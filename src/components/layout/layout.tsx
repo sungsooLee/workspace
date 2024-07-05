@@ -19,16 +19,16 @@ const HAELayout = () => {
       <div className='flex flex-1 overflow-hidden '>
         <LNB items={menuConfig.lnb[activeMenuId] || []} />
         <div
-          className={`flex-1 bg-bodybackground overflow-y-auto ${isLNBOpen ? 'ml-[264px]' : ''}`}
+          className={`flex-1 pb-[80px] bg-bodybackground overflow-y-auto ${isLNBOpen ? 'ml-[264px]' : ''}`}
         >
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
           </Suspense>
         </div>
       </div>
-      <div className='bg-gnb text-white p-4 fixed bottom-0 left-0 w-full'>
+      {/* <div className='bg-gnb text-white p-4 fixed bottom-0 left-0 w-full'>
         Footer
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import App from './App.tsx';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { worker } from './mocks/browser.ts';
+import React from 'react';
 
 //msw 설정
 if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { MenuItem } from '../types';
+import { useState } from 'react';
 
 interface LNBProps {
   items: MenuItem[];
@@ -7,46 +8,46 @@ interface LNBProps {
 
 const LNB = ({ items }: LNBProps) => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
 
   const changeRoute = (link: string) => {
-    console.log(link);
     navigate(`/${link}`);
   };
 
+  const toggleLNB = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className='relative'>
-      <div
-        id='lnb'
-        className={`bg-lnb h-full overflow-y-auto w-[264px] fixed `}
-      >
-        <nav>
-          {items &&
-            items.map((item) => (
-              <p
-                key={item.id}
-                className='block p-2'
-                onClick={() => {
-                  changeRoute(item.link);
-                }}
-              >
-                {item.name}
-              </p>
-            ))}
-        </nav>
+    <div
+      className={`relative transition-width	duration-300 ${
+        isOpen ? 'w-[264px]' : 'w-[0px]'
+      } `}
+    >
+      <div id='lnb' className={`bg-lnb h-full overflow-y-auto`}>
+        <button
+          onClick={toggleLNB}
+          className={`absolute top-2 right-[-20px] bg-gray-800 text-white p-1 rounded`}
+        >
+          {isOpen ? '<' : '>'}
+        </button>
+        {isOpen && (
+          <nav>
+            {items &&
+              items.map((item) => (
+                <p
+                  key={item.id}
+                  className='block p-2 cursor-pointer'
+                  onClick={() => {
+                    changeRoute(item.link);
+                  }}
+                >
+                  {item.name}
+                </p>
+              ))}
+          </nav>
+        )}
       </div>
-      {/*
-        접었다 폈다 할 수 있는 버튼 아이콘 필요. 사이드 바랑 붙어있게 구현하고 싶음.
-      */}
-      {/* <Button
-        className={`absolute w-[24px] h-[40px] top-1/4 ${isOpen ? 'right-[20px]' : '-right-[288px]'} transform bg-white border rounded p-1 shadow-md flex justify-center items-center`}
-        size='icon'
-        onClick={toggleLNB}
-      >
-        <img
-          src='/assets/icons/ic_chevron-left-double.svg'
-          className={`h-4 w-4 text-gray-700 transition-transform ${isOpen ? '' : 'rotate-180'}`}
-        />
-      </Button> */}
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 
 const SamplePage = lazy(() => import('@/pages/sample/sample'));
+const ChannelDetail = lazy(() => import('@/pages/sample/channel-detail'));
+const VideoDetail = lazy(() => import('@/pages/sample/video-detail'));
 
 export const myRoutes = [
   {
@@ -15,10 +17,14 @@ export const myRoutes = [
         element: <>나의 학습 현황</>,
       },
       {
-        path: 'sample',
+        path: 'channel-detail',
+        element: <ChannelDetail />,
+      },
+      {
+        path: 'video/:id',
         element: (
           <>
-            <SamplePage />
+            <VideoDetail />
           </>
         ),
       },

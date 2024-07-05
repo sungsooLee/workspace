@@ -110,7 +110,10 @@ export function AuthProvider({ children }: Props) {
 
   const login = useCallback((token: string, user: AuthUserType) => {
     setSession(token);
-
+    // TODO. 삭제 필요
+    // JWT 토큰 구현 이전에 유저 정보 갖고 있기 위한 임시 스토리지.
+    sessionStorage.setItem('user', user?.email);
+    console.log(user);
     dispatch({
       type: Types.LOGIN,
       payload: {

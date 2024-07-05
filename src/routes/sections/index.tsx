@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, ScrollRestoration, useRoutes } from 'react-router-dom';
 // import Header from '../../components/header';
 import { authRoutes } from './auth';
 import AuthGuard from '@/auth/guard/auth-guard';

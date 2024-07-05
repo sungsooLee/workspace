@@ -20,7 +20,7 @@ export const menuConfig: TestMenuConfig = {
     1: [
       { id: 11, name: '구독', link: 'my/subscribe' },
       { id: 12, name: '나의 학습현황', link: 'my/learnig-state' },
-      { id: 13, name: '샘플', link: 'my/sample' },
+      { id: 13, name: '채널 상세', link: 'my/channel-detail' },
     ],
     2: [
       { id: 21, name: '지식공유', link: 'knowledge/share' },
