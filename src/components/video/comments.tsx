@@ -31,8 +31,8 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit }) => {
     setInputComment('');
   };
 
-  const sendInputComment = () => {
-    onSubmit(inputComment);
+  const sendInputComment = async () => {
+    await onSubmit(inputComment);
     setInputComment('');
   };
 

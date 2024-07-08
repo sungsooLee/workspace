@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 
-const SamplePage = lazy(() => import('@/pages/sample/sample'));
 const ChannelDetail = lazy(() => import('@/pages/sample/channel-detail'));
 const VideoDetail = lazy(() => import('@/pages/sample/video-detail'));
 

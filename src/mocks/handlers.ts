@@ -72,6 +72,14 @@ export const handlers = [
       const comments = commentDb[`${id}`] || [];
       const commentArr = comments.slice(start, end);
       const isLastPage = end >= comments.length;
+      console.log(
+        'end=' +
+          end +
+          ', lenght=' +
+          comments.length +
+          ', isLastPage=' +
+          isLastPage
+      );
       return HttpResponse.json({
         id: id,
         comments: commentArr,

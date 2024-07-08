@@ -29,7 +29,7 @@ const Filter: React.FC<FilterProps> = ({
       <div className='w-full py-43pxr px-25pxr'>
         <div className='pb-37pxr flex flex-row items-center truncate'>
           학습 유형
-          <div className='space-x-80pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto'>
+          <div className='space-x-80pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden'>
             {Object.values(LearningTypeEnum).map((type) => (
               <p
                 key={type}
@@ -50,7 +50,7 @@ const Filter: React.FC<FilterProps> = ({
         </div>
         <div className='pb-37pxr flex flex-row items-center truncate'>
           학습 포맷
-          <div className='space-x-40pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto'>
+          <div className='space-x-40pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden'>
             {Object.values(LearningFormatEnum).map((format) => (
               <Button
                 key={format}

@@ -22,7 +22,7 @@ const VideoDetail = () => {
   const { id } = useParams<{ id: string }>();
   const {
     comments,
-    setPage,
+    incrementPage,
     loading,
     isLastPage,
     addComment,
@@ -30,7 +30,6 @@ const VideoDetail = () => {
     testMode,
     reset,
   } = useComments(id, 10, fetchCommnetApi, saveCommentApi, testFetchCommentApi);
-
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -39,7 +38,7 @@ const VideoDetail = () => {
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
-            setPage((prevPage) => prevPage + 1);
+            incrementPage();
           }
         },
         { threshold: 0.1 }
