@@ -19,17 +19,17 @@ const Filter: React.FC<FilterProps> = ({
   onFormatToggle,
 }) => {
   return (
-    <div className='flex flex-col p-[20px] lg:px-[50px] items-start'>
+    <div className='w-full flex flex-col p-20pxr lg:px-50pxr items-start'>
       <div>
         <div className='font-bold flex flex-row items-center'>
           조회필터
           <hr className='w-12 h-1 ml-4 mx-auto my-4 bg-black border-0 rounded' />
         </div>
       </div>
-      <div className='py-[43px] px-[25px]'>
-        <div className='pb-[37px] flex flex-row items-center truncate'>
+      <div className='w-full py-43pxr px-25pxr'>
+        <div className='pb-37pxr flex flex-row items-center truncate'>
           학습 유형
-          <div className='space-x-[80px] ml-[40px] flex flex-row'>
+          <div className='space-x-80pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto'>
             {Object.values(LearningTypeEnum).map((type) => (
               <p
                 key={type}
@@ -41,16 +41,16 @@ const Filter: React.FC<FilterProps> = ({
                     ) as LearningTypeEnum
                   )
                 }
-                className={`cursor-pointer truncate ${getEnumValueByKey(LearningTypeEnum, selectedType) === type ? 'font-bold text-xl' : 'font-normal text-base'}`}
+                className={`cursor-pointer hover:text-blue-500 ${getEnumValueByKey(LearningTypeEnum, selectedType) === type ? 'font-bold text-xl' : 'font-normal text-base'}`}
               >
                 {type}
               </p>
             ))}
           </div>
         </div>
-        <div className='pb-[37px] flex flex-row items-center truncate'>
+        <div className='pb-37pxr flex flex-row items-center truncate'>
           학습 포맷
-          <div className='space-x-[40px] ml-[40px] flex flex-row'>
+          <div className='space-x-40pxr ml-40pxr flex flex-row flex-nowrap overflow-x-auto'>
             {Object.values(LearningFormatEnum).map((format) => (
               <Button
                 key={format}

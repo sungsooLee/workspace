@@ -6,9 +6,9 @@ const ChannelProfile: React.FC<ChannelProfileProps> = ({
 }) => {
   return (
     <div className='flex flex-row w-full'>
-      <div className='profile-image'></div>
-      <div className='flex flex-col ml-[50px]'>
-        <p className='font-bold pb-[25px] truncate'>{title}</p>
+      <div className='profile-image min-w-50pxr min-h-50pxr' />
+      <div className='flex flex-col items-start ml-50pxr'>
+        <p className='font-bold pb-25pxr truncate'>{title}</p>
         <p className='font-thin truncate'>{description}</p>
       </div>
     </div>

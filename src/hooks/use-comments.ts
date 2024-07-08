@@ -1,8 +1,26 @@
 import { CommentProps } from '@/components/video/comments';
-import axiosInstance from '@/lib/utils/axios';
 import { useCallback, useEffect, useState } from 'react';
 
-const useComments = (videoId: string | undefined, pageSize: number) => {
+const useComments = (
+  id: string | undefined,
+  pageSize: number,
+  fetchCommentsApi: (
+    id: string,
+    page: number,
+    pageSize: number
+  ) => Promise<any>,
+  saveCommentsApi: (
+    newComment: Omit<CommentProps, 'regDt'>
+  ) => Promise<CommentProps>,
+  testFetchCommentsApi: (page: number, pageSize: number) => Promise<any>
+) => {
+  const reset = useCallback(() => {
+    setIsLastPage(false);
+    setPage(0);
+    setLoading(true);
+    setComments([]);
+  }, []);
+
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -11,40 +29,42 @@ const useComments = (videoId: string | undefined, pageSize: number) => {
 
   const fetchComments = useCallback(
     async (page: number) => {
-      if (!testMode && (!videoId || isLastPage)) return;
+      if (!testMode && (!id || isLastPage)) return;
       setLoading(true);
       try {
         const delay = (ms: number) =>
           new Promise((resolve) => setTimeout(resolve, ms));
         await delay(500); // 0.5초 지연 시간 추가 - 로딩화면 보이기 위해서
-        let url = `/api/video/comment/${videoId}`;
-        let testUrl = `/api/video/comments`;
-        const response = await axiosInstance.get(testMode ? testUrl : url, {
-          params: { page, pageSize },
-        });
-        setComments((prevComments) => [
-          ...prevComments,
-          ...response.data.comments,
-        ]);
-        setIsLastPage(response.data.isLastPage);
+        const response = testMode
+          ? await testFetchCommentsApi(page, pageSize)
+          : await fetchCommentsApi(id!, page, pageSize);
+        setComments((prevComments) => [...prevComments, ...response.comments]);
+        setIsLastPage(response.isLastPage);
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
     },
-    [videoId, pageSize, isLastPage, testMode]
+    [id, pageSize, isLastPage, testMode, fetchCommentsApi]
   );
 
-  const callSaveCommentApi = () => {};
-
-  const addComment = (newComment: CommentProps) => {
-    setComments((prevComments) => [...prevComments, newComment]);
+  const addComment = async (newComment: Omit<CommentProps, 'regDt'>) => {
+    try {
+      const savedComment = await saveCommentsApi(newComment);
+      setComments((prevComments) => [...prevComments, savedComment]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
+    reset();
+  }, [id, reset]);
+
+  useEffect(() => {
     fetchComments(page);
-  }, [fetchComments, page]);
+  }, [fetchComments, page, id]);
 
   return {
     comments,
@@ -55,6 +75,7 @@ const useComments = (videoId: string | undefined, pageSize: number) => {
     addComment,
     setTestMode,
     testMode,
+    reset,
   };
 };
 

@@ -16,6 +16,8 @@ export interface Video {
   course: {
     thumbnailUrl: string;
     title: string;
+    format: string;
+    type: string;
   };
 }
 

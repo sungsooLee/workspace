@@ -2,10 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuthContext } from '../hooks';
 import { useNavigate } from 'react-router-dom';
 
-// ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
-
 type Props = {
   children: React.ReactNode;
 };
@@ -16,10 +12,7 @@ export default function AuthGuard({ children }: Props) {
   return <>{loading ? <>SplashScreen</> : <Container>{children}</Container>}</>;
 }
 
-// ----------------------------------------------------------------------
-
 function Container({ children }: Props) {
-  //   const router = useRouter();
   const navigate = useNavigate();
 
   const { authenticated, method } = useAuthContext();

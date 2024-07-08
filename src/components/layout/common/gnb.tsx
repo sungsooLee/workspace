@@ -14,14 +14,18 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
     authContext.logout();
   };
   return (
-    <nav className='bg-gnb text-gnb-foreground flex items-center justify-between h-[84px] p-[24px]'>
+    <nav className='bg-gnb text-gnb-foreground flex items-center justify-between h-84pxr p-24pxr'>
       <div className='flex items-center'>
-        <img src='/assets/icons/HAE_Logo.svg' alt='Logo' className='' />
+        <img
+          src='/assets/icons/HAE_Logo.svg'
+          alt='Logo'
+          className='h-8 w-auto'
+        />
       </div>
-      <ul className='flex justify-center items-center space-x-4 py-4'>
+      <ul className='flex overflow-x-auto flex-nowrap items-center space-x-4 py-4'>
         {items &&
           items.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className='shrink-0'>
               <Button
                 onClick={() => onMenuClick(item.id)}
                 className='text-white hover:text-white hover:bg-gray-600 transition-colors duration-300 px-4 py-2 rounded'
@@ -32,7 +36,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
             </li>
           ))}
         {/*임시 로그아웃 */}
-        <li key='logout'>
+        <li key='logout' className='shrink-0'>
           <Button
             onClick={() => logout()}
             className='text-white hover:text-white hover:bg-gray-600 transition-colors duration-300 px-4 py-2 rounded'
@@ -43,12 +47,17 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
         </li>
       </ul>
       <div className='flex items-center space-x-4'>
-        <img src='/assets/icons/ic_bell.svg' alt='Notifications' />
-        <img src='/assets/icons/ic_globe.svg' alt='Globe' />
+        <img
+          src='/assets/icons/ic_bell.svg'
+          alt='Notifications'
+          className='h-6 w-6'
+        />
+        <img src='/assets/icons/ic_globe.svg' alt='Globe' className='h-6 w-6' />
         <img
           src='/assets/icons/ic_settings.svg'
           alt='Settings'
-          className='animate-spin duration-5000'
+          className='animate-spin h-6 w-6'
+          style={{ animationDuration: '5s' }}
         />
       </div>
     </nav>

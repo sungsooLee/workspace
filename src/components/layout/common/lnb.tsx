@@ -1,32 +1,31 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MenuItem } from '../types';
-import { useState } from 'react';
 
 interface LNBProps {
   items: MenuItem[];
+  isOpen: boolean;
+  toggleOpen: () => void;
 }
 
-const LNB = ({ items }: LNBProps) => {
+const LNB = ({ items, isOpen, toggleOpen }: LNBProps) => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
 
   const changeRoute = (link: string) => {
     navigate(`/${link}`);
   };
 
-  const toggleLNB = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <div
       className={`relative transition-width	duration-300 ${
-        isOpen ? 'w-[264px]' : 'w-[0px]'
+        isOpen ? 'w-264pxr' : 'w-0pxr'
       } `}
     >
-      <div id='lnb' className={`bg-lnb h-full overflow-y-auto`}>
+      <div
+        id='lnb'
+        className={`bg-lnb h-full overflow-y-auto border-r-2 border-black`}
+      >
         <button
-          onClick={toggleLNB}
+          onClick={toggleOpen}
           className={`absolute top-2 right-[-20px] bg-gray-800 text-white p-1 rounded`}
         >
           {isOpen ? '<' : '>'}
@@ -37,7 +36,7 @@ const LNB = ({ items }: LNBProps) => {
               items.map((item) => (
                 <p
                   key={item.id}
-                  className='block p-2 cursor-pointer'
+                  className={`block p-2 cursor-pointer hover:text-blue-500 `}
                   onClick={() => {
                     changeRoute(item.link);
                   }}

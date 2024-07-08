@@ -71,7 +71,7 @@ const ChannelDetail = () => {
   return (
     <>
       <div className='flex flex-col'>
-        <div className='flex flex-col lg:flex-row items-center p-[20px] lg:p-[70px] justify-between bg-white'>
+        <div className='flex flex-col lg:flex-row items-center p-20pxr lg:p-70pxr justify-between bg-white'>
           <ChannelProfile {...profile} />
           <ChannelDetailInfo {...details} />
         </div>
@@ -81,7 +81,9 @@ const ChannelDetail = () => {
           onTypeSelect={handleTypeSelect}
           onFormatToggle={handleFormatToggle}
         />
-        <VideoList videos={filteredVideos} />
+        <div className='px-20pxr'>
+          <VideoList videos={filteredVideos} />
+        </div>
       </div>
     </>
   );

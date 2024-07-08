@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const pxToRem = (px, base = 16) => `${px / base}rem`;
+
 module.exports = {
   darkMode: ['class'],
   content: [
@@ -87,6 +89,15 @@ module.exports = {
       },
       transitionDuration: {
         5000: '5000ms',
+      },
+      spacing: {
+        ...Array.from({ length: 300 }, (_, index) => index + 1).reduce(
+          (acc, px) => {
+            acc[`${px}pxr`] = pxToRem(px);
+            return acc;
+          },
+          {}
+        ),
       },
     },
   },

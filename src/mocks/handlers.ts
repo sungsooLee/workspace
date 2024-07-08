@@ -55,7 +55,6 @@ export const handlers = [
   // 2.댓글 저장하기
   // 3.비디오 정보 불러오기
   // 4.추천 리스트 비디오 목록 불러오기
-  //
 
   // 1.댓글 불러오기
   http.get('/api/video/comment/:id', async ({ params, request }) => {
@@ -74,6 +73,7 @@ export const handlers = [
       const commentArr = comments.slice(start, end);
       const isLastPage = end >= comments.length;
       return HttpResponse.json({
+        id: id,
         comments: commentArr,
         isLastPage,
       });
@@ -111,14 +111,12 @@ export const handlers = [
   http.post('/api/video/comment', async ({ request }) => {
     // console.log(request);
     const requsetJson: regComment = (await request.json()) as regComment;
-
     const { id, comment, email } = requsetJson;
-
+    console.log(requsetJson);
     const commentDbStr = localStorage.getItem('comment');
     const commentDb = JSON.parse(commentDbStr || '{}');
-
     if (!commentDb[id]) commentDb[id] = [];
-
+    console.log(id);
     commentDb[id].push({ comment: comment, email: email, time: Date.now() });
 
     localStorage.setItem('comment', JSON.stringify(commentDb));
