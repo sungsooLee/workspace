@@ -17,6 +17,12 @@ export default function LoginPage() {
     setPassword(e.target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && password.trim() !== '') {
+      login();
+    }
+  };
+
   const login = async () => {
     const res = await axiosInstance.post('/user', { email, password });
     const { token, ...user } = res.data;
@@ -31,6 +37,7 @@ export default function LoginPage() {
           placeholder='password'
           value={password}
           onChange={handlePasswordChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <div>

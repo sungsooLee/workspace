@@ -1,11 +1,6 @@
-import {
-  fetchCommnetApi,
-  saveCommentApi,
-  testFetchCommentApi,
-} from '@/api/comment';
+import { fetchCommnetApi, saveCommentApi } from '@/api/comment';
 import VideoList from '@/components/channel/detail/video-list';
 import Spinner from '@/components/spinner';
-import { Button } from '@/components/ui/button';
 import Comments from '@/components/video/comments';
 import VideoPlayer from '@/components/video/video-player';
 import useComments from '@/hooks/use-comments';
@@ -20,16 +15,17 @@ const VideoDetail = () => {
   const videos = res.data.items;
   const [videoInfo, setVideoInfo] = useState<Video | null>(null);
   const { id } = useParams<{ id: string }>();
+
   const {
     comments,
     incrementPage,
     loading,
     isLastPage,
     addComment,
-    setTestMode,
-    testMode,
+    deleteComment,
+    isFetchingNextPage,
     reset,
-  } = useComments(id, 10, fetchCommnetApi, saveCommentApi, testFetchCommentApi);
+  } = useComments(id, 10, fetchCommnetApi, saveCommentApi);
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -64,7 +60,7 @@ const VideoDetail = () => {
 
   return (
     <div key={id} className='flex flex-col overflow-hidden md:flex-row'>
-      <div className='flex-[6_6_0%] p-4 md:flex md:flex-col'>
+      <div className='flex-[6_6_0%] p-4 md:flex md:flex-col w-full'>
         <div className='relative mb-4 min-w-200pxr'>
           <VideoPlayer />
         </div>
@@ -78,20 +74,12 @@ const VideoDetail = () => {
           </h1>
         </div>
         <div className='flex-1 p-4'>
-          <div className='p-5'>
-            {testMode ? (
-              <Button onClick={() => setTestMode(!testMode)}>
-                Huge Mock data off
-              </Button>
-            ) : (
-              <Button onClick={() => setTestMode(!testMode)}>
-                Huge Mock data on
-              </Button>
-            )}
-          </div>
-
-          <Comments comments={comments} onSubmit={handleCommentSubmit} />
-          {loading && (
+          <Comments
+            comments={comments}
+            onSubmit={handleCommentSubmit}
+            onDelete={deleteComment}
+          />
+          {(loading || isFetchingNextPage) && (
             <div className='py-4'>
               <Spinner />
             </div>

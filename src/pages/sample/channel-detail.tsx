@@ -1,9 +1,12 @@
 import ChannelDetailInfo from '@/components/channel/detail/channel-detail';
 import ChannelProfile from '@/components/channel/detail/channel-profile';
 import Filter from '@/components/channel/detail/channel-filter';
-import fetchData from '@/lib/utils/fetchData';
 import '@/styles/channel-detail.scss';
-import { ChannelDetailProps, ChannelProfileProps } from '@/types/channel';
+import {
+  ChannelDetailProps,
+  ChannelProfileProps,
+  Video,
+} from '@/types/channel';
 import VideoList from '@/components/channel/detail/video-list';
 import { useState } from 'react';
 import {
@@ -11,18 +14,45 @@ import {
   LearningTypeEnum,
 } from '@/constants/enums/LearningEnum';
 import { getEnumValueByKey } from '@/lib/utils/enum';
+import { useQuery } from '@tanstack/react-query';
+import { fetchChannelVideos, fetchProfileDetail } from '@/api/comment';
 
-const videoResource = fetchData('/api/channel/test/videos');
-const profileDetailResource = fetchData('/api/channel/testId/profile');
 const ChannelDetail = () => {
-  const res = videoResource.read();
-  const getProfileDetail = profileDetailResource.read();
   const [selectedType, setSelectedType] = useState<LearningTypeEnum>(
     LearningTypeEnum.ALL
   );
   const [selectedFormats, setSelectedFormats] = useState<LearningFormatEnum[]>(
     []
   );
+  const {
+    data: videoData,
+    isLoading: isVideoLoading,
+    isError: isVideoError,
+  } = useQuery({
+    queryKey: ['videos'],
+    queryFn: fetchChannelVideos,
+  });
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+  } = useQuery({
+    queryKey: ['profile'],
+    queryFn: fetchProfileDetail,
+  });
+
+  // 로딩 중 또는 에러 시 처리
+  if (isVideoLoading || isProfileLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isVideoError || isProfileError) {
+    return <div>Error loading data</div>;
+  }
+
+  if (!videoData || !profileData) {
+    return <div>No data available</div>;
+  }
 
   const handleTypeSelect = (type: LearningTypeEnum) => {
     setSelectedType(type);
@@ -36,21 +66,19 @@ const ChannelDetail = () => {
     );
   };
   const profile: ChannelProfileProps = {
-    title: getProfileDetail.title,
-    description: getProfileDetail.description,
-    profileImage: getProfileDetail.profileImage,
+    title: profileData.title,
+    description: profileData.description,
+    profileImage: profileData.profileImage,
   };
-
-  const videos = res.data.items;
 
   const details: ChannelDetailProps = {
-    yotubeLink: getProfileDetail.details.youtubeLink,
-    subscribers: getProfileDetail.subscribers,
-    videos: getProfileDetail.videos,
-    views: getProfileDetail.views,
+    youtbeLink: profileData.details.youtubeLink,
+    subscribers: profileData.subscribers,
+    videos: profileData.videos,
+    views: profileData.views,
   };
 
-  const filteredVideos = videos.filter((video: any) => {
+  const filteredVideos = videoData.data.items.filter((video: Video) => {
     const matchesType =
       selectedType == LearningTypeEnum.ALL
         ? true

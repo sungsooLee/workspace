@@ -16,9 +16,9 @@ const LNB = ({ items, isOpen, toggleOpen }: LNBProps) => {
 
   return (
     <div
-      className={`relative transition-width	duration-300 ${
+      className={`relative ${
         isOpen ? 'w-264pxr' : 'w-0pxr'
-      } `}
+      } transition-all duration-300 `}
     >
       <div
         id='lnb'

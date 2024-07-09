@@ -1,65 +1,11 @@
-import { CommentProps } from '@/components/video/comments';
-import { useCallback, useEffect, useReducer, useRef } from 'react';
-
-interface CommentsState {
-  comments: CommentProps[];
-  loading: boolean;
-  page: number;
-  isLastPage: boolean;
-  testMode: boolean;
-}
-
-type Action =
-  | { type: 'RESET' }
-  | { type: 'FETCH_START' }
-  | {
-      type: 'FETCH_SUCCESS';
-      payload: { comments: CommentProps[]; isLastPage: boolean };
-    }
-  | { type: 'FETCH_FAILURE' }
-  | { type: 'ADD_COMMENT'; payload: CommentProps }
-  | { type: 'SET_TEST_MODE'; payload: boolean }
-  | { type: 'INCREMENT_PAGE' };
-
-const initialState: CommentsState = {
-  comments: [],
-  loading: false,
-  page: 0,
-  isLastPage: false,
-  testMode: false,
-};
-
-const commentsReducer = (
-  state: CommentsState,
-  action: Action
-): CommentsState => {
-  switch (action.type) {
-    case 'RESET':
-      return {
-        ...state,
-        ...initialState,
-      };
-    case 'FETCH_START':
-      return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
-      return {
-        ...state,
-        comments: [...state.comments, ...action.payload.comments],
-        isLastPage: action.payload.isLastPage,
-        loading: false,
-      };
-    case 'FETCH_FAILURE':
-      return { ...state, loading: false };
-    case 'ADD_COMMENT':
-      return { ...state, comments: [...state.comments, action.payload] };
-    case 'SET_TEST_MODE':
-      return { ...state, testMode: action.payload };
-    case 'INCREMENT_PAGE':
-      return { ...state, page: state.page + 1 };
-    default:
-      return state;
-  }
-};
+import { deleteCommentApi } from '@/api/comment';
+import { CommentProps, CommentsProps } from '@/components/video/comments';
+import commentKeys from '@/constants/queryKeys/comment-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 const useComments = (
   id: string | undefined,
@@ -71,77 +17,77 @@ const useComments = (
   ) => Promise<any>,
   saveCommentsApi: (
     newComment: Omit<CommentProps, 'regDt'>
-  ) => Promise<CommentProps>,
-  testFetchCommentsApi: (page: number, pageSize: number) => Promise<any>
+  ) => Promise<CommentsProps>
 ) => {
-  const [state, dispatch] = useReducer(commentsReducer, initialState);
-  const currentId = useRef(id);
+  const queryClient = useQueryClient();
 
-  const reset = useCallback(() => {
-    dispatch({ type: 'RESET' });
-  }, []);
-
-  const fetchComments = useCallback(
-    async (page: number) => {
-      if (!state.testMode && (!id || state.isLastPage || state.loading)) return;
-      dispatch({ type: 'FETCH_START' });
-      const fetchId = id;
-      try {
-        // const delay = (ms: number) =>
-        //   new Promise((resolve) => setTimeout(resolve, ms));
-        // await delay(500); // 0.5초 지연 시간 추가 - 로딩화면 보이기 위해서
-        const response = state.testMode
-          ? await testFetchCommentsApi(page, pageSize)
-          : await fetchCommentsApi(id!, page, pageSize);
-        if (currentId.current === fetchId) {
-          dispatch({
-            type: 'FETCH_SUCCESS',
-            payload: {
-              comments: response.comments,
-              isLastPage: response.isLastPage,
-            },
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        dispatch({ type: 'FETCH_FAILURE' });
-      }
-    },
-    [id, pageSize, state.testMode, state.isLastPage]
-  );
-
-  const addComment = async (newComment: Omit<CommentProps, 'regDt'>) => {
-    try {
-      const savedComment = await saveCommentsApi(newComment);
-      dispatch({ type: 'ADD_COMMENT', payload: savedComment });
-    } catch (error) {
-      console.error(error);
-    }
+  // 댓글 데이터 패칭 함수
+  const fetchComments = async ({ pageParam = 0 }) => {
+    // const delay = (ms: number) =>
+    //   new Promise((resolve) => setTimeout(resolve, ms));
+    // await delay(1000); // 로딩 화면 확인을 위해서 0.5초 지연
+    return fetchCommentsApi(id!, pageParam, pageSize);
   };
 
-  useEffect(() => {
-    reset();
-  }, [id, reset]);
+  // useInfiniteQuery 훅을 사용하여 무한 스크롤 처리
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: commentKeys.all(id!), // 쿼리 키
+    queryFn: fetchComments, // 쿼리 함수
+    initialPageParam: 0, // 초기 페이지 파라미터
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.isLastPage) {
+        return lastPage.nextCursor;
+      }
+      return false;
+    },
+    enabled: !!id, // id값이 존재할 때만 쿼리 활성화
+  });
 
-  useEffect(() => {
-    fetchComments(state.page);
-  }, [fetchComments, id, state.page]);
+  // useMutation 훅을 사용해서 새로운 댓글을 추가하는 뮤테이션
+  const addCommentMutation = useMutation({
+    mutationFn: saveCommentsApi,
+    onSuccess: () => {
+      //성공하면 쿼리 무효화해서 리페칭 -> 최신 데이터 유지.
+      queryClient.invalidateQueries({
+        queryKey: commentKeys.all(id!),
+      });
+    },
+  });
+  const addComment = async (newComment: Omit<CommentProps, 'regDt'>) => {
+    return addCommentMutation.mutateAsync(newComment);
+  };
 
-  useEffect(() => {
-    currentId.current = id;
-  }, [id]);
+  const deleteCommentMutation = useMutation({
+    mutationFn: deleteCommentApi,
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: commentKeys.all(id!),
+      });
+    },
+  });
+
+  const deleteComment = async (commentId: string) => {
+    return deleteCommentMutation.mutateAsync(commentId);
+  };
 
   return {
-    comments: state.comments,
-    fetchComments,
-    loading: state.loading,
-    incrementPage: () => dispatch({ type: 'INCREMENT_PAGE' }),
-    isLastPage: state.isLastPage,
+    comments: data?.pages.flatMap((page) => page.comments) || [],
+    loading: isLoading,
+    isLastPage: !hasNextPage,
+    incrementPage: fetchNextPage,
     addComment,
-    setTestMode: (testMode: boolean) =>
-      dispatch({ type: 'SET_TEST_MODE', payload: testMode }),
-    testMode: state.testMode,
-    reset,
+    deleteComment,
+    isFetchingNextPage,
+    reset: () => {
+      queryClient.resetQueries({ queryKey: commentKeys.all(id!) });
+    },
   };
 };
 

@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
 const ChannelDetail = lazy(() => import('@/pages/sample/channel-detail'));
 const VideoDetail = lazy(() => import('@/pages/sample/video-detail'));
@@ -23,7 +23,9 @@ export const myRoutes = [
         path: 'video/:id',
         element: (
           <>
-            <VideoDetail />
+            <Suspense fallback={<>Loading.....</>}>
+              <VideoDetail />
+            </Suspense>
           </>
         ),
       },

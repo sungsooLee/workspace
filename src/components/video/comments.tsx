@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 export interface CommentsProps {
   comments: CommentProps[];
   onSubmit: (comment: string) => void;
+  onDelete: (commentId: string) => void;
 }
 
 export interface CommentProps {
@@ -12,10 +13,16 @@ export interface CommentProps {
   comment: string;
   regDt: number;
   id?: string;
+  commentId?: string;
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments, onSubmit }) => {
+const Comments: React.FC<CommentsProps> = ({
+  comments,
+  onSubmit,
+  onDelete,
+}) => {
   const [inputComment, setInputComment] = useState<string>('');
+  const userEmail = sessionStorage.getItem('user') || '';
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputComment(e.target.value);
@@ -34,6 +41,10 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit }) => {
   const sendInputComment = async () => {
     await onSubmit(inputComment);
     setInputComment('');
+  };
+
+  const handleDelete = async (commentId: string) => {
+    await onDelete(commentId);
   };
 
   return (
@@ -67,14 +78,31 @@ const Comments: React.FC<CommentsProps> = ({ comments, onSubmit }) => {
         </div>
       </div>
       <ul>
-        {comments.map((item, index) => (
-          <li key={index} className='pb-3'>
-            <div className='flex flex-col items-start space-y-5'>
-              <p className='font-bold'>@{item.email}</p>
-              {item.comment}
-            </div>
-          </li>
-        ))}
+        {comments?.length > 0 &&
+          comments.map((item, index) => (
+            <li key={index} className='pb-3'>
+              <div className='flex flex-col items-start space-y-5'>
+                <div className='flex flex-col w-full'>
+                  {item?.email && (
+                    <p className='font-bold text-start'>@{item.email}</p>
+                  )}
+                  <div className='flex flex-row justify-between w-full'>
+                    {item?.comment && (
+                      <p className='text-start'>{item.comment}</p>
+                    )}
+                    {item.email === userEmail && (
+                      <button
+                        onClick={() => handleDelete(item.commentId!)}
+                        className='text-red-500 text-end'
+                      >
+                        삭제
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );

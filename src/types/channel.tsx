@@ -5,7 +5,7 @@ export interface ChannelProfileProps {
 }
 
 export interface ChannelDetailProps {
-  yotubeLink: string;
+  youtbeLink: string;
   subscribers: string;
   videos: string;
   views: string;
@@ -18,6 +18,7 @@ export interface Video {
     title: string;
     format: string;
     type: string;
+    url?: string;
   };
 }
 

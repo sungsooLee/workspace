@@ -19,6 +19,12 @@ export const testFetchCommentApi = async (page: number, pageSize: number) => {
   return response.data;
 };
 
+export const deleteCommentApi = async (commentId: string) => {
+  const response = await axiosInstance.delete(
+    `/api/video/comment/${commentId}`
+  );
+  return response.data;
+};
 export const saveCommentApi = async (
   newComment: Omit<CommentProps, 'regDt'>
 ) => {
@@ -26,4 +32,21 @@ export const saveCommentApi = async (
   return response.data;
 };
 
-export default { fetchCommnetApi, testFetchCommentApi, saveCommentApi };
+export const fetchChannelVideos = async () => {
+  const response = await axiosInstance.get('/api/channel/test/videos');
+  return response.data;
+};
+
+export const fetchProfileDetail = async () => {
+  const response = await axiosInstance.get('/api/channel/testId/profile');
+  return response.data;
+};
+
+export default {
+  fetchCommnetApi,
+  testFetchCommentApi,
+  saveCommentApi,
+  fetchChannelVideos,
+  fetchProfileDetail,
+  deleteCommentApi,
+};

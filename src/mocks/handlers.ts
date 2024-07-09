@@ -14,6 +14,13 @@ interface regComment {
 }
 const mockToken = 'testToken';
 
+const getNextCommentId = () => {
+  const currentId = localStorage.getItem('commentId');
+  const nextId = currentId ? parseInt(currentId) + 1 : 1;
+  localStorage.setItem('commentId', nextId.toString());
+  return nextId;
+};
+
 export const handlers = [
   http.post('/user', async ({ request }) => {
     const { email, password } = (await request.json()) as LoginUserType;
@@ -64,7 +71,6 @@ export const handlers = [
     const { id } = params;
     const page = url.searchParams.get('page');
     const pageSize = url.searchParams.get('pageSize');
-
     if (page && pageSize) {
       const start = parseInt(page) * parseInt(pageSize);
       const end = start + parseInt(pageSize);
@@ -84,6 +90,7 @@ export const handlers = [
         id: id,
         comments: commentArr,
         isLastPage,
+        nextCursor: isLastPage ? undefined : parseInt(page) + 1,
       });
     }
     return HttpResponse.json({
@@ -120,16 +127,19 @@ export const handlers = [
     // console.log(request);
     const requsetJson: regComment = (await request.json()) as regComment;
     const { id, comment, email } = requsetJson;
-    console.log(requsetJson);
     const commentDbStr = localStorage.getItem('comment');
     const commentDb = JSON.parse(commentDbStr || '{}');
+    const commentId = getNextCommentId();
     if (!commentDb[id]) commentDb[id] = [];
-    console.log(id);
-    commentDb[id].push({ comment: comment, email: email, time: Date.now() });
-
+    commentDb[id].push({
+      commentId: commentId,
+      comment: comment,
+      email: email,
+      time: Date.now(),
+    });
     localStorage.setItem('comment', JSON.stringify(commentDb));
-
     return HttpResponse.json({
+      commentId: commentId,
       comment: comment,
       email: email,
       id: id,
@@ -139,6 +149,21 @@ export const handlers = [
     return HttpResponse.json({
       videoUrl: '/video/test.mp4',
     });
+  }),
+  // 댓글 삭제하기
+  http.delete('/api/video/comment/:commentId', async ({ params }) => {
+    const { commentId } = params;
+    const commentDbStr = localStorage.getItem('comment');
+    const commentDb = JSON.parse(commentDbStr || '{}');
+
+    for (const videoId in commentDb) {
+      commentDb[videoId] = commentDb[videoId].filter(
+        (comment: any) => comment.commentId !== parseInt(commentId as string)
+      );
+    }
+    localStorage.setItem('comment', JSON.stringify(commentDb));
+
+    return HttpResponse.json({ commentId });
   }),
 
   http.get('/api/channel/:id/profile', ({ params, request }) => {

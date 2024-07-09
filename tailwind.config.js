@@ -29,6 +29,12 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        info: {
+          lightBg: '#F1F7FC', // Light mode 배경색
+          lightText: '#1472CE', // Light mode 글씨색
+          darkBg: '#1472CE', // Dark mode 배경색
+          darkText: '#FFFFFF', // Dark mode 글씨색
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -89,6 +95,33 @@ module.exports = {
       },
       transitionDuration: {
         5000: '5000ms',
+      },
+      borderRadius: {
+        ...Array.from({ length: 20 }, (_, index) => index + 1).reduce(
+          (acc, px) => {
+            acc[`${px}pxr`] = pxToRem(px);
+            return acc;
+          },
+          {}
+        ),
+      },
+      fontSize: {
+        ...Array.from({ length: 100 }, (_, index) => index + 1).reduce(
+          (acc, px) => {
+            acc[`${px}pxr`] = pxToRem(px);
+            return acc;
+          },
+          {}
+        ),
+      },
+      lineHeight: {
+        ...Array.from({ length: 100 }, (_, index) => index + 1).reduce(
+          (acc, px) => {
+            acc[`${px}pxr`] = pxToRem(px);
+            return acc;
+          },
+          {}
+        ),
       },
       spacing: {
         ...Array.from({ length: 300 }, (_, index) => index + 1).reduce(
