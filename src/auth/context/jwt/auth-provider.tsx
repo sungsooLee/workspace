@@ -124,7 +124,7 @@ export function AuthProvider({ children }: Props) {
       },
     });
 
-    navigate('/board');
+    navigate('/');
   }, []);
 
   const register = useCallback(async (email: string, password: string) => {

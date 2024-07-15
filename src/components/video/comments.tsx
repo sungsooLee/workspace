@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { CommentInput } from '../Input/comment-input';
 
 export interface CommentsProps {
   comments: CommentProps[];
@@ -39,8 +41,10 @@ const Comments: React.FC<CommentsProps> = ({
   };
 
   const sendInputComment = async () => {
-    await onSubmit(inputComment);
-    setInputComment('');
+    if (inputComment.trim() !== '') {
+      await onSubmit(inputComment);
+      setInputComment('');
+    }
   };
 
   const handleDelete = async (commentId: string) => {
@@ -51,12 +55,11 @@ const Comments: React.FC<CommentsProps> = ({
     <div>
       <div className='flex flex-col space-y-2'>
         <div className='w-full'>
-          <Input
+          <CommentInput
             placeholder='댓글 추가....'
             value={inputComment}
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
-            className='commentInput'
           />
         </div>
         <div className='w-full grid justify-items-end'>
@@ -84,13 +87,13 @@ const Comments: React.FC<CommentsProps> = ({
               <div className='flex flex-col items-start space-y-5'>
                 <div className='flex flex-col w-full'>
                   {item?.email && (
-                    <p className='font-bold text-start'>@{item.email}</p>
+                    <p className='font-bold text-start'>@{item?.email}</p>
                   )}
                   <div className='flex flex-row justify-between w-full'>
                     {item?.comment && (
                       <p className='text-start'>{item.comment}</p>
                     )}
-                    {item.email === userEmail && (
+                    {item?.email === userEmail && (
                       <button
                         onClick={() => handleDelete(item.commentId!)}
                         className='text-red-500 text-end'

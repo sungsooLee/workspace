@@ -12,9 +12,9 @@ export interface TestMenuConfig {
 
 export const menuConfig: TestMenuConfig = {
   gnb: [
-    { id: 1, name: '나', link: '#' },
-    { id: 2, name: '지식성장', link: '#' },
-    { id: 3, name: '신청할게요', link: '#' },
+    { id: 1, name: '과정', link: '#' },
+    { id: 2, name: '신청/예약', link: '#' },
+    { id: 3, name: '인증', link: '#' },
   ],
   lnb: {
     1: [

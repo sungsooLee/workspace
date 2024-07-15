@@ -18,12 +18,16 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+    fontFamily: {
+      sans: ['Pretendard', 'sans-serif'],
+    },
     extend: {
       colors: {
-        gnb: '#343333',
+        gnb: '#000',
         lnb: '#666666',
         body: '#D9D9D9',
         footer: '#343333',
+        'hae-white-60': 'rgba(255, 255, 255, 0.60)', // fallback color
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -63,10 +67,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        gnb: {
-          DEFAULT: 'hsl(var(--gnb))',
-          foreground: 'hsl(var(--gnb-foreground))',
-        },
+        // gnb: {
+        //   DEFAULT: 'hsl(var(--gnb))',
+        //   foreground: 'hsl(var(--gnb-foreground))',
+        // },
         lnb: {
           DEFAULT: 'hsl(var(--lnb))',
         },
@@ -124,7 +128,7 @@ module.exports = {
         ),
       },
       spacing: {
-        ...Array.from({ length: 300 }, (_, index) => index + 1).reduce(
+        ...Array.from({ length: 350 }, (_, index) => index + 1).reduce(
           (acc, px) => {
             acc[`${px}pxr`] = pxToRem(px);
             return acc;

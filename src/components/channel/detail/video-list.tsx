@@ -10,18 +10,18 @@ const VideoList: React.FC<VideoListProps> = ({ videos }) => {
   const navigate = useNavigate();
 
   const handleVideoClick = (videoId: number) => {
-    navigate(`/my/video/${videoId}`, { replace: true });
+    navigate(`/my/video/${videoId}`);
   };
 
   return (
     <div>
-      {/* <div
-        className='grid gap-6'
+      <div
+        className='grid gap-4'
         style={{
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(0, 200px))',
         }}
-      > */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+      >
+        {/* <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'> */}
         {videos.length > 0 &&
           videos.map((video: any) => (
             <div

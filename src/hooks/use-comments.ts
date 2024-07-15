@@ -6,6 +6,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
+import { useToast } from './use-toast';
 
 const useComments = (
   id: string | undefined,
@@ -20,6 +21,7 @@ const useComments = (
   ) => Promise<CommentsProps>
 ) => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   // 댓글 데이터 패칭 함수
   const fetchComments = async ({ pageParam = 0 }) => {
@@ -58,6 +60,7 @@ const useComments = (
       queryClient.invalidateQueries({
         queryKey: commentKeys.all(id!),
       });
+      toast({ description: '댓글이 등록되었습니다.', duration: 1000 });
     },
   });
   const addComment = async (newComment: Omit<CommentProps, 'regDt'>) => {
@@ -69,6 +72,11 @@ const useComments = (
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: commentKeys.all(id!),
+      });
+      toast({
+        description: '댓글을 삭제하였습니다.',
+        variant: 'destructive',
+        duration: 1000,
       });
     },
   });

@@ -4,6 +4,7 @@ import LNB from './common/lnb';
 import { Suspense, useState } from 'react';
 import { menuConfig } from './types';
 import LoadingScreen from '../suspense/loading-screen';
+import Footer from './common/footer';
 
 const Layout = () => {
   const [isLNBOpen, setIsLNBOpen] = useState(true);
@@ -22,15 +23,13 @@ const Layout = () => {
           isOpen={isLNBOpen}
           toggleOpen={() => setIsLNBOpen(!isLNBOpen)}
         />
-        <div className={`flex-1 pb-80pxr bg-bodybackground overflow-y-auto `}>
+        <div className={`flex-1 overflow-y-auto `}>
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
           </Suspense>
         </div>
       </div>
-      {/* <div className='bg-gnb text-white p-4 fixed bottom-0 left-0 w-full'>
-        Footer
-      </div> */}
+      <Footer />
     </div>
   );
 };

@@ -147,7 +147,7 @@ export const handlers = [
   }),
   http.get('/api/video', async ({ request }) => {
     return HttpResponse.json({
-      videoUrl: '/video/test.mp4',
+      videoUrl: '/videos/test.mp4',
     });
   }),
   // 댓글 삭제하기

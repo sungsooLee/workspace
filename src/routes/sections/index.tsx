@@ -10,10 +10,6 @@ import Layout from '@/components/layout/layout';
 const Page404 = lazy(() => import('@/pages/error/404'));
 export default function Router() {
   return useRoutes([
-    {
-      path: '/',
-      element: <Navigate to={'/board'} replace />,
-    },
     ...authRoutes,
     {
       path: '/',

@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 const videoResource = fetchData('/api/channel/test/videos');
 const VideoDetail = () => {
   const res = videoResource.read();
-  const videos = res.data.items;
+  const videos = res?.data?.items;
   const [videoInfo, setVideoInfo] = useState<Video | null>(null);
   const { id } = useParams<{ id: string }>();
 
@@ -26,6 +26,8 @@ const VideoDetail = () => {
     isFetchingNextPage,
     reset,
   } = useComments(id, 10, fetchCommnetApi, saveCommentApi);
+
+  // 무한 스크롤을 위한 설정
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {

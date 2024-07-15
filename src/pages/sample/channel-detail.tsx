@@ -72,7 +72,7 @@ const ChannelDetail = () => {
   };
 
   const details: ChannelDetailProps = {
-    youtbeLink: profileData.details.youtubeLink,
+    youtbeLink: profileData.details?.youtubeLink,
     subscribers: profileData.subscribers,
     videos: profileData.videos,
     views: profileData.views,
@@ -98,7 +98,7 @@ const ChannelDetail = () => {
 
   return (
     <>
-      <div className='flex flex-col'>
+      <div className='flex flex-col pb-[80px]'>
         <div className='flex flex-col lg:flex-row items-center p-20pxr lg:p-70pxr justify-between bg-white'>
           <ChannelProfile {...profile} />
           <ChannelDetailInfo {...details} />

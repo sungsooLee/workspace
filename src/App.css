@@ -75,7 +75,10 @@
 }
 
 html {
+  font-family: 'Pretendard', sans-serif;
   font-size: 16px;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
 }
 
 @media (max-width: 1200px) {
@@ -88,4 +91,22 @@ html {
   html {
     font-size: 12px;
   }
+}
+
+body {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.footer > p {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+  white-space: pre;
+  /* text-wrap: nowrap; */
 }

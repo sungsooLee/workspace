@@ -1,9 +1,11 @@
+import Home from '@/pages/sample/home';
+
 export const mainRoutes = [
   {
     children: [
       {
-        path: 'board',
-        element: <>동영상목록</>,
+        path: '',
+        element: <Home />,
       },
     ],
   },
