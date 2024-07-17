@@ -1,4 +1,4 @@
-import NotFoundView from '@/components/error/not-found-view';
+import NotFoundView from '@/shared/components/error/not-found-view';
 
 export default function NotFoundPage() {
   return (

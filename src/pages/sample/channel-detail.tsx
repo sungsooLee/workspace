@@ -1,23 +1,18 @@
-import ChannelDetailInfo from '@/components/channel/detail/channel-detail';
-import ChannelProfile from '@/components/channel/detail/channel-profile';
-import Filter from '@/components/channel/detail/channel-filter';
-import '@/styles/channel-detail.scss';
-import {
-  ChannelDetailProps,
-  ChannelProfileProps,
-  Video,
-} from '@/types/channel';
-import VideoList from '@/components/channel/detail/video-list';
+import ChannelProfile from '@/features/channel/ui/channel-profile';
 import { useState } from 'react';
-import {
-  LearningFormatEnum,
-  LearningTypeEnum,
-} from '@/constants/enums/LearningEnum';
-import { getEnumValueByKey } from '@/lib/utils/enum';
 import { useQuery } from '@tanstack/react-query';
-import { fetchChannelVideos, fetchProfileDetail } from '@/api/comment';
+import { Channel } from '@/entities/channel/model/channel';
+import { fetchChannelVideos } from '@/features/video';
+import { fetchProfileDetail } from '@/features/channel';
+import { getEnumValueByKey } from '@/shared/utils/enum';
+import ChannelDetailInfo from '@/features/channel/ui/channel-detail';
+import VideoFilter from '@/features/video/ui/video-filter';
+import VideoList from '@/features/video/ui/video-list';
+import { LearningFormatEnum, LearningTypeEnum } from '@/entities/learning';
+import { useNavigate } from 'react-router-dom';
 
 const ChannelDetail = () => {
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<LearningTypeEnum>(
     LearningTypeEnum.ALL
   );
@@ -54,6 +49,9 @@ const ChannelDetail = () => {
     return <div>No data available</div>;
   }
 
+  const handleVideoClick = (videoId: number) => {
+    navigate(`/my/video/${videoId}`);
+  };
   const handleTypeSelect = (type: LearningTypeEnum) => {
     setSelectedType(type);
   };
@@ -65,17 +63,14 @@ const ChannelDetail = () => {
         : [...prevSelectedFormats, format]
     );
   };
-  const profile: ChannelProfileProps = {
+  const profile: Channel = {
     title: profileData.title,
     description: profileData.description,
     profileImage: profileData.profileImage,
-  };
-
-  const details: ChannelDetailProps = {
-    youtbeLink: profileData.details?.youtubeLink,
+    youtubeLink: profileData.details?.youtubeLink,
     subscribers: profileData.subscribers,
     videos: profileData.videos,
-    views: profileData.views,
+    view: profileData.view,
   };
 
   const filteredVideos = videoData.data.items.filter((video: Video) => {
@@ -99,18 +94,18 @@ const ChannelDetail = () => {
   return (
     <>
       <div className='flex flex-col pb-[80px]'>
-        <div className='flex flex-col lg:flex-row items-center p-20pxr lg:p-70pxr justify-between bg-white'>
+        <div className='flex flex-col items-center justify-between bg-white p-20pxr lg:flex-row lg:p-70pxr'>
           <ChannelProfile {...profile} />
-          <ChannelDetailInfo {...details} />
+          <ChannelDetailInfo {...profile} />
         </div>
-        <Filter
+        <VideoFilter
           selectedType={selectedType}
           selectedFormats={selectedFormats}
           onTypeSelect={handleTypeSelect}
           onFormatToggle={handleFormatToggle}
         />
         <div className='px-20pxr'>
-          <VideoList videos={filteredVideos} />
+          <VideoList videos={filteredVideos} onClick={handleVideoClick} />
         </div>
       </div>
     </>

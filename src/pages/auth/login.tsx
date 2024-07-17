@@ -1,8 +1,8 @@
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { AuthContext } from '@/app/auth/context/jwt/auth-context';
+import { Button } from '@/shared/components/Button/button';
+import { Input } from '@/shared/components/Input/input';
+import axiosInstance from '@/shared/utils/axios';
 import { useContext, useState } from 'react';
-import { AuthContext } from '@/auth/context/jwt/auth-context';
-import axiosInstance from '@/lib/utils/axios';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
