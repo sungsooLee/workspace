@@ -52,3 +52,4 @@ const LNB = ({ items, isOpen, toggleOpen }: LNBProps) => {
 };
 
 export default LNB;
+2;

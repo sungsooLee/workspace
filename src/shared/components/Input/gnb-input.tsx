@@ -11,7 +11,8 @@ const GnbInput = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'flex h-10 w-full rounded-md border border-input bg-black px-3 py-2 text-sm text-white placeholder:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+            // 'bg-primary-3 placeholder:text-primary-6 border-primary-3 flex h-[34px] w-full border-[1px] border-solid px-3 py-2 text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+            'bg-primary-3 placeholder:text-primary-6 border-primary-3 flex h-[34px] w-[250px] border-[1px] border-solid px-3 py-2 text-sm text-black disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
           ref={ref}
@@ -19,10 +20,12 @@ const GnbInput = React.forwardRef<HTMLInputElement, InputProps>(
           onBlur={() => setIsFocused(false)}
           {...props}
         />
-        <img
-          src='/assets/icons/ic_search_fill.svg'
-          className='absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-white'
-        />
+        <div className='bg-point-light_blue absolute inset-y-0 right-0 flex items-center p-[7px]'>
+          <img
+            src='/assets/icons/navbar/ic_gnb_inputSearch.svg'
+            className='h-[20px] w-[20px] items-center justify-center'
+          />
+        </div>
       </div>
     );
   }

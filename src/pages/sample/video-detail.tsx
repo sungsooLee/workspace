@@ -1,7 +1,8 @@
 import { fetchCommnetApi, saveCommentApi } from '@/features/comment-list';
 import useComments from '@/features/comment-list/hooks/use-comments';
 import CommentList from '@/features/comment-list/ui/commen-list';
-import VideoList from '@/features/video/ui/video-list';
+import VideoList from '@/features/video-list/ui/video-list';
+// import VideoList from '@/features/video/ui/video-list';
 import VideoPlayer from '@/features/video/ui/video-player';
 import Spinner from '@/shared/components/Spinner/spinner';
 import fetchData from '@/shared/utils/fetchData';
@@ -67,11 +68,11 @@ const VideoDetail = () => {
     <div key={id} className='flex flex-col overflow-hidden md:flex-row'>
       <div className='w-full flex-[6_6_0%] p-4 md:flex md:flex-col'>
         <div className='relative mb-4 min-w-200pxr'>
-          <VideoPlayer videoId={id || ''} userId={userEmail} />
+          <VideoPlayer videoId={id || ''} />
         </div>
         <div>
           {videos.length && (
-            <VideoList videos={videos} onClick={handleVideoClick} />
+            <VideoList videos={videos} onClick={handleVideoClick} size={240} />
           )}
         </div>
       </div>

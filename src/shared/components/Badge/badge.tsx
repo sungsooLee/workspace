@@ -16,7 +16,7 @@ const badgeVariants = cva(
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
         outline: 'text-foreground',
         // 2024-07-09 피그마 참조해서 커스터마이징 추가
-        info: 'rounded-2pxr h-18pxr bg-info-lightBg text-info-lightText dark:bg-info-darkBg dark:text-info-darkText',
+        info: 'rounded-0 h-20pxr bg-point-light_blue text-white dark:bg-info-darkBg dark:text-info-darkText',
       },
       size: {
         lg: 'text-[12px] md:(text-[14px] h-28pxr) py-4pxr px-10pxr',

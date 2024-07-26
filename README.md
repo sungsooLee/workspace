@@ -6,6 +6,11 @@
 
 - _로컬 개발환경에서는 macOS 기준 Users/{ad명}/learningway/fe 안에 구성되어야함_
 
+### Extenstion
+
+- ESLint, Prettier : 코드 규칙 및 포맷.
+- Tailwind CSS IntelliSense : Tailwind 자동 완성, 린팅 등.
+
 ## b. 커밋 컨벤션
 
 - feat: 새로운 기능에 대한 커밋

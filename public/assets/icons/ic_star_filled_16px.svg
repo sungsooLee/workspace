@@ -1,0 +1,11 @@
+<!-- <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ic_star_filled_16px">
+<path id="vector" d="M8.54478 2L10.5738 6L14.7995 6.57143L11.7332 9.42857L12.6028 14L8.54478 11.7143L4.48681 14L5.35637 9.42857L2.16797 6.57143L6.51579 6L8.54478 2Z" fill="#1F2023" stroke="#1F2023" stroke-width="1.2" stroke-linejoin="round"/>
+</g>
+</svg> -->
+
+<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ic_star_filled_16px">
+<path id="vector" d="M8.54478 2L10.5738 6L14.7995 6.57143L11.7332 9.42857L12.6028 14L8.54478 11.7143L4.48681 14L5.35637 9.42857L2.16797 6.57143L6.51579 6L8.54478 2Z" fill="#FFD700" stroke="#FFD700" stroke-width="1.2" stroke-linejoin="round"/>
+</g>
+</svg>

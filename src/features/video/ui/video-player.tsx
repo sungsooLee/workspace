@@ -1,99 +1,292 @@
-import { setStorage } from '@/shared/hooks/use-local-storage';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
-// import ReactPlayer from 'react-player/youtube';
 import ReactPlayer from 'react-player';
-import { fetchVideoDetail, saveVideoProgress } from '../api/video-api';
-// import VideoControls from './video-controls';
+import VideoControls from './video-controls';
+import screenfull from 'screenfull';
+import { debounce } from 'lodash';
 
-interface PlayerInfo {
-  played: number;
-  playing: boolean;
-}
-
-const VideoPlayer: React.FC<{ videoId: string; userId: string }> = ({
-  videoId,
-  userId,
-}) => {
-  const playRef = useRef<ReactPlayer>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const { data: videoDetail, isLoading: isDetailLoading } = useQuery({
-    queryKey: ['videoDetail', videoId, userId],
-    queryFn: () => fetchVideoDetail(videoId, userId),
+type VideoPlayerProps = {
+  videoId: string;
+};
+//TODO:
+//
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
+  const playerRef = useRef<ReactPlayer>(null);
+  const playerRef2 = useRef<ReactPlayer>(null);
+  const previousVolume = useRef<number>(0);
+  const [fullyScreen, setFullyScreen] = useState<boolean>(false);
+  const [videoState, setVideoState] = useState({
+    playing: false,
+    muted: false,
+    volume: 55,
+    playbackRate: 1.0,
+    played: 0,
+    seeking: false,
+    buffer: true,
+    loaded: 0,
+    duration: 0,
+    isReady: false,
+    isLoading: true,
   });
+  const {
+    playing,
+    muted,
+    volume,
+    played,
+    seeking,
+    buffer,
+    duration,
+    isReady,
+    isLoading,
+  } = videoState;
 
   useEffect(() => {
-    if (videoDetail) {
-      console.log(videoDetail);
-      setCurrentTime(videoDetail.progress);
+    const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
+    if (savedProgress) {
+      setVideoState((prevState) => ({
+        ...prevState,
+        played: parseFloat(savedProgress),
+      }));
+    }
+  }, [videoId]);
 
-      if (playRef.current) {
-        console.log(videoDetail.progress);
-        playRef.current.seekTo(videoDetail.progress, 'seconds');
+  // useEffect(() => {
+  //   if (isReady && playerRef.current) {
+  //     //TODO:
+  //     //유저-게시글로 마지막 재생 구간 갖고 오기?
+  //     const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
+  //     if (savedProgress) {
+  //       console.log(savedProgress);
+  //       setVideoState((prevState) => ({
+  //         ...prevState,
+  //         isLoading: false,
+  //       }));
+  //       playerRef.current.seekTo(parseFloat(savedProgress));
+  //     }
+  //   }
+  // }, [isReady, videoId]);
+
+  const handleProgress = (state: any) => {
+    if (!seeking && state.played > 0) {
+      setVideoState((prevState) => ({
+        ...prevState,
+        played: state.played,
+        loaded: state.loaded,
+      }));
+      //TODO:
+      //현재 재생 구간 저장하는 API 호출?
+      localStorage.setItem(
+        `video-progress-${videoId}`,
+        state.played.toString()
+      );
+    }
+    if (isReady && playerRef.current && !seeking && state.played === 0) {
+      const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
+      if (savedProgress) {
+        console.log(savedProgress);
+        playerRef.current.seekTo(parseFloat(savedProgress));
       }
     }
-  }, [videoDetail]);
+  };
 
-  // 진도율 저장을 위한 useMutation
-  const {
-    mutate: saveProgress,
-    isError: isSaveError,
-    isSuccess: isSaveSuccess,
-  } = useMutation({
-    mutationFn: (progress: number) =>
-      saveVideoProgress(videoId, progress, userId),
-    onError: (error) => {
-      console.error('Error saving progress:', error);
-    },
-    onSuccess: () => {
-      console.log('Progress saved successfully');
-    },
-  });
+  const handlePlayPause = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      playing: !playing,
+    }));
+  };
 
-  const [playerInfo, setPlayerInfo] = useState<PlayerInfo>({
-    played: 0,
-    playing: false,
-  });
+  const bufferStartHandler = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      buffer: true,
+      isLoading: true,
+    }));
+  };
 
-  const handleProgress = (state: { played: number }) => {
-    setPlayerInfo({ ...playerInfo, played: state.played });
-    if (state.played > 0) {
-      console.log(state.played);
-      saveProgress(state.played);
+  const bufferEndHandler = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      buffer: false,
+    }));
+    if (isReady && !seeking) {
+      setVideoState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+      // console.log('seekTo해도될지...');
     }
-    // console.log(state.played);
   };
 
-  const handlePlay = () => {
-    setPlayerInfo((prevInfo) => ({ ...prevInfo, playing: true }));
+  const handleDuration = (duration: number) => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      duration,
+    }));
   };
 
-  const handlePause = () => {
-    setPlayerInfo((prevInfo) => ({ ...prevInfo, playing: false }));
+  const handleOnReady = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      isReady: true,
+    }));
+
+    // const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
+    // if (savedProgress && playerRef.current) {
+    //   playerRef.current.seekTo(parseFloat(savedProgress), 'seconds');
+    // }
+
+    if (!buffer) {
+      setVideoState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
   };
+
+  const handleVolumeToggle = () => {
+    setVideoState((prevState) => {
+      const isMuted = !muted;
+      if (isMuted) {
+        previousVolume.current = prevState.volume;
+      }
+      return {
+        ...prevState,
+        muted: isMuted,
+        volume: isMuted ? 0 : previousVolume.current,
+      };
+    });
+  };
+
+  const handleVolumeChange = (value: number) => {
+    setVideoState((prevState) => {
+      const isMuted = muted;
+      return {
+        ...prevState,
+        muted: isMuted && value > 0 ? false : isMuted,
+        volume: value,
+      };
+    });
+
+    previousVolume.current = value;
+  };
+
+  const handleFullscreenToggle = () => {
+    if (fullyScreen) {
+      screenfull.exit();
+    } else {
+      screenfull.request(document.querySelector('.video-wrapper')!);
+    }
+    setFullyScreen(!fullyScreen);
+  };
+
+  const handleSeekMouseDown = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      seeking: true,
+    }));
+  };
+
+  const handleSeekChange = (played: number) => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      played: played,
+    }));
+    if (playerRef.current) {
+      playerRef.current.seekTo(played);
+    }
+  };
+
+  const handleSeekMouseUp = (played: number) => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      seeking: false,
+    }));
+    if (playerRef.current) {
+      playerRef.current.seekTo(played);
+    }
+  };
+
+  const handleVideoClick = (event: React.MouseEvent) => {
+    if (event.detail === 1) {
+      handleClick();
+    } else if (event.detail === 2) {
+      handleClick.cancel();
+      handleVideoDoubleClick();
+    }
+  };
+  const handleVideoDoubleClick = () => {
+    handleFullscreenToggle();
+  };
+  const handleClick = debounce(() => {
+    handlePlayPause();
+  }, 250);
 
   return (
     <>
       <div className='video-wrapper'>
-        <ReactPlayer
-          ref={playRef}
-          url='http://localhost:5173/videos/test.mp4'
-          // url='https://www.youtube.com/watch?v=3e-higRXoaM'
-          width='100%'
-          height='100%'
-          className='react-player'
-          controls={true}
-          onProgress={handleProgress}
-          playing={playerInfo.playing}
-          // onDuration={testDuration}
-        />
+        {isLoading && (
+          <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-75'>
+            <div className='loading-spinner text-white'>Loading...</div>
+          </div>
+        )}
+        <div className='react-player' onClick={handleVideoClick}>
+          <ReactPlayer
+            ref={playerRef}
+            // url='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4'
+            // url='https://d1lfq3h9g82ibj.cloudfront.net/test.m3u8'
+            url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+            // url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+            // url='https://www.youtube.com/watch?v=1MTyCvS05V4&t=8621s'
+            width='100%'
+            height='100%'
+            playing={playing}
+            onProgress={handleProgress}
+            onBuffer={bufferStartHandler}
+            onBufferEnd={bufferEndHandler}
+            onDuration={handleDuration}
+            onReady={handleOnReady}
+            // onSeek={() => console.log('싱크!!')}
+            //TODO:
+            //m3u8 어떻게 할지?
+            controls={true}
+            config={{
+              file: {
+                forceHLS: true,
+                hlsOptions: {
+                  startLevel: -1,
+                  debug: true,
+                },
+              },
+            }}
+          />
+        </div>
+        {/* <VideoControls
+          played={played}
+          playing={playing}
+          onPlayPause={handlePlayPause}
+          duration={duration}
+          onVolumeToggle={handleVolumeToggle}
+          onVolumeChange={handleVolumeChange}
+          onFullscreenToggle={handleFullscreenToggle}
+          isFullscreen={fullyScreen}
+          muted={muted}
+          volume={volume}
+          loaded={played * 100}
+          onSeekMouseDown={handleSeekMouseDown}
+          onSeekChange={handleSeekChange}
+          onSeekMouseUp={handleSeekMouseUp}
+        /> */}
       </div>
       <div>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Paused</button>
-        <input type='range' min='0' max='1' step='0.05' />
+        <ReactPlayer
+          ref={playerRef2}
+          // url='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4'
+          url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+          width='100%'
+          height='100%'
+          controls={true}
+        />
       </div>
-      <p>Progress : {Math.round(playerInfo.played * 100)}</p>
     </>
   );
 };

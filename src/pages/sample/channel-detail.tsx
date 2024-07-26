@@ -7,9 +7,9 @@ import { fetchProfileDetail } from '@/features/channel';
 import { getEnumValueByKey } from '@/shared/utils/enum';
 import ChannelDetailInfo from '@/features/channel/ui/channel-detail';
 import VideoFilter from '@/features/video/ui/video-filter';
-import VideoList from '@/features/video/ui/video-list';
 import { LearningFormatEnum, LearningTypeEnum } from '@/entities/learning';
 import { useNavigate } from 'react-router-dom';
+import VideoList from '@/features/video-list/ui/video-list';
 
 const ChannelDetail = () => {
   const navigate = useNavigate();
@@ -105,7 +105,11 @@ const ChannelDetail = () => {
           onFormatToggle={handleFormatToggle}
         />
         <div className='px-20pxr'>
-          <VideoList videos={filteredVideos} onClick={handleVideoClick} />
+          <VideoList
+            videos={filteredVideos}
+            onClick={handleVideoClick}
+            size={280}
+          />
         </div>
       </div>
     </>

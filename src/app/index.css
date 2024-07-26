@@ -86,3 +86,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* @import url("/public/fonts/HyundaiSansTextKRRegular.ttf"); */
+
+@font-face {
+  font-family: 'SansTextKRRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/public/fonts/HyundaiSansTextKRRegular.ttf');
+}
+
+@font-face {
+  font-family: 'SansHeadKRBold';
+  font-weight: bold;
+  font-style: normal;
+  src: url('/public/fonts/HyundaiSansHeadKRBold.ttf');
+}
+
+@font-face {
+  font-family: 'SansHeadKRRegular';
+  font-weight: normal;
+  font-style: normal;
+  src: url('/public/fonts/HyundaiSansHeadKRRegular.ttf');
+}

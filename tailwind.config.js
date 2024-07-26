@@ -2,7 +2,7 @@
 const pxToRem = (px, base = 16) => `${px / base}rem`;
 
 module.exports = {
-  darkMode: ['class'],
+  darkMode: ['selector'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -19,9 +19,13 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Pretendard', 'sans-serif'],
+      head: ['SansHeadKRRegular', 'SansHeadKRBold'],
+      sans: ['SansTextKRRegular', 'Pretendard', 'sans-serif'],
     },
     extend: {
+      image: {
+        gnbLogo: "url('/logo/logo_hiway.png')",
+      },
       colors: {
         gnb: '#000',
         lnb: '#666666',
@@ -33,15 +37,37 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        point: {
+          blue: '#003469',
+          light_blue: '#00AFD5',
+          red: '#FF0000',
+          yellow: '#FFB902',
+        },
         info: {
           lightBg: '#F1F7FC', // Light mode 배경색
           lightText: '#1472CE', // Light mode 글씨색
-          darkBg: '#1472CE', // Dark mode 배경색
-          darkText: '#FFFFFF', // Dark mode 글씨색
+          // darkBg: '#1472CE', // Dark mode 배경색
+          // darkText: '#FFFFFF', // Dark mode 글씨색
+        },
+        grayScale: {
+          0: '#FFFFFF',
+          6: '#EBEBEB',
+          7: '#DDDDDD',
+          8: '#767676',
+          9: '#000000',
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          1: '#F6F8FD',
+          2: '#F2F5FB',
+          3: '#EDF0F7',
+          4: '#E3E9EF',
+          5: '#E3E6EC',
+          6: '#CFD3DD',
+          7: '#6F798B',
+          8: '#4C515E',
+          9: '#1F2023',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
