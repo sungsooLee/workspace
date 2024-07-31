@@ -36,9 +36,3 @@ Default.args = {
   },
   onClick: (videoId: number) => alert('클릭 비디오 ID=' + videoId),
 };
-
-// export const Package = Template.bind({});
-// Package.args = {
-//   ...Default.args,
-//   type: 'package',
-// };

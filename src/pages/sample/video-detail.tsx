@@ -1,3 +1,4 @@
+import VideoPlayerContainer from '@/entities/video-player/ui/video-player-container';
 import { fetchCommnetApi, saveCommentApi } from '@/features/comment-list';
 import useComments from '@/features/comment-list/hooks/use-comments';
 import CommentList from '@/features/comment-list/ui/commen-list';
@@ -68,7 +69,8 @@ const VideoDetail = () => {
     <div key={id} className='flex flex-col overflow-hidden md:flex-row'>
       <div className='w-full flex-[6_6_0%] p-4 md:flex md:flex-col'>
         <div className='relative mb-4 min-w-200pxr'>
-          <VideoPlayer videoId={id || ''} />
+          <VideoPlayerContainer />
+          {/* <VideoPlayer videoId={id || ''} /> */}
         </div>
         <div>
           {videos.length && (

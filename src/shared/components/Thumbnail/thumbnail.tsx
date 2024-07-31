@@ -23,9 +23,9 @@ const sizeStyles = {
     container: 'w-[280px]',
     contentPadding: 'pt-[32px] pb-[20px]',
     titleDiv: 'h-[48px] overflow-hidden text-ellipsis text-start',
-    titleInfo: 'space-y-[10px] pb-[14px]',
+    titleInfo: 'space-y-[10px]',
     titleText: 'font-head text-[18px] leading-[24px] tracking-[-0.45px]',
-    subTitle: 'h-full items-center space-x-[8px] flex flex-row',
+    subTitle: 'items-center space-x-[8px] flex flex-row',
     subTitleText:
       'text-[14px] font-normal leading-[22px] tracking-[-0.35px] text-grayScale-8',
     channelText: 'text-[14px] font-normal leading-[22px] tracking-[-0.35px]',
@@ -64,14 +64,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
             className={`align-center h-20pxr bg-point-light_blue px-4pxr duration-500 group-hover:translate-y-[-10px]`}
           >
             <p className='text-shadow text-[13px] font-normal leading-[20px] tracking-[-0.325px] text-white'>
-              수강신청 중
-            </p>
-          </div>
-          <div
-            className={`align-center h-20pxr bg-point-blue px-4pxr duration-500 group-hover:translate-y-[-10px]`}
-          >
-            <p className='text-shadow text-[13px] font-normal leading-[20px] tracking-[-0.325px] text-white'>
-              이러닝
+              수강신청가능 D-7
             </p>
           </div>
         </div>
@@ -86,17 +79,31 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
           <div className={`${styles.titleInfo}`}>
             <div className={`${styles.titleDiv}`}>
               <p className={`${styles.titleText}`}>{video.course.title}</p>
+              <div className={`${styles.subTitle}`}>
+                <p className={`${styles.subTitleText}`}>조회 1230</p>
+                <div className='h-12pxr w-1pxr bg-grayScale-7' />
+                <p className={`${styles.subTitleText}`}>05:12</p>
+              </div>
             </div>
-
-            <div className={`${styles.subTitle}`}>
-              <p className={`${styles.subTitleText}`}>
-                <img src='/assets/icons/ic_star_filled_16px.svg' />
-              </p>
-              <div className='h-12pxr w-1pxr bg-grayScale-7' />
-              <p className={`${styles.subTitleText}`}>조회 1230</p>
-
-              <div className='h-12pxr w-1pxr bg-grayScale-7' />
-              <p className={`${styles.subTitleText}`}>05:12</p>
+            <div className='flex flex-row space-x-4pxr overflow-hidden py-12pxr'>
+              <div className='items-center whitespace-nowrap bg-primary-2 px-6pxr py-2pxr'>
+                <p className='font-sans text-12pxr leading-[20px]'>
+                  Sales management
+                </p>
+              </div>
+              <div className='items-center whitespace-nowrap bg-primary-2 px-6pxr py-2pxr'>
+                <p className='font-sans text-12pxr leading-[20px]'>위탁</p>
+              </div>
+              <div className='items-center whitespace-nowrap bg-primary-2 px-6pxr py-2pxr'>
+                <p className='font-sans text-12pxr leading-[20px]'>이러닝</p>
+              </div>
+            </div>
+            <div className='flex flex-row items-center'>
+              <img
+                src='/assets/icons/channel_logo.png'
+                className='h-34pxr w-34pxr pr-8pxr'
+              />
+              <p className='font-sans text-[14px]'>HRD 솔루션팀 채널</p>
             </div>
           </div>
         </div>

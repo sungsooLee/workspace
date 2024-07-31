@@ -161,3 +161,56 @@ $highlight-color: #fff; */
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1.5rem; /* 또는 gap-6 */
 }
+.video-progress-container {
+  position: relative;
+  width: 100%;
+  height: 0.5em; /* Adjust the height as needed */
+}
+
+.video-progress-container .progress-bar {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.video-progress-container .progress-bar.played {
+  background: #82c91e;
+  z-index: 2;
+}
+
+.video-progress-container .progress-bar.loaded {
+  background: rgba(130, 201, 30, 0.5);
+  z-index: 1;
+}
+
+.video-progress-container input[type='range'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  -webkit-appearance: none;
+  z-index: 3;
+  pointer-events: all;
+}
+
+.video-progress-container input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #82c91e;
+  cursor: pointer;
+}
+
+.video-progress-container input[type='range']::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #82c91e;
+  cursor: pointer;
+}

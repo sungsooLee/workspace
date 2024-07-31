@@ -7,11 +7,55 @@ import { debounce } from 'lodash';
 type VideoPlayerProps = {
   videoId: string;
 };
-//TODO:
-//
+
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
   const playerRef = useRef<ReactPlayer>(null);
   const playerRef2 = useRef<ReactPlayer>(null);
+  const [subtitles, setSubtitles] = useState([
+    { label: 'Korean', src: '/testSrt_kr.vtt', srcLang: 'kr', default: true },
+    { label: 'English', src: '/testSrt_en.vtt', srcLang: 'en', default: false },
+  ]);
+  const [selectedSubtitle, setSelectedSubtitle] = useState(subtitles[0].label);
+  const tracks = [
+    // {
+    //   kind: 'subtitles',
+    //   src: '/subtitles/arab.vtt',
+    //   srcLang: 'ar',
+    //   label: 'Arabic',
+    //   default: true,
+    // },
+    // {
+    //   kind: 'subtitles',
+    //   src: '/subtitles/chi.vtt',
+    //   srcLang: 'zh',
+    //   label: 'Chinese',
+    // },
+    {
+      kind: 'subtitles',
+      src: '/subtitles/jap.vtt',
+      srcLang: 'ja',
+      label: 'Japanese',
+      default: true,
+    },
+    {
+      kind: 'subtitles',
+      src: '/subtitles/spa.vtt',
+      srcLang: 'es',
+      label: 'Spanish',
+    },
+    {
+      kind: 'subtitles',
+      src: '/subtitles/thai.vtt',
+      srcLang: 'th',
+      label: 'Thai',
+    },
+    {
+      kind: 'subtitles',
+      src: '/subtitles/viet.vtt',
+      srcLang: 'vi',
+      label: 'Vietnamese',
+    },
+  ];
   const previousVolume = useRef<number>(0);
   const [fullyScreen, setFullyScreen] = useState<boolean>(false);
   const [videoState, setVideoState] = useState({
@@ -25,20 +69,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
     loaded: 0,
     duration: 0,
     isReady: false,
-    isLoading: true,
+    // isLoading: true,
   });
   const {
     playing,
     muted,
     volume,
     played,
+    loaded,
     seeking,
     buffer,
     duration,
     isReady,
-    isLoading,
+    playbackRate,
+    // isLoading,
   } = videoState;
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
     if (savedProgress) {
@@ -48,22 +94,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
       }));
     }
   }, [videoId]);
-
-  // useEffect(() => {
-  //   if (isReady && playerRef.current) {
-  //     //TODO:
-  //     //유저-게시글로 마지막 재생 구간 갖고 오기?
-  //     const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
-  //     if (savedProgress) {
-  //       console.log(savedProgress);
-  //       setVideoState((prevState) => ({
-  //         ...prevState,
-  //         isLoading: false,
-  //       }));
-  //       playerRef.current.seekTo(parseFloat(savedProgress));
-  //     }
-  //   }
-  // }, [isReady, videoId]);
 
   const handleProgress = (state: any) => {
     if (!seeking && state.played > 0) {
@@ -82,7 +112,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
     if (isReady && playerRef.current && !seeking && state.played === 0) {
       const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
       if (savedProgress) {
-        console.log(savedProgress);
         playerRef.current.seekTo(parseFloat(savedProgress));
       }
     }
@@ -99,8 +128,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
     setVideoState((prevState) => ({
       ...prevState,
       buffer: true,
-      isLoading: true,
     }));
+    setIsLoading(true);
   };
 
   const bufferEndHandler = () => {
@@ -108,13 +137,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
       ...prevState,
       buffer: false,
     }));
-    if (isReady && !seeking) {
-      setVideoState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-      }));
-      // console.log('seekTo해도될지...');
-    }
+    setIsLoading(false);
   };
 
   const handleDuration = (duration: number) => {
@@ -129,18 +152,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
       ...prevState,
       isReady: true,
     }));
-
-    // const savedProgress = localStorage.getItem(`video-progress-${videoId}`);
-    // if (savedProgress && playerRef.current) {
-    //   playerRef.current.seekTo(parseFloat(savedProgress), 'seconds');
-    // }
-
-    if (!buffer) {
-      setVideoState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-      }));
-    }
+    setIsLoading(false);
   };
 
   const handleVolumeToggle = () => {
@@ -206,6 +218,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
     }
   };
 
+  const handlePlayback = (rate: number) => {
+    console.log(rate);
+    setVideoState((prevState) => ({ ...prevState, playbackRate: rate }));
+  };
+
   const handleVideoClick = (event: React.MouseEvent) => {
     if (event.detail === 1) {
       handleClick();
@@ -221,6 +238,28 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
     handlePlayPause();
   }, 250);
 
+  const handleSubtitleChange = (label: string) => {
+    setSelectedSubtitle(label);
+    if (playerRef.current) {
+      const textTracks = playerRef.current.getInternalPlayer().textTracks;
+      for (let i = 0; i < textTracks.length; i++) {
+        console.log(textTracks[i].label + '@@@' + label);
+        if (textTracks[i].label === label) {
+          textTracks[i].mode = 'showing';
+        } else {
+          textTracks[i].mode = 'hidden';
+        }
+      }
+    }
+    setSubtitles((prevSubtitles) =>
+      prevSubtitles.map((subtitle) =>
+        subtitle.label === label
+          ? { ...subtitle, default: true }
+          : { ...subtitle, default: false }
+      )
+    );
+  };
+
   return (
     <>
       <div className='video-wrapper'>
@@ -234,9 +273,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
             ref={playerRef}
             // url='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4'
             // url='https://d1lfq3h9g82ibj.cloudfront.net/test.m3u8'
-            url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
             // url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+            url='https://htavideo-gcp.hyundai-hta.com/20240716/140046823546/hls/manifest.m3u8'
             // url='https://www.youtube.com/watch?v=1MTyCvS05V4&t=8621s'
+            // url='https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4'
             width='100%'
             height='100%'
             playing={playing}
@@ -245,22 +285,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
             onBufferEnd={bufferEndHandler}
             onDuration={handleDuration}
             onReady={handleOnReady}
-            // onSeek={() => console.log('싱크!!')}
-            //TODO:
-            //m3u8 어떻게 할지?
-            controls={true}
+            playbackRate={playbackRate}
             config={{
               file: {
-                forceHLS: true,
-                hlsOptions: {
-                  startLevel: -1,
-                  debug: true,
-                },
+                // attributes: {
+                //   crossOrigin: 'anonymous',
+                // },
+                // forceHLS: true,
+                // hlsOptions: {
+                //   startLevel: -1,
+                //   debug: true,
+                // },
+                tracks: subtitles.map((subtitle) => ({
+                  kind: 'subtitles',
+                  label: subtitle.label,
+                  src: subtitle.src,
+                  srcLang: subtitle.srcLang,
+                  default: subtitle.default,
+                })),
               },
             }}
           />
         </div>
-        {/* <VideoControls
+        <VideoControls
           played={played}
           playing={playing}
           onPlayPause={handlePlayPause}
@@ -271,22 +318,32 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
           isFullscreen={fullyScreen}
           muted={muted}
           volume={volume}
-          loaded={played * 100}
+          loaded={loaded}
           onSeekMouseDown={handleSeekMouseDown}
           onSeekChange={handleSeekChange}
           onSeekMouseUp={handleSeekMouseUp}
-        /> */}
-      </div>
-      <div>
-        <ReactPlayer
-          ref={playerRef2}
-          // url='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4'
-          url='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
-          width='100%'
-          height='100%'
-          controls={true}
+          onPlaybackRateChange={handlePlayback}
+          playbackRate={playbackRate}
+          subtitles={subtitles}
+          selectedSubtitle={selectedSubtitle}
+          onSubtitleChange={handleSubtitleChange}
         />
       </div>
+
+      <ReactPlayer
+        url='https://htavideo-gcp.hyundai-hta.com/20240716/140046823546/hls/manifest.m3u8'
+        controls
+        config={{
+          file: {
+            attributes: {
+              crossOrigin: 'true',
+            },
+            tracks: tracks,
+          },
+        }}
+        width='100%'
+        height='auto'
+      />
     </>
   );
 };

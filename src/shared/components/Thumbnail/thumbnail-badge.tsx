@@ -8,7 +8,6 @@ const ThumbnailBadge: React.FC<BadgeProps> = ({
   type = 'default',
   children,
 }) => {
-  console.log(type + '@@@' + children);
   const bgColor = type === 'default' ? 'bg-point-light_blue' : 'bg-point-blue';
 
   return (
