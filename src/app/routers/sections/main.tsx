@@ -1,4 +1,4 @@
-import Home from '@/pages/sample/home';
+import Home from '@/pages/sample/Home';
 
 export const mainRoutes = [
   {

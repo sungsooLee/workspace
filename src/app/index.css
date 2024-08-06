@@ -76,6 +76,11 @@
     --gnb: 209 100% 10%;
     --gnb-foreground: 0 0% 100%;
   }
+
+  /**/
+  .dark p {
+    color: gray;
+  }
 }
 
 @layer base {

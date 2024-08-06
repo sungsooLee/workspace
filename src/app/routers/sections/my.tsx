@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 
-const ChannelDetail = lazy(() => import('@/pages/sample/channel-detail'));
-const VideoDetail = lazy(() => import('@/pages/sample/video-detail'));
+const ChannelDetail = lazy(() => import('@/pages/sample/ChannelDetail'));
+const VideoDetail = lazy(() => import('@/pages/sample/VideoDetail'));
 
 export const myRoutes = [
   {

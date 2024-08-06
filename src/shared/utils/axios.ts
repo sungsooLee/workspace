@@ -1,4 +1,4 @@
-import { HTTPError } from '@/shared/components/error/error-boundary';
+import { HTTPError } from '@/shared/components/error/errorBoundary';
 import axios from 'axios';
 
 export const endpoints = {};

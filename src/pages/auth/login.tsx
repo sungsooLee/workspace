@@ -1,4 +1,4 @@
-import { AuthContext } from '@/app/auth/context/jwt/auth-context';
+import { AuthContext } from '@/app/auth/context/jwt/authContext';
 import { Button } from '@/shared/components/Button/button';
 import { Input } from '@/shared/components/Input/input';
 import axiosInstance from '@/shared/utils/axios';

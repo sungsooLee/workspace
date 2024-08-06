@@ -4,8 +4,8 @@ import { mainRoutes } from './main';
 import { lazy } from 'react';
 import { knowledgeRoutes } from './knowledge';
 import { myRoutes } from './my';
-import AuthGuard from '@/app/auth/guard/auth-guard';
-import Layout from '@/app/layout/layout';
+import AuthGuard from '@/app/auth/guard/authGuard';
+import Layout from '@/app/layout/Layout';
 
 const Page404 = lazy(() => import('@/pages/error/404'));
 export default function Router() {

@@ -1,10 +1,12 @@
 import { MenuItem } from '../types';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '@/app/auth/context/jwt/auth-context';
-import { GnbInput } from '@/shared/components/Input/gnb-input';
+import { AuthContext } from '@/app/auth/context/jwt/authContext';
 import useThemeStore from '@/shared/stores/useThemeStore';
 import { applyThemePrefernce } from '@/shared/utils/themeUtils';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { GnbInput } from '@/shared/components/Input/GnbInput';
 
 interface GNBProps {
   items: MenuItem[];
@@ -12,6 +14,7 @@ interface GNBProps {
 }
 
 const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
+  const { t } = useTranslation();
   const authContext = useContext(AuthContext);
   const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -42,7 +45,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
   };
 
   return (
-    <nav className='text-gnb-foreground bg-grayScale-0 dark:bg-point-blue relative flex h-72pxr flex-col items-center px-24pxr py-12pxr'>
+    <nav className='text-gnb-foreground relative flex h-72pxr flex-col items-center bg-grayScale-0 px-24pxr py-12pxr dark:bg-point-blue'>
       <div className='flex w-full items-center justify-between'>
         <div className='flex items-center'>
           <div className='flex flex-row'>
@@ -79,7 +82,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                           : 'text-grayScale-9 dark:text-white'
                       } cursor-pointer rounded px-4 py-2 transition-colors duration-300`}
                     >
-                      {item.name}
+                      {t(item.name)}
                     </p>
                   </li>
                 ))}
@@ -89,7 +92,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                   onClick={() => logout()}
                   className='cursor-pointer rounded px-4 py-2 text-black transition-colors duration-300 hover:text-white dark:text-white'
                 >
-                  로그아웃
+                  {t('logout')}
                 </p>
               </li>
             </ul>
@@ -104,7 +107,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                 className='h-6 w-6'
               />
                */}
-              <button onClick={toggleTheme}>DarkMode</button>
+              <button onClick={toggleTheme}>{t('DarkMode')}</button>
               {/* <img
                 src='/assets/icons/navbar/ic_gnb_search.png'
                 alt='Light Mode Logo'
@@ -115,7 +118,8 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                 alt='Dark Mode Logo'
                 className='hidden h-auto dark:block'
               /> */}
-              <img
+              <LanguageSwitcher />
+              {/* <img
                 src='/assets/icons/navbar/ic_heart_line.svg'
                 alt='Light Mode Logo'
                 className='block h-auto dark:hidden'
@@ -124,7 +128,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                 src='/assets/icons/navbar/ic_heart_line_dark.svg'
                 alt='Dark Mode Logo'
                 className='hidden h-auto dark:block'
-              />
+              /> */}
               <img
                 src='/assets/icons/navbar/ic_bell.svg'
                 alt='Light Mode Logo'
@@ -139,7 +143,7 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
           </div>
         </div>
       </div>
-      <div className='bg-primary-3 absolute bottom-0 h-[1px] w-full'></div>
+      <div className='absolute bottom-0 h-[1px] w-full bg-primary-3'></div>
     </nav>
   );
 };

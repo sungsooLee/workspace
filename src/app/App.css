@@ -63,7 +63,7 @@
 
 .video-wrapper {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
   height: 0;
   padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
   background-color: #1e1e1e;
@@ -185,32 +185,90 @@ $highlight-color: #fff; */
   z-index: 1;
 }
 
-.video-progress-container input[type='range'] {
+/* .video-progress {
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 5px;
   width: 100%;
-  height: 100%;
-  background: transparent;
-  -webkit-appearance: none;
-  z-index: 3;
-  pointer-events: all;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: var(--font-sm);
+  color: #fff;
+  &:disabled {
+    display: none;
+  }
+} */
+.video-progress {
+  align-items: center;
 }
 
-.video-progress-container input[type='range']::-webkit-slider-thumb {
+.video-progress input[type='range'] {
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  background: linear-gradient(
+    to right,
+    #fff var(--progress),
+    rgba(250, 250, 250, 0.5) 0
+  );
+}
+
+.video-progress input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
+  background: blue;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-progress input[type='range']::-moz-range-thumb {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: #82c91e;
   cursor: pointer;
 }
+.seek-slider {
+  &::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -7px;
+    transition: transform 0.2s ease-in-out;
 
-.video-progress-container input[type='range']::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #82c91e;
-  cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-ms-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
 }

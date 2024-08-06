@@ -170,6 +170,15 @@ export const handlers = [
     return HttpResponse.json({ commentId });
   }),
 
+  http.get('/api/menus', async ({ request }) => {
+    return HttpResponse.json({
+      statusCode: 'OK',
+      message: '',
+      data: {
+        items: [{ id: 1, name: 'channel', link: '#' }],
+      },
+    });
+  }),
   http.get('/api/channel/:id/profile', ({ params, request }) => {
     const { id } = params;
     return HttpResponse.json({

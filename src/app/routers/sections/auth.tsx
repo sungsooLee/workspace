@@ -1,6 +1,6 @@
-import LoginPage from '@/pages/auth/login';
-import ErrorBoundary from '@/shared/components/error/error-boundary';
-import ErrorFallback from '@/shared/components/error/error-fallback';
+import LoginPage from '@/pages/auth/Login';
+import ErrorBoundary from '@/shared/components/error/errorBoundary';
+import ErrorFallback from '@/shared/components/error/errorFallback';
 import { Outlet } from 'react-router-dom';
 
 const auth = {
