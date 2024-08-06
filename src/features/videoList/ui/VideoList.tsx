@@ -23,6 +23,7 @@ const VideoList: React.FC<VideoListProps> = ({ videos, onClick, size }) => {
         {videos.length > 0 &&
           videos.map((video: any) => (
             <Thumbnail
+              key={video.id}
               size={size}
               type='default'
               info={video}
