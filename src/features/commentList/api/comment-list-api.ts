@@ -1,6 +1,7 @@
+import { axiosInstance } from '@/app/api/instance';
 import { Comment } from '@/entities/comment/model/comment';
-import axiosInstance from '@/shared/utils/axios';
-
+// import axiosInstance from '@/shared/utils/axios';
+// import axiosInstance from
 export const fetchCommnetApi = async (
   videoId: string,
   page: number,

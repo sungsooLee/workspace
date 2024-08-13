@@ -17,6 +17,7 @@ const VolumeControl = ({
   const [lastVolume, setLastVolume] = useState(volume);
   const [isHover, setIsHover] = useState(false);
   const volumeRef = useRef<HTMLDivElement>(null);
+  const volumeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isMuted && volume > 0) {
@@ -57,19 +58,15 @@ const VolumeControl = ({
     }
     onToggleMute();
   };
-
   return (
     <div
-      className='relative flex items-center'
-      ref={volumeRef}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      className='relative flex items-center space-x-4'
+      ref={volumeContainerRef}
     >
       <button onClick={handleMuteToggle} className='text-white'>
         {isMuted || volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>
-      {/* {isHover && ( */}
-      <div className='volume-range absolute bottom-full left-0 mb-2 rounded bg-black bg-opacity-75 p-2'>
+      <div className={`right-0 rounded bg-opacity-75 p-2`}>
         <input
           type='range'
           min={0}
@@ -77,10 +74,9 @@ const VolumeControl = ({
           step='0.01'
           value={volume}
           onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-          className='h-1 w-24 rounded-full outline-none'
+          className={`h-1 w-24 cursor-pointer outline-none`}
         />
       </div>
-      {/* )} */}
     </div>
   );
 };

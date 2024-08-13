@@ -1,23 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCompress, FaExpand } from 'react-icons/fa';
 import screenfull from 'screenfull';
 
-type FullScreenProps = {
-  isFullScreen: boolean;
-  onFullscreenToggle: () => void;
-};
-
-// const FullScreen = ({ isFullScreen, onFullscreenToggle }: FullScreenProps) => {
 const FullScreen = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const onFullscreenToggle = () => {
-    if (isFullScreen) {
-      screenfull.exit();
-    } else {
-      screenfull.request(document.querySelector('.video-container')!);
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullScreen(screenfull.isFullscreen);
+    };
+    if (screenfull.isEnabled) {
+      screenfull.on('change', handleFullscreenChange);
     }
-    setIsFullScreen(!isFullScreen);
+
+    return () => {
+      if (screenfull.isEnabled) {
+        screenfull.off('change', handleFullscreenChange);
+      }
+    };
+  }, []);
+
+  const onFullscreenToggle = () => {
+    if (screenfull.isEnabled) {
+      screenfull.toggle(document.querySelector('.player-wrapper')!);
+    }
   };
   return (
     <>

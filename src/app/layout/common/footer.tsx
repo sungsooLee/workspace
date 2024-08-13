@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <>
-      <footer className='w-full bg-[#313131] px-[264px] py-[40px]'>
+      <footer className='w-full bg-footer px-[264px] py-[40px]'>
         <div className='flex justify-between'>
           <div className='flex flex-col'>
             <div className='flex flex-row'>
@@ -28,14 +28,13 @@ const Footer = () => {
                   </span>
                 </div>
                 <div>
-                  <p className='flex pt-[32px] text-[#AAAAAA]'>
+                  <p className='flex pt-[32px]'>
                     Copyright © 2023 Hyundai-Autoever. All rights reserved.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className='min-w-[200px]'>드랍다운</div>
         </div>
       </footer>
     </>

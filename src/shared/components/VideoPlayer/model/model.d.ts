@@ -15,6 +15,7 @@ export interface VideoState {
   playbackRate: number;
   watchTime: number; //시청 시간
   lastPlayedTime: number;
+  url?: string;
 }
 
 /**
@@ -25,7 +26,7 @@ export interface VideoState {
  * 자막
  */
 export interface VideoPlayerProps {
-  videoUrl: string;
+  videoUrl?: string;
   lastPlayed: number;
   getAllowSeek: boolean;
 }

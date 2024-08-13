@@ -94,7 +94,7 @@ const ChannelDetail = () => {
   return (
     <>
       <div className='flex flex-col pb-[80px]'>
-        <div className='flex flex-col items-center justify-between bg-white p-20pxr lg:flex-row lg:p-70pxr'>
+        <div className='flex flex-col items-center justify-between p-20pxr lg:flex-row lg:p-70pxr'>
           <ChannelProfile {...profile} />
           <ChannelDetailInfo {...profile} />
         </div>

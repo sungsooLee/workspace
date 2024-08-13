@@ -2,7 +2,7 @@
 const pxToRem = (px, base = 16) => `${px / base}rem`;
 
 module.exports = {
-  darkMode: ['selector'],
+  darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -30,7 +30,7 @@ module.exports = {
         gnb: '#000',
         lnb: '#666666',
         body: '#D9D9D9',
-        footer: '#343333',
+        // footer: '#343333',
         'hae-white-60': 'rgba(255, 255, 255, 0.60)', // fallback color
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -100,8 +100,14 @@ module.exports = {
         lnb: {
           DEFAULT: 'hsl(var(--lnb))',
         },
-        bodybackground: {
-          DEFAULT: 'hsl(var(--bodybackground))',
+        body: {
+          DEFAULT: 'var(--body)',
+        },
+        primaryT: {
+          DEFAULT: 'var(--primaryT)',
+        },
+        footer: {
+          DEFAULT: 'var(--footer)',
         },
       },
       borderRadius: {

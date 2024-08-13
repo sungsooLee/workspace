@@ -70,13 +70,14 @@ const VideoDetail = () => {
         <div className='relative mb-4 min-w-200pxr'>
           <VideoPlayerContainer
             getAllowSeek={true}
-            lastPlayed={0}
+            lastPlayed={0.2}
             // videoUrl='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4' //mp4
             // videoUrl='https://vimeo.com/90509568' //vimeo
             // videoUrl='	https://test-videos.co.uk/vids/bigbuckbunny/webm/vp8/360/Big_Buck_Bunny_360_10s_1MB.webm' //webm
             // videoUrl='https://filesamples.com/samples/video/ogv/sample_640x360.ogv' //ogv
-            videoUrl='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+            // videoUrl='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
             // videoUrl='https://www.youtube.com/watch?v=ZCae_LPuzBU'
+            // videoUrl='https://www.youtube.com/watch?v=_ngCLZ5Iz-0&t=120'
             // videoUrl={'https://www.youtube.com/watch?v=ZCae_LPuzBU#t=240'}
           />
           {/* <VideoPlayer videoId={id || ''} /> */}

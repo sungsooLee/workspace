@@ -1,26 +1,65 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+// import { Navigate, ScrollRestoration, useRoutes } from 'react-router-dom';
+// import { authRoutes } from './auth';
+// import { mainRoutes } from './main';
+// import { lazy } from 'react';
+// import { knowledgeRoutes } from './knowledge';
+// import { myRoutes } from './my';
+// import Layout from '@/app/layout/Layout';
+// import ZustandAuthGuard from '@/app/auth/guard/zustandAuthGuard';
+// import ErrorPage from '@/pages/error/ErrorPage';
+
+// const Page404 = lazy(() => import('@/pages/error/404'));
+// export default function Router() {
+//   return useRoutes([
+//     ...authRoutes,
+//     {
+//       path: '/',
+//       element: (
+//         <ZustandAuthGuard>
+//           <Layout />
+//         </ZustandAuthGuard>
+//       ),
+//       children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
+//     },
+//     { path: '/error', element: <ErrorPage /> },
+//     { path: '404', element: <Page404 /> },
+//     { path: '*', element: <Navigate to='/404' replace /> },
+//   ]);
+// }
+
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+  ScrollRestoration,
+} from 'react-router-dom';
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
-import { lazy } from 'react';
 import { knowledgeRoutes } from './knowledge';
 import { myRoutes } from './my';
-import AuthGuard from '@/app/auth/guard/authGuard';
 import Layout from '@/app/layout/Layout';
+import ZustandAuthGuard from '@/app/auth/guard/zustandAuthGuard';
+import ErrorPage from '@/pages/error/ErrorPage';
+import Page404 from '@/pages/error/404';
 
-const Page404 = lazy(() => import('@/pages/error/404'));
+// 라우터 설정
+const router = createBrowserRouter([
+  ...authRoutes,
+  {
+    path: '/',
+    element: (
+      <ZustandAuthGuard>
+        <ScrollRestoration />
+        <Layout />
+      </ZustandAuthGuard>
+    ),
+    children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
+  },
+  { path: '/error', element: <ErrorPage /> },
+  { path: '404', element: <Page404 /> },
+  { path: '*', element: <Navigate to='/404' replace /> },
+]);
+
 export default function Router() {
-  return useRoutes([
-    ...authRoutes,
-    {
-      path: '/',
-      element: (
-        <AuthGuard>
-          <Layout />
-        </AuthGuard>
-      ),
-      children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
-    },
-    { path: '404', element: <Page404 /> },
-    { path: '*', element: <Navigate to='/404' replace /> },
-  ]);
+  return <RouterProvider router={router} />;
 }

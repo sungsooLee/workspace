@@ -1,12 +1,12 @@
 import { MenuItem } from '../types';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '@/app/auth/context/jwt/authContext';
 import useThemeStore from '@/shared/stores/useThemeStore';
 import { applyThemePrefernce } from '@/shared/utils/themeUtils';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
 import { GnbInput } from '@/shared/components/Input/GnbInput';
+import { useAuthStore } from '@/shared/stores/useAuthStore';
 
 interface GNBProps {
   items: MenuItem[];
@@ -15,10 +15,10 @@ interface GNBProps {
 
 const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
   const { t } = useTranslation();
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
   const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
   const navigate = useNavigate();
-
+  const signOut = useAuthStore((state) => state.signOut);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
   const theme = useThemeStore((state) => state.theme);
 
@@ -40,13 +40,14 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
     navigate('/');
   };
 
-  const logout = () => {
-    authContext.logout();
+  const logout = async () => {
+    await signOut();
+    // authContext.logout();
   };
 
   return (
     <nav className='text-gnb-foreground relative flex h-72pxr flex-col items-center bg-grayScale-0 px-24pxr py-12pxr dark:bg-point-blue'>
-      <div className='flex w-full items-center justify-between'>
+      <div className='flex w-full items-center justify-between whitespace-nowrap'>
         <div className='flex items-center'>
           <div className='flex flex-row'>
             <img
@@ -78,8 +79,8 @@ const GNB: React.FC<GNBProps> = ({ items, onMenuClick }) => {
                       onClick={() => handleMenuClick(item.id)}
                       className={`${
                         selectedMenuId === item.id
-                          ? 'text-grayScale-9 dark:text-white'
-                          : 'text-grayScale-9 dark:text-white'
+                          ? 'text-grayScale-9'
+                          : 'text-grayScale-7'
                       } cursor-pointer rounded px-4 py-2 transition-colors duration-300`}
                     >
                       {t(item.name)}

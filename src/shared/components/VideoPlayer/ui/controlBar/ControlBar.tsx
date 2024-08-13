@@ -19,6 +19,12 @@ interface ControlBarProps {
   onPlaybackRateChange: (rate: number) => void;
 }
 
+function formatTime(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  seconds = Math.floor(seconds % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
 const ControlBar = ({
   state,
   onPlayPause,
@@ -35,35 +41,54 @@ const ControlBar = ({
     onSeek(played);
   };
 
+  const { played, duration } = state;
+
   return (
-    <div className='absolute bottom-0 left-0 right-0 flex items-center space-x-4 bg-black bg-opacity-50 p-2'>
-      <PlayPause playing={state.playing} onPlayPause={onPlayPause} />
-      <VolumeControl
-        isMuted={state.muted}
-        onToggleMute={onToggleMute}
-        volume={state.volume}
-        onChangeVolume={onVolumeChange}
-      />
-      <SeekSlider
-        played={state.played}
-        loaded={state.loaded}
-        duration={state.duration}
-        onSeek={handleSeekChange}
-        onSeekMouseDown={onSeekMouseDown}
-        onSeekMouseUp={onSeekMouseUp}
-        allowSeek={allowSeek}
-      />
-      <PlaybackRateSelect
-        playbackRate={state.playbackRate}
-        onPlaybackRateChange={onPlaybackRateChange}
-      />
-      <SubtitlesSelect
-        subtitles={state.subtitles || []}
-        selectedSubtitle={state.subtitle || ''}
-        onSubtitleChange={onSubtitleChange}
-      />
-      <FullScreen />
-    </div>
+    <>
+      <div className='absolute bottom-0 flex w-full flex-col bg-black bg-opacity-50 p-2'>
+        <div className='flex w-full'>
+          <SeekSlider
+            played={state.played}
+            loaded={state.loaded}
+            duration={state.duration}
+            onSeek={handleSeekChange}
+            onSeekMouseDown={onSeekMouseDown}
+            onSeekMouseUp={onSeekMouseUp}
+            allowSeek={allowSeek}
+          />
+        </div>
+        {/* <div> */}
+        <div className='flex w-full justify-between'>
+          <div className='flex items-baseline space-x-4'>
+            <PlayPause playing={state.playing} onPlayPause={onPlayPause} />
+            <VolumeControl
+              isMuted={state.muted}
+              onToggleMute={onToggleMute}
+              volume={state.volume}
+              onChangeVolume={onVolumeChange}
+            />
+            <div>
+              <p className='text-white'>
+                {formatTime(played * duration)} / {formatTime(duration)}
+              </p>
+            </div>
+          </div>
+          <div className='flex items-center space-x-4'>
+            <PlaybackRateSelect
+              playbackRate={state.playbackRate}
+              onPlaybackRateChange={onPlaybackRateChange}
+            />
+            <SubtitlesSelect
+              subtitles={state.subtitles || []}
+              selectedSubtitle={state.subtitle || ''}
+              onSubtitleChange={onSubtitleChange}
+            />
+            <FullScreen />
+          </div>
+        </div>
+        {/* </div> */}
+      </div>
+    </>
   );
 };
 

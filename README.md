@@ -53,24 +53,37 @@
 
 ![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1721180917016?alt=media&token=c88c9119-85d7-4da3-b4ab-51d2e615e60b)
 
-클라이언트 상태 관리는 zustand 라이브러리 사용 예정
+# 3. 프로젝트 실행
 
-# 3. 실행
+1. install pnpm
 
-1. Install dependencies
+   > install package-manager
+
+   ```shellscript
+   npm install -g pnpm
+   ```
+
+2. install modules
+
+   ```shellscript
+   pnpm install
+   ```
+
+3. Run the dev server:
+   ```shellscript
+   pnpm run dev
+   ```
+
+# 3-1. 스토리북 실행
+
+1. Start the storybook
 
 ```bash
-npm install
+ pnpm run storybook
 ```
 
-2. Start the development server
+2. Open the project in your browser
 
 ```bash
-npm run dev
-```
-
-3. Open the project in your browser
-
-```bash
-http://localhost:5174
+http://localshot:6006
 ```

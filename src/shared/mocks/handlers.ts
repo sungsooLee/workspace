@@ -13,6 +13,8 @@ interface regComment {
   email: string;
 }
 
+const ACCESS_TOKEN_EXPIRY = 1 * 10 * 1000;
+
 const getVideoProgressKey = (videoId: string, userId: string) =>
   `video-progress-${userId}-${videoId}`;
 
@@ -44,6 +46,62 @@ export const handlers = [
       token: user.accessToken,
     });
   }),
+
+  /**
+   * 8월 11일 로그인 관련 새로 추가.
+   *
+   */
+  http.post('/login', async ({ request }) => {
+    const { email, password } = (await request.json()) as LoginUserType;
+
+    if (password !== '1234') {
+      return HttpResponse.json(
+        {
+          msg: '로그인 정보를 다시 확인해주세요. (비밀번호 1234)',
+        },
+        { status: 401 }
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        accessToken: 'mocked-access-token',
+        refreshToken: 'mocked-refresh-token',
+      },
+      {
+        status: 200,
+      }
+    );
+  }),
+
+  http.post('/refresh-token', async ({ request }) => {
+    const { refreshToken } = (await request.json()) as { refreshToken: string };
+
+    if (refreshToken === 'mocked-refresh-token') {
+      return HttpResponse.json(
+        {
+          accessToken: 'mocked-new-access-token',
+        },
+        { status: 200 }
+      );
+    }
+    return HttpResponse.json(
+      { msg: 'invalid refresh token' },
+      {
+        status: 401,
+      }
+    );
+  }),
+
+  http.get('/error401', async ({ request }) => {
+    return HttpResponse.json(
+      { msg: 'TEST NO TOKEN' },
+      {
+        status: 401,
+      }
+    );
+  }),
+  //////////////////
   http.get('/users/me', async ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
@@ -175,7 +233,10 @@ export const handlers = [
       statusCode: 'OK',
       message: '',
       data: {
-        items: [{ id: 1, name: 'channel', link: '#' }],
+        items: [
+          { id: 1, name: 'channel', link: '#' },
+          { id: 2, name: 'channel2', link: '#' },
+        ],
       },
     });
   }),
@@ -305,5 +366,28 @@ export const handlers = [
       progress: parseFloat(progress as string),
       url: `/videos/${videoId}.mp4`,
     });
+  }),
+
+  // 모든 Response 필드 string type
+  http.post('/api/testResponse', async ({ request }) => {
+    const test = {
+      timestamp: '2024-07-30T10:45:52.093772',
+      status: 200,
+      data: {
+        courseNo: '601656710953689572',
+        courseName: '1',
+        courseDesc: '과정설명입니다. 2000자까지 가능합니다.',
+        orgNo: '1',
+        courseType: 'ONLINE',
+        categories: [],
+        channel: { channelNo: '1', channelName: '1' },
+        isDeleted: 'FALSE',
+        isPublished: 'TRUE',
+        url: 'http://campus.autoever.com/course/uu4849-2893484-384982',
+        kitNo: '1',
+      },
+      message: null,
+    };
+    return HttpResponse.json(test);
   }),
 ];

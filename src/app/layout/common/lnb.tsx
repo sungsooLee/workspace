@@ -22,7 +22,7 @@ const LNB = ({ items, isOpen, toggleOpen }: LNBProps) => {
     >
       <div
         id='lnb'
-        className={`h-full overflow-y-auto border-r-2 border-black bg-lnb`}
+        className={`h-full overflow-y-auto border-r-2 border-primary-3 bg-white`}
       >
         <button
           onClick={toggleOpen}

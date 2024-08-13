@@ -1,4 +1,4 @@
-import axiosInstance from '@/shared/utils/axios';
+import { axiosInstance } from '@/app/api/instance';
 
 //채널 아이디로 동영상 목록 조회
 export const fetchChannelVideos = async () => {

@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import fetchMenus from './api/fetchMenus';
 import GNB from './common/Gnb';
 import LNB from './common/Lnb';
-
 const Layout = () => {
   const [isLNBOpen, setIsLNBOpen] = useState(true);
   const [activeMenuId, setActiveMenuId] = useState(1);
@@ -26,7 +25,7 @@ const Layout = () => {
   });
 
   return (
-    <div className='flex min-h-screen flex-col'>
+    <div className='flex min-h-screen flex-col bg-body text-primaryT'>
       {/* <GNB items={menuConfig.gnb} onMenuClick={handleMenuClick} /> */}
 
       <GNB items={menus || []} onMenuClick={handleMenuClick} />
@@ -37,8 +36,9 @@ const Layout = () => {
           isOpen={isLNBOpen}
           toggleOpen={() => setIsLNBOpen(!isLNBOpen)}
         />
-        <div className={`flex-1 overflow-y-auto`}>
+        <div className={`flex-1 overflow-y-auto bg-white`}>
           <Suspense fallback={<LoadingScreen />}>
+            {/* <ScrollRe */}
             <Outlet />
           </Suspense>
         </div>

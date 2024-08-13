@@ -1,8 +1,7 @@
 // import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import './index.css';
-import { BrowserRouter } from 'react-router-dom';
+import './styles/global.css';
 import { worker } from '../shared/mocks/browser.ts';
 import React from 'react';
 
@@ -14,8 +13,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );

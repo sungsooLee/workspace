@@ -1,9 +1,55 @@
+import { axiosInstance } from '@/app/api/instance';
+import { Button } from '@/shared/components/Button/button';
+import { HTTPError } from '@/shared/components/error/errorBoundary';
+import { useAuthStore } from '@/shared/stores/useAuthStore';
+import { transformApiData } from '@/shared/utils/apiDataTransformer';
+import axios from 'axios';
+
+interface commonApiResponse<T> {
+  timestamp: Date;
+  status: number;
+  data: T;
+  message: string;
+}
+
+type TestType = {
+  courseName: BigInt;
+  courseNo: BigInt;
+  courseDesc: string;
+  courseType: string;
+  isDeleted: boolean;
+  isPublished: boolean;
+  kitNo: number;
+  orgNo: number;
+  url: string;
+};
+
 const Home = () => {
+  const test = async () => {
+    try {
+      await axiosInstance.get('/error401');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        console.error('401 에러 발생:', error.message);
+      } else {
+        console.error('기타 에러 발생:', error);
+      }
+    }
+  };
+
+  const test2 = () => {
+    const { clearToken } = useAuthStore.getState();
+    clearToken();
+  };
   return (
     <>
       <div>
         <div className='h-[472px] w-full bg-cyan-50 px-240pxr py-80pxr'>
-          {/* <HomeFrame /> */}
+          <Button onClick={test} className='mb-10pxr'>
+            401에러
+          </Button>
+          <br />
+          <Button onClick={test2}>토큰 스토리지 삭제</Button>
         </div>
         <section className='h-[180px] w-full bg-gray-300 px-240pxr py-60pxr'>
           유저 정보
