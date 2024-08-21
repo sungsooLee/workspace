@@ -41,6 +41,7 @@ import Layout from '@/app/layout/Layout';
 import ZustandAuthGuard from '@/app/auth/guard/zustandAuthGuard';
 import ErrorPage from '@/pages/error/ErrorPage';
 import Page404 from '@/pages/error/404';
+import { GlobalBoundary } from '@/shared/components/error/GlobalBoundary';
 
 // 라우터 설정
 const router = createBrowserRouter([
@@ -48,14 +49,16 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <ZustandAuthGuard>
-        <ScrollRestoration />
-        <Layout />
-      </ZustandAuthGuard>
+      <GlobalBoundary>
+        <ZustandAuthGuard>
+          {/* <ScrollRestoration /> */}
+          <Layout />
+        </ZustandAuthGuard>
+      </GlobalBoundary>
     ),
     children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
   },
-  { path: '/error', element: <ErrorPage /> },
+  // { path: '/error', element: <ErrorPage /> },
   { path: '404', element: <Page404 /> },
   { path: '*', element: <Navigate to='/404' replace /> },
 ]);

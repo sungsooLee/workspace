@@ -2,12 +2,16 @@ import { fetchCommnetApi, saveCommentApi } from '@/features/commentList';
 // import VideoList from '@/features/video/ui/video-list';
 import Spinner from '@/shared/components/Spinner/spinner';
 import fetchData from '@/shared/utils/fetchData';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useComments from '@/features/commentList/hooks/useComments';
 import VideoList from '@/features/videoList/ui/VideoList';
 import CommentList from '@/features/commentList/ui/CommentList';
 import VideoPlayerContainer from '@/shared/components/VideoPlayer/ui/VideoPlayerContainer';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { reject } from 'lodash';
+import { CommonResponse } from '@/shared/types/response';
 
 const videoResource = fetchData('/api/channel/test/videos');
 const VideoDetail = () => {
@@ -15,6 +19,7 @@ const VideoDetail = () => {
   const res = videoResource.read();
   const videos = res?.data?.items;
   const [videoInfo, setVideoInfo] = useState<Video | null>(null);
+  const [tmpVideoInfo, setTmpVideoInfo] = useState<any>({});
   const { id } = useParams<{ id: string }>();
   const userEmail = sessionStorage.getItem('user') || '';
   const {
@@ -27,6 +32,28 @@ const VideoDetail = () => {
     isFetchingNextPage,
     reset,
   } = useComments(id, 10, fetchCommnetApi, saveCommentApi);
+
+  //비디오 시청 지점과 정보 가지고 오기. (가정)
+  // const { data, isLoading, isError } = useQuery<CommonResponse, Error>({
+  //   queryKey: ['getVideoInfo'],
+  //   queryFn: () => {
+  //     // return axios.get('http://10.204.240.36:8073/cms-module/api/v1/video', {
+  //     //   params: {
+  //     //     userId: 1,
+  //     //     contentId: 1,
+  //     //     chapterId: 1,
+  //     //     kitId: 1,
+  //     //     courseId: 1,
+  //     //     classId: 1,
+  //     //   },
+  //     // });
+  //     // throw new Error('강제로 오류 발생시키기');
+  //     // throw Promise.reject();
+  //   },
+  //   // throwOnError: (error) => {
+  //   //   console.log(error);
+  //   // },
+  // });
 
   // 무한 스크롤을 위한 설정
   const observer = useRef<IntersectionObserver | null>(null);
@@ -60,26 +87,36 @@ const VideoDetail = () => {
     setVideoInfo(video[0]);
     reset();
   }, [id]);
+
+  // useEffect(() => {
+  //   const info = data?.data?.data;
+  //   console.log(info);
+  //   console.log(info?.lastPlayTime);
+  //   // setTmpVideoInfo(info);
+  // }, [data]);
   const handleVideoClick = (videoId: number) => {
     navigate(`/my/video/${videoId}`);
   };
+
+  // if (isError) {
+  //   return <ErrorFallback resetError={error} />;
+  // }
 
   return (
     <div key={id} className='flex flex-col overflow-hidden md:flex-row'>
       <div className='w-full flex-[6_6_0%] p-4 md:flex md:flex-col'>
         <div className='relative mb-4 min-w-200pxr'>
+          {/* {isLoading ? (
+            <h1>데이터 가져오는중..</h1>
+          ) : ( */}
+          {/* // tmpVideoInfo?.lastPlayTime >= 0 && ( */}
           <VideoPlayerContainer
             getAllowSeek={true}
-            lastPlayed={0.2}
-            // videoUrl='https://d1lfq3h9g82ibj.cloudfront.net/test.mp4' //mp4
-            // videoUrl='https://vimeo.com/90509568' //vimeo
-            // videoUrl='	https://test-videos.co.uk/vids/bigbuckbunny/webm/vp8/360/Big_Buck_Bunny_360_10s_1MB.webm' //webm
-            // videoUrl='https://filesamples.com/samples/video/ogv/sample_640x360.ogv' //ogv
-            // videoUrl='https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
-            // videoUrl='https://www.youtube.com/watch?v=ZCae_LPuzBU'
-            // videoUrl='https://www.youtube.com/watch?v=_ngCLZ5Iz-0&t=120'
-            // videoUrl={'https://www.youtube.com/watch?v=ZCae_LPuzBU#t=240'}
+            lastPlayed={0}
+            // ...
           />
+          {/* // ) */}
+          {/* )} */}
           {/* <VideoPlayer videoId={id || ''} /> */}
         </div>
         <div>
@@ -91,7 +128,7 @@ const VideoDetail = () => {
 
       <div className='flex-[4_4_0%] p-4 md:flex md:flex-col md:pl-4'>
         <div className='mb-4'>
-          <h1 className='text-xl font-bold'>{videoInfo?.course?.title}</h1>
+          <h1 className='text-xl font-bold'>{tmpVideoInfo?.contentName}</h1>
         </div>
         <div className='flex-1 p-4'>
           <CommentList

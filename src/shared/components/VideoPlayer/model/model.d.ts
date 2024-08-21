@@ -15,7 +15,15 @@ export interface VideoState {
   playbackRate: number;
   watchTime: number; //시청 시간
   lastPlayedTime: number;
+  currentTime?: number;
   url?: string;
+  ///비디오 시청 보내기 위해서 새로 추가된 필드들
+  userId?: number;
+  contentId?: number;
+  chapterId?: number;
+  kitId?: number;
+  courseId?: number;
+  classId?: number;
 }
 
 /**

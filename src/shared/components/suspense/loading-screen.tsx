@@ -1,5 +1,9 @@
 const LoadingScreen = () => {
-  return <>로딩화면</>;
+  return (
+    <>
+      <p>로딩중....</p>
+    </>
+  );
 };
 
 export default LoadingScreen;

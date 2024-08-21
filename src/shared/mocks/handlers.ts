@@ -12,6 +12,7 @@ interface regComment {
   comment: string;
   email: string;
 }
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const ACCESS_TOKEN_EXPIRY = 1 * 10 * 1000;
 
@@ -99,6 +100,51 @@ export const handlers = [
       {
         status: 401,
       }
+    );
+  }),
+  //////////////////
+  http.get('/error/:codeNum', async ({ params, request }) => {
+    await wait(2000);
+
+    const { codeNum } = params;
+    switch (codeNum) {
+      case '400':
+        return HttpResponse.json(
+          {
+            message: '실패..',
+            code: 400,
+          },
+          { status: 400 }
+        );
+      case '401':
+        return HttpResponse.json(
+          { message: 'Forbidden', code: 401 },
+          { status: 401 }
+        );
+      case '403':
+        return HttpResponse.json(
+          { message: 'Forbidden', code: 403 },
+          { status: 403 }
+        );
+
+      case '200':
+        return HttpResponse.json(
+          {
+            message: '성공.',
+            code: 200,
+            data: { title: '성공 타이틀', content: '성공 ~' },
+          },
+          { status: 200 }
+        );
+    }
+  }),
+  http.post('/error/mutation', async ({ request }) => {
+    return HttpResponse.json(
+      {
+        message: '서버 에러 발생',
+        code: 500,
+      },
+      { status: 500 }
     );
   }),
   //////////////////

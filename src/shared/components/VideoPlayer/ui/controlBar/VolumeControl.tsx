@@ -9,7 +9,7 @@ type VolumeProps = {
 };
 
 const VolumeControl = ({
-  volume,
+  volume = 0.5,
   onChangeVolume,
   onToggleMute,
   isMuted,

@@ -21,4 +21,19 @@ export default defineConfig({
       external: ['msw/node'],
     },
   },
+  // server: {
+  //   port: 5173,
+  //   proxy: {
+  //     '/cms-module': {
+  //       target: 'http://10.204.240.36:8073',
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/cms-module/, ''),
+  //     },
+  //     '/portal-module': 'http://localhost:8082',
+  //     '/auth-module': 'http://localhost:8081',
+  //     '/file-module': 'http://localhost:8084',
+  //     '/encoding-module': 'http://localhost:8085',
+  //     '/hls': 'http://localhost:8070',
+  //   },
+  // },
 });

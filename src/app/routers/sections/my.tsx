@@ -1,3 +1,5 @@
+import { ErrorSample } from '@/pages/sample/ErrorSample';
+import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import { lazy, Suspense } from 'react';
 
 const ChannelDetail = lazy(() => import('@/pages/sample/ChannelDetail'));
@@ -12,24 +14,30 @@ export const myRoutes = [
         element: <>구독</>,
       },
       {
-        path: 'learnig-state',
-        element: <>나의 학습 현황</>,
+        path: 'error-sample',
+        element: (
+          <>
+            <ErrorSample />
+          </>
+        ),
       },
       {
         path: 'channel-detail',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          // <Suspense fallback={<div>Loading...</div>}>
+          <FetchBoundary>
             <ChannelDetail />
-          </Suspense>
+          </FetchBoundary>
+          // </Suspense>
         ),
       },
       {
         path: 'video/:id',
         element: (
           <>
-            <Suspense fallback={<>Loading.....</>}>
+            <FetchBoundary>
               <VideoDetail />
-            </Suspense>
+            </FetchBoundary>
           </>
         ),
       },

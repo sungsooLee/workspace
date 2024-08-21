@@ -1,6 +1,8 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { Progress, VideoState } from '../model/model';
 import ReactPlayer from 'react-player/lazy';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 type Action =
   | { type: 'PLAY' }
@@ -65,7 +67,7 @@ export function useVideoPlayer(initialState: VideoState) {
   const [state, dispatch] = useReducer(videoReducer, {
     ...initialState,
     // watchTime: initialState.watchTime || 0,
-    lastPlayedTime: initialState.lastPlayedTime || 0,
+    lastPlayedTime: initialState.lastPlayedTime,
   });
   // const lastPlayedLocation = useRef(initialState.played);
 
@@ -81,6 +83,20 @@ export function useVideoPlayer(initialState: VideoState) {
   const [isSubtitleInitialized, setIsSubtitleInitialized] = useState(false);
   const [progressInterval, setProgressInterval] =
     useState<NodeJS.Timeout | null>(null);
+
+  const sendVideoDataMutation = useMutation({
+    mutationFn: (data: {
+      userId: number;
+      contentId: number;
+      chapterId: number;
+      kitId: number;
+      courseId: number;
+      classId: number;
+      videoStartTime: number;
+      videoEndTime: number;
+      speed: number;
+    }) => axios.post('http://10.204.240.36:8073/cms-module/api/v1/video', data),
+  });
 
   const getVideoType = (url: string) => {
     if (url.includes('youtube.com')) {
@@ -117,6 +133,7 @@ export function useVideoPlayer(initialState: VideoState) {
           startSeconds: startTime,
         });
       } else {
+        console.log(state.lastPlayedTime);
         playerRef.current?.seekTo(state.lastPlayedTime);
       }
       seekPendingRef.current = false;
@@ -131,9 +148,10 @@ export function useVideoPlayer(initialState: VideoState) {
   ]);
 
   useEffect(() => {
-    if (state.playing && !progressInterval) {
-      if (startTime.current == null)
-        startTime.current = Math.ceil(playerRef.current?.getCurrentTime() || 0);
+    if (state.playing && !progressInterval && !isBuffering) {
+      // if (startTime.current == null)
+      startTime.current = Math.ceil(playerRef.current?.getCurrentTime() || 0);
+      console.log(state.playing);
       const interval = setInterval(() => {
         updateProgress();
       }, 1000);
@@ -144,6 +162,18 @@ export function useVideoPlayer(initialState: VideoState) {
     }
   }, [state.playing, progressInterval]);
 
+  useEffect(() => {
+    let playerInstance = playerRef.current;
+    return () => {
+      console.log('클린업 함수 호출');
+      if (playerInstance) {
+        playerInstance = null;
+      }
+      if (progressInterval) {
+        clearInterval(progressInterval); // 인터벌 클리어
+      }
+    };
+  }, []);
   const updateProgress = () => {
     const currentTime = Math.ceil(playerRef.current?.getCurrentTime() || 0);
     const playbackRate = playerRef.current?.getInternalPlayer().playbackRate;
@@ -155,7 +185,17 @@ export function useVideoPlayer(initialState: VideoState) {
       console.log('start time = ' + startTime.current);
       console.log('end time = ' + currentTime);
       console.log('현재 배속 = ' + playbackRate);
-
+      // sendVideoDataMutation.mutate({
+      //   userId: 1,
+      //   contentId: 1,
+      //   chapterId: 1,
+      //   kitId: 1,
+      //   courseId: 1,
+      //   classId: 1,
+      //   videoStartTime: startTime.current,
+      //   videoEndTime: currentTime,
+      //   speed: playbackRate,
+      // });
       elapsedTime.current = 0;
       startTime.current = currentTime;
 
@@ -189,16 +229,8 @@ export function useVideoPlayer(initialState: VideoState) {
     dispatch({ type: 'SET_VOLUME', payload: volume });
 
   const handleProgress = (videoState: Progress) => {
-    // console.log('Buffer=' + playerRef?.current?.buffered);
     if (!state.seeking && !seekPendingRef.current) {
-      // const currentTime = videoState.playedSeconds;
-      // const elapsedTime = currentTime - lastProgressRef.current;
-      // const newWatchTime = state.watchTime + elapsedTime;
-      // dispatch({ type: 'UPDATE_WATCH_TIME', payload: newWatchTime });
-      // dispatch({ type: 'SET_LAST_PLAYED_TIME', payload: currentTime });
       dispatch({ type: 'SET_PROGRESS', payload: videoState });
-
-      // lastProgressRef.current = currentTime;
     }
     handleLoadingState();
   };
@@ -272,11 +304,21 @@ export function useVideoPlayer(initialState: VideoState) {
   };
 
   const handleError = (error: any, data: any) => {
-    console.error(error, data);
+    // console.error(error, data);
     setIsLoading(false);
   };
 
-  // const
+  const handleRewind = () => {
+    const currentTime = playerRef.current?.getCurrentTime() || 0;
+    const newTime = Math.max(currentTime - 10, 0);
+    playerRef.current?.seekTo(newTime);
+  };
+
+  const handleForward = () => {
+    const currentTime = playerRef.current?.getCurrentTime() || 0;
+    const newTime = Math.max(currentTime + 10, 0);
+    playerRef.current?.seekTo(newTime);
+  };
 
   return {
     playerRef,
@@ -295,6 +337,8 @@ export function useVideoPlayer(initialState: VideoState) {
     handleBufferEnd,
     handlePlaybackChange,
     handleError,
+    handleRewind,
+    handleForward,
     isLoading,
   };
 }

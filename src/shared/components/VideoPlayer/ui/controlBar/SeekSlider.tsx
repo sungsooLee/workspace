@@ -9,7 +9,7 @@ interface SeekSliderProps {
 }
 
 const SeekSlider = ({
-  played,
+  played = 0,
   loaded,
   onSeek,
   onSeekMouseDown,
@@ -20,8 +20,9 @@ const SeekSlider = ({
     <div className='video-progress-container'>
       <div className='video-progress group w-full'>
         <div className='flex flex-row items-center gap-16pxr'>
+          {/* {played && played >= 0 && ( */}
           <input
-            disabled={!allowSeek}
+            // disabled={!allowSeek}
             type='range'
             min={0}
             max={0.999999}
@@ -31,8 +32,9 @@ const SeekSlider = ({
             onMouseDown={onSeekMouseDown}
             onMouseUp={onSeekMouseUp}
             className='seek-slider'
-            style={{ '--loaded': `${loaded * 100}%` } as React.CSSProperties}
+            // style={{ '--loaded': `${loaded * 100}%` } as React.CSSProperties}
           />
+          {/* )} */}
         </div>
       </div>
     </div>
