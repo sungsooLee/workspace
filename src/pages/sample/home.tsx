@@ -1,9 +1,6 @@
 import { axiosInstance } from '@/app/api/instance';
 import { Button } from '@/shared/components/Button/button';
-import { HTTPError } from '@/shared/components/error/errorBoundary';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
-import { transformApiData } from '@/shared/utils/apiDataTransformer';
-import axios from 'axios';
 
 interface commonApiResponse<T> {
   timestamp: Date;
@@ -12,29 +9,29 @@ interface commonApiResponse<T> {
   message: string;
 }
 
-type TestType = {
-  courseName: BigInt;
-  courseNo: BigInt;
-  courseDesc: string;
-  courseType: string;
-  isDeleted: boolean;
-  isPublished: boolean;
-  kitNo: number;
-  orgNo: number;
-  url: string;
+const errorData = async () => {
+  const data = await axiosInstance.get('/error401');
+  return data.data;
 };
-
+const call401Error = async () => errorData();
 const Home = () => {
+  // const test = async () => {
+
+  //   // try {
+  //   //   await axiosInstance.get('/error401');
+  //   // } catch (error) {
+  //   //   if (axios.isAxiosError(error) && error.response?.status === 401) {
+  //   //     console.error('401 에러 발생:', error.message);
+  //   //   } else {
+  //   //     console.error('기타 에러 발생:', error);
+  //   //   }
+  //   // }
+  // };
+  // const { data } = useCallApi2<{ msg: string }>('/error401');
+  // const { data, error } = useCallApi2<{ msg: string }>('/error401');
+
   const test = async () => {
-    try {
-      await axiosInstance.get('/error401');
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 401) {
-        console.error('401 에러 발생:', error.message);
-      } else {
-        console.error('기타 에러 발생:', error);
-      }
-    }
+    // console.log('데이터:', data);
   };
 
   const test2 = () => {
@@ -45,7 +42,7 @@ const Home = () => {
     <>
       <div>
         <div className='h-[472px] w-full bg-cyan-50 px-240pxr py-80pxr'>
-          <Button onClick={test} className='mb-10pxr'>
+          <Button onClick={() => test()} className='mb-10pxr'>
             401에러
           </Button>
           <br />

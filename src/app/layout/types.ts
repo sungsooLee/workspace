@@ -18,9 +18,9 @@ export const menuConfig: TestMenuConfig = {
   ],
   lnb: {
     1: [
-      { id: 11, name: '구독', link: 'my/subscribe' },
+      { id: 11, name: '키트 샘플', link: 'my/subscribe' },
       { id: 12, name: '에러 샘플', link: 'my/error-sample' },
-      { id: 13, name: '채널 상세', link: 'my/channel-detail' },
+      // { id: 13, name: '채널 상세', link: 'my/channel-detail' },
     ],
     2: [
       { id: 21, name: '지식공유', link: 'knowledge/share' },

@@ -1,16 +1,37 @@
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, ErrorBoundaryProps } from 'react-error-boundary';
 import { FetchErrorFallback } from './FetchErrorFallback';
-import { Suspense } from 'react';
+import { Suspense, SuspenseProps } from 'react';
 import LoadingScreen from '../suspense/loading-screen';
 
+type FetchBoundaryProps = {
+  children: React.ReactElement;
+  errorFallbackClassName?: string;
+  loadingFallbackClassName?: string;
+  errorFallbackComponent?: boolean;
+};
 export const FetchBoundary = ({
   children,
-}: {
-  children: React.ReactElement;
-}) => {
+  errorFallbackClassName,
+  loadingFallbackClassName,
+}: FetchBoundaryProps) => {
+  const errorBoundaryOptions: ErrorBoundaryProps = {
+    FallbackComponent: (props) => {
+      return (
+        <FetchErrorFallback
+          {...props}
+          className={errorFallbackClassName as string}
+        />
+      );
+    },
+  };
+
+  const loadingFallback = (
+    <LoadingScreen className={loadingFallbackClassName as string} />
+  );
+
   return (
-    <ErrorBoundary FallbackComponent={FetchErrorFallback}>
-      <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
+    <ErrorBoundary {...errorBoundaryOptions}>
+      <Suspense fallback={loadingFallback}>{children}</Suspense>
     </ErrorBoundary>
   );
 };

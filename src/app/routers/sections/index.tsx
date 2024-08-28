@@ -40,7 +40,6 @@ import { myRoutes } from './my';
 import Layout from '@/app/layout/Layout';
 import ZustandAuthGuard from '@/app/auth/guard/zustandAuthGuard';
 import ErrorPage from '@/pages/error/ErrorPage';
-import Page404 from '@/pages/error/404';
 import { GlobalBoundary } from '@/shared/components/error/GlobalBoundary';
 
 // 라우터 설정
@@ -59,8 +58,8 @@ const router = createBrowserRouter([
     children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
   },
   // { path: '/error', element: <ErrorPage /> },
-  { path: '404', element: <Page404 /> },
-  { path: '*', element: <Navigate to='/404' replace /> },
+  // { path: '404', element: <Page404 /> },
+  { path: '*', element: <>NOT FOUND</> },
 ]);
 
 export default function Router() {

@@ -7,10 +7,7 @@ import { GlobalBoundary } from '@/shared/components/error/GlobalBoundary';
 function App() {
   return (
     <>
-      {/* <GlobalBoundary> */}
       <Router />
-      {/* </GlobalBoundary> */}
-
       <Toaster />
       <ReactQueryDevtools initialIsOpen={true} />
     </>

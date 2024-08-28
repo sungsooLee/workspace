@@ -23,7 +23,7 @@ export interface VideoState {
   chapterId?: number;
   kitId?: number;
   courseId?: number;
-  classId?: number;
+  sequenceId?: number;
 }
 
 /**

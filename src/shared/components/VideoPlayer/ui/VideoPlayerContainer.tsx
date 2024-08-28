@@ -1,11 +1,8 @@
 import ReactPlayer from 'react-player/lazy';
 import { useVideoPlayer } from '../hooks/useVideoPlayer';
 import ControlBar from './controlBar/ControlBar';
-import { VideoPlayerProps, VideoState } from '../model/model';
-import { useEffect, useRef, useState } from 'react';
-import Hls from 'hls.js';
+import React, { useEffect, useRef, useState } from 'react';
 import Watermark from '../../Watermark/Watermark';
-import { useAuthStore } from '@/shared/stores/useAuthStore';
 import {
   FaBackward,
   FaForward,
@@ -14,65 +11,44 @@ import {
   FaVolumeDown,
   FaVolumeUp,
 } from 'react-icons/fa';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import useContentStore from '@/shared/stores/useContentStore';
+import { Chapter } from '@/features/chapter';
+import { Content } from '@/entities/content';
 
-const VideoPlayerContainer = ({
-  // videoUrl,
-  lastPlayed,
-  getAllowSeek,
-}: VideoPlayerProps) => {
+const VideoPlayerContainer = React.memo((initialState: any) => {
   const [isHover, setIsHover] = useState(true);
-  const { email } = useAuthStore.getState();
-  const tracks = [
-    {
-      kind: 'subtitles',
-      src: '/subtitles/jap.vtt',
-      srcLang: 'ja',
-      label: 'Japanese',
-      default: true,
-    },
-    {
-      kind: 'subtitles',
-      src: '/subtitles/spa.vtt',
-      srcLang: 'es',
-      label: 'Spanish',
-      // default: true,
-    },
-    {
-      kind: 'subtitles',
-      src: '/subtitles/thai.vtt',
-      srcLang: 'th',
-      label: 'Thai',
-    },
-    {
-      kind: 'subtitles',
-      src: '/subtitles/viet.vtt',
-      srcLang: 'vi',
-      label: 'Vietnamese',
-    },
-  ];
-  const initialState: VideoState = {
-    playing: false,
-    volume: 0.5,
-    playbackRate: 1.0,
-    progress: 0,
-    duration: 0,
-    played: lastPlayed,
-    muted: false,
-    fullscreen: false,
-    showSubtitles: false,
-    loaded: 0,
-    seeking: false,
-    allowSeek: getAllowSeek,
-    subtitles: tracks,
-    subtitle: tracks[0].label,
-    watchTime: 0,
-    lastPlayedTime: lastPlayed,
-    // url: 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
-    // url: 'https://www.youtube.com/watch?v=_ngCLZ5Iz-0',
-    // url: 'https://www.youtube.com/watch?v=ZCae_LPuzBU',
-    url: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
-    // url: 'https://htavideo-gcp.hyundai-hta.com/20240716/140046823546/hls/manifest.m3u8',
-  };
+  // const { email } = useAuthStore.getState();
+  // const tracks = [
+  //   {
+  //     kind: 'subtitles',
+  //     src: '/subtitles/jap.vtt',
+  //     srcLang: 'ja',
+  //     label: 'Japanese',
+  //     default: true,
+  //   },
+  //   {
+  //     kind: 'subtitles',
+  //     src: '/subtitles/spa.vtt',
+  //     srcLang: 'es',
+  //     label: 'Spanish',
+  //     // default: true,
+  //   },
+  //   {
+  //     kind: 'subtitles',
+  //     src: '/subtitles/thai.vtt',
+  //     srcLang: 'th',
+  //     label: 'Thai',
+  //   },
+  //   {
+  //     kind: 'subtitles',
+  //     src: '/subtitles/viet.vtt',
+  //     srcLang: 'vi',
+  //     label: 'Vietnamese',
+  //   },
+  // ];
+
   const {
     playerRef,
     state,
@@ -93,9 +69,8 @@ const VideoPlayerContainer = ({
     handleRewind,
     handleForward,
     isLoading,
+    isBuffering,
   } = useVideoPlayer(initialState);
-
-  // const hlsRef = useRef<Hls | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [showIcon, setShowIcon] = useState(false);
@@ -106,17 +81,89 @@ const VideoPlayerContainer = ({
   const { playing, volume, allowSeek, playbackRate, url } = state;
 
   const [playerKey, setPlayerKey] = useState('');
+  const { chapterList, fetchChapterList } = useContentStore((state) => state);
+  const sendVideoProgress = useMutation({
+    mutationFn: (data: {
+      userId: number;
+      contentId: number;
+      chapterId: number;
+      kitId: number;
+      courseId: number;
+      sequenceId: number;
+    }) => axios.post('/cms-module/api/v1/video/progress', data),
+    onSuccess: (response) => {
+      const responseData = response.data.data;
+      const { chapterId, contentId, videoProgressStatus } = responseData;
+      console.log(chapterList);
+      console.log(responseData);
+      const newChapterList = chapterList.map((chapter: Chapter) => {
+        if (chapter.chapterId === chapterId) {
+          const contentSeqList = chapter.contentSeqList.map(
+            (content: Content) => {
+              if (content.contentId === contentId) {
+                return {
+                  ...content,
+                  status: videoProgressStatus,
+                };
+              }
+              return content;
+            }
+          );
+          return {
+            ...chapter,
+            contentSeqList,
+          };
+        }
+        return chapter;
+      });
+      console.log(newChapterList);
+      fetchChapterList(newChapterList);
+    },
+  });
 
   useEffect(() => {
+    const { kitId, contentId, playing, chapterId, courseId, sequenceId } =
+      initialState;
+    console.log('@@@@mount@@@@@');
+    console.log(
+      'KitId= ',
+      initialState.kitId,
+      'ContentId = ',
+      initialState.contentId,
+      'Playing = ',
+      initialState.playing
+    );
     const key = `player-${Date.now()}`;
     setPlayerKey(key);
 
-    return () => {};
-  }, []);
+    return () => {
+      console.log('@@@unmount@@@');
+      console.log(
+        'KitId= ',
+        kitId,
+        'ContentId = ',
+        contentId,
+        'chapterId = ',
+        chapterId,
+        'sequenceId = ',
+        sequenceId
+      );
+      console.log(initialState);
+      if (contentId && chapterId && kitId && sequenceId) {
+        sendVideoProgress.mutate({
+          userId: 1,
+          contentId: contentId,
+          chapterId: chapterId,
+          kitId: kitId,
+          courseId: courseId || 1,
+          sequenceId: sequenceId,
+        });
+      }
+    };
+  }, [initialState]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // console.log(log);
       if (event.code === 'Space') {
         event.preventDefault();
 
@@ -162,18 +209,6 @@ const VideoPlayerContainer = ({
     };
   }, [handlePlayPause, handleVolumeChange, handleRewind, handleForward]);
 
-  useEffect(() => {
-    const hls = new Hls({
-      debug: true,
-      maxLoadingDelay: 4,
-      startLevel: 1,
-    });
-
-    return () => {
-      hls.destroy();
-    };
-  }, [url]);
-
   const handleMouseEnter = () => {
     if (!isHover) {
       setIsHover(true);
@@ -186,9 +221,6 @@ const VideoPlayerContainer = ({
     }
   };
 
-  // const canplay = () => {
-  //   console.log('~~이제 시작 가능~~');
-  // };
   return (
     <>
       <div
@@ -198,7 +230,7 @@ const VideoPlayerContainer = ({
         tabIndex={0}
         ref={containerRef}
       >
-        {isLoading && (
+        {(isLoading || isBuffering) && (
           <div className='absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50'>
             <div className='h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-white'></div>
           </div>
@@ -219,10 +251,6 @@ const VideoPlayerContainer = ({
               },
             },
             file: {
-              // attributes: {
-              //   // canPlay
-              //   canplay: canplay,
-              // },
               hlsVersion: '1.5.14',
               hlsOptions: {
                 manifestLoadPolicy: {
@@ -242,12 +270,8 @@ const VideoPlayerContainer = ({
                   },
                 },
               },
-              // attributes: {
-              //   crossOrigin: 'anonymous',
-              // },
             },
           }}
-          // light='true'
           width={'100%'}
           height={'100%'}
           onDuration={handleDuration}
@@ -256,13 +280,8 @@ const VideoPlayerContainer = ({
           onBuffer={handleBuffer}
           onBufferEnd={handleBufferEnd}
           className='react-player'
-          onError={(error, data, hlsInstance, hlsGlobal) => {
-            // console.error('Error:', error, data, hlsInstance, hlsGlobal);
-            // 에러 처리 로직 추가
-          }}
         />
-        {/* {showIcon && ( */}
-        <div className='animate-fadeout absolute inset-0 flex items-center justify-center transition duration-1000'>
+        <div className='absolute inset-0 flex animate-fadeout items-center justify-center transition duration-1000'>
           {showIcon && (
             <div className='relative'>
               <div className='rounded-full bg-black p-4'>
@@ -314,6 +333,6 @@ const VideoPlayerContainer = ({
       </div>
     </>
   );
-};
+});
 
 export default VideoPlayerContainer;

@@ -10,8 +10,8 @@ import CommentList from '@/features/commentList/ui/CommentList';
 import VideoPlayerContainer from '@/shared/components/VideoPlayer/ui/VideoPlayerContainer';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { reject } from 'lodash';
 import { CommonResponse } from '@/shared/types/response';
+import useContentStore from '@/shared/stores/useContentStore';
 
 const videoResource = fetchData('/api/channel/test/videos');
 const VideoDetail = () => {
@@ -32,7 +32,7 @@ const VideoDetail = () => {
     isFetchingNextPage,
     reset,
   } = useComments(id, 10, fetchCommnetApi, saveCommentApi);
-
+  const videoState = useContentStore((state: any) => state.content);
   //비디오 시청 지점과 정보 가지고 오기. (가정)
   // const { data, isLoading, isError } = useQuery<CommonResponse, Error>({
   //   queryKey: ['getVideoInfo'],
@@ -48,7 +48,6 @@ const VideoDetail = () => {
   //     //   },
   //     // });
   //     // throw new Error('강제로 오류 발생시키기');
-  //     // throw Promise.reject();
   //   },
   //   // throwOnError: (error) => {
   //   //   console.log(error);
@@ -110,11 +109,12 @@ const VideoDetail = () => {
             <h1>데이터 가져오는중..</h1>
           ) : ( */}
           {/* // tmpVideoInfo?.lastPlayTime >= 0 && ( */}
-          <VideoPlayerContainer
-            getAllowSeek={true}
-            lastPlayed={0}
-            // ...
-          />
+          {videoState && (
+            <VideoPlayerContainer
+              {...videoState}
+              // ...
+            />
+          )}
           {/* // ) */}
           {/* )} */}
           {/* <VideoPlayer videoId={id || ''} /> */}

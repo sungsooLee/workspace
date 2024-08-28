@@ -1,6 +1,7 @@
 import { ErrorSample } from '@/pages/sample/ErrorSample';
+import { KitPage } from '@/pages/sample/KitPage';
 import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 
 const ChannelDetail = lazy(() => import('@/pages/sample/ChannelDetail'));
 const VideoDetail = lazy(() => import('@/pages/sample/VideoDetail'));
@@ -11,7 +12,11 @@ export const myRoutes = [
     children: [
       {
         path: 'subscribe',
-        element: <>구독</>,
+        element: (
+          <>
+            <KitPage />
+          </>
+        ),
       },
       {
         path: 'error-sample',
@@ -24,11 +29,9 @@ export const myRoutes = [
       {
         path: 'channel-detail',
         element: (
-          // <Suspense fallback={<div>Loading...</div>}>
           <FetchBoundary>
             <ChannelDetail />
           </FetchBoundary>
-          // </Suspense>
         ),
       },
       {

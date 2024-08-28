@@ -1,4 +1,4 @@
-import { FetchBoundary } from '../error/FetchErrorBoundary';
+import { FetchBoundary } from '../../error/FetchErrorBoundary';
 import { ErrorContent } from './ErrorContent';
 
 export const Error401 = () => {

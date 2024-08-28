@@ -10,7 +10,7 @@ import { toast } from '@/shared/hooks/useToast.ts';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
+      retry: false,
       staleTime: 0,
       throwOnError: true,
     },
@@ -27,20 +27,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-// //msw 설정
-// if (process.env.NODE_ENV === 'development') {
-//   worker.start({
-//     onUnhandledRequest: 'bypass',
-//   });
-// }
-// ReactDOM.createRoot(document.getElementById('root')!).render(
-//   // <React.StcrictMode>
-//   <QueryClientProvider client={queryClient}>
-//     <App />
-//   </QueryClientProvider>
-//   // </React.StcrictMode>
-// );
 
 const renderApp = () => {
   ReactDOM.createRoot(document.getElementById('root')!).render(

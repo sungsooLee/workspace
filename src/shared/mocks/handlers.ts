@@ -54,6 +54,7 @@ export const handlers = [
    */
   http.post('/login', async ({ request }) => {
     const { email, password } = (await request.json()) as LoginUserType;
+    await wait(1000);
 
     if (password !== '1234') {
       return HttpResponse.json(
@@ -107,6 +108,9 @@ export const handlers = [
     await wait(2000);
 
     const { codeNum } = params;
+    // const randomResponse = () => Math.random() >= 0.1;
+    // // console.log(randomResponse());
+    // if (Math.random() >= 0.5) {
     switch (codeNum) {
       case '400':
         return HttpResponse.json(
@@ -126,6 +130,14 @@ export const handlers = [
           { message: 'Forbidden', code: 403 },
           { status: 403 }
         );
+      case 'CUSTOM_ERROR':
+        return HttpResponse.json(
+          {
+            message: '또잉..',
+            code: 'CUSTOM_ERROR',
+          },
+          { status: 400 }
+        );
 
       case '200':
         return HttpResponse.json(
@@ -137,8 +149,28 @@ export const handlers = [
           { status: 200 }
         );
     }
+    // }
+    // return HttpResponse.json(
+    //   {
+    //     message: '성공.',
+    //     code: 200,
+    //     data: { title: '성공 타이틀', content: '성공 ~' },
+    //   },
+    //   { status: 200 }
+    // );
   }),
   http.post('/error/mutation', async ({ request }) => {
+    const randomResponse = () => Math.random() >= 0.5;
+
+    if (randomResponse()) {
+      return HttpResponse.json(
+        {
+          message: '에러 발생 X',
+          code: 200,
+        },
+        { status: 200 }
+      );
+    }
     return HttpResponse.json(
       {
         message: '서버 에러 발생',

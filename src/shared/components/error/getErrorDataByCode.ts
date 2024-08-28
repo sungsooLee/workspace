@@ -4,6 +4,11 @@ type ErrorCodeType = {
   [key: string]: { code: string; message: string; requireLogin?: boolean };
 };
 
+// ??
+// 국제화 기준 .
+// 코드만 작성하고 해당 코드와 매핑되는 국제화에 맞는 메세지 json 및 번역 파일 생성.
+// 해당 json 파일 로드?
+
 const ERROR_CODE: ErrorCodeType = {
   default: { code: 'ERROR', message: '알 수 없는 오류가 발생했습니다.' },
 
@@ -16,6 +21,11 @@ const ERROR_CODE: ErrorCodeType = {
   ECONNABORTED: {
     code: '요청 시간 초과',
     message: '요청 시간을 초과했습니다.',
+  },
+
+  CUSTOM_ERROR: {
+    code: '커스텀 코드 에러 !',
+    message: '커스텀으로 만든 코드에 대한 에러입니다.',
   },
 
   // http status code 및 정의 된 코드
@@ -38,7 +48,6 @@ export const getErrorDataByCode = (
   }
   // if (serverErrorCode) {
   //   const res = error.response?.data;
-  //   console.log(res);
   //   return {
   //     code: res?.code.toString(),
   //     message: res?.message,

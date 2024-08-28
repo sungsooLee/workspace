@@ -1,4 +1,5 @@
 import LoginPage from '@/pages/auth/Login';
+import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import ErrorBoundary from '@/shared/components/error/errorBoundary';
 import ErrorFallback from '@/shared/components/error/errorFallback';
 import { Outlet } from 'react-router-dom';
@@ -15,7 +16,9 @@ const auth = {
       element: (
         <>
           <ErrorBoundary FallBack={ErrorFallback} onReset={() => {}}>
+            {/* <FetchBoundary> */}
             <LoginPage />
+            {/* </FetchBoundary> */}
           </ErrorBoundary>
         </>
       ),

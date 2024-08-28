@@ -37,10 +37,10 @@ const Layout = () => {
           toggleOpen={() => setIsLNBOpen(!isLNBOpen)}
         />
         <div className={`flex-1 overflow-y-auto bg-white`}>
-          <Suspense fallback={<LoadingScreen />}>
-            {/* <ScrollRe */}
-            <Outlet />
-          </Suspense>
+          {/* <Suspense fallback={<LoadingScreen />}> */}
+          {/* <ScrollRe */}
+          <Outlet />
+          {/* </Suspense> */}
         </div>
       </div>
       <Footer />

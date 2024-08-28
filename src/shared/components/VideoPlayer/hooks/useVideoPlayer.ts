@@ -18,7 +18,8 @@ type Action =
   | { type: 'CHANGE_SUBTITLE'; payload: string }
   | { type: 'CHANGE_PLAYBACK'; payload: number }
   | { type: 'UPDATE_WATCH_TIME'; payload: number }
-  | { type: 'SET_LAST_PLAYED_TIME'; payload: number };
+  | { type: 'SET_LAST_PLAYED_TIME'; payload: number }
+  | { type: 'SET_INITIAL_STATE'; payload: any };
 
 function videoReducer(state: VideoState, action: Action): VideoState {
   switch (action.type) {
@@ -57,18 +58,25 @@ function videoReducer(state: VideoState, action: Action): VideoState {
       return { ...state, lastPlayedTime: action.payload };
     // case 'CHANGE_URL':
     //   return {...state, }
+    case 'SET_INITIAL_STATE':
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }
 }
 
 export function useVideoPlayer(initialState: VideoState) {
-  // console.log(initialState);
-  const [state, dispatch] = useReducer(videoReducer, {
-    ...initialState,
-    // watchTime: initialState.watchTime || 0,
-    lastPlayedTime: initialState.lastPlayedTime,
-  });
+  // const [state, dispatch] = useReducer(videoReducer, {
+  //   // ...initialState,
+  //   ...initialState,
+  //   // watchTime: initialState.watchTime || 0,
+  //   lastPlayedTime: initialState.lastPlayedTime,
+  // });
+  const [state, dispatch] = useReducer(videoReducer, initialState);
+
   // const lastPlayedLocation = useRef(initialState.played);
 
   const lastProgressRef = useRef<number>(state.lastPlayedTime);
@@ -91,12 +99,29 @@ export function useVideoPlayer(initialState: VideoState) {
       chapterId: number;
       kitId: number;
       courseId: number;
-      classId: number;
       videoStartTime: number;
       videoEndTime: number;
       speed: number;
-    }) => axios.post('http://10.204.240.36:8073/cms-module/api/v1/video', data),
+      sequenceId: number;
+    }) => axios.post('/cms-module/api/v1/video/record', data),
   });
+
+  //동영상 옮겼을때 시간 초기화.
+  const clearTime = () => {
+    //시작시간 경과시간 초기화
+    startTime.current = 0;
+    elapsedTime.current = 0;
+
+    //현재 재생 상태 -> 중지로 변경
+    currentPlayingRef.current = false;
+    dispatch({ type: 'PLAY_PAUSE' });
+
+    console.log('clear time');
+    //인터벌 이벤트 clear
+    if (progressInterval) {
+      clearInterval(progressInterval); // 인터벌 클리어
+    }
+  };
 
   const getVideoType = (url: string) => {
     if (url.includes('youtube.com')) {
@@ -116,9 +141,49 @@ export function useVideoPlayer(initialState: VideoState) {
   };
 
   useEffect(() => {
+    addVideoChangeEvent();
+    clearTime();
+    console.log('변경..');
+    console.log(initialState);
+    dispatch({ type: 'SET_INITIAL_STATE', payload: initialState });
+  }, [initialState.contentId, initialState.url]);
+
+  const addVideoChangeEvent = () => {
+    if (playerRef.current) {
+      const handleReadyStateChange = () => {
+        const readyState = playerRef.current?.getInternalPlayer().readyState;
+
+        if (readyState < 2) {
+          setIsLoading(true);
+        } else {
+          setIsLoading(false);
+        }
+
+        if (readyState === 2 || readyState === 3) {
+          setIsBuffering(true);
+        } else {
+          setIsBuffering(false);
+        }
+      };
+
+      const player = playerRef.current.getInternalPlayer();
+      if (player) {
+        player.addEventListener('readystatechange', handleReadyStateChange);
+
+        return () => {
+          player.removeEventListener(
+            'readystatechange',
+            handleReadyStateChange
+          );
+        };
+      }
+    }
+  };
+
+  useEffect(() => {
     if (!playerRef.current) return;
     const videoType = getVideoType(initialState.url as string);
-
+    // addVideoChangeEvent();
     if (
       isReady &&
       !isBuffering &&
@@ -133,7 +198,7 @@ export function useVideoPlayer(initialState: VideoState) {
           startSeconds: startTime,
         });
       } else {
-        console.log(state.lastPlayedTime);
+        // console.log(playerRef.current.getInternalPlayer());
         playerRef.current?.seekTo(state.lastPlayedTime);
       }
       seekPendingRef.current = false;
@@ -150,7 +215,7 @@ export function useVideoPlayer(initialState: VideoState) {
   useEffect(() => {
     if (state.playing && !progressInterval && !isBuffering) {
       // if (startTime.current == null)
-      startTime.current = Math.ceil(playerRef.current?.getCurrentTime() || 0);
+      // startTime.current = Math.ceil(playerRef.current?.getCurrentTime() || 0);
       console.log(state.playing);
       const interval = setInterval(() => {
         updateProgress();
@@ -164,61 +229,77 @@ export function useVideoPlayer(initialState: VideoState) {
 
   useEffect(() => {
     let playerInstance = playerRef.current;
+    addVideoChangeEvent();
     return () => {
-      console.log('클린업 함수 호출');
+      if (progressInterval) {
+        clearInterval(progressInterval);
+        setProgressInterval(null);
+      }
       if (playerInstance) {
         playerInstance = null;
       }
-      if (progressInterval) {
-        clearInterval(progressInterval); // 인터벌 클리어
-      }
     };
   }, []);
+  useEffect(() => {
+    let playerInstance = playerRef.current;
+    // addVideoChangeEvent();
+
+    return () => {
+      if (progressInterval) {
+        clearInterval(progressInterval);
+        setProgressInterval(null);
+      }
+      if (playerInstance) {
+        playerInstance = null;
+      }
+    };
+  }, [progressInterval]);
+
   const updateProgress = () => {
     const currentTime = Math.ceil(playerRef.current?.getCurrentTime() || 0);
     const playbackRate = playerRef.current?.getInternalPlayer().playbackRate;
+    if (state.playing && !progressInterval && !isBuffering) {
+      elapsedTime.current += 1;
+      // console.log(elapsedTime.current);
+      // console.log(playerRef.current?.getInternalPlayer()?.readyState);
+      console.log(state);
+      if (elapsedTime.current >= 10) {
+        const { contentId, chapterId, kitId, sequenceId } = state;
+        console.log('10초 경과');
+        console.log('start time = ' + startTime.current);
+        console.log('end time = ' + currentTime);
+        console.log('현재 배속 = ' + playbackRate);
+        sendVideoDataMutation.mutate({
+          userId: 1,
+          contentId: contentId || 0,
+          chapterId: chapterId || 0,
+          kitId: kitId || 0,
+          courseId: 1,
+          sequenceId: sequenceId || 0,
+          videoStartTime: startTime.current,
+          videoEndTime: currentTime,
+          speed: playbackRate,
+        });
+        elapsedTime.current = 0;
+        startTime.current = currentTime;
 
-    elapsedTime.current += 1;
-
-    if (elapsedTime.current >= 10) {
-      console.log('10초 경과');
-      console.log('start time = ' + startTime.current);
-      console.log('end time = ' + currentTime);
-      console.log('현재 배속 = ' + playbackRate);
-      // sendVideoDataMutation.mutate({
-      //   userId: 1,
-      //   contentId: 1,
-      //   chapterId: 1,
-      //   kitId: 1,
-      //   courseId: 1,
-      //   classId: 1,
-      //   videoStartTime: startTime.current,
-      //   videoEndTime: currentTime,
-      //   speed: playbackRate,
-      // });
-      elapsedTime.current = 0;
-      startTime.current = currentTime;
-
-      //API 전송
+        //API 전송
+      }
     }
   };
 
   const handleReady = () => {
     setIsReady(true);
-    // setIsLoading(false);
-    // initSubtitle();
   };
 
   const handleBuffer = () => {
-    console.log('버퍼 시작');
     setIsBuffering(true);
-    setIsLoading(true);
+    // setIsLoading(true);
   };
 
   const handleBufferEnd = () => {
-    console.log('버퍼 끝');
     setIsBuffering(false);
-    if (isLoading) setIsLoading(false);
+    // if (isLoading) setIsLoading(false);
   };
 
   const handlePlayPause = () => {
@@ -235,12 +316,13 @@ export function useVideoPlayer(initialState: VideoState) {
     handleLoadingState();
   };
   const handleLoadingState = () => {
-    if (isLoading) {
-      setIsLoading(false);
-      if (currentPlayingRef.current) {
-        dispatch({ type: 'PLAY' });
-      }
+    // if (isLoading) {
+    //   setIsLoading(false);
+
+    if (currentPlayingRef.current) {
+      dispatch({ type: 'PLAY' });
     }
+    // }
   };
 
   const handleDuration = (duration: number) => {
@@ -258,8 +340,9 @@ export function useVideoPlayer(initialState: VideoState) {
 
   const seekMouseDown = () => {
     console.log('seekMouseDown isLoading = ' + isLoading);
-    if (!isLoading && !isBuffering) {
-      setIsLoading(true);
+    // if (!isLoading && !isBuffering) {
+    //   setIsLoading(true);
+    if (!isBuffering) {
       dispatch({ type: 'STOP' });
     }
     dispatch({ type: 'SEEK_MOUSE_DOWN' });
@@ -304,7 +387,6 @@ export function useVideoPlayer(initialState: VideoState) {
   };
 
   const handleError = (error: any, data: any) => {
-    // console.error(error, data);
     setIsLoading(false);
   };
 
@@ -340,5 +422,6 @@ export function useVideoPlayer(initialState: VideoState) {
     handleRewind,
     handleForward,
     isLoading,
+    isBuffering,
   };
 }

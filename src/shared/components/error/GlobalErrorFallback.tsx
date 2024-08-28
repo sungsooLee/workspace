@@ -1,11 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { getErrorDataByCode } from './getErrorDataByCode';
 import { Button } from '../Button/button';
-
-export type FallbackProps = {
-  error: any;
-  resetErrorBoundary: (...args: any[]) => void;
-};
+import { FallbackProps } from 'react-error-boundary';
 
 export const GlobalErrorFallback = ({
   error,

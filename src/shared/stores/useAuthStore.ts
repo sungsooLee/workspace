@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import { login, refreshAccessToken } from '@/app/auth/api/authService';
+import { useCallApi } from '../hooks/useCallApi';
 
 interface AuthState {
   accessToken: string | null;
@@ -33,6 +34,10 @@ export const useAuthStore = create(
       signIn: async (email: string, password: string) => {
         try {
           const { accessToken, refreshToken } = await login(email, password);
+          // const data = useCallApi(['api'], () => login(email, password));
+          // console.log(data);
+          // const { accessToken, refreshToken } = data.data;
+
           set({
             accessToken,
             refreshToken,
