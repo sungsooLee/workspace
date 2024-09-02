@@ -4,5 +4,7 @@ export interface Content extends Chapter {
   contentId: number;
   contentName: string;
   seq: number;
+  videoProgressStatus: string;
   status?: string;
+  playRateByEndTime: number;
 }

@@ -65,11 +65,11 @@ const VideoPlayerContainer = React.memo((initialState: any) => {
     handleBuffer,
     handleBufferEnd,
     handlePlaybackChange,
-    handleError,
+    // handleError,
     handleRewind,
     handleForward,
     isLoading,
-    isBuffering,
+    // isBuffering,
   } = useVideoPlayer(initialState);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -84,7 +84,6 @@ const VideoPlayerContainer = React.memo((initialState: any) => {
   const { chapterList, fetchChapterList } = useContentStore((state) => state);
   const sendVideoProgress = useMutation({
     mutationFn: (data: {
-      userId: number;
       contentId: number;
       chapterId: number;
       kitId: number;
@@ -151,7 +150,6 @@ const VideoPlayerContainer = React.memo((initialState: any) => {
       console.log(initialState);
       if (contentId && chapterId && kitId && sequenceId) {
         sendVideoProgress.mutate({
-          userId: 1,
           contentId: contentId,
           chapterId: chapterId,
           kitId: kitId,
@@ -230,7 +228,7 @@ const VideoPlayerContainer = React.memo((initialState: any) => {
         tabIndex={0}
         ref={containerRef}
       >
-        {(isLoading || isBuffering) && (
+        {isLoading.current && (
           <div className='absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50'>
             <div className='h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-white'></div>
           </div>

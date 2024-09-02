@@ -50,7 +50,6 @@ const router = createBrowserRouter([
     element: (
       <GlobalBoundary>
         <ZustandAuthGuard>
-          {/* <ScrollRestoration /> */}
           <Layout />
         </ZustandAuthGuard>
       </GlobalBoundary>

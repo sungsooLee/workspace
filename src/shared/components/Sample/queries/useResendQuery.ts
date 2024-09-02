@@ -3,9 +3,9 @@ import axios from 'axios';
 
 export const QUERY_KEY = ['resend'];
 
-const fetcher = (param: string) => axios.get(`/error/${param}`);
+const fetcher = (param: number) => axios.get(`/error/${param}`);
 
-const useResendQuery = (param: string) => {
+const useResendQuery = (param: number) => {
   return useSuspenseQuery({
     queryKey: QUERY_KEY,
     queryFn: () => fetcher(param),

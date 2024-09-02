@@ -25,8 +25,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/cms-module': {
-        target: 'http://10.204.240.36:8073',
-        changeOrigin: true,
+        target: 'http://localhost:8073',
       },
       '/portal-module': 'http://localhost:8082',
       '/auth-module': 'http://localhost:8081',

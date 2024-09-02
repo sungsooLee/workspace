@@ -23,21 +23,47 @@ export const ContentRender = (props: Content) => {
         chapterId: props?.chapterId,
         kitId: props?.kitId,
         sequenceId: props?.seq,
+        lastPlayedTime: props?.playRateByEndTime,
       });
     }
   };
 
   return (
     <>
-      <p
-        className='bg-slate-100'
+      <div
+        className='cursor-pointer bg-slate-100'
         onClick={() => {
           contentClickEvent();
         }}
       >
         {props.contentName}
-        {props.status ? '- 컨텐츠 상태 : ' + props.status : ''}
-      </p>
+        <p>{props?.videoProgressStatus}</p>
+        <p>{props.status ? '- 컨텐츠 상태 : ' + props.status : ''}</p>
+      </div>
     </>
   );
 };
+
+//   // addVideoChangeEvent();
+//   if (
+//     isReady &&
+//     !isBuffering &&
+//     seekPendingRef.current &&
+//     state.duration > 0
+//   ) {
+//     initSubtitle();
+//     if (videoType === 'youtube') {
+//       const startTime = state.lastPlayedTime * state.duration;
+//       playerRef.current?.getInternalPlayer()?.cueVideoById({
+//         videoId: getYouTubeVideoId(initialState.url as string),
+//         startSeconds: startTime,
+//       });
+//     } else {
+//       // console.log(playerRef.current.getInternalPlayer());
+//       playerRef.current?.seekTo(state.lastPlayedTime);
+//     }
+//     seekPendingRef.current = false;
+//     setIsLoading(false);
+//   }
+// },
+// ]);

@@ -22,7 +22,6 @@ export const ChapterRender = (props: Chapter) => {
     <>
       <div className='w-full bg-slate-400 p-10pxr'>
         <p>{props.chapterName}</p>
-        {/* {contentList && <ContentList {...contentList} />} */}
         {contentList && <ContentList contentList={contentList} />}
       </div>
     </>

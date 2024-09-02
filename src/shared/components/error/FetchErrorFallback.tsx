@@ -20,8 +20,8 @@ export const FetchErrorFallback = ({
   if (errorData.requireLogin) throw error;
 
   const handleClickReset = () => {
-    resetErrorBoundary();
-    reset();
+    resetErrorBoundary(); // fallbackprops의 일부. 오류 발생하기전 상태로 되돌아감.
+    reset(); //쿼리 다시 호출
   };
 
   return (

@@ -15,6 +15,8 @@ const errorData = async () => {
 };
 const call401Error = async () => errorData();
 const Home = () => {
+  const { accessToken } = useAuthStore();
+  console.log(accessToken);
   // const test = async () => {
 
   //   // try {
@@ -35,7 +37,7 @@ const Home = () => {
   };
 
   const test2 = () => {
-    const { clearToken } = useAuthStore.getState();
+    const { clearToken } = useAuthStore();
     clearToken();
   };
   return (

@@ -1,7 +1,6 @@
 import { Content } from '@/entities/content';
 import { ContentRender } from '@/entities/content/ui/Content';
 
-// export const ContentList = (props: Content[]) => {
 export const ContentList = ({ contentList }: { contentList: Content[] }) => {
   return (
     <>

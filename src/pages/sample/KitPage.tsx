@@ -3,12 +3,13 @@ import { KitContainer, KitProps } from '@/widgets/kit/ui/KitContainer';
 import { useState } from 'react';
 
 export const KitPage = () => {
-  const kitArr: KitProps[] = [{ kitId: 1 }, { kitId: 5 }];
+  const kitArr: KitProps[] = [{ kitId: 2 }];
 
   const [kit, setKit] = useState<KitProps | null>(null);
 
   const getKit = (props: any) => {
-    if (kit?.kitId !== props.kitId) setKit(props);
+    // if (kit?.kitId !== props.kitId)
+    setKit(props);
   };
 
   return (

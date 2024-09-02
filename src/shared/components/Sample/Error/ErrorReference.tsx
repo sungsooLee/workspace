@@ -1,7 +1,7 @@
 import { FetchBoundary } from '../../error/FetchErrorBoundary';
 import { ErrorJavascript } from './ErrorJavascript';
 
-export const ErrorJS = () => {
+export const ErrorReference = () => {
   return (
     <>
       <FetchBoundary>

@@ -10,7 +10,6 @@ export const axiosInstance = axios.create({
   baseURL: import.meta.env.BASE_URL,
   timeout: 10000,
 });
-
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   sent?: boolean;
 }

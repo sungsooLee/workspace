@@ -68,9 +68,13 @@ const ControlBar = ({
               onChangeVolume={onVolumeChange}
             />
             <div>
-              <p className='text-white'>
-                {formatTime(played * duration)} / {formatTime(duration)}
-              </p>
+              {played && duration ? (
+                <p className='text-white'>
+                  {formatTime(played * duration)} / {formatTime(duration)}{' '}
+                </p>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div className='flex items-center space-x-4'>

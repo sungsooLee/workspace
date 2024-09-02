@@ -1,6 +1,9 @@
+import { useErrorBoundary } from 'react-error-boundary';
 import { Button } from '../../Button/button';
 
 export const ErrorTimeoutAndClick = () => {
+  const { showBoundary } = useErrorBoundary();
+
   const setTimeoutError = () => {
     console.log('타임아웃 시작');
     setTimeout(() => {
@@ -11,9 +14,9 @@ export const ErrorTimeoutAndClick = () => {
 
   const clickError = () => {
     try {
-      console.log('클릭 에러');
       throw Error('Click Error');
     } catch (error) {
+      showBoundary(error);
       console.error(error);
     }
   };

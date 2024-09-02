@@ -9,7 +9,7 @@ interface SeekSliderProps {
 }
 
 const SeekSlider = ({
-  played = 0,
+  played,
   loaded,
   onSeek,
   onSeekMouseDown,

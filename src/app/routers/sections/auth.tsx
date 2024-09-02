@@ -16,9 +16,7 @@ const auth = {
       element: (
         <>
           <ErrorBoundary FallBack={ErrorFallback} onReset={() => {}}>
-            {/* <FetchBoundary> */}
             <LoginPage />
-            {/* </FetchBoundary> */}
           </ErrorBoundary>
         </>
       ),

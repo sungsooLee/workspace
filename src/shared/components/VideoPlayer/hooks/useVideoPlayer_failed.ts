@@ -75,7 +75,7 @@ export function useVideoPlayer(initialState: VideoState) {
   const currentPlayingRef = useRef(state.playing);
   const startTime = useRef(0);
   const elapsedTime = useRef(0);
-  const isLoading = useRef(true);
+  const isLoading = useRef(false);
   const [progressInterval, setProgressInterval] =
     useState<NodeJS.Timeout | null>(null);
 
@@ -95,7 +95,6 @@ export function useVideoPlayer(initialState: VideoState) {
 
   useEffect(() => {
     addVideoChangeEvent();
-    isLoading.current = true;
     dispatch({
       type: 'SET_INITIAL_STATE',
       payload: initialState,
@@ -288,10 +287,6 @@ export function useVideoPlayer(initialState: VideoState) {
     isLoading.current = false;
   }, []);
 
-  const handleReady = useCallback(() => {
-    isLoading.current = false;
-  }, []);
-
   return {
     playerRef,
     state,
@@ -310,7 +305,6 @@ export function useVideoPlayer(initialState: VideoState) {
     handleBufferEnd,
     handleRewind,
     handleForward,
-    handleReady,
     isLoading,
   };
 }
