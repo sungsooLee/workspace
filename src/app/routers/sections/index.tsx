@@ -56,8 +56,6 @@ const router = createBrowserRouter([
     ),
     children: [...mainRoutes, ...myRoutes, ...knowledgeRoutes],
   },
-  // { path: '/error', element: <ErrorPage /> },
-  // { path: '404', element: <Page404 /> },
   { path: '*', element: <>NOT FOUND</> },
 ]);
 

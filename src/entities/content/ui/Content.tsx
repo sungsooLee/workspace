@@ -43,27 +43,3 @@ export const ContentRender = (props: Content) => {
     </>
   );
 };
-
-//   // addVideoChangeEvent();
-//   if (
-//     isReady &&
-//     !isBuffering &&
-//     seekPendingRef.current &&
-//     state.duration > 0
-//   ) {
-//     initSubtitle();
-//     if (videoType === 'youtube') {
-//       const startTime = state.lastPlayedTime * state.duration;
-//       playerRef.current?.getInternalPlayer()?.cueVideoById({
-//         videoId: getYouTubeVideoId(initialState.url as string),
-//         startSeconds: startTime,
-//       });
-//     } else {
-//       // console.log(playerRef.current.getInternalPlayer());
-//       playerRef.current?.seekTo(state.lastPlayedTime);
-//     }
-//     seekPendingRef.current = false;
-//     setIsLoading(false);
-//   }
-// },
-// ]);

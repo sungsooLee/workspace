@@ -20,6 +20,7 @@ export const menuConfig: TestMenuConfig = {
     1: [
       { id: 11, name: '키트 샘플', link: 'my/subscribe' },
       { id: 12, name: '에러 샘플', link: 'my/error-sample' },
+      { id: 14, name: '입력 샘플', link: 'my/input-sample' },
       // { id: 13, name: '채널 상세', link: 'my/channel-detail' },
     ],
     2: [

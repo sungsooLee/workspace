@@ -1,4 +1,5 @@
 import { ErrorSample } from '@/pages/sample/ErrorSample';
+import InputSample from '@/pages/sample/InputSample';
 import { KitPage } from '@/pages/sample/KitPage';
 import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import { lazy } from 'react';
@@ -23,6 +24,14 @@ export const myRoutes = [
         element: (
           <>
             <ErrorSample />
+          </>
+        ),
+      },
+      {
+        path: 'input-sample',
+        element: (
+          <>
+            <InputSample />
           </>
         ),
       },

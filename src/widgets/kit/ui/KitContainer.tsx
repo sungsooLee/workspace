@@ -5,8 +5,12 @@ import { useEffect, useMemo } from 'react';
 import useContentStore from '@/shared/stores/useContentStore';
 import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import useGetKitQuery from '../queries/useGetKitQuery';
+import useKitProgressQuery from '../queries/useKitProgressQuery';
 export type KitProps = {
   kitId: number;
+  courseId?: number;
+  sequenceId?: number;
+  now?: number;
 };
 
 export type KitInfo = {
@@ -17,11 +21,12 @@ export type KitInfo = {
 };
 
 export const KitContainer = (props: KitProps) => {
-  const { kitId } = props;
-  const { data } = useGetKitQuery(props.kitId);
+  const { kitId, now } = props;
+  const { data, refetch } = useGetKitQuery(props.kitId);
   const videoState = useContentStore((state: any) => state.content);
+  const kitProgressMutation = useKitProgressQuery(props);
   const { setInitContent } = useContentStore();
-  const memoizedVideoState = useMemo(() => videoState, [videoState]);
+  const memoizedVideoState = useMemo(() => videoState, [videoState, now]);
   const memoizedChapterList: Chapter[] = useMemo(() => {
     const kitInfo = data.data.data;
     const chapterList: Chapter[] = kitInfo.chapterList;
@@ -39,8 +44,19 @@ export const KitContainer = (props: KitProps) => {
   useEffect(() => {
     return () => {
       setInitContent();
+      console.log('unmount');
+      kitProgressMutation.mutate();
     };
   }, []);
+
+  useEffect(() => {
+    refetchInfo();
+  }, [now]);
+
+  const refetchInfo = () => {
+    setInitContent();
+    refetch();
+  };
 
   return (
     <>
@@ -50,7 +66,10 @@ export const KitContainer = (props: KitProps) => {
           동영상 영역
           {videoState && videoState.url && (
             <FetchBoundary>
-              <VideoPlayerContainer {...memoizedVideoState} />
+              <VideoPlayerContainer
+                initialState={memoizedVideoState}
+                refetchFunc={refetch}
+              />
             </FetchBoundary>
           )}
         </div>

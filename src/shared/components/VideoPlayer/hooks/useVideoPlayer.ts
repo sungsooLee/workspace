@@ -94,8 +94,6 @@ export function useVideoPlayer(initialState: VideoState) {
   });
 
   useEffect(() => {
-    addVideoChangeEvent();
-    isLoading.current = true;
     dispatch({
       type: 'SET_INITIAL_STATE',
       payload: initialState,
@@ -104,40 +102,7 @@ export function useVideoPlayer(initialState: VideoState) {
 
   useEffect(() => {
     playerRef.current?.seekTo(state.lastPlayedTime);
-    isLoading.current = false;
   }, [state.duration, initialState.url]);
-
-  const addVideoChangeEvent = () => {
-    if (playerRef.current) {
-      const handleReadyStateChange = (player: any) => {
-        const readyState = player.readyState;
-        console.log(readyState);
-        if (readyState < 2) {
-          isLoading.current = true;
-        } else {
-          isLoading.current = false;
-        }
-        if (readyState === 2 || readyState === 3) {
-          isLoading.current = true;
-        } else {
-          isLoading.current = false;
-        }
-      };
-      const player = playerRef.current.getInternalPlayer();
-      if (player) {
-        player.addEventListener(
-          'readystatechange',
-          handleReadyStateChange(player)
-        );
-        return () => {
-          player.removeEventListener(
-            'readystatechange',
-            handleReadyStateChange
-          );
-        };
-      }
-    }
-  };
 
   useEffect(() => {
     if (state.playing && !progressInterval && !isLoading.current) {
@@ -154,7 +119,6 @@ export function useVideoPlayer(initialState: VideoState) {
 
   useEffect(() => {
     let playerInstance = playerRef.current;
-    // addVideoChangeEvent();
     return () => {
       if (progressInterval) {
         clearInterval(progressInterval);
@@ -230,16 +194,18 @@ export function useVideoPlayer(initialState: VideoState) {
     if (!state.seeking) {
       dispatch({ type: 'SET_PROGRESS', payload: videoState });
     }
-    handleLoadingState();
-  }, []);
-  const handleLoadingState = useCallback(() => {
-    if (currentPlayingRef.current) {
-      dispatch({ type: 'PLAY' });
+    const player = playerRef.current;
+    if (player) {
+      const readyState = player.getInternalPlayer().readyState;
+      if (readyState === 4 && state.played >= state.loaded) {
+        isLoading.current = false;
+      } else {
+        isLoading.current = true;
+      }
     }
   }, []);
 
   const handleDuration = (duration: number) => {
-    console.log(duration);
     dispatch({ type: 'SET_DURATION', payload: duration });
   };
 
@@ -253,7 +219,6 @@ export function useVideoPlayer(initialState: VideoState) {
   };
 
   const seekMouseDown = () => {
-    console.log('seekMouseDown isLoading = ' + isLoading.current);
     dispatch({ type: 'SEEK_MOUSE_DOWN' });
   };
   const seekMouseUp = () => {
@@ -310,7 +275,7 @@ export function useVideoPlayer(initialState: VideoState) {
     handleBufferEnd,
     handleRewind,
     handleForward,
-    handleReady,
     isLoading,
+    handleReady,
   };
 }
