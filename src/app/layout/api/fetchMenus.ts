@@ -1,5 +1,3 @@
-import useLanguageStore from '@/shared/stores/useLanguageStore';
-
 async function fetchMenus() {
   const response = await fetch('/api/menus');
   const responseJson = await response.json();

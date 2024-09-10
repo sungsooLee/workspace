@@ -44,7 +44,6 @@ export const KitContainer = (props: KitProps) => {
   useEffect(() => {
     return () => {
       setInitContent();
-      console.log('unmount');
       kitProgressMutation.mutate();
     };
   }, []);

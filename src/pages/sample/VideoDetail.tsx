@@ -86,38 +86,15 @@ const VideoDetail = () => {
     setVideoInfo(video[0]);
     reset();
   }, [id]);
-
-  // useEffect(() => {
-  //   const info = data?.data?.data;
-  //   console.log(info);
-  //   console.log(info?.lastPlayTime);
-  //   // setTmpVideoInfo(info);
-  // }, [data]);
   const handleVideoClick = (videoId: number) => {
     navigate(`/my/video/${videoId}`);
   };
-
-  // if (isError) {
-  //   return <ErrorFallback resetError={error} />;
-  // }
 
   return (
     <div key={id} className='flex flex-col overflow-hidden md:flex-row'>
       <div className='w-full flex-[6_6_0%] p-4 md:flex md:flex-col'>
         <div className='relative mb-4 min-w-200pxr'>
-          {/* {isLoading ? (
-            <h1>데이터 가져오는중..</h1>
-          ) : ( */}
-          {/* // tmpVideoInfo?.lastPlayTime >= 0 && ( */}
-          {videoState && (
-            <VideoPlayerContainer
-              {...videoState}
-              // ...
-            />
-          )}
-          {/* // ) */}
-          {/* )} */}
-          {/* <VideoPlayer videoId={id || ''} /> */}
+          {videoState && <VideoPlayerContainer {...videoState} />}
         </div>
         <div>
           {videos.length && (

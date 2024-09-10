@@ -1,15 +1,13 @@
-import { axiosInstance } from '@/app/api/instance';
 import { Button } from '@/shared/components/Button/button';
 import { HTTPError } from '@/shared/components/error/errorBoundary';
 import { Input } from '@/shared/components/Input/input';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const authContext = useContext(AuthContext);
   const signIn = useAuthStore((state) => state.signIn);
   const navigate = useNavigate();
 

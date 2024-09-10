@@ -5,14 +5,14 @@ interface IObjectKeys {
 }
 
 const companyComponentMap: IObjectKeys = {
-  companyA: {
+  A: {
     Card: lazy(() =>
       import('./CardSample').then((module) => ({
         default: module.default.CompanyACard,
       }))
     ),
   },
-  companyB: {
+  B: {
     Card: lazy(() =>
       import('./CardSample').then((module) => ({
         default: module.default.CompanyBCard,

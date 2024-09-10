@@ -15,7 +15,6 @@ export const useCallApi = <T>(
       return response;
     },
   });
-  console.log(data);
 
   return { data, isLoading };
 };
