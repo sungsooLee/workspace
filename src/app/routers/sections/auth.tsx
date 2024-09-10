@@ -1,5 +1,5 @@
-import LoginPage from '@/pages/auth/Login';
-import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
+// import LoginPage from '@/pages/auth/Login';
+import LoginPage from '@/pages/auth/login';
 import ErrorBoundary from '@/shared/components/error/errorBoundary';
 import ErrorFallback from '@/shared/components/error/errorFallback';
 import { Outlet } from 'react-router-dom';

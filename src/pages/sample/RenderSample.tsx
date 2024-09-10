@@ -34,7 +34,7 @@ const companySchemas = {
   }),
 };
 
-const currentCompany = 'B';
+const currentCompany = 'A';
 
 const companySchema: any =
   currentCompany in companySchemas
@@ -43,7 +43,7 @@ const companySchema: any =
 
 const RenderSample = () => {
   const combineSchema = commonSchema.merge(companySchema);
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(combineSchema),
   });
 
