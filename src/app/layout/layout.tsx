@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { menuConfig, MenuItem } from './types';
 import { useQuery } from '@tanstack/react-query';
 import fetchMenus from './api/fetchMenus';
-import GNB from './common/Gnb';
 import LnbDrawer from './common/LnbDrawer';
+import GNB from './common/gnb';
 const Layout = () => {
   const [activeMenuId, setActiveMenuId] = useState(1);
 
