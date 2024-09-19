@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputProps } from '../../../shared/components/Input/input';
+import { InputProps } from '../../../shared/components/ui/input';
 import { cn } from '@/shared/utils/utils';
 
 const CommentInput = React.forwardRef<HTMLInputElement, InputProps>(

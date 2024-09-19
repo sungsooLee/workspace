@@ -1,7 +1,5 @@
-// import LoginPage from '@/pages/auth/Login';
 import LoginPage from '@/pages/auth/login';
-import ErrorBoundary from '@/shared/components/error/errorBoundary';
-import ErrorFallback from '@/shared/components/error/errorFallback';
+import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import { Outlet } from 'react-router-dom';
 
 const auth = {
@@ -15,13 +13,12 @@ const auth = {
       path: 'login',
       element: (
         <>
-          <ErrorBoundary FallBack={ErrorFallback} onReset={() => {}}>
+          <FetchBoundary>
             <LoginPage />
-          </ErrorBoundary>
+          </FetchBoundary>
         </>
       ),
     },
-    { path: 'register', element: <>회원가입화면</> },
   ],
 };
 

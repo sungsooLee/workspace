@@ -1,4 +1,4 @@
-import { Button } from '@/shared/components/Button/button';
+import { Button } from '@/shared/components/ui/button';
 import { KitContainer, KitProps } from '@/widgets/kit/ui/KitContainer';
 import { useState } from 'react';
 

@@ -1,6 +1,7 @@
 import { HttpResponse, http } from 'msw';
-import user from './user.json';
-import hugeData from './commentsLarge.json';
+import user from './data/user.json';
+import hugeData from './data/commentsLarge.json';
+import { menuConfig } from '@/app/layout/types';
 
 interface LoginUserType {
   email: string;
@@ -48,20 +49,18 @@ export const handlers = [
     });
   }),
 
-  /**
-   * 8월 11일 로그인 관련 새로 추가.
-   *
-   */
   http.post('/login', async ({ request }) => {
-    const { email, password } = (await request.json()) as LoginUserType;
+    const { password } = (await request.json()) as LoginUserType;
     await wait(1000);
 
     if (password !== '1234') {
       return HttpResponse.json(
         {
-          msg: '로그인 정보를 다시 확인해주세요. (비밀번호 1234)',
+          error: '로그인 정보를 다시 확인해주세요. (비밀번호 1234)',
         },
-        { status: 401 }
+        {
+          status: 401,
+        }
       );
     }
 
@@ -174,7 +173,7 @@ export const handlers = [
     return HttpResponse.json(
       {
         message: '서버 에러 발생',
-        code: 500,
+        code: 'CUSTOM_ERROR',
       },
       { status: 500 }
     );
@@ -311,10 +310,7 @@ export const handlers = [
       statusCode: 'OK',
       message: '',
       data: {
-        items: [
-          { id: 1, name: 'channel', link: '#' },
-          { id: 2, name: 'channel2', link: '#' },
-        ],
+        items: menuConfig.gnb || [],
       },
     });
   }),

@@ -2,7 +2,7 @@ import {
   LearningFormatEnum,
   LearningTypeEnum,
 } from '@/entities/learning/model/learning';
-import { Button } from '@/shared/components/Button/button';
+import { Button } from '@/shared/components/ui/button';
 import { getEnumKeyByValue, getEnumValueByKey } from '@/shared/utils/enum';
 
 interface FilterProps {

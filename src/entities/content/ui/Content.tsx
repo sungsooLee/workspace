@@ -1,7 +1,6 @@
 import { Content } from '../model/types';
 import { getContent } from '../api';
 import useContentStore from '@/shared/stores/useContentStore';
-// import { useCallApi } from '@/shared/hooks/useCallApi';
 import { useSuspenseQuery } from '@tanstack/react-query';
 const getContentFunc = (contentId: number) => getContent(contentId);
 

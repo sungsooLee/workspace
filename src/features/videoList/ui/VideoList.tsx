@@ -1,4 +1,4 @@
-import Thumbnail from '@/shared/components/Thumbnail/thumbnail';
+import Thumbnail from '@/shared/components/thumbnail/thumbnail';
 
 interface VideoListProps {
   videos: Video[];

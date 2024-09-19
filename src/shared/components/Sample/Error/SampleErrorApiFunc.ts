@@ -1,6 +1,7 @@
-import axios from 'axios';
+import { axiosInstance } from '@/app/api/instance';
+// import axios from 'axios';
 
 export const errorGetData = async (param?: string) => {
-  const response = await axios.get(`/error/${param}`);
+  const response = await axiosInstance.get(`/error/${param}`);
   return response.data;
 };

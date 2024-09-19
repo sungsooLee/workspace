@@ -1,7 +1,7 @@
 import { ErrorBoundary, ErrorBoundaryProps } from 'react-error-boundary';
 import { FetchErrorFallback } from './FetchErrorFallback';
 import { Suspense, SuspenseProps } from 'react';
-import LoadingScreen from '../suspense/loading-screen';
+import LoadingScreen from '../ui/loading-screen';
 
 type FetchBoundaryProps = {
   children: React.ReactElement;

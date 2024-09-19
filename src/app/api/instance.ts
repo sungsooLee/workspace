@@ -52,6 +52,13 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const { config, response } = error;
     const customConfig = config as CustomAxiosRequestConfig;
+
+    if (response?.status === 401) {
+      if (customConfig.url === '/login') {
+        return Promise.reject(error);
+      }
+    }
+
     if (
       customConfig.url === '/refresh-token' ||
       response?.status !== 401 ||
