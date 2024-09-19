@@ -1,7 +1,5 @@
-import React from 'react';
 import VideoList, { VideoListProps } from './VideoList';
 import { Meta, StoryFn } from '@storybook/react';
-import * as thumbnailStories from '@/shared/components/Thumbnail/thumbnail.stories';
 
 // import * as ThumbStories from
 

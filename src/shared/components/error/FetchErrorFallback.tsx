@@ -1,7 +1,7 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { FallbackProps } from 'react-error-boundary';
 import { getErrorDataByCode } from './getErrorDataByCode';
-import { Button } from '../Button/button';
+import { Button } from '../ui/button';
 
 type CustomFallbackProps = FallbackProps & {
   // Type Intersection

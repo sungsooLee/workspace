@@ -1,6 +1,6 @@
 import { Chapter } from '@/features/chapter';
 import { ChapterList } from '@/features/chapterList/ui/ChapterList';
-import VideoPlayerContainer from '@/shared/components/VideoPlayer/ui/VideoPlayerContainer';
+import VideoPlayerContainer from '@/shared/components/videoPlayer/ui/VideoPlayerContainer';
 import { useEffect, useMemo } from 'react';
 import useContentStore from '@/shared/stores/useContentStore';
 import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';

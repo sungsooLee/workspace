@@ -1,8 +1,5 @@
 import ReactPlayer from 'react-player/lazy';
-import { useVideoPlayer } from '../hooks/useVideoPlayer';
-import ControlBar from './controlBar/ControlBar';
 import React, { useEffect, useRef, useState } from 'react';
-import Watermark from '../../Watermark/Watermark';
 import {
   FaBackward,
   FaForward,
@@ -16,6 +13,8 @@ import axios from 'axios';
 import useContentStore from '@/shared/stores/useContentStore';
 import { Chapter } from '@/features/chapter';
 import { Content } from '@/entities/content';
+import { useVideoPlayer } from '../hooks/useVideoPlayer';
+import ControlBar from './controlBar/ControlBar';
 
 const VideoPlayerContainer = React.memo(
   ({ initialState, refetchFunc }: { initialState: any; refetchFunc: any }) => {
@@ -257,16 +256,6 @@ const VideoPlayerContainer = React.memo(
             )}
           </div>
           {/* )} */}
-          {/* <Watermark
-          src={url}
-          text={email}
-          width='100%'
-          height='100%'
-          opacity={0.25}
-          fontSize='2em'
-          rotate='-45'
-          
-        /> */}
 
           {isHover && (
             <ControlBar

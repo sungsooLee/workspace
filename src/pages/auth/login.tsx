@@ -1,6 +1,7 @@
-import { Button } from '@/shared/components/Button/button';
-import { HTTPError } from '@/shared/components/error/errorBoundary';
-import { Input } from '@/shared/components/Input/input';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import LoadingScreen from '@/shared/components/ui/loading-screen';
+import { useLoginMutation } from '@/shared/hooks/useLoginMutation';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +9,10 @@ import { useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const signIn = useAuthStore((state) => state.signIn);
+  const loginMutation = useLoginMutation();
+  const singIn = useAuthStore((state) => state.signIn);
   const navigate = useNavigate();
-
+  const { isPending, isError, error } = loginMutation;
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -27,30 +29,50 @@ export default function LoginPage() {
 
   const login = async () => {
     try {
-      await signIn(email, password);
-      navigate('/');
+      loginMutation.mutateAsync({ email, password }).then((data) => {
+        if (data && data.accessToken && data.refreshToken && email) {
+          singIn(data.accessToken, data.refreshToken, email);
+          // navigate('/');
+          const searchParams = new URLSearchParams(window.location.search);
+          // console.log(searchParams);
+          const returnTo = searchParams.get('returnTo');
+          // Console.log()
+          if (returnTo) {
+            navigate(returnTo);
+          } else {
+            navigate('/');
+          }
+        } else throw Error('failed login');
+      });
     } catch (error: any) {
-      console.log(error);
-      if (error.response && error.response.status === 401) {
-        throw new HTTPError(401, 'Invalid email or password');
-      } else {
-        throw error;
-      }
+      throw error;
     }
   };
+
   return (
     <>
       <div className='p-50pxr'>
-        <Input placeholder='email' value={email} onChange={handleEmailChange} />
-        <Input
-          type='password'
-          placeholder='password'
-          value={password}
-          onChange={handlePasswordChange}
-          onKeyDown={handleKeyDown}
-        />
+        {!isPending ? (
+          <>
+            <Input
+              placeholder='email'
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <Input
+              type='password'
+              placeholder='password'
+              value={password}
+              onChange={handlePasswordChange}
+              onKeyDown={handleKeyDown}
+            />
+          </>
+        ) : (
+          <LoadingScreen />
+        )}
       </div>
       <div>
+        {isError && <p className='text-red-600'>{error?.message}</p>}
         <Button onClick={login}>로그인</Button>
       </div>
     </>

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { getErrorDataByCode } from './getErrorDataByCode';
-import { Button } from '../Button/button';
+import { Button } from '../ui/button';
 import { FallbackProps } from 'react-error-boundary';
 
 export const GlobalErrorFallback = ({

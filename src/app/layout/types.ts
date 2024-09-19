@@ -12,20 +12,14 @@ export interface TestMenuConfig {
 
 export const menuConfig: TestMenuConfig = {
   gnb: [
-    { id: 1, name: '학습채널', link: '#' },
-    { id: 2, name: '학습현황', link: '#' },
-    { id: 3, name: '학습지원', link: '#' },
+    { id: 1, name: 'channel', link: '#' },
+    { id: 2, name: '샘플', link: '#' },
   ],
   lnb: {
-    1: [
-      { id: 11, name: '키트 샘플', link: 'my/subscribe' },
-      { id: 12, name: '에러 샘플', link: 'my/error-sample' },
-      { id: 14, name: '입력 샘플', link: 'my/input-sample' },
-      // { id: 13, name: '채널 상세', link: 'my/channel-detail' },
-    ],
+    1: [{ id: 11, name: '키트 샘플', link: 'my/subscribe' }],
     2: [
-      { id: 21, name: '지식공유', link: 'knowledge/share' },
-      { id: 22, name: 'COP', link: 'knowledge/cop' },
+      { id: 21, name: '에러 처리', link: 'sample/error' },
+      { id: 22, name: '입력', link: 'sample/input' },
     ],
   },
 };

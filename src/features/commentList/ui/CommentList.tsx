@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../../shared/components/Button/button';
+import { Button } from '../../../shared/components/ui/button';
 import { CommentInput } from './CommentInput';
 import { CommentListProps } from '../model/commentList';
 

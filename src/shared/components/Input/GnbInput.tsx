@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputProps } from './input';
+import { InputProps } from '../ui/input';
 import { cn } from '@/shared/utils/utils';
 
 const GnbInput = React.forwardRef<HTMLInputElement, InputProps>(

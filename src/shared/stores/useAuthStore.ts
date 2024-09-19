@@ -1,7 +1,6 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
-import { login, refreshAccessToken } from '@/app/auth/api/authService';
-import { useCallApi } from '../hooks/useCallApi';
+import { refreshAccessToken } from '@/app/auth/api/authService';
 
 interface AuthState {
   accessToken: string | null;
@@ -10,7 +9,7 @@ interface AuthState {
   isLoading: boolean;
   error: Error | null;
   email?: string;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (accessToken: string, refreshToken: string, email: string) => void;
   signOut: () => void;
   checkAuth: () => void;
   refreshAccessToken: () => Promise<void>;
@@ -31,27 +30,15 @@ export const useAuthStore = create(
       setRefreshToken: (token: string | null) => set({ refreshToken: token }),
       clearToken: () =>
         set({ accessToken: null, refreshToken: null, isAuthenticated: false }),
-      signIn: async (email: string, password: string) => {
-        try {
-          const { accessToken, refreshToken } = await login(email, password);
-          // const data = useCallApi(['api'], () => login(email, password));
-          // console.log(data);
-          // const { accessToken, refreshToken } = data.data;
-
-          set({
-            accessToken,
-            refreshToken,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-            email: email,
-          });
-        } catch (error: any) {
-          set({ error, isLoading: false });
-          throw error;
-        }
-      },
-
+      signIn: (accessToken: string, refreshToken: string, email: string) =>
+        set({
+          accessToken,
+          refreshToken,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+          email: email,
+        }),
       signOut: () => {
         set({
           accessToken: null,
