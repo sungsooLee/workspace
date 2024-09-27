@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from 'tailwindcss';
@@ -33,5 +34,10 @@ export default defineConfig({
       '/encoding-module': 'http://localhost:8085',
       '/hls': 'http://localhost:8070',
     },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/tests/setup.ts',
   },
 });

@@ -13,8 +13,16 @@ export interface WithInputFieldProps<T extends ZodType<any, ZodTypeDef, any>> {
   inputSuffix?: React.ReactNode;
   className?: string;
   options?: any[];
-  // control?: Control<any>; // control 속성을 선택적으로 변경
   control?: any;
+  style?: {
+    container?: string;
+    label?: string;
+    input?: string;
+    error?: string;
+    checkbox?: string;
+    radio?: string;
+    toggle?: string;
+  };
 }
 
 export const withInputField = <T extends ZodType<any, ZodTypeDef, any>>(
@@ -32,6 +40,7 @@ export const withInputField = <T extends ZodType<any, ZodTypeDef, any>>(
     inputSuffix,
     options,
     className,
+    style = {},
     ...rest
   }: WithInputFieldProps<T> & UseControllerProps<any>) => {
     const {
@@ -48,7 +57,10 @@ export const withInputField = <T extends ZodType<any, ZodTypeDef, any>>(
           className={`flex items-center ${labelAlign === 'right' ? 'justify-end' : labelAlign === 'center' ? 'justify-center' : ''}`}
         >
           {label && (
-            <label className='mb-2 block text-sm font-bold text-gray-700'>
+            <label
+              htmlFor={name}
+              className='mb-2 block text-sm font-bold text-gray-700'
+            >
               {label}
               {required && <span className='text-red-500'>*</span>}
             </label>
@@ -57,6 +69,7 @@ export const withInputField = <T extends ZodType<any, ZodTypeDef, any>>(
         </div>
         <div className='relative'>
           <WrappedComponent
+            id={name}
             {...fieldProps}
             value={value || ''}
             onBlur={onBlur}
@@ -66,6 +79,7 @@ export const withInputField = <T extends ZodType<any, ZodTypeDef, any>>(
             className={`focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none ${
               error ? 'border-red-500' : ''
             }`}
+            style={style}
           />
           {inputSuffix && (
             <div className='absolute inset-y-0 right-0 flex items-center pr-3'>

@@ -9,6 +9,7 @@ export const initI18n = (language : string) => {
         translation: {
           "welcome": 'Welcome',
           "channel": 'Channel',
+          "sample" : "Sample",
           "logout" : "Logout",
           "DarkMode": "DarkMode"
         },
@@ -17,6 +18,7 @@ export const initI18n = (language : string) => {
         translation: {
           "welcome": '환영합니다',
           "channel": '채널',
+          "sample": "샘플",
           "logout":"로그아웃", 
           "DarkMode":'다크모드'
         },

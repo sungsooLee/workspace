@@ -13,7 +13,7 @@ export interface TestMenuConfig {
 export const menuConfig: TestMenuConfig = {
   gnb: [
     { id: 1, name: 'channel', link: '#' },
-    { id: 2, name: '샘플', link: '#' },
+    { id: 2, name: 'sample', link: '#' },
   ],
   lnb: {
     1: [{ id: 11, name: '키트 샘플', link: 'my/subscribe' }],

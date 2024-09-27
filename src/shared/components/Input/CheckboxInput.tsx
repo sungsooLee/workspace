@@ -1,41 +1,62 @@
 import { useState } from 'react';
 import { Checkbox } from '../ui/checkbox';
-import withInputField from './withInputField';
+import { useController } from 'react-hook-form';
 
-export const CheckboxInput = withInputField(
-  ({ className, onChange, error, options, label, ...rest }) => {
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+interface CheckboxInputProps {
+  name: string;
+  label?: string;
+  options: { value: any; label: any }[];
+  control: any;
+  className?: string;
+}
 
-    const handleCheckboxChange = (value: string, checked: boolean) => {
-      let newArr = [];
-      if (checked) {
-        newArr = [...selectedItems, value];
-      } else {
-        newArr = selectedItems.filter((item) => item !== value);
-      }
-      setSelectedItems(newArr);
-      onChange(newArr);
-    };
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({
+  name,
+  label,
+  options,
+  control,
+  className,
+}) => {
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+  });
+  const [selectedItems, setSelectedItems] = useState<any[]>(field.value || []);
 
-    return (
-      <>
-        {options &&
-          options.map(
-            ({ value, label: optionLabel }: { value: any; label: any }) => (
-              <div key={value} className='items-center space-x-2'>
-                <Checkbox
-                  id={value}
-                  checked={selectedItems.includes(value)}
-                  onCheckedChange={(checked: boolean) =>
-                    handleCheckboxChange(value, checked)
-                  }
-                  {...rest}
-                />
-                <label htmlFor={value}>{optionLabel}</label>
-              </div>
-            )
-          )}
-      </>
-    );
-  }
-);
+  const handleChange = (value: any) => {
+    const newSelectedItems = selectedItems.includes(value)
+      ? selectedItems.filter((item) => item !== value)
+      : [...selectedItems, value];
+    setSelectedItems(newSelectedItems);
+    field.onChange(newSelectedItems);
+  };
+
+  return (
+    <>
+      {label && (
+        <label className='mb-2 flex text-sm font-bold text-gray-700'>
+          {label}
+        </label>
+      )}
+      <div className={`flex ${className}`}>
+        {options.map(({ value, label: optionLabel }) => (
+          <div key={value} className='flex items-center space-x-2'>
+            <Checkbox
+              id={value}
+              checked={selectedItems.includes(value)}
+              onCheckedChange={() => handleChange(value)}
+            />
+            <label htmlFor={`${name}-${value}`} className='text-sm'>
+              {optionLabel}
+            </label>
+          </div>
+        ))}
+      </div>
+
+      {error && <p className='text-xs italic text-red-500'>{error.message}</p>}
+    </>
+  );
+};

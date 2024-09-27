@@ -8,7 +8,7 @@ import { TabsTrigger } from '@radix-ui/react-tabs';
 
 export const ErrorSamplePage = () => {
   return (
-    <Tabs defaultValue='400' className='h-full w-full'>
+    <Tabs defaultValue='400' className='h-full w-full p-20'>
       <TabsList className='grid w-full grid-cols-5'>
         <TabsTrigger className='data-[state=active]:bg-white' value='400'>
           400

@@ -50,7 +50,7 @@ const InputForm = ({ schema, onSubmit, children }: InputFormProps) => {
 
   return (
     <CommonCard>
-      <CommonCard.Title>입력 폼</CommonCard.Title>
+      <CommonCard.Title>Renderer</CommonCard.Title>
       <CommonCard.Contents>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CommonFields control={control} />

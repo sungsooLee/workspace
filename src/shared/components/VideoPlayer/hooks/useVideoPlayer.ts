@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { Progress, VideoState } from '../model/model';
 import ReactPlayer from 'react-player/lazy';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 
 type Action =
   | { type: 'PLAY' }
@@ -69,29 +67,16 @@ function videoReducer(state: VideoState, action: Action): VideoState {
 
 export function useVideoPlayer(initialState: VideoState) {
   const [state, dispatch] = useReducer(videoReducer, initialState);
+  const [isLoading, setIsLoading] = useState(true);
 
   const lastProgressRef = useRef<number>(state.lastPlayedTime);
   const playerRef = useRef<ReactPlayer>(null);
   const currentPlayingRef = useRef(state.playing);
   const startTime = useRef(0);
   const elapsedTime = useRef(0);
-  const isLoading = useRef(true);
   const [progressInterval, setProgressInterval] =
     useState<NodeJS.Timeout | null>(null);
-
-  //진도 체크 API 전송 없을 수 있으니 빼야될거 같음.
-  const sendVideoDataMutation = useMutation({
-    mutationFn: (data: {
-      contentId: number;
-      chapterId: number;
-      kitId: number;
-      courseId: number;
-      videoStartTime: number;
-      videoEndTime: number;
-      speed: number;
-      sequenceId: number;
-    }) => axios.post('/cms-module/api/v1/video/record', data),
-  });
+  // const { sendProgress, sendRecord } = useVideoAPI(refetch);
 
   useEffect(() => {
     dispatch({
@@ -104,31 +89,6 @@ export function useVideoPlayer(initialState: VideoState) {
     playerRef.current?.seekTo(state.lastPlayedTime);
   }, [state.duration, initialState.url]);
 
-  useEffect(() => {
-    if (state.playing && !progressInterval && !isLoading.current) {
-      console.log(state.playing);
-      const interval = setInterval(() => {
-        updateProgress();
-      }, 1000);
-      setProgressInterval(interval);
-    } else if (!state.playing && progressInterval) {
-      clearInterval(progressInterval);
-      setProgressInterval(null);
-    }
-  }, [state.playing, progressInterval]);
-
-  useEffect(() => {
-    let playerInstance = playerRef.current;
-    return () => {
-      if (progressInterval) {
-        clearInterval(progressInterval);
-        setProgressInterval(null);
-      }
-      if (playerInstance) {
-        playerInstance = null;
-      }
-    };
-  }, []);
   useEffect(() => {
     let playerInstance = playerRef.current;
     return () => {
@@ -158,29 +118,6 @@ export function useVideoPlayer(initialState: VideoState) {
     }
   };
 
-  const updateProgress = () => {
-    const currentTime = Math.ceil(playerRef.current?.getCurrentTime() || 0);
-    const playbackRate = playerRef.current?.getInternalPlayer().playbackRate;
-    if (state.playing && !progressInterval && !isLoading.current) {
-      elapsedTime.current += 1;
-      if (elapsedTime.current >= 10) {
-        const { contentId, chapterId, kitId, sequenceId } = state;
-        sendVideoDataMutation.mutate({
-          contentId: contentId || 0,
-          chapterId: chapterId || 0,
-          kitId: kitId || 0,
-          courseId: 1,
-          sequenceId: sequenceId || 0,
-          videoStartTime: startTime.current,
-          videoEndTime: currentTime,
-          speed: playbackRate,
-        });
-        elapsedTime.current = 0;
-        startTime.current = currentTime;
-      }
-    }
-  };
-
   const handlePlayPause = useCallback(() => {
     currentPlayingRef.current = !currentPlayingRef.current;
     dispatch({ type: 'PLAY_PAUSE' });
@@ -198,9 +135,9 @@ export function useVideoPlayer(initialState: VideoState) {
     if (player) {
       const readyState = player.getInternalPlayer().readyState;
       if (readyState === 4 && state.played >= state.loaded) {
-        isLoading.current = false;
+        setIsLoading(false);
       } else {
-        isLoading.current = true;
+        setIsLoading(true);
       }
     }
   }, []);
@@ -211,50 +148,49 @@ export function useVideoPlayer(initialState: VideoState) {
 
   const toggleMute = useCallback(() => dispatch({ type: 'TOGGLE_MUTE' }), []);
 
-  const handleSeekChange = (played: number) => {
-    //클릭한 구간을 저장
-    lastProgressRef.current = state.duration * played;
-    playerRef.current?.seekTo(played);
-    dispatch({ type: 'SEEK_CHANGE', payload: played });
-  };
+  const handleSeekChange = useCallback(
+    (played: number) => {
+      lastProgressRef.current = state.duration * played;
+      playerRef.current?.seekTo(played);
+      dispatch({ type: 'SEEK_CHANGE', payload: played });
+    },
+    [state.duration]
+  );
 
-  const seekMouseDown = () => {
+  const seekMouseDown = useCallback(() => {
     dispatch({ type: 'SEEK_MOUSE_DOWN' });
-  };
-  const seekMouseUp = () => {
+  }, []);
+
+  const seekMouseUp = useCallback(() => {
     dispatch({ type: 'SEEK_MOUSE_UP' });
-  };
+  }, []);
 
-  const handlePlaybackChange = (rate: number) => {
+  const handlePlaybackChange = useCallback((rate: number) => {
     dispatch({ type: 'CHANGE_PLAYBACK', payload: rate });
-  };
+  }, []);
 
-  // const handleError = (error: any, data: any) => {
-  //   setIsLoading(false);
-  // };
-
-  const handleRewind = () => {
+  const handleRewind = useCallback(() => {
     const currentTime = playerRef.current?.getCurrentTime() || 0;
     const newTime = Math.max(currentTime - 10, 0);
     playerRef.current?.seekTo(newTime);
-  };
+  }, []);
 
-  const handleForward = () => {
+  const handleForward = useCallback(() => {
     const currentTime = playerRef.current?.getCurrentTime() || 0;
     const newTime = Math.max(currentTime + 10, 0);
     playerRef.current?.seekTo(newTime);
-  };
+  }, []);
 
   const handleBuffer = useCallback(() => {
-    isLoading.current = true;
+    setIsLoading(true);
   }, []);
 
   const handleBufferEnd = useCallback(() => {
-    isLoading.current = false;
+    setIsLoading(false);
   }, []);
 
   const handleReady = useCallback(() => {
-    isLoading.current = false;
+    setIsLoading(false);
   }, []);
 
   return {
@@ -277,5 +213,7 @@ export function useVideoPlayer(initialState: VideoState) {
     handleForward,
     isLoading,
     handleReady,
+    startTime: startTime.current,
+    elapsedTime: elapsedTime.current,
   };
 }

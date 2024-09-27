@@ -1,3 +1,4 @@
+import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import { Button } from '@/shared/components/ui/button';
 import { KitContainer, KitProps } from '@/widgets/kit/ui/KitContainer';
 import { useState } from 'react';
@@ -17,14 +18,22 @@ export const KitPage = () => {
         return (
           <div key={item.kitId} className='flex flex-col items-center'>
             <Button onClick={() => getKit(item)} className='m-10'>
-              {item.kitId} 키트
+              {item.kitId}번 키트 조회
             </Button>
           </div>
         );
       })}
       <div>
-        샘플 키트
-        {kit && <KitContainer {...kit} />}
+        <FetchBoundary>
+          {kit ? (
+            <>
+              <p>샘플 키트</p>
+              <KitContainer {...kit} />
+            </>
+          ) : (
+            <></>
+          )}
+        </FetchBoundary>
       </div>
     </>
   );

@@ -4,7 +4,6 @@ import { getErrorDataByCode } from './getErrorDataByCode';
 import { Button } from '../ui/button';
 
 type CustomFallbackProps = FallbackProps & {
-  // Type Intersection
   className?: string;
 };
 

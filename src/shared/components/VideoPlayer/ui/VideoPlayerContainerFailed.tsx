@@ -2,7 +2,6 @@
 // import { useVideoPlayer } from '../hooks/useVideoPlayer';
 // import ControlBar from './controlBar/ControlBar';
 // import React, { useEffect, useRef, useState } from 'react';
-// import Watermark from '../../Watermark/Watermark';
 // import {
 //   FaBackward,
 //   FaForward,

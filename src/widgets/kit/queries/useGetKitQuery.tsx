@@ -1,10 +1,10 @@
+import { axiosInstance } from '@/app/api/instance';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
 export const QUERY_KEY = ['getKit'];
 
 const fetcher = (param: number) =>
-  axios.get(`/cms-module/api/v1/kits`, {
+  axiosInstance.get(`/cms-module/api/v1/kits`, {
     params: {
       courseId: 1,
       sequenceId: 1,

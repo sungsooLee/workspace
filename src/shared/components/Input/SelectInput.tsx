@@ -8,9 +8,18 @@ import {
 import withInputField from './withInputField';
 
 export const SelectInput = withInputField(
-  ({ className, onChange, error, options, label, placeholder, ...rest }) => (
+  ({
+    className,
+    value,
+    onChange,
+    error,
+    options,
+    label,
+    placeholder,
+    ...rest
+  }) => (
     <>
-      <Select onValueChange={onChange} {...rest}>
+      <Select value={value} onValueChange={onChange} {...rest}>
         <SelectTrigger className={`w-[180px] ${className}`}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

@@ -35,6 +35,11 @@ const ERROR_CODE: ErrorCodeType = {
   4011: { code: '4011', message: '인증이 만료되었습니다.', requireLogin: true },
   403: { code: '403', message: '권한이 없습니다.' },
   404: { code: '404', message: '존재하지 않는 정보입니다.' },
+  500: {
+    code: '통신 에러',
+    message:
+      '서버가 응답하지 않습니다. \n프로그램을 재시작하거나 관리자에게 연락하세요.',
+  },
 } as const;
 
 export const getErrorDataByCode = (

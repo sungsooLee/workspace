@@ -33,7 +33,7 @@ export default function ZustandAuthGuard({ children }: Props) {
   }, [checked, isAuthenticated, navigate]);
 
   if (!checked) {
-    return <>SplashScreen</>;
+    return <>SplashS en</>;
   }
 
   return <>{children}</>;

@@ -19,12 +19,7 @@ const CommonCardContents = ({
   children,
   className,
 }: CommonCardContentsProps) => {
-  return (
-    <div className={cn('bg-slate-200 p-4', className)}>
-      <p>이 영역은 공통 영역</p>
-      {children}
-    </div>
-  );
+  return <div className={cn('bg-slate-200 p-4', className)}>{children}</div>;
 };
 
 interface CommonCardButtonsProps {

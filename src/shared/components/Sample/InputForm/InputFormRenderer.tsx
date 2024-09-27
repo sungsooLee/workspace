@@ -2,19 +2,19 @@ import { Suspense } from 'react';
 import companyComponentMap from '../card/companyComponentMap';
 
 const InputFormRenderer = ({ companyType, cardData }: any) => {
-  const renderCompanySpecificCard = () => {
+  const renderCompanySpecificForm = () => {
     if (companyComponentMap[companyType]) {
-      const CompanySpecificCard = companyComponentMap[companyType].Form;
+      const CompanySpecificForm = companyComponentMap[companyType].Form;
       return (
         <Suspense fallback={<div>Loading...</div>}>
-          <CompanySpecificCard cardData={cardData} />
+          <CompanySpecificForm cardData={cardData} />
         </Suspense>
       );
     }
     return <></>;
   };
 
-  return <div>{renderCompanySpecificCard()}</div>;
+  return <div>{renderCompanySpecificForm()}</div>;
 };
 
 export default InputFormRenderer;
