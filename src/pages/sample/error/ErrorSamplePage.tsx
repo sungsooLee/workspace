@@ -3,8 +3,12 @@ import { Error4001 } from '@/shared/components/sample/Error/Error4001';
 import { Error401 } from '@/shared/components/sample/Error/Error401';
 import { Error403 } from '@/shared/components/sample/Error/Error403';
 import { ErrorMutation } from '@/shared/components/sample/Error/ErrorMutation';
-import { Tabs, TabsContent, TabsList } from '@/shared/components/ui/tabs';
-import { TabsTrigger } from '@radix-ui/react-tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/components/ui/tabs';
 
 export const ErrorSamplePage = () => {
   return (

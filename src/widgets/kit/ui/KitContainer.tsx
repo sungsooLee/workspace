@@ -1,11 +1,11 @@
 import { Chapter } from '@/features/chapter';
 import { ChapterList } from '@/features/chapterList/ui/ChapterList';
-import VideoPlayerContainer from '@/shared/components/videoPlayer/ui/VideoPlayerContainer';
 import { useEffect, useMemo } from 'react';
 import useContentStore from '@/shared/stores/useContentStore';
 import { FetchBoundary } from '@/shared/components/error/FetchErrorBoundary';
 import useGetKitQuery from '../queries/useGetKitQuery';
 import useKitProgressQuery from '../queries/useKitProgressQuery';
+import VideoPlayerContainer from '@/shared/components/videoPlayer/ui/VideoPlayerContainer';
 export type KitProps = {
   kitId: number;
   courseId?: number;

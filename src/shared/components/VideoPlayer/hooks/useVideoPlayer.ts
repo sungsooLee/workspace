@@ -74,9 +74,6 @@ export function useVideoPlayer(initialState: VideoState) {
   const currentPlayingRef = useRef(state.playing);
   const startTime = useRef(0);
   const elapsedTime = useRef(0);
-  const [progressInterval, setProgressInterval] =
-    useState<NodeJS.Timeout | null>(null);
-  // const { sendProgress, sendRecord } = useVideoAPI(refetch);
 
   useEffect(() => {
     dispatch({
@@ -88,19 +85,6 @@ export function useVideoPlayer(initialState: VideoState) {
   useEffect(() => {
     playerRef.current?.seekTo(state.lastPlayedTime);
   }, [state.duration, initialState.url]);
-
-  useEffect(() => {
-    let playerInstance = playerRef.current;
-    return () => {
-      if (progressInterval) {
-        clearInterval(progressInterval);
-        setProgressInterval(null);
-      }
-      if (playerInstance) {
-        playerInstance = null;
-      }
-    };
-  }, [progressInterval]);
 
   const handleSubtitleChange = (label: string) => {
     if (playerRef.current) {

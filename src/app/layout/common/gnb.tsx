@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import useThemeStore from '@/shared/stores/useThemeStore';
 import { applyThemePrefernce } from '@/shared/utils/themeUtils';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '@/shared/components/languageSwitcher/LanguageSwitcher';
 import { GnbInput } from '@/shared/components/Input/GnbInput';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
+import LanguageSwitcher from '@/shared/components/languageSwitcher/LanguageSwitcher';
 
 interface GNBProps {
   items: MenuItem[];

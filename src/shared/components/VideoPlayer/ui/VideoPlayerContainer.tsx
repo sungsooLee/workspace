@@ -107,10 +107,8 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({
   const updateProgress = useCallback(() => {
     if (playingRef.current && !isLoading) {
       cumulativePlaybackTimeRef.current += 1;
-      console.log(cumulativePlaybackTimeRef.current);
       if (cumulativePlaybackTimeRef.current >= 10) {
         cumulativePlaybackTimeRef.current = 0;
-
         // API 호출
         const currentTime = Math.ceil(playerRef.current?.getCurrentTime() || 0);
         const playbackRate =
@@ -126,7 +124,6 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({
           videoEndTime: currentTime,
           speed: playbackRate || 1,
         });
-
         // startTime 업데이트
         startTimeRef.current = currentTime;
       }

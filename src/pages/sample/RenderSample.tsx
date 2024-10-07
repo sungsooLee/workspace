@@ -1,5 +1,5 @@
-import CardRenderer from '../../shared/components/sample/card/CardRenderer';
-import InputFormRenderer from '../../shared/components/sample/InputForm/InputFormRenderer';
+import CardRenderer from '@/shared/components/sample/card/CardRenderer';
+import InputFormRenderer from '@/shared/components/sample/InputForm/InputFormRenderer';
 
 const RenderSample = ({ companyType }: { companyType: string }) => {
   return (
