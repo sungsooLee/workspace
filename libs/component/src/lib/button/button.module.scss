@@ -1,0 +1,22 @@
+._start {
+  padding: 20px;
+  ._button {
+    &._empty_btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 32px;
+      gap: 8px;
+      height: 60px;
+      border-radius: 32px;
+      font-size: 20px;
+      background-color: var(--ab-dark-primary-7);
+      color: var(--ab-light-black-1);
+    }
+  }
+}
+._icon_right {
+  flex-direction: row-reverse;
+  gap: 7px;
+}
