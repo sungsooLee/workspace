@@ -6,7 +6,7 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from 'axios';
-import { encodeQueryString } from '../utilities/query';
+import { encodeQueryString } from '../../index';
 
 const API_REQUEST_TIMEOUT = 5000;
 

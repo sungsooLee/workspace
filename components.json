@@ -4,14 +4,16 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "libs/ui/tailwind.config.js",
-    "css": "libs/ui/src/styles/global.css",
+    "config": "libs/component/tailwind.config.js",
+    "css": "libs/component/src/styles/global.css",
     "baseColor": "slate",
     "cssVariables": true
   },
   "aliases": {
-    "components": "@learnway/ui",
-    "ui": "@learnway/ui",
-    "utils": "@learnway/utils"
+    "components": "@/libs/component",
+    "ui": "@/libs/component/src/lib/ui",
+    "utils": "@/libs/shared/src/lib",
+    "lib": "@/libs/shared/src/lib",
+    "hooks": "@/libs/hooks/src/lib"
   }
 }

@@ -5,7 +5,7 @@ import { useTranslation, initReactI18next } from 'react-i18next';
 
 import { ReactQueryConfigProvider } from '@learnway/config';
 
-import '@learnway/styles/global.css';
+import './styles.css';
 
 import App from './app/app';
 

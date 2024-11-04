@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Button } from '@learnway/component';
 //import { Button as shadcnButton } from '@learnway/ui';
-import { Button as ShadcnButton } from '@learnway/ui/button';
+import { Button as ShadcnButton } from '@learnway/component';
 
 import { httpService } from '@learnway/shared';
 
@@ -466,16 +466,19 @@ export function NxWelcome({ title }: { title: string }) {
           <div id="welcome">
             <h1>
               API MESSAGE : {message} <p></p>
-              <h2>{t('Welcome to React')}</h2>
+              <span>{t('Welcome to React')}</span>
               !!
               <span> Hello there, </span>
               Welcome {title} 👋
               <button className="bg-primary">test</button>
-              <Button>Button COMP</Button>
-              <ShadcnButton>ShadCn BTN</ShadcnButton>
+              <br />
+              <Button variant={'outline'}>Button COMP</Button>
+              <br />
+              <ShadcnButton onClick={() => console.log('btn click')}>ShadCn BTN</ShadcnButton>
             </h1>
-            <button onClick={() => onChangeLocale('en')}>EN</button>
-            <button onClick={() => onChangeLocale('ko')}>KO</button>
+            <Button onClick={() => onChangeLocale('en')}>EN</Button>
+            <p></p>
+            <Button onClick={() => onChangeLocale('ko')}>KO</Button>
           </div>
 
           <div id="hero" className="rounded">

@@ -1,3 +1,3 @@
-export * from './lib/shared';
 export * from './lib/ajax/http.service';
-export * from './lib/utilities/query';
+export * from './lib/utils/cn';
+export * from './lib/utils/query';

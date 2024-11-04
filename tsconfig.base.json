@@ -18,9 +18,8 @@
       "@learnway/component": ["libs/component/src/index.ts"],
       "@learnway/config": ["libs/config/src/index.ts"],
       "@learnway/shared": ["libs/shared/src/index.ts"],
-      "@learnway/styles/*": ["libs/ui/src/styles/*"],
-      "@learnway/ui/*": ["libs/ui/src/ui/*"],
-      "@learnway/utils": ["libs/utils/src/index.ts"]
+      "@learnway/hooks": ["libs/hooks/src/index.ts"],
+      "@/libs/*": ["libs/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
