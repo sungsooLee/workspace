@@ -1,7 +1,0 @@
-{
-  "id": 1,
-  "name": "test",
-  "password": "1234",
-  "email": "test@test.com",
-  "accessToken": "testToken"
-}
