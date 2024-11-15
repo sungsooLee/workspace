@@ -3,9 +3,7 @@ import cn from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
-import { Button } from '@learnway/component';
-//import { Button as shadcnButton } from '@learnway/ui';
-import { Button as ShadcnButton } from '@learnway/component';
+import { Button } from '@learnway/ui';
 
 import { httpService } from '@learnway/shared';
 
@@ -472,9 +470,10 @@ export function NxWelcome({ title }: { title: string }) {
               Welcome {title} 👋
               <button className="bg-primary">test</button>
               <br />
-              <Button variant={'outline'}>Button COMP</Button>
+              <Button variant={'outline'} onClick={() => console.log('btn click')}>
+                Button COMP
+              </Button>
               <br />
-              <ShadcnButton onClick={() => console.log('btn click')}>ShadCn BTN</ShadcnButton>
             </h1>
             <Button onClick={() => onChangeLocale('en')}>EN</Button>
             <p></p>

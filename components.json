@@ -4,14 +4,14 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "libs/component/tailwind.config.js",
-    "css": "libs/component/src/styles/global.css",
+    "config": "libs/ui/tailwind.config.js",
+    "css": "libs/ui/src/styles/global.css",
     "baseColor": "slate",
     "cssVariables": true
   },
   "aliases": {
-    "components": "@/libs/component",
-    "ui": "@/libs/component/src/lib/ui",
+    "components": "@/libs/ui",
+    "ui": "@/libs/ui/src/lib",
     "utils": "@/libs/shared/src/lib",
     "lib": "@/libs/shared/src/lib",
     "hooks": "@/libs/hooks/src/lib"
