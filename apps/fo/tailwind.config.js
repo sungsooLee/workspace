@@ -6,7 +6,7 @@ const TailwindConfig = require('../../libs/ui/tailwind.config');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   ...TailwindConfig,
-  presets: [sharedTailwindPreset],
+  //presets: [sharedTailwindPreset],
   content: [
     ...TailwindConfig.content,
     join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,js}'),
