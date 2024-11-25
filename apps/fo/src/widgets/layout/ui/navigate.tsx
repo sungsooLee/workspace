@@ -55,17 +55,17 @@ export function Navigate() {
           <Link to={'/'}>Home</Link>
         </MenubarTrigger>
       </MenubarMenu>
-      {menus.map((menu: any) => {
+      {menus.map((menu: any, index: number) => {
         return (
-          <MenubarMenu>
+          <MenubarMenu key={`MenubarMenu${index}`}>
             <MenubarTrigger>
               {menu.children ? menu.title : <Link to={menu.path}>{menu.title}</Link>}
             </MenubarTrigger>
             {menu.children && (
               <MenubarContent>
-                {(menu.children ?? []).map((menuItem: any) => {
+                {(menu.children ?? []).map((menuItem: any, subIndex: number) => {
                   return (
-                    <MenubarItem>
+                    <MenubarItem key={`MenubarItem${subIndex}`}>
                       <Link to={menuItem.path}>{menuItem.title}</Link>
                     </MenubarItem>
                   );
