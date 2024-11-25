@@ -9,23 +9,23 @@ export default class MenuService {
       resolve([
         {
           title: 'Menu 2',
-          path: '/path/menu2',
+          path: '/menu2',
           roles: 'ROLE_HAE_USER',
           children: [
             {
               title: 'Menu 3',
-              path: '/path/menu3',
+              path: '/menu3',
               roles: 'ROLE_HAE_USER',
               tenantName: '현대자동차',
             },
             {
               title: 'Menu 4',
-              path: '/path/menu4',
+              path: '/menu4',
               roles: 'ROLE_HAE_USER',
               children: [
                 {
                   title: 'Menu 5',
-                  path: '/path/menu5',
+                  path: '/menu4/menu5',
                   roles: 'ROLE_HAE_USER',
                   tenantName: '현대자동차',
                 },
@@ -34,12 +34,12 @@ export default class MenuService {
             },
             {
               title: 'Menu 6',
-              path: '/path/menu6',
+              path: '/menu6',
               roles: 'ROLE_HAE_USER',
               children: [
                 {
                   title: 'Menu 7',
-                  path: '/path/menu7',
+                  path: '/menu6/menu7',
                   roles: 'ROLE_HAE_USER',
                   tenantName: '현대자동차',
                 },
