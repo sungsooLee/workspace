@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import TestForm from '@/libs/ui/src/lib/common-form/test-form';
+import { TestForm } from '../../../widgets/test';
 
 export const Route = createFileRoute('/_layout/menu6/menu7')({
   component: RouteComponent,

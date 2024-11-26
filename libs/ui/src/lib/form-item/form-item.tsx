@@ -1,12 +1,12 @@
 import { ControllerProps, useFormContext } from 'react-hook-form';
-import { CommonFieldProps, FieldType, MultiSelectFieldConfig, SelectOption } from './type';
+import { CommonFieldProps, FieldType, MultiSelectFieldConfig, SelectOption } from '../type';
 // import { useFormSchema } from "./context";
 import { z } from 'zod';
-import { FormInput } from './form-input';
-import FormSelect from './form-select';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form/form';
-import FormNumberInput from './form-number-input';
-import FormMultiSelect from './form-multi-select';
+import { FormInput } from '../common-form/form-input';
+import FormSelect from '../select/select';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../shadcn/form';
+import FormNumberInput from '../common-form/form-number-input';
+import FormMultiSelect from '../common-form/form-multi-select';
 
 export const isRequiredField = (fieldName: string, schema?: z.ZodType): boolean => {
   if (!schema) return false;
@@ -58,16 +58,15 @@ const renderControl = (field: any, fieldState: any, props: any) => {
       );
 
     case FieldType.MULTI_SELECT:
-      const multiSelectProps = props as MultiSelectFieldConfig;
       return (
         <FormMultiSelect
           {...commonProps}
           value={field.value || []}
-          options={multiSelectProps.options}
-          maxCount={multiSelectProps.maxCount}
-          animation={multiSelectProps.animation}
-          placeholder={multiSelectProps.placeholder}
-          variant={multiSelectProps.variant}
+          options={(props as MultiSelectFieldConfig).options}
+          maxCount={(props as MultiSelectFieldConfig).maxCount}
+          animation={(props as MultiSelectFieldConfig).animation}
+          placeholder={(props as MultiSelectFieldConfig).placeholder}
+          variant={(props as MultiSelectFieldConfig).variant}
         />
       );
     // TODO: 타입별로 추가 필요
@@ -108,4 +107,4 @@ const CommonFormItem = ({ name, label, type, ...props }: CommonFieldProps) => {
   );
 };
 
-export default CommonFormItem;
+export { CommonFormItem };

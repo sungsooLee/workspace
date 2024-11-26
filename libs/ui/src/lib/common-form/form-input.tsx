@@ -1,8 +1,9 @@
 import { forwardRef, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+
 import { cn } from '@learnway/shared';
 
-export type FormMode = 'read' | 'edit';
+import { FormMode } from '../type';
 
 export interface InputProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -40,6 +41,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
       if (inputRef.current && props.value) {
+        //
       }
     };
 

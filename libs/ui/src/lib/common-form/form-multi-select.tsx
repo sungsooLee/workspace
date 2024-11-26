@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
-import { MultiSelectFieldConfig } from './type';
+import { MultiSelectFieldConfig } from '../type';
 import { MultiSelect } from '../select/multi-select';
 
 const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldConfig>(

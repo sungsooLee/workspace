@@ -5,11 +5,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
-import { Popover, PopoverContent } from '../popover/popover';
+import { Popover, PopoverContent } from '../shadcn/popover';
 import { PopoverTrigger } from '@radix-ui/react-popover';
-import { Button } from '../button/button';
-import { Badge } from '../badge/badge';
-import { Separator } from '../separator/separator';
+import { Button } from '../shadcn/button';
+import { Badge } from '../shadcn/badge';
+import { Separator } from '../shadcn/separator';
 import {
   Command,
   CommandInput,
@@ -18,7 +18,7 @@ import {
   CommandGroup,
   CommandSeparator,
   CommandEmpty,
-} from '../command/command';
+} from '../shadcn/command';
 
 /**
  * Variants for the multi-select component to handle different styles.

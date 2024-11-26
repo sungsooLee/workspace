@@ -122,11 +122,3 @@ export interface CustomNumberInputProps extends Omit<NumericFormatProps, 'onChan
 // export type AnyZodObject = z.ZodObject<any, any, any> | z.ZodEffects<any>;
 
 export type AnyZodSchema = z.ZodType<any, any, any>;
-
-export type ExtendedFormProps<T extends z.ZodType> = {
-  schema: T;
-  onSubmit: (data: z.infer<T>) => void;
-  defaultValues?: DefaultValues<z.infer<T>>;
-  children: React.ReactNode;
-  className?: string;
-};

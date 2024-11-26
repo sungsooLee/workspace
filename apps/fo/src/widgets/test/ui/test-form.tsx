@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 // import { FormProvider } from "./FormProvider";
-import { FieldType } from './type';
-import CommonFormItem from './form-item';
-import { FormExtend } from './form-extend';
-import { Button } from '../button/button';
+import { FieldType } from '@learnway/ui';
+import { CommonFormItem } from '@learnway/ui';
+import { FormExtend } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 const TestForm = () => {
   const { t } = useTranslation();
 
@@ -177,4 +177,4 @@ const TestForm = () => {
   );
 };
 
-export default TestForm;
+export { TestForm };

@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 
 import { cn } from '@learnway/shared';
-import { Label } from '../label/label';
+import { Label } from './label';
 
 const Form = FormProvider;
 

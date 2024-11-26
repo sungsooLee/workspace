@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 import { NumericFormat } from 'react-number-format';
-import { CustomNumberInputProps } from './type';
+import { CustomNumberInputProps } from '../type';
 // import { CustomNumberInputProps, NumberFieldConfig } from "../form/common/type";
 
 const FormNumberInput = forwardRef<HTMLInputElement, CustomNumberInputProps>(
