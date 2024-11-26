@@ -7,6 +7,11 @@ import FormSelect from './form-select';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form/form';
 import FormNumberInput from './form-number-input';
 import FormMultiSelect from './form-multi-select';
+import FormCheckBox from './form-checkbox';
+import FormSwitch from './form-switch';
+import FormRadioGroup from './form-radio';
+import FormDatePicker from './form-datepicker';
+import FormDateRangePicker from './form-date-range-picker';
 
 export const isRequiredField = (fieldName: string, schema?: z.ZodType): boolean => {
   if (!schema) return false;
@@ -58,19 +63,53 @@ const renderControl = (field: any, fieldState: any, props: any) => {
       );
 
     case FieldType.MULTI_SELECT:
-      const multiSelectProps = props as MultiSelectFieldConfig;
       return (
         <FormMultiSelect
           {...commonProps}
           value={field.value || []}
-          options={multiSelectProps.options}
-          maxCount={multiSelectProps.maxCount}
-          animation={multiSelectProps.animation}
-          placeholder={multiSelectProps.placeholder}
-          variant={multiSelectProps.variant}
+          options={props.options}
+          maxCount={props.maxCount}
+          animation={props.animation}
+          placeholder={props.placeholder}
+          variant={props.variant}
         />
       );
-    // TODO: 타입별로 추가 필요
+
+    case FieldType.CHECKBOX:
+      return (
+        <FormCheckBox
+          {...commonProps}
+          checked={props.checked}
+          onCheckedChange={field.onChange}
+          checkboxLabel={props?.checkboxLabel}
+        />
+      );
+
+    case FieldType.SWITCH:
+      return (
+        <FormSwitch
+          {...commonProps}
+          checked={props.checked}
+          onCheckedChange={field.onChange}
+          formLabel={props?.formLabel}
+        />
+      );
+
+    case FieldType.RADIO:
+      return (
+        <FormRadioGroup
+          {...field}
+          error={!!fieldState.error}
+          options={props.options}
+          orientation={props.orientation}
+        />
+      );
+
+    case FieldType.DATE:
+      return <FormDatePicker {...commonProps} />;
+
+    case FieldType.DATE_RANGE:
+      return <FormDateRangePicker {...commonProps} />;
   }
   return <></>;
 };

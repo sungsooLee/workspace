@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-// import { FormProvider } from "./FormProvider";
 import { FieldType } from './type';
 import CommonFormItem from './form-item';
 import { FormExtend } from './form-extend';
@@ -8,69 +7,83 @@ import { Button } from '../button/button';
 const TestForm = () => {
   const { t } = useTranslation();
 
-  const schema = z
-    .object({
-      name: z.string().min(2, {
-        message: t('validation.min', { field: t('form.name'), min: 2 }),
+  const schema = z.object({
+    name: z.string().min(2, {
+      message: t('validation.min', { field: t('form.name'), min: 2 }),
+    }),
+    // email: z.string().optional(),
+    email: z
+      .string()
+      .trim()
+      .transform((val) => (val === '' ? undefined : val))
+      .pipe(z.string().email(t('validation.email')).optional()),
+    type: z
+      .string({
+        required_error: t('validation.required', { field: t('form.type') }),
+      })
+      .min(1, {
+        message: t('validation.required', { field: t('form.type') }),
       }),
-      // email: z.string().optional(),
-      email: z
-        .string()
-        .trim()
-        .transform((val) => (val === '' ? undefined : val))
-        .pipe(z.string().email(t('validation.email')).optional()),
-      type: z
-        .string({
-          required_error: t('validation.required', { field: t('form.type') }),
-        })
-        .min(1, {
-          message: t('validation.required', { field: t('form.type') }),
+    startAmount: z.coerce
+      .number({
+        required_error: t('validation.required', {
+          field: t('form.startAmount'),
         }),
-      startAmount: z.coerce
-        .number({
-          required_error: t('validation.required', {
-            field: t('form.startAmount'),
-          }),
-          invalid_type_error: t('validation.invalidNumber', {
-            field: t('form.startAmount'),
-          }),
-        })
-        .min(1, {
-          message: t('validation.min', {
-            field: t('form.startAmount'),
-            min: 1,
-          }),
+        invalid_type_error: t('validation.invalidNumber', {
+          field: t('form.startAmount'),
         }),
-      endAmount: z.coerce
-        .number({
-          required_error: t('validation.required', {
-            field: t('form.endAmount'),
-          }),
-          invalid_type_error: t('validation.invalidNumber', {
-            field: t('form.endAmount'),
-          }),
-        })
-        .min(0),
-      categories: z.array(z.string()).min(1, {
-        message: t('validation.minArrayLength', {
-          field: t('form.categories'),
+      })
+      .min(1, {
+        message: t('validation.min', {
+          field: t('form.startAmount'),
           min: 1,
         }),
       }),
-    })
-    .refine(
-      (data) => {
-        // startAmount가 있을 때만 비교
-        if (data.startAmount !== undefined && data.endAmount !== undefined) {
-          return data.endAmount > data.startAmount;
-        }
-        return true;
-      },
-      {
-        message: t('validation.amountRange'),
-        path: ['endAmount'], // 에러를 표시할 필드
-      },
-    );
+    endAmount: z.coerce
+      .number({
+        required_error: t('validation.required', {
+          field: t('form.endAmount'),
+        }),
+        invalid_type_error: t('validation.invalidNumber', {
+          field: t('form.endAmount'),
+        }),
+      })
+      .min(0),
+    categories: z.array(z.string()).min(1, {
+      message: t('validation.minArrayLength', {
+        field: t('form.categories'),
+        min: 1,
+      }),
+    }),
+    checkbox: z.boolean().optional(),
+    switch: z.boolean().optional(),
+    notificationType: z.enum(['all', 'mentions', 'none'], {
+      required_error: t('validation.required', {
+        field: t('form.notificationType'),
+      }),
+    }),
+    birthDate: z.date(),
+    dateRange: z.object({
+      from: z.date({
+        required_error: 'A start date is required',
+      }),
+      to: z.date({
+        required_error: 'An end date is required',
+      }),
+    }),
+  });
+  // .refine(
+  //   (data) => {
+  //     if (data.startAmount !== undefined && data.endAmount !== undefined) {
+  //       return data.endAmount > data.startAmount;
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: t('validation.amountRange'),
+  //     path: ['endAmount'],
+  //   },
+  // );
   // .superRefine((data, ctx) => {
   //   const startAmount = data.startAmount;
   //   if (startAmount && data.endAmount <= startAmount) {
@@ -87,18 +100,6 @@ const TestForm = () => {
   };
 
   return (
-    // <FormProvider
-    //   schema={schema}
-    //   onSubmit={handleSubmit}
-    //   defaultValues={{
-    //     name: "",
-    //     email: "",
-    //     type: "",
-    //     startAmount: 0,
-    //     endAmount: 0,
-    //     categories: [],
-    //   }}
-    // >
     <FormExtend
       schema={schema}
       onSubmit={handleSubmit}
@@ -109,6 +110,11 @@ const TestForm = () => {
         startAmount: 0,
         endAmount: 0,
         categories: [],
+        notificationType: 'none',
+        dateRange: {
+          from: undefined,
+          to: undefined,
+        },
       }}>
       <div className="grid grid-cols-2 gap-4">
         <CommonFormItem name="name" label={t('form.name')} type={FieldType.TEXT} />
@@ -169,6 +175,54 @@ const TestForm = () => {
         maxCount={3}
         variant="default"
         placeholder={t('form.categories.placeholder')}
+      />
+      <CommonFormItem
+        name="checkbox"
+        label={t('form.checkbox')}
+        type={FieldType.CHECKBOX}
+        checkboxLabel="test checkbox"
+      />
+      <CommonFormItem
+        name="switch"
+        label={t('form.switch')}
+        type={FieldType.SWITCH}
+        formLabel="test switch"
+      />
+      <CommonFormItem
+        name="notificationType"
+        label={t('form.notificationType')}
+        type={FieldType.RADIO}
+        options={[
+          {
+            value: 'all',
+            label: t('form.notificationType.all'),
+            description: t('form.notificationType.allDescription'),
+          },
+          {
+            value: 'mentions',
+            label: t('form.notificationType.mentions'),
+            description: t('form.notificationType.mentionsDescription'),
+          },
+          {
+            value: 'none',
+            label: t('form.notificationType.none'),
+          },
+        ]}
+        orientation="vertical"
+      />
+      <CommonFormItem
+        name="birthDate"
+        label={t('form.birthDate')}
+        type={FieldType.DATE}
+        maxDate={new Date()}
+      />
+      <CommonFormItem
+        name="dateRange"
+        label={t('form.dateRange')}
+        type={FieldType.DATE_RANGE}
+        numberOfMonths={2}
+        fromLabel={t('form.from')}
+        toLabel={t('form.to')}
       />
       <Button className="mt-10" type="submit">
         전송

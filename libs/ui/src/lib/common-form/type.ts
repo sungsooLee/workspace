@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { DefaultValues, UseFormReturn } from 'react-hook-form';
 import { NumericFormatProps } from 'react-number-format';
+import { DateRange } from 'react-day-picker';
 
 //     Type에 따라 여러 종류의 입력 요건을 처리할 수 있다.
 //         input
@@ -22,7 +23,7 @@ export enum FieldType {
   RADIO = 'radio',
   CHECKBOX = 'checkbox',
   DATE = 'date',
-  DATE_TIME = 'date-time',
+  // DATE_TIME = 'date-time',
   DATE_RANGE = 'date-range',
 }
 
@@ -35,7 +36,7 @@ export type FieldTpeValue = {
   [FieldType.RADIO]: boolean;
   [FieldType.CHECKBOX]: boolean;
   [FieldType.DATE]: Date;
-  [FieldType.DATE_TIME]: Date;
+  // [FieldType.DATE_TIME]: Date;
   [FieldType.DATE_RANGE]: Date[];
 };
 
@@ -46,6 +47,10 @@ export interface SelectOption {
   value: string;
   label: string;
   icon?: React.ComponentType<{ className?: string }>;
+}
+
+export interface RadioOption extends SelectOption {
+  description?: string;
 }
 
 //     form data의 physical name을 입력 받을 수 있다.
@@ -103,12 +108,67 @@ export interface MultiSelectFieldConfig extends BaseFieldConfig {
   variant?: 'default' | 'secondary' | 'destructive' | 'inverted';
 }
 
+export interface CheckFieldConfig extends BaseFieldConfig {
+  type: FieldType.CHECKBOX;
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  checkboxLabel?: string;
+}
+
+export interface SwitchFieldConfig extends BaseFieldConfig {
+  type: FieldType.SWITCH;
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  formLabel?: string;
+  // label Position에 대한 정의도 해야하는지 (e.g. Left, Right..)
+}
+
+export interface RadioFieldConfig extends BaseFieldConfig {
+  type: FieldType.RADIO;
+  options: RadioOption[];
+  orientation?: 'vertical' | 'horizontal';
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+}
+
+export interface DateBaseConfig extends BaseFieldConfig {
+  minDate?: Date;
+  maxDate?: Date;
+  disabledDates?: Date[];
+  showTimePicker?: boolean;
+  timeFormat?: '12' | '24';
+  numberOfMonths?: number;
+  minuteStep?: number;
+}
+
+export interface DateFieldConfig extends DateBaseConfig {
+  type: FieldType.DATE;
+  onChange?: (date: Date | undefined) => void;
+}
+
+// export interface DateTimeFieldConfig extends DateBaseConfig {
+//   type: FieldType.DATE_TIME;
+//   minuteStep?: number;
+// }
+
+export interface DateRangeFieldConfig extends DateBaseConfig {
+  type: FieldType.DATE_RANGE;
+  onChange?: (range: DateRange | undefined) => void;
+  fromLabel?: string;
+  toLabel?: string;
+}
+
 export type CommonFieldProps =
   | TextFieldConfig
   | NumberFieldConfig
   | SelectFieldConfig
-  | MultiSelectFieldConfig;
-
+  | MultiSelectFieldConfig
+  | CheckFieldConfig
+  | SwitchFieldConfig
+  | RadioFieldConfig
+  | DateFieldConfig
+  // | DateTimeFieldConfig
+  | DateRangeFieldConfig;
 export interface CustomNumberInputProps extends Omit<NumericFormatProps, 'onChange'> {
   error?: boolean;
   mode?: FormMode;
@@ -119,7 +179,6 @@ export interface CustomNumberInputProps extends Omit<NumericFormatProps, 'onChan
   onChange?: (value: string | undefined) => void;
   className?: string;
 }
-// export type AnyZodObject = z.ZodObject<any, any, any> | z.ZodEffects<any>;
 
 export type AnyZodSchema = z.ZodType<any, any, any>;
 

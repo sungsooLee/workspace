@@ -39,8 +39,8 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
-      if (inputRef.current && props.value) {
-      }
+      // if (inputRef.current && props.value) {
+      // }
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
