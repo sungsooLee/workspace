@@ -21,12 +21,16 @@ i18n
     resources: {
       en: {
         translation: {
-          'Welcome to React': 'Welcome to React and react-i18next',
+          ORG: 'Organization',
+          USER_ID: 'User ID',
+          PASSWORD: 'Password',
         },
       },
       ko: {
         translation: {
-          'Welcome to React': '어서와~ react-i18next는 처음이지 ?',
+          ORG: '회사',
+          USER_ID: '사용자 ID',
+          PASSWORD: '비밀번호',
         },
       },
     },

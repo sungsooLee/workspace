@@ -143,7 +143,7 @@ export class HttpService {
 
     return request
       .then((response: AxiosResponse) => {
-        return response.data;
+        return response.data.data;
       })
       .catch((error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {

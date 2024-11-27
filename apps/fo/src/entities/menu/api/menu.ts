@@ -1,4 +1,5 @@
 import { httpService } from '@learnway/shared';
+import { PMSApiPrefix } from '@learnway/config';
 
 import { Menu } from '../model/menu';
 
@@ -54,7 +55,7 @@ export default class MenuService {
   }
 
   static getMenu(menuId: string) {
-    return httpService.get<Menu>(`/menu/${menuId}`);
+    return httpService.get<Menu>(`${PMSApiPrefix()}/menu/${menuId}`);
   }
 
   static createMenus(menu: Menu[]) {

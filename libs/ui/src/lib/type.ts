@@ -46,6 +46,7 @@ export interface SelectOption {
   value: string;
   label: string;
   icon?: React.ComponentType<{ className?: string }>;
+  extra?: any;
 }
 
 //     form data의 physical name을 입력 받을 수 있다.
