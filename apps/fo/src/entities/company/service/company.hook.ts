@@ -5,14 +5,16 @@ import { SelectOption } from '@learnway/ui';
 import { queryOptions } from './company.queries';
 import { Company } from '../model/company';
 
-export function useCompanies() {
+export function useFetchCompanies() {
   return useQuery(queryOptions.all());
 }
 
-export function useCompanySelectOptions() {
+export function useFetchCompanySelectOptions() {
   return useQuery<Company[], unknown, SelectOption[]>({
     ...queryOptions.all(),
     select: (data: Company[]) =>
-      data?.map((d: Company) => ({ label: d.orgName, value: d.orgId, extra: d } as SelectOption)),
+      data?.map(
+        (d: Company) => ({ label: d.orgName, value: String(d.orgId), extra: d } as SelectOption),
+      ),
   });
 }

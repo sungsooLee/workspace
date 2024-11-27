@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useRouter, createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
@@ -8,28 +8,36 @@ import { CommonFormItem } from '@learnway/ui';
 import { FormExtend } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 
-import { useLogin } from '../entities/user';
-import { useCompanySelectOptions } from '../entities/company';
+import { useLoginUser, useFetchAuthUser } from '../entities/user';
+import { useFetchCompanySelectOptions } from '../entities/company';
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
 });
 
-//function convertToSelectOptions() {}
-
 function RouteComponent() {
   const { t } = useTranslation();
-
-  const { data } = useCompanySelectOptions();
+  const router = useRouter();
 
   const schema = z.object({
-    orgCode: z.string(),
-    userId: z.string(),
+    orgId: z.string(),
+    accountId: z.string(),
     password: z.string(),
   });
 
+  const { data } = useFetchAuthUser();
+  const { data: companyOptions } = useFetchCompanySelectOptions();
+
+  const { login } = useLoginUser();
+
+  useEffect(() => {
+    if (data?.accountId) {
+      router.navigate({ to: '/' });
+    }
+  }, [data]);
+
   const handleSubmit = (data: any) => {
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -38,19 +46,18 @@ function RouteComponent() {
         schema={schema}
         onSubmit={handleSubmit}
         defaultValues={{
-          orgCode: '',
-          userId: '',
-          password: '',
+          orgId: '1',
+          accountId: 'user1',
+          password: 'hae1234',
         }}>
         <div className="w-64 bg-slate-100">
           <CommonFormItem
-            name="orgCode"
+            name="orgId"
             label={t('ORG')}
             type={FieldType.SELECT}
-            options={data ?? []}
+            options={companyOptions ?? []}
           />
-
-          <CommonFormItem name="userId" label={t('USER_ID')} type={FieldType.TEXT} />
+          <CommonFormItem name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
           <CommonFormItem name="password" label={t('PASSWORD')} type={FieldType.TEXT} />
         </div>
 

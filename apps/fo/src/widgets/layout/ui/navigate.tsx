@@ -1,26 +1,17 @@
 import { useState, useEffect } from 'react';
-import cn from 'clsx';
-import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { isArray } from 'lodash';
 
 import {
   Menubar,
-  MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
+  Button,
 } from '@learnway/ui';
 
+import { useLogoutUser } from '../../../entities/user';
 import { useMenus } from '../../../entities/menu';
 
 /*
@@ -31,8 +22,10 @@ import { useMenus } from '../../../entities/menu';
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 export function Navigate() {
-  const { data } = useMenus({});
   const [menus, setMenus] = useState([]);
+
+  const { data } = useMenus({});
+  const { logout } = useLogoutUser();
 
   useEffect(() => {
     if (!data) {
@@ -44,8 +37,8 @@ export function Navigate() {
     setMenus(data[0].children);
   }, [data]);
 
-  const goPage = (to: string) => {
-    //router.navigate({ to });
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -54,6 +47,9 @@ export function Navigate() {
         <MenubarTrigger>
           <Link to={'/'}>Home</Link>
         </MenubarTrigger>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger onClick={() => handleLogout()}>logout</MenubarTrigger>
       </MenubarMenu>
       {menus.map((menu: any, index: number) => {
         return (

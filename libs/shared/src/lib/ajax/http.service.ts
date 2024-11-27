@@ -18,7 +18,7 @@ interface RequestArgs {
   payload?: any;
 }
 
-enum HttpMethod {
+export enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -100,6 +100,30 @@ export class HttpService {
     });
   }
 
+  async execute<T>(args: RequestArgs, options?: AxiosRequestConfig): Promise<AxiosResponse> {
+    this.setOptions(options);
+    const { url } = args;
+
+    return this.httpRequest<T>(args)
+      .then((response: AxiosResponse) => {
+        console.log('axios.response', response);
+        return response;
+      })
+      .catch((error: AxiosError | Error) => {
+        if (axios.isAxiosError(error)) {
+          console.log('axios.error', error);
+        } else {
+          // this.showNotification('Unknown Error', error.message);
+          console.log('> unknown error-2:', url, error.message);
+        }
+        throw error;
+      })
+      .finally(() => {
+        console.log('axios.httpRequest finally');
+        this.completed = true;
+      });
+  }
+
   private setOptions(options: AxiosRequestConfig = { timeout: API_REQUEST_TIMEOUT }): void {
     if (this.options) {
       this.options = { ...this.options, ...options };
@@ -112,36 +136,34 @@ export class HttpService {
     this.completed = false;
   }
 
-  private executeRequest<T>(args: RequestArgs): Promise<T> {
+  private httpRequest<T>(args: RequestArgs): AxiosPromise<T> {
     const { method, url, queryParam, payload } = args;
-    let request: AxiosPromise<T>;
     switch (method) {
       case HttpMethod.GET:
         if (payload) {
-          request = this.httpClient.get<T>(url, { params: queryParam, data: payload });
+          return this.httpClient.get<T>(url, { params: queryParam, data: payload });
         } else {
-          request = this.httpClient.get<T>(url, { params: queryParam });
+          return this.httpClient.get<T>(url, { params: queryParam });
         }
-        break;
       case HttpMethod.POST:
-        request = this.httpClient.post<T>(url, payload);
-        break;
+        return this.httpClient.post<T>(url, payload);
       case HttpMethod.PUT:
-        request = this.httpClient.put<T>(url, payload);
-        break;
+        return this.httpClient.put<T>(url, payload);
       case HttpMethod.PATCH:
-        request = this.httpClient.patch<T>(url, payload);
-        break;
+        return this.httpClient.patch<T>(url, payload);
       case HttpMethod.DELETE:
         if (payload) {
-          request = this.httpClient.delete<T>(url, { data: payload });
+          return this.httpClient.delete<T>(url, { data: payload });
         } else {
-          request = this.httpClient.delete<T>(url);
+          return this.httpClient.delete<T>(url);
         }
-        break;
     }
+  }
 
-    return request
+  private executeRequest<T>(args: RequestArgs): Promise<T> {
+    const { url } = args;
+
+    return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
         return response.data.data;
       })

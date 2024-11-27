@@ -1,12 +1,23 @@
 import AuthorizationService from '../api/authorization';
+import { User } from '../model/user';
 
 export const queryKeys = {
-  all: ['authorization'] as const,
+  authUser: ['auth-user'] as const,
 };
 
 export const queryOptions = {
-  all: (payload: any) => ({
-    queryKey: queryKeys.all,
-    queryFn: () => AuthorizationService.login(payload),
+  authUser: () => ({
+    queryKey: queryKeys.authUser,
+    queryFn: async () => new Promise((resolve) => resolve(null)),
+  }),
+};
+
+export const mutateOptions = {
+  login: () => ({
+    mutationFn: (payload: any) =>
+      AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) }),
+  }),
+  logout: () => ({
+    mutationFn: () => AuthorizationService.logout(),
   }),
 };
