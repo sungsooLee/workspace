@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
-import { RadioFieldConfig } from './type';
 import { cn } from '@/libs/shared/src';
-import { RadioGroup, RadioGroupItem } from '../radio/radio-group';
-import { FormControl, FormItem, FormLabel } from '../form/form';
+import { RadioGroup, RadioGroupItem } from '../shadcn/radio-group';
+import { FormControl, FormItem, FormLabel } from '../shadcn/form';
+import { RadioFieldProps } from './type';
 
-const FormRadioGroup = forwardRef<HTMLDivElement, RadioFieldConfig>(
+const FormRadioGroup = forwardRef<HTMLDivElement, RadioFieldProps>(
   (
     {
       value,

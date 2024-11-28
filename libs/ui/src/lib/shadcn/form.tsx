@@ -8,12 +8,34 @@ import {
   FieldValues,
   FormProvider,
   useFormContext,
+  UseFormReturn,
 } from 'react-hook-form';
 
+import { z } from 'zod';
 import { cn } from '@learnway/shared';
-import { Label } from '../label/label';
+import { Label } from './label';
 
-const Form = FormProvider;
+type FormSchemaContextValue = {
+  schema?: z.ZodObject<any>;
+};
+// schema 접근해서 Required 값 갖고 오기 위해서 추가.
+export const FormSchemaContext = React.createContext<FormSchemaContextValue>({});
+
+const Form = <T extends z.ZodObject<any>>({
+  schema,
+  children,
+  ...props
+}: {
+  schema?: T;
+  children: React.ReactNode;
+} & UseFormReturn<z.infer<T>>) => {
+  return (
+    <FormSchemaContext.Provider value={{ schema }}>
+      <FormProvider {...props}>{children}</FormProvider>
+    </FormSchemaContext.Provider>
+  );
+};
+//
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,

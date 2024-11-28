@@ -1,10 +1,13 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import { NumericFormat } from 'react-number-format';
-import { CustomNumberInputProps } from './type';
-// import { CustomNumberInputProps, NumberFieldConfig } from "../form/common/type";
+import { NumberFieldProps } from './type';
+import { ControllerRenderProps } from 'react-hook-form';
 
-const FormNumberInput = forwardRef<HTMLInputElement, CustomNumberInputProps>(
+const FormNumberInput = forwardRef<
+  HTMLInputElement,
+  NumberFieldProps & Partial<ControllerRenderProps>
+>(
   (
     {
       prefix,
@@ -22,6 +25,7 @@ const FormNumberInput = forwardRef<HTMLInputElement, CustomNumberInputProps>(
       onChange,
       onBlur,
       value,
+      type,
       ...props
     },
     ref,
@@ -98,6 +102,8 @@ const FormNumberInput = forwardRef<HTMLInputElement, CustomNumberInputProps>(
         onValueChange={(values) => {
           onChange?.(values.value);
         }}
+        // onChange={onChange}
+        // onValueChange={onChange}
         onBlur={onBlur}
         {...formatProps}
         {...props}

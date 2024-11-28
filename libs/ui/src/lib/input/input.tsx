@@ -1,15 +1,10 @@
 import { forwardRef, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@learnway/shared';
+import { TextFieldProps } from './type';
+import { ControllerRenderProps } from 'react-hook-form';
 
-export type FormMode = 'read' | 'edit';
-
-export interface InputProps extends React.ComponentProps<'input'> {
-  error: boolean;
-  mode?: FormMode;
-}
-
-const FormInput = forwardRef<HTMLInputElement, InputProps>(
+const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<ControllerRenderProps>>(
   ({ className, error, mode = 'edit', type, disabled, onBlur, onChange, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -39,19 +34,18 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
-      // if (inputRef.current && props.value) {
-      // }
+      if (inputRef.current && props.value) {
+        //
+      }
     };
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      console.log('blur');
+    const handleBlur = () => {
       setIsFocused(false);
       if (inputRef.current) {
-        console.log(inputRef.current);
         inputRef.current.setSelectionRange(0, 0);
       }
       if (onBlur) {
-        onBlur(e);
+        onBlur();
       }
     };
 
@@ -62,7 +56,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
       'focus:outline-none focus:border-blue-500',
       'overflow-hidden whitespace-nowrap text-ellipsis',
       {
-        'border-red-500 focus:border-red-500': props['aria-invalid'],
+        'border-red-500 focus:border-red-500': error,
         'border-gray-200 bg-gray-100 text-gray-500 text-gray-400 cursor-not-allowed': disabled,
       },
     );
@@ -71,7 +65,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
       <div className="relative w-full">
         <input
           className={cn(baseStyles, className)}
-          type={type}
+          type={props.inputType}
           ref={(el) => {
             inputRef.current = el;
           }}
@@ -103,4 +97,5 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
 
 FormInput.displayName = 'FormInput';
 
-export { FormInput };
+// export { FormInput };
+export default FormInput;
