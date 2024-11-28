@@ -1,0 +1,19 @@
+import { getQuerySkipToken } from '@learnway/shared';
+
+import TenantService from '../api/tenant';
+import { Tenant } from '../model/tenant';
+
+export const queryKeys = {
+  all: ['tenants'] as const,
+  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+};
+
+export const queryOptions = {
+  detail: (tenantId?: number) =>
+    tenantId
+      ? {
+          queryKey: queryKeys.detail(tenantId),
+          queryFn: () => TenantService.fetchTenant(tenantId),
+        }
+      : getQuerySkipToken<Tenant>(),
+};

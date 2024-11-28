@@ -11,6 +11,8 @@ export interface User {
   jobRoleName: any;
   userEngName: any;
   userLanguageSetCode: string;
+  activeTenantId?: number;
+  activeRoleId?: string;
 }
 
 export interface Role {

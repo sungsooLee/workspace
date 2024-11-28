@@ -11,21 +11,12 @@ import {
   Button,
 } from '@learnway/ui';
 
-import { useLogoutUser } from '../../../entities/user';
-import { useMenus } from '../../../entities/menu';
+import { useMenus } from '../service/navigate.service';
 
-/*
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- This is a starter component and can be deleted.
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- Delete this file and get started with your project!
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- */
 export function Navigate() {
   const [menus, setMenus] = useState([]);
 
-  const { data } = useMenus({});
-  const { logout } = useLogoutUser();
+  const { data } = useMenus();
 
   useEffect(() => {
     if (!data) {
@@ -37,20 +28,8 @@ export function Navigate() {
     setMenus(data[0].children);
   }, [data]);
 
-  const handleLogout = () => {
-    logout();
-  };
-
   return (
     <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>
-          <Link to={'/'}>Home</Link>
-        </MenubarTrigger>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger onClick={() => handleLogout()}>logout</MenubarTrigger>
-      </MenubarMenu>
       {menus.map((menu: any, index: number) => {
         return (
           <MenubarMenu key={`MenubarMenu${index}`}>

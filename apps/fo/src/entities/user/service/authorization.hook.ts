@@ -29,14 +29,19 @@ export function useLoginUser(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.login(),
     onSuccess: async (data: AxiosResponse, variables, context) => {
-      const { accountId, tenants, roles, refresh_token } = data.data.data;
+      const user = data.data.data;
+      const { accountId, tenants, roles, refresh_token } = user;
       cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
       cookieService.set('LOGIN_USER_ID', accountId);
       cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
 
-      queryClient.setQueryData(queryKeys.authUser, data.data);
+      queryClient.setQueryData(queryKeys.authUser, {
+        ...user,
+        activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
+        activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+      });
 
       router.navigate({ to: '/' });
     },
@@ -65,7 +70,7 @@ export function useLogoutUser(mutationOptions = {}) {
       cookieService.remove('LOGIN_ROLE_ID');
       cookieService.remove('REFRESH_LOGIN_TOKEN');
 
-      queryClient.invalidateQueries({ queryKey: [queryKeys.authUser] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
 
       router.navigate({ to: '/login' });
     },

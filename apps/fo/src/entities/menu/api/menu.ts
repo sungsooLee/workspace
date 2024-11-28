@@ -4,54 +4,12 @@ import { PMSApiPrefix } from '@learnway/config';
 import { Menu } from '../model/menu';
 
 export default class MenuService {
-  static getMenus(parentMenuId?: string) {
-    //return httpService.get<Menu[]>(`/menus/${parentMenuId}`);
-    return new Promise((resolve) => {
-      resolve([
-        {
-          title: 'Menu 2',
-          path: '/menu2',
-          roles: 'ROLE_HAE_USER',
-          children: [
-            {
-              title: 'Menu 3',
-              path: '/menu3',
-              roles: 'ROLE_HAE_USER',
-              tenantName: '현대자동차',
-            },
-            {
-              title: 'Menu 4',
-              path: '/menu4',
-              roles: 'ROLE_HAE_USER',
-              children: [
-                {
-                  title: 'Menu 5',
-                  path: '/menu4/menu5',
-                  roles: 'ROLE_HAE_USER',
-                  tenantName: '현대자동차',
-                },
-              ],
-              tenantName: '현대자동차',
-            },
-            {
-              title: 'Menu 6',
-              path: '/menu6',
-              roles: 'ROLE_HAE_USER',
-              children: [
-                {
-                  title: 'Menu 7',
-                  path: '/menu6/menu7',
-                  roles: 'ROLE_HAE_USER',
-                  tenantName: '현대자동차',
-                },
-              ],
-              tenantName: '현대자동차',
-            },
-          ],
-          tenantName: '현대자동차',
-        },
-      ]);
-    });
+  static getMenus(params?: any) {
+    return httpService.get<Menu>(
+      `${PMSApiPrefix()}/menus/${params.parentMenuId ?? ''}?roleIds=${params.roleIds}&tenantId=${
+        params.tenantId
+      }`,
+    );
   }
 
   static getMenu(menuId: string) {
