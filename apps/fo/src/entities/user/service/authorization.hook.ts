@@ -37,6 +37,8 @@ export function useLoginUser(mutationOptions = {}) {
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
 
+      queryClient.clear();
+
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
         activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
@@ -70,7 +72,7 @@ export function useLogoutUser(mutationOptions = {}) {
       cookieService.remove('LOGIN_ROLE_ID');
       cookieService.remove('REFRESH_LOGIN_TOKEN');
 
-      queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      queryClient.clear();
 
       router.navigate({ to: '/login' });
     },

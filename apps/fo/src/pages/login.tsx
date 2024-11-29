@@ -41,30 +41,32 @@ function RouteComponent() {
   };
 
   return (
-    <div className="bg-slate-200 h-full">
-      <FormExtend
-        schema={schema}
-        onSubmit={handleSubmit}
-        defaultValues={{
-          orgId: '1',
-          accountId: 'user1',
-          password: 'hae1234',
-        }}>
-        <div className="w-64 bg-slate-100">
-          <CommonFormItem
-            name="orgId"
-            label={t('ORG')}
-            type={FieldType.SELECT}
-            options={companyOptions ?? []}
-          />
-          <CommonFormItem name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
-          <CommonFormItem name="password" label={t('PASSWORD')} type={FieldType.TEXT} />
-        </div>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="bg-slate-200 p-10 rounded-lg">
+        <FormExtend
+          schema={schema}
+          onSubmit={handleSubmit}
+          defaultValues={{
+            orgId: '1',
+            accountId: 'user1',
+            password: 'hae1234',
+          }}>
+          <div className="w-64">
+            <CommonFormItem
+              name="orgId"
+              label={t('ORG')}
+              type={FieldType.SELECT}
+              options={companyOptions ?? []}
+            />
+            <CommonFormItem name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
+            <CommonFormItem name="password" label={t('PASSWORD')} type={FieldType.TEXT} />
+          </div>
 
-        <Button className="mt-10" type="submit">
-          전송
-        </Button>
-      </FormExtend>
+          <Button className="mt-10" type="submit">
+            로그인
+          </Button>
+        </FormExtend>
+      </div>
     </div>
   );
 }
