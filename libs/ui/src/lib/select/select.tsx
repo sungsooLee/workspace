@@ -1,7 +1,8 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../shadcn/select';
 import { cn } from '@learnway/shared';
-import { FormMode, SelectFieldConfig, SelectOption } from '../type';
+import { SelectFieldProps, SelectOption } from './type';
+import { FormMode } from '../type';
 
 export interface CustomSelectProps extends React.ComponentPropsWithoutRef<typeof Select> {
   options: SelectOption[];
@@ -13,7 +14,7 @@ export interface CustomSelectProps extends React.ComponentPropsWithoutRef<typeof
   className?: string;
 }
 
-const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldConfig>(
+const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldProps>(
   ({ options, error, mode = 'edit', value, onChange, disabled, className, ...props }, ref) => {
     if (mode === 'read') {
       const selectedOption = options.find((opt) => opt.value === value);
@@ -33,7 +34,7 @@ const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectField
         </SelectTrigger>
         <SelectContent>
           {options.map(({ value, label }) => (
-            <SelectItem key={value} value={value} className="cursor-pointer">
+            <SelectItem key={value} value={value && String(value)} className="cursor-pointer">
               {label}
             </SelectItem>
           ))}
