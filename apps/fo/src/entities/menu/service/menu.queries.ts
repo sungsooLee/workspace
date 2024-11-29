@@ -1,16 +1,27 @@
+import { getQuerySkipToken } from '@learnway/shared';
+
 import MenuService from '../api/menu';
+import { FetchMenusParams, Menu } from '../model/menu';
 
 export const queryKeys = {
   all: ['menus'] as const,
-  allByParentMenuId: (parentMenuId: string) => [...queryKeys.all, parentMenuId] as const,
+  allByParentMenuId: (parentMenuId: number) => [...queryKeys.all, parentMenuId] as const,
   detail: (menuId: string) => [...queryKeys.all, menuId] as const,
 };
 
 export const queryOptions = {
-  all: (parentMenuId?: string) => ({
-    queryKey: parentMenuId ? queryKeys.allByParentMenuId(parentMenuId) : queryKeys.all,
-    queryFn: () => MenuService.getMenus(parentMenuId),
-  }),
+  all: (params?: FetchMenusParams) =>
+    params?.tenantId && params?.roleIds
+      ? {
+          queryKey: params.parentMenuId
+            ? queryKeys.allByParentMenuId(params.parentMenuId)
+            : queryKeys.all,
+          queryFn: async () => {
+            const data = await MenuService.getMenus(params);
+            return data?.children as Menu[];
+          },
+        }
+      : getQuerySkipToken<Menu[]>(),
 
   detail: (menuId: string) => ({
     queryKey: queryKeys.detail(menuId),

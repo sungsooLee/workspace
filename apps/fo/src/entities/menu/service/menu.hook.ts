@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { queryOptions } from './menu.queries';
+import { FetchMenusParams } from '../model/menu';
 
-export function useMenus({ parentMenuId }: { parentMenuId?: string }) {
-  return useQuery(queryOptions.all(parentMenuId));
+export function useFetchMenus(params: FetchMenusParams) {
+  return useQuery(queryOptions.all(params));
 }
 
-export function useMenu({ menuId }: { menuId: string }) {
+export function useFetchMenu({ menuId }: { menuId: string }) {
   return useQuery(queryOptions.detail(menuId));
 }

@@ -1,3 +1,9 @@
+import type {
+  UseQueryOptions,
+  DefinedInitialDataOptions,
+  UndefinedInitialDataOptions,
+} from '@tanstack/react-query';
+import { skipToken } from '@tanstack/react-query';
 import { endsWith, isEmpty, startsWith } from 'lodash';
 
 export function decodeQueryString(qs: string = window.location.search.substr(1)) {
@@ -57,4 +63,14 @@ export function parseUrl(url: string): any {
   const api = list[0];
   const search = list.length > 1 ? list[1] : '';
   return { api, search };
+}
+
+export function getQuerySkipToken<T>() {
+  return {
+    queryKey: [] as const,
+    queryFn: skipToken,
+  } as
+    | UseQueryOptions<T, unknown, T>
+    | DefinedInitialDataOptions<T, unknown, T>
+    | UndefinedInitialDataOptions<T, unknown, T>;
 }

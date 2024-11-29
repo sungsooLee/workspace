@@ -1,38 +1,22 @@
 import { useState, useEffect } from 'react';
-import cn from 'clsx';
-import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { isArray } from 'lodash';
 
 import {
   Menubar,
-  MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
+  Button,
 } from '@learnway/ui';
 
-import { useMenus } from '../../../entities/menu';
+import { useMenus } from '../service/navigate.service';
 
-/*
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- This is a starter component and can be deleted.
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- Delete this file and get started with your project!
- * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- */
 export function Navigate() {
-  const { data } = useMenus({});
   const [menus, setMenus] = useState([]);
+
+  const { data } = useMenus();
 
   useEffect(() => {
     if (!data) {
@@ -44,17 +28,8 @@ export function Navigate() {
     setMenus(data[0].children);
   }, [data]);
 
-  const goPage = (to: string) => {
-    //router.navigate({ to });
-  };
-
   return (
     <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>
-          <Link to={'/'}>Home</Link>
-        </MenubarTrigger>
-      </MenubarMenu>
       {menus.map((menu: any, index: number) => {
         return (
           <MenubarMenu key={`MenubarMenu${index}`}>
