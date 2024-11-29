@@ -41,7 +41,9 @@ function LayoutComponent() {
       <div className="flex h-60px bg-gray-300">
         <div className="flex gap-10 items-center">
           <Link to={'/'}>
-            {(tenant?.logoImageUrl && <img src={tenant?.logoImageUrl} title={tenant.name} />) ??
+            {(tenant?.logoImageUrl && (
+              <img src={tenant?.logoImageUrl} title={tenant.name} className="h-16" />
+            )) ??
               tenant?.name}
           </Link>
           <Navigate />

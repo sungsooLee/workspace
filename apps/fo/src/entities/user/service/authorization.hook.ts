@@ -73,6 +73,7 @@ export function useLogoutUser(mutationOptions = {}) {
       cookieService.remove('REFRESH_LOGIN_TOKEN');
 
       queryClient.clear();
+      //queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
 
       router.navigate({ to: '/login' });
     },
