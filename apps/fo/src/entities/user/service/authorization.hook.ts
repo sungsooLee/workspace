@@ -51,7 +51,7 @@ export function useLoginUser(mutationOptions = {}) {
   });
 
   return {
-    login: (payload: any[], callback?: IMutateCallback<any[]>) => {
+    login: (payload: any, callback?: IMutateCallback<any[]>) => {
       mutate(payload, callback);
     },
     isSuccess,

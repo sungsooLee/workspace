@@ -65,7 +65,7 @@ const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<Controll
       <div className="relative w-full">
         <input
           className={cn(baseStyles, className)}
-          type={props.inputType}
+          type={type}
           ref={(el) => {
             inputRef.current = el;
           }}

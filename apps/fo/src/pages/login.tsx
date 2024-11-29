@@ -31,16 +31,6 @@ function RouteComponent() {
 
   const { login } = useLoginUser();
 
-  useEffect(() => {
-    if (data?.accountId) {
-      router.navigate({ to: '/' });
-    }
-  }, [data]);
-
-  const handleSubmit = (data: any) => {
-    login(data);
-  };
-
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -49,6 +39,16 @@ function RouteComponent() {
       password: 'hae1234',
     },
   });
+
+  useEffect(() => {
+    if (data?.accountId) {
+      router.navigate({ to: '/' });
+    }
+  }, [data]);
+
+  const handleSubmit = () => {
+    login(form.getValues());
+  };
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -62,15 +62,10 @@ function RouteComponent() {
               options={companyOptions ?? []}
             />
             <DynamicFormItem name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
-            <DynamicFormItem
-              name="password"
-              label={t('PASSWORD')}
-              type={FieldType.TEXT}
-              inputType="password"
-            />
+            <DynamicFormItem name="password" label={t('PASSWORD')} type={FieldType.PASSWORD} />
           </div>
 
-          <Button className="mt-10" type="submit">
+          <Button className="mt-10" type="submit" onClick={() => handleSubmit()}>
             로그인
           </Button>
         </Form>

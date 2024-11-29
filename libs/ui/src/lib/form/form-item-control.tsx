@@ -31,6 +31,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
   const type: FieldType = props.type;
   switch (type) {
     case FieldType.TEXT:
+    case FieldType.PASSWORD:
       return <FormInput {...commonProps} placeholder={props.placeholder} />;
     case FieldType.SELECT:
       return <FormSelect {...commonProps} options={props.options} />;

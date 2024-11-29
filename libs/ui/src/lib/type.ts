@@ -7,6 +7,7 @@ import { SwitchFieldProps } from './switch/type';
 
 export enum FieldType {
   TEXT = 'text',
+  PASSWORD = 'password',
   NUMBER = 'number',
   SELECT = 'select',
   MULTI_SELECT = 'multi-select',
@@ -20,6 +21,7 @@ export enum FieldType {
 
 export type FieldTpeValue = {
   [FieldType.TEXT]: string;
+  [FieldType.PASSWORD]: string;
   [FieldType.NUMBER]: number;
   [FieldType.SELECT]: string | number;
   [FieldType.MULTI_SELECT]: string | number;

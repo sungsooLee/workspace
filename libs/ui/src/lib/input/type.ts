@@ -1,8 +1,7 @@
 import { BaseFieldProps, FieldType } from '../type';
 
 export interface TextFieldProps extends BaseFieldProps {
-  type: FieldType.TEXT;
-  inputType?: string;
+  type: FieldType.TEXT | FieldType.PASSWORD;
 }
 
 export interface NumberFieldProps extends Omit<BaseFieldProps, 'type' | 'value'> {
