@@ -1,3 +1,5 @@
+import { skipToken } from '@tanstack/react-query';
+
 import { getQuerySkipToken } from '@learnway/shared';
 
 import TenantService from '../api/tenant';
@@ -16,4 +18,17 @@ export const queryOptions = {
           queryFn: () => TenantService.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
+};
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: Tenant) => TenantService.createTenant(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: Tenant) => TenantService.updateTenant(payload),
+  }),
+  delete: () => ({
+    mutationFn: (tenantId?: number) =>
+      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
+  }),
 };

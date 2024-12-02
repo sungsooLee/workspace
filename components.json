@@ -11,7 +11,7 @@
   },
   "aliases": {
     "components": "@/libs/ui",
-    "ui": "@/libs/ui/src/lib",
+    "ui": "@/libs/ui/src/lib/shadcn",
     "utils": "@/libs/shared/src/lib",
     "lib": "@/libs/shared/src/lib",
     "hooks": "@/libs/hooks/src/lib"
