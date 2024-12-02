@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DynamicFormItem from '@/libs/ui/src/lib/form/form-item';
-import { Button, FieldType, Form } from '@/libs/ui/src';
 import { useQuery } from '@tanstack/react-query';
+
+import { Button, FieldType, Form, DynamicFormField } from '@learnway/ui';
 
 const fetchFormData = (): Promise<any> => {
   const mockData = {
@@ -132,16 +132,16 @@ const TestForm = () => {
       <Form {...form} schema={schema}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-2 gap-4">
-            <DynamicFormItem name="name" label={t('form.name')} type={FieldType.TEXT} />
+            <DynamicFormField name="name" label={t('form.name')} type={FieldType.TEXT} />
 
-            {/* <DynamicFormItem
+            {/* <DynamicFormField
             name="email"
             label={t('form.email')}
             type={FieldType.TEXT}
             placeholder={t('form.emailPlaceholder')}
           /> */}
 
-            <DynamicFormItem
+            <DynamicFormField
               name="type"
               label={t('form.type')}
               type={FieldType.SELECT}
@@ -153,7 +153,7 @@ const TestForm = () => {
 
             <div className="col-span-2 space-y-2">
               <div className="grid grid-cols-2 gap-4">
-                <DynamicFormItem
+                <DynamicFormField
                   name="startAmount"
                   label={t('form.startAmount')}
                   type={FieldType.NUMBER}
@@ -162,7 +162,7 @@ const TestForm = () => {
                   thousandSeparator={true}
                 />
 
-                <DynamicFormItem
+                <DynamicFormField
                   name="endAmount"
                   label={t('form.endAmount')}
                   type={FieldType.NUMBER}
@@ -173,7 +173,7 @@ const TestForm = () => {
               </div>
             </div>
           </div>
-          <DynamicFormItem
+          <DynamicFormField
             name="categories"
             label={t('form.categories')}
             type={FieldType.MULTI_SELECT}
@@ -191,19 +191,19 @@ const TestForm = () => {
             variant="default"
             placeholder={t('form.categories.placeholder')}
           />
-          <DynamicFormItem
+          <DynamicFormField
             name="checkbox"
             label={t('form.checkbox')}
             type={FieldType.CHECKBOX}
             checkboxLabel="test checkbox"
           />
-          <DynamicFormItem
+          <DynamicFormField
             name="switch"
             label={t('form.switch')}
             type={FieldType.SWITCH}
             formLabel="test switch"
           />
-          <DynamicFormItem
+          <DynamicFormField
             name="notificationType"
             label={t('form.notificationType')}
             type={FieldType.RADIO}
@@ -225,13 +225,13 @@ const TestForm = () => {
             ]}
             orientation="vertical"
           />
-          <DynamicFormItem
+          <DynamicFormField
             name="birthDate"
             label={t('form.birthDate')}
             type={FieldType.DATE}
             maxDate={new Date()}
           />
-          <DynamicFormItem
+          <DynamicFormField
             name="dateRange"
             label={t('form.dateRange')}
             type={FieldType.DATE_RANGE}
