@@ -2,14 +2,14 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DynamicFormItem from '@/libs/ui/src/lib/form/form-item';
-import { Button, FieldType, Form } from '@/libs/ui/src';
 import { useQuery } from '@tanstack/react-query';
+
+import DynamicFormItem from '@/libs/ui/src/lib/form/form-item';
+import { Button, FieldType, Form, useModalContext } from '@/libs/ui/src';
 
 const fetchFormData = (): Promise<any> => {
   const mockData = {
     name: '초기 텍스트',
-    // email: '초기 이메일',
     startAmount: 10000,
     endAmount: 5000,
     checkbox: true,
@@ -35,16 +35,11 @@ const TestForm = () => {
     queryKey: ['formData'],
     queryFn: fetchFormData,
   });
-
+  const { closeModal } = useModalContext();
   const schema = z.object({
     name: z.string().min(2, {
       message: t('validation.min', { field: t('form.name'), min: 2 }),
     }),
-    // email: z
-    //   .string()
-    //   .trim()
-    //   .transform((val) => (val === '' ? undefined : val))
-    //   .pipe(z.string().email(t('validation.email')).optional()),
     type: z
       .string({
         required_error: t('validation.required', { field: t('form.type') }),
@@ -107,7 +102,6 @@ const TestForm = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
-      // email: '',
       startAmount: 0,
       endAmount: 0,
       checkbox: false,
@@ -119,12 +113,14 @@ const TestForm = () => {
       dateRange: { from: new Date(), to: new Date() },
     },
     values: formData,
-    // resetOptions: {
-    //   keepDirty: true,
-    // },
   });
   const handleSubmit = (data: any) => {
     console.log(data);
+    closeModal({ data: data });
+  };
+
+  const handleReset = () => {
+    form.reset();
   };
 
   return (
@@ -133,13 +129,6 @@ const TestForm = () => {
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <DynamicFormItem name="name" label={t('form.name')} type={FieldType.TEXT} />
-
-            {/* <DynamicFormItem
-            name="email"
-            label={t('form.email')}
-            type={FieldType.TEXT}
-            placeholder={t('form.emailPlaceholder')}
-          /> */}
 
             <DynamicFormItem
               name="type"
@@ -241,6 +230,9 @@ const TestForm = () => {
           />
           <Button className="mt-10" type="submit">
             전송
+          </Button>
+          <Button type="button" variant="outline" onClick={handleReset}>
+            초기화
           </Button>
         </form>
       </Form>

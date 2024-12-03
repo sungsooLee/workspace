@@ -7,11 +7,24 @@ import {
   DialogDescription,
   DialogFooter,
 } from '../shadcn/dialog';
-import { ModalProps } from './type';
+import { BaseModalProps } from './type';
 
-const Modal = ({ isOpen, onClose, title, description, children, footer }: ModalProps) => {
+const BaseModal: React.FC<BaseModalProps> = ({
+  title,
+  description,
+  children,
+  footer,
+  preventBackdropClose = false,
+  onClose,
+}) => {
+  const handleOpenChange = (open: boolean) => {
+    if (!open && !preventBackdropClose) {
+      onClose?.();
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={true} onOpenChange={handleOpenChange}>
       <DialogContent>
         {(title || description) && (
           <DialogHeader>
@@ -28,4 +41,4 @@ const Modal = ({ isOpen, onClose, title, description, children, footer }: ModalP
   );
 };
 
-export default Modal;
+export default BaseModal;

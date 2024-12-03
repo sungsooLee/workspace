@@ -1,5 +1,5 @@
 export { default as Modal } from './lib/modal/modal';
-export { default as useModal } from './lib/modal/use-modal.hook';
+export { default as useModalControl } from './lib/modal/modal.hook';
 
 export { default as FormCheckBox } from './lib/checkbox/checkbox';
 export { default as FormDatePicker } from './lib/date-picker/date-picker';
@@ -34,3 +34,8 @@ export * from './lib/switch/switch';
 export * from './lib/type';
 
 /// export 컨벤션 ??
+
+export { default as ModalWrapper } from './lib/modal/modal-wrapper';
+export { default as ModalContainer } from './lib/modal/modal-container';
+export * from './lib/stores/useModalStore';
+export * from './lib/modal/modal-context';
