@@ -5,8 +5,8 @@ export { default as FormCheckBox } from './lib/checkbox/checkbox';
 export { default as FormDatePicker } from './lib/date-picker/date-picker';
 export { default as FormDateRangePicker } from './lib/date-picker/date-range-picker';
 
-export * from './lib/form/form-item-control';
-export * from './lib/form/form-item';
+export * from './lib/dynamic-form-field/dynamic-form-field-control';
+export * from './lib/dynamic-form-field/dynamic-form-field';
 
 export { default as FormInput } from './lib/input/input';
 export * from './lib/input/number-input';

@@ -9,10 +9,10 @@ import {
 
 import { DynamicFieldProps } from '../type';
 import { memo, useContext } from 'react';
-import { FormItemControl } from './form-item-control';
+import { FormItemControl } from './dynamic-form-field-control';
 import { useFormContext } from 'react-hook-form';
 
-const DynamicFormItem = ({ name, label, type, ...props }: DynamicFieldProps) => {
+const DynamicFormField = ({ name, label, type, ...props }: DynamicFieldProps) => {
   const form = useFormContext();
   const { schema } = useContext(FormSchemaContext);
   const isRequired = schema?.shape?.[name] ? !schema.shape[name].isOptional() : false;
@@ -39,4 +39,4 @@ const DynamicFormItem = ({ name, label, type, ...props }: DynamicFieldProps) => 
   );
 };
 
-export default DynamicFormItem;
+export { DynamicFormField };
