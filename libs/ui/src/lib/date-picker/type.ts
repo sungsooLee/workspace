@@ -11,11 +11,6 @@ export interface DateProps extends BaseFieldProps {
   minuteStep?: number;
 }
 
-export interface DateFieldProps extends DateProps {
-  type: FieldType.DATE;
-  onChange?: (date: Date | undefined) => void;
-}
-
 export interface DateRangeFieldProps extends DateProps {
   type: FieldType.DATE_RANGE;
   onChange?: (range: DateRange | undefined) => void;

@@ -5,18 +5,14 @@ import { Label } from '../shadcn/label';
 import { SwitchFieldProps } from './type';
 
 const FormSwitch = forwardRef<HTMLButtonElement, SwitchFieldProps>(
-  ({ value, onChange, disabled, error, mode = 'edit', className, formLabel, ...props }, ref) => {
-    if (mode === 'read') {
-      return (
-        <div className={cn('py-2 px-3 text-sm text-gray-900', className)}>
-          {value ? '예' : '아니오'}
-        </div>
-      );
-    }
-
+  ({ value, onChange, disabled, formLabel, className }, ref) => {
     return (
-      <div className="flex items-center space-x-2">
-        <Switch checked={value} onCheckedChange={(checked) => onChange && onChange(checked)} />
+      <div className={cn('flex items-center space-x-2', className)}>
+        <Switch
+          checked={value}
+          onCheckedChange={(checked) => onChange && onChange(checked)}
+          disabled={disabled}
+        />
         {formLabel && <Label>{formLabel}</Label>}
       </div>
     );

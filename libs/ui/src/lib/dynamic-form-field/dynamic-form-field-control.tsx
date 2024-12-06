@@ -5,7 +5,6 @@ import FormSelect from '../select/select';
 import FormNumberInput from '../input/number-input';
 import FormMultiSelect from '../select/multi-select';
 import FormCheckBox from '../checkbox/checkbox';
-// import FormCheckBox from '@learnway/ui';
 import FormSwitch from '../switch/switch';
 import FormRadioGroup from '../radio/radio';
 import FormDatePicker from '../date-picker/date-picker';
@@ -24,7 +23,6 @@ interface FormControlProps {
 export const FormItemControl = ({ field, fieldState, props }: FormControlProps) => {
   const commonProps = {
     ...props,
-    error: !!fieldState.error,
     mode: props.mode,
     ...field,
   };
@@ -32,7 +30,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
   switch (type) {
     case FieldType.TEXT:
     case FieldType.PASSWORD:
-      return <FormInput {...commonProps} placeholder={props.placeholder} />;
+      return <FormInput {...commonProps} />;
     case FieldType.SELECT:
       return <FormSelect {...commonProps} options={props.options} />;
 
@@ -85,7 +83,6 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
       return (
         <FormRadioGroup
           {...commonProps}
-          error={!!fieldState.error}
           options={props.options}
           onValueChange={field.onChange}
           orientation={props.orientation}

@@ -9,8 +9,6 @@ const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
       value = [],
       onChange,
       options,
-      error,
-      mode = 'edit',
       maxCount = 3,
       animation = 0,
       placeholder,
@@ -20,18 +18,6 @@ const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
     },
     ref,
   ) => {
-    if (mode === 'read') {
-      const selectedLabels = value
-        .map((v: string | number) => options.find((opt) => opt.value === v)?.label)
-        .filter(Boolean);
-
-      return (
-        <div className={cn('py-2 px-3 text-sm text-gray-900', className)}>
-          {selectedLabels.length > 0 ? selectedLabels.join(', ') : '-'}
-        </div>
-      );
-    }
-
     const normalizedValue = Array.isArray(value) ? value.map(String) : value ? [String(value)] : [];
     const handleValueChange = (selectedValues: string[]) => {
       if (onChange) onChange?.(selectedValues);
@@ -48,7 +34,10 @@ const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
         placeholder={placeholder}
         variant={variant}
         disabled={disabled}
-        className={cn(error && 'border-red-500', className)}
+        className={cn(
+          'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
+          className,
+        )}
       />
     );
   },

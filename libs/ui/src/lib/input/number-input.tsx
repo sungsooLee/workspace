@@ -1,87 +1,31 @@
-import { forwardRef, useMemo } from 'react';
-import { cn } from '@learnway/shared';
+import { forwardRef } from 'react';
 import { NumericFormat } from 'react-number-format';
-import { NumberFieldProps } from './type';
-import { ControllerRenderProps } from 'react-hook-form';
 
-const FormNumberInput = forwardRef<
-  HTMLInputElement,
-  NumberFieldProps & Partial<ControllerRenderProps>
->(
+import { cn } from '@learnway/shared';
+
+import { NumberFieldProps } from './type';
+
+const NumberInput = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
       prefix,
       suffix,
-      currency,
-      locale = 'ko-KR',
       decimalScale = 0,
       allowNegative = false,
       thousandSeparator = true,
       placeholder,
       disabled,
       error,
-      mode = 'edit',
       className,
       onChange,
       onBlur,
       value,
       type,
+      fixedDecimalScale,
       ...props
     },
     ref,
   ) => {
-    // 읽기 모드 처리
-    if (mode === 'read') {
-      let displayValue = value;
-
-      if (value != null && value !== '') {
-        const numberValue = Number(value);
-        if (!isNaN(numberValue)) {
-          displayValue = new Intl.NumberFormat(locale, {
-            style: currency ? 'currency' : 'decimal',
-            currency,
-            minimumFractionDigits: decimalScale,
-            maximumFractionDigits: decimalScale,
-          }).format(numberValue);
-        }
-      }
-
-      return (
-        <div className={cn('py-2 px-3 text-sm text-gray-900', className)}>
-          {prefix && <span className="mr-1">{prefix}</span>}
-          {displayValue ?? '-'}
-          {suffix && <span className="ml-1">{suffix}</span>}
-        </div>
-      );
-    }
-
-    const getCurrencyDecimalScale = (currency?: string) => {
-      switch (currency) {
-        case 'KRW':
-          return 0;
-        case 'USD':
-        case 'EUR':
-          return 2;
-        default:
-          return 0;
-      }
-    };
-
-    const formatProps = currency
-      ? {
-          thousandSeparator: true,
-          prefix: `${currency} `,
-          suffix,
-          decimalScale: decimalScale ?? getCurrencyDecimalScale(currency),
-          fixedDecimalScale: (decimalScale ?? getCurrencyDecimalScale(currency)) > 0,
-        }
-      : {
-          thousandSeparator,
-          decimalScale,
-          prefix,
-          suffix,
-        };
-
     return (
       <NumericFormat
         getInputRef={ref}
@@ -90,11 +34,12 @@ const FormNumberInput = forwardRef<
           'border-gray-300 bg-white text-gray-900',
           'placeholder:text-gray-500',
           'focus:outline-none focus:ring-2 focus:ring-blue-500',
-          error && 'border-red-500 focus:ring-red-500',
+          'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
           disabled && 'bg-gray-100 text-gray-400 cursor-not-allowed',
           className,
         )}
-        // decimalScale={decimalScale}
+        decimalScale={decimalScale}
+        fixedDecimalScale={fixedDecimalScale}
         allowNegative={allowNegative}
         disabled={disabled}
         placeholder={placeholder}
@@ -102,14 +47,14 @@ const FormNumberInput = forwardRef<
         onValueChange={(values) => {
           onChange?.(values.value);
         }}
-        // onChange={onChange}
-        // onValueChange={onChange}
         onBlur={onBlur}
-        {...formatProps}
+        prefix={prefix}
+        suffix={suffix}
+        thousandSeparator={thousandSeparator}
         {...props}
       />
     );
   },
 );
 
-export default FormNumberInput;
+export default NumberInput;

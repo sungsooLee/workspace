@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
 
+export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
 export interface ModalConfig {
   title?: string;
   description?: string;
   footer?: React.ReactNode;
-  width?: string;
-  height?: string;
+  width?: ModalSize;
+  height?: ModalHeight;
   preventBackdropClose?: boolean;
-  isClosable?: boolean;
 }
 
 export interface ModalClose<T = any> {

@@ -1,4 +1,4 @@
-import { BaseFieldProps, FieldType } from '../type';
+import { BaseFieldProps } from '../type';
 
 export interface SelectOption {
   value: string;
@@ -8,14 +8,10 @@ export interface SelectOption {
 }
 
 export interface SelectFieldProps extends BaseFieldProps {
-  type: FieldType.SELECT;
   options: SelectOption[];
-  onChange?: (value: string) => void;
 }
 
 export interface MultiSelectFieldProps extends BaseFieldProps {
-  type: FieldType.MULTI_SELECT;
-  onChange?: (value: string[] | string) => void;
   options: SelectOption[];
   maxCount?: number;
   animation?: number;

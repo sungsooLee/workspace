@@ -1,18 +1,13 @@
-import { BaseFieldProps, FieldType } from '../type';
+import { BaseFieldProps } from '../type';
 
-export interface TextFieldProps extends BaseFieldProps {
-  type: FieldType.TEXT | FieldType.PASSWORD;
-}
-
-export interface NumberFieldProps extends Omit<BaseFieldProps, 'type' | 'value'> {
-  type: FieldType.NUMBER;
+export interface NumberFieldProps extends BaseFieldProps {
   prefix?: string;
   suffix?: string;
-  currency?: string;
   locale?: string;
   decimalScale?: number;
   allowNegative?: boolean;
   thousandSeparator?: boolean;
+  fixedDecimalScale?: boolean;
   min?: number;
   max?: number;
 }

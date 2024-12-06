@@ -1,21 +1,11 @@
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@learnway/shared';
-import { TextFieldProps } from './type';
-import { ControllerRenderProps } from 'react-hook-form';
 
-const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<ControllerRenderProps>>(
-  ({ className, error, mode = 'edit', type, disabled, onBlur, onChange, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+  ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
-
-    if (mode === 'read') {
-      return (
-        <div className={cn('w-full py-2 text-sm text-gray-900', className)}>
-          {props.value || '-'}
-        </div>
-      );
-    }
 
     const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -34,18 +24,18 @@ const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<Controll
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
-      if (inputRef.current && props.value) {
+      if (inputRef.current && value) {
         //
       }
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
       if (inputRef.current) {
         inputRef.current.setSelectionRange(0, 0);
       }
       if (onBlur) {
-        onBlur();
+        onBlur(e);
       }
     };
 
@@ -55,8 +45,8 @@ const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<Controll
       'placeholder:text-gray-500',
       'focus:outline-none focus:border-blue-500',
       'overflow-hidden whitespace-nowrap text-ellipsis',
+      'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
       {
-        'border-red-500 focus:border-red-500': error,
         'border-gray-200 bg-gray-100 text-gray-500 text-gray-400 cursor-not-allowed': disabled,
       },
     );
@@ -73,10 +63,10 @@ const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<Controll
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={onChange}
-          {...props}
+          placeholder={placeholder}
         />
         <div className="absolute right-0 top-0 bottom-0 w-8 flex items-center justify-center">
-          {isFocused && props.value && props.value.toString().length > 0 && (
+          {isFocused && value && value.toString().length > 0 && (
             <button
               type="button"
               onClick={handleClear}
@@ -95,7 +85,6 @@ const FormInput = forwardRef<HTMLInputElement, TextFieldProps & Partial<Controll
   },
 );
 
-FormInput.displayName = 'FormInput';
+Input.displayName = 'FormInput';
 
-// export { FormInput };
-export default FormInput;
+export default Input;

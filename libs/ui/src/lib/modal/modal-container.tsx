@@ -12,7 +12,7 @@ const ModalContainer = ({ index, data }: ModalContainerProps) => {
   };
 
   return (
-    <ModalProvider value={{ closeModal: handleClose }}>
+    <ModalProvider value={{ closeModal: handleClose, isModal: true }}>
       <BaseModal {...config} onClose={handleClose}>
         {content}
       </BaseModal>

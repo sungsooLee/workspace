@@ -10,6 +10,9 @@
     }
   },
   "peerDependencies": {
-    "zustand": "^x.x.x"
+    "zustand": "^x.x.x",
+    "storybook": "^x.x.x",
+    "postcss": "^x.x.x",
+    "autoprefixer": "^x.x.x"
   }
 }

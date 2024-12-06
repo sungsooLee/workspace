@@ -1,4 +1,6 @@
 import React from 'react';
+import { cn } from '@/libs/shared/src';
+
 import {
   Dialog,
   DialogContent,
@@ -16,16 +18,33 @@ const BaseModal: React.FC<BaseModalProps> = ({
   footer,
   preventBackdropClose = false,
   onClose,
+  width = 'md',
+  height = 'auto',
 }) => {
   const handleOpenChange = (open: boolean) => {
-    if (!open && !preventBackdropClose) {
-      onClose?.();
-    }
+    onClose?.();
+  };
+
+  const sizeClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-[95vw]',
+  };
+
+  const heightClasses = {
+    auto: 'h-auto',
+    sm: 'h-[300px]',
+    md: 'h-[500px]',
+    lg: 'h-[700px]',
+    full: 'h-[95vh]',
   };
 
   return (
     <Dialog open={true} onOpenChange={handleOpenChange}>
-      <DialogContent>
+      <DialogContent
+        className={cn(heightClasses[height], sizeClasses[width], 'transition-all duration-200')}>
         {(title || description) && (
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}

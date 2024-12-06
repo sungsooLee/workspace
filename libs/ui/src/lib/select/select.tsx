@@ -1,26 +1,10 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../shadcn/select';
 import { cn } from '@learnway/shared';
-import { SelectFieldProps, SelectOption } from './type';
-import { FormMode } from '../type';
-
-export interface CustomSelectProps extends React.ComponentPropsWithoutRef<typeof Select> {
-  options: SelectOption[];
-  error?: boolean;
-  mode?: FormMode;
-  value?: string;
-  onChange?: (value: string) => void;
-  disabled?: boolean;
-  className?: string;
-}
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../shadcn/select';
+import { SelectFieldProps } from './type';
 
 const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldProps>(
-  ({ options, error, mode = 'edit', value, onChange, disabled, className, ...props }, ref) => {
-    if (mode === 'read') {
-      const selectedOption = options.find((opt) => opt.value === value);
-      return <div className={cn('w-full py-2 text-sm text-gray-900')}>{selectedOption?.label}</div>;
-    }
-
+  ({ options, value, onChange, disabled, className, ...props }, ref) => {
     return (
       <Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
         <SelectTrigger
@@ -28,7 +12,7 @@ const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectField
           className={cn(
             'w-full',
             'focus:outline-none focus:border-blue-500',
-            error && 'border-red-500 focus:border-red-500',
+            'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
           )}>
           <SelectValue />
         </SelectTrigger>

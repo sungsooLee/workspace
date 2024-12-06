@@ -4,24 +4,17 @@ import { Checkbox } from '../shadcn/checkbox';
 import { CheckFieldProps } from './type';
 
 const FormCheckBox = forwardRef<HTMLButtonElement, CheckFieldProps>(
-  ({ checked, onCheckedChange, disabled, error, mode = 'edit', className, checkboxLabel }, ref) => {
-    if (mode === 'read') {
-      return (
-        <div className={cn('py-2 px-3 text-sm text-gray-900', className)}>
-          {checked ? '예' : '아니오'}
-        </div>
-      );
-    }
+  ({ value, onChange, disabled, className, checkboxLabel }, ref) => {
     return (
       <div className="flex items-center space-x-2">
         <Checkbox
           //   id={name}
           ref={ref}
-          checked={checked}
-          onCheckedChange={onCheckedChange}
+          checked={value}
+          onCheckedChange={onChange}
           disabled={disabled}
           className={cn(
-            error && 'border-red-500',
+            'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
             disabled && 'opacity-50 cursor-not-allowed',
             className,
           )}

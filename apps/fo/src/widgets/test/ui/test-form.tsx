@@ -145,7 +145,7 @@ const TestForm = () => {
                   name="startAmount"
                   label={t('form.startAmount')}
                   type={FieldType.NUMBER}
-                  currency="KRW"
+                  // currency="KRW"
                   decimalScale={0}
                   thousandSeparator={true}
                 />
@@ -154,7 +154,6 @@ const TestForm = () => {
                   name="endAmount"
                   label={t('form.endAmount')}
                   type={FieldType.NUMBER}
-                  currency="USD"
                   decimalScale={2}
                   thousandSeparator={true}
                 />
@@ -217,7 +216,7 @@ const TestForm = () => {
             name="birthDate"
             label={t('form.birthDate')}
             type={FieldType.DATE}
-            maxDate={new Date()}
+            // maxDate={new Date()}
           />
           <DynamicFormField
             name="dateRange"

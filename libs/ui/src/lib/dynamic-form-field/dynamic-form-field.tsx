@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -6,11 +8,8 @@ import {
   FormMessage,
   FormSchemaContext,
 } from '../shadcn/form';
-
 import { DynamicFieldProps } from '../type';
-import { memo, useContext } from 'react';
 import { FormItemControl } from './dynamic-form-field-control';
-import { useFormContext } from 'react-hook-form';
 
 const DynamicFormField = ({ name, label, type, ...props }: DynamicFieldProps) => {
   const form = useFormContext();
@@ -21,7 +20,7 @@ const DynamicFormField = ({ name, label, type, ...props }: DynamicFieldProps) =>
       control={form.control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem>
+        <FormItem className={`group ${fieldState.error ? 'has-error' : ''}`}>
           <FormLabel>
             {label}
             {isRequired && <span className="text-red-500 ml-1">*</span>}

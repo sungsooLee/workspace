@@ -1,6 +1,7 @@
+import { FocusEventHandler } from 'react';
 import { CheckFieldProps } from './checkbox/type';
-import { DateFieldProps, DateRangeFieldProps } from './date-picker/type';
-import { NumberFieldProps, TextFieldProps } from './input/type';
+import { DateRangeFieldProps } from './date-picker/type';
+import { NumberFieldProps } from './input/type';
 import { RadioFieldProps } from './radio/type';
 import { MultiSelectFieldProps, SelectFieldProps } from './select/type';
 import { SwitchFieldProps } from './switch/type';
@@ -36,13 +37,17 @@ export type FieldTpeValue = {
 //     수정 모드와 view모드 전환이 가능하다.
 export type FormMode = 'read' | 'edit';
 
-export interface BaseFieldProps {
-  // type: FieldType;
+export interface BaseFieldProps<T = any> {
+  type: FieldType;
   name: string;
   label: string;
   error?: boolean;
   mode?: FormMode;
-  value?: any;
+  value?: T;
+  onChange?: (value: T) => void;
+  onBlur?: FocusEventHandler<T> | undefined;
+  isRequired?: boolean;
+  errorMessage?: string;
   placeholder?: string;
   className?: string;
   disabled?: boolean;
@@ -50,12 +55,21 @@ export interface BaseFieldProps {
 }
 
 export type DynamicFieldProps =
-  | TextFieldProps
+  // | TextFieldProps
   | NumberFieldProps
   | SelectFieldProps
   | MultiSelectFieldProps
   | CheckFieldProps
   | SwitchFieldProps
   | RadioFieldProps
-  | DateFieldProps
+  // | DateFieldProps
   | DateRangeFieldProps;
+
+///////
+
+export interface BaseField<T = any> {
+  name: string;
+  label: string;
+  type: FieldType;
+  error?: boolean;
+}
