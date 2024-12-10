@@ -3,9 +3,12 @@ import { PMSApiPrefix } from '@learnway/config';
 
 import { Tenant } from '../model/tenant';
 
+import tenantsMock from '../../mock/tenants.json';
+
 export default class TenantService {
   static fetchTenant(id: number) {
-    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
+    //return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
+    return new Promise((resolve) => setTimeout(() => resolve(tenantsMock as any)));
   }
 
   static createTenant(payload: any) {

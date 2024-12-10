@@ -1,0 +1,34 @@
+.red {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --primary: 15 98% 35%;
+  --primary-foreground: #ffffff;
+  --primary-1: #600050;
+  --primary-2: 15 84% 27%;
+  --secondary: 15 92% 41%;
+  --secondary-foreground: #ffffff;
+  --secondary-1: 24 94% 62%;
+  --secondary-2: #009abc;
+  --secondary-3: #b2e7f2;
+  --secondary-4: #edfcff;
+  --secondary-5: #d8f8ff;
+  --secondary-6: #ffdada;
+  --secondary-7: #ffeded;
+  --secondary-8: #2e7ee7;
+  --secondary-9: #f6f8fd;
+  --secondary-10: #f2f4f9;
+  --status-error: #ed2929;
+  --status-warning: #ffb902;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 215 20.2% 65.1%;
+  --radius: 0.5rem;
+}

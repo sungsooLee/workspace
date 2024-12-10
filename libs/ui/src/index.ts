@@ -15,6 +15,7 @@ export * from './lib/radio/radio';
 export * from './lib/select/multi-select';
 export * from './lib/select/select';
 
+export * from './lib/shadcn/select';
 export * from './lib/shadcn/badge';
 export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';
