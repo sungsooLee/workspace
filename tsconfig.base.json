@@ -5,6 +5,7 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "resolveJsonModule": true, // for json mock
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
