@@ -1,8 +1,5 @@
-@import './assets/fonts/font.css';
-
-@import './assets/theme/base.css';
-@import './assets/theme/red.css';
-@import './assets/theme/green.css';
+@import '../../../libs/config/src/lib/style/font.css';
+@import '../../../libs/config/src/lib/style/theme.css';
 
 @tailwind base;
 @tailwind components;
@@ -18,6 +15,7 @@
   body {
     @apply antialiased bg-background text-foreground;
   }
+  body,
   html {
     font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
       Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',

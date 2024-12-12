@@ -6,7 +6,8 @@
     "dev:fo": "npx nx serve fo",
     "build:fo": "npx nx build fo",
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
-    "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add"
+    "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
+    "storybook": "nx run ui:storybook"
   },
   "private": true,
   "dependencies": {

@@ -6,6 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 
 import { FieldType } from '../type';
 import { DynamicFormField } from './dynamic-form-field';
+import { Button } from '../shadcn/button';
 
 export default {
   title: 'Components/DynamicFormField',
@@ -73,9 +74,10 @@ const Template = (args: any) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <DynamicFormField {...args} />
-        <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
-          Submit
-        </button>
+
+        <Button className="mt-10" type="submit">
+          로그인
+        </Button>
       </form>
     </FormProvider>
   );

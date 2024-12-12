@@ -12,6 +12,16 @@ const isTest = process.env.NODE_ENV === 'test';
 export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/apps/fo',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "./src/assets/theme/theme";',
+      },
+      css: {
+        additionalData: '@import "./src/assets/theme/theme.css";',
+      },
+    },
+  },
   server: {
     port: 4200,
     host: 'localhost',

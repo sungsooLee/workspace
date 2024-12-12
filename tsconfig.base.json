@@ -18,6 +18,7 @@
     "paths": {
       "@/libs/*": ["libs/*"],
       "@learnway/config": ["libs/config/src/index.ts"],
+      "@learnway/config/*": ["libs/config/src/lib/*"],
       "@learnway/hooks": ["libs/hooks/src/index.ts"],
       "@learnway/shared": ["libs/shared/src/index.ts"],
       "@learnway/ui": ["libs/ui/src/index.ts"]
