@@ -1,14 +1,28 @@
-import { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
+import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@learnway/shared';
 
 const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
+    const [inputValue, setInputValue] = useState(value);
+
+    useEffect(() => {
+      setInputValue(value);
+    }, [value]);
+
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setInputValue(newValue);
+      if (onChange) {
+        onChange(e);
+      }
     };
 
     const handleClear = () => {
@@ -58,11 +72,17 @@ const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>
           type={type}
           ref={(el) => {
             inputRef.current = el;
+            if (typeof ref === 'function') {
+              ref(el);
+            } else if (ref) {
+              ref.current = el;
+            }
           }}
+          value={inputValue}
           disabled={disabled}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onChange={onChange}
+          onChange={handleInputChange}
           placeholder={placeholder}
         />
         <div className="absolute right-0 top-0 bottom-0 w-8 flex items-center justify-center">
