@@ -1,11 +1,28 @@
-import NxWelcome from './nx-welcome';
+import { StrictMode } from 'react';
+import * as ReactDOM from 'react-dom/client';
 
-export function App() {
-  return (
-    <div>
-      <NxWelcome title="fo" />
-    </div>
-  );
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+
+import { ReactQueryConfigProvider } from '@learnway/config';
+
+import { routeTree } from '../routeTree.gen';
+
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+});
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
 }
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <StrictMode>
+    <ReactQueryConfigProvider>
+      <RouterProvider router={router} />
+    </ReactQueryConfigProvider>
+  </StrictMode>,
+);

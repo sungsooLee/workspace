@@ -5,7 +5,7 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "resolveJsonModule": true, // for json mock
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -21,7 +21,8 @@
       "@learnway/config/*": ["libs/config/src/lib/*"],
       "@learnway/hooks": ["libs/hooks/src/index.ts"],
       "@learnway/shared": ["libs/shared/src/index.ts"],
-      "@learnway/ui": ["libs/ui/src/index.ts"]
+      "@learnway/ui": ["libs/ui/src/index.ts"],
+      "types": ["libs/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
