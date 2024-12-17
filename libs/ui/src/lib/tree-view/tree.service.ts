@@ -112,7 +112,7 @@ export const updateNodeByKey = (
  * @param path 현재까지의 경로
  * @returns
  */
-const findNodePath = (
+export const findNodePath = (
   nodes: TreeNode[],
   targetKey: string,
   path: string[] = [],
@@ -145,4 +145,72 @@ export const isValidDrop = (draggedKey: string, targetKey: string, nodes: TreeNo
   if (!targetPath) return true;
 
   return !targetPath.includes(draggedKey);
+};
+
+export const insertNodeAtPosition = (
+  nodes: TreeNode[],
+  targetKey: string | null,
+  newNode: TreeNode,
+  position?: 'before' | 'after' | 'inside',
+): TreeNode[] => {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if (node.key === targetKey) {
+      const result = [...nodes];
+      switch (position) {
+        case 'before':
+          result.splice(i, 0, newNode);
+          return result;
+
+        case 'inside':
+          return addNodeToParent(nodes, targetKey, newNode);
+        case 'after':
+          result.splice(i + 1, 0, newNode);
+          return result;
+
+        default:
+          result.splice(i + 1, 0, newNode);
+          return result;
+      }
+    }
+  }
+
+  return nodes.map((node) => {
+    if (!node.children) return node;
+
+    return {
+      ...node,
+      children: insertNodeAtPosition(node.children, targetKey, newNode, position),
+    };
+  });
+};
+
+export const findSiblingNodes = (nodes: TreeNode[], targetKey: string): TreeNode[] => {
+  if (nodes.some((node) => node.key === targetKey)) {
+    return nodes;
+  }
+
+  for (const node of nodes) {
+    if (node.children) {
+      if (node.children.some((child) => child.key === targetKey)) {
+        return node.children;
+      }
+      const found = findSiblingNodes(node.children, targetKey);
+      if (found.length > 0) return found;
+    }
+  }
+
+  return [];
+};
+
+export const getTargetIndex = (nodes: TreeNode[], targetKey: string, position: string): number => {
+  const siblings = findSiblingNodes(nodes, targetKey);
+
+  const targetIndex = siblings.findIndex((node) => node.key === targetKey);
+
+  if (position === 'before') {
+    return targetIndex;
+  }
+
+  return targetIndex + 1;
 };

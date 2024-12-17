@@ -1,15 +1,135 @@
 import { useState, useCallback } from 'react';
-import { TreeNode } from './type';
-import { addNodeToParent, removeNodeByKey, updateNodeByKey } from './tree.service';
+import { TreeAction, TreeNode } from './type';
+import {
+  addNodeToParent,
+  generateKey,
+  insertNodeAtPosition,
+  removeNodeByKey,
+  updateNodeByKey,
+} from './tree.service';
 
-interface UseTreeViewProps {
+interface UseTreeProps {
   initialData: TreeNode[];
+  treeId?: string;
+  onMove?: (
+    sourceNode: TreeNode,
+    targetNode: TreeNode | null,
+    position: string,
+    targetIndex?: number,
+  ) => Promise<void>;
+  onCopy?: (sourceNode: TreeNode, targetNode: TreeNode | null, position?: string) => Promise<void>;
+  onAdd?: (parentNode: TreeNode | null, newNode: Partial<TreeNode>) => Promise<void>;
+  onDelete?: (node: TreeNode) => Promise<void>;
+  onUpdate?: (node: TreeNode, updates: Partial<TreeNode>) => Promise<void>;
+  onClick?: (node: TreeNode) => Promise<void>;
 }
 
-export const useTreeView = ({ initialData }: UseTreeViewProps) => {
+export const useTree = ({
+  initialData,
+  treeId,
+  onMove,
+  onCopy,
+  onAdd,
+  onDelete,
+  onUpdate,
+  onClick,
+}: UseTreeProps) => {
   const [treeData, setTreeData] = useState<TreeNode[]>(initialData);
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  const handleAction = useCallback(
+    async (action: TreeAction) => {
+      const { type, payload } = action;
+      console.log(payload);
+      if (payload.treeId !== treeId) return;
+
+      try {
+        switch (type) {
+          case 'MOVE': {
+            const { sourceNode, targetNode, position, targetIndex } = payload;
+            if (!sourceNode || position === undefined) return;
+            if (onMove) {
+              await onMove(sourceNode, targetNode || null, position, targetIndex);
+            }
+            setTreeData((prev) => {
+              const newData = removeNodeByKey(prev, sourceNode.key);
+              return insertNodeAtPosition(newData, targetNode?.key || null, sourceNode, position);
+            });
+            break;
+          }
+
+          case 'COPY': {
+            const { sourceNode, targetNode, position } = payload;
+            if (!sourceNode) return;
+
+            if (onCopy) {
+              await onCopy(sourceNode, targetNode || null, position);
+            }
+            setTreeData((prev) =>
+              insertNodeAtPosition(prev, targetNode?.key || null, sourceNode, position),
+            );
+            break;
+          }
+
+          case 'ADD': {
+            const { parentNode, newNode } = payload;
+            if (!newNode) return;
+
+            const nodeToAdd: TreeNode = {
+              key: generateKey(),
+              ...newNode,
+              children: newNode.children || [],
+            };
+
+            if (onAdd) {
+              await onAdd(parentNode || null, nodeToAdd);
+            }
+            setTreeData((prev) =>
+              parentNode ? addNodeToParent(prev, parentNode.key, nodeToAdd) : [...prev, nodeToAdd],
+            );
+            break;
+          }
+
+          case 'DELETE': {
+            const { nodeToDelete } = payload;
+            console.log(nodeToDelete);
+            if (!nodeToDelete) return;
+
+            if (onDelete) {
+              await onDelete(nodeToDelete);
+            }
+            setTreeData((prev) => removeNodeByKey(prev, nodeToDelete.key));
+            setSelectedNode(null);
+            break;
+          }
+
+          case 'UPDATE': {
+            const { node, updates } = payload;
+            if (!node || !updates) return;
+
+            if (onUpdate) {
+              await onUpdate(node, updates);
+            }
+            setTreeData((prev) => updateNodeByKey(prev, node.key, updates));
+            break;
+          }
+
+          case 'CLICK': {
+            const { node } = payload;
+
+            // if (onClick) {
+            //   await onClick(node);
+            // }
+            if (node) setSelectedNode(node);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [treeId, onMove, onCopy, onAdd, onDelete, onUpdate],
+  );
 
   const getAllNodeKeys = useCallback((nodes: TreeNode[]): string[] => {
     let keys: string[] = [];
@@ -33,32 +153,6 @@ export const useTreeView = ({ initialData }: UseTreeViewProps) => {
     [selectedNode],
   );
 
-  const handleAddNode = useCallback(
-    (nodeData: { title: string }) => {
-      const newNode: TreeNode = {
-        key: Math.random().toString(36).substr(2, 9),
-        title: nodeData.title,
-        children: [],
-      };
-
-      if (!selectedNode) {
-        setTreeData((prev) => [...prev, newNode]);
-        return;
-      }
-      setTreeData((prev) => addNodeToParent(prev, selectedNode.key, newNode));
-    },
-    [selectedNode],
-  );
-
-  const handleDeleteNode = useCallback((key: string) => {
-    setSelectedNode(null);
-    setTreeData((prev) => removeNodeByKey(prev, key));
-  }, []);
-
-  const handleUpdateNode = useCallback((key: string, updates: Partial<TreeNode>) => {
-    setTreeData((prev) => updateNodeByKey(prev, key, updates));
-  }, []);
-
   const handleExpandAll = useCallback(() => {
     const allKeys = getAllNodeKeys(treeData);
     setExpandedKeys(allKeys);
@@ -68,21 +162,14 @@ export const useTreeView = ({ initialData }: UseTreeViewProps) => {
     setExpandedKeys([]);
   }, []);
 
-  const handleTreeChange = useCallback((newData: TreeNode[]) => {
-    setTreeData(newData);
-  }, []);
-
   return {
     treeData,
     selectedNode,
     expandedKeys,
     setExpandedKeys,
     handleNodeClick,
-    handleAddNode,
-    handleDeleteNode,
-    handleUpdateNode,
     handleExpandAll,
     handleCollapseAll,
-    handleTreeChange,
+    handleAction,
   };
 };

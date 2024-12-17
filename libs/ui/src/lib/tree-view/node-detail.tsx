@@ -61,10 +61,7 @@ const NodeDetail = ({ selectedNode, onAdd, onDelete, onSave, expandAll, collapse
             <Plus className="w-4 h-4 mr-2" /> 노드 추가
           </Button>
           {selectedNode && (
-            <Button
-              variant="destructive"
-              className="w-full"
-              onClick={() => onDelete(selectedNode.key)}>
+            <Button variant="destructive" className="w-full" onClick={() => onDelete(selectedNode)}>
               <Trash className="w-4 h-4 mr-2" />
               노드 삭제
             </Button>
