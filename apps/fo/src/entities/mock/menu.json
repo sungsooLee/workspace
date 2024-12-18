@@ -163,7 +163,7 @@
           "children": [
             {
               "title": "Menu 9",
-              "path": "/menu9",
+              "path": "/menu8/menu9",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차"
             }
