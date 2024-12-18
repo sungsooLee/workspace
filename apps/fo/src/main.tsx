@@ -1,14 +1,30 @@
-import { initI18N } from '@learnway/config';
+import { StrictMode } from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
-import { fetchCodes, fetchI18nResource } from './entities/system';
+import { ReactQueryConfigProvider } from '@learnway/config';
 
-import './styles.css';
+import { AppConfigProvider } from './app/app-config-provider';
+import { routeTree } from './routeTree.gen';
 
-Promise.all([fetchCodes(), fetchI18nResource()]).then(
-  (responses: any[]) => {
-    initI18N(responses[1]);
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+});
 
-    import('./app/app');
-  },
-  (error: any) => console.log('> load app config error:', error),
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <StrictMode>
+    <ReactQueryConfigProvider>
+      <AppConfigProvider>
+        <RouterProvider router={router} />
+      </AppConfigProvider>
+    </ReactQueryConfigProvider>
+  </StrictMode>,
 );

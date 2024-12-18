@@ -1,5 +1,7 @@
 {
   "ORG": "Organization",
   "USER_ID": "User ID",
-  "PASSWORD": "Password"
+  "PASSWORD": "Password",
+  "LOGIN": "Login",
+  "LOGOUT": "Logout"
 }

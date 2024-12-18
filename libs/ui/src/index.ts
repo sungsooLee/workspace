@@ -32,6 +32,9 @@ export * from './lib/shadcn/separator';
 
 export * from './lib/switch/switch';
 
+export * from './lib/backdrop/backdrop';
+export * from './lib/spinner/spinner';
+
 export * from './lib/type';
 
 /// export 컨벤션 ??

@@ -18,6 +18,9 @@ const config: StorybookConfig = {
       },
     },
   ],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   framework: {
     name: '@storybook/react-vite',
     options: {

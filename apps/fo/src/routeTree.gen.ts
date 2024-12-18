@@ -11,8 +11,8 @@
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
-import { Route as LoginImport } from './pages/login'
 import { Route as LayoutImport } from './pages/_layout'
+import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as LayoutMenu6Menu7Import } from './pages/_layout/menu6/menu7'
@@ -20,14 +20,14 @@ import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 
 // Create/Update Routes
 
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
+const LayoutRoute = LayoutImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutRoute = LayoutImport.update({
-  id: '/_layout',
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -66,19 +66,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
     }
     '/_layout/menu4/menu5': {
       id: '/_layout/menu4/menu5'
@@ -125,16 +125,16 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
-  '/login': typeof LoginRoute
   '/': typeof LayoutIndexRoute
+  '/login': typeof LoginIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
   '/menu3': typeof LayoutMenu3IndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/login': typeof LoginRoute
   '/': typeof LayoutIndexRoute
+  '/login': typeof LoginIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -143,8 +143,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout': typeof LayoutRouteWithChildren
-  '/login': typeof LoginRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu6/menu7': typeof LayoutMenu6Menu7Route
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
@@ -152,14 +152,14 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
+  fullPaths: '' | '/' | '/login' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
+  to: '/' | '/login' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
   id:
     | '__root__'
     | '/_layout'
-    | '/login'
     | '/_layout/'
+    | '/login/'
     | '/_layout/menu4/menu5'
     | '/_layout/menu6/menu7'
     | '/_layout/menu3/'
@@ -168,12 +168,12 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
-  LoginRoute: LoginRoute,
+  LoginIndexRoute: LoginIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -187,7 +187,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_layout",
-        "/login"
+        "/login/"
       ]
     },
     "/_layout": {
@@ -199,12 +199,12 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
-    "/login": {
-      "filePath": "login.tsx"
-    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
     },
     "/_layout/menu4/menu5": {
       "filePath": "_layout/menu4/menu5.tsx",

@@ -1,5 +1,6 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@learnway/ui';
 
@@ -8,6 +9,12 @@ export const Route = createFileRoute('/_layout/')({
 });
 
 function HomeComponent() {
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    console.log('page index i18n.language', i18n.language);
+  }, [i18n.language]);
+
   return (
     <div className="flex gap-10 p-2 flex-col">
       <h3>Welcome Home!</h3>

@@ -1,5 +1,7 @@
 {
   "ORG": "회사",
   "USER_ID": "사용자 ID",
-  "PASSWORD": "비밀번호"
+  "PASSWORD": "비밀번호",
+  "LOGIN": "로그인",
+  "LOGOUT": "로그아웃"
 }
