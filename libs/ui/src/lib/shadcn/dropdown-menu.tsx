@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 
 import { CheckIcon, ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 

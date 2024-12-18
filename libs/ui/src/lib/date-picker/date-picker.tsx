@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 
