@@ -31,6 +31,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@/libs/shared/src': path.resolve(__dirname, '../../shared/src/index.ts'),
+          '@learnway/config': path.resolve(__dirname, '../../config/src/index.ts'),
         },
       },
       optimizeDeps: {

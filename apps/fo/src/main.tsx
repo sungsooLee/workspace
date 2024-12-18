@@ -1,63 +1,14 @@
-import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import i18n from 'i18next';
-import { useTranslation, initReactI18next } from 'react-i18next';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { initI18N } from '@learnway/config';
 
-import { ReactQueryConfigProvider } from '@learnway/config';
+import { fetchCodes, fetchI18nResource } from './entities/system';
 
 import './styles.css';
 
-import App from './app/app';
+Promise.all([fetchCodes(), fetchI18nResource()]).then(
+  (responses: any[]) => {
+    initI18N(responses[1]);
 
-import { routeTree } from './routeTree.gen';
-
-i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    // the translations
-    // (tip move them in a JSON file and import them,
-    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
-    resources: {
-      en: {
-        translation: {
-          ORG: 'Organization',
-          USER_ID: 'User ID',
-          PASSWORD: 'Password',
-        },
-      },
-      ko: {
-        translation: {
-          ORG: '회사',
-          USER_ID: '사용자 ID',
-          PASSWORD: '비밀번호',
-        },
-      },
-    },
-    lng: 'en', // if you're using a language detector, do not define the lng option
-    fallbackLng: 'en',
-
-    interpolation: {
-      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-    },
-  });
-
-const router = createRouter({
-  routeTree,
-  defaultPreload: 'intent',
-});
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router;
-  }
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <StrictMode>
-    <ReactQueryConfigProvider>
-      <RouterProvider router={router} />
-    </ReactQueryConfigProvider>
-  </StrictMode>,
+    import('./app/app');
+  },
+  (error: any) => console.log('> load app config error:', error),
 );

@@ -21,6 +21,7 @@ export * from './lib/tree-view/tree.hook';
 export * from './lib/tree-view/node-detail';
 export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/use-toast';
+export * from './lib/shadcn/select';
 export * from './lib/shadcn/badge';
 export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';

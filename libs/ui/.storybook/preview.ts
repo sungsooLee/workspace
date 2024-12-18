@@ -1,4 +1,8 @@
 import type { Preview } from '@storybook/react';
+
+//import '../../config/src/lib/style/font.css';
+//import '@learnway/config/style/theme.css';
+
 import '../src/styles/global.css';
 
 const preview: Preview = {

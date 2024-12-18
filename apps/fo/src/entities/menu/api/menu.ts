@@ -3,13 +3,18 @@ import { PMSApiPrefix } from '@learnway/config';
 
 import { Menu } from '../model/menu';
 
+import menuMock from '../../mock/menu.json';
+
 export default class MenuService {
   static getMenus(params?: any) {
+    /*
     return httpService.get<Menu>(
       `${PMSApiPrefix()}/menus/${params.parentMenuId ?? ''}?roleIds=${params.roleIds}&tenantId=${
         params.tenantId
       }`,
     );
+*/
+    return new Promise((resolve) => setTimeout(() => resolve(menuMock as any)));
   }
 
   static getMenu(menuId: string) {

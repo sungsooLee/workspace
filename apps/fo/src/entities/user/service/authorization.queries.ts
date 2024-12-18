@@ -1,3 +1,5 @@
+import type { AxiosResponse } from 'axios';
+
 import AuthorizationService from '../api/authorization';
 import { User } from '../model/user';
 
@@ -14,7 +16,7 @@ export const queryOptions = {
 
 export const mutateOptions = {
   login: () => ({
-    mutationFn: (payload: any) =>
+    mutationFn: (payload: any): Promise<AxiosResponse> =>
       AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) }),
   }),
   logout: () => ({

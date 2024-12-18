@@ -1,0 +1,123 @@
+[
+  {
+    "code": "LANGUAGE_CODE",
+    "name": "언어코드",
+    "description": "Refer to ISO 639-1 for list of languages and codes.",
+    "codes": [
+      {
+        "code": "de",
+        "name": "Deutsch",
+        "translation": "독일어"
+      },
+      {
+        "code": "ko",
+        "name": "한국어",
+        "translation": "한국어"
+      },
+      {
+        "code": "jp",
+        "name": "日本語",
+        "translation": "일본어"
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "translation": "영어"
+      },
+      {
+        "code": "zh",
+        "name": "中文",
+        "translation": "중국어"
+      }
+    ]
+  },
+  {
+    "code": "COURSE_CATEGORY",
+    "name": "과정카테고리",
+    "description": "과정카테고리설명",
+    "codes": [
+      {
+        "code": "0",
+        "name": "기타",
+        "translation": "기타"
+      },
+      {
+        "code": "A1",
+        "name": "경영관리",
+        "translation": "경영관리"
+      },
+      {
+        "code": "B1",
+        "name": "외국어",
+        "translation": "외국어"
+      },
+      {
+        "code": "C1",
+        "name": "정보기술",
+        "translation": "정보기술"
+      },
+      {
+        "code": "D1",
+        "name": "시사/교양",
+        "translation": "시사/교양"
+      }
+    ]
+  },
+  {
+    "code": "OPEN_COMPANY_CODE",
+    "name": "공개범위 회사코드",
+    "description": "공개범위 회사코드",
+    "codes": [
+      {
+        "code": "0101000000",
+        "name": "현대자동차",
+        "translation": "현대자동차"
+      },
+      {
+        "code": "0102000000",
+        "name": "기아자동차",
+        "translation": "기아자동차"
+      },
+      {
+        "code": "AUTOMCHNCH",
+        "name": "일반정비업체(현대)",
+        "translation": "일반정비업체(현대)"
+      },
+      {
+        "code": "AUTOMCHNCK",
+        "name": "일반정비업체(기아)",
+        "translation": "일반정비업체(기아)"
+      },
+      {
+        "code": "HB0001",
+        "name": "국내영업(H) 협력사",
+        "translation": "국내영업(H) 협력사"
+      },
+      {
+        "code": "HZ0101",
+        "name": "현대 비인가교육협력사",
+        "translation": "현대 비인가교육협력사"
+      },
+      {
+        "code": "KZ0101",
+        "name": "기아 비인가교육협력사",
+        "translation": "기아 비인가교육협력사"
+      },
+      {
+        "code": "coperation",
+        "name": "상생협력",
+        "translation": "상생협력"
+      },
+      {
+        "code": "cp01000000",
+        "name": "교육운영협력사",
+        "translation": "교육운영협력사"
+      },
+      {
+        "code": "gpwc",
+        "name": "GPWC",
+        "translation": "GPWC"
+      }
+    ]
+  }
+]

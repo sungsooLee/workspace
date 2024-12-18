@@ -1,14 +1,12 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
-const sharedTailwindPreset = require('../../libs/tailwind-preset/tailwind.preset');
-const TailwindConfig = require('../../libs/ui/tailwind.config');
+const tailwindPreset = require('../../libs/config/src/lib/style/tailwind.preset');
+const tailwindShadcnPreset = require('../../libs/config/src/lib/style/tailwind.shadcn.preset');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  ...TailwindConfig,
-  //presets: [sharedTailwindPreset],
+  presets: [tailwindShadcnPreset, tailwindPreset],
   content: [
-    ...TailwindConfig.content,
     join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,js}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
