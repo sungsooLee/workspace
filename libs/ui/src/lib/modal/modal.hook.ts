@@ -36,4 +36,4 @@ const useModalControl = (): ModalControl => {
   };
 };
 
-export default useModalControl;
+export { useModalControl };

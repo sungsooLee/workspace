@@ -4,7 +4,7 @@ import { within, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 import { Button } from '../shadcn/button';
 import ModalWrapper from './modal-wrapper';
-import useModalControl from './modal.hook';
+import { useModalControl } from './modal.hook';
 import { useModalContext } from './modal-context';
 
 const ModalDemo = ({ children }: { children: React.ReactNode }) => {
@@ -67,7 +67,7 @@ export const Basic: Story = {
     title: 'Title',
     description: 'description',
   },
-  render: (args) => {
+  render: function RenderBasic(args) {
     const { open } = useModalControl();
 
     return <Button onClick={() => open(<BasicModalContent />, args)}>OPEN</Button>;
@@ -82,7 +82,7 @@ export const OnCloseModal: Story = {
 
   name: 'onClose Callback',
 
-  render: (args) => {
+  render: function RenderColoseModal(args) {
     const [closeResult, setCloseResult] = useState('');
     const { open } = useModalControl();
 
@@ -115,7 +115,7 @@ export const WithCustomFooter: Story = {
     title: '커스텀 푸터 모달',
     description: '',
   },
-  render: (args) => {
+  render: function RenderWithCustomFooter(args) {
     const { open } = useModalControl();
     const CustomFooter = () => {
       const { closeModal } = useModalContext();
@@ -147,7 +147,7 @@ export const WithCustomFooter: Story = {
 
 export const NestedModals: Story = {
   name: 'Nested Modals',
-  render: () => {
+  render: function RenderNestedModals() {
     const { open } = useModalControl();
 
     const FirstModalContent = () => {
@@ -195,7 +195,7 @@ export const InteractionTest: Story = {
   args: {
     title: 'Interaction Modal',
   },
-  render: (args) => {
+  render: function RenderInteraction(args) {
     const { open } = useModalControl();
     return <Button onClick={() => open(<BasicModalContent />, args)}>OPEN</Button>;
   },
