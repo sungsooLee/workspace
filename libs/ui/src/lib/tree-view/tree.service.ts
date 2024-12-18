@@ -1,5 +1,4 @@
-// utils.ts
-import { TreeNode } from './type';
+import { NodeMovePositionType, TreeNode } from './type';
 
 export const generateKey = (): string => {
   return Math.random().toString(36).substr(2, 9);
@@ -151,23 +150,21 @@ export const insertNodeAtPosition = (
   nodes: TreeNode[],
   targetKey: string | null,
   newNode: TreeNode,
-  position?: 'before' | 'after' | 'inside',
+  position?: NodeMovePositionType,
 ): TreeNode[] => {
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     if (node.key === targetKey) {
       const result = [...nodes];
       switch (position) {
-        case 'before':
+        case 'BEFORE' as NodeMovePositionType:
           result.splice(i, 0, newNode);
           return result;
-
-        case 'inside':
+        case 'INSIDE' as NodeMovePositionType:
           return addNodeToParent(nodes, targetKey, newNode);
-        case 'after':
+        case 'AFTER' as NodeMovePositionType:
           result.splice(i + 1, 0, newNode);
           return result;
-
         default:
           result.splice(i + 1, 0, newNode);
           return result;
@@ -203,6 +200,13 @@ export const findSiblingNodes = (nodes: TreeNode[], targetKey: string): TreeNode
   return [];
 };
 
+/**
+ * dnd 하려는 index값
+ * @param nodes
+ * @param targetKey
+ * @param position
+ * @returns
+ */
 export const getTargetIndex = (nodes: TreeNode[], targetKey: string, position: string): number => {
   const siblings = findSiblingNodes(nodes, targetKey);
 
@@ -213,4 +217,18 @@ export const getTargetIndex = (nodes: TreeNode[], targetKey: string, position: s
   }
 
   return targetIndex + 1;
+};
+
+/**
+ * 노드에 트리 아이디 추가 (추후 API에서 가져올 것 같음.)
+ * @param nodes
+ * @param treeId
+ * @returns
+ */
+export const addTreeId = (nodes: TreeNode[], treeId: string): TreeNode[] => {
+  return nodes.map((node) => ({
+    ...node,
+    treeId,
+    children: node.children ? addTreeId(node.children, treeId) : undefined,
+  }));
 };

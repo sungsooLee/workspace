@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Trash } from 'lucide-react';
 import { Card, CardContent } from '../shadcn/card';
 import { Label } from '../shadcn/label';
@@ -19,9 +19,7 @@ const NodeDetail = ({ selectedNode, onAdd, onDelete, onSave, expandAll, collapse
     if (newNodeTitle.trim()) {
       setNewNodeTitle('');
 
-      onAdd({
-        title: newNodeTitle.trim(),
-      });
+      onAdd(newNodeTitle.trim());
     }
   };
 

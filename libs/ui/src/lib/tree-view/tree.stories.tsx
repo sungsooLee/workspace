@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { TreeNode } from './type';
 import { TreeView } from './tree';
 import { useTree } from './tree.hook';
 import { NodeDetail } from './node-detail';
-import { useState } from 'react';
+
 const meta: Meta<typeof TreeView> = {
   title: 'Components/TreeView',
   component: TreeView,
@@ -50,13 +51,10 @@ const sampleData: TreeNode[] = [
 export const Basic: Story = {
   decorators: [
     (Story) => {
-      const [draggedNode, setDraggedNode] = useState<{
-        node: TreeNode;
-        sourceTreeId: string;
-      } | null>(null);
-
+      const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
       const { treeData, selectedNode, expandedKeys, setExpandedKeys, handleAction } = useTree({
         initialData: sampleData,
+        treeId: '1',
       });
 
       return (
@@ -70,6 +68,7 @@ export const Basic: Story = {
               draggedNode,
               setDraggedNode,
               onAction: handleAction,
+              treeId: '1',
             }}
           />
         </div>
@@ -90,13 +89,23 @@ export const WithNodeDetail: Story = {
         handleCollapseAll,
         handleAction,
       } = useTree({ initialData: sampleData, treeId: '1' });
-      const [draggedNode, setDraggedNode] = useState<{
-        node: TreeNode;
-        sourceTreeId: string;
-      } | null>(null);
+      const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
 
       const handleNode = (title: string) => {
-        console.log(title);
+        if (title) {
+          handleAction({
+            type: 'ADD',
+            payload: {
+              type: 'ADD',
+              parentNode: selectedNode || null,
+              newNode: {
+                title: title,
+                treeId: '1',
+              },
+              treeId: '1',
+            },
+          });
+        }
       };
 
       const handleDeleteNode = (data: any) => {
@@ -104,6 +113,7 @@ export const WithNodeDetail: Story = {
           handleAction({
             type: 'DELETE',
             payload: {
+              type: 'DELETE',
               nodeToDelete: data,
               treeId: '1',
             },
@@ -153,17 +163,32 @@ export const constraintsTree: Story = {
         initialData: context.args.data,
         treeId: '1',
       });
-      const [draggedNode, setDraggedNode] = useState<{
-        node: TreeNode;
-        sourceTreeId: string;
-      } | null>(null);
+      const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
 
       const handleDeleteNode = (selectNode: TreeNode) => {
         if (selectNode) {
           handleAction({
             type: 'DELETE',
             payload: {
+              type: 'DELETE',
               nodeToDelete: selectNode,
+              treeId: selectNode.treeId as string,
+            },
+          });
+        }
+      };
+
+      const handleNode = (title: string) => {
+        if (title) {
+          handleAction({
+            type: 'ADD',
+            payload: {
+              type: 'ADD',
+              parentNode: selectedNode || null,
+              newNode: {
+                title: title,
+                treeId: '1',
+              },
               treeId: '1',
             },
           });
@@ -184,7 +209,7 @@ export const constraintsTree: Story = {
           />
           <NodeDetail
             selectedNode={selectedNode}
-            // onAdd={}
+            onAdd={handleNode}
             onDelete={handleDeleteNode}
             expandAll={handleExpandAll}
             collapseAll={handleCollapseAll}
@@ -255,10 +280,7 @@ export const DualTree: Story = {
           ],
         },
       ];
-      const [draggedNode, setDraggedNode] = useState<{
-        node: TreeNode;
-        sourceTreeId: string;
-      } | null>(null);
+      const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
 
       const {
         treeData: sourceData,
@@ -379,22 +401,14 @@ export const WithCustomEvent: Story = {
         setExpandedKeys: targetSetExpandedKeys,
         handleAction: targetHandleAction,
       } = useTree({
-        initialData: [
-          {
-            key: 'target-1',
-            title: '타겟 루트 1',
-          },
-        ],
+        initialData: [],
         onCopy: async (sourceNode: TreeNode, targetNode: TreeNode | null, position?: string) => {
           setActionType('COPY!!');
         },
         treeId: '2',
       });
 
-      const [draggedNode, setDraggedNode] = useState<{
-        node: TreeNode;
-        sourceTreeId: string;
-      } | null>(null);
+      const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
 
       return (
         <div className="flex flex-col">

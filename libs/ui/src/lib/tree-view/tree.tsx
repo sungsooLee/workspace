@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ChevronRight, ChevronDown, Folder, File } from 'lucide-react';
 
-import { DropInfo, TreeNode, TreeNodeComponentProps, TreeProps } from './type';
-import { getTargetIndex, isValidDrop } from './tree.service';
+import {
+  DropInfo,
+  NodeMovePositionType,
+  TreeActionPayload,
+  TreeNode,
+  TreeNodeComponentProps,
+  TreeProps,
+} from './type';
+import { addTreeId, getTargetIndex, isValidDrop } from './tree.service';
 
 const TreeNodeComponent = ({
   node,
@@ -19,12 +26,12 @@ const TreeNodeComponent = ({
   const hasChildren = node.children && node.children.length > 0;
   const isExpanded = expandedKeys.includes(node.key);
 
-  const [dropPosition, setDropPosition] = useState<'before' | 'after' | 'inside' | null>(null);
+  const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
 
   const dropIndicatorStyle = {
-    before: 'absolute w-full h-0.5 bg-blue-400 -top-[1px] z-10 pointer-events-none',
-    after: 'absolute w-full h-0.5 bg-blue-400 bottom-[-1px] z-10 pointer-events-none',
-    inside: 'absolute inset-0 bg-blue-100 opacity-50 pointer-events-none rounded',
+    BEFORE: 'absolute w-full h-0.5 bg-blue-400 -top-[1px] z-10 pointer-events-none',
+    AFTER: 'absolute w-full h-0.5 bg-blue-400 bottom-[-1px] z-10 pointer-events-none',
+    INSIDE: 'absolute inset-0 bg-blue-100 opacity-50 pointer-events-none rounded',
   };
 
   const isActuallyDraggable = isDraggable && node.constraints?.drag !== false;
@@ -32,7 +39,7 @@ const TreeNodeComponent = ({
   const getNodeStyle = () => {
     const styles = [
       `flex items-center py-1 px-2 rounded group
-        ${dropPosition === 'inside' ? 'bg-blue-200' : ''}`,
+        ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}`,
     ];
     if (selectedNodeKey === node.key) {
       styles.push('bg-blue-50');
@@ -70,7 +77,7 @@ const TreeNodeComponent = ({
     const y = e.clientY - rect.top;
     const threshold = rect.height / 3;
 
-    const newPosition = y < threshold ? 'before' : y > rect.height - threshold ? 'after' : 'inside';
+    const newPosition = y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
 
     if (dropPosition !== newPosition) {
       setDropPosition(newPosition);
@@ -92,7 +99,7 @@ const TreeNodeComponent = ({
 
     onDrop({
       targetNode: node,
-      dropPosition: dropPosition || 'inside',
+      dropPosition: dropPosition || 'INSIDE',
     });
     setDropPosition(null);
   };
@@ -105,15 +112,15 @@ const TreeNodeComponent = ({
   };
 
   const handleClick = () => {
-    if (onAction) {
-      onAction({
-        type: 'CLICK',
-        payload: {
-          node: node,
-          treeId: treeId,
-        },
-      });
-    }
+    const payload = {
+      type: 'CLICK',
+      node,
+      treeId,
+    };
+    onAction({
+      type: 'CLICK',
+      payload: payload as TreeActionPayload,
+    });
   };
 
   return (
@@ -189,31 +196,57 @@ const TreeView = ({
   setDraggedNode,
   onAction,
 }: TreeProps) => {
+  const treeData = useMemo(() => addTreeId(data, treeId), [data, treeId]);
+
   const handleDrop = async (dropInfo: DropInfo) => {
-    if (!draggedNode) return;
+    if (!draggedNode || !onAction) return;
     const { targetNode, dropPosition } = dropInfo;
 
-    if (!targetNode || draggedNode.node.key === targetNode.key) return;
-    if (!isValidDrop(draggedNode.node.key, targetNode.key, data)) return;
+    // 타겟이 null이고 position이 INSIDE일 때는 루트 레벨로 이동
+    if (!targetNode && dropPosition === 'INSIDE') {
+      const actionType = draggedNode.treeId === treeId ? 'MOVE' : 'COPY';
+
+      const payload = {
+        type: actionType,
+        sourceNode: draggedNode,
+        targetNode: null,
+        position: dropPosition,
+        treeId,
+        sourceTreeId: draggedNode.treeId,
+        targetIndex: data.length, // 루트 레벨의 마지막 위치
+      };
+
+      onAction({
+        type: actionType,
+        payload: payload as TreeActionPayload,
+      });
+      setDraggedNode(null);
+      return;
+    }
+
+    if (targetNode && draggedNode.key === targetNode.key) return;
+    if (targetNode && !isValidDrop(draggedNode.key, targetNode.key, data)) return;
 
     const targetIndex = targetNode
       ? getTargetIndex(data, targetNode.key, dropPosition)
       : data.length;
 
-    if (onAction) {
-      onAction({
-        type: draggedNode.sourceTreeId === treeId ? 'MOVE' : 'COPY',
-        payload: {
-          sourceNode: draggedNode.node,
-          targetNode,
-          treeId,
-          position: dropPosition,
-          targetIndex,
-          sourceTreeId: draggedNode.sourceTreeId,
-          targetTreeId: treeId,
-        },
-      });
-    }
+    const actionType = draggedNode.treeId === treeId ? 'MOVE' : 'COPY';
+
+    const payload = {
+      type: actionType,
+      sourceNode: draggedNode,
+      targetNode,
+      position: dropPosition,
+      treeId,
+      sourceTreeId: draggedNode.treeId,
+      targetIndex,
+    };
+
+    onAction({
+      type: actionType,
+      payload: payload as TreeActionPayload,
+    });
     setDraggedNode(null);
   };
 
@@ -223,7 +256,7 @@ const TreeView = ({
   };
 
   const handleDragStart = (node: TreeNode) => {
-    setDraggedNode({ node, sourceTreeId: treeId });
+    setDraggedNode(node);
   };
 
   return (
@@ -240,10 +273,10 @@ const TreeView = ({
       onDrop={(e) => {
         e.preventDefault();
         e.currentTarget.classList.remove('bg-blue-100');
-        handleDrop({ targetNode: null, dropPosition: 'inside' });
+        handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}>
       <div className="tree">
-        {data.map((node) => (
+        {treeData.map((node) => (
           <TreeNodeComponent
             key={node.key}
             node={node}
