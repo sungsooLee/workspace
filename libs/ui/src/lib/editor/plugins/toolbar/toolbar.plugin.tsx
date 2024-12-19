@@ -20,6 +20,8 @@ import {
 } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import Button from '../../components/ui/button';
+
 const LowPriority = 1;
 
 function Divider() {
@@ -83,6 +85,12 @@ const TollbarPlugin = () => {
 
   return (
     <div className="toolbar" ref={toolbarRef}>
+      <Button
+        icon={'type-bold'}
+        onClick={() => {
+          console.log('click');
+        }}
+      />
       <button
         disabled={!canUndo}
         onClick={() => {
