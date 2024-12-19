@@ -51,12 +51,6 @@ const Button: FC<ButtonProps> = ({
   active = false,
   ariaLabel = '',
 }) => {
-  /*const IconComponent: ReactNode =
-    typeof icon === 'string' && icon in icons
-      ? cloneElement(icons[icon as IconKey] as JSX.Element, {
-          className: `${DEFAULT_CLASS} disabled:`,
-        })
-      : icon;*/
   /**
    * 버튼 엘리먼트의 클릭 콜백 호출 함수
    * @param event
@@ -85,6 +79,12 @@ const Button: FC<ButtonProps> = ({
 
 export default Button;
 
+/**
+ * svg 컴포넌트를 동적으로 불러오다보니 함번더 감싸서 JSX 에서 컴포넌트 형식으로 사용할 수 있게 만듬
+ * @param icon
+ * @param className
+ * @constructor
+ */
 const IConComponent: FC<{ icon: IconKey; className: string }> = ({ icon, className }) => {
   return cloneElement(icons[icon], {
     className: `${DEFAULT_CLASS} ${className}`,
