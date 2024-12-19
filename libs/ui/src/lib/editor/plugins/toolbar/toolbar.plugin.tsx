@@ -86,21 +86,22 @@ const TollbarPlugin = () => {
   return (
     <div className="toolbar" ref={toolbarRef}>
       <Button
-        icon={'type-bold'}
-        onClick={() => {
-          console.log('click');
-        }}
-      />
-      <button
-        disabled={!canUndo}
+        icon={'arrow-clockwise'}
+        disable={!canUndo}
+        ariaLabel={'Undo'}
         onClick={() => {
           editor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
-        className="toolbar-item spaced"
-        aria-label="Undo">
-        <i className="format undo" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'arrow-counterclockwise'}
+        disable={!canRedo}
+        ariaLabel={'Redo'}
+        onClick={() => {
+          editor.dispatchCommand(REDO_COMMAND, undefined);
+        }}
+      />
+      {/*<button
         disabled={!canRedo}
         onClick={() => {
           editor.dispatchCommand(REDO_COMMAND, undefined);
@@ -108,73 +109,69 @@ const TollbarPlugin = () => {
         className="toolbar-item"
         aria-label="Redo">
         <i className="format redo" />
-      </button>
+      </button>*/}
       <Divider />
-      <button
+      <Button
+        icon={'type-bold'}
+        active={isBold}
+        ariaLabel={'Format Bold'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
         }}
-        className={'toolbar-item spaced ' + (isBold ? 'active' : '')}
-        aria-label="Format Bold">
-        <i className="format bold" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'type-italic'}
+        active={isItalic}
+        ariaLabel={'Format Italics'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
         }}
-        className={'toolbar-item spaced ' + (isItalic ? 'active' : '')}
-        aria-label="Format Italics">
-        <i className="format italic" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'type-underline'}
+        active={isUnderline}
+        ariaLabel={'Format Underline'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
         }}
-        className={'toolbar-item spaced ' + (isUnderline ? 'active' : '')}
-        aria-label="Format Underline">
-        <i className="format underline" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'type-strikethrough'}
+        active={isStrikethrough}
+        ariaLabel={'Format Strikethrough'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
         }}
-        className={'toolbar-item spaced ' + (isStrikethrough ? 'active' : '')}
-        aria-label="Format Strikethrough">
-        <i className="format strikethrough" />
-      </button>
+      />
       <Divider />
-      <button
+      <Button
+        icon={'text-left'}
+        ariaLabel={'Left Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
         }}
-        className="toolbar-item spaced"
-        aria-label="Left Align">
-        <i className="format left-align" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'text-center'}
+        ariaLabel={'Center Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
         }}
-        className="toolbar-item spaced"
-        aria-label="Center Align">
-        <i className="format center-align" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'text-right'}
+        ariaLabel={'Right Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
         }}
-        className="toolbar-item spaced"
-        aria-label="Right Align">
-        <i className="format right-align" />
-      </button>
-      <button
+      />
+      <Button
+        icon={'justify'}
+        ariaLabel={'Justify Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
         }}
-        className="toolbar-item"
-        aria-label="Justify Align">
-        <i className="format justify-align" />
-      </button>{' '}
+      />
     </div>
   );
 };

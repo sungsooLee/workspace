@@ -15,6 +15,7 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
+import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu6Menu7Import } from './pages/_layout/menu6/menu7'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 
@@ -40,6 +41,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
+  id: '/menu8/menu9',
+  path: '/menu8/menu9',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -94,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu6Menu7Import
       parentRoute: typeof LayoutImport
     }
+    '/_layout/menu8/menu9': {
+      id: '/_layout/menu8/menu9'
+      path: '/menu8/menu9'
+      fullPath: '/menu8/menu9'
+      preLoaderRoute: typeof LayoutMenu8Menu9Import
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu3/': {
       id: '/_layout/menu3/'
       path: '/menu3'
@@ -110,6 +124,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu6Menu7Route: typeof LayoutMenu6Menu7Route
+  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -117,6 +132,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu6Menu7Route: LayoutMenu6Menu7Route,
+  LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -129,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
+  '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/menu3': typeof LayoutMenu3IndexRoute
 }
 
@@ -137,6 +154,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
+  '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/menu3': typeof LayoutMenu3IndexRoute
 }
 
@@ -147,14 +165,28 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu6/menu7': typeof LayoutMenu6Menu7Route
+  '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/login' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
+  fullPaths:
+    | ''
+    | '/'
+    | '/login'
+    | '/menu4/menu5'
+    | '/menu6/menu7'
+    | '/menu8/menu9'
+    | '/menu3'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/menu4/menu5' | '/menu6/menu7' | '/menu3'
+  to:
+    | '/'
+    | '/login'
+    | '/menu4/menu5'
+    | '/menu6/menu7'
+    | '/menu8/menu9'
+    | '/menu3'
   id:
     | '__root__'
     | '/_layout'
@@ -162,6 +194,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/_layout/menu4/menu5'
     | '/_layout/menu6/menu7'
+    | '/_layout/menu8/menu9'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +229,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/menu4/menu5",
         "/_layout/menu6/menu7",
+        "/_layout/menu8/menu9",
         "/_layout/menu3/"
       ]
     },
@@ -212,6 +246,10 @@ export const routeTree = rootRoute
     },
     "/_layout/menu6/menu7": {
       "filePath": "_layout/menu6/menu7.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/menu8/menu9": {
+      "filePath": "_layout/menu8/menu9.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu3/": {
