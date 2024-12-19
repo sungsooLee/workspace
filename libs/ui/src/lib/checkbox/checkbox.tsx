@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import { Checkbox } from '../shadcn/checkbox';
 import { CheckFieldProps } from './type';
 

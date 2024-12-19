@@ -1,4 +1,4 @@
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import * as React from 'react';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

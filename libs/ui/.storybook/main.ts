@@ -18,6 +18,9 @@ const config: StorybookConfig = {
       },
     },
   ],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   framework: {
     name: '@storybook/react-vite',
     options: {
@@ -30,18 +33,19 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       resolve: {
         alias: {
-          '@/libs/shared/src': path.resolve(__dirname, '../../shared/src/index.ts'),
+          '@learnway/shared': path.resolve(__dirname, '../../shared/src/index.ts'),
           '@learnway/config': path.resolve(__dirname, '../../config/src/index.ts'),
         },
       },
       optimizeDeps: {
-        include: ['@/libs/shared/src'],
+        include: ['@learnway/shared'],
       },
       build: {
         commonjsOptions: {
           include: [/shared/, /node_modules/],
         },
       },
+      esbuild: undefined,
     });
   },
 };

@@ -23,7 +23,6 @@ export function useFetchAuthUser<T = User>() {
 }
 
 export function useLoginUser(mutationOptions = {}) {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { mutate, isSuccess, isError } = useMutation({
@@ -37,15 +36,13 @@ export function useLoginUser(mutationOptions = {}) {
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
 
-      queryClient.clear();
+      //queryClient.clear();
 
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
         activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
         activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
       });
-
-      router.navigate({ to: '/' });
     },
     ...mutationOptions,
   });
@@ -72,10 +69,10 @@ export function useLogoutUser(mutationOptions = {}) {
       cookieService.remove('LOGIN_ROLE_ID');
       cookieService.remove('REFRESH_LOGIN_TOKEN');
 
-      queryClient.clear();
-      //queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      //queryClient.clear();
+      queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
 
-      router.navigate({ to: '/login' });
+      //router.navigate({ to: '/login' });
     },
     ...mutationOptions,
   });
@@ -86,5 +83,19 @@ export function useLogoutUser(mutationOptions = {}) {
     },
     isSuccess,
     isError,
+  };
+}
+
+export function useUpdateUser(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+
+  return {
+    updateLanguage: (languageCode: string, callback?: IMutateCallback<any[]>) => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      queryClient.setQueryData(queryKeys.authUser, { ...user, userLanguageSetCode: languageCode });
+    },
   };
 }

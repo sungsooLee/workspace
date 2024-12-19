@@ -8,9 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldType, Form, DynamicFormField } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 
-import { useLoginUser, useFetchAuthUser } from '../entities/user';
-import { useFetchCompanySelectOptions } from '../entities/company';
-export const Route = createFileRoute('/login')({
+import { useLoginUser, useFetchAuthUser } from '../../entities/user';
+import { useFetchCompanySelectOptions } from '../../entities/company';
+
+import { useSetLanguage } from '../../features/system';
+
+export const Route = createFileRoute('/login/')({
   component: RouteComponent,
 });
 
@@ -28,6 +31,7 @@ function RouteComponent() {
   const { data: companyOptions } = useFetchCompanySelectOptions();
 
   const { login } = useLoginUser();
+  const { set: setLanguage, inProgress } = useSetLanguage();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -39,14 +43,20 @@ function RouteComponent() {
   });
 
   useEffect(() => {
-    if (data?.accountId) {
+    if (data?.accountId && !inProgress) {
+      console.log('go home page');
       router.navigate({ to: '/' });
     }
-  }, [data]);
+  }, [data, inProgress]);
 
   const handleSubmit = () => {
-    console.log('ddd');
-    login(form.getValues());
+    login(form.getValues(), {
+      onSuccess: async (data, variables, context) => {
+        const userLang = data.data.data.userLanguageSetCode;
+        await setLanguage(userLang);
+        router.navigate({ to: '/' });
+      },
+    });
   };
 
   return (
@@ -63,9 +73,8 @@ function RouteComponent() {
             <DynamicFormField name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
             <DynamicFormField name="password" label={t('PASSWORD')} type={FieldType.PASSWORD} />
           </div>
-
           <Button className="mt-10" type="submit" onClick={() => handleSubmit()}>
-            로그인
+            {t('LOGIN')}
           </Button>
         </Form>
       </div>

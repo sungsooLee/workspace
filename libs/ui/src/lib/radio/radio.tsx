@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import { RadioGroup, RadioGroupItem } from '../shadcn/radio-group';
 import { FormControl, FormItem, FormLabel } from '../shadcn/form';
 import { RadioFieldProps } from './type';

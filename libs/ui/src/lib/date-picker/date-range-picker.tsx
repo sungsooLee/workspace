@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '../shadcn/popover';
 import { Button } from '../shadcn/button';

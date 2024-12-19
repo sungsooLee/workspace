@@ -7,6 +7,6 @@ export const queryKeys = {
 export const queryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
-    queryFn: () => CodeService.fetchCodes('en'),
+    queryFn: () => CodeService.fetchCodes(),
   }),
 };
