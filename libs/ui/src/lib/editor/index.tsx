@@ -140,10 +140,7 @@ const constructImportMap = (): DOMConversionMap => {
 
 // 에디터 설정 객체를 정의합니다.
 const editorConfig = {
-  html: {
-    export: exportMap, // DOM 출력 맵.
-    import: constructImportMap(), // DOM 입력 변환 맵.
-  },
+  html: {},
   namespace: 'React.js Demo', // 네임스페이스 이름.
   nodes: [ParagraphNode, TextNode], // 사용될 Lexical 노드들.
   onError(error: Error) {

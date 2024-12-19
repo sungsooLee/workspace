@@ -21,7 +21,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Button from '../../components/ui/button';
-
+import DropDown from '../../components/ui/dropdown';
 const LowPriority = 1;
 
 function Divider() {
@@ -86,7 +86,7 @@ const TollbarPlugin = () => {
   return (
     <div className="toolbar" ref={toolbarRef}>
       <Button
-        icon={'arrow-clockwise'}
+        icon={'arrowClockwise'}
         disable={!canUndo}
         ariaLabel={'Undo'}
         onClick={() => {
@@ -94,7 +94,7 @@ const TollbarPlugin = () => {
         }}
       />
       <Button
-        icon={'arrow-counterclockwise'}
+        icon={'arrowCounterclockwise'}
         disable={!canRedo}
         ariaLabel={'Redo'}
         onClick={() => {
@@ -112,7 +112,7 @@ const TollbarPlugin = () => {
       </button>*/}
       <Divider />
       <Button
-        icon={'type-bold'}
+        icon={'typeBold'}
         active={isBold}
         ariaLabel={'Format Bold'}
         onClick={() => {
@@ -120,7 +120,7 @@ const TollbarPlugin = () => {
         }}
       />
       <Button
-        icon={'type-italic'}
+        icon={'typeItalic'}
         active={isItalic}
         ariaLabel={'Format Italics'}
         onClick={() => {
@@ -128,7 +128,7 @@ const TollbarPlugin = () => {
         }}
       />
       <Button
-        icon={'type-underline'}
+        icon={'typeUnderline'}
         active={isUnderline}
         ariaLabel={'Format Underline'}
         onClick={() => {
@@ -136,7 +136,7 @@ const TollbarPlugin = () => {
         }}
       />
       <Button
-        icon={'type-strikethrough'}
+        icon={'typeStrikethrough'}
         active={isStrikethrough}
         ariaLabel={'Format Strikethrough'}
         onClick={() => {
@@ -145,21 +145,21 @@ const TollbarPlugin = () => {
       />
       <Divider />
       <Button
-        icon={'text-left'}
+        icon={'textLeft'}
         ariaLabel={'Left Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
         }}
       />
       <Button
-        icon={'text-center'}
+        icon={'textCenter'}
         ariaLabel={'Center Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
         }}
       />
       <Button
-        icon={'text-right'}
+        icon={'textRight'}
         ariaLabel={'Right Align'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
@@ -172,6 +172,7 @@ const TollbarPlugin = () => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
         }}
       />
+      <DropDown icon={''} />
     </div>
   );
 };
