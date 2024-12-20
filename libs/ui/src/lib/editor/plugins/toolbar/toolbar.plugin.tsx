@@ -22,6 +22,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Button from '../../components/ui/button';
 import DropDown from '../../components/ui/dropdown';
+import FontSize from './font-size';
+import DropdownColorPicker from '../../components/ui/dropdown-color-picker';
 const LowPriority = 1;
 
 function Divider() {
@@ -101,15 +103,19 @@ const TollbarPlugin = () => {
           editor.dispatchCommand(REDO_COMMAND, undefined);
         }}
       />
-      {/*<button
-        disabled={!canRedo}
-        onClick={() => {
-          editor.dispatchCommand(REDO_COMMAND, undefined);
-        }}
-        className="toolbar-item"
-        aria-label="Redo">
-        <i className="format redo" />
-      </button>*/}
+      <Divider />
+      <DropDown
+        items={[
+          { value: '1', label: 'Heading1', icon: 'heading1', active: true },
+          { value: '2', label: 'Heading2', icon: 'heading2', active: false },
+          { value: '3', label: 'Heading3', icon: 'heading3', active: false },
+          { value: '4', label: 'Heading4', icon: 'heading4', active: false },
+          { value: '5', label: 'Heading5', icon: 'heading5', active: false },
+          { value: '6', label: 'Heading6', icon: 'heading6', active: false },
+        ]}
+      />
+      <Divider />
+      <FontSize />
       <Divider />
       <Button
         icon={'typeBold'}
@@ -143,36 +149,59 @@ const TollbarPlugin = () => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
         }}
       />
+      <Button
+        icon={'code'}
+        active={false}
+        ariaLabel={'Insert code block'}
+        onClick={() => {
+          // TODO. 활성화된 에디터가 필요함
+        }}
+      />
+      <Button
+        icon={'link'}
+        active={false}
+        ariaLabel={'Insert link'}
+        onClick={() => {
+          // TODO. 활성화된 에디터가 필요함
+        }}
+      />
+
+      <DropdownColorPicker icon={'fontColor'} />
+      <DropdownColorPicker icon={'bgColor'} />
       <Divider />
       <Button
-        icon={'textLeft'}
-        ariaLabel={'Left Align'}
+        icon={'indent'}
+        active={false}
+        ariaLabel={'Indent'}
         onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
+          // TODO. 활성화된 에디터가 필요함
         }}
       />
       <Button
-        icon={'textCenter'}
-        ariaLabel={'Center Align'}
+        icon={'outdent'}
+        active={false}
+        ariaLabel={'Outdent'}
         onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
+          // TODO. 활성화된 에디터가 필요함
         }}
       />
-      <Button
-        icon={'textRight'}
-        ariaLabel={'Right Align'}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-        }}
+      <DropDown
+        items={[
+          { value: '1', label: '왼쪽정렬', icon: 'textLeft', active: true },
+          { value: '2', label: '가운데정렬', icon: 'textCenter', active: false },
+          { value: '3', label: '오른쪽정렬', icon: 'textRight', active: false },
+        ]}
       />
-      <Button
-        icon={'justify'}
-        ariaLabel={'Justify Align'}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
-        }}
+      <DropDown
+        icon={'plus'}
+        label={'컨텐츠'}
+        items={[
+          { value: '1', label: '가로줄', icon: 'horizontalRule' },
+          { value: '2', label: '이미지', icon: 'fileImage' },
+          { value: '2', label: '테이블', icon: 'table' },
+          { value: '2', label: '비디오', icon: 'video' },
+        ]}
       />
-      <DropDown icon={''} />
     </div>
   );
 };

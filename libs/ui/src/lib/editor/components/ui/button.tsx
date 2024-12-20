@@ -28,7 +28,7 @@ const Button: FC<ButtonProps> = ({
   };
   return (
     <button
-      className={`border-0 flex rounded-lg p-[8px] cursor-pointer align-middle disabled:cursor-not-allowed ${
+      className={`border-0 flex rounded-lg p-[8px] cursor-pointer flex justify-center items-center disabled:cursor-not-allowed ${
         active ? 'bg-blue-100' : 'bg-none'
       } ${!disable ? 'hover:bg-gray-200' : ''} ${className}`}
       disabled={disable}

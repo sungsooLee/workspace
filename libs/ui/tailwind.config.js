@@ -12,4 +12,23 @@ module.exports = {
     join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,js}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-spinner': {
+          '&::-webkit-outer-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: '0',
+          },
+          '&::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: '0',
+          },
+          '&[type="number"]': {
+            '-moz-appearance': 'textfield',
+          },
+        },
+      });
+    },
+  ],
 };

@@ -18,6 +18,19 @@ import Heading3 from '../assets/icons/type-h3.svg?react';
 import Heading4 from '../assets/icons/type-h4.svg?react';
 import Heading5 from '../assets/icons/type-h5.svg?react';
 import Heading6 from '../assets/icons/type-h6.svg?react';
+import Plus from '../assets/icons/plus.svg?react';
+import Minus from '../assets/icons/minus-sign.svg?react';
+import Code from '../assets/icons/code.svg?react';
+import Link from '../assets/icons/link.svg?react';
+import FontColor from '../assets/icons/font-color.svg?react';
+import BgColor from '../assets/icons/bg-color.svg?react';
+import Indent from '../assets/icons/indent.svg?react';
+import Outdent from '../assets/icons/outdent.svg?react';
+import HorizontalRule from '../assets/icons/horizontal-rule.svg?react';
+import PageBreak from '../assets/icons/scissors.svg?react';
+import FileImage from '../assets/icons/file-image.svg?react';
+import Table from '../assets/icons/table.svg?react';
+import Video from '../assets/icons/youtube.svg?react';
 
 export const icons: Record<string, ReactElement> = {
   arrowClockwise: <ArrowClockwise />,
@@ -39,4 +52,17 @@ export const icons: Record<string, ReactElement> = {
   heading4: <Heading4 />,
   heading5: <Heading5 />,
   heading6: <Heading6 />,
+  plus: <Plus />,
+  minus: <Minus />,
+  code: <Code />,
+  link: <Link />,
+  fontColor: <FontColor />,
+  bgColor: <BgColor />,
+  indent: <Indent />,
+  outdent: <Outdent />,
+  pageBreak: <PageBreak />,
+  horizontalRule: <HorizontalRule />,
+  fileImage: <FileImage />,
+  table: <Table />,
+  video: <Video />,
 };
