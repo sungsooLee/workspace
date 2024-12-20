@@ -36,7 +36,7 @@ export function useLoginUser(mutationOptions = {}) {
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
 
-      queryClient.clear();
+      //queryClient.clear();
 
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
@@ -69,8 +69,8 @@ export function useLogoutUser(mutationOptions = {}) {
       cookieService.remove('LOGIN_ROLE_ID');
       cookieService.remove('REFRESH_LOGIN_TOKEN');
 
-      queryClient.clear();
-      //queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      //queryClient.clear();
+      queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
 
       //router.navigate({ to: '/login' });
     },

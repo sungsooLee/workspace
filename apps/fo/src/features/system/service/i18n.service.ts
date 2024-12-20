@@ -15,8 +15,10 @@ export function useSetLanguage() {
     set: async (languageCode: string): Promise<any> => {
       setInProgress(true);
       if (languageCode === getDefaultLang()) {
-        setInProgress(false);
-        return new Promise((resolve) => resolve({}));
+        return new Promise((resolve) => {
+          setInProgress(false);
+          resolve({});
+        });
       }
       if (languageCode !== getDefaultLang()) {
         return fetch(languageCode).then(async () => {
