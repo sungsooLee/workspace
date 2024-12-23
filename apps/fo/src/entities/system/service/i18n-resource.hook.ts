@@ -22,7 +22,6 @@ export function useFetchAsyncI18nResource(mutationOptions = {}) {
   return {
     fetch: async (languageCode: string): Promise<any> => {
       let resource = queryClient.getQueryData(queryKeys.detail(languageCode));
-      console.log('fetch resource', languageCode, queryKeys.detail(languageCode), resource);
       if (resource) {
         return new Promise((resolve) => resolve(resource));
       }

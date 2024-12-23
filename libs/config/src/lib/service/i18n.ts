@@ -4,25 +4,18 @@ import { initReactI18next } from 'react-i18next';
 import { getBrowserLang, cookieService } from '@learnway/shared';
 
 export function initI18N(resources: any) {
-  i18next
-    //.use(XHR)
-    .use(initReactI18next)
-    .init({
-      debug: false,
-      lng: getDefaultLang(),
-      fallbackLng: false,
-      // 4가지 설정하면 초기에 모든 파일이 다운로드됨
-      // i18n 변경시 download 하도록 변경한다.
-      // ref: https://www.i18next.com/overview/api - loadLanguages
-      // fallbackLng: ['en', 'ko', 'ja', 'cn'],
-      react: {
-        useSuspense: true,
-      },
-      interpolation: {
-        escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-      },
-      resources,
-    });
+  i18next.use(initReactI18next).init({
+    debug: false,
+    lng: getDefaultLang(),
+    fallbackLng: false,
+    react: {
+      useSuspense: true,
+    },
+    interpolation: {
+      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    },
+    resources,
+  });
 }
 
 export function getDefaultLang() {
@@ -41,7 +34,7 @@ export function setDefaultLang(lang: string): Promise<any> {
 }
 
 export function setI18nResource(lang: string, resource: any) {
-  i18next.addResources(lang, 'translation', resource[lang]['translation']);
+  i18next.addResourceBundle(lang, 'translation', resource[lang]['translation'], true, true);
 }
 
 /*

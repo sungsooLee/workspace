@@ -1,5 +1,5 @@
-export interface CodeMaster {
-  code: string;
+export interface CodeRole {
+  codeRole: string;
   name: string;
   description: string;
   codes: Code[];
@@ -8,5 +8,5 @@ export interface CodeMaster {
 export interface Code {
   code: string;
   name: string;
-  translation: string;
+  label: string;
 }

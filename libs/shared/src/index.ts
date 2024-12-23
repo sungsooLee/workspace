@@ -4,3 +4,4 @@ export * from './lib/i18n/browser-lang';
 export * from './lib/utils/cn';
 export * from './lib/utils/query';
 export * from './lib/utils/tree';
+export * from './lib/utils/depsAreSame';

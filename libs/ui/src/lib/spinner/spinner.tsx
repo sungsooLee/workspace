@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
@@ -12,13 +13,14 @@ export interface SpinnerProps {
 }
 
 export function Spinner({ className, isLoading, showBackdrop }: SpinnerProps) {
+  const { t } = useTranslation();
   /**
    * size
    * delay
    */
   return (
     <>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div>{t('LOADING')}...</div>}
       {isLoading && showBackdrop ? <BackDrop /> : ''}
     </>
   );

@@ -1,1 +1,1 @@
-export * from './service/i18n.service';
+export * from './service/i18n.hook';

@@ -1,6 +1,7 @@
 import { API_FIXED_URI, API_BO_URI } from '../const/config.constant';
 
 export interface LearnwayConfiguration {
+  CODE: any;
   HTTP_PORT?: number;
   // API
   PMS_API_PREFIX?: string;
@@ -8,10 +9,12 @@ export interface LearnwayConfiguration {
   CMS_API_PREFIX?: string;
 }
 
-export function setConfig(key: string, value: any): LearnwayConfiguration {
-  const config = (window as any).LEARNWAY_CONFIG || {};
-  config[key] = value;
-  return config;
+export function setConfig(key: string, value: any) {
+  const config = (window as any)['LEARNWAY_CONFIG'];
+  if (!config) {
+    (window as any)['LEARNWAY_CONFIG'] = {};
+  }
+  (window as any)['LEARNWAY_CONFIG'][key] = value;
 }
 
 export function getConfig(): LearnwayConfiguration {
