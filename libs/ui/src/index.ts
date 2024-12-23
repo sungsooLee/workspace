@@ -17,7 +17,6 @@ export * from './lib/select/select';
 
 export * from './lib/tree-view/tree';
 export * from './lib/tree-view/tree.service';
-export * from './lib/tree-view/tree.hook';
 export * from './lib/tree-view/node-detail';
 export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/use-toast';
