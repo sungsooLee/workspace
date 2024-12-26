@@ -48,3 +48,5 @@ out
 **/vite.config.{js,ts,mjs,mts,cjs,cts}.timestamp*
 
 storybook-static
+
+./apps/fo/src/routeTree.gen.ts

@@ -51,3 +51,6 @@ export * from './lib/stores/useModalStore';
 export * from './lib/modal/modal-context';
 
 export * from './lib/shadcn/toast';
+
+export * from './lib/editor/hooks/editor.hook';
+export * from './lib/editor';
