@@ -44,7 +44,6 @@ function RouteComponent() {
 
   useEffect(() => {
     if (data?.accountId && !inProgress) {
-      console.log('go home page');
       router.navigate({ to: '/' });
     }
   }, [data, inProgress]);

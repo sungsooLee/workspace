@@ -3,5 +3,15 @@
   "USER_ID": "User ID",
   "PASSWORD": "Password",
   "LOGIN": "Login",
-  "LOGOUT": "Logout"
+  "LOGOUT": "Logout",
+  "LOADING": "Loading",
+  "CODE": {
+    "LANGUAGE_CODE": {
+      "de": "Deutsch",
+      "ko": "korean",
+      "jp": "Japanese",
+      "en": "english",
+      "zh": "chinese"
+    }
+  }
 }

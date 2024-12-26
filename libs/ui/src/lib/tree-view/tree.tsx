@@ -1,33 +1,33 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ChevronRight, ChevronDown, Folder, File } from 'lucide-react';
-
 import {
   DropInfo,
   NodeMovePositionType,
-  TreeActionPayload,
+  SelectEventPayload,
   TreeNode,
   TreeNodeComponentProps,
   TreeProps,
 } from './type';
-import { addTreeId, getTargetIndex, isValidDrop } from './tree.service';
+import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from './tree.service';
+import { useTreeContext } from './tree.context';
 
 const TreeNodeComponent = ({
   node,
   level = 0,
   expandedKeys,
   setExpandedKeys,
-  selectedNodeKey,
+  selectedNode,
   onDragStart,
   onDrop,
   isDraggable,
-  onAction,
-  treeId,
+  onNodeClick,
 }: TreeNodeComponentProps) => {
   const hasChildren = node.children && node.children.length > 0;
   const isExpanded = expandedKeys.includes(node.key);
 
+  // 드랍 위치(before, inside, after)
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
-
+  // 드랍 위치에 따른 스타일링
   const dropIndicatorStyle = {
     BEFORE: 'absolute w-full h-0.5 bg-blue-400 -top-[1px] z-10 pointer-events-none',
     AFTER: 'absolute w-full h-0.5 bg-blue-400 bottom-[-1px] z-10 pointer-events-none',
@@ -41,7 +41,7 @@ const TreeNodeComponent = ({
       `flex items-center py-1 px-2 rounded group
         ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}`,
     ];
-    if (selectedNodeKey === node.key) {
+    if (selectedNode && selectedNode.key === node.key) {
       styles.push('bg-blue-50');
     }
     if (node.constraints?.drag === false) {
@@ -60,13 +60,14 @@ const TreeNodeComponent = ({
     }
     return styles.join(' ');
   };
-
+  // 드래그 가능하면 현재 노드 상위 컴포넌트로 콜백
   const handleDragStart = (e: React.DragEvent) => {
     e.stopPropagation();
     if (!isDraggable || node.constraints?.drag === false) return;
     onDragStart?.(node);
   };
 
+  // 노드 위에 드래그 된 노드가 겹칠 때 계산.
   const handleDragOver = (e: React.DragEvent) => {
     if (node.constraints?.drop === false) return;
 
@@ -84,12 +85,14 @@ const TreeNodeComponent = ({
     }
   };
 
+  // 노드 위에 드래그 된 노드가 벗어날 때
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDropPosition(null);
   };
 
+  // 드랍되었을때 상위 컴포넌트로 콜백
   const handleDrop = (e: React.DragEvent) => {
     if (node.constraints?.drop === false) return;
 
@@ -104,7 +107,8 @@ const TreeNodeComponent = ({
     setDropPosition(null);
   };
 
-  const toggleExpand = (e: React.MouseEvent) => {
+  // 접기, 펴기 토글.
+  const handleToggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
     setExpandedKeys((prev) =>
       isExpanded ? prev.filter((k) => k !== node.key) : [...prev, node.key],
@@ -112,15 +116,8 @@ const TreeNodeComponent = ({
   };
 
   const handleClick = () => {
-    const payload = {
-      type: 'CLICK',
-      node,
-      treeId,
-    };
-    onAction({
-      type: 'CLICK',
-      payload: payload as TreeActionPayload,
-    });
+    if (node && onNodeClick) onNodeClick(node);
+    if (node === selectedNode && onNodeClick) onNodeClick(null);
   };
 
   return (
@@ -143,7 +140,7 @@ const TreeNodeComponent = ({
         {dropPosition && <div className={dropIndicatorStyle[dropPosition]} />}
         <span
           className="w-6 h-6 flex items-center justify-center cursor-pointer"
-          onClick={toggleExpand}>
+          onClick={handleToggleExpand}>
           {hasChildren ? (
             isExpanded ? (
               <ChevronDown className="w-4 h-4 text-gray-600" />
@@ -159,7 +156,9 @@ const TreeNodeComponent = ({
             <File className="w-4 h-4 text-gray-500" />
           )}
         </span>
-        <span className="text-sm flex-grow">{node.title}</span>
+        <span className="text-sm flex-grow">
+          {node.title} / Depth : {level}
+        </span>
       </div>
 
       {hasChildren && isExpanded && (
@@ -172,12 +171,11 @@ const TreeNodeComponent = ({
                 level={level + 1}
                 expandedKeys={expandedKeys}
                 setExpandedKeys={setExpandedKeys}
-                selectedNodeKey={selectedNodeKey}
+                selectedNode={selectedNode}
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 isDraggable={isDraggable}
-                onAction={onAction}
-                treeId={treeId}
+                onNodeClick={onNodeClick}
               />
             ))}
         </div>
@@ -186,68 +184,77 @@ const TreeNodeComponent = ({
   );
 };
 
-const TreeView = ({
-  treeId,
-  data,
-  selectedKey,
-  expandedKeys,
-  setExpandedKeys,
-  draggedNode,
-  setDraggedNode,
-  onAction,
-}: TreeProps) => {
-  const treeData = useMemo(() => addTreeId(data, treeId), [data, treeId]);
+const TreeView = ({ treeId, data, onAction, expandTrigger }: TreeProps) => {
+  const [treeData, setTreeData] = useState(data);
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [internalDragState, setInternalDragState] = useState<{
+    node: TreeNode | null;
+    sourceTreeId: string | null;
+  }>({
+    node: null,
+    sourceTreeId: null,
+  });
 
-  const handleDrop = async (dropInfo: DropInfo) => {
-    if (!draggedNode || !onAction) return;
+  const treeContext = useTreeContext();
+
+  const dragState = treeContext ? treeContext.dragState : internalDragState;
+  const setDragState = treeContext ? treeContext.setDragState : setInternalDragState;
+
+  useEffect(() => {
+    setTreeData(data);
+  }, [data]);
+
+  const getAllNodeKeys = useCallback((nodes: TreeNode[]): string[] => {
+    return nodes.reduce((keys: string[], node) => {
+      keys.push(node.key);
+      if (node.children?.length) {
+        keys.push(...getAllNodeKeys(node.children));
+      }
+      return keys;
+    }, []);
+  }, []);
+
+  useEffect(() => {
+    if (expandTrigger !== undefined) {
+      setExpandedKeys(expandTrigger ? getAllNodeKeys(treeData) : []);
+    }
+  }, [expandTrigger]);
+
+  // 드래그&드랍 노드를 드랍하였을때
+  const handleDrop = (dropInfo: DropInfo) => {
+    if (!dragState.node) return;
+
     const { targetNode, dropPosition } = dropInfo;
+    // 같은 트리면 이동, 다른 트리면 복사
+    const actionType = dragState.sourceTreeId === treeId ? 'NODE_MOVE' : 'NODE_COPY';
 
-    // 타겟이 null이고 position이 INSIDE일 때는 루트 레벨로 이동
-    if (!targetNode && dropPosition === 'INSIDE') {
-      const actionType = draggedNode.treeId === treeId ? 'MOVE' : 'COPY';
-
-      const payload = {
-        type: actionType,
-        sourceNode: draggedNode,
-        targetNode: null,
-        position: dropPosition,
-        treeId,
-        sourceTreeId: draggedNode.treeId,
-        targetIndex: data.length, // 루트 레벨의 마지막 위치
-      };
-
-      onAction({
-        type: actionType,
-        payload: payload as TreeActionPayload,
-      });
-      setDraggedNode(null);
+    if (targetNode && !isValidDrop(dragState.node.key, targetNode.key, treeData)) return;
+    if (actionType === 'NODE_COPY' && findNodePath(treeData, dragState.node.key)) {
+      alert('이미 트리에 해당 노드가 존재합니다.');
       return;
     }
 
-    if (targetNode && draggedNode.key === targetNode.key) return;
-    if (targetNode && !isValidDrop(draggedNode.key, targetNode.key, data)) return;
+    let newTreeData = [...treeData];
+    if (actionType === 'NODE_MOVE') {
+      newTreeData = removeNodeByKey(newTreeData, dragState.node.key);
+    }
 
-    const targetIndex = targetNode
-      ? getTargetIndex(data, targetNode.key, dropPosition)
-      : data.length;
+    if (targetNode) {
+      newTreeData = insertNodeAtPosition(newTreeData, targetNode.key, dragState.node, dropPosition);
+    } else {
+      newTreeData = [...newTreeData, { ...dragState.node }];
+    }
 
-    const actionType = draggedNode.treeId === treeId ? 'MOVE' : 'COPY';
+    setTreeData(newTreeData);
 
-    const payload = {
+    onAction?.({
       type: actionType,
-      sourceNode: draggedNode,
-      targetNode,
+      sourceNode: dragState.node,
+      targetNode: targetNode,
       position: dropPosition,
       treeId,
-      sourceTreeId: draggedNode.treeId,
-      targetIndex,
-    };
-
-    onAction({
-      type: actionType,
-      payload: payload as TreeActionPayload,
     });
-    setDraggedNode(null);
   };
 
   const canDragNode = (node: TreeNode): boolean => {
@@ -256,7 +263,12 @@ const TreeView = ({
   };
 
   const handleDragStart = (node: TreeNode) => {
-    setDraggedNode(node);
+    setDragState({ node: node, sourceTreeId: treeId });
+  };
+
+  const handleNodeClick = (node: TreeNode | null) => {
+    setSelectedNode(node);
+    if (onAction && node) onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
   };
 
   return (
@@ -280,14 +292,13 @@ const TreeView = ({
           <TreeNodeComponent
             key={node.key}
             node={node}
-            selectedNodeKey={selectedKey}
+            selectedNode={selectedNode}
             expandedKeys={expandedKeys}
             setExpandedKeys={setExpandedKeys}
             onDragStart={handleDragStart}
             onDrop={handleDrop}
             isDraggable={canDragNode(node)}
-            onAction={onAction}
-            treeId={treeId}
+            onNodeClick={handleNodeClick}
           />
         ))}
       </div>

@@ -11,12 +11,15 @@ import {
   SelectGroup,
   SelectItem,
 } from '@learnway/ui';
+import { CODE_GROUP, codeConfig } from '@learnway/config';
 
 import { Navigate } from '../widgets/layout';
 import { useSetLanguage } from '../features/system';
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
 import { useLogoutUser } from '../entities/user';
+import { useCodesByCodeGroup, useLabelByCode } from '../entities/system';
+import type { Code } from '../entities/system';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -32,6 +35,9 @@ function LayoutComponent() {
   const { data: tenant } = useFetchTenant(data?.activeTenantId);
   const { logout } = useLogoutUser();
   const { set: setLanguage } = useSetLanguage();
+
+  const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
+  const { data: de } = useLabelByCode(CODE_GROUP.LANGUAGE_CODE, 'de');
 
   useEffect(() => {
     if (!data) {
@@ -91,7 +97,8 @@ function LayoutComponent() {
         </div>
         <div className="flex grow"></div>
         <div className="flex text-sm items-baseline justify-end gap-4 pt-4 pe-5">
-          {data?.userName}님 로그인,{' '}
+          {data?.userName}님 로그인, {de}{' '}
+          {codeConfig.getLabelByCode(CODE_GROUP.LANGUAGE_CODE, 'de')}
           <Button variant={'outline'} size={'sm'} onClick={() => handleLogout()}>
             {t('LOGOUT')}
           </Button>
@@ -113,9 +120,13 @@ function LayoutComponent() {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={DEFAULT_THEME}>default</SelectItem>
-                <SelectItem value="ko">Korean</SelectItem>
-                <SelectItem value="en">English</SelectItem>
+                {languageCodes.map((code: Code, index: number) => {
+                  return (
+                    <SelectItem value={code.code} key={`LANGUAGE${index}`}>
+                      {code.label}
+                    </SelectItem>
+                  );
+                })}
               </SelectGroup>
             </SelectContent>
           </Select>
