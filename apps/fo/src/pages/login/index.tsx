@@ -77,6 +77,10 @@ function RouteComponent() {
           </Button>
         </Form>
       </div>
+      <div className="typo-title-[3-B]">타이틀 타이포</div>
+      <div className="typo-body-[3-R]">바디 타이포</div>
+      <div className="typo-input-[1-R]">INPUT 타이포</div>
+      <div className="typo-label-[1-R]">LABEL 타이포</div>
     </div>
   );
 }

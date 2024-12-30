@@ -44,9 +44,14 @@ const BaseModal: React.FC<BaseModalProps> = ({
   return (
     <Dialog open={true} onOpenChange={handleOpenChange}>
       <DialogContent
-        className={cn(heightClasses[height], sizeClasses[width], 'transition-all duration-200')}>
+        className={cn(
+          heightClasses[height],
+          sizeClasses[width],
+          'transition-all duration-200',
+          'nlp--modal-content',
+        )}>
         {(title || description) && (
-          <DialogHeader>
+          <DialogHeader className="nlp--modal-header">
             {title && <DialogTitle>{title}</DialogTitle>}
             {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
