@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { TreeEventPayload, TreeNode } from './type';
-import { TreeView } from './tree';
-import { NodeDetail } from './node-detail';
-import { TreeContainer } from './tree.context';
+import { TreeEventPayload, TreeNode } from '@learnway/ui';
+import { TreeView } from '@learnway/ui';
+import { NodeDetail } from '@learnway/ui';
+import { TreeContainer } from '@learnway/ui';
 
 const meta: Meta<typeof TreeView> = {
   title: 'Components/TreeView',

@@ -1,12 +1,12 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FieldType } from '../type';
-import Input from './input';
+import { FieldType } from '@learnway/ui';
+import { FormInput } from '@learnway/ui';
 
 export default {
   title: 'Components/Input',
-  component: Input,
+  component: FormInput,
   tags: ['autodocs'],
   argTypes: {
     type: {
@@ -18,7 +18,7 @@ export default {
     disabled: { control: 'boolean' },
   },
 } as Meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof FormInput>;
 
 const BaseFormWrapper: React.FC<any> = (args) => {
   const [value, setValue] = React.useState(args.value || '');
@@ -28,7 +28,7 @@ const BaseFormWrapper: React.FC<any> = (args) => {
     args.onChange?.(e);
   };
 
-  return <Input {...args} value={value} onChange={handleChange} />;
+  return <FormInput {...args} value={value} onChange={handleChange} />;
 };
 
 export const Text: Story = {

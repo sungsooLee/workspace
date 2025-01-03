@@ -2,10 +2,10 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-import { Button } from '../shadcn/button';
-import ModalWrapper from './modal-wrapper';
-import { useModalControl } from './modal.hook';
-import { useModalContext } from './modal-context';
+import { Button } from '@learnway/ui';
+import { ModalWrapper } from '@learnway/ui';
+import { useModalControl } from '@learnway/ui';
+import { useModalContext } from '@learnway/ui';
 
 const ModalDemo = ({ children }: { children: React.ReactNode }) => {
   return (

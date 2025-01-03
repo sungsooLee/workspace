@@ -1,10 +1,11 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 import path from 'path';
 import { mergeConfig } from 'vite';
-import viteConfig from '../vite.config';
 
 const config: StorybookConfig = {
-  stories: ['../src/lib/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
+  stories: [
+    '../src/**/*.stories.@(js|jsx|ts|tsx|mdx)', // src 디렉토리 아래의 모든 스토리 파일
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -33,25 +34,14 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       resolve: {
         alias: {
-          '@learnway/shared': path.resolve(__dirname, '../../shared/src/index.ts'),
-          '@learnway/config': path.resolve(__dirname, '../../config/src/index.ts'),
+          '@libs/ui': path.resolve(__dirname, '../../libs/ui/src/index.ts'),
+          '@libs/editor': path.resolve(__dirname, '../../libs/editor/src/index.ts'),
+          '@libs/shared': path.resolve(__dirname, '../../libs/shared/src/index.ts'),
+          '@libs/hooks': path.resolve(__dirname, '../../libs/hooks/src/index.ts'),
         },
       },
-      optimizeDeps: {
-        include: ['@learnway/shared'],
-      },
-      build: {
-        commonjsOptions: {
-          include: [/shared/, /node_modules/],
-        },
-      },
-      esbuild: undefined,
     });
   },
 };
 
 export default config;
-
-// To customize your Vite configuration you can use the viteFinal field.
-// Check https://storybook.js.org/docs/react/builders/vite#configuration
-// and https://nx.dev/recipes/storybook/custom-builder-configs

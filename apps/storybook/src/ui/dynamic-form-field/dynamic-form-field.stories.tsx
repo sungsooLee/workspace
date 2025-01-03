@@ -4,9 +4,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { FieldType } from '../type';
-import { DynamicFormField } from './dynamic-form-field';
-import { Button } from '../shadcn/button';
+import { FieldType } from '@learnway/ui';
+import { DynamicFormField } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 
 export default {
   title: 'Components/DynamicFormField',
