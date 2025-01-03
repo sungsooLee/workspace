@@ -15,8 +15,9 @@ module.exports = {
   ],
   blocklist: ['outline'],
   plugins: [
-    require('./src/assets/tailwind.typo.plugin'),
+    require('./src/assets/tailwind-plugins/typo.plugin'),
     plugin(function ({ addUtilities, addComponents, matchUtilities, e, config }) {
+      /*
       addComponents({
         '.nlp--button': {
           '&.outline': {
@@ -33,7 +34,7 @@ module.exports = {
             backgroundColor: 'yellow',
           },
         },
-      });
+      });*/
     }),
   ],
 };
