@@ -43,14 +43,22 @@ export default defineConfig({
     },
   },
   test: {
-    watch: false,
+    watch: true,
     globals: true,
     environment: 'jsdom',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
+      all: false, // 테스트된 파일만 포함
       reportsDirectory: '../../coverage/libs/editor',
-      provider: 'v8',
+      provider: 'istanbul',
+      include:['src/lib/editor.tsx'],
+      thresholds:{
+        statements:35, // 전체 statement 커버리지 기준
+        branches:25, // 조건문 커버리지 기준
+        functions:0, // 함수 커버리지 기준,
+        lines:0, // 라인 커버리지 기준
+      }
     },
   },
 });
