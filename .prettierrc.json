@@ -7,5 +7,5 @@
   "tabWidth": 2,
   "bracketSpacing": true,
   "jsxBracketSameLine": true,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "tailwindConfig": "./apps/fo/tailwind.config.js"
 }

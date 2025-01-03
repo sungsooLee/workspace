@@ -59,7 +59,8 @@ function RouteComponent() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen  justify-center items-center flex flex-col">
+              <div className="typo-title-[3-B]">학습자 로그인</div>
       <div className="bg-slate-200 p-10 rounded-lg">
         <Form {...form} schema={schema}>
           <div className="w-64">
@@ -77,10 +78,6 @@ function RouteComponent() {
           </Button>
         </Form>
       </div>
-      <div className="typo-title-[3-B]">타이틀 타이포</div>
-      <div className="typo-body-[3-R]">바디 타이포</div>
-      <div className="typo-input-[1-R]">INPUT 타이포</div>
-      <div className="typo-label-[1-R]">LABEL 타이포</div>
     </div>
   );
 }
