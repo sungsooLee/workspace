@@ -59,9 +59,10 @@ function RouteComponent() {
   };
 
   return (
-    <div className="min-h-screen  justify-center items-center flex flex-col">
-              <div className="typo-title-[3-B]">학습자 로그인</div>
-      <div className="bg-slate-200 p-10 rounded-lg">
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <div className="typo-title-[3-B]">학습자 로그인</div>
+
+      <div className="rounded-lg bg-slate-200 p-10">
         <Form {...form} schema={schema}>
           <div className="w-64">
             <DynamicFormField
