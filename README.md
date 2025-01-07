@@ -69,6 +69,18 @@ Add shadcn-ui component to libs/component, run:
 npm run shadcn-add %comp%
 ```
 
+lib 추가 방법
+```sh
+  #npx nx g @nx/react:lib {추가할lib명} --directory=libs/{추가할lib명}
+  npx nx g @nx/react:lib editor --directory=libs/editor
+```
+app 추가 방법
+```
+ #npx nx g @nx/react:lib {추가할app명} --directory=libs/{추가할app명}
+ npx nx g @nx/react:app storybook --directory=apps/storybook
+```
+
+
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
 
 [More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

@@ -1,0 +1,85 @@
+{
+  "data": {
+    "status": 200,
+    "data": {
+      "accountId": "user1",
+      "userName": "김현대",
+      "email": "test1@email.com",
+      "userStateCode": "NORMAL",
+      "roles": [
+        {
+          "roleId": "ROLE_ADMIN",
+          "roleName": "총괄"
+        },
+        {
+          "roleId": "ROLE_HEC_USER",
+          "roleName": "엔지니어링유저"
+        },
+        {
+          "roleId": "ROLE_HAE_USER",
+          "roleName": "오토에버유저"
+        }
+      ],
+      "tenants": [
+        {
+          "tenantId": 3
+        },
+        {
+          "tenantId": 6
+        }
+      ],
+      "orgId": 1,
+      "orgName": "현대오토에버",
+      "jobRoleNo": null,
+      "jobRoleName": null,
+      "userEngName": null,
+      "userLanguageSetCode": "en"
+    },
+    "message": ""
+  },
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGVfaWRzIjoiUk9MRV9BRE1JTixST0xFX0hFQ19VU0VSLFJPTEVfSEFFX1VTRVIiLCJleHAiOjE3MzM4MDQwMTd9.Gv6egJx2EmlYbu1vzGCqhyiixodcdTvI_V28Dfbzz3KjN5_7v-GdjKm_ilWAbaUmfcaG-APBTVtOffKfybJJKg",
+    "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+    "connection": "close",
+    "content-length": "471",
+    "content-type": "application/json;charset=utf-8",
+    "date": "Tue, 10 Dec 2024 02:33:37 GMT",
+    "expires": "0",
+    "pragma": "no-cache",
+    "refresh-token-exp": "1733808017934",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-xss-protection": "0"
+  },
+  "config": {
+    "transitional": {
+      "silentJSONParsing": true,
+      "forcedJSONParsing": true,
+      "clarifyTimeoutError": false
+    },
+    "adapter": ["xhr", "http", "fetch"],
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 5000,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1,
+    "env": {},
+    "headers": {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/json"
+    },
+    "cancelToken": {
+      "promise": {},
+      "_listeners": []
+    },
+    "method": "post",
+    "url": "/pms-module/admin/api/v1/login",
+    "data": "{\"orgId\":1,\"accountId\":\"user1\",\"password\":\"hae1234\"}"
+  },
+  "request": {}
+}

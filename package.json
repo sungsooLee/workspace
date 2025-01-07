@@ -4,10 +4,13 @@
   "license": "MIT",
   "scripts": {
     "dev:fo": "npx nx serve fo",
+    "dev:bo": "npx nx serve bo",
     "build:fo": "npx nx build fo",
+    "build:bo": "npx nx build bo",
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
+    "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
-    "storybook": "nx run ui:storybook -p 6066"
+    "storybook": "nx run storybook:storybook -p 6066"
   },
   "private": true,
   "dependencies": {
@@ -131,7 +134,8 @@
     "jsdom": "~22.1.0",
     "nx": "20.0.3",
     "postcss": "8.4.38",
-    "prettier": "^2.6.2",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "storybook": "^8.2.8",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "3.4.3",

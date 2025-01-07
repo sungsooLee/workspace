@@ -1,0 +1,282 @@
+{
+  "title": "ROOT",
+  "path": "/",
+  "roles": "ROLE_ADMIN",
+  "children": [
+    {
+      "title": "Menu 2",
+      "path": "/menu2",
+      "roles": "ROLE_ADMIN",
+      "children": [
+        {
+          "title": "Menu 3",
+          "path": "/menu3",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 4",
+          "path": "/menu4",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 5",
+              "path": "/menu4/menu5",
+              "roles": "ROLE_ADMIN",
+              "children": [
+                {
+                  "title": "Menu 14",
+                  "path": "/menu14",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 15",
+                      "path": "/menu15",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                },
+                {
+                  "title": "Menu 16",
+                  "path": "/menu16",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 17",
+                      "path": "/menu17",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                },
+                {
+                  "title": "Menu 18",
+                  "path": "/menu18",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 19",
+                      "path": "/menu19",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                },
+                {
+                  "title": "Menu 20",
+                  "path": "/menu20",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 21",
+                      "path": "/menu21",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                },
+                {
+                  "title": "Menu 30",
+                  "path": "/menu30",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 31",
+                      "path": "/menu31",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                },
+                {
+                  "title": "Menu 34",
+                  "path": "/menu34",
+                  "roles": "ROLE_ADMIN",
+                  "children": [
+                    {
+                      "title": "Menu 35",
+                      "path": "/menu35",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차"
+                    }
+                  ],
+                  "tenantName": "현대자동차"
+                }
+              ],
+              "tenantName": "현대자동차"
+            },
+            {
+              "title": "Menu 10",
+              "path": "/menu10",
+              "roles": "ROLE_ADMIN",
+              "children": [
+                {
+                  "title": "Menu 11",
+                  "path": "/menu11",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차"
+                }
+              ],
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 6",
+          "path": "/menu6",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 7",
+              "path": "/menu6/menu7",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            },
+            {
+              "title": "Menu 12",
+              "path": "/menu12",
+              "roles": "ROLE_ADMIN",
+              "children": [
+                {
+                  "title": "Menu 13",
+                  "path": "/menu13",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차"
+                }
+              ],
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 8",
+          "path": "/menu8",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 9",
+              "path": "/menu8/menu9",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 22",
+          "path": "/menu22",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 23",
+              "path": "/menu23",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 24",
+          "path": "/menu24",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 25",
+              "path": "/menu25",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 26",
+          "path": "/menu26",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 27",
+              "path": "/menu27",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 28",
+          "path": "/menu28",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 29",
+              "path": "/menu29",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 32",
+          "path": "/menu32",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 33",
+              "path": "/menu33",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        },
+        {
+          "title": "Menu 36",
+          "path": "/menu36",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "Menu 37",
+              "path": "/menu37",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            },
+            {
+              "title": "Menu 38",
+              "path": "/menu38",
+              "roles": "ROLE_ADMIN",
+              "children": [
+                {
+                  "title": "Menu 39",
+                  "path": "/menu39",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차"
+                }
+              ],
+              "tenantName": "현대자동차"
+            },
+            {
+              "title": "Menu 40",
+              "path": "/menu40",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차"
+            }
+          ],
+          "tenantName": "현대자동차"
+        }
+      ],
+      "tenantName": "현대자동차"
+    }
+  ],
+  "tenantName": "현대자동차"
+}
