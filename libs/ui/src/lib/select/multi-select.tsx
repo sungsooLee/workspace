@@ -1,9 +1,9 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import { cn } from '@learnway/shared';
-import { MultiSelect } from '../shadcn/multi-select';
+import * as Primitive from './multi-select.shadcn';
 import { MultiSelectFieldProps } from './type';
 
-const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
+const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
   (
     {
       value = [],
@@ -24,7 +24,7 @@ const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
     };
 
     return (
-      <MultiSelect
+      <Primitive.MultiSelect
         ref={ref}
         options={options}
         value={normalizedValue}
@@ -43,4 +43,4 @@ const FormMultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
   },
 );
 
-export default FormMultiSelect;
+export default memo(MultiSelect);

@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { Menu } from '../model/menu';
+import { Menu } from '../../../types/entities/menu';
 
 import menuMock from '../../mock/menu.json';
 

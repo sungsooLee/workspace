@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { Company } from '../model/company';
+import { Company } from '../../../types/entities/company';
 
 import organizationMock from '../../mock/organization.json';
 

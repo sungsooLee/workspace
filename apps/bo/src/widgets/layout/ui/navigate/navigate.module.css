@@ -15,10 +15,3 @@
     }
   }
 }
-
-._menuItem {
-  background-color: green;
-  color: red !important;
-  padding: 24px;
-  overflow: auto;
-}
