@@ -1,4 +1,6 @@
-import theme from './theme';
+import themeConfig from './theme.config';
+import { AutoLinkNode, LinkNode } from '@lexical/link';
+
 // 초기 설정
 export const initialConfig = {
   namespace: 'MyEditor',
@@ -7,7 +9,6 @@ export const initialConfig = {
     /* istanbul ignore next */
     console.error('Lexical Editor Error:', error);
   },
-  nodes: [
-  ],
-  theme,
+  nodes: [AutoLinkNode, LinkNode],
+  theme: themeConfig,
 };

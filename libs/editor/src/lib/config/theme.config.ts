@@ -1,8 +1,8 @@
 import type { EditorThemeClasses } from 'lexical';
 
-import './style.css';
+import '../assets/styles/editor.css';
 
-const theme: EditorThemeClasses = {
+const themeConfig: EditorThemeClasses = {
   autocomplete: 'nlp--editor-autocomplete',
   blockCursor: 'nlp--editor-block-cursor',
   characterLimit: 'nlp--editor-character-limit',
@@ -110,4 +110,4 @@ const theme: EditorThemeClasses = {
   },
 };
 
-export default theme;
+export default themeConfig;

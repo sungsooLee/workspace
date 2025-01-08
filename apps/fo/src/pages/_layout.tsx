@@ -56,7 +56,7 @@ function LayoutComponent() {
     logout();
   };
 
-  const handleTheme = (theme: string) => {
+  const handleTheme = (themeConfig: string) => {
     console.log('handleTheme', theme);
 
     document.documentElement.classList.remove('red');
@@ -104,7 +104,7 @@ function LayoutComponent() {
           </Button>
           <Select onValueChange={(value: string) => handleTheme(value)}>
             <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select a theme" />
+              <SelectValue placeholder="Select a themeConfig" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>

@@ -12,6 +12,13 @@
         "coverage": true,
         "passWithNoTests": true
       }
+    },
+    "build": {
+      "executor": "@nx/web:rollup",
+      "options": {
+        "external": ["@svgr/rollup"],
+        "rollupConfig": "rollup.config.js"
+      }
     }
   }
 }
