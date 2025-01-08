@@ -1,15 +1,6 @@
 // FloatingModalContext 정의
-import React, {
-  createContext,
-  ReactNode,
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { $getSelection, getDOMSelection, $isRangeSelection } from 'lexical';
+import React, { createContext, ReactNode, RefObject, useContext, useRef, useState } from 'react';
+import { $getSelection, getDOMSelection } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 // 플로팅 모달 위치 조정을 위한 간격 상수 설정

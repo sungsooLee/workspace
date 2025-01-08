@@ -1,12 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { INITIAL_TOOLBAR_STATE } from '../config/toolbar.config';
 
 // 툴바 상태 타입 정의

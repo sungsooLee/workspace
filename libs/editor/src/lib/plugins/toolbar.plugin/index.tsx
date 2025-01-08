@@ -32,6 +32,7 @@ import TextItalic from '../../assets/images/icons/type-italic.svg?react';
 import TextUnderline from '../../assets/images/icons/type-underline.svg?react';
 import { useToolbarState } from '../../context/toolbar.context';
 import Link from './link';
+import BlockType from './block-type';
 
 const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
@@ -60,6 +61,8 @@ const ToolbarPlugin = () => {
   return (
     <div className="nlp--editor-tool-bar flex p-[10px] bg-gray-1 border-[1px] border-gray-3  text-gray-8 font-semibold">
       <History />
+      <Divider />
+      <BlockType />
       <Divider />
       <FontSize />
       <Divider />

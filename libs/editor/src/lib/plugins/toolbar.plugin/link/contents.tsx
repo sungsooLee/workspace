@@ -1,23 +1,10 @@
-import React, {
-  ChangeEvent,
-  FC,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FC, MouseEvent, useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $isLinkNode, $createLinkNode, $isAutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-import { $getSelection, $isRangeSelection, CLICK_COMMAND, COMMAND_PRIORITY_LOW } from 'lexical';
-import { $findMatchingParent, mergeRegister } from '@lexical/utils';
-import Button from '../../../components/button';
-import { useToolbarState } from '../../../context/toolbar.context';
-import LinkIcon from '../../assets/images/icons/link.svg?react';
+import { $createLinkNode, $isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { $getSelection, $isRangeSelection } from 'lexical';
+import { $findMatchingParent } from '@lexical/utils';
 import { sanitizeUrl } from '../../../utils/url';
 import { useFloatingModal } from '../../../context/floating-modal.context';
-import AutoLinkPlugin from '../../../plugins/auto-link.plugin';
-import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { getSelectedNode } from '../../../utils/get-selected-node';
 import CloseICon from '../../../assets/images/icons/close.svg?react';
 import ConfirmIcon from '../../../assets/images/icons/success-alt.svg?react';

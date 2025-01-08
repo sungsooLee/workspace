@@ -1,14 +1,6 @@
-import React, {
-  ChangeEvent,
-  FC,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $isLinkNode, $createLinkNode, $isAutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import {
   $getSelection,
   $isRangeSelection,
@@ -17,7 +9,7 @@ import {
   COMMAND_PRIORITY_LOW,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+import { mergeRegister } from '@lexical/utils';
 import Button from '../../../components/button';
 import { useToolbarState } from '../../../context/toolbar.context';
 import LinkIcon from '../../../assets/images/icons/link.svg?react';
@@ -27,6 +19,7 @@ import AutoLinkPlugin from '../../../plugins/auto-link.plugin';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { getSelectedNode } from '../../../utils/get-selected-node';
 import Contents from './contents';
+
 /**
  * Toolbar Link 버튼
  * @constructor
