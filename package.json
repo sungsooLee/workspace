@@ -6,7 +6,6 @@
     "dev:fo": "npx nx serve fo",
     "dev:bo": "npx nx serve bo",
     "dev:pub": "npx nx serve pub",
-    "dev:pub1": "npx nx serve pub1",
     "build:fo": "npx nx build fo",
     "build:bo": "npx nx build bo",
     "build:pub": "npx nx build pub",
@@ -71,7 +70,6 @@
     "react-i18next": "^15.1.0",
     "react-number-format": "^5.4.2",
     "react-player": "^2.16.0",
-    "react-router-dom": "6.11.2",
     "usehooks-ts": "^3.1.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
@@ -89,7 +87,6 @@
     "@nx/js": "20.0.5",
     "@nx/playwright": "20.0.3",
     "@nx/react": "20.0.5",
-    "@nx/rollup": "^20.3.1",
     "@nx/storybook": "20.0.3",
     "@nx/vite": "20.0.3",
     "@nx/web": "20.0.3",
