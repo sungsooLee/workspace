@@ -5,6 +5,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import svgr from 'vite-plugin-svgr';
+import path from 'path';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
@@ -34,6 +35,9 @@ export default defineConfig({
     !isTest && TanStackRouterVite(),
     svgr(),
   ],
+  resolve: {
+    alias: { find: '@/', replacement: path.resolve(__dirname, 'src') },
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
