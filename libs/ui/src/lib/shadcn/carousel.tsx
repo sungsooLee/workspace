@@ -1,9 +1,10 @@
 import * as React from "react"
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
-import { cn } from "@/libs/shared/src/lib"
-import { Button } from "@/libs/ui/src/lib/shadcn/button"
+import { cn } from '@learnway/shared'
+import { Button } from './button'
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 
 type CarouselApi = UseEmblaCarouselType[1]
