@@ -13,7 +13,7 @@
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
-    "storybook": "nx run storybook:storybook -p 6066",
+    "storybook": "nx run storybook:sb -p 6066",
     "test:editor": "nx test editor --coverage --watch"
   },
   "private": true,
