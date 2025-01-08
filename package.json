@@ -5,8 +5,10 @@
   "scripts": {
     "dev:fo": "npx nx serve fo",
     "dev:bo": "npx nx serve bo",
+    "dev:pub": "npx nx serve pub",
     "build:fo": "npx nx build fo",
     "build:bo": "npx nx build bo",
+    "build:pub": "npx nx build pub",
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
