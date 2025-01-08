@@ -13,6 +13,8 @@ import {
 
 import { useMenus } from '../service/navigate.service';
 
+import styles from './navigate.module.css';
+
 export function Navigate() {
   const [menus, setMenus] = useState([]);
 
@@ -29,19 +31,22 @@ export function Navigate() {
   }, [data]);
 
   return (
-    <Menubar>
+    <Menubar className={styles._start}>
       {menus.map((menu: any, index: number) => {
         return (
           <MenubarMenu key={`MenubarMenu${index}`}>
-            <MenubarTrigger>
+            <MenubarTrigger className={styles._menuItem}>
               {menu.children ? menu.title : <Link to={menu.path}>{menu.title}</Link>}
             </MenubarTrigger>
             {menu.children && (
               <MenubarContent>
                 {(menu.children ?? []).map((menuItem: any, subIndex: number) => {
                   return (
-                    <MenubarItem key={`MenubarItem${subIndex}`}>
-                      <Link to={menuItem.path}>{menuItem.title}</Link>
+                    <MenubarItem key={`MenubarItem${subIndex}`} className={styles._menuItem}>
+                      <Link to={menuItem.path}>
+                        {menuItem.title}
+                        <div className='bg-slate-50'>Icon</div>
+                      </Link>
                     </MenubarItem>
                   );
                 })}

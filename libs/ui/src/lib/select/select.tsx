@@ -1,31 +1,37 @@
-import React from 'react';
+import { forwardRef, memo } from 'react';
+
 import { cn } from '@learnway/shared';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../shadcn/select';
+
+import * as Primitive from './select.shadcn';
 import { SelectFieldProps } from './type';
 
-const FormSelect = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldProps>(
+const Select = forwardRef<React.ElementRef<typeof Primitive.Select>, SelectFieldProps>(
   ({ options, value, onChange, disabled, className, ...props }, ref) => {
     return (
-      <Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
-        <SelectTrigger
+      <Primitive.Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
+        <Primitive.SelectTrigger
           ref={ref}
           className={cn(
+            'nlp--select-trigger',
             'w-full',
-            'focus:outline-none focus:border-blue-500',
+            'focus:border-blue-500 focus:outline-none',
             'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
           )}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
+          <Primitive.SelectValue />
+        </Primitive.SelectTrigger>
+        <Primitive.SelectContent>
           {options.map(({ value, label }) => (
-            <SelectItem key={value} value={value && String(value)} className="cursor-pointer">
+            <Primitive.SelectItem
+              key={value}
+              value={value && String(value)}
+              className={cn('nlp--select-item', 'cursor-pointer')}>
               {label}
-            </SelectItem>
+            </Primitive.SelectItem>
           ))}
-        </SelectContent>
-      </Select>
+        </Primitive.SelectContent>
+      </Primitive.Select>
     );
   },
 );
 
-export default FormSelect;
+export default memo(Select);

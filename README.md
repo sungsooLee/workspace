@@ -40,7 +40,11 @@ pnpm install
 for windows
 
 ```sh
+// node config : process.env.NODE_TLS_REJECT_UNAUTHORIZED
 set NODE_TLS_REJECT_UNAUTHORIZED=0
+
+// npm config
+npm config set strict-ssl false
 ```
 
 for linux or mac
@@ -70,11 +74,14 @@ npm run shadcn-add %comp%
 ```
 
 lib 추가 방법
+
 ```sh
   #npx nx g @nx/react:lib {추가할lib명} --directory=libs/{추가할lib명}
   npx nx g @nx/react:lib editor --directory=libs/editor
 ```
+
 app 추가 방법
+
 ```
  #npx nx g @nx/react:lib {추가할app명} --directory=libs/{추가할app명}
  npx nx g @nx/react:app storybook --directory=apps/storybook

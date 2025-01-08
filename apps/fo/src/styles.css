@@ -1,9 +1,16 @@
 @import '../../../libs/config/src/lib/style/font.css';
 @import '../../../libs/config/src/lib/style/theme.css';
 
+@import 'tailwindcss/base';
+/*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*/
+
+@import './assets/styles/components/index.css';
+
+@import 'tailwindcss/utilities';
 
 @layer base {
 }
@@ -21,4 +28,8 @@
       Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
       'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   }
+}
+
+#root {
+  color: hsl(var(--secondary));
 }
