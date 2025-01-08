@@ -51,6 +51,7 @@
     "cmdk": "1.0.0",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
+    "embla-carousel-react": "^8.5.2",
     "i18next": "^23.16.4",
     "jotai": "^2.10.4",
     "js-cookie": "^3.0.5",
