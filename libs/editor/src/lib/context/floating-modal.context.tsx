@@ -111,6 +111,7 @@ export const FloatingModalContext: React.FC<{
           rootElement !== null &&
           rootElement.contains(nativeSelection.anchorNode)
         ) {
+          rootElement.clo;
           const domRect: DOMRect | undefined =
             nativeSelection.focusNode?.parentElement?.getBoundingClientRect(); // 선택한 노드의 위치 찾기
           if (domRect) {
@@ -141,7 +142,7 @@ export const FloatingModalContext: React.FC<{
       }}>
       {children}
       <div
-        className={`nlp--editor-floating-modal flex absolute top-0 left-0 z-10 max-w-[400px] w-full opacity-0 bg-white shadow-[0_-2px_2px_rgba(0,0,0,0.1),4px_4px_6px_rgba(0,0,0,0.2),-4px_4px_6px_rgba(0,0,0,0.2)] rounded-b-lg transition-opacity duration-500 will-change-transform ${
+        className={`nlp--editor-floating-modal absolute left-0 top-0 z-10 flex w-full max-w-[400px] rounded-b-lg bg-white opacity-0 shadow-[0_-2px_2px_rgba(0,0,0,0.1),4px_4px_6px_rgba(0,0,0,0.2),-4px_4px_6px_rgba(0,0,0,0.2)] transition-opacity duration-500 will-change-transform ${
           modal.open ? 'flex' : 'hidden'
         }`}
         ref={floatingModalRef}>
