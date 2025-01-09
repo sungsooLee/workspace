@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import Editor from '@/libs/ui/src/lib/editor';
+import { Editor } from '@learnway/ui';
 import React from 'react';
 
 export const Route = createFileRoute('/_layout/menu8/menu9')({
