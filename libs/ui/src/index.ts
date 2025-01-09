@@ -54,7 +54,10 @@ export * from './lib/shadcn/toast';
 
 /*editor*/
 export * from './lib/editor/hooks/editor.hook';
-export * from './lib/editor';
+export { default as Editor } from './lib/editor';
 
 export * from './lib/avatar/avatar';
 export * from './lib/popover/popover';
+
+export * from './lib/carousel/carousel';
+export * from './lib/carousel/image-carousel';

@@ -3,8 +3,8 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@learnway/ui';
-import { Carousel } from '@/libs/ui/src/lib/carousel/carousel';
-import { ImageCarousel } from '@/libs/ui/src/lib/carousel/image-carousel';
+import { Carousel } from '@learnway/ui';
+import { ImageCarousel } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
@@ -18,18 +18,17 @@ function HomeComponent() {
   }, [i18n.language]);
 
   return (
-    <div className="flex gap-10 p-2 flex-col">
+    <div className="flex flex-col gap-10 p-2">
       <h3>Welcome Home!</h3>
 
-
       {/** Carousel */}
-      <div className="flex gap-5 w-full">
+      <div className="flex w-full gap-5">
         <div className="min-w-32">Carousel</div>
         <ImageCarousel imageUrls={['a.png', 'b.png', 'c.png', 'd.png', 'e.png']} />
       </div>
 
       {/**primary */}
-      <div className="flex gap-5 w-10">
+      <div className="flex w-10 gap-5">
         <div className="min-w-32">Primary lg~xs</div>
 
         <Button size="lg">작성완료</Button>
@@ -40,7 +39,7 @@ function HomeComponent() {
 
         <Button size="xs">작성완료</Button>
       </div>
-      <div className="flex gap-5 w-10">
+      <div className="flex w-10 gap-5">
         <div className="min-w-32">Primary (disabled)</div>
 
         <Button size="lg" disabled>
