@@ -38,9 +38,9 @@ export type FieldTpeValue = {
 export type FormMode = 'read' | 'edit';
 
 export interface BaseFieldProps<T = any> {
-  type: FieldType;
-  name: string;
-  label: string;
+  type?: FieldType;
+  name?: string;
+  label?: string;
   error?: boolean;
   mode?: FormMode;
   value?: T;

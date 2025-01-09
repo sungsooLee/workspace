@@ -5,12 +5,10 @@ export { default as FormCheckBox } from './lib/checkbox/checkbox';
 export { default as FormDatePicker } from './lib/date-picker/date-picker';
 export { default as FormDateRangePicker } from './lib/date-picker/date-range-picker';
 export { default as FormInput } from './lib/input/input';
-export  { default as FormNumberInput }  from './lib/input/number-input';
+export { default as FormNumberInput } from './lib/input/number-input';
 
 export * from './lib/dynamic-form-field/dynamic-form-field-control';
 export * from './lib/dynamic-form-field/dynamic-form-field';
-
-
 
 export * from './lib/radio/radio';
 export * from './lib/select/multi-select';
@@ -58,3 +56,8 @@ export * from './lib/shadcn/toast';
 /*editor*/
 export * from './lib/editor/hooks/editor.hook';
 export * from './lib/editor';
+
+/*grid*/
+//타입 내보내는 컨벤션 어떻게 해야할지 ..
+export * from './lib/grid/types/index';
+export * from './lib/grid/index';

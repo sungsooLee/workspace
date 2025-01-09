@@ -14,6 +14,7 @@
     "storybook": "^x.x.x",
     "postcss": "^x.x.x",
     "autoprefixer": "^x.x.x",
-    "@tanstack/react-table": "^x.x.x"
+    "@tanstack/react-table": "^x.x.x",
+    "@tanstack/react-virtual": "^x.x.x"
   }
 }

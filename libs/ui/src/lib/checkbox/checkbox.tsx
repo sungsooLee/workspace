@@ -15,7 +15,7 @@ const FormCheckBox = forwardRef<HTMLButtonElement, CheckFieldProps>(
           disabled={disabled}
           className={cn(
             'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
-            disabled && 'opacity-50 cursor-not-allowed',
+            disabled && 'cursor-not-allowed opacity-50',
             className,
           )}
         />

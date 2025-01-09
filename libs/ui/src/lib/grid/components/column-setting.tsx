@@ -22,7 +22,7 @@ import { Button } from '../../shadcn/button';
 import { useModalControl } from '../../modal/modal.hook';
 import { ColumnSetting, ColumnSettingsProps, SortableItemProps } from '../types/column-settings';
 import { Checkbox } from '../../shadcn/checkbox';
-import { Table } from '@tanstack/react-table';
+import { ColumnDef, Table } from '@tanstack/react-table';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -30,7 +30,7 @@ export interface DragHandleProps {
 }
 
 const DragHandle: React.FC<DragHandleProps> = ({ listeners, attributes }) => (
-  <span className="cursor-move text-gray-400 px-2" {...listeners} {...attributes}>
+  <span className="cursor-move px-2 text-gray-400" {...listeners} {...attributes}>
     ⋮⋮
   </span>
 );
@@ -47,7 +47,7 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
 
   return (
     <div ref={setNodeRef} style={style}>
-      <div className="flex items-center gap-3 p-3 bg-white border rounded-lg">
+      <div className="flex items-center gap-3 rounded-lg border bg-white p-3">
         <DragHandle listeners={listeners} attributes={attributes} />
         {children}
       </div>
@@ -64,7 +64,7 @@ function ColumnSettingsContent<T extends object>({
   onApply: (settings: ColumnSetting[]) => void;
 }) {
   const { closeModal } = useModalContext();
-  const leafColumns = table.getAllLeafColumns();
+  const leafColumns = table.getAllLeafColumns().filter((col) => col.id !== 'select'); //체크박스 컬럼 제외
   console.log(leafColumns);
 
   // 컬럼 순서 상태 초기화
@@ -72,10 +72,13 @@ function ColumnSettingsContent<T extends object>({
 
   // 컬럼 표시/숨김 상태 초기화
   const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(() =>
-    leafColumns.reduce((acc, col) => {
-      acc[col.id] = col.getIsVisible();
-      return acc;
-    }, {} as Record<string, boolean>),
+    leafColumns.reduce(
+      (acc, col) => {
+        acc[col.id] = col.getIsVisible();
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
   );
 
   // DnD 센서 설정
@@ -132,8 +135,8 @@ function ColumnSettingsContent<T extends object>({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 p-2 border-b">
-        <label className="flex items-center gap-2 cursor-pointer">
+      <div className="flex items-center gap-2 border-b p-2">
+        <label className="flex cursor-pointer items-center gap-2">
           <Checkbox
             id="select-all"
             checked={leafColumns.every((col) => columnVisibility[col.id])}
@@ -150,15 +153,10 @@ function ColumnSettingsContent<T extends object>({
               const column = leafColumns.find((col) => col.id === columnId);
               if (!column) return null;
 
-              const header =
-                typeof column.columnDef.header === 'function'
-                  ? column.columnDef.header({} as any)
-                  : (column.columnDef.header as string) ?? column.id;
-
               return (
                 <SortableItem key={columnId} id={columnId}>
                   <div
-                    className="flex items-center gap-2 flex-1"
+                    className="flex flex-1 items-center gap-2"
                     onClick={(e) => e.stopPropagation()}>
                     <Checkbox
                       id={columnId}
@@ -166,7 +164,7 @@ function ColumnSettingsContent<T extends object>({
                       onCheckedChange={(checked) => handleVisibilityChange(columnId, !!checked)}
                     />
                     <label htmlFor={columnId} className="flex-1 cursor-pointer">
-                      {header}
+                      {column.id}
                     </label>
                   </div>
                 </SortableItem>
@@ -208,7 +206,7 @@ function ColumnSettings<T extends object>({
 
   return (
     <Button variant="outline" size="sm" className="ml-auto" onClick={handleOpenSettings}>
-      <Settings className="w-4 h-4 mr-2" />
+      <Settings className="mr-2 h-4 w-4" />
       항목설정
     </Button>
   );
