@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { Tenant } from '../model/tenant';
+import { Tenant } from '../../../types/entities/tenant';
 
 import tenantsMock from '../../mock/tenants.json';
 

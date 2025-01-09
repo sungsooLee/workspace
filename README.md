@@ -40,7 +40,11 @@ pnpm install
 for windows
 
 ```sh
+// node config : process.env.NODE_TLS_REJECT_UNAUTHORIZED
 set NODE_TLS_REJECT_UNAUTHORIZED=0
+
+// npm config
+npm config set strict-ssl false
 ```
 
 for linux or mac
@@ -70,15 +74,41 @@ npm run shadcn-add %comp%
 ```
 
 lib 추가 방법
+
 ```sh
   #npx nx g @nx/react:lib {추가할lib명} --directory=libs/{추가할lib명}
   npx nx g @nx/react:lib editor --directory=libs/editor
 ```
+
 app 추가 방법
+
 ```
  #npx nx g @nx/react:lib {추가할app명} --directory=libs/{추가할app명}
  npx nx g @nx/react:app storybook --directory=apps/storybook
 ```
+
+test coverage 컬럼 정의
+
+% Stmts:
+
+Statement Coverage (구문 커버리지): 실행된 **코드 구문(Statements)**의 비율.
+예: if, const, 함수 호출 등의 모든 실행 가능한 코드 구문이 테스트되었는지를 나타냅니다.
+% Branch:
+
+Branch Coverage (분기 커버리지): 조건문이나 분기문(if, switch, ?: 등)의 모든 경우가 테스트되었는지를 나타냅니다.
+예: if (condition)의 true와 false 두 가지 경우가 모두 테스트되었는지 확인.
+% Funcs:
+
+Function Coverage (함수 커버리지): 정의된 함수가 테스트된 비율.
+예: 함수가 선언되었을 뿐 실행되지 않았다면 커버리지에 포함되지 않습니다.
+% Lines:
+
+Line Coverage (라인 커버리지): 실제로 실행된 **코드 줄(Line)**의 비율.
+예: 블록 내 코드가 실행되지 않았으면 라인 커버리지가 부족하게 됩니다.
+Uncovered Line #s:
+
+테스트되지 않은 코드 줄 번호를 표시.
+예: editor.tsx 파일에서 15-16번째 줄이 테스트되지 않은 것으로 표시됨
 
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.

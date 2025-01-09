@@ -22,7 +22,7 @@ export * from './lib/tree-view/type';
 
 export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/use-toast';
-export * from './lib/shadcn/select';
+export * from './lib/select/select.shadcn';
 export * from './lib/shadcn/badge';
 export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';
@@ -32,7 +32,6 @@ export * from './lib/shadcn/dialog';
 export * from './lib/shadcn/form';
 export * from './lib/shadcn/label';
 export * from './lib/shadcn/menubar';
-export * from './lib/shadcn/popover';
 export * from './lib/shadcn/radio-group';
 export * from './lib/shadcn/separator';
 // export * from './lib/shadcn/switch'
@@ -56,6 +55,9 @@ export * from './lib/shadcn/toast';
 /*editor*/
 export * from './lib/editor/hooks/editor.hook';
 export * from './lib/editor';
+
+export * from './lib/avatar/avatar';
+export * from './lib/popover/popover';
 
 /*grid*/
 //타입 내보내는 컨벤션 어떻게 해야할지 ..

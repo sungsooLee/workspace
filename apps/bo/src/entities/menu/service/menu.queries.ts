@@ -1,7 +1,7 @@
 import { getQuerySkipToken } from '@learnway/shared';
 
 import MenuService from '../api/menu';
-import { FetchMenusParams, Menu } from '../model/menu';
+import { FetchMenusParams, Menu } from '../../../types/entities/menu';
 
 export const queryKeys = {
   all: ['menus'] as const,

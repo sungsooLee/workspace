@@ -25,7 +25,7 @@ const TestModal = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-10 items-center ">
+    <div className="flex flex-col items-center space-y-10">
       <Button onClick={handleOpenModal}>Modal</Button>
       <Button onClick={handleOpenAsyncModal}>Async Modal</Button>
     </div>
