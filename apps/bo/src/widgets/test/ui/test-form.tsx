@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 
-import { Button, DynamicFormField, FieldType, Form, useModalContext } from '@/libs/ui/src';
+import { Button, DynamicFormField, FieldType, Form, useModalContext } from '@learnway/ui';
 
 const fetchFormData = (): Promise<any> => {
   const mockData = {
