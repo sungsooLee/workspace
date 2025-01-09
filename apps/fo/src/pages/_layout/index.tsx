@@ -3,8 +3,8 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@learnway/ui';
-import { Carousel } from '@/libs/ui/src/lib/carousel/carousel';
-import { ImageCarousel } from '@/libs/ui/src/lib/carousel/image-carousel';
+import { Carousel } from '@learnway/ui';
+import { ImageCarousel } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,

@@ -1,4 +1,4 @@
-import { Button, useModalControl } from '@/libs/ui/src';
+import { Button, useModalControl } from '@learnway/ui';
 import TestForm from './test-form';
 
 const TestModal = () => {

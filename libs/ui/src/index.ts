@@ -54,12 +54,10 @@ export * from './lib/shadcn/toast';
 
 /*editor*/
 export * from './lib/editor/hooks/editor.hook';
-export * from './lib/editor';
+export { default as Editor } from './lib/editor';
 
 export * from './lib/avatar/avatar';
 export * from './lib/popover/popover';
 
-/*grid*/
-//타입 내보내는 컨벤션 어떻게 해야할지 ..
-export * from './lib/grid/types/index';
-export * from './lib/grid/index';
+export * from './lib/carousel/carousel';
+export * from './lib/carousel/image-carousel';
