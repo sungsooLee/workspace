@@ -32,12 +32,15 @@ export const FloatingModalContext: React.FC<{
   const [modal, setModal] = useState<{ open: boolean; contents?: ReactNode }>({ open: false });
 
   /**
-   * 링크 에디터를 위한 플로팅 요소의 위치 설정
-   * @param targetRect - 기준이 되는 DOMRect (타겟 요소의 위치 및 크기)
-   * @param floatingElem - 플로팅 모달 DOM 요소
-   * @param anchorElem - 기준 앵커 요소
-   * @param verticalGap - 위아래 간격 (기본값: VERTICAL_GAP)
-   * @param horizontalOffset - 좌우 간격 (기본값: HORIZONTAL_OFFSET)
+   * targetRect: 모달을 배치할 기준이 되는 DOMRect 정보.
+   * floatingElem, anchorElem: 모달과 앵커 요소.
+   * 스크롤러와 툴바 높이를 고려해 모달의 위치를 계산하고, CSS 스타일로 위치를 지정.
+   * 화면 밖으로 모달이 넘어가지 않도록 위치를 조정.
+   * @param targetRect
+   * @param floatingElem
+   * @param anchorElem
+   * @param verticalGap
+   * @param horizontalOffset
    */
   const setFloatingElemPositionForLinkEditor = (
     targetRect: DOMRect | null,
@@ -90,7 +93,8 @@ export const FloatingModalContext: React.FC<{
   };
 
   /**
-   * 플로팅 모달 열기
+   * 현재 선택 상태, 앵커 요소, DOM Selection 정보를 기반으로 모달을 열고 위치를 설정.
+   * 선택된 DOM 영역이 없거나 적절한 루트 요소를 찾지 못하면 동작하지 않음.
    */
   const handleOpenModal = (contents: ReactNode) => {
     editor.read(() => {
@@ -111,7 +115,6 @@ export const FloatingModalContext: React.FC<{
           rootElement !== null &&
           rootElement.contains(nativeSelection.anchorNode)
         ) {
-          rootElement.clo;
           const domRect: DOMRect | undefined =
             nativeSelection.focusNode?.parentElement?.getBoundingClientRect(); // 선택한 노드의 위치 찾기
           if (domRect) {
