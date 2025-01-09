@@ -25,7 +25,7 @@ import {
 } from 'lexical';
 
 import './style.css';
-import theme from './theme';
+import themeConfig from './themeConfig';
 import ToolbarPlugin from './plugins/toolbar/toolbar.plugin';
 import { parseAllowedColor, parseAllowedFontSize } from './config/style.config';
 
@@ -146,7 +146,7 @@ const editorConfig = {
   onError(error: Error) {
     throw error; // 오류 발생 시 예외를 던집니다.
   },
-  theme: theme, // 테마 설정.
+  themeConfig: themeConfig, // 테마 설정.
 };
 
 export default function App() {
