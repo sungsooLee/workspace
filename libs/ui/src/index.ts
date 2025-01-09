@@ -34,7 +34,6 @@ export * from './lib/shadcn/label';
 export * from './lib/shadcn/menubar';
 export * from './lib/shadcn/radio-group';
 export * from './lib/shadcn/separator';
-export * from './lib/shadcn/carousel';
 // export * from './lib/shadcn/switch'
 
 export * from './lib/switch/switch';

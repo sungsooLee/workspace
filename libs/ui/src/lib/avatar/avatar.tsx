@@ -10,7 +10,7 @@ interface AvatarProps {
   className?: string;
 }
 
-const AvatarCompoment = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarProps>(
+const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarProps>(
   ({ imageUrl, className, fallback = '' }, ref) => {
     return (
       <Primitive.Avatar className={cn('nlp--avatar', className)}>
@@ -21,4 +21,4 @@ const AvatarCompoment = forwardRef<React.ElementRef<typeof Primitive.Avatar>, Av
   },
 );
 
-export const Avatar = memo(AvatarCompoment);
+export const Avatar = memo(AvatarComponent);

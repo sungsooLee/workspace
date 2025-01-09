@@ -3,6 +3,8 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@learnway/ui';
+import { Carousel } from '@/libs/ui/src/lib/carousel/carousel';
+import { ImageCarousel } from '@/libs/ui/src/lib/carousel/image-carousel';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
@@ -18,6 +20,14 @@ function HomeComponent() {
   return (
     <div className="flex gap-10 p-2 flex-col">
       <h3>Welcome Home!</h3>
+
+
+      {/** Carousel */}
+      <div className="flex gap-5 w-full">
+        <div className="min-w-32">Carousel</div>
+        <ImageCarousel imageUrls={['a.png', 'b.png', 'c.png', 'd.png', 'e.png']} />
+      </div>
+
       {/**primary */}
       <div className="flex gap-5 w-10">
         <div className="min-w-32">Primary lg~xs</div>
