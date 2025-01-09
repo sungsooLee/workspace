@@ -68,23 +68,13 @@ const Link = () => {
 
   // 에디터 리스너 등록
   useEffect(() => {
-    return mergeRegister(
-      editor.registerCommand(
-        CLICK_COMMAND,
-        (_) => {
-          updateEditorState();
-          return false;
-        },
-        COMMAND_PRIORITY_LOW,
-      ),
-      editor.registerCommand(
-        SELECTION_CHANGE_COMMAND,
-        (_) => {
-          updateEditorState();
-          return false;
-        },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+    return editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        updateEditorState();
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL,
     );
   }, [editor, updateEditorState]);
 

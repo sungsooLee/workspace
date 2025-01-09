@@ -18,13 +18,11 @@ import {
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
-  CLICK_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
-  COMMAND_PRIORITY_LOW,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 
-import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
+import { $findMatchingParent, $getNearestNodeOfType } from '@lexical/utils';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
@@ -149,23 +147,13 @@ const BlockType = () => {
 
   // 에디터 리스너 등록
   useEffect(() => {
-    return mergeRegister(
-      editor.registerCommand(
-        CLICK_COMMAND,
-        (_) => {
-          updateEditorState();
-          return false;
-        },
-        COMMAND_PRIORITY_LOW,
-      ),
-      editor.registerCommand(
-        SELECTION_CHANGE_COMMAND,
-        (_) => {
-          updateEditorState();
-          return false;
-        },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+    return editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        updateEditorState();
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL,
     );
   }, [editor, updateEditorState]);
   return (

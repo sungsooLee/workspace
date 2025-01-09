@@ -33,6 +33,8 @@ import TextUnderline from '../../assets/images/icons/type-underline.svg?react';
 import { useToolbarState } from '../../context/toolbar.context';
 import Link from './link';
 import BlockType from './block-type';
+import FontColor from './font-color';
+import BackgroundColor from './background-color';
 
 const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
@@ -59,7 +61,7 @@ const ToolbarPlugin = () => {
   }, [editor, updateSelection]);
 
   return (
-    <div className="nlp--editor-tool-bar flex p-[10px] bg-gray-1 border-[1px] border-gray-3  text-gray-8 font-semibold">
+    <div className="nlp--editor-tool-bar bg-gray-1 border-gray-3 text-gray-8 flex border-[1px] p-[10px] font-semibold">
       <History />
       <Divider />
       <BlockType />
@@ -68,7 +70,7 @@ const ToolbarPlugin = () => {
       <Divider />
       <Button
         active={toolbarState.isBold}
-        className={'w-[34px] h-[36px]'}
+        className={'h-[36px] w-[34px]'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
           updateToolbarState('isBold', true);
@@ -77,7 +79,7 @@ const ToolbarPlugin = () => {
       </Button>
       <Button
         active={toolbarState.isItalic}
-        className={'w-[34px] h-[36px]'}
+        className={'h-[36px] w-[34px]'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
           updateToolbarState('isItalic', true);
@@ -86,7 +88,7 @@ const ToolbarPlugin = () => {
       </Button>
       <Button
         active={toolbarState.isUnderline}
-        className={'w-[34px] h-[36px]'}
+        className={'h-[36px] w-[34px]'}
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
           updateToolbarState('isUnderline', true);
@@ -94,6 +96,8 @@ const ToolbarPlugin = () => {
         <TextUnderline className={`${toolbarState.isBold ? '' : 'opacity-50'}`} />
       </Button>
       <Link />
+      <FontColor />
+      <BackgroundColor />
     </div>
   );
 };
@@ -101,5 +105,5 @@ const ToolbarPlugin = () => {
 export default ToolbarPlugin;
 
 const Divider = () => {
-  return <div className="w-[1px] bg-gray-3 m-0 mx-[4px]" />;
+  return <div className="bg-gray-3 m-0 mx-[4px] w-[1px]" />;
 };
