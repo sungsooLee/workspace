@@ -1,7 +1,7 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
-const tailwindPreset = require('../../libs/config/src/lib/style/tailwind.preset');
-const tailwindShadcnPreset = require('../../libs/config/src/lib/style/tailwind.shadcn.preset');
+const tailwindPreset = require('../../../libs/config/src/lib/style/tailwind.preset');
+const tailwindShadcnPreset = require('../../../libs/config/src/lib/style/tailwind.shadcn.preset');
 
 const plugin = require('tailwindcss/plugin');
 
@@ -14,7 +14,5 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   blocklist: ['outline'],
-  plugins: [
-    require('./src/assets/tailwind-plugins/typo.plugin')
-  ],
+  plugins: [require('./src/assets/tailwind-plugins/typo.plugin')],
 };
