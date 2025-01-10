@@ -1,6 +1,7 @@
 import themeConfig from './theme.config';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
-
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
+import { ListItemNode, ListNode } from '@lexical/list';
 // 초기 설정
 export const initialConfig = {
   namespace: 'MyEditor',
@@ -9,6 +10,6 @@ export const initialConfig = {
     /* istanbul ignore next */
     console.error('Lexical Editor Error:', error);
   },
-  nodes: [AutoLinkNode, LinkNode],
+  nodes: [AutoLinkNode, LinkNode, HeadingNode, QuoteNode, ListItemNode, ListNode],
   theme: themeConfig,
 };

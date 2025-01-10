@@ -78,7 +78,7 @@ const themeConfig: EditorThemeClasses = {
   },
   ltr: 'nlp--editor-ltr',
   mark: 'nlp--editor-mark',
-  markOverlap: 'nlp--editor-markOverlap',
+  markOverlap: 'nlp--editor-mark-overlap',
   paragraph: 'nlp--editor-paragraph',
   quote: 'nlp--editor-quote',
   rtl: 'nlp--editor-rtl',
