@@ -1,129 +1,185 @@
-import Button from '../../components/button';
-import TextParagraph from '../../assets/images/icons/text-paragraph.svg?react';
-import ChevronDown from '../../assets/images/icons/chevron-down.svg?react';
-import TypeH1 from '../../assets/images/icons/type-h1.svg?react';
-import TypeH2 from '../../assets/images/icons/type-h2.svg?react';
-import TypeH3 from '../../assets/images/icons/type-h3.svg?react';
-import TypeH4 from '../../assets/images/icons/type-h4.svg?react';
-import TypeH5 from '../../assets/images/icons/type-h5.svg?react';
-import TypeH6 from '../../assets/images/icons/type-h6.svg?react';
-import ListUl from '../../assets/images/icons/list-ul.svg?react';
-import ListOL from '../../assets/images/icons/list-ol.svg?react';
-import Quote from '../../assets/images/icons/chat-square-quote.svg?react';
-import Check from '../../assets/images/icons/square-check.svg?react';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  $isListNode,
+  INSERT_CHECK_LIST_COMMAND,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  ListNode,
+} from '@lexical/list';
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  $isHeadingNode,
+  HeadingTagType,
+} from '@lexical/rich-text';
+import { $setBlocksType } from '@lexical/selection';
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  $isRootOrShadowRoot,
+  COMMAND_PRIORITY_CRITICAL,
+  SELECTION_CHANGE_COMMAND,
+} from 'lexical';
+
+import { $findMatchingParent, $getNearestNodeOfType } from '@lexical/utils';
+
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
-const items = [
-  {
-    icon: TextParagraph,
-    label: '일반',
-    value: 'paragraph',
-  },
-  {
-    icon: TypeH1,
-    label: '제목 1',
-    value: 'h1',
-  },
-  {
-    icon: TypeH2,
-    label: '제목 2',
-    blockType: 'heading',
-    value: 'h2',
-  },
-  {
-    icon: TypeH3,
-    label: '제목 3',
-    value: 'h3',
-  },
-  {
-    icon: TypeH4,
-    label: '제목 4',
-    value: 'h4',
-  },
-  {
-    icon: TypeH5,
-    label: '제목 5',
-    value: 'h5',
-  },
-  {
-    icon: TypeH6,
-    label: '제목 6',
-    value: 'h6',
-  },
-  {
-    icon: ListUl,
-    label: '숫자 목록',
-    value: 'list-ul',
-  },
-  {
-    icon: ListOL,
-    label: '점 목록',
-    value: 'list-ol',
-  },
-  {
-    icon: Check,
-    label: '체크 목록',
-    value: 'check',
-  },
-  {
-    icon: Quote,
-    label: '인용구',
-    value: 'quote',
-  },
-];
+import { blockTypeItems, BlockValueType } from '../../config/toolbar.config';
+import ListMaxIndentLevelPlugin from '../list-max-indent-level.plugin';
+import { useToolbarState } from '../../context/toolbar.context';
+import Popover, { PopoverItem } from '../../context/popover.context';
 
+/**
+ * 문단 타입
+ * HeadingNode, QuoteNode, ListItemNode, ListNode
+ * @constructor
+ */
 const BlockType = () => {
+  const { toolbarState, updateToolbarState } = useToolbarState();
+  // 툴바 상태의 블록 타입과 일치하는 아이템을 찾고 메모이제이션
+  const activeItem = useMemo(
+    () => blockTypeItems.find((item) => item.value === toolbarState.blockType),
+    [toolbarState.blockType],
+  );
   const [editor] = useLexicalComposerContext();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const handleOpen = () => {
-    setOpen((state) => !state);
-  };
-  const handleClickOutside = (event: any) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      setOpen(false); // 닫기
-    }
-    const parentRootElement = editor.getRootElement();
-    console.log(parentRootElement);
-  };
-  useEffect(() => {
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
+
+  function dropDownActiveClass(active: boolean) {
+    if (active) {
+      return 'active dropdown-item-active';
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      return '';
     }
-  }, [open]);
+  }
+
+  // 에디터 상태를 업데이트
+  const updateEditorState = useCallback(() => {
+    // 현재 선택 상태를 기준으로 에디터의 블록 타입을 판별하고, 툴바 상태에 이를 반영함.
+    // 선택된 노드와 부모 노드를 분석해 리스트인지, 헤딩인지, 또는 다른 블록 타입인지 확인하며,
+    // 이 정보를 활용해 툴바 UI를 동적으로 업데이트함.
+    const selection = $getSelection();
+    if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      let element =
+        anchorNode.getKey() === 'root'
+          ? anchorNode
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+      if ($isListNode(element)) {
+        const parentList = $getNearestNodeOfType<ListNode>(anchorNode, ListNode);
+        const type = parentList ? parentList.getListType() : element.getListType();
+        updateToolbarState('blockType', type);
+      } else {
+        const type = $isHeadingNode(element) ? element.getTag() : element.getType();
+        updateToolbarState('blockType', type as BlockValueType);
+      }
+    }
+  }, [updateToolbarState]);
+
+  // 드롭다운 내 블록 타입 변경 이벤트를 처리합니다.
+  const handleChangeType = useCallback(
+    (value: string) => {
+      console.log(value);
+      // 변경하려는 블록 타입을 확인
+      const item = blockTypeItems.find((item) => item.value === value);
+      if (!item) return;
+      editor.update(() => {
+        const selection = $getSelection();
+        switch (item.value) {
+          case 'paragraph':
+            if ($isRangeSelection(selection)) {
+              console.log('gogo');
+              $setBlocksType(selection, () => $createParagraphNode());
+            }
+            break;
+          case 'h1':
+          case 'h2':
+          case 'h3':
+          case 'h4':
+            $setBlocksType(selection, () => $createHeadingNode(value as HeadingTagType));
+            break;
+          case 'number':
+            editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+            break;
+          case 'bullet':
+            editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+            break;
+          case 'check':
+            editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
+            break;
+          case 'quote':
+            $setBlocksType(selection, () => $createQuoteNode());
+            break;
+        }
+      });
+    },
+    [editor],
+  );
+
+  // 에디터 리스너 등록
+  useEffect(() => {
+    return editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        updateEditorState();
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL,
+    );
+  }, [editor, updateEditorState]);
   return (
-    <div ref={ref} className={'relative'}>
-      <Button className={'h-[36px] gap-2 p-2'} onClick={handleOpen}>
-        <TextParagraph />
-        <span>Normal</span>
-        <button className={'ml-1 pt-1'}>
-          <ChevronDown />
-        </button>
-      </Button>
-      {open && (
-        <div
-          className={
-            'bg-gray-1 absolute top-[41px] z-50 w-[150px] p-2 shadow-[0_-2px_2px_rgba(0,0,0,0.1),4px_4px_6px_rgba(0,0,0,0.2),-4px_4px_6px_rgba(0,0,0,0.2)]'
-          }>
-          <ul>
-            {items.map((item) => (
-              <li key={item.value} className={'flex items-center'}>
-                <button
-                  className={
-                    'hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1'
-                  }>
+    <>
+      {activeItem && (
+        <>
+          <Popover
+            className={`'h-[36px] p-2' gap-2`}
+            icon={<activeItem.icon className={'h-[20px] w-[20px]'} />}
+            label={activeItem.label}>
+            {blockTypeItems.map((item) => (
+              <PopoverItem
+                key={item.value}
+                className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${dropDownActiveClass(toolbarState.blockType === 'paragraph')}`}
+                onClick={() => handleChangeType(item.value)}>
+                <>
                   <item.icon />
                   <span>{item.label}</span>
-                </button>
-              </li>
+                </>
+              </PopoverItem>
             ))}
-          </ul>
-        </div>
+          </Popover>
+          <Popover
+            className={`'h-[36px] p-2' gap-2`}
+            icon={<activeItem.icon className={'h-[20px] w-[20px]'} />}
+            label={activeItem.label}>
+            {blockTypeItems.map((item) => (
+              <PopoverItem
+                key={item.value}
+                className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${dropDownActiveClass(toolbarState.blockType === 'paragraph')}`}
+                onClick={() => handleChangeType(item.value)}>
+                <>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </>
+              </PopoverItem>
+            ))}
+          </Popover>
+        </>
       )}
-    </div>
+      <ListPlugin />
+      <CheckListPlugin />
+      <ListMaxIndentLevelPlugin maxDepth={7} />
+      <TabIndentationPlugin />
+    </>
   );
 };
 
