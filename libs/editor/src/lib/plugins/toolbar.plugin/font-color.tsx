@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
@@ -13,6 +13,8 @@ import ChevronDown from '../../assets/images/icons/chevron-down.svg?react';
 import FontColorIcon from '../../assets/images/icons/font-color.svg?react';
 import ColorPicker from '../../components/ColorPicker';
 import { useToolbarState } from '../../context/toolbar.context';
+import { blockTypeItems } from '@/libs/editor/src/lib/config/toolbar.config';
+import Popover, { PopoverItem } from '@/libs/editor/src/lib/context/popover.context';
 
 const FontColor = () => {
   const [editor] = useLexicalComposerContext();
@@ -90,7 +92,7 @@ const FontColor = () => {
 
   return (
     <>
-      <div ref={ref} className={'relative'}>
+      {/*<div ref={ref} className={'relative'}>
         <Button className={'h-[36px] gap-1 p-2'} onClick={handleOpen}>
           <FontColorIcon className={'h-[20px] w-[20px]'} />
           <button className={'pt-1'}>
@@ -105,7 +107,10 @@ const FontColor = () => {
             <ColorPicker color={toolbarState.fontColor} onChange={handleChangeColor} />
           </div>
         )}
-      </div>
+      </div>*/}
+      {/*<Popover className={`'h-[36px] p-2' gap-2`} icon={FontColorIcon}>
+        <ColorPicker color={toolbarState.fontColor} onChange={handleChangeColor} />
+      </Popover>*/}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -29,11 +29,10 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
-import Button from '../../components/button';
-import ChevronDown from '../../assets/images/icons/chevron-down.svg?react';
 import { blockTypeItems, BlockValueType } from '../../config/toolbar.config';
 import ListMaxIndentLevelPlugin from '../list-max-indent-level.plugin';
 import { useToolbarState } from '../../context/toolbar.context';
+import Popover, { PopoverItem } from '../../context/popover.context';
 
 /**
  * 문단 타입
@@ -48,20 +47,14 @@ const BlockType = () => {
     [toolbarState.blockType],
   );
   const [editor] = useLexicalComposerContext();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
-  // 드롭다운 메뉴의 열림/닫힘 상태를 처리
-  const handleOpen = () => {
-    setOpen((state) => !state);
-  };
-
-  // 드롭다운 외부를 클릭했을 때 닫히는 동작을 처리
-  const handleClickOutside = (event: any) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      setOpen(false); // 닫기
+  function dropDownActiveClass(active: boolean) {
+    if (active) {
+      return 'active dropdown-item-active';
+    } else {
+      return '';
     }
-  };
+  }
 
   // 에디터 상태를 업데이트
   const updateEditorState = useCallback(() => {
@@ -95,8 +88,8 @@ const BlockType = () => {
 
   // 드롭다운 내 블록 타입 변경 이벤트를 처리합니다.
   const handleChangeType = useCallback(
-    (e: any, value: string) => {
-      e.preventDefault();
+    (value: string) => {
+      console.log(value);
       // 변경하려는 블록 타입을 확인
       const item = blockTypeItems.find((item) => item.value === value);
       if (!item) return;
@@ -128,22 +121,10 @@ const BlockType = () => {
             $setBlocksType(selection, () => $createQuoteNode());
             break;
         }
-        setOpen(false);
-        updateEditorState();
       });
     },
-    [editor, updateEditorState],
+    [editor],
   );
-
-  // 드롭다운 외부 클릭 이벤트 리스너를 설정
-  useEffect(() => {
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [open, handleClickOutside]);
 
   // 에디터 리스너 등록
   useEffect(() => {
@@ -158,40 +139,42 @@ const BlockType = () => {
   }, [editor, updateEditorState]);
   return (
     <>
-      <div ref={ref} className={'relative'}>
-        <Button className={'h-[36px] gap-2 p-2'} onClick={handleOpen}>
-          {activeItem && (
-            <>
-              <activeItem.icon />
-              <span>{activeItem.label}</span>
-            </>
-          )}
-          <button className={'ml-1 pt-1'}>
-            <ChevronDown />
-          </button>
-        </Button>
-        {open && (
-          <div
-            className={
-              'bg-gray-1 absolute top-[41px] z-50 w-[150px] p-2 shadow-[0_-2px_2px_rgba(0,0,0,0.1),4px_4px_6px_rgba(0,0,0,0.2),-4px_4px_6px_rgba(0,0,0,0.2)]'
-            }>
-            <ul>
-              {blockTypeItems.map((item) => (
-                <li key={item.value} className={'flex items-center'}>
-                  <button
-                    className={
-                      'hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1'
-                    }
-                    onClick={(e: any) => handleChangeType(e, item.value)}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      {activeItem && (
+        <>
+          <Popover
+            className={`'h-[36px] p-2' gap-2`}
+            icon={<activeItem.icon className={'h-[20px] w-[20px]'} />}
+            label={activeItem.label}>
+            {blockTypeItems.map((item) => (
+              <PopoverItem
+                key={item.value}
+                className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${dropDownActiveClass(toolbarState.blockType === 'paragraph')}`}
+                onClick={() => handleChangeType(item.value)}>
+                <>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </>
+              </PopoverItem>
+            ))}
+          </Popover>
+          <Popover
+            className={`'h-[36px] p-2' gap-2`}
+            icon={<activeItem.icon className={'h-[20px] w-[20px]'} />}
+            label={activeItem.label}>
+            {blockTypeItems.map((item) => (
+              <PopoverItem
+                key={item.value}
+                className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${dropDownActiveClass(toolbarState.blockType === 'paragraph')}`}
+                onClick={() => handleChangeType(item.value)}>
+                <>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </>
+              </PopoverItem>
+            ))}
+          </Popover>
+        </>
+      )}
       <ListPlugin />
       <CheckListPlugin />
       <ListMaxIndentLevelPlugin maxDepth={7} />

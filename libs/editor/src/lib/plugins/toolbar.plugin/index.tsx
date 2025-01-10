@@ -30,6 +30,7 @@ import Button from '../../components/button';
 import TextBold from '../../assets/images/icons/type-bold.svg?react';
 import TextItalic from '../../assets/images/icons/type-italic.svg?react';
 import TextUnderline from '../../assets/images/icons/type-underline.svg?react';
+import LinkIcon from '../../assets/images/icons/link.svg?react';
 import { useToolbarState } from '../../context/toolbar.context';
 import Link from './link';
 import BlockType from './block-type';
