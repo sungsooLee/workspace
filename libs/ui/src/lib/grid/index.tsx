@@ -1,4 +1,5 @@
 import {
+  Column,
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -19,17 +20,20 @@ import { cn } from '@learnway/shared';
 
 import { GridProps } from './types/grid';
 import { HTMLProps, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Filter } from './components/filter';
-import ColumnSettings from './components/column-setting';
-import { ColumnSetting } from './types/column-settings';
+import ColumnSettings, { ColumnSetting } from './components/column-setting';
 import FormCheckBox from '../checkbox/checkbox';
 import { CheckFieldProps } from '../checkbox/type';
 import { CheckedState } from '@radix-ui/react-checkbox';
+import { FilterIcon } from 'lucide-react';
+import { Button } from '../shadcn/button';
+import { useModalControl } from '../modal/modal.hook';
+import { FilterContent } from './components/filter-content';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
 }
 
+/// 체크 박스
 export const IndeterminateCheckbox = ({
   indeterminate,
   value,
@@ -44,6 +48,7 @@ export const IndeterminateCheckbox = ({
 
   return <FormCheckBox value={checkedState} onChange={handleChange} {...rest} />;
 };
+///////
 
 const Grid = <T extends object>({
   data,
@@ -52,29 +57,12 @@ const Grid = <T extends object>({
   onRowSelect,
   multiSelectable = false,
   pagination,
-  infiniteScroll,
   title,
   isLoading,
 }: GridProps<T>) => {
-  // 테이블 컨테이너 ref (무한 스크롤용)
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
-  // 무한스크롤 핸들러
-  const fetchMoreOnBottomReached = useCallback(
-    (containerRefElement?: HTMLDivElement | null) => {
-      if (!infiniteScroll || !containerRefElement) return;
-
-      const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
-      if (
-        scrollHeight - scrollTop - clientHeight < 500 && // 하단 500px 지점에 도달하고
-        !infiniteScroll.isFetching && // 데이터 로딩중이 아니고
-        infiniteScroll.hasNextPage // 다음 페이지가 있으면
-      ) {
-        infiniteScroll.fetchNextPage();
-      }
-    },
-    [infiniteScroll],
-  );
+  const { open } = useModalControl();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -100,6 +88,8 @@ const Grid = <T extends object>({
         ? [
             {
               id: 'select',
+              size: 50,
+              // 헤더 체크 박스
               header: ({ table }) => (
                 <IndeterminateCheckbox
                   value={table.getIsAllRowsSelected()}
@@ -109,6 +99,7 @@ const Grid = <T extends object>({
                   }}
                 />
               ),
+              // 바디 체크 박스
               cell: ({ row }) => (
                 <div className="px-1">
                   <IndeterminateCheckbox
@@ -205,7 +196,7 @@ const Grid = <T extends object>({
     enableMultiRowSelection: multiSelectable,
     enableHiding: true,
     //// 클라이언트 사이드 처리
-    // getFilteredRowModel: getFilteredRowModel(), // 클라이언트 사이드 필터링 (api로만 필터링하려면 제외)
+    getFilteredRowModel: getFilteredRowModel(), // 클라이언트 사이드 필터링 (api로만 필터링하려면 제외)
     // getSortedRowModel: getSortedRowModel(), // 클라이언트 사이드 소팅 (소팅 서버 로직일 경우에 제외)
     //// 서버 사이드 처리
     manualSorting: true, // 서버 소팅일 경우 포함.
@@ -218,26 +209,23 @@ const Grid = <T extends object>({
     },
   });
 
-  // 무한 스크롤 이벤트
-  // useEffect(() => {
-  //   fetchMoreOnBottomReached(tableContainerRef.current);
-  // }, [fetchMoreOnBottomReached]);
-
+  ///// 가상 스크롤
   const { rows } = table.getRowModel();
-
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 40, // 행의 예상 높이
+    estimateSize: () => 60,
     getScrollElement: () => tableContainerRef.current,
-    overscan: 5, // 추가로 렌더링할 행 수
+    overscan: 5,
+    measureElement: (element) => element?.getBoundingClientRect().height,
   });
+  /////////
 
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     if (!onStateChange) return;
 
     onStateChange({
-      filter: columnFilters,
+      filters: columnFilters,
       sorting,
       columnVisibility,
       columnOrder,
@@ -260,22 +248,54 @@ const Grid = <T extends object>({
     setColumnOrder(order);
   };
 
+  ////
+  const openFilterPopup = (e: React.MouseEvent, column: Column<T, unknown>) => {
+    e.stopPropagation();
+
+    const filterType = column.columnDef.meta?.filterType;
+    const currentValue = column.getFilterValue();
+
+    open(
+      <FilterContent
+        column={column.id}
+        type={filterType as 'text' | 'range' | 'select'}
+        initialValue={currentValue}
+        onApply={(value) => {
+          column.setFilterValue(value);
+          // 필터 변경 시 상위 컴포넌트에 알림
+          if (onStateChange) {
+            onStateChange({
+              filters: columnFilters,
+              sorting,
+              columnVisibility,
+              columnOrder,
+            });
+          }
+        }}
+      />,
+      {
+        title: `${column.columnDef.header as string} 필터`,
+        width: 'sm',
+      },
+    );
+  };
+  ////
+
   //// 테이블 내용 렌더링
   const renderTableContent = () => (
     <div
       ref={tableContainerRef}
-      // className="overflow-auto rounded-lg border"
-      // style={{ height: '600px' }}
-      /// 무한스크롤일때
-      // ref={infiniteScroll ? tableContainerRef : null}
-      // onScroll={infiniteScroll ? (e) => fetchMoreOnBottomReached(e.currentTarget) : undefined}
-      // style={infiniteScroll ? { maxHeight: '600px' } : undefined}
-    >
-      <table className="min-w-full table-auto divide-y divide-gray-200">
-        {' '}
-        <thead className="sticky top-0 z-10 bg-gray-50">
+      className="relative overflow-auto rounded-lg border"
+      style={{ height: '600px', width: '100%' }}>
+      <table
+        className="w-full"
+        style={{
+          display: 'grid',
+          minWidth: 'max-content',
+        }}>
+        <thead className="sticky top-0 z-10 grid bg-gray-50">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} style={{ display: 'flex', width: '100%' }}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -283,7 +303,7 @@ const Grid = <T extends object>({
                     width: header.getSize(),
                     minWidth: header.getSize(),
                   }}
-                  className="border-b px-4 py-2 text-left">
+                  className="flex border-b px-4 py-2 text-left">
                   <div className="flex flex-col gap-2">
                     <div
                       className={cn(
@@ -307,8 +327,16 @@ const Grid = <T extends object>({
                         asc: ' 🔼',
                         desc: ' 🔽',
                       }[header.column.getIsSorted() as string] ?? null}
+                      {header.column.columnDef.meta?.filterType && (
+                        <Button
+                          onClick={(e) => openFilterPopup(e, header.column)}
+                          size="xs"
+                          className="m-2">
+                          <FilterIcon />
+                        </Button>
+                      )}
                     </div>
-                    {header.column.columnDef.meta?.filterType && <Filter column={header.column} />}
+                    {/* {header.column.columnDef.meta?.filterType && <Filter column={header.column} />} */}
                   </div>
                 </th>
               ))}
@@ -317,78 +345,50 @@ const Grid = <T extends object>({
         </thead>
         <tbody
           style={{
+            display: 'block',
             height: `${rowVirtualizer.getTotalSize()}px`,
             position: 'relative',
+            minWidth: 'max-content',
           }}>
-          {
-            isLoading
-              ? // 로딩 상태일 때 스켈레톤 UI 표시
-                Array.from({ length: pagination?.pageSize || 10 }).map((_, index) => (
-                  <tr key={index} className="animate-pulse">
-                    {columns.map((col, colIndex) => (
-                      <td key={colIndex} className="px-4 py-2">
-                        <div className="h-4 rounded bg-gray-200"></div>
+          {isLoading ? (
+            // 로딩 상태일 때 스켈레톤 UI 표시
+            <p>Loading...</p>
+          ) : (
+            rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
+              const row = rows[virtualRow.index] as Row<T>;
+              return (
+                <tr
+                  data-index={virtualRow.index}
+                  ref={(node) => rowVirtualizer.measureElement(node)}
+                  key={row.id}
+                  style={{
+                    display: 'flex',
+                    position: 'absolute',
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                  className={cn(
+                    'cursor-pointer border-b hover:bg-gray-50',
+                    row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+                  )}
+                  onClick={() => row.toggleSelected()}>
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <td
+                        key={cell.id}
+                        style={{
+                          display: 'flex',
+                          width: cell.column.getSize(),
+                        }}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
-                    ))}
-                  </tr>
-                ))
-              : rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
-                  const row = rows[virtualRow.index] as Row<T>;
-                  return (
-                    <tr
-                      data-index={virtualRow.index}
-                      ref={(node) => rowVirtualizer.measureElement(node)}
-                      key={row.id}
-                      style={{
-                        display: 'flex',
-                        position: 'absolute',
-                        transform: `translateY(${virtualRow.start}px)`,
-                        width: '100%',
-                      }}
-                      className={cn(
-                        'cursor-pointer border-b hover:bg-gray-50',
-                        row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
-                      )}
-                      onClick={() => row.toggleSelected()}>
-                      {row.getVisibleCells().map((cell) => {
-                        return (
-                          <td
-                            key={cell.id}
-                            style={{
-                              display: 'flex',
-                              width: cell.column.getSize(),
-                            }}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })
-            // table.getRowModel().rows.map((row) => (
-            //     <tr
-            //       key={row.id}
-            //       className={cn(
-            //         'cursor-pointer border-b hover:bg-gray-50',
-            //         row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
-            //       )}
-            //       onClick={() => row.toggleSelected()}>
-            //       {row.getVisibleCells().map((cell) => (
-            //         <td
-            //           key={cell.id}
-            //           style={{
-            //             width: cell.column.getSize(),
-            //             minWidth: cell.column.getSize(),
-            //           }}
-            //           className="px-4 py-2 text-sm">
-            //           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            //         </td>
-            //       ))}
-            //     </tr>
-            //   ))
-          }
+                    );
+                  })}
+                </tr>
+              );
+            })
+          )}
         </tbody>
-        <tfoot className="bg-gray-50">
+        {/* <tfoot className="bg-gray-50">
           {table.getFooterGroups().map((footerGroup) => (
             <tr key={footerGroup.id}>
               {footerGroup.headers.map((header) => (
@@ -406,7 +406,7 @@ const Grid = <T extends object>({
               ))}
             </tr>
           ))}
-        </tfoot>
+        </tfoot> */}
       </table>
     </div>
   );
@@ -491,10 +491,9 @@ const Grid = <T extends object>({
   };
 
   return (
-    <div className="w-full max-w-full">
+    <div className="flex h-full w-full flex-col">
       <div className="mb-4 flex w-full flex-row">
         {title && <div className="px-4 text-lg font-semibold">{title}</div>}
-
         <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
       </div>
       {renderTableContent()}

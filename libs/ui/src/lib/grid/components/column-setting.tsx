@@ -20,13 +20,33 @@ import { CSS } from '@dnd-kit/utilities';
 import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../shadcn/button';
 import { useModalControl } from '../../modal/modal.hook';
-import { ColumnSetting, ColumnSettingsProps, SortableItemProps } from '../types/column-settings';
 import { Checkbox } from '../../shadcn/checkbox';
 import { ColumnDef, Table } from '@tanstack/react-table';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
   attributes?: import('@dnd-kit/core').DraggableAttributes;
+}
+
+export interface ColumnSetting {
+  id: string;
+  header: string;
+  isVisible: boolean;
+}
+
+export interface SortableItemProps {
+  id: string;
+  children: React.ReactNode;
+}
+
+export interface ColumnSettingsContentProps<T extends object> {
+  onApply: (settings: ColumnSetting[]) => void;
+  table: Table<T>;
+}
+
+export interface ColumnSettingsProps<T extends object> {
+  table: Table<T>;
+  onColumnChange?: (settings: ColumnSetting[]) => void;
 }
 
 const DragHandle: React.FC<DragHandleProps> = ({ listeners, attributes }) => (

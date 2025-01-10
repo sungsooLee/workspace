@@ -8,7 +8,7 @@ import {
   VisibilityState,
   RowSelectionState,
 } from '@tanstack/react-table';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, keepPreviousData } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 
 import { useMemo, useState } from 'react';
@@ -99,7 +99,7 @@ const columnHelper = createColumnHelper<Person>();
 const columns = [
   columnHelper.accessor('firstName', {
     cell: (info) => info.getValue(),
-    header: () => 'First Name',
+    header: 'First Name',
     footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
     meta: {
       filterType: 'text',
@@ -107,18 +107,18 @@ const columns = [
   }),
   columnHelper.accessor('lastName', {
     cell: (info) => info.getValue(),
-    header: () => 'Last Name',
+    header: 'Last Name',
   }),
   columnHelper.accessor('age', {
     cell: (info) => info.getValue(),
-    header: () => 'Age',
+    header: 'Age',
     meta: {
       filterType: 'range',
     },
   }),
   columnHelper.accessor('visits', {
     cell: (info) => info.getValue(),
-    header: () => 'Visits',
+    header: 'Visits',
     footer: (props) => {
       const total = props.table
         .getRowModel()
@@ -131,11 +131,11 @@ const columns = [
   }),
   columnHelper.accessor('status', {
     cell: (info) => info.getValue(),
-    header: () => 'Status',
+    header: 'Status',
   }),
   columnHelper.accessor('progress', {
     cell: (info) => info.getValue(),
-    header: () => 'Progress',
+    header: 'Progress',
     meta: {
       filterType: 'range',
     },
@@ -155,10 +155,11 @@ const BaseTable = () => {
   });
 
   const handleStateChange = (newState: GridState) => {
+    console.log(newState);
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,
-      filter: newState.filter || prev.filters,
+      filters: newState.filters || prev.filters,
     }));
   };
 
@@ -197,7 +198,7 @@ const TableWithColumnSettings = () => {
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,
-      filter: newState.filter || prev.filters,
+      filter: newState.filters || prev.filters,
     }));
   };
 
@@ -260,7 +261,7 @@ const MultiSelectTable = () => {
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,
-      filter: newState.filter || prev.filters,
+      filters: newState.filters || prev.filters,
     }));
   };
 
@@ -307,29 +308,21 @@ interface TableResponse<T> {
 }
 
 // 무한 스크롤용 mock API
-const fetchInfiniteData = async (pageParam = 0): Promise<TableResponse<Person>> => {
+const fetchInfiniteData = async (): Promise<Person[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  const pageSize = 5;
   const totalRows = 100;
-  const startIndex = pageParam * pageSize;
 
-  const data = Array.from({ length: pageSize }).map((_, index) => ({
-    firstName: `Name ${startIndex + index}`,
-    lastName: `Surname ${startIndex + index}`,
+  const data = Array.from({ length: totalRows }).map((_, index) => ({
+    firstName: `Name ${index}`,
+    lastName: `Surname ${index}`,
     age: Math.floor(Math.random() * 50) + 20,
     visits: Math.floor(Math.random() * 100),
     status: Math.random() > 0.5 ? 'Active' : 'Inactive',
     progress: Math.floor(Math.random() * 100),
   }));
 
-  return {
-    data,
-    meta: {
-      totalRows,
-      hasNextPage: startIndex + pageSize < totalRows,
-    },
-  };
+  return data;
 };
 
 const InfiniteScrollTable = () => {
@@ -338,43 +331,35 @@ const InfiniteScrollTable = () => {
     filters: [] as ColumnFiltersState,
   });
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
-    queryKey: ['infinite-table', tableState],
-    queryFn: ({ pageParam = 0 }) => fetchInfiniteData(pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => (lastPage.meta.hasNextPage ? pages.length : undefined),
+  const { data, isLoading } = useQuery({
+    queryKey: ['PersonEntity', tableState] as const,
+    queryFn: () => fetchInfiniteData(),
   });
-
-  const flatData = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
 
   const handleStateChange = (newState: GridState) => {
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,
-      filter: newState.filter || prev.filters,
+      filters: newState.filters || prev.filters,
     }));
   };
 
   return (
     <div className="p-4">
       <Grid
-        data={flatData}
+        data={data || []}
         columns={columns}
         onStateChange={handleStateChange}
         isLoading={isLoading}
-        infiniteScroll={{
-          hasNextPage: !!hasNextPage, // 다음 페이지 여부
-          isFetching: isFetchingNextPage, //로딩 상태
-          fetchNextPage,
-        }}
-        title="무한 스크롤"
+        title="가상 스크롤"
+        multiSelectable={true}
       />
     </div>
   );
 };
 
 export const WithInfiniteScroll: Story = {
-  name: '무한 스크롤 그리드',
+  name: '가상 스크롤 그리드',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -388,7 +373,7 @@ export const WithInfiniteScroll: Story = {
     docs: {
       description: {
         story: `
-  무한 스크롤이 적용된 그리드.
+  가상 스크롤이 적용된 그리드.
         `,
       },
     },
@@ -435,16 +420,17 @@ const PaginationTable = () => {
     filters: [] as ColumnFiltersState,
   });
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['paginated-table', pageIndex, pageSize, tableState],
+  const { data, isFetching } = useQuery({
+    queryKey: ['PersonEntity', pageIndex, pageSize, tableState] as const,
     queryFn: () => fetchPaginatedData({ pageIndex, pageSize }),
+    placeholderData: keepPreviousData,
   });
 
   const handleStateChange = (newState: GridState) => {
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,
-      filter: newState.filter || prev.filters,
+      filters: newState.filters || prev.filters,
     }));
   };
 
@@ -454,7 +440,7 @@ const PaginationTable = () => {
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
-        isLoading={isLoading}
+        isLoading={isFetching}
         pagination={{
           pageSize,
           pageIndex,

@@ -85,14 +85,14 @@ const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>
           onChange={handleInputChange}
           placeholder={placeholder}
         />
-        <div className="absolute right-0 top-0 bottom-0 w-8 flex items-center justify-center">
+        <div className="absolute bottom-0 right-0 top-0 flex w-8 items-center justify-center">
           {isFocused && value && value.toString().length > 0 && (
             <button
               type="button"
               onClick={handleClear}
               onMouseDown={handleMouseDown}
               className={cn(
-                'p-1 rounded-full hover:bg-gray-100',
+                'rounded-full p-1 hover:bg-gray-100',
                 'text-gray-400 hover:text-gray-600',
                 'focus:outline-none',
               )}>

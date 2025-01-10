@@ -6,8 +6,8 @@ import {
   SortingState,
   VisibilityState,
 } from '@tanstack/react-table';
-import { ColumnSetting } from './column-settings';
 import { FilterState } from './filter';
+import { ColumnSetting } from '../components/column-setting';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -45,7 +45,7 @@ export interface GridProps<T extends object> {
 }
 
 export interface GridState {
-  filter?: ColumnFiltersState;
+  filters?: ColumnFiltersState;
   sorting?: SortingState;
   columnVisibility?: VisibilityState;
   columnOrder?: string[];

@@ -11,7 +11,7 @@ interface DebouncedInputProps
 }
 
 const DebouncedInput = forwardRef<HTMLInputElement, DebouncedInputProps>(
-  ({ value: initialValue, onChange, debounceTimeout = 500, className, ...props }, ref) => {
+  ({ value: initialValue, onChange, debounceTimeout = 100, className, ...props }, ref) => {
     const [value, setValue] = useState<string | number>(initialValue);
 
     useEffect(() => {
