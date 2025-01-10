@@ -264,8 +264,8 @@ const Grid = <T extends object>({
   const renderTableContent = () => (
     <div
       ref={tableContainerRef}
-      className="overflow-auto rounded-lg border"
-      style={{ height: '600px' }}
+      // className="overflow-auto rounded-lg border"
+      // style={{ height: '600px' }}
       /// 무한스크롤일때
       // ref={infiniteScroll ? tableContainerRef : null}
       // onScroll={infiniteScroll ? (e) => fetchMoreOnBottomReached(e.currentTarget) : undefined}
@@ -273,7 +273,7 @@ const Grid = <T extends object>({
     >
       <table className="min-w-full table-auto divide-y divide-gray-200">
         {' '}
-        <thead className="bg-gray-50">
+        <thead className="sticky top-0 z-10 bg-gray-50">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -319,8 +319,7 @@ const Grid = <T extends object>({
           style={{
             height: `${rowVirtualizer.getTotalSize()}px`,
             position: 'relative',
-          }}
-          className="min-h-[400px] divide-y divide-gray-200 bg-white">
+          }}>
           {
             isLoading
               ? // 로딩 상태일 때 스켈레톤 UI 표시
@@ -337,13 +336,13 @@ const Grid = <T extends object>({
                   const row = rows[virtualRow.index] as Row<T>;
                   return (
                     <tr
-                      data-index={virtualRow.index} //needed for dynamic row height measurement
-                      ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
+                      data-index={virtualRow.index}
+                      ref={(node) => rowVirtualizer.measureElement(node)}
                       key={row.id}
                       style={{
                         display: 'flex',
                         position: 'absolute',
-                        transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
+                        transform: `translateY(${virtualRow.start}px)`,
                         width: '100%',
                       }}
                       className={cn(

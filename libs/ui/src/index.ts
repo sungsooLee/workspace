@@ -61,3 +61,6 @@ export * from './lib/popover/popover';
 
 export * from './lib/carousel/carousel';
 export * from './lib/carousel/image-carousel';
+
+export * from './lib/grid';
+export * from './lib/grid/types';
