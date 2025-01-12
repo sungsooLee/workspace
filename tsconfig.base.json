@@ -19,10 +19,10 @@
       "@/libs/*": ["libs/*"],
       "@learnway/config": ["libs/config/src/index.ts"],
       "@learnway/config/*": ["libs/config/src/lib/*"],
+      "@learnway/editor": ["libs/editor/src/index.ts"],
       "@learnway/hooks": ["libs/hooks/src/index.ts"],
       "@learnway/shared": ["libs/shared/src/index.ts"],
       "@learnway/ui": ["libs/ui/src/index.ts"],
-      "@learnway/editor": ["libs/editor/src/index.ts"],
       "editor": ["libs/editor/src/index.ts"],
       "types": ["libs/types/src/index.ts"]
     }

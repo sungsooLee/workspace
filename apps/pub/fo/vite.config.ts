@@ -5,14 +5,13 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import svgr from 'vite-plugin-svgr';
-import path from 'path';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/pub',
+  cacheDir: '../../node_modules/.vite/apps/pub/fo',
   server: {
     port: 4200,
     host: 'localhost',
@@ -40,7 +39,7 @@ export default defineConfig({
   //  plugins: [ nxViteTsPaths() ],
   // },
   build: {
-    outDir: '../../dist/apps/pub',
+    outDir: '../../dist/apps/pub/fo',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
