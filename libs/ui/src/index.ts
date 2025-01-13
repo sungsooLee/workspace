@@ -13,7 +13,7 @@ export * from './lib/card/card';
 export * from './lib/carousel/carousel';
 export * from './lib/carousel/image-carousel';
 
-// chekbox
+// checkbox
 export * from './lib/checkbox/checkbox';
 
 // date-picker
@@ -56,8 +56,6 @@ export * from './lib/tree-view/node-detail';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
 
-// toast
-export * from './lib/shadcn/toast';
 
 /*editor*/
 export * from './lib/editor/hooks/editor.hook';
@@ -66,9 +64,12 @@ export { default as Editor } from './lib/editor';
 // type
 export * from './lib/type';
 
+// shad - toast
+export * from './lib/shadcn/toast';
+export * from './lib/shadcn/use-toast';
+
 // shadcn (주석처리 예정)
 export * from './lib/shadcn/toaster';
-export * from './lib/shadcn/use-toast';
 export * from './lib/shadcn/badge';
 export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';
