@@ -36,6 +36,7 @@ import Link from './link';
 import BlockType from './block-type';
 import FontColor from './font-color';
 import BackgroundColor from './background-color';
+import Insert from './insert';
 
 const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
@@ -99,6 +100,8 @@ const ToolbarPlugin = () => {
       <Link />
       <FontColor />
       <BackgroundColor />
+      <Divider />
+      <Insert />
     </div>
   );
 };

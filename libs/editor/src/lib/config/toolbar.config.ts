@@ -11,6 +11,10 @@ import ListUl from '../assets/images/icons/list-ul.svg?react';
 import ListOL from '../assets/images/icons/list-ol.svg?react';
 import Quote from '../assets/images/icons/chat-square-quote.svg?react';
 import Check from '../assets/images/icons/square-check.svg?react';
+import HorizontalRule from '../assets/images/icons/horizontal-rule.svg?react';
+import FileImage from '../assets/images/icons/file-image.svg?react';
+import Table from '../assets/images/icons/table.svg?react';
+import Video from '../assets/images/icons/video.svg?react';
 export const MIN_ALLOWED_FONT_SIZE = 8; // 최소 허용 폰트 크기
 export const MAX_ALLOWED_FONT_SIZE = 72; // 최대 허용 폰트 크기
 export const DEFAULT_FONT_SIZE = 15; // 기본 폰트 크기
@@ -122,8 +126,23 @@ export const INITIAL_TOOLBAR_STATE = {
 // 삽입 아이템
 export const insertItems = [
   {
-    icon: TextParagraph,
-    label: '일반',
-    value: 'paragraph',
+    icon: HorizontalRule,
+    label: '가로 구분선',
+    value: 'horizontal-rule',
+  },
+  {
+    icon: FileImage,
+    label: '이미지',
+    value: 'image',
+  },
+  {
+    icon: Table,
+    label: '표',
+    value: 'table',
+  },
+  {
+    icon: Video,
+    label: '동영상',
+    value: 'video',
   },
 ];

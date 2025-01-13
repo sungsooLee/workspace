@@ -7,7 +7,7 @@ import TreeViewPlugin from './plugins/tree-view.plugin';
 
 const Editor: FC = () => {
   return (
-    <div className={'w-full max-w-[980px]'}>
+    <div className={'min-h-[550px] w-full max-w-[980px]'}>
       <LexicalComposer initialConfig={initialConfig}>
         <ToolbarContext>
           <RichTextEditor />
