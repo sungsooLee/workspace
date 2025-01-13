@@ -4,7 +4,7 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "libs/config/tailwind.shadcn.preset.js",
+    "config": "libs/config/src/lib/style/tailwind.shadcn.preset.js",
     "css": "libs/ui/src/styles/shadcn.global.css",
     "baseColor": "slate",
     "cssVariables": true

@@ -1,0 +1,7 @@
+._start {
+  position: absolute !important;
+
+  ._active {
+    color: blue;
+  }
+}

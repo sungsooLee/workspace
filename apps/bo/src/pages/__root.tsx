@@ -1,13 +1,19 @@
-import * as React from 'react';
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
+import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { ModalWrapper } from '@/libs/ui/src';
+
+import { ModalWrapper } from '@learnway/ui';
+
+import type { Menu } from '../types';
+
+import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  useRenewalMenuStateFromRouting();
+
   return (
     <>
       <Outlet />

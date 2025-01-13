@@ -1,14 +1,25 @@
 import { isArray } from 'lodash';
 
-export function convertHierarchyToList(tree: any, childProperty = 'children') {
-  const recursiveCall = (arr: any[], r: any[]) => {
+export function convertHierarchyToList(
+  tree: any,
+  convertFn?: (node: any, depth: number, index: number, parentNode?: any) => [any, any[]],
+  childProperty = 'children',
+) {
+  const recursiveCall = (arr: any[], r: any[], depth = 0, parentNode?: any) => {
     if (!arr?.length) {
       return;
     }
+    depth++;
+
     arr.forEach((node: any, index: number) => {
-      r.push(node);
+      if (convertFn) {
+        r.push(convertFn(node, depth, index, parentNode));
+      } else {
+        r.push(node);
+      }
+
       if (node?.[childProperty]?.length > 0) {
-        recursiveCall(node[childProperty], r);
+        recursiveCall(node[childProperty], r, depth, node);
       }
     });
   };

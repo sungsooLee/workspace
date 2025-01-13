@@ -40,6 +40,7 @@ export * from './lib/switch/switch';
 
 export * from './lib/backdrop/backdrop';
 export * from './lib/spinner/spinner';
+export * from './lib/sidebar/sidebar';
 
 export * from './lib/type';
 
