@@ -1,4 +1,7 @@
 
+// accordion
+export * from './lib/accordion/accordion';
+
 // avatar
 export * from './lib/avatar/avatar';
 export * from './lib/popover/popover';
