@@ -1,12 +1,12 @@
 import { ControllerRenderProps } from 'react-hook-form';
 import { FieldType } from '../type';
 import FormInput from '../input/input';
-import FormSelect from '../select/select';
+import { Select as FormSelect } from '../select/select';
 import FormNumberInput from '../input/number-input';
 import FormMultiSelect from '../select/multi-select';
 import FormCheckBox from '../checkbox/checkbox';
 import FormSwitch from '../switch/switch';
-import FormRadioGroup from '../radio/radio';
+import { Radio as FormRadioGroup } from '../radio/radio';
 import FormDatePicker from '../date-picker/date-picker';
 import FormDateRangePicker from '../date-picker/date-range-picker';
 

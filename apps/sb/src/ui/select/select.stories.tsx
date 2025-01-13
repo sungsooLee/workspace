@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormSelect as Select } from '@learnway/ui';
+import { Select } from '@learnway/ui';
 
 export default {
   title: 'Components/Select',

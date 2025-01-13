@@ -4,12 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import {
   Button,
+  FieldType,
   Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
 } from '@learnway/ui';
 import { CODE_GROUP, codeConfig } from '@learnway/config';
 
@@ -102,34 +98,28 @@ function LayoutComponent() {
           <Button variant={'outline'} size={'sm'} onClick={() => handleLogout()}>
             {t('LOGOUT')}
           </Button>
-          <Select onValueChange={(value: string) => handleTheme(value)}>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select a themeConfig" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value={DEFAULT_THEME}>default</SelectItem>
-                <SelectItem value="red">red</SelectItem>
-                <SelectItem value="green">green</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select onValueChange={(value: string) => handleLang(value)}>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select a lang" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {languageCodes.map((code: Code, index: number) => {
-                  return (
-                    <SelectItem value={code.code} key={`LANGUAGE${index}`}>
-                      {code.label}
-                    </SelectItem>
-                  );
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Select
+            type={FieldType.SELECT}
+            name='name'
+            label='label'
+            options={[
+              {value: DEFAULT_THEME, label: 'default'},
+              {value: 'red', label: 'red'},
+              {value: 'green', label: 'green'},
+            ]}
+            onChange={(value: string) => handleTheme(value)}
+          />
+          <Select
+            type={FieldType.SELECT}
+            name='name'
+            label='label'
+            options={
+              languageCodes.map((code: Code, index: number) => {
+                return {value: code.code, label: code.label}
+              })
+            }
+            onChange={(value: string) => handleLang(value)}
+          />
         </div>
       </div>
       <div className="p-10">

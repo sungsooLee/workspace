@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from '../shadcn/radio-group';
 import { FormControl, FormItem, FormLabel } from '../shadcn/form';
 import { RadioFieldProps } from './type';
 
-const FormRadioGroup = forwardRef<HTMLDivElement, RadioFieldProps>(
+const RadioComponent = forwardRef<HTMLDivElement, RadioFieldProps>(
   ({ value, onValueChange, options, orientation = 'vertical', disabled, className }, ref) => {
     return (
       <RadioGroup
@@ -35,6 +35,6 @@ const FormRadioGroup = forwardRef<HTMLDivElement, RadioFieldProps>(
   },
 );
 
-FormRadioGroup.displayName = 'FormRadioGroup';
+// FormRadioGroup.displayName = 'FormRadioGroup';
 
-export default FormRadioGroup;
+export const Radio = RadioComponent;
