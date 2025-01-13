@@ -4,6 +4,7 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { ImageNode } from '../nodes/image.node';
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 // 초기 설정
 export const initialConfig = {
   namespace: 'MyEditor',
@@ -21,6 +22,9 @@ export const initialConfig = {
     ListNode,
     HorizontalRuleNode,
     ImageNode,
+    TableCellNode,
+    TableNode,
+    TableRowNode,
   ],
   theme: themeConfig,
 };

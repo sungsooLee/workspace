@@ -66,6 +66,7 @@ const Image: FC<{ onInsert: (payload: InsertImagePayload) => void }> = ({ onInse
                 }
                 id={'url'}
                 type="text"
+                onChange={(e: any) => setSrc(e.target.value)}
               />
             </div>
             <div className={'flex items-center justify-between gap-4'}>
@@ -78,6 +79,7 @@ const Image: FC<{ onInsert: (payload: InsertImagePayload) => void }> = ({ onInse
                   'border-gray-3 focus:border-gray-5 w-full flex-1 rounded-lg border p-2 focus:outline-none'
                 }
                 type="text"
+                onChange={(e: any) => setAltText(e.target.value)}
               />
             </div>
           </div>
@@ -87,7 +89,11 @@ const Image: FC<{ onInsert: (payload: InsertImagePayload) => void }> = ({ onInse
               onClick={(e) => handleChangeStep(e, 'choice')}>
               뒤로
             </button>
-            <button className={'bg-gray-3 hover:bg-gray-5 rounded-lg p-2'}>입력</button>
+            <button
+              className={'bg-gray-3 hover:bg-gray-5 rounded-lg p-2'}
+              onClick={handleClickInsert}>
+              입력
+            </button>
           </div>
         </div>
       )}
@@ -118,6 +124,7 @@ const Image: FC<{ onInsert: (payload: InsertImagePayload) => void }> = ({ onInse
                   'border-gray-3 focus:border-gray-5 w-full flex-1 rounded-lg border p-2 focus:outline-none'
                 }
                 type="text"
+                onChange={(e: any) => setAltText(e.target.value)}
               />
             </div>
           </div>

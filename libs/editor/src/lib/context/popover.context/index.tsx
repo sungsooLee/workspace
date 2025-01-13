@@ -11,6 +11,7 @@ import React, {
   ReactNode,
   FunctionComponent,
   SVGProps,
+  MouseEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { isDOMNode } from 'lexical';
@@ -25,8 +26,8 @@ const dropDownPadding = 4;
 
 interface PopoverItemProps {
   children: React.ReactNode;
-  className: string;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
+  onClick?: () => void;
   title?: string;
 }
 export const PopoverItem: FC<PopoverItemProps> = ({ children, className = '', onClick, title }) => {
@@ -40,6 +41,12 @@ export const PopoverItem: FC<PopoverItemProps> = ({ children, className = '', on
 
   const { registerItem } = dropDownContext;
 
+  const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClick && onClick();
+  };
+
   useEffect(() => {
     if (ref && ref.current) {
       registerItem(ref);
@@ -47,7 +54,12 @@ export const PopoverItem: FC<PopoverItemProps> = ({ children, className = '', on
   }, [ref, registerItem]);
 
   return (
-    <button className={className} onClick={onClick} ref={ref} title={title} type="button">
+    <button
+      className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${className}`}
+      onClick={handleOnClick}
+      ref={ref}
+      title={title}
+      type="button">
       {children}
     </button>
   );
@@ -168,7 +180,7 @@ const Popover: FC<PopoverProps> = ({
     const button = buttonRef.current;
 
     if (button !== null && showDropDown) {
-      const handle = (event: MouseEvent) => {
+      const handle = (event: any) => {
         const target = event.target;
         if (!isDOMNode(target)) {
           return;

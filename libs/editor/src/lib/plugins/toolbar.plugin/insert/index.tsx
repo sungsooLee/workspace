@@ -6,14 +6,16 @@ import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin
 
 import { insertItems } from '../../../config/toolbar.config';
 import Popover, { PopoverItem } from '../../../context/popover.context';
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
 import { useToolbarState } from '../../../context/toolbar.context';
 import PlusIcon from '../../../assets/images/icons/plus.svg?react';
-import { useModal } from '../../..//context/modal.context';
+import { useModal } from '../../../context/modal.context';
 import Image from './image';
 import Video from './video';
 import Table from './table';
 import ImagesPlugin, { INSERT_IMAGE_COMMAND, InsertImagePayload } from '../../images.plugin';
-
+import TableCellResizer from '../../table-cell-resizer.plugin';
+import { INSERT_TABLE_COMMAND } from '@lexical/table';
 /**
  * 삽입 플러그인
  * [HorizontalRuleNode]
@@ -22,9 +24,19 @@ import ImagesPlugin, { INSERT_IMAGE_COMMAND, InsertImagePayload } from '../../im
 const Insert = () => {
   const [editor] = useLexicalComposerContext();
   const { openModal, closeModal } = useModal();
+  const { toolbarState } = useToolbarState();
 
-  const handleChangeImage = (payload: InsertImagePayload) => {
+  const handleAddImage = (payload: InsertImagePayload) => {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
+    closeModal();
+  };
+
+  const handleAddTable = (rows: string, columns: string) => {
+    editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+      columns,
+      rows,
+    });
+
     closeModal();
   };
 
@@ -35,10 +47,10 @@ const Insert = () => {
         editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
         break;
       case 'image':
-        openModal('title', <Image onInsert={handleChangeImage} />);
+        openModal('title', <Image onInsert={handleAddImage} />);
         break;
       case 'table':
-        openModal('table', <Table />);
+        openModal('table', <Table onInsert={handleAddTable} />);
         break;
       case 'video':
         openModal('Video', <Video />);
@@ -65,6 +77,8 @@ const Insert = () => {
       </Popover>
       <HorizontalRulePlugin />
       <ImagesPlugin />
+      <TablePlugin hasCellMerge={true} hasCellBackgroundColor={true} hasHorizontalScroll={true} />
+      <TableCellResizer />
     </>
   );
 };
