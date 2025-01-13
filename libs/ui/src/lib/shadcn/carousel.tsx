@@ -6,6 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 
 import { cn } from '@learnway/shared'
 
+// import { Button } from '../button/button'
 import { Button } from '../shadcn/button'
 
 type CarouselApi = UseEmblaCarouselType[1]

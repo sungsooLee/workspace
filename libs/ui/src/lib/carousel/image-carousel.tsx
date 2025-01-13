@@ -1,6 +1,6 @@
 import { forwardRef, memo } from 'react';
 
-import * as Primitive from './carousel.shadcn';
+import * as Primitive from '../shadcn/carousel';
 import * as CardPrimitive from '../shadcn/card';
 import { Carousel, CarouselComponentProps } from './carousel';
 

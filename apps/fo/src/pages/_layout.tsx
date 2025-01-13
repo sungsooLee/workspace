@@ -56,7 +56,7 @@ function LayoutComponent() {
     logout();
   };
 
-  const handleTheme = (themeConfig: string) => {
+  const handleTheme = (themeConfig: string, theme = '') => {
     console.log('handleTheme', theme);
 
     document.documentElement.classList.remove('red');
