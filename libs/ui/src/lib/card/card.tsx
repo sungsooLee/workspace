@@ -1,4 +1,4 @@
-import { forwardRef, memo, HTMLAttributes } from 'react';
+import { forwardRef, HTMLAttributes } from 'react';
 
 import * as Primitive from '../shadcn/card';
 
@@ -26,4 +26,4 @@ const CardComponent = forwardRef<
   )
 })
 
-export const Card = memo(CardComponent)
+export const Card = CardComponent

@@ -1,4 +1,4 @@
-import { forwardRef, memo } from 'react';
+import { forwardRef } from 'react';
 
 import * as Primitive from '../shadcn/carousel';
 import * as CardPrimitive from '../shadcn/card';
@@ -36,4 +36,4 @@ const ImageItems = (imageUrls: Array<string>) => {
   ))
 }
 
-export const ImageCarousel = memo(ImageCarouselComponent)
+export const ImageCarousel = ImageCarouselComponent

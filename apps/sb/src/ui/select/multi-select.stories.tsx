@@ -18,6 +18,8 @@ const BaseWrapper: React.FC<any> = (args) => {
 // Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
 export const MultiSelectStory: Story = {
   name: 'MultiSelect',
-  args: {},
+  args: {
+    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
+  },
   render: (args) => <BaseWrapper {...args} />,
 };

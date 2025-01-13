@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormDatePicker as DatePicker } from '@learnway/ui';
+import { DatePicker } from '@learnway/ui';
 
 export default {
   title: 'Components/DatePicker',

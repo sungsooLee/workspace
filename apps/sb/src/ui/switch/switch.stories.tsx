@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormSwitch as Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui';
 
 export default {
   title: 'Components/Switch',

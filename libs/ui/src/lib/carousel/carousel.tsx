@@ -1,4 +1,4 @@
-import { forwardRef, memo } from 'react';
+import { forwardRef } from 'react';
 
 import * as Primitive from '../shadcn/carousel';
 
@@ -23,4 +23,4 @@ const CarouselComponent = forwardRef<
   )
 })
 
-export const Carousel = memo(CarouselComponent)
+export const Carousel = CarouselComponent

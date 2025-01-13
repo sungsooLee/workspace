@@ -2,7 +2,7 @@ import { forwardRef, memo } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './select.shadcn';
+import * as Primitive from '../shadcn/select';
 import { SelectFieldProps } from './type';
 
 const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Select>, SelectFieldProps>(

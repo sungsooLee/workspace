@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { NumberFieldProps } from './type';
 
-const NumberInput = forwardRef<HTMLInputElement, NumberFieldProps>(
+const NumberInputComponent = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
       prefix,
@@ -57,4 +57,4 @@ const NumberInput = forwardRef<HTMLInputElement, NumberFieldProps>(
   },
 );
 
-export default NumberInput;
+export const NumberInput = NumberInputComponent;
