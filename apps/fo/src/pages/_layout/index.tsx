@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, FieldType, ImageCarousel, Radio } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/')({
-  component: HomeComponent,w
+  component: HomeComponent,
 });
 
 function HomeComponent() {
