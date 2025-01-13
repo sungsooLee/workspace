@@ -8,27 +8,55 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
 import { Route as LayoutImport } from './pages/_layout'
+import { Route as GuideImport } from './pages/_guide'
+import { Route as UserIndexImport } from './pages/user/index'
 import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
+import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
+import { Route as GuideGuideMenuIndexImport } from './pages/_guide/guide/menu/index'
+
+// Create Virtual Routes
+
+const LoginImport = createFileRoute('/login')()
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  id: '/login/',
-  path: '/login/',
+const GuideRoute = GuideImport.update({
+  id: '/_guide',
   getParentRoute: () => rootRoute,
+} as any)
+
+const UserIndexRoute = UserIndexImport.update({
+  id: '/user/',
+  path: '/user/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
 } as any)
 
 const LayoutIndexRoute = LayoutIndexImport.update({
@@ -37,10 +65,21 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LoginLayoutRoute = LoginLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => LoginRoute,
+} as any)
+
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const GuideGuideIndexRoute = GuideGuideIndexImport.update({
+  id: '/guide/',
+  path: '/guide/',
+  getParentRoute: () => GuideRoute,
 } as any)
 
 const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
@@ -55,16 +94,43 @@ const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const GuideGuideMenuIndexRoute = GuideGuideMenuIndexImport.update({
+  id: '/guide/menu/',
+  path: '/guide/menu/',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_guide': {
+      id: '/_guide'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GuideImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout': {
       id: '/_layout'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/_layout': {
+      id: '/login/_layout'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginLayoutImport
+      parentRoute: typeof LoginRoute
     }
     '/_layout/': {
       id: '/_layout/'
@@ -75,9 +141,16 @@ declare module '@tanstack/react-router' {
     }
     '/login/': {
       id: '/login/'
-      path: '/login'
-      fullPath: '/login'
+      path: '/'
+      fullPath: '/login/'
       preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof LoginImport
+    }
+    '/user/': {
+      id: '/user/'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserIndexImport
       parentRoute: typeof rootRoute
     }
     '/_layout/menu4/menu5': {
@@ -94,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu8Menu9Import
       parentRoute: typeof LayoutImport
     }
+    '/_guide/guide/': {
+      id: '/_guide/guide/'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideGuideIndexImport
+      parentRoute: typeof GuideImport
+    }
     '/_layout/menu3/': {
       id: '/_layout/menu3/'
       path: '/menu3'
@@ -101,10 +181,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu3IndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_guide/guide/menu/': {
+      id: '/_guide/guide/menu/'
+      path: '/guide/menu'
+      fullPath: '/guide/menu'
+      preLoaderRoute: typeof GuideGuideMenuIndexImport
+      parentRoute: typeof GuideImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface GuideRouteChildren {
+  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
+  GuideGuideMenuIndexRoute: typeof GuideGuideMenuIndexRoute
+}
+
+const GuideRouteChildren: GuideRouteChildren = {
+  GuideGuideIndexRoute: GuideGuideIndexRoute,
+  GuideGuideMenuIndexRoute: GuideGuideMenuIndexRoute,
+}
+
+const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -123,57 +222,112 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
+interface LoginRouteChildren {
+  LoginLayoutRoute: typeof LoginLayoutRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginLayoutRoute: LoginLayoutRoute,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/login': typeof LoginLayoutRoute
   '/': typeof LayoutIndexRoute
-  '/login': typeof LoginIndexRoute
+  '/login/': typeof LoginIndexRoute
+  '/user': typeof UserIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
+  '/guide/menu': typeof GuideGuideMenuIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof LayoutIndexRoute
+  '': typeof GuideRouteWithChildren
   '/login': typeof LoginIndexRoute
+  '/': typeof LayoutIndexRoute
+  '/user': typeof UserIndexRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
+  '/guide/menu': typeof GuideGuideMenuIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRouteWithChildren
+  '/login/_layout': typeof LoginLayoutRoute
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/user/': typeof UserIndexRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
+  '/_guide/guide/menu/': typeof GuideGuideMenuIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/login' | '/menu4/menu5' | '/menu8/menu9' | '/menu3'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/'
+    | '/login/'
+    | '/user'
+    | '/menu4/menu5'
+    | '/menu8/menu9'
+    | '/guide'
+    | '/menu3'
+    | '/guide/menu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/menu4/menu5' | '/menu8/menu9' | '/menu3'
+  to:
+    | ''
+    | '/login'
+    | '/'
+    | '/user'
+    | '/menu4/menu5'
+    | '/menu8/menu9'
+    | '/guide'
+    | '/menu3'
+    | '/guide/menu'
   id:
     | '__root__'
+    | '/_guide'
     | '/_layout'
+    | '/login'
+    | '/login/_layout'
     | '/_layout/'
     | '/login/'
+    | '/user/'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
+    | '/_guide/guide/'
     | '/_layout/menu3/'
+    | '/_guide/guide/menu/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
-  LoginIndexRoute: typeof LoginIndexRoute
+  LoginRoute: typeof LoginRouteWithChildren
+  UserIndexRoute: typeof UserIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
-  LoginIndexRoute: LoginIndexRoute,
+  LoginRoute: LoginRouteWithChildren,
+  UserIndexRoute: UserIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -186,8 +340,17 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_guide",
         "/_layout",
-        "/login/"
+        "/login",
+        "/user/"
+      ]
+    },
+    "/_guide": {
+      "filePath": "_guide.tsx",
+      "children": [
+        "/_guide/guide/",
+        "/_guide/guide/menu/"
       ]
     },
     "/_layout": {
@@ -199,12 +362,27 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
+    "/login": {
+      "filePath": "login",
+      "children": [
+        "/login/_layout",
+        "/login/"
+      ]
+    },
+    "/login/_layout": {
+      "filePath": "login/_layout.tsx",
+      "parent": "/login"
+    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
     },
     "/login/": {
-      "filePath": "login/index.tsx"
+      "filePath": "login/index.tsx",
+      "parent": "/login"
+    },
+    "/user/": {
+      "filePath": "user/index.tsx"
     },
     "/_layout/menu4/menu5": {
       "filePath": "_layout/menu4/menu5.tsx",
@@ -214,9 +392,17 @@ export const routeTree = rootRoute
       "filePath": "_layout/menu8/menu9.tsx",
       "parent": "/_layout"
     },
+    "/_guide/guide/": {
+      "filePath": "_guide/guide/index.tsx",
+      "parent": "/_guide"
+    },
     "/_layout/menu3/": {
       "filePath": "_layout/menu3/index.tsx",
       "parent": "/_layout"
+    },
+    "/_guide/guide/menu/": {
+      "filePath": "_guide/guide/menu/index.tsx",
+      "parent": "/_guide"
     }
   }
 }
