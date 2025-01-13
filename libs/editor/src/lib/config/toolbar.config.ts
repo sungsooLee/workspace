@@ -118,3 +118,12 @@ export const INITIAL_TOOLBAR_STATE = {
   isCapitalize: false, // 첫 글자 대문자 여부
   rootType: 'root' as keyof typeof rootTypeToRootName, // 기본 루트 타입
 };
+
+// 삽입 아이템
+export const insertItems = [
+  {
+    icon: TextParagraph,
+    label: '일반',
+    value: 'paragraph',
+  },
+];

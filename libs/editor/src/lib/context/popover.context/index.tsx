@@ -9,6 +9,8 @@ import React, {
   useState,
   useCallback,
   ReactNode,
+  FunctionComponent,
+  SVGProps,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { isDOMNode } from 'lexical';
@@ -216,15 +218,11 @@ const Popover: FC<PopoverProps> = ({
         type="button"
         disabled={disabled}
         className={`hover:bg-gray-3 flex h-[36px] items-center justify-center gap-1 rounded-lg p-2 disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-transparent ${className}`}
-        onClick={() => setShowDropDown(!showDropDown)}
+        onClick={() => {
+          setShowDropDown(!showDropDown);
+        }}
         ref={buttonRef}>
-        {/*{icon &&
-          (typeof icon === 'function' ? (
-              {createElement(icon, { width: 24, height: 24 })}
-          ) : (
-            {icon}
-          )) // ReactNode 렌더링
-        }*/}
+        <IconRenderer icon={icon} />
         {label && <span className="text dropdown-button-text">{label}</span>}
         <ChevronDown />
       </button>
@@ -240,3 +238,33 @@ const Popover: FC<PopoverProps> = ({
 };
 
 export default Popover;
+
+type IconProps = {
+  icon?: ReactNode | FunctionComponent<SVGProps<SVGSVGElement>>;
+};
+
+const IconRenderer: React.FC<IconProps> = ({ icon }) => {
+  if (!icon) {
+    return null; // 아이콘이 없을 경우 null 반환
+  }
+
+  // icon이 ReactNode일 경우 그대로 렌더링
+  if (React.isValidElement(icon)) {
+    return <>{icon}</>;
+  }
+
+  // icon이 FunctionComponent일 경우 컴포넌트를 호출하여 렌더링
+  if (typeof icon === 'function') {
+    const SvgIcon = icon; // TypeScript가 타입 추론 가능
+    return (
+      <SvgIcon
+        width={24}
+        height={24}
+        fill="currentColor"
+        // SVGProps에 필요한 prop 전달 가능
+      />
+    );
+  }
+  // icon이 예상과 다른 경우 null 반환
+  return null;
+};
