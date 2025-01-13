@@ -26,4 +26,6 @@ export function Spinner({ className, isLoading, showBackdrop }: SpinnerProps) {
   );
 }
 
+export default Spinner;
+
 //export const Spinner = memo(Spinner);

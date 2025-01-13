@@ -2,15 +2,15 @@ import { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import { Switch } from '../shadcn/switch';
+import * as Primitive from '../shadcn/switch';
 import { Label } from '../shadcn/label';
 import { SwitchFieldProps } from './type';
 
-const FormSwitch = forwardRef<HTMLButtonElement, SwitchFieldProps>(
+const SwitchComponent = forwardRef<HTMLButtonElement, SwitchFieldProps>(
   ({ value, onChange, disabled, formLabel, className }, ref) => {
     return (
       <div className={cn('flex items-center space-x-2', className)}>
-        <Switch
+        <Primitive.Switch
           checked={value}
           onCheckedChange={(checked) => onChange && onChange(checked)}
           disabled={disabled}
@@ -21,4 +21,4 @@ const FormSwitch = forwardRef<HTMLButtonElement, SwitchFieldProps>(
   },
 );
 
-export default FormSwitch;
+export const Switch = SwitchComponent;
