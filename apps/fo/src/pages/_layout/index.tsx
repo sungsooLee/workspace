@@ -2,12 +2,10 @@ import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@learnway/ui';
-import { Carousel } from '@learnway/ui';
-import { ImageCarousel } from '@learnway/ui';
+import { Button, FieldType, ImageCarousel, Radio } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/')({
-  component: HomeComponent,
+  component: HomeComponent,w
 });
 
 function HomeComponent() {
@@ -24,7 +22,13 @@ function HomeComponent() {
       {/** Carousel */}
       <div className="flex w-full gap-5">
         <div className="min-w-32">Carousel</div>
-        <ImageCarousel imageUrls={['a.png', 'b.png', 'c.png', 'd.png', 'e.png']} />
+        {/*<ImageCarousel imageUrls={['a.png', 'b.png', 'c.png', 'd.png', 'e.png']} />*/}
+        <Radio
+          type={FieldType.RADIO}
+          name='name'
+          label='label'
+          options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}
+        />
       </div>
 
       {/**primary */}
