@@ -9,7 +9,7 @@ const HORIZONTAL_OFFSET = 5; // 좌우 간격
 
 // FloatingModalContext의 타입 정의
 interface FloatingModalContextValue {
-  scrollTarget?: RefObject<HTMLDivElement>; // DOM 스크롤을 대상 요소로 참조
+  scrollTarget?: HTMLDivElement | null; // DOM 스크롤을 대상 요소로 참조
   openModal: (contents: ReactNode) => void; // 모달 열기 함수
   closeModal: () => void; // 모달 닫기 함수
   isOpen: boolean; // 모달 오픈 상태
@@ -25,7 +25,7 @@ const Context = createContext<FloatingModalContextValue | undefined>(undefined);
  */
 export const FloatingModalContext: React.FC<{
   children: ReactNode; // 컨텍스트 하위 자식 요소
-  scrollTarget?: RefObject<HTMLDivElement>; // 스크롤 대상 전달
+  scrollTarget?: HTMLDivElement | null; // 스크롤 대상 전달
 }> = ({ children, scrollTarget }) => {
   const floatingModalRef = useRef<HTMLDivElement | null>(null); // 플로팅 모달 DOM 참조
   const [editor] = useLexicalComposerContext(); // Lexical의 편집기 인스턴스 가져오기
@@ -98,7 +98,7 @@ export const FloatingModalContext: React.FC<{
    */
   const handleOpenModal = (contents: ReactNode) => {
     editor.read(() => {
-      if (scrollTarget && scrollTarget.current) {
+      if (scrollTarget) {
         const selection = $getSelection(); // 현재 선택 상태 가져오기
         const floatingModalElem = floatingModalRef.current; // 모달 요소 DOM 가져오기
         const nativeSelection = getDOMSelection(editor._window); // DOM Selection 가져오기
@@ -120,7 +120,7 @@ export const FloatingModalContext: React.FC<{
           if (domRect) {
             domRect.y += 40; // 위치 조정
             // 링크 에디터 위치 설정
-            setFloatingElemPositionForLinkEditor(domRect, floatingModalElem, scrollTarget.current);
+            setFloatingElemPositionForLinkEditor(domRect, floatingModalElem, scrollTarget);
           }
         }
       }

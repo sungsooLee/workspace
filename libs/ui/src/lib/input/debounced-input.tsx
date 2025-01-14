@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState, useCallback } from 'react';
 import { cn } from '@learnway/shared';
-import Input from './input';
+import { Input } from './input';
 
 interface DebouncedInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

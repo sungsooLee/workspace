@@ -5,17 +5,16 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
-  VisibilityState,
   RowSelectionState,
 } from '@tanstack/react-table';
-import { useInfiniteQuery, useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { GridState, ModalWrapper, Grid } from '@learnway/ui';
 
 export default {
-  title: 'Components/Table',
+  title: 'Components/Grid',
   component: Grid,
   tags: ['autodocs'],
   argTypes: {},

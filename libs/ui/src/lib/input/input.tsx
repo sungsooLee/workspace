@@ -1,8 +1,9 @@
 import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+
 import { cn } from '@learnway/shared';
 
-const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
@@ -105,6 +106,7 @@ const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>
   },
 );
 
-Input.displayName = 'FormInput';
+export const Input = InputComponent;
 
-export default Input;
+// Input.displayName = 'FormInput';
+// export default Input;

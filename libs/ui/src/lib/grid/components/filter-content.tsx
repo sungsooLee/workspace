@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../shadcn/button';
-import Input from '../../input/input';
 import DebouncedInput from '../../input/debounced-input';
-import MultiSelect from '../../select/multi-select';
+import { Input } from '../../input/input';
+import { MultiSelect } from '../../select/multi-select';
 
 interface FilterContentProps {
   column: string;

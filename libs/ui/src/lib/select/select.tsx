@@ -2,10 +2,10 @@ import { forwardRef, memo } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './select.shadcn';
+import * as Primitive from '../shadcn/select';
 import { SelectFieldProps } from './type';
 
-const Select = forwardRef<React.ElementRef<typeof Primitive.Select>, SelectFieldProps>(
+const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Select>, SelectFieldProps>(
   ({ options, value, onChange, disabled, className, ...props }, ref) => {
     return (
       <Primitive.Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
@@ -34,4 +34,4 @@ const Select = forwardRef<React.ElementRef<typeof Primitive.Select>, SelectField
   },
 );
 
-export default memo(Select);
+export const Select = SelectComponent;

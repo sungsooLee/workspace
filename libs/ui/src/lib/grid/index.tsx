@@ -29,7 +29,7 @@ import { FilterContent } from './components/filter-content';
 import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
-import FormCheckBox from '../checkbox/checkbox';
+import { Checkbox } from '../checkbox/checkbox';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -48,7 +48,7 @@ export const IndeterminateCheckbox = ({
 
   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
 
-  return <FormCheckBox value={checkedState} onChange={handleChange} {...rest} />;
+  return <Checkbox value={checkedState} onChange={handleChange} {...rest} />;
 };
 ///////
 

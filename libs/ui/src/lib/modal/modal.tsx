@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { cn } from '@learnway/shared';
 
 import {
@@ -11,7 +12,7 @@ import {
 } from '../shadcn/dialog';
 import { BaseModalProps } from './type';
 
-const BaseModal: React.FC<BaseModalProps> = ({
+const ModalComponent: React.FC<BaseModalProps> = ({
   title,
   description,
   children,
@@ -65,4 +66,4 @@ const BaseModal: React.FC<BaseModalProps> = ({
   );
 };
 
-export default BaseModal;
+export const Modal = ModalComponent;

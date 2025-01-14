@@ -1,4 +1,4 @@
-import { forwardRef, memo } from 'react';
+import { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -21,4 +21,4 @@ const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, Av
   },
 );
 
-export const Avatar = memo(AvatarComponent);
+export const Avatar = AvatarComponent;

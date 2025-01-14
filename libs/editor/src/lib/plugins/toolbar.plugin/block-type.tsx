@@ -157,22 +157,6 @@ const BlockType = () => {
               </PopoverItem>
             ))}
           </Popover>
-          <Popover
-            className={`'h-[36px] p-2' gap-2`}
-            icon={<activeItem.icon className={'h-[20px] w-[20px]'} />}
-            label={activeItem.label}>
-            {blockTypeItems.map((item) => (
-              <PopoverItem
-                key={item.value}
-                className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1 ${dropDownActiveClass(toolbarState.blockType === 'paragraph')}`}
-                onClick={() => handleChangeType(item.value)}>
-                <>
-                  <item.icon />
-                  <span>{item.label}</span>
-                </>
-              </PopoverItem>
-            ))}
-          </Popover>
         </>
       )}
       <ListPlugin />
