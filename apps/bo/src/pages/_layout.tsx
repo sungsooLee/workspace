@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { Navigate, QuickMenu } from '../widgets/layout';
-import { Logo, UserAvatar, Notification, Language } from '../features/layout';
+import { GNB, Layout } from '../widgets/layout';
 
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
@@ -36,23 +35,10 @@ function LayoutComponent() {
 
   return (
     <div>
-      <div className="bg-secondary-1 flex flex-col">
-        <div className="flex items-center gap-10">
-          <Logo />
-          <div className="flex grow"></div>
-          <Language />
-          <Notification />
-          <UserAvatar />
-        </div>
-        <div className="flex items-center">
-          <Navigate />
-          <div className="flex grow"></div>
-          <QuickMenu />
-        </div>
-      </div>
-      <div className="p-10">
+      <GNB />
+      <Layout>
         <Outlet />
-      </div>
+      </Layout>
     </div>
   );
 }

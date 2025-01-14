@@ -7,9 +7,9 @@ import { CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles } from 'lucide-rea
 import { cn } from '@learnway/shared';
 import { Popover, PopoverContent } from '../popover/popover.shadcn';
 import { PopoverTrigger } from '@radix-ui/react-popover';
-import { Button } from '../shadcn/button';
-import { Badge } from '../shadcn/badge';
-import { Separator } from '../shadcn/separator';
+import { Button } from './button';
+import { Badge } from './badge';
+import { Separator } from './separator';
 import {
   Command,
   CommandInput,
@@ -18,7 +18,7 @@ import {
   CommandGroup,
   CommandSeparator,
   CommandEmpty,
-} from '../shadcn/command';
+} from './command';
 
 /**
  * Variants for the multi-select component to handle different styles.

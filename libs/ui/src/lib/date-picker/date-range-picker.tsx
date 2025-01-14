@@ -1,13 +1,15 @@
 import { forwardRef } from 'react';
-import { cn } from '@learnway/shared';
+import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
+
+import { cn } from '@learnway/shared';
+
 import { Popover } from '../popover/popover';
 import { Button } from '../shadcn/button';
-import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '../shadcn/calendar';
 import { DateRangeFieldProps } from './type';
 
-const FormDateRangePicker = forwardRef<HTMLDivElement, DateRangeFieldProps>(
+const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>(
   (
     {
       value,
@@ -70,4 +72,4 @@ const FormDateRangePicker = forwardRef<HTMLDivElement, DateRangeFieldProps>(
   },
 );
 
-export default FormDateRangePicker;
+export const DateRangePicker = DateRangePickerComponent;

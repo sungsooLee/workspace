@@ -8,7 +8,7 @@ import { Button } from '../shadcn/button';
 import { Calendar } from '../shadcn/calendar';
 import { DateProps } from './type';
 
-const FormDatePicker = forwardRef<HTMLDivElement, DateProps>(
+const DatePickerComponent = forwardRef<HTMLDivElement, DateProps>(
   (
     {
       value,
@@ -54,4 +54,4 @@ const FormDatePicker = forwardRef<HTMLDivElement, DateProps>(
   },
 );
 
-export default FormDatePicker;
+export const DatePicker = DatePickerComponent;
