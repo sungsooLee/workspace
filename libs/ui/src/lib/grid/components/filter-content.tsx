@@ -3,6 +3,7 @@ import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../shadcn/button';
 import Input from '../../input/input';
 import DebouncedInput from '../../input/debounced-input';
+import MultiSelect from '../../select/multi-select';
 
 interface FilterContentProps {
   column: string;
@@ -10,9 +11,20 @@ interface FilterContentProps {
   // initialValue: string | [number, number] | string[];
   initialValue: unknown;
   onApply: (value: any) => void;
+  // 여러 가지 선택 사항을 위한 props
+  options?: {
+    label: string;
+    value: string;
+  }[];
 }
 
-export const FilterContent = ({ column, type, initialValue, onApply }: FilterContentProps) => {
+export const FilterContent = ({
+  column,
+  type,
+  initialValue,
+  onApply,
+  options = [],
+}: FilterContentProps) => {
   const { closeModal } = useModalContext();
 
   const getInitialValue = () => {
@@ -72,6 +84,18 @@ export const FilterContent = ({ column, type, initialValue, onApply }: FilterCon
           placeholder="Search..."
           className="w-full"
         />
+      )}
+
+      {type === 'select' && (
+        <div className="min-h-[200px]">
+          <MultiSelect
+            options={options}
+            value={value as string[]}
+            onChange={(newValue) => setValue(newValue)}
+            placeholder="필터를 설정한 옵션을 선택하세요.."
+            maxCount={5}
+          />
+        </div>
       )}
 
       <div className="flex justify-between pt-4">

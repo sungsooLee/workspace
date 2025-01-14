@@ -2,30 +2,32 @@ import {
   ColumnDef,
   ColumnFiltersState,
   RowData,
-  RowSelectionState,
   SortingState,
   VisibilityState,
 } from '@tanstack/react-table';
-import { FilterState } from './filter';
-import { ColumnSetting } from '../components/column-setting';
 
 declare module '@tanstack/react-table' {
+  // 컬럼 커스텀 타입 메타 설정
   interface ColumnMeta<TData extends RowData, TValue> {
-    // 고정 열 여부?
     filterType?: 'text' | 'range' | 'select';
+    filterOptions?: { label: string; value: string }[];
   }
 }
 
 export interface GridProps<T extends object> {
+  // 그리드 데이터
   data: T[];
+  // 그리드 컬럼
   columns: ColumnDef<T>[];
+  // 로딩 여부
   isLoading?: boolean;
-  onFilterChange?: (filters: FilterState) => void;
+  // 로우 클릭에 대한 콜백 처리
   onRowSelect?: (row: any) => void;
-  pageSize?: number;
+  // 컬럼, 그리드 설정 변경에 따른 콜백 함수
   onStateChange?: (state: GridState) => void;
+  // 그리드 타이틀
   title?: string;
-  onColumnSettingsChange?: (settings: ColumnSetting[]) => void;
+  // 다중선택을 위한 Props
   multiSelectable?: boolean;
   // 페이지네이션 관련 Props
   pagination?: {
@@ -36,11 +38,13 @@ export interface GridProps<T extends object> {
     onPageSizeChange: (pageSize: number) => void; // 페이지 크기 변경 시 콜백
     pageSizeOptions?: number[]; // 페이지 사이즈 옵션
   };
-  // 무한 스크롤(페이지네이션) 관련 Props
-  infiniteScroll?: {
-    isFetching: boolean;
-    hasNextPage: boolean;
-    fetchNextPage: () => Promise<any>;
+  // 정적 그루핑 설정
+  columnGrouping?: {
+    columns: string[];
+  };
+  // 고정 컬럼 설정
+  columnPinning?: {
+    columns: string[];
   };
 }
 

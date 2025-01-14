@@ -104,10 +104,12 @@ const columns = [
     meta: {
       filterType: 'text',
     },
+    enableGrouping: false,
   }),
   columnHelper.accessor('lastName', {
     cell: (info) => info.getValue(),
     header: 'Last Name',
+    enableGrouping: false,
   }),
   columnHelper.accessor('age', {
     cell: (info) => info.getValue(),
@@ -115,6 +117,7 @@ const columns = [
     meta: {
       filterType: 'range',
     },
+    enableGrouping: false,
   }),
   columnHelper.accessor('visits', {
     cell: (info) => info.getValue(),
@@ -132,6 +135,16 @@ const columns = [
   columnHelper.accessor('status', {
     cell: (info) => info.getValue(),
     header: 'Status',
+    getGroupingValue: (row) => `${row.status}`,
+    enableGrouping: true,
+    aggregationFn: 'count',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '활성', value: 'active' },
+        { label: '비활성', value: 'inactive' },
+      ],
+    },
   }),
   columnHelper.accessor('progress', {
     cell: (info) => info.getValue(),
@@ -139,6 +152,7 @@ const columns = [
     meta: {
       filterType: 'range',
     },
+    enableGrouping: false,
   }),
 ] as ColumnDef<Person, unknown>[];
 
@@ -181,6 +195,7 @@ export const Base: Story = {
   ],
   render: () => <BaseTable />,
 };
+
 const TableWithColumnSettings = () => {
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
@@ -308,9 +323,9 @@ interface TableResponse<T> {
 }
 
 // 무한 스크롤용 mock API
-const fetchInfiniteData = async (): Promise<Person[]> => {
+const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
-
+  console.log(tableState);
   const totalRows = 100;
 
   const data = Array.from({ length: totalRows }).map((_, index) => ({
@@ -333,7 +348,7 @@ const InfiniteScrollTable = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ['PersonEntity', tableState] as const,
-    queryFn: () => fetchInfiniteData(),
+    queryFn: () => fetchInfiniteData({ tableState }),
   });
 
   const handleStateChange = (newState: GridState) => {
@@ -384,11 +399,15 @@ export const WithInfiniteScroll: Story = {
 const fetchPaginatedData = async ({
   pageIndex,
   pageSize,
+  tableState,
 }: {
   pageIndex: number;
   pageSize: number;
+  tableState: any; // 추후 재정의 필요
 }): Promise<TableResponse<Person>> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log('페이지사이즈 : ' + pageSize + ', 페이지인덱스' + pageIndex + ' !! API 호출');
+  console.log(tableState);
   // 전체 100개의 데이터가 있다고 가정
   const totalRows = 100;
   const startIndex = pageIndex * pageSize;
@@ -422,7 +441,7 @@ const PaginationTable = () => {
 
   const { data, isFetching } = useQuery({
     queryKey: ['PersonEntity', pageIndex, pageSize, tableState] as const,
-    queryFn: () => fetchPaginatedData({ pageIndex, pageSize }),
+    queryFn: () => fetchPaginatedData({ pageIndex, pageSize, tableState }),
     placeholderData: keepPreviousData,
   });
 
@@ -470,6 +489,121 @@ export const WithPagination: Story = {
       description: {
         story: `
   페이지네이션이 적용된 그리드
+        `,
+      },
+    },
+  },
+};
+
+const GroupedColumnTable = () => {
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['PersonEntity', tableState] as const,
+    queryFn: () => fetchInfiniteData({ tableState }),
+  });
+
+  const handleStateChange = (newState: GridState) => {
+    setTableState((prev) => ({
+      ...prev,
+      sorting: newState.sorting || prev.sorting,
+      filters: newState.filters || prev.filters,
+    }));
+  };
+
+  return (
+    <div className="p-4">
+      <Grid
+        data={data || []}
+        columns={columns}
+        onStateChange={handleStateChange}
+        isLoading={isLoading}
+        title="Grouping Columns"
+        multiSelectable={true}
+        columnGrouping={{ columns: ['status'] }}
+      />
+    </div>
+  );
+};
+
+export const WithGroupColumn: Story = {
+  name: '컬럼 그룹 그리드',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <GroupedColumnTable />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+  원하는 컬럼 그룹화
+  - prop으로 그룹을 원하는 컬럼을 넘겨준다.
+        `,
+      },
+    },
+  },
+};
+
+const PinnedColumnTable = () => {
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['PersonEntity', tableState] as const,
+    queryFn: () => fetchInfiniteData({ tableState }),
+  });
+
+  const handleStateChange = (newState: GridState) => {
+    setTableState((prev) => ({
+      ...prev,
+      sorting: newState.sorting || prev.sorting,
+      filters: newState.filters || prev.filters,
+    }));
+  };
+
+  return (
+    <div className="p-4">
+      <Grid
+        data={data || []}
+        columns={columns}
+        onStateChange={handleStateChange}
+        isLoading={isLoading}
+        title="Pinning Columns"
+        multiSelectable={true}
+        columnPinning={{ columns: ['status'] }}
+      />
+    </div>
+  );
+};
+
+export const WithPinColumn: Story = {
+  name: '고정 컬럼 그리드',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <PinnedColumnTable />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+  원하는 컬럼 왼쪽 고정
+  - prop으로 고정을 원하는 컬럼을 넘겨준다.
+  - Sticky와 같은 스타일 추가 필요
         `,
       },
     },

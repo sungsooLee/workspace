@@ -16,12 +16,13 @@ import {
   verticalListSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable';
+import { Table } from '@tanstack/react-table';
 import { CSS } from '@dnd-kit/utilities';
+
 import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../shadcn/button';
 import { useModalControl } from '../../modal/modal.hook';
 import { Checkbox } from '../../shadcn/checkbox';
-import { ColumnDef, Table } from '@tanstack/react-table';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;

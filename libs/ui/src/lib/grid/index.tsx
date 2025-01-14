@@ -1,33 +1,35 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Column,
-  ColumnDef,
   ColumnFiltersState,
+  ColumnPinningState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
+  GroupingState,
   OnChangeFn,
   PaginationState,
   Row,
   RowSelectionState,
   SortingState,
+  Table,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-
+import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
+import { FilterIcon } from 'lucide-react';
 
 import { GridProps } from './types/grid';
-import { HTMLProps, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
-import FormCheckBox from '../checkbox/checkbox';
-import { CheckFieldProps } from '../checkbox/type';
-import { CheckedState } from '@radix-ui/react-checkbox';
-import { FilterIcon } from 'lucide-react';
-import { Button } from '../shadcn/button';
-import { useModalControl } from '../modal/modal.hook';
 import { FilterContent } from './components/filter-content';
+
+import { useModalControl } from '../modal/modal.hook';
+import { Button } from '../shadcn/button';
+import { CheckFieldProps } from '../checkbox/type';
+import FormCheckBox from '../checkbox/checkbox';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -59,14 +61,24 @@ const Grid = <T extends object>({
   pagination,
   title,
   isLoading,
+  columnGrouping,
+  columnPinning = { columns: [] },
 }: GridProps<T>) => {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const { open } = useModalControl();
-
+  const [expanded, setExpanded] = useState({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const groupingState = useMemo<GroupingState>(
+    () => columnGrouping?.columns || [],
+    [columnGrouping?.columns],
+  );
+  const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
+    left: multiSelectable ? ['select', ...columnPinning.columns] : columnPinning.columns, // 체크박스가 있으면 'select'를 기본으로 고정
+    right: [],
+  });
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
     columns.reduce((acc, col) => {
       acc[col.id as string] = true;
@@ -76,9 +88,7 @@ const Grid = <T extends object>({
 
   // columnOrder 초기화
   const [columnOrder, setColumnOrder] = useState<string[]>(() =>
-    multiSelectable
-      ? ['select', ...columns.map((col) => col.id as string)] // 체크박스가 제일 앞에 오게
-      : columns.map((col) => col.id as string),
+    columns.map((col) => col.id as string),
   );
 
   // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
@@ -89,8 +99,10 @@ const Grid = <T extends object>({
             {
               id: 'select',
               size: 50,
-              // 헤더 체크 박스
-              header: ({ table }) => (
+              maxSize: 50,
+              minSize: 50,
+              enablePinning: true, // 핀 기능 활성화
+              header: ({ table }: { table: Table<T> }) => (
                 <IndeterminateCheckbox
                   value={table.getIsAllRowsSelected()}
                   indeterminate={table.getIsSomeRowsSelected()}
@@ -100,13 +112,18 @@ const Grid = <T extends object>({
                 />
               ),
               // 바디 체크 박스
-              cell: ({ row }) => (
+              cell: ({ row }: { row: Row<T> }) => (
                 <div className="px-1">
                   <IndeterminateCheckbox
                     value={row.getIsSelected()}
                     onChange={(checked) => {
+                      // 그룹핑된 행은 체크박스 비활성화
+                      if (row.getIsGrouped()) {
+                        return;
+                      }
                       row.toggleSelected(!!checked);
                     }}
+                    disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
                   />
                 </div>
               ),
@@ -161,7 +178,6 @@ const Grid = <T extends object>({
 
   const table = useReactTable({
     data,
-    // columns,
     columns: columnsWithCheckbox,
     state: {
       columnOrder,
@@ -169,17 +185,22 @@ const Grid = <T extends object>({
       sorting,
       columnFilters,
       rowSelection,
+      grouping: groupingState,
+      expanded,
       ...(pagination && {
         pagination: {
           pageIndex: pagination.pageIndex,
           pageSize: pagination.pageSize,
         } as PaginationState,
       }),
+      columnPinning: columnPinningState,
     },
     onColumnVisibilityChange: setColumnVisibility,
     onColumnOrderChange: setColumnOrder,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onExpandedChange: setExpanded,
+    onColumnPinningChange: setColumnPinningState,
     onPaginationChange: (updater) => {
       if (!pagination) return;
       const newPagination =
@@ -191,17 +212,24 @@ const Grid = <T extends object>({
       pagination.onPageSizeChange(newPagination.pageSize);
     },
     getCoreRowModel: getCoreRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     enableRowSelection: true,
     onRowSelectionChange: handleRowSelectionChange,
     enableMultiRowSelection: multiSelectable,
     enableHiding: true,
-    //// 클라이언트 사이드 처리
-    getFilteredRowModel: getFilteredRowModel(), // 클라이언트 사이드 필터링 (api로만 필터링하려면 제외)
+    enableGrouping: true,
+    enableExpanding: true,
+    enablePinning: true,
+    //// 클라이언트 사이드 처리 ///////
+    // getFilteredRowModel: getFilteredRowModel(), // 클라이언트 사이드 필터링 (api로만 필터링하려면 제외)
     // getSortedRowModel: getSortedRowModel(), // 클라이언트 사이드 소팅 (소팅 서버 로직일 경우에 제외)
-    //// 서버 사이드 처리
+    //// 서버 사이드 처리 //////
     manualSorting: true, // 서버 소팅일 경우 포함.
     manualFiltering: true, // 서버 필터일 경우 포함.
     manualPagination: true, //서버 페이지네이션 처리
+    // manualGrouping: true,  // 서버 그루핑. 그루핑 데이터 자체를 서버에서 내려줘야됨.
+    // manualExpanding: true,
     pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
     //고유 ID 부여, 페이지네이션에서 selected row를 위해서
     getRowId: (row: T, index: number) => {
@@ -209,16 +237,18 @@ const Grid = <T extends object>({
     },
   });
 
-  ///// 가상 스크롤
+  // 가상 스크롤 관련 설정
   const { rows } = table.getRowModel();
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 60,
+    estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
     getScrollElement: () => tableContainerRef.current,
+    measureElement:
+      typeof window !== 'undefined' && navigator.userAgent.indexOf('Firefox') === -1
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
     overscan: 5,
-    measureElement: (element) => element?.getBoundingClientRect().height,
   });
-  /////////
 
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
@@ -232,28 +262,28 @@ const Grid = <T extends object>({
     });
   }, [columnFilters, sorting, columnVisibility, columnOrder]);
 
-  // ColumnSettings의 변경 사항 처리
+  // 컬럼 팝업에서 컬럼에 대한 항목 설정
   const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
+    // 숨기기 설정
     const visibility = settings.reduce((acc, setting) => {
       acc[setting.id] = setting.isVisible;
       return acc;
     }, {} as VisibilityState);
-
-    // 다중 선택 모드일 때만 select 컬럼 추가
-    const order = multiSelectable
-      ? ['select', ...settings.map((setting) => setting.id)]
-      : settings.map((setting) => setting.id);
+    // 순서 설정
+    const order = settings.map((setting) => setting.id);
 
     setColumnVisibility(visibility);
     setColumnOrder(order);
   };
 
-  ////
+  /// 필터 팝업 오픈
   const openFilterPopup = (e: React.MouseEvent, column: Column<T, unknown>) => {
     e.stopPropagation();
 
     const filterType = column.columnDef.meta?.filterType;
     const currentValue = column.getFilterValue();
+    const filterOptions =
+      column.columnDef.meta?.filterType === 'select' ? column.columnDef.meta.filterOptions : [];
 
     open(
       <FilterContent
@@ -272,6 +302,7 @@ const Grid = <T extends object>({
             });
           }
         }}
+        options={filterOptions}
       />,
       {
         title: `${column.columnDef.header as string} 필터`,
@@ -282,134 +313,199 @@ const Grid = <T extends object>({
   ////
 
   //// 테이블 내용 렌더링
-  const renderTableContent = () => (
-    <div
-      ref={tableContainerRef}
-      className="relative overflow-auto rounded-lg border"
-      style={{ height: '600px', width: '100%' }}>
-      <table
-        className="w-full"
-        style={{
-          display: 'grid',
-          minWidth: 'max-content',
-        }}>
-        <thead className="sticky top-0 z-10 grid bg-gray-50">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} style={{ display: 'flex', width: '100%' }}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  style={{
-                    width: header.getSize(),
-                    minWidth: header.getSize(),
-                  }}
-                  className="flex border-b px-4 py-2 text-left">
-                  <div className="flex flex-col gap-2">
-                    <div
-                      className={cn(
-                        header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                        'text-xs font-medium uppercase text-gray-500',
-                      )}
-                      onClick={header.column.getToggleSortingHandler()}
-                      title={
-                        header.column.getCanSort()
-                          ? header.column.getNextSortingOrder() === 'asc'
-                            ? 'Sort ascending'
-                            : header.column.getNextSortingOrder() === 'desc'
-                              ? 'Sort descending'
-                              : 'Clear sort'
-                          : undefined
-                      }>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                      {{
-                        asc: ' 🔼',
-                        desc: ' 🔽',
-                      }[header.column.getIsSorted() as string] ?? null}
-                      {header.column.columnDef.meta?.filterType && (
-                        <Button
-                          onClick={(e) => openFilterPopup(e, header.column)}
-                          size="xs"
-                          className="m-2">
-                          <FilterIcon />
-                        </Button>
-                      )}
-                    </div>
-                    {/* {header.column.columnDef.meta?.filterType && <Filter column={header.column} />} */}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody
-          style={{
-            display: 'block',
-            height: `${rowVirtualizer.getTotalSize()}px`,
-            position: 'relative',
-            minWidth: 'max-content',
-          }}>
-          {isLoading ? (
-            // 로딩 상태일 때 스켈레톤 UI 표시
-            <p>Loading...</p>
-          ) : (
-            rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
-              const row = rows[virtualRow.index] as Row<T>;
-              return (
-                <tr
-                  data-index={virtualRow.index}
-                  ref={(node) => rowVirtualizer.measureElement(node)}
-                  key={row.id}
+  const renderTableContent = () => {
+    const paginationGrid = pagination ? true : false;
+
+    const renderRows = () => {
+      if (paginationGrid) {
+        return rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
+          const row = rows[virtualRow.index] as Row<T>;
+          return (
+            <tr
+              data-index={virtualRow.index}
+              ref={(node) => rowVirtualizer.measureElement(node)}
+              key={row.id}
+              className={cn(
+                'cursor-pointer border-b hover:bg-gray-50',
+                row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+              )}
+              style={{
+                display: 'flex',
+                position: 'absolute',
+                transform: `translateY(${virtualRow.start}px)`,
+                width: '100%',
+              }}
+              onClick={() => row.toggleSelected()}>
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
                   style={{
                     display: 'flex',
-                    position: 'absolute',
-                    transform: `translateY(${virtualRow.start}px)`,
-                  }}
-                  className={cn(
-                    'cursor-pointer border-b hover:bg-gray-50',
-                    row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
-                  )}
-                  onClick={() => row.toggleSelected()}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td
-                        key={cell.id}
-                        style={{
-                          display: 'flex',
-                          width: cell.column.getSize(),
-                        }}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })
-          )}
-        </tbody>
-        {/* <tfoot className="bg-gray-50">
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  style={{
-                    width: header.getSize(),
-                    minWidth: header.getSize(),
-                  }}
-                  className="px-4 py-2 text-left text-xs font-medium text-gray-500">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.footer, header.getContext())}
-                </th>
+                    width: cell.column.getSize(),
+                  }}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
-          ))}
-        </tfoot> */}
-      </table>
-    </div>
-  );
+          );
+        });
+      }
+      const virtualRows = rowVirtualizer.getVirtualItems();
+      const paddingTop = virtualRows.length > 0 ? virtualRows[0].start : 0;
+      const paddingBottom =
+        virtualRows.length > 0
+          ? rowVirtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1].end || 0)
+          : 0;
+
+      return (
+        <>
+          {paddingTop > 0 && <tr style={{ height: `${paddingTop}px`, width: '100%' }} />}
+          {virtualRows.map((virtualRow) => {
+            const row = rows[virtualRow.index] as Row<T>;
+            return (
+              <tr
+                key={row.id}
+                data-index={virtualRow.index}
+                ref={(node) => rowVirtualizer.measureElement(node)}
+                className={cn(
+                  'border-b hover:bg-gray-50',
+                  row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+                )}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: `${virtualRow.size}px`,
+                  transform: `translateY(${virtualRow.start}px)`,
+                  display: 'flex',
+                }}
+                onClick={() => !row.getIsGrouped() && row.toggleSelected()}>
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className="px-4 py-2"
+                    style={{
+                      background: cell.getIsGrouped()
+                        ? '#0aff0082'
+                        : cell.getIsAggregated()
+                          ? '#ffa50078'
+                          : cell.getIsPlaceholder()
+                            ? '#ff000042'
+                            : '',
+                      width: cell.column.getSize(),
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}>
+                    {cell.getIsGrouped() ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          row.toggleExpanded();
+                        }}
+                        style={{
+                          cursor: row.getIsGrouped() ? 'default' : 'pointer',
+                        }}>
+                        {row.getIsExpanded() ? '👇' : '👉'}{' '}
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())} (
+                        {row.subRows.length})
+                      </button>
+                    ) : cell.getIsAggregated() ? (
+                      flexRender(
+                        cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )
+                    ) : cell.getIsPlaceholder() ? null : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+          {paddingBottom > 0 && <tr style={{ height: `${paddingBottom}px`, width: '100%' }} />}
+        </>
+      );
+    };
+
+    return (
+      <div
+        ref={tableContainerRef}
+        className="relative overflow-auto rounded-lg border"
+        style={{
+          height: '600px',
+          width: '100%',
+        }}>
+        <table
+          style={{
+            display: paginationGrid ? 'table' : 'grid', // 가상 스크롤일 때 grid 사용
+            width: '100%',
+          }}>
+          <thead
+            style={{
+              display: paginationGrid ? 'table-header-group' : 'grid',
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              backgroundColor: 'rgb(249 250 251)',
+            }}>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                key={headerGroup.id}
+                style={{
+                  display: paginationGrid ? 'table-row' : 'flex',
+                  width: '100%',
+                }}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    style={{
+                      width: paginationGrid ? undefined : header.getSize(),
+                      display: paginationGrid ? 'table-cell' : 'flex',
+                    }}
+                    className="border-b px-4 py-2 text-left">
+                    <div className="flex flex-col gap-2">
+                      <div
+                        className={cn(
+                          header.column.getCanSort() ? 'cursor-pointer select-none' : '',
+                          'text-xs font-medium uppercase text-gray-500',
+                        )}
+                        onClick={header.column.getToggleSortingHandler()}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: ' 🔼',
+                          desc: ' 🔽',
+                        }[header.column.getIsSorted() as string] ?? null}
+                        {/* 필터 */}
+                        {header.column.columnDef.meta?.filterType && (
+                          <Button
+                            onClick={(e) => openFilterPopup(e, header.column)}
+                            size="xs"
+                            className="m-2">
+                            <FilterIcon />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody
+            style={{
+              display: paginationGrid ? 'table-row-group' : 'grid',
+              position: 'relative',
+              height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
+            }}>
+            {isLoading ? <p>Loading...</p> : renderRows()}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   //// 페이지네이션 렌더링
   const renderPagination = () => {
