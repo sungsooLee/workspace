@@ -1,0 +1,13 @@
+import { createFileRoute } from '@tanstack/react-router';
+
+export const Route = createFileRoute('/_guide/guide/button')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  return (
+    <div>
+      <h2 className="guide_tit2">Guide Info</h2>
+    </div>
+  );
+}
