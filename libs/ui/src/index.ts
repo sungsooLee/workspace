@@ -8,6 +8,9 @@ export * from './lib/popover/popover';
 // backdrop
 export * from './lib/backdrop/backdrop';
 
+// breadcrumb
+export * from './lib/breadcrumb/breadcrumb';
+
 // card
 export * from './lib/card/card';
 
