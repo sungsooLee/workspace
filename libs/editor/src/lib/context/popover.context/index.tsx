@@ -235,7 +235,7 @@ const Popover: FC<PopoverProps> = ({
         }}
         ref={buttonRef}>
         <IconRenderer icon={icon} />
-        {label && <span className="text dropdown-button-text">{label}</span>}
+        {label && <span className="text dropdown-button-text whitespace-nowrap">{label}</span>}
         <ChevronDown />
       </button>
       {showDropDown &&

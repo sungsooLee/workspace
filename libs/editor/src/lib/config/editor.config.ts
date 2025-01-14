@@ -3,8 +3,9 @@ import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
-import { ImageNode } from '../nodes/image.node';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
+import { ImageNode } from '../nodes/image.node';
+import { ReactPlayerNode } from '../nodes/react-player.node';
 // 초기 설정
 export const initialConfig = {
   namespace: 'MyEditor',
@@ -25,6 +26,7 @@ export const initialConfig = {
     TableCellNode,
     TableNode,
     TableRowNode,
+    ReactPlayerNode,
   ],
   theme: themeConfig,
 };

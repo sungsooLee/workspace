@@ -1,7 +1,5 @@
 import type { BaseSelection, LexicalCommand, LexicalEditor, NodeKey } from 'lexical';
 
-import './image.css';
-
 import { HashtagNode } from '@lexical/hashtag';
 import { LinkNode } from '@lexical/link';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';

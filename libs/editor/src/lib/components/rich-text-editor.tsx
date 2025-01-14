@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import Placeholder from './placeholder';
@@ -26,7 +26,7 @@ const RichTextEditor = () => {
     }
   };
   return (
-    <div className={'nlp--editor-container relative w-full min-w-[550px]'}>
+    <div className={'nlp--editor-container relative w-[780px] w-full'}>
       <ModalContext>
         <FloatingModalContext scrollTarget={scrollTarget}>
           <ToolbarPlugin />

@@ -1,13 +1,14 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
+import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
+import { $getSelection } from 'lexical';
 
 import { insertItems } from '../../../config/toolbar.config';
 import Popover, { PopoverItem } from '../../../context/popover.context';
-import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
-import { useToolbarState } from '../../../context/toolbar.context';
 import PlusIcon from '../../../assets/images/icons/plus.svg?react';
 import { useModal } from '../../../context/modal.context';
 import Image from './image';
@@ -15,7 +16,9 @@ import Video from './video';
 import Table from './table';
 import ImagesPlugin, { INSERT_IMAGE_COMMAND, InsertImagePayload } from '../../images.plugin';
 import TableCellResizer from '../../table-cell-resizer.plugin';
-import { INSERT_TABLE_COMMAND } from '@lexical/table';
+
+import { $createReactPlayerNode } from '../../../nodes/react-player.node';
+
 /**
  * 삽입 플러그인
  * [HorizontalRuleNode]
@@ -24,7 +27,6 @@ import { INSERT_TABLE_COMMAND } from '@lexical/table';
 const Insert = () => {
   const [editor] = useLexicalComposerContext();
   const { openModal, closeModal } = useModal();
-  const { toolbarState } = useToolbarState();
 
   const handleAddImage = (payload: InsertImagePayload) => {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
@@ -40,8 +42,18 @@ const Insert = () => {
     closeModal();
   };
 
+  const handleAddVideo = (url: string) => {
+    editor.update(() => {
+      const node = $createReactPlayerNode(url);
+      const selection = $getSelection();
+      if (selection) {
+        selection.insertNodes([node]);
+        closeModal();
+      }
+    });
+  };
+
   const handleChangeType = (type: string) => {
-    console.log('type =>', type);
     switch (type) {
       case 'horizontal-rule':
         editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
@@ -53,7 +65,7 @@ const Insert = () => {
         openModal('table', <Table onInsert={handleAddTable} />);
         break;
       case 'video':
-        openModal('Video', <Video />);
+        openModal('Video', <Video onInsert={handleAddVideo} />);
         break;
     }
   };

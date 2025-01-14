@@ -14,7 +14,6 @@ import {
 } from 'lexical';
 import Popover, { PopoverItem } from '../../context/popover.context';
 import { useToolbarState } from '../../context/toolbar.context';
-import PlusIcon from '../../assets/images/icons/plus.svg?react';
 import { elementFormatType } from '../../config/toolbar.config';
 import { getSelectedNode } from '../../utils/get-selected-node';
 const ElementFormat = () => {
@@ -62,15 +61,13 @@ const ElementFormat = () => {
           (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
         );
       }
-
-      updateToolbarState(
-        'elementFormat',
-        $isElementNode(matchingParent)
+      const formatType =
+        ($isElementNode(matchingParent)
           ? matchingParent.getFormatType()
           : $isElementNode(node)
             ? node.getFormatType()
-            : parent?.getFormatType() || 'left',
-      );
+            : parent?.getFormatType()) || 'left';
+      updateToolbarState('elementFormat', formatType);
     }
   }, [updateToolbarState]);
 

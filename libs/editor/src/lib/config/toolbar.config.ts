@@ -18,9 +18,10 @@ import Video from '../assets/images/icons/video.svg?react';
 import TextLeft from '../assets/images/icons/text-left.svg?react';
 import TextRight from '../assets/images/icons/text-right.svg?react';
 import TextCenter from '../assets/images/icons/text-center.svg?react';
+
+import TextOutdent from '../assets/images/icons/outdent.svg?react';
 import TextIndent from '../assets/images/icons/indent.svg?react';
-import Outdent from '../assets/images/icons/outdent.svg?react';
-import { Indent } from 'lucide-react';
+
 export const MIN_ALLOWED_FONT_SIZE = 8; // 최소 허용 폰트 크기
 export const MAX_ALLOWED_FONT_SIZE = 72; // 최대 허용 폰트 크기
 export const DEFAULT_FONT_SIZE = 15; // 기본 폰트 크기
@@ -170,13 +171,13 @@ export const elementFormatType = [
     value: 'center',
   },
   {
-    icon: Indent,
-    label: '들여쓰기',
-    value: 'indent',
-  },
-  {
-    icon: Outdent,
+    icon: TextOutdent,
     label: '내어쓰기',
     value: 'outdent',
+  },
+  {
+    icon: TextIndent,
+    label: '들여쓰기',
+    value: 'indent',
   },
 ];
