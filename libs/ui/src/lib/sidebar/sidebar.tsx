@@ -1,21 +1,29 @@
-import { memo } from 'react';
-
-import { SidebarProvider, SidebarTrigger } from './sidebar.shadcn';
+import React, { forwardRef } from 'react';
 import * as Primitive from './sidebar.shadcn';
 
 //export { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarFooter };
 export * from './sidebar.shadcn';
 
-function SidebarComponent() {
-  return (
-    <Primitive.Sidebar className="nlp--sidebar">
-      <Primitive.SidebarHeader className="nlp--sidebar-header"></Primitive.SidebarHeader>
-      <Primitive.SidebarContent className="nlp--sidebar-content">
-        <Primitive.SidebarGroup></Primitive.SidebarGroup>
-      </Primitive.SidebarContent>
-      <Primitive.SidebarFooter />
-    </Primitive.Sidebar>
-  );
+export interface SidebarComponentProps extends React.ComponentProps<typeof Primitive.Sidebar> {
+  items?: Array<never>;
 }
 
-//export const Sidebar = memo(SidebarComponent);
+const SidebarComponent = forwardRef<
+  React.ElementRef<typeof Primitive.Sidebar>,
+  SidebarComponentProps
+>(
+  ({ items, children, ...props }) => {
+    return (
+      <Primitive.SidebarProvider>
+        <Primitive.Sidebar >
+          <h1>Left</h1>
+        </Primitive.Sidebar>
+        <main>
+          <Primitive.SidebarTrigger />
+          {children}
+        </main>
+      </Primitive.SidebarProvider>
+    );
+  })
+
+export const Sidebar = SidebarComponent;
