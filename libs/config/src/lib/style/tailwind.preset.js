@@ -24,6 +24,10 @@ module.exports = {
           9: 'var(--secondary-9)',
           10: 'var(--secondary-10)',
         },
+        danger: {
+          DEFAULT: 'hsl(var(--danger))',
+          foreground: 'var(--danger-foreground)',
+        },
         gray: {
           1: '#F4F8FF',
           2: '#EAF1FA',
