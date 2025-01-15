@@ -24,14 +24,6 @@ const Contents: FC<{ editable: boolean }> = ({ editable }) => {
   };
 
   /**
-   * Edit mode
-   */
-  const handleEditMode = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsEdit(true);
-  };
-
-  /**
    * 링크 수정
    */
   const handleConfirm = (e: MouseEvent<HTMLButtonElement>) => {
@@ -126,16 +118,16 @@ const Contents: FC<{ editable: boolean }> = ({ editable }) => {
             <input
               ref={inputRef}
               type="text"
-              className={'rounded-lg bg-gray-3 flex-1 py-1 px-2'}
+              className={'bg-gray-3 flex-1 rounded-lg px-2 py-1'}
               value={url}
               onChange={handleUrlChange}
             />
             <div className={'flex gap-3'}>
               <button onClick={handleCancel}>
-                <CloseICon className={'w-[16px] h-[16px]'} />
+                <CloseICon className={'h-[16px] w-[16px]'} />
               </button>
               <button onClick={handleConfirm}>
-                <ConfirmIcon className={'w-[16px] h-[16px]'} />
+                <ConfirmIcon className={'h-[16px] w-[16px]'} />
               </button>
             </div>
           </>
@@ -146,10 +138,10 @@ const Contents: FC<{ editable: boolean }> = ({ editable }) => {
             </a>
             <div className={'flex gap-3'}>
               <button onClick={handleModify}>
-                <ModifyIcon className={'w-[16px] h-[16px]'} />
+                <ModifyIcon className={'h-[16px] w-[16px]'} />
               </button>
               <button onClick={handleDelete}>
-                <TrashIcon className={'w-[16px] h-[16px]'} />
+                <TrashIcon className={'h-[16px] w-[16px]'} />
               </button>
             </div>
           </>

@@ -1,9 +1,10 @@
-import { forwardRef, memo } from 'react';
+import { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
-import * as Primitive from './multi-select.shadcn';
+
+import * as Primitive from '../shadcn/multi-select';
 import { MultiSelectFieldProps } from './type';
 
-const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
+const MultiSelectComponent = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
   (
     {
       value = [],
@@ -43,4 +44,4 @@ const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
   },
 );
 
-export default memo(MultiSelect);
+export const MultiSelect = MultiSelectComponent;

@@ -49,4 +49,5 @@ out
 
 storybook-static
 
-./apps/fo/src/routeTree.gen.ts
+/apps/*/routeTree.gen.ts:
+

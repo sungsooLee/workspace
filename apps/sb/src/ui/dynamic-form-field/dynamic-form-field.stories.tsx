@@ -1,11 +1,11 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 // DynamicFormField.stories.tsx
 import { Meta, StoryObj } from '@storybook/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { FieldType } from '@learnway/ui';
-import { DynamicFormField } from '@learnway/ui';
+import { DynamicFormField, FieldType } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 
 export default {

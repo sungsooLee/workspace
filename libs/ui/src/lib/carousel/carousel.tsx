@@ -1,6 +1,6 @@
-import { forwardRef, memo } from 'react';
+import { forwardRef } from 'react';
 
-import * as Primitive from './carousel.shadcn';
+import * as Primitive from '../shadcn/carousel';
 
 export interface CarouselComponentProps extends Primitive.CarouselProps {
   items?: Array<JSX.Element>;
@@ -23,4 +23,4 @@ const CarouselComponent = forwardRef<
   )
 })
 
-export const Carousel = memo(CarouselComponent)
+export const Carousel = CarouselComponent

@@ -1,16 +1,16 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormInput } from '@learnway/ui';
-import { FormNumberInput } from '@learnway/ui';
+import { NumberInput } from '@learnway/ui';
 
 export default {
   title: 'Components/NumberInput',
-  component: FormNumberInput,
+  component: NumberInput,
   tags: ['autodocs'],
   argTypes: {},
 } as Meta;
-type Story = StoryObj<typeof FormInput>;
+type Story = StoryObj<typeof NumberInput>;
 
 const BaseFormWrapper: React.FC<any> = (args) => {
   const [value, setValue] = React.useState(args.value || '');
@@ -20,7 +20,7 @@ const BaseFormWrapper: React.FC<any> = (args) => {
     args.onChange?.(e);
   };
 
-  return <FormNumberInput {...args} value={value} onChange={handleChange} />;
+  return <NumberInput {...args} value={value} onChange={handleChange} />;
 };
 
 export const Default: Story = {

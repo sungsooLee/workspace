@@ -1,7 +1,7 @@
 import { useModalStore } from '../stores/useModalStore';
-import ModalContainer from './modal-container';
+import { ModalContainer } from './modal-container';
 
-const ModalWrapper = () => {
+const ModalWrapperComponent = () => {
   const modals = useModalStore((state) => state.modals);
 
   return (
@@ -12,4 +12,4 @@ const ModalWrapper = () => {
     </>
   );
 };
-export default ModalWrapper;
+export const ModalWrapper = ModalWrapperComponent;
