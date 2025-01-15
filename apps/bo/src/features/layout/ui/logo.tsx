@@ -9,7 +9,7 @@ const LogoCompoment = () => {
   const { data: tenant } = useFetchTenant(data?.activeTenantId);
 
   return (
-    <Link to={'/menu5/menu5-1'}>
+    <Link to={'/menu/$menuId'} params={{ menuId: 'menu2-3-1-2' }}>
       {(tenant?.logoImageUrl && (
         <img src={tenant?.logoImageUrl} title={tenant.name} className="h-16" />
       )) ??

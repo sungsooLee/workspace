@@ -1,55 +1,39 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMatchRoute } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from '@learnway/ui';
+import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent } from '@learnway/ui';
 
-import { Menu, MenuHierarchy } from '../../../../types/entities';
-import { useActiveMenuState } from '../../../../features/layout';
-import { Navigate } from './navigate/navigate';
+import { useActiveMenuDepthState } from '../../../../features/layout';
+
+import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';
 
 function LNBComponent() {
   const { t } = useTranslation();
 
-  const [activeMenu, setActiveMenu] = useActiveMenuState();
+  const [activeMenuDepth] = useActiveMenuDepthState();
 
-  const matchRoute = useMatchRoute();
+  if (!activeMenuDepth?.[0]) {
+    return <></>;
+  }
 
   return (
-    <Sidebar className={styles._start}>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>{activeMenu?.title}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {activeMenu?.children?.map((menu: MenuHierarchy) => (
-                <SidebarMenuItem key={menu.title}>
-                  <SidebarMenuButton asChild>
-                    <a
-                      href={menu.path}
-                      className={menu.path && matchRoute({ to: menu.path }) ? styles._active : ''}>
-                      <span>{menu.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+    <SidebarContent className={styles._start}>
+      <SidebarGroup>
+        <SidebarGroupLabel>{activeMenuDepth[0].title}</SidebarGroupLabel>
+        <SidebarGroupContent>
+          {activeMenuDepth[0]?.children && (
+            <AccordionMenu
+              menus={activeMenuDepth[0]?.children}
+              depth={2}
+              className={styles._depth2}
+            />
+          )}
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
   );
 }
 

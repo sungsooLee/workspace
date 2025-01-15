@@ -1,19 +1,17 @@
 export interface Hierarchy<T> {
+  key: string;
   title: string;
   path: string;
-  children?: T[];
+  children?: Hierarchy<T>[];
+  parentNode: Menu;
+  depth: number;
 }
 
-export interface MenuHierarchy extends Hierarchy<MenuHierarchy> {
+export interface Menu extends Hierarchy<Menu> {
   id?: number;
   isQuickAccessArea?: boolean;
   roles?: string;
   tenantName?: string; // 제거 예정
-}
-
-export interface Menu extends Hierarchy<MenuHierarchy> {
-  parentNode: Menu;
-  depth: number;
 }
 
 export interface FetchMenusParams {

@@ -1,4 +1,4 @@
-import { getQuerySkipToken } from '@learnway/shared';
+import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
 
 import MenuService from '../api/menu';
 import { FetchMenusParams, Menu } from '../../../types/entities/menu';
@@ -18,7 +18,18 @@ export const queryOptions = {
             : queryKeys.all,
           queryFn: async () => {
             const data = await MenuService.getMenus(params);
-            return data?.children as Menu[];
+
+            return convertHierarchyNode(
+              data?.children,
+              (node: any, depth: number, index: number, parentNode?: any) => {
+                node['depth'] = depth;
+                node['parentNode'] = parentNode;
+                if (!node?.key) {
+                  node['key'] = getRandomId();
+                }
+                return [node, node.children];
+              },
+            );
           },
         }
       : getQuerySkipToken<Menu[]>(),
