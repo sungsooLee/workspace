@@ -9,14 +9,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          'bg-secondary text-secondary-foreground shadow hover:bg-secondary/80 disabled:bg-gray-3 disabled:text-gray-6',
-        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline:
-          'border border-secondary text-secondary bg-background shadow-sm hover:bg-accent hover:text-accent-foreground disabled:border-gray-4 disabled:text-gray-5',
+        default: 'bg-secondary text-secondary-foreground shadow hover:bg-secondary/80 disabled:bg-gray-3 disabled:text-gray-6',
+        primary: 'bg-primary text-secondary-foreground shadow hover:bg-secondary/80 disabled:bg-gray-3 disabled:text-gray-6',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        'gray-outline':
-          'border border-gray-6 text-gray-8 bg-background shadow-sm hover:bg-accent hover:text-accent-foreground disabled:border-gray-4 disabled:text-gray-5 disabled:bg-gray-1',
+        danger: 'bg-danger text-danger-foreground shadow-sm hover:bg-danger/80',
+        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        outline: 'border border-secondary text-secondary bg-background shadow-sm hover:bg-accent hover:text-accent-foreground disabled:border-gray-4 disabled:text-gray-5',
+        'gray-outline': 'border border-gray-6 text-gray-8 bg-background shadow-sm hover:bg-accent hover:text-accent-foreground disabled:border-gray-4 disabled:text-gray-5 disabled:bg-gray-1',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-secondary underline-offset-4 hover:underline',
       },
