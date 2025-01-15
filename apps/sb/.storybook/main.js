@@ -4,8 +4,6 @@
 // import postcss from 'postcss';
 // import { fileURLToPath } from 'url';
 
-// const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 // const config: StorybookConfig = {
 //   stories: [
 //     '../src/**/*.stories.@(js|jsx|ts|tsx|mdx)', // src 디렉토리 아래의 모든 스토리 파일
@@ -18,8 +16,8 @@
 //       name: '@storybook/addon-styling',
 //       options: {
 //         postCss: {
-//           // implements: require.resolve('postcss'),
-//           implementation: postcss, // require.resolve 대신 직접 모듈 사용
+//           implements: require.resolve('postcss'),
+//           // implementation: postcss, // require.resolve 대신 직접 모듈 사용
 //         },
 //       },
 //     },
@@ -51,7 +49,7 @@
 
 // export default config;
 
-//Nx와 Storybook의 모듈 시스템 충돌로 인해 발생. main.ts 파일을 CommonJS 형식으로 변경
+// Nx와 Storybook의 모듈 시스템 충돌로 인해 발생. main.ts 파일을 CommonJS 형식으로 변경
 const path = require('path');
 const { mergeConfig } = require('vite');
 

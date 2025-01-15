@@ -8,6 +8,9 @@ export * from './lib/popover/popover';
 // backdrop
 export * from './lib/backdrop/backdrop';
 
+// breadcrumb
+export * from './lib/breadcrumb/breadcrumb';
+
 // card
 export * from './lib/card/card';
 
@@ -71,6 +74,10 @@ export * from './lib/shadcn/use-toast';
 
 // sidebar
 export * from './lib/sidebar/sidebar';
+
+// grid
+export * from './lib/grid';
+export * from './lib/grid/types';
 
 // shadcn (주석처리 예정)
 export * from './lib/shadcn/toaster';

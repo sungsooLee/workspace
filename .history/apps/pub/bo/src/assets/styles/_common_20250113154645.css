@@ -1,0 +1,16 @@
+/* _common.css 공통 */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: rem(16);
+  @include font-family;
+  font-weight: 400;
+  color: var(--FO_grey9);
+  line-height: 160%;
+}
+
+strong {
+  font-weight: 600;
+}

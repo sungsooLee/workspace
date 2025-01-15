@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
@@ -160,7 +161,7 @@ export const NestedModals: Story = {
       return (
         <div>
           <p>첫 번째 모달</p>
-          <div className="p-10 space-x-5 flex flex-row">
+          <div className="flex flex-row space-x-5 p-10">
             <Button onClick={openSecondModal}>두 번째 모달 열기</Button>
             <Button variant="outline" onClick={() => closeModal()}>
               첫 번째 모달 닫기

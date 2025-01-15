@@ -25,6 +25,7 @@
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/pages/_guide/_layout.tsx.bak"
   ]
 }
