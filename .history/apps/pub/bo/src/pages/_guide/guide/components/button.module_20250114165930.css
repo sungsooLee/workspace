@@ -1,0 +1,5 @@
+/* Button Components Style */
+.nlp_button {
+  padding: 12px 10px;
+  background-color: var(--secondary1);
+}

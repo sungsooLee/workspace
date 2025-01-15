@@ -1,0 +1,6 @@
+/* style.css */
+@import '_reset';
+@import './fonts/font.css';
+@import '_color';
+@import '_typography';
+@import '_layout';
