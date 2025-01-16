@@ -11,10 +11,11 @@ import {
 import { DynamicFieldProps } from '../type';
 import { FormItemControl } from './dynamic-form-field-control';
 
-const DynamicFormField = ({ name, label, type, ...props }: DynamicFieldProps) => {
+const DynamicFormField = ({ name = '', label, type, isRequired, ...props }: DynamicFieldProps) => {
   const form = useFormContext();
   const { schema } = useContext(FormSchemaContext);
-  const isRequired = schema?.shape?.[name] ? !schema.shape[name].isOptional() : false;
+  const required = isRequired ?? (schema?.shape?.[name] ? !schema.shape[name].isOptional() : false);
+
   return (
     <FormField
       control={form.control}
@@ -23,7 +24,7 @@ const DynamicFormField = ({ name, label, type, ...props }: DynamicFieldProps) =>
         <FormItem className={`group ${fieldState.error ? 'has-error' : ''}`}>
           <FormLabel>
             {label}
-            {isRequired && <span className="text-red-500 ml-1">*</span>}
+            {required && <span className="ml-1 text-red-500">*</span>}
           </FormLabel>
           <FormControl>
             <FormItemControl
