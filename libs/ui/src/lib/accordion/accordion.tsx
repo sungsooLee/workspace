@@ -4,6 +4,8 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 import { cn } from '@learnway/shared';
 
+import styles from './accordion.module.scss';
+
 export interface AccordionItem {
   key: string;
   title: string | React.ReactNode;
@@ -25,18 +27,18 @@ const AccordionComponent = forwardRef<
     <Primitive.Root
       type="single"
       collapsible
-      className={cn(className, 'nlp--accordion w-full')}
+      className={cn(styles.start, className, 'nlp--accordion', 'w-full')}
       value={value}
       onValueChange={onValueChange}
       ref={ref}>
       {items.map((item: AccordionItem) => {
         return (
-          <Primitive.Item value={item.key} className="nlp--accordion-item">
-            <Primitive.Trigger className="nlp--accordion-trigger">
+          <Primitive.Item value={item.key}>
+            <Primitive.Trigger>
               {item.title}
               {item.children && <ChevronDownIcon />}
             </Primitive.Trigger>
-            <Primitive.Content className="nlp--accordion-content">
+            <Primitive.Content>
               {item.children}
             </Primitive.Content>
           </Primitive.Item>
