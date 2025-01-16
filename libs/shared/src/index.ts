@@ -5,3 +5,4 @@ export * from './lib/utils/cn';
 export * from './lib/utils/query';
 export * from './lib/utils/tree';
 export * from './lib/utils/depsAreSame';
+export * from './lib/utils/random-generator';

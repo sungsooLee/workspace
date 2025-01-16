@@ -1,0 +1,29 @@
+/* _common.css 공통 */
+// 스타일 정의
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: rem(16);
+  @include font-family;
+  font-weight: 400;
+  color: var(--FO_grey9);
+  line-height: 160%;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-left {
+  @include flex-left;
+}

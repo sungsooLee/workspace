@@ -1,0 +1,78 @@
+@import './_reset.css';
+@import './fonts/font.css';
+
+/* _color.css */
+
+/* font, BG */
+:root {
+  /* gray Scale */
+  --white: #ffffff;
+
+  --gray1: #f6f8fd; /* BG */
+  --gray2: #f2f5fb; /* Table_bg */
+  --gray3: #edf0f7; /* Table_line */
+  --gray4: #e3e9ef;
+  --gray5: #d6dae1; /* Disable_txt, Inputfield */
+  --gray6: #a9afb8;
+  --gray7: #6f798b;
+  --gray8: #4c515e;
+  --gray9: #4c515e;
+  --gray10: #0c0f15;
+
+  /* button */
+  --primary1: #06226a; /* 버튼 프레스 */
+  --primary2: #07287e;
+  --primary3: #0f3492; /* 버튼 호버 */
+
+  --secondary1: #00afd5;
+  --secondary2: #00b6de; /* 버튼 호버 */
+  --secondary3: #0093bc; /* 버튼 프레스 */
+  --secondary4: #b2e7f2;
+  --secondary5: #d8f8ff; /* select */
+  --secondary6: #edfcff; /* bg */
+  --secondary7: #ffdada; /* red plus */
+  --secondary8: #ffeded; /* red bg */
+  --secondary9: #ffeded; /* contents bg */
+  --secondary10: #f6f8fd; /* table bg */
+
+  /* Support */
+  --status1: #ff4646; /* Error */
+  --status2: #ffb902; /* Warning */
+  --status3: #3eb838; /* Complete */
+  --status4: #926bea; /* icon */
+}
+
+/* _common.css 공통 */
+html {
+  font-size: 62.5%;
+}
+
+html {
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    sans-serif;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gray9);
+  line-height: 160%;
+}
+
+strong {
+  font-weight: 600;
+}

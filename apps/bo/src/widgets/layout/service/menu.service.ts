@@ -2,15 +2,19 @@ import { useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
-import { convertHierarchyToList } from '@learnway/shared';
+import { convertHierarchyToList, getRandomId } from '@learnway/shared';
 
 import { useFetchMenus } from '../../../entities/menu';
 import { useFetchAuthUser } from '../../../entities/user';
-import { MenuHierarchy, Menu } from '../../../types';
+import { Menu, HookData } from '../../../types';
 
-import { useActiveMenuState } from '../../../features/layout';
+import { useActiveMenuDepthState } from '../../../features/layout';
 
-export function useMenuHierarchy(isQuickAccessArea = false) {
+/**
+ * 메뉴 정보를 트리 구조로 반환
+ * isQuickAccessArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
+ */
+export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
   const { data } = useFetchMenus({
     parentMenuId: 1,
@@ -18,6 +22,7 @@ export function useMenuHierarchy(isQuickAccessArea = false) {
     roleIds: authUser?.activeRoleId,
   });
 
+  console.log('data', data);
   return {
     data: useCreation(() => {
       if (!data || !data?.length) {
@@ -25,13 +30,17 @@ export function useMenuHierarchy(isQuickAccessArea = false) {
       }
 
       return isQuickAccessArea
-        ? data?.filter((menu: MenuHierarchy) => menu?.isQuickAccessArea)
-        : data?.filter((menu: MenuHierarchy) => !menu?.isQuickAccessArea);
+        ? data?.filter((menu: Menu) => menu?.isQuickAccessArea)
+        : data?.filter((menu: Menu) => !menu?.isQuickAccessArea);
     }, [data, isQuickAccessArea]),
   };
 }
 
-export function useMenus() {
+/**
+ * 전체 메뉴 정보를 리스트로 반환
+ * isQuickAccessArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
+ */
+export function useMenus(): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
   const { data } = useFetchMenus({
     parentMenuId: 1,
@@ -47,38 +56,41 @@ export function useMenus() {
 
       return convertHierarchyToList(
         data,
+        /*
         (node: any, depth: number, index: number, parentNode?: any) => {
-          return {
-            ...node,
-            depth,
-            parentNode,
-          };
-        },
+          node['depth'] = depth;
+          node['parentNode'] = parentNode;
+          node['key'] = getRandomId();
+          return node;
+        },*/
       );
     }, [data]),
   };
 }
 
+/**
+ * Routing 상태 변경 시 Active menu depth 상태 정보 갱신
+ */
 export function useRenewalMenuStateFromRouting() {
   const state = useRouterState();
 
   const { data } = useMenus();
-  const [, setActiveMenu] = useActiveMenuState();
+  const [, setActiveMenuDepth] = useActiveMenuDepthState();
 
   useEffect(() => {
     if (state.location.pathname === '/') {
       return;
     }
+    const depths: Menu[] = [];
     const recursiveCall = (path: string) => {
       data.some((menu: Menu) => {
         if (menu.path === path) {
-          if (menu.depth > 1) {
-            recursiveCall(menu.parentNode.path);
-            return true;
+          depths.unshift(menu);
+          if (menu.depth === 1) {
+            setActiveMenuDepth(depths);
           } else {
-            setActiveMenu(menu);
+            recursiveCall(menu.parentNode.path);
           }
-
           return true;
         }
       });

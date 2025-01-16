@@ -2,10 +2,13 @@ import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { SidebarProvider, SidebarTrigger } from '@learnway/ui';
+import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
 
-import { useActiveMenuState } from '../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../features/layout';
 import { LNB } from '../lnb/lnb';
+import { PageContainer } from '../container/page-container';
+
+import styles from './layout.module.css';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -14,21 +17,23 @@ interface LayoutComponentProps {
 function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
-  const [active1TierMenu] = useActiveMenuState();
+  const [activeMenuDepth] = useActiveMenuDepthState();
 
-  if (!active1TierMenu || !active1TierMenu?.children?.length) {
-    return <div className="bg-secondary-1 flex flex-col">{children}</div>;
+  if (activeMenuDepth && activeMenuDepth[0].children && activeMenuDepth[0].children?.length > 0) {
+    return (
+      <SidebarProvider className={styles._start}>
+        <Sidebar className={styles._sidebar}>
+          <LNB />
+        </Sidebar>
+        <main>
+          <SidebarTrigger />
+          <PageContainer>{children}</PageContainer>
+        </main>
+      </SidebarProvider>
+    );
   }
 
-  return (
-    <SidebarProvider>
-      <LNB />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
-  );
+  return <PageContainer>{children}</PageContainer>;
 }
 
 export const Layout = memo(LayoutComponent);
