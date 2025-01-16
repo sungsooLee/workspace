@@ -1,8 +1,8 @@
 import { BaseFieldProps } from '../type';
 
 export interface SelectOption {
-  value: string;
   label: string;
+  value: string;
   icon?: React.ComponentType<{ className?: string }>;
   extra?: any;
 }
