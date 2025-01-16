@@ -1,11 +1,4 @@
-export interface Hierarchy<T> {
-  key: string;
-  title: string;
-  path: string;
-  children?: Hierarchy<T>[];
-  parentNode: Menu;
-  depth: number;
-}
+import { Hierarchy } from '../hierarchy';
 
 export interface Menu extends Hierarchy<Menu> {
   id?: number;

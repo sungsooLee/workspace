@@ -1384,18 +1384,21 @@
     {
       "title": "마켓플레이스",
       "roles": "ROLE_ADMIN",
+      "path": "/menu/marketplace",
       "children": [
         {
           "title": "마켓플레이스 목록",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "isQuickAccessArea": false
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-list"
         },
         {
           "title": "공유하기 설정",
           "roles": "ROLE_ADMIN",
-          "tenantName": "현대자동차",
-          "isQuickAccessArea": false
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-shared",
+          "messageCode": "course_search"
         },
         {
           "title": "공유요청 승인",

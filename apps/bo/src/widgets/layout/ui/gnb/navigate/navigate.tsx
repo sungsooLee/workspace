@@ -16,7 +16,6 @@ function NavigateComponent() {
   const matchRoute = useMatchRoute();
 
   const handleMenuClick = (menu: Menu) => {
-    setActiveMenuDepthMenu([menu]);
     router.navigate({ to: menu.path });
   };
 
