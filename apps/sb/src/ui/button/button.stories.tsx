@@ -24,7 +24,7 @@ export const ButtonStory: Story = {
   render: (args) => <Template {...args} />,
 };
 
-export const LadingButton: Story = {
+export const LoadingButton: Story = {
   args: {
     isLoading: true,
   },

@@ -9,6 +9,7 @@ export interface ButtonComponentProps extends React.ComponentProps<typeof Primit
   iconAlign?: 'left' | 'right';
   onlyIcon?: boolean;
   isLoading?: boolean;
+  dummy?: boolean;
 }
 
 const ButtonComponent = forwardRef<
