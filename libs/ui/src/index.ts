@@ -79,6 +79,9 @@ export * from './lib/sidebar/sidebar';
 export * from './lib/grid';
 export * from './lib/grid/types';
 
+// form-builder
+export * from './lib/apply-form-builder';
+
 // shadcn (주석처리 예정)
 export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/badge';

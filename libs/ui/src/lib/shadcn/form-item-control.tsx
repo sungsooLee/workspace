@@ -2,13 +2,13 @@ import { ControllerRenderProps } from 'react-hook-form';
 import { FieldType } from '../type';
 import { Input as FormInput } from '../input/input';
 import { NumberInput as FormNumberInput } from '../input/number-input';
-import { Select as FormSelect } from '../select/select';
 import { MultiSelect as FormMultiSelect } from '../select/multi-select';
 import { Checkbox as FormCheckBox } from '../checkbox/checkbox';
-import { Switch as FormSwitch } from '../switch/switch';
-import { Radio as FormRadioGroup } from '../radio/radio';
 import { DatePicker as FormDatePicker } from '../date-picker/date-picker';
 import { DateRangePicker as FormDateRangePicker } from '../date-picker/date-range-picker';
+import { Select } from '../select/select';
+import { Switch as FormSwitch } from '../switch/switch';
+import { Radio as FormRadioGroup } from '../radio/radio';
 
 interface FormControlProps {
   field: ControllerRenderProps;
@@ -32,7 +32,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
     case FieldType.TEXT:
       return <FormInput {...commonProps} placeholder={props.placeholder} />;
     case FieldType.SELECT:
-      return <FormSelect {...commonProps} options={props.options} />;
+      return <Select {...commonProps} options={props.options} />;
 
     case FieldType.MULTI_SELECT:
       return (
