@@ -5,7 +5,7 @@ interface ButtonProps {
   className?: string; // 클래스
   onClick?: () => void; // 버튼 클릭 callback
   disabled?: boolean; // 비활성화 여부
-  active?: boolean; // 활성화 여부
+  active?: boolean; // 활성화 여부O
 }
 
 /**

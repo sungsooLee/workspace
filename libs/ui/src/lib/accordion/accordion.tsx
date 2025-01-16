@@ -16,7 +16,7 @@ export interface AccordionComponentProps {
   items: AccordionItem[];
   className?: string;
   value?: string;
-  onValueChange: (value: string | string[]) => void;
+  onValueChange?: (value: string | string[]) => void;
 }
 
 const AccordionComponent = forwardRef<
