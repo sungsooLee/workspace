@@ -1,5 +1,8 @@
 // accordion
-export * from './lib/accordion/accordion';
+export * from './lib/accordion/accordion'
+
+// button
+export * from './lib/button/button';
 
 // avatar
 export * from './lib/avatar/avatar';
@@ -48,6 +51,9 @@ export * from './lib/radio/radio';
 export * from './lib/select/select';
 export * from './lib/select/multi-select';
 
+// sidebar
+export * from './lib/sidebar/sidebar';
+
 // switch
 export * from './lib/switch/switch';
 
@@ -85,7 +91,7 @@ export * from './lib/apply-form-builder';
 // shadcn (주석처리 예정)
 export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/badge';
-export * from './lib/shadcn/button';
+// export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';
 export * from './lib/shadcn/command';
 export * from './lib/shadcn/dialog';

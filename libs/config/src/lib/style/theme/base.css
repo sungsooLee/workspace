@@ -25,13 +25,15 @@
   --secondary-8: #2e7ee7;
   --secondary-9: #f6f8fd;
   --secondary-10: #f2f4f9;
+  --danger: 0, 100%, 96%;
+  --danger-foreground: #FF4646;
   --status-error: #ed2929;
   --status-warning: #ffb902;
   --destructive: 0 100% 50%;
   --destructive-foreground: 210 40% 98%;
   --ring: 215 20.2% 65.1%;
   --radius: 0.5rem;
-  
+
   --sidebar-background: 0 0% 98%;
   --sidebar-foreground: 240 5.3% 26.1%;
   --sidebar-primary: 240 5.9% 10%;

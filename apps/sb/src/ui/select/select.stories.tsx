@@ -1,7 +1,8 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from '@learnway/ui';
+import useSelect from '@/libs/ui/src/lib/select/logic';
 
 export default {
   title: 'Components/Select',
@@ -11,8 +12,18 @@ export default {
 } as Meta;
 type Story = StoryObj<typeof Select>;
 
-const BaseWrapper: React.FC<any> = (args) => {
-  return <Select {...args} />;
+const Template: React.FC<any> = (args) => {
+  return <Select {...args}  />;
+};
+
+const TemplateControl: React.FC<any> = (args) => {
+  const [value, setValue] = useState<string>('value2');
+  return (
+    <div>
+      <span><button onClick={() => setValue('value1')}>Set Value</button></span>
+      <Select {...args} value={value} />
+    </div>
+  );
 };
 
 // Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
@@ -21,5 +32,13 @@ export const SelectStory: Story = {
   args: {
     options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
   },
-  render: (args) => <BaseWrapper {...args} />,
+  render: (args) => <Template {...args} onChange={(option: any) => console.log(option)}/>,
+};
+
+export const SetValue: Story = {
+  args: {
+    // value: 'value2',
+    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
+  },
+  render: (args) => <TemplateControl {...args} />,
 };
