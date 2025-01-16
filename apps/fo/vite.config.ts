@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
-import svgr from 'vite-plugin-svgr';
+//import svgr from 'vite-plugin-svgr';
+import svgr from '@svgr/rollup';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';

@@ -23,7 +23,7 @@
       "@learnway/hooks": ["libs/hooks/src/index.ts"],
       "@learnway/shared": ["libs/shared/src/index.ts"],
       "@learnway/ui": ["libs/ui/src/index.ts"],
-      "editor": ["libs/editor/src/index.ts"],
+      "@learnway/icons": ["libs/icons/src/index.ts"],
       "types": ["libs/types/src/index.ts"]
     }
   },

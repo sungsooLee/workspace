@@ -3,7 +3,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import svgr from 'vite-plugin-svgr';
+//import svgr from 'vite-plugin-svgr';
+import svgr from '@svgr/rollup';
 
 export default defineConfig({
   root: __dirname,

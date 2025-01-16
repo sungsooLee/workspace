@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
@@ -17,6 +19,11 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutAppleRouteImport } from './pages/_layout/apple/_route'
+
+// Create Virtual Routes
+
+const LayoutAppleImport = createFileRoute('/_layout/apple')()
 
 // Create/Update Routes
 
@@ -29,6 +36,12 @@ const TestRoute = TestImport.update({
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutAppleRoute = LayoutAppleImport.update({
+  id: '/apple',
+  path: '/apple',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const LoginIndexRoute = LoginIndexImport.update({
@@ -54,6 +67,13 @@ const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   path: '/menu/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutAppleRouteRoute = LayoutAppleRouteImport.update({
+  id: '/_route',
+  getParentRoute: () => LayoutAppleRoute,
+} as any).lazy(() =>
+  import('./pages/_layout/apple/_route.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -87,6 +107,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_layout/apple': {
+      id: '/_layout/apple'
+      path: '/apple'
+      fullPath: '/apple'
+      preLoaderRoute: typeof LayoutAppleImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/apple/_route': {
+      id: '/_layout/apple/_route'
+      path: '/apple'
+      fullPath: '/apple'
+      preLoaderRoute: typeof LayoutAppleRouteImport
+      parentRoute: typeof LayoutAppleRoute
+    }
     '/_layout/menu/$menuId': {
       id: '/_layout/menu/$menuId'
       path: '/menu/$menuId'
@@ -106,14 +140,28 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface LayoutAppleRouteChildren {
+  LayoutAppleRouteRoute: typeof LayoutAppleRouteRoute
+}
+
+const LayoutAppleRouteChildren: LayoutAppleRouteChildren = {
+  LayoutAppleRouteRoute: LayoutAppleRouteRoute,
+}
+
+const LayoutAppleRouteWithChildren = LayoutAppleRoute._addFileChildren(
+  LayoutAppleRouteChildren,
+)
+
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutAppleRoute: typeof LayoutAppleRouteWithChildren
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenuIndexRoute: typeof LayoutMenuIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutAppleRoute: LayoutAppleRouteWithChildren,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenuIndexRoute: LayoutMenuIndexRoute,
 }
@@ -126,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/apple': typeof LayoutAppleRouteRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu': typeof LayoutMenuIndexRoute
 }
@@ -134,6 +183,7 @@ export interface FileRoutesByTo {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/apple': typeof LayoutAppleRouteRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu': typeof LayoutMenuIndexRoute
 }
@@ -144,21 +194,32 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/_layout/apple': typeof LayoutAppleRouteWithChildren
+  '/_layout/apple/_route': typeof LayoutAppleRouteRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu/': typeof LayoutMenuIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/test' | '/' | '/login' | '/menu/$menuId' | '/menu'
+  fullPaths:
+    | ''
+    | '/test'
+    | '/'
+    | '/login'
+    | '/apple'
+    | '/menu/$menuId'
+    | '/menu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/test' | '/' | '/login' | '/menu/$menuId' | '/menu'
+  to: '/test' | '/' | '/login' | '/apple' | '/menu/$menuId' | '/menu'
   id:
     | '__root__'
     | '/_layout'
     | '/test'
     | '/_layout/'
     | '/login/'
+    | '/_layout/apple'
+    | '/_layout/apple/_route'
     | '/_layout/menu/$menuId'
     | '/_layout/menu/'
   fileRoutesById: FileRoutesById
@@ -195,6 +256,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/apple",
         "/_layout/menu/$menuId",
         "/_layout/menu/"
       ]
@@ -208,6 +270,17 @@ export const routeTree = rootRoute
     },
     "/login/": {
       "filePath": "login/index.tsx"
+    },
+    "/_layout/apple": {
+      "filePath": "_layout/apple",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/apple/_route"
+      ]
+    },
+    "/_layout/apple/_route": {
+      "filePath": "_layout/apple/_route.tsx",
+      "parent": "/_layout/apple"
     },
     "/_layout/menu/$menuId": {
       "filePath": "_layout/menu/$menuId.tsx",
