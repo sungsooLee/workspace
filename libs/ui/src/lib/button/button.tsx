@@ -1,8 +1,11 @@
 import React, { forwardRef } from 'react';
-import * as Primitive from '../shadcn/button';
 import { Loader2 } from 'lucide-react';
 
-export interface ButtonComponentProps extends React.ComponentProps<typeof Primitive.Button> {
+import { cn } from '@learnway/shared';
+
+import styles from './button.module.scss';
+
+export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger' | 'default' | 'destructive' | 'outline' | 'gray-outline' | 'ghost' | 'link'; // override from shadcn.button
   size?: 'xs' | 'sm' | 'md' | 'md-1' | 'lg' | 'icon'; // override from shadcn.button
   icon?: React.ReactNode;
@@ -13,13 +16,14 @@ export interface ButtonComponentProps extends React.ComponentProps<typeof Primit
 }
 
 const ButtonComponent = forwardRef<
-  React.ElementRef<typeof Primitive.Button>,
+  HTMLButtonElement,
   ButtonComponentProps
 >(
   ({ icon, iconAlign = 'left', onlyIcon = false, isLoading, disabled, children, ...props }) => {
     return (
-      <Primitive.Button
+      <button
         {...props}
+        className={cn(styles.start, 'nlp--button')}
         disabled={disabled || isLoading}
       >
 
@@ -35,7 +39,7 @@ const ButtonComponent = forwardRef<
         {/* right icon */}
         {iconAlign === 'right' && icon}
 
-      </Primitive.Button>
+      </button>
     );
   },
 );
