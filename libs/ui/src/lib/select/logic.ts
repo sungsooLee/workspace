@@ -10,8 +10,10 @@ export default function useSelect({ options, onChange }: SelectComponentProps) {
     setSelectedItem(defaultSelectedItem)
   }, [])
 
+
   function setCurrentSelectedItem(value: string) {
-    const item = options.find(option => option.value === value)
+    const item = options.find(d => d.value === value)
+
     setSelectedItem(item)
 
     if (onChange) {

@@ -1,8 +1,8 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from "@radix-ui/react-select";
+import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
 import useSelect from './logic';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
@@ -17,50 +17,25 @@ export interface SelectComponentProps extends React.ComponentProps<typeof Primit
   onChange?: (value?: SelectOption) => void;
 }
 
-const SelectItem = React.forwardRef(
-  ({ children, className, ...props }: any, forwardedRef) => {
-    return (
-      <Primitive.Item
-        className={cn(styles.SelectItem, className)}
-        {...props}
-        ref={forwardedRef}
-      >
-        <Primitive.ItemText>{children}</Primitive.ItemText>
-        <Primitive.ItemIndicator className="SelectItemIndicator">
-          <CheckIcon />
-        </Primitive.ItemIndicator>
-      </Primitive.Item>
-    );
-  },
-);
-
 const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SelectComponentProps>(
   (
-    { options, labelKey = 'label', valueKey = 'value', disabled, onChange, placeholder, ...props },
+    {
+      options,
+      value,
+      labelKey = 'label',
+      valueKey = 'value',
+      disabled,
+      onChange,
+      placeholder,
+      ...props
+    },
     ref,
   ) => {
-    const selectClassName = cn(
-      'nlp--select-trigger',
-      'w-full',
-      'focus:border-blue-500 focus:outline-none',
-      'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
-    );
-
-    // const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
-
-    useEffect(() => {
-      if (props.value) {
-        console.log('change parent value', props.value)
-        setValue(props.value);
-      }
-    }, [props.value])
-
-
-    const [value, setValue] = React.useState(props.value);
+    const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
 
     return (
-      <div className={styles.start}>
-        <Primitive.Root value={value} onValueChange={setValue}>
+      <div className={cn(styles.start, 'nlp--select')}>
+        <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
           <Primitive.Trigger className={styles.SelectTrigger} aria-label="Food">
             <Primitive.Value placeholder={placeholder} />
             <Primitive.Icon className={styles.SelectIcon}>
@@ -73,11 +48,11 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
                 <ChevronUpIcon />
               </Primitive.ScrollUpButton>
               <Primitive.Viewport className={styles.SelectViewport}>
-
                 {options.map(({ value, label }) => (
-                  <SelectItem value={value}>{label}</SelectItem>
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
                 ))}
-
               </Primitive.Viewport>
               <Primitive.ScrollDownButton className={styles.SelectScrollButton}>
                 <ChevronDownIcon />
@@ -89,5 +64,16 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     );
   },
 );
+
+const SelectItem = React.forwardRef(({ children, className, ...props }: any, forwardedRef) => {
+  return (
+    <Primitive.Item className={cn(styles.SelectItem, className)} {...props} ref={forwardedRef}>
+      <Primitive.ItemText>{children}</Primitive.ItemText>
+      <Primitive.ItemIndicator className="SelectItemIndicator">
+        <CheckIcon />
+      </Primitive.ItemIndicator>
+    </Primitive.Item>
+  );
+});
 
 export const Select = SelectComponent;
