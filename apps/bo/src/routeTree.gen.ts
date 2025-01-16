@@ -15,16 +15,8 @@ import { Route as TestImport } from './pages/test'
 import { Route as LayoutImport } from './pages/_layout'
 import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LayoutMenu5IndexImport } from './pages/_layout/menu5/index'
-import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
-import { Route as LayoutMenu2IndexImport } from './pages/_layout/menu2/index'
-import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
-import { Route as LayoutMenu6Menu7Import } from './pages/_layout/menu6/menu7'
-import { Route as LayoutMenu5Menu51Import } from './pages/_layout/menu5/menu5-1'
-import { Route as LayoutMenu4Menu41Import } from './pages/_layout/menu4/menu4-1'
-import { Route as LayoutMenu3Menu32Import } from './pages/_layout/menu3/menu3-2'
-import { Route as LayoutMenu3Menu31Import } from './pages/_layout/menu3/menu3-1'
-import { Route as LayoutMenu2Menu21Import } from './pages/_layout/menu2/menu2-1'
+import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
+import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
 
 // Create/Update Routes
 
@@ -51,63 +43,15 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutMenu5IndexRoute = LayoutMenu5IndexImport.update({
-  id: '/menu5/',
-  path: '/menu5/',
+const LayoutMenuIndexRoute = LayoutMenuIndexImport.update({
+  id: '/menu/',
+  path: '/menu/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
-  id: '/menu3/',
-  path: '/menu3/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu2IndexRoute = LayoutMenu2IndexImport.update({
-  id: '/menu2/',
-  path: '/menu2/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
-  id: '/menu8/menu9',
-  path: '/menu8/menu9',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu6Menu7Route = LayoutMenu6Menu7Import.update({
-  id: '/menu6/menu7',
-  path: '/menu6/menu7',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu5Menu51Route = LayoutMenu5Menu51Import.update({
-  id: '/menu5/menu5-1',
-  path: '/menu5/menu5-1',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu4Menu41Route = LayoutMenu4Menu41Import.update({
-  id: '/menu4/menu4-1',
-  path: '/menu4/menu4-1',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu3Menu32Route = LayoutMenu3Menu32Import.update({
-  id: '/menu3/menu3-2',
-  path: '/menu3/menu3-2',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu3Menu31Route = LayoutMenu3Menu31Import.update({
-  id: '/menu3/menu3-1',
-  path: '/menu3/menu3-1',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu2Menu21Route = LayoutMenu2Menu21Import.update({
-  id: '/menu2/menu2-1',
-  path: '/menu2/menu2-1',
+const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
+  id: '/menu/$menuId',
+  path: '/menu/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -143,74 +87,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/menu2/menu2-1': {
-      id: '/_layout/menu2/menu2-1'
-      path: '/menu2/menu2-1'
-      fullPath: '/menu2/menu2-1'
-      preLoaderRoute: typeof LayoutMenu2Menu21Import
+    '/_layout/menu/$menuId': {
+      id: '/_layout/menu/$menuId'
+      path: '/menu/$menuId'
+      fullPath: '/menu/$menuId'
+      preLoaderRoute: typeof LayoutMenuMenuIdImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/menu3/menu3-1': {
-      id: '/_layout/menu3/menu3-1'
-      path: '/menu3/menu3-1'
-      fullPath: '/menu3/menu3-1'
-      preLoaderRoute: typeof LayoutMenu3Menu31Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu3/menu3-2': {
-      id: '/_layout/menu3/menu3-2'
-      path: '/menu3/menu3-2'
-      fullPath: '/menu3/menu3-2'
-      preLoaderRoute: typeof LayoutMenu3Menu32Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu4/menu4-1': {
-      id: '/_layout/menu4/menu4-1'
-      path: '/menu4/menu4-1'
-      fullPath: '/menu4/menu4-1'
-      preLoaderRoute: typeof LayoutMenu4Menu41Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu5/menu5-1': {
-      id: '/_layout/menu5/menu5-1'
-      path: '/menu5/menu5-1'
-      fullPath: '/menu5/menu5-1'
-      preLoaderRoute: typeof LayoutMenu5Menu51Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu6/menu7': {
-      id: '/_layout/menu6/menu7'
-      path: '/menu6/menu7'
-      fullPath: '/menu6/menu7'
-      preLoaderRoute: typeof LayoutMenu6Menu7Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu8/menu9': {
-      id: '/_layout/menu8/menu9'
-      path: '/menu8/menu9'
-      fullPath: '/menu8/menu9'
-      preLoaderRoute: typeof LayoutMenu8Menu9Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu2/': {
-      id: '/_layout/menu2/'
-      path: '/menu2'
-      fullPath: '/menu2'
-      preLoaderRoute: typeof LayoutMenu2IndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu3/': {
-      id: '/_layout/menu3/'
-      path: '/menu3'
-      fullPath: '/menu3'
-      preLoaderRoute: typeof LayoutMenu3IndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu5/': {
-      id: '/_layout/menu5/'
-      path: '/menu5'
-      fullPath: '/menu5'
-      preLoaderRoute: typeof LayoutMenu5IndexImport
+    '/_layout/menu/': {
+      id: '/_layout/menu/'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof LayoutMenuIndexImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -220,30 +108,14 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutMenu2Menu21Route: typeof LayoutMenu2Menu21Route
-  LayoutMenu3Menu31Route: typeof LayoutMenu3Menu31Route
-  LayoutMenu3Menu32Route: typeof LayoutMenu3Menu32Route
-  LayoutMenu4Menu41Route: typeof LayoutMenu4Menu41Route
-  LayoutMenu5Menu51Route: typeof LayoutMenu5Menu51Route
-  LayoutMenu6Menu7Route: typeof LayoutMenu6Menu7Route
-  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
-  LayoutMenu2IndexRoute: typeof LayoutMenu2IndexRoute
-  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
-  LayoutMenu5IndexRoute: typeof LayoutMenu5IndexRoute
+  LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
+  LayoutMenuIndexRoute: typeof LayoutMenuIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutMenu2Menu21Route: LayoutMenu2Menu21Route,
-  LayoutMenu3Menu31Route: LayoutMenu3Menu31Route,
-  LayoutMenu3Menu32Route: LayoutMenu3Menu32Route,
-  LayoutMenu4Menu41Route: LayoutMenu4Menu41Route,
-  LayoutMenu5Menu51Route: LayoutMenu5Menu51Route,
-  LayoutMenu6Menu7Route: LayoutMenu6Menu7Route,
-  LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
-  LayoutMenu2IndexRoute: LayoutMenu2IndexRoute,
-  LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
-  LayoutMenu5IndexRoute: LayoutMenu5IndexRoute,
+  LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
+  LayoutMenuIndexRoute: LayoutMenuIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -254,32 +126,16 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
-  '/menu2/menu2-1': typeof LayoutMenu2Menu21Route
-  '/menu3/menu3-1': typeof LayoutMenu3Menu31Route
-  '/menu3/menu3-2': typeof LayoutMenu3Menu32Route
-  '/menu4/menu4-1': typeof LayoutMenu4Menu41Route
-  '/menu5/menu5-1': typeof LayoutMenu5Menu51Route
-  '/menu6/menu7': typeof LayoutMenu6Menu7Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/menu2': typeof LayoutMenu2IndexRoute
-  '/menu3': typeof LayoutMenu3IndexRoute
-  '/menu5': typeof LayoutMenu5IndexRoute
+  '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/menu': typeof LayoutMenuIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
-  '/menu2/menu2-1': typeof LayoutMenu2Menu21Route
-  '/menu3/menu3-1': typeof LayoutMenu3Menu31Route
-  '/menu3/menu3-2': typeof LayoutMenu3Menu32Route
-  '/menu4/menu4-1': typeof LayoutMenu4Menu41Route
-  '/menu5/menu5-1': typeof LayoutMenu5Menu51Route
-  '/menu6/menu7': typeof LayoutMenu6Menu7Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/menu2': typeof LayoutMenu2IndexRoute
-  '/menu3': typeof LayoutMenu3IndexRoute
-  '/menu5': typeof LayoutMenu5IndexRoute
+  '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/menu': typeof LayoutMenuIndexRoute
 }
 
 export interface FileRoutesById {
@@ -288,66 +144,23 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
-  '/_layout/menu2/menu2-1': typeof LayoutMenu2Menu21Route
-  '/_layout/menu3/menu3-1': typeof LayoutMenu3Menu31Route
-  '/_layout/menu3/menu3-2': typeof LayoutMenu3Menu32Route
-  '/_layout/menu4/menu4-1': typeof LayoutMenu4Menu41Route
-  '/_layout/menu5/menu5-1': typeof LayoutMenu5Menu51Route
-  '/_layout/menu6/menu7': typeof LayoutMenu6Menu7Route
-  '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/_layout/menu2/': typeof LayoutMenu2IndexRoute
-  '/_layout/menu3/': typeof LayoutMenu3IndexRoute
-  '/_layout/menu5/': typeof LayoutMenu5IndexRoute
+  '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/_layout/menu/': typeof LayoutMenuIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/test'
-    | '/'
-    | '/login'
-    | '/menu2/menu2-1'
-    | '/menu3/menu3-1'
-    | '/menu3/menu3-2'
-    | '/menu4/menu4-1'
-    | '/menu5/menu5-1'
-    | '/menu6/menu7'
-    | '/menu8/menu9'
-    | '/menu2'
-    | '/menu3'
-    | '/menu5'
+  fullPaths: '' | '/test' | '/' | '/login' | '/menu/$menuId' | '/menu'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/test'
-    | '/'
-    | '/login'
-    | '/menu2/menu2-1'
-    | '/menu3/menu3-1'
-    | '/menu3/menu3-2'
-    | '/menu4/menu4-1'
-    | '/menu5/menu5-1'
-    | '/menu6/menu7'
-    | '/menu8/menu9'
-    | '/menu2'
-    | '/menu3'
-    | '/menu5'
+  to: '/test' | '/' | '/login' | '/menu/$menuId' | '/menu'
   id:
     | '__root__'
     | '/_layout'
     | '/test'
     | '/_layout/'
     | '/login/'
-    | '/_layout/menu2/menu2-1'
-    | '/_layout/menu3/menu3-1'
-    | '/_layout/menu3/menu3-2'
-    | '/_layout/menu4/menu4-1'
-    | '/_layout/menu5/menu5-1'
-    | '/_layout/menu6/menu7'
-    | '/_layout/menu8/menu9'
-    | '/_layout/menu2/'
-    | '/_layout/menu3/'
-    | '/_layout/menu5/'
+    | '/_layout/menu/$menuId'
+    | '/_layout/menu/'
   fileRoutesById: FileRoutesById
 }
 
@@ -382,16 +195,8 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
-        "/_layout/menu2/menu2-1",
-        "/_layout/menu3/menu3-1",
-        "/_layout/menu3/menu3-2",
-        "/_layout/menu4/menu4-1",
-        "/_layout/menu5/menu5-1",
-        "/_layout/menu6/menu7",
-        "/_layout/menu8/menu9",
-        "/_layout/menu2/",
-        "/_layout/menu3/",
-        "/_layout/menu5/"
+        "/_layout/menu/$menuId",
+        "/_layout/menu/"
       ]
     },
     "/test": {
@@ -404,44 +209,12 @@ export const routeTree = rootRoute
     "/login/": {
       "filePath": "login/index.tsx"
     },
-    "/_layout/menu2/menu2-1": {
-      "filePath": "_layout/menu2/menu2-1.tsx",
+    "/_layout/menu/$menuId": {
+      "filePath": "_layout/menu/$menuId.tsx",
       "parent": "/_layout"
     },
-    "/_layout/menu3/menu3-1": {
-      "filePath": "_layout/menu3/menu3-1.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu3/menu3-2": {
-      "filePath": "_layout/menu3/menu3-2.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu4/menu4-1": {
-      "filePath": "_layout/menu4/menu4-1.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu5/menu5-1": {
-      "filePath": "_layout/menu5/menu5-1.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu6/menu7": {
-      "filePath": "_layout/menu6/menu7.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu8/menu9": {
-      "filePath": "_layout/menu8/menu9.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu2/": {
-      "filePath": "_layout/menu2/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu3/": {
-      "filePath": "_layout/menu3/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu5/": {
-      "filePath": "_layout/menu5/index.tsx",
+    "/_layout/menu/": {
+      "filePath": "_layout/menu/index.tsx",
       "parent": "/_layout"
     }
   }

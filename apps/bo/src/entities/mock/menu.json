@@ -6,33 +6,33 @@
     {
       "title": "플랫폼 관리",
       "roles": "ROLE_ADMIN",
-      "path": "/menu2",
+      "path": "/menu/menu2",
       "children": [
         {
           "title": "서비스 관리",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isQuickAccessArea": false,
-          "path": "/menu2/menu2-1"
+          "path": "/menu/menu2-1"
         },
         {
           "title": "권한관리",
           "roles": "ROLE_ADMIN",
-          "path": "/menu2/menu2-2",
+          "path": "/menu/menu2-2",
           "children": [
             {
               "title": "학습자 역할 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu2/menu2-2/menu2-2-1"
+              "path": "/menu/menu2-2-1"
             },
             {
               "title": "관리자 권한 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu2/menu2-2/menu2-2-2"
+              "path": "/menu/menu2-2-2"
             }
           ],
           "tenantName": "현대자동차",
@@ -41,21 +41,37 @@
         {
           "title": "메뉴 관리",
           "roles": "ROLE_ADMIN",
-          "path": "/menu2/menu2-3",
+          "path": "/menu/menu2-3",
           "children": [
             {
               "title": "FO 메뉴 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu2/menu2-3/menu2-3-1"
+              "path": "/menu/menu2-3-1",
+              "children": [
+                {
+                  "title": "메뉴 수정",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차",
+                  "isQuickAccessArea": false,
+                  "path": "/menu/menu2-3-1-1"
+                },
+                {
+                  "title": "메뉴 생성",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차",
+                  "isQuickAccessArea": false,
+                  "path": "/menu/menu2-3-1-2"
+                }
+              ]
             },
             {
               "title": "BO 메뉴 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu2/menu2-3/menu2-3-2"
+              "path": "/menu/menu2-3-2"
             }
           ],
           "tenantName": "현대자동차",
@@ -64,24 +80,28 @@
         {
           "title": "요소 설정 관리",
           "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-4",
           "children": [
             {
               "title": "템플릿 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-1"
             },
             {
               "title": "엡 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-2"
             },
             {
               "title": "모듈 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-3"
             }
           ],
           "tenantName": "현대자동차",
@@ -90,30 +110,35 @@
         {
           "title": "플랫폼 시스템 관리",
           "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-5",
           "children": [
             {
               "title": "공통코드 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-1"
             },
             {
               "title": "프로그램 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-2"
             },
             {
               "title": "시스템 메시지 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-3"
             },
             {
               "title": "에러 메시지 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-4"
             },
             {
               "title": "API 관리",
@@ -156,18 +181,19 @@
     {
       "title": "고객사 운영",
       "roles": "ROLE_ADMIN",
-      "path": "/menu5",
+      "path": "/menu/menu3",
       "children": [
         {
           "title": "테넌트 관리",
           "roles": "ROLE_ADMIN",
-          "path": "/menu5/menu5-1",
+          "path": "/menu/menu3-1",
           "children": [
             {
               "title": "테넌트 개설",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-1-1"
             }
           ],
           "tenantName": "현대자동차",
@@ -176,25 +202,28 @@
         {
           "title": "테넌트 운영 관리",
           "roles": "ROLE_ADMIN",
-          "path": "/menu5/menu5-2",
+          "path": "/menu/menu3-2",
           "children": [
             {
               "title": "LXP 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-1"
             },
             {
               "title": "전시 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-2"
             },
             {
               "title": "검색 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-3"
             },
             {
               "title": "테마/토픽(카테고리) 관리",
@@ -233,18 +262,21 @@
         {
           "title": "결재 관리",
           "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-3",
           "children": [
             {
               "title": "결재 라인 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-3-1"
             },
             {
               "title": "결재 내역 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
-              "isQuickAccessArea": false
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-3-2"
             }
           ],
           "tenantName": "현대자동차",
@@ -253,6 +285,7 @@
         {
           "title": "인사관리",
           "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-4",
           "children": [
             {
               "title": "회사/조직 관리",
@@ -1351,18 +1384,21 @@
     {
       "title": "마켓플레이스",
       "roles": "ROLE_ADMIN",
+      "path": "/menu/marketplace",
       "children": [
         {
           "title": "마켓플레이스 목록",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "isQuickAccessArea": false
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-list"
         },
         {
           "title": "공유하기 설정",
           "roles": "ROLE_ADMIN",
-          "tenantName": "현대자동차",
-          "isQuickAccessArea": false
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-shared",
+          "messageCode": "course_search"
         },
         {
           "title": "공유요청 승인",

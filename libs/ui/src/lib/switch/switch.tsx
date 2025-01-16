@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
+import { SwitchFieldProps } from './type';
 
 import * as Primitive from '../shadcn/switch';
 import { Label } from '../shadcn/label';
-import { SwitchFieldProps } from './type';
 
 const SwitchComponent = forwardRef<HTMLButtonElement, SwitchFieldProps>(
   ({ value, onChange, disabled, formLabel, className }, ref) => {

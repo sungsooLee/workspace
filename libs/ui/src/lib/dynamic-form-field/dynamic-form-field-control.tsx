@@ -1,14 +1,14 @@
 import { ControllerRenderProps } from 'react-hook-form';
 import { FieldType } from '../type';
 import { Input as FormInput } from '../input/input';
-import { NumberInput as FormNumberInput } from '../input/number-input';
-import { Select as FormSelect } from '../select/select';
 import { MultiSelect as FormMultiSelect } from '../select/multi-select';
 import { Checkbox as FormCheckBox } from '../checkbox/checkbox';
-import { Switch as FormSwitch } from '../switch/switch';
-import { Radio as FormRadioGroup } from '../radio/radio';
 import { DatePicker as FormDatePicker } from '../date-picker/date-picker';
 import { DateRangePicker as FormDateRangePicker } from '../date-picker/date-range-picker';
+import { Radio as FormRadioGroup } from '../radio/radio';
+import { NumberInput } from '../input/number-input';
+import { Select } from '../select/select';
+import { Switch as FormSwitch } from '../switch/switch';
 
 interface FormControlProps {
   field: ControllerRenderProps;
@@ -32,7 +32,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
     case FieldType.PASSWORD:
       return <FormInput {...commonProps} />;
     case FieldType.SELECT:
-      return <FormSelect {...commonProps} options={props.options} />;
+      return <Select {...commonProps} options={props.options} />;
 
     case FieldType.MULTI_SELECT:
       return (
@@ -51,7 +51,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
       );
     case FieldType.NUMBER:
       return (
-        <FormNumberInput
+        <NumberInput
           {...commonProps}
           prefix={props.prefix}
           suffix={props.suffix}
@@ -59,6 +59,9 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
           decimalScale={props.decimalScale}
           thousandSeparator={props.thousandSeparator}
           allowNegative={props.allowNegative}
+          onChange={(values) => {
+            field.onChange(Number(values));
+          }}
         />
       );
     case FieldType.CHECKBOX:
@@ -76,7 +79,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
           {...commonProps}
           checked={field.value}
           onChange={field.onChange}
-          formLabel={props?.formLabel}
+          formLabel={props?.label}
         />
       );
     case FieldType.RADIO:
@@ -89,7 +92,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
         />
       );
     case FieldType.DATE:
-      return <FormDatePicker {...commonProps} />;
+      return <FormDatePicker {...commonProps} onChange={field.onChange} />;
     case FieldType.DATE_RANGE:
       return <FormDateRangePicker {...commonProps} />;
   }

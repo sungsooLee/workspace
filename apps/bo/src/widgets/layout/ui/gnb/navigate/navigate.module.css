@@ -6,17 +6,4 @@
   ._active {
     color: blue;
   }
-
-  ._menuItem {
-    @apply bg-gray-8;
-    color: theme('colors.gray.9') !important;
-    padding: 24px;
-    overflow: auto;
-
-    ._menuIcon {
-      color: red !important;
-      padding: 24px;
-      overflow: auto;
-    }
-  }
 }

@@ -1,12 +1,10 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { MenuHierarchy } from '../../../types/entities/menu';
-
 import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
-  static getMenus(params?: any): Promise<MenuHierarchy> {
+  static getMenus(params?: any): Promise<any> {
     /*
     return httpService.get<Menu>(
       `${PMSApiPrefix()}/menus/${params.parentMenuId ?? ''}?roleIds=${params.roleIds}&tenantId=${
@@ -14,19 +12,19 @@ export default class MenuService {
       }`,
     );
 */
-    return new Promise((resolve) => setTimeout(() => resolve(menuMock as MenuHierarchy)));
+    return new Promise((resolve) => setTimeout(() => resolve(menuMock as any)));
   }
 
   static getMenu(menuId: string) {
-    return httpService.get<MenuHierarchy>(`${PMSApiPrefix()}/menu/${menuId}`);
+    return httpService.get<any>(`${PMSApiPrefix()}/menu/${menuId}`);
   }
 
-  static createMenus(menu: MenuHierarchy[]) {
-    return httpService.post<MenuHierarchy>(`/menus`, menu);
+  static createMenus(menu: any[]) {
+    return httpService.post<any>(`/menus`, menu);
   }
 
-  static updateMenu(menuId: string, menu: MenuHierarchy) {
-    return httpService.patch<MenuHierarchy>(`/menus`, menu);
+  static updateMenu(menuId: string, menu: any) {
+    return httpService.patch<any>(`/menus`, menu);
   }
 }
 /*

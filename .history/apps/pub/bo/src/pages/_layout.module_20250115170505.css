@@ -1,0 +1,7 @@
+/* _layout.module.css */
+
+.bo_wrap {
+  max-width: 1920px;
+  min-width: 1440px;
+  width: 100%;
+}

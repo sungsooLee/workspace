@@ -1,0 +1,15 @@
+import { createFileRoute } from '@tanstack/react-router';
+
+interface MenuParams {
+  menuId?: string;
+}
+
+export const Route = createFileRoute('/_layout/menu/$menuId')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const { menuId } = Route.useParams();
+
+  return <div>Hello "/menu/$menuId"! {menuId}</div>;
+}
