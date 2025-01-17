@@ -1,0 +1,13 @@
+._start {
+  ._active {
+    color: blue;
+  }
+
+  ._depth2 {
+    background-color: aqua;
+
+    ._depth3 {
+      background-color: yellowgreen;
+    }
+  }
+}

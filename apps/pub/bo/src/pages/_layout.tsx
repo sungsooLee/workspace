@@ -1,9 +1,13 @@
-import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import styles from './_layout.module.css';
-import logoImage from '../assets/images/logo.png';
 
 import { cn } from '@learnway/shared';
+
+import { GNB, Layout } from '../widgets/layout';
+
+import styles from './_layout.module.css';
+import logoImage from '../assets/images/logo.png';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -17,6 +21,10 @@ function LayoutComponent() {
 
   return (
     <div>
+      <GNB />
+      <Layout>
+        <Outlet />
+      </Layout>
       <div className={styles.bo_wrap}>
         {/* header */}
         <header className={styles.header}>
