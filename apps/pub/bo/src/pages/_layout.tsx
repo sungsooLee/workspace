@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
+import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';

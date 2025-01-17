@@ -6,7 +6,6 @@ import { last } from 'lodash';
 import { cn } from '@learnway/shared';
 import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
 
-import { useActiveMenuDepthState } from '../../../../features/layout';
 import { LNB } from '../lnb/lnb';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
@@ -19,18 +18,12 @@ interface PageContainerComponentProps {
 function PageContainerComponent({ children }: PageContainerComponentProps) {
   const { t } = useTranslation();
 
-  const [activeMenuDepth] = useActiveMenuDepthState();
-
-  const title = useCreation(() => {
-    return last(activeMenuDepth)?.title;
-  }, [activeMenuDepth]);
-
   return (
     <div className="bg-secondary-1 flex flex-col">
       <div>
         <Breadcrumbs />
       </div>
-      <div>{title}</div>
+      <div>{'title'}</div>
       <div>{children}</div>
     </div>
   );

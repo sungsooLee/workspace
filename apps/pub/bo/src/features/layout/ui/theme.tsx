@@ -4,8 +4,6 @@ import { values } from 'lodash';
 
 import { Avatar, Popover } from '@learnway/ui';
 
-import { useFetchAuthUser } from '../../../entities/user';
-
 enum Themes {
   DEFAULT = 'default',
   RED = 'red',
@@ -37,8 +35,6 @@ const PopoverContent = () => {
 
 const ThemeComponent = () => {
   const { t, i18n } = useTranslation();
-
-  const { data } = useFetchAuthUser();
 
   return (
     <Popover popoverContent={<PopoverContent />}>

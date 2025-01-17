@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Popover } from '@learnway/ui';
 
-import { useFetchAuthUser } from '../../../entities/user';
-
 const PopoverContent = () => {
   const { t } = useTranslation();
 
@@ -20,8 +18,6 @@ const PopoverContent = () => {
 
 const MyMenuCompoment = () => {
   const { t } = useTranslation();
-
-  const { data } = useFetchAuthUser();
 
   return <Popover popoverContent={<PopoverContent />}>{t('MY MENU')}</Popover>;
 };

@@ -1,21 +1,8 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
-import { useFetchAuthUser } from '../../../entities/user';
-import { useFetchTenant } from '../../../entities/tenant';
-
 const LogoCompoment = () => {
-  const { data } = useFetchAuthUser();
-  const { data: tenant } = useFetchTenant(data?.activeTenantId);
-
-  return (
-    <Link to={'/apple'}>
-      {(tenant?.logoImageUrl && (
-        <img src={tenant?.logoImageUrl} title={tenant.name} className="h-16" />
-      )) ??
-        tenant?.name}
-    </Link>
-  );
+  return <div></div>;
 };
 
 export const Logo = memo(LogoCompoment);
