@@ -33,7 +33,7 @@ const AccordionComponent = forwardRef<
       ref={ref}>
       {items.map((item: AccordionItem) => {
         return (
-          <Primitive.Item value={item.key} className={cn(styles.accordion_item)}>
+          <Primitive.Item value={item.key} className={cn(styles.accordion_item)} key={item.key}>
             <Primitive.Trigger className={cn(styles.accordion_btn)}>
               <span>{item.title}</span>
               {item.children && <ChevronDownIcon />}

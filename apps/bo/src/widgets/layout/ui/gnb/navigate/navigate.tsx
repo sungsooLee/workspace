@@ -20,13 +20,14 @@ function NavigateComponent() {
         <ul>
           {data?.map((menu: Menu, index: number) => {
             return (
-              <li>
+              <li key={menu.key}>
                 <Link
                   to={menu.path}
                   key={menu.key}
                   className={
                     menu.path &&
-                    (matchRoute({ to: menu.path }) || activeMenuDepthMenu?.[0].path === menu.path)
+                    (matchRoute({ to: menu?.path }) ||
+                      activeMenuDepthMenu?.[0]?.path === menu?.path)
                       ? styles._active
                       : ''
                   }>

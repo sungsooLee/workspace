@@ -19,8 +19,8 @@ function QuickMenuComponent() {
         <ul>
           {data?.map((menu: Menu, index: number) => {
             return (
-              <li>
-                <Link to={menu.path} key={`QUICKMENU${index}`}>
+              <li key={menu.key}>
+                <Link to={menu.path} key={menu.key}>
                   {menu.title}
                 </Link>
               </li>

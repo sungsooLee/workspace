@@ -22,7 +22,6 @@ export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
     roleIds: authUser?.activeRoleId,
   });
 
-  console.log('data', data);
   return {
     data: useCreation(() => {
       if (!data || !data?.length) {
@@ -79,6 +78,7 @@ export function useRenewalMenuStateFromRouting() {
 
   useEffect(() => {
     if (state.location.pathname === '/') {
+      setActiveMenuDepth([]);
       return;
     }
     const depths: Menu[] = [];

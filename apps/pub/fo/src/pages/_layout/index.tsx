@@ -11,10 +11,6 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   const { t, i18n } = useTranslation();
 
-  useEffect(() => {
-    console.log('page index i18n.language', i18n.language);
-  }, [i18n.language]);
-
   return (
     <div className="flex flex-col gap-10 p-2">
       <h3>FO 퍼블 가이드 어플리케이션 입니다.</h3>

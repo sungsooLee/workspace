@@ -11,9 +11,5 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   const { t, i18n } = useTranslation();
 
-  useEffect(() => {
-    console.log('page index i18n.language', i18n.language);
-  }, [i18n.language]);
-
   return <div>컨텐츠 영역</div>;
 }
