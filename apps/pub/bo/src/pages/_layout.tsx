@@ -19,7 +19,7 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div className={styles.bo_wrap}>
+    <div className={styles.start}>
       <GNB />
       <Layout>
         <Outlet />

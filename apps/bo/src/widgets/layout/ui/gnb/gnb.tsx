@@ -7,22 +7,31 @@ import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
 import { Logo, UserAvatar, Notification, Language } from '../../../../features/layout';
 
+import styles from './gnb.module.css';
+
 function GNBComponent() {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-secondary-1 flex flex-col">
-      <div className="flex items-center gap-10">
-        <Logo />
-        <div className="flex grow"></div> <Navigate />
-        <Language />
-        <Notification />
-        <UserAvatar />
-      </div>
-      <div className="flex items-center">
-        <div className="flex grow"></div>
-        <QuickMenu />
-      </div>
+    <div className={`${styles.start} nlp--header`}>
+      <header className={styles.header}>
+        <h1>
+          <Logo />
+        </h1>
+        <div className={styles.nav_area}>
+          <Navigate />
+        </div>
+
+        <div className={styles.util}>
+          <Language />
+          <Notification />
+          <UserAvatar />
+        </div>
+
+        <div className={styles.quick_menu}>
+          <QuickMenu />
+        </div>
+      </header>
     </div>
   );
 }

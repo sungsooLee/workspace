@@ -1,9 +1,17 @@
-._start {
-  display: flex;
-  height: 100%;
-  /*background-color: red !important;*/
-
-  ._active {
-    color: blue;
+/* navigate.module.css */
+.start {
+  .nav {
+    ul {
+      @apply flex justify-start gap-[48px];
+      > li {
+        a {
+          color: var(--white);
+          @apply inline-flex h-[56px] items-center text-[2rem];
+          &:hover {
+            @apply font-bold;
+          }
+        }
+      }
+    }
   }
 }
