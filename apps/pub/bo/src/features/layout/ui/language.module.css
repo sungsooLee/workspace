@@ -1,0 +1,8 @@
+/* language.module.css */
+.start {
+  &.select {
+    span {
+      @apply text-[white];
+    }
+  }
+}

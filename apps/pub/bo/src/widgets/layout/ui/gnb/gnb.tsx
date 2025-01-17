@@ -26,6 +26,9 @@ function GNBComponent() {
           <Language />
           <Notification />
           <UserAvatar />
+        </div>
+
+        <div className={styles.quick_menu}>
           <QuickMenu />
         </div>
       </header>
