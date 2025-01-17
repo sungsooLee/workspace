@@ -1,8 +1,5 @@
 /* accordion.module.css */
 .start {
-  .lnb_wrap {
-    @apply w-[264px];
-  }
   .accordion_item {
     .accordion_btn {
       @apply relative box-border flex max-h-[70px] w-full items-center py-[13px] pr-[32px];

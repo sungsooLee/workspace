@@ -1,5 +1,5 @@
-._start {
-  ._sidebar {
-    position: absolute !important;
+.start {
+  .bo_container {
+    @apply flex;
   }
 }

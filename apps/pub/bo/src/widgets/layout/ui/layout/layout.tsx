@@ -19,10 +19,12 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   //if () {
   return (
     <div className={styles.start}>
-      <LNB />
-      <main>
-        <PageContainer>{children}</PageContainer>
-      </main>
+      <div className={styles.bo_container}>
+        <LNB />
+        <main>
+          <PageContainer>{children}</PageContainer>
+        </main>
+      </div>
     </div>
   );
   //}
