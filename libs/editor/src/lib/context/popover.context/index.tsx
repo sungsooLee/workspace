@@ -15,7 +15,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { isDOMNode } from 'lexical';
-import ChevronDown from '../../assets/images/icons/chevron-down.svg?react';
+import { ReactComponent as ChevronDown } from '../../assets/images/icons/chevron-down.svg';
 type PopoverContext = {
   registerItem: (ref: RefObject<HTMLButtonElement>) => void;
 };

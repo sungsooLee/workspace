@@ -8,7 +8,7 @@
 import { DraggableBlockPlugin_EXPERIMENTAL } from '@lexical/react/LexicalDraggableBlockPlugin';
 import { useEffect, useRef } from 'react';
 
-import DraggableIcon from '../assets/images/icons/draggable-block-menu.svg?react';
+import { ReactComponent as DraggableIcon } from '../assets/images/icons/draggable-block-menu.svg';
 
 const DRAGGABLE_BLOCK_MENU_CLASSNAME = 'draggable-block-menu';
 

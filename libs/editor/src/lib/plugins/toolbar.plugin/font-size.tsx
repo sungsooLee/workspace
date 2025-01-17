@@ -1,6 +1,6 @@
 import Button from '../../components/button';
-import Minus from '../../assets/images/icons/minus-sign.svg?react';
-import Plus from '../../assets/images/icons/add-sign.svg?react';
+import { ReactComponent as Minus } from '../../assets/images/icons/minus-sign.svg';
+import { ReactComponent as Plus } from '../../assets/images/icons/add-sign.svg';
 import { useToolbarState } from '../..//context/toolbar.context';
 import { useEffect, useMemo } from 'react';
 import { $isTableSelection } from '@lexical/table';

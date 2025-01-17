@@ -9,8 +9,8 @@ import {
 import { $getSelectionStyleValueForProperty, $patchStyleText } from '@lexical/selection';
 
 import Button from '../../components/button';
-import ChevronDown from '../../assets/images/icons/chevron-down.svg?react';
-import FontColorIcon from '../../assets/images/icons/font-color.svg?react';
+import { ReactComponent as ChevronDown } from '../../assets/images/icons/chevron-down.svg';
+import { ReactComponent as FontColorIcon } from '../../assets/images/icons/font-color.svg';
 import ColorPicker from '../../components/ColorPicker';
 import { useToolbarState } from '../../context/toolbar.context';
 import Popover, { PopoverItem } from '../../context/popover.context';

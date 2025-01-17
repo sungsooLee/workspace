@@ -5,7 +5,7 @@
     "esModuleInterop": true, // for json mock
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["vite/client", "vite-plugin-svgr/client"]
+    "types": ["vite/client"]
   },
   "files": [],
   "include": [],

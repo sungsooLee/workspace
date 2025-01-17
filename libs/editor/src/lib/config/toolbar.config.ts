@@ -1,26 +1,26 @@
 // 상수: 폰트 크기 제한 및 기본값
 import { ElementFormatType } from 'lexical';
-import TextParagraph from '../assets/images/icons/text-paragraph.svg?react';
-import TypeH1 from '../assets/images/icons/type-h1.svg?react';
-import TypeH2 from '../assets/images/icons/type-h2.svg?react';
-import TypeH3 from '../assets/images/icons/type-h3.svg?react';
-import TypeH4 from '../assets/images/icons/type-h4.svg?react';
-import TypeH5 from '../assets/images/icons/type-h5.svg?react';
-import TypeH6 from '../assets/images/icons/type-h6.svg?react';
-import ListUl from '../assets/images/icons/list-ul.svg?react';
-import ListOL from '../assets/images/icons/list-ol.svg?react';
-import Quote from '../assets/images/icons/chat-square-quote.svg?react';
-import Check from '../assets/images/icons/square-check.svg?react';
-import HorizontalRule from '../assets/images/icons/horizontal-rule.svg?react';
-import FileImage from '../assets/images/icons/file-image.svg?react';
-import Table from '../assets/images/icons/table.svg?react';
-import Video from '../assets/images/icons/video.svg?react';
-import TextLeft from '../assets/images/icons/text-left.svg?react';
-import TextRight from '../assets/images/icons/text-right.svg?react';
-import TextCenter from '../assets/images/icons/text-center.svg?react';
+import { ReactComponent as TextParagraph } from '../assets/images/icons/text-paragraph.svg';
+import { ReactComponent as TypeH1 } from '../assets/images/icons/type-h1.svg';
+import { ReactComponent as TypeH2 } from '../assets/images/icons/type-h2.svg';
+import { ReactComponent as TypeH3 } from '../assets/images/icons/type-h3.svg';
+import { ReactComponent as TypeH4 } from '../assets/images/icons/type-h4.svg';
+import { ReactComponent as TypeH5 } from '../assets/images/icons/type-h5.svg';
+import { ReactComponent as TypeH6 } from '../assets/images/icons/type-h6.svg';
+import { ReactComponent as ListUl } from '../assets/images/icons/list-ul.svg';
+import { ReactComponent as ListOL } from '../assets/images/icons/list-ol.svg';
+import { ReactComponent as Quote } from '../assets/images/icons/chat-square-quote.svg';
+import { ReactComponent as Check } from '../assets/images/icons/square-check.svg';
+import { ReactComponent as HorizontalRule } from '../assets/images/icons/horizontal-rule.svg';
+import { ReactComponent as FileImage } from '../assets/images/icons/file-image.svg';
+import { ReactComponent as Table } from '../assets/images/icons/table.svg';
+import { ReactComponent as Video } from '../assets/images/icons/video.svg';
+import { ReactComponent as TextLeft } from '../assets/images/icons/text-left.svg';
+import { ReactComponent as TextRight } from '../assets/images/icons/text-right.svg';
+import { ReactComponent as TextCenter } from '../assets/images/icons/text-center.svg';
 
-import TextOutdent from '../assets/images/icons/outdent.svg?react';
-import TextIndent from '../assets/images/icons/indent.svg?react';
+import { ReactComponent as TextOutdent } from '../assets/images/icons/outdent.svg';
+import { ReactComponent as TextIndent } from '../assets/images/icons/indent.svg';
 
 export const MIN_ALLOWED_FONT_SIZE = 8; // 최소 허용 폰트 크기
 export const MAX_ALLOWED_FONT_SIZE = 72; // 최대 허용 폰트 크기

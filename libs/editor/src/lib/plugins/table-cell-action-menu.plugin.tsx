@@ -49,7 +49,7 @@ import {
 import * as React from 'react';
 import { ReactNode, ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import ChevronDown from '../assets/images/icons/chevron-down.svg?react';
+import { ReactComponent as ChevronDown } from '../assets/images/icons/chevron-down.svg';
 import invariant from './invariant';
 
 import useModal from '../hooks/use-modal';
