@@ -1,19 +1,4 @@
-/* _layout.module.css */
-
-.bo_wrap {
-  max-width: 1920px;
-  min-width: 1440px;
-  width: 100%;
-  overflow-x: hidden;
-
-  .bo_container {
-    .lnb {
-      @apply w-[264px];
-    }
-    @apply flex justify-start;
-  }
-}
-
+/* gnb.module.css */
 .header {
   background-color: #012277;
   @apply px-[32px];
