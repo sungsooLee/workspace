@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { GNB, Layout, LNB } from '../widgets/layout';
+import { GNB, Layout } from '../widgets/layout';
 
 import styles from './_layout.module.css';
-import logoImage from '../assets/images/logo.png';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -23,7 +22,6 @@ function LayoutComponent() {
     <div className={styles.bo_wrap}>
       <GNB />
       <Layout>
-        <LNB />
         <Outlet />
       </Layout>
     </div>

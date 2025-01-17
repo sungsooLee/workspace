@@ -13,7 +13,7 @@ function GNBComponent() {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <div className={`${styles.start} nlp--header`}>
       <header className={styles.header}>
         <h1>
           <Logo />
@@ -21,10 +21,13 @@ function GNBComponent() {
         <div className={styles.nav_area}>
           <Navigate />
         </div>
-        <Language />
-        <Notification />
-        <UserAvatar />
-        <QuickMenu />
+
+        <div className={styles.util}>
+          <Language />
+          <Notification />
+          <UserAvatar />
+          <QuickMenu />
+        </div>
       </header>
     </div>
   );

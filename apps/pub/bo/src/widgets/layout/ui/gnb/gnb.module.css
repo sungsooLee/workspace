@@ -1,26 +1,30 @@
 /* gnb.module.css */
-.header {
-  background-color: #012277;
-  @apply px-[32px];
-  h1 {
-    img {
-      @apply h-[60px] w-auto;
+.start {
+  .header {
+    @apply relative bg-[#012277] px-[32px];
+    h1 {
+      img {
+        @apply h-[60px] w-auto;
+      }
     }
-  }
-  .nav_area {
-    .nav {
-      ul {
-        @apply flex justify-start gap-[48px];
-        > li {
-          a {
-            color: var(--white);
-            @apply inline-flex h-[56px] items-center text-[2rem];
-            &:hover {
-              @apply font-bold;
+    .nav_area {
+      .nav {
+        ul {
+          @apply flex justify-start gap-[48px];
+          > li {
+            a {
+              color: var(--white);
+              @apply inline-flex h-[56px] items-center text-[2rem];
+              &:hover {
+                @apply font-bold;
+              }
             }
           }
         }
       }
+    }
+    .util {
+      @apply absolute right-8 top-0;
     }
   }
 }
