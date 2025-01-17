@@ -1,8 +1,8 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
+// import { cn } from '@learnway/shared';
+// import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
 
 import { LNB } from '../lnb/lnb';
 import { PageContainer } from '../container/page-container';
@@ -18,15 +18,12 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   //if () {
   return (
-    <SidebarProvider className={styles._start}>
-      <Sidebar className={styles._sidebar}>
-        <LNB />
-      </Sidebar>
+    <div className={styles.start}>
+      <LNB />
       <main>
-        <SidebarTrigger />
         <PageContainer>{children}</PageContainer>
       </main>
-    </SidebarProvider>
+    </div>
   );
   //}
 

@@ -1,4 +1,10 @@
-._start {
+.start {
+  @apply w-[264px];
+  ._lnb_title {
+    & > span {
+      @apply block pb-[18px] text-[1.8rem] font-bold text-[var(--gray9)];
+    }
+  }
   ._active {
     color: blue;
   }

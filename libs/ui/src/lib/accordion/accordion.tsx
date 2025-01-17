@@ -35,7 +35,7 @@ const AccordionComponent = forwardRef<
         return (
           <Primitive.Item value={item.key} className={cn(styles.accordion_item)}>
             <Primitive.Trigger className={cn(styles.accordion_btn)}>
-              {item.title}
+              <span>{item.title}</span>
               {item.children && <ChevronDownIcon />}
             </Primitive.Trigger>
             <Primitive.Content className={cn(styles.accordion_content)}>
