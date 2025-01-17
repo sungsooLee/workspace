@@ -1,6 +1,6 @@
 .start {
   .lnb_wrap {
-    @apply w-[264px];
+    @apply w-[264px] p-[32px];
   }
   ._lnb_title {
     & > span {

@@ -7,7 +7,7 @@ import styles from './lnb.module.css';
 
 function LNBComponent() {
   return (
-    <div className={(styles.start, 'nlp--lnb')}>
+    <div className={`${styles.start} nlp--lnb`}>
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>{'activeMenuDepth[0].title'}</h2>
         <Accordion
@@ -32,7 +32,21 @@ function LNBComponent() {
                             {
                               key: 'q45p7j237v12',
                               title: '메뉴 타이틀A-2-2',
-                              children: '',
+                              children: (
+                                <Accordion
+                                  items={[
+                                    {
+                                      key: 'q45p7j237v03',
+                                      title: '메뉴 타이틀A-3-1',
+                                      children: '',
+                                    },
+                                    {
+                                      key: 'q45p7j237v14',
+                                      title: '메뉴 타이틀A-3-2',
+                                      children: '',
+                                    },
+                                  ]}></Accordion>
+                              ),
                             },
                           ]}></Accordion>
                       ),
