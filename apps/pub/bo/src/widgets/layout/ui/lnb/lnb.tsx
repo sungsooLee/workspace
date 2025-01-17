@@ -9,7 +9,9 @@ function LNBComponent() {
   return (
     <div className={`${styles.start} nlp--lnb`}>
       <div className={styles.lnb_wrap}>
-        <h2 className={styles.lnb_title}>{'activeMenuDepth[0].title'}</h2>
+        <h2 className={styles.lnb_title}>
+          <span>{'activeMenuDepth[0].title'}</span>
+        </h2>
         <Accordion
           items={[
             {

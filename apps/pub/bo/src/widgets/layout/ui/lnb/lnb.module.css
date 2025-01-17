@@ -2,7 +2,7 @@
   .lnb_wrap {
     @apply w-[264px] p-[32px];
   }
-  ._lnb_title {
+  .lnb_title {
     & > span {
       @apply block pb-[18px] text-[1.8rem] font-bold text-[var(--gray9)];
     }
