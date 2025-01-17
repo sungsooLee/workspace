@@ -20,20 +20,20 @@ function LNBComponent() {
   }
 
   return (
-    <SidebarContent className={styles._start}>
-      <SidebarGroup>
-        <SidebarGroupLabel>{activeMenuDepth[0].title}</SidebarGroupLabel>
-        <SidebarGroupContent>
-          {activeMenuDepth[0]?.children && (
-            <AccordionMenu
-              menus={activeMenuDepth[0]?.children}
-              depth={2}
-              className={styles._depth2}
-            />
-          )}
-        </SidebarGroupContent>
-      </SidebarGroup>
-    </SidebarContent>
+    <div className={cn(styles.start, 'nlp--lnb')}>
+      <div className={styles.lnb_wrap}>
+        <h2 className={styles.lnb_title}>
+          <span>{activeMenuDepth[0].title}</span>
+        </h2>
+        {activeMenuDepth[0]?.children && (
+          <AccordionMenu
+            menus={activeMenuDepth[0]?.children}
+            depth={2}
+            className={styles._depth2}
+          />
+        )}
+      </div>
+    </div>
   );
 }
 

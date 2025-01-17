@@ -15,7 +15,7 @@ function NavigateComponent() {
   const matchRoute = useMatchRoute();
 
   return (
-    <div className={styles._start}>
+    <div className={styles.start}>
       <nav className={styles.nav}>
         <ul>
           {data?.map((menu: Menu, index: number) => {
