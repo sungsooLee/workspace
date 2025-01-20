@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { Accordion } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
 
 import styles from './lnb.module.css';
 
@@ -11,6 +12,7 @@ function LNBComponent() {
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>
           <span>{'activeMenuDepth[0].title'}</span>
+          <button type="button"></button>
         </h2>
         <Accordion
           items={[
@@ -19,12 +21,14 @@ function LNBComponent() {
               title: '메뉴 타이틀A',
               children: (
                 <Accordion
+                  className={styles.accordion_depth2}
                   items={[
                     {
                       key: 'q45p7j237v0',
                       title: '메뉴 타이틀A-1',
                       children: (
                         <Accordion
+                          className={styles.accordion_depth3}
                           items={[
                             {
                               key: 'q45p7j237v01',
@@ -58,6 +62,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-2',
                       children: (
                         <Accordion
+                          className={styles.accordion_depth2}
                           items={[
                             {
                               key: 'q45p7j237v03',

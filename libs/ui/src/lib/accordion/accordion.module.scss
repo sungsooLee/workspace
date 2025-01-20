@@ -2,7 +2,7 @@
 .start {
   .accordion_item {
     .accordion_btn {
-      @apply relative box-border flex max-h-[70px] w-full items-center py-[13px] pr-[32px];
+      @apply relative box-border flex max-h-[70px] w-full items-center py-[13px] pl-[16px] pr-[32px];
       & > span {
         @apply overflow-hidden text-left text-[1.4rem] leading-[22px] text-[var(--gray9)];
         display: -webkit-box;
@@ -16,14 +16,37 @@
         }
       }
       svg {
-        @apply absolute right-0 top-1/2 -mt-[8px] h-[1.6rem] w-[1.6rem];
+        @apply absolute right-[16px] top-1/2 -mt-[8px] h-[1.6rem] w-[1.6rem];
       }
     }
     .accordion_content {
-      @apply rounded-[8px] border-b-2 border-[#001b60] bg-[var(--gray1)] px-[16px];
+      @apply rounded-[8px] border-b-2 border-[#001b60] bg-[var(--gray1)];
       .accordion_item {
         .accordion_content {
-          @apply px-0;
+          @apply bg-[var(--primary2)] px-0;
+          .accordion_btn {
+            span {
+              @apply relative text-white;
+            }
+            svg {
+              @apply stroke-[var(--white)];
+            }
+          }
+          .accordion_content {
+            .accordion_btn {
+              span {
+                @apply pl-[12px];
+              }
+              &[data-state='open'] {
+                span {
+                  @apply pl-[14px];
+                  &::before {
+                    @apply absolute left-0 top-1/2 -mt-[3px] block h-[6px] w-[6px] rounded-[3px] bg-white content-[''];
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
