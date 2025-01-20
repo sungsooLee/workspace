@@ -11,13 +11,15 @@ export default {
 } as Meta;
 type Story = StoryObj<typeof Avatar>;
 
-const BaseWrapper: React.FC<any> = (args) => {
+const Template: React.FC<any> = (args) => {
   return <Avatar {...args} />;
 };
 
 // Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
 export const AvatarStory: Story = {
   name: 'Avatar',
-  args: {},
-  render: (args) => <BaseWrapper {...args} />,
+  args: {
+    imageUrl: 'https://github.com/shadcn.png'
+  },
+  render: (args) => <Template {...args} />,
 };

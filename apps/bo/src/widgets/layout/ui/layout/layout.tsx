@@ -2,7 +2,7 @@ import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
+import { SidebarProvider, SidebarTrigger, Sidebar, Radio } from '@learnway/ui';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
 import { LNB } from '../lnb/lnb';
@@ -27,7 +27,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
         </Sidebar>
         <main>
           <SidebarTrigger />
-          <PageContainer>{children}</PageContainer>
+          <Radio options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))} />
         </main>
       </SidebarProvider>
     );

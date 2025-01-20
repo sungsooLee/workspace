@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button, Radio } from '@learnway/ui';
 
 import styles from './index.module.css';
 
@@ -20,7 +20,7 @@ function HomeComponent() {
 
   return (
     <div className={cn('flex flex-col gap-10 p-2', styles._start)}>
-      <h3>Welcome Home!</h3>
+      <Radio options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))} />
       {/**primary */}
       <div className="flex w-10 gap-5">
         <div className="min-w-32">Primary lg~xs</div>
