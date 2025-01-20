@@ -1,0 +1,21 @@
+.start {
+  .lnb_wrap {
+    @apply w-[264px] p-[32px];
+  }
+  .lnb_title {
+    & > span {
+      @apply block pb-[18px] text-[1.8rem] font-bold text-[var(--gray9)];
+    }
+  }
+  ._active {
+    color: blue;
+  }
+
+  ._depth2 {
+    background-color: aqua;
+
+    ._depth3 {
+      background-color: yellowgreen;
+    }
+  }
+}

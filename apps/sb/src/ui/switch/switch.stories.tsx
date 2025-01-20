@@ -18,6 +18,7 @@ const BaseWrapper: React.FC<any> = (args) => {
 // Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
 export const SwitchStory: Story = {
   name: 'Switch',
-  args: {},
+  args: {
+  },
   render: (args) => <BaseWrapper {...args} />,
 };

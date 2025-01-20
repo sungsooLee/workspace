@@ -9,6 +9,8 @@ import { GNB, Layout } from '../widgets/layout';
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
 
+import styles from './_layout.module.css';
+
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
 });
@@ -34,7 +36,7 @@ function LayoutComponent() {
   }, [tenant]);
 
   return (
-    <div>
+    <div className={styles.start}>
       <GNB />
       <Layout>
         <Outlet />

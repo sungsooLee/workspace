@@ -10,8 +10,8 @@ import { mergeRegister } from '@lexical/utils';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 
-import Prev from '../../assets/images/icons/arrow-counterclockwise.svg?react';
-import Next from '../../assets/images/icons/arrow-clockwise.svg?react';
+import { ReactComponent as Prev } from '../../assets/images/icons/arrow-counterclockwise.svg';
+import { ReactComponent as Next } from '../../assets/images/icons/arrow-clockwise.svg';
 import Button from '../../components/button';
 import { useToolbarState } from '../../context/toolbar.context';
 
@@ -49,11 +49,11 @@ const History: FC = () => {
 
   return (
     <div className={'flex'}>
-      <Button onClick={handleUndo} className={'w-[34px] h-[36px]'} disabled={!toolbarState.canUndo}>
-        <Prev className={'opacity-50 text-gray-10'} />
+      <Button onClick={handleUndo} className={'h-[36px] w-[34px]'} disabled={!toolbarState.canUndo}>
+        <Prev className={'text-gray-10 opacity-50'} />
       </Button>
-      <Button onClick={handleRedo} className={'w-[34px] h-[36px]'} disabled={!toolbarState.canRedo}>
-        <Next className={'opacity-50 text-gray-10'} />
+      <Button onClick={handleRedo} className={'h-[36px] w-[34px]'} disabled={!toolbarState.canRedo}>
+        <Next className={'text-gray-10 opacity-50'} />
       </Button>
       <HistoryPlugin />
     </div>

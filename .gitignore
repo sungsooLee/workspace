@@ -51,3 +51,4 @@ storybook-static
 
 /apps/*/routeTree.gen.ts:
 
+.history/

@@ -10,6 +10,8 @@
 
 @import './assets/styles/components/index.css';
 
+@import './assets/styles/global.css';
+
 @import 'tailwindcss/utilities';
 
 @layer base {

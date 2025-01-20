@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
+import { cn } from '@learnway/shared';
+
 import { MyMenu } from '../../../../../features/layout';
 import { useMenuHierarchy } from '../../../service/menu.service';
 
@@ -12,15 +14,21 @@ function QuickMenuComponent() {
   const { data } = useMenuHierarchy(true);
 
   return (
-    <div className={styles._start}>
-      {data?.map((menu: Menu, index: number) => {
-        return (
-          <Link to={menu.path} key={`QUICKMENU${index}`}>
-            {menu.title}
-          </Link>
-        );
-      })}
-      <MyMenu />
+    <div className={cn(styles.start, 'nlp--quick-menu')}>
+      <div className={styles.menu_list}>
+        <ul>
+          {data?.map((menu: Menu, index: number) => {
+            return (
+              <li key={menu.key}>
+                <Link to={menu.path} key={menu.key}>
+                  {menu.title}
+                </Link>
+              </li>
+            );
+          })}
+          <MyMenu />
+        </ul>
+      </div>
     </div>
   );
 }

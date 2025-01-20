@@ -1,13 +1,10 @@
-._start {
-  ._active {
-    color: blue;
+.start {
+  .lnb_wrap {
+    @apply w-[264px] p-[32px];
   }
-
-  ._depth2 {
-    background-color: aqua;
-
-    ._depth3 {
-      background-color: yellowgreen;
+  .lnb_title {
+    & > span {
+      @apply block pb-[18px] text-[1.8rem] font-bold text-[var(--gray9)];
     }
   }
 }

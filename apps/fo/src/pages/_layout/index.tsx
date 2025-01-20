@@ -11,10 +11,6 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   const { t, i18n } = useTranslation();
 
-  useEffect(() => {
-    console.log('page index i18n.language', i18n.language);
-  }, [i18n.language]);
-
   return (
     <div className="flex flex-col gap-10 p-2">
       <h3>Welcome Home!</h3>
@@ -29,11 +25,7 @@ function HomeComponent() {
         {/*  label='label'*/}
         {/*  options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}*/}
         {/*/>*/}
-        <Switch
-          type={FieldType.RADIO}
-          name='name'
-          label='label'
-        />
+        <Switch type={FieldType.RADIO} name="name" label="label" />
       </div>
 
       {/**primary */}

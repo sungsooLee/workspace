@@ -9,7 +9,7 @@ import { $getSelection } from 'lexical';
 
 import { insertItems } from '../../../config/toolbar.config';
 import Popover, { PopoverItem } from '../../../context/popover.context';
-import PlusIcon from '../../../assets/images/icons/plus.svg?react';
+import { ReactComponent as PlusIcon } from '../../../assets/images/icons/plus.svg';
 import { useModal } from '../../../context/modal.context';
 import Image from './image';
 import Video from './video';

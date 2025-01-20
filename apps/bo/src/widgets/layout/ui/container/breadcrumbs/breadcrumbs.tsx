@@ -20,7 +20,8 @@ function BreadcrumbsComponent() {
   return (
     <div className={styles._start}>
       Home
-      {activeMenuDepth && activeMenuDepth.map((menu: Menu) => <span>&gt; {menu.title}</span>)}
+      {activeMenuDepth &&
+        activeMenuDepth.map((menu: Menu) => <span key={menu.key}>&gt; {menu.title}</span>)}
     </div>
   );
 }

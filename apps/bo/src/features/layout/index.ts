@@ -1,4 +1,4 @@
-export * from './ui/logo';
+export * from './ui/logo/logo';
 export * from './ui/user-avatar';
 export * from './ui/notification';
 export * from './ui/language';

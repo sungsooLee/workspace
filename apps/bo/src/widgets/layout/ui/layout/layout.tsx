@@ -19,17 +19,21 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
-  if (activeMenuDepth && activeMenuDepth[0].children && activeMenuDepth[0].children?.length > 0) {
+  if (
+    activeMenuDepth &&
+    activeMenuDepth?.length &&
+    activeMenuDepth[0].children &&
+    activeMenuDepth[0].children?.length > 0
+  ) {
     return (
-      <SidebarProvider className={styles._start}>
-        <Sidebar className={styles._sidebar}>
+      <div className={styles.start}>
+        <div className={styles.bo_container}>
           <LNB />
-        </Sidebar>
-        <main>
-          <SidebarTrigger />
-          <PageContainer>{children}</PageContainer>
-        </main>
-      </SidebarProvider>
+          <main>
+            <PageContainer>{children}</PageContainer>
+          </main>
+        </div>
+      </div>
     );
   }
 

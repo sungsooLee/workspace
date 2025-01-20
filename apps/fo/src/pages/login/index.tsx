@@ -8,13 +8,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldType, Form, DynamicFormField } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 import { Information } from '@learnway/icons';
+import { Info } from '@learnway/icons';
+import { Editor, Arrow } from '@learnway/editor';
 
 import { useLoginUser, useFetchAuthUser } from '../../entities/user';
 import { useFetchCompanySelectOptions } from '../../entities/company';
 
 import { useSetLanguage } from '../../features/system';
 //import { ReactComponent as Information } from '../../assets/information.svg';
-//import Information from '../../assets/information.svg';
+//import Information from '../../assets/information.svg?react';
 
 export const Route = createFileRoute('/login/')({
   component: RouteComponent,
@@ -68,7 +70,7 @@ function RouteComponent() {
       <div className="rounded-lg bg-slate-200 p-10">
         <Form {...form} schema={schema}>
           <Information width={120} height={120} stroke="red" />
-
+          <Arrow />
           <div className="w-64">
             <DynamicFormField
               name="orgId"
@@ -84,6 +86,7 @@ function RouteComponent() {
           </Button>
         </Form>
       </div>
+      <Editor />
     </div>
   );
 }

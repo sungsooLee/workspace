@@ -12,7 +12,7 @@ import {
 import { mergeRegister } from '@lexical/utils';
 import Button from '../../../components/button';
 import { useToolbarState } from '../../../context/toolbar.context';
-import LinkIcon from '../../../assets/images/icons/link.svg?react';
+import { ReactComponent as LinkIcon } from '../../../assets/images/icons/link.svg';
 import { sanitizeUrl } from '../../../utils/url';
 import { useFloatingModal } from '../../../context/floating-modal.context';
 import AutoLinkPlugin from '../../../plugins/auto-link.plugin';
@@ -84,7 +84,8 @@ const Link = () => {
         active={toolbarState.isLink}
         className={'h-[36px] w-[34px]'}
         onClick={handleInsertLink}>
-        <LinkIcon className={`${toolbarState.isLink ? '' : 'opacity-50'}`} />
+        {/*<LinkIcon className={`${toolbarState.isLink ? '' : 'opacity-50'}`} />*/}
+        <LinkIcon />
       </Button>
       <AutoLinkPlugin />
       <LinkPlugin />
