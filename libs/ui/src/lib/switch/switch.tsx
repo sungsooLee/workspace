@@ -1,23 +1,33 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
+import * as Primitive from "@radix-ui/react-switch";
 
 import { cn } from '@learnway/shared';
-import { SwitchFieldProps } from './type';
+import styles from './switch.module.scss';
 
-import * as Primitive from '../shadcn/switch';
-import { Label } from '../shadcn/label';
+export interface SwitchComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  label?: string;
+}
 
-const SwitchComponent = forwardRef<HTMLButtonElement, SwitchFieldProps>(
-  ({ value, onChange, disabled, formLabel, className }, ref) => {
+const SwitchComponent = forwardRef<
+  React.ElementRef<typeof Primitive.Root>,
+  SwitchComponentProps
+>(
+  ({ label, ...props }, ref) => {
     return (
-      <div className={cn('flex items-center space-x-2', className)}>
-        <Primitive.Switch
-          checked={value}
-          onCheckedChange={(checked) => onChange && onChange(checked)}
-          disabled={disabled}
-        />
-        {formLabel && <Label>{formLabel}</Label>}
+      <div className={cn('nlp--switch', styles.start)}>
+        <Primitive.Root className={styles.switch_root} id="airplane-mode">
+          <Primitive.Thumb className={styles.switch_thumb} />
+        </Primitive.Root>
+        {label && (
+          <label
+            className={styles.label}
+            htmlFor="airplane-mode"
+          >
+            {label}
+          </label>
+        )}
       </div>
-    );
+    )
   },
 );
 

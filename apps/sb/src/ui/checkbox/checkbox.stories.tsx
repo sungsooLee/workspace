@@ -46,7 +46,7 @@ const TemplateSetValue: React.FC<any> = (args) => {
   );
 };
 
-export const SetValue: Story = {
+export const ValueControl: Story = {
   args: {
     label: 'checkbox label',
     disabled: false,

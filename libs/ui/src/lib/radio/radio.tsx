@@ -1,32 +1,45 @@
-import { forwardRef } from 'react';
-import { cn } from '@learnway/shared';
-import { RadioGroup, RadioGroupItem } from '../shadcn/radio-group';
-import { Label } from '../shadcn/label';
-import { RadioFieldProps } from './type';
+import React, { forwardRef } from 'react';
+import * as Primitive from "@radix-ui/react-radio-group";
 
-const RadioComponent = forwardRef<HTMLDivElement, RadioFieldProps>(
-  ({ orientation = 'vertical', className, options, ...props}, ref) => {
+import { cn } from '@learnway/shared';
+
+import { RadioOption } from './type';
+import styles from './radio.module.scss';
+
+export interface RadioComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  options: RadioOption[];
+  orientation?: 'vertical' | 'horizontal';
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+}
+
+const RadioComponent = forwardRef<
+  React.ElementRef<typeof Primitive.Root>,
+  RadioComponentProps
+>(
+  ({ className, options, defaultValue, orientation = 'horizontal', ...props}, ref) => {
     return (
-      <RadioGroup
-        ref={ref}
+      <Primitive.Root
         className={cn(
-          orientation === 'vertical' ? 'flex flex-col space-y-1' : 'flex flex-row space-x-4',
-          'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500 group-[.has-error]:text-destructive',
-          className,
+          styles.start,
+          'nlp--radio',
+          // orientation === 'horizontal' ? horizontal_selector : vertical_selector (css 구현필요)
         )}
         {...props}
       >
-        {options.map((option) => (
-          <div key={option.value} className="flex items-center space-x-2">
-            <RadioGroupItem value={option.value} id={option.value} />
-            <Label htmlFor={option.value}>{option.label}</Label>
+        {options.map((option: RadioOption) => (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Primitive.Item key={option.value} className={styles.item} value={option.value} id={option.value}>
+              <Primitive.Indicator className={styles.indicator} />
+            </Primitive.Item>
+            <label className={styles.label} htmlFor={option.value}>
+              {option.label}
+            </label>
           </div>
         ))}
-      </RadioGroup>
-    )
+      </Primitive.Root>
+    );
   },
 );
-
-// FormRadioGroup.displayName = 'FormRadioGroup';
 
 export const Radio = RadioComponent;
