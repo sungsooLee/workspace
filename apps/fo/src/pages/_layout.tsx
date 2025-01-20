@@ -2,14 +2,10 @@ import { useEffect } from 'react';
 import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Button,
-  FieldType,
-  Select,
-} from '@learnway/ui';
+import { Button, FieldType, Select } from '@learnway/ui';
 import { CODE_GROUP, codeConfig } from '@learnway/config';
 
-import { Navigate } from '../widgets/layout';
+import { GNB, Layout, Navigate } from '../widgets/layout';
 import { useSetLanguage } from '../features/system';
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
@@ -81,7 +77,11 @@ function LayoutComponent() {
 
   return (
     <div>
-      <div className="flex h-60px bg-secondary-1">
+      <GNB />
+      <Layout>
+        <Outlet />
+      </Layout>
+      {/* <div className="flex h-60px bg-secondary-1">
         <div className="flex gap-10 items-center">
           <Link to={'/'}>
             {(tenant?.logoImageUrl && (
@@ -124,7 +124,7 @@ function LayoutComponent() {
       </div>
       <div className="p-10">
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 }

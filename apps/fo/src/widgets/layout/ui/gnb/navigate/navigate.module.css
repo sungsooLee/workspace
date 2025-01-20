@@ -1,0 +1,9 @@
+._start {
+  display: flex;
+  height: 100%;
+  /*background-color: red !important;*/
+
+  ._active {
+    color: blue;
+  }
+}
