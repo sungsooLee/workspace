@@ -1,7 +1,9 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import styles from './my-menu.module.css';
 import { Popover } from '@learnway/ui';
+import { IcoStar } from '@learnway/icons';
 
 import { useFetchAuthUser } from '../../../entities/user';
 
@@ -23,7 +25,16 @@ const MyMenuCompoment = () => {
 
   const { data } = useFetchAuthUser();
 
-  return <Popover popoverContent={<PopoverContent />}>{t('MY MENU')}</Popover>;
+  return (
+    <Popover popoverContent={<PopoverContent />}>
+      {
+        <button type="button" className={styles.btn_menu}>
+          <IcoStar width={20} height={20} stroke="#FFB902" />
+          <span className={styles.btn_text}>{t('MY MENU')}</span>
+        </button>
+      }
+    </Popover>
+  );
 };
 
 export const MyMenu = memo(MyMenuCompoment);
