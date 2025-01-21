@@ -1,4 +1,4 @@
-import { Hierarchy } from '../hierarchy';
+import { Hierarchy } from '@learnway/shared';
 
 export interface Menu extends Hierarchy<Menu> {
   id?: number;

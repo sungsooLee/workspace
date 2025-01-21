@@ -6,3 +6,5 @@ export * from './lib/utils/query';
 export * from './lib/utils/tree';
 export * from './lib/utils/depsAreSame';
 export * from './lib/utils/random-generator';
+
+export * from './lib/types';
