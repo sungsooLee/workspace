@@ -1,0 +1,10 @@
+.start {
+  .alarm_item {
+    @apply relative;
+    .count_view {
+      @apply absolute flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646];
+    }
+  }
+  .alarm_content {
+  }
+}
