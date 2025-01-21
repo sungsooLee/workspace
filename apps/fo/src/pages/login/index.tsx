@@ -86,7 +86,6 @@ function RouteComponent() {
           </Button>
         </Form>
       </div>
-      <Editor />
     </div>
   );
 }

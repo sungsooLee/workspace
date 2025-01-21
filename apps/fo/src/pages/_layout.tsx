@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { Button, FieldType, Select } from '@learnway/ui';
 import { CODE_GROUP, codeConfig } from '@learnway/config';
 
-import { GNB, Layout, Navigate } from '../widgets/layout';
+import { GNB, Layout } from '../widgets/layout';
 import { useSetLanguage } from '../features/system';
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
 import { useLogoutUser } from '../entities/user';
 import { useCodesByCodeGroup, useLabelByCode } from '../entities/system';
 import type { Code } from '../entities/system';
+import { Breadcrumbs } from '../widgets/layout/ui/container/breadcrumbs/breadcrumbs';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -78,6 +79,7 @@ function LayoutComponent() {
   return (
     <div>
       <GNB />
+      <Breadcrumbs />
       <Layout>
         <Outlet />
       </Layout>

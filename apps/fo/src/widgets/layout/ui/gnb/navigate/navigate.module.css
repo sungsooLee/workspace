@@ -4,6 +4,7 @@
   /*background-color: red !important;*/
 
   ._active {
-    color: blue;
+    color: red;
   }
+  /* 2depth 메뉴 레이어 */
 }

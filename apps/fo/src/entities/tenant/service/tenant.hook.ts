@@ -8,6 +8,10 @@ export function useFetchTenant(tenantId?: number) {
   return useQuery(queryOptions.detail(tenantId));
 }
 
+export function useFetchTenantByUser(accountId?: string) {
+  return useQuery(queryOptions.byUser(accountId));
+}
+
 export function useCreateTenant(mutationOptions = {}) {
   const queryClient = useQueryClient();
 

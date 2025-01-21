@@ -1,20 +1,25 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Logo } from '../../../../features/layout';
+import { Category, GnbInput, Logo, Notification, Tenants } from '../../../../features/layout';
 import { Navigate } from './navigate/navigate';
 import { Language } from '../../../../features/layout/ui/language';
+import { UserAvatar } from '../../../../features/layout/ui/user-avatar';
 
 function GNBComponent() {
   return (
     <div className="bg-secondary-1 flex flex-col">
       <div className="flex items-center gap-10">
         <Logo />
-        <div className="flex grow"></div>
-        <Navigate />
+        <Tenants />
+        <GnbInput />
         <Language />
-        {/* <Notification/>
-         */}
+        <Notification />
+        <UserAvatar />
+      </div>
+      <div className="flex items-center gap-10">
+        <Category />
+        <Navigate />
       </div>
     </div>
   );
