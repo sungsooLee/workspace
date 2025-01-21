@@ -1,282 +1,386 @@
 {
   "title": "ROOT",
-  "path": "/",
   "roles": "ROLE_ADMIN",
+  "id": 0,
+  "path": "/",
   "children": [
     {
-      "title": "Menu 2",
-      "path": "/menu2",
+      "title": "교육제도",
+      "id": 1,
       "roles": "ROLE_ADMIN",
+      "path": "/menu/menu2",
       "children": [
         {
-          "title": "Menu 3",
-          "path": "/menu3",
+          "title": "금융자격지원제도",
+          "id": 11,
           "roles": "ROLE_ADMIN",
-          "tenantName": "현대자동차"
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/menu2-1"
         },
         {
-          "title": "Menu 4",
-          "path": "/menu4",
+          "title": "SPA 승진제도",
+          "id": 12,
           "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 5",
-              "path": "/menu4/menu5",
-              "roles": "ROLE_ADMIN",
-              "children": [
-                {
-                  "title": "Menu 14",
-                  "path": "/menu14",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 15",
-                      "path": "/menu15",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                },
-                {
-                  "title": "Menu 16",
-                  "path": "/menu16",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 17",
-                      "path": "/menu17",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                },
-                {
-                  "title": "Menu 18",
-                  "path": "/menu18",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 19",
-                      "path": "/menu19",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                },
-                {
-                  "title": "Menu 20",
-                  "path": "/menu20",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 21",
-                      "path": "/menu21",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                },
-                {
-                  "title": "Menu 30",
-                  "path": "/menu30",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 31",
-                      "path": "/menu31",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                },
-                {
-                  "title": "Menu 34",
-                  "path": "/menu34",
-                  "roles": "ROLE_ADMIN",
-                  "children": [
-                    {
-                      "title": "Menu 35",
-                      "path": "/menu35",
-                      "roles": "ROLE_ADMIN",
-                      "tenantName": "현대자동차"
-                    }
-                  ],
-                  "tenantName": "현대자동차"
-                }
-              ],
-              "tenantName": "현대자동차"
-            },
-            {
-              "title": "Menu 10",
-              "path": "/menu10",
-              "roles": "ROLE_ADMIN",
-              "children": [
-                {
-                  "title": "Menu 11",
-                  "path": "/menu11",
-                  "roles": "ROLE_ADMIN",
-                  "tenantName": "현대자동차"
-                }
-              ],
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 6",
-          "path": "/menu6",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 7",
-              "path": "/menu6/menu7",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            },
-            {
-              "title": "Menu 12",
-              "path": "/menu12",
-              "roles": "ROLE_ADMIN",
-              "children": [
-                {
-                  "title": "Menu 13",
-                  "path": "/menu13",
-                  "roles": "ROLE_ADMIN",
-                  "tenantName": "현대자동차"
-                }
-              ],
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 8",
-          "path": "/menu8",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 9",
-              "path": "/menu8/menu9",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 22",
-          "path": "/menu22",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 23",
-              "path": "/menu23",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 24",
-          "path": "/menu24",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 25",
-              "path": "/menu25",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 26",
-          "path": "/menu26",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 27",
-              "path": "/menu27",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 28",
-          "path": "/menu28",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 29",
-              "path": "/menu29",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 32",
-          "path": "/menu32",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 33",
-              "path": "/menu33",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
-        },
-        {
-          "title": "Menu 36",
-          "path": "/menu36",
-          "roles": "ROLE_ADMIN",
-          "children": [
-            {
-              "title": "Menu 37",
-              "path": "/menu37",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            },
-            {
-              "title": "Menu 38",
-              "path": "/menu38",
-              "roles": "ROLE_ADMIN",
-              "children": [
-                {
-                  "title": "Menu 39",
-                  "path": "/menu39",
-                  "roles": "ROLE_ADMIN",
-                  "tenantName": "현대자동차"
-                }
-              ],
-              "tenantName": "현대자동차"
-            },
-            {
-              "title": "Menu 40",
-              "path": "/menu40",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차"
-            }
-          ],
-          "tenantName": "현대자동차"
+          "path": "/menu/menu2-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
         }
-      ],
-      "tenantName": "현대자동차"
+      ]
+    },
+    {
+      "title": "학습계획",
+      "id": 2,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu3",
+      "children": [
+        {
+          "title": "진단",
+          "id": 21,
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/menu3-1"
+        },
+        {
+          "title": "계획수립",
+          "id": 22,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
+    },
+    {
+      "title": "HMCP",
+      "id": 3,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu4",
+      "children": [
+        {
+          "title": "안내",
+          "id": 31,
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/menu4-1"
+        },
+        {
+          "title": "시험일정",
+          "id": 32,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu4-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "시험결과",
+          "id": 33,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu4-3",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
+    },
+    {
+      "title": "채널",
+      "id": 4,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu5",
+      "children": [
+        {
+          "title": "채널",
+          "id": 41,
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/menu5-1"
+        }
+      ]
+    },
+    {
+      "title": "나의학습",
+      "id": 5,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu6",
+      "children": [
+        {
+          "title": "학습현황",
+          "id": 51,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-1",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "학습노트",
+          "id": 52,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "학습실적",
+          "id": 53,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-3",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "학습이력",
+          "id": 54,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-4",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "나의활동",
+          "id": 55,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-5",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "배지",
+          "id": 56,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-6",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "설문",
+          "id": 57,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-7",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "평가",
+          "id": 58,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-8",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "결재함",
+          "id": 59,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu6-9",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
+    },
+    {
+      "title": "팀학습현황",
+      "id": 6,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu7",
+      "children": [
+        {
+          "title": "팀결재함",
+          "id": 61,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-1",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀진단현황",
+          "id": 62,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀계획수립",
+          "id": 63,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-3",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀학습현황",
+          "id": 64,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-4",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀학습이력",
+          "id": 65,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-5",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀학습실적",
+          "id": 66,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-6",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀교육지원현황",
+          "id": 67,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-7",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀아학점수",
+          "id": 68,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-8",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "팀자격증현황",
+          "id": 69,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-9",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "사업부진단예산",
+          "id": 610,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu7-10",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
+    },
+    {
+      "title": "교육지원",
+      "id": 7,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu8",
+      "children": [
+        {
+          "title": "공지",
+          "id": 71,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-1",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "FAQ",
+          "id": 72,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "Q&A",
+          "id": 73,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-3",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "강의장예약",
+          "id": 74,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-4",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "교육비지원",
+          "id": 75,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-5",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "출강신청",
+          "id": 76,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-6",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "교육/채널요청",
+          "id": 77,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-7",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "1:1 문의",
+          "id": 78,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu8-8",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
+    },
+    {
+      "title": "커뮤니티",
+      "id": 8,
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu9",
+      "children": [
+        {
+          "title": "러닝맵",
+          "id": 81,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu9-1",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "지식공유",
+          "id": 82,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu9-2",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "OJT",
+          "id": 83,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu9-3",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "코칭",
+          "id": 84,
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu9-4",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ]
     }
   ],
-  "tenantName": "현대자동차"
+  "tenantName": "현대자동차",
+  "isQuickAccessArea": false
 }

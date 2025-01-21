@@ -2,12 +2,15 @@ import * as React from 'react';
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { ModalWrapper } from '@learnway/ui';
+import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  useRenewalMenuStateFromRouting();
+
   return (
     <>
       <Outlet />
