@@ -6,7 +6,6 @@ export * from './lib/button/button';
 
 // avatar
 export * from './lib/avatar/avatar';
-export * from './lib/popover/popover';
 
 // backdrop
 export * from './lib/backdrop/backdrop';
@@ -71,8 +70,18 @@ export * from './lib/tree-view/type';
 export * from './lib/editor/hooks/editor.hook';
 export { default as Editor } from './lib/editor';
 
+// popover
+export * from './lib/popover/popover';
+
+// textarea
+export * from './lib/textarea/textarea';
+
 // type
 export * from './lib/type';
+
+
+// popover
+export * from './lib/tooltip/tooltip';
 
 // shad - toast
 export * from './lib/shadcn/toast';

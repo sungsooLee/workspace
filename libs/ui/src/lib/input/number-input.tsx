@@ -5,6 +5,8 @@ import { cn } from '@learnway/shared';
 
 import { BaseFieldProps } from '../type';
 
+import styles from './number-input.module.scss';
+
 export interface NumberFieldProps extends BaseFieldProps {
   prefix?: string;
   suffix?: string;
@@ -42,6 +44,7 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberFieldProps>(
       <NumericFormat
         getInputRef={ref}
         className={cn(
+          styles.start,
           'w-full rounded-md border px-3 py-2 text-sm',
           'border-gray-300 bg-white text-gray-900',
           'placeholder:text-gray-500',
