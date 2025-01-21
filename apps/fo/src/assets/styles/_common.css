@@ -1,0 +1,17 @@
+/* _common.css 공통 */
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gray9);
+  line-height: 160%;
+}
+
+strong {
+  font-weight: 600;
+}
