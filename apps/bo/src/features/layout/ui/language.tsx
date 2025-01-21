@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CODE_GROUP } from '@learnway/config';
+import { CODE_GROUP, Code } from '@learnway/config';
 import { Avatar, Popover } from '@learnway/ui';
 
 import { useSetLanguage } from '../../../features/system';
 import { useFetchAuthUser } from '../../../entities/user';
 import { useCodesByCodeGroup } from '../../../entities/system';
-import type { Code } from '../../../entities/system';
 
 const PopoverContent = ({ data }: { data?: Code[] }) => {
   const { t } = useTranslation();

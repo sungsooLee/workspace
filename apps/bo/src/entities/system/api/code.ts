@@ -1,13 +1,11 @@
 import { httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
-
-import { CodeRole } from '../../../types/entities/code';
+import { PMSApiPrefix, CodeGroup } from '@learnway/config';
 
 import codeMock from '../../mock/code.json';
 
 export default class CodeService {
-  static fetchCodes(): Promise<CodeRole[]> {
+  static fetchCodes(): Promise<CodeGroup[]> {
     //return httpService.get<Company[]>(`${PMSApiPrefix()}/codes`);
-    return new Promise((resolve) => setTimeout(() => resolve(codeMock as CodeRole[]), 2000));
+    return new Promise((resolve) => setTimeout(() => resolve(codeMock as CodeGroup[]), 2000));
   }
 }

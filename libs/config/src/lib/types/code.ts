@@ -1,5 +1,5 @@
-export interface CodeRole {
-  codeRole: string;
+export interface CodeGroup {
+  codeGroup: string;
   name: string;
   description: string;
   codes: Code[];
@@ -8,5 +8,5 @@ export interface CodeRole {
 export interface Code {
   code: string;
   name: string;
-  label: string;
+  label?: string;
 }
