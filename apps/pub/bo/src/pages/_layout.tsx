@@ -6,8 +6,6 @@ import { cn } from '@learnway/shared';
 
 import { GNB, Layout } from '../widgets/layout';
 
-import styles from './_layout.module.css';
-
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
 });
@@ -19,7 +17,7 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div className={styles.start}>
+    <div>
       <GNB />
       <Layout>
         <Outlet />
