@@ -2,6 +2,8 @@ import React, { forwardRef, useEffect, useState, useCallback } from 'react';
 import { cn } from '@learnway/shared';
 import { Input } from './input';
 
+import styles from './debounced-input.module.scss';
+
 interface DebouncedInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   value: string | number;
@@ -47,7 +49,7 @@ const DebouncedInput = forwardRef<HTMLInputElement, DebouncedInputProps>(
         ref={ref}
         value={value}
         onChange={handleChange}
-        className={cn('w-full', className)}
+        className={cn(styles.start, 'w-full', className)}
       />
     );
   },

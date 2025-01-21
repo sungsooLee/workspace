@@ -2,25 +2,29 @@ import { forwardRef, memo, ReactNode } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './popover.shadcn';
+import * as Primitive from "@radix-ui/react-popover";
 
-interface PopoverProps extends Primitive.PopoverContentProps {
+import styles from './popover.module.scss';
+
+interface PopoverComponentProps extends Primitive.PopoverContentProps {
   children: ReactNode;
   popoverContent?: ReactNode;
   className?: string;
 }
 
-const PopoverComponent = forwardRef<React.ElementRef<typeof Primitive.Popover>, PopoverProps>(
+const PopoverComponent = forwardRef<React.ElementRef<typeof Primitive.Popover>, PopoverComponentProps>(
   ({ children, className, popoverContent, ...props }, ref) => {
     return (
-      <Primitive.Popover>
-        <Primitive.PopoverTrigger className={cn('nlp--popover-trigger')}>
+      <Primitive.Root>
+        <Primitive.Trigger asChild>
           {children}
-        </Primitive.PopoverTrigger>
-        <Primitive.PopoverContent className={cn('nlp--popover-content', className)} {...props}>
-          {popoverContent}
-        </Primitive.PopoverContent>
-      </Primitive.Popover>
+        </Primitive.Trigger>
+        <Primitive.Portal>
+          <Primitive.Content className={styles.start} sideOffset={5}>
+            {popoverContent}
+          </Primitive.Content>
+        </Primitive.Portal>
+      </Primitive.Root>
     );
   },
 );

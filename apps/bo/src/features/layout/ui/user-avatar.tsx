@@ -55,7 +55,7 @@ const PopoverContent = () => {
   );
 };
 
-const AvatarCompoment = () => {
+const AvatarComponent = () => {
   const { data } = useFetchAuthUser();
 
   return (
@@ -65,4 +65,4 @@ const AvatarCompoment = () => {
   );
 };
 
-export const UserAvatar = memo(AvatarCompoment);
+export const UserAvatar = memo(AvatarComponent);
