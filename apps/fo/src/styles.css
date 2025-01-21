@@ -16,9 +16,6 @@
 @import './assets/styles/style.css'; /* 퍼블 css */
 
 @layer base {
-}
-
-@layer base {
   * {
     @apply border-border;
   }
