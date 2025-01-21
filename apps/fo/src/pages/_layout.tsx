@@ -83,50 +83,6 @@ function LayoutComponent() {
       <Layout>
         <Outlet />
       </Layout>
-      {/* <div className="flex h-60px bg-secondary-1">
-        <div className="flex gap-10 items-center">
-          <Link to={'/'}>
-            {(tenant?.logoImageUrl && (
-              <img src={tenant?.logoImageUrl} title={tenant.name} className="h-16" />
-            )) ??
-              tenant?.name}
-          </Link>
-          <Navigate />
-        </div>
-        <div className="flex grow"></div>
-        <div className="flex text-sm items-baseline justify-end gap-4 pt-4 pe-5">
-          {data?.userName}님 로그인, {de}{' '}
-          {codeConfig.getLabelByCode(CODE_GROUP.LANGUAGE_CODE, 'de')}
-          <Button variant={'outline'} size={'sm'} onClick={() => handleLogout()}>
-            {t('LOGOUT')}
-          </Button>
-          <Select
-            type={FieldType.SELECT}
-            name='name'
-            label='label'
-            options={[
-              {value: DEFAULT_THEME, label: 'default'},
-              {value: 'red', label: 'red'},
-              {value: 'green', label: 'green'},
-            ]}
-            onChange={(value: string) => handleTheme(value)}
-          />
-          <Select
-            type={FieldType.SELECT}
-            name='name'
-            label='label'
-            options={
-              languageCodes.map((code: Code, index: number) => {
-                return {value: code.code, label: code.label}
-              })
-            }
-            onChange={(value: string) => handleLang(value)}
-          />
-        </div>
-      </div>
-      <div className="p-10">
-        <Outlet />
-      </div> */}
     </div>
   );
 }

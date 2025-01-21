@@ -6,6 +6,7 @@ import { cookieService } from '@learnway/shared';
 
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 import { User } from '../model/user';
+import { useEffect } from 'react';
 
 export interface IMutateCallback<TVariables> {
   onSuccess?: (data: any, variables: TVariables, context: any) => void;
@@ -98,4 +99,12 @@ export function useUpdateUser(mutationOptions = {}) {
       queryClient.setQueryData(queryKeys.authUser, { ...user, userLanguageSetCode: languageCode });
     },
   };
+}
+
+export function useAuthinitialize() {
+  const queryClient = useQueryClient();
+
+  // useEffect(()=>{
+
+  // },[])
 }
