@@ -2,7 +2,7 @@ import { forwardRef, memo, ReactNode } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './popover.shadcn';
+import * as Primitive from '@radix-ui/react-popover';
 
 interface PopoverProps extends Primitive.PopoverContentProps {
   children: ReactNode;
