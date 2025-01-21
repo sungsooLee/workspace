@@ -20,7 +20,7 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
-import { FilterIcon } from 'lucide-react';
+import { IcoGridFilter } from '@learnway/icons';
 
 import { GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
@@ -30,6 +30,7 @@ import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
 import { Checkbox } from '../checkbox/checkbox';
+import './index.css';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -431,7 +432,7 @@ const Grid = <T extends object>({
     return (
       <div
         ref={tableContainerRef}
-        className="relative overflow-auto rounded-lg border"
+        className={cn('grid_table')}
         style={{
           height: '600px',
           width: '100%',
@@ -447,7 +448,7 @@ const Grid = <T extends object>({
               position: 'sticky',
               top: 0,
               zIndex: 1,
-              backgroundColor: 'rgb(249 250 251)',
+              backgroundColor: '#F4F8FF',
             }}>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr
@@ -463,12 +464,13 @@ const Grid = <T extends object>({
                       width: paginationGrid ? undefined : header.getSize(),
                       display: paginationGrid ? 'table-cell' : 'flex',
                     }}
-                    className="border-b px-4 py-2 text-left">
-                    <div className="flex flex-col gap-2">
+                    className="thead_th">
+                    <div className="flex flex-col">
                       <div
                         className={cn(
+                          'flex items-center justify-center',
                           header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          'text-xs font-medium uppercase text-gray-500',
+                          'h-[50px] font-bold uppercase',
                         )}
                         onClick={header.column.getToggleSortingHandler()}>
                         {header.isPlaceholder
@@ -480,12 +482,12 @@ const Grid = <T extends object>({
                         }[header.column.getIsSorted() as string] ?? null}
                         {/* 필터 */}
                         {header.column.columnDef.meta?.filterType && (
-                          <Button
+                          <button
+                            type="button"
                             onClick={(e) => openFilterPopup(e, header.column)}
-                            size="xs"
-                            className="m-2">
-                            <FilterIcon />
-                          </Button>
+                            className="btn_filter">
+                            <IcoGridFilter width={16} height={16} />
+                          </button>
                         )}
                       </div>
                     </div>
