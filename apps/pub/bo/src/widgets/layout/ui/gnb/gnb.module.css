@@ -24,7 +24,7 @@
       }
     }
     .util {
-      @apply absolute right-8 top-0 flex items-center;
+      @apply absolute right-[32px] top-[10px] flex items-center;
     }
     .quick_menu {
       @apply absolute bottom-0 right-[32px];

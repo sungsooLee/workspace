@@ -1,16 +1,26 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { Accordion } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
 import styles from './lnb.module.css';
 
 function LNBComponent() {
+  const [isActive, setActive] = useState<boolean>(false); // LNB 최상단 타이틀 active
+  const buttonClass = `${isActive ? styles.active : styles.inactive}`; // LNB 최상단 타이틀 active 클래스 적용
   return (
     <div className={`${styles.start} nlp--lnb`}>
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>
-          <span>{'activeMenuDepth[0].title'}</span>
+          <button
+            type="button"
+            className={cn(styles.lnb_title_btn, buttonClass)}
+            onClick={() => setActive(!isActive)}>
+            <span className={styles.lnb_title_text}>{'activeMenuDepth[0].title'}</span>
+            <IcoArrowDown width={16} height={16} stroke="#131C30" />
+          </button>
         </h2>
         <Accordion
           items={[
@@ -19,12 +29,14 @@ function LNBComponent() {
               title: '메뉴 타이틀A',
               children: (
                 <Accordion
+                  className={styles.accordion_depth2}
                   items={[
                     {
                       key: 'q45p7j237v0',
                       title: '메뉴 타이틀A-1',
                       children: (
                         <Accordion
+                          className={styles.accordion_depth3}
                           items={[
                             {
                               key: 'q45p7j237v01',
@@ -58,6 +70,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-2',
                       children: (
                         <Accordion
+                          className={styles.accordion_depth2}
                           items={[
                             {
                               key: 'q45p7j237v03',
