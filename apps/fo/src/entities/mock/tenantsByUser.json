@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "현대자동차",
+    "windowTitle": "현대자동차 학습플랫폼",
+    "logoImageUrl": "http://gesadmin.hmc.co.kr/upload/homepage/logo/25/gate_toplogo@blue.png",
+    "loginImageUrl": "https://naver.com"
+  },
+  {
+    "id": 2,
+    "name": "현대자동차2",
+    "windowTitle": "현대자동차 학습플랫폼",
+    "logoImageUrl": "http://gesadmin.hmc.co.kr/upload/homepage/logo/25/gate_toplogo@blue.png",
+    "loginImageUrl": "https://naver.com"
+  },
+  {
+    "id": 3,
+    "name": "현대자동차3",
+    "windowTitle": "현대자동차 학습플랫폼",
+    "logoImageUrl": "http://gesadmin.hmc.co.kr/upload/homepage/logo/25/gate_toplogo@blue.png",
+    "loginImageUrl": "https://naver.com"
+  },
+  {
+    "id": 4,
+    "name": "현대자동차4",
+    "windowTitle": "현대자동차 학습플랫폼",
+    "logoImageUrl": "http://gesadmin.hmc.co.kr/upload/homepage/logo/25/gate_toplogo@blue.png",
+    "loginImageUrl": "https://naver.com"
+  },
+  {
+    "id": 5,
+    "name": "현대자동차5",
+    "windowTitle": "현대자동차 학습플랫폼",
+    "logoImageUrl": "http://gesadmin.hmc.co.kr/upload/homepage/logo/25/gate_toplogo@blue.png",
+    "loginImageUrl": "https://naver.com"
+  }
+]

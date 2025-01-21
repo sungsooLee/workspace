@@ -1,8 +1,6 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { Menu } from '../model/menu';
-
 import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
@@ -18,15 +16,15 @@ export default class MenuService {
   }
 
   static getMenu(menuId: string) {
-    return httpService.get<Menu>(`${PMSApiPrefix()}/menu/${menuId}`);
+    return httpService.get<any>(`${PMSApiPrefix()}/menu/${menuId}`);
   }
 
-  static createMenus(menu: Menu[]) {
-    return httpService.post<Menu>(`/menus`, menu);
+  static createMenus(menu: any[]) {
+    return httpService.post<any>(`/menus`, menu);
   }
 
-  static updateMenu(menuId: string, menu: Menu) {
-    return httpService.patch<Menu>(`/menus`, menu);
+  static updateMenu(menuId: string, menu: any) {
+    return httpService.patch<any>(`/menus`, menu);
   }
 }
 /*
