@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-accordion';
-import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { IcoArrowDown } from '@learnway/icons';
 
 import { cn } from '@learnway/shared';
 
@@ -35,8 +35,8 @@ const AccordionComponent = forwardRef<
         return (
           <Primitive.Item value={item.key} className={cn(styles.accordion_item)} key={item.key}>
             <Primitive.Trigger className={cn(styles.accordion_btn)}>
-              <span>{item.title}</span>
-              {item.children && <ChevronDownIcon />}
+              <span className="accordion_title">{item.title}</span>
+              {item.children && <IcoArrowDown width={16} height={16} stroke="#131C30" />}
             </Primitive.Trigger>
             <Primitive.Content className={cn(styles.accordion_content)}>
               {item.children}

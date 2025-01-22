@@ -2,6 +2,7 @@
 @import '../../../libs/config/src/lib/style/theme.css';
 
 @import 'tailwindcss/base';
+
 /*
 @tailwind base;
 @tailwind components;
@@ -10,9 +11,9 @@
 
 @import './assets/styles/components/index.css';
 
-@import './assets/styles/global.css';
-
 @import 'tailwindcss/utilities';
+
+@import './assets/styles/style.css'; /* 퍼블 css */
 
 @layer base {
 }
@@ -21,8 +22,11 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply text-[62.5%];
+  }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-[1.6rem] font-normal leading-[1.6] text-[--gray9];
   }
   body,
   html {
@@ -43,4 +47,8 @@
       'Segoe UI Symbol',
       sans-serif;
   }
+}
+
+#root {
+  @apply text-[--gray9];
 }

@@ -11,6 +11,7 @@ import {
   DialogFooter,
 } from '../shadcn/dialog';
 import { BaseModalProps } from './type';
+import styles from './modal.module.css';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
   title,
@@ -46,19 +47,20 @@ const ModalComponent: React.FC<BaseModalProps> = ({
     <Dialog open={true} onOpenChange={handleOpenChange}>
       <DialogContent
         className={cn(
+          styles.modal_wrap,
           heightClasses[height],
           sizeClasses[width],
           'transition-all duration-200',
           'nlp--modal-content',
         )}>
         {(title || description) && (
-          <DialogHeader className="nlp--modal-header">
+          <DialogHeader className={cn(styles.modal_header, 'nlp--modal-header')}>
             {title && <DialogTitle>{title}</DialogTitle>}
             {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
         )}
 
-        <div className="py-4">{children}</div>
+        <div className={styles.modal_content}>{children}</div>
 
         {footer && <DialogFooter>{footer}</DialogFooter>}
       </DialogContent>

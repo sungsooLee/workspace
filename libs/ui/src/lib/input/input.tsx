@@ -3,6 +3,8 @@ import { X } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
 
+import styles from './input.module.scss';
+
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -67,9 +69,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     );
 
     return (
-      <div className="relative w-full">
+      <div className={cn(styles.start, 'relative w-full')}>
         <input
-          className={cn(baseStyles, className)}
+          className={cn(styles.input, baseStyles, className)}
           type={type}
           ref={(el) => {
             inputRef.current = el;
@@ -86,7 +88,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           onChange={handleInputChange}
           placeholder={placeholder}
         />
-        <div className="absolute bottom-0 right-0 top-0 flex w-8 items-center justify-center">
+        <div className={cn(styles.button, 'absolute bottom-0 right-0 top-0 flex w-8 items-center justify-center')}>
           {isFocused && value && value.toString().length > 0 && (
             <button
               type="button"

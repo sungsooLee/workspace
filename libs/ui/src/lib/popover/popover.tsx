@@ -1,10 +1,11 @@
 import { forwardRef, memo, ReactNode } from 'react';
-
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './popover.shadcn';
+import * as Primitive from '@radix-ui/react-popover';
 
-interface PopoverProps extends Primitive.PopoverContentProps {
+import styles from './popover.module.scss';
+
+interface PopoverComponentProps extends Primitive.PopoverContentProps {
   children: ReactNode;
   popoverContent?: ReactNode;
   className?: string;
@@ -12,20 +13,23 @@ interface PopoverProps extends Primitive.PopoverContentProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-const PopoverComponent = forwardRef<React.ElementRef<typeof Primitive.Popover>, PopoverProps>(
-  ({ children, className, popoverContent, open, onOpenChange, ...props }, ref) => {
-    return (
-      <Primitive.Popover open={open} onOpenChange={onOpenChange}>
-        <Primitive.PopoverTrigger className={cn('nlp--popover-trigger')}>
-          {children}
-        </Primitive.PopoverTrigger>
-        <Primitive.PopoverContent className={cn('nlp--popover-content', className)} {...props}>
+const PopoverComponent = forwardRef<
+  React.ElementRef<typeof Primitive.Popover>,
+  PopoverComponentProps
+>(({ children, className, popoverContent, open, onOpenChange, ...props }, ref) => {
+  return (
+    <Primitive.Root open={open} onOpenChange={onOpenChange}>
+      <Primitive.PopoverTrigger className={cn('nlp--popover-trigger')}>
+        {children}
+      </Primitive.PopoverTrigger>
+      <Primitive.Portal>
+        <Primitive.Content className={cn('nlp--popover-content', className)} {...props}>
           {popoverContent}
-        </Primitive.PopoverContent>
-      </Primitive.Popover>
-    );
-  },
-);
+        </Primitive.Content>
+      </Primitive.Portal>
+    </Primitive.Root>
+  );
+});
 
 const PopoverRoot = memo(PopoverComponent);
 export const Popover = Object.assign(PopoverRoot, {

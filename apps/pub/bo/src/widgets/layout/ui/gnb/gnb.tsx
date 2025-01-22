@@ -1,8 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-
 import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
 import { Logo, UserAvatar, Notification, Language } from '../../../../features/layout';
