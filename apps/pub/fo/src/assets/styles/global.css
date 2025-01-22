@@ -1,10 +1,19 @@
+@import 'tailwindcss/utilities';
+
 @import './_reset.css';
 @import './_color.css';
 @import './_common.css';
-@import './_media.css';
+@import './_util.css';
 
 /* Layout */
 ._layout_wrap {
+  width: 100%;
+  .container {
+    @apply mx-auto;
+    .inner {
+      width: 1180px;
+    }
+  }
 }
 
 ._header {

@@ -1,0 +1,16 @@
+/* _util.css */
+
+@layer utilities {
+  /* mobile */
+  @screen mobile {
+  }
+
+  /* pc */
+  @screen pc {
+    .menu_list {
+      li {
+        font-size: 50px;
+      }
+    }
+  }
+}

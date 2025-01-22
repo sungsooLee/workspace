@@ -15,4 +15,13 @@ module.exports = {
   ],
   blocklist: ['outline'],
   plugins: [require('./src/assets/tailwind-plugins/typo.plugin')],
+
+  theme: {
+    extend: {
+      screens: {
+        mobile: '360px',
+        pc: '1920px',
+      },
+    },
+  },
 };
