@@ -8,6 +8,7 @@ export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 
 export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid download
 export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid download
 export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 grid download
+export { ReactComponent as IcoClose } from './lib/ic_close.svg'; // 24*24 close
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

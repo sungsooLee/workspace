@@ -11,7 +11,7 @@ import {
   DialogFooter,
 } from '../shadcn/dialog';
 import { BaseModalProps } from './type';
-import styles from './modal.module.css';
+import styles from './modal.module.scss';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
   title,
@@ -20,7 +20,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   footer,
   preventBackdropClose = false,
   onClose,
-  width = 'md',
+  width = 'lg',
   height = 'auto',
 }) => {
   const handleOpenChange = (open: boolean) => {
@@ -28,7 +28,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   };
 
   const sizeClasses = {
-    sm: 'max-w-sm',
+    sm: 'max-w-m',
     md: 'max-w-lg',
     lg: 'max-w-2xl',
     xl: 'max-w-4xl',
