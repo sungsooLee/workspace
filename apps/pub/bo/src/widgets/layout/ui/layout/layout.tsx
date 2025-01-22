@@ -6,9 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 import { LNB } from '../lnb/lnb';
 import { PageContainer } from '../container/page-container';
-
-import styles from './layout.module.css';
-
 interface LayoutComponentProps {
   children: ReactNode;
 }
@@ -18,8 +15,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   //if () {
   return (
-    <div className={styles.start}>
-      <div className={styles.bo_container}>
+    <div className="start">
+      <div className="bo_container">
         <LNB />
         <main>
           <PageContainer>{children}</PageContainer>
