@@ -1,12 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Grid } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/_layout/grid_list')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
       firstName: 'tanner',
@@ -162,7 +165,26 @@ function RouteComponent() {
 
   return (
     <div>
-      <Grid data={data} columns={columns} />
+      <div className="nlp--titlewrap">
+        <div className="title_item">
+          <strong className="title">{`타이틀`}</strong>
+          <span className="count">
+            {10}
+            <span className="unit">건</span>
+          </span>
+        </div>
+      </div>
+      <Grid
+        data={data}
+        columns={columns}
+        pagination={{
+          pageSize,
+          pageIndex,
+          totalRows: 100,
+          onPageChange: setPageIndex,
+          onPageSizeChange: setPageSize,
+        }}
+      />
     </div>
   );
 }

@@ -30,7 +30,7 @@ import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
 import { Checkbox } from '../checkbox/checkbox';
-import './index.css';
+import './grid.css'; // grid CSS
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -385,7 +385,7 @@ const Grid = <T extends object>({
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-4 py-2"
+                    className="grid_td"
                     style={{
                       background: cell.getIsGrouped()
                         ? '#0aff0082'
@@ -468,9 +468,9 @@ const Grid = <T extends object>({
                     <div className="flex flex-col">
                       <div
                         className={cn(
-                          'flex items-center justify-center',
+                          'flex items-center',
                           header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          'h-[50px] font-bold uppercase',
+                          'box-border min-h-[40px] px-[8px] py-[9px] text-[12px] font-bold uppercase text-[#5C636E]',
                         )}
                         onClick={header.column.getToggleSortingHandler()}>
                         {header.isPlaceholder
