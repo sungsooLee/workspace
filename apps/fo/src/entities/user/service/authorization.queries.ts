@@ -14,25 +14,17 @@ export const queryOptions = {
     // queryFn: async () => new Promise((resolve) => resolve(null)),
     queryFn: async () => {
       const token = cookieService.get('LOGIN_TOKEN');
-      const userId = cookieService.get('LOGIN_USER_ID');
-      const tenantId = cookieService.get('LOGIN_TENANT_ID');
-      const roleId = cookieService.get('LOGIN_ROLE_ID');
-
-      if (!token || !userId || !tenantId || !roleId) {
+      if (!token) {
         return null;
       }
+      //
+      const response = await AuthorizationService.getCurrentUser();
+      const userData = response.data.data;
 
-      const mockResponse = await AuthorizationService.login({
-        accountId: userId,
-        orgId: 1,
-        password: 'hae1234',
-      });
-
-      const userData = mockResponse.data.data;
       return {
         ...userData,
-        activeTenantId: tenantId,
-        activeRoleId: roleId,
+        activeTenantId: cookieService.get('LOGIN_TENANT_ID'),
+        activeRoleId: cookieService.get('LOGIN_ROLE_ID'),
       };
     },
   }),

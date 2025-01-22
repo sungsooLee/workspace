@@ -1,15 +1,19 @@
-import { memo, useCallback } from 'react';
-import { Tenant, useFetchTenantByUser } from '../../../entities/tenant';
-import { useFetchAuthUser } from '../../../entities/user';
-import { cookieService } from '@learnway/shared';
+import { memo } from 'react';
+import { Tenant } from '../../../entities/tenant';
 import { Popover } from '@learnway/ui';
+
+interface TenantsComponentProps {
+  tenants: Tenant[];
+  activeTenant: Tenant | null;
+  onTenantSwitch: (tenant: Tenant) => void;
+}
 
 const PopoverContent = ({
   data,
   onTenantSelect,
 }: {
   data?: Tenant[];
-  onTenantSelect: (tenantId: string) => void;
+  onTenantSelect: (tenantId: Tenant) => void;
 }) => {
   if (!data || !data?.length) {
     return null;
@@ -23,7 +27,7 @@ const PopoverContent = ({
             className="cursor-pointer px-4 py-2 hover:bg-gray-100"
             value={tenant.id}
             key={`TENANT${idx}`}
-            onClick={() => onTenantSelect(tenant.id + '')}>
+            onClick={() => onTenantSelect(tenant)}>
             {tenant.name}
           </li>
         );
@@ -32,33 +36,10 @@ const PopoverContent = ({
   );
 };
 
-const TenantComponent = () => {
-  const { data: userData } = useFetchAuthUser();
-  const { data: tenants } = useFetchTenantByUser(userData?.accountId);
-
-  const handleTenantSwitch = useCallback((tenantId: string) => {
-    cookieService.set('LOGIN_TENANT_ID', tenantId);
-
-    const currentUrl = new URL(window.location.href);
-    const baseUrl = `${currentUrl.protocol}//${currentUrl.host}`;
-
-    const newWindow = window.open(baseUrl, '_blank');
-
-    if (newWindow) {
-      newWindow.focus();
-    }
-  }, []);
-
-  if (!tenants?.length) {
-    return null;
-  }
-
-  const activeTenant =
-    tenants.find((tenant) => tenant.id + '' === cookieService.get('LOGIN_TENANT_ID')) || tenants[0];
-
+const TenantComponent = ({ tenants, activeTenant, onTenantSwitch }: TenantsComponentProps) => {
   return (
-    <Popover popoverContent={<PopoverContent data={tenants} onTenantSelect={handleTenantSwitch} />}>
-      <div className="cursor-pointer">{activeTenant?.name}</div>
+    <Popover popoverContent={<PopoverContent data={tenants} onTenantSelect={onTenantSwitch} />}>
+      <div className="min-w-[100px] cursor-pointer">{activeTenant?.name || '테넌트 선택'}</div>
     </Popover>
   );
 };

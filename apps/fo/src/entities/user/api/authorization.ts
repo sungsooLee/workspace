@@ -24,4 +24,8 @@ export default class AuthorizationService {
     //return httpService.get(`${PMSApiPrefix()}/logout`);
     return new Promise((resolve) => resolve({}));
   }
+
+  static getCurrentUser(): Promise<AxiosResponse> {
+    return new Promise((resolve) => setTimeout(() => resolve(loginMock as any)));
+  }
 }

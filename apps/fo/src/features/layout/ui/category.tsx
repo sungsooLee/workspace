@@ -1,21 +1,16 @@
-import { memo } from 'react';
-import { Button, ModalWrapper, useModalControl } from '@learnway/ui';
+import { memo, useState } from 'react';
+import { Button, ModalWrapper, Popover, useModalControl } from '@learnway/ui';
 
 const CategoryContent = () => {
   return <div>Content</div>;
 };
 const CategoryComponent = () => {
-  const { open } = useModalControl();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div>
-      <Button
-        onClick={() => {
-          open(<CategoryContent></CategoryContent>);
-        }}>
-        카테고리
-      </Button>
-      <ModalWrapper />
-    </div>
+    <Popover open={isOpen} onOpenChange={setIsOpen} popoverContent={<CategoryContent />}>
+      <Button>{isOpen ? '카테고리 닫기' : '카테고리'}</Button>
+    </Popover>
   );
 };
 

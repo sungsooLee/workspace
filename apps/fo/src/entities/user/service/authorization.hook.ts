@@ -7,6 +7,10 @@ import { cookieService } from '@learnway/shared';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 import { User } from '../model/user';
 import { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { activeTenantAtom } from '../../../features/layout';
+import AuthorizationService from '../api/authorization';
+import TenantService from '../../tenant/api/tenant';
 
 export interface IMutateCallback<TVariables> {
   onSuccess?: (data: any, variables: TVariables, context: any) => void;
@@ -36,7 +40,6 @@ export function useLoginUser(mutationOptions = {}) {
       cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
-
       //queryClient.clear();
 
       queryClient.setQueryData(queryKeys.authUser, {
@@ -101,10 +104,20 @@ export function useUpdateUser(mutationOptions = {}) {
   };
 }
 
-export function useAuthinitialize() {
-  const queryClient = useQueryClient();
+export function useAuth() {
+  const [activeTenant] = useAtom(activeTenantAtom);
+  console.log(activeTenant);
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: AuthorizationService.getCurrentUser,
+    staleTime: 5 * 60 * 1000,
+  });
 
-  // useEffect(()=>{
+  // const { data: tenant } = useQuery({
+  //   queryKey: ['tenant', activeTenant],
+  //   queryFn: () => TenantService.fetchTenantsByUser(user?.data.accountId),
+  //   enabled: !!activeTenant,
+  // });
 
-  // },[])
+  return { user, activeTenant };
 }
