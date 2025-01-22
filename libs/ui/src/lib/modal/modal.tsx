@@ -1,11 +1,17 @@
 import React from 'react';
 
-import * as Primitive from '@radix-ui/react-dialog';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { cn } from '@learnway/shared';
 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '../shadcn/dialog';
 import { BaseModalProps } from './type';
 import styles from './modal.module.css';
-import styles from './modal.module.scss';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
   title,
@@ -19,6 +25,22 @@ const ModalComponent: React.FC<BaseModalProps> = ({
 }) => {
   const handleOpenChange = (open: boolean) => {
     onClose?.();
+  };
+
+  const sizeClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-[95vw]',
+  };
+
+  const heightClasses = {
+    auto: 'h-auto',
+    sm: 'h-[300px]',
+    md: 'h-[500px]',
+    lg: 'h-[700px]',
+    full: 'h-[95vh]',
   };
 
   return (
