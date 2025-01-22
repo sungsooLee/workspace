@@ -327,8 +327,8 @@ const Grid = <T extends object>({
               ref={(node) => rowVirtualizer.measureElement(node)}
               key={row.id}
               className={cn(
-                'cursor-pointer border-b hover:bg-gray-50',
-                row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+                'cursor-pointer border-b hover:bg-[#F4F8FF]',
+                row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
               )}
               style={{
                 display: 'flex',

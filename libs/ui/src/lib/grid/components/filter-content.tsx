@@ -4,6 +4,8 @@ import { Button } from '../../shadcn/button';
 import DebouncedInput from '../../input/debounced-input';
 import { Input } from '../../input/input';
 import { MultiSelect } from '../../select/multi-select';
+import { cn } from '@learnway/shared';
+import '../grid.css'; // grid CSS
 
 interface FilterContentProps {
   column: string;
@@ -98,7 +100,7 @@ export const FilterContent = ({
         </div>
       )}
 
-      <div className="flex justify-between pt-4">
+      <div className="modal_button">
         <Button variant="ghost" onClick={handleReset}>
           초기화
         </Button>
