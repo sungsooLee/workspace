@@ -17,7 +17,7 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div>
+    <div className="_layout_wrap">
       <GNB />
       <Layout>
         <Outlet />

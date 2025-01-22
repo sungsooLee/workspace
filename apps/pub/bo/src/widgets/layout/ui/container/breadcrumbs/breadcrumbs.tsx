@@ -3,12 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import styles from './breadcrumbs.module.css';
-
 function BreadcrumbsComponent() {
   const { t } = useTranslation();
 
-  return <div className={styles._start}>Home</div>;
+  return <div className="">Home</div>;
 }
 
 export const Breadcrumbs = memo(BreadcrumbsComponent);

@@ -1,16 +1,20 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { UserAvatar, Notification, Language } from '../../../../features/layout';
+import logoImage from '../../../../assets/images/logo.png';
 
 function GNBComponent() {
   const { t } = useTranslation();
 
   return (
-    <div className="">
-      <header className="">
-        <h1></h1>
+    <div>
+      <header className="_header">
+        <h1>
+          <img src={logoImage} alt="" />
+        </h1>
         <div className="_nav">
-          <nav className="">
+          <nav className="menu_list">
             <ul>
               <li>
                 <Link to={'/'}>대시보드</Link>
@@ -40,9 +44,11 @@ function GNBComponent() {
           </nav>
         </div>
 
-        <div className=""></div>
-
-        <div className=""></div>
+        <div className="util">
+          <Language />
+          <Notification />
+          <UserAvatar />
+        </div>
       </header>
     </div>
   );
