@@ -1,3 +1,4 @@
+@import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
 
 @import './_reset.css';
@@ -5,38 +6,40 @@
 @import './_common.css';
 @import './_util.css';
 
-/* Layout */
-._layout_wrap {
-  width: 100%;
-  .container {
-    @apply mx-auto;
-    .inner {
-      width: 1180px;
+@layer base {
+  /* Layout */
+  ._layout_wrap {
+    width: 100%;
+    ._container {
+      @apply mx-auto;
+      .container_inner {
+        width: 1180px;
+      }
     }
   }
-}
 
-._header {
-  @apply relative bg-[#012277] px-[32px];
-  h1 {
-    img {
-      @apply h-[60px] w-auto;
+  ._header {
+    @apply relative px-[32px];
+    h1 {
+      img {
+        @apply h-[60px] w-auto;
+      }
+    }
+    .util {
+      @apply absolute right-[32px] top-[10px] flex items-center;
     }
   }
-  .util {
-    @apply absolute right-[32px] top-[10px] flex items-center;
-  }
-}
 
-._nav {
-  ul.list {
-    @apply flex justify-start gap-[48px];
-    > li {
-      a {
-        color: var(--white);
-        @apply inline-flex h-[56px] items-center text-[2rem];
-        &:hover {
-          @apply font-bold;
+  ._nav {
+    ul.menu_list {
+      @apply flex justify-start gap-[48px];
+      > li {
+        a {
+          color: var(--gray9);
+          @apply inline-flex h-[56px] items-center text-[1.6rem];
+          &:hover {
+            @apply font-bold;
+          }
         }
       }
     }

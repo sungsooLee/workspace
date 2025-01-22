@@ -7,10 +7,5 @@
 
   /* pc */
   @screen pc {
-    .menu_list {
-      li {
-        font-size: 50px;
-      }
-    }
   }
 }

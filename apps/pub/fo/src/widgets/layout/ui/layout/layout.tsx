@@ -13,8 +13,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="">
-      <div className="">
+    <div className="_container">
+      <div className="container_inner">
         <main>
           <PageContainer>{children}</PageContainer>
         </main>

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { GNB, Layout } from '../widgets/layout';
+import { GNB, Layout, Footer } from '../widgets/layout';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -22,6 +22,7 @@ function LayoutComponent() {
       <Layout>
         <Outlet />
       </Layout>
+      <Footer />
     </div>
   );
 }
