@@ -22,8 +22,8 @@ export const useModalStore = create<ModalStore>((set, get) => ({
   close: (index: number, data?: any) => {
     const modal = get().modals[index];
 
-    if (modal.onClose) modal.onClose?.(data);
-    else modal?.resolver?.(data);
+    if (modal?.onClose) modal.onClose?.(data);
+    else if (modal?.resolver) modal.resolver?.(data); // 팝업 닫을때 error 발생해서 조건 추가, (modal = undefined)
 
     set((state) => ({
       modals: state.modals.filter((_, i) => i !== index),
