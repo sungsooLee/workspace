@@ -1,6 +1,6 @@
 .start {
   .lnb_wrap {
-    @apply w-[264px] p-[32px];
+    @apply w-full p-[32px];
   }
   .lnb_title {
     @apply mb-[16px] box-border border-b-2 border-solid border-[var(--gray9)] pb-[16px];
