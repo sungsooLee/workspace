@@ -59,6 +59,12 @@ export * from './lib/switch/switch';
 // spinner
 export * from './lib/spinner/spinner';
 
+// progress
+export * from './lib/progress/progress';
+
+// tabs
+export * from './lib/tabs/tabs';
+
 // tree
 export * from './lib/tree-view/tree';
 export * from './lib/tree-view/tree.service';
