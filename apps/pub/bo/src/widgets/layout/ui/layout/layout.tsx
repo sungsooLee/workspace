@@ -15,8 +15,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   //if () {
   return (
-    <div className="start">
-      <div className="bo_container">
+    <div className="_container">
+      <div className="container_inner">
         <LNB />
         <main>
           <PageContainer>{children}</PageContainer>

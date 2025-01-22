@@ -1,3 +1,47 @@
 @import './_reset.css';
 @import './_color.css';
 @import './_common.css';
+
+/* layout */
+._layout_wrap {
+  ._container {
+    .container_inner {
+      @apply flex w-full overflow-hidden;
+      .nlp--lnb {
+        @apply box-border min-h-[calc(100vh-116px)] max-w-[264px] bg-[var(--white)];
+        border-right: 1px solid var(--gray4);
+      }
+      main {
+        @apply flex-1 bg-[var(--secondary10)];
+        .contents {
+          padding: 24px 40px 0;
+        }
+      }
+    }
+  }
+}
+
+.bread_crumbs {
+  ul {
+    @apply flex min-h-[52px] items-center bg-[var(--white)] pl-[24px];
+    border-bottom: 1px solid var(--gray4);
+    li {
+      &:nth-child(1) {
+        svg {
+          @apply mr-[5px];
+          & + svg {
+            @apply ml-[8px];
+          }
+        }
+      }
+      &:not(:nth-child(1)) {
+        svg {
+          @apply mx-[8px];
+        }
+      }
+      a {
+        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray8)];
+      }
+    }
+  }
+}
