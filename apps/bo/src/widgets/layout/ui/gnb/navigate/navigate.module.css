@@ -6,10 +6,7 @@
       > li {
         a {
           color: var(--white);
-          @apply inline-flex h-[56px] items-center text-[2rem];
-          &:hover {
-            @apply font-bold;
-          }
+          @apply inline-flex h-[56px] items-center text-[20px] font-normal tracking-[-0.3px];
         }
       }
     }

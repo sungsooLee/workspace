@@ -20,14 +20,14 @@ function QuickMenuComponent() {
           {data?.map((menu: Menu, index: number) => {
             return (
               <li key={menu.key}>
-                <Link to={menu.path} key={menu.key}>
+                <Link to={menu.path} key={menu.key} className={styles.menu_item}>
                   {menu.title}
                 </Link>
               </li>
             );
           })}
-          <MyMenu />
         </ul>
+        <MyMenu />
       </div>
     </div>
   );

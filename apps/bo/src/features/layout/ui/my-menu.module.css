@@ -1,0 +1,9 @@
+.btn_menu {
+  @apply relative flex h-[40px] w-[40px] items-center justify-center;
+  .btn_text {
+    @apply text-[16px] text-white;
+  }
+  svg {
+    @apply h-[20px] w-[20px];
+  }
+}

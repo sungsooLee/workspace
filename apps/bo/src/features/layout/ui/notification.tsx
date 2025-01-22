@@ -16,10 +16,10 @@ const NotificationComponent = () => {
   return (
     <Popover popoverContent={<PopoverContent />}>
       {/* <Avatar imageUrl="https://*.png" fallback="Noti" /> */}
-      <span className={styles.alarm_item}>
+      <button type="button" className={styles.btn_alarm}>
         <IcoAlarmFill width={32} height={32} stroke="#fff" />
         <em className={styles.count_view}>99</em>
-      </span>
+      </button>
     </Popover>
   );
 };
