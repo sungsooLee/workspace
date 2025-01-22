@@ -79,7 +79,6 @@ export const OnCloseModal: Story = {
     title: 'onCloseModal',
     description: 'TEST!!!!',
   },
-
   name: 'onClose Callback',
 
   render: function RenderColoseModal(args) {
