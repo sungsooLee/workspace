@@ -59,7 +59,7 @@ function RouteComponent() {
         <div className="guide_wrap">
           <div className="aside">
             <h1>
-              <Link to={'/guide'}>Publish Guide</Link>
+              <Link to={'/guide'}>Publish Guide(FO)</Link>
             </h1>
             <div className="menu">
               <ul>
