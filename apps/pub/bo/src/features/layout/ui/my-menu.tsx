@@ -30,7 +30,7 @@ const MyMenuCompoment = () => {
       {
         <button type="button" className={styles.btn_menu}>
           <IcoStar width={18} height={18} stroke="#FFB902" />
-          <span className={styles.btn_text}>{t('MY menu')}</span>
+          <span className={styles.btn_text}>{t('My menu')}</span>
         </button>
       }
     </Popover>

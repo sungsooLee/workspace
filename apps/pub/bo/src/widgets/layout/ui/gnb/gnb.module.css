@@ -32,6 +32,9 @@
     }
     .util {
       @apply absolute right-[32px] top-[10px] flex items-center;
+      button:not(:nth-child(1)) {
+        @apply ml-[24px];
+      }
     }
     .quick_menu {
       @apply absolute bottom-[8px] right-0 min-w-[380px];
@@ -40,7 +43,7 @@
         > li {
           a {
             color: var(--white);
-            @apply inline-flex h-[40px] items-center text-[1.6rem];
+            @apply inline-flex h-[40px] items-center text-[16px];
           }
         }
         & + button {
