@@ -13,10 +13,10 @@ export { ReactComponent as IcoArrowForward } from './lib/ic_arrow_forward.svg'; 
 export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home
 export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 line
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
-export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // link blank line
-export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // link blank line
-export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // link blank line
-export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // link blank line
+export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging btn
+export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
+export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
+export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn
 
 //export Default as Information from './lib/information.svg?react';
 
