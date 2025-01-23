@@ -86,12 +86,9 @@ export * from './lib/textarea/textarea';
 export * from './lib/toast/toast';
 export * from './lib/toast/toast.hook';
 export * from './lib/toast/toast-wrapper';
-// export * from './lib/shadcn/toast';
-// export * from './lib/shadcn/use-toast';
 
 // type
 export * from './lib/type';
-
 
 // popover
 export * from './lib/tooltip/tooltip';
@@ -108,7 +105,7 @@ export * from './lib/grid/types';
 export * from './lib/apply-form-builder';
 
 // shadcn (주석처리 예정)
-export * from './lib/shadcn/toaster';
+// export * from './lib/shadcn/toaster';
 export * from './lib/shadcn/badge';
 // export * from './lib/shadcn/button';
 export * from './lib/shadcn/calendar';
