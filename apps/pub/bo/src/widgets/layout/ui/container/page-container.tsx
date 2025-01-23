@@ -1,5 +1,5 @@
 import { memo, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 
 interface PageContainerComponentProps {
@@ -7,12 +7,12 @@ interface PageContainerComponentProps {
 }
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
-    <div className="">
+    <div className="contents">
       <Breadcrumbs />
-      <div className="contents">{children}</div>
+      {children}
     </div>
   );
 }
