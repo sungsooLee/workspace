@@ -6,7 +6,7 @@ import styles from './user-name.module.css';
 
 const UserNameCompoment = () => {
   return (
-    <div className={`${styles.start} nlp--name`}>
+    <div className={`${styles.start} ${styles.user_name}`}>
       <Link to={''}>
         <div className={styles.user}>
           <span className={styles.name}>Admin</span>

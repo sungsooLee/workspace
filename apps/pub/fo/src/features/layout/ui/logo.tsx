@@ -5,7 +5,7 @@ import logoImage from '../../../assets/images/logo.png';
 
 const LogoCompoment = () => {
   return (
-    <div className={`${styles.start} nlp--logo`}>
+    <div className={`${styles.start} ${styles.logo}`}>
       <Link to={'/'}>
         <img src={logoImage} alt="Logo" />
       </Link>

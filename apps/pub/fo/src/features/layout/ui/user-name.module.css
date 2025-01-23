@@ -1,9 +1,11 @@
 /* user-name.module.css */
 .start {
-  .user {
-    @apply flex items-center;
-    .name {
-      @apply mr-[2px] inline-block text-[1.4rem];
+  &.user_name {
+    .user {
+      @apply flex items-center;
+      .name {
+        @apply mr-[2px] inline-block text-[1.4rem];
+      }
     }
   }
 }
