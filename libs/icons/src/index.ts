@@ -17,6 +17,11 @@ export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; //
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn
+export { ReactComponent as IcoChevronLeftDisabled } from './lib/ic_chevron_left_disabled.svg'; // grid paging btn
+export { ReactComponent as IcoChevronLeftDoubleDisabled } from './lib/ic_chevron_left_double_disabled.svg'; // grid paging btn
+export { ReactComponent as IcoChevronRightDisabled } from './lib/ic_chevron_right_disabled.svg'; // grid paging btn
+export { ReactComponent as IcoChevronRightDoubleDisabled } from './lib/ic_chevron_right_double_disabled.svg'; // grid paging btn
+export { ReactComponent as IcoArrowBackward } from './lib/ic_arrow_backward.svg'; // grid paging btn
 export { ReactComponent as IcoMenu01 } from './lib/ic_menu-01.svg'; // catagory menu
 
 //export Default as Information from './lib/information.svg?react';
