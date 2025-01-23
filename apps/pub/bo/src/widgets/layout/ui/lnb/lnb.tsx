@@ -71,7 +71,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-2',
                       children: (
                         <Accordion
-                          className={styles.depth2}
+                          className={styles.depth3}
                           items={[
                             {
                               key: 'q45p7j237v03',
