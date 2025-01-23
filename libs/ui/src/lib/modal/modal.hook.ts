@@ -7,10 +7,10 @@ const useModalControl = (): ModalControl => {
   const { open: openModal } = useModalStore();
 
   const open = useCallback(
-    <T = any>(
+    (
       content: ReactNode,
       config?: ModalConfig,
-      onClose?: (data?: ModalClose<T>) => void,
+      onClose?: (data?: any) => void,
     ) => {
       openModal(content, config, onClose);
     },

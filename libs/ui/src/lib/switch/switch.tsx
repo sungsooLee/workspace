@@ -6,15 +6,16 @@ import styles from './switch.module.scss';
 
 export interface SwitchComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   label?: string;
+  className?: string;
 }
 
 const SwitchComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   SwitchComponentProps
 >(
-  ({ label, ...props }, ref) => {
+  ({ label, className, ...props }, ref) => {
     return (
-      <div className={cn('nlp--switch', styles.start)}>
+      <div className={cn(styles.start, className, 'nlp--switch')}>
         <Primitive.Root className={styles.switch_root} id="airplane-mode">
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>

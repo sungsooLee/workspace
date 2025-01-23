@@ -20,4 +20,6 @@ const ModalContainerComponent = ({ index, data }: ModalContainerProps) => {
   );
 };
 
+ModalContainerComponent.displayName = 'ModalContainer';
+
 export const ModalContainer =  ModalContainerComponent;

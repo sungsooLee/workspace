@@ -16,26 +16,26 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
   items: Array<TabItemProps>;
   className?: string;
   selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
-  selectedTabIndex?: number; // 최초 렌더링 이후 tab 조작 필요시 사용
-  defaultSelectedTabIndex?: number; // 최초 렌더링 할때 선택할 tab index
+  // selectedTabIndex?: number; // 최초 렌더링 이후 tab 조작 필요시 사용
+  // defaultSelectedTabIndex?: number; // 최초 렌더링 할때 선택할 tab index
 }
 
-const TabsComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TabsComponentProps>(
-  ({ className, items, defaultSelectedTabIndex = 0, ...props }, ref) => {
-    // const [progress, setProgress] = React.useState(value);
-    //
-    // useEffect(() => {
-    //   const timer = setTimeout(() => setProgress(value), 500);
-    //   return () => clearTimeout(timer);
-    // }, [value])
+export const TabsComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TabsComponentProps>(
+  ({ className, items, selectedTabKey, ...props }, ref) => {
+    const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key);
+
+    // changed selectedTabKey
+    useEffect(() => {
+      selectedTabKey && setValue(selectedTabKey);
+    }, [selectedTabKey])
 
     return (
-      <Primitive.Root className={styles.Root} defaultValue={items?.at(defaultSelectedTabIndex)?.key}>
+      <Primitive.Root className={cn(styles.Root, className, 'nlp--tabs')} value={value} onValueChange={(value) => setValue(value)}>
 
         {/* Tab Buttons */}
         <Primitive.List className={styles.List} aria-label="Manage your account">
           {items.map((d: TabItemProps, index) => (
-            <Primitive.Trigger className={styles.Trigger} value={d.key}>
+            <Primitive.Trigger className={styles.Trigger} value={d.key} key={d.key}>
               {d.title}
             </Primitive.Trigger>
           ))}
@@ -43,7 +43,7 @@ const TabsComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TabsCo
 
         {/* Tab Contents */}
         {items.map((d: TabItemProps, index) => (
-          <Primitive.Content className={styles.Content} value={d.key}>
+          <Primitive.Content className={styles.Content} value={d.key} key={d.key}>
             {d.content}
           </Primitive.Content>
         ))}
@@ -54,4 +54,6 @@ const TabsComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TabsCo
   },
 );
 
-export const Tabs = memo(TabsComponent);
+TabsComponent.displayName = 'Tabs';
+
+export const Tabs = TabsComponent;

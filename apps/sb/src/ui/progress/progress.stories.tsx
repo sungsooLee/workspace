@@ -12,16 +12,8 @@ export default {
 type Story = StoryObj<typeof Progress>;
 
 const Template: React.FC<any> = (args) => {
-  const Content = () => (
-    <div className="w-80">
-      <h3 className="bg-green-50">Content Header</h3>
-      <h4 className="bg-gray-3 h-20">Content Body</h4>
-    </div>
-  )
   return (
-    <Progress {...args} popoverContent={<Content />}>
-      <button>Open Progress</button>
-    </Progress>
+    <Progress {...args} />
   )
 };
 

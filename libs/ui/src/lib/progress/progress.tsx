@@ -21,7 +21,7 @@ const ProgressComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Pr
     }, [value])
 
     return (
-      <Primitive.Root className={styles.Root} value={progress}>
+      <Primitive.Root className={cn(styles.Root, className, 'nlp--progress')} value={progress}>
         <Primitive.Indicator
           className={styles.Indicator}
           style={{ transform: `translateX(-${100 - progress}%)` }}
