@@ -164,7 +164,7 @@ function RouteComponent() {
   ] as ColumnDef<any, unknown>[];
 
   return (
-    <div>
+    <div className="content">
       <div className="nlp--titlewrap">
         <div className="title_item">
           <strong className="title">{`타이틀`}</strong>

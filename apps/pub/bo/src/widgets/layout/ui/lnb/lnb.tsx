@@ -8,8 +8,8 @@ import { cn } from '@learnway/shared';
 import styles from './lnb.module.css';
 
 function LNBComponent() {
-  const [isActive, setActive] = useState<boolean>(false); // LNB 최상단 타이틀 active
-  const buttonClass = `${isActive ? styles.active : styles.inactive}`; // LNB 최상단 타이틀 active 클래스 적용
+  const [isActive, setActive] = useState<boolean>(true); // LNB 최상단 타이틀 active
+  const buttonClass = `${isActive ? styles.close : styles.open}`; // LNB 최상단 타이틀 active 클래스 적용
   return (
     <div className={`${styles.start} nlp--lnb`}>
       <div className={styles.lnb_wrap}>
@@ -29,14 +29,14 @@ function LNBComponent() {
               title: '메뉴 타이틀A',
               children: (
                 <Accordion
-                  className={styles.accordion_depth2}
+                  className={styles.depth2}
                   items={[
                     {
                       key: 'q45p7j237v0',
                       title: '메뉴 타이틀A-1',
                       children: (
                         <Accordion
-                          className={styles.accordion_depth3}
+                          className={styles.depth3}
                           items={[
                             {
                               key: 'q45p7j237v01',
@@ -48,6 +48,7 @@ function LNBComponent() {
                               title: '메뉴 타이틀A-2-2',
                               children: (
                                 <Accordion
+                                  className={styles.depth4}
                                   items={[
                                     {
                                       key: 'q45p7j237v03',
@@ -70,7 +71,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-2',
                       children: (
                         <Accordion
-                          className={styles.accordion_depth2}
+                          className={styles.depth3}
                           items={[
                             {
                               key: 'q45p7j237v03',
