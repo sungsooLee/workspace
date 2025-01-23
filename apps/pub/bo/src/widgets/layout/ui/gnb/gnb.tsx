@@ -11,7 +11,7 @@ function GNBComponent() {
   const { t } = useTranslation();
 
   return (
-    <div className={`${styles.start} nlp--header`}>
+    <div className={styles.start}>
       <header className={styles.header}>
         <h1>
           <Logo />

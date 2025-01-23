@@ -15,7 +15,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   //if () {
   return (
-    <div className="_container">
+    <div className="container">
       <div className="container_inner">
         <LNB />
         <main>

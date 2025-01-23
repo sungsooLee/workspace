@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
@@ -17,7 +16,7 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div className="_layout_wrap">
+    <div className="layout_wrap">
       <GNB />
       <Layout>
         <Outlet />
