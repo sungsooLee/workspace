@@ -1,10 +1,13 @@
 /* language.module.css */
 .btn_language {
-  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[4px] font-bold text-[var(--gray9)];
+  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[24px] text-[1.4rem] text-[var(--gray9)];
   &[data-state='open'] {
     svg {
       @apply rotate-180;
     }
+  }
+  .select {
+    @apply mr-[2px] inline-block;
   }
 }
 .language_content {

@@ -1,4 +1,5 @@
 .grid_table {
+  @apply bg-[var(--white)];
   border: 1px solid var(--gray6);
   .thead_th {
     @apply justify-start bg-[var(--gray1)] text-[14px] font-bold text-[#5C636E];
@@ -15,6 +16,16 @@
     border-bottom: 1px solid var(--gray4);
     &:first-child {
       border-left: 0;
+    }
+  }
+}
+.select_item {
+  @apply box-border min-h-[32px] rounded-[4px] text-[14px] font-normal text-[var(--gray8)];
+  border: 1px solid var(--gray4);
+}
+.paging_wrap {
+  button {
+    &:disabled {
     }
   }
 }

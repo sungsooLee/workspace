@@ -13,14 +13,16 @@
       }
       main {
         @apply flex-1 bg-[var(--secondary10)];
-        .contents {
-          padding: 24px 40px 0;
-        }
+      }
+      .content {
+        @apply box-border max-w-[1656px];
+        padding: 24px 40px 0;
       }
     }
   }
 }
 
+/* breadCrumbs */
 .bread_crumbs {
   ul {
     @apply flex min-h-[52px] items-center bg-[var(--white)] pl-[24px];

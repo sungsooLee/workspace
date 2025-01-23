@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import { Avatar, Popover } from '@learnway/ui';
-import { IcoAlarmFill } from '@learnway/icons';
+import { Popover } from '@learnway/ui';
+import { IcoBell02 } from '@learnway/icons';
 import styles from './notification.module.css';
 
 // import { useFetchAuthUser } from '../../../entities/user';
@@ -17,8 +17,8 @@ const NotificationComponent = () => {
     <Popover popoverContent={<PopoverContent />}>
       {/* <Avatar imageUrl="https://*.png" fallback="Noti" /> */}
       <button type="button" className={styles.btn_alarm}>
-        <IcoAlarmFill width={32} height={32} stroke="#000" fill="#000" />
-        <em className={styles.count_view}>99</em>
+        <IcoBell02 width={20} height={20} stroke="#131C30" />
+        <em className={styles.noti}></em>
       </button>
     </Popover>
   );
