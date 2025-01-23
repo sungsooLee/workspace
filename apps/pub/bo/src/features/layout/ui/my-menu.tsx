@@ -29,8 +29,8 @@ const MyMenuCompoment = () => {
     <Popover popoverContent={<PopoverContent />}>
       {
         <button type="button" className={styles.btn_menu}>
-          <IcoStar width={20} height={20} stroke="#FFB902" />
-          <span className={styles.btn_text}>{t('MY MENU')}</span>
+          <IcoStar width={18} height={18} stroke="#FFB902" />
+          <span className={styles.btn_text}>{t('MY menu')}</span>
         </button>
       }
     </Popover>

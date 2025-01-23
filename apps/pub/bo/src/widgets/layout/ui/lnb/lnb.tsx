@@ -1,8 +1,7 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
-import { Accordion } from '@learnway/ui';
-import { Button } from '@learnway/ui';
+import { Accordion, Button } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
@@ -31,14 +30,14 @@ function LNBComponent() {
           </Button>
         </h2>
         <Accordion
-          type="multiple"
+          type={'multiple'}
           items={[
             {
               value: 'q45p7j237v9',
               title: '메뉴 타이틀A',
               children: (
                 <Accordion
-                  type="multiple"
+                  type={'multiple'}
                   className={styles.depth2}
                   items={[
                     {
@@ -46,7 +45,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-1',
                       children: (
                         <Accordion
-                          type="multiple"
+                          type={'multiple'}
                           className={styles.depth3}
                           items={[
                             {
@@ -59,7 +58,7 @@ function LNBComponent() {
                               title: '메뉴 타이틀A-2-2',
                               children: (
                                 <Accordion
-                                  type="multiple"
+                                  type={'multiple'}
                                   className={styles.depth4}
                                   items={[
                                     {
@@ -83,7 +82,7 @@ function LNBComponent() {
                       title: '메뉴 타이틀A-2',
                       children: (
                         <Accordion
-                          type="multiple"
+                          type={'multiple'}
                           className={styles.depth3}
                           items={[
                             {
@@ -112,6 +111,7 @@ function LNBComponent() {
               title: '메뉴 타이틀C',
               children: (
                 <Accordion
+                  type={'multiple'}
                   items={[
                     {
                       value: 'q45p7j237v4',
