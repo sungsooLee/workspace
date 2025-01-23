@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Logo, UserAvatar, Notification, Language } from '../../../../features/layout';
+import { Logo, UserAvatar, Notification, Language, UserName } from '../../../../features/layout';
 import { Navigate } from './navigate/navigate';
 
 function GNBComponent() {
@@ -18,6 +18,7 @@ function GNBComponent() {
         </div>
 
         <div className="util">
+          <UserName />
           <Language />
           <Notification />
           <UserAvatar />

@@ -6,6 +6,9 @@
       @apply rotate-180;
     }
   }
+  .select {
+    @apply mr-[2px] inline-block;
+  }
 }
 .language_content {
   @apply w-[240px] overflow-hidden rounded-[8px] bg-[var(--white)];

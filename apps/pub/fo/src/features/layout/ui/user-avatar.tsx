@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
 import { map } from 'lodash';
 import { useCreation } from 'ahooks';
+import styles from './user-avatar.module.css';
 
 import { Avatar, Popover } from '@learnway/ui';
 

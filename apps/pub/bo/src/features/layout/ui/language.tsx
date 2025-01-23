@@ -36,7 +36,7 @@ const LanguageComponent = () => {
   return (
     <Popover popoverContent={<PopoverContent />}>
       <button className={styles.btn_language}>
-        {'KR'}
+        <span className={styles.select}>{'KR'}</span>
         <IcoArrowDown width={16} height={16} stroke="#fff" />
       </button>
     </Popover>
