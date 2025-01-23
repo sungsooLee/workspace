@@ -8,8 +8,8 @@ import styles from './quick-menu.module.css';
 function QuickMenuComponent() {
   return (
     <div className={`${styles.start} nlp--quick-menu`}>
-      <div className={styles.menu_list}>
-        <ul>
+      <div className={styles.menu_wrap}>
+        <ul className={styles.menu_list}>
           <li>
             <Link to={'/'}>마켓플레이스</Link>
           </li>

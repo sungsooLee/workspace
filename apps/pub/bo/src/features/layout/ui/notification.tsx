@@ -1,13 +1,17 @@
 import { memo } from 'react';
 
-import { Avatar, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui';
 import { IcoAlarmFill } from '@learnway/icons';
 import styles from './notification.module.css';
 
 // import { useFetchAuthUser } from '../../../entities/user';
 
 const PopoverContent = () => {
-  return <div className={styles.alarm_content}></div>;
+  return (
+    <div className={styles.alarm_content}>
+      <p>111</p>
+    </div>
+  );
 };
 
 const NotificationComponent = () => {
