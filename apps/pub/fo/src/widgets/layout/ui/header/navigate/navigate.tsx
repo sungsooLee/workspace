@@ -4,32 +4,32 @@ import styles from './navigate.module.css';
 
 function NavigateComponent() {
   return (
-    <div className={`${styles.start} nlp--navigate`}>
+    <div className={`${styles.start} ${styles.navigate}`}>
       <nav className={styles.nav}>
         <ul>
-          <li>
-            <Link to={'/'}>대시보드</Link>
-          </li>
-          <li>
-            <Link to={'/'}>채널관리</Link>
-          </li>
-          <li>
-            <Link to={'/'}>교육운영</Link>
-          </li>
-          <li>
-            <Link to={'/'}>교육자원</Link>
-          </li>
           <li>
             <Link to={'/'}>교육제도</Link>
           </li>
           <li>
-            <Link to={'/'}>교육통계</Link>
+            <Link to={'/'}>학습계획</Link>
           </li>
           <li>
-            <Link to={'/'}>고객사운영</Link>
+            <Link to={'/'}>채널</Link>
           </li>
           <li>
-            <Link to={'/'}>플랫폼관리</Link>
+            <Link to={'/'}>HMCP</Link>
+          </li>
+          <li>
+            <Link to={'/'}>나의학습</Link>
+          </li>
+          <li>
+            <Link to={'/'}>커뮤니티</Link>
+          </li>
+          <li>
+            <Link to={'/'}>교육지원</Link>
+          </li>
+          <li>
+            <Link to={'/'}>팀학습현황</Link>
           </li>
         </ul>
       </nav>

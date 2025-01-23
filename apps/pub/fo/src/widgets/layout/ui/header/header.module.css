@@ -1,7 +1,10 @@
 /* header.module.css */
 .start {
   &.header {
-    @apply relative flex px-[32px];
+    @apply relative items-center;
+    .header_area {
+      @apply relative m-auto w-[1120px];
+    }
     h1 {
       img {
         @apply h-[60px] w-auto;
@@ -9,6 +12,9 @@
     }
     .util {
       @apply absolute right-[32px] top-[10px] flex items-center;
+    }
+    .nav_area {
+      @apply flex items-center;
     }
   }
 }

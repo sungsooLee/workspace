@@ -1,0 +1,11 @@
+/* layout.module.css */
+.start {
+  &.container {
+    .inner {
+      @apply relative m-auto w-[1120px];
+    }
+    .breadcrums {
+      @apply h-[46px] bg-[var(--gray1)];
+    }
+  }
+}

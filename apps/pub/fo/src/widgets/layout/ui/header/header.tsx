@@ -5,27 +5,26 @@ import { Logo, UserAvatar, Notification, Language, UserName } from '../../../../
 import { Navigate } from './navigate/navigate';
 import { Category } from './category/category';
 import { IcoMenu01 } from '@learnway/icons';
-import { Button } from '@learnway/ui';
 import styles from './header.module.css';
 
 function HeaderComponent() {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <header className={`${styles.start} ${styles.header}`}>
+    <div className={`${styles.start} ${styles.header}`}>
+      <header className={styles.header_area}>
         <h1>
           <Logo />
         </h1>
 
-        <div className="util">
+        <div className={styles.util}>
           <UserName />
           <Language />
           <Notification />
           <UserAvatar />
         </div>
 
-        <div className="nav_area">
+        <div className={styles.nav_area}>
           <Category />
           <Navigate />
         </div>
