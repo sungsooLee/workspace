@@ -11,6 +11,9 @@ export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 gr
 export { ReactComponent as IcoClose } from './lib/ic_close.svg'; // 24*24 close
 export { ReactComponent as IcoArrowForward } from './lib/ic_arrow_forward.svg'; // bread arrow
 export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home
+export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 line
+export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
+
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
