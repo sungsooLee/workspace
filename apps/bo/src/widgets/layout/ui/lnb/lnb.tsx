@@ -7,6 +7,7 @@ import { Accordion } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
+import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';
 
@@ -19,7 +20,7 @@ function LNBComponent() {
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
 
-  const buttonClass = `${openAllButtonState ? styles.active : styles.inactive}`;
+  const buttonClass = `${openAllButtonState ? styles.open : styles.close}`;
 
   useEffect(() => {
     setOpenAll(false);
