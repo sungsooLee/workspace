@@ -1,7 +1,7 @@
 /* header.module.css */
 .start {
   &.header {
-    @apply relative px-[32px];
+    @apply relative flex px-[32px];
     h1 {
       img {
         @apply h-[60px] w-auto;
