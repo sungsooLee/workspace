@@ -1,5 +1,7 @@
 import { forwardRef, memo, ReactNode } from 'react';
 
+import { cn } from '@learnway/shared';
+
 import * as Primitive from '@radix-ui/react-popover';
 
 import styles from './popover.module.scss';
