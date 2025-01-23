@@ -17,6 +17,7 @@ export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; //
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn
+export { ReactComponent as IcoArrowBackward } from './lib/ic_arrow_backward.svg'; // lnb toggle
 
 //export Default as Information from './lib/information.svg?react';
 

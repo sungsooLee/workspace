@@ -2,25 +2,33 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { Accordion } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { Button } from '@learnway/ui';
+import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './lnb.module.css';
 
 function LNBComponent() {
   const [isActive, setActive] = useState<boolean>(true); // LNB 최상단 타이틀 active
-  const buttonClass = `${isActive ? styles.close : styles.open}`; // LNB 최상단 타이틀 active 클래스 적용
+  const buttonClass = `${isActive ? styles.open : styles.close}`; // LNB 최상단 타이틀 active 클래스 적용
+
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  // const lnbRef = useRef<HTMLDivElement>(null);
+
+  const toggleLnb = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <div className={`${styles.start} nlp--lnb`}>
+    <div className={`${styles.start} nlp--lnb ${isOpen ? `${styles.open}` : `${styles.close}`}`}>
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>
-          <button
-            type="button"
+          <Button
             className={cn(styles.lnb_title_btn, buttonClass)}
             onClick={() => setActive(!isActive)}>
             <span className={styles.lnb_title_text}>{'activeMenuDepth[0].title'}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
-          </button>
+          </Button>
         </h2>
         <Accordion
           items={[
@@ -115,6 +123,10 @@ function LNBComponent() {
             },
           ]}></Accordion>
       </div>
+      {/* lnb toggle button */}
+      <Button className={styles.btn_toggle} onlyIcon aria-expanded={isOpen} onClick={toggleLnb}>
+        <IcoArrowBackward width={20} height={20} />
+      </Button>
     </div>
   );
 }
