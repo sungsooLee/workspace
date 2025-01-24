@@ -4,6 +4,7 @@
 
 /* layout */
 .layout_wrap {
+  @apply min-w-[1440px];
   .container {
     .container_inner {
       @apply flex w-full overflow-hidden;
