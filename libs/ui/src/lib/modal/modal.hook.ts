@@ -1,17 +1,15 @@
-import { ReactNode, useCallback } from 'react';
+import { createElement, ReactNode, useCallback } from 'react';
 import { reject } from 'lodash';
 import { useModalStore } from '../stores/useModalStore';
-import { ModalClose, ModalConfig, ModalControl } from './type';
+import { Alert, AlertComponentProps } from '../alert/alert';
+import { AlertData, ModalClose, ModalConfig, ModalControl } from './type';
 
+// TODO: rename : useModalControl > useModal
 const useModalControl = (): ModalControl => {
   const { open: openModal } = useModalStore();
 
   const open = useCallback(
-    (
-      content: ReactNode,
-      config?: ModalConfig,
-      onClose?: (data?: any) => void,
-    ) => {
+    (content: ReactNode, config?: ModalConfig, onClose?: (data?: any) => void) => {
       openModal(content, config, onClose);
     },
     [openModal],
@@ -30,9 +28,19 @@ const useModalControl = (): ModalControl => {
     [openModal],
   );
 
+  const alert = useCallback(
+    (props: AlertComponentProps) => {
+      openModal(createElement(Alert, props));
+      // openModal(<h1></h1>, props.config, props.onClose);
+    },
+    [openModal],
+  );
+
   return {
     open,
     openAsync,
+    alert,
+    // confirm,
   };
 };
 

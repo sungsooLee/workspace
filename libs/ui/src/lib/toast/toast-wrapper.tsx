@@ -7,6 +7,7 @@ interface ToastContainerProps {
   swipeDirection?: 'up' | 'down' | 'left' | 'right';
   duration?: number;
 }
+
 const ToastWrapperComponent = ({
   swipeDirection = 'right',
   duration = 3000,

@@ -19,11 +19,11 @@ export const Template: any = (args: any) => {
     })
   }
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 w-[500px] h-[300px] bg-gray-1">
       <div className="flex flex-row gap-5">
         <Button onClick={() => handleClickToast()}>Open Toast</Button>
       </div>
-      <ToastWrapper />
+      <ToastWrapper {...args} />
     </div>
   )
 }

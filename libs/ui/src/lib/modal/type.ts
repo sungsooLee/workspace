@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { AlertComponentProps } from '../alert/alert';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
@@ -31,11 +32,21 @@ export interface BaseModalProps extends ModalConfig {
   children: React.ReactNode;
 }
 
+// TODO: rename : ModalControl > useModalReturnValue
 export interface ModalControl {
+  // TODO: open: (modal: ModalData) => void
   open: <T = any>(
     content: ReactNode,
     config?: ModalConfig,
     onClose?: (data?: ModalClose<T>) => void,
   ) => void;
+  alert: (props: AlertComponentProps) => void;
   openAsync: <T = any>(content: ReactNode, config?: ModalConfig) => Promise<ModalClose<T>>;
+}
+
+export interface AlertData {
+  title?: string | ReactNode;
+  description?: string | ReactNode;
+  content?: string | ReactNode;
+  onClose?: (data?: ModalClose) => void;
 }

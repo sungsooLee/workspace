@@ -23,7 +23,7 @@ const ButtonComponent = forwardRef<
     return (
       <button
         {...props}
-        className={cn(styles.start, 'nlp--button')}
+        className={cn(styles.start, 'nlp--button', 'primary')}
         disabled={disabled || isLoading}
       >
 
