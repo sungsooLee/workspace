@@ -63,6 +63,13 @@
     border-color: var(--gray4);
   }
 }
+.search {
+  @apply rounded-[5px] pl-[8px] pr-[10px] text-[13px] font-bold text-[var(--gray9)];
+  border: 1px solid var(--gray4);
+  svg {
+    @apply mr-[2px];
+  }
+}
 .xs {
   @apply h-[28px] px-[12px];
 }
