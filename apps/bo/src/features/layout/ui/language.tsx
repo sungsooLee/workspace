@@ -10,6 +10,7 @@ import { useSetLanguage } from '../../../features/system';
 import { useFetchAuthUser } from '../../../entities/user';
 import { useCodesByCodeGroup } from '../../../entities/system';
 
+import { useParams } from '@tanstack/react-router';
 const PopoverContent = ({ data }: { data?: Code[] }) => {
   const { t } = useTranslation();
 
@@ -62,6 +63,8 @@ const PopoverContent = ({ data }: { data?: Code[] }) => {
 };
 
 const LanguageComponent = () => {
+  const ttttt = useParams({ strict: false });
+  console.log('useParams LanguageComponent', ttttt);
   const { data } = useFetchAuthUser();
   const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
 

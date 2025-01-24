@@ -450,6 +450,7 @@
     {
       "title": "교육운영",
       "roles": "ROLE_ADMIN",
+      "path": "/learning/detail/dkwpdlfs",
       "children": [
         {
           "title": "과정 조회",
@@ -686,6 +687,7 @@
     {
       "title": "교육자원",
       "roles": "ROLE_ADMIN",
+      "path": "/learning/detail/dkwpdlfs/video",
       "children": [
         {
           "title": "학습자원 관리",
