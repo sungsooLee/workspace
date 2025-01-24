@@ -1,0 +1,7 @@
+.start {
+  &.contents {
+    .inner {
+      @apply px-[40px] py-[24px];
+    }
+  }
+}

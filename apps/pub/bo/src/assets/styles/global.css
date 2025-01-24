@@ -1,24 +1,3 @@
 @import './_reset.css';
 @import './_color.css';
 @import './_common.css';
-
-/* layout */
-.layout_wrap {
-  @apply min-w-[1440px];
-  .container {
-    .container_inner {
-      @apply flex w-full overflow-hidden;
-      .nlp--lnb {
-        @apply relative box-border min-h-[calc(100vh-116px)] max-w-[264px] overflow-hidden bg-[var(--white)] transition-all duration-300 ease-in-out;
-        border-right: 1px solid var(--gray4);
-      }
-      main {
-        @apply flex-1 bg-[var(--secondary10)];
-      }
-      .content {
-        @apply box-border max-w-[1656px];
-        padding: 24px 40px 0;
-      }
-    }
-  }
-}
