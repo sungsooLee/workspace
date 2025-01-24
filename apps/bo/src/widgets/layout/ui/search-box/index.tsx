@@ -1,16 +1,18 @@
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { searchDialogConfig } from './config';
-import { FieldType } from '@learnway/ui';
+import { CODE_GROUP } from '@learnway/config';
+import { useTranslation } from 'react-i18next';
+import { useFetchCodeGroups } from '../../../../entities/system';
 
 const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [collapsedHeight, setCollapsedHeight] = useState(0);
-  const { builders, control, formSubmit, reset } = config;
-  const [maxVisibleCount, setMaxVisibleCount] = useState(0);
-  // 두 줄 높이 여부 및 "축소 상태 높이" 계산
-  // 그리드 높이 계산 함수
+  const { builders: initBuilders, control, formSubmit, reset } = config;
+  const { data } = useFetchCodeGroups();
+  const [builders, setBuilders] = useState<any>();
+  const { t } = useTranslation();
   const calculateGridHeight = () => {
     if (!gridRef.current) return;
 
@@ -50,14 +52,35 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
     onSearch && formSubmit(onSearch);
   };
 
+  const loadDropdownItems = () => {
+    const newBuilders = initBuilders.map((builder: any) => {
+      if ((builder.type === 'dropdown' || builder.type === 'multi-dropdown') && builder.codeGroup) {
+        const languages = (data as any)[builder.codeGroup].codes;
+        if (languages) {
+          return {
+            ...builder,
+            items: [...builder.items, ...languages].map((lang) => ({
+              ...lang,
+              name: t(lang.name),
+            })),
+          };
+        }
+      }
+
+      return { ...builder };
+    });
+    setBuilders(newBuilders);
+  };
+
   // 초기 렌더링 및 화면 리사이즈 시 다시 높이 계산
   useLayoutEffect(() => {
+    loadDropdownItems();
     calculateGridHeight();
     window.addEventListener('resize', calculateGridHeight);
     return () => {
       window.removeEventListener('resize', calculateGridHeight);
     };
-  }, []);
+  }, [data]);
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -70,14 +93,15 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
             maxHeight: !isExpanded && isOverflowing ? `${collapsedHeight}px` : 'none',
             transition: 'max-height 0.3s ease', // 부드러운 확장/축소
           }}>
-          {builders.map((property: any) => {
-            const Component = searchDialogConfig[property.type]; // 해당 타입의 컴포넌트
-            return Component ? (
-              <div key={property.name}>
-                <Component control={control} {...property} key={property.key} />
-              </div>
-            ) : null; // props 전달
-          })}
+          {builders &&
+            builders.map((property: any) => {
+              const Component = searchDialogConfig[property.type]; // 해당 타입의 컴포넌트
+              return Component ? (
+                <div key={property.name}>
+                  <Component control={control} {...property} key={property.key} />
+                </div>
+              ) : null; // props 전달
+            })}
         </div>
         <div className="submit-container">
           {isOverflowing && (

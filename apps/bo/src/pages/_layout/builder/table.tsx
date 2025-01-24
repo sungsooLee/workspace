@@ -9,6 +9,7 @@ import TableBox from '../../../widgets/layout/ui/table-box';
 import { useFetchMockUsers } from '../../../entities/api-mock/service/mock-user.hook';
 import useTableBox from '../../../widgets/layout/ui/table-box/use-table-box';
 import { queryOptions } from '../../../entities/api-mock/service/mock-user.queries';
+import { codeConfig, CODE_GROUP } from '@learnway/config';
 export const Route = createFileRoute('/_layout/builder/table')({
   component: RouteComponent,
 });
@@ -25,6 +26,9 @@ function RouteComponent() {
     fetch();
   };
 
+  /*useEffect(() => {
+    codeConfig.get
+  }, []);*/
   return (
     <div>
       <SearchBox config={sConfig} onSearch={handleOnSearch} />
@@ -52,7 +56,16 @@ const tableConfig = {
 
 const searchConfig = {
   searchMethod: 'change',
+
   builders: [
+    {
+      name: 'language_code',
+      type: 'dropdown',
+      label: '언어코드',
+      value: ['ko'],
+      items: [{ code: '', name: '언어전체' }],
+      codeGroup: CODE_GROUP.LANGUAGE_CODE,
+    },
     {
       name: 'register_date',
       label: '등록일',
@@ -81,11 +94,11 @@ const searchConfig = {
       label: '카테고리',
       value: ['tech'],
       items: [
-        { value: 'tech', label: '기술' },
-        { value: 'finance', label: '금융' },
-        { value: 'healthcare', label: '헬스케어' },
-        { value: 'education', label: '교육' },
-        { value: 'retail', label: '리테일' },
+        { code: 'tech', name: '기술' },
+        { code: 'finance', name: '금융' },
+        { code: 'healthcare', name: '헬스케어' },
+        { code: 'education', name: '교육' },
+        { code: 'retail', name: '리테일' },
       ],
     },
     {
@@ -94,9 +107,9 @@ const searchConfig = {
       label: '역할',
       value: 'admin',
       items: [
-        { value: 'admin', label: '관리자' },
-        { value: 'editor', label: '편집자' },
-        { value: 'viewer', label: '뷰어' },
+        { code: 'admin', name: '관리자' },
+        { code: 'editor', name: '편집자' },
+        { code: 'viewer', name: '뷰어' },
       ],
     },
     {
@@ -105,22 +118,22 @@ const searchConfig = {
       label: '지역',
       value: [],
       items: [
-        { value: 'na', label: '북아메리카' },
-        { value: 'eu', label: '유럽' },
-        { value: 'asia', label: '아시아' },
-        { value: 'sa', label: '남아메리카' },
-        { value: 'africa', label: '아프리카' },
+        { code: 'na', name: '북아메리카' },
+        { code: 'eu', name: '유럽' },
+        { code: 'asia', name: '아시아' },
+        { code: 'sa', name: '남아메리카' },
+        { code: 'africa', name: '아프리카' },
       ],
     },
     {
       name: 'priority',
       type: 'dropdown',
       label: '우선순위',
-      value: '',
+      value: 'medium',
       items: [
-        { value: 'high', label: '높음' },
-        { value: 'medium', label: '중간' },
-        { value: 'low', label: '낮음' },
+        { code: 'high', name: '높음' },
+        { code: 'medium', name: '중간' },
+        { code: 'low', name: '낮음' },
       ],
     },
     {
@@ -129,10 +142,10 @@ const searchConfig = {
       label: '태그',
       value: [],
       items: [
-        { value: 'urgent', label: '긴급' },
-        { value: 'follow_up', label: '추적' },
-        { value: 'internal', label: '내부' },
-        { value: 'external', label: '외부' },
+        { code: 'urgent', name: '긴급' },
+        { code: 'follow_up', name: '추적' },
+        { code: 'internal', name: '내부' },
+        { code: 'external', name: '외부' },
       ],
     },
     {

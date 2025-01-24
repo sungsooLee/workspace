@@ -48,7 +48,7 @@ const MultiDropdown: FC<DialogProps> = ({ control, name, label, items }) => {
                 <div className="header" onClick={toggleDropdown}>
                   {selectedValues.length > 0
                     ? selectedValues
-                        .map((sv) => items.find((item) => item.value === sv)?.label)
+                        .map((sv) => items.find((item) => item.code === sv)?.name)
                         .join(', ')
                     : 'Select options'}
                   <span className={`arrow ${isOpen ? 'open' : ''}`}>▼</span>
@@ -58,10 +58,10 @@ const MultiDropdown: FC<DialogProps> = ({ control, name, label, items }) => {
                   <div className="options">
                     {items.map((option) => (
                       <div
-                        key={option.value}
-                        className={`option ${selectedValues.includes(option.value) ? 'selected' : ''}`}
-                        onClick={(e) => handleOnChange(e, option.value)}>
-                        {option.label}
+                        key={option.code}
+                        className={`option ${selectedValues.includes(option.code) ? 'selected' : ''}`}
+                        onClick={(e) => handleOnChange(e, option.code)}>
+                        {option.name}
                       </div>
                     ))}
                   </div>

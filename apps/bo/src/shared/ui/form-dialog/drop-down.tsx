@@ -4,18 +4,10 @@ import { Controller } from 'react-hook-form';
 
 const DropDown: FC<DialogProps> = ({ control, name, label, items }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<DialogItem>({
-    value: '',
-    label: '선택하세요',
-  });
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
-
-  const handleOptionClick = (option: DialogItem) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
 
   // Close dropdown if clicked outside
   useEffect(() => {
@@ -45,14 +37,26 @@ const DropDown: FC<DialogProps> = ({ control, name, label, items }) => {
             onChange(selectedValue);
             setIsOpen(false);
           };
+          console.log(
+            name +
+              '     ' +
+              'value => ' +
+              value +
+              '    ' +
+              items.find((item) => {
+                console.log(
+                  `code => ${item.code}   name  => ${item.name}   ${item.code === value}`,
+                );
+                return item.code === value;
+              }),
+          );
+          console.log(items);
           // 렌더링할 컴포넌트에 props 전달
           return (
             <>
               {/* Selected Option */}
               <button id={name} className="dropdown-selected" onClick={toggleDropdown}>
-                <span>
-                  {items.find((item) => item.value === value)?.label || 'Select an option'}
-                </span>
+                <span>{items.find((item) => item.code === value)?.name || 'Select an option'}</span>
                 <span className="dropdown-arrow">{isOpen ? '▲' : '▼'}</span>
               </button>
 
@@ -62,9 +66,9 @@ const DropDown: FC<DialogProps> = ({ control, name, label, items }) => {
                   {items.map((item, index) => (
                     <div
                       key={index}
-                      className={`dropdown-item ${value === item.value ? 'selected' : ''}`}
-                      onClick={() => handleOnChange(item.value)}>
-                      {item.label}
+                      className={`dropdown-item ${value === item.code ? 'selected' : ''}`}
+                      onClick={() => handleOnChange(item.code)}>
+                      {item.name}
                     </div>
                   ))}
                 </div>
