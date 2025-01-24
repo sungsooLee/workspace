@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
@@ -25,11 +25,19 @@ const PopoverContent = () => {
 };
 
 const AvatarCompoment = () => {
+  const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
+
   return (
     <Popover popoverContent={<PopoverContent />}>
       <Button className={styles.btn_avatar}>
-        <span>{'김'}</span>
-        <Avatar imageUrl="https://github.com/shadcn.png" />
+        {hasAvataImage ? (
+          <Avatar imageUrl="https://github.com/shadcn.png" />
+        ) : (
+          // 아바타 이미지 없는 경우 CASE
+          <span className={styles.name}>
+            <em className={styles.text}>{'김'}</em>
+          </span>
+        )}
       </Button>
     </Popover>
   );
