@@ -176,6 +176,30 @@
     border-color: var(--gray4);
   }
 }
+.text {
+  @apply justify-center rounded-[4px] bg-[var(--white)] px-[8px] text-[14px] font-normal text-[var(--gray9)];
+  &:hover {
+    @apply text-[var(--gray7)];
+    svg {
+      stroke: var(--gray7);
+    }
+  }
+  &:active {
+    @apply bg-[var(--gray1)] text-[var(--gray9)];
+  }
+  &:disabled {
+    @apply bg-white text-[var(--gray5)];
+    svg {
+      stroke: var(--gray5);
+    }
+  }
+}
+.chips {
+  @apply justify-center rounded-full bg-[var(--gray2)] px-[12px] text-[13px] font-light text-[var(--gray9)];
+  svg {
+    @apply ml-[2px];
+  }
+}
 .xs {
   @apply h-[28px] px-[12px];
 }

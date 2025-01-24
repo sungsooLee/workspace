@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus, IcoDownload } from '@learnway/icons';
+import { IcoSearch, IcoPlus, IcoDownload, IcoClose } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/button')({
   component: RouteComponent,
@@ -92,6 +92,26 @@ function RouteComponent() {
         </Button>
         <Button variant="point" size="sm" disabled>
           포인트
+        </Button>
+      </div>
+      <div>
+        <Button variant="text" size="sm">
+          선택
+        </Button>
+        <Button variant="text" size="sm" iconAlign="left">
+          <IcoDownload width={16} height={16} /> 선택
+        </Button>
+        <Button variant="text" size="sm" disabled>
+          선택
+        </Button>
+      </div>
+      <div>
+        <Button variant="chips" size="sm">
+          선택
+        </Button>
+        <Button variant="chips" size="sm" iconAlign="right">
+          선택
+          <IcoClose width={12} height={12} />
         </Button>
       </div>
     </div>
