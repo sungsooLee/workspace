@@ -15,8 +15,10 @@ function BreadcrumbsComponent() {
         {menuItems.map((item, idx) => (
           <li key={idx} className="link_item">
             <Link to={'/'}>
-              {idx === 0 && <IcoHome02 width={12} height={12} />} {item}
-              {idx !== menuItems.length - 1 && <IcoArrowForward width={12} height={12} />}
+              {idx === 0 && <IcoHome02 width={12} height={12} stroke="#131C30" />} {item}
+              {idx !== menuItems.length - 1 && (
+                <IcoArrowForward width={12} height={12} stroke="#131C30" />
+              )}
             </Link>
           </li>
         ))}
