@@ -19,25 +19,36 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
-  if (
-    activeMenuDepth &&
-    activeMenuDepth?.length &&
-    activeMenuDepth[0].children &&
-    activeMenuDepth[0].children?.length > 0
-  ) {
-    return (
-      <div className={styles.start}>
-        <div className={styles.bo_container}>
-          <LNB />
-          <main>
-            <PageContainer>{children}</PageContainer>
-          </main>
-        </div>
-      </div>
-    );
-  }
+  // if (
+  //   activeMenuDepth &&
+  //   activeMenuDepth?.length &&
+  //   activeMenuDepth[0].children &&
+  //   activeMenuDepth[0].children?.length > 0
+  // ) {
+  //   return (
+  //     <div className={styles.start}>
+  //       <div className={styles.bo_container}>
+  //         <LNB />
+  //         <main>
+  //           <PageContainer>{children}</PageContainer>
+  //         </main>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  return <PageContainer>{children}</PageContainer>;
+  return (
+    <div className={styles.start}>
+      <div className={styles.bo_container}>
+        <LNB />
+        <main>
+          <PageContainer>{children}</PageContainer>
+        </main>
+      </div>
+    </div>
+  );
+
+  // return <PageContainer>{children}</PageContainer>;
 }
 
 export const Layout = memo(LayoutComponent);

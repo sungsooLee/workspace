@@ -1,5 +1,0 @@
-.start {
-  .menu_list {
-    @apply flex items-center justify-start;
-  }
-}

@@ -1,30 +1,19 @@
 import { memo, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useCreation } from 'ahooks';
-import { last } from 'lodash';
-
-import { cn } from '@learnway/shared';
-import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
-
-import { LNB } from '../lnb/lnb';
-
+// import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import styles from './layout.module.css';
+import styles from './page-container.module.css';
 
 interface PageContainerComponentProps {
   children: ReactNode;
 }
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
-    <div className="bg-secondary-1 flex flex-col">
-      <div>
-        <Breadcrumbs />
-      </div>
-      <div>{'title'}</div>
-      <div>{children}</div>
+    <div className={`${styles.start} ${styles.contents}`}>
+      <Breadcrumbs />
+      <div className={styles.inner}>{children}</div>
     </div>
   );
 }

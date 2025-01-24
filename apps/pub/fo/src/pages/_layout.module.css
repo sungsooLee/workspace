@@ -1,9 +1,2 @@
-.nlp-main {
-  border-color: red;
-
-  .nlp-title {
-    background-color: var(--secondary-8);
-    color: theme('colors.gray.4');
-    @apply typo-title-[1-B] !important;
-  }
+.start {
 }

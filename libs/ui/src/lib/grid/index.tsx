@@ -20,7 +20,7 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
-import { FilterIcon } from 'lucide-react';
+import { IcoGridFilter } from '@learnway/icons';
 
 import { GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
@@ -30,6 +30,13 @@ import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
 import { Checkbox } from '../checkbox/checkbox';
+
+// paging Icons
+import { IcoChevronLeft } from '@learnway/icons';
+import { IcoChevronLeftDouble } from '@learnway/icons';
+import { IcoChevronRight } from '@learnway/icons';
+import { IcoChevronRightDouble } from '@learnway/icons';
+import './grid.css'; // grid CSS
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -48,7 +55,8 @@ export const IndeterminateCheckbox = ({
 
   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
 
-  return <Checkbox value={checkedState} onChange={handleChange} {...rest} />;
+  return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
+  // return <Checkbox checked={checkedState} onCheckedChange={handleChange} {...rest} />;
 };
 ///////
 
@@ -103,20 +111,28 @@ const Grid = <T extends object>({
               minSize: 50,
               enablePinning: true, // 핀 기능 활성화
               header: ({ table }: { table: Table<T> }) => (
-                <IndeterminateCheckbox
-                  value={table.getIsAllRowsSelected()}
-                  indeterminate={table.getIsSomeRowsSelected()}
-                  onChange={(checked) => {
+                <Checkbox
+                  checked={table.getIsAllRowsSelected()}
+                  onCheckedChange={(checked) => {
                     table.toggleAllRowsSelected(!!checked);
                   }}
                 />
               ),
+              // header: ({ table }: { table: Table<T> }) => (
+              //   <IndeterminateCheckbox
+              //     value={table.getIsAllRowsSelected()}
+              //     indeterminate={table.getIsSomeRowsSelected()}
+              //     onChange={(checked) => {
+              //       table.toggleAllRowsSelected(!!checked);
+              //     }}
+              //   />
+              // ),
               // 바디 체크 박스
               cell: ({ row }: { row: Row<T> }) => (
                 <div className="px-1">
-                  <IndeterminateCheckbox
-                    value={row.getIsSelected()}
-                    onChange={(checked) => {
+                  <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(checked) => {
                       // 그룹핑된 행은 체크박스 비활성화
                       if (row.getIsGrouped()) {
                         return;
@@ -127,6 +143,21 @@ const Grid = <T extends object>({
                   />
                 </div>
               ),
+              // cell: ({ row }: { row: Row<T> }) => (
+              //   <div className="px-1">
+              //     <IndeterminateCheckbox
+              //       value={row.getIsSelected()}
+              //       onChange={(checked) => {
+              //         // 그룹핑된 행은 체크박스 비활성화
+              //         if (row.getIsGrouped()) {
+              //           return;
+              //         }
+              //         row.toggleSelected(!!checked);
+              //       }}
+              //       disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
+              //     />
+              //   </div>
+              // ),
             },
             ...columns,
           ]
@@ -326,8 +357,8 @@ const Grid = <T extends object>({
               ref={(node) => rowVirtualizer.measureElement(node)}
               key={row.id}
               className={cn(
-                'cursor-pointer border-b hover:bg-gray-50',
-                row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+                'cursor-pointer border-b hover:bg-[#F4F8FF]',
+                row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
               )}
               style={{
                 display: 'flex',
@@ -384,7 +415,7 @@ const Grid = <T extends object>({
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-4 py-2"
+                    className="grid_td"
                     style={{
                       background: cell.getIsGrouped()
                         ? '#0aff0082'
@@ -431,7 +462,7 @@ const Grid = <T extends object>({
     return (
       <div
         ref={tableContainerRef}
-        className="relative overflow-auto rounded-lg border"
+        className={cn('grid_table')}
         style={{
           height: '600px',
           width: '100%',
@@ -447,7 +478,7 @@ const Grid = <T extends object>({
               position: 'sticky',
               top: 0,
               zIndex: 1,
-              backgroundColor: 'rgb(249 250 251)',
+              backgroundColor: '#F4F8FF',
             }}>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr
@@ -463,12 +494,13 @@ const Grid = <T extends object>({
                       width: paginationGrid ? undefined : header.getSize(),
                       display: paginationGrid ? 'table-cell' : 'flex',
                     }}
-                    className="border-b px-4 py-2 text-left">
-                    <div className="flex flex-col gap-2">
+                    className="thead_th">
+                    <div className="flex flex-col">
                       <div
                         className={cn(
+                          'flex items-center',
                           header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          'text-xs font-medium uppercase text-gray-500',
+                          'box-border min-h-[40px] px-[8px] py-[9px] text-[12px] font-bold uppercase text-[#5C636E]',
                         )}
                         onClick={header.column.getToggleSortingHandler()}>
                         {header.isPlaceholder
@@ -480,12 +512,12 @@ const Grid = <T extends object>({
                         }[header.column.getIsSorted() as string] ?? null}
                         {/* 필터 */}
                         {header.column.columnDef.meta?.filterType && (
-                          <Button
+                          <button
+                            type="button"
                             onClick={(e) => openFilterPopup(e, header.column)}
-                            size="xs"
-                            className="m-2">
-                            <FilterIcon />
-                          </Button>
+                            className="btn_filter">
+                            <IcoGridFilter width={16} height={16} />
+                          </button>
                         )}
                       </div>
                     </div>
@@ -522,65 +554,64 @@ const Grid = <T extends object>({
     const totalPages = Math.ceil(totalRows / pageSize);
 
     return (
-      <div className="mt-4 flex items-center justify-between px-4">
+      <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <select
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="rounded border p-1">
+            className="select_item">
             {pageSizeOptions.map((size) => (
               <option key={size} value={size}>
                 {size}개씩 보기
               </option>
             ))}
           </select>
+          <div className="flex items-center">
+            <button
+              onClick={() => onPageChange(0)}
+              disabled={pageIndex === 0}
+              className="btn_first">
+              {<IcoChevronLeftDouble width={32} height={32} />}
+            </button>
+            <button
+              onClick={() => onPageChange(pageIndex - 1)}
+              disabled={pageIndex === 0}
+              className="btn_prev">
+              {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
+            </button>
+
+            {/* 페이지 번호들 */}
+            <div className="paging_wrap flex gap-1">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => onPageChange(i)}
+                  className={cn(
+                    'h-[32px] w-[32px] rounded-[4px]',
+                    pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
+                  )}>
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => onPageChange(pageIndex + 1)}
+              disabled={pageIndex >= totalPages - 1}
+              className="btn_next">
+              {<IcoChevronRight width={32} height={32} />}
+            </button>
+            <button
+              onClick={() => onPageChange(totalPages - 1)}
+              disabled={pageIndex >= totalPages - 1}
+              className="btn_last">
+              {<IcoChevronRightDouble width={32} height={32} />}
+            </button>
+          </div>
           <span className="text-sm text-gray-600">
             총 {totalRows}개 중 {pageIndex * pageSize + 1}-
             {Math.min((pageIndex + 1) * pageSize, totalRows)}
           </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onPageChange(0)}
-            disabled={pageIndex === 0}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'<<'}
-          </button>
-          <button
-            onClick={() => onPageChange(pageIndex - 1)}
-            disabled={pageIndex === 0}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'<'}
-          </button>
-
-          {/* 페이지 번호들 */}
-          <div className="flex gap-1">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => onPageChange(i)}
-                className={cn(
-                  'rounded px-3 py-1',
-                  pageIndex === i ? 'bg-blue-500 text-white' : 'border hover:bg-gray-100',
-                )}>
-                {i + 1}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => onPageChange(pageIndex + 1)}
-            disabled={pageIndex >= totalPages - 1}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'>'}
-          </button>
-          <button
-            onClick={() => onPageChange(totalPages - 1)}
-            disabled={pageIndex >= totalPages - 1}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'>>'}
-          </button>
         </div>
       </div>
     );

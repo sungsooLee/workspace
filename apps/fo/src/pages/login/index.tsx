@@ -13,8 +13,8 @@ import { Editor, Arrow } from '@learnway/editor';
 
 import { useLoginUser, useFetchAuthUser } from '../../entities/user';
 import { useFetchCompanySelectOptions } from '../../entities/company';
-
 import { useSetLanguage } from '../../features/system';
+
 //import { ReactComponent as Information } from '../../assets/information.svg';
 //import Information from '../../assets/information.svg?react';
 

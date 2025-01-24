@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
-import '../assets/styles/style.css';
+import '../assets/styles/global.css';
 import '../assets/styles/guide.css';
 // import styles from './_guide.module.css';
 

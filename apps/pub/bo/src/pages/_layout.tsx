@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { GNB, Layout } from '../widgets/layout';
-
-import styles from './_layout.module.css';
+import { Header, Layout } from '../widgets/layout';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -19,8 +16,8 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div className={styles.start}>
-      <GNB />
+    <div className="layout_wrap">
+      <Header />
       <Layout>
         <Outlet />
       </Layout>

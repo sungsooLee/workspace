@@ -8,35 +8,15 @@
       }
     }
     .nav_area {
-      .nav {
-        ul {
-          @apply flex justify-start gap-[48px];
-          > li {
-            a {
-              color: var(--white);
-              @apply inline-flex h-[56px] items-center text-[2rem];
-              &:hover {
-                @apply font-bold;
-              }
-            }
-          }
-        }
-      }
     }
     .util {
-      @apply absolute right-8 top-0 flex items-center;
+      @apply absolute right-8 top-0 mt-[10px] flex items-center;
+      button + button {
+        @apply ml-[25px];
+      }
     }
     .quick_menu {
       @apply absolute bottom-0 right-[32px];
-      ul {
-        @apply flex;
-        > li {
-          a {
-            color: var(--white);
-            @apply inline-flex h-[56px] items-center text-[1.6rem];
-          }
-        }
-      }
     }
   }
 }

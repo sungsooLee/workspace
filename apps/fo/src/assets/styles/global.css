@@ -1,0 +1,35 @@
+@import './_reset.css';
+@import './_color.css';
+@import './_common.css';
+@import './_media.css ';
+
+/* Layout */
+._layout_wrap {
+}
+
+._header {
+  @apply relative bg-[#012277] px-[32px];
+  h1 {
+    img {
+      @apply h-[60px] w-auto;
+    }
+  }
+  .util {
+    @apply absolute right-[32px] top-[10px] flex items-center;
+  }
+}
+
+._nav {
+  ul.list {
+    @apply flex justify-start gap-[48px];
+    > li {
+      a {
+        color: var(--white);
+        @apply inline-flex h-[56px] items-center text-[2rem];
+        &:hover {
+          @apply font-bold;
+        }
+      }
+    }
+  }
+}

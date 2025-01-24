@@ -2,6 +2,7 @@
 @import '../../../libs/config/src/lib/style/theme.css';
 
 @import 'tailwindcss/base';
+
 /*
 @tailwind base;
 @tailwind components;
@@ -13,23 +14,36 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+  html {
+    @apply text-[62.5%];
+  }
   body {
-    @apply antialiased bg-background text-foreground;
+    @apply text-[1.6rem] font-normal leading-[1.6] text-[--gray9];
   }
   body,
   html {
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
   }
 }
 
 #root {
-  color: hsl(var(--secondary));
+  @apply text-[--gray9];
 }

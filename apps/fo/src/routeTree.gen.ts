@@ -20,6 +20,7 @@ import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu6Menu7Import } from './pages/_layout/menu6/menu7'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutCategoryCategoryIdImport } from './pages/_layout/category/$categoryId'
 
 // Create/Update Routes
 
@@ -76,6 +77,12 @@ const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutCategoryCategoryIdRoute = LayoutCategoryCategoryIdImport.update({
+  id: '/category/$categoryId',
+  path: '/category/$categoryId',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -100,6 +107,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/category/$categoryId': {
+      id: '/_layout/category/$categoryId'
+      path: '/category/$categoryId'
+      fullPath: '/category/$categoryId'
+      preLoaderRoute: typeof LayoutCategoryCategoryIdImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/menu/$menuId': {
       id: '/_layout/menu/$menuId'
@@ -150,6 +164,7 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCategoryCategoryIdRoute: typeof LayoutCategoryCategoryIdRoute
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu6Menu7Route: typeof LayoutMenu6Menu7Route
@@ -160,6 +175,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCategoryCategoryIdRoute: LayoutCategoryCategoryIdRoute,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu6Menu7Route: LayoutMenu6Menu7Route,
@@ -175,6 +191,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/category/$categoryId': typeof LayoutCategoryCategoryIdRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
@@ -186,6 +203,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/category/$categoryId': typeof LayoutCategoryCategoryIdRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu6/menu7': typeof LayoutMenu6Menu7Route
@@ -199,6 +217,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/_layout/category/$categoryId': typeof LayoutCategoryCategoryIdRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu6/menu7': typeof LayoutMenu6Menu7Route
@@ -213,6 +232,7 @@ export interface FileRouteTypes {
     | ''
     | '/'
     | '/login'
+    | '/category/$categoryId'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu6/menu7'
@@ -223,6 +243,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/category/$categoryId'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu6/menu7'
@@ -234,6 +255,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_layout/'
     | '/login/'
+    | '/_layout/category/$categoryId'
     | '/_layout/menu/$menuId'
     | '/_layout/menu4/menu5'
     | '/_layout/menu6/menu7'
@@ -271,6 +293,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/category/$categoryId",
         "/_layout/menu/$menuId",
         "/_layout/menu4/menu5",
         "/_layout/menu6/menu7",
@@ -285,6 +308,10 @@ export const routeTree = rootRoute
     },
     "/login/": {
       "filePath": "login/index.tsx"
+    },
+    "/_layout/category/$categoryId": {
+      "filePath": "_layout/category/$categoryId.tsx",
+      "parent": "/_layout"
     },
     "/_layout/menu/$menuId": {
       "filePath": "_layout/menu/$menuId.tsx",

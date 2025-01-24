@@ -1,10 +1,25 @@
-.start {
-  .lnb_wrap {
-    @apply w-[264px] p-[32px];
-  }
-  .lnb_title {
-    & > span {
-      @apply block pb-[18px] text-[1.8rem] font-bold text-[var(--gray9)];
+.lnb_wrap {
+  @apply w-[264px] p-[32px];
+}
+.lnb_title {
+  @apply mb-[16px] box-border border-b-2 border-solid border-[var(--gray9)] pb-[16px];
+  .lnb_title_btn {
+    @apply relative flex min-h-[25px] w-full items-center break-all pr-[20px];
+    .lnb_title_text {
+      @apply block text-left text-[18px] font-bold leading-[26px] text-[var(--gray9)];
+    }
+    &.close {
+      svg {
+        @apply rotate-0;
+      }
+    }
+    &.open {
+      svg {
+        @apply rotate-180;
+      }
+    }
+    svg {
+      @apply absolute right-0 top-1/2 -mt-[8px] h-[16px] w-[16px];
     }
   }
 }

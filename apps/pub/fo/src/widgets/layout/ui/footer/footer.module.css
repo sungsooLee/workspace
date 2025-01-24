@@ -1,0 +1,13 @@
+/* footer.module.css */
+
+.start {
+  &.footer {
+    @apply relative bg-[--primary1];
+    .footer_area {
+      @apply relative m-auto w-[1120px];
+    }
+    .menu_list {
+      @apply flex-col;
+    }
+  }
+}

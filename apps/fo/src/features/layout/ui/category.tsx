@@ -1,21 +1,25 @@
-import { memo } from 'react';
-import { Button, ModalWrapper, useModalControl } from '@learnway/ui';
+import { memo, useEffect, useState } from 'react';
+import { Button, Popover } from '@learnway/ui';
+import { CategoryLayer } from '../../category/ui/category-layer';
+import { useRouter } from '@tanstack/react-router';
 
 const CategoryContent = () => {
-  return <div>Content</div>;
+  return <CategoryLayer />;
 };
 const CategoryComponent = () => {
-  const { open } = useModalControl();
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    return router.history.subscribe((navigation) => {
+      setIsOpen(false);
+    });
+  }, [router.history]);
+
   return (
-    <div>
-      <Button
-        onClick={() => {
-          open(<CategoryContent></CategoryContent>);
-        }}>
-        카테고리
-      </Button>
-      <ModalWrapper />
-    </div>
+    <Popover open={isOpen} onOpenChange={setIsOpen} popoverContent={<CategoryContent />}>
+      <Button>{isOpen ? '카테고리 닫기' : '카테고리'}</Button>
+    </Popover>
   );
 };
 

@@ -1,7 +1,7 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import { ModalWrapper } from '@learnway/ui';
+import { ModalWrapper, ToastWrapper } from '@learnway/ui';
 
 import type { Menu } from '../types';
 
@@ -18,6 +18,7 @@ function RootComponent() {
     <>
       <Outlet />
       <ModalWrapper />
+      <ToastWrapper />
       <TanStackRouterDevtools position="bottom-right" />
     </>
   );

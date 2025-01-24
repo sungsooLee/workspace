@@ -19,7 +19,7 @@ const BaseWrapper: React.FC<any> = (args) => {
 export const ImageCarouselStory: Story = {
   name: 'ImageCarousel',
   args: {
-    imageUrls: ['a.png', 'b.png', 'c.png', 'd.png', 'e.png']
+    // imageUrls: ['a.png', 'b.png', 'c.png', 'd.png', 'e.png']
   },
   render: (args) => <BaseWrapper {...args} />,
 };
