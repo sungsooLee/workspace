@@ -1,29 +1,54 @@
+import { useEffect } from 'react';
+
 import { createFileRoute } from '@tanstack/react-router';
 import useSearchBox from '../../../widgets/layout/ui/search-box/use-search-box';
 import SearchBox from '../../../widgets/layout/ui/search-box';
 import z from 'zod';
 import '../../../builder.css';
-
+import TableBox from '../../../widgets/layout/ui/table-box';
+import { useFetchMockUsers } from '../../../entities/api-mock/service/mock-user.hook';
+import useTableBox from '../../../widgets/layout/ui/table-box/use-table-box';
+import { queryOptions } from '../../../entities/api-mock/service/mock-user.queries';
 export const Route = createFileRoute('/_layout/builder/table')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { config } = useSearchBox(searchConfig);
-
+  const { config: sConfig } = useSearchBox(searchConfig);
+  // const { isPending, data } = useFetchMockUsers();
+  const { config: tConfig, fetch } = useTableBox(tableConfig);
   /**
    * @param data
    */
   const handleOnSearch = (data: any) => {
     console.log(data);
+    fetch();
   };
 
   return (
     <div>
-      <SearchBox config={config} onSearch={handleOnSearch} />
+      <SearchBox config={sConfig} onSearch={handleOnSearch} />
+      {/*<TableBox config={tConfig} />*/}
     </div>
   );
 }
+
+const tableConfig = {
+  query: queryOptions.all,
+  builders: [
+    {
+      name: 'id',
+      label: '아이디',
+      width: '50px',
+    },
+    { name: 'name', label: '이름', width: '100px' },
+    { name: 'age', label: '나이', width: '100px' },
+    { name: 'department', label: '부서', width: '100px' },
+    { name: 'jobType', label: '직업구분', width: '100px' },
+    { name: 'position', label: '위치', width: '100px' },
+    { name: 'contact', label: '연락처', width: '100px' },
+  ],
+};
 
 const searchConfig = {
   searchMethod: 'change',

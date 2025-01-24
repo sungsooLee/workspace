@@ -7,16 +7,7 @@ const DateRange: FC<DialogProps> = ({ control, name, label }) => {
   const [startDate, endDate] = useMemo(() => [value.split('|')[0], value.split('|')[1]], [value]);
 
   // onChange 이벤트를 핸들링하여 커스텀 컴포넌트와 연결
-  const handleOnChange = useCallback(
-    (e: any, type: 'start' | 'end', onChange: any) => {
-      if (type === 'start') {
-        onChange(`${e.target.value}|${endDate}`);
-      } else {
-        onChange(`${startDate}|${e.target.value}`);
-      }
-    },
-    [startDate, endDate],
-  );
+
   return (
     <div className={'builder-dialog-container date-range'}>
       {label && <label>{label}</label>}
@@ -26,21 +17,22 @@ const DateRange: FC<DialogProps> = ({ control, name, label }) => {
         render={({ field }) => {
           // Field에서 value와 onChange 함수 추출
           const { value, onChange } = field;
-          setValue(value);
+          const [startDate, endDate] = [value.split('|')[0], value.split('|')[1]];
+
+          const handleOnChange = (e: any, type: 'start' | 'end') => {
+            if (type === 'start') {
+              onChange(`${e.target.value}|${endDate}`);
+            } else {
+              onChange(`${startDate}|${e.target.value}`);
+            }
+          };
+
           // 렌더링할 컴포넌트에 props 전달
           return (
             <div className={'date-range-group'}>
-              <input
-                type="text"
-                onChange={(e) => handleOnChange(e, 'start', onChange)}
-                value={startDate}
-              />
+              <input type="text" onChange={(e) => handleOnChange(e, 'start')} value={startDate} />
               <span>~</span>
-              <input
-                type="text"
-                onChange={(e) => handleOnChange(e, 'end', onChange)}
-                value={endDate}
-              />
+              <input type="text" onChange={(e) => handleOnChange(e, 'end')} value={endDate} />
             </div>
           );
         }}

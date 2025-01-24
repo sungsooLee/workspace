@@ -62,7 +62,6 @@ const useSearchBox = (config: any) => {
 
   // 필수 여부를 체크하는 로직
   const getFieldValidation = (fieldName: string) => {
-    console.log('get field validation =>', fieldName);
     return !!(config.validator && config.validator[fieldName]);
   };
 
