@@ -55,7 +55,8 @@ export const IndeterminateCheckbox = ({
 
   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
 
-  return <Checkbox value={checkedState} onChange={handleChange} {...rest} />;
+  return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
+  // return <Checkbox checked={checkedState} onCheckedChange={handleChange} {...rest} />;
 };
 ///////
 
@@ -110,20 +111,28 @@ const Grid = <T extends object>({
               minSize: 50,
               enablePinning: true, // 핀 기능 활성화
               header: ({ table }: { table: Table<T> }) => (
-                <IndeterminateCheckbox
-                  value={table.getIsAllRowsSelected()}
-                  indeterminate={table.getIsSomeRowsSelected()}
-                  onChange={(checked) => {
+                <Checkbox
+                  checked={table.getIsAllRowsSelected()}
+                  onCheckedChange={(checked) => {
                     table.toggleAllRowsSelected(!!checked);
                   }}
                 />
               ),
+              // header: ({ table }: { table: Table<T> }) => (
+              //   <IndeterminateCheckbox
+              //     value={table.getIsAllRowsSelected()}
+              //     indeterminate={table.getIsSomeRowsSelected()}
+              //     onChange={(checked) => {
+              //       table.toggleAllRowsSelected(!!checked);
+              //     }}
+              //   />
+              // ),
               // 바디 체크 박스
               cell: ({ row }: { row: Row<T> }) => (
                 <div className="px-1">
-                  <IndeterminateCheckbox
-                    value={row.getIsSelected()}
-                    onChange={(checked) => {
+                  <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(checked) => {
                       // 그룹핑된 행은 체크박스 비활성화
                       if (row.getIsGrouped()) {
                         return;
@@ -134,6 +143,21 @@ const Grid = <T extends object>({
                   />
                 </div>
               ),
+              // cell: ({ row }: { row: Row<T> }) => (
+              //   <div className="px-1">
+              //     <IndeterminateCheckbox
+              //       value={row.getIsSelected()}
+              //       onChange={(checked) => {
+              //         // 그룹핑된 행은 체크박스 비활성화
+              //         if (row.getIsGrouped()) {
+              //           return;
+              //         }
+              //         row.toggleSelected(!!checked);
+              //       }}
+              //       disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
+              //     />
+              //   </div>
+              // ),
             },
             ...columns,
           ]
