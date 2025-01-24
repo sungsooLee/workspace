@@ -4,8 +4,6 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import { ReactQueryConfigProvider } from '@learnway/config';
 
-import { fetchCodes } from './entities/system';
-
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
 
