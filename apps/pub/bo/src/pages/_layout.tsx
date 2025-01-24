@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { GNB, Layout } from '../widgets/layout';
+import { Header, Layout } from '../widgets/layout';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -17,7 +17,7 @@ function LayoutComponent() {
 
   return (
     <div className="layout_wrap">
-      <GNB />
+      <Header />
       <Layout>
         <Outlet />
       </Layout>
