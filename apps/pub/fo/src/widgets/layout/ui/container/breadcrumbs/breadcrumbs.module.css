@@ -1,24 +1,27 @@
 .start {
   /* breadCrumbs */
   .breadcrumbs {
-    @apply flex min-h-[52px] items-center pl-[24px];
+    @apply flex items-center;
 
     li {
       &:nth-child(1) {
         svg {
-          @apply mr-[5px];
+          @apply mr-[12px];
           & + svg {
-            @apply ml-[8px];
+            @apply ml-[0];
           }
         }
       }
       &:not(:nth-child(1)) {
         svg {
-          @apply mx-[8px];
+          @apply mx-[12px];
         }
       }
       a {
-        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray8)];
+        &.active {
+          @apply text-[var(--gray9)];
+        }
+        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray7)];
       }
     }
   }

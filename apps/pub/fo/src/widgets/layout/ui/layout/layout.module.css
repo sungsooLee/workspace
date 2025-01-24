@@ -6,7 +6,7 @@
       @apply relative m-auto w-[1120px];
     }
     .breadcrums {
-      @apply h-[46px] bg-[var(--gray1)];
+      @apply flex h-[46px] items-center bg-[var(--gray1)];
     }
   }
 }
