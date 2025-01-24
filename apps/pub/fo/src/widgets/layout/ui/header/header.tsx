@@ -1,9 +1,15 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Logo, UserAvatar, Notification, Language, UserName } from '../../../../features/layout';
-import { Navigate } from './navigate/navigate';
-import { Category } from './category/category';
+import {
+  Logo,
+  UserAvatar,
+  Notification,
+  Language,
+  UserName,
+  Navigate,
+  Category,
+} from '../../../../features/layout';
 import { IcoMenu01 } from '@learnway/icons';
 import styles from './header.module.css';
 
