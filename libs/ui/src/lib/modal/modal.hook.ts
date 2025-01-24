@@ -2,7 +2,7 @@ import { createElement, ReactNode, useCallback } from 'react';
 import { reject } from 'lodash';
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
-import { AlertData, ModalClose, ModalConfig, ModalControl } from './type';
+import { ModalClose, ModalConfig, ModalControl } from './type';
 
 // TODO: rename : useModalControl > useModal
 const useModalControl = (): ModalControl => {
@@ -30,8 +30,24 @@ const useModalControl = (): ModalControl => {
 
   const alert = useCallback(
     (props: AlertComponentProps) => {
-      openModal(createElement(Alert, props));
-      // openModal(<h1></h1>, props.config, props.onClose);
+      const modalContent = createElement(Alert, props);
+      const modalConfig = {
+        hideCloseButton: true,
+      };
+      const onClose = props.onClose;
+      openModal(modalContent, modalConfig, onClose);
+    },
+    [openModal],
+  );
+
+  const confirm = useCallback(
+    (props: AlertComponentProps) => {
+      const modalContent = createElement(Alert, { ...props, isConfirm: true });
+      const modalConfig = {
+        hideCloseButton: true,
+      };
+      const onClose = props.onClose;
+      openModal(modalContent, modalConfig, onClose);
     },
     [openModal],
   );
@@ -40,7 +56,7 @@ const useModalControl = (): ModalControl => {
     open,
     openAsync,
     alert,
-    // confirm,
+    confirm,
   };
 };
 

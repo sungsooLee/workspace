@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { AlertComponentProps } from '../alert/alert';
+import { ConfirmComponentProps } from '../confirm/confirm';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
@@ -10,6 +11,12 @@ export interface ModalConfig {
   width?: ModalSize;
   height?: ModalHeight;
   preventBackdropClose?: boolean;
+  hideCloseButton?: boolean;
+}
+
+export interface BaseModalProps extends ModalConfig {
+  onClose?: (data?: any) => void;
+  children: React.ReactNode;
 }
 
 export interface ModalClose<T = any> {
@@ -27,11 +34,6 @@ export interface ModalContainerProps {
   data: ModalData;
 }
 
-export interface BaseModalProps extends ModalConfig {
-  onClose?: (data?: any) => void;
-  children: React.ReactNode;
-}
-
 // TODO: rename : ModalControl > useModalReturnValue
 export interface ModalControl {
   // TODO: open: (modal: ModalData) => void
@@ -41,6 +43,7 @@ export interface ModalControl {
     onClose?: (data?: ModalClose<T>) => void,
   ) => void;
   alert: (props: AlertComponentProps) => void;
+  confirm: (props: ConfirmComponentProps) => void;
   openAsync: <T = any>(content: ReactNode, config?: ModalConfig) => Promise<ModalClose<T>>;
 }
 

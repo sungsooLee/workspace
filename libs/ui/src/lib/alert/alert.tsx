@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
+import { useModalContext } from '../modal/modal-context';
 
 import styles from './alert.module.css';
 
@@ -13,13 +14,25 @@ export interface AlertComponentProps {
   content?: React.ReactNode | string;
   footer?: React.ReactNode;
   onClose?: () => void;
+  okButtonLabel?: string;
+  cancelButtonLabel?: string;
+  isConfirm?: boolean;
 }
 
 const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
-  ({ className, title, description, content, footer, ...otherProps }, ref) => {
+  ({ className, title, description, content, footer, okButtonLabel = '확인', cancelButtonLabel = '취소', isConfirm = false, ...otherProps }, ref) => {
 
-    const defaultFooter = (
-      <></>
+    const { closeModal } = useModalContext();
+
+    const defaultFooter = isConfirm ? (
+      <>
+        <Button onClick={() => closeModal()}>{cancelButtonLabel}</Button>
+        <Button onClick={() => closeModal()}>{okButtonLabel}</Button>
+      </>
+    ) : (
+      <>
+        <Button onClick={() => closeModal()}>{okButtonLabel}</Button>
+      </>
     )
 
     return (
@@ -31,9 +44,11 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
         </div>
 
         {/* description */}
-        <div className={styles.description}>
-          {description}
-        </div>
+        {description && (
+          <div className={styles.description}>
+            {description}
+          </div>
+        )}
 
         {/* content */}
         <div className={styles.content}>
@@ -42,9 +57,8 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
 
         {/* footer */}
         <div className={styles.footer}>
-          <Button>OK</Button>
+          {footer ?? defaultFooter}
         </div>
-
 
       </div>
     )
