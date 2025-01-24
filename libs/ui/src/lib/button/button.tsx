@@ -17,6 +17,8 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
     | 'point'
     | 'text'
     | 'chips'
+    | 'expand'
+    | 'expand2'
     | 'danger'
     | 'default'
     | 'destructive'
