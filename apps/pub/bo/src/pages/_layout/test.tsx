@@ -8,9 +8,47 @@ export const Route = createFileRoute('/_layout/test')({
 function RouteComponent() {
   return (
     <div className="content">
-      <Button variant="primary" size="sm">
-        111
-      </Button>
+      <div>
+        <Button variant="primary" size="xs" disabled>
+          버튼
+        </Button>
+        <Button variant="primary" size="sm">
+          버튼
+        </Button>
+        <Button variant="primary" size="md">
+          버튼
+        </Button>
+        <Button variant="primary" size="lg">
+          버튼
+        </Button>
+      </div>
+      <div>
+        <Button variant="line" size="sm" disabled>
+          버튼
+        </Button>
+        <Button variant="line" size="lg">
+          버튼
+        </Button>
+      </div>
+      <div>
+        <Button variant="gray" size="sm" disabled>
+          버튼
+        </Button>
+        <Button variant="gray" size="md">
+          버튼
+        </Button>
+        <Button variant="gray" size="lg">
+          버튼
+        </Button>
+      </div>
+      <div>
+        <Button variant="gray2" size="sm" disabled>
+          111
+        </Button>
+        <Button variant="gray2" size="xs">
+          111
+        </Button>
+      </div>
     </div>
   );
 }

@@ -8,6 +8,9 @@ import styles from './button.module.scss';
 export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
     | 'primary'
+    | 'line'
+    | 'gray'
+    | 'gray2'
     | 'secondary'
     | 'danger'
     | 'default'
@@ -16,7 +19,7 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
     | 'gray-outline'
     | 'ghost'
     | 'link'; // override from shadcn.button
-  size?: 'xs' | 'sm' | 'md' | 'md-1' | 'lg' | 'icon'; // override from shadcn.button
+  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   icon?: React.ReactNode;
   iconAlign?: 'left' | 'right';
   onlyIcon?: boolean;
@@ -34,12 +37,21 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
     disabled,
     children,
     className,
+    variant,
+    size,
     ...props
   }) => {
     return (
       <button
         {...props}
-        className={cn(styles.start, className, 'nlp--button')}
+        className={cn(
+          styles.start,
+          styles.btn,
+          className,
+          'nlp--button',
+          variant && styles[variant],
+          size && styles[size],
+        )}
         disabled={disabled || isLoading}>
         {/* loading icon */}
         {isLoading && <Loader2 className="animate-spin" />}
