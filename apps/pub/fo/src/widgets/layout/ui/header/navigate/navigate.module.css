@@ -1,0 +1,17 @@
+/* navigate.module.css */
+.start {
+  .nav {
+    ul {
+      @apply flex justify-start gap-[48px];
+      > li {
+        a {
+          color: var(--gray9);
+          @apply inline-flex h-[56px] items-center text-[1.6rem];
+          &:hover {
+            @apply font-bold;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/* user-avatar.module.css */
+.btn_avatar {
+  @apply inline-flex h-[40px] w-[40px] items-center justify-center;
+  img {
+    @apply h-[36px] w-[36px];
+  }
+}

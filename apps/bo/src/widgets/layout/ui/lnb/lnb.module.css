@@ -8,12 +8,12 @@
     .lnb_title_text {
       @apply block text-left text-[18px] font-bold leading-[26px] text-[var(--gray9)];
     }
-    &.active {
+    &.close {
       svg {
         @apply rotate-0;
       }
     }
-    &.inactive {
+    &.open {
       svg {
         @apply rotate-180;
       }
@@ -21,16 +21,5 @@
     svg {
       @apply absolute right-0 top-1/2 -mt-[8px] h-[16px] w-[16px];
     }
-  }
-}
-._active {
-  color: blue;
-}
-
-._depth2 {
-  background-color: aqua;
-
-  ._depth3 {
-    background-color: yellowgreen;
   }
 }

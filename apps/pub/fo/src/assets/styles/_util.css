@@ -1,0 +1,11 @@
+/* _util.css */
+
+@layer utilities {
+  /* mobile */
+  @screen mobile {
+  }
+
+  /* pc */
+  @screen pc {
+  }
+}

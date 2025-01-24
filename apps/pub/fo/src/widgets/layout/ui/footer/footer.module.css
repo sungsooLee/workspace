@@ -1,0 +1,10 @@
+/* footer.module.css */
+
+.start {
+  .footer {
+    @apply bg-[--primary1];
+    .menu_list {
+      @apply flex-col;
+    }
+  }
+}

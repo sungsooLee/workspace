@@ -30,6 +30,12 @@ import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
 import { Checkbox } from '../checkbox/checkbox';
+
+// paging Icons
+import { IcoChevronLeft } from '@learnway/icons';
+import { IcoChevronLeftDouble } from '@learnway/icons';
+import { IcoChevronRight } from '@learnway/icons';
+import { IcoChevronRightDouble } from '@learnway/icons';
 import './grid.css'; // grid CSS
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
@@ -327,8 +333,8 @@ const Grid = <T extends object>({
               ref={(node) => rowVirtualizer.measureElement(node)}
               key={row.id}
               className={cn(
-                'cursor-pointer border-b hover:bg-gray-50',
-                row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
+                'cursor-pointer border-b hover:bg-[#F4F8FF]',
+                row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
               )}
               style={{
                 display: 'flex',
@@ -524,65 +530,64 @@ const Grid = <T extends object>({
     const totalPages = Math.ceil(totalRows / pageSize);
 
     return (
-      <div className="mt-4 flex items-center justify-between px-4">
+      <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <select
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="rounded border p-1">
+            className="select_item">
             {pageSizeOptions.map((size) => (
               <option key={size} value={size}>
                 {size}개씩 보기
               </option>
             ))}
           </select>
+          <div className="flex items-center">
+            <button
+              onClick={() => onPageChange(0)}
+              disabled={pageIndex === 0}
+              className="btn_first">
+              {<IcoChevronLeftDouble width={32} height={32} />}
+            </button>
+            <button
+              onClick={() => onPageChange(pageIndex - 1)}
+              disabled={pageIndex === 0}
+              className="btn_prev">
+              {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
+            </button>
+
+            {/* 페이지 번호들 */}
+            <div className="paging_wrap flex gap-1">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => onPageChange(i)}
+                  className={cn(
+                    'h-[32px] w-[32px] rounded-[4px]',
+                    pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
+                  )}>
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => onPageChange(pageIndex + 1)}
+              disabled={pageIndex >= totalPages - 1}
+              className="btn_next">
+              {<IcoChevronRight width={32} height={32} />}
+            </button>
+            <button
+              onClick={() => onPageChange(totalPages - 1)}
+              disabled={pageIndex >= totalPages - 1}
+              className="btn_last">
+              {<IcoChevronRightDouble width={32} height={32} />}
+            </button>
+          </div>
           <span className="text-sm text-gray-600">
             총 {totalRows}개 중 {pageIndex * pageSize + 1}-
             {Math.min((pageIndex + 1) * pageSize, totalRows)}
           </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onPageChange(0)}
-            disabled={pageIndex === 0}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'<<'}
-          </button>
-          <button
-            onClick={() => onPageChange(pageIndex - 1)}
-            disabled={pageIndex === 0}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'<'}
-          </button>
-
-          {/* 페이지 번호들 */}
-          <div className="flex gap-1">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => onPageChange(i)}
-                className={cn(
-                  'rounded px-3 py-1',
-                  pageIndex === i ? 'bg-blue-500 text-white' : 'border hover:bg-gray-100',
-                )}>
-                {i + 1}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => onPageChange(pageIndex + 1)}
-            disabled={pageIndex >= totalPages - 1}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'>'}
-          </button>
-          <button
-            onClick={() => onPageChange(totalPages - 1)}
-            disabled={pageIndex >= totalPages - 1}
-            className="rounded border px-2 py-1 disabled:opacity-50">
-            {'>>'}
-          </button>
         </div>
       </div>
     );

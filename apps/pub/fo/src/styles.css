@@ -1,16 +1,16 @@
 @import '../../../../libs/config/src/lib/style/font.css';
 @import '../../../../libs/config/src/lib/style/theme.css';
 
-@import 'tailwindcss/base';
 /*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 */
 
+@import 'tailwindcss/base';
+@import 'tailwindcss/utilities';
 @import './assets/styles/components/index.css';
 @import './assets/styles/global.css';
-@import 'tailwindcss/utilities';
 
 @layer base {
 }

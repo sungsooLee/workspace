@@ -1,14 +1,27 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-
-import styles from './breadcrumbs.module.css';
+import { Link } from '@tanstack/react-router';
+import { IcoHome02, IcoArrowForward } from '@learnway/icons';
 
 function BreadcrumbsComponent() {
   const { t } = useTranslation();
 
-  return <div className={styles._start}>Home</div>;
+  const menuItems = ['menu1', 'menu2', 'menu3', 'menu4'];
+  return (
+    <div className="bread_crumbs">
+      <ul>
+        {menuItems.map((item, idx) => (
+          <li key={idx} className="link_item">
+            <Link to={'/'}>
+              {idx === 0 && <IcoHome02 width={12} height={12} />} {item}
+              {idx !== menuItems.length - 1 && <IcoArrowForward width={12} height={12} />}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export const Breadcrumbs = memo(BreadcrumbsComponent);

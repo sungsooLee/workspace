@@ -1,6 +1,8 @@
-.start {
-  .alarm_item {
+.btn_alarm {
+  @apply relative flex min-h-[40px] w-[40px] items-center;
+  .count_view {
+    @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
   }
-  .alarm_content {
-  }
+}
+.alarm_content {
 }

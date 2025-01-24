@@ -31,7 +31,6 @@
           }
         }
         .accordion_content {
-          @apply bg-[var(--primary2)] px-0;
           .accordion_btn {
             span {
               @apply relative pl-[16px] text-white;
