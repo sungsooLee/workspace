@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { useCodesByCodeGroup, type Code } from '../../../entities/system';
-import { useSetLanguage } from '../../system';
 import { useFetchAuthUser } from '../../../entities/user';
 import { CODE_GROUP } from '@learnway/config';
 import { Popover, Avatar } from '@learnway/ui';
@@ -8,8 +7,6 @@ import { memo } from 'react';
 
 const PopoverContent = ({ data }: { data?: Code[] }) => {
   const { t } = useTranslation();
-
-  const { set: setLanguage } = useSetLanguage();
 
   const handleLang = (lang: string) => {
     setLanguage(lang);
