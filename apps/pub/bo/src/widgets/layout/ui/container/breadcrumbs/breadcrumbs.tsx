@@ -20,7 +20,7 @@ function BreadcrumbsComponent() {
             <Link
               to={'/'}
               onClick={() => setActiveMenu(item)}
-              className={`${styles.menuItem} ${activeMenu === item ? styles.active : ''}`}>
+              className={`${activeMenu === item ? styles.active : ''}`}>
               {idx === 0 && <IcoHome02 width={12} height={12} stroke="#131C30" />}
 
               {idx !== menuItems.length - 1 && (
