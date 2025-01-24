@@ -66,7 +66,7 @@ function GNBComponent() {
       <div className="flex items-center gap-10">
         <Logo activeTenant={activeTenant} />
         <Tenants
-          tenants={tenants}
+          tenants={tenants || []}
           activeTenant={activeTenant}
           onTenantSwitch={handleTenantSwitch}
         />

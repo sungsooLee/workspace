@@ -49,6 +49,7 @@ export * from './lib/radio/radio';
 // select
 export * from './lib/select/select';
 export * from './lib/select/multi-select';
+export * from './lib/select/type';
 
 // sidebar
 export * from './lib/sidebar/sidebar';

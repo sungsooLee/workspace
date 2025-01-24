@@ -1,8 +1,3 @@
-import { httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
-
-import { Company } from '../model/company';
-
 import organizationMock from '../../mock/organization.json';
 
 export default class CompanyService {

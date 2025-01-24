@@ -6,10 +6,7 @@ import { $findMatchingParent } from '@lexical/utils';
 import { sanitizeUrl } from '../../../utils/url';
 import { useFloatingModal } from '../../../context/floating-modal.context';
 import { getSelectedNode } from '../../../utils/get-selected-node';
-import CloseICon from '../../../assets/images/icons/close.svg';
-import ConfirmIcon from '../../../assets/images/icons/success-alt.svg';
-import ModifyIcon from '../../../assets/images/icons/pencil-fill.svg';
-import TrashIcon from '../../../assets/images/icons/trash.svg';
+import { IcoClose, IcoConfirm, IcoModify, IcoTrash } from '@learnway/icons';
 
 const Contents: FC<{ editable: boolean }> = ({ editable }) => {
   const [editor] = useLexicalComposerContext();
@@ -124,10 +121,10 @@ const Contents: FC<{ editable: boolean }> = ({ editable }) => {
             />
             <div className={'flex gap-3'}>
               <button onClick={handleCancel}>
-                <CloseICon className={'h-[16px] w-[16px]'} />
+                <IcoClose className={'h-[16px] w-[16px]'} />
               </button>
               <button onClick={handleConfirm}>
-                <ConfirmIcon className={'h-[16px] w-[16px]'} />
+                <IcoConfirm className={'h-[16px] w-[16px]'} />
               </button>
             </div>
           </>
@@ -138,10 +135,10 @@ const Contents: FC<{ editable: boolean }> = ({ editable }) => {
             </a>
             <div className={'flex gap-3'}>
               <button onClick={handleModify}>
-                <ModifyIcon className={'h-[16px] w-[16px]'} />
+                <IcoModify className={'h-[16px] w-[16px]'} />
               </button>
               <button onClick={handleDelete}>
-                <TrashIcon className={'h-[16px] w-[16px]'} />
+                <IcoTrash className="h-[16px] w-[16px]" />
               </button>
             </div>
           </>

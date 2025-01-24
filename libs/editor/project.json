@@ -14,10 +14,10 @@
       }
     },
     "build": {
-      "executor": "@nx/web:rollup",
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "external": ["@svgr/rollup"],
-        "rollupConfig": "rollup.config.js"
+        "outputPath": "dist/libs/editor"
       }
     }
   }

@@ -17,7 +17,7 @@ export const queryOptions = {
     tenantId
       ? {
           queryKey: queryKeys.detail(tenantId),
-          queryFn: () => TenantService.fetchTenant(tenantId),
+          queryFn: (): Promise<any> => TenantService.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
   // 유저 ID에 따른 테넌트 리스트 쿼리 옵션
@@ -25,7 +25,7 @@ export const queryOptions = {
     userId
       ? {
           queryKey: queryKeys.byUser(userId),
-          queryFn: () => TenantService.fetchTenantsByUser(userId),
+          queryFn: (): Promise<any> => TenantService.fetchTenantsByUser(userId),
         }
       : getQuerySkipToken<Tenant[]>(),
 };

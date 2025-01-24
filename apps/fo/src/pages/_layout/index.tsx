@@ -25,7 +25,7 @@ function HomeComponent() {
         {/*  label='label'*/}
         {/*  options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}*/}
         {/*/>*/}
-        <Switch type={FieldType.RADIO} name="name" label="label" />
+        {/* <Switch type={FieldType.SWITCH} name="name" label="label" /> */}
       </div>
 
       {/**primary */}

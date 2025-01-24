@@ -723,6 +723,17 @@ function TableCellActionMenuContainer({
     prevTableCellDOM.current = tableCellNode;
   }, [prevTableCellDOM, tableCellNode]);
 
+  //
+  const handleColorPicker = (
+    title: string,
+    getContent: (onClose: () => void) => ReactNode,
+    closeOnClickOutside?: boolean,
+  ) => {
+    if (typeof showColorPickerModal === 'function') {
+      showColorPickerModal(title, getContent, closeOnClickOutside);
+    }
+  };
+
   return (
     <div className="table-cell-action-button-container" ref={menuButtonRef}>
       {tableCellNode != null && (
@@ -745,7 +756,7 @@ function TableCellActionMenuContainer({
               onClose={() => setIsMenuOpen(false)}
               tableCellNode={tableCellNode}
               cellMerge={cellMerge}
-              showColorPickerModal={showColorPickerModal}
+              showColorPickerModal={handleColorPicker}
             />
           )}
         </>

@@ -9,7 +9,7 @@ export function useFetchTenant(tenantId?: number) {
 }
 
 export function useFetchTenantByUser(accountId?: string) {
-  return useQuery(queryOptions.byUser(accountId));
+  return useQuery(queryOptions.byUser(accountId || ''));
 }
 
 export function useCreateTenant(mutationOptions = {}) {
