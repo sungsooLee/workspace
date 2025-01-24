@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
-import { MyMenu } from '../../../../../features/layout';
+import { MyMenu } from './my-menu';
 
 import styles from './quick-menu.module.css';
 

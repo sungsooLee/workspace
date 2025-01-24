@@ -1,13 +1,18 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Navigate } from './navigate/navigate';
-import { QuickMenu } from './quick-menu/quick-menu';
-import { Logo, UserAvatar, Notification, Language } from '../../../../features/layout';
+import {
+  Logo,
+  UserAvatar,
+  Notification,
+  Language,
+  Navigate,
+  QuickMenu,
+} from '../../../../features/layout';
 
-import styles from './gnb.module.css';
+import styles from './header.module.css';
 
-function GNBComponent() {
+function HeaderComponent() {
   const { t } = useTranslation();
 
   return (
@@ -35,4 +40,4 @@ function GNBComponent() {
   );
 }
 
-export const GNB = memo(GNBComponent);
+export const Header = memo(HeaderComponent);
