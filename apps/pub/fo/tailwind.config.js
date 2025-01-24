@@ -14,7 +14,25 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   blocklist: ['outline'],
-  plugins: [require('./src/assets/tailwind-plugins/typo.plugin')],
+  plugins: [
+    require('./src/assets/tailwind-plugins/typo.plugin'),
+
+    function ({ addComponents }) {
+      const baseTitle = {
+        letterSpacing: '-0.3px',
+        lineHeight: '140%',
+      };
+
+      addComponents({
+        // title class add
+        '.title_4_b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+      });
+    },
+  ],
 
   theme: {
     extend: {

@@ -20,6 +20,7 @@ import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
 import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
+import { Route as LayoutButtonImport } from './pages/_layout/button'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -81,6 +82,12 @@ const LayoutTestRoute = LayoutTestImport.update({
 const LayoutGridlistRoute = LayoutGridlistImport.update({
   id: '/grid_list',
   path: '/grid_list',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutButtonRoute = LayoutButtonImport.update({
+  id: '/button',
+  path: '/button',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -177,6 +184,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/button': {
+      id: '/_layout/button'
+      path: '/button'
+      fullPath: '/button'
+      preLoaderRoute: typeof LayoutButtonImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/grid_list': {
       id: '/_layout/grid_list'
@@ -336,6 +350,7 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
+  LayoutButtonRoute: typeof LayoutButtonRoute
   LayoutGridlistRoute: typeof LayoutGridlistRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -345,6 +360,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutButtonRoute: LayoutButtonRoute,
   LayoutGridlistRoute: LayoutGridlistRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
@@ -370,6 +386,7 @@ const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginLayoutRoute
@@ -391,6 +408,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginIndexRoute
@@ -413,6 +431,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout/button': typeof LayoutButtonRoute
   '/_layout/grid_list': typeof LayoutGridlistRoute
   '/_layout/test': typeof LayoutTestRoute
   '/login': typeof LoginRouteWithChildren
@@ -437,6 +456,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/button'
     | '/grid_list'
     | '/test'
     | '/login'
@@ -457,6 +477,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/button'
     | '/grid_list'
     | '/test'
     | '/login'
@@ -477,6 +498,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_guide'
     | '/_layout'
+    | '/_layout/button'
     | '/_layout/grid_list'
     | '/_layout/test'
     | '/login'
@@ -542,6 +564,7 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
+        "/_layout/button",
         "/_layout/grid_list",
         "/_layout/test",
         "/_layout/",
@@ -549,6 +572,10 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/menu3/"
       ]
+    },
+    "/_layout/button": {
+      "filePath": "_layout/button.tsx",
+      "parent": "/_layout"
     },
     "/_layout/grid_list": {
       "filePath": "_layout/grid_list.tsx",

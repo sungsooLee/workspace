@@ -1,5 +1,28 @@
-/* breadcrumbs.module */
 .start {
-  &.breadcrumbs {
+  /* breadCrumbs */
+  .breadcrumbs {
+    @apply flex items-center;
+
+    li {
+      &:nth-child(1) {
+        svg {
+          @apply mr-[12px];
+          & + svg {
+            @apply ml-[0];
+          }
+        }
+      }
+      &:not(:nth-child(1)) {
+        svg {
+          @apply mx-[12px];
+        }
+      }
+      a {
+        &.active {
+          @apply text-[var(--gray9)];
+        }
+        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray7)];
+      }
+    }
   }
 }

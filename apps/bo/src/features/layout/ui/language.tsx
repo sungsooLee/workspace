@@ -5,6 +5,7 @@ import { CODE_GROUP, Code } from '@learnway/config';
 import { Popover } from '@learnway/ui';
 import styles from './language.module.css';
 import { IcoCheck, IcoArrowDown } from '@learnway/icons';
+import { Button } from '@learnway/ui';
 
 import { useSetLanguage } from '../../../features/system';
 import { useFetchAuthUser } from '../../../entities/user';
@@ -48,13 +49,12 @@ const PopoverContent = ({ data }: { data?: Code[] }) => {
     <div className={styles.language_content}>
       <div className={styles.btn_wrap}>
         {buttons.map((btn, idx) => (
-          <button
-            type="button"
+          <Button
             key={idx}
             className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
             onClick={() => handleClick(idx)}>
             {btn} {activeIdx === idx && <IcoCheck width={20} height={20} />}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

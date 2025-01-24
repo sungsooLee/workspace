@@ -9,8 +9,8 @@ import {
   UserName,
   Navigate,
   Category,
+  Tenant,
 } from '../../../../features/layout';
-import { IcoMenu01 } from '@learnway/icons';
 import styles from './header.module.css';
 
 function HeaderComponent() {
@@ -19,9 +19,12 @@ function HeaderComponent() {
   return (
     <div className={`${styles.start} ${styles.header}`}>
       <header className={styles.header_area}>
-        <h1>
-          <Logo />
-        </h1>
+        <div className={styles.logo_inner}>
+          <h1>
+            <Logo />
+          </h1>
+          <Tenant />
+        </div>
 
         <div className={styles.util}>
           <UserName />

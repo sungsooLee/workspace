@@ -10,7 +10,8 @@ export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid dow
 export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 grid download
 export { ReactComponent as IcoClose } from './lib/ic_close.svg'; // 24*24 close
 export { ReactComponent as IcoArrowForward } from './lib/ic_arrow_forward.svg'; // bread arrow
-export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home
+export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home BO
+export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
 export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 line
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
 export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging btn

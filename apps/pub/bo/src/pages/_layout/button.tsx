@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
+import { IcoSearch, IcoPlus } from '@learnway/icons';
 
-export const Route = createFileRoute('/_layout/test')({
+export const Route = createFileRoute('/_layout/button')({
   component: RouteComponent,
 });
 
@@ -47,6 +48,30 @@ function RouteComponent() {
         </Button>
         <Button variant="gray2" size="xs">
           111
+        </Button>
+      </div>
+      <div>
+        <Button variant="search" size="sm" iconAlign="left">
+          <IcoSearch width={16} height={16} stroke="#131C30" /> 검색
+        </Button>
+        <Button variant="search" size="sm">
+          111
+        </Button>
+      </div>
+      <div>
+        <Button variant="expand" size="sm" onlyIcon>
+          <IcoPlus width={16} height={16} stroke="#131C30" />
+        </Button>
+        <Button variant="expand" size="sm" onlyIcon>
+          <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
+        </Button>
+        <Button variant="expand" size="xs" onlyIcon>
+          <IcoPlus width={16} height={16} stroke="#131C30" />
+        </Button>
+      </div>
+      <div>
+        <Button variant="expand2" size="sm" iconAlign="left">
+          <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
         </Button>
       </div>
     </div>

@@ -5,30 +5,31 @@
   /* gray Scale */
   --white: #ffffff;
 
-  --gray1: #f6f8fd; /* BG */
-  --gray2: #f2f5fb; /* Table_bg */
-  --gray3: #edf0f7; /* Table_line */
-  --gray4: #e3e9ef;
-  --gray5: #d6dae1; /* Disable_txt, Inputfield */
-  --gray6: #a9afb8;
-  --gray7: #6f798b;
-  --gray8: #4c515e;
-  --gray9: #131c30;
-  --gray10: #0c0f15;
+  --gray1: #f4f8ff; /* BG */
+  --gray2: #eaf1fa; /* Table_bg */
+  --gray3: #dee7f3; /* Table_line */
+  --gray4: #c8d2e5;
+  --gray5: #b5c2d7; /* Disable_txt, Inputfield */
+  --gray6: #8c97ae;
+  --gray7: #747d91;
+  --gray8: #5c636e;
+  --gray9: #3e4550;
+  --gray10: #131c30;
 
   /* button */
   --primary1: #06226a; /* 버튼 프레스 */
   --primary2: #07287e;
   --primary3: #0f3492; /* 버튼 호버 */
+  --primary4: #3f5da8;
 
   --secondary1: #00afd5;
   --secondary2: #00b6de; /* 버튼 호버 */
   --secondary3: #0093bc; /* 버튼 프레스 */
   --secondary4: #b2e7f2;
-  --secondary5: #d8f8ff; /* select */
-  --secondary6: #edfcff; /* bg */
+  --secondary5: #edfcff; /* select */
+  --secondary6: #ffeded; /* bg */
   --secondary7: #ffdada; /* red plus */
-  --secondary8: #ffeded; /* red bg */
+  --secondary8: #f7feff; /* red bg */
   --secondary9: #ffeded; /* contents bg */
   --secondary10: #f6f8fd; /* table bg */
 

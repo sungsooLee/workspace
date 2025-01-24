@@ -4,8 +4,8 @@ import styles from './footer.module.css';
 
 function FooterComponent() {
   return (
-    <div className={`${styles.start} nlp--footer`}>
-      <div className={styles.footer}>
+    <div className={`${styles.start} ${styles.footer}`}>
+      <div className={styles.footer_area}>
         <div className={styles.footer_menu}>
           <h4 className="">교육제도</h4>
           <ul className={styles.menu_list}>
