@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next';
 
 import { Link } from '@tanstack/react-router';
 import { IcoHome02, IcoArrowForward } from '@learnway/icons';
+import styles from './breadcrumbs.module.css';
 
 function BreadcrumbsComponent() {
   const { t } = useTranslation();
 
   const menuItems = ['menu1', 'menu2', 'menu3', 'menu4'];
   return (
-    <div className="bread_crumbs">
-      <ul>
+    <div className={styles.start}>
+      <ul className={styles.bread_crumbs}>
         {menuItems.map((item, idx) => (
           <li key={idx} className="link_item">
             <Link to={'/'}>
