@@ -11,7 +11,7 @@ function BreadcrumbsComponent() {
   const menuItems = ['menu1', 'menu2', 'menu3', 'menu4'];
   return (
     <div className={styles.start}>
-      <ul className={styles.bread_crumbs}>
+      <ul className={styles.breadcrumbs}>
         {menuItems.map((item, idx) => (
           <li key={idx} className="link_item">
             <Link to={'/'}>

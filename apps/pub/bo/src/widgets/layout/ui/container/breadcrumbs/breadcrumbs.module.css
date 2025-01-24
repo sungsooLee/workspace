@@ -1,6 +1,6 @@
 .start {
   /* breadCrumbs */
-  .bread_crumbs {
+  .breadcrumbs {
     @apply flex min-h-[52px] items-center bg-[var(--white)] pl-[24px];
     border-bottom: 1px solid var(--gray4);
     li {
