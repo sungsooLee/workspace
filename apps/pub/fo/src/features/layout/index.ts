@@ -5,3 +5,4 @@ export * from './ui/language';
 export * from './ui/user-name';
 export * from './ui/navigate';
 export * from './ui/category';
+export * from './ui/tenant';

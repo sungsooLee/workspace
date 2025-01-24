@@ -8,11 +8,10 @@ import styles from './breadcrumbs.module.css';
 function BreadcrumbsComponent() {
   const { t } = useTranslation();
 
-  const [activeMenu, setActiveMenu] = useState('home'); // 초기값 설정
-
+  const [activeMenu, setActiveMenu] = useState('');
   const menuItems = ['menu1', 'menu2', 'menu3', 'menu4'];
   return (
-    <div className={`${styles.start} ${styles.breadcrumbs}`}>
+    <div className={styles.start}>
       <ul className={styles.breadcrumbs}>
         {menuItems.map((item, idx) => (
           <li key={item} className={styles.link_item}>
