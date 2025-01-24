@@ -10,8 +10,20 @@ import {
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 
-import { useState } from 'react';
-import { GridState, ModalWrapper, Grid } from '@learnway/ui';
+import { useMemo, useState } from 'react';
+import {
+  GridState,
+  ModalWrapper,
+  Grid,
+  CustomCell,
+  useModalControl,
+  ColumnFactory,
+  useModalContext,
+  Button,
+  DynamicFormField,
+  FieldType,
+  NumberInput,
+} from '@learnway/ui';
 
 export default {
   title: 'Components/Grid',
@@ -28,6 +40,7 @@ interface Person {
   visits: number;
   status: string;
   progress: number;
+  imageUrl?: string;
 }
 
 interface UseTableDataProps<T> {
@@ -607,4 +620,323 @@ export const WithPinColumn: Story = {
       },
     },
   },
+};
+
+const mockData: Person[] = [
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 28,
+    visits: 100,
+    status: 'Active',
+    progress: 50,
+    imageUrl: 'https://picsum.photos/seed/1/200/200',
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Smith',
+    age: 32,
+    visits: 80,
+    status: 'Active',
+    progress: 75,
+    imageUrl: 'https://picsum.photos/seed/2/200/200',
+  },
+  {
+    firstName: 'Bob',
+    lastName: 'Johnson',
+    age: 45,
+    visits: 60,
+    status: 'Inactive',
+    progress: 30,
+    imageUrl: 'https://picsum.photos/seed/3/200/200',
+  },
+  {
+    firstName: 'Alice',
+    lastName: 'Williams',
+    age: 29,
+    visits: 90,
+    status: 'Active',
+    progress: 85,
+    imageUrl: 'https://picsum.photos/seed/4/200/200',
+  },
+];
+
+const CustomCellTable = () => {
+  const { open } = useModalControl();
+
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+
+  const columnsWithCustomCell = [
+    columnHelper.accessor('firstName', {
+      cell: (info) => (
+        <CustomCell
+          row={info.row.original}
+          value={info.getValue()}
+          imageUrl={info.row.original.imageUrl}
+          onAction={(row) => {
+            open(
+              <div className="p-4">
+                <div className="space-y-2">
+                  <p>이름:{row.firstName}</p>
+                  <p>나이:{row.age}</p>
+                  <p>상태: {row.status}</p>
+                  <p>이미지 URL:{row.imageUrl}</p>
+                </div>
+              </div>,
+              {
+                title: '사용자 정보',
+                width: 'sm',
+              },
+            );
+          }}
+        />
+      ),
+      header: 'First Name',
+      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+      meta: {
+        filterType: 'text',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('lastName', {
+      cell: (info) => info.getValue(),
+      header: 'Last Name',
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('age', {
+      cell: (info) => info.getValue(),
+      header: 'Age',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('visits', {
+      cell: (info) => info.getValue(),
+      header: 'Visits',
+      footer: (props) => {
+        const total = props.table
+          .getRowModel()
+          .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+        return `Total: ${total}`;
+      },
+      meta: {
+        filterType: 'range',
+      },
+    }),
+    columnHelper.accessor('status', {
+      cell: (info) => info.getValue(),
+      header: 'Status',
+      getGroupingValue: (row) => `${row.status}`,
+      enableGrouping: true,
+      aggregationFn: 'count',
+      meta: {
+        filterType: 'select',
+        filterOptions: [
+          { label: '활성', value: 'active' },
+          { label: '비활성', value: 'inactive' },
+        ],
+      },
+    }),
+    columnHelper.accessor('progress', {
+      cell: (info) => info.getValue(),
+      header: 'Progress',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<Person, unknown>[];
+
+  const handleStateChange = (newState: GridState) => {
+    setTableState((prev) => ({
+      ...prev,
+      sorting: newState.sorting || prev.sorting,
+      filters: newState.filters || prev.filters,
+    }));
+  };
+
+  return (
+    <div className="p-4">
+      <Grid
+        data={mockData}
+        columns={columnsWithCustomCell}
+        onStateChange={handleStateChange}
+        title="커스텀 셀 테스트"
+      />
+    </div>
+  );
+};
+
+export const WithCustomCell: Story = {
+  name: '커스텀 셀 그리드',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <CustomCellTable />,
+};
+
+const PersonTestModal = ({
+  data,
+  onConfirm,
+}: {
+  data: Person;
+  onConfirm: (updatedData: Person) => void;
+}) => {
+  const { closeModal } = useModalContext();
+  const [tmpData, setTmpData] = useState(data.visits);
+  const handleSubmit = () => {
+    onConfirm({ ...data, visits: tmpData });
+    closeModal();
+  };
+
+  return (
+    <div>
+      <NumberInput value={tmpData} onChange={(v) => setTmpData(v)} />
+      <Button onClick={handleSubmit}>확인</Button>
+    </div>
+  );
+};
+
+export const createPersonColumns = (columnFactory: ColumnFactory<Person>): ColumnDef<Person>[] => {
+  const columns = columnFactory.create([
+    {
+      accessor: 'firstName',
+      header: 'First Name',
+      filterType: 'text',
+      enableGrouping: false,
+      customCell: ({ row, openModal }) => (
+        <CustomCell
+          row={row}
+          value={row.firstName}
+          imageUrl={row.imageUrl}
+          onAction={() => {
+            openModal?.(
+              <div className="space-y-2 p-4">
+                <p>이름:{row.firstName}</p>
+                <p>나이:{row.age}</p>
+                <p>상태:{row.status}</p>
+                <p>이미지 URL:{row.imageUrl}</p>
+              </div>,
+              { title: '사용자 정보', width: 'sm' },
+            );
+          }}
+        />
+      ),
+      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+    },
+    {
+      accessor: 'lastName',
+      header: 'Last Name',
+      enableGrouping: false,
+    },
+    {
+      accessor: 'age',
+      header: 'Age',
+      enableGrouping: false,
+      customCell: ({ row }) => <div>커스텀셀!:{row.age}</div>,
+    },
+    {
+      accessor: 'visits',
+      header: 'Visits',
+      filterType: 'range',
+      customCell: ({ row, openModal }) => (
+        <div>
+          <Button
+            onClick={() => {
+              openModal(
+                <div>
+                  <PersonTestModal
+                    data={row}
+                    onConfirm={(data) => {
+                      console.log(data.visits);
+                    }}
+                  />
+                </div>,
+              );
+            }}>
+            팝업
+          </Button>
+        </div>
+      ),
+      footer: (props) => {
+        const total = props.table
+          .getRowModel()
+          .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+        return `Total: ${total}`;
+      },
+    },
+    {
+      accessor: 'status',
+      header: 'Status',
+      filterType: 'select',
+      enableGrouping: true,
+      meta: {
+        filterOptions: [
+          { label: '활성', value: 'active' },
+          { label: '비활성', value: 'inactive' },
+        ],
+      },
+    },
+    {
+      accessor: 'progress',
+      header: 'Progress',
+      filterType: 'range',
+      enableGrouping: false,
+    },
+  ]);
+  return columns as ColumnDef<Person>[];
+};
+
+const ColumnFactoryTable = () => {
+  const { open } = useModalControl();
+
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+
+  // 모달 팝업을 띄울때는 open 을 컬럼 팩토리에 넘겨줌.
+  const columnFactory = useMemo(() => new ColumnFactory<Person>(open), [open]);
+  const columns = useMemo(() => createPersonColumns(columnFactory), [columnFactory]);
+
+  const handleStateChange = (newState: GridState) => {
+    setTableState((prev) => ({
+      ...prev,
+      sorting: newState.sorting || prev.sorting,
+      filters: newState.filters || prev.filters,
+    }));
+  };
+
+  return (
+    <div className="p-4">
+      <Grid
+        data={mockData}
+        columns={columns}
+        onStateChange={handleStateChange}
+        title="커스텀 셀 생성"
+      />
+    </div>
+  );
+};
+
+export const WithCustomFactoryCell: Story = {
+  name: '커스텀 셀 생성',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <ColumnFactoryTable />,
 };

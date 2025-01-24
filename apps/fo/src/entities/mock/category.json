@@ -1,0 +1,157 @@
+[
+  {
+    "categoryId": 1,
+    "companyId": 1,
+    "name": "리더십/비즈니스",
+    "sortSeq": 1,
+    "categoryType": "MAIN",
+    "key": "leadership",
+    "title": "리더십/비즈니스",
+    "path": "/leadership",
+    "depth": 1,
+    "parentNode": null,
+    "children": [
+      {
+        "categoryId": 11,
+        "companyId": 1,
+        "name": "경영전략",
+        "sortSeq": 1,
+        "categoryType": "SUB",
+        "key": "leadership-strategy",
+        "title": "경영전략",
+        "path": "/leadership/strategy",
+        "depth": 2,
+        "parentNode": null,
+        "children": [
+          {
+            "categoryId": 111,
+            "companyId": 1,
+            "name": "비즈니스 모델",
+            "sortSeq": 1,
+            "categoryType": "DETAIL",
+            "key": "leadership-strategy-model",
+            "title": "비즈니스 모델",
+            "path": "/leadership/strategy/model",
+            "depth": 3,
+            "parentNode": null
+          },
+          {
+            "categoryId": 112,
+            "companyId": 1,
+            "name": "성과관리",
+            "sortSeq": 2,
+            "categoryType": "DETAIL",
+            "key": "leadership-strategy-performance",
+            "title": "성과관리",
+            "path": "/leadership/strategy/performance",
+            "depth": 3,
+            "parentNode": null
+          }
+        ]
+      },
+      {
+        "categoryId": 12,
+        "companyId": 1,
+        "name": "기업문화",
+        "sortSeq": 2,
+        "categoryType": "SUB",
+        "key": "leadership-culture",
+        "title": "기업문화",
+        "path": "/leadership/culture",
+        "depth": 2,
+        "parentNode": null,
+        "children": [
+          {
+            "categoryId": 121,
+            "companyId": 1,
+            "name": "조직문화",
+            "sortSeq": 1,
+            "categoryType": "DETAIL",
+            "key": "leadership-culture-org",
+            "title": "조직문화",
+            "path": "/leadership/culture/org",
+            "depth": 3,
+            "parentNode": null
+          },
+          {
+            "categoryId": 122,
+            "companyId": 1,
+            "name": "업무환경",
+            "sortSeq": 2,
+            "categoryType": "DETAIL",
+            "key": "leadership-culture-environment",
+            "title": "업무환경",
+            "path": "/leadership/culture/environment",
+            "depth": 3,
+            "parentNode": null
+          }
+        ]
+      },
+      {
+        "categoryId": 13,
+        "companyId": 1,
+        "name": "3Depth없는 카테고리",
+        "sortSeq": 2,
+        "categoryType": "SUB",
+        "key": "leadership-culture",
+        "title": "3Depth없는 카테고리",
+        "path": "/leadership/tmp",
+        "depth": 2,
+        "parentNode": null,
+        "children": []
+      }
+    ]
+  },
+  {
+    "categoryId": 2,
+    "companyId": 1,
+    "name": "IT",
+    "sortSeq": 2,
+    "categoryType": "MAIN",
+    "key": "it",
+    "title": "IT",
+    "path": "/it",
+    "depth": 1,
+    "parentNode": null,
+    "children": [
+      {
+        "categoryId": 21,
+        "companyId": 1,
+        "name": "개발",
+        "sortSeq": 1,
+        "categoryType": "SUB",
+        "key": "it-development",
+        "title": "개발",
+        "path": "/it/development",
+        "depth": 2,
+        "parentNode": null,
+        "children": [
+          {
+            "categoryId": 211,
+            "companyId": 1,
+            "name": "프론트엔드",
+            "sortSeq": 1,
+            "categoryType": "DETAIL",
+            "key": "it-development-frontend",
+            "title": "프론트엔드",
+            "path": "/it/development/frontend",
+            "depth": 3,
+            "parentNode": null
+          },
+          {
+            "categoryId": 212,
+            "companyId": 1,
+            "name": "백엔드",
+            "sortSeq": 2,
+            "categoryType": "DETAIL",
+            "key": "it-development-backend",
+            "title": "백엔드",
+            "path": "/it/development/backend",
+            "depth": 3,
+            "parentNode": null
+          }
+        ]
+      }
+    ]
+  }
+]

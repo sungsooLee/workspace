@@ -1,5 +1,5 @@
 // accordion
-export * from './lib/accordion/accordion'
+export * from './lib/accordion/accordion';
 
 // button
 export * from './lib/button/button';
@@ -85,7 +85,6 @@ export * from './lib/textarea/textarea';
 // type
 export * from './lib/type';
 
-
 // popover
 export * from './lib/tooltip/tooltip';
 
@@ -99,6 +98,8 @@ export * from './lib/sidebar/sidebar';
 // grid
 export * from './lib/grid';
 export * from './lib/grid/types';
+export * from './lib/grid/components/custom-cell';
+export * from './lib/grid/configs/column-factory';
 
 // form-builder
 export * from './lib/apply-form-builder';

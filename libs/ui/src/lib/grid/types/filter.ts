@@ -1,6 +1,8 @@
+export type FilterType = 'text' | 'range' | 'select';
+
 export interface FilterValue {
   column: string;
-  type: 'text' | 'range' | 'select';
+  type: FilterType;
   value: string | [number, number] | string[];
 }
 

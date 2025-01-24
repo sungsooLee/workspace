@@ -13,8 +13,6 @@
 
 @import 'tailwindcss/utilities';
 
-@import './assets/styles/style.css'; /* 퍼블 css */
-
 @layer base {
   * {
     @apply border-border;
