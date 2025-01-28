@@ -1,5 +1,5 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Accordion } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
@@ -18,26 +18,26 @@ const Template: React.FC<any> = (args) => {
 
 const dummyItems = [
   {
-    key: getRandomId(),
+    value: getRandomId(),
     title: 'title A',
-    children: (
-      <Template items={[{key: getRandomId(), title: 'title A1', children: 'A1 Content'}]} />
-    )
+    children: <div>Content A</div>,
   },
   {
-    key: getRandomId(),
+    value: getRandomId(),
     title: 'title B',
-    children: (
-      <Template items={[{key: getRandomId(), title: 'title B1', children: 'B1 Content'}]} />
-    )
+    children: <div>Content B</div>,
   },
-]
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const AccordionStory: Story = {
-  name: 'Accordion',
-  args: {
-    items: dummyItems
-  },
-  render: (args) => <Template {...args} />,
-};
+];
 
+export const AccordionStory: any = (args: any) => {
+  const [value, setValue] = useState<string>('');
+  return (
+    <div className="flex flex-col gap-5">
+      <Template {...args} value={value} onValueChange={(value: string) => setValue(value)} />
+    </div>
+  );
+};
+AccordionStory.storyName = 'Accordion';
+AccordionStory.args = {
+  items: dummyItems,
+};

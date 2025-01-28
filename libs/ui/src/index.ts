@@ -93,9 +93,11 @@ export * from './lib/type';
 // popover
 export * from './lib/tooltip/tooltip';
 
-
 // sidebar
 export * from './lib/sidebar/sidebar';
+
+// panel
+export * from './lib/panel/panel';
 
 // grid
 export * from './lib/grid';
