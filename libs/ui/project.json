@@ -5,15 +5,7 @@
   "projectType": "library",
   "tags": [],
   "// targets": "to see all targets run: nx show project ui --web",
-  "targets": {
-    "build": {
-      "executor": "@nx/web:rollup",
-      "options": {
-        "external": ["@svgr/rollup"],
-        "rollupConfig": "rollup.config.js"
-      }
-    }
-  },
+  "targets": {},
   "dependencies": {
     "@/libs/shared": "*"
   }

@@ -745,7 +745,7 @@ function TableCellActionMenuContainer({
               onClose={() => setIsMenuOpen(false)}
               tableCellNode={tableCellNode}
               cellMerge={cellMerge}
-              showColorPickerModal={showColorPickerModal}
+              showColorPickerModal={showColorPickerModal as any}
             />
           )}
         </>

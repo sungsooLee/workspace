@@ -117,7 +117,7 @@ export * from './lib/shadcn/command';
 export * from './lib/shadcn/dialog';
 export * from './lib/shadcn/form';
 export * from './lib/shadcn/label';
-export * from './lib/shadcn/menubar';
+//export * from './lib/shadcn/menubar';
 export * from './lib/shadcn/radio-group';
 export * from './lib/shadcn/separator';
 // export * from './lib/shadcn/checkbox';
