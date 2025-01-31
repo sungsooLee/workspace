@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalControl, useModalContext } from '@learnway/ui';
-import { Footer } from 'react-day-picker';
+import { Button, useModalControl } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/modal')({
   component: RouteComponent,
