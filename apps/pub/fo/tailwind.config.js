@@ -35,6 +35,11 @@ module.exports = {
           fontSize: '1.4rem',
           fontWeight: '700',
         },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
       });
     },
   ],
