@@ -26,6 +26,10 @@ export { ReactComponent as IcoArrowBackward } from './lib/ic_arrow_backward.svg'
 export { ReactComponent as IcoMenu01 } from './lib/ic_menu-01.svg'; // catagory menu
 export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
+export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
+export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
+export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
+export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
 
 //export Default as Information from './lib/information.svg?react';
 
