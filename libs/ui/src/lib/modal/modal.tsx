@@ -1,7 +1,7 @@
 import React from 'react';
 
 import * as Primitive from '@radix-ui/react-dialog';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { IcoXclose } from '@learnway/icons';
 
 import { BaseModalProps } from './type';
 import styles from './modal.module.scss';
@@ -24,22 +24,22 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   return (
     <Primitive.Root open={true} onOpenChange={handleOpenChange}>
       <Primitive.Portal>
-        <Primitive.Overlay className={styles.Overlay} />
-        <Primitive.Content className={styles.Content}>
+        <Primitive.Overlay className={styles.overlay} />
+        <Primitive.Content className={styles.content}>
           {/* title */}
-          <Primitive.Title className={styles.Title}>{title}</Primitive.Title>
+          <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
           {/* description */}
-          <Primitive.Description className={styles.Description}>
+          <Primitive.Description className={styles.description}>
             {description}
           </Primitive.Description>
 
           {/* children */}
-          <div className={styles.ContentBody}>{children}</div>
+          <div className={styles.content_body}>{children}</div>
 
           {/* footer */}
           {footer && (
-            <div className={styles.Footer}>
+            <div className={styles.footer}>
               <Primitive.Close asChild>
                 <button className={`${styles.Button} green`}>{footer}</button>
               </Primitive.Close>
@@ -49,8 +49,8 @@ const ModalComponent: React.FC<BaseModalProps> = ({
           {/* close button */}
           {!hideCloseButton && (
             <Primitive.Close asChild>
-              <button className={styles.IconButton} aria-label="Close">
-                <Cross2Icon />
+              <button className={styles.btn_close} aria-label="Close">
+                <IcoXclose width={24} height={24} stroke="#131C30" />
               </button>
             </Primitive.Close>
           )}

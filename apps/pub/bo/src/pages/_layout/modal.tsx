@@ -1,101 +1,24 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModalControl, useModalContext } from '@learnway/ui';
+import { Footer } from 'react-day-picker';
 
 export const Route = createFileRoute('/_layout/modal')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
-  const handleClickAlert = () => {
-    openAlert({
-      title: (
-        <>
-          타이틀 입니다. <br /> 줄바꿈 적용
-        </>
-      ),
-      description: (
-        <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-        </>
-      ),
-    });
+  const { open } = useModalControl();
+  const BasicModalContent = () => {
+    return <div>Content</div>;
   };
-  const handleClickAlert2 = () => {
-    openAlert({
-      title: (
-        <>
-          컨펌 (아이콘 케이스) <br /> 줄바꿈 적용
-        </>
-      ),
-      description: (
-        <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-        </>
-      ),
-      isConfirm: true,
-      iconVisible: true,
-    });
-  };
-  const handleClickAlert3 = () => {
-    openAlert({
-      title: (
-        <>
-          알럿 (아이콘 케이스 : error) <br /> 줄바꿈 적용
-        </>
-      ),
-      description: (
-        <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-        </>
-      ),
-      iconVisible: true,
-      alertType: 'error',
-    });
-  };
-  const handleClickAlert4 = () => {
-    openAlert({
-      title: (
-        <>
-          알럿 (아이콘 케이스 : caution) <br /> 줄바꿈 적용
-        </>
-      ),
-      description: (
-        <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-        </>
-      ),
-      iconVisible: true,
-      alertType: 'caution',
-    });
-  };
-  const handleClickAlert5 = () => {
-    openAlert({
-      title: (
-        <>
-          알럿 (아이콘 케이스 : complete) <br /> 줄바꿈 적용
-        </>
-      ),
-      description: (
-        <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-        </>
-      ),
-      iconVisible: true,
-      alertType: 'complete',
-    });
-  };
+  const info = () => ({
+    title: '모달 제목',
+    description: '이것은 모달 설명입니다.',
+  });
+
   return (
     <div className="content">
-      <Button onClick={() => handleClickAlert()}>Open Alert</Button>
-      <br />
-      <Button onClick={() => handleClickAlert2()}>Open Alert</Button>
-      <br />
-      <Button onClick={() => handleClickAlert3()}>Open Alert</Button>
-      <br />
-      <Button onClick={() => handleClickAlert4()}>Open Alert</Button>
-      <br />
-      <Button onClick={() => handleClickAlert5()}>Open Alert</Button>
+      <Button onClick={() => open(<BasicModalContent />, info())}>OPEN</Button>
     </div>
   );
 }
