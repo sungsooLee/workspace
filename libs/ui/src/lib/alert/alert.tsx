@@ -12,7 +12,7 @@ const MAX_HEIGHT = 160;
 
 export interface AlertComponentProps {
   className?: string;
-  title?: string;
+  title?: React.ReactNode | string;
   description?: React.ReactNode | string;
   content?: React.ReactNode | string;
   footer?: React.ReactNode;
