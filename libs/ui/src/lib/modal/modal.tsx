@@ -54,7 +54,6 @@ const ModalComponent: React.FC<BaseModalProps> = ({
               </button>
             </Primitive.Close>
           )}
-
         </Primitive.Content>
       </Primitive.Portal>
     </Primitive.Root>

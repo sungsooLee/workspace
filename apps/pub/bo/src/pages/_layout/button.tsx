@@ -111,7 +111,7 @@ function RouteComponent() {
         </Button>
         <Button variant="chips" size="sm" iconAlign="right">
           선택
-          <IcoClose width={12} height={12} />
+          <IcoClose width={12} height={12} stroke="#131C30" />
         </Button>
       </div>
     </div>

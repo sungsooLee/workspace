@@ -19,6 +19,7 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
+import { Route as LayoutModalImport } from './pages/_layout/modal'
 import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
 import { Route as LayoutButtonImport } from './pages/_layout/button'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -76,6 +77,12 @@ const LoginLayoutRoute = LoginLayoutImport.update({
 const LayoutTestRoute = LayoutTestImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutModalRoute = LayoutModalImport.update({
+  id: '/modal',
+  path: '/modal',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -197,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/grid_list'
       fullPath: '/grid_list'
       preLoaderRoute: typeof LayoutGridlistImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/modal': {
+      id: '/_layout/modal'
+      path: '/modal'
+      fullPath: '/modal'
+      preLoaderRoute: typeof LayoutModalImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/test': {
@@ -352,6 +366,7 @@ const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 interface LayoutRouteChildren {
   LayoutButtonRoute: typeof LayoutButtonRoute
   LayoutGridlistRoute: typeof LayoutGridlistRoute
+  LayoutModalRoute: typeof LayoutModalRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
@@ -362,6 +377,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutButtonRoute: LayoutButtonRoute,
   LayoutGridlistRoute: LayoutGridlistRoute,
+  LayoutModalRoute: LayoutModalRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
@@ -388,6 +404,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
+  '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginLayoutRoute
   '/': typeof LayoutIndexRoute
@@ -410,6 +427,7 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
+  '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginIndexRoute
   '/': typeof LayoutIndexRoute
@@ -433,6 +451,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/button': typeof LayoutButtonRoute
   '/_layout/grid_list': typeof LayoutGridlistRoute
+  '/_layout/modal': typeof LayoutModalRoute
   '/_layout/test': typeof LayoutTestRoute
   '/login': typeof LoginRouteWithChildren
   '/login/_layout': typeof LoginLayoutRoute
@@ -458,6 +477,7 @@ export interface FileRouteTypes {
     | ''
     | '/button'
     | '/grid_list'
+    | '/modal'
     | '/test'
     | '/login'
     | '/'
@@ -479,6 +499,7 @@ export interface FileRouteTypes {
     | ''
     | '/button'
     | '/grid_list'
+    | '/modal'
     | '/test'
     | '/login'
     | '/'
@@ -500,6 +521,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_layout/button'
     | '/_layout/grid_list'
+    | '/_layout/modal'
     | '/_layout/test'
     | '/login'
     | '/login/_layout'
@@ -566,6 +588,7 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/button",
         "/_layout/grid_list",
+        "/_layout/modal",
         "/_layout/test",
         "/_layout/",
         "/_layout/menu4/menu5",
@@ -579,6 +602,10 @@ export const routeTree = rootRoute
     },
     "/_layout/grid_list": {
       "filePath": "_layout/grid_list.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/modal": {
+      "filePath": "_layout/modal.tsx",
       "parent": "/_layout"
     },
     "/_layout/test": {

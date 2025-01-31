@@ -1,6 +1,19 @@
 .start {
   &.btn {
     @apply box-border inline-flex items-center justify-start;
+    /* Size ( 28 | 32 | 36 | 40 ) */
+    &.xs {
+      @apply h-[28px] justify-center px-[12px];
+    }
+    &.sm {
+      @apply h-[32px] justify-center px-[12px];
+    }
+    &.md {
+      @apply h-[36px] min-w-[60px] justify-center px-[12px];
+    }
+    &.lg {
+      @apply h-[40px] min-w-[80px] justify-center px-[8px];
+    }
   }
 }
 .primary {
@@ -199,16 +212,4 @@
   svg {
     @apply ml-[2px];
   }
-}
-.xs {
-  @apply h-[28px] px-[12px];
-}
-.sm {
-  @apply h-[32px] px-[12px];
-}
-.md {
-  @apply h-[36px] px-[12px];
-}
-.lg {
-  @apply h-[40px] px-[8px];
 }

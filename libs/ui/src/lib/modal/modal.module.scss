@@ -5,19 +5,8 @@
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.Title {
-  margin: 0;
-  font-weight: 500;
-  color: var(--mauve-12);
-  font-size: 17px;
-}
-
 .Content {
-  background-color: white;
-  border-radius: 6px;
-  box-shadow:
-    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  @apply rounded-[16px] bg-[white] p-0 shadow-[0px_8px_8px_rgba(0,0,0,0.12)];
   position: fixed;
   top: 50%;
   left: 50%;
@@ -25,27 +14,16 @@
   width: 90vw;
   max-width: 450px;
   max-height: 85vh;
-  padding: 25px;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   &:focus {
     outline: none;
   }
 }
 
-.ContentBody {
-}
-
 .Footer {
   display: flex;
   margin-top: 25;
   justify-content: flex-end;
-}
-
-.Description {
-  margin: 10px 0 20px;
-  color: var(--mauve-11);
-  font-size: 15px;
-  line-height: 1.5;
 }
 
 .Button {
