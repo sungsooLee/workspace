@@ -6,10 +6,10 @@ import { $findMatchingParent } from '@lexical/utils';
 import { sanitizeUrl } from '../../../utils/url';
 import { useFloatingModal } from '../../../context/floating-modal.context';
 import { getSelectedNode } from '../../../utils/get-selected-node';
-import CloseICon from '../../../assets/images/icons/close.svg';
-import ConfirmIcon from '../../../assets/images/icons/success-alt.svg';
-import ModifyIcon from '../../../assets/images/icons/pencil-fill.svg';
-import TrashIcon from '../../../assets/images/icons/trash.svg';
+import { ReactComponent as CloseICon } from '../../../assets/images/icons/close.svg';
+import { ReactComponent as ConfirmIcon } from '../../../assets/images/icons/success-alt.svg';
+import { ReactComponent as ModifyIcon } from '../../../assets/images/icons/pencil-fill.svg';
+import { ReactComponent as TrashIcon } from '../../../assets/images/icons/trash.svg';
 
 const Contents: FC<{ editable: boolean }> = ({ editable }) => {
   const [editor] = useLexicalComposerContext();

@@ -1,4 +1,4 @@
-.nlp--content-editable{
+.nlp--content-editable {
   border: 0;
   font-size: 15px;
   display: block;
@@ -10,7 +10,7 @@
 .nlp--tool-bar {
   font-size: 14px;
 }
-.nlp--content-editable-placeholder{
+.nlp--content-editable-placeholder {
   color: #999;
   overflow: hidden;
   position: absolute;
@@ -24,11 +24,10 @@
   pointer-events: none;
 }
 
-.nlp--editor-paragraph{
+.nlp--editor-paragraph {
   margin: 0;
   position: relative;
 }
-
 
 .nlp--editor-text-bold {
   font-weight: bold;
@@ -88,7 +87,7 @@
   list-style-position: outside;
   list-style-type: disc;
 }
-.nlp--editor-list-item{
+.nlp--editor-list-item {
   margin: 0 32px;
 }
 .nlp--editor-list-item-checked,
@@ -175,11 +174,8 @@
   line-height: 14px;
 }
 
-
 .nlp--editor-floating-modal {
-
 }
-
 
 .nlp--editor-link {
   color: rgb(33, 111, 219);
@@ -194,14 +190,14 @@
   z-index: 100;
   display: block;
   position: fixed;
-  box-shadow: 0 12px 28px #0003, 0 2px 4px #0000001a, inset 0 0 0 1px #ffffff80;
+  box-shadow:
+    0 12px 28px #0003,
+    0 2px 4px #0000001a,
+    inset 0 0 0 1px #ffffff80;
   border-radius: 8px;
   min-height: 40px;
   background-color: #fff;
 }
-
-
-
 
 .nlp--editor span.editor-image {
   cursor: default;
@@ -421,7 +417,6 @@
   overflow: hidden;
 }
 
-
 .nlp--editor .draggable-block-menu {
   border-radius: 4px;
   padding: 2px 1px;
@@ -462,7 +457,6 @@
 .nlp--editor-table-cell-resizer {
   position: absolute;
 }
-
 
 .nlp--editor-table-scrollable-wrapper {
   overflow-x: auto;
@@ -543,7 +537,7 @@
   cursor: pointer;
 }
 .nlp--editor-table-add-columns:after {
-  background-image: url(../images/icons/plus.svg);
+  /*background-image: url(../images/icons/plus.svg);*/
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -621,8 +615,6 @@
   background-color: #ddd;
 }
 
-
-
 .table-cell-action-button-container {
   position: absolute;
   top: 0;
@@ -656,8 +648,10 @@
   z-index: 100;
   display: block;
   position: fixed;
-  box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-  inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 12px 28px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   min-height: 40px;
   background-color: #fff;
@@ -744,5 +738,3 @@
   margin: 4px 8px;
   height: 1px;
 }
-
-

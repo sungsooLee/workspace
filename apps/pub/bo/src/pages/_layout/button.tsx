@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus } from '@learnway/icons';
+import { IcoSearch, IcoPlus, IcoDownload, IcoClose } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/button')({
   component: RouteComponent,
@@ -49,6 +49,10 @@ function RouteComponent() {
         <Button variant="gray2" size="xs">
           111
         </Button>
+        <Button variant="gray2" size="xs" iconAlign="left" disabled>
+          <IcoDownload width={16} height={16} />
+          엑셀다운로드
+        </Button>
       </div>
       <div>
         <Button variant="search" size="sm" iconAlign="left">
@@ -59,7 +63,7 @@ function RouteComponent() {
         </Button>
       </div>
       <div>
-        <Button variant="expand" size="sm" onlyIcon>
+        <Button variant="expand" size="sm" onlyIcon disabled>
           <IcoPlus width={16} height={16} stroke="#131C30" />
         </Button>
         <Button variant="expand" size="sm" onlyIcon>
@@ -72,6 +76,42 @@ function RouteComponent() {
       <div>
         <Button variant="expand2" size="sm" iconAlign="left">
           <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
+        </Button>
+      </div>
+      <div>
+        <Button variant="save" size="sm">
+          저장
+        </Button>
+        <Button variant="save" size="sm" disabled>
+          저장
+        </Button>
+      </div>
+      <div>
+        <Button variant="point" size="sm">
+          포인트
+        </Button>
+        <Button variant="point" size="sm" disabled>
+          포인트
+        </Button>
+      </div>
+      <div>
+        <Button variant="text" size="sm">
+          선택
+        </Button>
+        <Button variant="text" size="sm" iconAlign="left">
+          <IcoDownload width={16} height={16} /> 선택
+        </Button>
+        <Button variant="text" size="sm" disabled>
+          선택
+        </Button>
+      </div>
+      <div>
+        <Button variant="chips" size="sm">
+          선택
+        </Button>
+        <Button variant="chips" size="sm" iconAlign="right">
+          선택
+          <IcoClose width={12} height={12} />
         </Button>
       </div>
     </div>
