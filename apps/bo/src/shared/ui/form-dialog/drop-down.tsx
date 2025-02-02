@@ -37,26 +37,14 @@ const DropDown: FC<DialogProps> = ({ control, name, label, items }) => {
             onChange(selectedValue);
             setIsOpen(false);
           };
-          console.log(
-            name +
-              '     ' +
-              'value => ' +
-              value +
-              '    ' +
-              items.find((item) => {
-                console.log(
-                  `code => ${item.code}   name  => ${item.name}   ${item.code === value}`,
-                );
-                return item.code === value;
-              }),
-          );
-          console.log(items);
           // 렌더링할 컴포넌트에 props 전달
           return (
             <>
               {/* Selected Option */}
               <button id={name} className="dropdown-selected" onClick={toggleDropdown}>
-                <span>{items.find((item) => item.code === value)?.name || 'Select an option'}</span>
+                <span>
+                  {items.find((item) => item.code.trim() === value)?.name || 'Select an option'}
+                </span>
                 <span className="dropdown-arrow">{isOpen ? '▲' : '▼'}</span>
               </button>
 

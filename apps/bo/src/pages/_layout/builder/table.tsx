@@ -62,9 +62,33 @@ const searchConfig = {
       name: 'language_code',
       type: 'dropdown',
       label: '언어코드',
-      value: ['ko'],
+      value: '',
       items: [{ code: '', name: '언어전체' }],
       codeGroup: CODE_GROUP.LANGUAGE_CODE,
+    },
+    {
+      name: 'language_detail',
+      type: 'dropdown',
+      label: '언어상세',
+      value: '',
+      items: [{ code: '', name: '언어코드를 선택하세요.' }],
+      dependency: 'language_code',
+    },
+    {
+      name: 'language_code2',
+      type: 'dropdown',
+      label: '언어코드2',
+      value: '',
+      items: [{ code: '', name: '언어전체' }],
+      codeGroup: CODE_GROUP.LANGUAGE_CODE,
+    },
+    {
+      name: 'language_detail2',
+      type: 'dropdown',
+      label: '언어상세2',
+      value: '',
+      items: [{ code: '', name: '언어코드를 선택하세요.' }],
+      dependency: 'language_code2',
     },
     {
       name: 'register_date',
@@ -189,7 +213,7 @@ const searchConfig = {
       name: 'area',
       type: 'radio-group',
       label: '지역',
-      value: '',
+      value: 'seoul',
       items: [
         {
           value: '',

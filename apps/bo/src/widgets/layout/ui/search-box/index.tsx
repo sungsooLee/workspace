@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useRef, useState, useCallback } from 'react';
+import { FC, useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { searchDialogConfig } from './config';
 import { CODE_GROUP } from '@learnway/config';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,15 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
   const { builders: initBuilders, control, formSubmit, reset } = config;
   const { data } = useFetchCodeGroups();
   const [builders, setBuilders] = useState<any>();
+  const dependencies = initBuilders
+    .filter((builder: any) => builder.dependency)
+    .map((builder: any) => ({
+      name: builder.name,
+      dependency: builder.dependency,
+    }));
   const { t } = useTranslation();
+
+  const watchedFields = config.watch(dependencies.map((dp: any) => dp.dependency));
   const calculateGridHeight = () => {
     if (!gridRef.current) return;
 
@@ -55,11 +63,11 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
   const loadDropdownItems = () => {
     const newBuilders = initBuilders.map((builder: any) => {
       if ((builder.type === 'dropdown' || builder.type === 'multi-dropdown') && builder.codeGroup) {
-        const languages = (data as any)[builder.codeGroup].codes;
-        if (languages) {
+        const codes = (data as any)[builder.codeGroup].codes;
+        if (codes) {
           return {
             ...builder,
-            items: [...builder.items, ...languages].map((lang) => ({
+            items: [...builder.items, ...codes].map((lang) => ({
               ...lang,
               name: t(lang.name),
             })),
@@ -81,6 +89,31 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
       window.removeEventListener('resize', calculateGridHeight);
     };
   }, [data]);
+
+  useEffect(() => {
+    if (!watchedFields || watchedFields.length === 0) return;
+    console.log('watched fields =>', watchedFields, dependencies);
+    watchedFields.forEach((field: string, index: number) => {
+      const dependency = dependencies[index];
+      const childField = initBuilders.find((ib: any) => ib.name === dependency.dependency);
+      const parentCodes = (data as any)[childField.codeGroup];
+      console.log('parentCodes => ', parentCodes);
+      const findParent = parentCodes.codes.find((pc: any) => pc.code === field)?.codes || [];
+      const initData = initBuilders.find((ib: any) => ib.name === dependency.name);
+      /*reset({
+        [dependency.dependency]: initData.value,
+      });*/
+      setBuilders((builders: any) =>
+        builders.map((builder: any) => {
+          if (builder.name === dependency.name) {
+            const initItems = initData.items || [];
+            return { ...builder, items: [...initItems, ...findParent] };
+          }
+          return { ...builder };
+        }),
+      );
+    });
+  }, [watchedFields]);
 
   return (
     <form onSubmit={handleFormSubmit}>

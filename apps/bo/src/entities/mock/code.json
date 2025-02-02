@@ -6,23 +6,131 @@
     "codes": [
       {
         "code": "de",
-        "name": "Deutsch"
+        "name": "Deutsch",
+        "codes": [{
+          "code": "1",
+          "name": "Deutsch"
+        },
+          {
+            "code": "2",
+            "name": "English"
+          },
+          {
+            "code": "3",
+            "name": "Français"
+          },
+          {
+            "code": "4",
+            "name": "Español"
+          },
+          {
+            "code": "5",
+            "name": "中文 (Zhōngwén)"
+          }]
       },
       {
         "code": "ko",
-        "name": "한국어"
+        "name": "한국어",
+        "codes" : [
+          {
+            "code": "ko",
+            "name": "한국어"
+          },
+          {
+            "code": "kr",
+            "name": "대한민국"
+          },
+          {
+            "code": "h1",
+            "name": "한글"
+          },
+          {
+            "code": "kor",
+            "name": "한국"
+          },
+          {
+            "code": "han",
+            "name": "조선말"
+          }
+        ]
       },
       {
         "code": "jp",
-        "name": "日本語"
+        "name": "日本語",
+        "codes": [
+          {
+            "code": "ja",
+            "name": "日本語"
+          },
+          {
+            "code": "jp",
+            "name": "日本"
+          },
+          {
+            "code": "n1",
+            "name": "일본어 1급"
+          },
+          {
+            "code": "nih",
+            "name": "にほんご"
+          },
+          {
+            "code": "jpn",
+            "name": "ジャパン語"
+          }
+        ]
       },
       {
         "code": "en",
-        "name": "English"
+        "name": "English",
+        "codes": [
+          {
+            "code": "en",
+            "name": "English"
+          },
+          {
+            "code": "us",
+            "name": "American English"
+          },
+          {
+            "code": "uk",
+            "name": "British English"
+          },
+          {
+            "code": "au",
+            "name": "Australian English"
+          },
+          {
+            "code": "eng",
+            "name": "Global English"
+          }
+        ]
       },
       {
         "code": "zh",
-        "name": "中文"
+        "name": "中文",
+        "codes": [
+          {
+            "code": "zh",
+            "name": "中文 (Simplified)"
+          },
+          {
+            "code": "zh_CN",
+            "name": "中文 (Mainland)"
+          },
+          {
+            "code": "zh_TW",
+            "name": "繁體中文 (Traditional)"
+          },
+          {
+            "code": "cn",
+            "name": "汉语"
+          },
+          {
+            "code": "mand",
+            "name": "Mandarin"
+          }
+        ]
       }
     ]
   },

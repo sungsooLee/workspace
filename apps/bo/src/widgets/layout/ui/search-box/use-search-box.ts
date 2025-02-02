@@ -22,7 +22,7 @@ const useSearchBox = (config: any) => {
     defaultValues,
   });
 
-  const { control, handleSubmit, setFocus, getValues, reset } = methods;
+  const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
 
   // formSubmit 함수 : 폼 데이터를 제출하고 검증 오류를 처리
   const formSubmit = (onValid: any) => {
@@ -82,6 +82,7 @@ const useSearchBox = (config: any) => {
     config: {
       ...config,
       control: extendedControl,
+      watch,
       reset: resetForm,
       formSubmit,
     },
