@@ -21,10 +21,27 @@
       }
     }
     [class*='recent_button'] {
-      @apply flex cursor-pointer;
+      @apply absolute top-[27px] z-[2] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+      &::before {
+        background: url(../../../assets/images/common/bg_swipe_shadow.png) no-repeat;
+        pointer-events: none;
+        @apply absolute top-[-4px] z-[-1] inline-block h-[32px] w-[110px] bg-[length:110px_32px] bg-no-repeat content-[''];
+      }
     }
     .recent_button_next {
-      @apply absolute right-[0] top-[0] h-[28px] w-[28px] items-center justify-center rounded-full border border-solid border-[var(--gray5)] text-center;
+      @apply right-[68px];
+      &::before {
+        @apply right-[0];
+      }
+    }
+    .recent_button_prev {
+      @apply left-[128px];
+      &::before {
+        @apply left-[0] rotate-[180deg];
+      }
+      svg {
+        @apply rotate-[180deg];
+      }
     }
   }
 }
