@@ -9,7 +9,7 @@ function RouteComponent() {
   return (
     <div>
       <Input type="text" value="text" placeholder="입력" /> <br />
-      <Input type="password" placeholder="입력" />
+      <Input type="password" placeholder="" />
     </div>
   );
 }
