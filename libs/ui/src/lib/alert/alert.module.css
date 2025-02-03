@@ -10,8 +10,11 @@
     @apply pt-[8px];
   }
 }
+.alert_wrap {
+  @apply max-w-[360px];
+}
 .title {
-  @apply flex items-center justify-center px-[20px] pt-[32px] text-center text-[18px] font-bold text-[var(--gray9)];
+  @apply flex max-h-[80px] items-center justify-center px-[20px] pt-[32px] text-center text-[18px] font-bold text-[var(--gray9)];
 }
 .description {
   @apply flex max-h-[160px] items-start justify-center overflow-y-auto overflow-x-hidden px-[20px] pb-[20px] pr-[12px] pt-[8px] text-center font-normal text-[var(--gray7)];

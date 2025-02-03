@@ -12,7 +12,6 @@ function RouteComponent() {
   };
   const info = () => ({
     title: '모달 제목',
-    description: '이것은 모달 설명입니다.',
   });
 
   return (
