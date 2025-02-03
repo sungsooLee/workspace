@@ -20,8 +20,8 @@ import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
 import { Route as LayoutModalImport } from './pages/_layout/modal'
-import { Route as LayoutInputImport } from './pages/_layout/input'
 import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
+import { Route as LayoutFormImport } from './pages/_layout/form'
 import { Route as LayoutButtonImport } from './pages/_layout/button'
 import { Route as LayoutAlertImport } from './pages/_layout/alert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -88,15 +88,15 @@ const LayoutModalRoute = LayoutModalImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutInputRoute = LayoutInputImport.update({
-  id: '/input',
-  path: '/input',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutGridlistRoute = LayoutGridlistImport.update({
   id: '/grid_list',
   path: '/grid_list',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutFormRoute = LayoutFormImport.update({
+  id: '/form',
+  path: '/form',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -220,18 +220,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutButtonImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/form': {
+      id: '/_layout/form'
+      path: '/form'
+      fullPath: '/form'
+      preLoaderRoute: typeof LayoutFormImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/grid_list': {
       id: '/_layout/grid_list'
       path: '/grid_list'
       fullPath: '/grid_list'
       preLoaderRoute: typeof LayoutGridlistImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/input': {
-      id: '/_layout/input'
-      path: '/input'
-      fullPath: '/input'
-      preLoaderRoute: typeof LayoutInputImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/modal': {
@@ -394,8 +394,8 @@ const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 interface LayoutRouteChildren {
   LayoutAlertRoute: typeof LayoutAlertRoute
   LayoutButtonRoute: typeof LayoutButtonRoute
+  LayoutFormRoute: typeof LayoutFormRoute
   LayoutGridlistRoute: typeof LayoutGridlistRoute
-  LayoutInputRoute: typeof LayoutInputRoute
   LayoutModalRoute: typeof LayoutModalRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -407,8 +407,8 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAlertRoute: LayoutAlertRoute,
   LayoutButtonRoute: LayoutButtonRoute,
+  LayoutFormRoute: LayoutFormRoute,
   LayoutGridlistRoute: LayoutGridlistRoute,
-  LayoutInputRoute: LayoutInputRoute,
   LayoutModalRoute: LayoutModalRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
@@ -436,8 +436,8 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/alert': typeof LayoutAlertRoute
   '/button': typeof LayoutButtonRoute
+  '/form': typeof LayoutFormRoute
   '/grid_list': typeof LayoutGridlistRoute
-  '/input': typeof LayoutInputRoute
   '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginLayoutRoute
@@ -461,8 +461,8 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/alert': typeof LayoutAlertRoute
   '/button': typeof LayoutButtonRoute
+  '/form': typeof LayoutFormRoute
   '/grid_list': typeof LayoutGridlistRoute
-  '/input': typeof LayoutInputRoute
   '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginIndexRoute
@@ -487,8 +487,8 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/alert': typeof LayoutAlertRoute
   '/_layout/button': typeof LayoutButtonRoute
+  '/_layout/form': typeof LayoutFormRoute
   '/_layout/grid_list': typeof LayoutGridlistRoute
-  '/_layout/input': typeof LayoutInputRoute
   '/_layout/modal': typeof LayoutModalRoute
   '/_layout/test': typeof LayoutTestRoute
   '/login': typeof LoginRouteWithChildren
@@ -515,8 +515,8 @@ export interface FileRouteTypes {
     | ''
     | '/alert'
     | '/button'
+    | '/form'
     | '/grid_list'
-    | '/input'
     | '/modal'
     | '/test'
     | '/login'
@@ -539,8 +539,8 @@ export interface FileRouteTypes {
     | ''
     | '/alert'
     | '/button'
+    | '/form'
     | '/grid_list'
-    | '/input'
     | '/modal'
     | '/test'
     | '/login'
@@ -563,8 +563,8 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_layout/alert'
     | '/_layout/button'
+    | '/_layout/form'
     | '/_layout/grid_list'
-    | '/_layout/input'
     | '/_layout/modal'
     | '/_layout/test'
     | '/login'
@@ -632,8 +632,8 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/alert",
         "/_layout/button",
+        "/_layout/form",
         "/_layout/grid_list",
-        "/_layout/input",
         "/_layout/modal",
         "/_layout/test",
         "/_layout/",
@@ -650,12 +650,12 @@ export const routeTree = rootRoute
       "filePath": "_layout/button.tsx",
       "parent": "/_layout"
     },
-    "/_layout/grid_list": {
-      "filePath": "_layout/grid_list.tsx",
+    "/_layout/form": {
+      "filePath": "_layout/form.tsx",
       "parent": "/_layout"
     },
-    "/_layout/input": {
-      "filePath": "_layout/input.tsx",
+    "/_layout/grid_list": {
+      "filePath": "_layout/grid_list.tsx",
       "parent": "/_layout"
     },
     "/_layout/modal": {

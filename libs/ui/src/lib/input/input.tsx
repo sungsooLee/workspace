@@ -6,10 +6,12 @@ import { IcoDelete03 } from '@learnway/icons';
 import styles from './input.module.scss';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
+  ({ className, id, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const hasNoBorder = className?.includes('bd_none');
+    const sizeLarge = className?.includes('lg');
+    const errorCase = className?.includes('error');
 
     useEffect(() => {
       setInputValue(value);
@@ -64,8 +66,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     return (
       <div className={cn(styles.start, 'nlp--input')}>
         <input
-          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${className}`}
+          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
           type={type}
+          id={id}
           ref={(el) => {
             inputRef.current = el;
             if (typeof ref === 'function') {
