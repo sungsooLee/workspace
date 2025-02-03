@@ -63,7 +63,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'}>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'}>
+        <Button size="md" variant={'outline'}>
           작성완료
         </Button>
 
@@ -79,7 +79,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'} disabled>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'} disabled>
+        <Button size="md" variant={'outline'} disabled>
           작성완료
         </Button>
 

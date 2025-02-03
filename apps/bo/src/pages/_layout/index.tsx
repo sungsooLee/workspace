@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button, useToast } from '@learnway/ui';
 
 import styles from './index.module.css';
 
@@ -13,6 +13,14 @@ export const Route = createFileRoute('/_layout/')({
 
 function HomeComponent() {
   const { t, i18n } = useTranslation();
+  const { open } = useToast();
+
+  const onClickToast = () => {
+    open({
+      title: 'title a',
+      description: 'desc a',
+    });
+  };
 
   return (
     <div className={cn('flex flex-col gap-10 p-2', styles._start)}>
@@ -21,8 +29,8 @@ function HomeComponent() {
       <div className="flex w-10 gap-5">
         <div className="min-w-32">Primary lg~xs</div>
 
-        <Button size="lg" className={styles._button}>
-          작성완료
+        <Button size="lg" className={styles._button} onClick={onClickToast}>
+          작성완료 2
         </Button>
 
         <Button>작성완료</Button>
@@ -54,7 +62,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'}>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'}>
+        <Button size="md" variant={'outline'}>
           작성완료
         </Button>
 
@@ -70,7 +78,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'} disabled>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'} disabled>
+        <Button size="md" variant={'outline'} disabled>
           작성완료
         </Button>
 

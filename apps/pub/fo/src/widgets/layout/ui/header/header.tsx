@@ -1,10 +1,17 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Logo, UserAvatar, Notification, Language, UserName } from '../../../../features/layout';
-import { Navigate } from './navigate/navigate';
-import { Category } from './category/category';
-import { IcoMenu01 } from '@learnway/icons';
+import {
+  Logo,
+  UserAvatar,
+  Notification,
+  Language,
+  UserName,
+  Navigate,
+  Category,
+  Tenant,
+  Search,
+} from '../../../../features/layout';
 import styles from './header.module.css';
 
 function HeaderComponent() {
@@ -13,9 +20,16 @@ function HeaderComponent() {
   return (
     <div className={`${styles.start} ${styles.header}`}>
       <header className={styles.header_area}>
-        <h1>
-          <Logo />
-        </h1>
+        <div className={styles.logo_inner}>
+          <h1>
+            <Logo />
+          </h1>
+          <Tenant />
+        </div>
+
+        <div className={styles.search_form}>
+          <Search />
+        </div>
 
         <div className={styles.util}>
           <UserName />

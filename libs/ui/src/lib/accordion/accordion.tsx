@@ -6,7 +6,7 @@ import { useCreation } from 'ahooks';
 
 import { cn } from '@learnway/shared';
 
-import styles from './accordion.module.scss';
+import styles from './accordion.module.css';
 
 export type accordionType = 'single' | 'multiple';
 export interface AccordionItem {

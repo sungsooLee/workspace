@@ -1,5 +1,6 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './layout.module.css';
 
 // import { cn } from '@learnway/shared';
 // import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
@@ -15,8 +16,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   //if () {
   return (
-    <div className="container">
-      <div className="container_inner">
+    <div className={`${styles.start} ${styles.container}`}>
+      <div className={styles.container_inner}>
         <LNB />
         <main>
           <PageContainer>{children}</PageContainer>

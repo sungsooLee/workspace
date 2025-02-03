@@ -2,14 +2,12 @@
   &.open {
     @apply w-[263px];
     .lnb_wrap {
-      @apply opacity-100;
+      @apply h-full;
+      border-right: 1px solid var(--gray4);
     }
   }
   &.close {
-    @apply w-0;
-    .lnb_wrap {
-      @apply opacity-0;
-    }
+    @apply w-0 overflow-hidden;
     .btn_toggle {
       @apply left-0;
       svg {
@@ -18,7 +16,7 @@
     }
   }
   .lnb_wrap {
-    @apply relative box-border h-[100%] w-full min-w-[263px] p-[32px] transition-all duration-300 ease-in-out;
+    @apply relative box-border w-full min-w-[263px] p-[32px] transition-all duration-300 ease-in-out;
   }
   .lnb_title {
     @apply mb-[16px] box-border border-b-2 border-solid border-[var(--gray9)] pb-[16px];
@@ -43,7 +41,7 @@
     }
   }
   .btn_toggle {
-    @apply fixed bottom-[100px] left-[263px] z-10 h-[56px] w-[24px] overflow-hidden bg-white transition-all duration-300 ease-in-out;
+    @apply fixed bottom-[100px] left-[263px] z-10 h-[56px] w-[24px] overflow-hidden bg-white transition-all duration-100 ease-in-out;
     border: 1px solid #cfd8e8;
     border-left: 0;
     border-radius: 0 6px 6px 0;

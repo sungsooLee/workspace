@@ -30,10 +30,10 @@ export default defineConfig({
     host: 'localhost',
   },
   plugins: [
-    viteReact(),
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md']),
     !isTest && TanStackRouterVite(),
+    viteReact(),
     svgr(),
   ],
   resolve: {

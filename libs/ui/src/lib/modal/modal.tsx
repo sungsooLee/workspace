@@ -1,15 +1,8 @@
 import React from 'react';
 
-import { cn } from '@learnway/shared';
+import * as Primitive from '@radix-ui/react-dialog';
+import { IcoXclose } from '@learnway/icons';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '../shadcn/dialog';
 import { BaseModalProps } from './type';
 import styles from './modal.module.scss';
 
@@ -20,51 +13,50 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   footer,
   preventBackdropClose = false,
   onClose,
-  width = 'lg',
+  width = 'md',
   height = 'auto',
+  hideCloseButton = false,
 }) => {
   const handleOpenChange = (open: boolean) => {
     onClose?.();
   };
 
-  const sizeClasses = {
-    sm: 'max-w-m',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl',
-    full: 'max-w-[95vw]',
-  };
-
-  const heightClasses = {
-    auto: 'h-auto',
-    sm: 'h-[300px]',
-    md: 'h-[500px]',
-    lg: 'h-[700px]',
-    full: 'h-[95vh]',
-  };
-
   return (
-    <Dialog open={true} onOpenChange={handleOpenChange}>
-      <DialogContent
-        className={cn(
-          styles.modal_wrap,
-          heightClasses[height],
-          sizeClasses[width],
-          'transition-all duration-200',
-          'nlp--modal-content',
-        )}>
-        {(title || description) && (
-          <DialogHeader className={cn(styles.modal_header, 'nlp--modal-header')}>
-            {title && <DialogTitle>{title}</DialogTitle>}
-            {description && <DialogDescription>{description}</DialogDescription>}
-          </DialogHeader>
-        )}
+    <Primitive.Root open={true} onOpenChange={handleOpenChange}>
+      <Primitive.Portal>
+        <Primitive.Overlay className={styles.overlay} />
+        <Primitive.Content className={styles.content}>
+          {/* title */}
+          <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
-        <div className={styles.modal_content}>{children}</div>
+          {/* description */}
+          <Primitive.Description className={styles.description}>
+            {description}
+          </Primitive.Description>
 
-        {footer && <DialogFooter>{footer}</DialogFooter>}
-      </DialogContent>
-    </Dialog>
+          {/* children */}
+          <div className={styles.content_body}>{children}</div>
+
+          {/* footer */}
+          {footer && (
+            <div className={styles.footer}>
+              <Primitive.Close asChild>
+                <button className={`${styles.Button} green`}>{footer}</button>
+              </Primitive.Close>
+            </div>
+          )}
+
+          {/* close button */}
+          {!hideCloseButton && (
+            <Primitive.Close asChild>
+              <button className={styles.btn_close} aria-label="Close">
+                <IcoXclose width={24} height={24} stroke="#131C30" />
+              </button>
+            </Primitive.Close>
+          )}
+        </Primitive.Content>
+      </Primitive.Portal>
+    </Primitive.Root>
   );
 };
 

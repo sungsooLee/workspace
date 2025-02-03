@@ -4,32 +4,3 @@
 @import './_reset.css';
 @import './_color.css';
 @import './_common.css';
-@import './_util.css';
-
-@layer base {
-  /* Layout */
-  ._layout_wrap {
-    width: 100%;
-    ._container {
-      @apply mx-auto;
-      .container_inner {
-        width: 1180px;
-      }
-    }
-  }
-
-  ._nav {
-    ul.menu_list {
-      @apply flex justify-start gap-[48px];
-      > li {
-        a {
-          color: var(--gray9);
-          @apply inline-flex h-[56px] items-center text-[1.6rem];
-          &:hover {
-            @apply font-bold;
-          }
-        }
-      }
-    }
-  }
-}

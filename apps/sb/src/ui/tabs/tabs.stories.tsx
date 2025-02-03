@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs } from '@learnway/ui';
+import { Button, Progress, Tabs } from '@learnway/ui';
 
 export default {
   title: 'Components/Tabs',
@@ -9,37 +9,57 @@ export default {
   tags: ['autodocs'],
   argTypes: {},
 } as Meta;
+
 type Story = StoryObj<typeof Tabs>;
 
-const Template: React.FC<any> = (args) => <Tabs {...args} />;
+const Template: React.FC<any> = (args: any) => <Tabs {...args} />
 
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const TabsStory: Story = {
-  name: 'Tabs',
+const items = [
+  {
+    title: 'Tab A',
+    key: 'a',
+    content: (
+      <h2>Tab A content</h2>
+    )
+  },
+  {
+    title: 'Tab B',
+    key: 'b',
+    content: (
+      <h2>Tab B content</h2>
+    )
+  },
+  {
+    title: 'Tab C',
+    key: 'c',
+    content: (
+      <h2>Tab C content</h2>
+    )
+  }
+]
+
+export const Basic: Story = {
   args: {
-    items: [
-      {
-        title: 'Tab A',
-        key: 'a',
-        content: (
-          <h2>Tab A content</h2>
-        )
-      },
-      {
-        title: 'Tab B',
-        key: 'B',
-        content: (
-          <h2>Tab B content</h2>
-        )
-      },
-      {
-        title: 'Tab C',
-        key: 'c',
-        content: (
-          <h2>Tab C content</h2>
-        )
-      }
-    ],
+    items,
   },
   render: (args) => <Template {...args} />,
 };
+
+
+export const TemplateSelectTab: any = (args: any) => {
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('');
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5">
+        <Button onClick={() => setSelectedTabKey('b')}>Tab B 선택</Button>
+      </div>
+      <Tabs {...args} selectedTabKey={selectedTabKey} />
+    </div>
+  )
+}
+TemplateSelectTab.storyName = 'Tab 수동으로 선택';
+TemplateSelectTab.args = {
+  items,
+};
+
+

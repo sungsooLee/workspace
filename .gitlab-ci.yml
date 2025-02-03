@@ -1,0 +1,27 @@
+stages:
+  - build
+
+# pnpm 관련 캐시 설정
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .pnpm-store
+    - node_modules/
+
+build:
+  stage: build
+  image: node:18
+  before_script:
+    #pnpm 설치
+    - npm install -g pnpm
+    - pnpm config set store-dir .pnpm-store
+  script:
+    - pnpm install
+    - pnpm run build:fo
+    - pnpm run build:bo
+  artifacts:
+    paths:
+      - dist/apps/fo
+      - dist/apps/bo
+  only:
+    - main

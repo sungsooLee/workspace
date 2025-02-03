@@ -1,26 +1,38 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
+import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 
-import * as Primitive from '../shadcn/carousel';
+import { cn } from '@learnway/shared';
 
-export interface CarouselComponentProps extends Primitive.CarouselProps {
-  items?: Array<JSX.Element>;
+import styles from './carousel.module.scss';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+export interface CarouselComponentProps extends SwiperProps {
+  items: Array<React.ReactNode>;
+  className?: string;
 }
 
-const CarouselComponent = forwardRef<
-  React.ElementRef<typeof Primitive.Carousel>,
-  CarouselComponentProps
->(({ items, ...props }) => {
-  return (
-    <>
-      <Primitive.Carousel {...props}>
-        <Primitive.CarouselContent>
-          {items}
-        </Primitive.CarouselContent>
-        <Primitive.CarouselPrevious />
-        <Primitive.CarouselNext />
-      </Primitive.Carousel>
-    </>
-  )
-})
+const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
+  ({ className, items, ...props }, ref) => {
+    return (
+      <Swiper
+        {...props}
+        className={cn(styles.Swiper, className, 'nlp-carousel')}
+        spaceBetween={50}
+        // slidesPerView={3}
+        navigation={true}
+        modules={[Navigation]}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}>
+        {/* items */}
+        {items.map((item, index) => (
+          <SwiperSlide className={styles.SwiperSlide}>{item}</SwiperSlide>
+        ))}
+      </Swiper>
+    );
+  },
+);
 
-export const Carousel = CarouselComponent
+export const Carousel = CarouselComponent;

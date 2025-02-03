@@ -3,8 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import { ReactQueryConfigProvider } from '@learnway/config';
-
-import { fetchCodes } from './entities/system';
+import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
