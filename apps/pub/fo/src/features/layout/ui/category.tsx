@@ -42,9 +42,12 @@ const CategoryCompoment = () => {
             </h2>
 
             <div className={styles.menu_list}>
-              <div className={`{$styles.menu_section} {$styles.sec1}`}></div>
+              <div className={`${styles.menu_section} ${styles.sec1}`}></div>
             </div>
           </div>
+
+          {/* 카테고리 영역 - 뎁스영역 */}
+          <div className={styles.category_inner}></div>
         </div>
       </div>
     </div>

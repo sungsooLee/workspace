@@ -13,9 +13,19 @@
     }
     .category {
       z-index: 2;
-      @apply absolute left-[0] top-[116px] hidden w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100;
+      @apply absolute left-[0] top-[116px] w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100;
       &.active {
         @apply block opacity-100;
+      }
+    }
+    .category_menu {
+      @apply w-[240px];
+      h2 {
+        @apply body_3_b flex items-center justify-between;
+      }
+    }
+    .menu_list {
+      .menu_section {
       }
     }
   }
