@@ -5,7 +5,10 @@ const MultiDropdown: FC<DialogProps> = ({ control, name, label, items }) => {
   const [isOpen, setIsOpen] = useState(false); // 드롭다운 열림/닫힘 상태
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => setIsOpen(!isOpen); // 드롭다운 열기/닫기
+  const toggleDropdown = (e: any) => {
+    e.preventDefault();
+    setIsOpen((prev) => !prev);
+  };
 
   // Close dropdown if clicked outside
   useEffect(() => {

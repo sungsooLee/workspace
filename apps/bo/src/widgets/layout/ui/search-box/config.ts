@@ -7,7 +7,6 @@ import UserSearchPop from '../../../../shared/ui/form-dialog/user-search-pop';
 import InputCheck from '../../../../shared/ui/form-dialog/input-check';
 import InputCheckGroup from '../../../../shared/ui/form-dialog/input-check-group';
 import InputRadioGroup from '../../../../shared/ui/form-dialog/input-radio-group';
-import { FieldType } from '@learnway/ui';
 
 export const searchDialogConfig: DialogConfig = {
   text: InputText,

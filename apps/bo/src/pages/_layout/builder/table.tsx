@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import useSearchBox from '../../../widgets/layout/ui/search-box/use-search-box';
 import SearchBox from '../../../widgets/layout/ui/search-box';
 import z from 'zod';
-import '../../../builder.css';
+
 import TableBox from '../../../widgets/layout/ui/table-box';
 import { useFetchMockUsers } from '../../../entities/api-mock/service/mock-user.hook';
 import useTableBox from '../../../widgets/layout/ui/table-box/use-table-box';
@@ -32,7 +32,7 @@ function RouteComponent() {
   return (
     <div>
       <SearchBox config={sConfig} onSearch={handleOnSearch} />
-      {/*<TableBox config={tConfig} />*/}
+      <TableBox config={tConfig} />
     </div>
   );
 }
@@ -90,7 +90,7 @@ const searchConfig = {
       items: [{ code: '', name: '언어코드를 선택하세요.' }],
       dependency: 'language_code2',
     },
-    {
+    /*{
       name: 'register_date',
       label: '등록일',
       type: 'date-range',
@@ -99,7 +99,7 @@ const searchConfig = {
         startDate: '2024-01-01',
         endDate: '2024-01-01',
       },
-    },
+    },*/
     {
       name: 'keyword',
       label: '키워드',

@@ -3,6 +3,7 @@ import { searchDialogConfig } from './config';
 import { CODE_GROUP } from '@learnway/config';
 import { useTranslation } from 'react-i18next';
 import { useFetchCodeGroups } from '../../../../entities/system';
+import { Button, Input } from '@learnway/ui';
 
 const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
     }));
   const { t } = useTranslation();
 
-  const watchedFields = config.watch(dependencies.map((dp: any) => dp.dependency));
+  /*const watchedFields = config.watch(dependencies.map((dp: any) => dp.dependency));*/
   const calculateGridHeight = () => {
     if (!gridRef.current) return;
 
@@ -57,10 +58,12 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
   const handleFormSubmit = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log('on form submit?');
     onSearch && formSubmit(onSearch);
   };
 
   const loadDropdownItems = () => {
+    console.log('loadDropDownItems [] => z');
     const newBuilders = initBuilders.map((builder: any) => {
       if ((builder.type === 'dropdown' || builder.type === 'multi-dropdown') && builder.codeGroup) {
         const codes = (data as any)[builder.codeGroup].codes;
@@ -82,6 +85,7 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
 
   // 초기 렌더링 및 화면 리사이즈 시 다시 높이 계산
   useLayoutEffect(() => {
+    console.log(dependencies.map((dp: any) => dp.dependency));
     loadDropdownItems();
     calculateGridHeight();
     window.addEventListener('resize', calculateGridHeight);
@@ -89,31 +93,6 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
       window.removeEventListener('resize', calculateGridHeight);
     };
   }, [data]);
-
-  useEffect(() => {
-    if (!watchedFields || watchedFields.length === 0) return;
-    console.log('watched fields =>', watchedFields, dependencies);
-    watchedFields.forEach((field: string, index: number) => {
-      const dependency = dependencies[index];
-      const childField = initBuilders.find((ib: any) => ib.name === dependency.dependency);
-      const parentCodes = (data as any)[childField.codeGroup];
-      console.log('parentCodes => ', parentCodes);
-      const findParent = parentCodes.codes.find((pc: any) => pc.code === field)?.codes || [];
-      const initData = initBuilders.find((ib: any) => ib.name === dependency.name);
-      /*reset({
-        [dependency.dependency]: initData.value,
-      });*/
-      setBuilders((builders: any) =>
-        builders.map((builder: any) => {
-          if (builder.name === dependency.name) {
-            const initItems = initData.items || [];
-            return { ...builder, items: [...initItems, ...findParent] };
-          }
-          return { ...builder };
-        }),
-      );
-    });
-  }, [watchedFields]);
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -131,7 +110,7 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
               const Component = searchDialogConfig[property.type]; // 해당 타입의 컴포넌트
               return Component ? (
                 <div key={property.name}>
-                  <Component control={control} {...property} key={property.key} />
+                  <Component control={control} {...property} key={property.key} config={config} />
                 </div>
               ) : null; // props 전달
             })}
