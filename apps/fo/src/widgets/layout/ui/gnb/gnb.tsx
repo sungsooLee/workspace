@@ -8,6 +8,7 @@ import { UserAvatar } from '../../../../features/layout/ui/user-avatar';
 import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '../../../../entities/user';
 import { Tenant, useFetchTenantByUser } from '../../../../entities/tenant';
+import styles from './gnb.module.css';
 
 function GNBComponent() {
   const { data: userData } = useFetchAuthUser();
@@ -62,9 +63,13 @@ function GNBComponent() {
   }, []);
 
   return (
-    <div className="bg-secondary-1 flex flex-col">
-      <div className="flex items-center gap-10">
-        <Logo activeTenant={activeTenant} />
+    <div className={`${styles.start} ${styles.header}`}>
+      <header className={styles.header_area}>
+        <div className={styles.logo_inner}>
+          <h1>
+            <Logo activeTenant={activeTenant} />
+          </h1>
+        </div>
         <Tenants
           tenants={tenants || []}
           activeTenant={activeTenant}
@@ -74,11 +79,9 @@ function GNBComponent() {
         <Language />
         <Notification />
         <UserAvatar />
-      </div>
-      <div className="flex items-center gap-10">
         <Category />
         <Navigate />
-      </div>
+      </header>
     </div>
   );
 }

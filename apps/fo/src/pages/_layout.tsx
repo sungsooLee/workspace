@@ -13,6 +13,7 @@ import { useLogoutUser } from '../entities/user';
 import { useCodesByCodeGroup, useLabelByCode } from '../entities/system';
 import type { Code } from '../entities/system';
 import { Breadcrumbs } from '../widgets/layout/ui/container/breadcrumbs/breadcrumbs';
+import styles from './_layout.module.css';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -77,7 +78,7 @@ function LayoutComponent() {
   );
 
   return (
-    <div>
+    <div className={`${styles.start} ${styles.layout_wrap}`}>
       <GNB />
       <Breadcrumbs />
       <Layout>
