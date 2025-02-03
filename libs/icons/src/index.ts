@@ -30,6 +30,7 @@ export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert ca
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
 export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
+export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 
 //export Default as Information from './lib/information.svg?react';
 
