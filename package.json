@@ -11,6 +11,7 @@
     "build:bo": "npx nx build bo",
     "build:pb-bo": "npx nx build pb-bo",
     "build:pb-fo": "npx nx build pb-fo",
+    "build:libs": "npx nx build config & npx nx build editor & npx nx build hooks & npx nx build icons & npx nx build shared & npx nx build ui",
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
