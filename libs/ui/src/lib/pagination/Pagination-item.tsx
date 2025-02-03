@@ -6,7 +6,7 @@ import { Button } from '../button/button';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import styles from './pagination-item.module.scss';
+import styles from './pagination-item.module.css';
 
 export interface PaginationItemComponentProps {
   className?: string;

@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import * as Primitive from "@radix-ui/react-tabs";
 
-import styles from './tabs.module.scss';
+import styles from './tabs.module.css';
 
 interface TabItemProps {
   title: string;

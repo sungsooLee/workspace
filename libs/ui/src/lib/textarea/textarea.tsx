@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { BaseFieldProps } from '../type';
 
-import styles from './textarea.module.scss';
+import styles from './textarea.module.css';
 
 export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   dummy?: any;

@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import * as Primitive from "@radix-ui/react-progress";
 
-import styles from './progress.module.scss';
+import styles from './progress.module.css';
 
 interface ProgressComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   value: number;

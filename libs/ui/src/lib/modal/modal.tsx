@@ -5,7 +5,7 @@ import { IcoXclose } from '@learnway/icons';
 
 import { BaseModalProps } from './type';
 import { cn } from '@learnway/shared';
-import styles from './modal.module.scss';
+import styles from './modal.module.css';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
   title,

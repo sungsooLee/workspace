@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import styles from './pagination.module.scss';
+import styles from './pagination.module.css';
 
 import usePagination from './usePagination';
 import { PaginationItem } from './Pagination-item';

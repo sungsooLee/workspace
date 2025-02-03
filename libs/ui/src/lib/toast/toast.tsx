@@ -4,7 +4,7 @@ import * as Primitive from '@radix-ui/react-toast';
 
 import { ToastConfig } from './type';
 
-import styles from './toast.module.scss';
+import styles from './toast.module.css';
 
 export interface ToastComponentProps {
   className?: string;
