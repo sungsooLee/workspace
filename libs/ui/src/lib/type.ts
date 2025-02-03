@@ -1,6 +1,6 @@
 import { FocusEventHandler } from 'react';
 import { CheckFieldProps } from './checkbox/type';
-import { DateRangeFieldProps } from './date-picker/type';
+import { DateRangeFieldProps } from './date-picker/date-range-picker';
 import { NumberFieldProps } from './input/type';
 import { RadioFieldProps } from './radio/type';
 import { MultiSelectFieldProps, SelectFieldProps } from './select/type';
@@ -73,3 +73,8 @@ export interface BaseField<T = any> {
   type: FieldType;
   error?: boolean;
 }
+
+export type DateRange = {
+  from: Date | undefined;
+  to?: Date | undefined;
+};
