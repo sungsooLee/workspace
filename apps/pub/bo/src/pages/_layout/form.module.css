@@ -1,0 +1,27 @@
+/* form.module.css */
+.form_wrap {
+  @apply flex w-full flex-col;
+  .form_label {
+    @apply label_1_b;
+  }
+}
+.form_item {
+  & + .form_item {
+    @apply mt-[26px];
+  }
+}
+
+.contents_wrap {
+  @apply mt-[16px] flex rounded-[8px] bg-[var(--white)] p-[32px];
+  border: 1px solid #bac9e4;
+}
+.page_wrap {
+}
+
+/* title_wrap */
+.title_wrap {
+  @apply flex justify-between;
+  .title {
+    @apply title_1_b;
+  }
+}

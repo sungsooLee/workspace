@@ -10,9 +10,7 @@ function RouteComponent() {
   return (
     <div className="content">
       <div>
-        <Button variant="primary" size="xs" disabled>
-          버튼
-        </Button>
+        <Button>버튼</Button>
         <Button variant="primary" size="sm">
           버튼
         </Button>
