@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_layout/input')({
 function RouteComponent() {
   return (
     <div>
-      <Input type="text" value="text" placeholder="입력" /> <br />
+      <Input type="text" value="text" placeholder="입력" className="bd_none" /> <br />
       <Input type="password" placeholder="" />
     </div>
   );

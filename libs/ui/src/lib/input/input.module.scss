@@ -3,6 +3,9 @@
   .input {
     @apply min-h-[32px] w-full rounded-[4px] px-[12px] py-[8px] align-middle text-[14px] font-normal text-[var(--gray8)];
     border: 1px solid var(--gray4);
+    &.bd_none {
+      @apply border-0;
+    }
     &[type='text'] {
     }
     &[type='password'] {

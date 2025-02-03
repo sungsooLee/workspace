@@ -1,5 +1,4 @@
 import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
 import { IcoDelete03 } from '@learnway/icons';
@@ -10,6 +9,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
   ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
+    const hasNoBorder = className?.includes('bd_none');
 
     useEffect(() => {
       setInputValue(value);
@@ -64,7 +64,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     return (
       <div className={cn(styles.start, 'nlp--input')}>
         <input
-          className={cn(styles.input, baseStyles, className)}
+          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${className}`}
           type={type}
           ref={(el) => {
             inputRef.current = el;
@@ -87,7 +87,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
               type="button"
               onClick={handleClear}
               onMouseDown={handleMouseDown}
-              className={cn('', '', 'focus:outline-none')}>
+              className={cn(styles.clear, 'focus:outline-none')}>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
           )}
