@@ -1,22 +1,41 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModalControl, useModalContext } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/modal')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { open } = useModalControl();
+  const { open: openModal } = useModalControl();
   const BasicModalContent = () => {
-    return <div>Content</div>;
+    return (
+      <div>
+        <p>11111</p>
+      </div>
+    );
   };
-  const info = () => ({
-    title: '모달 제목',
-  });
+  const CustomFooter = () => {
+    const { closeModal } = useModalContext();
+    return (
+      <>
+        <Button variant="gray" size="lg" onClick={() => closeModal()}>
+          취소
+        </Button>
+        <Button variant="primary" size="lg" onClick={() => closeModal()}>
+          확인
+        </Button>
+      </>
+    );
+  };
 
   return (
     <div className="content">
-      <Button onClick={() => open(<BasicModalContent />, info())}>OPEN</Button>
+      <Button
+        onClick={() =>
+          openModal(<BasicModalContent />, { title: '타이틀', footer: <CustomFooter /> })
+        }>
+        OPEN
+      </Button>
     </div>
   );
 }

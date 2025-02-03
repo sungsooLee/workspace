@@ -32,14 +32,19 @@
 }
 
 .content_body {
-  // @apply px-[32px] py-[24px];
+  .contents {
+    @apply px-[32px] py-[24px];
+  }
   &:empty {
     @apply p-0;
   }
 }
 
 .footer {
-  @apply flex items-center justify-center;
+  @apply flex items-center justify-center pb-[24px] pt-[16px];
+  .btn + .btn {
+    @apply ml-[8px];
+  }
 }
 .btn_wrap {
   @apply flex items-center justify-center;

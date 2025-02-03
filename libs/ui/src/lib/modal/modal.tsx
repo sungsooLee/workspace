@@ -35,14 +35,17 @@ const ModalComponent: React.FC<BaseModalProps> = ({
           </Primitive.Description>
 
           {/* children */}
-          <div className={styles.content_body}>{children}</div>
+          <div className={styles.content_body}>
+            <div className={styles.contents}>{children}</div>
+          </div>
 
           {/* footer */}
           {footer && (
             <div className={styles.footer}>
-              <Primitive.Close asChild>
+              {footer}
+              {/* <Primitive.Close asChild>
                 <button className={`${styles.Button} green`}>{footer}</button>
-              </Primitive.Close>
+              </Primitive.Close> */}
             </div>
           )}
 
