@@ -8,3 +8,4 @@ export * from './ui/category';
 export * from './ui/tenant';
 export * from './ui/family-site';
 export * from './ui/search';
+export * from './ui/recent_visits';

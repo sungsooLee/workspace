@@ -2,10 +2,20 @@
 .start {
   &.category_area {
     @apply flex items-center;
-    .btn_catagory {
+    .btn_category {
       @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
       svg {
         @apply m-auto;
+      }
+      &.active {
+        @apply border-[var(--primary2)] bg-[var(--primary2)];
+      }
+    }
+    .category {
+      z-index: 2;
+      @apply absolute left-[0] top-[116px] w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100;
+      &.active {
+        @apply block opacity-100;
       }
     }
   }
