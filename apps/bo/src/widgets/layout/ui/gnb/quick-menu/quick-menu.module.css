@@ -1,17 +1,20 @@
+/* quick-menu.module.css */
 .start {
-  .menu_list {
-    @apply flex items-center justify-start;
-    & > ul {
-      @apply flex;
-      > li {
-        @apply relative px-[28px];
-        & + li::before {
-          @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white bg-opacity-15 content-[''];
+  .menu_wrap {
+    @apply flex;
+    .menu_list {
+      @apply flex items-center justify-start;
+      li {
+        &:not(:nth-child(1)) {
+          @apply ml-[28px];
+          a {
+            @apply relative px-[28px];
+            &::before {
+              @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white opacity-15 content-[''];
+            }
+          }
         }
       }
-    }
-    .menu_item {
-      @apply inline-flex h-[56px] items-center text-[16px] font-medium text-[var(--white)];
     }
   }
 }

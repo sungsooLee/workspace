@@ -2,7 +2,6 @@ import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { SidebarProvider, SidebarTrigger, Sidebar } from '@learnway/ui';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
 import { LNB } from '../lnb/lnb';
@@ -19,36 +18,25 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
-  // if (
-  //   activeMenuDepth &&
-  //   activeMenuDepth?.length &&
-  //   activeMenuDepth[0].children &&
-  //   activeMenuDepth[0].children?.length > 0
-  // ) {
-  //   return (
-  //     <div className={styles.start}>
-  //       <div className={styles.bo_container}>
-  //         <LNB />
-  //         <main>
-  //           <PageContainer>{children}</PageContainer>
-  //         </main>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  return (
-    <div className={styles.start}>
-      <div className={styles.bo_container}>
-        <LNB />
-        <main>
-          <PageContainer>{children}</PageContainer>
-        </main>
+  if (
+    activeMenuDepth &&
+    activeMenuDepth?.length &&
+    activeMenuDepth[0].children &&
+    activeMenuDepth[0].children?.length > 0
+  ) {
+    return (
+      <div className={cn(styles.start, styles.container)}>
+        <div className={styles.container_inner}>
+          <LNB />
+          <main>
+            <PageContainer>{children}</PageContainer>
+          </main>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
-  // return <PageContainer>{children}</PageContainer>;
+  return <PageContainer>{children}</PageContainer>;
 }
 
 export const Layout = memo(LayoutComponent);

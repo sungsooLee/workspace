@@ -17,11 +17,8 @@ const LogoCompoment = () => {
         to={'/learning/$id/video'}
         params={{ id: 'ddfeeeer' }}
         search={{ page: 2, filter: '', sort: 'oldest' }}>
-        {/*(tenant?.logoImageUrl && <img src={logoImage} alt="Logo" />) ?? tenant?.name*/},
+        {/*(tenant?.logoImageUrl && <img src={logoImage} alt="Logo" />) ?? tenant?.name*/}
         <img src={logoImage} alt="Logo" />
-      </Link>
-      <Link to={'/learning/$id/video'} params={{ id: 'ddfeeeer' }}>
-        ddd
       </Link>
     </div>
   );
