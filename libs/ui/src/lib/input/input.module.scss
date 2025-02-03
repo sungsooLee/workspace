@@ -1,7 +1,7 @@
 .start {
   position: relative;
   .input {
-    @apply min-h-[32px] rounded-[4px] px-[12px] py-[8px] align-middle text-[14px] font-normal text-[var(--gray8)];
+    @apply min-h-[32px] w-full rounded-[4px] px-[12px] py-[8px] align-middle text-[14px] font-normal text-[var(--gray8)];
     border: 1px solid var(--gray4);
     &[type='text'] {
     }
@@ -13,6 +13,6 @@
   }
 
   .button {
-    display: block !important;
+    @apply absolute right-[10px] top-1/2 -mt-[10px] inline-flex h-[20px] w-[20px] items-center justify-center;
   }
 }
