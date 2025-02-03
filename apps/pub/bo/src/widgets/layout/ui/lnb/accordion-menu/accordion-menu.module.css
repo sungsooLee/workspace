@@ -1,13 +1,10 @@
-._start {
-  ._active {
-    color: blue;
+.start {
+  &.depth2 {
   }
-
-  ._depth2 {
-    background-color: aqua;
-
-    ._depth3 {
-      background-color: yellowgreen;
-    }
+  &.depth3 {
+    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+  }
+  &.depth4 {
+    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
   }
 }
