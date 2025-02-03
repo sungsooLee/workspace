@@ -13,11 +13,33 @@
     @apply border-border;
   }
   body {
-    @apply antialiased bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    &::-webkit-scrollbar {
+      @apply h-[64px] w-[12px] bg-white;
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
+    }
+    &::-webkit-scrollbar-track {
+      @apply bg-white;
+    }
   }
   html {
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
   }
 }

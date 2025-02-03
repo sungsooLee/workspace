@@ -1,25 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, ModalWrapper, useModalControl } from '@learnway/ui';
-import { useState } from 'react';
+import { Button, useModalControl } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/modal')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
-  const handleClickAlert = () => {
-    openAlert({
-      title: 'alert title',
-      description:
-        'alert description alert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert descriptionalert description',
-      isConfirm: true,
-    });
+  const { open } = useModalControl();
+  const BasicModalContent = () => {
+    return <div>Content</div>;
   };
+  const info = () => ({
+    title: '모달 제목',
+    description: '이것은 모달 설명입니다.',
+  });
+
   return (
     <div className="content">
-      <Button onClick={() => handleClickAlert()}>Open Alert</Button>
-      <ModalWrapper />
+      <Button onClick={() => open(<BasicModalContent />, info())}>OPEN</Button>
     </div>
   );
 }

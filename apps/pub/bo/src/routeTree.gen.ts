@@ -22,6 +22,7 @@ import { Route as LayoutTestImport } from './pages/_layout/test'
 import { Route as LayoutModalImport } from './pages/_layout/modal'
 import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
 import { Route as LayoutButtonImport } from './pages/_layout/button'
+import { Route as LayoutAlertImport } from './pages/_layout/alert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -95,6 +96,12 @@ const LayoutGridlistRoute = LayoutGridlistImport.update({
 const LayoutButtonRoute = LayoutButtonImport.update({
   id: '/button',
   path: '/button',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAlertRoute = LayoutAlertImport.update({
+  id: '/alert',
+  path: '/alert',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -191,6 +198,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/alert': {
+      id: '/_layout/alert'
+      path: '/alert'
+      fullPath: '/alert'
+      preLoaderRoute: typeof LayoutAlertImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/button': {
       id: '/_layout/button'
@@ -364,6 +378,7 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
+  LayoutAlertRoute: typeof LayoutAlertRoute
   LayoutButtonRoute: typeof LayoutButtonRoute
   LayoutGridlistRoute: typeof LayoutGridlistRoute
   LayoutModalRoute: typeof LayoutModalRoute
@@ -375,6 +390,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAlertRoute: LayoutAlertRoute,
   LayoutButtonRoute: LayoutButtonRoute,
   LayoutGridlistRoute: LayoutGridlistRoute,
   LayoutModalRoute: LayoutModalRoute,
@@ -402,6 +418,7 @@ const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/alert': typeof LayoutAlertRoute
   '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
   '/modal': typeof LayoutModalRoute
@@ -425,6 +442,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/alert': typeof LayoutAlertRoute
   '/button': typeof LayoutButtonRoute
   '/grid_list': typeof LayoutGridlistRoute
   '/modal': typeof LayoutModalRoute
@@ -449,6 +467,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout/alert': typeof LayoutAlertRoute
   '/_layout/button': typeof LayoutButtonRoute
   '/_layout/grid_list': typeof LayoutGridlistRoute
   '/_layout/modal': typeof LayoutModalRoute
@@ -475,6 +494,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/alert'
     | '/button'
     | '/grid_list'
     | '/modal'
@@ -497,6 +517,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/alert'
     | '/button'
     | '/grid_list'
     | '/modal'
@@ -519,6 +540,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_guide'
     | '/_layout'
+    | '/_layout/alert'
     | '/_layout/button'
     | '/_layout/grid_list'
     | '/_layout/modal'
@@ -586,6 +608,7 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
+        "/_layout/alert",
         "/_layout/button",
         "/_layout/grid_list",
         "/_layout/modal",
@@ -595,6 +618,10 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/menu3/"
       ]
+    },
+    "/_layout/alert": {
+      "filePath": "_layout/alert.tsx",
+      "parent": "/_layout"
     },
     "/_layout/button": {
       "filePath": "_layout/button.tsx",

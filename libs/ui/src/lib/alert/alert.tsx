@@ -4,35 +4,38 @@ import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
 import { useModalContext } from '../modal/modal-context';
-
+import { IcoCaution, IcoWarning, IcoError, IcoComplete } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
-
-// description Height check
-const MAX_HEIGHT = 160;
 
 export interface AlertComponentProps {
   className?: string;
-  title?: string;
+  icon?: React.ReactNode;
+  title?: React.ReactNode | string;
   description?: React.ReactNode | string;
   content?: React.ReactNode | string;
   footer?: React.ReactNode;
   onClose?: () => void;
   okButtonLabel?: string;
   cancelButtonLabel?: string;
+  iconVisible?: boolean;
   isConfirm?: boolean;
+  alertType?: 'error' | 'caution' | 'complete'; // icon type
 }
 
 const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
   (
     {
       className,
+      icon, // icon 추가
       title,
       description,
       content,
       footer,
       okButtonLabel = '확인',
       cancelButtonLabel = '취소',
+      iconVisible = false, // icon case
       isConfirm = false,
+      alertType,
       ...otherProps
     },
     ref,
@@ -40,6 +43,8 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     const { closeModal } = useModalContext();
 
     // description scroll check Start
+    const MAX_HEIGHT = 160;
+
     const descriptionRef = useRef<HTMLDivElement>(null);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -62,6 +67,26 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       return () => observer.disconnect();
     }, []);
     // description scroll check End
+
+    const iconCase = () => {
+      if (!iconVisible) return null; // 아이콘이 숨겨져 있으면 null 반환
+
+      if (isConfirm) {
+        return <IcoCaution width={48} height={48} stroke="#8C97AE" />; // 컨펌창 주의 아이콘
+      }
+
+      // isConfirm이 아닌 경우의 세부 조건
+      switch (alertType) {
+        case 'error':
+          return <IcoError width={48} height={48} stroke="#FFB902" />; // 에러 아이콘
+        case 'caution':
+          return <IcoWarning width={48} height={48} stroke="#FF4646" />; // 경고 아이콘
+        case 'complete':
+          return <IcoComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
+        default:
+          return null;
+      }
+    };
 
     const defaultFooter = isConfirm ? (
       <div className={styles.btn_wrap}>
@@ -86,6 +111,9 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
 
     return (
       <div className={cn(styles.root, className, 'nlp--alert')}>
+        {/* icon */}
+        {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
+
         {/* title */}
         <div className={styles.title}>{title}</div>
 
