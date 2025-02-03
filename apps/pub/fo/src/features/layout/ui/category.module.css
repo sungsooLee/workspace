@@ -13,7 +13,7 @@
     }
     .category {
       z-index: 2;
-      @apply absolute left-[0] top-[116px] w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100;
+      @apply absolute left-[0] top-[116px] hidden w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100;
       &.active {
         @apply block opacity-100;
       }

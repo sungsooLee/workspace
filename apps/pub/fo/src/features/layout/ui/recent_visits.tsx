@@ -1,4 +1,4 @@
-import { memo, useState, useRef } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from './recent_visits.module.css';
 import { IcoXclose, IcoArrowForward } from '@learnway/icons';
@@ -20,21 +20,31 @@ const RecentVisitsCompoment = () => {
     { id: 9, label: '성희롱 예방' },
   ]);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     setItems(items.filter((item) => item.id !== id));
+    console.log('Deleted item:', id);
   };
-  const swiper = useSwiper();
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (swiperRef.current && prevRef.current && nextRef.current) {
+      const swiperInstance = swiperRef.current.swiper;
+      swiperInstance.params.navigation.prevEl = prevRef.current;
+      swiperInstance.params.navigation.nextEl = nextRef.current;
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, []);
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
       <h3 className={styles.tit}>최근방문</h3>
       <Swiper
+        ref={swiperRef}
         spaceBetween={8}
         slidesPerView="auto"
         loop={false}
-        navigation={{
-          prevEl: '.recent_button_prev',
-          nextEl: '.recent_button_next',
-        }}
         modules={[Navigation]}
         className={styles.recent_swiper}>
         <div className={styles.lists}>
@@ -54,15 +64,15 @@ const RecentVisitsCompoment = () => {
         </div>
       </Swiper>
 
-      <div className={styles.recent_button_prev}>
-        <Button>
+      <div ref={prevRef} className={styles.recent_button_prev}>
+        <div className={styles.btn}>
           <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-        </Button>
+        </div>
       </div>
-      <div className={styles.recent_button_next}>
-        <Button>
+      <div ref={nextRef} className={styles.recent_button_next}>
+        <div className={styles.btn}>
           <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-        </Button>
+        </div>
       </div>
     </div>
   );
