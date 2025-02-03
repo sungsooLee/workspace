@@ -1,77 +1,50 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
 import styles from './pagination.module.scss';
 
-import { Button } from '../button/button';
-
-
-interface PaginationItemProps {
-  page?: number;
-  isButton?: boolean;
-}
-
-const PaginationItem = ({ page }: PaginationItemProps) => {
-  return (
-    <Button>{page}</Button>
-  )
-}
+import usePagination from './usePagination';
+import { PaginationItem } from './Pagination-item';
 
 export interface PaginationComponentProps {
-  className?: string
-  pageNumber: number;
-  pageSize: number;
-  buttonCount?: number;
-  boundaryCount?: number;
-  siblingCount?: number;
+  className?: string;
   hideNextButton?: boolean;
   hidePrevButton?: boolean;
-  onChange?: () => void,
+  onChange?: (event: React.ChangeEvent<unknown>, value: number) => void;
   showFirstButton?: boolean;
   showLastButton?: boolean;
-  size?: string;
+  page?: number; // 현제 페이지
+  count: number; // 전체 페이지 수
+  size?: string; // 버튼 size
+  boundaryCount?: number; // ellipsis 전후로 표시할 page 버튼 개수
+  siblingCount?: number; // 현제 페이지 전후로 표시할 page 버튼 개수
+  color?: string; // 버튼 color
+  disabled?: boolean;
+  variant?: string;
+  // prop 자세한 내용은 https://mui.com/material-ui/react-pagination/#api 참조
 }
 
 const PaginationComponent = forwardRef<HTMLButtonElement, PaginationComponentProps>(
   ({
-   className,
-   buttonCount = 10,
+    className,
+    color = 'standard',
+    disabled = false,
+    size = 'medium',
+    variant = 'text',
     ...props
   }) => {
-    const [currentPage, setCurrentPage] = React.useState(1);
-    const items: any = getItems(buttonCount, currentPage);
-
-    console.log(items)
-
-    // useEffect(() => {
-    //   setCurrentPage()
-    // })
+    const { items } = usePagination({ ...props, componentName: 'Pagination' });
+    console.log(items);
 
     return (
-      <div
-        className={cn(styles.start, className, 'nlp--pagination')}
-      >
-        {items.map((d: any) => <PaginationItem page={d.page} key={d.page} />)}
+      <div className={cn(styles.root, className, 'nlp--pagination', 'flex flex-row gap-5')}>
+        {items.map((item: any, index: number) => (
+          <PaginationItem key={index} {...item} color={color} size={size} variant={variant} />
+        ))}
       </div>
     );
   },
 );
-
-const getItems = (buttonCount: number, currentPage: number) => {
-  const start = currentPage * buttonCount - buttonCount + 1;
-  const end = currentPage * buttonCount;
-  const range = (start: number, end: number) => {
-    const length = end - start + 1;
-    return Array.from({ length }, (_, i) => start + i);
-  };
-  const items = range(start, end).map(d => ({
-    page: d,
-  }))
-
-  return items;
-}
-
-
 
 export const Pagination = PaginationComponent;

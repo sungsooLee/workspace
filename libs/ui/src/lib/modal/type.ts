@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { AlertComponentProps } from '../alert/alert';
-import { ConfirmComponentProps } from '../confirm/confirm';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
@@ -43,7 +42,7 @@ export interface ModalControl {
     onClose?: (data?: ModalClose<T>) => void,
   ) => void;
   alert: (props: AlertComponentProps) => void;
-  confirm: (props: ConfirmComponentProps) => void;
+  confirm: (props: AlertComponentProps) => void;
   openAsync: <T = any>(content: ReactNode, config?: ModalConfig) => Promise<ModalClose<T>>;
 }
 
