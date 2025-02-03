@@ -14,6 +14,9 @@
     &.lg {
       @apply h-[40px] min-w-[80px] justify-center px-[8px];
     }
+    & + .btn {
+      @apply ml-[8px];
+    }
   }
 }
 .primary {

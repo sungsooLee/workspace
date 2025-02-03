@@ -18,6 +18,15 @@
       border-left: 0;
     }
   }
+  &::-webkit-scrollbar {
+    @apply h-[64px] w-[12px] bg-white;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-white;
+  }
 }
 .select_item {
   @apply box-border min-h-[32px] rounded-[4px] text-[14px] font-normal text-[var(--gray8)];
