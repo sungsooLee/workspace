@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 import { cn } from '@learnway/shared';
 import { IcoDelete03 } from '@learnway/icons';
 
-import styles from './input.module.scss';
+import styles from './input.module.css';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {

@@ -1,23 +1,29 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
+
+import * as Primitive from "@radix-ui/react-avatar";
 
 import { cn } from '@learnway/shared';
 
-import * as Primitive from './avatar.shadcn';
 import styles from './avatar.module.css';
 
-interface AvatarProps {
+interface AvatarComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   imageUrl: string;
   fallback?: string;
   className?: string;
 }
 
-const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarProps>(
+const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarComponentProps>(
   ({ imageUrl, className, fallback = '' }, ref) => {
     return (
-      <Primitive.Avatar className={cn(styles.start, className, 'nlp--avatar')}>
-        <Primitive.AvatarImage src={imageUrl} className={cn(styles.avatar)} />
-        <Primitive.AvatarFallback>{fallback}</Primitive.AvatarFallback>
-      </Primitive.Avatar>
+      <Primitive.Root className={cn('nlp--avatar', className, styles.start)}>
+        <Primitive.Image
+          className={styles.image}
+          src={imageUrl}
+        />
+        <Primitive.Fallback className={styles.fallback} delayMs={600}>
+          {fallback}
+        </Primitive.Fallback>
+      </Primitive.Root>
     );
   },
 );

@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
 
-import styles from './button.module.scss';
+import styles from './button.module.css';
 
 export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:

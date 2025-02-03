@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import * as Primitive from "@radix-ui/react-tooltip";
 
-import styles from './tooltip.module.scss';
+import styles from './tooltip.module.css';
 
 interface TooltipComponentProps extends Primitive.TooltipProps {
   children: ReactNode;

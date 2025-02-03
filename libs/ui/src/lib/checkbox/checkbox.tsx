@@ -4,7 +4,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 
 import { cn, getRandomId } from '@learnway/shared';
 
-import styles from "./checkbox.module.scss";
+import styles from "./checkbox.module.css";
 
 export interface CheckboxComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   label?: string;

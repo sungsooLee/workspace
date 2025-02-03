@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { BaseFieldProps } from '../type';
 
-import styles from './number-input.module.scss';
+import styles from './number-input.module.css';
 
 export interface NumberFieldProps extends BaseFieldProps {
   prefix?: string;

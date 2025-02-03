@@ -27,6 +27,10 @@ export * from './lib/checkbox/checkbox';
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
 
+// editor
+export * from './lib/editor/hooks/editor.hook';
+export { default as Editor } from './lib/editor';
+
 // input
 export * from './lib/input/input';
 export * from './lib/input/number-input';
@@ -73,9 +77,8 @@ export * from './lib/tree-view/node-detail';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
 
-/*editor*/
-export * from './lib/editor/hooks/editor.hook';
-export { default as Editor } from './lib/editor';
+// pagination
+export * from './lib/pagination/pagination';
 
 // popover
 export * from './lib/popover/popover';

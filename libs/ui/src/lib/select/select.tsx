@@ -8,7 +8,7 @@ import { SelectOption } from './type';
 import useSelect from './logic';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 
-import styles from './select.module.scss';
+import styles from './select.module.css';
 
 export interface SelectComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   options: Array<SelectOption>;
