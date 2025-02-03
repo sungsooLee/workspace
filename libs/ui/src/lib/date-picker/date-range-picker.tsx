@@ -1,18 +1,24 @@
-import { forwardRef } from 'react';
-import { CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns';
+import { forwardRef, useState } from 'react';
+import { useCreation } from 'ahooks';
 
-import { cn } from '@learnway/shared';
+import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
 
-import { Popover } from '../popover/popover';
-import { Button } from '../shadcn/button';
-import { Calendar } from '../shadcn/calendar';
-import { DateRangeFieldProps } from './type';
+import { DatePicker, DatePickerComponentProps } from './date-picker';
+import { FieldType, DateRange } from '../type';
+
+export interface DateRangeFieldProps extends Omit<DatePickerComponentProps, 'value' | 'onChange'> {
+  type: FieldType.DATE_RANGE;
+  value?: DateRange | undefined;
+  onChange?: (range: DateRange | undefined) => void;
+  fromLabel?: string;
+  toLabel?: string;
+}
 
 const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>(
   (
     {
-      value,
+      dateTimeFormat = DATE_TIME_FORMAT.DATE,
+      value = { from: new Date(), to: undefined },
       onChange,
       error,
       mode = 'edit',
@@ -23,51 +29,50 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
     },
     ref,
   ) => {
-    if (mode === 'read') {
-      return (
-        <div className={cn('px-3 py-2 text-sm text-gray-900', props.className)}>
-          {value?.from && value?.to
-            ? `${format(value.from, 'PPP')} - ${format(value.to, 'PPP')}`
-            : '-'}
-        </div>
-      );
-    }
+    const [startDate, setStartDate] = useState<Date | undefined>(value.from);
+    const [endDate, setEndDate] = useState<Date | undefined>(value.to);
+
+    const dateFormat = useCreation(() => {
+      return getDateTimeFormat(dateTimeFormat);
+    }, [dateTimeFormat]);
+
+    const handleStartChange = (date: Date | undefined) => {
+      setStartDate(date);
+
+      if (onChange) {
+        onChange({ from: date, to: endDate });
+      }
+    };
+
+    const handleEndChange = (date: Date | undefined) => {
+      setEndDate(date);
+
+      if (onChange) {
+        onChange({ from: startDate, to: date });
+      }
+    };
 
     return (
-      <Popover
-        popoverContent={
-          <Calendar
-            mode="range"
-            selected={value}
-            onSelect={onChange}
-            numberOfMonths={2}
-            {...props}
-          />
-        }
-        className="w-auto p-0"
-        align="start">
-        <Button
-          variant="outline"
-          className={cn(
-            'w-full justify-start text-left font-normal',
-            !value && 'text-muted-foreground',
-            error && 'border-red-500',
-            props.className,
-          )}>
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {value?.from ? (
-            value.to ? (
-              <>
-                {format(value.from, 'PPP')} - {format(value.to, 'PPP')}
-              </>
-            ) : (
-              format(value.from, 'PPP')
-            )
-          ) : (
-            placeholder
-          )}
-        </Button>
-      </Popover>
+      <>
+        <DatePicker
+          dateTimeFormat={dateFormat}
+          value={startDate}
+          onChange={(date) => handleStartChange(date)}
+          selectsStart
+          startDate={startDate}
+          endDate={endDate}
+          maxDate={endDate}
+        />
+        <DatePicker
+          dateTimeFormat={dateFormat}
+          value={endDate}
+          onChange={(date) => handleEndChange(date)}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+        />
+      </>
     );
   },
 );

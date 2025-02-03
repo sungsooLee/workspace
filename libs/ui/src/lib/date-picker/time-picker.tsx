@@ -9,7 +9,7 @@ import { useCreation } from 'ahooks';
 
 import { convertDateFormatToFns } from './date-picker.service';
 
-export interface DatePickerComponentProps extends BaseFieldProps<Date> {
+export interface TimePickerComponentProps extends BaseFieldProps<Date> {
   dateTimeFormat?: DATE_TIME_FORMAT;
   minDate?: Date;
   maxDate?: Date;
@@ -26,7 +26,7 @@ export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   onChange?: (date: Date | undefined) => void;
 }
 
-const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>(
+const TimePickerComponent = forwardRef<HTMLDivElement, TimePickerComponentProps>(
   (
     {
       dateTimeFormat = DATE_TIME_FORMAT.DATE,
@@ -76,18 +76,18 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
       <Primitive
         showIcon
         dateFormat={dateFormat}
-        shouldCloseOnSelect
-        minDate={minDate}
-        maxDate={maxDate}
+        shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+        minDate={minDate} // minDate 이전 날짜 선택 불가
+        maxDate={maxDate} // maxDate 이후 날짜 선택 불가
         selected={selectedDate}
         onChange={(date) => handleChange(date ?? undefined)}
         icon={<CalendarIcon />}
         isClearable={true}
         showTimeInput={showTimeInput}
-        //customTimeInput={<ExampleCustomTimeInput />}
+        customTimeInput={<ExampleCustomTimeInput />}
       />
     );
   },
 );
 
-export const DatePicker = DatePickerComponent;
+export const TimePicker = TimePickerComponent;
