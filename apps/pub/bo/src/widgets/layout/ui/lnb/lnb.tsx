@@ -130,7 +130,7 @@ function LNBComponent() {
       </div>
       {/* lnb toggle button */}
       <Button className={styles.btn_toggle} onlyIcon aria-expanded={isOpen} onClick={toggleLnb}>
-        <IcoArrowBackward width={20} height={20} />
+        <IcoArrowBackward width={20} height={20} stroke="#131C30" />
       </Button>
     </div>
   );

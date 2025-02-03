@@ -30,10 +30,20 @@ module.exports = {
           fontSize: '2.4rem',
           fontWeight: '600',
         },
+        '.body_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
         '.body_3_r': {
           ...baseTitle,
           fontSize: '1.4rem',
-          fontWeight: '700',
+          fontWeight: '400',
+        },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
         },
       });
     },
