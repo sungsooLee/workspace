@@ -21,10 +21,32 @@
       }
     }
     [class*='recent_button'] {
-      @apply flex cursor-pointer;
+      @apply absolute top-[24px] z-[3] flex;
+      .btn {
+        @apply absolute top-[2px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+      }
+      &::before {
+        background: url(../../../assets/images/common/bg_swipe_shadow.png) no-repeat;
+        @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[32px] w-[110px] bg-[length:110px_32px] bg-no-repeat content-[''];
+      }
     }
     .recent_button_next {
-      @apply absolute right-[0] top-[0] h-[28px] w-[28px] items-center justify-center rounded-full border border-solid border-[var(--gray5)] text-center;
+      @apply right-[68px];
+
+      &::before {
+        @apply right-[-28px];
+      }
+    }
+    .recent_button_prev {
+      @apply left-[128px];
+
+      &::before {
+        @apply left-[0] rotate-[180deg];
+      }
+
+      svg {
+        @apply rotate-[180deg];
+      }
     }
   }
 }

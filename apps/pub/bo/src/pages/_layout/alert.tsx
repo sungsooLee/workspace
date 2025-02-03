@@ -54,8 +54,6 @@ function RouteComponent() {
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'error',
     });
   };
   const handleClickAlert4 = () => {

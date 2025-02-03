@@ -2,6 +2,7 @@ import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 're
 import { X } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
+import { IcoDelete03 } from '@learnway/icons';
 
 import styles from './input.module.scss';
 
@@ -81,15 +82,22 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           placeholder={placeholder}
         />
         <div className={cn(styles.button, '')}>
-          {isFocused && value && value.toString().length > 0 && (
+          <button
+            type="button"
+            onClick={handleClear}
+            onMouseDown={handleMouseDown}
+            className={cn('', '', 'focus:outline-none')}>
+            <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+          </button>
+          {/* {isFocused && value && value.toString().length > 0 && (
             <button
               type="button"
               onClick={handleClear}
               onMouseDown={handleMouseDown}
               className={cn('', '', 'focus:outline-none')}>
-              <X size={16} />
+              <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
-          )}
+          )} */}
         </div>
       </div>
     );
