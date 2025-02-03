@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
 
 import { BaseModalProps } from './type';
+import { cn } from '@learnway/shared';
 import styles from './modal.module.scss';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
@@ -13,7 +14,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   footer,
   preventBackdropClose = false,
   onClose,
-  width = 'md',
+  width = 'auto',
   height = 'auto',
   hideCloseButton = false,
 }) => {
@@ -25,7 +26,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
     <Primitive.Root open={true} onOpenChange={handleOpenChange}>
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
-        <Primitive.Content className={styles.content}>
+        <Primitive.Content className={cn(styles.content, width && styles[width])}>
           {/* title */}
           <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
@@ -36,7 +37,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
 
           {/* children */}
           <div className={styles.content_body}>
-            <div className={styles.contents}>{children}</div>
+            <div className={`${styles.contents} ${styles.scroll}`}>{children}</div>
           </div>
 
           {/* footer */}

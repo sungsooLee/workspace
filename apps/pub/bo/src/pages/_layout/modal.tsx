@@ -11,6 +11,51 @@ function RouteComponent() {
     return (
       <div>
         <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
       </div>
     );
   };
@@ -32,7 +77,11 @@ function RouteComponent() {
     <div className="content">
       <Button
         onClick={() =>
-          openModal(<BasicModalContent />, { title: '타이틀', footer: <CustomFooter /> })
+          openModal(<BasicModalContent />, {
+            title: '타이틀',
+            width: 'xl',
+            footer: <CustomFooter />,
+          })
         }>
         OPEN
       </Button>
