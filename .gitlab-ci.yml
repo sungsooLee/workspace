@@ -36,12 +36,12 @@ build:
   only:
     - main
 
-  deploy:
-    stage: deploy
-    image: amazon/aws-cli
-    dependencies: # build 단계의 artifacts 를 사용.
-      - build
-    script:
-      - aws s3 sync dist/apps/bo s3://hmgnlp-dev-front-web/fo --delete
-    only:
-      - main
+deploy:
+  stage: deploy
+  image: amazon/aws-cli
+  dependencies: # build 단계의 artifacts 를 사용.
+    - build
+  script:
+    - aws s3 sync dist/apps/bo s3://hmgnlp-dev-front-web/fo --delete
+  only:
+    - main
