@@ -20,7 +20,7 @@ const PopoverContent = () => {
             key={idx}
             className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
             onClick={() => handleClick(idx)}>
-            {btn} {activeIdx === idx && <IcoCheck width={20} height={20} />}
+            {btn} {activeIdx === idx && <IcoCheck width={20} height={20} stroke="#131c30" />}
           </Button>
         ))}
       </div>

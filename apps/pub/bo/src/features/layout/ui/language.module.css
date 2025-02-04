@@ -20,6 +20,9 @@
       &.active {
         @apply bg-[#D8F8FF] font-bold;
       }
+      & + .btn {
+        @apply ml-0;
+      }
       svg {
         @apply absolute right-[24px] top-1/2 -mt-[10px];
       }
