@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Input, Button } from '@learnway/ui';
 import styles from './form.module.css';
 
-export const Route = createFileRoute('/_layout/form')({
+export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,
 });
 
@@ -11,7 +11,7 @@ function RouteComponent() {
     <div className={styles.page_wrap}>
       {/* title_wrap */}
       <div className={styles.title_wrap}>
-        <h3 className={styles.title}>타이틀</h3>
+        <h3 className={styles.title}>Form</h3>
         <div className={styles.btn_wrap}>
           <Button variant="point" size="sm">
             취소
@@ -54,7 +54,7 @@ function RouteComponent() {
             <label htmlFor="name4" className={styles.form_label}>
               비밀번호
             </label>
-            <Input id="name4" type="password" placeholder="" value="" />
+            <Input id="name4" type="password" placeholder="" value="●●●●" />
           </div>
         </div>
       </div>
