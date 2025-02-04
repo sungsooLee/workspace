@@ -375,10 +375,12 @@ const CategoryCompoment = () => {
           </div>
 
           {/* 카테고리 영역 - 뎁스영역 */}
-          <div className={`${styles.category_inner} ${isAllOpen ? styles.active : ''}`}>
+          <div className={styles.category_inner}>
             <div className={styles.tit_head}>
               <h2>기업경영</h2>
-              <Button className={styles.btn_cate} onClick={categoryAll}>
+              <Button
+                onClick={categoryAll}
+                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
                 <IcoArrowDown width={16} height={16} stroke="#07287E" />
               </Button>
             </div>
@@ -389,7 +391,9 @@ const CategoryCompoment = () => {
                 <div key={index} className={styles.depth_wrap}>
                   <div className={styles.tit}>
                     <h3>{category.title}</h3>
-                    <Button className={styles.btn_cate} onClick={() => categoryDepth(index)}>
+                    <Button
+                      className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
+                      onClick={() => categoryDepth(index)}>
                       <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                     </Button>
                   </div>

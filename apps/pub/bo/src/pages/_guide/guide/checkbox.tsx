@@ -9,7 +9,10 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Checkbox Component Guide</h2>
-      <Checkbox label="label" />
+      <h3 className="guide_tit3">default</h3>
+      <Checkbox label="default" />
+      <h3 className="guide_tit3">disabled</h3>
+      <Checkbox label="disabled" disabled />
     </div>
   );
 }
