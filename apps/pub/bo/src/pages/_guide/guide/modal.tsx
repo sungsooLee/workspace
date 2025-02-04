@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModalControl, useModalContext } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/modal')({
+export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
 });
 
@@ -10,46 +10,6 @@ function RouteComponent() {
   const BasicModalContent = () => {
     return (
       <div>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
         <p>11111</p>
         <p>11111</p>
         <p>11111</p>
@@ -75,15 +35,21 @@ function RouteComponent() {
 
   return (
     <div className="content">
+      <h2 className="guide_tit2">Modal Component Guide(작업중)</h2>
+      <p className="loc react">
+        모달 size(가로 기준) : sm(600px), md(800px), lg(1024px), xl(1400px) width 속성 적용
+      </p>
+      <br />
+      <br />
       <Button
         onClick={() =>
           openModal(<BasicModalContent />, {
             title: '타이틀',
-            width: 'xl',
+            width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
             footer: <CustomFooter />,
           })
         }>
-        OPEN
+        모달 팝업 열기
       </Button>
     </div>
   );

@@ -1,18 +1,18 @@
 .start {
   &.btn {
-    @apply box-border inline-flex items-center justify-start;
+    @apply box-border inline-flex items-center justify-start leading-[1rem];
     /* Size ( 28 | 32 | 36 | 40 ) */
     &.xs {
-      @apply h-[28px] justify-center px-[12px];
+      @apply h-[28px] min-w-[48px] justify-center px-[6px];
     }
     &.sm {
-      @apply h-[32px] justify-center px-[12px];
+      @apply h-[32px] min-w-[48px] justify-center px-[6px];
     }
     &.md {
-      @apply h-[36px] min-w-[60px] justify-center px-[12px];
+      @apply h-[36px] min-w-[60px] justify-center px-[6px];
     }
     &.lg {
-      @apply h-[40px] min-w-[80px] justify-center px-[8px];
+      @apply h-[40px] min-w-[80px] justify-center px-[6px];
     }
     & + .btn {
       @apply ml-[8px];

@@ -35,6 +35,7 @@ export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert wa
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
 export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
+export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 
 //export Default as Information from './lib/information.svg?react';
 
