@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import { Checkbox, Select } from '@learnway/ui';
+import { FC, memo } from 'react';
 
 const TableBox: FC<any> = ({ config }) => {
+  console.log('table box');
   return (
     <div className={'table-container'}>
       {config.isFetching ? 'Fetching...' : null}
@@ -53,5 +53,4 @@ const TableBox: FC<any> = ({ config }) => {
     </div>
   );
 };
-
 export default TableBox;

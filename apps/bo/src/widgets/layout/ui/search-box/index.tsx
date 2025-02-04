@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useLayoutEffect, useRef, useState, memo } from 'react';
 import { searchDialogConfig } from './config';
 import { useTranslation } from 'react-i18next';
 import { useFetchCodeGroups } from '../../../../entities/system';
@@ -84,7 +84,7 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
         </div>
         <div className="submit-container">
           {isOverflowing && (
-            <button className={'btn'} onClick={() => setIsExpanded(!isExpanded)}>
+            <button className={'btn'} type={'button'} onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? '축소' : '확장'}
             </button>
           )}
