@@ -6,7 +6,7 @@ import { IcoDelete03 } from '@learnway/icons';
 import styles from './input.module.css';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, id, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
+  ({ className, id, type, disabled, readOnly, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const hasNoBorder = className?.includes('bd_none');
@@ -79,6 +79,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           }}
           value={inputValue}
           disabled={disabled}
+          readOnly={readOnly}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleInputChange}
