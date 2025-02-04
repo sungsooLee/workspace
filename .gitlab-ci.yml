@@ -46,6 +46,7 @@ deploy:
     - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID_DEV}
     - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY_DEV}
     - aws configure set region ${AWS_DEFAULT_REGION}
+    - aws s3 ls
     - aws s3 sync dist/apps/fo s3://hmgnlp-dev-front-web/fo --delete
   only:
     - main
