@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Radio } from '@learnway/ui';
+import { Button, Radio, ToastWrapper, useToast } from '@learnway/ui';
 
 export default {
   title: 'Components/Radio',
@@ -11,47 +11,38 @@ export default {
 } as Meta;
 type Story = StoryObj<typeof Radio>;
 
-const Template: React.FC<any> = (args) => {
+export const Template: any = (args: any) => {
   return (
+    <div className="flex flex-col gap-5 w-[500px] h-[300px] bg-gray-1">
       <Radio
-        {...args}
+        disabled={true}
+        defaultValue='value0'
+        options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}
       />
-  );
-};
+    </div>
+  )
+}
+Template.storyName = 'Radio';
+Template.args = {};
 
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const RadioStory: Story = {
-  name: 'Radio',
-  args: {
-    defaultValue: 'value0',
-    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
-  },
-  render: (args) => <Template {...args} />,
-};
 
-const TemplateValue: React.FC<any> = (args) => {
+export const TemplateValueControl: any = (args: any) => {
   const [value, setValue] = useState<string>('value0');
   return (
     <>
       <div className='flex space-x-5'>
-        <Button onClick={() => setValue('value2')}>set value('value2')</Button>
-        <Button onClick={() => setValue('')}>reset value</Button>
+        <Button onClick={() => setValue('value2')}>select label 2</Button>
+        <Button onClick={() => setValue('')}>reset</Button>
       </div>
       <div className='h-10'></div>
       <Radio
         {...args}
         value={value}
+        options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}
         onValueChange={(selectedValue) => setValue(selectedValue)}
       />
     </>
-  );
-};
-
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const ValueControl: Story = {
-  args: {
-    defaultValue: 'value0',
-    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
-  },
-  render: (args) => <TemplateValue {...args} />,
-};
+  )
+}
+TemplateValueControl.storyName = 'Value Control';
+TemplateValueControl.args = {};
