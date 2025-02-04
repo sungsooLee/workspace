@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import * as Primitive from "@radix-ui/react-radio-group";
+import * as Primitive from '@radix-ui/react-radio-group';
 
 import { cn } from '@learnway/shared';
 
@@ -13,23 +13,24 @@ export interface RadioComponentProps extends React.ComponentProps<typeof Primiti
   onValueChange?: (value: string) => void;
 }
 
-const RadioComponent = forwardRef<
-  React.ElementRef<typeof Primitive.Root>,
-  RadioComponentProps
->(
-  ({ className, options, defaultValue, orientation = 'horizontal', ...props}, ref) => {
+const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, RadioComponentProps>(
+  ({ className, options, defaultValue, orientation = 'horizontal', ...props }, ref) => {
     return (
       <Primitive.Root
         className={cn(
           styles.start,
+          styles.radio,
           'nlp--radio',
           // orientation === 'horizontal' ? horizontal_selector : vertical_selector (css 구현필요)
         )}
-        {...props}
-      >
+        {...props}>
         {options.map((option: RadioOption) => (
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Primitive.Item key={option.value} className={styles.item} value={option.value} id={option.value}>
+            <Primitive.Item
+              key={option.value}
+              className={styles.item}
+              value={option.value}
+              id={option.value}>
               <Primitive.Indicator className={styles.indicator} />
             </Primitive.Item>
             <label className={styles.label} htmlFor={option.value}>
