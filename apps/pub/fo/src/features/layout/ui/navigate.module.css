@@ -1,21 +1,52 @@
 /* navigate.module.css */
 .start {
   .nav {
-    ul {
-      @apply flex justify-start gap-[48px];
-      > li {
+    .gnb_swiper {
+      @apply flex justify-start overflow-hidden;
+      .slide {
+        @apply relative flex w-auto items-center justify-start gap-[8px] whitespace-nowrap;
         a {
           color: var(--gray9);
-          @apply inline-flex h-[56px] items-center text-[1.6rem];
+          @apply inline-flex h-[64px] items-center text-[1.6rem];
           &:hover {
             @apply font-bold;
           }
         }
         &.division {
-          &::before {
-            @apply inline-block h-5 w-px bg-[var(--gray5)] content-[''];
+          &::after {
+            @apply absolute right-[-32px] inline-block h-5 w-px bg-[var(--gray5)] content-[''];
+          }
+          + .slide {
+            @apply ml-[12px];
           }
         }
+        .label {
+          @apply body_4_b absolute left-1/2 top-[0] inline-flex h-[20px] items-center whitespace-nowrap rounded-[10px] bg-[var(--status1)] px-[8px] text-[var(--white)];
+        }
+      }
+    }
+    [class*='gnb_button'] {
+      @apply absolute top-[24px] z-[3] flex;
+      .btn {
+        @apply absolute top-[2px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+      }
+    }
+    .gnb_button_next {
+      @apply right-[68px];
+
+      &::before {
+        @apply right-[-28px];
+      }
+    }
+    .gnb_button_prev {
+      @apply left-[128px];
+
+      &::before {
+        @apply left-[0] rotate-[180deg];
+      }
+
+      svg {
+        @apply rotate-[180deg];
       }
     }
   }
