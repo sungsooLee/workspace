@@ -1,5 +1,4 @@
-@import '../../../libs/config/src/lib/style/font.css';
-@import '../../../libs/config/src/lib/style/theme.css';
+@import '../../../libs/config/src/lib/style/theme/fo.css';
 
 /*
 @tailwind base;
