@@ -3,7 +3,7 @@ import { Grid } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 
-export const Route = createFileRoute('/_layout/grid_list')({
+export const Route = createFileRoute('/_guide/guide/grid')({
   component: RouteComponent,
 });
 
@@ -230,6 +230,10 @@ function RouteComponent() {
   return (
     <div className="content">
       <div className="nlp--titlewrap">
+        <h2 className="guide_tit2">Grid Table Component Guide(작업중)</h2>
+        <p className="loc react">케이스가 많아 케이스 추가될때 해당 스타일 적용 필요</p>
+        <br />
+        <br />
         <div className="title_item">
           <strong className="title">{`타이틀`}</strong>
           <span className="count">

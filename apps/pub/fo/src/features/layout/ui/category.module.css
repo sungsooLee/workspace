@@ -13,20 +13,20 @@
     }
     .category {
       z-index: 2;
-      @apply absolute left-[0] top-[116px] w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100 shadow-[0px_2px_10px_var(--gray5)];
+      @apply absolute left-[0] top-[116px] hidden w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100 shadow-[0px_2px_10px_var(--gray5)];
       &.active {
         @apply block opacity-100;
       }
     }
 
     .category_container {
-      @apply max-h-[1000px] overflow-auto border-t border-solid border-t-[var(--gray4)] pt-[24px];
+      @apply flex justify-start border-t border-solid border-t-[var(--gray4)] pt-[24px];
     }
 
     .category_menu {
-      @apply scrollbar relative h-[100dvh] w-[240px] overflow-y-auto rounded-bl-[16px] bg-[#274CAC];
+      @apply relative w-[240px];
       h2 {
-        @apply static flex items-center justify-between bg-[var(--white)];
+        @apply flex items-center justify-between bg-[var(--white)];
         a {
           @apply body_3_b block flex-1 px-[32px] py-[15px];
         }
@@ -35,9 +35,10 @@
         }
       }
       .menu_list_wrap {
-        @apply relative pb-[32px];
+        @apply scrollbar relative overflow-auto rounded-bl-[16px] bg-[#274CAC] pb-[32px];
 
         .menu_list {
+          @apply flex h-screen flex-col;
           .menu_section {
             &.sec1 {
               @apply bg-[#07287E];
@@ -58,9 +59,54 @@
           }
         }
         .banner_list {
-          @apply px-[32px];
+          @apply mt-auto px-[32px] pb-[34px];
           .banner {
             @apply mt-[8px] block;
+          }
+        }
+      }
+    }
+
+    .category_inner {
+      .btn_cate {
+        @apply inline-block pl-[10px];
+        svg {
+          @apply rotate-0;
+          transition: all 0.1s linear;
+        }
+      }
+      &.active {
+        .btn_cate {
+          svg {
+            @apply rotate-0;
+          }
+        }
+      }
+      @apply scrollbar relative h-screen w-full overflow-auto px-[40px];
+      .tit_head {
+        @apply body_3_b mb-[16px] flex justify-between border-b border-solid border-b-[var(--primary2)] py-[14px] text-[var(--primary2)];
+      }
+      .depth_wrap {
+        @apply pb-[40px];
+        .tit {
+          @apply body_3_b flex justify-between border-b border-solid border-b-[var(--gray4)] py-[13px] text-[var(--gray8)];
+        }
+        .btn_cate {
+          @apply inline-block pl-[10px];
+        }
+        .depth_info {
+          @apply pt-[16px];
+          .list {
+            @apply flex flex-wrap;
+            li {
+              @apply mb-[12px] w-1/3 pr-[20px];
+              a {
+                @apply body_3_r text-[1.4rem] text-[var(--gray8)];
+                &:hover {
+                  @apply underline;
+                }
+              }
+            }
           }
         }
       }

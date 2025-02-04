@@ -50,18 +50,9 @@
 .content_body {
   @apply max-h-[710px] overflow-hidden;
   .contents {
-    @apply max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[24px];
+    @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[24px];
     &.scroll {
       border-bottom: 1px solid var(--gray3);
-    }
-    &::-webkit-scrollbar {
-      @apply h-[64px] w-[12px] bg-white;
-    }
-    &::-webkit-scrollbar-thumb {
-      @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
-    }
-    &::-webkit-scrollbar-track {
-      @apply bg-white;
     }
   }
   &:empty {
