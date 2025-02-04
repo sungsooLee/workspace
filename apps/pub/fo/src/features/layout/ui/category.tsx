@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { IcoMenu01, IcoXclose, IcoArrowForward } from '@learnway/icons';
+import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import styles from './category.module.css';
 import { RecentVisits } from './recent_visits';
@@ -12,31 +12,207 @@ const CategoryCompoment = () => {
     {
       title: '경영전략',
       link: '',
-      subCategories: ['3dpth Category'],
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
     },
     {
       title: '마케팅 전략',
       link: '',
-      subCategories: ['Market Analysis', 'SEO Planning'],
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
+    },
+    {
+      title: '마케팅 전략',
+      link: '',
+      subCategories: [
+        '3dpth Category',
+        '3dpth Category 3dpth Category3dpth Category3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+        '3dpth Category',
+      ],
     },
   ];
 
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggleCategory = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   const [isActive, setIsActive] = useState(false);
 
-  const openCategory = () => {
+  const toggleCategory = () => {
     setIsActive(!isActive);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  // 각 카테고리의 열림/닫힘 상태를 배열로 관리
+  const [openStates, setOpenStates] = useState(categories.map(() => false));
 
-  const toggleAll = () => {
-    setIsOpen(!isOpen);
+  // 모든 카테고리가 열려있는지 확인
+  const isAllOpen = openStates.every((state) => state);
+
+  // 전체 열기/닫기
+  const categoryAll = () => {
+    setOpenStates(categories.map(() => !isAllOpen));
+  };
+
+  // 개별 열기/닫기
+  const categoryDepth = (index) => {
+    setOpenStates((prev) => prev.map((state, i) => (i === index ? !state : state)));
   };
 
   return (
@@ -44,7 +220,7 @@ const CategoryCompoment = () => {
       <Button
         onlyIcon
         className={`${styles.btn_category} ${isActive ? styles.active : ''}`}
-        onClick={openCategory}>
+        onClick={toggleCategory}>
         {isActive ? (
           <IcoXclose width={24} height={24} stroke="#ffffff" />
         ) : (
@@ -199,38 +375,39 @@ const CategoryCompoment = () => {
           </div>
 
           {/* 카테고리 영역 - 뎁스영역 */}
-          <div className={styles.category_inner}>
+          <div className={`${styles.category_inner} ${isAllOpen ? styles.active : ''}`}>
             <div className={styles.tit_head}>
               <h2>기업경영</h2>
-              <Button className={styles.btn_cate} onClick={toggleAll}>
-                <IcoArrowForward width={16} height={16} stroke="#07287E" />
+              <Button className={styles.btn_cate} onClick={categoryAll}>
+                <IcoArrowDown width={16} height={16} stroke="#07287E" />
               </Button>
             </div>
 
-            {/* 3dapth */}
-            {categories.map((category, index) => (
-              <div key={index} className={styles.depth_wrap}>
-                <div className={styles.tit}>
-                  <h3>{category.title}</h3>
-                  <Button className={styles.btn_cate} onClick={() => toggleCategory(index)}>
-                    <IcoArrowForward width={16} height={16} stroke="#07287E" />
-                  </Button>
-                </div>
-
-                {/* openIndex 상태에 따라 열리고 닫힘 */}
-                {openIndex === index && (
-                  <div className={styles.depth_info}>
-                    <ul>
-                      {category.subCategories.map((sub, subIndex) => (
-                        <li key={subIndex}>
-                          <Link to={category.link}>{sub}</Link>
-                        </li>
-                      ))}
-                    </ul>
+            <div className={styles.depth_area}>
+              {/* 3dapth */}
+              {categories.map((category, index) => (
+                <div key={index} className={styles.depth_wrap}>
+                  <div className={styles.tit}>
+                    <h3>{category.title}</h3>
+                    <Button className={styles.btn_cate} onClick={() => categoryDepth(index)}>
+                      <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
+                    </Button>
                   </div>
-                )}
-              </div>
-            ))}
+
+                  {openStates[index] && (
+                    <div className={styles.depth_info}>
+                      <ul className={styles.list}>
+                        {category.subCategories.map((sub, subIndex) => (
+                          <li key={subIndex}>
+                            <Link to={category.link}>{sub}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
