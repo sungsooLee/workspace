@@ -29,6 +29,7 @@ function RouteComponent() {
         { label: 'Grid 테이블', path: '/guide/grid' },
         { label: 'Form', path: '/guide/form' },
         { label: 'Checkbox', path: '/guide/checkbox' },
+        { label: 'Radio', path: '/guide/radio' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
         // { label: '이미지', path: '/guide/components/image' },
         // { label: '아이콘', path: '/guide/components/icon' },
