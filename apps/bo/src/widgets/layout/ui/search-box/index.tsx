@@ -1,9 +1,8 @@
-import { FC, useLayoutEffect, useRef, useState, useEffect } from 'react';
+import { FC, useLayoutEffect, useRef, useState } from 'react';
 import { searchDialogConfig } from './config';
-import { CODE_GROUP } from '@learnway/config';
 import { useTranslation } from 'react-i18next';
 import { useFetchCodeGroups } from '../../../../entities/system';
-import { Button, Input } from '@learnway/ui';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -12,14 +11,6 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
   const [collapsedHeight, setCollapsedHeight] = useState(0);
   const { builders: initBuilders, control, formSubmit, reset } = config;
   const { data } = useFetchCodeGroups();
-  const [builders, setBuilders] = useState<any>();
-  const dependencies = initBuilders
-    .filter((builder: any) => builder.dependency)
-    .map((builder: any) => ({
-      name: builder.name,
-      dependency: builder.dependency,
-    }));
-  const { t } = useTranslation();
 
   /*const watchedFields = config.watch(dependencies.map((dp: any) => dp.dependency));*/
   const calculateGridHeight = () => {
@@ -61,32 +52,8 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
     console.log('on form submit?');
     onSearch && formSubmit(onSearch);
   };
-
-  const loadDropdownItems = () => {
-    console.log('loadDropDownItems [] => z');
-    const newBuilders = initBuilders.map((builder: any) => {
-      if ((builder.type === 'dropdown' || builder.type === 'multi-dropdown') && builder.codeGroup) {
-        const codes = (data as any)[builder.codeGroup].codes;
-        if (codes) {
-          return {
-            ...builder,
-            items: [...builder.items, ...codes].map((lang) => ({
-              ...lang,
-              name: t(lang.name),
-            })),
-          };
-        }
-      }
-
-      return { ...builder };
-    });
-    setBuilders(newBuilders);
-  };
-
   // 초기 렌더링 및 화면 리사이즈 시 다시 높이 계산
   useLayoutEffect(() => {
-    console.log(dependencies.map((dp: any) => dp.dependency));
-    loadDropdownItems();
     calculateGridHeight();
     window.addEventListener('resize', calculateGridHeight);
     return () => {
@@ -105,8 +72,8 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
             maxHeight: !isExpanded && isOverflowing ? `${collapsedHeight}px` : 'none',
             transition: 'max-height 0.3s ease', // 부드러운 확장/축소
           }}>
-          {builders &&
-            builders.map((property: any) => {
+          {initBuilders &&
+            initBuilders.map((property: any) => {
               const Component = searchDialogConfig[property.type]; // 해당 타입의 컴포넌트
               return Component ? (
                 <div key={property.name}>

@@ -81,6 +81,21 @@ const useSearchBox = (config: any) => {
   return {
     config: {
       ...config,
+      /*itemsConfig: config.builders.map((builder: any) => {
+        if (builder.itemsConfig && builder.itemsConfig.type === 'code') {
+          const target = config.builders.find((bd: any) => bd.name === builder.itemsConfig.target);
+          if (target) {
+            return {
+              ...builder,
+              itemsConfig: {
+                ...builder.itemsConfig,
+                codeGroup: target.codeGroup,
+              },
+            };
+          }
+        }
+        return builder;
+      }),*/
       control: extendedControl,
       watch,
       reset: resetForm,

@@ -1,15 +1,13 @@
-import { useEffect } from 'react';
-
 import { createFileRoute } from '@tanstack/react-router';
 import useSearchBox from '../../../widgets/layout/ui/search-box/use-search-box';
 import SearchBox from '../../../widgets/layout/ui/search-box';
 import z from 'zod';
 
 import TableBox from '../../../widgets/layout/ui/table-box';
-import { useFetchMockUsers } from '../../../entities/api-mock/service/mock-user.hook';
 import useTableBox from '../../../widgets/layout/ui/table-box/use-table-box';
-import { queryOptions } from '../../../entities/api-mock/service/mock-user.queries';
-import { codeConfig, CODE_GROUP } from '@learnway/config';
+import { queryOptions as userQueryOptions } from '../../../entities/api-mock/service/mock-user.queries';
+import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
+import { CODE_GROUP } from '@learnway/config';
 export const Route = createFileRoute('/_layout/builder/table')({
   component: RouteComponent,
 });
@@ -38,7 +36,7 @@ function RouteComponent() {
 }
 
 const tableConfig = {
-  query: queryOptions.all,
+  query: userQueryOptions.all,
   builders: [
     {
       name: 'id',
@@ -56,7 +54,6 @@ const tableConfig = {
 
 const searchConfig = {
   searchMethod: 'change',
-
   builders: [
     {
       name: 'language_code',
@@ -64,7 +61,10 @@ const searchConfig = {
       label: '언어코드',
       value: '',
       items: [{ code: '', name: '언어전체' }],
-      codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      itemsConfig: {
+        type: 'self',
+        codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      },
     },
     {
       name: 'language_detail',
@@ -72,7 +72,11 @@ const searchConfig = {
       label: '언어상세',
       value: '',
       items: [{ code: '', name: '언어코드를 선택하세요.' }],
-      dependency: 'language_code',
+      itemsConfig: {
+        type: 'target',
+        target: 'language_code',
+        codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      },
     },
     {
       name: 'language_code2',
@@ -80,7 +84,13 @@ const searchConfig = {
       label: '언어코드2',
       value: '',
       items: [{ code: '', name: '언어전체' }],
-      codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      itemsConfig: {
+        type: 'self',
+        api: codeQueryOptions.getTestCodes,
+        callback: (response: any) => {
+          return response.data;
+        },
+      },
     },
     {
       name: 'language_detail2',
@@ -88,7 +98,14 @@ const searchConfig = {
       label: '언어상세2',
       value: '',
       items: [{ code: '', name: '언어코드를 선택하세요.' }],
-      dependency: 'language_code2',
+      itemsConfig: {
+        type: 'target',
+        target: 'language_code2',
+        api: codeQueryOptions.getTestCode,
+        callback: (response: any) => {
+          return response.data;
+        },
+      },
     },
     /*{
       name: 'register_date',
