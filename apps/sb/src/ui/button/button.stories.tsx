@@ -9,8 +9,8 @@ export default {
   component: Button,
   tags: ['autodocs'],
   args: {
-    variant: 'primary',
-    size: 'md'
+    // variant: 'primary',
+    // size: 'md'
   },
 } as Meta;
 
