@@ -1,7 +1,14 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Category, GnbInput, Logo, Notification, Tenants } from '../../../../features/layout';
+import {
+  Category,
+  Search,
+  Logo,
+  Notification,
+  Tenants,
+  AdminLink,
+} from '../../../../features/layout';
 import { Navigate } from './navigate/navigate';
 import { Language } from '../../../../features/layout/ui/language';
 import { UserAvatar } from '../../../../features/layout/ui/user-avatar';
@@ -69,18 +76,26 @@ function GNBComponent() {
           <h1>
             <Logo activeTenant={activeTenant} />
           </h1>
+
+          <Tenants
+            tenants={tenants || []}
+            activeTenant={activeTenant}
+            onTenantSwitch={handleTenantSwitch}
+          />
         </div>
-        <Tenants
-          tenants={tenants || []}
-          activeTenant={activeTenant}
-          onTenantSwitch={handleTenantSwitch}
-        />
-        <GnbInput />
-        <Language />
-        <Notification />
-        <UserAvatar />
-        <Category />
-        <Navigate />
+        <div className={styles.search_form}>
+          <Search />
+        </div>
+        <div className={styles.util}>
+          <AdminLink />
+          <Language />
+          <Notification />
+          <UserAvatar />
+        </div>
+        <div className={styles.nav_area}>
+          <Category />
+          <Navigate />
+        </div>
       </header>
     </div>
   );

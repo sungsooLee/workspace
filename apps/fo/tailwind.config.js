@@ -15,6 +15,46 @@ module.exports = {
   ],
   blocklist: ['outline'],
   plugins: [
-    require('./src/assets/tailwind-plugins/typo.plugin')
+    require('./src/assets/tailwind-plugins/typo.plugin'),
+
+    function ({ addComponents }) {
+      const baseTitle = {
+        letterSpacing: '-0.3px',
+        lineHeight: '140%',
+      };
+
+      addComponents({
+        // title class add
+        '.title_4_b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+      });
+    },
   ],
+
+  theme: {
+    extend: {
+      screens: {
+        mobile: '360px',
+        pc: '1920px',
+      },
+    },
+  },
 };

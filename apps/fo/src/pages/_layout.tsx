@@ -80,7 +80,6 @@ function LayoutComponent() {
   return (
     <div className={`${styles.start} ${styles.layout_wrap}`}>
       <GNB />
-      <Breadcrumbs />
       <Layout>
         <Outlet />
       </Layout>

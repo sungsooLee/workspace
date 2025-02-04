@@ -1,0 +1,28 @@
+/* tenant.module.css */
+.btn_tenant {
+  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[24px] text-[1.4rem] text-[var(--gray9)];
+  &[data-state='open'] {
+    svg {
+      @apply rotate-180;
+    }
+  }
+  .select {
+    @apply mr-[2px] inline-block;
+  }
+}
+.tenant_content {
+  @apply w-[240px] overflow-hidden rounded-[8px] bg-[var(--white)];
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.1));
+  .btn_wrap {
+    @apply flex flex-col;
+    .btn {
+      @apply relative box-border flex h-[62px] w-full items-center pl-[24px] pr-[56px] text-left font-[#] text-[16px] font-normal;
+      &.active {
+        @apply bg-[#D8F8FF] font-bold;
+      }
+      svg {
+        @apply absolute right-[24px] top-1/2 -mt-[10px];
+      }
+    }
+  }
+}
