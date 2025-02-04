@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Control } from 'react-hook-form';
+import { FormDialogProps } from '@learnway/ui';
 
 export interface DialogItem {
   value: string;
@@ -16,5 +17,5 @@ export interface DialogProps {
 }
 
 export interface DialogConfig {
-  [key: string]: FC<DialogProps>;
+  [key: string]: FC<FormDialogProps>;
 }

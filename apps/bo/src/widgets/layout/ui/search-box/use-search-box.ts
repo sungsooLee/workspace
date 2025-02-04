@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
-
+import { createZodSchema } from './create-jod-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 const useSearchBox = (config: any) => {
   // 초기값 세팅
   const defaultValues = config.builders.reduce((acc: any, prop: any) => {
@@ -18,8 +20,10 @@ const useSearchBox = (config: any) => {
     }
     return acc;
   }, {}); // 초기값 {}로 빈 객체를 전달
+  const schema = createZodSchema(config); // 유효성 검사 스키마 생성
   const methods = useForm<any>({
     defaultValues,
+    resolver: zodResolver(schema),
   });
 
   const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
@@ -52,7 +56,7 @@ const useSearchBox = (config: any) => {
         if (firstErrorKey) {
           // 에러 메시지를 가져와 표시
           const errorMessage = errors[firstErrorKey]?.message || 'Validation error'; // 기본 에러 메시지를 설정
-          alert(errorMessage); // 에러 메시지를 alert로 표시
+          //alert(errorMessage); // 에러 메시지를 alert로 표시
           // 에러가 있는 필드에 focus 처리
           setFocus(firstErrorKey);
         }
@@ -60,15 +64,10 @@ const useSearchBox = (config: any) => {
     )(); // handleSubmit이 반환하는 함수를 즉시 실행
   };
 
-  // 필수 여부를 체크하는 로직
-  const getFieldValidation = (fieldName: string) => {
-    return !!(config.validator && config.validator[fieldName]);
-  };
-
   // control에 validator 정보를 추가한 객체 반환
   const extendedControl = {
     ...control, // 기본 control
-    isFieldRequired: (fieldName: string) => getFieldValidation(fieldName), // 필수 여부 확인
+    isFieldRequired: (fieldName: string) => !!(config.validator && config.validator[fieldName]), // 필수 여부 확인
   };
 
   const resetForm = (values?: any) => {
@@ -81,21 +80,6 @@ const useSearchBox = (config: any) => {
   return {
     config: {
       ...config,
-      /*itemsConfig: config.builders.map((builder: any) => {
-        if (builder.itemsConfig && builder.itemsConfig.type === 'code') {
-          const target = config.builders.find((bd: any) => bd.name === builder.itemsConfig.target);
-          if (target) {
-            return {
-              ...builder,
-              itemsConfig: {
-                ...builder.itemsConfig,
-                codeGroup: target.codeGroup,
-              },
-            };
-          }
-        }
-        return builder;
-      }),*/
       control: extendedControl,
       watch,
       reset: resetForm,

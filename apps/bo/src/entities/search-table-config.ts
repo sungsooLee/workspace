@@ -2,6 +2,7 @@ import { queryOptions as userQueryOptions } from './api-mock/service/mock-user.q
 import { CODE_GROUP } from '@learnway/config';
 import { queryOptions as codeQueryOptions } from './api-mock/service/mock-code.queries';
 import z from 'zod';
+import { t } from 'i18next'; // i18next 사용
 export const tableConfig = {
   query: userQueryOptions.all,
   builders: [
@@ -89,6 +90,8 @@ export const searchConfig = {
       label: '키워드',
       type: 'text',
       value: '',
+      placeholder: '키워드를 입력하세요',
+      description: '기본 메세지',
     },
     {
       name: 'age',
@@ -215,6 +218,7 @@ export const searchConfig = {
     },
   ],
   validator: {
-    userName: z.string(),
+    keyword: z.string().nonempty(t('LOGIN')),
+    age: z.string().nonempty(t('사용자명을 입력해주세요')),
   },
 };

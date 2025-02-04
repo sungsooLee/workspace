@@ -3,6 +3,7 @@ import { searchDialogConfig } from './config';
 import { useTranslation } from 'react-i18next';
 import { useFetchCodeGroups } from '../../../../entities/system';
 import { useQueryClient } from '@tanstack/react-query';
+import { FormInput } from '@learnway/ui';
 
 const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
   const gridRef = useRef<HTMLDivElement>(null);

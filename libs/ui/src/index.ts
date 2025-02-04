@@ -33,6 +33,7 @@ export { default as Editor } from './lib/editor';
 
 // input
 export * from './lib/input/input';
+export * from './lib/input/form-input';
 export * from './lib/input/number-input';
 
 // form
