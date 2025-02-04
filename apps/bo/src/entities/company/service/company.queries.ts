@@ -1,3 +1,4 @@
+import { Company } from '../../../types';
 import CompanyService from '../api/company';
 
 export const queryKeys = {
@@ -7,6 +8,6 @@ export const queryKeys = {
 export const queryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
-    queryFn: () => CompanyService.fetchCompanies(),
+    queryFn: async (): Promise<any> => CompanyService.fetchCompanies(),
   }),
 };

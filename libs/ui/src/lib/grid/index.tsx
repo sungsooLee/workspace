@@ -29,7 +29,6 @@ import { FilterContent } from './components/filter-content';
 import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../shadcn/button';
 import { CheckFieldProps } from '../checkbox/type';
-import { Checkbox } from '../checkbox/checkbox';
 
 // paging Icons
 import { IcoChevronLeft } from '@learnway/icons';
@@ -37,6 +36,7 @@ import { IcoChevronLeftDouble } from '@learnway/icons';
 import { IcoChevronRight } from '@learnway/icons';
 import { IcoChevronRightDouble } from '@learnway/icons';
 import './grid.css'; // grid CSS
+import { Checkbox } from '../checkbox/checkbox';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -56,7 +56,6 @@ export const IndeterminateCheckbox = ({
   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
 
   return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
-  // return <Checkbox checked={checkedState} onCheckedChange={handleChange} {...rest} />;
 };
 ///////
 

@@ -25,7 +25,7 @@ function HomeComponent() {
         {/*  label='label'*/}
         {/*  options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}*/}
         {/*/>*/}
-        <Switch type={FieldType.RADIO} name="name" label="label" />
+        {/* <Switch type={FieldType.SWITCH} name="name" label="label" /> */}
       </div>
 
       {/**primary */}
@@ -63,7 +63,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'}>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'}>
+        <Button size="md" variant={'outline'}>
           작성완료
         </Button>
 
@@ -79,7 +79,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'} disabled>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'} disabled>
+        <Button size="md" variant={'outline'} disabled>
           작성완료
         </Button>
 

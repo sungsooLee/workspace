@@ -4,20 +4,17 @@ import { Navigation } from 'swiper/modules';
 
 import { cn } from '@learnway/shared';
 
-import styles from './carousel.module.scss';
+import styles from './carousel.module.css';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 export interface CarouselComponentProps extends SwiperProps {
-  items: Array<React.ReactNode>
+  items: Array<React.ReactNode>;
   className?: string;
 }
 
-const CarouselComponent = forwardRef<
-  React.ElementRef<typeof Swiper>,
-  CarouselComponentProps
->(
+const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
   ({ className, items, ...props }, ref) => {
     return (
       <Swiper
@@ -28,16 +25,13 @@ const CarouselComponent = forwardRef<
         navigation={true}
         modules={[Navigation]}
         onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
-
+        onSwiper={(swiper) => console.log(swiper)}>
         {/* items */}
         {items.map((item, index) => (
           <SwiperSlide className={styles.SwiperSlide}>{item}</SwiperSlide>
         ))}
-
       </Swiper>
-    )
+    );
   },
 );
 

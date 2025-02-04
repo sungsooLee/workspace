@@ -49,7 +49,8 @@ import {
 import * as React from 'react';
 import { ReactNode, ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ReactComponent as ChevronDown } from '../assets/images/icons/chevron-down.svg';
+// import { ReactComponent as ChevronDown } from '../assets/images/icons/chevron-down.svg';
+import { IcoChevronDown as ChevronDown } from '@learnway/icons';
 import invariant from './invariant';
 
 import useModal from '../hooks/use-modal';
@@ -722,6 +723,17 @@ function TableCellActionMenuContainer({
     }
     prevTableCellDOM.current = tableCellNode;
   }, [prevTableCellDOM, tableCellNode]);
+
+  //
+  const handleColorPicker = (
+    title: string,
+    getContent: (onClose: () => void) => ReactNode,
+    closeOnClickOutside?: boolean,
+  ) => {
+    if (typeof showColorPickerModal === 'function') {
+      showColorPickerModal(title, getContent, closeOnClickOutside);
+    }
+  };
 
   return (
     <div className="table-cell-action-button-container" ref={menuButtonRef}>

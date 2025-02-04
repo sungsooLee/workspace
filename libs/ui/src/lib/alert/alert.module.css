@@ -1,0 +1,33 @@
+.btn_wrap {
+  @apply flex justify-center pb-[24px] pt-[16px];
+  .btn_cancel + .btn_confirm {
+    @apply ml-[8px];
+  }
+}
+.icon {
+  @apply mb-[8px] flex items-center justify-center pt-[24px];
+  & + .title {
+    @apply pt-[8px];
+  }
+}
+.alert_wrap {
+  @apply -mx-[32px] -my-[24px];
+}
+.title {
+  @apply flex max-h-[80px] items-center justify-center px-[20px] pt-[32px] text-center text-[18px] font-bold text-[var(--gray9)];
+}
+.description {
+  @apply flex max-h-[160px] items-start justify-center overflow-y-auto overflow-x-hidden px-[20px] pb-[20px] pr-[12px] pt-[8px] text-center font-normal text-[var(--gray7)];
+  &.scroll {
+    border-bottom: 1px solid var(--gray3);
+  }
+  &::-webkit-scrollbar {
+    @apply h-[64px] w-[12px] bg-white;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-white;
+  }
+}

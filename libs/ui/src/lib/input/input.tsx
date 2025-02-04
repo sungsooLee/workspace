@@ -1,14 +1,17 @@
 import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
+import { IcoDelete03 } from '@learnway/icons';
 
-import styles from './input.module.scss';
+import styles from './input.module.css';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
+  ({ className, id, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
+    const hasNoBorder = className?.includes('bd_none');
+    const sizeLarge = className?.includes('lg');
+    const errorCase = className?.includes('error');
 
     useEffect(() => {
       setInputValue(value);
@@ -56,23 +59,16 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
       }
     };
 
-    const baseStyles = cn(
-      'w-full rounded-md border px-3 py-2 text-sm',
-      'border-gray-300 bg-white text-gray-900',
-      'placeholder:text-gray-500',
-      'focus:outline-none focus:border-blue-500',
-      'overflow-hidden whitespace-nowrap text-ellipsis',
-      'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
-      {
-        'border-gray-200 bg-gray-100 text-gray-500 text-gray-400 cursor-not-allowed': disabled,
-      },
-    );
+    const baseStyles = cn('', {
+      'cursor-not-allowed': disabled,
+    });
 
     return (
-      <div className={cn(styles.start, 'relative w-full')}>
+      <div className={cn(styles.start, 'nlp--input')}>
         <input
-          className={cn(styles.input, baseStyles, className)}
+          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
           type={type}
+          id={id}
           ref={(el) => {
             inputRef.current = el;
             if (typeof ref === 'function') {
@@ -88,18 +84,14 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           onChange={handleInputChange}
           placeholder={placeholder}
         />
-        <div className={cn(styles.button, 'absolute bottom-0 right-0 top-0 flex w-8 items-center justify-center')}>
+        <div className={cn(styles.button, '')}>
           {isFocused && value && value.toString().length > 0 && (
             <button
               type="button"
               onClick={handleClear}
               onMouseDown={handleMouseDown}
-              className={cn(
-                'rounded-full p-1 hover:bg-gray-100',
-                'text-gray-400 hover:text-gray-600',
-                'focus:outline-none',
-              )}>
-              <X size={16} />
+              className={cn(styles.clear, 'focus:outline-none')}>
+              <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
           )}
         </div>

@@ -13,6 +13,9 @@
         @apply h-[60px] w-auto;
       }
     }
+    .search_form {
+      @apply absolute left-[250px] top-[10px];
+    }
     .util {
       @apply absolute right-[32px] top-[10px] flex items-center;
     }

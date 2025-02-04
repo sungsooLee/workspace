@@ -15,7 +15,7 @@ export const queryOptions = {
     tenantId
       ? {
           queryKey: queryKeys.detail(tenantId),
-          queryFn: () => TenantService.fetchTenant(tenantId),
+          queryFn: (): Promise<any> => TenantService.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
 };

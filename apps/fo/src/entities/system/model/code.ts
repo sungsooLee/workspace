@@ -1,4 +1,5 @@
 export interface CodeRole {
+  codeGroup: string;
   codeRole: string;
   name: string;
   description: string;

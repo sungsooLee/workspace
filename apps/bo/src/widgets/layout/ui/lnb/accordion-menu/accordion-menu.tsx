@@ -13,7 +13,7 @@ import { useCreation } from 'ahooks';
 
 interface AccordionMenuComponentProps {
   menus: Menu[];
-  className: string;
+  className?: string;
   depth: number;
   openAll?: boolean;
   onOpenStateAll?: (open: boolean) => void;
@@ -45,13 +45,11 @@ const AccordionMenuComponent = ({
       return {
         value: menu.key,
         title: (
-          <span className={active ? styles._active : ''}>
+          <span className={active ? styles.active : ''}>
             {menu.path ? <Link to={menu.path}>{menu.title}</Link> : menu.title}
           </span>
         ),
-        children: menu?.children && (
-          <AccordionMenu menus={menu?.children} className={styles._depth3} depth={depth + 1} />
-        ),
+        children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
       } as AccordionItem;
     });
   }, [menus, activeMenuDepth]);
@@ -91,7 +89,7 @@ const AccordionMenuComponent = ({
     <Accordion
       type={'multiple'}
       items={items}
-      className={cn(styles._start, className)}
+      className={cn(styles.start, styles[`depth${depth}`])}
       value={value}
       onValueChange={(e) => handleValueChange(e as string[])}
     />

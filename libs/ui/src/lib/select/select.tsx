@@ -1,13 +1,14 @@
 import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
+import { IcoArrowDown } from '@learnway/icons';
 
 import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
 import useSelect from './logic';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 
-import styles from './select.module.scss';
+import styles from './select.module.css';
 
 export interface SelectComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   options: Array<SelectOption>;
@@ -36,10 +37,10 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     return (
       <div className={cn(styles.start, 'nlp--select')}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
-          <Primitive.Trigger className={styles.SelectTrigger} aria-label="Food">
+          <Primitive.Trigger className={styles.SelectTrigger} aria-label="">
             <Primitive.Value placeholder={placeholder} />
             <Primitive.Icon className={styles.SelectIcon}>
-              <ChevronDownIcon />
+              <IcoArrowDown width={16} height={16} stroke="#131C30" />
             </Primitive.Icon>
           </Primitive.Trigger>
           <Primitive.Portal>
@@ -55,7 +56,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
                 ))}
               </Primitive.Viewport>
               <Primitive.ScrollDownButton className={styles.SelectScrollButton}>
-                <ChevronDownIcon />
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Primitive.ScrollDownButton>
             </Primitive.Content>
           </Primitive.Portal>

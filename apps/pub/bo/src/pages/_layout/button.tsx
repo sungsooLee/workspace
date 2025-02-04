@@ -10,9 +10,7 @@ function RouteComponent() {
   return (
     <div className="content">
       <div>
-        <Button variant="primary" size="xs" disabled>
-          버튼
-        </Button>
+        <Button>버튼</Button>
         <Button variant="primary" size="sm">
           버튼
         </Button>
@@ -111,7 +109,7 @@ function RouteComponent() {
         </Button>
         <Button variant="chips" size="sm" iconAlign="right">
           선택
-          <IcoClose width={12} height={12} />
+          <IcoClose width={12} height={12} stroke="#131C30" />
         </Button>
       </div>
     </div>

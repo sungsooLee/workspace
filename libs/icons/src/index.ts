@@ -14,6 +14,7 @@ export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 brea
 export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
 export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 line
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
+export { ReactComponent as IcoChevronDown } from './lib/ic_chevron_down.svg';
 export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging btn
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
@@ -24,8 +25,16 @@ export { ReactComponent as IcoChevronRightDisabled } from './lib/ic_chevron_righ
 export { ReactComponent as IcoChevronRightDoubleDisabled } from './lib/ic_chevron_right_double_disabled.svg'; // grid paging btn
 export { ReactComponent as IcoArrowBackward } from './lib/ic_arrow_backward.svg'; // grid paging btn
 export { ReactComponent as IcoMenu01 } from './lib/ic_menu-01.svg'; // catagory menu
+export { ReactComponent as IcoConfirm } from './lib/ic_success_alt.svg'; // confirm Icon
+export { ReactComponent as IcoModify } from './lib/ic_pencil_fill.svg';
+export { ReactComponent as IcoTrash } from './lib/ic_trash.svg';
 export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
+export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
+export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
+export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
+export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
+export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 
 //export Default as Information from './lib/information.svg?react';
 

@@ -7,6 +7,6 @@ export const queryKeys = {
 export const queryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
-    queryFn: () => CompanyService.fetchCompanies(),
+    queryFn: (): Promise<any> => CompanyService.fetchCompanies(),
   }),
 };

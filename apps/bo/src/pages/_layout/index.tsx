@@ -19,8 +19,8 @@ function HomeComponent() {
     open({
       title: 'title a',
       description: 'desc a',
-    })
-  }
+    });
+  };
 
   return (
     <div className={cn('flex flex-col gap-10 p-2', styles._start)}>
@@ -62,7 +62,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'}>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'}>
+        <Button size="md" variant={'outline'}>
           작성완료
         </Button>
 
@@ -78,7 +78,7 @@ function HomeComponent() {
         <Button size="lg" variant={'outline'} disabled>
           작성완료
         </Button>
-        <Button size="md-1" variant={'outline'} disabled>
+        <Button size="md" variant={'outline'} disabled>
           작성완료
         </Button>
 

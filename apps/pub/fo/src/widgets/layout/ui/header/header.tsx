@@ -10,6 +10,7 @@ import {
   Navigate,
   Category,
   Tenant,
+  Search,
 } from '../../../../features/layout';
 import styles from './header.module.css';
 
@@ -24,6 +25,10 @@ function HeaderComponent() {
             <Logo />
           </h1>
           <Tenant />
+        </div>
+
+        <div className={styles.search_form}>
+          <Search />
         </div>
 
         <div className={styles.util}>

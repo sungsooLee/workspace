@@ -1,7 +1,10 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
+// import { FamilySite } from '../../../../features/layout';
 import styles from './footer.module.css';
 import logoImage from '../../../../assets/images/logo_footer.png';
+import { Select } from '@learnway/ui';
 
 function FooterComponent() {
   return (
@@ -55,6 +58,26 @@ function FooterComponent() {
                 Copyright © 2023 Hyundai-Autoever. All rights reserved.
               </div>
             </div>
+          </div>
+
+          <div className={styles.family_site_info}>
+            <Select
+              onChange={() => {}}
+              options={[
+                {
+                  label: 'Family site',
+                  value: 'value0',
+                },
+                {
+                  label: 'site1',
+                  value: 'value1',
+                },
+                {
+                  label: 'site2',
+                  value: 'value2',
+                },
+              ]}
+            />
           </div>
         </div>
       </div>

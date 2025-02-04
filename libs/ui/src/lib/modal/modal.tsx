@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as Primitive from '@radix-ui/react-dialog';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { IcoXclose } from '@learnway/icons';
 
 import { BaseModalProps } from './type';
-import styles from './modal.module.scss';
+import { cn } from '@learnway/shared';
+import styles from './modal.module.css';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
   title,
@@ -13,7 +14,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   footer,
   preventBackdropClose = false,
   onClose,
-  width = 'md',
+  width = 'auto',
   height = 'auto',
   hideCloseButton = false,
 }) => {
@@ -24,37 +25,39 @@ const ModalComponent: React.FC<BaseModalProps> = ({
   return (
     <Primitive.Root open={true} onOpenChange={handleOpenChange}>
       <Primitive.Portal>
-        <Primitive.Overlay className={styles.Overlay} />
-        <Primitive.Content className={styles.Content}>
+        <Primitive.Overlay className={styles.overlay} />
+        <Primitive.Content className={cn(styles.content, width && styles[width])}>
           {/* title */}
-          <Primitive.Title className={styles.Title}>{title}</Primitive.Title>
+          <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
           {/* description */}
-          <Primitive.Description className={styles.Description}>
+          <Primitive.Description className={styles.description}>
             {description}
           </Primitive.Description>
 
           {/* children */}
-          <div className={styles.ContentBody}>{children}</div>
+          <div className={styles.content_body}>
+            <div className={`${styles.contents} ${styles.scroll}`}>{children}</div>
+          </div>
 
           {/* footer */}
           {footer && (
-            <div className={styles.Footer}>
-              <Primitive.Close asChild>
+            <div className={styles.footer}>
+              {footer}
+              {/* <Primitive.Close asChild>
                 <button className={`${styles.Button} green`}>{footer}</button>
-              </Primitive.Close>
+              </Primitive.Close> */}
             </div>
           )}
 
           {/* close button */}
           {!hideCloseButton && (
             <Primitive.Close asChild>
-              <button className={styles.IconButton} aria-label="Close">
-                <Cross2Icon />
+              <button className={styles.btn_close} aria-label="Close">
+                <IcoXclose width={24} height={24} stroke="#131C30" />
               </button>
             </Primitive.Close>
           )}
-
         </Primitive.Content>
       </Primitive.Portal>
     </Primitive.Root>

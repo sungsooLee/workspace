@@ -1,0 +1,9 @@
+/* search.module.css */
+.start {
+  &.search {
+    @apply flex h-[40px] w-[260px] items-center justify-between rounded-[100px] border-[1px] border-solid border-[var(--primary2)] bg-[var(--white)] px-[16px];
+  }
+  input {
+    @apply !border-[0] !px-[0] !py-[0] !text-[1.4rem];
+  }
+}
