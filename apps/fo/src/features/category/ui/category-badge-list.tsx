@@ -1,7 +1,13 @@
 import React from 'react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { IcoXclose, IcoArrowForward } from '@learnway/icons';
+import { Button } from '@learnway/ui';
+
 import { Category } from '../../../types/entities/category';
 import { useCategories } from '../services/category.service';
 import { useCategoryNavigation } from '../../../entities/category/service/category.hook';
+import styles from './category-badge-list.module.css';
+import 'swiper/swiper-bundle.css';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;
@@ -47,9 +53,9 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
   // };
 
   return (
-    <div className="flex flex-wrap gap-2 p-4">
-      최근방문
-      {recentCategories.map((category) => (
+    <div className={`${styles.start} ${styles.recent_visits}`}>
+      <h3 className={styles.tit}>최근방문</h3>
+      {/* {recentCategories.map((category) => (
         <div
           key={category.categoryId}
           className="cursor-pointer"
@@ -57,7 +63,44 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
           <span>{category.name}</span>
           <button onClick={(e) => handleClose(e, category.categoryId)}>×</button>
         </div>
-      ))}
+      ))} */}
+      <Swiper
+        spaceBetween={8}
+        slidesPerView="auto"
+        loop={false}
+        navigation={{
+          prevEl: '.recent_button_prev',
+          nextEl: '.recent_button_next',
+        }}
+        className={styles.recent_swiper}>
+        <div className={styles.lists}>
+          {recentCategories.map((item) => (
+            <SwiperSlide key={item.categoryId} className={styles.slide}>
+              <div className={styles.item}>
+                <Button className={styles.txt} onClick={() => handleCategoryClick(item)}>
+                  {item.name}
+                </Button>
+                <Button
+                  aria-label="remove"
+                  onClick={(e) => handleClose(e, item.categoryId)}
+                  className={styles.remove}>
+                  <IcoXclose width={16} height={16} stroke="#131C30" />
+                </Button>
+              </div>
+            </SwiperSlide>
+          ))}
+        </div>
+      </Swiper>
+
+      {/* <Button onClick={() => swiper.slideNext()}>
+        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+      </Button> */}
+      <div className={styles.recent_button_prev}>
+        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+      </div>
+      <div className={styles.recent_button_next}>
+        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+      </div>
     </div>
   );
 }

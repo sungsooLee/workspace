@@ -15,6 +15,67 @@ module.exports = {
   ],
   blocklist: ['outline'],
   plugins: [
-    require('./src/assets/tailwind-plugins/typo.plugin')
+    require('./src/assets/tailwind-plugins/typo.plugin'),
+
+    function ({ addComponents }) {
+      const baseTitle = {
+        letterSpacing: '-0.3px',
+        lineHeight: '140%',
+      };
+
+      addComponents({
+        '.scrollbar': {
+          '&::-webkit-scrollbar': {
+            height: '64px',
+            width: '12px',
+            backgroundColor: '#fff',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px',
+            borderWidth: '4px',
+            borderStyle: 'solid',
+            borderColor: 'transparent',
+            backgroundColor: 'var(--gray4)',
+            backgroundClip: 'padding-box',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#fff',
+          },
+          '.scroll-smooth': {
+            scrollBehavior: 'smooth',
+          },
+        },
+        // title class add
+        '.title_4_b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+      });
+    },
   ],
+
+  theme: {
+    extend: {
+      screens: {
+        mobile: '360px',
+        pc: '1920px',
+      },
+    },
+  },
 };

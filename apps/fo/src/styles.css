@@ -1,6 +1,5 @@
+@import '../../../libs/config/src/lib/style/font.css';
 @import '../../../libs/config/src/lib/style/theme.css';
-
-@import 'tailwindcss/base';
 
 /*
 @tailwind base;
@@ -8,19 +7,20 @@
 @tailwind utilities;
 */
 
-@import './assets/styles/components/index.css';
-
+@import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
+@import './assets/styles/components/index.css';
+@import './assets/styles/global.css';
+
+@layer base {
+}
 
 @layer base {
   * {
     @apply border-border;
   }
-  html {
-    @apply text-[62.5%];
-  }
   body {
-    @apply text-[1.6rem] font-normal leading-[1.6] text-[--gray9];
+    @apply bg-background text-foreground antialiased;
   }
   body,
   html {
@@ -41,8 +41,4 @@
       'Segoe UI Symbol',
       sans-serif;
   }
-}
-
-#root {
-  @apply text-[--gray9];
 }

@@ -1,13 +1,21 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Category, GnbInput, Logo, Notification, Tenants } from '../../../../features/layout';
+import {
+  Category,
+  Search,
+  Logo,
+  Notification,
+  Tenants,
+  AdminLink,
+} from '../../../../features/layout';
 import { Navigate } from './navigate/navigate';
 import { Language } from '../../../../features/layout/ui/language';
 import { UserAvatar } from '../../../../features/layout/ui/user-avatar';
 import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '../../../../entities/user';
 import { Tenant, useFetchTenantByUser } from '../../../../entities/tenant';
+import styles from './gnb.module.css';
 
 function GNBComponent() {
   const { data: userData } = useFetchAuthUser();
@@ -62,23 +70,33 @@ function GNBComponent() {
   }, []);
 
   return (
-    <div className="bg-secondary-1 flex flex-col">
-      <div className="flex items-center gap-10">
-        <Logo activeTenant={activeTenant} />
-        <Tenants
-          tenants={tenants || []}
-          activeTenant={activeTenant}
-          onTenantSwitch={handleTenantSwitch}
-        />
-        <GnbInput />
-        <Language />
-        <Notification />
-        <UserAvatar />
-      </div>
-      <div className="flex items-center gap-10">
-        <Category />
-        <Navigate />
-      </div>
+    <div className={`${styles.start} ${styles.header}`}>
+      <header className={styles.header_area}>
+        <div className={styles.logo_inner}>
+          <h1>
+            <Logo activeTenant={activeTenant} />
+          </h1>
+
+          <Tenants
+            tenants={tenants || []}
+            activeTenant={activeTenant}
+            onTenantSwitch={handleTenantSwitch}
+          />
+        </div>
+        <div className={styles.search_form}>
+          <Search />
+        </div>
+        <div className={styles.util}>
+          <AdminLink />
+          <Language />
+          <Notification />
+          <UserAvatar />
+        </div>
+        <div className={styles.nav_area}>
+          <Category />
+          <Navigate />
+        </div>
+      </header>
     </div>
   );
 }

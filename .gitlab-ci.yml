@@ -7,18 +7,23 @@ cache:
   paths:
     - .pnpm-store
     - node_modules/
+    - apps/*/node_modules
+    - libs/*/node_modules
 
 build:
   stage: build
   image: node:18
   before_script:
+    #
+    - npm config set strict-ssl false
     #pnpm 설치
     - npm install -g pnpm
+    - npm install -g nx
     - pnpm config set store-dir .pnpm-store
   script:
-    - pnpm install
-    - pnpm run build:fo
-    - pnpm run build:bo
+    - pnpm install -y
+    - npx nx build fo
+    - npx nx build bo
   artifacts:
     paths:
       - dist/apps/fo
