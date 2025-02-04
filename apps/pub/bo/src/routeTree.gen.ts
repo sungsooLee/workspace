@@ -19,7 +19,6 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
-import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -80,12 +79,6 @@ const LoginLayoutRoute = LoginLayoutImport.update({
 const LayoutTestRoute = LayoutTestImport.update({
   id: '/test',
   path: '/test',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutGridlistRoute = LayoutGridlistImport.update({
-  id: '/grid_list',
-  path: '/grid_list',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -212,13 +205,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
-    }
-    '/_layout/grid_list': {
-      id: '/_layout/grid_list'
-      path: '/grid_list'
-      fullPath: '/grid_list'
-      preLoaderRoute: typeof LayoutGridlistImport
-      parentRoute: typeof LayoutImport
     }
     '/_layout/test': {
       id: '/_layout/test'
@@ -416,7 +402,6 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
-  LayoutGridlistRoute: typeof LayoutGridlistRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
@@ -425,7 +410,6 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutGridlistRoute: LayoutGridlistRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
@@ -450,7 +434,6 @@ const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
-  '/grid_list': typeof LayoutGridlistRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginLayoutRoute
   '/': typeof LayoutIndexRoute
@@ -476,7 +459,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
-  '/grid_list': typeof LayoutGridlistRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginIndexRoute
   '/': typeof LayoutIndexRoute
@@ -503,7 +485,6 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/grid_list': typeof LayoutGridlistRoute
   '/_layout/test': typeof LayoutTestRoute
   '/login': typeof LoginRouteWithChildren
   '/login/_layout': typeof LoginLayoutRoute
@@ -532,7 +513,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/grid_list'
     | '/test'
     | '/login'
     | '/'
@@ -557,7 +537,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/grid_list'
     | '/test'
     | '/login'
     | '/'
@@ -582,7 +561,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_guide'
     | '/_layout'
-    | '/_layout/grid_list'
     | '/_layout/test'
     | '/login'
     | '/login/_layout'
@@ -657,17 +635,12 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
-        "/_layout/grid_list",
         "/_layout/test",
         "/_layout/",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/menu3/"
       ]
-    },
-    "/_layout/grid_list": {
-      "filePath": "_layout/grid_list.tsx",
-      "parent": "/_layout"
     },
     "/_layout/test": {
       "filePath": "_layout/test.tsx",
