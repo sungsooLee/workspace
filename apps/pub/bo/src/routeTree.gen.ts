@@ -19,21 +19,22 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
-import { Route as LayoutModalImport } from './pages/_layout/modal'
 import { Route as LayoutGridlistImport } from './pages/_layout/grid_list'
-import { Route as LayoutFormImport } from './pages/_layout/form'
-import { Route as LayoutButtonImport } from './pages/_layout/button'
-import { Route as LayoutAlertImport } from './pages/_layout/alert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
+import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
+import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
+import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
 import { Route as GuideGuideButtonImport } from './pages/_guide/guide/button'
+import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 import { Route as GuideGuideComponentsLayoutImport } from './pages/_guide/guide/components/Layout'
 import { Route as GuideGuideComponentsButtonImport } from './pages/_guide/guide/components/Button'
 
@@ -82,33 +83,9 @@ const LayoutTestRoute = LayoutTestImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutModalRoute = LayoutModalImport.update({
-  id: '/modal',
-  path: '/modal',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutGridlistRoute = LayoutGridlistImport.update({
   id: '/grid_list',
   path: '/grid_list',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutFormRoute = LayoutFormImport.update({
-  id: '/form',
-  path: '/form',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutButtonRoute = LayoutButtonImport.update({
-  id: '/button',
-  path: '/button',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutAlertRoute = LayoutAlertImport.update({
-  id: '/alert',
-  path: '/alert',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -148,6 +125,12 @@ const GuideGuideRespondRoute = GuideGuideRespondImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideModalRoute = GuideGuideModalImport.update({
+  id: '/guide/modal',
+  path: '/guide/modal',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
@@ -160,15 +143,39 @@ const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideGridRoute = GuideGuideGridImport.update({
+  id: '/guide/grid',
+  path: '/guide/grid',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideFormRoute = GuideGuideFormImport.update({
+  id: '/guide/form',
+  path: '/guide/form',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideColorRoute = GuideGuideColorImport.update({
   id: '/guide/color',
   path: '/guide/color',
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
+  id: '/guide/buttons',
+  path: '/guide/buttons',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideButtonRoute = GuideGuideButtonImport.update({
   id: '/guide/button',
   path: '/guide/button',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideAlertRoute = GuideGuideAlertImport.update({
+  id: '/guide/alert',
+  path: '/guide/alert',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -206,39 +213,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/alert': {
-      id: '/_layout/alert'
-      path: '/alert'
-      fullPath: '/alert'
-      preLoaderRoute: typeof LayoutAlertImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/button': {
-      id: '/_layout/button'
-      path: '/button'
-      fullPath: '/button'
-      preLoaderRoute: typeof LayoutButtonImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/form': {
-      id: '/_layout/form'
-      path: '/form'
-      fullPath: '/form'
-      preLoaderRoute: typeof LayoutFormImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/grid_list': {
       id: '/_layout/grid_list'
       path: '/grid_list'
       fullPath: '/grid_list'
       preLoaderRoute: typeof LayoutGridlistImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/modal': {
-      id: '/_layout/modal'
-      path: '/modal'
-      fullPath: '/modal'
-      preLoaderRoute: typeof LayoutModalImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/test': {
@@ -276,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof LoginImport
     }
+    '/_guide/guide/alert': {
+      id: '/_guide/guide/alert'
+      path: '/guide/alert'
+      fullPath: '/guide/alert'
+      preLoaderRoute: typeof GuideGuideAlertImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/button': {
       id: '/_guide/guide/button'
       path: '/guide/button'
@@ -283,11 +269,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideButtonImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/buttons': {
+      id: '/_guide/guide/buttons'
+      path: '/guide/buttons'
+      fullPath: '/guide/buttons'
+      preLoaderRoute: typeof GuideGuideButtonsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/color': {
       id: '/_guide/guide/color'
       path: '/guide/color'
       fullPath: '/guide/color'
       preLoaderRoute: typeof GuideGuideColorImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/form': {
+      id: '/_guide/guide/form'
+      path: '/guide/form'
+      fullPath: '/guide/form'
+      preLoaderRoute: typeof GuideGuideFormImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/grid': {
+      id: '/_guide/guide/grid'
+      path: '/guide/grid'
+      fullPath: '/guide/grid'
+      preLoaderRoute: typeof GuideGuideGridImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/info': {
@@ -302,6 +309,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/layout'
       fullPath: '/guide/layout'
       preLoaderRoute: typeof GuideGuideLayoutImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/modal': {
+      id: '/_guide/guide/modal'
+      path: '/guide/modal'
+      fullPath: '/guide/modal'
+      preLoaderRoute: typeof GuideGuideModalImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/respond': {
@@ -366,10 +380,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface GuideRouteChildren {
+  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
   GuideGuideButtonRoute: typeof GuideGuideButtonRoute
+  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideFormRoute: typeof GuideGuideFormRoute
+  GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
+  GuideGuideModalRoute: typeof GuideGuideModalRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -378,10 +397,15 @@ interface GuideRouteChildren {
 }
 
 const GuideRouteChildren: GuideRouteChildren = {
+  GuideGuideAlertRoute: GuideGuideAlertRoute,
   GuideGuideButtonRoute: GuideGuideButtonRoute,
+  GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideFormRoute: GuideGuideFormRoute,
+  GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
+  GuideGuideModalRoute: GuideGuideModalRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -392,11 +416,7 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
-  LayoutAlertRoute: typeof LayoutAlertRoute
-  LayoutButtonRoute: typeof LayoutButtonRoute
-  LayoutFormRoute: typeof LayoutFormRoute
   LayoutGridlistRoute: typeof LayoutGridlistRoute
-  LayoutModalRoute: typeof LayoutModalRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
@@ -405,11 +425,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutAlertRoute: LayoutAlertRoute,
-  LayoutButtonRoute: LayoutButtonRoute,
-  LayoutFormRoute: LayoutFormRoute,
   LayoutGridlistRoute: LayoutGridlistRoute,
-  LayoutModalRoute: LayoutModalRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
@@ -434,19 +450,20 @@ const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
-  '/alert': typeof LayoutAlertRoute
-  '/button': typeof LayoutButtonRoute
-  '/form': typeof LayoutFormRoute
   '/grid_list': typeof LayoutGridlistRoute
-  '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginLayoutRoute
   '/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/button': typeof GuideGuideButtonRoute
+  '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/form': typeof GuideGuideFormRoute
+  '/guide/grid': typeof GuideGuideGridRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/modal': typeof GuideGuideModalRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
@@ -459,18 +476,19 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
-  '/alert': typeof LayoutAlertRoute
-  '/button': typeof LayoutButtonRoute
-  '/form': typeof LayoutFormRoute
   '/grid_list': typeof LayoutGridlistRoute
-  '/modal': typeof LayoutModalRoute
   '/test': typeof LayoutTestRoute
   '/login': typeof LoginIndexRoute
   '/': typeof LayoutIndexRoute
+  '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/button': typeof GuideGuideButtonRoute
+  '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/form': typeof GuideGuideFormRoute
+  '/guide/grid': typeof GuideGuideGridRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/modal': typeof GuideGuideModalRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
@@ -485,20 +503,21 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/alert': typeof LayoutAlertRoute
-  '/_layout/button': typeof LayoutButtonRoute
-  '/_layout/form': typeof LayoutFormRoute
   '/_layout/grid_list': typeof LayoutGridlistRoute
-  '/_layout/modal': typeof LayoutModalRoute
   '/_layout/test': typeof LayoutTestRoute
   '/login': typeof LoginRouteWithChildren
   '/login/_layout': typeof LoginLayoutRoute
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/button': typeof GuideGuideButtonRoute
+  '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
+  '/_guide/guide/form': typeof GuideGuideFormRoute
+  '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
+  '/_guide/guide/modal': typeof GuideGuideModalRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
@@ -513,19 +532,20 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/alert'
-    | '/button'
-    | '/form'
     | '/grid_list'
-    | '/modal'
     | '/test'
     | '/login'
     | '/'
     | '/login/'
+    | '/guide/alert'
     | '/guide/button'
+    | '/guide/buttons'
     | '/guide/color'
+    | '/guide/form'
+    | '/guide/grid'
     | '/guide/info'
     | '/guide/layout'
+    | '/guide/modal'
     | '/guide/respond'
     | '/guide/typography'
     | '/menu4/menu5'
@@ -537,18 +557,19 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/alert'
-    | '/button'
-    | '/form'
     | '/grid_list'
-    | '/modal'
     | '/test'
     | '/login'
     | '/'
+    | '/guide/alert'
     | '/guide/button'
+    | '/guide/buttons'
     | '/guide/color'
+    | '/guide/form'
+    | '/guide/grid'
     | '/guide/info'
     | '/guide/layout'
+    | '/guide/modal'
     | '/guide/respond'
     | '/guide/typography'
     | '/menu4/menu5'
@@ -561,20 +582,21 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_guide'
     | '/_layout'
-    | '/_layout/alert'
-    | '/_layout/button'
-    | '/_layout/form'
     | '/_layout/grid_list'
-    | '/_layout/modal'
     | '/_layout/test'
     | '/login'
     | '/login/_layout'
     | '/_layout/'
     | '/login/'
+    | '/_guide/guide/alert'
     | '/_guide/guide/button'
+    | '/_guide/guide/buttons'
     | '/_guide/guide/color'
+    | '/_guide/guide/form'
+    | '/_guide/guide/grid'
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
+    | '/_guide/guide/modal'
     | '/_guide/guide/respond'
     | '/_guide/guide/typography'
     | '/_layout/menu4/menu5'
@@ -616,10 +638,15 @@ export const routeTree = rootRoute
     "/_guide": {
       "filePath": "_guide.tsx",
       "children": [
+        "/_guide/guide/alert",
         "/_guide/guide/button",
+        "/_guide/guide/buttons",
         "/_guide/guide/color",
+        "/_guide/guide/form",
+        "/_guide/guide/grid",
         "/_guide/guide/info",
         "/_guide/guide/layout",
+        "/_guide/guide/modal",
         "/_guide/guide/respond",
         "/_guide/guide/typography",
         "/_guide/guide/",
@@ -630,11 +657,7 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
-        "/_layout/alert",
-        "/_layout/button",
-        "/_layout/form",
         "/_layout/grid_list",
-        "/_layout/modal",
         "/_layout/test",
         "/_layout/",
         "/_layout/menu4/menu5",
@@ -642,24 +665,8 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
-    "/_layout/alert": {
-      "filePath": "_layout/alert.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/button": {
-      "filePath": "_layout/button.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/form": {
-      "filePath": "_layout/form.tsx",
-      "parent": "/_layout"
-    },
     "/_layout/grid_list": {
       "filePath": "_layout/grid_list.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/modal": {
-      "filePath": "_layout/modal.tsx",
       "parent": "/_layout"
     },
     "/_layout/test": {
@@ -685,12 +692,28 @@ export const routeTree = rootRoute
       "filePath": "login/index.tsx",
       "parent": "/login"
     },
+    "/_guide/guide/alert": {
+      "filePath": "_guide/guide/alert.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/button": {
       "filePath": "_guide/guide/button.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/buttons": {
+      "filePath": "_guide/guide/buttons.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/color": {
       "filePath": "_guide/guide/color.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/form": {
+      "filePath": "_guide/guide/form.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/grid": {
+      "filePath": "_guide/guide/grid.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/info": {
@@ -699,6 +722,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/layout": {
       "filePath": "_guide/guide/layout.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/modal": {
+      "filePath": "_guide/guide/modal.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/respond": {
