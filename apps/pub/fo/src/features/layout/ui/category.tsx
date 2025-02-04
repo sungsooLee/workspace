@@ -394,7 +394,7 @@ const CategoryCompoment = () => {
                     </Button>
                   </div>
 
-                  {openStates[index] && (
+                  {!openStates[index] && (
                     <div className={styles.depth_info}>
                       <ul className={styles.list}>
                         {category.subCategories.map((sub, subIndex) => (
