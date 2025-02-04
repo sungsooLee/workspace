@@ -11,6 +11,11 @@
             @apply font-bold;
           }
         }
+        &.division {
+          &::before {
+            @apply inline-block h-5 w-px bg-[var(--gray5)] content-[''];
+          }
+        }
       }
     }
   }

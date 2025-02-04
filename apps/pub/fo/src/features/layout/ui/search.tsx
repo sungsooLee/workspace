@@ -7,7 +7,7 @@ import { IcoSearch } from '@learnway/icons';
 const SearchCompoment = () => {
   return (
     <div className={`${styles.start} ${styles.search}`}>
-      <Input placeholder="현대 자동차" type="text" />
+      <Input placeholder="검색어를 입력해주세요." type="text" />
       <Button aria-label="search">
         <IcoSearch width={20} height={20} stroke="#131C30" />
       </Button>

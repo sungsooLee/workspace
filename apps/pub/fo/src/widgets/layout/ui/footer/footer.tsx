@@ -34,8 +34,8 @@ function FooterComponent() {
                   <Link to={''}>이용약관</Link>
                 </li>
                 <li>
-                  <Link to={''} className={styles.active}>
-                    개인정보 처리방침
+                  <Link to={''}>
+                    <span>개인정보 처리방침</span>
                   </Link>
                 </li>
               </ul>
