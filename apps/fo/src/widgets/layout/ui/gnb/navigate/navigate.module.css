@@ -1,10 +1,22 @@
-._start {
-  display: flex;
-  height: 100%;
-  /*background-color: red !important;*/
-
-  ._active {
-    color: red;
+/* navigate.module.css */
+.start {
+  .nav {
+    ul {
+      @apply flex justify-start gap-[48px];
+      > li {
+        a {
+          color: var(--gray9);
+          @apply inline-flex h-[56px] items-center text-[1.6rem];
+          &:hover {
+            @apply font-bold;
+          }
+        }
+        &.division {
+          &::before {
+            @apply inline-block h-5 w-px bg-[var(--gray5)] content-[''];
+          }
+        }
+      }
+    }
   }
-  /* 2depth 메뉴 레이어 */
 }

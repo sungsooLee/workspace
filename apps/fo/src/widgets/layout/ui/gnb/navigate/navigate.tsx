@@ -1,9 +1,9 @@
 import { memo, useState } from 'react';
 import { useMenuHierarchy } from '../../../service/menu.service';
 import { Menu } from '../../../../../types';
-import styles from './navigate.module.css';
 import { useMatchRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useActiveMenuDepthState } from '../../../../../features/layout';
+import styles from './navigate.module.css';
 
 interface LayerProps {
   menus: Menu[];
@@ -71,19 +71,21 @@ function NavigateComponent() {
   };
 
   return (
-    <nav onMouseLeave={handleMouseLeave}>
-      <ul className="flex space-x-2" onMouseEnter={handleMouseEnter}>
-        {menus?.map((menu: Menu) => (
-          <li key={menu.id}>
-            <button type="button" className={isActiveMenu(menu) ? 'text-red-500' : ''}>
+    <div className={`${styles.start} ${styles.navigate}`}>
+      <nav className={styles.nav} onMouseLeave={handleMouseLeave}>
+        <ul onMouseEnter={handleMouseEnter}>
+          {menus?.map((menu: Menu) => (
+            <li key={menu.id}>
+              {/* <button type="button" className={isActiveMenu(menu) ? 'text-red-500' : ''}> */}
               {menu.title}
-            </button>
-          </li>
-        ))}
-      </ul>
+              {/* </button> */}
+            </li>
+          ))}
+        </ul>
 
-      <MenuLayer menus={menus} isVisible={isHovered} />
-    </nav>
+        <MenuLayer menus={menus} isVisible={isHovered} />
+      </nav>
+    </div>
   );
 }
 
