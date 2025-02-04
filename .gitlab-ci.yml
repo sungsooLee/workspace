@@ -1,3 +1,7 @@
+default:
+  tags:
+    - docker
+
 stages:
   - build
 
@@ -21,12 +25,12 @@ build:
     - npm install -g nx
     - pnpm config set store-dir .pnpm-store
   script:
-    - pnpm install -y
+    - pnpm install --no-frozen-lockfile
     - npx nx build fo
-    - npx nx build bo
+    # - npx nx build bo
   artifacts:
     paths:
       - dist/apps/fo
-      - dist/apps/bo
+      # - dist/apps/bo
   only:
     - main

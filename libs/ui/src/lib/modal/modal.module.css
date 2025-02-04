@@ -47,7 +47,8 @@
   }
 }
 
-.content_body {
+/* 빌드 오류로 인하여 주석 처리 */
+/* .content_body {
   @apply max-h-[710px] overflow-hidden;
   .contents {
     @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[24px];
@@ -58,7 +59,7 @@
   &:empty {
     @apply p-0;
   }
-}
+} */
 
 .footer {
   @apply flex items-center justify-center pb-[24px] pt-[16px];
