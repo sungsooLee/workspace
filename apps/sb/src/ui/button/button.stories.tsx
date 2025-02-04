@@ -1,39 +1,44 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@learnway/ui';
+import { Button, Radio } from '@learnway/ui';
 import { Camera } from 'lucide-react';
 
 export default {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  argTypes: {},
+  args: {
+    variant: 'primary',
+    size: 'md'
+  },
 } as Meta;
-type Story = StoryObj<typeof Button>;
 
-const Template: React.FC<any> = (args) => {
-  return <Button {...args}>Button</Button>;
-};
-
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const ButtonStory: Story = {
-  name: 'Button',
-  args: {
-  },
-  render: (args) => <Template {...args} />,
-};
-
-export const LoadingButton: Story = {
-  args: {
-    isLoading: true,
-  },
-  render: (args) => <Template {...args} />,
+// Button
+export const Template: any = (args: any) => {
+  return (
+    <Button {...args}>Button</Button>
+  )
 }
+Template.storyName = 'Button';
+Template.args = {};
 
-export const IconButton: Story = {
-  args: {
-    icon: <Camera />,
-  },
-  render: (args) => <Template {...args} />,
+
+// Loading Button
+export const TemplateLoading: any = (args: any) => {
+  return (
+    <Button {...args} isLoading={true}>Button</Button>
+  )
 }
+TemplateLoading.storyName = 'Loading Button';
+TemplateLoading.args = {};
+
+
+// Icon Button
+export const TemplateIcon: any = (args: any) => {
+  return (
+    <Button {...args} icon={<Camera />}>Button</Button>
+  )
+}
+TemplateIcon.storyName = 'Icon Button';
+TemplateIcon.args = {};

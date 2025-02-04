@@ -1,6 +1,3 @@
-@tailwind components;
-@tailwind utilities;
-
 .guide_wrap {
   @apply flex;
   height: 100dvh;

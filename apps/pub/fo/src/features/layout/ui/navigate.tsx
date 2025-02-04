@@ -8,6 +8,12 @@ function NavigateComponent() {
       <nav className={styles.nav}>
         <ul>
           <li>
+            <Link to={'/'}>기술인증</Link>
+          </li>
+          <li>
+            <Link to={'/'}>수강신청</Link>
+          </li>
+          <li className={styles.division}>
             <Link to={'/'}>교육제도</Link>
           </li>
           <li>

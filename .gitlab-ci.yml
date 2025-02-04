@@ -1,27 +1,52 @@
+default:
+  tags:
+    - docker
+
 stages:
-  - build
+  # - build
+  - deploy
 
 # pnpm 관련 캐시 설정
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .pnpm-store
-    - node_modules/
+# cache:
+#   key: ${CI_COMMIT_REF_SLUG}
+#   paths:
+#     - .pnpm-store
+#     - node_modules/
+#     - apps/*/node_modules
+#     - libs/*/node_modules
 
-build:
-  stage: build
-  image: node:18
-  before_script:
-    #pnpm 설치
-    - npm install -g pnpm
-    - pnpm config set store-dir .pnpm-store
+# build:
+#   stage: build
+#   image: node:18
+#   before_script:
+#     #
+#     - npm config set strict-ssl false
+#     #pnpm 설치
+#     - npm install -g pnpm
+#     - npm install -g nx
+#     - pnpm config set store-dir .pnpm-store
+#   script:
+#     - pnpm install --no-frozen-lockfile
+#     - npx nx build fo
+#     # - npx nx build bo
+#   artifacts:
+#     paths:
+#       - dist/apps/fo
+#       # - dist/apps/bo
+#   only:
+#     - main
+
+deploy:
+  stage: deploy
+  image: amazon/aws-cli
+  # dependencies: # build 단계의 artifacts 를 사용.
+  #   - build
   script:
-    - pnpm install
-    - pnpm run build:fo
-    - pnpm run build:bo
-  artifacts:
-    paths:
-      - dist/apps/fo
-      - dist/apps/bo
+    # AWS 자격 증명 설정
+    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID_DEV}
+    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY_DEV}
+    - aws configure set region ${AWS_DEFAULT_REGION}
+    - aws s3 ls
+    - aws s3 sync dist/apps/fo s3://hmgnlp-dev-front-web/fo --delete
   only:
     - main

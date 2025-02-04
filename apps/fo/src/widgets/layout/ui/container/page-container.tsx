@@ -17,7 +17,7 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
 
   return (
     <div className="bg-secondary-1 flex flex-col">
-      <div>{title}</div>
+      {/* <div>{title}</div> */}
       <div>{children}</div>
     </div>
   );

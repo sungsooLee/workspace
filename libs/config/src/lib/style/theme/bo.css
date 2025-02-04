@@ -1,0 +1,30 @@
+:root {
+  /* gray Scale */
+  --white: #ffffff;
+
+  --gray1: #f4f8ff; /* BG */
+  --gray2: #eaf1fa;
+  --gray3: #dee7f3;
+  --gray4: #c8d2e5;
+  --gray5: #b5c2d7;
+  --gray6: #8c97ae;
+  --gray7: #747d91;
+  --gray8: #5c636e;
+  --gray9: #3e4550;
+  --gray10: #131c30;
+
+  /* button */
+  --primary1: #07287e;
+  --primary2: #0f3492;
+  --primary3: #06226a;
+
+  --secondary1: #00afd5;
+  --secondary2: #0093bc;
+  --secondary3: #00b6de;
+
+  /* Support */
+  --status1: #ff4646;
+  --status2: #ffb902;
+  --status3: #3eb838;
+  --status4: #926bea;
+}

@@ -4,10 +4,11 @@ import { useRouter } from '@tanstack/react-router';
 import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
-import { Avatar, Popover } from '@learnway/ui';
+import { Avatar, Button, Popover } from '@learnway/ui';
 
 import { useFetchAuthUser, useLogoutUser } from '../../../entities/user';
 import { Tenant } from '../../../entities/tenant';
+import styles from './user-avatar.module.css';
 
 interface ProfileMenu {
   title: string;
@@ -60,7 +61,16 @@ const AvatarCompoment = () => {
 
   return (
     <Popover popoverContent={<PopoverContent />}>
-      <Avatar imageUrl="https://github.com/shadcn.png" fallback={data?.email} />
+      <Button className={styles.btn_avatar}>
+        {data ? (
+          <Avatar imageUrl="https://github.com/shadcn.png" />
+        ) : (
+          // 아바타 이미지 없는 경우 CASE
+          <span className={styles.name}>
+            <em className={styles.text}>{'김'}</em>
+          </span>
+        )}
+      </Button>
     </Popover>
   );
 };

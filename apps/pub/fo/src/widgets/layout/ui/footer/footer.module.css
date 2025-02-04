@@ -22,9 +22,7 @@
             @apply flex gap-[48px];
             > li {
               a {
-                &.active {
-                  @apply text-[var(--gray5)];
-                }
+                @apply text-[var(--gray5)];
               }
             }
           }
@@ -38,7 +36,6 @@
             .address {
               @apply mt-[8px];
               .tel {
-                @apply text-[var(--secondary1)];
               }
             }
             .copyright {

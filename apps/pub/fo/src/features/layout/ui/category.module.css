@@ -71,17 +71,16 @@
       .btn_cate {
         @apply inline-block pl-[10px];
         svg {
-          @apply rotate-0;
+          @apply rotate-180;
           transition: all 0.1s linear;
         }
-      }
-      &.active {
-        .btn_cate {
+        &.active {
           svg {
             @apply rotate-0;
           }
         }
       }
+
       @apply scrollbar relative h-screen w-full overflow-auto px-[40px];
       .tit_head {
         @apply body_3_b mb-[16px] flex justify-between border-b border-solid border-b-[var(--primary2)] py-[14px] text-[var(--primary2)];
@@ -90,9 +89,6 @@
         @apply pb-[40px];
         .tit {
           @apply body_3_b flex justify-between border-b border-solid border-b-[var(--gray4)] py-[13px] text-[var(--gray8)];
-        }
-        .btn_cate {
-          @apply inline-block pl-[10px];
         }
         .depth_info {
           @apply pt-[16px];
