@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState, useCallback } from 'react';
 import { cn } from '@learnway/shared';
 import { Input } from './input';
 
-import styles from './debounced-input.module.scss';
+import styles from './debounced-input.module.css';
 
 interface DebouncedInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

@@ -1,22 +1,58 @@
-/* gnb.module.css */
+/* header.module.css */
 .start {
   .header {
     @apply relative bg-[#012277] px-[32px];
     h1 {
+      @apply inline-flex items-center;
       img {
         @apply h-[60px] w-auto;
       }
+      .title {
+        @apply relative ml-[6px] box-border inline-flex min-h-[60px] pl-[6px] pt-[24px] text-[16px] font-bold text-white;
+        &::before {
+          @apply absolute left-0 top-[36px] -mt-[6px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
+        }
+      }
     }
     .nav_area {
+      .nav {
+        ul {
+          @apply flex justify-start gap-[48px];
+          > li {
+            a {
+              color: var(--white);
+              @apply inline-flex h-[40px] items-center text-[20px];
+              &:hover {
+                @apply font-bold;
+              }
+            }
+          }
+        }
+      }
     }
     .util {
-      @apply absolute right-8 top-0 mt-[10px] flex items-center;
-      button + button {
-        @apply ml-[25px];
+      @apply absolute right-[32px] top-[10px] flex items-center;
+      button:not(:nth-child(1)) {
+        @apply ml-[24px];
       }
     }
     .quick_menu {
-      @apply absolute bottom-0 right-[32px];
+      @apply absolute bottom-[8px] right-0 min-w-[380px];
+      ul {
+        @apply flex;
+        > li {
+          a {
+            color: var(--white);
+            @apply inline-flex h-[40px] items-center text-[16px];
+          }
+        }
+        & + button {
+          @apply relative;
+          &::before {
+            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white opacity-15 content-[''];
+          }
+        }
+      }
     }
   }
 }

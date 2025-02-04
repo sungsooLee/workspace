@@ -2,9 +2,8 @@ import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent } from '@learnway/ui';
-import { Accordion } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { Button } from '@learnway/ui';
+import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
@@ -16,6 +15,7 @@ function LNBComponent() {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
+  const [toggleLnb, setToggleLnb] = useState<boolean>(true);
   const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
@@ -56,22 +56,12 @@ function LNBComponent() {
     }
   };
 
+  const handleToggleLnb = () => {
+    setToggleLnb((prev) => !prev);
+  };
+  console.log('menus activeMenuDepth', activeMenuDepth);
   return (
-    // <div className={cn(styles.start, 'nlp--lnb')}>
-    //   <div className={styles.lnb_wrap}>
-    //     <h2 className={styles.lnb_title}>
-    //       <span>{activeMenuDepth[0].title}</span>
-    //     </h2>
-    //     {activeMenuDepth[0]?.children && (
-    //       <AccordionMenu
-    //         menus={activeMenuDepth[0]?.children}
-    //         depth={2}
-    //         className={styles._depth2}
-    //       />
-    //     )}
-    //   </div>
-    // </div>
-    <div className={`${styles.start} nlp--lnb`}>
+    <div className={`${styles.start} nlp--lnb ${toggleLnb ? `${styles.open}` : `${styles.close}`}`}>
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>
           <button
@@ -86,12 +76,19 @@ function LNBComponent() {
           <AccordionMenu
             menus={menus}
             depth={2}
-            className={styles._depth2}
             openAll={openAll}
             onOpenStateAll={(e) => handleOpenStateAll(e as boolean)}
           />
         )}
       </div>
+      {/* lnb toggle button */}
+      <Button
+        className={styles.btn_toggle}
+        onlyIcon
+        aria-expanded={toggleLnb}
+        onClick={handleToggleLnb}>
+        <IcoArrowBackward width={20} height={20} stroke="#131C30" />
+      </Button>
     </div>
   );
 }

@@ -13,16 +13,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
-    &::-webkit-scrollbar {
-      @apply h-[64px] w-[12px] bg-white;
-    }
-    &::-webkit-scrollbar-thumb {
-      @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
-    }
-    &::-webkit-scrollbar-track {
-      @apply bg-white;
-    }
+    @apply bg-background text-foreground scrollbar antialiased;
   }
   html {
     font-family:

@@ -1,18 +1,21 @@
 .start {
   &.btn {
-    @apply box-border inline-flex items-center justify-start;
+    @apply box-border inline-flex items-center justify-start leading-[1rem];
     /* Size ( 28 | 32 | 36 | 40 ) */
     &.xs {
-      @apply h-[28px] justify-center px-[12px];
+      @apply h-[28px] min-w-[48px] justify-center px-[6px];
     }
     &.sm {
-      @apply h-[32px] justify-center px-[12px];
+      @apply h-[32px] min-w-[48px] justify-center px-[6px];
     }
     &.md {
-      @apply h-[36px] min-w-[60px] justify-center px-[12px];
+      @apply h-[36px] min-w-[60px] justify-center px-[6px];
     }
     &.lg {
-      @apply h-[40px] min-w-[80px] justify-center px-[8px];
+      @apply h-[40px] min-w-[80px] justify-center px-[6px];
+    }
+    & + .btn {
+      @apply ml-[8px];
     }
   }
 }
@@ -29,7 +32,7 @@
   }
 }
 .line {
-  @apply justify-center rounded-[4px] text-[14px] font-bold text-[var(--secondary1)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[14px] font-bold text-[var(--secondary1)];
   border: 1px solid var(--secondary1);
   &:hover {
     @apply text-[var(--secondary2)];
@@ -45,7 +48,7 @@
   }
 }
 .gray {
-  @apply justify-center rounded-[4px] text-[14px] font-bold text-[var(--gray8)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[14px] font-bold text-[var(--gray8)];
   border: 1px solid var(--gray6);
   &:hover {
     @apply text-[var(--gray7)];
@@ -61,7 +64,7 @@
   }
 }
 .gray2 {
-  @apply justify-center rounded-[4px] text-[13px] font-medium text-[var(--gray8)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[13px] font-medium text-[var(--gray8)];
   border: 1px solid var(--gray5);
   &:hover {
     @apply text-[var(--gray8)];
@@ -80,7 +83,7 @@
   }
 }
 .search {
-  @apply justify-center rounded-[4px] pl-[8px] pr-[10px] text-[13px] font-bold text-[var(--gray9)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] pl-[8px] pr-[10px] text-[13px] font-bold text-[var(--gray9)];
   border: 1px solid var(--gray4);
   svg {
     @apply -ml-[2px] mr-[2px];
@@ -174,7 +177,7 @@
   }
 }
 .point {
-  @apply justify-center rounded-[4px] text-[13px] font-bold text-[var(--primary2)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[13px] font-bold text-[var(--primary2)];
   border: 1px solid var(--primary2);
   &:hover {
     @apply text-[var(--primary3)];

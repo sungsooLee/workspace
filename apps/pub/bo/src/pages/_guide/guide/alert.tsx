@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModalControl } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/alert')({
+export const Route = createFileRoute('/_guide/guide/alert')({
   component: RouteComponent,
 });
 
@@ -54,8 +54,6 @@ function RouteComponent() {
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'error',
     });
   };
   const handleClickAlert4 = () => {
@@ -108,6 +106,9 @@ function RouteComponent() {
   };
   return (
     <div className="content">
+      <h2 className="guide_tit2">Confirm, Alert Component Guide</h2>
+      <p className="loc react">Confirm, Alert(아이콘 케이스에 따라 사용)</p>
+      <h3 className="guide_tit3">Confirm</h3>
       <Button variant="text" onClick={() => handleClickAlert()}>
         Confirm창 열기
       </Button>
@@ -116,8 +117,7 @@ function RouteComponent() {
       <Button variant="text" onClick={() => handleClickAlert2()}>
         Confirm창 열기(아이콘 case)
       </Button>
-      <br />
-      <br />
+      <h3 className="guide_tit3">Alert</h3>
       <Button variant="text" onClick={() => handleClickAlert3()}>
         Alert창 열기(아이콘 X)
       </Button>

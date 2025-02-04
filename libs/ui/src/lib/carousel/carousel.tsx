@@ -4,7 +4,7 @@ import { Navigation } from 'swiper/modules';
 
 import { cn } from '@learnway/shared';
 
-import styles from './carousel.module.scss';
+import styles from './carousel.module.css';
 
 import 'swiper/css';
 import 'swiper/css/navigation';

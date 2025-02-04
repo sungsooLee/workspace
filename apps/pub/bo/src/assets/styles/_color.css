@@ -6,10 +6,10 @@
   --white: #ffffff;
 
   --gray1: #f4f8ff; /* BG */
-  --gray2: #eaf1fa; /* Table_bg */
-  --gray3: #dee7f3; /* Table_line */
+  --gray2: #eaf1fa;
+  --gray3: #dee7f3;
   --gray4: #c8d2e5;
-  --gray5: #b5c2d7; /* Disable_txt, Inputfield */
+  --gray5: #b5c2d7;
   --gray6: #8c97ae;
   --gray7: #747d91;
   --gray8: #5c636e;
@@ -17,25 +17,17 @@
   --gray10: #131c30;
 
   /* button */
-  --primary1: #06226a; /* 버튼 프레스 */
-  --primary2: #07287e;
-  --primary3: #0f3492; /* 버튼 호버 */
-  --primary4: #3f5da8;
+  --primary1: #07287e;
+  --primary2: #0f3492;
+  --primary3: #06226a;
 
   --secondary1: #00afd5;
-  --secondary2: #00b6de; /* 버튼 호버 */
-  --secondary3: #0093bc; /* 버튼 프레스 */
-  --secondary4: #b2e7f2;
-  --secondary5: #edfcff; /* select */
-  --secondary6: #ffeded; /* bg */
-  --secondary7: #ffdada; /* red plus */
-  --secondary8: #f7feff; /* red bg */
-  --secondary9: #ffeded; /* contents bg */
-  --secondary10: #f6f8fd; /* table bg */
+  --secondary2: #0093bc;
+  --secondary3: #00b6de;
 
   /* Support */
-  --status1: #ff4646; /* Error */
-  --status2: #ffb902; /* Warning */
-  --status3: #3eb838; /* Complete */
-  --status4: #926bea; /* icon */
+  --status1: #ff4646;
+  --status2: #ffb902;
+  --status3: #3eb838;
+  --status4: #926bea;
 }

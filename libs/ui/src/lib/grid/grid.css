@@ -1,5 +1,5 @@
 .grid_table {
-  @apply bg-[var(--white)];
+  @apply overflow-y-auto overflow-x-hidden bg-[var(--white)];
   border: 1px solid var(--gray6);
   .thead_th {
     @apply justify-start bg-[var(--gray1)] text-[14px] font-bold text-[#5C636E];
@@ -17,6 +17,15 @@
     &:first-child {
       border-left: 0;
     }
+  }
+  &::-webkit-scrollbar {
+    @apply h-[64px] w-[12px] bg-white;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-white;
   }
 }
 .select_item {

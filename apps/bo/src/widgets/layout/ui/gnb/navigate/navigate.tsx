@@ -15,7 +15,7 @@ function NavigateComponent() {
   const matchRoute = useMatchRoute();
 
   return (
-    <div className={styles.start}>
+    <div className={`${styles.start} nlp--navigate`}>
       <nav className={styles.nav}>
         <ul>
           {data?.map((menu: Menu, index: number) => {

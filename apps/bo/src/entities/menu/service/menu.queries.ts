@@ -22,8 +22,12 @@ export const queryOptions = {
             return convertHierarchyNode(
               data?.children,
               (node: any, depth: number, index: number, parentNode?: any) => {
+                if (parentNode) {
+                  const cloneParentNode = { ...parentNode };
+                  delete cloneParentNode.children;
+                  node['parentNode'] = cloneParentNode;
+                }
                 node['depth'] = depth;
-                node['parentNode'] = parentNode;
                 if (!node?.key) {
                   node['key'] = getRandomId();
                 }

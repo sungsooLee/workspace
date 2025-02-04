@@ -13,10 +13,11 @@ function GNBComponent() {
   const { t } = useTranslation();
 
   return (
-    <div className={`${styles.start} nlp--header`}>
+    <div className={styles.start}>
       <header className={styles.header}>
         <h1>
           <Logo />
+          <strong className={styles.title}>{'HRD 센터'}</strong>
         </h1>
         <div className={styles.nav_area}>
           <Navigate />

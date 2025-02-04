@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import * as Primitive from "@radix-ui/react-switch";
 
 import { cn } from '@learnway/shared';
-import styles from './switch.module.scss';
+import styles from './switch.module.css';
 
 export interface SwitchComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   label?: string;

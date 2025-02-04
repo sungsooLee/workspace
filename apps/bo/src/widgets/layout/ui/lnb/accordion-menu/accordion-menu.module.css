@@ -1,2 +1,10 @@
-._start {
+.start {
+  &.depth2 {
+  }
+  &.depth3 {
+    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+  }
+  &.depth4 {
+    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+  }
 }

@@ -12,12 +12,12 @@
       .footer_info {
         @apply flex;
         .logo {
+          @apply absolute bottom-[0] right-[0];
           img {
             @apply inline-block h-[30px] w-auto;
           }
         }
         .info_area {
-          @apply pl-[40px];
           .info_menu ul {
             @apply flex gap-[48px];
             > li {
@@ -42,7 +42,7 @@
               }
             }
             .copyright {
-              @apply mt-[40px];
+              @apply mt-[8px];
             }
           }
         }

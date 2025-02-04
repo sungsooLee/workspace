@@ -110,7 +110,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     );
 
     return (
-      <div className={cn(styles.root, className, 'nlp--alert')}>
+      <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
         {/* icon */}
         {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
 

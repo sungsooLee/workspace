@@ -1,14 +1,17 @@
 import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
+import { IcoDelete03 } from '@learnway/icons';
 
-import styles from './input.module.scss';
+import styles from './input.module.css';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
+  ({ className, id, type, disabled, readOnly, onBlur, onChange, value, placeholder }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
+    const hasNoBorder = className?.includes('bd_none');
+    const sizeLarge = className?.includes('lg');
+    const errorCase = className?.includes('error');
 
     useEffect(() => {
       setInputValue(value);
@@ -63,8 +66,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     return (
       <div className={cn(styles.start, 'nlp--input')}>
         <input
-          className={cn(styles.input, baseStyles, className)}
+          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
           type={type}
+          id={id}
           ref={(el) => {
             inputRef.current = el;
             if (typeof ref === 'function') {
@@ -75,6 +79,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           }}
           value={inputValue}
           disabled={disabled}
+          readOnly={readOnly}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleInputChange}
@@ -86,8 +91,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
               type="button"
               onClick={handleClear}
               onMouseDown={handleMouseDown}
-              className={cn('', '', 'focus:outline-none')}>
-              <X size={16} />
+              className={cn(styles.clear, 'focus:outline-none')}>
+              <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
           )}
         </div>

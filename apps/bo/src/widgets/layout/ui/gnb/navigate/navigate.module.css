@@ -2,11 +2,14 @@
 .start {
   .nav {
     ul {
-      @apply flex justify-start gap-[48px];
+      @apply flex justify-start gap-[48px] pb-[8px];
       > li {
         a {
           color: var(--white);
-          @apply inline-flex h-[56px] items-center text-[20px] font-normal tracking-[-0.3px];
+          @apply inline-flex h-[40px] items-center text-[20px];
+          &:hover {
+            @apply font-bold;
+          }
         }
       }
     }
