@@ -13,7 +13,6 @@ import { routeTree } from './routeTree.gen';
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  basepath: process.env.NODE_ENV === 'development' ? '/fo' : '/',
 });
 
 declare module '@tanstack/react-router' {
