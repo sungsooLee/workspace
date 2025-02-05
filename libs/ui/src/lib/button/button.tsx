@@ -44,8 +44,8 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
     disabled,
     children,
     className,
-    variant = 'primary',
-    size = 'md',
+    variant,
+    size,
     ...props
   }) => {
     return (

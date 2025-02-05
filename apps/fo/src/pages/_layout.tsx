@@ -14,6 +14,7 @@ import { useCodesByCodeGroup, useLabelByCode } from '../entities/system';
 import type { Code } from '../entities/system';
 import { Breadcrumbs } from '../widgets/layout/ui/container/breadcrumbs/breadcrumbs';
 import styles from './_layout.module.css';
+import { Footer } from '../widgets/layout/ui/footer/footer';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -83,6 +84,7 @@ function LayoutComponent() {
       <Layout>
         <Outlet />
       </Layout>
+      <Footer />
     </div>
   );
 }

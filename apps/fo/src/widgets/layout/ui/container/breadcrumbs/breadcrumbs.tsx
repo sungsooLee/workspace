@@ -14,16 +14,20 @@ function BreadcrumbsComponent() {
   }
 
   return (
-    <div className={styles._start}>
-      <IcoHome03 width={16} height={16} stroke="#6F798B" />{' '}
+    <div className={styles.start}>
       <ul className={styles.breadcrumbs}>
         {activeMenuDepth &&
           activeMenuDepth.map((menu: Menu, idx) => (
             <li key={menu.key} className={styles.link_item}>
-              {menu.title}
+              {/* {menu.title} */}
               <Link to={'/'}>
+                {idx === 0 && <IcoHome03 width={16} height={16} stroke="#6F798B" />}
+
                 {idx !== activeMenuDepth.length - 1 && (
-                  <IcoArrowForward width={12} height={12} stroke="#131C30" />
+                  <>
+                    <IcoArrowForward width={12} height={12} stroke="#131C30" />
+                    {menu.title}
+                  </>
                 )}
               </Link>
             </li>
