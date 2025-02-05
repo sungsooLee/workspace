@@ -24,6 +24,7 @@ import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
+import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
@@ -112,6 +113,12 @@ const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
+  id: '/guide/tooltip',
+  path: '/guide/tooltip',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -353,6 +360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSelectImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/tooltip': {
+      id: '/_guide/guide/tooltip'
+      path: '/guide/tooltip'
+      fullPath: '/guide/tooltip'
+      preLoaderRoute: typeof GuideGuideTooltipImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/typography': {
       id: '/_guide/guide/typography'
       path: '/guide/typography'
@@ -421,6 +435,7 @@ interface GuideRouteChildren {
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
+  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
   GuideGuideComponentsButtonRoute: typeof GuideGuideComponentsButtonRoute
@@ -441,6 +456,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
+  GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
   GuideGuideComponentsButtonRoute: GuideGuideComponentsButtonRoute,
@@ -499,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -526,6 +543,7 @@ export interface FileRoutesByTo {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -557,6 +575,7 @@ export interface FileRoutesById {
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
+  '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -587,6 +606,7 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/tooltip'
     | '/guide/typography'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -613,6 +633,7 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/tooltip'
     | '/guide/typography'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -642,6 +663,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
     | '/_guide/guide/select'
+    | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -695,6 +717,7 @@ export const routeTree = rootRoute
         "/_guide/guide/radio",
         "/_guide/guide/respond",
         "/_guide/guide/select",
+        "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/",
         "/_guide/guide/components/Button",
@@ -784,6 +807,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/select": {
       "filePath": "_guide/guide/select.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/tooltip": {
+      "filePath": "_guide/guide/tooltip.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/typography": {

@@ -27,26 +27,3 @@
     @apply cursor-pointer border-0 bg-[var(--gray1)] outline-none;
   }
 }
-
-[data-radix-select-viewport] {
-  @apply !scrollbar;
-}
-
-[data-radix-select-viewport]::-webkit-scrollbar {
-  height: '64px';
-  width: '12px';
-  backgroundcolor: '#fff';
-}
-
-[data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  borderradius: '9999px';
-  borderwidth: '4px';
-  borderstyle: 'solid';
-  bordercolor: 'transparent';
-  backgroundcolor: 'var(--gray4)';
-  backgroundclip: 'padding-box';
-}
-
-[data-radix-select-viewport]::-webkit-scrollbar-track {
-  backgroundcolor: '#fff';
-}
