@@ -33,13 +33,16 @@ build:
     - pnpm config set store-dir .pnpm-store
   script:
     - pnpm install --no-frozen-lockfile
-    - npx nx build fo
-    - npx nx build bo
+    # development 환경으로 빌드
+    - npx nx build fo --configuration=development --mode=development
+    # production 환경으로 빌드
+    # - npx nx build fo --configuration=production --mode=production
+    # - npx nx build bo
   artifacts:
     paths:
       - dist/apps/fo
       - dist/apps/bo
-#### S3 업로드 권한 요청 중
+
 deploy:
   stage: deploy
   image: docker

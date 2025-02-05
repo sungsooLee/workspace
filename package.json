@@ -7,7 +7,7 @@
     "dev:bo": "npx nx serve bo",
     "dev:pb-bo": "npx nx serve pb-bo",
     "dev:pb-fo": "npx nx serve pb-fo",
-    "build:fo": "npx nx build fo",
+    "build:fo:dev": "npx nx build fo --configuration=development --mode=development",
     "build:bo": "npx nx build bo",
     "build:pb-bo": "npx nx build pb-bo",
     "build:pb-fo": "npx nx build pb-fo",
