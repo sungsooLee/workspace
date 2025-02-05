@@ -1,5 +1,5 @@
 import React, { forwardRef, memo, ReactNode, useState } from 'react';
-
+import { IcoTooltipArrow } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-tooltip';
@@ -11,41 +11,20 @@ interface TooltipComponentProps extends Primitive.TooltipProps {
   content: ReactNode | string;
   side?: 'top' | 'right' | 'bottom' | 'left';
   align?: 'start' | 'center' | 'end';
-  isClickAble?: boolean; // 클릭일 경우 케이스 추가
   className?: string;
   sideOffset?: number;
-  avoidCollisions?: boolean;
+  alwaysOpen?: boolean;
 }
 
 const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TooltipComponentProps>(
   (
-    {
-      children,
-      className,
-      content,
-      side = 'top',
-      align = 'end',
-      isClickAble = false,
-      sideOffset = 5,
-      ...props
-    },
+    { children, className, content, side = 'right', align = 'start', sideOffset = 5, ...props },
     ref,
   ) => {
-    const [isOpen, setIsOpen] = useState(false); // 클릭 시 툴팁 열기/닫기 상태 관리
-
-    const toggleTooltip = () => {
-      if (isClickAble) {
-        setIsOpen((prev) => !prev); // 클릭 시 툴팁 열고 닫기
-      }
-    };
     return (
-      <Primitive.Provider>
-        <Primitive.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Primitive.Trigger className={styles.tooltip_btn} asChild>
-            <div className={styles.tooltip_item} onClick={toggleTooltip}>
-              {children}
-            </div>
-          </Primitive.Trigger>
+      <Primitive.Provider disableHoverableContent>
+        <Primitive.Root open={true}>
+          <Primitive.Trigger className={styles.tooltip_btn}>{children}</Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
               side={side}
@@ -53,6 +32,10 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
               className={cn(styles.start, styles.tooltip_content)}
               sideOffset={5}>
               {content}
+              <Primitive.Arrow className={styles.tooltip_arrow} />
+              {/* <Primitive.Arrow className={styles.tooltip_arrow} asChild>
+                <IcoTooltipArrow width={10} height={11} fill="#333333" />
+              </Primitive.Arrow> */}
             </Primitive.Content>
           </Primitive.Portal>
         </Primitive.Root>

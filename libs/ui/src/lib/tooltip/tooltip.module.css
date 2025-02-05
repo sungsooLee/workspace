@@ -1,7 +1,12 @@
 .tooltip_btn {
+  @apply inline-flex;
 }
 
 .tooltip_item {
+}
+
+.tooltip_arrow {
+  @apply -top-[5px] mr-[6px] h-2 w-4 rounded-sm fill-[#333];
 }
 
 .tooltip_content {
