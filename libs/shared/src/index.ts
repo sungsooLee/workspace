@@ -6,6 +6,8 @@ export * from './lib/utils/query';
 export * from './lib/utils/tree';
 export * from './lib/utils/depsAreSame';
 export * from './lib/utils/random-generator';
-export * from './lib/utils/date-format';
+export * from './lib/date/date-format';
+export * from './lib/date/date-util';
+export * from './lib/date/time-util';
 
 export * from './lib/types';

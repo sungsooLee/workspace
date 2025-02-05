@@ -1,9 +1,12 @@
-import { memo, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { useMenuHierarchy } from '../../../service/menu.service';
 import { Menu } from '../../../../../types';
-import styles from './navigate.module.css';
-import { useMatchRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { Link, useMatchRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useActiveMenuDepthState } from '../../../../../features/layout';
+import { IcoArrowForward } from '@learnway/icons';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import styles from './navigate.module.css';
 
 interface LayerProps {
   menus: Menu[];
@@ -53,7 +56,9 @@ function NavigateComponent() {
   const [isHovered, setIsHovered] = useState(false);
   const { data: menus } = useMenuHierarchy();
   const location = useRouterState();
-
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<any>(null);
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -71,19 +76,47 @@ function NavigateComponent() {
   };
 
   return (
-    <nav onMouseLeave={handleMouseLeave}>
-      <ul className="flex space-x-2" onMouseEnter={handleMouseEnter}>
-        {menus?.map((menu: Menu) => (
-          <li key={menu.id}>
-            <button type="button" className={isActiveMenu(menu) ? 'text-red-500' : ''}>
+    <div className={`${styles.start} ${styles.navigate}`}>
+      <nav className={styles.nav} onMouseLeave={handleMouseLeave}>
+        {/* <ul onMouseEnter={handleMouseEnter}>
+          {menus?.map((menu: Menu) => (
+            <li key={menu.id}>
               {menu.title}
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <MenuLayer menus={menus} isVisible={isHovered} />
-    </nav>
+            </li>
+          ))}
+        </ul> */}
+        <Swiper
+          ref={swiperRef}
+          spaceBetween={48}
+          slidesPerView="auto"
+          loop={false}
+          modules={[Navigation]}
+          className={styles.gnb_swiper}>
+          {menus.map((menu, index) => (
+            <SwiperSlide
+              key={index}
+              // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
+              className={`${styles.slide}`}>
+              {/* {menu.title} */}
+              <Link to={'/'}>{menu.title}</Link>
+              {/* 라벨 표시 */}
+              {/* {gnb.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div ref={prevRef} className={styles.gnb_button_prev}>
+          <div className={styles.btn}>
+            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+          </div>
+        </div>
+        <div ref={nextRef} className={styles.gnb_button_next}>
+          <div className={styles.btn}>
+            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+          </div>
+        </div>
+        <MenuLayer menus={menus} isVisible={isHovered} />
+      </nav>
+    </div>
   );
 }
 

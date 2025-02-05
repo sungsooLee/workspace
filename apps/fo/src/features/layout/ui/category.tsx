@@ -6,11 +6,7 @@ import { IcoMenu01, IcoXclose } from '@learnway/icons';
 import styles from './category.module.css';
 
 const CategoryContent = ({ isOpen }: any) => {
-  return (
-    <div className={`${styles.category} ${isOpen ? styles.active : ''}`}>
-      <CategoryLayer isOpen={isOpen} />
-    </div>
-  );
+  return <CategoryLayer isOpen={isOpen} />;
 };
 const CategoryComponent = () => {
   const router = useRouter();
@@ -23,11 +19,11 @@ const CategoryComponent = () => {
   }, [router.history]);
 
   return (
-    <Popover
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      popoverContent={<CategoryContent isOpen={isOpen} />}>
-      <div className={`${styles.start} ${styles.category_area}`}>
+    <div className={`${styles.start} ${styles.category_area}`}>
+      <Popover
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        popoverContent={<CategoryContent isOpen={isOpen} />}>
         <Button onlyIcon className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}>
           {isOpen ? (
             <IcoXclose width={24} height={24} stroke="#ffffff" />
@@ -51,8 +47,8 @@ const CategoryComponent = () => {
         {/* 최근방문 */}
         {/* <RecentVisits /> */}
         {/* </div> */}
-      </div>
-    </Popover>
+      </Popover>
+    </div>
   );
 };
 

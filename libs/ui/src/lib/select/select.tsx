@@ -1,12 +1,11 @@
 import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoArrowUp } from '@learnway/icons';
 
 import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
 import useSelect from './logic';
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 
 import styles from './select.module.css';
 
@@ -37,25 +36,35 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     return (
       <div className={cn(styles.start, 'nlp--select')}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
-          <Primitive.Trigger className={styles.SelectTrigger} aria-label="">
-            <Primitive.Value placeholder={placeholder} />
-            <Primitive.Icon className={styles.SelectIcon}>
+          <Primitive.Trigger className={styles.select_trigger} aria-label="">
+            <Primitive.Value placeholder={placeholder} className={styles.select_text} />
+            <Primitive.Icon className={styles.select_icon}>
               <IcoArrowDown width={16} height={16} stroke="#131C30" />
             </Primitive.Icon>
           </Primitive.Trigger>
           <Primitive.Portal>
-            <Primitive.Content className={styles.SelectContent}>
-              <Primitive.ScrollUpButton className={styles.SelectScrollButton}>
-                <ChevronUpIcon />
+            <Primitive.Content
+              className={cn(
+                styles.select_content,
+                'w-auto min-w-[var(--radix-select-trigger-width)]',
+              )}
+              position="popper"
+              sideOffset={4}>
+              <Primitive.ScrollUpButton className={styles.select_scrollbtn}>
+                <IcoArrowUp width={12} height={12} stroke="#131C30" />
               </Primitive.ScrollUpButton>
-              <Primitive.Viewport className={styles.SelectViewport}>
+              <Primitive.Viewport
+                className={cn(
+                  styles.select_viewport,
+                  'scrollbar w-auto min-w-[var(--radix-select-trigger-width)]',
+                )}>
                 {options.map(({ value, label }) => (
-                  <SelectItem key={value} value={value}>
+                  <SelectItem key={value} value={value} className={styles.select_item}>
                     {label}
                   </SelectItem>
                 ))}
               </Primitive.Viewport>
-              <Primitive.ScrollDownButton className={styles.SelectScrollButton}>
+              <Primitive.ScrollDownButton className={styles.select_scrollbtn}>
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Primitive.ScrollDownButton>
             </Primitive.Content>
@@ -70,9 +79,9 @@ const SelectItem = React.forwardRef(({ children, className, ...props }: any, for
   return (
     <Primitive.Item className={cn(styles.SelectItem, className)} {...props} ref={forwardedRef}>
       <Primitive.ItemText>{children}</Primitive.ItemText>
-      <Primitive.ItemIndicator className="SelectItemIndicator">
+      {/* <Primitive.ItemIndicator className="SelectItemIndicator">
         <CheckIcon />
-      </Primitive.ItemIndicator>
+      </Primitive.ItemIndicator> */}
     </Primitive.Item>
   );
 });
