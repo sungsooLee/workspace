@@ -18,6 +18,13 @@ cache:
 build:
   stage: build
   image: node:18
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
+      variables:
+        AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
+        AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
+        S3_BUCKET: '${S3_BUCKET_DEV}'
+    - when: never
   before_script:
     #
     - npm config set strict-ssl false
@@ -29,9 +36,6 @@ build:
     - pnpm install --no-frozen-lockfile
     - npx nx build fo
     # - npx nx build bo
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
-    - when: never
   artifacts:
     paths:
       - dist/apps/fo
