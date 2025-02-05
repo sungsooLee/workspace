@@ -3,7 +3,7 @@
   &.header {
     @apply relative items-center;
     .header_area {
-      @apply relative m-auto w-[1120px];
+      @apply relative m-auto w-[1180px];
     }
     .logo_inner {
       @apply flex items-center;

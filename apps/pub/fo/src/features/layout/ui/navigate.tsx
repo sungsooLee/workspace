@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from './navigate.module.css';
 import { IcoArrowForward } from '@learnway/icons';
@@ -36,6 +36,17 @@ function NavigateComponent() {
       swiperInstance.navigation.update();
     }
   }, []);
+
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
       <nav className={styles.nav}>
@@ -45,6 +56,8 @@ function NavigateComponent() {
           slidesPerView="auto"
           loop={false}
           modules={[Navigation]}
+          simulateTouch={isMobile}
+          allowTouchMove={isMobile}
           className={styles.gnb_swiper}>
           {gnb.map((gnb, index) => (
             <SwiperSlide
