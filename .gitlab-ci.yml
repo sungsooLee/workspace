@@ -42,12 +42,15 @@ deploy:
   # dependencies: # build 단계의 artifacts 를 사용.
   #   - build
   script:
-    # AWS 자격 증명 설정
+    - echo "AWS CLI Version:"
     - aws --version
-    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID_DEV}
-    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY_DEV}
-    - aws configure set region ${AWS_DEFAULT_REGION}
+    - echo "Listing S3 Buckets..."
     - aws s3 ls
+    - echo "Syncing to S3..."
     - aws s3 sync dist/apps/fo s3://hmgnlp-dev-front-web/fo --delete
   only:
     - main
+  variables:
+    AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
+    AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
+    AWS_DEFAULT_REGION: 'ap-northeast-2'
