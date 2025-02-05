@@ -41,16 +41,17 @@ deploy:
   image: amazon/aws-cli:latest
   # dependencies: # build 단계의 artifacts 를 사용.
   #   - build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
+      variables:
+        AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
+        AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
+        S3_BUCKET: '${S3_BUCKET_DEV}'
+    - when: never
   script:
     - echo "AWS CLI Version:"
     - aws --version
-    - echo "Listing S3 Buckets..."
-    - aws s3 ls
+    - echo "Configuring AWS credentials..."
+    - aws configure list
     - echo "Syncing to S3..."
-    - aws s3 sync dist/apps/fo s3://hmgnlp-dev-front-web/fo --delete
-  only:
-    - main
-  variables:
-    AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
-    AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
-    AWS_DEFAULT_REGION: 'ap-northeast-2'
+    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
