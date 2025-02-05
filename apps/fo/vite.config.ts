@@ -41,10 +41,18 @@ export default defineConfig({
   base: '/fo/',
   build: {
     outDir: '../../dist/apps/fo',
+    assetsDir: 'assets',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash][extname]',
+      },
     },
   },
 });
