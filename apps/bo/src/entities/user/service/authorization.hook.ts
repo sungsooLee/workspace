@@ -41,8 +41,8 @@ export function useFetchAuthUser<T = User>() {
         //queryClient.clear();
         const userData = {
           ...user,
-          activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
-          activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+          activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : undefined,
+          activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : undefined,
         };
         queryClient.setQueryData(queryKeys.authUser, userData);
         return userData;
