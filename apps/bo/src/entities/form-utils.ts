@@ -1,16 +1,17 @@
-import dayjs, { ManipulateType } from 'dayjs';
-import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
+import { ManipulateType } from 'dayjs';
+import { dateCalculator, getDateToString } from '@learnway/shared';
+
 interface NowProps {
   unit?: ManipulateType;
   offset?: number;
 }
 export const formUtils = {
   now: (props?: NowProps) => {
-    let now = dayjs();
+    let now = new Date();
     if (props) {
-      const { unit, offset = 0 } = props;
-      now = now.add(offset, unit);
+      const { unit = 'day', offset = 0 } = props;
+      now = dateCalculator(now, unit, offset);
     }
-    return now.format(getDateTimeFormat(DATE_TIME_FORMAT.DATE));
+    return getDateToString(now);
   },
 };

@@ -88,6 +88,7 @@ export interface FormDialogProps {
   name: string;
   disabled?: boolean;
   label?: string;
+  value?: string | string[];
   description?: string;
   items?: FormDialogItem[]; // 필수로 변경
 }
