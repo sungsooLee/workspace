@@ -29,6 +29,9 @@ build:
     - pnpm install --no-frozen-lockfile
     - npx nx build fo
     # - npx nx build bo
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
+    - when: never
   artifacts:
     paths:
       - dist/apps/fo
