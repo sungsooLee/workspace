@@ -23,9 +23,7 @@
       @apply rounded-[8px] border-b-2 border-[#001b60] bg-[var(--gray1)];
       .accordion_item {
         .accordion_btn {
-          span {
-            @apply pl-[16px];
-          }
+          @apply pl-[16px];
           svg {
             @apply right-[16px];
           }
