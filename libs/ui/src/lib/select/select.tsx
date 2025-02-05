@@ -6,7 +6,6 @@ import { IcoArrowDown, IcoArrowUp } from '@learnway/icons';
 import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
 import useSelect from './logic';
-import { CheckIcon } from '@radix-ui/react-icons';
 
 import styles from './select.module.css';
 
@@ -39,8 +38,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
         <Primitive.Root
           value={selectedItem?.value}
           onValueChange={setCurrentSelectedItem}
-          // open={true}
-        >
+          open={true}>
           <Primitive.Trigger className={styles.select_trigger} aria-label="">
             <Primitive.Value placeholder={placeholder} className={styles.select_text} />
             <Primitive.Icon className={styles.select_icon}>
@@ -49,13 +47,20 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
           </Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
-              className="w-auto min-w-[var(--radix-select-trigger-width)]"
+              className={cn(
+                styles.select_content,
+                'w-auto min-w-[var(--radix-select-trigger-width)]',
+              )}
               position="popper"
               sideOffset={4}>
               <Primitive.ScrollUpButton className={styles.select_scrollbtn}>
                 <IcoArrowUp width={12} height={12} stroke="#131C30" />
               </Primitive.ScrollUpButton>
-              <Primitive.Viewport className={styles.select_viewport}>
+              <Primitive.Viewport
+                className={cn(
+                  styles.select_viewport,
+                  'scrollbar w-auto min-w-[var(--radix-select-trigger-width)]',
+                )}>
                 {options.map(({ value, label }) => (
                   <SelectItem key={value} value={value} className={styles.select_item}>
                     {label}

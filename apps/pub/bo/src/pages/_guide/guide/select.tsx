@@ -14,6 +14,15 @@ function RouteComponent() {
           { value: 'type1', label: 'aaaaa' },
           { value: 'type2', label: 'bbbbb' },
           { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
+          { value: 'type3', label: 'ccccc' },
         ]}
       />
     </div>
