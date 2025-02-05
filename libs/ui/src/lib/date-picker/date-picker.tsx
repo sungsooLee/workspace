@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useEffect } from 'react';
 import { CalendarIcon } from 'lucide-react';
 import Primitive from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -71,7 +71,9 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
         onChange(date);
       }
     };
-
+    useEffect(() => {
+      setSelectedDate(value);
+    }, [value]);
     return (
       <Primitive
         showIcon
@@ -84,6 +86,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
         icon={<CalendarIcon />}
         isClearable={true}
         showTimeInput={showTimeInput}
+        monthsShown={numberOfMonths}
         //customTimeInput={<ExampleCustomTimeInput />}
       />
     );

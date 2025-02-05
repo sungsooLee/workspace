@@ -43,6 +43,43 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    plugin(function ({ addBase, theme }) {
+      addBase({
+        h1: { fontSize: theme('fontSize.2xl') },
+        h2: { fontSize: theme('fontSize.xl') },
+        h3: { fontSize: theme('fontSize.lg') },
+      });
+    }),
+    function ({ addComponents }) {
+      const baseTitle = {
+        letterSpacing: '-0.3px',
+        lineHeight: '140%',
+      };
 
-  plugins: [require('./tailwind-plugins/util.plugin')],
+      addComponents({
+        '.scrollbar': {
+          '&::-webkit-scrollbar': {
+            height: '64px',
+            width: '12px',
+            backgroundColor: '#fff',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px',
+            borderWidth: '4px',
+            borderStyle: 'solid',
+            borderColor: 'transparent',
+            backgroundColor: 'var(--gray4)',
+            backgroundClip: 'padding-box',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#fff',
+          },
+          '.scroll-smooth': {
+            scrollBehavior: 'smooth',
+          },
+        },
+      });
+    },
+  ],
 };
