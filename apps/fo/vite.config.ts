@@ -38,6 +38,7 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  base: '/fo/',
   build: {
     outDir: '../../dist/apps/fo',
     emptyOutDir: true,
