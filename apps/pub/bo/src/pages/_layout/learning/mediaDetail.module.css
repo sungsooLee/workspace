@@ -1,3 +1,6 @@
+.media_detail {
+}
+
 /* form.module.css */
 .form_wrap {
   @apply flex w-full flex-col;
@@ -42,10 +45,13 @@
 
 /* contents_wrap */
 .contents_wrap {
-  @apply mt-[16px] flex rounded-[8px] bg-[var(--white)] px-[34px] pb-[28px] pt-[23px];
-  border: 1px solid #a9afb8;
-}
-.page_wrap {
+  @apply mt-[16px] flex w-full min-w-[1564px] rounded-[8px] border-[1px] border-solid border-[#bac9e4] bg-[var(--white)] px-[34px] pb-[28px] pt-[23px];
+  & > div:nth-child(1) {
+    @apply flex-grow pr-[25px];
+    & + div {
+      @apply box-border w-[467px] border-l-[1px] border-solid border-[var(--gray3)] pl-[25px];
+    }
+  }
 }
 
 /* title_wrap */
@@ -53,5 +59,22 @@
   @apply flex justify-between;
   .title {
     @apply title_1_b inline-flex;
+  }
+}
+
+/* media_wrap */
+.btn_list {
+  @apply flex;
+  li {
+    @apply relative;
+    .btn_text {
+      @apply text-[1.3rem] text-[var(--gray8)];
+    }
+    & + li {
+      @apply ml-[10px] pl-[10px];
+      &::before {
+        @apply absolute left-0 top-1/2 -mt-[5.5px] h-[11px] w-[1px] bg-[#000] content-[''];
+      }
+    }
   }
 }

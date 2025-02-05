@@ -1,7 +1,7 @@
 /* recent_visits.module.css */
 .start {
   &.recent_visits {
-    @apply flex items-center pb-[26px] pl-[32px] pr-[68px] pt-[24px];
+    @apply relative flex items-center pb-[26px] pl-[32px] pr-[68px] pt-[24px];
     .tit {
       @apply inline-block w-[108px];
     }
@@ -21,9 +21,9 @@
       }
     }
     [class*='recent_button'] {
-      @apply absolute top-[24px] z-[3] flex;
+      @apply absolute top-1/2 z-[3] flex translate-y-[-16px];
       .btn {
-        @apply absolute top-[2px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+        @apply absolute top-[0] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
       }
       &::before {
         background: url(../../../assets/images/common/bg_swipe_shadow.png) no-repeat;
@@ -34,14 +34,14 @@
       @apply right-[68px];
 
       &::before {
-        @apply right-[-28px];
+        @apply right-[-28px] rotate-[180deg];
       }
     }
     .recent_button_prev {
       @apply left-[128px];
 
       &::before {
-        @apply left-[0] rotate-[180deg];
+        @apply left-[-28px];
       }
 
       svg {

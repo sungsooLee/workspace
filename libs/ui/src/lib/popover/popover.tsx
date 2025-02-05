@@ -19,7 +19,7 @@ const PopoverComponent = forwardRef<
 >(({ children, className, popoverContent, open, onOpenChange, ...props }, ref) => {
   return (
     <Primitive.Root open={open} onOpenChange={onOpenChange}>
-      <Primitive.PopoverTrigger className={cn('nlp--popover-trigger')}>
+      <Primitive.PopoverTrigger className={cn('nlp--popover-trigger', className)}>
         {children}
       </Primitive.PopoverTrigger>
       <Primitive.Portal>
