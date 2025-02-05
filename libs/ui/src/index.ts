@@ -27,6 +27,9 @@ export * from './lib/checkbox/checkbox';
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
 
+// chips
+export * from './lib/chips/chips';
+
 // editor
 export * from './lib/editor/hooks/editor.hook';
 export { default as Editor } from './lib/editor';

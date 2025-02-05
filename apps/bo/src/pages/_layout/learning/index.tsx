@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import styles from './index.module.css';
 import { cn } from '@learnway/shared';
-import { Panel } from '@learnway/ui';
+import { Button, Panel } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -10,15 +10,21 @@ export const Route = createFileRoute('/_layout/learning/')({
 
 function RouteComponent() {
   return (
-    <LearningSamplePage />
-  )
-}
-
-export const LearningSamplePage = () => {
-  return (
     <div className={cn(styles.root, 'grid grid-cols-10 h-64 gap-4')}>
       <div className="col-span-7 bg-gray-2 p-4">
-        <Panel className="col-span-7 bg-gray-2 p-4" title={'기본정보'}></Panel>
+        <Panel className="col-span-7 p-4" title={'기본정보'}>
+          기본정보 Panel Content
+        </Panel>
+        <Button>전체 펼치기</Button>
+        <Panel className="col-span-7 bg-gray-2 p-4" title={'Panel A'}>
+          A Panel Content
+        </Panel>
+        <Panel className="col-span-7 bg-gray-2 p-4" title={'Panel B'}>
+          B Panel Content
+        </Panel>
+        <Panel className="col-span-7 bg-gray-2 p-4" title={'Panel C'}>
+          C Panel Content
+        </Panel>
       </div>
       <div className="col-span-3 bg-gray-2 p-4">
         <div className={"grid grid-rows-3"}>
@@ -36,6 +42,4 @@ export const LearningSamplePage = () => {
       </div>
     </div>
   )
-};
-
-
+}

@@ -1,5 +1,5 @@
 'use client';
-import useControlled from './useControlled';
+import useControlled from './controlled.hook';
 
 export interface UsePaginationProps {
   /**

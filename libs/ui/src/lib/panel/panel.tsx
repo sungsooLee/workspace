@@ -1,25 +1,20 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isString } from 'lodash';
-import { useCreation } from 'ahooks';
 
-import { cn, getRandomId } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 
-import { Accordion } from '../accordion/accordion';
-import { SubPanel } from './sub-panel/sub-panel';
-
-//import './panel.css';
 import styles from './panel.module.css';
 
 export interface PanelComponentProps {
   title?: ReactNode | string;
   actions?: ReactNode;
   className?: string;
-  style?: any;
   children?: ReactNode | ReactNode[];
-  collapse?: { opened: boolean };
-  headerBackgroudColor?: string;
+  collapsible?: boolean; // collapse 사용 여부
+  collapsed?: boolean; // 외부에서 collapsed 컨트롤 필요한 경우 사용
   headerClassName?: string;
+  hideHeaderUnderline?: boolean;
 }
 
 const PanelComponent = function ({
@@ -27,50 +22,45 @@ const PanelComponent = function ({
   actions,
   className,
   children,
-  style,
-  collapse,
+  collapsible,
+  collapsed: ownerCollapsed,
+  hideHeaderUnderline = false,
 }: PanelComponentProps) {
   const { t } = useTranslation();
 
-  const [value, setValue] = useState<string[]>([]);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
 
-  const collapsedItem = useCreation(() => ({ title, value: getRandomId(), children }), []);
+  const handleClick = () => {
+    setCollapsed(!collapsed);
+  };
 
   useEffect(() => {
-    if (collapse?.opened === true) {
-      setValue([collapsedItem.value]);
-    }
-  }, [collapse?.opened]);
-
-  if (collapse) {
-    return (
-      <Accordion
-        type="multiple"
-        items={[collapsedItem]}
-        className={cn(styles._start, styles._collapse, 'nlp--panel-accordion')}
-        value={value}
-        onValueChange={(value: any) => {
-          setValue(value as string[]);
-        }}
-      />
-    );
-  }
+    typeof ownerCollapsed === 'boolean' && setCollapsed(ownerCollapsed);
+  }, [ownerCollapsed]);
 
   return (
-    <div className={cn(styles.start, className)} style={style}>
-      <div className={cn(styles.header, 'nlp--panel-header', !title && !actions && styles.hide)}>
-        <div className={cn(styles.title, 'nlp--panel-title', 'bg-slate-500 font-extrabold')}>
-          {isString(title) ? t(title) : title}
-        </div>
+    <div className={cn(styles.start, className, 'nlp--panel')}>
+      {/* Header */}
+      <div className={cn(styles.header, 'flex flex-row')}>
+        {/* Title */}
+        <div className={cn(styles.title, 'flex-1')}>{isString(title) ? t(title) : title}</div>
+        {/* Action */}
         <div className={styles.actions}>{actions}</div>
+        {/* Collapse Button */}
+        {collapsible && <button onClick={handleClick}>{collapsed ? 'X' : 'O'}</button>}
       </div>
-      <div className={styles.body}>
-        <div className={cn(styles.col, 'nlp--panel-body')}>{children}</div>
+
+      {/* Header Underline */}
+      {!hideHeaderUnderline && (
+        <hr />
+      )}
+
+      {/* Body */}
+      <div className={cn(styles.body, !collapsed && 'hidden')}>
+        <div className={cn(styles.col)}>{children}</div>
       </div>
     </div>
   );
 };
-
-PanelComponent.Sub = SubPanel;
 
 export const Panel = PanelComponent;
