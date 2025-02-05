@@ -39,8 +39,6 @@ build:
     paths:
       - dist/apps/fo
       # - dist/apps/bo
-  only:
-    - main
 #### S3 업로드 권한 요청 중
 deploy:
   stage: deploy
