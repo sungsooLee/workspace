@@ -23,7 +23,6 @@ build:
       variables:
         AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
         AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
-        S3_BUCKET: '${S3_BUCKET_DEV}'
     - when: never
   before_script:
     #
@@ -65,5 +64,4 @@ deploy:
       variables:
         AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
         AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
-        S3_BUCKET: '${S3_BUCKET_DEV}'
     - when: never
