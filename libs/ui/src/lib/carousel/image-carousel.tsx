@@ -1,7 +1,5 @@
 import { forwardRef } from 'react';
 
-import * as Primitive from '../shadcn/carousel';
-import * as CardPrimitive from '../shadcn/card';
 import { Carousel, CarouselComponentProps } from './carousel';
 
 interface ImageCarouselComponentProps extends CarouselComponentProps {
@@ -9,7 +7,7 @@ interface ImageCarouselComponentProps extends CarouselComponentProps {
 }
 
 const ImageCarouselComponent = forwardRef<
-  React.ElementRef<typeof Primitive.Carousel>,
+  React.ElementRef<typeof Carousel>,
   ImageCarouselComponentProps
 >(({ ...props }) => {
   const items = ImageItems(props.imageUrls);

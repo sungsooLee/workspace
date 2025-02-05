@@ -12,7 +12,7 @@ import { SubPanel } from './sub-panel/sub-panel';
 import styles from './panel.module.css';
 
 export interface PanelComponentProps {
-  title?: string | ReactNode;
+  title?: ReactNode | string;
   actions?: ReactNode;
   className?: string;
   style?: any;

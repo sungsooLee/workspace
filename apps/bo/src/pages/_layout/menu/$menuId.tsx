@@ -11,5 +11,5 @@ export const Route = createFileRoute('/_layout/menu/$menuId')({
 function RouteComponent() {
   const { menuId } = Route.useParams();
 
-  return <div>Hello "/menu/$menuId"! {menuId}</div>;
+  return <div>Hello2 "/menu/$menuId"! {menuId}</div>;
 }

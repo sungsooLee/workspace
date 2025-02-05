@@ -19,13 +19,39 @@ const SubWrapper: React.FC<any> = (args) => {
   return <Panel.Sub {...args} />;
 };
 
-// Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
-export const PanelStory: Story = {
-  name: 'Panel',
-  args: {},
-  render: (args) => (
+// Panel
+export const Template: any = (args: any) => {
+  return (
     <div className="flex flex-col gap-5">
-      <BaseWrapper {...args} title={<div>제목</div>}>
+      <Panel {...args} title={'Title'}>
+        <>content</>
+      </Panel>
+    </div>
+  )
+}
+Template.storyName = 'Panel';
+Template.args = {};
+
+
+// Panel
+export const TemplateCollapse: any = (args: any) => {
+  return (
+    <div className="flex flex-col gap-5">
+      <Panel {...args} title={'Title'} collapse={{opened: true}}>
+        <>content</>
+      </Panel>
+    </div>
+  )
+}
+TemplateCollapse.storyName = 'Collapse';
+TemplateCollapse.args = {};
+
+
+// Panel
+export const TemplateCustomTitle: any = (args: any) => {
+  return (
+    <div className="flex flex-col gap-5">
+      <BaseWrapper {...args} title={<div>Custom Title</div>}>
         <div key="1">Content1</div>
         <div key="2">Content2</div>
         <SubWrapper title={<div>소제목1</div>}>
@@ -40,5 +66,7 @@ export const PanelStory: Story = {
         </SubWrapper>
       </BaseWrapper>
     </div>
-  ),
-};
+  )
+}
+TemplateCustomTitle.storyName = 'Custom Title';
+TemplateCustomTitle.args = {};

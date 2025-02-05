@@ -16,6 +16,7 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
+import { Route as LayoutLearningIndexImport } from './pages/_layout/learning/index'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
 import { Route as LayoutLearningIdVideoImport } from './pages/_layout/learning/$id/video'
 
@@ -47,6 +48,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LayoutMenuIndexRoute = LayoutMenuIndexImport.update({
   id: '/menu/',
   path: '/menu/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutLearningIndexRoute = LayoutLearningIndexImport.update({
+  id: '/learning/',
+  path: '/learning/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -101,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenuMenuIdImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/': {
+      id: '/_layout/learning/'
+      path: '/learning'
+      fullPath: '/learning'
+      preLoaderRoute: typeof LayoutLearningIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu/': {
       id: '/_layout/menu/'
       path: '/menu'
@@ -123,6 +137,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
+  LayoutLearningIndexRoute: typeof LayoutLearningIndexRoute
   LayoutMenuIndexRoute: typeof LayoutMenuIndexRoute
   LayoutLearningIdVideoRoute: typeof LayoutLearningIdVideoRoute
 }
@@ -130,6 +145,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
+  LayoutLearningIndexRoute: LayoutLearningIndexRoute,
   LayoutMenuIndexRoute: LayoutMenuIndexRoute,
   LayoutLearningIdVideoRoute: LayoutLearningIdVideoRoute,
 }
@@ -143,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/learning': typeof LayoutLearningIndexRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -152,6 +169,7 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/learning': typeof LayoutLearningIndexRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -163,6 +181,7 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/_layout/learning/': typeof LayoutLearningIndexRoute
   '/_layout/menu/': typeof LayoutMenuIndexRoute
   '/_layout/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -175,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/menu/$menuId'
+    | '/learning'
     | '/menu'
     | '/learning/$id/video'
   fileRoutesByTo: FileRoutesByTo
@@ -183,6 +203,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/menu/$menuId'
+    | '/learning'
     | '/menu'
     | '/learning/$id/video'
   id:
@@ -192,6 +213,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/login/'
     | '/_layout/menu/$menuId'
+    | '/_layout/learning/'
     | '/_layout/menu/'
     | '/_layout/learning/$id/video'
   fileRoutesById: FileRoutesById
@@ -229,6 +251,7 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/menu/$menuId",
+        "/_layout/learning/",
         "/_layout/menu/",
         "/_layout/learning/$id/video"
       ]
@@ -245,6 +268,10 @@ export const routeTree = rootRoute
     },
     "/_layout/menu/$menuId": {
       "filePath": "_layout/menu/$menuId.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/": {
+      "filePath": "_layout/learning/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu/": {
