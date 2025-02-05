@@ -82,12 +82,14 @@ export type DateRange = {
 interface FormDialogControl extends Control<any> {
   isFieldRequired: (fieldName: string) => boolean; // 새롭게 추가할 필드
 }
+
 export interface FormDialogProps {
   control: FormDialogControl;
   name: string;
+  disabled?: boolean;
   label?: string;
   description?: string;
-  items?: FormDialogItem[];
+  items?: FormDialogItem[]; // 필수로 변경
 }
 
 export interface FormDialogItem {

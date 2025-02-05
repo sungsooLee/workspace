@@ -18,7 +18,12 @@ const CheckboxComponent = forwardRef<
   const uuid = getRandomId();
   return (
     <div className={cn(styles.start, 'nlp--checkbox')}>
-      <Primitive.Root {...props} id={uuid} className={styles.checkbox_root} disabled={disabled}>
+      <Primitive.Root
+        {...props}
+        id={uuid}
+        ref={ref}
+        className={styles.checkbox_root}
+        disabled={disabled}>
         <Primitive.Indicator className={styles.checkbox_indicator}>
           <IcoCheckboxChecked width={12} height={13} fill="none" stroke="#ffffff" />
         </Primitive.Indicator>
@@ -29,27 +34,6 @@ const CheckboxComponent = forwardRef<
         </label>
       )}
     </div>
-
-    // <div className="flex items-center space-x-2">
-    //   <Primitive.Root
-    //     //   id={name}
-    //     ref={ref}
-    //     checked={value}
-    //     onCheckedChange={onChange}
-    //     disabled={disabled}
-    //     className={cn(
-    //       'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
-    //       disabled && 'cursor-not-allowed opacity-50',
-    //       className,
-    //     )}
-    //   />
-    //   {checkboxLabel && (
-    //     <label
-    //       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-    //       {checkboxLabel}
-    //     </label>
-    //   )}
-    // </div>
   );
 });
 

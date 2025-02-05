@@ -8,8 +8,7 @@ const useSearchBox = (config: any) => {
     // prop.key에 값이 존재할 경우 설정, 그렇지 않으면 빈 값으로
     switch (prop.type) {
       case 'date-range':
-        acc[prop.name] =
-          (prop.value.startDate || new Date()) + '|' + (prop.value.endDate || new Date());
+        acc[prop.name] = (prop.value.from || new Date()) + '|' + (prop.value.to || new Date());
         break;
       case 'multi-dropdown':
         acc[prop.name] = prop.value || [];

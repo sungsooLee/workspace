@@ -3,7 +3,7 @@ import { searchDialogConfig } from './config';
 import { useTranslation } from 'react-i18next';
 import { useFetchCodeGroups } from '../../../../entities/system';
 import { useQueryClient } from '@tanstack/react-query';
-import { FormInput } from '@learnway/ui';
+import { DateRangePicker, FieldType, FormInput } from '@learnway/ui';
 
 const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,11 @@ const SearchBox: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => 
       window.removeEventListener('resize', calculateGridHeight);
     };
   }, [data]);
+  const [date, setDate] = useState(new Date());
 
+  const handleDate = (value: any) => {
+    setDate(value);
+  };
   return (
     <form onSubmit={handleFormSubmit}>
       <div className={'search-container'}>

@@ -2,7 +2,8 @@ import { queryOptions as userQueryOptions } from './api-mock/service/mock-user.q
 import { CODE_GROUP } from '@learnway/config';
 import { queryOptions as codeQueryOptions } from './api-mock/service/mock-code.queries';
 import z from 'zod';
-import { t } from 'i18next'; // i18next 사용
+import { t } from 'i18next';
+import { formUtils } from './form-utils'; // i18next 사용
 export const tableConfig = {
   query: userQueryOptions.all,
   builders: [
@@ -75,16 +76,15 @@ export const searchConfig = {
         },
       },
     },
-    /*{
+    {
       name: 'register_date',
       label: '등록일',
       type: 'date-range',
-      required: true,
       value: {
-        startDate: '2024-01-01',
-        endDate: '2024-01-01',
+        from: formUtils.now({ unit: 'day', offset: -30 }),
+        to: formUtils.now(),
       },
-    },*/
+    },
     {
       name: 'keyword',
       label: '키워드',
@@ -92,6 +92,13 @@ export const searchConfig = {
       value: '',
       placeholder: '키워드를 입력하세요',
       description: '기본 메세지',
+    },
+    {
+      name: 'password',
+      label: '비밀번호',
+      type: 'password',
+      value: '',
+      placeholder: '비밀번호를 입력하세요',
     },
     {
       name: 'age',
@@ -178,21 +185,21 @@ export const searchConfig = {
     },
     {
       name: 'color',
-      type: 'check-group',
+      type: 'checkbox-group',
       label: '색선택',
       value: [],
       items: [
         {
-          value: 'red',
-          label: '빨강',
+          code: 'red',
+          name: '빨강',
         },
         {
-          value: 'yellow',
-          label: '노랑',
+          code: 'yellow',
+          name: '노랑',
         },
         {
-          value: 'blue',
-          label: '파랑',
+          code: 'blue',
+          name: '파랑',
         },
       ],
     },
@@ -203,22 +210,23 @@ export const searchConfig = {
       value: 'seoul',
       items: [
         {
-          value: '',
-          label: '전체',
+          code: '',
+          name: '전체',
         },
         {
-          value: 'seoul',
-          label: '서울',
+          code: 'seoul',
+          name: '서울',
         },
         {
-          value: 'pusan',
-          label: '부산',
+          code: 'pusan',
+          name: '부산',
         },
       ],
     },
   ],
   validator: {
-    keyword: z.string().nonempty(t('LOGIN')),
-    age: z.string().nonempty(t('사용자명을 입력해주세요')),
+    /*keyword: z.string().nonempty(t('LOGIN')),
+    age: z.string().nonempty(t('사용자명을 입력해주세요.')),
+    password: z.string().nonempty(t('비밀번호를 입력해주세요.')),*/
   },
 };
