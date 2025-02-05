@@ -1,9 +1,7 @@
-import React, { forwardRef, memo, ReactNode, useState } from 'react';
-import { IcoTooltipArrow } from '@learnway/icons';
+import React, { forwardRef, memo, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-tooltip';
-
 import styles from './tooltip.module.css';
 
 interface TooltipComponentProps extends Primitive.TooltipProps {
@@ -32,9 +30,6 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
               sideOffset={5}>
               {content}
               <Primitive.Arrow className={styles.tooltip_arrow} />
-              {/* <Primitive.Arrow className={styles.tooltip_arrow} asChild>
-                <IcoTooltipArrow width={10} height={11} fill="#333333" />
-              </Primitive.Arrow> */}
             </Primitive.Content>
           </Primitive.Portal>
         </Primitive.Root>
