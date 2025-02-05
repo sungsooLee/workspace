@@ -3,44 +3,44 @@ default:
     - docker
 
 stages:
-  # - build
+  - build
   - deploy
 
 # pnpm 관련 캐시 설정
-# cache:
-#   key: ${CI_COMMIT_REF_SLUG}
-#   paths:
-#     - .pnpm-store
-#     - node_modules/
-#     - apps/*/node_modules
-#     - libs/*/node_modules
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .pnpm-store
+    - node_modules/
+    - apps/*/node_modules
+    - libs/*/node_modules
 
-# build:
-#   stage: build
-#   image: node:18
-#   before_script:
-#     #
-#     - npm config set strict-ssl false
-#     #pnpm 설치
-#     - npm install -g pnpm
-#     - npm install -g nx
-#     - pnpm config set store-dir .pnpm-store
-#   script:
-#     - pnpm install --no-frozen-lockfile
-#     - npx nx build fo
-#     # - npx nx build bo
-#   artifacts:
-#     paths:
-#       - dist/apps/fo
-#       # - dist/apps/bo
-#   only:
-#     - main
+build:
+  stage: build
+  image: node:18
+  before_script:
+    #
+    - npm config set strict-ssl false
+    #pnpm 설치
+    - npm install -g pnpm
+    - npm install -g nx
+    - pnpm config set store-dir .pnpm-store
+  script:
+    - pnpm install --no-frozen-lockfile
+    - npx nx build fo
+    # - npx nx build bo
+  artifacts:
+    paths:
+      - dist/apps/fo
+      # - dist/apps/bo
+  only:
+    - main
 #### S3 업로드 권한 요청 중
 deploy:
   stage: deploy
   image: docker
-  # dependencies: # build 단계의 artifacts 를 사용.
-  #   - build
+  dependencies: # build 단계의 artifacts 를 사용.
+    - build
   before_script:
     - apk update
     - apk add --no-cache aws-cli
@@ -52,7 +52,7 @@ deploy:
     - echo "Configuring AWS credentials..."
     - aws configure list
     - echo "Syncing to S3..."
-    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
+    - aws s3 sync dist/apps/fo s3://hmgnlp-dev-front-web/fo --delete
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
