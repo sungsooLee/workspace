@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useEffect } from 'react';
 import { useCreation } from 'ahooks';
 
 import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
@@ -51,28 +51,21 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
         onChange({ from: startDate, to: date });
       }
     };
-
+    useEffect(() => {
+      setStartDate(value.from);
+      setEndDate(value.to);
+    }, [value]);
     return (
-      <>
-        <DatePicker
-          dateTimeFormat={dateFormat}
-          value={startDate}
-          onChange={(date) => handleStartChange(date)}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-          maxDate={endDate}
-        />
-        <DatePicker
-          dateTimeFormat={dateFormat}
-          value={endDate}
-          onChange={(date) => handleEndChange(date)}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-        />
-      </>
+      <DatePicker
+        dateTimeFormat={dateFormat}
+        value={endDate}
+        onChange={(date) => handleEndChange(date)}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
+        numberOfMonths={2}
+      />
     );
   },
 );

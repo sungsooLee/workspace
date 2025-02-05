@@ -169,6 +169,18 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false
+            },{
+              "title": "그리드 빌더",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/builder/grid"
+            },{
+              "title": "테이블 빌더",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/builder/table"
             }
           ],
           "tenantName": "현대자동차",
