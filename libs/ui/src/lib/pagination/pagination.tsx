@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import styles from './pagination.module.css';
 
-import usePagination from './usePagination';
+import usePagination from './pagination.hook';
 import { PaginationItem } from './Pagination-item';
 
 export interface PaginationComponentProps {
