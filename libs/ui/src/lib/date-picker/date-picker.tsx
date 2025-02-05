@@ -86,6 +86,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
         icon={<CalendarIcon />}
         isClearable={true}
         showTimeInput={showTimeInput}
+        monthsShown={numberOfMonths}
         //customTimeInput={<ExampleCustomTimeInput />}
       />
     );
