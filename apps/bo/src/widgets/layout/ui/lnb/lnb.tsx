@@ -59,7 +59,7 @@ function LNBComponent() {
   const handleToggleLnb = () => {
     setToggleLnb((prev) => !prev);
   };
-  console.log('menus activeMenuDepth', activeMenuDepth);
+
   return (
     <div className={`${styles.start} nlp--lnb ${toggleLnb ? `${styles.open}` : `${styles.close}`}`}>
       <div className={styles.lnb_wrap}>
