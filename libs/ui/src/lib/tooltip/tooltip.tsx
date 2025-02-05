@@ -13,7 +13,6 @@ interface TooltipComponentProps extends Primitive.TooltipProps {
   align?: 'start' | 'center' | 'end';
   className?: string;
   sideOffset?: number;
-  alwaysOpen?: boolean;
 }
 
 const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TooltipComponentProps>(
@@ -22,8 +21,8 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
     ref,
   ) => {
     return (
-      <Primitive.Provider disableHoverableContent>
-        <Primitive.Root open={true}>
+      <Primitive.Provider>
+        <Primitive.Root>
           <Primitive.Trigger className={styles.tooltip_btn}>{children}</Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
