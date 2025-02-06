@@ -58,6 +58,9 @@
   }
 }
 .form_label {
+  .form_text {
+    @apply label_1_b;
+  }
   .status {
     @apply ml-[2px] inline-flex align-text-top;
     &.required svg {
@@ -71,11 +74,14 @@
 
 /* contents_wrap */
 .contents_wrap {
-  @apply mt-[16px] flex w-full min-w-[1564px] rounded-[8px] border-[1px] border-solid border-[#bac9e4] bg-[var(--white)] px-[34px] pb-[28px] pt-[23px];
-  & > div:nth-child(1) {
-    @apply flex-grow pr-[25px];
-    & + div {
-      @apply box-border w-[467px] border-l-[1px] border-solid border-[var(--gray3)] pl-[25px];
+  @apply mt-[16px] box-border h-[calc(100vh-260px)] w-full min-w-[1564px] overflow-hidden rounded-[8px] border-[1px] border-solid border-[#bac9e4] bg-[var(--white)] pb-[18px] pt-[23px];
+  .contents {
+    @apply scrollbar flex h-full overflow-y-auto overflow-x-hidden px-[34px];
+    & > div:nth-child(1) {
+      @apply flex-grow pb-[28px] pr-[25px];
+      & + div {
+        @apply box-border w-[467px] border-l-[1px] border-solid border-[var(--gray3)] pl-[25px];
+      }
     }
   }
 }

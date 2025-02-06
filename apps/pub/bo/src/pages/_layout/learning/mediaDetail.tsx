@@ -72,151 +72,154 @@ function RouteComponent() {
       </div>
       {/* contents_wrap */}
       <div className={styles.contents_wrap}>
-        {/* form_wrap */}
-        <div className={styles.form_wrap}>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name" className={styles.form_label}>
-              채널{/* 필수 케이스 */}
-              <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
-              </span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name" type="text" placeholder="관리채널이 1개인 경우 관리채널명" />
+        <div className={styles.contents}>
+          {/* form_wrap */}
+          <div className={styles.form_wrap}>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name" className={styles.form_label}>
+                <span className={styles.form_text}>채널</span>
+                {/* 필수 케이스 */}
+                <span className={cn(styles.status, styles.required)}>
+                  <IcoFormRequired width={8} height={8} />
+                </span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name" type="text" placeholder="관리채널이 1개인 경우 관리채널명" />
+              </div>
+              <p className={cn(styles.guide_text)}>기본 메시지</p>
             </div>
-            <p className={cn(styles.guide_text)}>기본 메시지</p>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name-1-2" className={styles.form_label}>
-              콘텐츠명
-              {/* 필수 케이스 */}
-              <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
-              </span>
-            </label>
-            {/* file upload case */}
-            <div className={cn(styles.input_box, styles.line)}>
-              <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
-              <span className={styles.count}>
-                <em className={styles.num}>7</em>/150
-              </span>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name-1-2" className={styles.form_label}>
+                <span className={styles.form_text}>콘텐츠명</span>
+                {/* 필수 케이스 */}
+                <span className={cn(styles.status, styles.required)}>
+                  <IcoFormRequired width={8} height={8} />
+                </span>
+              </label>
+              {/* file upload case */}
+              <div className={cn(styles.input_box, styles.line)}>
+                <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
+                <span className={styles.count}>
+                  <em className={styles.num}>7</em>/150
+                </span>
+              </div>
             </div>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name-1-3" className={styles.form_label}>
-              카테고리
-            </label>
-            <div className={styles.input_box}>
-              <Input
-                id="name-1-3"
-                type="text"
-                placeholder="학습자원을 분류할 카테고리를 선택하세요."
-              />
-              <Button variant="gray" size="sm">
-                선택
-              </Button>
-            </div>
-          </div>
-          {/* Textarea type */}
-          <div className={styles.form_item}>
-            <label htmlFor="name-1-4" className={styles.form_label}>
-              콘텐츠 설명
-            </label>
-            <div className={cn(styles.input_box, styles.line, styles.column)}>
-              <Textarea
-                rows={5}
-                cols={33}
-                className="bd_none resize_none"
-                placeholder="콘텐츠에 대한 설명을 입력하세요."
-              />
-              <span className={cn(styles.count, styles.full)}>
-                <em className={styles.num}>7</em>/150
-              </span>
-            </div>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name2" className={styles.form_label}>
-              Disabled
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name2" type="text" placeholder="입력" value="홍길동" disabled />
-            </div>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name3" className={styles.form_label}>
-              error
-              {/* error 케이스 */}
-              <span className={cn(styles.status, styles.error)}>
-                <IcoFormRequired width={8} height={8} />
-              </span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
-            </div>
-            {/* 에러인경우 : error 클래스 추가 */}
-            <p className={cn(styles.guide_text, styles.error)}>에러메시지</p>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name4" className={styles.form_label}>
-              Password
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name4" type="password" placeholder="" value="●●●●" />
-            </div>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name5" className={styles.form_label}>
-              readonly
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name5" type="text" placeholder="입력" readOnly />
-            </div>
-          </div>
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name5" className={styles.form_label}>
-              로그인 Case
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name5" type="text" value="text" placeholder="입력" className="lg" />
-            </div>
-            <p className={cn(styles.guide_text)}>기본 메시지</p>
-          </div>
-        </div>
-        {/* media_wrap */}
-        <div className={styles.media_wrap}>
-          {/* btn_list */}
-          <ul className={styles.btn_list}>
-            {buttons.map((btn, index) => (
-              <li>
-                <Button key={index} onClick={btn.onClick} className={styles.btn_text}>
-                  {btn.label}
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name-1-3" className={styles.form_label}>
+                <span className={styles.form_text}>카테고리</span>
+              </label>
+              <div className={styles.input_box}>
+                <Input
+                  id="name-1-3"
+                  type="text"
+                  placeholder="학습자원을 분류할 카테고리를 선택하세요."
+                />
+                <Button variant="gray" size="sm">
+                  선택
                 </Button>
-              </li>
-            ))}
-          </ul>
-          {/* media */}
-          <div className={styles.media}>
-            <img src={mediaImg} alt="" />
+              </div>
+            </div>
+            {/* Textarea type */}
+            <div className={styles.form_item}>
+              <label htmlFor="name-1-4" className={styles.form_label}>
+                <span className={styles.form_text}>콘텐츠 설명</span>
+              </label>
+              <div className={cn(styles.input_box, styles.line, styles.column)}>
+                <Textarea
+                  rows={5}
+                  cols={33}
+                  className="bd_none resize_none"
+                  placeholder="콘텐츠에 대한 설명을 입력하세요."
+                />
+                <span className={cn(styles.count, styles.full)}>
+                  <em className={styles.num}>7</em>/150
+                </span>
+              </div>
+            </div>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name2" className={styles.form_label}>
+                <span className={styles.form_text}>Disabled</span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name2" type="text" placeholder="입력" value="홍길동" disabled />
+              </div>
+            </div>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name3" className={styles.form_label}>
+                <span className={styles.form_text}>error</span>
+                {/* error 케이스 */}
+                <span className={cn(styles.status, styles.error)}>
+                  <IcoFormRequired width={8} height={8} />
+                </span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
+              </div>
+              {/* 에러인경우 : error 클래스 추가 */}
+              <p className={cn(styles.guide_text, styles.error)}>에러메시지</p>
+            </div>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name4" className={styles.form_label}>
+                <span className={styles.form_text}>Password</span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name4" type="password" placeholder="" value="●●●●" />
+              </div>
+            </div>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name5" className={styles.form_label}>
+                <span className={styles.form_text}>readonly</span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name5" type="text" placeholder="입력" readOnly />
+              </div>
+            </div>
+            {/* form_item */}
+            <div className={styles.form_item}>
+              <label htmlFor="name5" className={styles.form_label}>
+                <span className={styles.form_text}>로그인 Case</span>
+              </label>
+              <div className={styles.input_box}>
+                <Input id="name5" type="text" value="text" placeholder="입력" className="lg" />
+              </div>
+              <p className={cn(styles.guide_text)}>기본 메시지</p>
+            </div>
           </div>
-          {/* info_list */}
-          <ul className={styles.info_list}>
-            {infoList.map((item, index) => (
-              <li key={index}>
-                <span className={styles.title}>{item.title}</span>
-                <span className={styles.text}>{item.text}</span>
-                {item.title2 && <span className={styles.title}>{item.title2}</span>}
-                {item.text2 && <span className={styles.text}>{item.text2}</span>}
-              </li>
-            ))}
-          </ul>
+          {/* media_wrap */}
+          <div className={styles.media_wrap}>
+            {/* btn_list */}
+            <ul className={styles.btn_list}>
+              {buttons.map((btn, index) => (
+                <li>
+                  <Button key={index} onClick={btn.onClick} className={styles.btn_text}>
+                    {btn.label}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+            {/* media */}
+            <div className={styles.media}>
+              <img src={mediaImg} alt="" />
+            </div>
+            {/* info_list */}
+            <ul className={styles.info_list}>
+              {infoList.map((item, index) => (
+                <li key={index}>
+                  <span className={styles.title}>{item.title}</span>
+                  <span className={styles.text}>{item.text}</span>
+                  {item.title2 && <span className={styles.title}>{item.title2}</span>}
+                  {item.text2 && <span className={styles.text}>{item.text2}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
