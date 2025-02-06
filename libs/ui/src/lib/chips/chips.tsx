@@ -1,33 +1,32 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import styles from './chips.module.css';
 import { SelectOption } from '../select/type';
 
-export interface ChipsComponentProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'primary';
+import styles from './chips.module.css';
+
+export interface ChipsComponentProps {
+  option: SelectOption;
+  variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
   prefixCharacter?: string;
+  hideCloseButton?: boolean;
   onDelete?: (option: SelectOption) => void;
-  label: string;
-  value: string;
 }
 
-const ChipsComponent = forwardRef<HTMLDivElement, ChipsComponentProps>(
+const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
   ({
-    children,
     className,
     variant,
     size,
     prefixCharacter = '#',
-    label,
-    value,
     onDelete,
+    hideCloseButton,
+    option: { label, value },
     ...props
   }) => {
-
     const handleDeleteClick = (event: React.MouseEvent) => {
       event.stopPropagation(); // onClick 실행 방지
       const option: SelectOption = {
@@ -38,7 +37,9 @@ const ChipsComponent = forwardRef<HTMLDivElement, ChipsComponentProps>(
     };
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--chips', 'rounded-full bg-gray-2')}>
+      <span
+        {...props}
+        className={cn(styles.start, className, 'nlp--chips', 'bg-gray-2 m-1 rounded')}>
         {/* prefix character */}
         {prefixCharacter}
 
@@ -46,8 +47,12 @@ const ChipsComponent = forwardRef<HTMLDivElement, ChipsComponentProps>(
         {label}
 
         {/* close button */}
-        <button onClick={handleDeleteClick}>x</button>
-      </div>
+        {!hideCloseButton && (
+          <button onClick={handleDeleteClick} className={'ml-1'}>
+            x
+          </button>
+        )}
+      </span>
     );
   },
 );

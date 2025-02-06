@@ -23,12 +23,13 @@ export * from './lib/carousel/image-carousel';
 // checkbox
 export * from './lib/checkbox/checkbox';
 
+// chips
+export * from './lib/chips/chips';
+export * from './lib/chips/chip-list';
+
 // date-picker
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
-
-// chips
-export * from './lib/chips/chips';
 
 // editor
 export * from './lib/editor/hooks/editor.hook';
