@@ -8,7 +8,7 @@
 
 /* form.module.css */
 .form_wrap {
-  @apply flex w-full flex-1;
+  @apply flex w-full gap-[32px];
   .form_label {
     @apply label_1_b mb-[12px] flex;
   }
@@ -17,7 +17,7 @@
   }
 }
 .form_item {
-  @apply w-full pb-[17px];
+  @apply w-full flex-1 pb-[17px];
   .guide_text {
     @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
     &:empty {
@@ -41,6 +41,15 @@
   }
   .count {
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+  }
+  .select_option {
+    @apply mr-[16px] min-w-[132px];
+    & + div {
+      @apply relative;
+      &::before {
+        @apply absolute -left-[23px] top-1/2 mx-[8px] inline-flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+      }
+    }
   }
   &.line {
     @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];

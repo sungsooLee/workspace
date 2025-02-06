@@ -15,6 +15,7 @@ export interface SelectComponentProps extends React.ComponentProps<typeof Primit
   valueKey?: string;
   placeholder?: string;
   className?: string;
+  size?: 'md' | 'lg';
   onChange?: (value?: SelectOption) => void;
 }
 
@@ -28,6 +29,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       disabled,
       onChange,
       placeholder,
+      size = 'md',
       className,
       ...props
     },
@@ -36,7 +38,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
 
     return (
-      <div className={cn(styles.start, 'nlp--select', className)}>
+      <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
           <Primitive.Trigger className={styles.select_trigger} aria-label="">
             <Primitive.Value placeholder={placeholder} className={styles.select_text} />
@@ -53,7 +55,11 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
                 <IcoArrowUp width={12} height={12} stroke="#131C30" />
               </Primitive.ScrollUpButton> */}
               <Primitive.Viewport
-                className={cn(styles.select_viewport, 'min-w-[var(--radix-select-trigger-width)]')}>
+                className={cn(
+                  styles.select_viewport,
+                  'min-w-[var(--radix-select-trigger-width)]',
+                  size && styles[size],
+                )}>
                 {options.map(({ value, label }) => (
                   <SelectItem key={value} value={value} className={styles.select_item}>
                     {label}

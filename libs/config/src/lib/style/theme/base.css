@@ -1,45 +1,37 @@
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 47.4% 11.2%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 47.4% 11.2%;
-  --primary: 223 89% 26%;
-  --primary-foreground: #ffffff;
-  --primary-1: 223 100% 19%;
-  --primary-2: 223 100% 13%;
-  --secondary: 191 100% 42%;
-  --secondary-foreground: #ffffff;
-  --secondary-1: #00b6de;
-  --secondary-2: #009abc;
-  --secondary-3: #b2e7f2;
-  --secondary-4: #edfcff;
-  --secondary-5: #d8f8ff;
-  --secondary-6: #ffdada;
-  --secondary-7: #ffeded;
-  --secondary-8: #2e7ee7;
-  --secondary-9: #f6f8fd;
-  --secondary-10: #f2f4f9;
-  --danger: 0, 100%, 96%;
-  --danger-foreground: #FF4646;
-  --status-error: #ed2929;
-  --status-warning: #ffb902;
-  --destructive: 0 100% 50%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 215 20.2% 65.1%;
-  --radius: 0.5rem;
+  /* gray Scale */
+  --white: #ffffff;
 
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 240 5.3% 26.1%;
-  --sidebar-primary: 240 5.9% 10%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 240 4.8% 95.9%;
-  --sidebar-accent-foreground: 240 5.9% 10%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-ring: 217.2 91.2% 59.8%
+  --gray1: #f4f8ff; /* BG */
+  --gray2: #eaf1fa;
+  --gray3: #dee7f3;
+  --gray4: #c8d2e5;
+  --gray5: #b5c2d7;
+  --gray6: #8c97ae;
+  --gray7: #747d91;
+  --gray8: #5c636e;
+  --gray9: #3e4550;
+  --gray10: #131c30;
+
+  /* button */
+  --primary1: #07287e;
+  --primary2: #0f3492;
+  --primary3: #06226a;
+
+  --secondary1: #00afd5;
+  --secondary2: #0093bc;
+  --secondary3: #00b6de;
+  --secondary4: #b2e7f2;
+  --secondary5: #d8f8ff; /* select */
+  --secondary6: #edfcff; /* bg */
+  --secondary7: #ffdada; /* red plus */
+  --secondary8: #ffeded; /* red bg */
+  --secondary9: #ffeded; /* contents bg */
+  --secondary10: #f6f8fd; /* table bg */
+
+  /* Support */
+  --status1: #ff4646;
+  --status2: #ffb902;
+  --status3: #3eb838;
+  --status4: #926bea;
 }
