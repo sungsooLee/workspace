@@ -58,7 +58,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
       }
     };
 
-    const handleDeleteChip = (event: SelectOption) => {
+    const handleChipDelete = (event: SelectOption) => {
       const newOptions = selectedOptions.filter((option) => option.value !== event.value);
       setSelectedOptions(newOptions);
     };
@@ -79,7 +79,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
         {/* chips wrapper */}
         <div className={cn(styles.chips_wapper)}>
           {selectedOptions.map((option) => (
-            <Chips option={option} className="mr-1" onDelete={handleDeleteChip} />
+            <Chips option={option} className="mr-1" onDelete={handleChipDelete} />
           ))}
         </div>
       </div>
