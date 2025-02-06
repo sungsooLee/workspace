@@ -10,7 +10,7 @@
     }
   }
   &.category_area {
-    @apply flex items-center;
+    @apply flex items-center bg-[var(--white)];
 
     .category {
       z-index: 2;

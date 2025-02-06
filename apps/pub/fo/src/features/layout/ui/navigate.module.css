@@ -16,6 +16,9 @@
               &::before {
                 @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-[''];
               }
+              .menu_all {
+                @apply block;
+              }
             }
           }
           &.division {
@@ -56,13 +59,6 @@
         }
         svg {
           @apply rotate-[180deg];
-        }
-      }
-    }
-    .menu_all {
-      @apply absolute bottom-[0] left-[0] top-[64px] flex h-[auto] w-full bg-[var(--white)];
-      .menu_div {
-        .menu_list {
         }
       }
     }
