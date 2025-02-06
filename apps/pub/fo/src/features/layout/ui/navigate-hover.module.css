@@ -1,7 +1,7 @@
 /* navigate-hover.module.css */
 .start {
   &.menu_all {
-    @apply absolute left-[0] top-[128x] z-10 flex w-full justify-center border-b-[1px] border-t-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] shadow-[0px_2px_6px_var(--gray5)];
+    @apply absolute left-[0] top-[128x] z-10 flex hidden w-full justify-center border-b-[1px] border-t-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] shadow-[0px_2px_6px_var(--gray5)];
     &.active {
       @apply block;
     }
@@ -24,8 +24,9 @@
         .menu_list {
           @apply mt-[24px];
           .list {
-            @apply mt-[7px];
+            @apply pt-[2px];
             > li {
+              @apply mt-[5px];
               a {
                 @apply body_3_r text-[var(--gray7)];
                 &:hover {
