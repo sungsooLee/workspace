@@ -42,7 +42,19 @@
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   &.line {
-    @apply rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
+    @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];
+    .input {
+      @apply px-[12px];
+    }
+    &.column {
+      @apply flex-col pr-0;
+      .count {
+        @apply flex w-full justify-end pb-[12px] pr-[12px];
+      }
+    }
+    &.focused {
+      @apply border-[var(--gray7)];
+    }
   }
 }
 .form_label {

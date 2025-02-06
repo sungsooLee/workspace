@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Input, Button, Textarea } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
@@ -124,7 +125,7 @@ function RouteComponent() {
             <label htmlFor="name-1-4" className={styles.form_label}>
               콘텐츠 설명
             </label>
-            <div className={cn(styles.input_box, styles.line)}>
+            <div className={cn(styles.input_box, styles.line, styles.column)}>
               <Textarea
                 rows={5}
                 cols={33}

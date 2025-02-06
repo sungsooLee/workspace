@@ -1,8 +1,8 @@
 .start {
   &.textarea {
-    @apply box-border h-[120px] w-full rounded-[4px] border border-solid border-[var(--gray4)] p-[12px] text-[1.4rem] font-normal text-[var(--gray9)];
+    @apply scrollbar box-border h-[120px] w-full overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray4)] p-[12px] text-[1.4rem] font-normal text-[var(--gray9)];
     &.bd_none {
-      @apply border-none outline-offset-0;
+      @apply border-none pl-[12px] outline-offset-0;
     }
     &.resize_none {
       @apply resize-none;
