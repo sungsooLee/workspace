@@ -1,0 +1,6 @@
+.nlp--select {
+  @apply !h-[40px];
+  button {
+    @apply !h-[40px] !pl-[16px];
+  }
+}
