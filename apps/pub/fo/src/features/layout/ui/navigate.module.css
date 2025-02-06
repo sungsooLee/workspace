@@ -1,17 +1,24 @@
 /* navigate.module.css */
 .start {
   &.navigate {
+    @apply relative;
     .nav {
       @apply relative z-[0];
       .gnb_swiper {
         @apply flex w-[1100px] justify-start;
         .slide {
-          @apply relative flex w-auto items-center justify-start gap-[8px] whitespace-nowrap;
+          @apply body_2_b relative flex w-auto items-center justify-start gap-[8px] whitespace-nowrap;
           a {
             color: var(--gray9);
-            @apply inline-flex h-[64px] items-center text-[1.6rem];
+            @apply relative inline-flex h-[64px] items-center text-[1.6rem];
             &:hover {
-              @apply font-bold;
+              @apply text-[var(--secondary1)];
+              &::before {
+                @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-[''];
+              }
+              .menu_all {
+                @apply block;
+              }
             }
           }
           &.division {
@@ -28,25 +35,28 @@
         }
       }
       [class*='gnb_button'] {
-        @apply absolute top-[24px] z-[3] flex;
+        @apply absolute top-1/2 z-[3] flex translate-y-[-32px];
         .btn {
-          @apply absolute top-[2px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+          @apply absolute top-[16px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray4)] bg-[var(--white)] text-center shadow-[0px_3px_6px_var(--gray4)];
+        }
+        &::before {
+          background: url(../../../assets/images/common/bg_swipe_gnb_shadow.png) no-repeat;
+          @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[64px] w-[60px] bg-[length:60px_64px] bg-no-repeat content-[''];
         }
       }
       .gnb_button_next {
-        @apply right-[68px];
+        @apply right-[28px];
 
         &::before {
-          @apply right-[-28px];
+          @apply right-[-28px] rotate-[180deg];
         }
       }
       .gnb_button_prev {
-        @apply left-[128px];
+        @apply left-[-10px];
 
         &::before {
-          @apply left-[0] rotate-[180deg];
+          @apply left-[-10px];
         }
-
         svg {
           @apply rotate-[180deg];
         }

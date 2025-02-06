@@ -1,22 +1,20 @@
 /* category.module.css */
 .start {
-  &.category_area {
-    @apply flex items-center;
-    .btn_category {
-      @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
-      svg {
-        @apply m-auto;
-      }
-      &.active {
-        @apply border-[var(--primary2)] bg-[var(--primary2)];
-      }
+  .btn_category {
+    @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
+    svg {
+      @apply m-auto;
     }
+    &.active {
+      @apply border-[var(--primary2)] bg-[var(--primary2)];
+    }
+  }
+  &.category_area {
+    @apply flex items-center bg-[var(--white)];
+
     .category {
       z-index: 2;
-      @apply absolute left-[0] top-[116px] hidden w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100 shadow-[0px_2px_10px_var(--gray5)];
-      &.active {
-        @apply block opacity-100;
-      }
+      @apply absolute left-[-20px] top-[15px] w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_var(--gray5)];
     }
 
     .category_container {
@@ -27,7 +25,8 @@
       @apply relative w-[240px];
       h2 {
         @apply flex items-center justify-between bg-[var(--white)];
-        a {
+        a,
+        button {
           @apply body_3_b block flex-1 px-[32px] py-[15px];
         }
         i {
@@ -51,8 +50,9 @@
             }
             .list {
               > li {
-                a {
-                  @apply body_3_b block inline-block w-full px-[32px] py-[15px] text-[var(--white)];
+                a,
+                button {
+                  @apply body_3_b block inline-block w-full px-[32px] py-[15px] text-left text-[var(--white)];
                 }
               }
             }

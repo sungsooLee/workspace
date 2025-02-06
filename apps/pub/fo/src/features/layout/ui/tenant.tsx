@@ -31,11 +31,9 @@ const PopoverContent = () => {
 
 const TenantComponent = () => {
   return (
-    <Popover popoverContent={<PopoverContent />}>
-      <button className={styles.btn_tenant}>
-        <span className={styles.select}>{'현대자동차'}</span>
-        <IcoArrowDown width={16} height={16} stroke="#131C30" />
-      </button>
+    <Popover popoverContent={<PopoverContent />} className={styles.btn_tenant}>
+      <span className={styles.select}>{'현대자동차'}</span>
+      <IcoArrowDown width={16} height={16} stroke="#131C30" />
     </Popover>
   );
 };

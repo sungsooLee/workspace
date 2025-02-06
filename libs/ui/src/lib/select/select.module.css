@@ -13,7 +13,7 @@
 }
 
 .select_viewport {
-  @apply !scrollbar max-h-[148px] overflow-y-auto overflow-x-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray7)] bg-[var(--white)];
+  @apply max-h-[148px] overflow-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray7)] bg-[var(--white)];
 }
 
 .select_scrollbtn {

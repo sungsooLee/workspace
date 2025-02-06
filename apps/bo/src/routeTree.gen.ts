@@ -16,7 +16,10 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
+import { Route as LayoutLearningIndexImport } from './pages/_layout/learning/index'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutBuilderTableImport } from './pages/_layout/builder/table'
+import { Route as LayoutBuilderGridImport } from './pages/_layout/builder/grid'
 import { Route as LayoutLearningIdVideoImport } from './pages/_layout/learning/$id/video'
 
 // Create/Update Routes
@@ -50,9 +53,27 @@ const LayoutMenuIndexRoute = LayoutMenuIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLearningIndexRoute = LayoutLearningIndexImport.update({
+  id: '/learning/',
+  path: '/learning/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   id: '/menu/$menuId',
   path: '/menu/$menuId',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutBuilderTableRoute = LayoutBuilderTableImport.update({
+  id: '/builder/table',
+  path: '/builder/table',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutBuilderGridRoute = LayoutBuilderGridImport.update({
+  id: '/builder/grid',
+  path: '/builder/grid',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -94,11 +115,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_layout/builder/grid': {
+      id: '/_layout/builder/grid'
+      path: '/builder/grid'
+      fullPath: '/builder/grid'
+      preLoaderRoute: typeof LayoutBuilderGridImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/builder/table': {
+      id: '/_layout/builder/table'
+      path: '/builder/table'
+      fullPath: '/builder/table'
+      preLoaderRoute: typeof LayoutBuilderTableImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu/$menuId': {
       id: '/_layout/menu/$menuId'
       path: '/menu/$menuId'
       fullPath: '/menu/$menuId'
       preLoaderRoute: typeof LayoutMenuMenuIdImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/': {
+      id: '/_layout/learning/'
+      path: '/learning'
+      fullPath: '/learning'
+      preLoaderRoute: typeof LayoutLearningIndexImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/menu/': {
@@ -122,14 +164,20 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutBuilderGridRoute: typeof LayoutBuilderGridRoute
+  LayoutBuilderTableRoute: typeof LayoutBuilderTableRoute
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
+  LayoutLearningIndexRoute: typeof LayoutLearningIndexRoute
   LayoutMenuIndexRoute: typeof LayoutMenuIndexRoute
   LayoutLearningIdVideoRoute: typeof LayoutLearningIdVideoRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutBuilderGridRoute: LayoutBuilderGridRoute,
+  LayoutBuilderTableRoute: LayoutBuilderTableRoute,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
+  LayoutLearningIndexRoute: LayoutLearningIndexRoute,
   LayoutMenuIndexRoute: LayoutMenuIndexRoute,
   LayoutLearningIdVideoRoute: LayoutLearningIdVideoRoute,
 }
@@ -142,7 +190,10 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/builder/grid': typeof LayoutBuilderGridRoute
+  '/builder/table': typeof LayoutBuilderTableRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/learning': typeof LayoutLearningIndexRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -151,7 +202,10 @@ export interface FileRoutesByTo {
   '/test': typeof TestRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginIndexRoute
+  '/builder/grid': typeof LayoutBuilderGridRoute
+  '/builder/table': typeof LayoutBuilderTableRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/learning': typeof LayoutLearningIndexRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -162,7 +216,10 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/_layout/builder/grid': typeof LayoutBuilderGridRoute
+  '/_layout/builder/table': typeof LayoutBuilderTableRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
+  '/_layout/learning/': typeof LayoutLearningIndexRoute
   '/_layout/menu/': typeof LayoutMenuIndexRoute
   '/_layout/learning/$id/video': typeof LayoutLearningIdVideoRoute
 }
@@ -174,7 +231,10 @@ export interface FileRouteTypes {
     | '/test'
     | '/'
     | '/login'
+    | '/builder/grid'
+    | '/builder/table'
     | '/menu/$menuId'
+    | '/learning'
     | '/menu'
     | '/learning/$id/video'
   fileRoutesByTo: FileRoutesByTo
@@ -182,7 +242,10 @@ export interface FileRouteTypes {
     | '/test'
     | '/'
     | '/login'
+    | '/builder/grid'
+    | '/builder/table'
     | '/menu/$menuId'
+    | '/learning'
     | '/menu'
     | '/learning/$id/video'
   id:
@@ -191,7 +254,10 @@ export interface FileRouteTypes {
     | '/test'
     | '/_layout/'
     | '/login/'
+    | '/_layout/builder/grid'
+    | '/_layout/builder/table'
     | '/_layout/menu/$menuId'
+    | '/_layout/learning/'
     | '/_layout/menu/'
     | '/_layout/learning/$id/video'
   fileRoutesById: FileRoutesById
@@ -228,7 +294,10 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/builder/grid",
+        "/_layout/builder/table",
         "/_layout/menu/$menuId",
+        "/_layout/learning/",
         "/_layout/menu/",
         "/_layout/learning/$id/video"
       ]
@@ -243,8 +312,20 @@ export const routeTree = rootRoute
     "/login/": {
       "filePath": "login/index.tsx"
     },
+    "/_layout/builder/grid": {
+      "filePath": "_layout/builder/grid.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/builder/table": {
+      "filePath": "_layout/builder/table.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/menu/$menuId": {
       "filePath": "_layout/menu/$menuId.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/": {
+      "filePath": "_layout/learning/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu/": {

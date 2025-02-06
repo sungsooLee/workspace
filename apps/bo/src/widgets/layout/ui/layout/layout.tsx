@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
@@ -39,4 +39,4 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return <PageContainer>{children}</PageContainer>;
 }
 
-export const Layout = memo(LayoutComponent);
+export const Layout = LayoutComponent;

@@ -5,7 +5,7 @@ import { NumberFieldProps } from './input/type';
 import { RadioFieldProps } from './radio/type';
 import { MultiSelectFieldProps, SelectFieldProps } from './select/type';
 import { SwitchFieldProps } from './switch/type';
-
+import { Control } from 'react-hook-form';
 export enum FieldType {
   TEXT = 'text',
   PASSWORD = 'password',
@@ -78,3 +78,23 @@ export type DateRange = {
   from: Date | undefined;
   to?: Date | undefined;
 };
+
+interface FormDialogControl extends Control<any> {
+  isFieldRequired: (fieldName: string) => boolean; // 새롭게 추가할 필드
+}
+
+export interface FormDialogProps {
+  control: FormDialogControl;
+  name: string;
+  disabled?: boolean;
+  label?: string;
+  value?: string | string[];
+  description?: string;
+  items?: FormDialogItem[]; // 필수로 변경
+}
+
+export interface FormDialogItem {
+  value: string;
+  label: string;
+  [key: string]: any;
+}

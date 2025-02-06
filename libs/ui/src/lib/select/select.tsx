@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
-import { IcoArrowDown, IcoArrowUp } from '@learnway/icons';
+import { IcoArrowDown } from '@learnway/icons';
 
 import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
@@ -14,6 +14,7 @@ export interface SelectComponentProps extends React.ComponentProps<typeof Primit
   labelKey?: string;
   valueKey?: string;
   placeholder?: string;
+  className?: string;
   onChange?: (value?: SelectOption) => void;
 }
 
@@ -27,6 +28,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       disabled,
       onChange,
       placeholder,
+      className,
       ...props
     },
     ref,
@@ -34,7 +36,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
 
     return (
-      <div className={cn(styles.start, 'nlp--select')}>
+      <div className={cn(styles.start, 'nlp--select', className)}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
           <Primitive.Trigger className={styles.select_trigger} aria-label="">
             <Primitive.Value placeholder={placeholder} className={styles.select_text} />
@@ -44,29 +46,23 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
           </Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
-              className={cn(
-                styles.select_content,
-                'w-auto min-w-[var(--radix-select-trigger-width)]',
-              )}
+              className="w-auto min-w-[var(--radix-select-trigger-width)]"
               position="popper"
               sideOffset={4}>
-              <Primitive.ScrollUpButton className={styles.select_scrollbtn}>
+              {/* <Primitive.ScrollUpButton className={styles.select_scrollbtn}>
                 <IcoArrowUp width={12} height={12} stroke="#131C30" />
-              </Primitive.ScrollUpButton>
+              </Primitive.ScrollUpButton> */}
               <Primitive.Viewport
-                className={cn(
-                  styles.select_viewport,
-                  'scrollbar w-auto min-w-[var(--radix-select-trigger-width)]',
-                )}>
+                className={cn(styles.select_viewport, 'min-w-[var(--radix-select-trigger-width)]')}>
                 {options.map(({ value, label }) => (
                   <SelectItem key={value} value={value} className={styles.select_item}>
                     {label}
                   </SelectItem>
                 ))}
               </Primitive.Viewport>
-              <Primitive.ScrollDownButton className={styles.select_scrollbtn}>
+              {/* <Primitive.ScrollDownButton className={styles.select_scrollbtn}>
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
-              </Primitive.ScrollDownButton>
+              </Primitive.ScrollDownButton> */}
             </Primitive.Content>
           </Primitive.Portal>
         </Primitive.Root>

@@ -2,7 +2,7 @@
 .start {
   &.contents {
     .inner {
-      @apply px-[40px] py-[24px];
+      @apply bg-[#f2f4f9] px-[40px] pb-[18px] pt-[24px];
     }
   }
 }

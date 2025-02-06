@@ -34,11 +34,9 @@ const LanguageComponent = () => {
   // const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
 
   return (
-    <Popover popoverContent={<PopoverContent />}>
-      <button className={styles.btn_language}>
-        <span className={styles.select}>{'KR'}</span>
-        <IcoArrowDown width={16} height={16} stroke="#131C30" />
-      </button>
+    <Popover popoverContent={<PopoverContent />} className={styles.btn_language}>
+      <span className={styles.select}>{'KR'}</span>
+      <IcoArrowDown width={16} height={16} stroke="#131C30" />
     </Popover>
   );
 };

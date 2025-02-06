@@ -40,6 +40,7 @@
   }
 }
 
+/* contents_wrap */
 .contents_wrap {
   @apply mt-[16px] flex rounded-[8px] bg-[var(--white)] px-[34px] pb-[28px] pt-[23px];
   border: 1px solid #a9afb8;
