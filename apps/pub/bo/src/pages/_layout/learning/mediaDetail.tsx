@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Input, Button } from '@learnway/ui';
+import { Input, Button, Textarea } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
@@ -31,10 +31,19 @@ function RouteComponent() {
     },
   ];
 
-  const list: Item[] = [
-    { title: '제목 1', text: '내용 1', title2: '제목 1-2', text2: '내용 1-2' },
-    { title: '제목 2', text: '내용 2' },
-    { title: '제목 3', text: '내용 3' },
+  // media info_list
+  const infoList = [
+    { title: '파일명', text: '파일명이 들어갑니다' },
+    { title: '재생시간', text: '1시간' },
+    { title: '원본용량', text: '2GB' },
+    { title: '720P  용량', text: '1.6GB', title2: '480P 용량', text2: '900MB' },
+    { title: '해상도', text: '1902 X 968' },
+    { title: '파일형식', text: 'MOV' },
+    { title: '비디오 코덱', text: 'H264' },
+    { title: '비디오 프레임레이트', text: '59.99fps' },
+    { title: '비디오 비트레이트', text: '58MB' },
+    { title: '오디오 코덱', text: '' },
+    { title: '오디오 샘플레이트', text: '' },
   ];
 
   return (
@@ -80,46 +89,51 @@ function RouteComponent() {
           {/* form_item */}
           <div className={styles.form_item}>
             <label htmlFor="name-1-2" className={styles.form_label}>
-              Default(버튼케이스)
+              콘텐츠명
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={8} height={8} />
               </span>
             </label>
-            <div className={styles.input_box}>
-              <Input id="name-1-2" type="text" value="text" placeholder="입력" />
-              <Button variant="gray" size="sm">
-                선택
-              </Button>
+            {/* file upload case */}
+            <div className={cn(styles.input_box, styles.line)}>
+              <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
+              <span className={styles.count}>
+                <em className={styles.num}>7</em>/150
+              </span>
             </div>
           </div>
           {/* form_item */}
           <div className={styles.form_item}>
             <label htmlFor="name-1-3" className={styles.form_label}>
-              Default(텍스트 케이스)
-              {/* 필수 케이스 */}
-              <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
-              </span>
+              카테고리
             </label>
             <div className={styles.input_box}>
-              <Input id="name-1-3" type="text" value="text" placeholder="입력" />
-              <span className={styles.text}>안내메세지 안내메세지</span>
+              <Input
+                id="name-1-3"
+                type="text"
+                placeholder="학습자원을 분류할 카테고리를 선택하세요."
+              />
+              <Button variant="gray" size="sm">
+                선택
+              </Button>
             </div>
           </div>
-          {/* form_item */}
+          {/* Textarea type */}
           <div className={styles.form_item}>
             <label htmlFor="name-1-4" className={styles.form_label}>
-              Default(텍스트 케이스2)
-              {/* 필수 케이스 */}
-              <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
-              </span>
+              콘텐츠 설명
             </label>
-            <div className={styles.input_box}>
-              <span className={styles.text}>메세지</span>
-              <Input id="name-1-4" type="text" value="text" placeholder="입력" />
-              <span className={styles.text}>안내메세지 안내메세지</span>
+            <div className={cn(styles.input_box, styles.line)}>
+              <Textarea
+                rows={5}
+                cols={33}
+                className="bd_none resize_none"
+                placeholder="콘텐츠에 대한 설명을 입력하세요."
+              />
+              <span className={cn(styles.count, styles.full)}>
+                <em className={styles.num}>7</em>/150
+              </span>
             </div>
           </div>
           {/* form_item */}
@@ -191,17 +205,17 @@ function RouteComponent() {
           <div className={styles.media}>
             <img src={mediaImg} alt="" />
           </div>
-          {/* media_info */}
-          <div className={styles.media_info}>
-            {list.map((item, index) => (
-              <div key={index}>
-                <h2>{item.title}</h2>
-                <p>{item.text}</p>
-                {item.title2 && <h3>{item.title2}</h3>} {/* title2가 있을 경우만 렌더링 */}
-                {item.text2 && <p>{item.text2}</p>} {/* text2가 있을 경우만 렌더링 */}
-              </div>
+          {/* info_list */}
+          <ul className={styles.info_list}>
+            {infoList.map((item, index) => (
+              <li key={index}>
+                <span className={styles.title}>{item.title}</span>
+                <span className={styles.text}>{item.text}</span>
+                {item.title2 && <span className={styles.title}>{item.title2}</span>}
+                {item.text2 && <span className={styles.text}>{item.text2}</span>}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </div>
