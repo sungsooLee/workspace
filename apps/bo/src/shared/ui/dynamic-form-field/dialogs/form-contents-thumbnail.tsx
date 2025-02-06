@@ -24,12 +24,12 @@ const formContentsThumbnail: FC<any> = ({ name, fieldRefs, onChange, value }) =>
         {value &&
           value.map((item, index) => (
             <div className="thumbnail" key={index}>
-              <button
+              {/* <button
                 type={'button'}
                 className={'delete'}
                 onClick={() => handleDeleteThumbnail(idx)}>
                 X
-              </button>
+              </button>*/}
               <div className={'check-area'}>
                 <Checkbox
                   checked={item.selected}
