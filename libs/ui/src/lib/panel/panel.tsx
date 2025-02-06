@@ -4,7 +4,9 @@ import { isString } from 'lodash';
 
 import { cn } from '@learnway/shared';
 
+import { Button } from '../button/button';
 import styles from './panel.module.css';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export interface PanelComponentProps {
   title?: ReactNode | string;
@@ -47,13 +49,13 @@ const PanelComponent = function ({
         {/* Action */}
         <div className={styles.actions}>{actions}</div>
         {/* Collapse Button */}
-        {collapsible && <button onClick={handleClick}>{collapsed ? 'X' : 'O'}</button>}
+        {collapsible && (
+          <Button icon={collapsed ? <ChevronUp /> : <ChevronDown />} onClick={handleClick} />
+        )}
       </div>
 
       {/* Header Underline */}
-      {!hideHeaderUnderline && (
-        <hr />
-      )}
+      {!hideHeaderUnderline && <hr />}
 
       {/* Body */}
       <div className={cn(styles.body, !collapsed && 'hidden')}>
