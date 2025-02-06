@@ -1,4 +1,4 @@
-import { memo, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useMenuHierarchy } from '../../../service/menu.service';
 import { Menu } from '../../../../../types';
 import { Link, useMatchRoute, useRouter, useRouterState } from '@tanstack/react-router';
@@ -59,6 +59,16 @@ function NavigateComponent() {
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (swiperRef.current && prevRef.current && nextRef.current) {
+      const swiperInstance = swiperRef.current.swiper;
+      swiperInstance.params.navigation.prevEl = prevRef.current;
+      swiperInstance.params.navigation.nextEl = nextRef.current;
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, []);
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -74,6 +84,17 @@ function NavigateComponent() {
     );
     return isActive || hasActiveChild;
   };
+
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
@@ -91,6 +112,8 @@ function NavigateComponent() {
           slidesPerView="auto"
           loop={false}
           modules={[Navigation]}
+          simulateTouch={isMobile}
+          allowTouchMove={isMobile}
           className={styles.gnb_swiper}>
           {menus.map((menu, index) => (
             <SwiperSlide
