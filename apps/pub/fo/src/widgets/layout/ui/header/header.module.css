@@ -2,25 +2,32 @@
 .start {
   &.header {
     @apply relative items-center;
+
     .header_area {
       @apply relative m-auto w-[1180px];
-    }
-    .logo_inner {
-      @apply flex items-center;
-    }
-    h1 {
-      img {
-        @apply h-[60px] w-auto;
+
+      .top_area {
+        @apply relative flex justify-between;
+
+        .logo_inner {
+          @apply flex items-center;
+        }
+        h1 {
+          img {
+            @apply h-[60px] w-auto;
+          }
+        }
+        .search_form {
+          @apply flex-1 pt-[10px];
+        }
+        .util {
+          @apply flex items-center pr-[32px];
+        }
       }
     }
-    .search_form {
-      @apply absolute left-[250px] top-[10px];
-    }
-    .util {
-      @apply absolute right-[32px] top-[10px] z-[2] flex items-center;
-    }
+
     .nav_area {
-      @apply flex items-center;
+      @apply relative flex items-center;
     }
   }
 }

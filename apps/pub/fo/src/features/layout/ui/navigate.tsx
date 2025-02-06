@@ -23,8 +23,6 @@ function NavigateComponent() {
     { name: '교육지원', link: '/', isLabel: false, hasDivision: false },
   ];
 
-  const menuAll = [{}];
-
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
@@ -80,39 +78,6 @@ function NavigateComponent() {
         <div ref={nextRef} className={styles.gnb_button_next}>
           <div className={styles.btn}>
             <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-          </div>
-        </div>
-
-        {/* hover menu */}
-        <div className={styles.menu_all}>
-          <div className={styles.menu_div}>
-            <div className={styles.menu_list}>
-              <h2>
-                <Link to={''}>교육제도</Link>
-              </h2>
-              <ul className={styles.list}>
-                <li>
-                  <Link to={''}>금융자격지원제도</Link>
-                </li>
-                <li>
-                  <Link to={''}>SPA 승진제도</Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className={styles.menu_list}>
-              <h2>
-                <Link to={''}>학습계획</Link>
-              </h2>
-              <ul className={styles.list}>
-                <li>
-                  <Link to={''}>진단</Link>
-                </li>
-                <li>
-                  <Link to={''}>계획수립</Link>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </nav>
