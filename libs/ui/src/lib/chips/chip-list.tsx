@@ -3,33 +3,24 @@ import { isEqual } from 'lodash';
 
 import { cn } from '@learnway/shared';
 
-import { Chips } from './chips';
+import { Chips, ChipsComponentProps } from './chips';
 import { SelectOption } from '../select/type';
 import { Input } from '../input/input';
 
 import styles from './chips.module.css';
 
-export interface ChipListComponentProps {
+export interface ChipListComponentProps extends ChipsComponentProps {
   options: Array<SelectOption>;
-  variant?: 'primary';
-  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
-  className?: string;
-  prefixCharacter?: string;
-  hideCloseButton?: boolean;
   showInput?: boolean;
-  onDelete?: (option: SelectOption) => void;
+  orientation?: 'vertical' | 'horizontal';
   onChange?: (options: Array<SelectOption>) => void;
 }
 
 const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
   ({
     className,
-    variant,
-    size,
-    prefixCharacter = '#',
     onDelete,
     onChange,
-    hideCloseButton,
     showInput,
     options,
     ...props
@@ -76,10 +67,16 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
           />
         )}
 
+        {/* TODO: orientation(vertical, horizontal) style 처리 필요 */}
         {/* chips wrapper */}
         <div className={cn(styles.chips_wapper)}>
           {selectedOptions.map((option) => (
-            <Chips option={option} className="mr-1" onDelete={handleChipDelete} />
+            <Chips
+              {...props}
+              option={option}
+              className="mr-1"
+              onDelete={handleChipDelete}
+            />
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -6,9 +6,9 @@ import { SelectOption } from '../select/type';
 
 import styles from './chips.module.css';
 
-export interface ChipsComponentProps extends HTMLAttributes<HTMLDivElement> {
+export interface ChipsComponentProps {
   option: SelectOption;
-  variant?: 'primary';
+  variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
   prefixCharacter?: string;
@@ -24,7 +24,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     prefixCharacter = '#',
     onDelete,
     hideCloseButton,
-     option: {label, value},
+    option: { label, value },
     ...props
   }) => {
     const handleDeleteClick = (event: React.MouseEvent) => {
@@ -47,7 +47,11 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {label}
 
         {/* close button */}
-        {!hideCloseButton && <button onClick={handleDeleteClick} className={'ml-1'}>x</button>}
+        {!hideCloseButton && (
+          <button onClick={handleDeleteClick} className={'ml-1'}>
+            x
+          </button>
+        )}
       </span>
     );
   },
