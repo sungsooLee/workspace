@@ -10,5 +10,8 @@
     &::placeholder {
       @apply text-[var(--gray5)];
     }
+    &:focus {
+      @apply border border-solid border-[var(--gray5)];
+    }
   }
 }
