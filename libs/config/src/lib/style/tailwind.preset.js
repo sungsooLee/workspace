@@ -79,6 +79,21 @@ module.exports = {
             scrollBehavior: 'smooth',
           },
         },
+
+        '.typo': {
+          // title class add
+          '.title_1_b': {
+            ...baseTitle,
+            fontSize: '2.2rem',
+            fontWeight: '600',
+          },
+          // lable title class add
+          '.label_1_b': {
+            ...baseTitle,
+            fontSize: '1.2rem',
+            fontWeight: '600',
+          },
+        },
       });
     },
   ],
