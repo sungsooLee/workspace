@@ -1,35 +1,40 @@
-import { InputHTMLAttributes, FC } from 'react';
-import { FormDialogProps } from '../type';
-import { Controller } from 'react-hook-form';
-import { cn } from '@learnway/shared';
-import { clsx } from 'clsx';
-
-import styles from './checkbox.module.css';
-import { IcoFormRequired } from '@learnway/icons';
+import { FC, Fragment } from 'react';
 import { Checkbox } from './checkbox';
 
-const FormCheckBoxGroupComponent: FC<FormDialogProps> = ({ control, label, name }) => {
+const FormCheckBoxGroupComponent: FC<any> = ({
+  value = [],
+  onChange,
+  checkLabel: label,
+  options = [],
+  fieldRefs,
+  name,
+  ...props
+}) => {
+  const handleCheckChange = (checked: boolean, checkedValue: string) => {
+    let checkedValues = [...value];
+    if (checked && !checkedValues.includes(checkedValue)) {
+      checkedValues.push(checkedValue);
+    }
+    if (!checked) {
+      checkedValues = checkedValues.filter((item: string) => item !== checkedValue);
+    }
+    onChange(checkedValues);
+  };
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, value, ref }, formState: { errors } }) => {
-        const isChecked = 'Y' === value;
-        const hideLabel = !label;
-        return (
-          <Checkbox
-            ref={ref}
-            name={name}
-            onClick={() => {
-              onChange(value === 'Y' ? 'N' : 'Y');
-            }}
-            checked={isChecked}
-            hideLabel={hideLabel}
-            label={label}
-          />
-        );
-      }}
-    />
+    <div ref={(ref) => (fieldRefs.current[name] = ref)}>
+      {options &&
+        options.map((item: any) => (
+          <Fragment key={item.value}>
+            <Checkbox
+              onCheckedChange={(checked: boolean) => handleCheckChange(checked, item.value)}
+              checked={value.indexOf(item.value) >= 0}
+              {...props}
+              label={item.label}
+              hideLabel={!item.label}
+            />
+          </Fragment>
+        ))}
+    </div>
   );
 };
 export const FormCheckboxGroup = FormCheckBoxGroupComponent;

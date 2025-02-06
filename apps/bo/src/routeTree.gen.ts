@@ -17,6 +17,7 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutDetailType2Import } from './pages/_layout/detail/type2'
 import { Route as LayoutBuilderTableImport } from './pages/_layout/builder/table'
 import { Route as LayoutBuilderGridImport } from './pages/_layout/builder/grid'
 import { Route as LayoutLearningIdVideoImport } from './pages/_layout/learning/$id/video'
@@ -55,6 +56,12 @@ const LayoutMenuIndexRoute = LayoutMenuIndexImport.update({
 const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   id: '/menu/$menuId',
   path: '/menu/$menuId',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutDetailType2Route = LayoutDetailType2Import.update({
+  id: '/detail/type2',
+  path: '/detail/type2',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -122,6 +129,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutBuilderTableImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/detail/type2': {
+      id: '/_layout/detail/type2'
+      path: '/detail/type2'
+      fullPath: '/detail/type2'
+      preLoaderRoute: typeof LayoutDetailType2Import
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu/$menuId': {
       id: '/_layout/menu/$menuId'
       path: '/menu/$menuId'
@@ -152,6 +166,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBuilderGridRoute: typeof LayoutBuilderGridRoute
   LayoutBuilderTableRoute: typeof LayoutBuilderTableRoute
+  LayoutDetailType2Route: typeof LayoutDetailType2Route
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenuIndexRoute: typeof LayoutMenuIndexRoute
   LayoutLearningIdVideoRoute: typeof LayoutLearningIdVideoRoute
@@ -161,6 +176,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutBuilderGridRoute: LayoutBuilderGridRoute,
   LayoutBuilderTableRoute: LayoutBuilderTableRoute,
+  LayoutDetailType2Route: LayoutDetailType2Route,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenuIndexRoute: LayoutMenuIndexRoute,
   LayoutLearningIdVideoRoute: LayoutLearningIdVideoRoute,
@@ -176,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginIndexRoute
   '/builder/grid': typeof LayoutBuilderGridRoute
   '/builder/table': typeof LayoutBuilderTableRoute
+  '/detail/type2': typeof LayoutDetailType2Route
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
@@ -187,6 +204,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginIndexRoute
   '/builder/grid': typeof LayoutBuilderGridRoute
   '/builder/table': typeof LayoutBuilderTableRoute
+  '/detail/type2': typeof LayoutDetailType2Route
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu': typeof LayoutMenuIndexRoute
   '/learning/$id/video': typeof LayoutLearningIdVideoRoute
@@ -200,6 +218,7 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/_layout/builder/grid': typeof LayoutBuilderGridRoute
   '/_layout/builder/table': typeof LayoutBuilderTableRoute
+  '/_layout/detail/type2': typeof LayoutDetailType2Route
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu/': typeof LayoutMenuIndexRoute
   '/_layout/learning/$id/video': typeof LayoutLearningIdVideoRoute
@@ -214,6 +233,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/builder/grid'
     | '/builder/table'
+    | '/detail/type2'
     | '/menu/$menuId'
     | '/menu'
     | '/learning/$id/video'
@@ -224,6 +244,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/builder/grid'
     | '/builder/table'
+    | '/detail/type2'
     | '/menu/$menuId'
     | '/menu'
     | '/learning/$id/video'
@@ -235,6 +256,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/_layout/builder/grid'
     | '/_layout/builder/table'
+    | '/_layout/detail/type2'
     | '/_layout/menu/$menuId'
     | '/_layout/menu/'
     | '/_layout/learning/$id/video'
@@ -274,6 +296,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/builder/grid",
         "/_layout/builder/table",
+        "/_layout/detail/type2",
         "/_layout/menu/$menuId",
         "/_layout/menu/",
         "/_layout/learning/$id/video"
@@ -295,6 +318,10 @@ export const routeTree = rootRoute
     },
     "/_layout/builder/table": {
       "filePath": "_layout/builder/table.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/detail/type2": {
+      "filePath": "_layout/detail/type2.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu/$menuId": {

@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogProps } from '../search-box/type';
 
 const DateRange: FC<DialogProps> = ({ control, name, label }) => {
   const [value, setValue] = useState('|');

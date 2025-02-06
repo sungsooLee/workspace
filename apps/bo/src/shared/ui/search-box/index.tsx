@@ -1,7 +1,7 @@
 import { FC, useLayoutEffect, useRef, useState, memo } from 'react';
 import { searchDialogConfig } from './config';
 import { useTranslation } from 'react-i18next';
-import { useFetchCodeGroups } from '../../../../entities/system';
+import { useFetchCodeGroups } from '../../../entities/system';
 import { useQueryClient } from '@tanstack/react-query';
 import { DateRangePicker, FieldType, FormInput } from '@learnway/ui';
 

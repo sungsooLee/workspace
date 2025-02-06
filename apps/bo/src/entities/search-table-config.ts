@@ -225,8 +225,8 @@ export const searchConfig = {
     },
   ],
   validator: {
-    /*keyword: z.string().nonempty(t('LOGIN')),
+    keyword: z.string().nonempty(t('LOGIN')),
     age: z.string().nonempty(t('사용자명을 입력해주세요.')),
-    password: z.string().nonempty(t('비밀번호를 입력해주세요.')),*/
+    password: z.string().nonempty(t('비밀번호를 입력해주세요.')),
   },
 };
