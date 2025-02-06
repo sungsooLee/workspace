@@ -58,7 +58,7 @@ function GNBComponent() {
     sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
 
     const currentUrl = new URL(window.location.href);
-    const baseUrl = `${currentUrl.protocol}//${currentUrl.host}`;
+    const baseUrl = `${currentUrl.protocol}//${currentUrl.host}/fo`;
 
     const newUrl = new URL(baseUrl);
     newUrl.searchParams.set('tenantId', tenant.id.toString());

@@ -37,10 +37,7 @@ build:
     - pnpm config set auto-install-peers true
   script:
     - pnpm install --no-frozen-lockfile
-    # development 환경으로 빌드
-    - npx nx build fo --configuration=development --mode=development
-    # production 환경으로 빌드
-    # - npx nx build fo --configuration=production --mode=production
+    - npx nx build fo
     # - npx nx build bo
   artifacts:
     paths:

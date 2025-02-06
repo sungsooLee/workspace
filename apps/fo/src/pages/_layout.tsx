@@ -35,12 +35,6 @@ function LayoutComponent() {
   const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
   const { data: de } = useLabelByCode(CODE_GROUP.LANGUAGE_CODE, 'de');
 
-  // useEffect(() => {
-  //   if (!data) {
-  //     router.navigate({ to: '/login' });
-  //   }
-  // }, [data]);
-
   useEffect(() => {
     if (!isLoading && !data && currentPath !== '/login') {
       router.navigate({
