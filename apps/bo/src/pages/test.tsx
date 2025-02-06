@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Sidebar, SidebarProvider, SidebarTrigger } from '@learnway/ui';
-
 import { LNB } from '../widgets/layout';
 
 export const Route = createFileRoute('/test')({
@@ -11,12 +9,13 @@ export const Route = createFileRoute('/test')({
 
 function RouteComponent() {
   return (
-    <SidebarProvider>
-      <LNB />
-      <main>
-        <SidebarTrigger />
-        test
-      </main>
-    </SidebarProvider>
+    <span>test</span>
+    // <SidebarProvider>
+    //   <LNB />
+    //   <main>
+    //     <SidebarTrigger />
+    //     test
+    //   </main>
+    // </SidebarProvider>
   );
 }
