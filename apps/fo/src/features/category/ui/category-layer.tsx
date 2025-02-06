@@ -116,7 +116,9 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
               <>
                 <div className={styles.tit_head}>
                   <h2>
-                    <Link to={`/category/${selectedCategory.categoryId}`}>
+                    <Link
+                      to="/category/$categoryId"
+                      params={{ categoryId: selectedCategory.categoryId.toString() }}>
                       {selectedCategory.name}
                     </Link>
                   </h2>
