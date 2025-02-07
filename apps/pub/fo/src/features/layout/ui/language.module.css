@@ -22,7 +22,7 @@
       li {
         @apply body_3_r w-[calc(100%/2)] min-w-[188px];
         .btn {
-          @apply box-border block h-full w-full rounded-[4px] px-[12px] py-[8px] text-left text-[var[--gray9]];
+          @apply box-border block h-full w-full rounded-[4px] px-[12px] py-[12px] text-left text-[var[--gray9]];
           &.active,
           a:hover {
             @apply bg-[var(--secondary5)];
