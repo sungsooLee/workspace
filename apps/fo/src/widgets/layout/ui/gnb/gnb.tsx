@@ -22,13 +22,21 @@ function GNBComponent() {
   const { data: userData } = useFetchAuthUser();
   const { data: tenants } = useFetchTenantByUser(userData?.accountId);
   const [isHoverNavigate, setIsHoverNavigate] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const handleMouseEnter = () => {
-    console.log('호버');
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+    }
     setIsHoverNavigate(true);
   };
   const handleMouseLeave = () => {
-    console.log('아웃');
     setIsHoverNavigate(false);
+  };
+  const handleCategoryOpen = (isOpen: boolean) => {
+    if (isOpen && isHoverNavigate) {
+      setIsHoverNavigate(false);
+    }
+    setIsCategoryOpen(isOpen);
   };
   const [activeTenant, setActiveTenant] = useState<Tenant | null>(() => {
     const storedTenant = sessionStorage.getItem('ACTIVE_TENANT');
@@ -104,7 +112,7 @@ function GNBComponent() {
         </div>
         <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
           <div className={styles.nav_area}>
-            <Category />
+            <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
             <Navigate onMouseEnter={handleMouseEnter} />
           </div>
           {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}

@@ -5,24 +5,29 @@ import { useRouter } from '@tanstack/react-router';
 import { IcoMenu01, IcoXclose } from '@learnway/icons';
 import styles from './category.module.css';
 
+interface CategoryProps {
+  onOpenChange: (isOpen: boolean) => void;
+  isOpen: boolean;
+}
+
 const CategoryContent = ({ isOpen }: any) => {
   return <CategoryLayer isOpen={isOpen} />;
 };
-const CategoryComponent = () => {
+const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     return router.history.subscribe((navigation) => {
-      setIsOpen(false);
+      onOpenChange(false);
     });
-  }, [router.history]);
+  }, [router.history, onOpenChange]);
 
   return (
     <div className={`${styles.start} ${styles.category_area}`}>
       <Popover
         open={isOpen}
-        onOpenChange={setIsOpen}
+        onOpenChange={onOpenChange}
         popoverContent={<CategoryContent isOpen={isOpen} />}>
         <Button onlyIcon className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}>
           {isOpen ? (

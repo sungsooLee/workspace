@@ -95,7 +95,7 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
 
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
-      <nav className={styles.nav} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <nav className={styles.nav} onMouseLeave={onMouseLeave}>
         <Swiper
           ref={swiperRef}
           spaceBetween={48}
@@ -111,7 +111,9 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
               // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
               className={`${styles.slide}`}>
               {/* {menu.title} */}
-              <Link to={'/'}>{menu.title}</Link>
+              <Link to={'/'} onMouseEnter={onMouseEnter}>
+                {menu.title}
+              </Link>
               {/* 라벨 표시 */}
               {/* {gnb.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
             </SwiperSlide>

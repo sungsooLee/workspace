@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCategories } from '../services/category.service';
 import { CategoryBadgeList } from './category-badge-list';
 import styles from './category-layer.module.css';
@@ -24,7 +24,6 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
 
   // 선택된 depth1의 하위 카테고리들 찾기
   const selectedCategory = categories.find((cat) => cat.categoryId === selectedDepth1);
-  console.log(selectedCategory);
   // 각 카테고리의 열림/닫힘 상태를 배열로 관리
   const [openStates, setOpenStates] = useState(categories.map(() => false));
 
@@ -54,6 +53,13 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
     }
   };
 
+  useEffect(() => {
+    if (depth1Categories.length > 0 && !selectedDepth1) {
+      const firstCategory = depth1Categories[0];
+      handleDepth1Select(firstCategory.categoryId);
+    }
+  }, [depth1Categories]);
+
   return (
     <div className={`${styles.start} ${styles.category_area}`}>
       <div className={`${styles.category} ${isOpen ? styles.active : ''}`}>
@@ -73,15 +79,6 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
       </div> */}
         <div className={styles.category_container}>
           <div className={styles.category_menu}>
-            {/* <h2>
-              <Link to={'/'} className={styles.tit}>
-                기업경영
-              </Link>
-              <i>
-                <IcoArrowForward width={16} height={16} stroke="#07287E" />
-              </i>
-            </h2> */}
-
             <div className={styles.menu_list_wrap}>
               <div className={styles.menu_list}>
                 {/* 카테고리 영역 - 좌측메뉴(sec1) - sec1~sec3 loop */}
@@ -92,7 +89,14 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
                         <Button
                           onClick={() => handleDepth1Select(category.categoryId)}
                           className={selectedDepth1 === category.categoryId ? styles.active : ''}>
-                          {category.name}
+                          <span>{category.name}</span>
+                          {selectedDepth1 === category.categoryId ? (
+                            <i>
+                              <IcoArrowForward width={16} height={16} stroke="#07287E" />
+                            </i>
+                          ) : (
+                            ''
+                          )}
                         </Button>
                       </li>
                     ))}
