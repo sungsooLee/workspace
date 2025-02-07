@@ -62,6 +62,7 @@ function FooterComponent() {
 
           <div className={styles.family_site_info}>
             <Select
+              size="lg"
               onChange={() => {}}
               options={[
                 {

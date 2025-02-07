@@ -14,7 +14,7 @@
 
     .category {
       z-index: 2;
-      @apply absolute left-[-20px] top-[15px] w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_var(--gray5)];
+      @apply absolute left-[-20px] top-[15px] w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     }
 
     .category_container {
@@ -50,16 +50,26 @@
             }
             .list {
               > li {
+                @apply flex items-center justify-between;
                 a,
                 button {
-                  @apply body_3_b block inline-block w-full px-[32px] py-[15px] text-left text-[var(--white)];
+                  @apply body_3_b flex w-full justify-between py-[15px] text-left text-[var(--white)];
+                  span {
+                    @apply inline-block px-[32px];
+                  }
+                  &.active {
+                    @apply bg-[var(--white)] text-[var(--primary2)];
+                  }
+                }
+                i {
+                  @apply pr-[8px];
                 }
               }
             }
           }
         }
         .banner_list {
-          @apply mt-auto px-[32px] pb-[34px];
+          @apply px-[32px] py-[34px];
           .banner {
             @apply mt-[8px] block;
           }

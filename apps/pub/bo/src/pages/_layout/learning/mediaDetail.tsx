@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Input, Button, Textarea, Select } from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
+import { Input, Button, Textarea, Select, Tooltip } from '@learnway/ui';
+import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './mediaDetail.module.css';
@@ -204,8 +204,17 @@ function RouteComponent() {
             <div className={styles.form_wrap}>
               {/* form_item */}
               <div className={styles.form_item}>
-                <label htmlFor="name2" className={styles.form_label}>
-                  <span className={styles.form_text}>Disabled</span>
+                <label htmlFor="name-1-7" className={styles.form_label}>
+                  <span className={styles.form_text}>사용기한</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(styles.status, styles.required)}>
+                    <IcoFormRequired width={8} height={8} />
+                  </span>
+                  <Tooltip side="right" content={'사용기한'}>
+                    <Button onlyIcon>
+                      <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                    </Button>
+                  </Tooltip>
                 </label>
                 <div className={styles.input_box}>
                   <Input id="name2" type="text" placeholder="입력" value="홍길동" disabled />

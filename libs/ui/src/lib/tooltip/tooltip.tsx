@@ -29,7 +29,16 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
               className={cn(styles.start, styles.tooltip_content)}
               sideOffset={5}>
               {content}
-              <Primitive.Arrow className={styles.tooltip_arrow} />
+              <Primitive.Arrow
+                className="fill-gray-900"
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  transform: 'rotate(0deg)',
+                  borderRadius: '3px', // 둥근 끝
+                  clipPath: 'polygon(0% 0%, 100% 0%, 50% 100%)', // 직각삼각형
+                }}
+              />
             </Primitive.Content>
           </Primitive.Portal>
         </Primitive.Root>
