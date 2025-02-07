@@ -1,6 +1,6 @@
 .start {
   &.chips {
-    @apply inline-flex min-h-[2.8rem] justify-center rounded-full bg-[var(--gray2)] px-[10px] text-[13px] font-light text-[var(--gray9)];
+    @apply inline-flex min-h-[2.8rem] items-center justify-center rounded-full bg-[var(--gray2)] px-[10px] text-[13px] font-light text-[var(--gray9)];
   }
   &.chips_box {
     @apply rounded-[4px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] p-[12px];
