@@ -25,7 +25,7 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
     | 'outline'
     | 'gray-outline'
     | 'ghost'
-    | 'link'; // override from shadcn.button
+    | 'link';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   icon?: React.ReactNode;
   iconAlign?: 'left' | 'right';

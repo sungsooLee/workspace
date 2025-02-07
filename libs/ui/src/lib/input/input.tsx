@@ -6,7 +6,7 @@ import { IcoDelete03 } from '@learnway/icons';
 import styles from './input.module.css';
 
 const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, id, type, disabled, onBlur, onChange, value, placeholder }, ref) => {
+  ({ className, id, type, disabled, onBlur, onChange, value, placeholder, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const hasNoBorder = className?.includes('bd_none');
@@ -64,8 +64,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     });
 
     return (
-      <div className={cn(styles.start, 'nlp--input')}>
+      <div className={cn(styles.start, 'nlp--input', { [styles.focused]: isFocused })}>
         <input
+          {...props}
           className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
           type={type}
           id={id}

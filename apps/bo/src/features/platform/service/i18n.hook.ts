@@ -1,9 +1,33 @@
 import { useState } from 'react';
+import { useCreation } from 'ahooks';
 
+import { SelectOption } from '@learnway/ui';
+import { CODE_GROUP, Code } from '@learnway/config';
 import { getDefaultLang, setDefaultLang } from '@learnway/config';
 
-import { useFetchAsyncI18nResource } from '../../../entities/system';
+import { useCodesByCodeGroup, useFetchAsyncI18nResource } from '../../../entities/platform';
 import { useUpdateUser } from '../../../entities/user';
+
+const AVALIABLE_LANGUAGES = ['en', 'ko'];
+
+export function useLanguageSelectOptions() {
+  const { data } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
+
+  return {
+    data: useCreation(() => {
+      return data
+        .filter((code: Code) => AVALIABLE_LANGUAGES.includes(code.code))
+        .map(
+          (code: Code) =>
+            ({
+              label: code.name,
+              value: code.code,
+              extra: code,
+            }) as SelectOption,
+        );
+    }, [data]),
+  };
+}
 
 export function useSetLanguage() {
   const [inProgress, setInProgress] = useState<boolean>(false);

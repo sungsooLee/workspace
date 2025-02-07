@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import { createFileRoute } from '@tanstack/react-router';
-import { Language } from '../../../../features/layout';
 import { routeConfig } from '../../../../features/auth';
 
 /*

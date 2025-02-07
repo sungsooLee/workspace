@@ -1,16 +1,5 @@
 /* language.module.css */
-.btn_language {
-  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[4px] font-bold text-[var(--white)];
-  &[data-state='open'] {
-    svg {
-      @apply rotate-180;
-    }
-  }
-  .select {
-    @apply mr-[2px] inline-block;
-  }
-}
-.language_content {
+.start {
   @apply w-[240px] overflow-hidden rounded-[8px] bg-[var(--white)];
   filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.1));
   .btn_wrap {
@@ -24,5 +13,17 @@
         @apply absolute right-[24px] top-1/2 -mt-[10px];
       }
     }
+  }
+}
+
+.btn_language {
+  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[4px] font-bold text-[var(--white)];
+  &[data-state='open'] {
+    svg {
+      @apply rotate-180;
+    }
+  }
+  .select {
+    @apply mr-[2px] inline-block;
   }
 }

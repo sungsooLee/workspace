@@ -6,12 +6,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FieldType, Form, DynamicFormField } from '@learnway/ui';
-import { Button } from '@learnway/ui';
+import { Button, Select } from '@learnway/ui';
 
 import { useLoginUser, useFetchAuthUser } from '../../entities/user';
-import { useFetchCompanySelectOptions } from '../../entities/company';
 
-import { useSetLanguage } from '../../features/system';
+import { useSetLanguage, useLanguageSelectOptions } from '../../features/platform';
 
 export const Route = createFileRoute('/login/')({
   component: RouteComponent,
@@ -28,10 +27,10 @@ function RouteComponent() {
   });
 
   const { data } = useFetchAuthUser();
-  const { data: companyOptions } = useFetchCompanySelectOptions();
 
   const { login } = useLoginUser();
   const { set: setLanguage, inProgress } = useSetLanguage();
+  const { data: languageSelectOptions } = useLanguageSelectOptions();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -44,7 +43,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (data?.accountId && !inProgress) {
-      router.navigate({ to: '/' });
+      //router.navigate({ to: '/' });
     }
   }, [data, inProgress]);
 
@@ -59,17 +58,14 @@ function RouteComponent() {
   };
 
   return (
-    <div className="min-h-screen justify-center items-center flex flex-col">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="typo-title-[3-B]">관리자 로그인</div>
-      <div className="bg-slate-200 p-10 rounded-lg">
+      <div className="typo-title-[3-B]">
+        <Select options={languageSelectOptions}></Select>
+      </div>
+      <div className="rounded-lg bg-slate-200 p-10">
         <Form {...form} schema={schema}>
           <div className="w-64">
-            <DynamicFormField
-              name="orgId"
-              label={t('ORG')}
-              type={FieldType.SELECT}
-              options={companyOptions ?? []}
-            />
             <DynamicFormField name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
             <DynamicFormField name="password" label={t('PASSWORD')} type={FieldType.PASSWORD} />
           </div>

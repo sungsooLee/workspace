@@ -23,6 +23,10 @@ export * from './lib/carousel/image-carousel';
 // checkbox
 export * from './lib/checkbox/checkbox';
 
+// chips
+export * from './lib/chips/chips';
+export * from './lib/chips/chip-list';
+
 // date-picker
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
@@ -59,9 +63,6 @@ export * from './lib/select/form-select';
 export * from './lib/select/select';
 export * from './lib/select/multi-select';
 export * from './lib/select/type';
-
-// sidebar
-export * from './lib/sidebar/sidebar';
 
 // switch
 export * from './lib/switch/switch';
@@ -102,9 +103,6 @@ export * from './lib/type';
 // popover
 export * from './lib/tooltip/tooltip';
 
-// sidebar
-export * from './lib/sidebar/sidebar';
-
 // panel
 export * from './lib/panel/panel';
 
@@ -118,17 +116,4 @@ export * from './lib/grid/configs/column-factory';
 export * from './lib/apply-form-builder';
 
 // shadcn (주석처리 예정)
-// export * from './lib/shadcn/toaster';
-export * from './lib/shadcn/badge';
-// export * from './lib/shadcn/button';
-//export * from './lib/shadcn/calendar';
-export * from './lib/shadcn/command';
-export * from './lib/shadcn/dialog';
 export * from './lib/shadcn/form';
-export * from './lib/shadcn/label';
-//export * from './lib/shadcn/menubar';
-export * from './lib/shadcn/radio-group';
-export * from './lib/shadcn/separator';
-// export * from './lib/shadcn/checkbox';
-// export * from './lib/select/select.shadcn';
-// export * from './lib/shadcn/switch'

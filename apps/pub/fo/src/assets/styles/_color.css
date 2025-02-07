@@ -14,7 +14,6 @@
   --gray7: #6f798b;
   --gray8: #4c515e;
   --gray9: #131c30;
-  --gray10: #0c0f15;
 
   /* button */
   --primary1: #06226a; /* 버튼 프레스 */
@@ -25,12 +24,10 @@
   --secondary2: #00b6de; /* 버튼 호버 */
   --secondary3: #0093bc; /* 버튼 프레스 */
   --secondary4: #b2e7f2;
-  --secondary5: #d8f8ff; /* select */
-  --secondary6: #edfcff; /* bg */
+  --secondary5: #edfcff; /* select */
+  --secondary6: #f7feff; /* bg */
   --secondary7: #ffdada; /* red plus */
   --secondary8: #ffeded; /* red bg */
-  --secondary9: #ffeded; /* contents bg */
-  --secondary10: #f6f8fd; /* table bg */
 
   /* Support */
   --status1: #ff4646; /* Error */

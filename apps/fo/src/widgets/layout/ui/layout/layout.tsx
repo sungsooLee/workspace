@@ -2,8 +2,6 @@ import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActiveMenuDepthState } from '../../../../features/layout';
 
-import { SidebarProvider, Sidebar, SidebarTrigger } from '@learnway/ui';
-
 import { PageContainer } from '../container/page-container';
 import styles from './layout.module.css';
 import { Breadcrumbs } from '../container/breadcrumbs/breadcrumbs';

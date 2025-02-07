@@ -4,6 +4,7 @@ export * from './ui/notification';
 export * from './ui/language';
 export * from './ui/user-name';
 export * from './ui/navigate';
+export * from './ui/navigate-hover';
 export * from './ui/category';
 export * from './ui/tenant';
 export * from './ui/family-site';

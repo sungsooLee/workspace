@@ -3,7 +3,7 @@ import { useEffect, useState, ReactNode } from 'react';
 import { initI18N } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
-import { useFetchI18nResource, useFetchCodeGroups } from '../entities/system';
+import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 
 import '../styles.css';
 

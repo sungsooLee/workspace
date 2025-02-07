@@ -21,6 +21,13 @@
   --secondary1: #00afd5;
   --secondary2: #0093bc;
   --secondary3: #00b6de;
+  --secondary4: #b2e7f2;
+  --secondary5: #d8f8ff; /* select */
+  --secondary6: #edfcff; /* bg */
+  --secondary7: #ffdada; /* red plus */
+  --secondary8: #ffeded; /* red bg */
+  --secondary9: #ffeded; /* contents bg */
+  --secondary10: #f6f8fd; /* table bg */
 
   /* Support */
   --status1: #ff4646;

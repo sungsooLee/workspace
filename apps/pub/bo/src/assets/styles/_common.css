@@ -33,9 +33,16 @@ body {
   font-weight: 400;
   color: var(--gray9);
   line-height: 160%;
-  @apply scrollbar;
 }
 
 strong {
   font-weight: 600;
+}
+
+/* 공통 레이아웃(정렬) */
+.row {
+  @apply flex w-full gap-[32px];
+  & + .row {
+    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[17px];
+  }
 }

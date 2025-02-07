@@ -13,7 +13,17 @@
 }
 
 .select_viewport {
-  @apply !scrollbar max-h-[148px] overflow-y-auto overflow-x-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray7)] bg-[var(--white)];
+  @apply max-h-[148px] overflow-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray7)] bg-[var(--white)];
+  &.lg {
+    @apply max-h-[206px] rounded-[8px] border-[var(--gray7)] p-[8px];
+    .select_item {
+      @apply min-h-[3.8rem] text-[var(--gray9)];
+      &[data-state='checked'],
+      &:hover {
+        @apply rounded-[4px] bg-[var(--secondary5)];
+      }
+    }
+  }
 }
 
 .select_scrollbtn {
@@ -25,5 +35,11 @@
   &[data-state='checked'],
   &:hover {
     @apply cursor-pointer border-0 bg-[var(--gray1)] outline-none;
+  }
+}
+
+.lg {
+  .select_trigger {
+    @apply min-h-[40px] rounded-[8px] border-[var(--gray6)] pl-[16px];
   }
 }
