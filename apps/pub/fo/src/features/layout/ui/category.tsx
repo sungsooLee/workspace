@@ -197,7 +197,10 @@ const CategoryCompoment = () => {
         open={isOpen}
         onOpenChange={setIsOpen}
         popoverContent={<PopoverContent />}
-        className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}>
+        className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
+        side="bottom"
+        align="start"
+        sideOffset={15}>
         {isOpen ? (
           <IcoXclose width={24} height={24} stroke="#ffffff" />
         ) : (
