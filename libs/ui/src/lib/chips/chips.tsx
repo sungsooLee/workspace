@@ -44,7 +44,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {prefixCharacter}
 
         {/* label */}
-        <span className={styles.text}>{label}</span>
+        <span className={styles.label}>{label}</span>
 
         {/* close button */}
         {!hideCloseButton && (
