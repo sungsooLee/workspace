@@ -22,7 +22,7 @@ const RecentVisitsCompoment = () => {
   // ]);
 
   const items: SelectOption[] = [
-    { label: '현대자동차 A', value: 'A' },
+    { label: '현대자동차 현대자동차현대자동차 A', value: 'A' },
     { label: '현대자동차 B', value: 'B' },
     { label: '현대자동차 C', value: 'C' },
     { label: '현대자동차 D', value: 'E' },
