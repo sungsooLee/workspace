@@ -5,12 +5,34 @@
 .tooltip_item {
 }
 
-.tooltip_arrow {
-  @apply -top-[5px] mr-[6px] h-2 w-4 rounded-sm fill-[#333];
+.arrow {
+  @apply absolute inline-flex h-[10px] w-[10px];
 }
 
 .tooltip_content {
-  @apply rounded-bl-[6px] rounded-br-[6px] rounded-tl-none rounded-tr-[6px] bg-[#333] px-[12px] py-[8px] text-[1.4rem] font-medium text-[var(--white)];
+  @apply rounded-[6px] bg-[#333] px-[12px] py-[8px] text-[1.4rem] font-medium text-[var(--white)];
+  &[data-side='right'] {
+    &[data-align='start'],
+    &[data-align='center'] {
+      @apply mt-[6px] rounded-tl-none;
+      .arrow {
+        @apply left-0 top-[6px] -ml-[9px];
+      }
+    }
+    &[data-align='end'] {
+      @apply -translate-y-[8px] rounded-bl-none;
+      .arrow {
+        @apply bottom-0 left-0 -ml-[9px] rotate-[93deg];
+      }
+    }
+  }
+  &[data-side='bottom'] {
+    &[data-align='start'] {
+      .arrow {
+        @apply left-0 top-0 -mt-[9px] rotate-[81deg];
+      }
+    }
+  }
 }
 
 @keyframes slideUpAndFade {

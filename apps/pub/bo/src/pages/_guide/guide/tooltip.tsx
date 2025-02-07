@@ -16,11 +16,18 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Tootip Component Guide</h2>
-      <Tooltip side="right" content={'tooltip content'} open={true}>
+      <p className="loc react">Side : right , align : start</p>
+      <Tooltip side="bottom" align="start" content={'tooltip content'}>
         <Button onlyIcon>
           <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
         </Button>
       </Tooltip>
+      {/* <p className="loc react">Side : right , align : center</p>
+      <Tooltip side="right" align="center" content={'tooltip content'}>
+        <Button onlyIcon>
+          <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+        </Button>
+      </Tooltip> */}
     </div>
   );
 }

@@ -38,6 +38,7 @@ function RouteComponent() {
           value: 'H',
         }}
         prefixCharacter="#"
+        typeBtn
       />
       <Chips
         option={{
