@@ -31,7 +31,9 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Chips Component Guide</h2>
-      <h3 className="guide_tit3">Chips 개별로 사용하는 경우</h3>
+      <h3 className="guide_tit3">
+        Chips 개별로 사용하는 경우(안에 label이 버튼인 경우 typeBtn props 추가)
+      </h3>
       <Chips
         option={{
           label: '현대자동차 H',

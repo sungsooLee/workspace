@@ -16,12 +16,12 @@ interface TooltipComponentProps extends Primitive.TooltipProps {
 
 const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TooltipComponentProps>(
   (
-    { children, className, content, side = 'right', align = 'start', sideOffset = 5, ...props },
+    { children, className, content, side = 'bottom', align = 'start', sideOffset = 5, ...props },
     ref,
   ) => {
     return (
       <Primitive.Provider>
-        <Primitive.Root open>
+        <Primitive.Root>
           <Primitive.Trigger className={styles.tooltip_btn}>{children}</Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
