@@ -10,6 +10,7 @@ interface PopoverComponentProps extends Primitive.PopoverContentProps {
   popoverContent?: ReactNode;
   className?: string;
   open?: boolean;
+  side?: 'top' | 'right' | 'bottom' | 'left';
   onOpenChange?: (open: boolean) => void;
 }
 

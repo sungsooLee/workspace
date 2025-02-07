@@ -23,7 +23,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     className,
     variant,
     size,
-    prefixCharacter = '#',
+    prefixCharacter,
     onDelete,
     hideCloseButton,
     option: { label, value },
@@ -44,12 +44,12 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {prefixCharacter}
 
         {/* label */}
-        {label}
+        <span className={styles.label}>{label}</span>
 
         {/* close button */}
         {!hideCloseButton && (
           <Button onClick={handleDeleteClick}>
-            <IcoXclose width={12} height={13} stroke="#131C30" className={styles.close} />
+            <IcoXclose stroke="#131C30" className={styles.close} />
           </Button>
         )}
       </span>
