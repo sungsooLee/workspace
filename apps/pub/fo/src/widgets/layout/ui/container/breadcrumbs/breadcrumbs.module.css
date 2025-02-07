@@ -52,7 +52,7 @@
       li {
         @apply body_4_r w-[calc(100%/6)] min-w-[125px];
         a {
-          @apply box-border block h-full w-full rounded-[4px] px-[10px] py-[5px];
+          @apply box-border block h-full w-full rounded-[4px] px-[10px] py-[6px];
           &:hover,
           &.active {
             @apply bg-[var(--secondary5)];
