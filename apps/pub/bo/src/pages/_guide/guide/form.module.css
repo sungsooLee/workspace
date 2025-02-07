@@ -64,13 +64,3 @@
     }
   }
 }
-
-.row {
-  @apply flex w-full gap-[32px];
-  .form_label {
-    @apply label_1_b mb-[12px] flex;
-  }
-  &:not(:nth-child(1)) {
-    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[17px];
-  }
-}
