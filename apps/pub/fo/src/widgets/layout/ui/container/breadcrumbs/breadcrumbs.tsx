@@ -80,7 +80,12 @@ function BreadcrumbsComponent() {
                 </>
               )}
             </Link>*/}
-          <Popover popoverContent={<PopoverContent1 />} className={styles.btn_menu}>
+          <Popover
+            popoverContent={<PopoverContent1 />}
+            className={styles.btn_menu}
+            side="bottom"
+            align="start"
+            sideOffset={10}>
             <span className={styles.select}>{'서비스1'}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
             <IcoArrowForward width={12} height={12} stroke="#131C30" />
@@ -88,7 +93,12 @@ function BreadcrumbsComponent() {
         </li>
 
         <li className={styles.link_item}>
-          <Popover popoverContent={<PopoverContent2 />} className={styles.btn_menu}>
+          <Popover
+            popoverContent={<PopoverContent2 />}
+            className={styles.btn_menu}
+            side="bottom"
+            align="start"
+            sideOffset={10}>
             <span className={styles.select}>{'서비스2'}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
             <IcoArrowForward width={12} height={12} stroke="#131C30" />
@@ -96,7 +106,12 @@ function BreadcrumbsComponent() {
         </li>
 
         <li className={styles.link_item}>
-          <Popover popoverContent={<PopoverContent3 />} className={styles.btn_menu}>
+          <Popover
+            popoverContent={<PopoverContent3 />}
+            className={styles.btn_menu}
+            side="bottom"
+            align="start"
+            sideOffset={10}>
             <span className={styles.select}>{'서비스3'}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Popover>
