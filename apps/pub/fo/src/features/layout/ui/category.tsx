@@ -59,17 +59,21 @@ const PopoverContent = () => {
                   <ul className={styles.list}>
                     <li>
                       <Button className={styles.active}>
-                        리더십/비즈스킬
+                        <span>리더십/비즈스킬</span>
                         <i>
                           <IcoArrowForward width={16} height={16} stroke="#07287E" />
                         </i>
                       </Button>
                     </li>
                     <li>
-                      <Button>어학</Button>
+                      <Button>
+                        <span>어학</span>
+                      </Button>
                     </li>
                     <li>
-                      <Button>IT</Button>
+                      <Button>
+                        <span>IT</span>
+                      </Button>
                     </li>
                   </ul>
                 </div>
@@ -78,16 +82,19 @@ const PopoverContent = () => {
                 <div className={`${styles.menu_section} ${styles.sec2}`}>
                   <ul className={styles.list}>
                     <li>
-                      <Button>경영/기획</Button>
+                      <Button>
+                        <span>경영/기획</span>
+                      </Button>
                     </li>
                     <li>
-                      <Button>고객 서비스</Button>
+                      <Button>
+                        <span>마케팅 및 세일즈마케팅 및 세일즈 메케팅 및 세일즈</span>
+                      </Button>
                     </li>
                     <li>
-                      <Button>마케팅 및 세일즈마케팅 및 세일즈 메케팅 및 세일즈</Button>
-                    </li>
-                    <li>
-                      <Button>생산</Button>
+                      <Button>
+                        <span>생산</span>
+                      </Button>
                     </li>
                   </ul>
                 </div>
@@ -96,22 +103,14 @@ const PopoverContent = () => {
                 <div className={`${styles.menu_section} ${styles.sec3}`}>
                   <ul className={styles.list}>
                     <li>
-                      <Button>서비스</Button>
+                      <Button>
+                        <span>서비스</span>
+                      </Button>
                     </li>
                     <li>
-                      <Button>연구개발</Button>
-                    </li>
-                    <li>
-                      <Button>품질</Button>
-                    </li>
-                    <li>
-                      <Button>서비스</Button>
-                    </li>
-                    <li>
-                      <Button>연구개발</Button>
-                    </li>
-                    <li>
-                      <Button>품질</Button>
+                      <Button>
+                        <span>연구개발</span>
+                      </Button>
                     </li>
                   </ul>
                 </div>
@@ -120,55 +119,9 @@ const PopoverContent = () => {
                 <div className={`${styles.menu_section} ${styles.sec1}`}>
                   <ul className={styles.list}>
                     <li>
-                      <Button>리더십/비즈스킬</Button>
-                    </li>
-                    <li>
-                      <Button>어학</Button>
-                    </li>
-                    <li>
-                      <Button>IT</Button>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* 카테고리 영역 - 좌측메뉴(sec5) */}
-                <div className={`${styles.menu_section} ${styles.sec2}`}>
-                  <ul className={styles.list}>
-                    <li>
-                      <Button>경영/기획</Button>
-                    </li>
-                    <li>
-                      <Button>고객 서비스</Button>
-                    </li>
-                    <li>
-                      <Button>마케팅 및 세일즈마케팅 및 세일즈 메케팅 및 세일즈</Button>
-                    </li>
-                    <li>
-                      <Button>생산</Button>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* 카테고리 영역 - 좌측메뉴(sec6) */}
-                <div className={`${styles.menu_section} ${styles.sec3}`}>
-                  <ul className={styles.list}>
-                    <li>
-                      <Button>서비스</Button>
-                    </li>
-                    <li>
-                      <Button>연구개발</Button>
-                    </li>
-                    <li>
-                      <Button>품질</Button>
-                    </li>
-                    <li>
-                      <Button>서비스</Button>
-                    </li>
-                    <li>
-                      <Button>연구개발</Button>
-                    </li>
-                    <li>
-                      <Button>품질</Button>
+                      <Button>
+                        <span>리더십/비즈스킬</span>
+                      </Button>
                     </li>
                   </ul>
                 </div>
