@@ -48,5 +48,8 @@
         @apply rotate-[180deg];
       }
     }
+    .no_visits {
+      @apply w-auto text-[1.4rem] font-medium text-[var(--gray7)];
+    }
   }
 }
