@@ -57,12 +57,18 @@
                   span {
                     @apply inline-block px-[32px];
                   }
+                  i {
+                    @apply hidden;
+                  }
                   &.active {
                     @apply bg-[var(--white)] text-[var(--primary2)];
+                    span {
+                      @apply pr-[8px];
+                    }
+                    i {
+                      @apply inline-block pr-[8px];
+                    }
                   }
-                }
-                i {
-                  @apply pr-[8px];
                 }
               }
             }

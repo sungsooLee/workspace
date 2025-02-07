@@ -38,16 +38,6 @@ const RecentVisitsCompoment = () => {
     }
   }, []);
 
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
       <h3 className={styles.tit}>최근방문</h3>
@@ -57,20 +47,18 @@ const RecentVisitsCompoment = () => {
         slidesPerView="auto"
         loop={false}
         modules={[Navigation]}
-        simulateTouch={isMobile}
-        allowTouchMove={isMobile}
         className={styles.recent_swiper}>
         <div className={styles.lists}>
-          {items.map((item) => (
-            <SwiperSlide key={item.id} className={styles.slide}>
+          {items.map((slide, index) => (
+            <SwiperSlide key={items.id} className={styles.slide}>
               <div className={styles.item}>
-                <Button className={styles.txt}>{item.label}</Button>
+                {/* <Button className={styles.txt}>{item.label}</Button>
                 <Button
                   aria-label="remove"
                   onClick={() => handleDelete(item.id)}
                   className={styles.remove}>
                   <IcoXclose width={16} height={16} stroke="#131C30" />
-                </Button>
+                </Button> */}
               </div>
             </SwiperSlide>
           ))}
