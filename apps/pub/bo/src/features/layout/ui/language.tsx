@@ -41,7 +41,7 @@ const LanguageComponent = () => {
       align="center"
       sideOffset={5}>
       <span className={styles.select}>{'KR'}</span>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" />
+      <IcoArrowDown width={16} height={16} stroke="#ffffff" />
     </Popover>
   );
 };
