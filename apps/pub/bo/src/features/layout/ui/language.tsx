@@ -7,20 +7,7 @@ import { IcoArrowDown } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const langs = [
-    'Korea',
-    'English',
-    'French',
-    'Arabic',
-    'Indonesian',
-    'Chinese Taiwan',
-    'Japanese',
-    'Deutsch',
-    'Malay',
-    'Nepali',
-    'Spanish',
-    'Portuguese',
-  ];
+  const langs = ['Korea', 'English'];
   const handleClick = (idx: number): void => {
     setActiveIdx(idx);
   };
