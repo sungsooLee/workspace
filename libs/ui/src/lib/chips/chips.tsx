@@ -49,7 +49,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {/* close button */}
         {!hideCloseButton && (
           <Button onClick={handleDeleteClick}>
-            <IcoXclose width={12} height={13} stroke="#131C30" className={styles.close} />
+            <IcoXclose stroke="#131C30" className={styles.close} />
           </Button>
         )}
       </span>
