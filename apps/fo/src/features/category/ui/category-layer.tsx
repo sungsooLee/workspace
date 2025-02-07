@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useCategories } from '../services/category.service';
 import { CategoryBadgeList } from './category-badge-list';
-import { CategoryNavigation } from './category-navigation';
-import { CategoryDetail } from './category-detail';
 import styles from './category-layer.module.css';
 import { Link } from '@tanstack/react-router';
 import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
@@ -12,6 +10,7 @@ import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
 import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
 import { Category } from '../../../types/entities/category';
 import { Hierarchy } from '../../../types/hierarchy';
+import { useCategoryNavigation } from '../../../entities/category/service/category.hook';
 
 interface CategoryLayerProps {
   isOpen: boolean;
@@ -21,6 +20,7 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
   const { data: categories } = useCategories();
   const [selectedDepth1, setSelectedDepth1] = useState<number | null>(null);
   const depth1Categories = categories.filter((cat) => cat.depth === 1);
+  const { handleCategoryClick } = useCategoryNavigation();
 
   // 선택된 depth1의 하위 카테고리들 찾기
   const selectedCategory = categories.find((cat) => cat.categoryId === selectedDepth1);
@@ -118,7 +118,8 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
                   <h2>
                     <Link
                       to="/category/$categoryId"
-                      params={{ categoryId: selectedCategory.categoryId.toString() }}>
+                      params={{ categoryId: selectedCategory.categoryId.toString() }}
+                      onClick={() => handleCategoryClick(selectedCategory)}>
                       {selectedCategory.name}
                     </Link>
                   </h2>
@@ -136,7 +137,8 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
                         <h3>
                           <Link
                             to="/category/$categoryId"
-                            params={{ categoryId: category.categoryId.toString() }}>
+                            params={{ categoryId: category.categoryId.toString() }}
+                            onClick={() => handleCategoryClick(category)}>
                             {category.name}
                           </Link>
                         </h3>
@@ -154,7 +156,8 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
                               <li key={sub.categoryId}>
                                 <Link
                                   to="/category/$categoryId"
-                                  params={{ categoryId: sub.categoryId.toString() }}>
+                                  params={{ categoryId: sub.categoryId.toString() }}
+                                  onClick={() => handleCategoryClick(sub)}>
                                   {sub.name}
                                 </Link>
                               </li>

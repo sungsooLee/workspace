@@ -3,14 +3,18 @@ import { Link } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
 import styles from './navigate-hover.module.css';
 
-function NavigateHoverComponent() {
+interface NavigateHoverComponentProps {
+  isOpen: boolean;
+}
+
+function NavigateHoverComponent({ isOpen }: NavigateHoverComponentProps) {
   const menuData = [
     {
       title: '교육제도',
-      link: '',
+      link: '/',
       subMenu: [
-        { title: '금융자격지원제도', link: '' },
-        { title: 'SPA 승진제도', link: '' },
+        { title: '금융자격지원제도', link: '/' },
+        { title: 'SPA 승진제도', link: '/' },
       ],
     },
     {
@@ -90,7 +94,7 @@ function NavigateHoverComponent() {
     },
   ];
   return (
-    <div className={`${styles.start} ${styles.menu_all} ${styles.active}`}>
+    <div className={`${styles.start} ${styles.menu_all} ${isOpen ? styles.active : ''}`}>
       <div className={styles.menu_inner}>
         {menuData.map((menu, index) => (
           <div key={index} className={styles.menu_div}>
@@ -106,7 +110,6 @@ function NavigateHoverComponent() {
                 )}
               </h2>
 
-              {/* 서브 메뉴가 있을 경우 */}
               {menu.subMenu && menu.subMenu.length > 0 && (
                 <ul className={styles.list}>
                   {menu.subMenu.map((subItem, subIndex) => (

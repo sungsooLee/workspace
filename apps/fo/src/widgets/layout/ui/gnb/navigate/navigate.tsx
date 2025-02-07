@@ -13,6 +13,11 @@ interface LayerProps {
   isVisible: boolean;
 }
 
+interface NavigateComponentProps {
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+}
+
 // 2Depth 레이어 컴포넌트
 const MenuLayer = memo(({ menus, isVisible }: LayerProps) => {
   const router = useRouter();
@@ -52,8 +57,7 @@ const MenuLayer = memo(({ menus, isVisible }: LayerProps) => {
   );
 });
 
-function NavigateComponent() {
-  const [isHovered, setIsHovered] = useState(false);
+function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
   const { data: menus } = useMenuHierarchy();
   const location = useRouterState();
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -69,13 +73,6 @@ function NavigateComponent() {
       swiperInstance.navigation.update();
     }
   }, []);
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   const isActiveMenu = (menu: Menu) => {
     const isActive = location.location.pathname.startsWith(menu.path);
@@ -98,14 +95,7 @@ function NavigateComponent() {
 
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
-      <nav className={styles.nav} onMouseLeave={handleMouseLeave}>
-        {/* <ul onMouseEnter={handleMouseEnter}>
-          {menus?.map((menu: Menu) => (
-            <li key={menu.id}>
-              {menu.title}
-            </li>
-          ))}
-        </ul> */}
+      <nav className={styles.nav} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Swiper
           ref={swiperRef}
           spaceBetween={48}
@@ -137,7 +127,6 @@ function NavigateComponent() {
             <IcoArrowForward width={16} height={16} stroke="#6F798B" />
           </div>
         </div>
-        <MenuLayer menus={menus} isVisible={isHovered} />
       </nav>
     </div>
   );

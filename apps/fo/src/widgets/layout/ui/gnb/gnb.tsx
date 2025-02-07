@@ -16,10 +16,20 @@ import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '../../../../entities/user';
 import { Tenant, useFetchTenantByUser } from '../../../../entities/tenant';
 import styles from './gnb.module.css';
+import { NavigateHover } from './navigate/navigate-hover';
 
 function GNBComponent() {
   const { data: userData } = useFetchAuthUser();
   const { data: tenants } = useFetchTenantByUser(userData?.accountId);
+  const [isHoverNavigate, setIsHoverNavigate] = useState(false);
+  const handleMouseEnter = () => {
+    console.log('호버');
+    setIsHoverNavigate(true);
+  };
+  const handleMouseLeave = () => {
+    console.log('아웃');
+    setIsHoverNavigate(false);
+  };
   const [activeTenant, setActiveTenant] = useState<Tenant | null>(() => {
     const storedTenant = sessionStorage.getItem('ACTIVE_TENANT');
     if (storedTenant) {
@@ -92,9 +102,12 @@ function GNBComponent() {
           <Notification />
           <UserAvatar />
         </div>
-        <div className={styles.nav_area}>
-          <Category />
-          <Navigate />
+        <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
+          <div className={styles.nav_area}>
+            <Category />
+            <Navigate onMouseEnter={handleMouseEnter} />
+          </div>
+          {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
         </div>
       </header>
     </div>
