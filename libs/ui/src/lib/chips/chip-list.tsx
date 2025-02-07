@@ -13,6 +13,7 @@ export interface ChipListComponentProps extends ChipsComponentProps {
   options: Array<SelectOption>;
   showInput?: boolean;
   orientation?: 'vertical' | 'horizontal';
+  placeholder?: string;
   onChange?: (options: Array<SelectOption>) => void;
 }
 
@@ -23,6 +24,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
     onChange,
     showInput,
     options,
+    placeholder = '태그를 입력해주세요.',
     ...props
   }) => {
     const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>(options);
@@ -55,12 +57,16 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
     };
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--chip-list', 'border p-3')}>
+      <div
+        {...props}
+        className={cn(styles.start, styles.chips_list, className, 'nlp--chip-list', {
+          [styles.chips_box]: showInput,
+        })}>
         {/* input */}
         {showInput && (
           <Input
-            className={'mb-3 max-w-[200px]'}
-            placeholder={'태그를 입력해주세요.'}
+            className={styles.input_chips}
+            placeholder={placeholder}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
             value={inputValue}
@@ -74,7 +80,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
             <Chips
               {...props}
               option={option}
-              className="mr-1"
+              className={styles.btn_chips}
               onDelete={handleChipDelete}
             />
           ))}

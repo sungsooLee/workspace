@@ -8,6 +8,9 @@
 
 /* form.module.css */
 .form_wrap {
+  @apply relative;
+}
+.form_row {
   @apply flex w-full gap-[32px];
   .form_label {
     @apply label_1_b mb-[12px] flex;

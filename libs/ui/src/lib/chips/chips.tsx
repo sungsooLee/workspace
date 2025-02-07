@@ -3,8 +3,10 @@ import React, { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 
 import { SelectOption } from '../select/type';
+import { IcoClose } from '@learnway/icons';
 
 import styles from './chips.module.css';
+import { Button } from '../button/button';
 
 export interface ChipsComponentProps {
   option: SelectOption;
@@ -37,9 +39,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     };
 
     return (
-      <span
-        {...props}
-        className={cn(styles.start, className, 'nlp--chips', 'bg-gray-2 m-1 rounded')}>
+      <span {...props} className={cn(styles.start, styles.chips, className, 'nlp--chips')}>
         {/* prefix character */}
         {prefixCharacter}
 
@@ -48,9 +48,9 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
 
         {/* close button */}
         {!hideCloseButton && (
-          <button onClick={handleDeleteClick} className={'ml-1'}>
-            x
-          </button>
+          <Button onClick={handleDeleteClick}>
+            <IcoClose width={12} height={12} stroke="#131C30" className={styles.close} />
+          </Button>
         )}
       </span>
     );
