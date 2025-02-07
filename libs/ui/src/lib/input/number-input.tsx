@@ -50,7 +50,7 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberFieldProps>(
           'placeholder:text-gray-500',
           'focus:outline-none focus:ring-2 focus:ring-blue-500',
           'group-[.has-error]:border-red-500 group-[.has-error]:focus:border-red-500',
-          disabled && 'bg-gray-100 text-gray-400 cursor-not-allowed',
+          disabled && 'cursor-not-allowed bg-gray-100 text-gray-400',
           className,
         )}
         decimalScale={decimalScale}
