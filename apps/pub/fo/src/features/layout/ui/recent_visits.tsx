@@ -20,7 +20,7 @@ const RecentVisitsCompoment = () => {
     { id: 9, label: '성희롱 예방' },
   ]);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: any) => {
     setItems(items.filter((item) => item.id !== id));
     console.log('Deleted item:', id);
   };

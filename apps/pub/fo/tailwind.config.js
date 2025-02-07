@@ -76,6 +76,11 @@ module.exports = {
           fontSize: '1.2rem',
           fontWeight: '600',
         },
+        '.body_4_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
         '.input_3_r': {
           ...baseTitle,
           fontSize: '1.4rem',

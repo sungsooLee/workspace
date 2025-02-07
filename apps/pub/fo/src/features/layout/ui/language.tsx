@@ -30,9 +30,6 @@ const PopoverContent = () => {
 };
 
 const LanguageComponent = () => {
-  // const { data } = useFetchAuthUser();
-  // const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
-
   return (
     <Popover popoverContent={<PopoverContent />} className={styles.btn_language}>
       <span className={styles.select}>{'KR'}</span>

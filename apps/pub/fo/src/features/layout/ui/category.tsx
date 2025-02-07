@@ -52,22 +52,18 @@ const PopoverContent = () => {
         <div className={styles.category_container}>
           {/* 카테고리 영역 - 좌측메뉴 */}
           <div className={styles.category_menu}>
-            <h2>
-              <Link to={''} className={styles.tit}>
-                기업경영
-              </Link>
-              <i>
-                <IcoArrowForward width={16} height={16} stroke="#07287E" />
-              </i>
-            </h2>
-
             <div className={styles.menu_list_wrap}>
               <div className={styles.menu_list}>
                 {/* 카테고리 영역 - 좌측메뉴(sec1) - sec1~sec3 loop */}
                 <div className={`${styles.menu_section} ${styles.sec1}`}>
                   <ul className={styles.list}>
                     <li>
-                      <Button>리더십/비즈스킬</Button>
+                      <Button className={styles.active}>
+                        리더십/비즈스킬
+                        <i>
+                          <IcoArrowForward width={16} height={16} stroke="#07287E" />
+                        </i>
+                      </Button>
                     </li>
                     <li>
                       <Button>어학</Button>
