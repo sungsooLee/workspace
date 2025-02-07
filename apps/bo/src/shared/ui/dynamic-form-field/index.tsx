@@ -5,7 +5,15 @@ import { cn } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
 import { Controller } from 'react-hook-form';
 import { clsx } from 'clsx';
-import { Checkbox, FormCheckbox, FormRadioGroup, Input, Radio, RadioGroup } from '@learnway/ui';
+import {
+  Checkbox,
+  FormCheckbox,
+  FormRadioGroup,
+  FormSelect,
+  Input,
+  Radio,
+  RadioGroup,
+} from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
 import FormCategorySelector from './dialogs/form-category-selector';
 import FormContentsThumbnail from './dialogs/form-contents-thumbnail';
@@ -30,7 +38,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
         const errorClass = clsx({
           error: errors && errors[name],
         });
-        const Component = dialogConfig[type || configType];
+        const c = dialogConfig[type || configType];
         const formParams = {
           ref,
           type: configType || type,
@@ -64,13 +72,14 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
                 )}
               </label>
             )}
-            <div className={styles.input_box}>
+            <div className={styles.input_box} ref={(ref) => (fieldRefs.current[name] = ref)}>
               {configType === 'text' && <Input {...formParams} />}
               {configType === 'radio-group' && <FormRadioGroup {...formParams} />}
               {configType === 'checkbox' && <FormCheckbox {...formParams} />}
               {configType === 'check-group' && <FormCheckboxGroup {...formParams} />}
               {configType === 'category-selector' && <FormCategorySelector {...formParams} />}
               {configType === 'contents-thumbnail' && <FormContentsThumbnail {...formParams} />}
+              {configType === 'dropdown' && <FormSelect {...formParams} />}
             </div>
             {errorClass !== 'error' && description && (
               <p className={cn(styles.guide_text)}>{description}</p>

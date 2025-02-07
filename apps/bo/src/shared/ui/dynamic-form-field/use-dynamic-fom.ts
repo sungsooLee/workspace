@@ -64,9 +64,8 @@ const useCustomForm = (config: any) => {
           if (errorFieldRef) {
             errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
             errorFieldRef.focus(); // focus 처리
-          } else {
-            setFocus(firstErrorKey);
           }
+          setFocus(firstErrorKey);
         }
       },
     )(); // handleSubmit이 반환하는 함수를 즉시 실행

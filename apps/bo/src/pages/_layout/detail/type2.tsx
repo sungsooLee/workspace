@@ -7,6 +7,7 @@ import PageContainer from '../../../widgets/layout/ui/page-layout/page-container
 import z from 'zod';
 import { t } from 'i18next';
 import DynamicFormField from '../../../shared/ui/dynamic-form-field';
+import { CODE_GROUP } from '@learnway/config';
 export const Route = createFileRoute('/_layout/detail/type2')({
   component: RouteComponent,
 });
@@ -44,8 +45,18 @@ function RouteComponent() {
             버튼4
           </Button>
         </PageButtons>
+        <h1>CODE</h1>
         <PageRow>
-          <DynamicFormField provider={provider} name={'language_code'} />
+          <DynamicFormField provider={provider} name={'language'} />
+          <DynamicFormField provider={provider} name={'language_detail'} />
+        </PageRow>
+        <h1>fetch</h1>
+        <PageRow>
+          <DynamicFormField provider={provider} name={'language'} />
+          <DynamicFormField provider={provider} name={'language_detail'} />
+        </PageRow>
+        <PageRow>
+          <DynamicFormField provider={provider} name={'title'} />
         </PageRow>
         <PageRow>
           <DynamicFormField provider={provider} name={'subdivision'} />
@@ -70,9 +81,34 @@ function RouteComponent() {
 const detailConfig = {
   builders: [
     {
-      name: 'language_code',
+      name: 'language',
+      type: 'dropdown',
+      label: '언어',
+      value: '',
+      items: [{ code: '', name: '언어전체' }],
+      description: '총 학습 시간은 차수별 학습 기간 입니다.',
+      itemsConfig: {
+        type: 'target',
+        target: 'language_code',
+        codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      },
+    },
+    {
+      name: 'language_detail',
+      type: 'dropdown',
+      label: '언어상세',
+      value: '',
+      description: '총 학습 시간은 차수별 학습 기간 입니다.',
+      items: [{ code: '', name: '언어코드를 선택하세요.' }],
+      itemsConfig: {
+        type: 'self',
+        codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      },
+    },
+    {
+      name: 'title',
       type: 'text',
-      label: '언어코드',
+      label: '제목',
       value: '',
       description: '총 학습 시간은 차수별 학습 기간 입니다.',
     },
