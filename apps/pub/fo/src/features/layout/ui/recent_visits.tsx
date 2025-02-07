@@ -53,7 +53,11 @@ const RecentVisitsCompoment = () => {
         <div className={styles.lists}>
           {items.map((item, index) => (
             <SwiperSlide key={index} className={styles.slide}>
-              <Chips className={styles.item} option={{ label: item.label, value: item.value }} />
+              <Chips
+                className={styles.item}
+                option={{ label: item.label, value: item.value }}
+                typeBtn
+              />
             </SwiperSlide>
           ))}
         </div>

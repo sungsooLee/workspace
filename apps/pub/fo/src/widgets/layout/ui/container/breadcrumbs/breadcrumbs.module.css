@@ -46,7 +46,7 @@
     }
   }
   &.hover_menu {
-    @apply !left-[0] rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[16px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    @apply rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[16px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .menu_list {
       @apply flex max-w-[788px] flex-wrap;
       li {
