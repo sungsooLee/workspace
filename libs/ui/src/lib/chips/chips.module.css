@@ -5,13 +5,13 @@
   &.chips_box {
     @apply rounded-[4px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] p-[12px];
     .input_chips {
-      @apply border-0;
+      @apply border-0 pl-0;
     }
   }
   .chips_wapper {
     @apply mt-[16px] flex flex-wrap gap-x-[8px] gap-y-[12px];
   }
   .close {
-    @apply h-[13px] w-[12px];
+    @apply ml-[2px] h-[13px] w-[12px];
   }
 }
