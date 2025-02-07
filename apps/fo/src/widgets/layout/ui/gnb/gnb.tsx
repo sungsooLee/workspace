@@ -38,53 +38,30 @@ function GNBComponent() {
     }
     setIsCategoryOpen(isOpen);
   };
+  const handleNavigateHoverClose = () => {
+    if (isHoverNavigate) {
+      setIsHoverNavigate(false);
+    }
+  };
+
   const [activeTenant, setActiveTenant] = useState<Tenant | null>(() => {
     const storedTenant = sessionStorage.getItem('ACTIVE_TENANT');
-    if (storedTenant) {
-      return JSON.parse(storedTenant);
-    }
-
-    if (!window.opener && !storedTenant) {
-      return null;
-    }
-
-    return null;
+    return storedTenant ? JSON.parse(storedTenant) : null;
   });
 
   useEffect(() => {
     if (!activeTenant && tenants?.length) {
-      // 새로운 윈도우로 열렸을 떄 URL에서 테넌트 아이디 갖고옴.
-      if (window.opener) {
-        const params = new URLSearchParams(window.location.search);
-        const tenantId = params.get('tenantId');
-        const tenant = tenants.find((t) => t.id.toString() === tenantId);
-        if (tenant) {
-          setActiveTenant(tenant);
-          sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
-        }
-      } else {
-        const tenantId = cookieService.get('LOGIN_TENANT_ID');
-        const tenant = tenants.find((t) => t.id.toString() === tenantId) || tenants[0];
-        setActiveTenant(tenant);
-        sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
-      }
+      const tenantId = cookieService.get('LOGIN_TENANT_ID');
+      const tenant = tenants.find((t) => t.id.toString() === tenantId) || tenants[0];
+      setActiveTenant(tenant);
+      sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
     }
-  }, [tenants]);
+  }, [tenants, activeTenant]);
 
   const handleTenantSwitch = useCallback((tenant: Tenant) => {
     setActiveTenant(tenant);
     sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
-
-    const currentUrl = new URL(window.location.href);
-    const baseUrl = `${currentUrl.protocol}//${currentUrl.host}/fo`;
-
-    const newUrl = new URL(baseUrl);
-    newUrl.searchParams.set('tenantId', tenant.id.toString());
-
-    const newWindow = window.open(newUrl.toString(), '_blank');
-    if (newWindow) {
-      newWindow.focus();
-    }
+    window.location.reload();
   }, []);
 
   return (
@@ -115,7 +92,9 @@ function GNBComponent() {
             <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
             <Navigate onMouseEnter={handleMouseEnter} />
           </div>
-          {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
+          {isHoverNavigate && (
+            <NavigateHover isOpen={isHoverNavigate} onClose={handleNavigateHoverClose} />
+          )}
         </div>
       </header>
     </div>

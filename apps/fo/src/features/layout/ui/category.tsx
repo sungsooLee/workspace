@@ -15,7 +15,6 @@ const CategoryContent = ({ isOpen }: any) => {
 };
 const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
   const router = useRouter();
-  // const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     return router.history.subscribe((navigation) => {
@@ -36,22 +35,6 @@ const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
             <IcoMenu01 width={24} height={24} stroke="#131C30" />
           )}
         </Button>
-        {/* <Button
-          onlyIcon
-          className={`${styles.btn_category} ${isActive ? styles.active : ''}`}
-          onClick={toggleCategory}>
-          {isActive ? (
-            <IcoXclose width={24} height={24} stroke="#ffffff" />
-          ) : (
-            <IcoMenu01 width={24} height={24} stroke="#131C30" />
-          )}
-        </Button> */}
-
-        {/* 카테고리 전체 메뉴 */}
-        {/* <div className={`${styles.category} ${isActive ? styles.active : ''}`}> */}
-        {/* 최근방문 */}
-        {/* <RecentVisits /> */}
-        {/* </div> */}
       </Popover>
     </div>
   );

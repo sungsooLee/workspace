@@ -1,13 +1,15 @@
 import { memo, useRef, useEffect, useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useRouter } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
 import styles from './navigate-hover.module.css';
 
 interface NavigateHoverComponentProps {
+  onClose: () => void;
   isOpen: boolean;
 }
 
-function NavigateHoverComponent({ isOpen }: NavigateHoverComponentProps) {
+function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps) {
+  const router = useRouter();
   const menuData = [
     {
       title: '교육제도',
@@ -93,6 +95,13 @@ function NavigateHoverComponent({ isOpen }: NavigateHoverComponentProps) {
       ],
     },
   ];
+
+  useEffect(() => {
+    return router.history.subscribe((navigation) => {
+      onClose();
+    });
+  }, [router.history, onClose]);
+
   return (
     <div className={`${styles.start} ${styles.menu_all} ${isOpen ? styles.active : ''}`}>
       <div className={styles.menu_inner}>
