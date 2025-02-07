@@ -90,7 +90,8 @@ function NavigateHoverComponent() {
     },
   ];
   return (
-    <div className={`${styles.start} ${styles.menu_all} ${styles.active}`}>
+    <div className={`${styles.start} ${styles.menu_all}`}>
+      {/* ${styles.active} */}
       <div className={styles.menu_inner}>
         {menuData.map((menu, index) => (
           <div key={index} className={styles.menu_div}>
