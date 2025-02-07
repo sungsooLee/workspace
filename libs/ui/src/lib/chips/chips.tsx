@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 
 import { SelectOption } from '../select/type';
-import { IcoClose } from '@learnway/icons';
+import { IcoXclose } from '@learnway/icons';
 
 import styles from './chips.module.css';
 import { Button } from '../button/button';
@@ -49,7 +49,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {/* close button */}
         {!hideCloseButton && (
           <Button onClick={handleDeleteClick}>
-            <IcoClose width={12} height={12} stroke="#131C30" className={styles.close} />
+            <IcoXclose width={12} height={13} stroke="#131C30" className={styles.close} />
           </Button>
         )}
       </span>
