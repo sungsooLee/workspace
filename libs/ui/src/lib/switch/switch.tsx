@@ -8,13 +8,23 @@ export interface SwitchComponentProps extends React.ComponentProps<typeof Primit
   id?: string;
   label?: string;
   className?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  reversed?: boolean; // label이 앞에 있는 Case
 }
 
 const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SwitchComponentProps>(
-  ({ id, label, className, ...props }, ref) => {
+  ({ id, label, className, checked, disabled, reversed, ...props }, ref) => {
     return (
-      <div className={cn(styles.start, styles.switch, className, 'nlp--switch')}>
-        <Primitive.Root className={styles.switch_root} id={id}>
+      <div
+        className={cn(styles.start, styles.switch, className, 'nlp--switch', {
+          [styles.reversed]: reversed,
+        })}>
+        <Primitive.Root
+          className={styles.switch_root}
+          id={id}
+          checked={checked}
+          disabled={disabled}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
         {label && (
