@@ -18,7 +18,7 @@ import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-grou
 import FormCategorySelector from './dialogs/form-category-selector';
 import FormContentsThumbnail from './dialogs/form-contents-thumbnail';
 const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...props }) => {
-  const { control, builders, fieldRefs } = provider;
+  const { control, builders, fieldRefs, watch } = provider;
   console.log('provider => ', provider);
   const {
     label,
@@ -27,6 +27,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
     description,
     options,
     checkLabel,
+    itemsConfig,
   } = builders.find((builder) => builder.name === name);
 
   return (
@@ -40,6 +41,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
         });
         const c = dialogConfig[type || configType];
         const formParams = {
+          watch,
           ref,
           type: configType || type,
           name,
@@ -52,6 +54,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
           options,
           checkLabel,
           fieldRefs,
+          itemsConfig,
         };
         const handleOnChagne = (obj: any) => {
           console.log('dynamic on change = >', obj);
