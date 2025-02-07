@@ -58,6 +58,7 @@ const PopoverContent = () => {
                 <div className={`${styles.menu_section} ${styles.sec1}`}>
                   <ul className={styles.list}>
                     <li>
+                      {/* 버튼활성화 active */}
                       <Button className={styles.active}>
                         <span>리더십/비즈스킬</span>
                         <i>

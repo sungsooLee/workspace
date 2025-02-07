@@ -10,7 +10,9 @@ const PopoverContent1 = () => {
     <div className={`${styles.start} ${styles.hover_menu}`}>
       <ul className={styles.menu_list}>
         <li>
-          <Link to={''}>전기/전차 부품</Link>
+          <Link to={''} className={styles.active}>
+            전기/전차 부품
+          </Link>
         </li>
         <li>
           <Link to={''}>서브메뉴1</Link>
