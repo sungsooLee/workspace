@@ -35,6 +35,7 @@ const PopoverContent = () => {
       ),
       isConfirm: true,
       iconVisible: false,
+      okButtonLabel: '로그인연장',
     });
   };
 
