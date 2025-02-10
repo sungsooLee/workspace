@@ -1,6 +1,6 @@
 import { useEffect, useState, ReactNode } from 'react';
 
-import { initI18N } from '@learnway/config';
+import { initI18N, initZod } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
@@ -24,6 +24,10 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
+
+  useEffect(() => {
+    initZod();
+  }, []);
 
   useEffect(() => {
     if (!i18nData) {

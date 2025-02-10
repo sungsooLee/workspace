@@ -11,5 +11,9 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   const { t, i18n } = useTranslation();
 
-  return <div>컨텐츠 영역</div>;
+  return (
+    <div>
+      <p>컨텐츠 영역</p>
+    </div>
+  );
 }

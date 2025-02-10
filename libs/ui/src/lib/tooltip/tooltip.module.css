@@ -5,12 +5,86 @@
 .tooltip_item {
 }
 
-.tooltip_arrow {
-  @apply -top-[5px] mr-[6px] h-2 w-4 rounded-sm fill-[#333];
+.arrow {
+  @apply absolute inline-flex h-[10px] w-[10px];
 }
 
 .tooltip_content {
-  @apply rounded-bl-[6px] rounded-br-[6px] rounded-tl-none rounded-tr-[6px] bg-[#333] px-[12px] py-[8px] text-[1.4rem] font-medium text-[var(--white)];
+  @apply rounded-[6px] bg-[#333] px-[12px] py-[8px] text-[1.4rem] font-medium text-[var(--white)];
+  &[data-side='right'] {
+    &[data-align='start'],
+    &[data-align='center'] {
+      @apply mt-[6px] rounded-tl-none;
+      .arrow {
+        @apply left-0 top-[6px] -ml-[9px];
+      }
+    }
+    &[data-align='end'] {
+      @apply -translate-y-[8px] rounded-bl-none;
+      .arrow {
+        @apply bottom-0 left-0 -ml-[8px] rotate-[90deg];
+      }
+    }
+  }
+  &[data-side='bottom'] {
+    &[data-align='start'] {
+      @apply translate-x-[8px] rounded-tl-none;
+      .arrow {
+        @apply left-0 top-0 -mt-[8px] rotate-[180deg];
+      }
+    }
+    &[data-align='end'] {
+      @apply -translate-x-[8px] rounded-tr-none;
+      .arrow {
+        @apply right-0 top-0 -mt-[8px] rotate-[90deg];
+      }
+    }
+    &[data-align='center'] {
+      .arrow {
+        @apply left-1/2 top-0 -ml-[10px] -mt-[8px] rotate-[90deg];
+      }
+    }
+  }
+  &[data-side='left'] {
+    &[data-align='start'] {
+      @apply translate-y-[8px] rounded-tr-none;
+      .arrow {
+        @apply right-0 top-0 -mr-[8px] rotate-[270deg];
+      }
+    }
+    &[data-align='center'] {
+      @apply translate-y-[8px];
+      .arrow {
+        @apply right-0 top-1/2 -mr-[8px] -mt-[8px] rotate-[270deg];
+      }
+    }
+    &[data-align='end'] {
+      @apply -translate-y-[8px] rounded-br-none;
+      .arrow {
+        @apply bottom-0 right-0 -mr-[8px] rotate-[180deg];
+      }
+    }
+  }
+  &[data-side='top'] {
+    &[data-align='start'] {
+      @apply translate-x-[8px] rounded-bl-none;
+      .arrow {
+        @apply bottom-0 left-0 -mb-[8px] rotate-[270deg];
+      }
+    }
+    &[data-align='center'] {
+      @apply -translate-x-[4px];
+      .arrow {
+        @apply bottom-0 left-1/2 -mb-[8px] rotate-[270deg];
+      }
+    }
+    &[data-align='end'] {
+      @apply -translate-x-[8px] rounded-br-none;
+      .arrow {
+        @apply bottom-0 right-0 -mb-[8px];
+      }
+    }
+  }
 }
 
 @keyframes slideUpAndFade {

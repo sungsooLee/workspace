@@ -13,6 +13,7 @@ export interface ChipsComponentProps {
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
+  typeBtn?: boolean;
   prefixCharacter?: string;
   hideCloseButton?: boolean;
   onDelete?: (option: SelectOption) => void;
@@ -23,6 +24,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     className,
     variant,
     size,
+    typeBtn,
     prefixCharacter,
     onDelete,
     hideCloseButton,
@@ -44,7 +46,11 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         {prefixCharacter}
 
         {/* label */}
-        <span className={styles.label}>{label}</span>
+        {!typeBtn ? (
+          <span className={styles.label}>{label}</span>
+        ) : (
+          <Button className={styles.label}>{label}</Button>
+        )}
 
         {/* close button */}
         {!hideCloseButton && (

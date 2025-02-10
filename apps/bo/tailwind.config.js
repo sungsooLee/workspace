@@ -32,7 +32,7 @@ module.exports = {
         // lable title class add
         '.label_1_b': {
           ...baseTitle,
-          fontSize: '1.2rem',
+          fontSize: '1.4rem',
           fontWeight: '600',
         },
       });

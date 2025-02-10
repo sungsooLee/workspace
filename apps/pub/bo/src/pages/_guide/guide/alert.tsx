@@ -23,6 +23,8 @@ function RouteComponent() {
           <br /> 줄바꿈 적용
         </>
       ),
+      okButtonLabel: '확인 버튼명',
+      cancelButtonLabel: '취소 버튼명',
       isConfirm: true,
     });
   };

@@ -45,16 +45,61 @@ module.exports = {
           },
         },
         // title class add
-        '.title_1_b': {
+        '.title_4_b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+        '.title_bo_1_b': {
           ...baseTitle,
           fontSize: '2.2rem',
           fontWeight: '600',
         },
-        // lable title class add
-        '.label_1_b': {
+        '.body_1_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.body_2_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.body_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.body_4_b': {
           ...baseTitle,
           fontSize: '1.2rem',
           fontWeight: '600',
+        },
+        '.body_4_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        // lable title class add
+        '.label_1_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+        '.btuuon_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
         },
       });
     },

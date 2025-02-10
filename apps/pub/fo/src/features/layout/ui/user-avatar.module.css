@@ -1,13 +1,51 @@
 /* user-avatar.module.css */
+.start {
+  &.avata_area {
+    @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    .profile_info {
+      @apply pb-[32px] pt-[36px];
+      .avata_img {
+        @apply m-auto h-[66px] w-[66px] text-center;
+        .start {
+          @apply h-[66px] w-[66px];
+        }
+      }
+      .info_avata {
+        @apply m-auto h-[66px] w-[66px];
+      }
+      .profile {
+        .name {
+          @apply body_1_b mt-[16px] block text-center text-[var(--gray9)];
+        }
+        .tenant,
+        .team {
+          @apply body_3_r mt-[8px] block text-center text-[var(--gray7)];
+        }
+        .team {
+          @apply mt-[0];
+        }
+      }
+    }
+    .info_list {
+      > li {
+        @apply border-t border-solid border-[var(--gray3)];
+        a,
+        button {
+          @apply btuuon_2_r block px-[24px] py-[20px];
+        }
+      }
+    }
+    .btn_log {
+      @apply btuuon_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
+      svg {
+        @apply mr-[10px];
+      }
+    }
+  }
+}
+
 .btn_avatar {
-  @apply inline-flex h-[40px] w-[40px] items-center justify-center;
   img {
     @apply h-[36px] w-[36px];
   }
-}
-.name {
-  @apply flex h-[40px] w-[40px] items-center justify-center;
-}
-.name .text {
-  @apply flex h-[36px] w-[36px] items-center justify-center rounded-full bg-[var(--secondary1)] text-[16px] font-bold text-white;
 }

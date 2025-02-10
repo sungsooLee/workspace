@@ -60,7 +60,7 @@ export const FormItemControl = ({ field, fieldState, props }: FormControlProps) 
           thousandSeparator={props.thousandSeparator}
           allowNegative={props.allowNegative}
           onChange={(values) => {
-            field.onChange(Number(values));
+            field.onChange(values === '' ? undefined : Number(values));
           }}
         />
       );

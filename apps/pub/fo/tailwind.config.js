@@ -86,6 +86,11 @@ module.exports = {
           fontSize: '1.4rem',
           fontWeight: '400',
         },
+        '.btuuon_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
+        },
       });
     },
   ],
