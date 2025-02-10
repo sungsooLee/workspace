@@ -37,9 +37,6 @@
       }
     }
   }
-  .chips_wrap {
-    @apply mb-[20px];
-  }
 }
 .input_box_wrap {
   @apply hidden;

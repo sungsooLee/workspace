@@ -62,20 +62,6 @@ function RouteComponent() {
     { label: '현대자동차 A', value: 'A' },
     { label: '현대자동차 B', value: 'B' },
     { label: '현대자동차 C', value: 'C' },
-    { label: '현대자동차 D', value: 'E' },
-    { label: '현대자동차 F', value: 'F' },
-    { label: '현대자동차 G', value: 'G' },
-    { label: '현대자동차 H', value: 'H' },
-    { label: '현대자동차 I', value: 'I' },
-    { label: '현대자동차 J', value: 'J' },
-    { label: '현대자동차 K', value: 'K' },
-    { label: '현대자동차 L', value: 'L' },
-    { label: '현대자동차 M', value: 'M' },
-    { label: '현대자동차 N', value: 'N' },
-    { label: '현대자동차 O', value: 'O' },
-    { label: '현대자동차 P', value: 'P' },
-    { label: '현대자동차 Q', value: 'Q' },
-    { label: '현대자동차 R', value: 'R' },
   ];
   const handleChange = (event: SelectOption[]) => {
     console.log(event);
@@ -299,6 +285,9 @@ function RouteComponent() {
                 onChange={handleChange}
               />
             </div>
+            <p className={styles.text_limit}>
+              <em className={styles.num}>14개</em>/200개
+            </p>
           </div>
         </div>
         {/* row */}
