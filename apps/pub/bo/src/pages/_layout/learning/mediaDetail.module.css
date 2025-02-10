@@ -3,9 +3,10 @@
 }
 .sub_contents {
   @apply relative box-border w-[479px] shrink-0 pl-[25px];
-  &::before {
-    @apply absolute left-0 top-0 block h-[100dvh] w-[1px] bg-[var(--gray4)] content-[''];
-  }
+  /* &::before {
+    @apply sticky left-0 top-0 h-full w-[1px] content-[''];
+    box-shadow: inset 1px 0 0 var(--gray4);
+  } */
 }
 
 /* form.module.css */
