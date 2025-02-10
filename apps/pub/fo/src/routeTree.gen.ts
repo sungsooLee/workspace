@@ -13,8 +13,9 @@
 import { Route as rootRoute } from './pages/__root'
 import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
-import { Route as LoginIndexImport } from './pages/login/index'
+import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -38,9 +39,8 @@ const GuideRoute = GuideImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  id: '/login/',
-  path: '/login/',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,6 +48,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
@@ -118,6 +124,13 @@ const GuideGuideComponentsButtonRoute = GuideGuideComponentsButtonImport.update(
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/_guide': {
       id: '/_guide'
       path: ''
@@ -132,19 +145,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
-    }
-    '/login/': {
-      id: '/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof rootRoute
     }
     '/_guide/guide/button': {
       id: '/_guide/guide/button'
@@ -221,6 +234,16 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface GuideRouteChildren {
   GuideGuideButtonRoute: typeof GuideGuideButtonRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
@@ -262,8 +285,8 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/login': typeof AuthLoginRoute
   '/': typeof LayoutIndexRoute
-  '/login': typeof LoginIndexRoute
   '/guide/button': typeof GuideGuideButtonRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/info': typeof GuideGuideInfoRoute
@@ -278,8 +301,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/login': typeof AuthLoginRoute
   '/': typeof LayoutIndexRoute
-  '/login': typeof LoginIndexRoute
   '/guide/button': typeof GuideGuideButtonRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/info': typeof GuideGuideInfoRoute
@@ -294,10 +317,11 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
   '/_layout/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
   '/_guide/guide/button': typeof GuideGuideButtonRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
@@ -314,8 +338,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/'
     | '/login'
+    | '/'
     | '/guide/button'
     | '/guide/color'
     | '/guide/info'
@@ -329,8 +353,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/'
     | '/login'
+    | '/'
     | '/guide/button'
     | '/guide/color'
     | '/guide/info'
@@ -343,10 +367,11 @@ export interface FileRouteTypes {
     | '/guide/components/Layout'
   id:
     | '__root__'
+    | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/login'
     | '/_layout/'
-    | '/login/'
     | '/_guide/guide/button'
     | '/_guide/guide/color'
     | '/_guide/guide/info'
@@ -361,15 +386,15 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
-  LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
-  LoginIndexRoute: LoginIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -382,9 +407,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_auth",
         "/_guide",
-        "/_layout",
-        "/login/"
+        "/_layout"
+      ]
+    },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login"
       ]
     },
     "/_guide": {
@@ -408,12 +439,13 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
-    },
-    "/login/": {
-      "filePath": "login/index.tsx"
     },
     "/_guide/guide/button": {
       "filePath": "_guide/guide/button.tsx",

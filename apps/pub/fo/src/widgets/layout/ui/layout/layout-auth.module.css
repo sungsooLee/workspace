@@ -1,0 +1,9 @@
+/* layout.module.css */
+.start {
+  &.container {
+    @apply h-[100vh] bg-[var(--gray1)];
+    .inner {
+      @apply relative m-auto w-[1180px];
+    }
+  }
+}
