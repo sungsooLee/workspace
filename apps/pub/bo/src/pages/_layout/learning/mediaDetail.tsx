@@ -48,10 +48,14 @@ function RouteComponent() {
   ];
 
   // form toggle
-  const [openSections, setOpenSections] = useState<{ [key: number]: boolean }>({});
+  const [toggleSections, setToggleSections] = useState<{ [key: number]: boolean }>({
+    1: true, // 섹션 1은 기본적으로 열려 있음
+    2: true, // 섹션 2는 기본적으로 열려 있음
+    3: true, // 섹션 3는 기본적으로 열려 있음
+  });
 
   const toggleContent = (index: number) => {
-    setOpenSections((prevState) => ({
+    setToggleSections((prevState) => ({
       ...prevState,
       [index]: !prevState[index], // 해당 index만 토글
     }));
@@ -148,7 +152,7 @@ function RouteComponent() {
                 id="name-1-4"
                 rows={5}
                 cols={33}
-                className="resize_none"
+                resize="none"
                 placeholder="한글,영문,숫자 포함 2500자 이하"
               />
             </div>
@@ -206,11 +210,11 @@ function RouteComponent() {
                 className={styles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(1)}
-                aria-expanded={openSections[1] || false}>
+                aria-expanded={toggleSections[1] || false}>
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
-            <div className={`${styles.input_box_wrap} ${openSections[1] ? styles.open : ''}`}>
+            <div className={`${styles.input_box_wrap} ${toggleSections[1] ? styles.open : ''}`}>
               <div className={styles.input_box}>
                 <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
                 <Button variant="gray" size="sm">
@@ -288,6 +292,68 @@ function RouteComponent() {
             <p className={styles.text_limit}>
               <em className={styles.num}>14개</em>/200개
             </p>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* Textarea type */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-9" className={styles.form_label}>
+              <span className={styles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+              <Button
+                className={styles.btn_toggle}
+                onlyIcon
+                onClick={() => toggleContent(2)}
+                aria-expanded={toggleSections[2] || false}>
+                <IcoArrowDown width={20} height={20} stroke="#4C515E" />
+              </Button>
+            </label>
+            <div className={`${styles.input_box_wrap} ${toggleSections[2] ? styles.open : ''}`}>
+              <div className={styles.input_box}>
+                <Textarea
+                  id="name-1-9"
+                  rows={5}
+                  cols={33}
+                  placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
+                  resize="none"
+                  size="sm"
+                />
+              </div>
+              <p className={styles.text_limit}>
+                <em className={styles.num}>0</em>/2500
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* Textarea type */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-10" className={styles.form_label}>
+              <span className={styles.form_text}>키워드 (AI 자동 추출)</span>
+              <Button
+                className={styles.btn_toggle}
+                onlyIcon
+                onClick={() => toggleContent(3)}
+                aria-expanded={toggleSections[3] || false}>
+                <IcoArrowDown width={20} height={20} stroke="#4C515E" />
+              </Button>
+            </label>
+            <div className={`${styles.input_box_wrap} ${toggleSections[3] ? styles.open : ''}`}>
+              <div className={styles.input_box}>
+                <Textarea
+                  id="name-1-10"
+                  rows={5}
+                  cols={33}
+                  placeholder="키워드는 AI 자동 추출되어 표기됩니다."
+                  resize="none"
+                  size="sm"
+                />
+              </div>
+              <p className={styles.text_limit}>
+                <em className={styles.num}>0</em>/2500
+              </p>
+            </div>
           </div>
         </div>
         {/* row */}
