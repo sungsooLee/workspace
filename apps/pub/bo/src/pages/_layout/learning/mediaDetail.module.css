@@ -70,6 +70,15 @@
       @apply min-w-[360px];
     }
   }
+  .radio_wrap {
+    @apply mt-[12px] flex w-full;
+    & > div {
+      @apply flex-1;
+    }
+  }
+  .check {
+    @apply absolute right-0 top-[8px];
+  }
   .dash {
     @apply flex min-w-[8px] items-center justify-start;
     &::after {
@@ -116,10 +125,10 @@
     }
   }
   .tooltip {
-    @apply align-middle;
+    @apply ml-[2px] align-middle;
   }
   .comment {
-    @apply float-right mr-[36px] flex inline-flex w-auto items-center text-[1.4rem] font-normal text-[var(--gray7)];
+    @apply float-right mr-[36px] inline-flex w-auto items-center text-[1.4rem] font-normal text-[var(--gray7)];
     .num {
       @apply ml-[4px] inline-flex;
     }

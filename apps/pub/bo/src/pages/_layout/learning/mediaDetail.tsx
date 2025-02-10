@@ -9,6 +9,8 @@ import {
   ChipList,
   SelectOption,
   Switch,
+  Radio,
+  Checkbox,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -521,6 +523,101 @@ function RouteComponent() {
                 </Button>
               </Tooltip>
             </label>
+            <div className={cn(styles.input_box)}>
+              <Radio
+                className={styles.radio_wrap}
+                options={[
+                  { value: 'type1', label: '비공개' },
+                  { value: 'type2', label: '전체공개' },
+                  { value: 'type3', label: '일부공개' },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-15" className={styles.form_label}>
+              <span className={styles.form_text}>공유채널 설정</span>
+              <Tooltip
+                className={styles.tooltip}
+                side="right"
+                align="start"
+                content={'공유채널 설정2222222'}>
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                </Button>
+              </Tooltip>
+            </label>
+            <div className={cn(styles.input_box)}>
+              <Input id="name-1-15" type="text" readOnly value="채널명" placeholder="" />
+              <Button variant="gray" size="sm">
+                선택
+              </Button>
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-16" className={styles.form_label}>
+              <span className={styles.form_text}>검수 확인</span>
+              {/* 필수 케이스 */}
+              <span className={cn(styles.status, styles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <span className={styles.sub_test}>
+                {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
+              </span>
+            </label>
+            <div className={cn(styles.input_box, styles.type2)}>
+              <Checkbox className={styles.check} />
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row no_line">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-17" className={styles.form_label}>
+              <span className={styles.form_text}>저작권 확인</span>
+              {/* 필수 케이스 */}
+              <span className={cn(styles.status, styles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <span className={styles.sub_test}>
+                {
+                  '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
+                }
+              </span>
+            </label>
+            <div className={cn(styles.input_box, styles.type2)}>
+              <Checkbox className={styles.check} />
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row no_line">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-18" className={styles.form_label}>
+              <span className={styles.form_text}>보안 확인</span>
+              {/* 필수 케이스 */}
+              <span className={cn(styles.status, styles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <span className={styles.sub_test}>
+                {
+                  '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다.'
+                }
+              </span>
+            </label>
+            <div className={cn(styles.input_box, styles.type2)}>
+              <Checkbox className={styles.check} />
+            </div>
           </div>
         </div>
         {/* row */}

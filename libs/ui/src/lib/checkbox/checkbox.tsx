@@ -17,7 +17,7 @@ const CheckboxComponent = forwardRef<
 >(({ value, onChange, disabled, className, label, hideLabel, ...props }, ref) => {
   const uuid = getRandomId();
   return (
-    <div className={cn(styles.start, 'nlp--checkbox')}>
+    <div className={cn(styles.start, 'nlp--checkbox', className)}>
       <Primitive.Root
         {...props}
         id={uuid}
