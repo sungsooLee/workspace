@@ -18,7 +18,7 @@ export default {
 // Chips
 export const Template: any = (args: any) => {
   return (
-    <Chips {...args} option={{label: '현대자동차', value: 'H'}}>Chips</Chips>
+    <Chips option={{label: '현대자동차', value: 'H'}}>Chips</Chips>
   )
 }
 Template.storyName = 'Chips';
@@ -36,7 +36,8 @@ export const TemplateDelete: any = (args: any) => {
     alert(JSON.stringify(event))
   }
   return (
-    <Chips {...args} option={{label: '현대자동차', value: 'H'}} onClick={() => handleClick({label: '현대자동차', value: 'H'})} onDelete={handleDelete}>Chips</Chips>
+    <Chips option={{label: '현대자동차', value: 'H'}} onClick={handleClick} onDelete={handleDelete}>Chips</Chips>
+    // <Chips option={{label: '현대자동차', value: 'H'}} onClick={() => handleClick({label: '현대자동차', value: 'H'})} onDelete={handleDelete}>Chips</Chips>
   )
 }
 TemplateDelete.storyName = 'Handle Delete';
@@ -53,11 +54,14 @@ export const TemplateList: any = (args: any) => {
     {label: '현대자동차 D', value: 'E'},
     {label: '현대자동차 F', value: 'F'},
   ];
+  const handleItemClick = (event: SelectOption) => {
+    console.log('handleItemClick', event);
+  }
   const handleChange = (event: SelectOption[]) => {
-    console.log(event)
+    console.log('handleChange', event);
   }
   return (
-    <ChipList {...args} options={options} showInput className={'w-[500px]'} onChange={handleChange}  />
+    <ChipList options={options} showInput className={'w-[500px]'} onItemClick={handleItemClick} onChange={handleChange}  />
   )
 }
 TemplateList.storyName = 'Chips List';

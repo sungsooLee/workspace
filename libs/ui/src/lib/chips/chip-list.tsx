@@ -9,11 +9,12 @@ import { Input } from '../input/input';
 
 import styles from './chips.module.css';
 
-export interface ChipListComponentProps extends ChipsComponentProps {
+export interface ChipListComponentProps extends Omit<ChipsComponentProps, 'option' | 'onClick'> {
   options: Array<SelectOption>;
   showInput?: boolean;
   orientation?: 'vertical' | 'horizontal';
   placeholder?: string;
+  onItemClick?: (option: SelectOption) => void;
   onChange?: (options: Array<SelectOption>) => void;
 }
 
@@ -25,6 +26,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
     showInput,
     options,
     placeholder = '태그를 입력해주세요.',
+    onItemClick,
     ...props
   }) => {
     const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>(options);
@@ -49,6 +51,10 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
         setSelectedOptions([...selectedOptions, { label: value, value }]);
         setInputValue('');
       }
+    };
+
+    const handleChipClick = (event: SelectOption) => {
+      onItemClick?.(event);
     };
 
     const handleChipDelete = (event: SelectOption) => {
@@ -81,6 +87,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
               {...props}
               option={option}
               className={styles.btn_chips}
+              onClick={onItemClick && handleChipClick}
               onDelete={handleChipDelete}
             />
           ))}
