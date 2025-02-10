@@ -676,7 +676,7 @@ function RouteComponent() {
           </div>
         </div>
       </div>
-      {/* media_wrap */}
+      {/* sub_contents */}
       <div className={styles.sub_contents}>
         {/* btn_list */}
         <ul className={styles.btn_list}>
@@ -688,7 +688,7 @@ function RouteComponent() {
             </li>
           ))}
         </ul>
-        {/* media */}
+        {/* media(비디오 영역) */}
         <div className={styles.media}>
           <img src={mediaImg} width="100%" alt="" />
         </div>
