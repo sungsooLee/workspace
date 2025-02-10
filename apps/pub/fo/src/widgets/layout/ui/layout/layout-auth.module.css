@@ -1,7 +1,7 @@
 /* layout.module.css */
 .start {
   &.container {
-    @apply h-[100vh] bg-[var(--gray1)];
+    @apply h-[100vh] bg-[var(--gray1)] pt-[70px];
     .inner {
       @apply relative m-auto w-[1180px];
     }

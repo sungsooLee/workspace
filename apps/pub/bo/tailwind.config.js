@@ -101,6 +101,12 @@ module.exports = {
           fontSize: '1.6rem',
           fontWeight: '700',
         },
+
+        '.ellipsis': {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        },
       });
     },
   ],

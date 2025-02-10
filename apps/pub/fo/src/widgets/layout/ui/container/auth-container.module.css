@@ -1,7 +1,7 @@
 /* page-container.module.css */
 .start {
   &.auth_container {
-    @apply relative m-auto w-full min-w-[600px] pb-[40px] pt-[110px];
+    @apply relative m-auto w-full min-w-[600px] pb-[40px] pt-[40px];
 
     .auth_area {
       @apply m-auto w-[600px];
