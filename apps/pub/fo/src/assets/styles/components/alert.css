@@ -1,0 +1,8 @@
+.nlp--alert {
+  .description {
+    @apply body_3_r text-[var(--gray7)];
+    .time {
+      @apply mt-[20px] text-[var(--secondary1)];
+    }
+  }
+}

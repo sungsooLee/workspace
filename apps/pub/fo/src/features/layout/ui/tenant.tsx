@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Popover } from '@learnway/ui';
 import styles from './tenant.module.css';
-import { IcoCheck, IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -47,7 +47,7 @@ const TenantComponent = () => {
       popoverContent={<PopoverContent />}
       className={styles.btn_tenant}
       side="bottom"
-      align="center"
+      align="start"
       sideOffset={5}>
       <span className={styles.select}>{'현대 오토에버'}</span>
       <IcoArrowDown width={16} height={16} stroke="#131C30" />
