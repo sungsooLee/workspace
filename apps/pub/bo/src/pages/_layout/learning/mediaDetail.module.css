@@ -10,7 +10,7 @@
 
 /* form.module.css */
 .form_item {
-  @apply relative w-full flex-1 pb-[17px];
+  @apply relative w-full flex-1 pb-[16px];
   .guide_text {
     @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
     &:empty {
@@ -21,7 +21,7 @@
     }
   }
   .sub_test {
-    @apply mt-[5px] text-[1.2rem] leading-[1rem] text-[var(--gray7)];
+    @apply mt-[5px] block text-[1.2rem] leading-[1rem] text-[var(--gray7)];
   }
   .text_limit {
     @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
@@ -37,11 +37,17 @@
       }
     }
   }
+  .btn_switch {
+    @apply absolute right-0 top-[8px];
+  }
 }
 .input_box_wrap {
   @apply hidden;
   .input_box {
     @apply mt-[8px];
+    & + .input_box {
+      @apply mt-[16px];
+    }
   }
   &.open {
     @apply block;
@@ -59,13 +65,34 @@
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   .select_option {
-    @apply mr-[16px] min-w-[132px];
-    & + div {
-      @apply relative;
-      &::before {
-        @apply absolute -left-[23px] top-1/2 mx-[8px] inline-flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
-      }
+    @apply min-w-[132px];
+    &.lg {
+      @apply min-w-[360px];
     }
+  }
+  .radio_wrap {
+    @apply mt-[12px] flex w-full;
+    & > div {
+      @apply flex-1;
+    }
+  }
+  .check {
+    @apply absolute right-0 top-[8px];
+  }
+  .dash {
+    @apply flex min-w-[8px] items-center justify-start;
+    &::after {
+      @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+    }
+  }
+  .btn_edit {
+    @apply !min-w-[72px];
+  }
+  .btn_delete {
+    @apply !ml-[16px];
+  }
+  &.type2 {
+    @apply mt-0;
   }
   &.line {
     @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];
@@ -84,6 +111,7 @@
   }
 }
 .form_label {
+  @apply block overflow-hidden;
   .form_text {
     @apply label_1_b;
     &.sm {
@@ -94,6 +122,15 @@
           @apply h-[8px] w-[8px];
         }
       }
+    }
+  }
+  .tooltip {
+    @apply ml-[2px] align-middle;
+  }
+  .comment {
+    @apply float-right mr-[36px] inline-flex w-auto items-center text-[1.4rem] font-normal text-[var(--gray7)];
+    .num {
+      @apply ml-[4px] inline-flex;
     }
   }
   .status {
