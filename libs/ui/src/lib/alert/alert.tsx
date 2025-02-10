@@ -14,7 +14,7 @@ export interface AlertComponentProps {
   description?: React.ReactNode | string;
   content?: React.ReactNode | string;
   footer?: React.ReactNode;
-  onClose?: () => void;
+  onClose?: (data?: any) => void;
   okButtonLabel?: string;
   cancelButtonLabel?: string;
   iconVisible?: boolean;
@@ -36,6 +36,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       iconVisible = false, // icon case
       isConfirm = false,
       alertType,
+      onClose,
       ...otherProps
     },
     ref,
@@ -88,22 +89,31 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       }
     };
 
+    const handleClose = (confirmed: boolean) => {
+      closeModal(confirmed);
+      onClose?.();
+    };
+
     const defaultFooter = isConfirm ? (
       <div className={styles.btn_wrap}>
-        <Button variant="gray" size="lg" className={styles.btn_cancel} onClick={() => closeModal()}>
+        <Button
+          variant="gray"
+          size="lg"
+          className={styles.btn_cancel}
+          onClick={() => handleClose(false)}>
           {cancelButtonLabel}
         </Button>
         <Button
           variant="primary"
           size="lg"
           className={styles.btn_confirm}
-          onClick={() => closeModal()}>
+          onClick={() => handleClose(true)}>
           {okButtonLabel}
         </Button>
       </div>
     ) : (
       <div className={styles.btn_wrap}>
-        <Button variant="primary" size="lg" onClick={() => closeModal()}>
+        <Button variant="primary" size="lg" onClick={() => handleClose(true)}>
           {okButtonLabel}
         </Button>
       </div>

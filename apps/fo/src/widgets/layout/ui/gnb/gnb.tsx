@@ -67,26 +67,31 @@ function GNBComponent() {
   return (
     <div className={`${styles.start} ${styles.header}`}>
       <header className={styles.header_area}>
-        <div className={styles.logo_inner}>
-          <h1>
-            <Logo activeTenant={activeTenant} />
-          </h1>
+        <div className={styles.top_area}>
+          <div className={styles.logo_inner}>
+            <h1>
+              <Logo activeTenant={activeTenant} />
+            </h1>
 
-          <Tenants
-            tenants={tenants || []}
-            activeTenant={activeTenant}
-            onTenantSwitch={handleTenantSwitch}
-          />
+            <Tenants
+              tenants={tenants || []}
+              activeTenant={activeTenant}
+              onTenantSwitch={handleTenantSwitch}
+            />
+          </div>
+
+          <div className={styles.search_form}>
+            <Search />
+          </div>
+
+          <div className={styles.util}>
+            <AdminLink />
+            <Language />
+            <Notification />
+            <UserAvatar />
+          </div>
         </div>
-        <div className={styles.search_form}>
-          <Search />
-        </div>
-        <div className={styles.util}>
-          <AdminLink />
-          <Language />
-          <Notification />
-          <UserAvatar />
-        </div>
+
         <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
           <div className={styles.nav_area}>
             <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
