@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input, Button, Textarea, Select, Tooltip } from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import { Input, Button, Textarea, Select, Tooltip, ChipList, SelectOption } from '@learnway/ui';
+import { IcoFormRequired, IcoArrowDown, IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './mediaDetail.module.css';
@@ -46,6 +47,40 @@ function RouteComponent() {
     { title: '오디오 샘플레이트', text: '' },
   ];
 
+  // form toggle
+  const [openSections, setOpenSections] = useState<{ [key: number]: boolean }>({});
+
+  const toggleContent = (index: number) => {
+    setOpenSections((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index], // 해당 index만 토글
+    }));
+  };
+
+  // chip List
+  const options: SelectOption[] = [
+    { label: '현대자동차 A', value: 'A' },
+    { label: '현대자동차 B', value: 'B' },
+    { label: '현대자동차 C', value: 'C' },
+    { label: '현대자동차 D', value: 'E' },
+    { label: '현대자동차 F', value: 'F' },
+    { label: '현대자동차 G', value: 'G' },
+    { label: '현대자동차 H', value: 'H' },
+    { label: '현대자동차 I', value: 'I' },
+    { label: '현대자동차 J', value: 'J' },
+    { label: '현대자동차 K', value: 'K' },
+    { label: '현대자동차 L', value: 'L' },
+    { label: '현대자동차 M', value: 'M' },
+    { label: '현대자동차 N', value: 'N' },
+    { label: '현대자동차 O', value: 'O' },
+    { label: '현대자동차 P', value: 'P' },
+    { label: '현대자동차 Q', value: 'Q' },
+    { label: '현대자동차 R', value: 'R' },
+  ];
+  const handleChange = (event: SelectOption[]) => {
+    console.log(event);
+  };
+
   return (
     <>
       <div className={styles.main_contents}>
@@ -57,7 +92,7 @@ function RouteComponent() {
               <span className={styles.form_text}>채널</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
             </label>
             <div className={styles.input_box}>
@@ -83,7 +118,7 @@ function RouteComponent() {
               <span className={styles.form_text}>학습자원명</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
             </label>
             {/* file upload case */}
@@ -144,7 +179,7 @@ function RouteComponent() {
               <span className={styles.form_text}>담당자</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
             </label>
             <div className={styles.input_box}>
@@ -160,7 +195,7 @@ function RouteComponent() {
               <span className={styles.form_text}>연락처</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
             </label>
             <div className={styles.input_box}>
@@ -180,19 +215,89 @@ function RouteComponent() {
           {/* form_item */}
           <div className={styles.form_item}>
             <label htmlFor="name-1-7" className={styles.form_label}>
-              <span className={styles.form_text}>사용기한</span>
+              <span className={styles.form_text}>외주개발업체 정보</span>
+              <Button
+                className={styles.btn_toggle}
+                onlyIcon
+                onClick={() => toggleContent(1)}
+                aria-expanded={openSections[1] || false}>
+                <IcoArrowDown width={20} height={20} stroke="#4C515E" />
+              </Button>
+            </label>
+            <div className={`${styles.input_box_wrap} ${openSections[1] ? styles.open : ''}`}>
+              <div className={styles.input_box}>
+                <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
+                <Button variant="gray" size="sm">
+                  선택
+                </Button>
+              </div>
+              <div className="row">
+                <div className={styles.form_item}>
+                  <label htmlFor="name-1-7-1" className={styles.form_label}>
+                    <span className={cn(styles.form_text, styles.sm)}>외주개발업체 담당자</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(styles.status, styles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={styles.input_box}>
+                    <Input id="name-1-7-1" type="text" disabled value="김현대" placeholder="" />
+                    <Button variant="gray" size="sm">
+                      선택
+                    </Button>
+                  </div>
+                </div>
+                <div className={styles.form_item}>
+                  <label htmlFor="name-1-7-2" className={styles.form_label}>
+                    <span className={cn(styles.form_text, styles.sm)}>연락처</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(styles.status, styles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={styles.input_box}>
+                    <Select
+                      className={styles.select_option}
+                      options={[
+                        { value: 'type1', label: '+82' },
+                        { value: 'type2', label: '+83' },
+                      ]}
+                    />
+                    <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-8" className={styles.form_label}>
+              <span className={styles.form_text}>태그</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
-              <Tooltip side="right" content={'사용기한'}>
+              <Tooltip side="right" align="start" content={'tooltip content'}>
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
               </Tooltip>
+              <p className={styles.sub_test}>
+                {'동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'}
+              </p>
             </label>
             <div className={styles.input_box}>
-              <Input id="name2" type="text" placeholder="입력" value="홍길동" disabled />
+              <ChipList
+                className={styles.chips_wrap}
+                options={options}
+                placeholder="한글, 영문, 숫자 포함 9자 이하"
+                showInput
+                prefixCharacter="#"
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
@@ -204,7 +309,7 @@ function RouteComponent() {
               <span className={styles.form_text}>error</span>
               {/* error 케이스 */}
               <span className={cn(styles.status, styles.error)}>
-                <IcoFormRequired width={8} height={8} />
+                <IcoFormRequired width={12} height={12} />
               </span>
             </label>
             <div className={styles.input_box}>

@@ -3,11 +3,14 @@
 }
 .sub_contents {
   @apply relative box-border w-[479px] pl-[25px];
+  &::before {
+    @apply absolute left-0 top-0 block h-[100dvh] w-[1px] bg-[var(--gray4)] content-[''];
+  }
 }
 
 /* form.module.css */
 .form_item {
-  @apply w-full flex-1 pb-[17px];
+  @apply relative w-full flex-1 pb-[17px];
   .guide_text {
     @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
     &:empty {
@@ -17,12 +20,38 @@
       @apply text-[var(--status1)];
     }
   }
+  .sub_test {
+    @apply mt-[5px] text-[1.2rem] leading-[1rem] text-[var(--gray7)];
+  }
   .text_limit {
     @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
   }
+  .btn_toggle {
+    @apply absolute right-0 top-[3px] h-[20px] w-[20px];
+    svg {
+      @apply transition duration-300 ease-in-out;
+    }
+    &[aria-expanded='true'] {
+      svg {
+        @apply rotate-180;
+      }
+    }
+  }
+  .chips_wrap {
+    @apply mb-[20px];
+  }
+}
+.input_box_wrap {
+  @apply hidden;
+  .input_box {
+    @apply mt-[8px];
+  }
+  &.open {
+    @apply block;
+  }
 }
 .input_box {
-  @apply flex w-full items-center space-x-[8px];
+  @apply mt-[12px] flex w-full items-center space-x-[8px];
   .input {
     @apply flex-auto;
   }
@@ -60,6 +89,15 @@
 .form_label {
   .form_text {
     @apply label_1_b;
+    &.sm {
+      @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
+      & + .status {
+        @apply -mt-[4px] align-middle;
+        svg {
+          @apply h-[8px] w-[8px];
+        }
+      }
+    }
   }
   .status {
     @apply ml-[2px] inline-flex align-text-top;
