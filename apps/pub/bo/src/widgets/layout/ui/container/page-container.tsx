@@ -10,7 +10,6 @@ interface PageContainerComponentProps {
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
   // const { t } = useTranslation();
-  const childrenArray = React.Children.toArray(children);
 
   return (
     <div className={`${styles.start} ${styles.contents}`}>
