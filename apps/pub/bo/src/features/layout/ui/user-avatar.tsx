@@ -82,7 +82,7 @@ const AvatarCompoment = () => {
       className={styles.btn_avatar}
       side="bottom"
       align="end"
-      sideOffset={65}>
+      sideOffset={15}>
       {hasAvataImage ? (
         <Avatar imageUrl="https://github.com/shadcn.png" />
       ) : (

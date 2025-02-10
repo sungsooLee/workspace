@@ -45,8 +45,7 @@
 }
 
 .btn_avatar {
-  @apply inline-flex h-[36px] w-[36px] items-center justify-center;
   img {
-    @apply h-[36px] w-[36px];
+    @apply h-[32px] w-[32px];
   }
 }
