@@ -2,7 +2,7 @@
   @apply min-h-full flex-grow pb-[28px] pr-[32px];
 }
 .sub_contents {
-  @apply relative box-border w-[479px] pl-[25px];
+  @apply relative box-border w-[479px] shrink-0 pl-[25px];
   &::before {
     @apply absolute left-0 top-0 block h-[100dvh] w-[1px] bg-[var(--gray4)] content-[''];
   }
