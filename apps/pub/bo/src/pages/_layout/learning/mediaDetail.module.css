@@ -115,6 +115,9 @@
       }
     }
   }
+  .tooltip {
+    @apply align-middle;
+  }
   .comment {
     @apply float-right mr-[36px] flex inline-flex w-auto items-center text-[1.4rem] font-normal text-[var(--gray7)];
     .num {

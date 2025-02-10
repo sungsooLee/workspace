@@ -292,7 +292,11 @@ function RouteComponent() {
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <Tooltip side="right" align="start" content={'tooltip content'}>
+              <Tooltip
+                className={styles.tooltip}
+                side="right"
+                align="start"
+                content={'tooltip content'}>
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
@@ -499,6 +503,24 @@ function RouteComponent() {
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={styles.form_item}>
+            <label htmlFor="name-1-14" className={styles.form_label}>
+              <span className={styles.form_text}>마켓플레이스 공개설정</span>
+              <Tooltip
+                className={styles.tooltip}
+                side="right"
+                align="start"
+                content={'마켓플레이스 공개설정111111'}>
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                </Button>
+              </Tooltip>
+            </label>
           </div>
         </div>
         {/* row */}
