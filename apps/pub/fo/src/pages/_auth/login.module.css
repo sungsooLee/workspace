@@ -23,7 +23,6 @@
     }
     .sns_login {
       &::before {
-        @apply contents=[''] block;
       }
     }
   }
