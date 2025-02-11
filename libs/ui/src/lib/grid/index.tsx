@@ -37,7 +37,6 @@ import { IcoChevronRight } from '@learnway/icons';
 import { IcoChevronRightDouble } from '@learnway/icons';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
-import { Select } from '../select/select';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -554,66 +553,64 @@ const Grid = <T extends object>({
     const totalPages = Math.ceil(totalRows / pageSize);
 
     return (
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <select
-            value={pageSize}
-            onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="select_item">
-            {pageSizeOptions.map((size) => (
-              <option key={size} value={size}>
-                {size}개씩 보기
-              </option>
+      <div className="paging_wrap">
+        <select
+          value={pageSize}
+          onChange={(e) => onPageSizeChange(Number(e.target.value))}
+          className="select_item">
+          {pageSizeOptions.map((size) => (
+            <option key={size} value={size}>
+              {size}개씩 보기
+            </option>
+          ))}
+        </select>
+        <div className="btn_wrap">
+          <Button
+            onClick={() => onPageChange(0)}
+            disabled={pageIndex === 0}
+            className="btn_first"
+            onlyIcon>
+            {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
+          </Button>
+          <Button
+            onClick={() => onPageChange(pageIndex - 1)}
+            disabled={pageIndex === 0}
+            className="btn_prev">
+            {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
+          </Button>
+
+          {/* 페이지 번호들 */}
+          <div className="num_wrap">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <Button
+                key={i}
+                onClick={() => onPageChange(i)}
+                className={cn(
+                  'h-[32px] w-[32px] rounded-[4px]',
+                  pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
+                )}>
+                {i + 1}
+              </Button>
             ))}
-          </select>
-          <div className="flex items-center">
-            <Button
-              onClick={() => onPageChange(0)}
-              disabled={pageIndex === 0}
-              className="btn_first"
-              onlyIcon>
-              {<IcoChevronLeftDouble width={32} height={32} />}
-            </Button>
-            <Button
-              onClick={() => onPageChange(pageIndex - 1)}
-              disabled={pageIndex === 0}
-              className="btn_prev">
-              {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-            </Button>
-
-            {/* 페이지 번호들 */}
-            <div className="paging_wrap flex gap-1">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <Button
-                  key={i}
-                  onClick={() => onPageChange(i)}
-                  className={cn(
-                    'h-[32px] w-[32px] rounded-[4px]',
-                    pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
-                  )}>
-                  {i + 1}
-                </Button>
-              ))}
-            </div>
-
-            <Button
-              onClick={() => onPageChange(pageIndex + 1)}
-              disabled={pageIndex >= totalPages - 1}
-              className="btn_next">
-              {<IcoChevronRight width={32} height={32} />}
-            </Button>
-            <Button
-              onClick={() => onPageChange(totalPages - 1)}
-              disabled={pageIndex >= totalPages - 1}
-              className="btn_last">
-              {<IcoChevronRightDouble width={32} height={32} />}
-            </Button>
           </div>
-          <span className="text-sm text-gray-600">
-            총 {totalRows}개 중 {pageIndex * pageSize + 1}-
-            {Math.min((pageIndex + 1) * pageSize, totalRows)}
-          </span>
+
+          <Button
+            onClick={() => onPageChange(pageIndex + 1)}
+            disabled={pageIndex >= totalPages - 1}
+            className="btn_next">
+            {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
+          </Button>
+          <Button
+            onClick={() => onPageChange(totalPages - 1)}
+            disabled={pageIndex >= totalPages - 1}
+            className="btn_last">
+            {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
+          </Button>
         </div>
+        <span className="text-sm text-gray-600">
+          총 {totalRows}개 중 {pageIndex * pageSize + 1}-
+          {Math.min((pageIndex + 1) * pageSize, totalRows)}
+        </span>
       </div>
     );
   };
