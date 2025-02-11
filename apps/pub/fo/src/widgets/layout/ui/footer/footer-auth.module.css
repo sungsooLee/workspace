@@ -1,0 +1,10 @@
+/* footer-auth.module.css */
+.start {
+  &.footer_auth {
+    .menu_list {
+      > li {
+        @apply flex;
+      }
+    }
+  }
+}
