@@ -1,11 +1,12 @@
-import { z } from 'zod';
+import { z, ZodInvalidStringIssue } from 'zod';
 
 const customErrorMap: z.ZodErrorMap = (error, ctx) => {
   /*
     This is where you override the various error codes
     */
-  console.log('customErrorMap', error, ctx.defaultError, ctx);
+  console.log('customErrorMap', error.code, 'validation', error, ctx);
   let params;
+  let validation: string | undefined;
   switch (error.code) {
     case z.ZodIssueCode.invalid_type:
       if (error.expected === 'string') {
@@ -16,6 +17,21 @@ const customErrorMap: z.ZodErrorMap = (error, ctx) => {
           return { message: `This ain't a string!` };
         }
           */
+      break;
+    case z.ZodIssueCode.invalid_string:
+      validation = (error as any)?.validation;
+      if (validation === 'email') {
+        return { message: '${label}은 잘못된 이메일' };
+      }
+      break;
+    case z.ZodIssueCode.too_small:
+      if (error.type === 'number') {
+        // gte
+        return { message: `Number must be greater than or equal to ${error.minimum}` };
+      } else {
+        // min
+        return { message: `String must contain at least ${error.minimum} character(s)` };
+      }
       break;
     case z.ZodIssueCode.custom:
       // produce a custom message using error.params

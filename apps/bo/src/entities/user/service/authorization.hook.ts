@@ -22,34 +22,7 @@ export interface IMutateCallback<TVariables> {
 }
 
 export function useFetchAuthUser<T = User>() {
-  //return useQuery<unknown, unknown, T>(queryOptions.authUser());
-
-  const { data } = useQuery<unknown, unknown, T>(queryOptions.authUser());
-
-  const queryClient = useQueryClient();
-  return {
-    data: useCreation(() => {
-      if (!data) {
-        const user = loginMock.data.data;
-        const { accountId, tenants, roles } = user;
-        //cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
-        cookieService.set('LOGIN_USER_ID', accountId);
-        cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
-        cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
-        //cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
-
-        //queryClient.clear();
-        const userData = {
-          ...user,
-          activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : undefined,
-          activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : undefined,
-        };
-        queryClient.setQueryData(queryKeys.authUser, userData);
-        return userData;
-      }
-      return data;
-    }, [data]),
-  };
+  return useQuery<unknown, unknown, T>(queryOptions.authUser());
 }
 
 export function useLoginUser(mutationOptions = {}) {
@@ -58,15 +31,14 @@ export function useLoginUser(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.login(),
     onSuccess: async (data: AxiosResponse, variables, context) => {
+      cookieService.clear();
+
       const user = data.data.data;
-      const { accountId, tenants, roles, refresh_token } = user;
+      const { accountId, tenants, roles } = user;
       cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
       cookieService.set('LOGIN_USER_ID', accountId);
       cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
-      cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
-
-      //queryClient.clear();
 
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
@@ -86,6 +58,33 @@ export function useLoginUser(mutationOptions = {}) {
   };
 }
 
+export function useReissue(mutationOptions = {}) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.reissue(),
+    onSuccess: async (data: AxiosResponse, variables, context) => {
+      console.log('reissue', data);
+      //cookieService.clear();
+
+      //queryClient.clear();
+      //queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+
+      //router.navigate({ to: '/login' });
+    },
+    ...mutationOptions,
+  });
+
+  return {
+    reissue: () => {
+      mutate();
+    },
+    isSuccess,
+    isError,
+  };
+}
+
 export function useLogoutUser(mutationOptions = {}) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -93,11 +92,7 @@ export function useLogoutUser(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.logout(),
     onSuccess: async () => {
-      cookieService.remove('LOGIN_TOKEN');
-      cookieService.remove('LOGIN_USER_ID');
-      cookieService.remove('LOGIN_TENANT_ID');
-      cookieService.remove('LOGIN_ROLE_ID');
-      cookieService.remove('REFRESH_LOGIN_TOKEN');
+      cookieService.clear();
 
       //queryClient.clear();
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });

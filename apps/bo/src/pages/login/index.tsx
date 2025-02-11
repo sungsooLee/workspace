@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isNumber, isString } from 'lodash';
 
 import { zodValidator } from '@learnway/config';
 import { FieldType, Form, DynamicFormField } from '@learnway/ui';
@@ -23,12 +22,9 @@ function RouteComponent() {
   const router = useRouter();
 
   const schema = z.object({
-    orgId: z.string(),
-    //accountId: z.string().required(),
-    accountId: zodValidator.stringRequied.min(3),
-    //accountNum: z.union([z.number(), z.undefined()]).transform(required),
-    accountNum: zodValidator.numberRequied.gte(5),
-    //number: z.coerce.number().transform(required), //coerce
+    username: z.string(), //zodValidator.stringRequied, //.min(3),
+    //username: zodValidator.stringRequied.email(),
+    //accountNum: z.number(), //zodValidator.numberRequied.gte(5),
     password: z.string(),
   });
 
@@ -41,14 +37,13 @@ function RouteComponent() {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      orgId: '1',
-      accountId: '',
+      username: 'test2@email.com',
       password: 'hae1234',
     },
   });
 
   useEffect(() => {
-    if (data?.accountId && !inProgress) {
+    if ((data as any)?.username && !inProgress) {
       //router.navigate({ to: '/' });
     }
   }, [data, inProgress]);
@@ -70,19 +65,19 @@ function RouteComponent() {
   };
 
   const handleLanguage = (lang?: SelectOption) => {
-    console.log('handleLanguage', lang);
+    lang && setLanguage(lang?.value);
   };
 
   const handleSubmit = (data: z.infer<typeof schema>) => {
-    alert(JSON.stringify(data, null, 2));
-    /*
+    //alert(JSON.stringify(data, null, 2));
+
     login(form.getValues(), {
       onSuccess: async (data, variables, context) => {
         const userLang = data.data.data.userLanguageSetCode;
         await setLanguage(userLang);
         router.navigate({ to: '/' });
       },
-    });*/
+    });
   };
 
   return (
@@ -95,7 +90,7 @@ function RouteComponent() {
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <div className="w-64">
-              <DynamicFormField name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
+              <DynamicFormField name="username" label={t('USER_ID')} type={FieldType.TEXT} />
               <DynamicFormField
                 name="accountNum"
                 label={t('USER_NUMBER')}
