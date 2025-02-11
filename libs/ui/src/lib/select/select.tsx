@@ -31,6 +31,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       onChange,
       placeholder,
       size = 'md',
+      selectedValue,
       className,
       ...props
     },
@@ -39,7 +40,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
     // 외부에 의한 값을 처리하기 위한 effect
     useEffect(() => {
-      setCurrentSelectedItem(value);
+      setCurrentSelectedItem(value || '');
     }, [value]);
     return (
       <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>

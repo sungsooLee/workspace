@@ -1,25 +1,23 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { dialogConfig } from './config';
 import styles from '@/libs/ui/src/lib/input/form.module.css';
 import { cn } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
 import { Controller } from 'react-hook-form';
 import { clsx } from 'clsx';
-import {
-  Checkbox,
-  FormCheckbox,
-  FormRadioGroup,
-  FormSelect,
-  Input,
-  Radio,
-  RadioGroup,
-} from '@learnway/ui';
+import { FormCheckbox, FormRadioGroup, Input } from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
+import FormSelect from './dialogs/form-select';
 import FormCategorySelector from './dialogs/form-category-selector';
 import FormContentsThumbnail from './dialogs/form-contents-thumbnail';
+
 const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...props }) => {
   const { control, builders, fieldRefs, watch } = provider;
-  console.log('provider => ', provider);
+  console.log('name => ', name);
+  const names = name.split('.');
+  if (names.length > 1) {
+    console.log('array name => ', name, names);
+  }
   const {
     label,
     type: configType,
@@ -27,8 +25,12 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
     description,
     options,
     checkLabel,
-    itemsConfig,
-  } = builders.find((builder) => builder.name === name);
+    optionsConfig,
+  } = names.length === 1
+    ? builders.find((builder: any) => builder.name === name)
+    : builders
+        .find((builder: any) => builder.name === names[0])
+        ['fields'].find((builder: any) => builder.name === names[2]);
 
   return (
     <Controller
@@ -54,7 +56,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
           options,
           checkLabel,
           fieldRefs,
-          itemsConfig,
+          optionsConfig,
         };
         const handleOnChagne = (obj: any) => {
           console.log('dynamic on change = >', obj);

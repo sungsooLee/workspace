@@ -93,6 +93,7 @@ const useCustomForm = (config: any) => {
       formSubmit,
       fieldRefs,
     },
+    control,
     getValues,
     onSubmit: formSubmit,
     reset: resetForm,

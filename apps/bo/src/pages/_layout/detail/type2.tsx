@@ -4,17 +4,20 @@ import PageButtons from '../../../widgets/layout/ui/page-layout/slot/page-button
 import { Button } from '@learnway/ui';
 import PageRow from '../../../widgets/layout/ui/page-layout/page-row';
 import PageContainer from '../../../widgets/layout/ui/page-layout/page-container';
-import z from 'zod';
-import { t } from 'i18next';
+import { useFieldArray } from 'react-hook-form';
 import DynamicFormField from '../../../shared/ui/dynamic-form-field';
 import { CODE_GROUP } from '@learnway/config';
+import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 export const Route = createFileRoute('/_layout/detail/type2')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, reset } = useCustomForm(detailConfig);
-
+  const { provider, onSubmit, reset, control } = useCustomForm(detailConfig);
+  const { fields, remove, append } = useFieldArray({
+    control,
+    name: 'userInfos',
+  });
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
@@ -52,8 +55,8 @@ function RouteComponent() {
         </PageRow>
         <h1>fetch</h1>
         <PageRow>
-          <DynamicFormField provider={provider} name={'language'} />
-          <DynamicFormField provider={provider} name={'language_detail'} />
+          <DynamicFormField provider={provider} name={'language2'} />
+          <DynamicFormField provider={provider} name={'language2_detail'} />
         </PageRow>
         <PageRow>
           <DynamicFormField provider={provider} name={'title'} />
@@ -73,6 +76,67 @@ function RouteComponent() {
         <PageRow>
           <DynamicFormField provider={provider} name={'thumbnails'} />
         </PageRow>
+        <PageRow>
+          <div>
+            <div>
+              <Button
+                type={'button'}
+                variant="gray"
+                size="sm"
+                onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
+                추가
+              </Button>
+            </div>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>취미</th>
+                    <th>삭제</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fields.map((_, index) => (
+                    <tr>
+                      <td>
+                        <DynamicFormField
+                          key={index}
+                          provider={provider}
+                          name={`userInfos.${index}.user-name`}
+                        />
+                      </td>
+                      <td>
+                        <DynamicFormField
+                          key={index}
+                          provider={provider}
+                          name={`userInfos.${index}.user-age`}
+                        />
+                      </td>
+                      <td>
+                        <DynamicFormField
+                          key={index}
+                          provider={provider}
+                          name={`userInfos.${index}.user-hobby`}
+                        />
+                      </td>
+                      <td>
+                        <Button
+                          type={'button'}
+                          variant="gray"
+                          size="sm"
+                          onClick={() => remove(index)}>
+                          삭제
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </PageRow>
       </PageContainer>
     </form>
   );
@@ -85,11 +149,10 @@ const detailConfig = {
       type: 'dropdown',
       label: '언어',
       value: '',
-      items: [{ code: '', name: '언어전체' }],
+      options: [{ value: '', label: '언어전체' }],
       description: '총 학습 시간은 차수별 학습 기간 입니다.',
-      itemsConfig: {
-        type: 'target',
-        target: 'language_code',
+      optionsConfig: {
+        type: 'self',
         codeGroup: CODE_GROUP.LANGUAGE_CODE,
       },
     },
@@ -99,10 +162,42 @@ const detailConfig = {
       label: '언어상세',
       value: '',
       description: '총 학습 시간은 차수별 학습 기간 입니다.',
-      items: [{ code: '', name: '언어코드를 선택하세요.' }],
-      itemsConfig: {
-        type: 'self',
+      options: [{ value: '', label: '언어코드를 선택하세요.' }],
+      optionsConfig: {
+        type: 'target',
+        target: 'language',
+        options: [{ value: '', label: '언어 상세를 선택하세요.' }],
         codeGroup: CODE_GROUP.LANGUAGE_CODE,
+      },
+    },
+    {
+      name: 'language2',
+      type: 'dropdown',
+      label: '언어2',
+      value: '',
+      options: [{ value: '', label: '언어전체2' }],
+      optionsConfig: {
+        type: 'self',
+        api: codeQueryOptions.getTestCodes,
+        callback: (response: any) => {
+          return response.data.map((res: any) => ({ ...res, value: res.code, label: res.name }));
+        },
+      },
+    },
+    {
+      name: 'language2_detail',
+      type: 'dropdown',
+      label: '언어2_상세',
+      value: '',
+      options: [{ value: '', label: '언어2를 선택하세요.' }],
+      optionsConfig: {
+        type: 'target',
+        target: 'language2',
+        api: codeQueryOptions.getTestCode,
+        options: [{ value: '', label: '언어2 상세를 선택하세요.' }],
+        callback: (response: any) => {
+          return response.data.map((res: any) => ({ ...res, value: res.code, label: res.name }));
+        },
       },
     },
     {
@@ -167,12 +262,52 @@ const detailConfig = {
       label: '썸네일',
       value: [],
     },
+    {
+      name: 'userInfos',
+      type: 'array',
+      label: '사용자정보모음',
+      fields: [
+        {
+          name: 'user-name',
+          type: 'text',
+        },
+        {
+          name: 'user-age',
+          type: 'text',
+        },
+        {
+          name: 'user-hobby',
+          type: 'dropdown',
+          options: [
+            {
+              value: '',
+              label: '취미를 선택해주세요',
+            },
+            {
+              value: 'soccer',
+              label: '축구',
+            },
+            {
+              value: 'basketball',
+              label: '농구',
+            },
+          ],
+        },
+      ],
+      value: [
+        {
+          'user-name': '',
+          'user-age': '',
+          'user-hobby': '',
+        },
+      ],
+    },
   ],
   validator: {
-    category: z.string().nonempty(t('유효성 테스트')),
+    /* category: z.string().nonempty(t('유효성 테스트')),
     language_code: z.string().nonempty(t('유효성 테스트')),
     subdivision: z.string().nonempty(t('유효성 테스트')),
     check: z.boolean(),
-    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),
+    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
   },
 };
