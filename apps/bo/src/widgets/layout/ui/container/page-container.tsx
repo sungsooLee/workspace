@@ -1,15 +1,25 @@
 import { FC, ReactNode, Children, isValidElement } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useCreation } from 'ahooks';
+import { last } from 'lodash';
+import { Button } from '@learnway/ui';
+
 import styles from './page-container.module.css';
 import { PageButtons } from './slot/page-buttons';
 import { PageLeft } from './slot/page-left';
 import { PageRight } from './slot/page-right';
-import { Button } from '@learnway/ui';
-import { useActiveMenuDepthState } from '../../../../features/layout';
-import { useTranslation } from 'react-i18next';
-import { useCreation } from 'ahooks';
-import { last } from 'lodash';
-import { Breadcrumbs } from '../container/breadcrumbs/breadcrumbs';
+import { PageContents } from './page-contents';
 
+import { useActiveMenuDepthState } from '../../../../features/layout';
+
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
+
+/**
+ * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
+ * @param children
+ * @param panel
+ * @constructor
+ */
 const PageContainerComponent: FC<{
   children: ReactNode;
   panel?: boolean;
@@ -65,7 +75,9 @@ const PageContainerComponent: FC<{
         {/* contents_wrap */}
         <div className={styles.contents_wrap}>
           {/* contents */}
-          <div className={styles.contents}>{children}</div>
+          <div className={styles.contents}>
+            <PageContents>{children}</PageContents>
+          </div>
         </div>
       </div>
     </div>

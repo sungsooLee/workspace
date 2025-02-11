@@ -182,17 +182,11 @@
               "isQuickAccessArea": false,
               "path": "/builder/table"
             },{
-              "title": "상세-CMS",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차",
-              "isQuickAccessArea": false,
-              "path": "/detail/type1"
-            },{
               "title": "상세-LMS",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/detail/type2"
+              "path": "/menu/type2"
             }
           ],
           "tenantName": "현대자동차",

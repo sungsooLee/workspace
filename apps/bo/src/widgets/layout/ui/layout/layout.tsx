@@ -34,7 +34,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     );
   }
 
-  return { children };
+  return children;
 }
 
 export const Layout = LayoutComponent;
