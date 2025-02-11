@@ -28,6 +28,9 @@ function RouteComponent() {
   const handleChange = (event: SelectOption[]) => {
     console.log(event);
   };
+  const handleClick = () => {
+    console.log('1111');
+  };
   return (
     <div>
       <h2 className="guide_tit2">Chips Component Guide</h2>
@@ -40,7 +43,7 @@ function RouteComponent() {
           value: 'H',
         }}
         prefixCharacter="#"
-        typeBtn
+        onClick={handleClick}
       />
       <Chips
         option={{
