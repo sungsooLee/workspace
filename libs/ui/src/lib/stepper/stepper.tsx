@@ -40,10 +40,8 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
           <div
             className={cn(selectedItem?.value === d.value && styles.selectedStep)}
             onClick={() => handleClick(d)}>
-            <>
-              <strong className={styles.title}>{d.label}</strong>
-              <p className={styles.text}>{'서브타이틀'}</p>
-            </>
+            <strong className={styles.title}>{d.label}</strong>
+            <p className={styles.text}>{'서브타이틀'}</p>
           </div>
         ))}
       </div>
