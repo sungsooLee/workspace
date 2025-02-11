@@ -69,6 +69,9 @@ export * from './lib/switch/switch';
 // spinner
 export * from './lib/spinner/spinner';
 
+// stepper
+export * from './lib/stepper/stepper';
+
 // progress
 export * from './lib/progress/progress';
 
