@@ -1,6 +1,6 @@
 export interface User {
   accountId: string;
-  userName: string;
+  username: string;
   email: string;
   userStateCode: string;
   roles: Role[];

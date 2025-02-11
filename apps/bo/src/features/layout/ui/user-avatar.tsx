@@ -6,7 +6,7 @@ import { useCreation } from 'ahooks';
 
 import { Avatar, Popover } from '@learnway/ui';
 
-import { useFetchAuthUser, useLogoutUser } from '../../../entities/user';
+import { useFetchAuthUser, useLogoutUser, useReissue } from '../../../entities/user';
 import type { Tenant } from '../../../types';
 
 interface ProfileMenu {
@@ -20,6 +20,7 @@ const PopoverContent = () => {
 
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
+  const { reissue } = useReissue();
 
   const PROFILE_MENU: ProfileMenu[] = useCreation(
     () => [
@@ -34,6 +35,10 @@ const PopoverContent = () => {
       {
         title: 'LOGOUT',
         action: () => logout(),
+      },
+      {
+        title: 'REISSUE',
+        action: () => reissue(), //logout(),
       },
     ],
     [],

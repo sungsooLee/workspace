@@ -19,9 +19,10 @@ export default defineConfig({
     host: 'localhost',
     proxy: {
       '/pms-module': {
-        target: 'http://localhost:8072',
+        target:
+          'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },
