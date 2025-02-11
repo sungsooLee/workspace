@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
 
@@ -36,9 +35,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
           </Primitive.Description>
 
           {/* children */}
-          <div className={styles.content_body}>
-            <div className={`${styles.contents} ${styles.scroll}`}>{children}</div>
-          </div>
+          <div className={styles.content_body}>{children}</div>
 
           {/* footer */}
           {footer && (

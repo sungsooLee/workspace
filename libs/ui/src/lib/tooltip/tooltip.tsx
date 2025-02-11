@@ -22,7 +22,9 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
     return (
       <Primitive.Provider>
         <Primitive.Root>
-          <Primitive.Trigger className={styles.tooltip_btn}>{children}</Primitive.Trigger>
+          <Primitive.Trigger className={cn(styles.tooltip_btn, className)}>
+            {children}
+          </Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
               side={side}

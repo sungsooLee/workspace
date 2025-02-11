@@ -13,17 +13,16 @@ export default {
 // Stepper
 export const Template: any = (args: any) => {
   const items = [
-    {label: '스텝 1', value: 'step1'},
-    {label: '스텝 2', value: 'step2'},
-    {label: '스텝 3', value: 'step3'},
-    {label: '스텝 4', value: 'step4'},
-    {label: '스텝 5', value: 'step5'},
-  ]
+    { label: '스텝 1', value: 'step1' },
+    { label: '스텝 2', value: 'step2' },
+    { label: '스텝 3', value: 'step3' },
+    { label: '스텝 4', value: 'step4' },
+    { label: '스텝 5', value: 'step5' },
+  ];
   const handleChange = (event: SelectOption) => {
-    console.log(event)
-  }
+    console.log(event);
+  };
   return <Stepper items={items} onChange={handleChange} />;
-}
+};
 Template.storyName = 'Stepper';
 Template.args = {};
-
