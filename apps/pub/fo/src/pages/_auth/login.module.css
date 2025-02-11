@@ -1,0 +1,29 @@
+/* login.module.css */
+.start {
+  &.auth_wrap {
+    .login_info {
+      @apply flex items-center justify-between;
+      .id_save {
+        label {
+          @apply text-[1.4rem] text-[var(--gray8)];
+        }
+      }
+      .info {
+        @apply body_3_r flex gap-[24px] text-[var(--gray8)];
+        button {
+          @apply underline;
+        }
+      }
+    }
+    .btn_box {
+      @apply mt-[40px];
+      .btn {
+        @apply w-full;
+      }
+    }
+    .sns_login {
+      &::before {
+      }
+    }
+  }
+}
