@@ -4,7 +4,7 @@
     .label {
       @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
       &.button_mode {
-        @apply cursor-pointer;
+        @apply pointer-events-auto;
       }
       & + button {
         @apply ml-[2px];
