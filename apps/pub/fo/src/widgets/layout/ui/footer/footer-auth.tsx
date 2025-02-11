@@ -2,7 +2,6 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import styles from './footer-auth.module.css';
-import { Copyright } from 'lucide-react';
 
 function FooterAuthComponent() {
   return (
@@ -19,7 +18,9 @@ function FooterAuthComponent() {
             <Link to={''}>고객지원</Link>
           </li>
         </ul>
-        <div className={styles.copy}>copyright © 2023 Hyundai-Autoever. All rights reserved. </div>
+        <div className={styles.copyright}>
+          copyright © 2023 Hyundai-Autoever. All rights reserved.{' '}
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ interface PageData {
 
 const pageData: Record<string, PageData> = {
   '/join': { title: '회원가입', className: '' },
-  '/login': { title: 'LEARNING WAY (시스템명)', className: 'login' },
+  '/login': { title: 'LEARNING WAY (시스템명)', className: 'title_login' },
 };
 
 const AuthTitleCompoment = () => {

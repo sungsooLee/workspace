@@ -1,1 +1,4 @@
 /* auth-title.module.css */
+.title_login {
+  @apply text-[var(--primary2)];
+}

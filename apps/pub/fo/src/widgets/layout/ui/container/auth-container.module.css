@@ -6,13 +6,10 @@
     .auth_area {
       @apply m-auto w-[600px];
       h2 {
-        @apply title_2_b px-[31px] pb-[32px] text-center text-[var(--gray9)];
-        .login {
-          @apply text-[var(--primary2)];
-        }
+        @apply title_2_b px-[31px] pb-[32px] text-center;
       }
       .auth_inner {
-        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
+        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[40px] py-[48px];
       }
     }
   }

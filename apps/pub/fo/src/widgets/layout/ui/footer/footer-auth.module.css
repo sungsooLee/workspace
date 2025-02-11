@@ -1,9 +1,21 @@
 /* footer-auth.module.css */
 .start {
   &.footer_auth {
-    .menu_list {
-      > li {
-        @apply flex;
+    @apply mt-[40px];
+    .footer_area {
+      .menu_list {
+        @apply flex items-center justify-center gap-[24px];
+        > li {
+          a {
+            @apply text-[var(--gray7)];
+            &:hover {
+              @apply underline;
+            }
+          }
+        }
+      }
+      .copyright {
+        @apply mt-[16px] text-[var(--gray7)];
       }
     }
   }
