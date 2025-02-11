@@ -1,26 +1,4 @@
 .stepper {
-  @apply flex w-full;
-  counter-reset: item-counter;
-  .step_item {
-    @apply relative flex-1 text-center;
-    counter-increment: item-counter;
-    &.md {
-      @apply pt-[30px];
-    }
-    &.lg {
-      @apply pt-[36px];
-    }
-    &::before {
-      @apply inline-flex h-[24px] w-[24px] items-center justify-center rounded-[12px] bg-[var(--gray6)];
-      content: counter(item-counter);
-    }
-    .title {
-      @apply block text-[1.2rem] font-bold leading-[1rem] text-[var(--gray10)];
-    }
-    .text {
-      @apply mt-[4px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray8)];
-    }
-  }
 }
 
 .selected_step {

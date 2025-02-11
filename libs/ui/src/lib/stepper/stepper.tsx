@@ -9,12 +9,11 @@ export interface StepperComponentProps {
   items: Array<SelectOption>;
   className?: string;
   selectedStep?: string;
-  size?: 'sm' | 'md' | 'lg';
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, size, onChange, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', styles.stepper, size && styles[size])}>
+      <div className={cn(className, 'nlp-stepper', styles.stepper)}>
         {items?.map((d: SelectOption) => (
           <div
             className={cn(
@@ -44,8 +43,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               styles.step_item,
             )}
             onClick={() => handleClick(d)}>
-            <strong className={styles.title}>{d.label}</strong>
-            <p className={styles.text}>{'서브타이틀'}</p>
+            {d.label}
           </div>
         ))}
       </div>
