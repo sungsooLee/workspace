@@ -20,7 +20,7 @@ module.exports = plugin(function ({ addUtilities, theme }) {
   const scrollbar = {
     '.scrollbar': {
       '&::-webkit-scrollbar': {
-        height: '64px',
+        height: '12px',
         width: '12px',
         backgroundColor: '#fff',
       },

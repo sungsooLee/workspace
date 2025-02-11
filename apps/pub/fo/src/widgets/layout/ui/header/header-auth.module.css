@@ -1,8 +1,7 @@
 /* header-auth.module.css */
 .start {
   &.header_auth {
-    @apply fixed w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
-    z-index: 2;
+    @apply w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
 
     .header_area {
       @apply flex h-[70px] items-center justify-between pl-[32px] pr-[8px];

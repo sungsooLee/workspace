@@ -9,7 +9,7 @@
         @apply title_2_b px-[31px] pb-[32px] text-center;
       }
       .auth_inner {
-        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[40px] py-[48px];
+        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
       }
     }
   }
