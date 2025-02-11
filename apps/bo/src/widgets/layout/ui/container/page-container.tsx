@@ -53,7 +53,7 @@ const PageContainerComponent: FC<{
       <div className={styles.inner}>
         {/* title_wrap */}
         <div className={styles.title_wrap}>
-          <h3 className={styles.title}>{title}</h3>
+          <h3 className={styles.title}>{title || '테스트 제목'}</h3>
           <div className={styles.btn_wrap}>
             <Button variant="point" size="sm">
               매핑과정 보기
