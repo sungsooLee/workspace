@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import PageButtons from '../../../widgets/layout/ui/page-layout/slot/page-buttons';
+import { PageButtons } from '../../../widgets/layout/ui/container/slot/page-buttons';
 import { Button } from '@learnway/ui';
-import PageRow from '../../../widgets/layout/ui/page-layout/page-row';
-import PageContainer from '../../../widgets/layout/ui/page-layout/page-container';
+import { PageRow } from '../../../widgets/layout/ui/container/parts/page-row';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { useFieldArray } from 'react-hook-form';
 import DynamicFormField from '../../../shared/ui/dynamic-form-field';
 import { CODE_GROUP } from '@learnway/config';

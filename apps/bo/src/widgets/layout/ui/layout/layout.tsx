@@ -28,15 +28,13 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       <div className={cn(styles.start, styles.container)}>
         <div className={styles.container_inner}>
           <LNB />
-          <main>
-            <PageContainer>{children}</PageContainer>
-          </main>
+          <main>{children}</main>
         </div>
       </div>
     );
   }
 
-  return <PageContainer>{children}</PageContainer>;
+  return { children };
 }
 
 export const Layout = LayoutComponent;

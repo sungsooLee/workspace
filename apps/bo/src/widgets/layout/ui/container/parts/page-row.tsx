@@ -1,5 +1,5 @@
 import { FC, ReactNode, Children } from 'react';
-const PageRow: FC<{ children: ReactNode }> = ({ children }) => {
+const PageRowComponent: FC<{ children: ReactNode }> = ({ children }) => {
   const childCount = Children.count(children);
 
   return (
@@ -12,4 +12,6 @@ const PageRow: FC<{ children: ReactNode }> = ({ children }) => {
     </div>
   );
 };
-export default PageRow;
+PageRowComponent.displayName = 'PageRow';
+
+export const PageRow = PageRowComponent;
