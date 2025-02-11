@@ -85,6 +85,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
           onChange={handleInputChange}
           placeholder={placeholder}
         />
+
+        {/* Clear Button  */}
         <div className={cn(styles.button, '')}>
           {isFocused && value && value.toString().length > 0 && (
             <button
