@@ -1,12 +1,27 @@
 import { FC, ReactNode, Children, isValidElement } from 'react';
 import './page-container.css';
+import styles from './page-container.module.css';
 import PageButtons from './slot/page-buttons';
 import PageLeft from './slot/page-left';
 import PageRight from './slot/page-right';
+import { Button } from '@learnway/ui';
+import { useActiveMenuDepthState } from '../../../../features/layout';
+import { useTranslation } from 'react-i18next';
+import { useCreation } from 'ahooks';
+import { last } from 'lodash';
+import { Breadcrumbs } from '../container/breadcrumbs/breadcrumbs';
 const PageContainer: FC<{
   children: ReactNode;
   panel?: boolean;
 }> = ({ children, panel = false }) => {
+  const { t } = useTranslation();
+
+  const [activeMenuDepth] = useActiveMenuDepthState();
+
+  const title = useCreation(() => {
+    return last(activeMenuDepth)?.title;
+  }, [activeMenuDepth]);
+
   const ButtonSlot = Children.toArray(children).find(
     (child) => isValidElement(child) && child.type === PageButtons,
   );
@@ -23,20 +38,35 @@ const PageContainer: FC<{
   const isDivision = Children.count(LeftSlot) > 0 && Children.count(RightSlot) > 0;
 
   return (
-    <div className={`page-container`}>
-      <div className={'pc-header'}>
-        <div className={'pc-title'}>title</div>
-        <div className={'pc-buttons'}>{ButtonSlot}</div>
-      </div>
-      <div className={`pc-body ${isDivision ? 'division' : ''} ${panel ? 'panel' : ''}`}>
-        {isDivision ? (
-          <>
-            <div className="pc-body-left">{LeftSlot}</div>
-            <div className="pc-body-right">{RightSlot}</div>
-          </>
-        ) : (
-          <>{BodySlot}</>
-        )}
+    <div className={`${styles.start} ${styles.contents}`}>
+      <Breadcrumbs />
+      <div className={styles.inner}>
+        {/* title_wrap */}
+        <div className={styles.title_wrap}>
+          <h3 className={styles.title}>동영상 상세</h3>
+          <div className={styles.btn_wrap}>
+            <Button variant="point" size="sm">
+              매핑과정 보기
+            </Button>
+            <Button variant="point" size="sm">
+              공유이력 보기
+            </Button>
+            <Button variant="point" size="sm">
+              삭제
+            </Button>
+            <Button variant="point" size="sm">
+              수정
+            </Button>
+            <Button variant="primary" size="sm">
+              목록
+            </Button>
+          </div>
+        </div>
+        {/* contents_wrap */}
+        <div className={styles.contents_wrap}>
+          {/* contents */}
+          <div className={styles.contents}>{children}</div>
+        </div>
       </div>
     </div>
   );
