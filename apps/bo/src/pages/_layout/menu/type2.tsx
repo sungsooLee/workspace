@@ -1,97 +1,105 @@
-import { createFileRoute } from '@tanstack/react-router'
-import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom'
-import { PageButtons } from '../../../widgets/layout/ui/container/slot/page-buttons'
-import { Button } from '@learnway/ui'
-import { PageRow } from '../../../widgets/layout/ui/container/parts/page-row'
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container'
-import { useFieldArray } from 'react-hook-form'
-import DynamicFormField from '../../../shared/ui/dynamic-form-field'
-import { CODE_GROUP } from '@learnway/config'
-import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries'
+import { useFieldArray } from 'react-hook-form';
+import { createFileRoute } from '@tanstack/react-router';
+import { z } from 'zod';
+import { t } from 'i18next';
+import { Button } from '@learnway/ui';
+import { CODE_GROUP } from '@learnway/config';
+
+import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
+import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
+import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
+import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import DynamicFormField from '../../../shared/ui/dynamic-form-field';
+import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
+
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { provider, onSubmit, reset, control } = useCustomForm(detailConfig)
+  const { provider, onSubmit, reset, control } = useCustomForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
-  })
+  });
   const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data)
-  }
+    console.log('data {} => ', data);
+  };
 
   const handleOnReset = () => {
-    reset()
-  }
+    reset();
+  };
   const handleFormSubmit = (e: any) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('on form submit?')
-    onSubmit(handleOnSubmit)
-  }
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('on form submit?');
+    onSubmit(handleOnSubmit);
+  };
   return (
     <form onSubmit={handleFormSubmit}>
       <PageContainer panel>
-        <PageButtons>
-          <Button type="submit" variant="gray" size="sm">
-            Submit
+        <ContentsButtons>
+          <Button type="submit" variant="point" size="sm">
+            저장
           </Button>
-          <Button
-            type={'button'}
-            variant="line"
-            size="sm"
-            onClick={handleOnReset}
-          >
-            초기화
+          <Button type={'button'} variant="point" size="sm">
+            공유이력 보기
           </Button>
-          <Button variant="gray" size="sm">
-            버튼3
+          <Button type={'button'} variant="point" size="sm">
+            삭제
           </Button>
-          <Button variant="gray" size="sm">
-            버튼4
+          <Button type={'button'} variant="point" size="sm">
+            수정
           </Button>
-        </PageButtons>
+          <Button type={'button'} variant="primary" size="sm">
+            목록
+          </Button>
+        </ContentsButtons>
         <h1>CODE</h1>
-        <PageRow>
+        <MainContents>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'language'} />
+            <DynamicFormField provider={provider} name={'language_detail'} />
+          </ContentsRow>
+        </MainContents>
+        <SubContents></SubContents>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'language'} />
           <DynamicFormField provider={provider} name={'language_detail'} />
-        </PageRow>
+        </ContentsRow>
         <h1>fetch</h1>
-        <PageRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'language2'} />
           <DynamicFormField provider={provider} name={'language2_detail'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'title'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'subdivision'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'check'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'tenant'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'category'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <DynamicFormField provider={provider} name={'thumbnails'} />
-        </PageRow>
-        <PageRow>
+        </ContentsRow>
+        <ContentsRow>
           <div>
             <div>
               <Button
                 type={'button'}
                 variant="gray"
                 size="sm"
-                onClick={() =>
-                  append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })
-                }
-              >
+                onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
                 추가
               </Button>
             </div>
@@ -134,8 +142,7 @@ function RouteComponent() {
                           type={'button'}
                           variant="gray"
                           size="sm"
-                          onClick={() => remove(index)}
-                        >
+                          onClick={() => remove(index)}>
                           삭제
                         </Button>
                       </td>
@@ -145,10 +152,10 @@ function RouteComponent() {
               </table>
             </div>
           </div>
-        </PageRow>
+        </ContentsRow>
       </PageContainer>
     </form>
-  )
+  );
 }
 
 const detailConfig = {
@@ -193,7 +200,7 @@ const detailConfig = {
             ...res,
             value: res.code,
             label: res.name,
-          }))
+          }));
         },
       },
     },
@@ -213,7 +220,7 @@ const detailConfig = {
             ...res,
             value: res.code,
             label: res.name,
-          }))
+          }));
         },
       },
     },
@@ -321,10 +328,10 @@ const detailConfig = {
     },
   ],
   validator: {
-    /* category: z.string().nonempty(t('유효성 테스트')),
+    category: z.string().nonempty(t('유효성 테스트')),
     language_code: z.string().nonempty(t('유효성 테스트')),
     subdivision: z.string().nonempty(t('유효성 테스트')),
     check: z.boolean(),
-    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),
   },
-}
+};

@@ -21,7 +21,7 @@
   .title_wrap {
     @apply flex justify-between;
     .title {
-      @apply  inline-flex;
+      @apply  title_bo_1_b inline-flex;
     }
   }
 }

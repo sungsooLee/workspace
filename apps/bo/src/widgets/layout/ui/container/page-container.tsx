@@ -2,12 +2,9 @@ import { FC, ReactNode, Children, isValidElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
-import { Button } from '@learnway/ui';
 
 import styles from './page-container.module.css';
-import { PageButtons } from './slot/page-buttons';
-import { PageLeft } from './slot/page-left';
-import { PageRight } from './slot/page-right';
+import { ContentsButtons } from './slot/contents-buttons';
 import { PageContents } from './page-contents';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
@@ -33,19 +30,11 @@ const PageContainerComponent: FC<{
   }, [activeMenuDepth]);
 
   const ButtonSlot = Children.toArray(children).find(
-    (child) => isValidElement(child) && child.type === PageButtons,
+    (child) => isValidElement(child) && child.type === ContentsButtons,
   );
   const BodySlot = Children.toArray(children).filter(
-    (child) => !(isValidElement(child) && child.type === PageButtons),
+    (child) => !(isValidElement(child) && child.type === ContentsButtons),
   );
-
-  const LeftSlot = Children.toArray(BodySlot).filter(
-    (child) => isValidElement(child) && child.type === PageLeft,
-  );
-  const RightSlot = Children.toArray(BodySlot).filter(
-    (child) => isValidElement(child) && child.type === PageRight,
-  );
-  const isDivision = Children.count(LeftSlot) > 0 && Children.count(RightSlot) > 0;
 
   return (
     <div className={`${styles.start} ${styles.contents}`}>
@@ -54,29 +43,13 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={styles.title_wrap}>
           <h3 className={styles.title}>{title || '테스트 제목'}</h3>
-          <div className={styles.btn_wrap}>
-            <Button variant="point" size="sm">
-              매핑과정 보기
-            </Button>
-            <Button variant="point" size="sm">
-              공유이력 보기
-            </Button>
-            <Button variant="point" size="sm">
-              삭제
-            </Button>
-            <Button variant="point" size="sm">
-              수정
-            </Button>
-            <Button variant="primary" size="sm">
-              목록
-            </Button>
-          </div>
+          {ButtonSlot && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
         </div>
         {/* contents_wrap */}
         <div className={styles.contents_wrap}>
           {/* contents */}
           <div className={styles.contents}>
-            <PageContents>{children}</PageContents>
+            <PageContents>{BodySlot}</PageContents>
           </div>
         </div>
       </div>
