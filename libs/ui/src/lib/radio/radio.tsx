@@ -20,6 +20,7 @@ const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Radio
         className={cn(
           styles.start,
           'nlp--radio',
+          className,
           // orientation === 'horizontal' ? horizontal_selector : vertical_selector (css 구현필요)
         )}
         defaultValue={defaultValue}

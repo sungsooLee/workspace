@@ -1,4 +1,4 @@
-/* recent_visits.module.css */
+/* recent-visits.module.css */
 .start {
   &.recent_visits {
     @apply relative flex items-center pb-[26px] pl-[32px] pr-[68px] pt-[24px];

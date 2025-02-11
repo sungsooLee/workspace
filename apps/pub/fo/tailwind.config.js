@@ -46,6 +46,11 @@ module.exports = {
           },
         },
         // title class add
+        '.title_2_b': {
+          ...baseTitle,
+          fontSize: '3.4rem',
+          fontWeight: '600',
+        },
         '.title_4_b': {
           ...baseTitle,
           fontSize: '2.4rem',
@@ -90,6 +95,12 @@ module.exports = {
           ...baseTitle,
           fontSize: '1.6rem',
           fontWeight: '700',
+        },
+
+        '.ellipsis': {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         },
       });
     },

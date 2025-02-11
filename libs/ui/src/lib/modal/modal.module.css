@@ -19,7 +19,10 @@
 }
 
 .content_body {
-  @apply px-[24px] py-[16px];
+  @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[24px];
+  &.scrolled {
+    border-bottom: 1px solid var(--gray3);
+  }
 }
 
 .content {
@@ -48,6 +51,12 @@
   }
   &.xl {
     @apply w-[1400px];
+  }
+}
+
+@media (min-height: 710px) {
+  .section {
+    background-color: #e0e0e0; /* 높이가 710px 이상일 때 배경색 변경 */
   }
 }
 
