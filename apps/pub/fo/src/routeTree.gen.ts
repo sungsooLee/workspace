@@ -17,8 +17,6 @@ import { Route as LoginIndexImport } from './pages/login/index'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
-import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
@@ -62,18 +60,6 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
-} as any)
-
-const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
-  id: '/menu8/menu9',
-  path: '/menu8/menu9',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
-  id: '/menu4/menu5',
-  path: '/menu4/menu5',
-  getParentRoute: () => LayoutRoute,
 } as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
@@ -202,20 +188,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
-    '/_layout/menu4/menu5': {
-      id: '/_layout/menu4/menu5'
-      path: '/menu4/menu5'
-      fullPath: '/menu4/menu5'
-      preLoaderRoute: typeof LayoutMenu4Menu5Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu8/menu9': {
-      id: '/_layout/menu8/menu9'
-      path: '/menu8/menu9'
-      fullPath: '/menu8/menu9'
-      preLoaderRoute: typeof LayoutMenu8Menu9Import
-      parentRoute: typeof LayoutImport
-    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -277,15 +249,11 @@ const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
-  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
-  LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -302,8 +270,6 @@ export interface FileRoutesByFullPath {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
-  '/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
   '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
@@ -320,8 +286,6 @@ export interface FileRoutesByTo {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
-  '/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
   '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
@@ -340,8 +304,6 @@ export interface FileRoutesById {
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
-  '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
   '/_guide/guide/components/Button': typeof GuideGuideComponentsButtonRoute
@@ -360,8 +322,6 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/respond'
     | '/guide/typography'
-    | '/menu4/menu5'
-    | '/menu8/menu9'
     | '/guide'
     | '/menu3'
     | '/guide/components/Button'
@@ -377,8 +337,6 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/respond'
     | '/guide/typography'
-    | '/menu4/menu5'
-    | '/menu8/menu9'
     | '/guide'
     | '/menu3'
     | '/guide/components/Button'
@@ -395,8 +353,6 @@ export interface FileRouteTypes {
     | '/_guide/guide/layout'
     | '/_guide/guide/respond'
     | '/_guide/guide/typography'
-    | '/_layout/menu4/menu5'
-    | '/_layout/menu8/menu9'
     | '/_guide/guide/'
     | '/_layout/menu3/'
     | '/_guide/guide/components/Button'
@@ -449,8 +405,6 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
-        "/_layout/menu4/menu5",
-        "/_layout/menu8/menu9",
         "/_layout/menu3/"
       ]
     },
@@ -484,14 +438,6 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
-    },
-    "/_layout/menu4/menu5": {
-      "filePath": "_layout/menu4/menu5.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu8/menu9": {
-      "filePath": "_layout/menu8/menu9.tsx",
-      "parent": "/_layout"
     },
     "/_guide/guide/": {
       "filePath": "_guide/guide/index.tsx",

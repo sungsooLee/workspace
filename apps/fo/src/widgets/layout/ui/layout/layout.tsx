@@ -17,11 +17,11 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   return (
     <div className={`${styles.start} ${styles.container}`}>
-      <div className={styles.breadcrums}>
+      {/* <div className={styles.breadcrums}>
         <div className={styles.inner}>
           <Breadcrumbs />
         </div>
-      </div>
+      </div> */}
       <div className={styles.inner}>
         <main>
           <PageContainer>{children}</PageContainer>

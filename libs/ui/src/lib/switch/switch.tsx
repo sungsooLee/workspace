@@ -1,34 +1,51 @@
 import React, { forwardRef } from 'react';
-import * as Primitive from "@radix-ui/react-switch";
+import * as Primitive from '@radix-ui/react-switch';
 
 import { cn } from '@learnway/shared';
 import styles from './switch.module.css';
 
 export interface SwitchComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  id?: string;
   label?: string;
   className?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  reversed?: boolean; // label이 앞에 있는 Case
+  labelAlign?: 'left' | 'right';
 }
 
-const SwitchComponent = forwardRef<
-  React.ElementRef<typeof Primitive.Root>,
-  SwitchComponentProps
->(
-  ({ label, className, ...props }, ref) => {
+const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SwitchComponentProps>(
+  ({ id, label, className, checked, disabled, reversed, labelAlign = 'left', ...props }, ref) => {
     return (
-      <div className={cn(styles.start, className, 'nlp--switch')}>
-        <Primitive.Root className={styles.switch_root} id="airplane-mode">
+      <div
+        className={cn(styles.start, styles.switch, className, 'nlp--switch', {
+          [styles.reversed]: reversed,
+        })}>
+
+        {/* left label */}
+        {labelAlign === 'left' && label && (
+          <label className={styles.label} htmlFor={id}>
+            {label}
+          </label>
+        )}
+
+        {/* Switch Button */}
+        <Primitive.Root
+          className={styles.switch_root}
+          id={id}
+          checked={checked}
+          disabled={disabled}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
-        {label && (
-          <label
-            className={styles.label}
-            htmlFor="airplane-mode"
-          >
+
+        {/* right label */}
+        {labelAlign === 'right' && label && (
+          <label className={styles.label} htmlFor={id}>
             {label}
           </label>
         )}
       </div>
-    )
+    );
   },
 );
 

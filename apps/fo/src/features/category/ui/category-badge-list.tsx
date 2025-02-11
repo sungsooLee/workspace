@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { IcoXclose, IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui';
@@ -7,7 +7,7 @@ import { Category } from '../../../types/entities/category';
 import { useCategories } from '../services/category.service';
 import { useCategoryNavigation } from '../../../entities/category/service/category.hook';
 import styles from './category-badge-list.module.css';
-import 'swiper/swiper-bundle.css';
+import { Navigation } from 'swiper/modules';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;
@@ -16,7 +16,20 @@ interface CategoryBadgeListProps {
 
 export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) {
   const { handleCategoryClick } = useCategoryNavigation();
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<any>(null);
 
+  useEffect(() => {
+    if (swiperRef.current && prevRef.current && nextRef.current) {
+      const swiperInstance = swiperRef.current.swiper;
+      swiperInstance.params.navigation.prevEl = prevRef.current;
+      swiperInstance.params.navigation.nextEl = nextRef.current;
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, []);
   // 최근 방문한 카테고리는 일단 로컬 스토리지에서 관리한다고 가정
   const [recentCategories, setRecentCategories] = React.useState<Category[]>([]);
   const { data: categories } = useCategories();
@@ -48,30 +61,26 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
     onClose?.(categoryId);
   };
 
-  // const handleClick = (category: Category) => {
-  //   onClick?.(category);
-  // };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
       <h3 className={styles.tit}>최근방문</h3>
-      {/* {recentCategories.map((category) => (
-        <div
-          key={category.categoryId}
-          className="cursor-pointer"
-          onClick={() => handleCategoryClick(category)}>
-          <span>{category.name}</span>
-          <button onClick={(e) => handleClose(e, category.categoryId)}>×</button>
-        </div>
-      ))} */}
       <Swiper
+        ref={swiperRef}
         spaceBetween={8}
         slidesPerView="auto"
         loop={false}
-        navigation={{
-          prevEl: '.recent_button_prev',
-          nextEl: '.recent_button_next',
-        }}
+        modules={[Navigation]}
+        simulateTouch={isMobile}
+        allowTouchMove={isMobile}
         className={styles.recent_swiper}>
         <div className={styles.lists}>
           {recentCategories.map((item) => (
@@ -92,14 +101,15 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
         </div>
       </Swiper>
 
-      {/* <Button onClick={() => swiper.slideNext()}>
-        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-      </Button> */}
-      <div className={styles.recent_button_prev}>
-        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+      <div ref={prevRef} className={styles.recent_button_prev}>
+        <div className={styles.btn}>
+          <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+        </div>
       </div>
-      <div className={styles.recent_button_next}>
-        <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+      <div ref={nextRef} className={styles.recent_button_next}>
+        <div className={styles.btn}>
+          <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+        </div>
       </div>
     </div>
   );

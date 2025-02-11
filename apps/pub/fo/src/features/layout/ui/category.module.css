@@ -10,11 +10,11 @@
     }
   }
   &.category_area {
-    @apply flex items-center bg-[var(--white)];
+    @apply flex items-center;
 
     .category {
       z-index: 2;
-      @apply absolute left-[-20px] top-[15px] w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+      @apply w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     }
 
     .category_container {

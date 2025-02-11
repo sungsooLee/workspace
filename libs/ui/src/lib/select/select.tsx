@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoArrowDown } from '@learnway/icons';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import * as Primitive from '@radix-ui/react-select';
 import { SelectOption } from './type';
 import useSelect from './logic';

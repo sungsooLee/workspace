@@ -7,5 +7,14 @@ export const Route = createFileRoute('/_layout/category/$categoryId')({
 function RouteComponent() {
   const { categoryId } = Route.useParams();
 
-  return <div>Hello "/_layout/category/$categoryId"!</div>;
+  return (
+    <div>
+      {/* <div className={styles.breadcrums}>
+        <div className={styles.inner}>
+          <Breadcrumbs />
+        </div>
+      </div> */}
+      Hello "/_layout/category/$categoryId"!
+    </div>
+  );
 }
