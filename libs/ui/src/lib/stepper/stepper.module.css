@@ -4,3 +4,11 @@
 .selected_step {
   background-color: lightcoral;
 }
+
+.active {
+  background: #00afd5;
+}
+
+.complete {
+  background: #3eb838;
+}

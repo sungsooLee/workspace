@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -9,11 +9,12 @@ export interface StepperComponentProps {
   items: Array<SelectOption>;
   className?: string;
   selectedStep?: string;
+  disabledStepClick?: boolean; // step 이동 가능 여부
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, onChange, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, disabledStepClick, ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -27,7 +28,18 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
       if (selectedItem) {
         onChange?.(selectedItem);
       }
-    }, [onChange, selectedItem]);
+    }, [selectedItem]);
+
+    const stepperItems = useMemo(() => {
+      const findIndex = items.findIndex((d: SelectOption) => d.value === selectedItem?.value) || 0;
+      return items?.map((d: SelectOption, index: number) => {
+        return {
+          ...d,
+          isActive: index === findIndex, // active step 여부
+          isComplete: index < findIndex, // complete step 여부
+        };
+      });
+    }, [selectedItem]);
 
     const handleClick = (item: SelectOption) => {
       const isChanged = item.value !== selectedItem?.value;
@@ -35,15 +47,24 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', styles.stepper)}>
-        {items?.map((d: SelectOption) => (
+      <div className={cn(className, 'nlp-stepper', styles.stepper, 'flex flex-row gap-5')}>
+        {stepperItems?.map((d: any, index: number) => (
           <div
+            key={d.value}
             className={cn(
-              selectedItem?.value === d.value && styles.selected_step,
               styles.step_item,
+              d.isActive && styles.active,
+              d.isComplete && styles.complete,
+              'flex flex-col',
             )}
-            onClick={() => handleClick(d)}>
-            {d.label}
+            onClick={() => !disabledStepClick && handleClick(d)}>
+            {/* icon or step value */}
+            <div>{index + 1}</div>
+            {/*<div>{d.isComplete ? <Check /> : index + 1}</div>*/}
+            {/* title */}
+            <div>{d.label}</div>
+            {/* help text */}
+            <div>{d.subLabel}</div>
           </div>
         ))}
       </div>
