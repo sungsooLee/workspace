@@ -11,15 +11,23 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
   dummy?: any;
   className?: string;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  size?: 'sm' | 'md'; // textarea 높이(basic : md)
+  border?: 'none'; // border 없는 경우
 }
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
-  ({ className, ...props }, ref) => {
-    const hasNoBorder = className?.includes('bd_none'); // border 없는 경우
-    const resizeNone = className?.includes('resize_none'); // resize 없는 경우
+  ({ size = 'md', resize, border, className, ...props }, ref) => {
     return (
       <textarea
-        className={`${styles.start} ${styles.textarea} ${hasNoBorder ? styles.bd_none : ''} ${resizeNone ? styles.resize_none : ''} ${className}`}
+        className={cn(
+          styles.start,
+          styles.textarea,
+          className,
+          'nlp--textarea',
+          resize && styles[resize],
+          size && styles[size],
+          border && styles.bd_none,
+        )}
         {...props}
       />
     );

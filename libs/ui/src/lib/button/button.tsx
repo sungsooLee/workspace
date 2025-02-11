@@ -26,7 +26,7 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
     | 'gray-outline'
     | 'ghost'
     | 'link';
-  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; // xs(28) , sm(32) , md(36), lg(40), xl(48)
   icon?: React.ReactNode;
   iconAlign?: 'left' | 'right';
   onlyIcon?: boolean;

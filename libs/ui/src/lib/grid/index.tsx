@@ -27,7 +27,7 @@ import ColumnSettings, { ColumnSetting } from './components/column-setting';
 import { FilterContent } from './components/filter-content';
 
 import { useModalControl } from '../modal/modal.hook';
-import { Button } from '../shadcn/button';
+import { Button } from '../button/button';
 import { CheckFieldProps } from '../checkbox/type';
 
 // paging Icons
@@ -37,6 +37,7 @@ import { IcoChevronRight } from '@learnway/icons';
 import { IcoChevronRightDouble } from '@learnway/icons';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
+import { Select } from '../select/select';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -566,23 +567,24 @@ const Grid = <T extends object>({
             ))}
           </select>
           <div className="flex items-center">
-            <button
+            <Button
               onClick={() => onPageChange(0)}
               disabled={pageIndex === 0}
-              className="btn_first">
+              className="btn_first"
+              onlyIcon>
               {<IcoChevronLeftDouble width={32} height={32} />}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => onPageChange(pageIndex - 1)}
               disabled={pageIndex === 0}
               className="btn_prev">
               {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-            </button>
+            </Button>
 
             {/* 페이지 번호들 */}
             <div className="paging_wrap flex gap-1">
               {Array.from({ length: totalPages }, (_, i) => (
-                <button
+                <Button
                   key={i}
                   onClick={() => onPageChange(i)}
                   className={cn(
@@ -590,22 +592,22 @@ const Grid = <T extends object>({
                     pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
                   )}>
                   {i + 1}
-                </button>
+                </Button>
               ))}
             </div>
 
-            <button
+            <Button
               onClick={() => onPageChange(pageIndex + 1)}
               disabled={pageIndex >= totalPages - 1}
               className="btn_next">
               {<IcoChevronRight width={32} height={32} />}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => onPageChange(totalPages - 1)}
               disabled={pageIndex >= totalPages - 1}
               className="btn_last">
               {<IcoChevronRightDouble width={32} height={32} />}
-            </button>
+            </Button>
           </div>
           <span className="text-sm text-gray-600">
             총 {totalRows}개 중 {pageIndex * pageSize + 1}-

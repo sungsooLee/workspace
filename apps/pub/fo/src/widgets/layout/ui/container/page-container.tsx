@@ -12,7 +12,7 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
   return (
     <div className={`${styles.start} ${styles.page_container}`}>
       <div className={styles.title}>{'title'}</div>
-      <div>{children}</div>
+      {children}
     </div>
   );
 }

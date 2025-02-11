@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import React, { memo, ReactNode } from 'react';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { Button } from '@learnway/ui';
@@ -36,10 +36,10 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
             </Button>
           </div>
         </div>
-        {/* contents_wrap */}
-        <div className={styles.contents_wrap}>
+        {/* content_wrap */}
+        <div className={styles.content_wrap}>
           {/* contents */}
-          <div className={styles.contents}>{children}</div>
+          <div className={styles.content}>{children}</div>
         </div>
       </div>
     </div>
