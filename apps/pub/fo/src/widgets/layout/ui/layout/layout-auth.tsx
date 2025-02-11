@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 // import { cn } from '@learnway/shared';
 import { AuthContainer } from '../container/auth-container';
 import styles from './layout-auth.module.css';
-interface LayoutComponentProps {
+interface LayoutAuthComponentProps {
   children: ReactNode;
 }
 
-function LayoutAuthComponent({ children }: LayoutComponentProps) {
+function LayoutAuthComponent({ children }: LayoutAuthComponentProps) {
   const { t } = useTranslation();
 
   return (

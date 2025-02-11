@@ -1,9 +1,9 @@
 /* layout.module.css */
 .start {
   &.container {
-    @apply h-[100vh] bg-[var(--gray1)] pt-[70px];
+    @apply m-auto h-[100vh] w-full min-w-[600px] bg-[var(--gray1)] pt-[70px] text-center;
     .inner {
-      @apply relative m-auto w-[1180px];
+      @apply relative;
     }
   }
 }

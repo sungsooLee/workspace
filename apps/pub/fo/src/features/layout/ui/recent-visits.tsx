@@ -1,6 +1,6 @@
 import { memo, useState, useRef, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import styles from './recent_visits.module.css';
+import styles from './recent-visits.module.css';
 import { IcoXclose, IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';

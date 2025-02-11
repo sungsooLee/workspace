@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button, Popover } from '@learnway/ui';
 import styles from './category.module.css';
-import { RecentVisits } from './recent_visits';
+import { RecentVisits } from './recent-visits';
 import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
 import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
 
