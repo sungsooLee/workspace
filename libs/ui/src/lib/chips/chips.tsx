@@ -12,7 +12,6 @@ export interface ChipsComponentProps extends PropsWithChildren {
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
-  typeBtn?: boolean; // will be deprecated
   prefixCharacter?: string;
   hideCloseButton?: boolean;
   onClick?: (option: SelectOption) => void;
@@ -24,7 +23,6 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     className,
     variant,
     size,
-    typeBtn,
     prefixCharacter,
     onClick,
     onDelete,
@@ -32,7 +30,6 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     option: { label, value },
     ...props
   }) => {
-
     // 버튼 모드 사용 여부 - onClick 설정 했을때만 버튼으로 판단 (button style 조정시 사용)
     const isButtonMode = !!onClick;
 
@@ -42,19 +39,22 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
         value,
       };
       onClick?.(option);
-    }
+    };
 
     const handleDeleteClick = (event: React.MouseEvent) => {
       event.stopPropagation(); // onClick 실행 방지
       const option: SelectOption = {
         label,
         value,
-      }
+      };
       onDelete?.(option);
-    }
+    };
 
     return (
-      <span {...props} className={cn(styles.start, styles.chips, className, 'nlp--chips')} onClick={handleClick}>
+      <span
+        {...props}
+        className={cn(styles.start, styles.chips, className, 'nlp--chips')}
+        onClick={handleClick}>
         {/* prefix character */}
         {prefixCharacter}
 
