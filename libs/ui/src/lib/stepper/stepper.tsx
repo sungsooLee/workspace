@@ -9,12 +9,11 @@ export interface StepperComponentProps {
   items: Array<SelectOption>;
   className?: string;
   selectedStep?: string;
-  isVisible?: boolean;
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, isVisible, onChange, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -22,13 +21,13 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
       const firstItem = items?.at(0);
       const item = selectedStep ? findItem : firstItem; // selectedStep 값이 없으면 첫번째 step 선택
       item && setSelectedItem(item);
-    }, [selectedStep]);
+    }, [items, selectedStep]);
 
     useEffect(() => {
       if (selectedItem) {
         onChange?.(selectedItem);
       }
-    }, [selectedItem]);
+    }, [onChange, selectedItem]);
 
     const handleClick = (item: SelectOption) => {
       const isChanged = item.value !== selectedItem?.value;
@@ -36,20 +35,15 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', 'flex flex-row', styles.stepper)}>
+      <div className={cn(className, 'nlp-stepper', styles.stepper)}>
         {items?.map((d: SelectOption) => (
           <div
-            className={cn(
-              selectedItem?.value === d.value && styles.selected_step,
-              styles.step_item,
-            )}
+            className={cn(selectedItem?.value === d.value && styles.selectedStep)}
             onClick={() => handleClick(d)}>
-            {isVisible && (
-              <>
-                <strong className={styles.title}>{d.label}</strong>
-                <p className={styles.text}>{'서브타이틀'}</p>
-              </>
-            )}
+            <>
+              <strong className={styles.title}>{d.label}</strong>
+              <p className={styles.text}>{'서브타이틀'}</p>
+            </>
           </div>
         ))}
       </div>
