@@ -18,7 +18,7 @@ function RouteComponent() {
   };
   return (
     <div>
-      <Stepper items={items} onChange={handleChange} />
+      <Stepper items={items} selectedStep="1" onChange={handleChange} isVisible />
     </div>
   );
 }
