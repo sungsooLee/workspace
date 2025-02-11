@@ -35,12 +35,13 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', 'flex flex-row')}>
+      <div className={cn(className, 'nlp-stepper', 'flex flex-row', styles.stepper)}>
         {items?.map((d: SelectOption) => (
           <div
             className={cn(selectedItem?.value === d.value && styles.selectedStep, 'border p-1')}
             onClick={() => handleClick(d)}>
             {d.label}
+            <p className={styles.text}>{'서브타이틀'}</p>
           </div>
         ))}
       </div>
