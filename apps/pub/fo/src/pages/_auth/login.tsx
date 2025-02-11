@@ -2,6 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
+import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
+import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
+import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -50,6 +53,40 @@ function RouteComponent() {
           <Button>진행현황</Button>
           <Button>아이디/비밀번호찾기</Button>
         </div>
+      </div>
+
+      <div className={styles.btn_box}>
+        <Button size="xl" variant="primary" className={styles.btn}>
+          로그인
+        </Button>
+      </div>
+
+      <div className={styles.sns_login}>
+        <h3 className={styles.tit_sns}>소셜 로그인</h3>
+        <ul>
+          <li>
+            <Button>
+              <img src={snsNaverImage} alt="naver" />
+            </Button>
+          </li>
+          <li>
+            <Button>
+              <img src={snskakaoImage} alt="kakao" />
+            </Button>
+          </li>
+          <li>
+            <Button>
+              <img src={snsGoogleImage} alt="google" />
+            </Button>
+          </li>
+        </ul>
+        <div className={styles.noti}>
+          회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
+        </div>
+      </div>
+
+      <div className={styles.login_guide}>
+        아직 회원이 아니시라면 <Button>회원가입</Button>하세요.
       </div>
     </div>
   );

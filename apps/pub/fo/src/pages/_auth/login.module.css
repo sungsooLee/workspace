@@ -15,5 +15,16 @@
         }
       }
     }
+    .btn_box {
+      @apply mt-[40px];
+      .btn {
+        @apply w-full;
+      }
+    }
+    .sns_login {
+      &::before {
+        @apply contents=[''] block;
+      }
+    }
   }
 }
