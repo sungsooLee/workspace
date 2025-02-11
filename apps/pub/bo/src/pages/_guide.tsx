@@ -34,6 +34,7 @@ function RouteComponent() {
         { label: 'Tootip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
+        { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
         // { label: '이미지', path: '/guide/components/image' },
         // { label: '아이콘', path: '/guide/components/icon' },
@@ -81,7 +82,7 @@ function RouteComponent() {
                     </span>
                     {subItems && !visibleList[title] && (
                       <ul>
-                        {subItems.map(({ label, path, index }) => (
+                        {subItems.map(({ label, path }) => (
                           <li key={path} className={currentPath === path ? 'active' : ''}>
                             {title === 'Pages' ? (
                               <a href={path} target="_blank" rel="noopener noreferrer">
