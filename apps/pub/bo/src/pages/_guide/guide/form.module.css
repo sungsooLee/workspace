@@ -1,4 +1,5 @@
 /* form.module.css */
+/* form.module.css */
 .form_item {
   @apply relative w-full flex-1 pb-[16px];
   .guide_text {
@@ -10,7 +11,7 @@
       @apply text-[var(--status1)];
     }
   }
-  .sub_test {
+  .sub_text {
     @apply mt-[5px] block text-[1.2rem] leading-[1rem] text-[var(--gray7)];
   }
   .text_limit {

@@ -607,9 +607,11 @@ const Grid = <T extends object>({
             {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
           </Button>
         </div>
-        <span className="text-sm text-gray-600">
-          총 {totalRows}개 중 {pageIndex * pageSize + 1}-
-          {Math.min((pageIndex + 1) * pageSize, totalRows)}
+        <span className="count_wrap">
+          {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
+          {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
+          {pageIndex * pageSize + 1}-{Math.min((pageIndex + 1) * pageSize, totalRows)} / {totalRows}{' '}
+          Page
         </span>
       </div>
     );
