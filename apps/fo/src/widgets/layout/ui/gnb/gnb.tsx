@@ -91,7 +91,7 @@ function GNBComponent() {
           <div className={styles.util}>
             <AdminLink />
             <Language />
-            <Notification />
+            <Notification userUUID={userData?.accountId} />
             <UserAvatar />
           </div>
         </div>
