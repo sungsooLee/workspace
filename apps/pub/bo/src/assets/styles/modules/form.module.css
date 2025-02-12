@@ -2,7 +2,7 @@
 .form_item {
   @apply relative w-full flex-1 pb-[16px];
   .guide_text {
-    @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
+    @apply mt-[8px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
     &:empty {
       @apply hidden;
     }
@@ -29,6 +29,14 @@
   }
   .btn_switch {
     @apply absolute right-0 top-[8px];
+  }
+  &.type2 {
+    .form_label {
+      @apply pr-[35px];
+    }
+    .input_box {
+      @apply mt-0;
+    }
   }
 }
 .input_box_wrap {
@@ -61,7 +69,7 @@
     }
   }
   .radio_wrap {
-    @apply mt-[12px] flex w-full;
+    @apply flex w-full;
     & > div {
       @apply flex-1;
     }

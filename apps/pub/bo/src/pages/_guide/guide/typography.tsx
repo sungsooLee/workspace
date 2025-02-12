@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-
 export const Route = createFileRoute('/_guide/guide/typography')({
   component: RouteComponent,
 });
@@ -15,8 +14,8 @@ function RouteComponent() {
           preview: `<h1 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h1>`,
           code: `
               .title_1_b {
-      @include title_1_b;
-    }
+      @apply title_1_b;
+}
               `,
         },
         {
@@ -25,8 +24,8 @@ function RouteComponent() {
           preview: `<h1 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h1>`,
           code: `
               .title_1_r {
-      @include title_1_r;
-    }
+      @apply title_1_r;
+}
               `,
         },
         {
@@ -35,8 +34,8 @@ function RouteComponent() {
           preview: `<h2 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h2>`,
           code: `
               .title_2_b {
-      @include title_2_b;
-    } // 메인 타이틀
+      @apply title_2_b;
+} // 메인 타이틀
               `,
         },
         {
@@ -45,8 +44,8 @@ function RouteComponent() {
           preview: `<h2 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h2>`,
           code: `
               .title_2_r {
-      @include title_2_r;
-    }
+      @apply title_2_r;
+}
               `,
         },
         {
@@ -55,8 +54,8 @@ function RouteComponent() {
           preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
           code: `
               .title_3_b {
-      @include title_3_b;
-    } // 서브 타이틀
+      @apply title_3_b;
+} // 서브 타이틀
               `,
         },
         {
@@ -65,8 +64,8 @@ function RouteComponent() {
           preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
           code: `
               .title_3_r {
-      @include title_3_r;
-    }
+      @apply title_3_r;
+}
               `,
         },
         {
@@ -75,8 +74,8 @@ function RouteComponent() {
           preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
           code: `
               .title_4_b {
-      @include title_4_b;
-    } // 카드 타이틀
+      @apply title_4_b;
+} // 카드 타이틀
               `,
         },
         {
@@ -85,8 +84,8 @@ function RouteComponent() {
           preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
           code: `
               .title_4_r {
-      @include title_4_r;
-    }
+      @apply title_4_r;
+}
               `,
         },
         {
@@ -95,8 +94,8 @@ function RouteComponent() {
           preview: `<h5 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h5>`,
           code: `
               .title_5_b {
-      @include title_5_b;
-    } // 카드 타이틀
+      @apply title_5_b;
+} // 카드 타이틀
               `,
         },
         {
@@ -105,8 +104,8 @@ function RouteComponent() {
           preview: `<h5 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h5>`,
           code: `
               .title_5_r {
-      @include title_5_r;
-    }
+      @apply title_5_r;
+}
               `,
         },
       ],
@@ -120,8 +119,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_1_b {
-      @include body_1_b;
-    }
+      @apply body_1_b;
+}
               `,
         },
         {
@@ -130,8 +129,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_1_r {
-      @include body_1_r;
-    }
+      @apply body_1_r;
+}
               `,
         },
         {
@@ -140,8 +139,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_2_b {
-      @include body_2_b;
-    }
+      @apply body_2_b;
+}
               `,
         },
         {
@@ -150,8 +149,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_2_r {
-      @include body_2_r;
-    }
+      @apply body_2_r;
+}
               `,
         },
         {
@@ -160,8 +159,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_3_b {
-      @include body_3_b;
-    }
+      @apply body_3_b;
+}
               `,
         },
         {
@@ -170,8 +169,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_3_r {
-      @include body_3_r;
-    }
+      @apply body_3_r;
+}
               `,
         },
         {
@@ -180,8 +179,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_4_b {
-      @include body_4_b;
-    }
+      @apply body_4_b;
+}
               `,
         },
         {
@@ -190,8 +189,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .body_4_r {
-      @include body_4_r;
-    }
+      @apply body_4_r;
+}
               `,
         },
       ],
@@ -205,8 +204,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_1_b {
-      @include input_1_b;
-    }
+      @apply input_1_b;
+}
               `,
         },
         {
@@ -215,8 +214,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_1_r {
-      @include input_1_r;
-    }
+      @apply input_1_r;
+}
               `,
         },
         {
@@ -225,8 +224,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_2_b {
-      @include input_2_b;
-    }
+      @apply input_2_b;
+}
               `,
         },
         {
@@ -235,8 +234,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_2_r {
-      @include input_2_r;
-    }
+      @apply input_2_r;
+}
               `,
         },
         {
@@ -245,8 +244,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_3_b {
-      @include input_3_b;
-    }
+      @apply input_3_b;
+}
               `,
         },
         {
@@ -255,8 +254,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .input_3_r {
-      @include input_3_r;
-    }
+      @apply input_3_r;
+}
               `,
         },
       ],
@@ -270,8 +269,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_1_b {
-      @include button_1_b;
-    }
+      @apply button_1_b;
+}
               `,
         },
         {
@@ -280,8 +279,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_l_r {
-      @include button_l_r;
-    }
+      @apply button_l_r;
+}
               `,
         },
         {
@@ -290,8 +289,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_2_b {
-      @include button_2_b;
-    }
+      @apply button_2_b;
+}
               `,
         },
         {
@@ -300,8 +299,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_2_r {
-      @include button_2_r;
-    }
+      @apply button_2_r;
+}
               `,
         },
         {
@@ -310,8 +309,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_3_b {
-      @include button_3_b;
-    }
+      @apply button_3_b;
+}
               `,
         },
         {
@@ -320,8 +319,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_3_r {
-      @include button_3_r;
-    }
+      @apply button_3_r;
+}
               `,
         },
         {
@@ -330,8 +329,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_4_b {
-      @include button_4_b;
-    }
+      @apply button_4_b;
+}
               `,
         },
         {
@@ -340,8 +339,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_4_r {
-      @include button_4_r;
-    }
+      @apply button_4_r;
+}
               `,
         },
         {
@@ -350,8 +349,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 것을 환영합니다.</span>`,
           code: `
               .button_4_r {
-      @include button_4_r;
-    }
+      @apply button_4_r;
+}
               `,
         },
       ],
@@ -365,8 +364,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .label_1_b {
-      @include label_1_b;
-    }
+      @apply label_1_b;
+}
               `,
         },
         {
@@ -375,8 +374,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .label_1_r {
-      @include label_1_r;
-    }
+      @apply label_1_r;
+}
               `,
         },
         {
@@ -385,8 +384,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .label_2_b {
-      @include label_2_b;
-    }
+      @apply label_2_b;
+}
               `,
         },
         {
@@ -395,8 +394,8 @@ function RouteComponent() {
           preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
           code: `
               .label_2_r {
-      @include label_2_r;
-    }
+      @apply label_2_r;
+}
               `,
         },
       ],
@@ -406,12 +405,14 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Typography Guide</h2>
-      <p className="loc css">CSS 위치 : /src/assets/styles/_typography.css (임시)</p>
+      <p className="loc css">
+        설장파일 위치 : /apps/pub/bo/<strong>tailwind.config.js</strong>
+      </p>
       <p className="info">
         타이틀은 h1~h6까지 의미있는(시멘틱) 태그를 부여한다.
         <br />
-        타이틀 외에 동일한 스타일 사용시 ex)
-        <strong>@include title_1_b;</strong> 와 같이 속성을 부여한다.
+        테일윈드 <strong>tailwind.config.js</strong> 에 디자인 클래스명과 동일하게 추가 후 @apply
+        body_2_r 형식으로 활용해서 사용한다.
       </p>
 
       <div>
