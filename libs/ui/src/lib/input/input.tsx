@@ -1,102 +1,137 @@
-import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
+import { NumericFormat, PatternFormat } from 'react-number-format';
+import { NumericFormatProps } from 'react-number-format/types/types';
 
 import { cn } from '@learnway/shared';
 import { IcoDelete03 } from '@learnway/icons';
 
 import styles from './input.module.css';
 
-const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, id, type, disabled, onBlur, onChange, value, placeholder, ...props }, ref) => {
+export interface InputProps extends Omit<NumericFormatProps, 'type'> {
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel';
+  placeHolder?: string;
+  unitText?: string;
+  onChange?: (value: any) => void;
+  // for text type
+  showCounter?: boolean; // 입력글자수/최대입력가능글자수 표시 여부
+  // for mask type
+  mask?: string | string[]; // mask 설정 문자열
+  format?: string; // format 설정 문자열
+  allowEmptyFormatting?: boolean;
+}
+
+const InputComponent = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      type = 'text',
+      thousandSeparator = true,
+      disabled,
+      className,
+      value = '',
+      onBlur,
+      placeHolder = '값을 입력하세요.',
+      unitText,
+      onChange,
+      showCounter,
+      mask,
+      format = '',
+      allowEmptyFormatting = true,
+      ...props
+    },
+    ref,
+  ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
-    const hasNoBorder = className?.includes('bd_none');
-    const sizeLarge = className?.includes('lg');
-    const errorCase = className?.includes('error');
 
     useEffect(() => {
       setInputValue(value);
     }, [value]);
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
-
-    const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value;
-      setInputValue(newValue);
-      if (onChange) {
-        onChange(e);
+    useEffect(() => {
+      if (value !== inputValue) {
+        onChange?.(inputValue);
       }
+    }, [inputValue]);
+
+    const handleInputChange = (value: any) => {
+      setInputValue(value);
     };
 
-    const handleClear = () => {
-      if (onChange) {
-        const event = {
-          target: {
-            value: '',
-          },
-        } as React.ChangeEvent<HTMLInputElement>;
-        onChange(event);
-      }
-    };
-
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleInputFocus = () => {
       setIsFocused(true);
-      if (inputRef.current && value) {
-        //
-      }
     };
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
-      if (inputRef.current) {
-        inputRef.current.setSelectionRange(0, 0);
-      }
-      if (onBlur) {
-        onBlur(e);
-      }
+      onBlur?.(event);
     };
 
-    const baseStyles = cn('', {
-      'cursor-not-allowed': disabled,
-    });
+    const handleClearClick = () => {
+      setInputValue('');
+    };
 
     return (
-      <div className={cn(styles.start, 'nlp--input', { [styles.focused]: isFocused })}>
-        <input
-          {...props}
-          className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
-          type={type}
-          id={id}
-          ref={(el) => {
-            inputRef.current = el;
-            if (typeof ref === 'function') {
-              ref(el);
-            } else if (ref) {
-              ref.current = el;
+      <div className={cn(styles.start, 'nlp--input', 'flex flex-row border p-1')}>
+        {type === 'number' ? (
+          <NumericFormat
+            {...props}
+            getInputRef={ref}
+            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
+            value={inputValue}
+            thousandSeparator={thousandSeparator}
+            placeholder={placeHolder}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onValueChange={(values) => {
+              handleInputChange(values.value);
+            }}
+          />
+        ) : type === 'mask' ? (
+          <PatternFormat
+            {...props}
+            getInputRef={ref}
+            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
+            value={inputValue}
+            format={format}
+            mask={mask}
+            placeholder={placeHolder}
+            allowEmptyFormatting={allowEmptyFormatting}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onValueChange={(values) => {
+              handleInputChange(values.value);
+            }}
+          />
+        ) : (
+          <input
+            ref={ref}
+            value={inputValue || ''}
+            disabled={disabled}
+            type={type}
+            placeholder={placeHolder}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleInputChange(event?.target?.value)
             }
-          }}
-          value={inputValue}
-          disabled={disabled}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleInputChange}
-          placeholder={placeholder}
-        />
+          />
+        )}
 
-        {/* Clear Button  */}
-        <div className={cn(styles.button, '')}>
-          {isFocused && value && value.toString().length > 0 && (
+        {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
+        <div className={cn(styles.button, 'flex flex-row gap-2')}>
+          {/* 삭제 버튼 */}
+          {isFocused && !!String(inputValue)?.length && (
             <button
               type="button"
-              onClick={handleClear}
-              onMouseDown={handleMouseDown}
+              onClick={handleClearClick}
               className={cn(styles.clear, 'focus:outline-none')}>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
           )}
+          {/* 단위 */}
+          {unitText && <div className={'text-gray-6'}>{unitText}</div>}
+          {/* 입력글자수/최대입력가능글자수 */}
+          {showCounter && type === 'text' && <div className={'text-gray-6'}>{'20/100'}</div>}
         </div>
       </div>
     );
@@ -104,6 +139,3 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
 );
 
 export const Input = InputComponent;
-
-// Input.displayName = 'FormInput';
-// export default Input;

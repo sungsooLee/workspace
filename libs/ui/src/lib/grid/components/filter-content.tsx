@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../shadcn/button';
-import DebouncedInput from '../../input/debounced-input';
 import { Input } from '../../input/input';
 import { MultiSelect } from '../../select/multi-select';
-import { cn } from '@learnway/shared';
-import '../grid.css'; // grid CSS
+import '../grid.css';
+import { debounce } from 'lodash'; // grid CSS
 
 interface FilterContentProps {
   column: string;
@@ -78,11 +77,11 @@ export const FilterContent = ({
       )}
 
       {type === 'text' && (
-        <DebouncedInput
+        <Input
           value={typeof value === 'string' ? value : ''}
-          onChange={(value) => {
+          onChange={debounce((value) => {
             setValue(value as string);
-          }}
+          }, 100)}
           placeholder="Search..."
           className="w-full"
         />
