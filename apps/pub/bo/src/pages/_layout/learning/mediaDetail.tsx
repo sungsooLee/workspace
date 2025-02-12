@@ -112,7 +112,7 @@ function RouteComponent() {
                 선택
               </Button>
             </div>
-            <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+            <p className={formStyles.guide_text}>기본 메시지</p>
           </div>
         </div>
         {/* row */}
@@ -394,7 +394,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type2)}>
             <label htmlFor="name-1-11" className={formStyles.form_label}>
               <span className={formStyles.form_text}>교육자원 활용여부</span>
               {/* 필수 케이스 */}
@@ -405,7 +405,7 @@ function RouteComponent() {
                 {'해당 동영상으로 교육 과정을 개설할 수 있습니다.'}
               </span>
             </label>
-            <div className={cn(formStyles.input_box, formStyles.type2)}>
+            <div className={formStyles.input_box}>
               <Switch id="name-1-11" className={formStyles.btn_switch} />
             </div>
           </div>
@@ -413,7 +413,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type2)}>
             <label htmlFor="name-1-12" className={formStyles.form_label}>
               <span className={formStyles.form_text}>보안콘텐츠 여부</span>
               {/* 필수 케이스 */}
@@ -426,7 +426,7 @@ function RouteComponent() {
                 }
               </span>
             </label>
-            <div className={cn(formStyles.input_box, formStyles.type2)}>
+            <div className={formStyles.input_box}>
               <Switch id="name-1-12" className={formStyles.btn_switch} />
             </div>
           </div>
@@ -531,7 +531,7 @@ function RouteComponent() {
                 </Button>
               </Tooltip>
             </label>
-            <div className={cn(formStyles.input_box)}>
+            <div className={formStyles.input_box}>
               <Radio
                 className={formStyles.radio_wrap}
                 options={[
@@ -555,11 +555,11 @@ function RouteComponent() {
                 align="start"
                 content={'공유채널 설정2222222'}>
                 <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                  <IcoAlertCircle width={16} height={17} />
                 </Button>
               </Tooltip>
             </label>
-            <div className={cn(formStyles.input_box)}>
+            <div className={formStyles.input_box}>
               <Input id="name-1-15" type="text" readOnly value="채널명" placeholder="" />
               <Button variant="gray" size="sm">
                 선택
@@ -570,7 +570,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* form_item */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type2)}>
             <label htmlFor="name-1-16" className={formStyles.form_label}>
               <span className={formStyles.form_text}>검수 확인</span>
               {/* 필수 케이스 */}
@@ -581,7 +581,7 @@ function RouteComponent() {
                 {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
               </span>
             </label>
-            <div className={cn(formStyles.input_box, formStyles.type2)}>
+            <div className={formStyles.input_box}>
               <Checkbox className={formStyles.check} />
             </div>
           </div>
@@ -589,7 +589,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row no_line">
           {/* form_item */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type2)}>
             <label htmlFor="name-1-17" className={formStyles.form_label}>
               <span className={formStyles.form_text}>저작권 확인</span>
               {/* 필수 케이스 */}
@@ -602,7 +602,7 @@ function RouteComponent() {
                 }
               </span>
             </label>
-            <div className={cn(formStyles.input_box, formStyles.type2)}>
+            <div className={formStyles.input_box}>
               <Checkbox className={formStyles.check} />
             </div>
           </div>

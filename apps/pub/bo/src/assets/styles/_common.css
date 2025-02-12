@@ -48,3 +48,17 @@ html body[data-scroll-locked] {
 body[data-scroll-locked][data-scroll-locked] {
   overflow: auto !important;
 }
+
+/* 공통 레이아웃(정렬) */
+.row {
+  @apply flex w-full gap-[32px];
+  .row {
+    @apply mt-[16px];
+  }
+  & + .row {
+    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+    &.no_line {
+      @apply border-0;
+    }
+  }
+}
