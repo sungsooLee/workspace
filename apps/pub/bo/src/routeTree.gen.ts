@@ -8,46 +8,46 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 
 // Import Routes
 
-import { Route as rootRoute } from './pages/__root'
-import { Route as LayoutImport } from './pages/_layout'
-import { Route as GuideImport } from './pages/_guide'
-import { Route as LoginIndexImport } from './pages/login/index'
-import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LoginLayoutImport } from './pages/login/_layout'
-import { Route as LayoutTestImport } from './pages/_layout/test'
-import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
-import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
-import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
-import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
-import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
-import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
-import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
-import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
-import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
-import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
-import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
-import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
-import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
-import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
-import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
-import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
-import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
-import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
-import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
-import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
-import { Route as GuideGuideButtonImport } from './pages/_guide/guide/button'
-import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
-import { Route as GuideGuideComponentsLayoutImport } from './pages/_guide/guide/components/Layout'
-import { Route as GuideGuideComponentsButtonImport } from './pages/_guide/guide/components/Button'
+import { Route as rootRoute } from './pages/__root';
+import { Route as LayoutImport } from './pages/_layout';
+import { Route as GuideImport } from './pages/_guide';
+import { Route as LoginIndexImport } from './pages/login/index';
+import { Route as LayoutIndexImport } from './pages/_layout/index';
+import { Route as LoginLayoutImport } from './pages/login/_layout';
+import { Route as LayoutTestImport } from './pages/_layout/test';
+import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index';
+import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index';
+import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9';
+import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5';
+import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail';
+import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography';
+import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip';
+import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch';
+import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select';
+import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond';
+import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio';
+import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination';
+import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal';
+import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout';
+import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info';
+import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid';
+import { Route as GuideGuideFormImport } from './pages/_guide/guide/form';
+import { Route as GuideGuideColorImport } from './pages/_guide/guide/color';
+import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips';
+import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox';
+import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons';
+import { Route as GuideGuideButtonImport } from './pages/_guide/guide/button';
+import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert';
+import { Route as GuideGuideComponentsLayoutImport } from './pages/_guide/guide/components/Layout';
+import { Route as GuideGuideComponentsButtonImport } from './pages/_guide/guide/components/Button';
 
 // Create Virtual Routes
 
-const LoginImport = createFileRoute('/login')()
+const LoginImport = createFileRoute('/login')();
 
 // Create/Update Routes
 
@@ -55,450 +55,446 @@ const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const GuideRoute = GuideImport.update({
   id: '/_guide',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const LoginIndexRoute = LoginIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LoginRoute,
-} as any)
+} as any);
 
 const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LoginLayoutRoute = LoginLayoutImport.update({
   id: '/_layout',
   getParentRoute: () => LoginRoute,
-} as any)
+} as any);
 
 const LayoutTestRoute = LayoutTestImport.update({
   id: '/test',
   path: '/test',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
   id: '/menu8/menu9',
   path: '/menu8/menu9',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
   id: '/menu4/menu5',
   path: '/menu4/menu5',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutLearningMediaDetailRoute = LayoutLearningMediaDetailImport.update({
   id: '/learning/mediaDetail',
   path: '/learning/mediaDetail',
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideSelectRoute = GuideGuideSelectImport.update({
   id: '/guide/select',
   path: '/guide/select',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideRespondRoute = GuideGuideRespondImport.update({
   id: '/guide/respond',
   path: '/guide/respond',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideRadioRoute = GuideGuideRadioImport.update({
   id: '/guide/radio',
   path: '/guide/radio',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideModalRoute = GuideGuideModalImport.update({
   id: '/guide/modal',
   path: '/guide/modal',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   id: '/guide/info',
   path: '/guide/info',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideGridRoute = GuideGuideGridImport.update({
   id: '/guide/grid',
   path: '/guide/grid',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideFormRoute = GuideGuideFormImport.update({
   id: '/guide/form',
   path: '/guide/form',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideColorRoute = GuideGuideColorImport.update({
   id: '/guide/color',
   path: '/guide/color',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideChipsRoute = GuideGuideChipsImport.update({
   id: '/guide/chips',
   path: '/guide/chips',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideCheckboxRoute = GuideGuideCheckboxImport.update({
   id: '/guide/checkbox',
   path: '/guide/checkbox',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideButtonRoute = GuideGuideButtonImport.update({
   id: '/guide/button',
   path: '/guide/button',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
 const GuideGuideAlertRoute = GuideGuideAlertImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
   getParentRoute: () => GuideRoute,
-} as any)
+} as any);
 
-const GuideGuideComponentsLayoutRoute = GuideGuideComponentsLayoutImport.update(
-  {
-    id: '/guide/components/Layout',
-    path: '/guide/components/Layout',
-    getParentRoute: () => GuideRoute,
-  } as any,
-)
+const GuideGuideComponentsLayoutRoute = GuideGuideComponentsLayoutImport.update({
+  id: '/guide/components/Layout',
+  path: '/guide/components/Layout',
+  getParentRoute: () => GuideRoute,
+} as any);
 
-const GuideGuideComponentsButtonRoute = GuideGuideComponentsButtonImport.update(
-  {
-    id: '/guide/components/Button',
-    path: '/guide/components/Button',
-    getParentRoute: () => GuideRoute,
-  } as any,
-)
+const GuideGuideComponentsButtonRoute = GuideGuideComponentsButtonImport.update({
+  id: '/guide/components/Button',
+  path: '/guide/components/Button',
+  getParentRoute: () => GuideRoute,
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_guide': {
-      id: '/_guide'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof GuideImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/_guide';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof GuideImport;
+      parentRoute: typeof rootRoute;
+    };
     '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/_layout';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof LayoutImport;
+      parentRoute: typeof rootRoute;
+    };
     '/_layout/test': {
-      id: '/_layout/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof LayoutTestImport
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/test';
+      path: '/test';
+      fullPath: '/test';
+      preLoaderRoute: typeof LayoutTestImport;
+      parentRoute: typeof LayoutImport;
+    };
     '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/login';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof LoginImport;
+      parentRoute: typeof rootRoute;
+    };
     '/login/_layout': {
-      id: '/login/_layout'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginLayoutImport
-      parentRoute: typeof LoginRoute
-    }
+      id: '/login/_layout';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof LoginLayoutImport;
+      parentRoute: typeof LoginRoute;
+    };
     '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof LayoutIndexImport;
+      parentRoute: typeof LayoutImport;
+    };
     '/login/': {
-      id: '/login/'
-      path: '/'
-      fullPath: '/login/'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof LoginImport
-    }
+      id: '/login/';
+      path: '/';
+      fullPath: '/login/';
+      preLoaderRoute: typeof LoginIndexImport;
+      parentRoute: typeof LoginImport;
+    };
     '/_guide/guide/alert': {
-      id: '/_guide/guide/alert'
-      path: '/guide/alert'
-      fullPath: '/guide/alert'
-      preLoaderRoute: typeof GuideGuideAlertImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/alert';
+      path: '/guide/alert';
+      fullPath: '/guide/alert';
+      preLoaderRoute: typeof GuideGuideAlertImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/button': {
-      id: '/_guide/guide/button'
-      path: '/guide/button'
-      fullPath: '/guide/button'
-      preLoaderRoute: typeof GuideGuideButtonImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/button';
+      path: '/guide/button';
+      fullPath: '/guide/button';
+      preLoaderRoute: typeof GuideGuideButtonImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/buttons': {
-      id: '/_guide/guide/buttons'
-      path: '/guide/buttons'
-      fullPath: '/guide/buttons'
-      preLoaderRoute: typeof GuideGuideButtonsImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/buttons';
+      path: '/guide/buttons';
+      fullPath: '/guide/buttons';
+      preLoaderRoute: typeof GuideGuideButtonsImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/checkbox': {
-      id: '/_guide/guide/checkbox'
-      path: '/guide/checkbox'
-      fullPath: '/guide/checkbox'
-      preLoaderRoute: typeof GuideGuideCheckboxImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/checkbox';
+      path: '/guide/checkbox';
+      fullPath: '/guide/checkbox';
+      preLoaderRoute: typeof GuideGuideCheckboxImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/chips': {
-      id: '/_guide/guide/chips'
-      path: '/guide/chips'
-      fullPath: '/guide/chips'
-      preLoaderRoute: typeof GuideGuideChipsImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/chips';
+      path: '/guide/chips';
+      fullPath: '/guide/chips';
+      preLoaderRoute: typeof GuideGuideChipsImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/color': {
-      id: '/_guide/guide/color'
-      path: '/guide/color'
-      fullPath: '/guide/color'
-      preLoaderRoute: typeof GuideGuideColorImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/color';
+      path: '/guide/color';
+      fullPath: '/guide/color';
+      preLoaderRoute: typeof GuideGuideColorImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/form': {
-      id: '/_guide/guide/form'
-      path: '/guide/form'
-      fullPath: '/guide/form'
-      preLoaderRoute: typeof GuideGuideFormImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/form';
+      path: '/guide/form';
+      fullPath: '/guide/form';
+      preLoaderRoute: typeof GuideGuideFormImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/grid': {
-      id: '/_guide/guide/grid'
-      path: '/guide/grid'
-      fullPath: '/guide/grid'
-      preLoaderRoute: typeof GuideGuideGridImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/grid';
+      path: '/guide/grid';
+      fullPath: '/guide/grid';
+      preLoaderRoute: typeof GuideGuideGridImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/info': {
-      id: '/_guide/guide/info'
-      path: '/guide/info'
-      fullPath: '/guide/info'
-      preLoaderRoute: typeof GuideGuideInfoImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/info';
+      path: '/guide/info';
+      fullPath: '/guide/info';
+      preLoaderRoute: typeof GuideGuideInfoImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/layout': {
-      id: '/_guide/guide/layout'
-      path: '/guide/layout'
-      fullPath: '/guide/layout'
-      preLoaderRoute: typeof GuideGuideLayoutImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/layout';
+      path: '/guide/layout';
+      fullPath: '/guide/layout';
+      preLoaderRoute: typeof GuideGuideLayoutImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/modal': {
-      id: '/_guide/guide/modal'
-      path: '/guide/modal'
-      fullPath: '/guide/modal'
-      preLoaderRoute: typeof GuideGuideModalImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/modal';
+      path: '/guide/modal';
+      fullPath: '/guide/modal';
+      preLoaderRoute: typeof GuideGuideModalImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/pagination': {
-      id: '/_guide/guide/pagination'
-      path: '/guide/pagination'
-      fullPath: '/guide/pagination'
-      preLoaderRoute: typeof GuideGuidePaginationImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/pagination';
+      path: '/guide/pagination';
+      fullPath: '/guide/pagination';
+      preLoaderRoute: typeof GuideGuidePaginationImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/radio': {
-      id: '/_guide/guide/radio'
-      path: '/guide/radio'
-      fullPath: '/guide/radio'
-      preLoaderRoute: typeof GuideGuideRadioImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/radio';
+      path: '/guide/radio';
+      fullPath: '/guide/radio';
+      preLoaderRoute: typeof GuideGuideRadioImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/respond': {
-      id: '/_guide/guide/respond'
-      path: '/guide/respond'
-      fullPath: '/guide/respond'
-      preLoaderRoute: typeof GuideGuideRespondImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/respond';
+      path: '/guide/respond';
+      fullPath: '/guide/respond';
+      preLoaderRoute: typeof GuideGuideRespondImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/select': {
-      id: '/_guide/guide/select'
-      path: '/guide/select'
-      fullPath: '/guide/select'
-      preLoaderRoute: typeof GuideGuideSelectImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/select';
+      path: '/guide/select';
+      fullPath: '/guide/select';
+      preLoaderRoute: typeof GuideGuideSelectImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/switch': {
-      id: '/_guide/guide/switch'
-      path: '/guide/switch'
-      fullPath: '/guide/switch'
-      preLoaderRoute: typeof GuideGuideSwitchImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/switch';
+      path: '/guide/switch';
+      fullPath: '/guide/switch';
+      preLoaderRoute: typeof GuideGuideSwitchImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/tooltip': {
-      id: '/_guide/guide/tooltip'
-      path: '/guide/tooltip'
-      fullPath: '/guide/tooltip'
-      preLoaderRoute: typeof GuideGuideTooltipImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/tooltip';
+      path: '/guide/tooltip';
+      fullPath: '/guide/tooltip';
+      preLoaderRoute: typeof GuideGuideTooltipImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/typography': {
-      id: '/_guide/guide/typography'
-      path: '/guide/typography'
-      fullPath: '/guide/typography'
-      preLoaderRoute: typeof GuideGuideTypographyImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/typography';
+      path: '/guide/typography';
+      fullPath: '/guide/typography';
+      preLoaderRoute: typeof GuideGuideTypographyImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_layout/learning/mediaDetail': {
-      id: '/_layout/learning/mediaDetail'
-      path: '/learning/mediaDetail'
-      fullPath: '/learning/mediaDetail'
-      preLoaderRoute: typeof LayoutLearningMediaDetailImport
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/learning/mediaDetail';
+      path: '/learning/mediaDetail';
+      fullPath: '/learning/mediaDetail';
+      preLoaderRoute: typeof LayoutLearningMediaDetailImport;
+      parentRoute: typeof LayoutImport;
+    };
     '/_layout/menu4/menu5': {
-      id: '/_layout/menu4/menu5'
-      path: '/menu4/menu5'
-      fullPath: '/menu4/menu5'
-      preLoaderRoute: typeof LayoutMenu4Menu5Import
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/menu4/menu5';
+      path: '/menu4/menu5';
+      fullPath: '/menu4/menu5';
+      preLoaderRoute: typeof LayoutMenu4Menu5Import;
+      parentRoute: typeof LayoutImport;
+    };
     '/_layout/menu8/menu9': {
-      id: '/_layout/menu8/menu9'
-      path: '/menu8/menu9'
-      fullPath: '/menu8/menu9'
-      preLoaderRoute: typeof LayoutMenu8Menu9Import
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/menu8/menu9';
+      path: '/menu8/menu9';
+      fullPath: '/menu8/menu9';
+      preLoaderRoute: typeof LayoutMenu8Menu9Import;
+      parentRoute: typeof LayoutImport;
+    };
     '/_guide/guide/': {
-      id: '/_guide/guide/'
-      path: '/guide'
-      fullPath: '/guide'
-      preLoaderRoute: typeof GuideGuideIndexImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/';
+      path: '/guide';
+      fullPath: '/guide';
+      preLoaderRoute: typeof GuideGuideIndexImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_layout/menu3/': {
-      id: '/_layout/menu3/'
-      path: '/menu3'
-      fullPath: '/menu3'
-      preLoaderRoute: typeof LayoutMenu3IndexImport
-      parentRoute: typeof LayoutImport
-    }
+      id: '/_layout/menu3/';
+      path: '/menu3';
+      fullPath: '/menu3';
+      preLoaderRoute: typeof LayoutMenu3IndexImport;
+      parentRoute: typeof LayoutImport;
+    };
     '/_guide/guide/components/Button': {
-      id: '/_guide/guide/components/Button'
-      path: '/guide/components/Button'
-      fullPath: '/guide/components/Button'
-      preLoaderRoute: typeof GuideGuideComponentsButtonImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/components/Button';
+      path: '/guide/components/Button';
+      fullPath: '/guide/components/Button';
+      preLoaderRoute: typeof GuideGuideComponentsButtonImport;
+      parentRoute: typeof GuideImport;
+    };
     '/_guide/guide/components/Layout': {
-      id: '/_guide/guide/components/Layout'
-      path: '/guide/components/Layout'
-      fullPath: '/guide/components/Layout'
-      preLoaderRoute: typeof GuideGuideComponentsLayoutImport
-      parentRoute: typeof GuideImport
-    }
+      id: '/_guide/guide/components/Layout';
+      path: '/guide/components/Layout';
+      fullPath: '/guide/components/Layout';
+      preLoaderRoute: typeof GuideGuideComponentsLayoutImport;
+      parentRoute: typeof GuideImport;
+    };
   }
 }
 
 // Create and export the route tree
 
 interface GuideRouteChildren {
-  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
-  GuideGuideButtonRoute: typeof GuideGuideButtonRoute
-  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
-  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
-  GuideGuideChipsRoute: typeof GuideGuideChipsRoute
-  GuideGuideColorRoute: typeof GuideGuideColorRoute
-  GuideGuideFormRoute: typeof GuideGuideFormRoute
-  GuideGuideGridRoute: typeof GuideGuideGridRoute
-  GuideGuideInfoRoute: typeof GuideGuideInfoRoute
-  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
-  GuideGuideModalRoute: typeof GuideGuideModalRoute
-  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
-  GuideGuideRadioRoute: typeof GuideGuideRadioRoute
-  GuideGuideRespondRoute: typeof GuideGuideRespondRoute
-  GuideGuideSelectRoute: typeof GuideGuideSelectRoute
-  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
-  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
-  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
-  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
-  GuideGuideComponentsButtonRoute: typeof GuideGuideComponentsButtonRoute
-  GuideGuideComponentsLayoutRoute: typeof GuideGuideComponentsLayoutRoute
+  GuideGuideAlertRoute: typeof GuideGuideAlertRoute;
+  GuideGuideButtonRoute: typeof GuideGuideButtonRoute;
+  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute;
+  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute;
+  GuideGuideChipsRoute: typeof GuideGuideChipsRoute;
+  GuideGuideColorRoute: typeof GuideGuideColorRoute;
+  GuideGuideFormRoute: typeof GuideGuideFormRoute;
+  GuideGuideGridRoute: typeof GuideGuideGridRoute;
+  GuideGuideInfoRoute: typeof GuideGuideInfoRoute;
+  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute;
+  GuideGuideModalRoute: typeof GuideGuideModalRoute;
+  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute;
+  GuideGuideRadioRoute: typeof GuideGuideRadioRoute;
+  GuideGuideRespondRoute: typeof GuideGuideRespondRoute;
+  GuideGuideSelectRoute: typeof GuideGuideSelectRoute;
+  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute;
+  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute;
+  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute;
+  GuideGuideIndexRoute: typeof GuideGuideIndexRoute;
+  GuideGuideComponentsButtonRoute: typeof GuideGuideComponentsButtonRoute;
+  GuideGuideComponentsLayoutRoute: typeof GuideGuideComponentsLayoutRoute;
 }
 
 const GuideRouteChildren: GuideRouteChildren = {
@@ -523,17 +519,17 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideIndexRoute: GuideGuideIndexRoute,
   GuideGuideComponentsButtonRoute: GuideGuideComponentsButtonRoute,
   GuideGuideComponentsLayoutRoute: GuideGuideComponentsLayoutRoute,
-}
+};
 
-const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
+const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren);
 
 interface LayoutRouteChildren {
-  LayoutTestRoute: typeof LayoutTestRoute
-  LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
-  LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
-  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
-  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
+  LayoutTestRoute: typeof LayoutTestRoute;
+  LayoutIndexRoute: typeof LayoutIndexRoute;
+  LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute;
+  LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route;
+  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route;
+  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute;
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -543,126 +539,125 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
-}
+};
 
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
+const LayoutRouteWithChildren = LayoutRoute._addFileChildren(LayoutRouteChildren);
 
 interface LoginRouteChildren {
-  LoginLayoutRoute: typeof LoginLayoutRoute
-  LoginIndexRoute: typeof LoginIndexRoute
+  LoginLayoutRoute: typeof LoginLayoutRoute;
+  LoginIndexRoute: typeof LoginIndexRoute;
 }
 
 const LoginRouteChildren: LoginRouteChildren = {
   LoginLayoutRoute: LoginLayoutRoute,
   LoginIndexRoute: LoginIndexRoute,
-}
+};
 
-const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren);
 
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
-  '/test': typeof LayoutTestRoute
-  '/login': typeof LoginLayoutRoute
-  '/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
-  '/guide/alert': typeof GuideGuideAlertRoute
-  '/guide/button': typeof GuideGuideButtonRoute
-  '/guide/buttons': typeof GuideGuideButtonsRoute
-  '/guide/checkbox': typeof GuideGuideCheckboxRoute
-  '/guide/chips': typeof GuideGuideChipsRoute
-  '/guide/color': typeof GuideGuideColorRoute
-  '/guide/form': typeof GuideGuideFormRoute
-  '/guide/grid': typeof GuideGuideGridRoute
-  '/guide/info': typeof GuideGuideInfoRoute
-  '/guide/layout': typeof GuideGuideLayoutRoute
-  '/guide/modal': typeof GuideGuideModalRoute
-  '/guide/pagination': typeof GuideGuidePaginationRoute
-  '/guide/radio': typeof GuideGuideRadioRoute
-  '/guide/respond': typeof GuideGuideRespondRoute
-  '/guide/select': typeof GuideGuideSelectRoute
-  '/guide/switch': typeof GuideGuideSwitchRoute
-  '/guide/tooltip': typeof GuideGuideTooltipRoute
-  '/guide/typography': typeof GuideGuideTypographyRoute
-  '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
-  '/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/guide': typeof GuideGuideIndexRoute
-  '/menu3': typeof LayoutMenu3IndexRoute
-  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
+  '': typeof LayoutRouteWithChildren;
+  '/test': typeof LayoutTestRoute;
+  '/login': typeof LoginLayoutRoute;
+  '/': typeof LayoutIndexRoute;
+  '/login/': typeof LoginIndexRoute;
+  '/guide/alert': typeof GuideGuideAlertRoute;
+  '/guide/button': typeof GuideGuideButtonRoute;
+  '/guide/buttons': typeof GuideGuideButtonsRoute;
+  '/guide/checkbox': typeof GuideGuideCheckboxRoute;
+  '/guide/chips': typeof GuideGuideChipsRoute;
+  '/guide/color': typeof GuideGuideColorRoute;
+  '/guide/form': typeof GuideGuideFormRoute;
+  '/guide/grid': typeof GuideGuideGridRoute;
+  '/guide/info': typeof GuideGuideInfoRoute;
+  '/guide/layout': typeof GuideGuideLayoutRoute;
+  '/guide/modal': typeof GuideGuideModalRoute;
+  '/guide/pagination': typeof GuideGuidePaginationRoute;
+  '/guide/radio': typeof GuideGuideRadioRoute;
+  '/guide/respond': typeof GuideGuideRespondRoute;
+  '/guide/select': typeof GuideGuideSelectRoute;
+  '/guide/switch': typeof GuideGuideSwitchRoute;
+  '/guide/tooltip': typeof GuideGuideTooltipRoute;
+  '/guide/typography': typeof GuideGuideTypographyRoute;
+  '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute;
+  '/menu4/menu5': typeof LayoutMenu4Menu5Route;
+  '/menu8/menu9': typeof LayoutMenu8Menu9Route;
+  '/guide': typeof GuideGuideIndexRoute;
+  '/menu3': typeof LayoutMenu3IndexRoute;
+  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute;
+  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute;
 }
 
 export interface FileRoutesByTo {
-  '': typeof GuideRouteWithChildren
-  '/test': typeof LayoutTestRoute
-  '/login': typeof LoginIndexRoute
-  '/': typeof LayoutIndexRoute
-  '/guide/alert': typeof GuideGuideAlertRoute
-  '/guide/button': typeof GuideGuideButtonRoute
-  '/guide/buttons': typeof GuideGuideButtonsRoute
-  '/guide/checkbox': typeof GuideGuideCheckboxRoute
-  '/guide/chips': typeof GuideGuideChipsRoute
-  '/guide/color': typeof GuideGuideColorRoute
-  '/guide/form': typeof GuideGuideFormRoute
-  '/guide/grid': typeof GuideGuideGridRoute
-  '/guide/info': typeof GuideGuideInfoRoute
-  '/guide/layout': typeof GuideGuideLayoutRoute
-  '/guide/modal': typeof GuideGuideModalRoute
-  '/guide/pagination': typeof GuideGuidePaginationRoute
-  '/guide/radio': typeof GuideGuideRadioRoute
-  '/guide/respond': typeof GuideGuideRespondRoute
-  '/guide/select': typeof GuideGuideSelectRoute
-  '/guide/switch': typeof GuideGuideSwitchRoute
-  '/guide/tooltip': typeof GuideGuideTooltipRoute
-  '/guide/typography': typeof GuideGuideTypographyRoute
-  '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
-  '/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/guide': typeof GuideGuideIndexRoute
-  '/menu3': typeof LayoutMenu3IndexRoute
-  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
+  '': typeof GuideRouteWithChildren;
+  '/test': typeof LayoutTestRoute;
+  '/login': typeof LoginIndexRoute;
+  '/': typeof LayoutIndexRoute;
+  '/guide/alert': typeof GuideGuideAlertRoute;
+  '/guide/button': typeof GuideGuideButtonRoute;
+  '/guide/buttons': typeof GuideGuideButtonsRoute;
+  '/guide/checkbox': typeof GuideGuideCheckboxRoute;
+  '/guide/chips': typeof GuideGuideChipsRoute;
+  '/guide/color': typeof GuideGuideColorRoute;
+  '/guide/form': typeof GuideGuideFormRoute;
+  '/guide/grid': typeof GuideGuideGridRoute;
+  '/guide/info': typeof GuideGuideInfoRoute;
+  '/guide/layout': typeof GuideGuideLayoutRoute;
+  '/guide/modal': typeof GuideGuideModalRoute;
+  '/guide/pagination': typeof GuideGuidePaginationRoute;
+  '/guide/radio': typeof GuideGuideRadioRoute;
+  '/guide/respond': typeof GuideGuideRespondRoute;
+  '/guide/select': typeof GuideGuideSelectRoute;
+  '/guide/switch': typeof GuideGuideSwitchRoute;
+  '/guide/tooltip': typeof GuideGuideTooltipRoute;
+  '/guide/typography': typeof GuideGuideTypographyRoute;
+  '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute;
+  '/menu4/menu5': typeof LayoutMenu4Menu5Route;
+  '/menu8/menu9': typeof LayoutMenu8Menu9Route;
+  '/guide': typeof GuideGuideIndexRoute;
+  '/menu3': typeof LayoutMenu3IndexRoute;
+  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute;
+  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/_guide': typeof GuideRouteWithChildren
-  '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/test': typeof LayoutTestRoute
-  '/login': typeof LoginRouteWithChildren
-  '/login/_layout': typeof LoginLayoutRoute
-  '/_layout/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
-  '/_guide/guide/alert': typeof GuideGuideAlertRoute
-  '/_guide/guide/button': typeof GuideGuideButtonRoute
-  '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
-  '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
-  '/_guide/guide/chips': typeof GuideGuideChipsRoute
-  '/_guide/guide/color': typeof GuideGuideColorRoute
-  '/_guide/guide/form': typeof GuideGuideFormRoute
-  '/_guide/guide/grid': typeof GuideGuideGridRoute
-  '/_guide/guide/info': typeof GuideGuideInfoRoute
-  '/_guide/guide/layout': typeof GuideGuideLayoutRoute
-  '/_guide/guide/modal': typeof GuideGuideModalRoute
-  '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
-  '/_guide/guide/radio': typeof GuideGuideRadioRoute
-  '/_guide/guide/respond': typeof GuideGuideRespondRoute
-  '/_guide/guide/select': typeof GuideGuideSelectRoute
-  '/_guide/guide/switch': typeof GuideGuideSwitchRoute
-  '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
-  '/_guide/guide/typography': typeof GuideGuideTypographyRoute
-  '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
-  '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
-  '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/_guide/guide/': typeof GuideGuideIndexRoute
-  '/_layout/menu3/': typeof LayoutMenu3IndexRoute
-  '/_guide/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/_guide/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
+  __root__: typeof rootRoute;
+  '/_guide': typeof GuideRouteWithChildren;
+  '/_layout': typeof LayoutRouteWithChildren;
+  '/_layout/test': typeof LayoutTestRoute;
+  '/login': typeof LoginRouteWithChildren;
+  '/login/_layout': typeof LoginLayoutRoute;
+  '/_layout/': typeof LayoutIndexRoute;
+  '/login/': typeof LoginIndexRoute;
+  '/_guide/guide/alert': typeof GuideGuideAlertRoute;
+  '/_guide/guide/button': typeof GuideGuideButtonRoute;
+  '/_guide/guide/buttons': typeof GuideGuideButtonsRoute;
+  '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute;
+  '/_guide/guide/chips': typeof GuideGuideChipsRoute;
+  '/_guide/guide/color': typeof GuideGuideColorRoute;
+  '/_guide/guide/form': typeof GuideGuideFormRoute;
+  '/_guide/guide/grid': typeof GuideGuideGridRoute;
+  '/_guide/guide/info': typeof GuideGuideInfoRoute;
+  '/_guide/guide/layout': typeof GuideGuideLayoutRoute;
+  '/_guide/guide/modal': typeof GuideGuideModalRoute;
+  '/_guide/guide/pagination': typeof GuideGuidePaginationRoute;
+  '/_guide/guide/radio': typeof GuideGuideRadioRoute;
+  '/_guide/guide/respond': typeof GuideGuideRespondRoute;
+  '/_guide/guide/select': typeof GuideGuideSelectRoute;
+  '/_guide/guide/switch': typeof GuideGuideSwitchRoute;
+  '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute;
+  '/_guide/guide/typography': typeof GuideGuideTypographyRoute;
+  '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute;
+  '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route;
+  '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route;
+  '/_guide/guide/': typeof GuideGuideIndexRoute;
+  '/_layout/menu3/': typeof LayoutMenu3IndexRoute;
+  '/_guide/guide/components/Button': typeof GuideGuideComponentsButtonRoute;
+  '/_guide/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | ''
     | '/test'
@@ -693,8 +688,8 @@ export interface FileRouteTypes {
     | '/guide'
     | '/menu3'
     | '/guide/components/Button'
-    | '/guide/components/Layout'
-  fileRoutesByTo: FileRoutesByTo
+    | '/guide/components/Layout';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | ''
     | '/test'
@@ -724,7 +719,7 @@ export interface FileRouteTypes {
     | '/guide'
     | '/menu3'
     | '/guide/components/Button'
-    | '/guide/components/Layout'
+    | '/guide/components/Layout';
   id:
     | '__root__'
     | '/_guide'
@@ -758,25 +753,25 @@ export interface FileRouteTypes {
     | '/_guide/guide/'
     | '/_layout/menu3/'
     | '/_guide/guide/components/Button'
-    | '/_guide/guide/components/Layout'
-  fileRoutesById: FileRoutesById
+    | '/_guide/guide/components/Layout';
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  GuideRoute: typeof GuideRouteWithChildren
-  LayoutRoute: typeof LayoutRouteWithChildren
-  LoginRoute: typeof LoginRouteWithChildren
+  GuideRoute: typeof GuideRouteWithChildren;
+  LayoutRoute: typeof LayoutRouteWithChildren;
+  LoginRoute: typeof LoginRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
   LoginRoute: LoginRouteWithChildren,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
