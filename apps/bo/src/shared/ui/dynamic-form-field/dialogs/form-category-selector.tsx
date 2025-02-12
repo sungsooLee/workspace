@@ -1,6 +1,6 @@
 import { FC, useRef } from 'react';
 import { Button } from '@learnway/ui';
-const FormCategorySelector: FC<any> = ({ onChange, value, name, fieldRefs }) => {
+const FormCategorySelectorComponent: FC<any> = ({ onChange, value, name, fieldRefs }) => {
   const handleOnSelector = () => {
     onChange('표준 카테고리');
   };
@@ -15,4 +15,4 @@ const FormCategorySelector: FC<any> = ({ onChange, value, name, fieldRefs }) => 
   );
 };
 
-export default FormCategorySelector;
+export const FormCategorySelector = FormCategorySelectorComponent;

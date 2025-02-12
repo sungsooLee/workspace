@@ -25,50 +25,51 @@ const useCustomForm = (config: any) => {
     defaultValues,
     resolver: zodResolver(schema),
   });
-  const fieldRefs = useRef({});
+  const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
 
   // formSubmit 함수 : 폼 데이터를 제출하고 검증 오류를 처리
-  const formSubmit = (onValid: any) => {
-    handleSubmit(
-      (data) => {
-        const objectParams: any = {};
-        config.builders.forEach((prop: any) => {
-          const value = data[prop.name];
-          if (prop.type === 'date-range') {
-            objectParams['startDate'] = value.split('|')[0];
-            objectParams['endDate'] = value.split('|')[1];
-            delete value[prop.name];
-          } else {
-            objectParams[prop.name] = value;
-          }
-        });
-        /*const queryParams = new URLSearchParams({
-          ...objectParams,
-        });*/
-        onValid(objectParams); // 가공한 데이터를 onValid로 전달
-      }, // 폼 데이터가 유효한 경우 실행할 콜백
-      (errors) => {
-        // 폼 데이터가 유효하지 않은 경우 처리
-        console.error('Validation Errors:', errors); // 검증 오류를 콘솔에 출력
-        // 첫 번째 에러 필드 가져오기
-        const firstErrorKey = Object.keys(errors)[0]; // 첫 번째 에러 필드의 키
-        if (firstErrorKey) {
-          const errorFieldName = firstErrorKey;
-          const errorFieldRef = fieldRefs.current[errorFieldName];
+  const formSubmit = (onValid: (data: any) => void): React.FormEventHandler<HTMLFormElement> => {
+    return (event) => {
+      event.preventDefault(); // 폼의 기본 동작을 방지
 
-          // 에러 메시지를 가져와 표시
-          const errorMessage = errors[firstErrorKey]?.message || 'Validation error'; // 기본 에러 메시지를 설정
-          //alert(errorMessage); // 에러 메시지를 alert로 표시
-          // 에러가 있는 필드에 focus 처리
-          if (errorFieldRef) {
-            errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            errorFieldRef.focus(); // focus 처리
+      handleSubmit(
+        (data) => {
+          const objectParams: any = {};
+          config.builders.forEach((prop: any) => {
+            const value = data[prop.name];
+            if (prop.type === 'date-range') {
+              objectParams['startDate'] = value.split('|')[0];
+              objectParams['endDate'] = value.split('|')[1];
+              delete value[prop.name];
+            } else {
+              objectParams[prop.name] = value;
+            }
+          });
+          onValid(objectParams); // 가공한 데이터를 처리
+        },
+        (errors) => {
+          console.error('Validation Errors:', errors); // 폼 데이터가 유효하지 않은 경우 처리
+          console.error('Validation Errors:', errors); // 검증 오류를 콘솔에 출력
+          // 첫 번째 에러 필드 가져오기
+          const firstErrorKey = Object.keys(errors)[0]; // 첫 번째 에러 필드의 키
+          if (firstErrorKey) {
+            const errorFieldName = firstErrorKey;
+            const errorFieldRef = fieldRefs.current[errorFieldName] as HTMLDivElement | null;
+
+            // 에러 메시지를 가져와 표시
+            const errorMessage = errors[firstErrorKey]?.message || 'Validation error'; // 기본 에러 메시지를 설정
+            //alert(errorMessage); // 에러 메시지를 alert로 표시
+            // 에러가 있는 필드에 focus 처리
+            if (errorFieldRef) {
+              errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              errorFieldRef.focus(); // focus 처리
+            }
+            setFocus(firstErrorKey);
           }
-          setFocus(firstErrorKey);
-        }
-      },
-    )(); // handleSubmit이 반환하는 함수를 즉시 실행
+        },
+      )();
+    };
   };
 
   // control에 validator 정보를 추가한 객체 반환

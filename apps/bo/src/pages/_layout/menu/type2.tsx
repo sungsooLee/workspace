@@ -1,6 +1,6 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { z } from 'zod';
+import { z, ZodTypeAny } from 'zod';
 import { t } from 'i18next';
 import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
@@ -13,6 +13,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import DynamicFormField from '../../../shared/ui/dynamic-form-field';
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
+import { MovieInfo } from '../../../widgets/contents/movie-info';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -31,14 +32,8 @@ function RouteComponent() {
   const handleOnReset = () => {
     reset();
   };
-  const handleFormSubmit = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('on form submit?');
-    onSubmit(handleOnSubmit);
-  };
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer panel>
         <ContentsButtons>
           <Button type="submit" variant="point" size="sm">
@@ -60,99 +55,99 @@ function RouteComponent() {
         <h1>CODE</h1>
         <MainContents>
           <ContentsRow>
+            <DynamicFormField provider={provider} name={'channel'} disabled />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'contentName'} />
+          </ContentsRow>
+          <ContentsRow>
             <DynamicFormField provider={provider} name={'language'} />
             <DynamicFormField provider={provider} name={'language_detail'} />
           </ContentsRow>
-        </MainContents>
-        <SubContents></SubContents>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'language'} />
-          <DynamicFormField provider={provider} name={'language_detail'} />
-        </ContentsRow>
-        <h1>fetch</h1>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'language2'} />
-          <DynamicFormField provider={provider} name={'language2_detail'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'title'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'subdivision'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'check'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'tenant'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'category'} />
-        </ContentsRow>
-        <ContentsRow>
-          <DynamicFormField provider={provider} name={'thumbnails'} />
-        </ContentsRow>
-        <ContentsRow>
-          <div>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'language2'} />
+            <DynamicFormField provider={provider} name={'language2_detail'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'title'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'subdivision'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'check'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'tenant'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'categorySelector'} />
+          </ContentsRow>
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'thumbnails'} />
+          </ContentsRow>
+          <ContentsRow>
             <div>
-              <Button
-                type={'button'}
-                variant="gray"
-                size="sm"
-                onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
-                추가
-              </Button>
-            </div>
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>이름</th>
-                    <th>나이</th>
-                    <th>취미</th>
-                    <th>삭제</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {fields.map((_, index) => (
+              <div>
+                <Button
+                  type={'button'}
+                  variant="gray"
+                  size="sm"
+                  onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
+                  추가
+                </Button>
+              </div>
+              <div>
+                <table>
+                  <thead>
                     <tr>
-                      <td>
-                        <DynamicFormField
-                          key={index}
-                          provider={provider}
-                          name={`userInfos.${index}.user-name`}
-                        />
-                      </td>
-                      <td>
-                        <DynamicFormField
-                          key={index}
-                          provider={provider}
-                          name={`userInfos.${index}.user-age`}
-                        />
-                      </td>
-                      <td>
-                        <DynamicFormField
-                          key={index}
-                          provider={provider}
-                          name={`userInfos.${index}.user-hobby`}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          type={'button'}
-                          variant="gray"
-                          size="sm"
-                          onClick={() => remove(index)}>
-                          삭제
-                        </Button>
-                      </td>
+                      <th>이름</th>
+                      <th>나이</th>
+                      <th>취미</th>
+                      <th>삭제</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {fields.map((_, index) => (
+                      <tr key={index}>
+                        <td>
+                          <DynamicFormField
+                            provider={provider}
+                            name={`userInfos.${index}.user-name`}
+                          />
+                        </td>
+                        <td>
+                          <DynamicFormField
+                            provider={provider}
+                            name={`userInfos.${index}.user-age`}
+                          />
+                        </td>
+                        <td>
+                          <DynamicFormField
+                            provider={provider}
+                            name={`userInfos.${index}.user-hobby`}
+                          />
+                        </td>
+                        <td>
+                          <Button
+                            type={'button'}
+                            variant="gray"
+                            size="sm"
+                            onClick={() => remove(index)}>
+                            삭제
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </ContentsRow>
+          </ContentsRow>
+        </MainContents>
+        <SubContents>
+          <MovieInfo />
+        </SubContents>
       </PageContainer>
     </form>
   );
@@ -160,6 +155,34 @@ function RouteComponent() {
 
 const detailConfig = {
   builders: [
+    {
+      name: 'channel',
+      type: 'text-popup-button',
+      label: '채널',
+      value: '',
+      placeholder: '최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명',
+      description: '기본 메세지',
+    },
+    {
+      name: 'contentName',
+      type: 'text-limit',
+      label: '학습자원명',
+      limit: 150,
+      value: '',
+      placeholder: '업로드 파일명',
+    },
+    {
+      name: 'category',
+      type: 'text-popup-button',
+      label: '카테고리',
+      value: '',
+      placeholder: '학습자원을 분류할 카테고리를 선택하세요.',
+      button: {
+        label: '선택',
+        variant: 'gray',
+        size: 'sm',
+      },
+    },
     {
       name: 'language',
       type: 'dropdown',
@@ -275,7 +298,7 @@ const detailConfig = {
       ],
     },
     {
-      name: 'category',
+      name: 'categorySelector',
       type: 'category-selector',
       label: '카테고리 선택',
       value: '',
@@ -328,10 +351,11 @@ const detailConfig = {
     },
   ],
   validator: {
+    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
     category: z.string().nonempty(t('유효성 테스트')),
     language_code: z.string().nonempty(t('유효성 테스트')),
     subdivision: z.string().nonempty(t('유효성 테스트')),
     check: z.boolean(),
-    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),
+    tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
   },
 };

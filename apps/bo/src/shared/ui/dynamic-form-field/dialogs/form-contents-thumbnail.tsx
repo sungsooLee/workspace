@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import './form-contents-thumbnail.css';
 import { Checkbox } from '@learnway/ui';
-const formContentsThumbnail: FC<any> = ({ name, fieldRefs, onChange, value }) => {
+const FormContentsThumbnailComponent: FC<any> = ({ name, fieldRefs, onChange, value }) => {
   const handleOnClick = () => {
     onChange([...value, { url: 'https://placehold.co/100x100', selected: false }]);
   };
@@ -43,4 +43,4 @@ const formContentsThumbnail: FC<any> = ({ name, fieldRefs, onChange, value }) =>
     </div>
   );
 };
-export default formContentsThumbnail;
+export const FormContentsThumbnail = FormContentsThumbnailComponent;

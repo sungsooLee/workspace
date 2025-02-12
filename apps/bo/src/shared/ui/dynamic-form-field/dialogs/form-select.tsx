@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import { Select, SelectOption } from '@learnway/ui';
 
-const FormSelect: FC<any> = ({ optionsConfig, watch, options, value, onChange, name }) => {
+const FormSelectComponent: FC<any> = ({ optionsConfig, watch, options, value, onChange, name }) => {
   const [currentOptions, setCurrentOptions] = useState<SelectOption[]>(
     options.map((option: any) =>
       option.value === '' ? { ...option, value: 'selected-empty' } : { ...option },
@@ -101,4 +101,4 @@ const FormSelect: FC<any> = ({ optionsConfig, watch, options, value, onChange, n
   );
 };
 
-export default FormSelect;
+export const FormSelect = FormSelectComponent;
