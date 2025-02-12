@@ -2,3 +2,9 @@
 .auth_box {
   @apply px-[40px] py-[48px];
 }
+.btn_wrap {
+  @apply mt-[48px] flex items-center justify-center;
+  button {
+    @apply w-full;
+  }
+}
