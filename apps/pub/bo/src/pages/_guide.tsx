@@ -33,6 +33,7 @@ function RouteComponent() {
         { label: 'Tootip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
+        { label: 'Pagination', path: '/guide/pagination' },
         // { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
         // { label: '이미지', path: '/guide/components/image' },

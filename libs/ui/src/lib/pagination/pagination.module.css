@@ -1,2 +1,5 @@
 .root {
 }
+.pagination {
+  @apply flex justify-center;
+}
