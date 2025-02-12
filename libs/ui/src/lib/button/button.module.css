@@ -17,6 +17,9 @@
     &.xl {
       @apply h-[48px] min-w-[80px] justify-center px-[6px];
     }
+    & + .btn {
+      @apply ml-[8px];
+    }
   }
 }
 .primary {
