@@ -10,16 +10,21 @@ export interface RadioComponentProps extends React.ComponentProps<typeof Primiti
   options: RadioOption[];
   orientation?: 'vertical' | 'horizontal';
   defaultValue?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
   onValueChange?: (value: string) => void;
 }
 
 const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, RadioComponentProps>(
-  ({ className, options, disabled, defaultValue, orientation = 'horizontal', ...props }, ref) => {
+  (
+    { className, options, disabled, defaultValue, size, orientation = 'horizontal', ...props },
+    ref,
+  ) => {
     return (
       <Primitive.Root
         className={cn(
           styles.start,
           'nlp--radio',
+          size && styles[size],
           className,
           // orientation === 'horizontal' ? horizontal_selector : vertical_selector (css 구현필요)
         )}

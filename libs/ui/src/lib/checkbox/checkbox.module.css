@@ -34,7 +34,10 @@
       @apply h-[1rem] w-[1rem];
       &[data-state='checked'] {
         .checkbox_indicator {
-          @apply h-[1rem] w-[1rem];
+          @apply h-[1rem] w-[1rem] rounded-[3px];
+          svg {
+            @apply h-[7px] w-[6px];
+          }
         }
       }
     }
