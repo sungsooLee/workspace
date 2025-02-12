@@ -1,6 +1,9 @@
 /* login.module.css */
 .start {
   &.auth_wrap {
+    .auth_box {
+      @apply px-[40px] pt-[48px];
+    }
     .login_info {
       @apply flex items-center justify-between;
       .id_save {
