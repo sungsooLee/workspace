@@ -4,6 +4,9 @@ export * from './lib/accordion/accordion';
 // avatar
 export * from './lib/avatar/avatar';
 
+// badge
+export * from './lib/badge/badge';
+
 // button
 export * from './lib/button/button';
 

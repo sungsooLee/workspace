@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, ReactNode } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoTooltipArrow } from '@learnway/icons';
 
@@ -43,4 +43,4 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
   },
 );
 
-export const Tooltip = memo(TooltipComponent);
+export const Tooltip = TooltipComponent;
