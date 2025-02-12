@@ -25,8 +25,8 @@ import { Button } from '@learnway/ui';
           </pre>
         </div>
 
-        <h3 className="guide_tit3">Primary Button</h3>
         <div className="group">
+          <h3 className="guide_tit3">Primary Button</h3>
           <div className="flex_box">
             <div className="desc">
               <Button variant="primary" size="xs">

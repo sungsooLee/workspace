@@ -47,7 +47,7 @@ function RouteComponent() {
   };
   return (
     <div>
-      <h2 className="guide_tit2">Form Component Guide</h2>
+      <h2 className="guide_tit2">Form Guide</h2>
       <h3 className="guide_tit3">
         Form 사용 케이스(row는 정렬할때 사용- form요소가 아니더라도 사용 가능)
       </h3>

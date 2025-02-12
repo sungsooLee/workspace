@@ -144,6 +144,9 @@
         }
         .flex_box {
           @apply flex items-center;
+          .desc {
+            @apply flex items-center gap-[20px];
+          }
           padding: 20px;
           border: 1px dashed #ccc;
           + .code_example {

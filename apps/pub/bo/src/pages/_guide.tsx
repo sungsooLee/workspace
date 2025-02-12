@@ -16,17 +16,17 @@ function RouteComponent() {
         { label: '소개', path: '/guide/info' },
         { label: '컬러', path: '/guide/color' },
         { label: '타이포그래픽', path: '/guide/typography' },
+        { label: 'Form', path: '/guide/form' },
       ],
     },
     {
       title: 'Component',
       subItems: [
-        { label: '레이아웃', path: '/guide/layout' },
         { label: 'Buttons', path: '/guide/buttons' },
         { label: 'Alert, Confirm', path: '/guide/alert' },
         { label: 'Modal', path: '/guide/modal' },
         { label: 'Grid 테이블', path: '/guide/grid' },
-        { label: 'Form', path: '/guide/form' },
+
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
         { label: 'Select', path: '/guide/select' },
@@ -34,10 +34,6 @@ function RouteComponent() {
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
         { label: 'Pagination', path: '/guide/pagination' },
-        // { label: 'Stepper', path: '/guide/stepper' },
-        // { label: '텍스트필드', path: '/guide/components/textfield' },
-        // { label: '이미지', path: '/guide/components/image' },
-        // { label: '아이콘', path: '/guide/components/icon' },
       ],
     },
   ];
