@@ -131,7 +131,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 단위 */}
           {unitText && <div className={'text-gray-6'}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {showCounter > 0 && type === 'text' && <div className={'text-gray-6'}>{'20/100'}</div>}
+          {showCounter && type === 'text' && <div className={'text-gray-6'}>{'20/100'}</div>}
         </div>
       </div>
     );
