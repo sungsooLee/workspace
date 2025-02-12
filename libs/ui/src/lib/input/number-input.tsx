@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 
@@ -7,39 +7,51 @@ import { cn } from '@learnway/shared';
 import styles from './number-input.module.css';
 import { IcoDelete03 } from '@learnway/icons';
 
-export interface NumberInputProps extends NumericFormatProps {
-  min?: number;
-  max?: number;
-  error?: boolean;
+export interface NumberInputProps extends Omit<NumericFormatProps, 'type'> {
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel';
   placeHolder?: string;
-  rightText?: string;
+  unitText?: string;
   onChange?: (value: any) => void;
-  numeric?: boolean; // 숫자 입력 모드
-  mask?: string | string[]; // 마스크 입력 모드
-  format?: string; // 마스크 사용시 format 설정
+  // for text type
+  showCounter?: boolean; // 입력글자수/최대입력가능글자수 표시 여부
+  // for mask type
+  mask?: string | string[]; // mask 설정 문자열
+  format?: string; // format 설정 문자열
+  allowEmptyFormatting?: boolean;
 }
 
 const NumberInputComponent = forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
+      type = 'text',
       thousandSeparator = true,
       disabled,
-      error,
       className,
-      onChange,
-      value,
+      value = '',
       onBlur,
       placeHolder = '값을 입력하세요.',
-      rightText,
-      numeric,
+      unitText,
+      onChange,
+      showCounter,
       mask,
       format = '',
+      allowEmptyFormatting = true,
       ...props
     },
     ref,
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(value);
+
+    useEffect(() => {
+      setInputValue(value);
+    }, [value]);
+
+    useEffect(() => {
+      if (value !== inputValue) {
+        onChange?.(inputValue);
+      }
+    }, [inputValue]);
 
     const handleInputChange = (value: any) => {
       setInputValue(value);
@@ -50,7 +62,7 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(true);
+      setIsFocused(false);
       onBlur?.(event);
     };
 
@@ -58,55 +70,44 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberInputProps>(
       setInputValue('');
     };
 
-    console.log(inputValue);
-
     return (
       <div className={cn(styles.start, 'nlp--input', 'flex flex-row border p-1')}>
-        {numeric ? (
+        {type === 'number' ? (
           <NumericFormat
             {...props}
             getInputRef={ref}
-            className={cn(
-              className,
-              'placeholder:text-gray-500',
-              'focus:outline-none',
-              disabled && 'cursor-not-allowed bg-gray-100 text-gray-400',
-            )}
-            // customInput={() => <input onFocus={handleInputFocus} onBlur={handleInputBlur} />}
+            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
             value={inputValue}
             thousandSeparator={thousandSeparator}
             placeholder={placeHolder}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
           />
-        ) : mask ? (
+        ) : type === 'mask' ? (
           <PatternFormat
             {...props}
             getInputRef={ref}
-            className={cn(
-              className,
-              'placeholder:text-gray-500',
-              'focus:outline-none',
-              disabled && 'cursor-not-allowed bg-gray-100 text-gray-400',
-            )}
+            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
             value={inputValue}
             format={format}
             mask={mask}
             placeholder={placeHolder}
+            allowEmptyFormatting={allowEmptyFormatting}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
           />
         ) : (
           <input
             ref={ref}
-            value={inputValue}
+            value={inputValue || ''}
             disabled={disabled}
+            type={type}
             placeholder={placeHolder}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -116,9 +117,9 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberInputProps>(
           />
         )}
 
-        {/* clear button & right text */}
-        <div className={cn(styles.button, '')}>
-          {/* clear button */}
+        {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
+        <div className={cn(styles.button, 'flex flex-row gap-2')}>
+          {/* 삭제 버튼 */}
           {isFocused && !!String(inputValue)?.length && (
             <button
               type="button"
@@ -127,8 +128,10 @@ const NumberInputComponent = forwardRef<HTMLInputElement, NumberInputProps>(
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </button>
           )}
-          {/* right text */}
-          {rightText && <span>{rightText}</span>}
+          {/* 단위 */}
+          {unitText && <div className={'text-gray-6'}>{unitText}</div>}
+          {/* 입력글자수/최대입력가능글자수 */}
+          {showCounter && type === 'text' && <div className={'text-gray-6'}>{'20/100'}</div>}
         </div>
       </div>
     );

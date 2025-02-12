@@ -22,7 +22,7 @@ export const Template: any = (args: any) => {
   const handleChange = (event: SelectOption) => {
     console.log(event);
   };
-  return <Stepper items={items} onChange={handleChange} />;
+  return <Stepper items={items} enableMoveStep onChange={handleChange} />;
 };
 Template.storyName = 'Stepper';
 Template.args = {};

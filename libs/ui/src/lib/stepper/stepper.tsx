@@ -9,12 +9,12 @@ export interface StepperComponentProps {
   items: Array<SelectOption>;
   className?: string;
   selectedStep?: string;
-  disabledStepClick?: boolean; // step 이동 가능 여부
+  enableMoveStep?: boolean; // step 이동 가능 여부 (step onClick 사용 여부)
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, onChange, disabledStepClick, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, enableMoveStep, ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -32,13 +32,11 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
 
     const stepperItems = useMemo(() => {
       const findIndex = items.findIndex((d: SelectOption) => d.value === selectedItem?.value) || 0;
-      return items?.map((d: SelectOption, index: number) => {
-        return {
-          ...d,
-          isActive: index === findIndex, // active step 여부
-          isComplete: index < findIndex, // complete step 여부
-        };
-      });
+      return items?.map((d: SelectOption, index: number) => ({
+        ...d,
+        isActive: index === findIndex, // active step 여부
+        isComplete: index < findIndex, // complete step 여부
+      }));
     }, [selectedItem]);
 
     const handleClick = (item: SelectOption) => {
@@ -57,9 +55,9 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               d.isComplete && styles.complete,
               'flex flex-col',
             )}
-            onClick={() => !disabledStepClick && handleClick(d)}>
+            onClick={() => enableMoveStep && handleClick(d)}>
             {/* icon or step value */}
-            <div>{index + 1}</div>
+            <div>{d.isComplete ? 'V' : index + 1}</div>
             {/*<div>{d.isComplete ? <Check /> : index + 1}</div>*/}
             {/* title */}
             <div>{d.label}</div>
