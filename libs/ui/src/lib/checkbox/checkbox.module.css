@@ -14,6 +14,30 @@
       @apply bg-[var(--gray2)];
       border-color: var(--gray4);
     }
+    &.md {
+      @apply h-[1.8rem] w-[1.8rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.8rem] w-[1.8rem];
+        }
+      }
+    }
+    &.sm {
+      @apply h-[1.6rem] w-[1.6rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.6rem] w-[1.6rem];
+        }
+      }
+    }
+    &.xs {
+      @apply h-[1.2rem] w-[1.2rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.2rem] w-[1.2rem];
+        }
+      }
+    }
   }
   .label {
     @apply ml-[6px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray8)];

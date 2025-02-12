@@ -9,12 +9,13 @@ import styles from './checkbox.module.css';
 export interface CheckboxComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   label?: string;
   hideLabel?: boolean;
+  size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
 }
 
 const CheckboxComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   CheckboxComponentProps
->(({ value, onChange, disabled, className, label, hideLabel, ...props }, ref) => {
+>(({ value, onChange, disabled, className, label, hideLabel, size, ...props }, ref) => {
   const uuid = getRandomId();
   return (
     <div className={cn(styles.start, 'nlp--checkbox', className)}>
@@ -22,7 +23,7 @@ const CheckboxComponent = forwardRef<
         {...props}
         id={uuid}
         ref={ref}
-        className={styles.checkbox_root}
+        className={cn(styles.checkbox_root, size && styles[size])}
         disabled={disabled}>
         <Primitive.Indicator className={styles.checkbox_indicator}>
           <IcoCheckboxChecked width={12} height={13} fill="none" stroke="#ffffff" />
