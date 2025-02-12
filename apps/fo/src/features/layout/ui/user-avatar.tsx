@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useRouter } from '@tanstack/react-router';
 import { map } from 'lodash';
@@ -10,6 +10,7 @@ import { useFetchAuthUser, useLogoutUser } from '../../../entities/user';
 import { Tenant } from '../../../entities/tenant';
 import styles from './user-avatar.module.css';
 import { IcLogOut01 } from '@learnway/icons';
+import { useLoginTimeout } from '../../../widgets/layout/service/loginTimeout.hooks';
 
 interface ProfileMenu {
   title: string;
@@ -20,10 +21,9 @@ const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { alert: openAlert } = useModalControl();
-
   const { data } = useFetchAuthUser();
-  console.log(data);
   const { logout } = useLogoutUser();
+  const { startSession } = useLoginTimeout();
 
   const PROFILE_MENU: ProfileMenu[] = useCreation(
     () => [
@@ -34,6 +34,10 @@ const PopoverContent = () => {
       {
         title: '프로필 작성',
         action: () => router.navigate({ to: '/' }),
+      },
+      {
+        title: '로그인 연장 타이머 테스트',
+        action: () => startSession(),
       },
     ],
     [],
@@ -46,6 +50,7 @@ const PopoverContent = () => {
       isConfirm: true,
       iconVisible: false,
       onClose: (result: boolean) => {
+        // console.log(result);
         if (result) logout();
       },
     });
@@ -72,6 +77,10 @@ const PopoverContent = () => {
       },
     });
   };
+
+  // useEffect(()=>{
+
+  // },[])
 
   return (
     // <div>
@@ -114,7 +123,7 @@ const PopoverContent = () => {
           );
         })}
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => loginExtension()}>
+      <Button className={styles.btn_log} variant="text" onClick={() => logoutAlert()}>
         <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
       </Button>
     </div>
@@ -142,4 +151,4 @@ const AvatarCompoment = () => {
   );
 };
 
-export const UserAvatar = memo(AvatarCompoment);
+export const UserAvatar = AvatarCompoment;

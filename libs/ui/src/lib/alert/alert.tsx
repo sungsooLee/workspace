@@ -91,7 +91,6 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
 
     const handleClose = (confirmed: boolean) => {
       closeModal(confirmed);
-      onClose?.();
     };
 
     const defaultFooter = isConfirm ? (

@@ -17,12 +17,15 @@ import { useFetchAuthUser } from '../../../../entities/user';
 import { Tenant, useFetchTenantByUser } from '../../../../entities/tenant';
 import styles from './gnb.module.css';
 import { NavigateHover } from './navigate/navigate-hover';
+import { useLoginTimeout } from '../../service/loginTimeout.hooks';
+import { SessionTimer } from '../../../../features/system/ui/sessionTimer';
 
 function GNBComponent() {
   const { data: userData } = useFetchAuthUser();
   const { data: tenants } = useFetchTenantByUser(userData?.accountId);
   const [isHoverNavigate, setIsHoverNavigate] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
   const handleMouseEnter = () => {
     if (isCategoryOpen) {
       setIsCategoryOpen(false);
@@ -66,6 +69,7 @@ function GNBComponent() {
 
   return (
     <div className={`${styles.start} ${styles.header}`}>
+      {/* <SessionTimer /> */}
       <header className={styles.header_area}>
         <div className={styles.top_area}>
           <div className={styles.logo_inner}>
