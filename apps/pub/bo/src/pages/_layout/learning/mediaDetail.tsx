@@ -20,12 +20,17 @@ import {
   IcoAlertCircle,
   IcoCloseCircle,
   IcoUploadCloud,
+  IcoLoaing,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
+import thumbStyles from './thumb.module.css'; // thumb css
+
+/* images */
+import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaDetail')({
@@ -91,6 +96,20 @@ function RouteComponent() {
   ];
   const handleChange = (event: SelectOption[]) => {
     console.log(event);
+  };
+
+  //
+  const [activeButtons, setActiveButtons] = useState<number[]>([]);
+
+  const handleButtonClick = (id: number) => {
+    setActiveButtons((prev) => {
+      // 버튼이 이미 active 상태라면 제거, 아니면 추가
+      if (prev.includes(id)) {
+        return prev.filter((buttonId) => buttonId !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
 
   // Swiper
@@ -232,12 +251,7 @@ function RouteComponent() {
                 ]}
               />
               <span className={formStyles.dash}></span>
-              <Input
-                id="name-1-6"
-                type="text"
-                placeholder="- 제외한 숫자만 입력"
-                className={formStyles.dash}
-              />
+              <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
             </div>
           </div>
         </div>
@@ -298,12 +312,7 @@ function RouteComponent() {
                       ]}
                     />
                     <span className={formStyles.dash}></span>
-                    <Input
-                      id="name-1-7-2"
-                      type="text"
-                      placeholder="- 제외한 숫자만 입력"
-                      className={formStyles.dash}
-                    />
+                    <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
                   </div>
                 </div>
               </div>
@@ -325,23 +334,38 @@ function RouteComponent() {
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Swiper
-                ref={swiperRef}
-                spaceBetween={12}
-                slidesPerView="auto"
-                loop={false}
-                modules={[Navigation]}
-                className={styles.thumb_swiper}>
-                <SwiperSlide className={styles.slide}>
-                  <div className={formStyles.btn_upload}>
-                    <Button className={formStyles.btn_file}>
-                      <IcoUploadCloud width={24} height={24} stroke="#747D91" />
-                      <Input type="file" className={formStyles.input_file} />
-                      <span className={formStyles.btn_label}>{'썸네일 업로드'}</span>
-                    </Button>
-                  </div>
-                </SwiperSlide>
-              </Swiper>
+              <div className={thumbStyles.thumb_wrap}>
+                <Swiper
+                  ref={swiperRef}
+                  spaceBetween={12}
+                  slidesPerView="auto"
+                  loop={false}
+                  modules={[Navigation]}
+                  className={thumbStyles.thumb_swiper}>
+                  <SwiperSlide className={thumbStyles.slide}>
+                    <div className={thumbStyles.thumb_item}>
+                      <Button className={thumbStyles.btn_file}>
+                        <IcoUploadCloud width={24} height={24} stroke="#747D91" />
+                        <Input type="file" className={thumbStyles.input_file} />
+                        <span className={thumbStyles.text}>{'썸네일 업로드'}</span>
+                      </Button>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className={thumbStyles.slide}>
+                    <div className={thumbStyles.thumb_item}>
+                      <IcoLoaing width={24} height={24} stroke="#747D91" />
+                      <span className={thumbStyles.text}>{'동영상 썸네일 추출중'}</span>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className={thumbStyles.slide}>
+                    <div
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(1) ? styles.active : ''}`}>
+                      <Button className={thumbStyles.btn_check}></Button>
+                      <img src={defaultImg} alt="thumb img" className={thumbStyles.img} />
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
             </div>
           </div>
         </div>
