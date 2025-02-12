@@ -306,7 +306,7 @@ function RouteComponent() {
                 align="start"
                 content={'tooltip content'}>
                 <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                  <IcoAlertCircle width={12} height={12} fill="#A9AFB8" />
                 </Button>
               </Tooltip>
               <span className={formStyles.sub_text}>
@@ -527,7 +527,7 @@ function RouteComponent() {
                 align="start"
                 content={'마켓플레이스 공개설정111111'}>
                 <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                  <IcoAlertCircle width={12} height={12} fill="#A9AFB8" />
                 </Button>
               </Tooltip>
             </label>
@@ -555,7 +555,7 @@ function RouteComponent() {
                 align="start"
                 content={'공유채널 설정2222222'}>
                 <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" stroke="white" />
+                  <IcoAlertCircle width={12} height={12} fill="#A9AFB8" />
                 </Button>
               </Tooltip>
             </label>
