@@ -555,7 +555,7 @@ function RouteComponent() {
                 align="start"
                 content={'공유채널 설정2222222'}>
                 <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={17} />
+                  <IcoAlertCircle width={16} height={17} fill="#A9AFB8" stroke="white" />
                 </Button>
               </Tooltip>
             </label>
