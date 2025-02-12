@@ -37,3 +37,120 @@
     @apply border-[var(--gray4)];
   }
 }
+
+
+.input_box {
+  @apply mt-[12px] flex w-full items-center space-x-[8px];
+  .input {
+    @apply flex-auto;
+  }
+  .text {
+    @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
+  }
+  .count {
+    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+  }
+  .select_option {
+    @apply min-w-[132px];
+    &.lg {
+      @apply min-w-[360px];
+    }
+  }
+  .radio_wrap {
+    @apply mt-[12px] flex w-full;
+    & > div {
+      @apply flex-1;
+    }
+  }
+  .check {
+    @apply absolute right-0 top-[8px];
+  }
+  .dash {
+    @apply flex min-w-[8px] items-center justify-start;
+    &::after {
+      @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+    }
+  }
+  .btn_edit {
+    @apply !min-w-[72px];
+  }
+  .btn_delete {
+    @apply !ml-[16px];
+  }
+  &.type2 {
+    @apply mt-0;
+  }
+  &.line {
+    @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];
+    .input {
+      @apply px-[12px];
+    }
+    &.column {
+      @apply flex-col pr-0;
+      .count {
+        @apply flex w-full justify-end pb-[12px] pr-[12px];
+      }
+    }
+    &.focused {
+      @apply border-[var(--gray7)];
+    }
+  }
+}
+
+.input_box {
+  @apply mt-[12px] flex w-full items-center space-x-[8px];
+  .input {
+    @apply flex-auto;
+  }
+  .text {
+    @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
+  }
+  .count {
+    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+  }
+  .select_option {
+    @apply min-w-[132px];
+    &.lg {
+      @apply min-w-[360px];
+    }
+  }
+  .radio_wrap {
+    @apply mt-[12px] flex w-full;
+    & > div {
+      @apply flex-1;
+    }
+  }
+  .check {
+    @apply absolute right-0 top-[8px];
+  }
+  .dash {
+    @apply flex min-w-[8px] items-center justify-start;
+    &::after {
+      @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+    }
+  }
+  .btn_edit {
+    @apply !min-w-[72px];
+  }
+  .btn_delete {
+    @apply !ml-[16px];
+  }
+  &.type2 {
+    @apply mt-0;
+  }
+  &.line {
+    @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];
+    .input {
+      @apply px-[12px];
+    }
+    &.column {
+      @apply flex-col pr-0;
+      .count {
+        @apply flex w-full justify-end pb-[12px] pr-[12px];
+      }
+    }
+    &.focused {
+      @apply border-[var(--gray7)];
+    }
+  }
+}

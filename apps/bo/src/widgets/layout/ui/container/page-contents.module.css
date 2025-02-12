@@ -1,0 +1,139 @@
+.main_contents {
+  @apply min-h-full flex-grow pb-[28px] pr-[32px];
+}
+.sub_contents {
+  @apply relative box-border w-[479px] shrink-0 pl-[25px];
+  &::before {
+    @apply absolute left-0 top-0 block h-[100dvh] w-[1px] bg-[var(--gray4)] content-[''];
+  }
+}
+
+/* form.module.css */
+.form_item {
+  @apply relative w-full flex-1 pb-[17px];
+  .guide_text {
+    @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
+    &:empty {
+      @apply hidden;
+    }
+    &.error {
+      @apply text-[var(--status1)];
+    }
+  }
+  .sub_test {
+    @apply mt-[5px] text-[1.2rem] leading-[1rem] text-[var(--gray7)];
+  }
+  .text_limit {
+    @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
+  }
+  .btn_toggle {
+    @apply absolute right-0 top-[3px] h-[20px] w-[20px];
+    svg {
+      @apply transition duration-300 ease-in-out;
+    }
+    &[aria-expanded='true'] {
+      svg {
+        @apply rotate-180;
+      }
+    }
+  }
+}
+.input_box_wrap {
+  @apply hidden;
+  .input_box {
+    @apply mt-[8px];
+  }
+  &.open {
+    @apply block;
+  }
+}
+.input_box {
+  @apply mt-[12px] flex w-full items-center space-x-[8px];
+  .input {
+    @apply flex-auto;
+  }
+  .text {
+    @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
+  }
+  .count {
+    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+  }
+  .select_option {
+    @apply mr-[16px] min-w-[132px];
+    & + div {
+      @apply relative;
+      &::before {
+        @apply absolute -left-[23px] top-1/2 mx-[8px] inline-flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+      }
+    }
+  }
+  &.line {
+    @apply rounded-[4px] border border-solid border-[var(--gray4)] pr-[12px];
+    .input {
+      @apply px-[12px];
+    }
+    &.column {
+      @apply flex-col pr-0;
+      .count {
+        @apply flex w-full justify-end pb-[12px] pr-[12px];
+      }
+    }
+    &.focused {
+      @apply border-[var(--gray7)];
+    }
+  }
+}
+.form_label {
+  .form_text {
+    @apply label_1_b;
+    &.sm {
+      @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
+      & + .status {
+        @apply -mt-[4px] align-middle;
+        svg {
+          @apply h-[8px] w-[8px];
+        }
+      }
+    }
+  }
+  .status {
+    @apply ml-[2px] inline-flex align-text-top;
+    &.required svg {
+      fill: #00afd5;
+    }
+    &.error svg {
+      fill: var(--status1);
+    }
+  }
+}
+
+/* media_wrap */
+.btn_list {
+  @apply flex;
+  li {
+    @apply relative;
+    .btn_text {
+      @apply text-[1.3rem] text-[var(--gray8)];
+    }
+    & + li {
+      @apply ml-[10px] pl-[10px];
+      &::before {
+        @apply absolute left-0 top-1/2 -mt-[5.5px] h-[11px] w-[1px] bg-[#000] content-[''];
+      }
+    }
+  }
+}
+
+/* info_list */
+.info_list {
+  @apply mt-[10px] border-b-[1px] border-solid border-[var(--gray3)];
+  li {
+    @apply flex min-h-[44px] items-center border-t-[1px] border-solid border-[var(--gray3)] py-[4px];
+    .title {
+      @apply min-w-[114px] text-[1.4rem] font-bold text-[var(--gray9)];
+    }
+    .text {
+      @apply ml-[24px] text-[1.4rem] font-normal leading-[1.6rem] text-[var(--gray8)];
+    }
+  }
+}

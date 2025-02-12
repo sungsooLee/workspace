@@ -1,11 +1,11 @@
 import { DialogConfig } from './type';
-import DateRange from '../../../../shared/ui/form-dialog/date-range';
-import DropDown from '../../../../shared/ui/form-dialog/drop-down';
-import MultiDropdown from '../../../../shared/ui/form-dialog/multi-drop-down';
-import UserSearchPop from '../../../../shared/ui/form-dialog/user-search-pop';
-import InputCheck from '../../../../shared/ui/form-dialog/input-check';
-import InputCheckGroup from '../../../../shared/ui/form-dialog/input-check-group';
-import InputRadioGroup from '../../../../shared/ui/form-dialog/input-radio-group';
+import DateRange from '../form-dialog/date-range';
+import DropDown from '../form-dialog/drop-down';
+import MultiDropdown from '../form-dialog/multi-drop-down';
+import UserSearchPop from '../form-dialog/user-search-pop';
+import InputCheck from '../form-dialog/input-check';
+import InputCheckGroup from '../form-dialog/input-check-group';
+import InputRadioGroup from '../form-dialog/input-radio-group';
 import { FormCheckbox, FormDateRangePicker, FormInput, FormRadioGroup } from '@learnway/ui';
 
 export const searchDialogConfig: DialogConfig = {

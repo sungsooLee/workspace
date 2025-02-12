@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-// DynamicFormField.stories.tsx
+// Index.stories.tsx
 import { Meta, StoryObj } from '@storybook/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,7 @@ import { DynamicFormField, FieldType } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 
 export default {
-  title: 'Components/DynamicFormField',
+  title: 'Components/Index',
   component: DynamicFormField,
   tags: ['autodocs'],
 } as Meta;

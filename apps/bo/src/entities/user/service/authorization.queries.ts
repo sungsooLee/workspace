@@ -22,4 +22,7 @@ export const mutateOptions = {
   logout: () => ({
     mutationFn: () => AuthorizationService.logout(),
   }),
+  reissue: () => ({
+    mutationFn: () => AuthorizationService.reissue(),
+  }),  
 };

@@ -22,14 +22,13 @@ class CookieService {
     Cookies.remove(key);
   }
 
-  removeAll() {
+  clear() {
     // Direct remove from login cookie
     Cookies.remove('LOGIN_USER_ID');
-    Cookies.remove('LOGIN_USER_IMAGE_URL');
-    Cookies.remove('LOGIN_USER_FULL_NAME');
+    Cookies.remove('LOGIN_TENANT_ID');
+    Cookies.remove('LOGIN_ROLE_ID');
     Cookies.remove('LOGIN_TOKEN');
-    Cookies.remove('LOGIN_TOKEN_TYPE');
-    Cookies.remove('REFRESH_LOGIN_TOKEN');
+    //Cookies.remove('REFRESH_LOGIN_TOKEN');
 
     // remove cookies from app
     this.keys

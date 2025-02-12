@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogProps } from '../search-box/type';
 import { Controller } from 'react-hook-form';
 
 const InputRadioGroup: FC<DialogProps> = ({ control, name, label, items }) => {

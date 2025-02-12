@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useRef } from 'react';
-import { DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogProps } from '../search-box/type';
 import { Controller } from 'react-hook-form';
 const MultiDropdown: FC<DialogProps> = ({ control, name, label, items }) => {
   const [isOpen, setIsOpen] = useState(false); // 드롭다운 열림/닫힘 상태
