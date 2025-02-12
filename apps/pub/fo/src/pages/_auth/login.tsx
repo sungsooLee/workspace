@@ -3,6 +3,7 @@ import { Input, Checkbox, Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
+import authStyles from './auth.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
@@ -15,7 +16,7 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.auth_wrap}`}>
-      <div className={styles.auth_box}>
+      <div className={authStyles.auth_box}>
         <div className={formStyles.form_row}>
           <div className={formStyles.form_item}>
             <label htmlFor="name5" className={formStyles.form_label}>
