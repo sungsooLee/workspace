@@ -2,46 +2,68 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FieldType, Input } from '@learnway/ui';
+import { Input } from '@learnway/ui';
 
 export default {
   title: 'Components/Input',
   component: Input,
   tags: ['autodocs'],
-  argTypes: {
-    type: {
-      control: 'select',
-      options: [FieldType.TEXT, FieldType.PASSWORD],
-      defaultValue: FieldType.TEXT,
-    },
-    placeholder: { control: 'text' },
-    disabled: { control: 'boolean' },
-  },
+  args: {},
+  argTypes: {},
 } as Meta;
 type Story = StoryObj<typeof Input>;
 
-const BaseFormWrapper: React.FC<any> = (args) => {
-  const [value, setValue] = React.useState(args.value || '');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    args.onChange?.(e);
+// Text
+export const Template: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
   };
-
-  return <Input {...args} value={value} onChange={handleChange} />;
+  return (
+    <div className={'flex flex-col gap-3'}>
+      <Input {...args} onChange={handleChange} />
+      <Input {...args} unitText={'명'} onChange={handleChange} />
+      <Input {...args} showCounter onChange={handleChange} />
+      <Input {...args} unitText={'명'} showCounter onChange={handleChange} />
+    </div>
+  );
 };
+Template.storyName = 'Text';
+Template.args = {};
 
-export const Text: Story = {
-  args: {
-    type: FieldType.TEXT,
-    placeholder: '값을 입력하세요.',
-  },
-  render: (args) => <BaseFormWrapper {...args} />,
+// Text
+export const TemplateValueControl: any = (args: any) => {
+  const [value, setValue] = React.useState('');
+  const handleChange = (value: any) => {
+    console.log(value);
+  };
+  return (
+    <div className={'flex flex-col gap-3'}>
+      <button onClick={() => setValue('XX')}>Set</button>
+      <Input {...args} value={value} onChange={handleChange} />
+    </div>
+  );
 };
+TemplateValueControl.storyName = 'Value Control';
+TemplateValueControl.args = {};
 
-export const Password: Story = {
-  args: {
-    type: FieldType.PASSWORD,
-  },
-  render: (args) => <BaseFormWrapper {...args} />,
+// Number
+export const TemplateNumber: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
+  };
+  return <Input {...args} type="number" onChange={handleChange} />;
 };
+TemplateNumber.storyName = 'Number';
+TemplateNumber.args = {};
+
+// Mask
+export const TemplateMask: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
+  };
+  return (
+    <Input {...args} type="mask" mask={'_'} format={'###-####-####'} onChange={handleChange} />
+  );
+};
+TemplateMask.storyName = 'Mask';
+TemplateMask.args = {};
