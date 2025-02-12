@@ -1,22 +1,25 @@
-import { z, ZodInvalidStringIssue } from 'zod';
-
-const customErrorMap: z.ZodErrorMap = (error, ctx) => {
-  /*
-    This is where you override the various error codes
-    */
-  console.log('customErrorMap', error.code, 'validation', error, ctx);
+import { z, ZodIssueOptionalMessage } from 'zod';
+/**
+ *  Custom zod errorMap: invalid message를 i18n code로 변경 처리
+ *  z.setErrorMap global적용하거나 schema별로 별도 적용 가능
+ *  z.ZodIssueCode 참조: https://zod.dev/ERROR_HANDLING?id=zodissuecode
+ *  https://zod.dev/?id=strings
+ * @param error
+ * @param ctx
+ * @return { message: string }
+ */
+const customErrorMap: z.ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: z.ErrorMapCtx) => {
+  //console.log('customErrorMap', error?.path[0], error.code, error, ctx);
   let params;
   let validation: string | undefined;
   switch (error.code) {
     case z.ZodIssueCode.invalid_type:
       if (error.expected === 'string') {
-        return { message: `This ain't a string!` };
+        return { message: `잘못된 문자열 입력` };
       }
-      /*
-        if (error.expected === 'number') {
-          return { message: `This ain't a string!` };
-        }
-          */
+      if (error.expected === 'number') {
+        return { message: `잘못된 숫자 입력` };
+      }
       break;
     case z.ZodIssueCode.invalid_string:
       validation = (error as any)?.validation;
@@ -48,6 +51,9 @@ const customErrorMap: z.ZodErrorMap = (error, ctx) => {
   return { message: ctx.defaultError };
 };
 
+/**
+ *  zod errorMap 전역 적용
+ */
 export function initZod() {
   z.setErrorMap(customErrorMap);
 }
