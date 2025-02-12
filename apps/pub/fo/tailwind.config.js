@@ -56,6 +56,11 @@ module.exports = {
           fontSize: '2.4rem',
           fontWeight: '600',
         },
+        '.title_5_b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '600',
+        },
         '.body_1_b': {
           ...baseTitle,
           fontSize: '1.6rem',

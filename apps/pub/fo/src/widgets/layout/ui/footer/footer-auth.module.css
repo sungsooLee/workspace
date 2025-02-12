@@ -3,6 +3,7 @@
   &.footer_auth {
     @apply mt-[40px];
     .footer_area {
+      @apply text-[14px];
       .menu_list {
         @apply flex items-center justify-center gap-[24px];
         > li {
