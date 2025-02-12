@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Input,
@@ -12,7 +12,15 @@ import {
   Radio,
   Checkbox,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import {
+  IcoFormRequired,
+  IcoArrowDown,
+  IcoAlertCircle,
+  IcoCloseCircle,
+  IcoUploadCloud,
+} from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './page-content.module.css';
@@ -84,6 +92,18 @@ function RouteComponent() {
   const handleChange = (event: SelectOption[]) => {
     console.log(event);
   };
+
+  // Swiper
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const swiperRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const swiperInstance = swiperRef.current.swiper;
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, []);
 
   return (
     <>
@@ -294,6 +314,41 @@ function RouteComponent() {
         <div className="row">
           {/* form_item */}
           <div className={formStyles.form_item}>
+            <label htmlFor="name-thumb" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>썸네일</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <span className={formStyles.sub_text}>
+                {'동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'}
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Swiper
+                ref={swiperRef}
+                spaceBetween={12}
+                slidesPerView="auto"
+                loop={false}
+                modules={[Navigation]}
+                className={styles.thumb_swiper}>
+                <SwiperSlide className={styles.slide}>
+                  <div className={formStyles.btn_upload}>
+                    <Button className={formStyles.btn_file}>
+                      <IcoUploadCloud width={24} height={24} stroke="#747D91" />
+                      <Input type="file" className={formStyles.input_file} />
+                      <span className={formStyles.btn_label}>{'썸네일 업로드'}</span>
+                    </Button>
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={formStyles.form_item}>
             <label htmlFor="name-1-8" className={formStyles.form_label}>
               <span className={formStyles.form_text}>태그</span>
               {/* 필수 케이스 */}
@@ -342,7 +397,8 @@ function RouteComponent() {
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
-            <div className={`${formStyles.input_box_wrap} ${toggleSections[2] ? styles.open : ''}`}>
+            <div
+              className={`${formStyles.input_box_wrap} ${toggleSections[2] ? formStyles.open : ''}`}>
               <div className={formStyles.input_box}>
                 <Textarea
                   id="name-1-9"
@@ -579,27 +635,6 @@ function RouteComponent() {
               </span>
               <span className={formStyles.sub_text}>
                 {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
-              </span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Checkbox className={formStyles.check} />
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row no_line">
-          {/* form_item */}
-          <div className={cn(formStyles.form_item, formStyles.type2)}>
-            <label htmlFor="name-1-17" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>저작권 확인</span>
-              {/* 필수 케이스 */}
-              <span className={cn(formStyles.status, formStyles.required)}>
-                <IcoFormRequired width={12} height={12} />
-              </span>
-              <span className={formStyles.sub_text}>
-                {
-                  '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
-                }
               </span>
             </label>
             <div className={formStyles.input_box}>

@@ -58,7 +58,7 @@ body[data-scroll-locked][data-scroll-locked] {
   & + .row {
     @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
     &.no_line {
-      @apply border-0;
+      @apply border-0 pt-0;
     }
   }
 }

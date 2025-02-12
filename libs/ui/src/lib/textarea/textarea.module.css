@@ -1,6 +1,6 @@
 .start {
   &.textarea {
-    @apply scrollbar box-border h-[120px] w-full overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray4)] p-[12px] text-[1.4rem] font-normal text-[var(--gray9)];
+    @apply scrollbar box-border h-[120px] w-full overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray4)] p-[12px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray9)];
     &.sm {
       @apply h-[80px];
     }
