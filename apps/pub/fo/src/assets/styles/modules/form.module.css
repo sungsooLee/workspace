@@ -1,4 +1,17 @@
 /* form.module.css */
+.form_row {
+  @apply flex w-full gap-[32px] text-left;
+  .row {
+    @apply mt-[16px];
+  }
+  & + .row {
+    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+    &.no_line {
+      @apply border-0;
+    }
+  }
+}
+
 .form_item {
   @apply relative w-full flex-1 pb-[16px];
   .guide_text {
@@ -10,7 +23,7 @@
       @apply text-[var(--status1)];
     }
   }
-  .sub_text {
+  .sub_test {
     @apply mt-[5px] block text-[1.2rem] leading-[1rem] text-[var(--gray7)];
   }
   .text_limit {
@@ -44,7 +57,7 @@
   }
 }
 .input_box {
-  @apply mt-[12px] flex w-full items-center space-x-[8px];
+  @apply mt-[8px] flex w-full items-center space-x-[8px];
   .input {
     @apply flex-auto;
   }
@@ -103,9 +116,9 @@
 .form_label {
   @apply block overflow-hidden;
   .form_text {
-    @apply label_1_b;
+    @apply text-[1.4rem] text-[var(--gray8)];
     &.sm {
-      @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
+      @apply text-[1.2rem] leading-[1rem];
       & + .status {
         @apply -mt-[4px] align-middle;
         svg {
@@ -132,4 +145,8 @@
       fill: var(--status1);
     }
   }
+}
+
+.id_save {
+  @apply text-[1.4rem];
 }
