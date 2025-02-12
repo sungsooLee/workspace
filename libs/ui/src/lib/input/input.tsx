@@ -64,7 +64,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInpu
     });
 
     return (
-      <div className={cn(styles.start, 'nlp--input', { [styles.focused]: isFocused })}>
+      <div className={cn(styles.start, 'nlp--input', className, { [styles.focused]: isFocused })}>
         <input
           {...props}
           className={`${styles.input} ${baseStyles} ${hasNoBorder ? styles.bd_none : ''} ${sizeLarge ? styles.lg : ''} ${errorCase ? styles.error : ''} ${className}`}
