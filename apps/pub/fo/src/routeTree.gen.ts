@@ -15,8 +15,9 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as AuthSuccessImport } from './pages/_auth/success'
+import { Route as AuthSignupImport } from './pages/_auth/signup'
 import { Route as AuthLoginImport } from './pages/_auth/login'
-import { Route as AuthJoinImport } from './pages/_auth/join'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -51,15 +52,21 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const AuthLoginRoute = AuthLoginImport.update({
-  id: '/login',
-  path: '/login',
+const AuthSuccessRoute = AuthSuccessImport.update({
+  id: '/success',
+  path: '/success',
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthJoinRoute = AuthJoinImport.update({
-  id: '/join',
-  path: '/join',
+const AuthSignupRoute = AuthSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -152,18 +159,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/join': {
-      id: '/_auth/join'
-      path: '/join'
-      fullPath: '/join'
-      preLoaderRoute: typeof AuthJoinImport
-      parentRoute: typeof AuthImport
-    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/success': {
+      id: '/_auth/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
     '/_layout/': {
@@ -249,13 +263,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
-  AuthJoinRoute: typeof AuthJoinRoute
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthJoinRoute: AuthJoinRoute,
   AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  AuthSuccessRoute: AuthSuccessRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -301,8 +317,9 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
-  '/join': typeof AuthJoinRoute
   '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/button': typeof GuideGuideButtonRoute
   '/guide/color': typeof GuideGuideColorRoute
@@ -318,8 +335,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
-  '/join': typeof AuthJoinRoute
   '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/button': typeof GuideGuideButtonRoute
   '/guide/color': typeof GuideGuideColorRoute
@@ -338,8 +356,9 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
-  '/_auth/join': typeof AuthJoinRoute
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/button': typeof GuideGuideButtonRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
@@ -357,8 +376,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/join'
     | '/login'
+    | '/signup'
+    | '/success'
     | '/'
     | '/guide/button'
     | '/guide/color'
@@ -373,8 +393,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/join'
     | '/login'
+    | '/signup'
+    | '/success'
     | '/'
     | '/guide/button'
     | '/guide/color'
@@ -391,8 +412,9 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
-    | '/_auth/join'
     | '/_auth/login'
+    | '/_auth/signup'
+    | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/button'
     | '/_guide/guide/color'
@@ -437,8 +459,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/join",
-        "/_auth/login"
+        "/_auth/login",
+        "/_auth/signup",
+        "/_auth/success"
       ]
     },
     "/_guide": {
@@ -462,12 +485,16 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
-    "/_auth/join": {
-      "filePath": "_auth/join.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup": {
+      "filePath": "_auth/signup.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/success": {
+      "filePath": "_auth/success.tsx",
       "parent": "/_auth"
     },
     "/_layout/": {
