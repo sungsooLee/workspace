@@ -37,6 +37,8 @@ import { IcoChevronRight } from '@learnway/icons';
 import { IcoChevronRightDouble } from '@learnway/icons';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
+import { Select } from '../select/select';
+import { SelectOption } from '../select/type';
 
 interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
   indeterminate?: boolean;
@@ -550,20 +552,27 @@ const Grid = <T extends object>({
       onPageSizeChange,
       pageSizeOptions = [10, 20, 50, 100],
     } = pagination;
+
+    const options: SelectOption[] = pageSizeOptions.map((size) => ({
+      value: size.toString(),
+      label: `${size}개씩 보기`,
+    }));
+
+    const handleChange = (value?: SelectOption) => {
+      if (value) {
+        onPageSizeChange(Number(value.value));
+      }
+    };
     const totalPages = Math.ceil(totalRows / pageSize);
 
     return (
       <div className="paging_wrap">
-        <select
-          value={pageSize}
-          onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="select_item">
-          {pageSizeOptions.map((size) => (
-            <option key={size} value={size}>
-              {size}개씩 보기
-            </option>
-          ))}
-        </select>
+        <Select
+          value={pageSize.toString()}
+          onChange={handleChange}
+          options={options}
+          className="select_item"
+        />
         <div className="btn_wrap">
           <Button
             onClick={() => onPageChange(0)}

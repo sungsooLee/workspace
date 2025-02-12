@@ -13,16 +13,32 @@ function RouteComponent() {
       <Radio
         options={[
           { value: 'type1', label: 'aaaaa' },
-          { value: 'type2', label: 'bbbbb' },
-          { value: 'type3', label: 'ccccc' },
+          { value: 'type1-2', label: 'bbbbb' },
+          { value: 'type1-3', label: 'ccccc' },
         ]}
+      />
+      <Radio
+        options={[
+          { value: 'type2-1', label: 'aaaaa' },
+          { value: 'type2-2', label: 'bbbbb' },
+          { value: 'type2-3', label: 'ccccc' },
+        ]}
+        size="md"
+      />
+      <Radio
+        options={[
+          { value: 'type3-1', label: 'aaaaa' },
+          { value: 'type3-2', label: 'bbbbb' },
+          { value: 'type3-3', label: 'ccccc' },
+        ]}
+        size="sm"
       />
       <h3 className="guide_tit3">disabled</h3>
       <Radio
         options={[
-          { value: 'type4', label: 'ddd' },
-          { value: 'type5', label: 'eeee' },
-          { value: 'type6', label: 'ffff' },
+          { value: 'type4-1', label: 'ddd' },
+          { value: 'type4-2', label: 'eeee' },
+          { value: 'type4-3', label: 'ffff' },
         ]}
         disabled
       />

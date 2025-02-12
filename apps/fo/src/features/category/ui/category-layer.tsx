@@ -64,19 +64,6 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
     <div className={`${styles.start} ${styles.category_area}`}>
       <div className={`${styles.category} ${isOpen ? styles.active : ''}`}>
         <CategoryBadgeList />
-        {/* <div className="flex flex-1">
-        <div className="w-60 bg-blue-900">
-          <CategoryNavigation
-            categories={categories}
-            selectedId={selectedDepth1}
-            onSelect={setSelectedDepth1}
-          />
-        </div>
-
-        <div className="flex-1">
-          <CategoryDetail categories={categories} selectedDepth1={selectedDepth1} />
-        </div>
-      </div> */}
         <div className={styles.category_container}>
           <div className={styles.category_menu}>
             <div className={styles.menu_list_wrap}>
@@ -146,11 +133,13 @@ export function CategoryLayer({ isOpen }: CategoryLayerProps) {
                             {category.name}
                           </Link>
                         </h3>
-                        <Button
-                          className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                          onClick={() => toggleCategory(index)}>
-                          <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
-                        </Button>
+                        {category.children && category.children.length > 0 && (
+                          <Button
+                            className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
+                            onClick={() => toggleCategory(index)}>
+                            <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
+                          </Button>
+                        )}
                       </div>
 
                       {!openStates[index] && category.children && category.children.length > 0 && (

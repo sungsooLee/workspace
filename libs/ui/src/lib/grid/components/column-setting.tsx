@@ -20,9 +20,9 @@ import { Table } from '@tanstack/react-table';
 import { CSS } from '@dnd-kit/utilities';
 
 import { useModalContext } from '../../modal/modal-context';
-import { Button } from '../../shadcn/button';
+import { Button } from '../../button/button';
 import { useModalControl } from '../../modal/modal.hook';
-import { Checkbox } from '../../shadcn/checkbox';
+import { Checkbox } from '../../checkbox/checkbox';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -160,10 +160,11 @@ function ColumnSettingsContent<T extends object>({
         <label className="flex cursor-pointer items-center gap-2">
           <Checkbox
             id="select-all"
+            size="md"
             checked={leafColumns.every((col) => columnVisibility[col.id])}
             onCheckedChange={(checked) => handleToggleAll(!!checked)}
           />
-          <span className="text-sm font-medium">전체 선택</span>
+          <span className="text-[1.8rem] font-medium">전체 선택</span>
         </label>
       </div>
 
@@ -181,6 +182,7 @@ function ColumnSettingsContent<T extends object>({
                     onClick={(e) => e.stopPropagation()}>
                     <Checkbox
                       id={columnId}
+                      size="md"
                       checked={columnVisibility[columnId]}
                       onCheckedChange={(checked) => handleVisibilityChange(columnId, !!checked)}
                     />
@@ -195,11 +197,13 @@ function ColumnSettingsContent<T extends object>({
         </SortableContext>
       </DndContext>
 
-      <div className="flex justify-end gap-2">
-        <Button variant="outline" onClick={closeModal}>
+      <div className="flex justify-center">
+        <Button variant="gray" size="lg" onClick={closeModal}>
           취소
         </Button>
-        <Button onClick={handleApply}>적용</Button>
+        <Button variant="primary" size="lg" onClick={handleApply}>
+          적용
+        </Button>
       </div>
     </div>
   );

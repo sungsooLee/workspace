@@ -3,6 +3,7 @@ export { ReactComponent as IcoArrowDown } from './lib/ic_arrow_down.svg'; // 16*
 export { ReactComponent as IcoArrowUp } from './lib/ic_arrow_up.svg'; // 16*16 Arrow up
 export { ReactComponent as IcoAlarmFill } from './lib/ic_alarm_fill.svg'; // 32*32 Alarm
 export { ReactComponent as IcoCheck } from './lib/ic_check.svg'; // 20*20 Check
+export { ReactComponent as IcoCheck02 } from './lib/ic_check02.svg';
 export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star
 export { ReactComponent as IcoGridFilter } from './lib/ic_arrow_up_double.svg'; // 16*16 grid filter
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download

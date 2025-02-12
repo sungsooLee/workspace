@@ -57,7 +57,11 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
               key={index}
               // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
               className={`${styles.slide}`}>
-              <Link to={'/'} onMouseEnter={onMouseEnter}>
+              <Link
+                to={'/'}
+                onMouseEnter={onMouseEnter}
+                onClick={(e) => e.preventDefault()}
+                preload={false}>
                 {menu.title}
               </Link>
               {/* 라벨 표시 */}
