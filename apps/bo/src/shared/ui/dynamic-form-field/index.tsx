@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { dialogConfig } from './config';
 import styles from './form.module.css';
 import { cn } from '@learnway/shared';
@@ -34,7 +34,7 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
         const errorClass = clsx({
           error: errors && errors[name],
         });
-        const c = dialogConfig[(type || configType) as keyof typeof dialogConfig];
+        const FormComponant = dialogConfig[(type || configType) as keyof typeof dialogConfig];
         const formParams = {
           watch,
           ref,

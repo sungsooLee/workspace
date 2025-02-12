@@ -18,7 +18,6 @@ const InputLimitComponent = forwardRef<HTMLInputElement, CustomInputProps>(
     };
 
     useEffect(() => {
-      console.log('value => ', value);
       setCount(value.length);
     }, [value]);
     return (

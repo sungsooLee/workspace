@@ -39,13 +39,11 @@ export { default as Editor } from './lib/editor';
 
 // input
 export * from './lib/input/input';
-export * from './lib/input/form-input';
 export * from './lib/input/input-limit';
 export * from './lib/input/input-button';
 export * from './lib/checkbox/form-checkbox';
 export * from './lib/radio/form-radio-group';
 export * from './lib/date-picker/form-date-range-picker';
-export * from './lib/input/number-input';
 
 // form
 export * from './lib/dynamic-form-field/dynamic-form-field-control';

@@ -14,7 +14,7 @@ const FormContentsThumbnailComponent: FC<any> = ({ name, fieldRefs, onChange, va
     onChange(value.filter((_, idx) => idx !== index));
   };
   return (
-    <div ref={(ref) => (fieldRefs.current[name] = ref)} className={'form-contents-thumbnail'}>
+    <div>
       <div className={'fct-button'}>
         <button type={'button'} onClick={handleOnClick}>
           썸네일 업로드

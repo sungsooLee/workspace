@@ -3,6 +3,11 @@ import { createZodSchema } from '../search-box/create-jod-schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+
+/**
+ * 사용자 정의 설정을 재빌드해 react hook form
+ * @param config
+ */
 const useCustomForm = (config: any) => {
   // 초기값 세팅
   const defaultValues = config.builders.reduce((acc: any, prop: any) => {
@@ -77,7 +82,10 @@ const useCustomForm = (config: any) => {
     ...control, // 기본 control
     isFieldRequired: (fieldName: string) => !!(config.validator && config.validator[fieldName]), // 필수 여부 확인
   };
-
+  /**
+   *
+   * @param values
+   */
   const resetForm = (values?: any) => {
     if (values) {
       reset(values);
