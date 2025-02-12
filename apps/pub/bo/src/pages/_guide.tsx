@@ -23,9 +23,9 @@ function RouteComponent() {
       title: 'Component',
       subItems: [
         { label: '레이아웃', path: '/guide/layout' },
-        { label: '버튼', path: '/guide/buttons' },
-        { label: '알럿,컨펌', path: '/guide/alert' },
-        { label: '모달', path: '/guide/modal' },
+        { label: 'Buttons', path: '/guide/buttons' },
+        { label: 'Alert, Confirm', path: '/guide/alert' },
+        { label: 'Modal', path: '/guide/modal' },
         { label: 'Grid 테이블', path: '/guide/grid' },
         { label: 'Form', path: '/guide/form' },
         { label: 'Checkbox', path: '/guide/checkbox' },
