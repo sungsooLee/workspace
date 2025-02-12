@@ -1,7 +1,7 @@
 import { FC, useEffect, useCallback, useRef, useState } from 'react';
 import { DialogItem, DialogProps } from '../../../widgets/layout/ui/search-box/type';
 import { Controller } from 'react-hook-form';
-import { useFetchCodeGroups } from '../../../entities/system';
+import { useFetchCodeGroups } from '../../../entities/platform';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import { useClickOutside } from '@reactuses/core';

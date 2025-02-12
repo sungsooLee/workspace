@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useModalStore } from '../stores/useModalStore';
 import { Modal } from './modal';
 import { ModalProvider } from './modal-context';
@@ -22,4 +23,4 @@ const ModalContainerComponent = ({ index, data }: ModalContainerProps) => {
 
 ModalContainerComponent.displayName = 'ModalContainer';
 
-export const ModalContainer =  ModalContainerComponent;
+export const ModalContainer = ModalContainerComponent;

@@ -8,6 +8,7 @@ import {
   Language,
   UserName,
   Navigate,
+  NavigateHover,
   Category,
   Tenant,
   Search,
@@ -20,22 +21,24 @@ function HeaderComponent() {
   return (
     <div className={`${styles.start} ${styles.header}`}>
       <header className={styles.header_area}>
-        <div className={styles.logo_inner}>
-          <h1>
-            <Logo />
-          </h1>
-          <Tenant />
-        </div>
+        <div className={styles.top_area}>
+          <div className={styles.logo_inner}>
+            <h1>
+              <Logo />
+            </h1>
+            <Tenant />
+          </div>
 
-        <div className={styles.search_form}>
-          <Search />
-        </div>
+          <div className={styles.search_form}>
+            <Search />
+          </div>
 
-        <div className={styles.util}>
-          <UserName />
-          <Language />
-          <Notification />
-          <UserAvatar />
+          <div className={styles.util}>
+            <UserName />
+            <Language />
+            <Notification />
+            <UserAvatar />
+          </div>
         </div>
 
         <div className={styles.nav_area}>
@@ -43,6 +46,7 @@ function HeaderComponent() {
           <Navigate />
         </div>
       </header>
+      <NavigateHover />
     </div>
   );
 }

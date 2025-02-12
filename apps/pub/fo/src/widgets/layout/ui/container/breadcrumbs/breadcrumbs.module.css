@@ -3,25 +3,61 @@
   .breadcrumbs {
     @apply flex items-center;
 
-    li {
-      &:nth-child(1) {
-        svg {
-          @apply mr-[12px];
-          & + svg {
-            @apply ml-[0];
+    .link_item {
+      .arw {
+        @apply mx-[12px];
+      }
+      .btn_menu {
+        @apply flex items-center;
+
+        .select {
+          @apply body_3_r text-[var(--gray7)];
+        }
+        .stats {
+          @apply ml-[4px] flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray4)] bg-[var(--white)] text-center;
+          svg {
+            @apply m-auto;
+            stroke: var(--gray7);
+            transition: all 0.1s linear;
           }
         }
-      }
-      &:not(:nth-child(1)) {
-        svg {
-          @apply mx-[12px];
+
+        &[data-state='open'] {
+          @apply text-[var(--gray8)];
+          .select {
+            @apply body_3_b text-[var(--gray8)];
+          }
+          .stats {
+            @apply border-[var(--gray7)];
+            svg {
+              stroke: var(--gray8);
+              @apply rotate-180;
+              transition: all 0.1s linear;
+            }
+          }
         }
       }
       a {
         &.active {
-          @apply text-[var(--gray9)];
+          @apply text-[var(--gray7)];
         }
         @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray7)];
+      }
+    }
+  }
+  &.hover_menu {
+    @apply rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[16px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    .menu_list {
+      @apply flex max-w-[788px] flex-wrap;
+      li {
+        @apply body_4_r w-[calc(100%/6)] min-w-[125px];
+        a {
+          @apply box-border block h-full w-full rounded-[4px] px-[10px] py-[6px];
+          &:hover,
+          &.active {
+            @apply bg-[var(--secondary5)];
+          }
+        }
       }
     }
   }

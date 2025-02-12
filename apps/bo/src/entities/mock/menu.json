@@ -462,7 +462,7 @@
     {
       "title": "교육운영",
       "roles": "ROLE_ADMIN",
-      "path": "/learning/detail/dkwpdlfs",
+      "path": "/learning",
       "children": [
         {
           "title": "과정 조회",

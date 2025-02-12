@@ -1,22 +1,20 @@
 /* category.module.css */
 .start {
+  .btn_category {
+    @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
+    svg {
+      @apply m-auto;
+    }
+    &.active {
+      @apply border-[var(--primary2)] bg-[var(--primary2)];
+    }
+  }
   &.category_area {
     @apply flex items-center;
-    .btn_category {
-      @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
-      svg {
-        @apply m-auto;
-      }
-      &.active {
-        @apply border-[var(--primary2)] bg-[var(--primary2)];
-      }
-    }
+
     .category {
       z-index: 2;
-      @apply absolute left-[0] top-[116px] hidden w-full rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] opacity-100 shadow-[0px_2px_10px_var(--gray5)];
-      &.active {
-        @apply block opacity-100;
-      }
+      @apply w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     }
 
     .category_container {
@@ -27,7 +25,8 @@
       @apply relative w-[240px];
       h2 {
         @apply flex items-center justify-between bg-[var(--white)];
-        a {
+        a,
+        button {
           @apply body_3_b block flex-1 px-[32px] py-[15px];
         }
         i {
@@ -51,15 +50,32 @@
             }
             .list {
               > li {
-                a {
-                  @apply body_3_b block inline-block w-full px-[32px] py-[15px] text-[var(--white)];
+                @apply flex items-center justify-between;
+                a,
+                button {
+                  @apply body_3_b flex w-full justify-between py-[15px] text-left text-[var(--white)];
+                  span {
+                    @apply inline-block px-[32px];
+                  }
+                  i {
+                    @apply hidden;
+                  }
+                  &.active {
+                    @apply bg-[var(--white)] text-[var(--primary2)];
+                    span {
+                      @apply pr-[8px];
+                    }
+                    i {
+                      @apply inline-block pr-[8px];
+                    }
+                  }
                 }
               }
             }
           }
         }
         .banner_list {
-          @apply mt-auto px-[32px] pb-[34px];
+          @apply px-[32px] py-[34px];
           .banner {
             @apply mt-[8px] block;
           }

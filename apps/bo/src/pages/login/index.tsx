@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
-import { useRouter, createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
-import { useForm, FormProvider } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { zodValidator } from '@learnway/config';
-import { FieldType, Form, DynamicFormField } from '@learnway/ui';
-import { Button, Select, Checkbox, SelectOption } from '@learnway/ui';
+import { Button, Checkbox, DynamicFormField, FieldType, Select, SelectOption } from '@learnway/ui';
 
-import { useLoginUser, useFetchAuthUser } from '../../entities/user';
+import { useFetchAuthUser, useLoginUser } from '../../entities/user';
 
-import { useSetLanguage, useLanguageSelectOptions } from '../../features/platform';
+import { useLanguageSelectOptions, useSetLanguage } from '../../features/platform';
 
 export const Route = createFileRoute('/login/')({
   component: RouteComponent,

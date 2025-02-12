@@ -25,6 +25,8 @@ export const Route = createFileRoute('/login/')({
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchParams = new URLSearchParams(window.location.search);
+  const redirectUrl = searchParams.get('redirect') || '/';
 
   const schema = z.object({
     orgId: z.string(),
@@ -49,7 +51,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (data?.accountId && !inProgress) {
-      router.navigate({ to: '/' });
+      router.navigate({ to: redirectUrl });
     }
   }, [data, inProgress]);
 
@@ -58,7 +60,8 @@ function RouteComponent() {
       onSuccess: async (data, variables, context) => {
         const userLang = data.data.data.userLanguageSetCode;
         await setLanguage(userLang);
-        router.navigate({ to: '/' });
+        // router.navigate({ to: '/' });
+        router.navigate({ to: redirectUrl }); // 저장된 URL로 리다이렉트
       },
     });
   };

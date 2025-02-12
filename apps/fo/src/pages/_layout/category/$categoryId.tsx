@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-
 export const Route = createFileRoute('/_layout/category/$categoryId')({
   component: RouteComponent,
 });

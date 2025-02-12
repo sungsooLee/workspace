@@ -10,6 +10,7 @@ interface PopoverComponentProps extends Primitive.PopoverContentProps {
   popoverContent?: ReactNode;
   className?: string;
   open?: boolean;
+  side?: 'top' | 'right' | 'bottom' | 'left';
   onOpenChange?: (open: boolean) => void;
 }
 
@@ -19,7 +20,7 @@ const PopoverComponent = forwardRef<
 >(({ children, className, popoverContent, open, onOpenChange, ...props }, ref) => {
   return (
     <Primitive.Root open={open} onOpenChange={onOpenChange}>
-      <Primitive.PopoverTrigger className={cn('nlp--popover-trigger')}>
+      <Primitive.PopoverTrigger className={cn('nlp--popover-trigger', className)}>
         {children}
       </Primitive.PopoverTrigger>
       <Primitive.Portal>

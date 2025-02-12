@@ -1,0 +1,4 @@
+/* auth.module.css */
+.auth_box {
+  @apply px-[40px] py-[48px];
+}

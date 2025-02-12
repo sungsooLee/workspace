@@ -23,14 +23,18 @@ function RouteComponent() {
       title: 'Component',
       subItems: [
         { label: '레이아웃', path: '/guide/layout' },
-        { label: '버튼', path: '/guide/buttons' },
-        { label: '알럿,컨펌', path: '/guide/alert' },
-        { label: '모달', path: '/guide/modal' },
+        { label: 'Buttons', path: '/guide/buttons' },
+        { label: 'Alert, Confirm', path: '/guide/alert' },
+        { label: 'Modal', path: '/guide/modal' },
         { label: 'Grid 테이블', path: '/guide/grid' },
         { label: 'Form', path: '/guide/form' },
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
         { label: 'Select', path: '/guide/select' },
+        { label: 'Tootip', path: '/guide/tooltip' },
+        { label: 'Chips', path: '/guide/chips' },
+        { label: 'Switch', path: '/guide/switch' },
+        // { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
         // { label: '이미지', path: '/guide/components/image' },
         // { label: '아이콘', path: '/guide/components/icon' },
@@ -78,7 +82,7 @@ function RouteComponent() {
                     </span>
                     {subItems && !visibleList[title] && (
                       <ul>
-                        {subItems.map(({ label, path, index }) => (
+                        {subItems.map(({ label, path }) => (
                           <li key={path} className={currentPath === path ? 'active' : ''}>
                             {title === 'Pages' ? (
                               <a href={path} target="_blank" rel="noopener noreferrer">

@@ -11,6 +11,13 @@ function RouteComponent() {
       <h2 className="guide_tit2">Checkbox Component Guide</h2>
       <h3 className="guide_tit3">default</h3>
       <Checkbox label="default" />
+      <br />
+      <Checkbox label="default" size="md" />
+      <br />
+      <Checkbox label="default" size="sm" />
+      <br />
+      <Checkbox label="default" size="xs" />
+      <br />
       <h3 className="guide_tit3">disabled</h3>
       <Checkbox label="disabled" disabled />
     </div>

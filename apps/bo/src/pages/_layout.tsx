@@ -20,11 +20,11 @@ function LayoutComponent() {
   const { data } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenantId);
 
-  useEffect(() => {
-    if (!data) {
-      router.navigate({ to: '/login' });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (!data) {
+  //     router.navigate({ to: '/login' });
+  //   }
+  // }, [data]);
 
   useEffect(() => {
     if (!tenant) {

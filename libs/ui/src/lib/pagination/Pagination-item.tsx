@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 import styles from './pagination-item.module.css';
 
@@ -44,22 +44,24 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
     onClick,
     ...other
   }) => {
+    // button icon
+    const icon = {
+      previous: <ChevronLeft />,
+      next: <ChevronRight />,
+      first: <ChevronsLeft />,
+      last: <ChevronsRight />,
+    }[type];
+
     return type === 'start-ellipsis' || type === 'end-ellipsis' ? (
       <span>...</span>
     ) : (
       <>
         <Button
           className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
-          icon={type === 'previous' ? <ChevronLeft /> : type === 'next' ? <ChevronRight /> : null}
+          icon={icon}
           onClick={() => onClick?.()}>
           {type === 'page' && page}
         </Button>
-        {/*{type === 'page' && (*/}
-        {/*  <button>{page}</button>*/}
-        {/*)}*/}
-        {/*{type !== 'page' && (*/}
-        {/*  <button>{type}</button>*/}
-        {/*)}*/}
       </>
     );
   },

@@ -3,44 +3,52 @@ default:
     - docker
 
 stages:
-  # - build
+  - build
   - deploy
 
 # pnpm 관련 캐시 설정
-# cache:
-#   key: ${CI_COMMIT_REF_SLUG}
-#   paths:
-#     - .pnpm-store
-#     - node_modules/
-#     - apps/*/node_modules
-#     - libs/*/node_modules
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .pnpm-store
+    - node_modules/
+    - apps/*/node_modules
+    - libs/*/node_modules
 
-# build:
-#   stage: build
-#   image: node:18
-#   before_script:
-#     #
-#     - npm config set strict-ssl false
-#     #pnpm 설치
-#     - npm install -g pnpm
-#     - npm install -g nx
-#     - pnpm config set store-dir .pnpm-store
-#   script:
-#     - pnpm install --no-frozen-lockfile
-#     - npx nx build fo
-#     # - npx nx build bo
-#   artifacts:
-#     paths:
-#       - dist/apps/fo
-#       # - dist/apps/bo
-#   only:
-#     - main
-#### S3 업로드 권한 요청 중
+build:
+  stage: build
+  image: node:18
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
+      variables:
+        AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
+        AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
+    - when: never
+  before_script:
+    # 넥서스 레지스트리 설정
+    - npm config set registry http://nexus.hmc.co.kr/repository/npm-group/
+    - npm config set strict-ssl true
+    #pnpm 설치
+    - npm install -g pnpm
+    - npm install -g nx
+    - pnpm config set store-dir .pnpm-store
+    - pnpm config set registry http://nexus.hmc.co.kr/repository/npm-group/
+    - pnpm config set strict-peer-dependencies false
+    - pnpm config set auto-install-peers true
+  script:
+    - pnpm install --no-frozen-lockfile
+    - npx nx build fo
+    # - npx nx build bo
+  artifacts:
+    paths:
+      - dist/apps/fo
+      - dist/apps/bo
+
 deploy:
   stage: deploy
   image: docker
-  # dependencies: # build 단계의 artifacts 를 사용.
-  #   - build
+  dependencies: # build 단계의 artifacts 를 사용.
+    - build
   before_script:
     - apk update
     - apk add --no-cache aws-cli
@@ -53,6 +61,7 @@ deploy:
     - aws configure list
     - echo "Syncing to S3..."
     - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
+    # - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:

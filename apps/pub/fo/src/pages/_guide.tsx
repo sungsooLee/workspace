@@ -31,7 +31,7 @@ function RouteComponent() {
     },
     {
       title: 'Pages',
-      subItems: [{ label: '메뉴1', path: '/menu3' }],
+      subItems: [{ label: '로그인', path: '/login' }],
     },
   ];
   const [visibleList, setVisibleList] = useState({});

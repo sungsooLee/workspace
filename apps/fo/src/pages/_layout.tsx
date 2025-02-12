@@ -23,10 +23,11 @@ export const Route = createFileRoute('/_layout')({
 function LayoutComponent() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const currentPath = router.state.location.pathname;
 
   const DEFAULT_THEME = 'default';
 
-  const { data } = useFetchAuthUser();
+  const { data, isLoading } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenantId);
   const { logout } = useLogoutUser();
   const { set: setLanguage } = useSetLanguage();
@@ -35,10 +36,13 @@ function LayoutComponent() {
   const { data: de } = useLabelByCode(CODE_GROUP.LANGUAGE_CODE, 'de');
 
   useEffect(() => {
-    if (!data) {
-      router.navigate({ to: '/login' });
+    if (!isLoading && !data && currentPath !== '/login') {
+      router.navigate({
+        to: '/login',
+        search: { redirect: currentPath }, // 현재 URL을 쿼리 파라미터로 전달
+      });
     }
-  }, [data]);
+  }, [data, isLoading, currentPath]);
 
   useEffect(() => {
     if (!tenant) {
@@ -78,6 +82,9 @@ function LayoutComponent() {
       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
   );
 
+  if (isLoading) {
+    return <div>Loading...</div>; // 또는 로딩 컴포넌트
+  }
   return (
     <div className={`${styles.start} ${styles.layout_wrap}`}>
       <GNB />
