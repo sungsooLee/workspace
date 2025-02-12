@@ -22,6 +22,7 @@ export * from './lib/carousel/image-carousel';
 
 // checkbox
 export * from './lib/checkbox/checkbox';
+export * from './lib/checkbox/form-checkbox';
 
 // chips
 export * from './lib/chips/chips';
@@ -30,6 +31,7 @@ export * from './lib/chips/chip-list';
 // date-picker
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
+export * from './lib/date-picker/form-date-range-picker';
 
 // editor
 export * from './lib/editor/hooks/editor.hook';
@@ -59,6 +61,7 @@ export * from './lib/modal/modal-context';
 
 // radio
 export * from './lib/radio/radio';
+export * from './lib/radio/form-radio-group';
 
 // select
 export * from './lib/select/select';
