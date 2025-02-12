@@ -86,6 +86,7 @@ function RouteComponent() {
 
   return (
     <>
+      {/* main_contents */}
       <div className={styles.main_contents}>
         {/* row */}
         <div className="row">
@@ -622,6 +623,7 @@ function RouteComponent() {
           </div>
         </div>
       </div>
+      <hr className={styles.vertical_line} />
       {/* sub_contents */}
       <div className={styles.sub_contents}>
         {/* btn_list */}

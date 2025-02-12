@@ -11,9 +11,6 @@
     @apply mt-[16px] box-border h-[calc(100vh-260px)] w-full min-w-[1576px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pb-[18px] pt-[23px];
     .content {
       @apply scrollbar relative flex h-[calc(100vh-300px)] items-stretch overflow-hidden overflow-y-auto px-[32px];
-      &::after {
-        @apply sticky right-[448px] top-0 flex h-full w-[1px] bg-[var(--gray4)] content-[''];
-      }
     }
   }
 
