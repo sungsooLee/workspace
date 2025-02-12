@@ -47,7 +47,7 @@
     "content-length": "471",
     "content-type": "application/json;charset=utf-8",
     "date": "Tue, 10 Dec 2024 02:33:37 GMT",
-    "expires": "0",
+    "expires": "120",
     "pragma": "no-cache",
     "refresh-token-exp": "1733808017934",
     "x-content-type-options": "nosniff",

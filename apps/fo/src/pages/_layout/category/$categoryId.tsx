@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-
 export const Route = createFileRoute('/_layout/category/$categoryId')({
   component: RouteComponent,
 });
@@ -7,14 +6,5 @@ export const Route = createFileRoute('/_layout/category/$categoryId')({
 function RouteComponent() {
   const { categoryId } = Route.useParams();
 
-  return (
-    <div>
-      {/* <div className={styles.breadcrums}>
-        <div className={styles.inner}>
-          <Breadcrumbs />
-        </div>
-      </div> */}
-      Hello "/_layout/category/$categoryId"!
-    </div>
-  );
+  return <div>Hello "/_layout/category/$categoryId"!</div>;
 }

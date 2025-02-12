@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import styles from './join.module.css';
+import styles from './signup.module.css';
 
-export const Route = createFileRoute('/_auth/join')({
+export const Route = createFileRoute('/_auth/signup')({
   component: RouteComponent,
 });
 

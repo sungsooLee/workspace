@@ -3,6 +3,8 @@ import { Input, Checkbox, Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
+import authStyles from './auth.module.css';
+import formStyles from '../../assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
@@ -15,35 +17,35 @@ function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.auth_wrap}`}>
       <div className={styles.auth_box}>
-        <div className="form_row">
-          <div className="form_item">
-            <label htmlFor="name5" className="form_label">
-              <span className="form_text">아이디/이메일</span>
+        <div className={formStyles.form_row}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>아이디/이메일</span>
             </label>
-            <div className="input_box">
+            <div className={formStyles.input_box}>
               <Input
                 id="name5"
                 type="text"
                 value=""
                 placeholder="아이디 또는 회사 이메일을 입력하세요."
-                className="lg"
+                className={formStyles.lg}
               />
             </div>
           </div>
         </div>
 
-        <div className="form_row">
-          <div className="form_item">
-            <label htmlFor="name5" className="form_label">
-              <span className="form_text">비밀번호</span>
+        <div className={formStyles.form_row}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>비밀번호</span>
             </label>
-            <div className="input_box">
+            <div className={formStyles.input_box}>
               <Input
                 id="name5"
                 type="password"
                 value=""
                 placeholder="비밀번호를 입력하세요."
-                className="lg"
+                className={formStyles.lg}
               />
             </div>
           </div>

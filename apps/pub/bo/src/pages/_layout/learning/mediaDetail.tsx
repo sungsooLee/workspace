@@ -15,7 +15,8 @@ import {
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
-import styles from './mediaDetail.module.css';
+import styles from './page-content.module.css';
+import movieInfoStyles from './movie-info.module.css';
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaDetail')({
@@ -85,6 +86,7 @@ function RouteComponent() {
 
   return (
     <>
+      {/* main_contents */}
       <div className={styles.main_contents}>
         {/* row */}
         <div className="row">
@@ -303,7 +305,7 @@ function RouteComponent() {
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
               </Tooltip>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {'동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'}
               </span>
             </label>
@@ -394,7 +396,7 @@ function RouteComponent() {
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {'해당 동영상으로 교육 과정을 개설할 수 있습니다.'}
               </span>
             </label>
@@ -413,7 +415,7 @@ function RouteComponent() {
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {
                   '동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 있어요.'
                 }
@@ -569,7 +571,7 @@ function RouteComponent() {
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
               </span>
             </label>
@@ -588,7 +590,7 @@ function RouteComponent() {
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {
                   '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
                 }
@@ -602,102 +604,48 @@ function RouteComponent() {
         {/* row */}
         <div className="row no_line">
           {/* form_item */}
-          <div className={styles.form_item}>
+          <div className={cn(styles.form_item, styles.type2)}>
             <label htmlFor="name-1-18" className={styles.form_label}>
               <span className={styles.form_text}>보안 확인</span>
               {/* 필수 케이스 */}
               <span className={cn(styles.status, styles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={styles.sub_test}>
+              <span className={styles.sub_text}>
                 {
                   '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다.'
                 }
               </span>
             </label>
-            <div className={cn(styles.input_box, styles.type2)}>
+            <div className={styles.input_box}>
               <Checkbox className={styles.check} />
             </div>
           </div>
         </div>
-        {/* row */}
-        <div className="row">
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name3" className={styles.form_label}>
-              <span className={styles.form_text}>error</span>
-              {/* error 케이스 */}
-              <span className={cn(styles.status, styles.error)}>
-                <IcoFormRequired width={12} height={12} />
-              </span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
-            </div>
-            {/* 에러인경우 : error 클래스 추가 */}
-            <p className={cn(styles.guide_text, styles.error)}>에러메시지</p>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row">
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name4" className={styles.form_label}>
-              <span className={styles.form_text}>Password</span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name4" type="password" placeholder="" value="●●●●" />
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row">
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name5" className={styles.form_label}>
-              <span className={styles.form_text}>readonly</span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name5" type="text" placeholder="입력" readOnly />
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row">
-          {/* form_item */}
-          <div className={styles.form_item}>
-            <label htmlFor="name5" className={styles.form_label}>
-              <span className={styles.form_text}>로그인 Case</span>
-            </label>
-            <div className={styles.input_box}>
-              <Input id="name5" type="text" value="text" placeholder="입력" className="lg" />
-            </div>
-            <p className={cn(styles.guide_text)}>기본 메시지</p>
-          </div>
-        </div>
       </div>
+      <hr className={styles.vertical_line} />
       {/* sub_contents */}
       <div className={styles.sub_contents}>
         {/* btn_list */}
-        <ul className={styles.btn_list}>
+        <ul className={movieInfoStyles.btn_list}>
           {buttons.map((btn, index) => (
             <li>
-              <Button key={index} onClick={btn.onClick} className={styles.btn_text}>
+              <Button key={index} onClick={btn.onClick} className={movieInfoStyles.btn_text}>
                 {btn.label}
               </Button>
             </li>
           ))}
         </ul>
         {/* media(비디오 영역) */}
-        <div className={styles.media}>
+        <div className={movieInfoStyles.media}>
           <img src={mediaImg} width="100%" alt="" />
         </div>
         {/* info_list */}
-        <ul className={styles.info_list}>
+        <ul className={movieInfoStyles.info_list}>
           {infoList.map((item, index) => (
             <li key={index}>
-              <span className={styles.title}>{item.title}</span>
-              <span className={styles.text}>{item.text}</span>
+              <span className={movieInfoStyles.title}>{item.title}</span>
+              <span className={movieInfoStyles.text}>{item.text}</span>
             </li>
           ))}
         </ul>

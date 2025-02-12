@@ -1,5 +1,2 @@
 .nlp--input {
-  .input {
-    @apply border-[var(--gray5)];
-  }
 }

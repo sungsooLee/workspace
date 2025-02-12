@@ -1,12 +1,7 @@
 /* _common.css 공통 */
 
-:root {
-  --img-path: '../images/';
-}
-
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
 }
 
 html {
@@ -33,6 +28,7 @@ body {
   font-weight: 400;
   color: var(--gray9);
   line-height: 160%;
+  @apply scrollbar;
 }
 
 strong {

@@ -23,18 +23,22 @@ const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
   }, [router.history, onOpenChange]);
 
   return (
-    <div className={`${styles.start} ${styles.category_area}`}>
+    <div className={`${styles.start} `}>
       <Popover
         open={isOpen}
         onOpenChange={onOpenChange}
-        popoverContent={<CategoryContent isOpen={isOpen} />}>
-        <Button onlyIcon className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}>
-          {isOpen ? (
-            <IcoXclose width={24} height={24} stroke="#ffffff" />
-          ) : (
-            <IcoMenu01 width={24} height={24} stroke="#131C30" />
-          )}
-        </Button>
+        className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
+        popoverContent={<CategoryContent isOpen={isOpen} />}
+        side="bottom"
+        align="start"
+        sideOffset={15}>
+        {/* <Button onlyIcon className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}> */}
+        {isOpen ? (
+          <IcoXclose width={24} height={24} stroke="#ffffff" />
+        ) : (
+          <IcoMenu01 width={24} height={24} stroke="#131C30" />
+        )}
+        {/* </Button> */}
       </Popover>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { IcoXclose, IcoArrowForward } from '@learnway/icons';
-import { Button } from '@learnway/ui';
+import { Button, Chips } from '@learnway/ui';
 
 import { Category } from '../../../types/entities/category';
 import { useCategories } from '../services/category.service';
@@ -16,7 +16,6 @@ interface CategoryBadgeListProps {
 
 export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) {
   const { handleCategoryClick } = useCategoryNavigation();
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
@@ -61,14 +60,19 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
     onClose?.(categoryId);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
-    };
+  const handleDelete = (categoryId: number) => {
+    // 최근 방문 목록에서 제거
+    const updatedIds = recentCategories
+      .filter((cat) => cat.categoryId !== categoryId)
+      .map((cat) => cat.categoryId);
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    localStorage.setItem('recentCategories', JSON.stringify(updatedIds));
+    setRecentCategories((prev) => prev.filter((cat) => cat.categoryId !== categoryId));
+    // onClose?.(categoryId);
+  };
+  const handleClick = (data: Category) => {
+    if (data) handleCategoryClick(data);
+  };
 
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
@@ -79,13 +83,14 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
         slidesPerView="auto"
         loop={false}
         modules={[Navigation]}
-        simulateTouch={isMobile}
-        allowTouchMove={isMobile}
         className={styles.recent_swiper}>
         <div className={styles.lists}>
           {recentCategories.map((item) => (
-            <SwiperSlide key={item.categoryId} className={styles.slide}>
-              <div className={styles.item}>
+            <SwiperSlide
+              key={item.categoryId}
+              className={styles.slide}
+              onClick={() => handleClick(item)}>
+              {/* <div className={styles.item}>
                 <Button className={styles.txt} onClick={() => handleCategoryClick(item)}>
                   {item.name}
                 </Button>
@@ -95,7 +100,12 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
                   className={styles.remove}>
                   <IcoXclose width={16} height={16} stroke="#131C30" />
                 </Button>
-              </div>
+              </div> */}
+              <Chips
+                className={styles.item}
+                option={{ label: item.name, value: item.categoryId + '' }}
+                onDelete={() => handleDelete(item.categoryId)}
+              />
             </SwiperSlide>
           ))}
         </div>

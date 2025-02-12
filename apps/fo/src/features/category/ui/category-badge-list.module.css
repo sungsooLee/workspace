@@ -12,11 +12,11 @@
       @apply flex w-auto items-center justify-start gap-[8px] overflow-hidden whitespace-nowrap;
       > .item {
         @apply body_3_r flex h-[32px] max-w-[143px] items-center rounded-[8px] bg-[var(--gray1)] pl-[12px] pr-[10px] text-[var(--gray8)];
-        .txt {
-          @apply body_3_r inline-block overflow-hidden text-ellipsis whitespace-nowrap;
-        }
         .remove {
           @apply ml-[4px];
+        }
+        svg {
+          @apply ml-[4px] h-[auto] w-[16px];
         }
       }
     }
@@ -47,6 +47,9 @@
       svg {
         @apply rotate-[180deg];
       }
+    }
+    .no_visits {
+      @apply w-auto text-[1.4rem] font-medium text-[var(--gray7)];
     }
   }
 }

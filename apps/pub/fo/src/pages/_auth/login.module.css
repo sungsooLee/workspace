@@ -3,55 +3,55 @@
   &.auth_wrap {
     .auth_box {
       @apply px-[40px] pt-[48px];
-      .login_info {
-        @apply flex items-center justify-between;
-        .id_save {
-          label {
-            @apply text-[1.4rem] text-[var(--gray8)];
-          }
-        }
-        .info {
-          @apply body_3_r flex gap-[24px] text-[var(--gray8)];
-          button {
-            @apply underline;
-          }
+    }
+    .login_info {
+      @apply flex items-center justify-between;
+      .id_save {
+        label {
+          @apply text-[1.4rem] text-[var(--gray8)];
         }
       }
-      .btn_box {
-        @apply mt-[40px];
-        .btn {
-          @apply w-full;
-        }
-      }
-      .sns_login {
-        @apply relative mt-[40px];
-        .list {
-          @apply mt-[16px] flex items-center justify-center gap-[24px];
-          > li {
-            @apply h-[48px] w-[48px];
-          }
-        }
-        &::before {
-          @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
-          z-index: 0;
-        }
-        .tit_sns {
-          @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray8)];
-          z-index: 2;
-        }
-        .noti {
-          @apply body_bo_2_r mt-[16px] text-[var(--gray7)];
+      .info {
+        @apply body_3_r flex gap-[24px] text-[var(--gray8)];
+        button {
+          @apply underline;
         }
       }
     }
-    .login_guide {
-      @apply body_3_r mt-[48px] flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray8)];
-      .btn_join {
-        @apply text-[var(--secondary3)];
+    .btn_box {
+      @apply mt-[40px];
+      .btn {
+        @apply w-full;
       }
-      svg {
-        @apply mr-[4px];
+    }
+    .sns_login {
+      @apply relative mt-[40px];
+      .list {
+        @apply mt-[16px] flex items-center justify-center gap-[24px];
+        > li {
+          @apply h-[48px] w-[48px];
+        }
       }
+      &::before {
+        @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
+        z-index: 0;
+      }
+      .tit_sns {
+        @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray8)];
+        z-index: 2;
+      }
+      .noti {
+        @apply body_bo_2_r mt-[16px] text-[var(--gray7)];
+      }
+    }
+  }
+  .login_guide {
+    @apply body_3_r mt-[48px] flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray8)];
+    .btn_join {
+      @apply text-[var(--secondary3)];
+    }
+    svg {
+      @apply mr-[4px];
     }
   }
 }
