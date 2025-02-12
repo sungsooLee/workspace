@@ -141,23 +141,3 @@
     }
   }
 }
-/* file upload */
-.btn_upload {
-  .btn_file {
-    @apply relative flex h-[76px] w-[128px] flex-col justify-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
-    .btn_label {
-      @apply mt-[4px] flex;
-    }
-  }
-  .input_file {
-    @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
-  }
-}
-
-/* Swiper */
-.thumb_swiper {
-  @apply flex w-full justify-start;
-  .slide {
-    @apply flex w-auto items-center justify-start gap-[12px] overflow-hidden whitespace-nowrap;
-  }
-}
