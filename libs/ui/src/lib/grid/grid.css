@@ -1,5 +1,5 @@
 .grid_table {
-  @apply overflow-y-auto overflow-x-hidden bg-[var(--white)];
+  @apply scrollbar overflow-auto bg-[var(--white)];
   border: 1px solid var(--gray6);
   .thead_th {
     @apply justify-start bg-[var(--gray1)] text-[14px] font-bold text-[#5C636E];
@@ -10,33 +10,38 @@
     .btn_filter {
     }
   }
-  tbody tr td {
-    @apply min-h-[40px] items-center px-[8px] py-[4px] text-[14px] font-normal text-[var(--gray7)];
-    border-left: 1px solid var(--gray4);
-    border-bottom: 1px solid var(--gray4);
-    &:first-child {
-      border-left: 0;
+  tbody {
+    tr td {
+      @apply min-h-[40px] items-center px-[8px] py-[4px] text-[14px] font-normal text-[var(--gray7)];
+      border-left: 1px solid var(--gray4);
+      border-bottom: 1px solid var(--gray4);
+      &:first-child {
+        border-left: 0;
+      }
     }
   }
-  &::-webkit-scrollbar {
-    @apply h-[64px] w-[12px] bg-white;
-  }
-  &::-webkit-scrollbar-thumb {
-    @apply rounded-full border-[4px] border-solid border-transparent bg-[var(--gray4)] bg-clip-padding;
-  }
-  &::-webkit-scrollbar-track {
-    @apply bg-white;
-  }
 }
-.select_item {
-  @apply box-border min-h-[32px] rounded-[4px] text-[14px] font-normal text-[var(--gray8)];
-  border: 1px solid var(--gray4);
-}
+/* Paging */
 .paging_wrap {
-  button {
-    &:disabled {
+  @apply relative my-[8px] flex justify-between;
+  .select_item {
+    @apply w-[120px];
+  }
+  .btn_wrap {
+    @apply mx-auto flex;
+    button {
+      @apply inline-flex !justify-center;
+      &:disabled {
+        svg {
+          @apply fill-[var(--gray5)];
+        }
+      }
     }
   }
+}
+
+.count_wrap {
+  @apply flex w-[120px] items-center text-[14px] text-[var(--gray7)];
 }
 .title_wrap {
 }

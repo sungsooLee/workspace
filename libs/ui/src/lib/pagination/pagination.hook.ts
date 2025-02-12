@@ -89,8 +89,8 @@ export default function usePagination(props: UsePaginationProps) {
     hidePrevButton = false,
     onChange: handleChange,
     page: pageProp,
-    showFirstButton = false,
-    showLastButton = false,
+    showFirstButton = true,
+    showLastButton = true,
     ...other
   } = props;
 

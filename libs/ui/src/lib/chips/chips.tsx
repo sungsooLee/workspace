@@ -1,21 +1,20 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { cn } from '@learnway/shared';
-
-import { SelectOption } from '../select/type';
 import { IcoXclose } from '@learnway/icons';
 
+import { SelectOption } from '../select/type';
 import styles from './chips.module.css';
 import { Button } from '../button/button';
 
-export interface ChipsComponentProps {
+export interface ChipsComponentProps extends PropsWithChildren {
   option: SelectOption;
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
-  typeBtn?: boolean;
   prefixCharacter?: string;
   hideCloseButton?: boolean;
+  onClick?: (option: SelectOption) => void;
   onDelete?: (option: SelectOption) => void;
 }
 
@@ -24,13 +23,24 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     className,
     variant,
     size,
-    typeBtn,
     prefixCharacter,
+    onClick,
     onDelete,
     hideCloseButton,
     option: { label, value },
     ...props
   }) => {
+    // 버튼 모드 사용 여부 - onClick 설정 했을때만 버튼으로 판단 (button style 조정시 사용)
+    const isButtonMode = !!onClick;
+
+    const handleClick = (event: React.MouseEvent) => {
+      const option: SelectOption = {
+        label,
+        value,
+      };
+      onClick?.(option);
+    };
+
     const handleDeleteClick = (event: React.MouseEvent) => {
       event.stopPropagation(); // onClick 실행 방지
       const option: SelectOption = {
@@ -41,16 +51,15 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     };
 
     return (
-      <span {...props} className={cn(styles.start, styles.chips, className, 'nlp--chips')}>
+      <span
+        {...props}
+        className={cn(styles.start, styles.chips, className, 'nlp--chips')}
+        onClick={handleClick}>
         {/* prefix character */}
         {prefixCharacter}
 
         {/* label */}
-        {!typeBtn ? (
-          <span className={styles.label}>{label}</span>
-        ) : (
-          <Button className={styles.label}>{label}</Button>
-        )}
+        <Button className={cn(styles.label, isButtonMode && styles.button_mode)}>{label}</Button>
 
         {/* close button */}
         {!hideCloseButton && (

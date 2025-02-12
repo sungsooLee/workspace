@@ -8,24 +8,45 @@ export default {
   title: 'Components/NumberInput',
   component: NumberInput,
   tags: ['autodocs'],
+  args: {},
   argTypes: {},
 } as Meta;
 type Story = StoryObj<typeof NumberInput>;
 
-const BaseFormWrapper: React.FC<any> = (args) => {
-  const [value, setValue] = React.useState(args.value || '');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    args.onChange?.(e);
+// Number
+export const Template: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
   };
-
-  return <NumberInput {...args} value={value} onChange={handleChange} />;
+  return <NumberInput {...args} onChange={handleChange} />;
 };
+Template.storyName = 'Text';
+Template.args = {};
 
-export const Default: Story = {
-  args: {
-    placeholder: '값을 입력하세요.',
-  },
-  render: (args) => <BaseFormWrapper {...args} />,
+// Number
+export const TemplateNumber: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
+  };
+  return <NumberInput {...args} numeric onChange={handleChange} />;
 };
+TemplateNumber.storyName = 'Number';
+TemplateNumber.args = {};
+
+// Mask
+export const TemplateMask: any = (args: any) => {
+  const handleChange = (value: any) => {
+    console.log(value);
+  };
+  return (
+    <NumberInput
+      {...args}
+      mask={'_'}
+      format={'###-####-####'}
+      allowEmptyFormatting
+      onChange={handleChange}
+    />
+  );
+};
+TemplateMask.storyName = 'Mask';
+TemplateMask.args = {};

@@ -2,17 +2,41 @@
   @apply relative inline-flex items-center;
 
   .checkbox_root {
-    @apply flex h-[2.4rem] w-[2.4rem] items-center justify-center rounded-[4px] bg-[var(--white)];
+    @apply flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--white)];
     border: 1px solid var(--gray5);
     &[data-state='checked'] {
       .checkbox_indicator {
-        @apply absolute left-0 top-1/2 -mt-[12px] flex h-[2.4rem] w-[2.4rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
+        @apply absolute left-0 top-0 flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
         border-color: var(--secondary1);
       }
     }
     &:disabled {
       @apply bg-[var(--gray2)];
       border-color: var(--gray4);
+    }
+    &.md {
+      @apply h-[1.6rem] w-[1.6rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.6rem] w-[1.6rem];
+        }
+      }
+    }
+    &.sm {
+      @apply h-[1.4rem] w-[1.4rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.4rem] w-[1.4rem];
+        }
+      }
+    }
+    &.xs {
+      @apply h-[1rem] w-[1rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1rem] w-[1rem];
+        }
+      }
     }
   }
   .label {

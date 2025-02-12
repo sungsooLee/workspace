@@ -51,7 +51,7 @@ const LanguageComponent = () => {
       popoverContent={<PopoverContent />}
       className={styles.btn_language}
       side="bottom"
-      align="center"
+      align="end"
       sideOffset={5}>
       <span className={styles.select}>{'KR'}</span>
       <IcoArrowDown width={16} height={16} stroke="#131C30" />
