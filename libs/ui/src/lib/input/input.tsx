@@ -12,7 +12,8 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
   placeHolder?: string;
   unitText?: string;
-  onChange?: (value: any) => void;
+  // onChange?: (value: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // for text type
   showCounter?: boolean; // 입력글자수/최대입력가능글자수 표시 여부
   // for mask type
@@ -39,6 +40,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       mask,
       format = '',
       allowEmptyFormatting = true,
+      onKeyDown,
       ...props
     },
     ref,
@@ -52,7 +54,12 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
     useEffect(() => {
       if (value !== inputValue) {
-        onChange?.(inputValue);
+        const event = {
+          target: {
+            value: inputValue,
+          },
+        } as React.ChangeEvent<HTMLInputElement>;
+        onChange?.(event);
       }
     }, [inputValue]);
 
@@ -113,6 +120,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             placeholder={placeHolder}
             className={cn(styles.input, className, borderNone ? styles.bd_none : '')}
+            onKeyDown={onKeyDown}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
