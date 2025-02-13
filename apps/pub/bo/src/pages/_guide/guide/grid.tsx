@@ -231,28 +231,52 @@ function RouteComponent() {
     <div className="content">
       <div className="nlp--titlewrap">
         <h2 className="guide_tit2">Grid Table Component Guide(작업중)</h2>
-        <p className="loc react">케이스가 많아 케이스 추가될때 해당 스타일 적용 필요</p>
-        <br />
-        <br />
-        <div className="title_item">
-          <strong className="title">{`타이틀`}</strong>
-          <span className="count">
-            {10}
-            <span className="unit">건</span>
-          </span>
+        <p className="loc react">/libs/ui/src/lib/grid/</p>
+        <p className="info">케이스가 많아 케이스 추가될때 해당 스타일 적용 필요</p>
+        <div className="code_example">
+          <pre className="code_block">
+            <code>
+              {`// 초기 import
+import { Grid } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+<Grid
+  data={data}
+  columns={columns}
+  pagination={{
+    pageSize,
+    pageIndex,
+    totalRows: 100,
+    onPageChange: setPageIndex,
+    onPageSizeChange: setPageSize,
+  }}
+/>
+`}
+            </code>
+          </pre>
         </div>
+        <div className="group">
+          <h3 className="guide_tit3">Grid Example</h3>
+          <div className="title_item">
+            <strong className="title">{`타이틀`}</strong>
+            <span className="count">
+              {10}
+              <span className="unit">건</span>
+            </span>
+          </div>
+        </div>
+        <Grid
+          data={data}
+          columns={columns}
+          pagination={{
+            pageSize,
+            pageIndex,
+            totalRows: 100,
+            onPageChange: setPageIndex,
+            onPageSizeChange: setPageSize,
+          }}
+        />
       </div>
-      <Grid
-        data={data}
-        columns={columns}
-        pagination={{
-          pageSize,
-          pageIndex,
-          totalRows: 100,
-          onPageChange: setPageIndex,
-          onPageSizeChange: setPageSize,
-        }}
-      />
     </div>
   );
 }
