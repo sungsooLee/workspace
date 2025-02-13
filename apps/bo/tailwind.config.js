@@ -17,6 +17,7 @@ module.exports = {
   plugins: [
     require('./src/assets/tailwind-plugins/typo.plugin'),
     function ({ addComponents }) {
+<<<<<<< HEAD
       const baseTitle = {
         letterSpacing: '-0.3px',
         lineHeight: '140%',
@@ -117,6 +118,9 @@ module.exports = {
           whiteSpace: 'nowrap',
         },
       });
+=======
+      addComponents({});
+>>>>>>> feature/pub/dev
     },
   ],
 };

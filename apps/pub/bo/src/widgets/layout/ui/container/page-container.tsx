@@ -17,7 +17,7 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
       <div className={styles.inner}>
         {/* title_wrap */}
         <div className={styles.title_wrap}>
-          <h3 className={styles.title}>동영상 상세</h3>
+          <h3 className="title_bo_1_b">동영상 상세</h3>
           <div className={styles.btn_wrap}>
             <Button variant="point" size="sm">
               매핑과정 보기

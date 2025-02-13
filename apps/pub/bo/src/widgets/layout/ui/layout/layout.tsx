@@ -19,7 +19,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     <div className={`${styles.start} ${styles.container}`}>
       <div className={styles.container_inner}>
         <LNB />
-        <main>
+        <main className={styles.main}>
           <PageContainer>{children}</PageContainer>
         </main>
       </div>

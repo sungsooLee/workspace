@@ -50,7 +50,12 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 
 /* 공통 레이아웃(정렬) */
+.lnb-open main {
+  /* lnb open */
+  @apply max-w-[calc(100vw-263px)];
+}
 .row {
+  /* form */
   @apply flex w-full gap-[32px];
   .row {
     @apply mt-[16px];
@@ -58,7 +63,7 @@ body[data-scroll-locked][data-scroll-locked] {
   & + .row {
     @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
     &.no_line {
-      @apply border-0;
+      @apply border-0 pt-0;
     }
   }
 }

@@ -146,6 +146,9 @@
           @apply flex items-center;
           .desc {
             @apply flex items-center gap-[20px];
+            &.col {
+              @apply flex-wrap justify-start;
+            }
           }
           padding: 20px;
           border: 1px dashed #ccc;
