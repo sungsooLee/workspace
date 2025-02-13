@@ -113,3 +113,6 @@ export * from './lib/apply-form-builder';
 
 // shadcn (주석처리 예정)
 export * from './lib/shadcn/form';
+
+// 임시
+export * from './lib/dynamic-form-field/dynamic-form-field';
