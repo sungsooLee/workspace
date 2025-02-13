@@ -52,7 +52,10 @@ body[data-scroll-locked][data-scroll-locked] {
 /* 공통 레이아웃(정렬) */
 .lnb-open main {
   /* lnb open */
-  max-width: calc(100vw - 263px);
+  @apply max-w-[calc(100vw-263px)];
+}
+.row_wrap {
+  @apply rounded-[8px] border border-solid border-[var(--gray5)] p-[16px];
 }
 .row {
   /* form */
