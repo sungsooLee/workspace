@@ -28,7 +28,7 @@ module.exports = {
           '&::-webkit-scrollbar': {
             height: '12px',
             width: '12px',
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
           },
           '&::-webkit-scrollbar-thumb': {
             borderRadius: '9999px',
@@ -39,7 +39,7 @@ module.exports = {
             backgroundClip: 'padding-box',
           },
           '&::-webkit-scrollbar-track': {
-            backgroundColor: '#fff',
+            backgroundColor: 'transparents',
           },
           '.scroll-smooth': {
             scrollBehavior: 'smooth',

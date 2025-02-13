@@ -15,7 +15,7 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
   ({ size = 'md', resize, border, className, ...props }, ref) => {
     return (
-      <div>
+      <div className={styles.textarea_wrap}>
         {/* textarea */}
         <textarea
           className={cn(
@@ -30,7 +30,9 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
           {...props}
         />
         {/* 입력 글자수 */}
-        <span>20/100</span>
+        <p className={styles.text_limit}>
+          <span className={styles.num}>20</span>/100
+        </p>
       </div>
     );
   },

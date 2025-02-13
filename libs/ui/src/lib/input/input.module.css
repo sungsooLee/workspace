@@ -38,6 +38,12 @@
   }
 }
 
+.button_wrap {
+  @apply absolute right-[10px] top-1/2 flex min-w-[75px] -translate-y-1/2 flex-row justify-end gap-2;
+  .count {
+    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+  }
+}
 
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];
@@ -46,9 +52,6 @@
   }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
-  }
-  .count {
-    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   .select_option {
     @apply min-w-[132px];

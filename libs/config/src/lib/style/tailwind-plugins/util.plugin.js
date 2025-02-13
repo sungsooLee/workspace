@@ -22,7 +22,7 @@ module.exports = plugin(function ({ addUtilities, theme }) {
       '&::-webkit-scrollbar': {
         height: '12px',
         width: '12px',
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
       },
       '&::-webkit-scrollbar-thumb': {
         borderRadius: '9999px',
@@ -33,7 +33,7 @@ module.exports = plugin(function ({ addUtilities, theme }) {
         backgroundClip: 'padding-box',
       },
       '&::-webkit-scrollbar-track': {
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
       },
       '.scroll-smooth': {
         scrollBehavior: 'smooth',
