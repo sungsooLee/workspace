@@ -108,7 +108,7 @@
 .form_label {
   @apply block overflow-hidden;
   .form_text {
-    @apply label_1_b;
+    @apply body_3_b;
     &.sm {
       @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
       & + .status {

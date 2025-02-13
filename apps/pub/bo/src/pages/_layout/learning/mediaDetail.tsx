@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Input,
@@ -101,8 +101,8 @@ function RouteComponent() {
     { label: '현대자동차 F', value: 'F' },
   ];
 
-  //
-  const [activeButtons, setActiveButtons] = useState<number[]>([1]);
+  // Thumb 이미지 체크 버튼
+  const [activeButtons, setActiveButtons] = useState<number[]>([1]); // active 버튼 index
 
   const handleButtonClick = (id: number) => {
     setActiveButtons((prev) => {
@@ -118,6 +118,14 @@ function RouteComponent() {
   // Swiper
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
+  const [isAtStart, setIsAtStart] = useState(true); // left edge Check
+  const [isAtEnd, setIsAtEnd] = useState(false); // right edge Check
+
+  const handleSlideChange = (swiper: any) => {
+    // 슬라이드가 변경될 때마다 호출됩니다.
+    setIsAtStart(swiper.isBeginning); // 왼쪽 끝인지 확인
+    setIsAtEnd(swiper.isEnd); // 오른쪽 끝인지 확인
+  };
 
   return (
     <>
@@ -334,7 +342,8 @@ function RouteComponent() {
                   freeMode={true}
                   grabCursor={true}
                   modules={[FreeMode]}
-                  className={thumbStyles.thumb_swiper}>
+                  className={thumbStyles.thumb_swiper}
+                  onSlideChange={handleSlideChange}>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div className={thumbStyles.thumb_item}>
                       <Button className={thumbStyles.btn_file}>
@@ -484,10 +493,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(7) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(6)}
+                        onClick={() => handleButtonClick(7)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}
@@ -504,10 +513,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(8) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(6)}
+                        onClick={() => handleButtonClick(8)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}
@@ -524,10 +533,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(9) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(6)}
+                        onClick={() => handleButtonClick(9)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}

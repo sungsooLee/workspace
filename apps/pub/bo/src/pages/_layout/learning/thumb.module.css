@@ -1,6 +1,6 @@
 /* thumb.module.css */
 .thumb_wrap {
-  @apply overflow-hidden;
+  @apply relative overflow-hidden;
   .thumb_swiper {
     @apply w-full;
     .slide {
@@ -54,6 +54,26 @@
       }
     }
   }
+  /* &::before,
+  &::after {
+    @apply absolute top-0 z-20 h-[76px] w-[60px] bg-gradient-to-r from-white/70 to-transparent content-[''];
+  }
+  &.edge_left {
+    &::before {
+      @apply hidden;
+    }
+    &::after {
+      @apply right-0 block;
+    }
+  }
+  &.edge_right {
+    &::before {
+      @apply left-0 block;
+    }
+    &::after {
+      @apply hidden;
+    }
+  } */
 }
 /* file upload */
 .thumb_item {
