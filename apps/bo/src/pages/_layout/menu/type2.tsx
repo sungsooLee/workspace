@@ -1,20 +1,23 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { z, ZodTypeAny } from 'zod';
+import { z } from 'zod';
 import { t } from 'i18next';
-import { Button, Checkbox } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
+import get from 'lodash/get';
 
-import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
+import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import DynamicFormField from '../../../shared/ui/dynamic-form-field';
+import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { ELearningCategory } from '../../../shared/ui/dynamic-form-field/dialogs/e-learning-category';
+import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
+import { LowerGubun } from '../../../shared/ui/dynamic-form-field/dialogs/lower-gubun';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -22,7 +25,7 @@ export const Route = createFileRoute('/_layout/menu/type2')({
 
 function RouteComponent() {
   /* react hook form custom */
-  const { provider, onSubmit, reset, control } = useCustomForm(detailConfig);
+  const { provider, onSubmit, reset, control } = useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
@@ -38,6 +41,10 @@ function RouteComponent() {
   const handleOnReset = () => {
     reset();
   };
+  const handleOnChange = () => {
+    reset({ contentName: '1234' });
+  };
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
@@ -45,7 +52,7 @@ function RouteComponent() {
           <Button type="submit" variant="point" size="sm">
             저장
           </Button>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={handleOnChange}>
             공유이력 보기
           </Button>
           <Button type={'button'} variant="point" size="sm">
@@ -86,14 +93,21 @@ function RouteComponent() {
           <ContentsRow>
             <DynamicFormField provider={provider} name={'tenant'} />
           </ContentsRow>
-          <ContentsRow>
+          {/*<ContentsRow>
             <DynamicFormField provider={provider} name={'categorySelector'} />
           </ContentsRow>
           <ContentsRow>
             <DynamicFormField provider={provider} name={'thumbnails'} />
+          </ContentsRow>*/}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'eLeaning'}>
+              <ELearningCategory />
+            </DynamicFormField>
           </ContentsRow>
           <ContentsRow>
-            <ELearningCategory provider={provider} name={'eLeaning'} />
+            <DynamicFormField provider={provider} name={'lowerGubun'}>
+              <LowerGubun />
+            </DynamicFormField>
           </ContentsRow>
           <ContentsRow>
             <div>
@@ -165,7 +179,7 @@ function RouteComponent() {
 /**
  * 필수값 : name, type
  */
-const detailConfig = {
+const detailConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'channel',
@@ -180,7 +194,6 @@ const detailConfig = {
       type: 'text',
       label: '학습자원명',
       maxLength: 10,
-      customName: '홍길동',
       value: '',
       placeholder: '업로드 파일명',
     },
@@ -292,7 +305,7 @@ const detailConfig = {
     },
     {
       name: 'tenant',
-      type: 'check-group',
+      type: 'checkbox-group',
       label: '테넌트 선택',
       value: ['tenantA'],
       options: [
@@ -310,7 +323,7 @@ const detailConfig = {
         },
       ],
     },
-    {
+    /*{
       name: 'categorySelector',
       type: 'selector',
       label: '카테고리 선택',
@@ -321,6 +334,16 @@ const detailConfig = {
       type: 'contents-thumbnail',
       label: '썸네일',
       value: [],
+    },*/
+    {
+      name: 'lowerGubun',
+      label: '하위구분',
+      type: 'object',
+      value: {
+        gubun: '01',
+        select: ['01', '02'],
+        url: '',
+      },
     },
     {
       name: 'userInfos',
@@ -364,17 +387,22 @@ const detailConfig = {
     },
     {
       name: 'eLeaning',
-      value: [
-        {
-          tenant: 'tenantA',
-          categories: [],
-        },
-      ],
+      type: 'text',
+      label: '이러닝 카테고리',
+      value: '',
     },
   ],
   validator: {
+    eLeaning: z.string().nonempty(t('이러닝 카테고리를 선택해주세요.')),
+    lowerGubun: z.object({
+      // 'gubun' 필드는 문자열로, 필수이며 빈 값이 아닌 경우 검증
+      gubun: z.string().nonempty({ message: '하위구분을 선택해 주세요.' }),
+      // 'select' 필드는 체크박스 그룹이므로 문자열 배열로 처리 (선택 사항이라면 optional)
+      select: z.array(z.string()).optional(),
+      url: z.string().nonempty({ message: 'url 을 입력해주세요' }),
+    }),
     /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-    category: z.string().nonempty(t('유효성 테스트')),
+     category: z.string().nonempty(t('유효성 테스트')),
      language_code: z.string().nonempty(t('유효성 테스트')),
      subdivision: z.string().nonempty(t('유효성 테스트')),
      check: z.boolean(),

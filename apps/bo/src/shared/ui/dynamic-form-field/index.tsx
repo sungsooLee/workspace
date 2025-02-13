@@ -1,41 +1,93 @@
-import { FC } from 'react';
+import { FC, isValidElement, cloneElement, ReactElement } from 'react';
 import { dialogConfig } from './config';
 import styles from './form.module.css';
 import { cn } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
 import { Controller } from 'react-hook-form';
-import { clsx } from 'clsx';
-import { FormCheckbox, FormRadioGroup, Input, InputButton, InputLimit } from '@learnway/ui';
-import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
-import { FormSelect } from './dialogs/form-select';
-import { FormCategorySelector } from './dialogs/form-category-selector';
-import { FormContentsThumbnail } from './dialogs/form-contents-thumbnail';
+import { Builder, DynamicFormFieldProps, FormParams } from './type';
+import get from 'lodash/get';
 
-const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...props }) => {
+/**
+ * getBuilderConfig 함수
+ * - 점(.)으로 구분된 필드 이름에서, 배열 인덱스는 건너뛰고
+ *   설정 객체를 재귀적으로 탐색합니다.
+ * - 만약 최상위 필드(부모)가 object 또는 array 타입이면,
+ *   자식 필드의 라벨 대신 부모의 라벨을 사용합니다.
+ * - 현재 설정과 최상위 필드의 이름을 함께 반환합니다.
+ *
+ * @param builders - 최상위 builder 배열
+ * @param name - 점(.)으로 구분된 필드 이름 (예: "userInfos.0.user-name")
+ * @returns { config: Partial<Builder>, topLevelName: string }
+ */
+const getBuilderConfig = (builders: Builder[], name: string): Partial<Builder> => {
+  // nameParts 예: ["lowerGubun", "gubun"]
+  const parts = name.split('.');
+  let parentConfig: Partial<Builder> | undefined;
+  let currentConfig: Partial<Builder> | undefined;
+  let currentBuilders = builders;
+
+  parts.forEach((part, index) => {
+    // 배열 인덱스(숫자)는 건너뛰기
+    if (!isNaN(Number(part))) return;
+    const found = currentBuilders.find((b) => b.name === part);
+    if (!found) return;
+    // 첫 번째 찾은 필드가 최상위 필드(부모)
+    if (index === 0) {
+      parentConfig = found;
+    }
+    currentConfig = found;
+    // 다음 단계로 내려갈 필드 목록 갱신 (자식 필드들)
+    currentBuilders = found.fields || [];
+  });
+
+  // 부모가 object 또는 array 타입이면, 자식 필드의 라벨 대신 부모의 라벨 사용
+  if (
+    parentConfig &&
+    (parentConfig.type === 'object' || parentConfig.type === 'array') &&
+    currentConfig
+  ) {
+    currentConfig.label = parentConfig.label;
+  }
+
+  return {
+    config: currentConfig || {},
+    topLevelName: parentConfig ? parentConfig.name : '',
+  };
+};
+/**
+ * DynamicFormField 컴포넌트
+ * - react-hook-form의 Controller를 사용하여 동적으로 폼 필드를 렌더링합니다.
+ */
+const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
+  provider,
+  name,
+  type,
+  disabled = false,
+  children,
+  ...props
+}) => {
   const { control, builders, fieldRefs, watch } = provider;
-  const names = name.split('.');
 
-  const {
-    type: configType,
-    label,
-    ...buildProps
-  } = names.length === 1
-    ? builders.find((builder: any) => builder.name === name)
-    : builders
-        .find((builder: any) => builder.name === names[0])
-        ['fields'].find((builder: any) => builder.name === names[2]);
+  // 현재 필드에 해당하는 빌더 설정 정보 추출
+  const { config: builderConfig, topLevelName } = getBuilderConfig(builders, name);
+  const { type: configType, label, ...buildProps } = builderConfig;
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value, ref }, formState: { errors } }) => {
-        const isRequired = control.isFieldRequired(name);
-        const errorClass = clsx({
-          error: errors && errors[name],
-        });
-        const FormComponant = dialogConfig[(type || configType) as keyof typeof dialogConfig];
-        const formParams = {
+        // 현재 필드가 필수인지 여부 체크
+        const isRequired = control.isFieldRequired(topLevelName);
+
+        const hasError = !!errors[topLevelName];
+        console.log('errors=> ', errors);
+
+        // dialogConfig에서 해당 타입의 컴포넌트를 선택 (type prop이 우선)
+        const FormComponent = dialogConfig[(type || configType) as keyof typeof dialogConfig];
+
+        // 폼 필드에 공통적으로 전달할 파라미터
+        const formParams: FormParams = {
           watch,
           ref,
           type: configType || type,
@@ -43,49 +95,62 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
           onChange,
           onBlur,
           disabled,
-          errorClass,
-          fieldRefs,
           ...buildProps,
+          ...props, // 추가 props 전달
           value,
         };
-        const handleOnChagne = (obj: any) => {
-          console.log('dynamic on change = >', obj);
+
+        /**
+         * 커스텀 onChange 핸들러
+         * - onChange 호출 후 콘솔에 값을 출력합니다.
+         * @param newValue - 업데이트된 값
+         */
+        const handleCustomDynamicFormOnChange = (newValue: any) => {
+          onChange(newValue);
         };
+
+        // children이 React 요소라면 formParams를 주입하여 클론 생성
+        const ChildComponent = isValidElement(children)
+          ? cloneElement(children as ReactElement, {
+              ...formParams,
+              value,
+              onChange: handleCustomDynamicFormOnChange,
+            })
+          : null;
+
         return (
           <div className={styles.form_item}>
+            {/* 레이블 렌더링 */}
             {label && (
               <label htmlFor={name} className={styles.form_label}>
                 {label}
                 {isRequired && (
                   <span
                     className={cn(styles.status, {
-                      [styles.error]: errorClass === 'error', // 에러가 있는 경우 styles.error 추가
-                      [styles.required]: errorClass !== 'error', // 에러가 없는 경우 styles.required 추가
+                      [styles.error]: hasError, // 에러가 있을 경우 에러 스타일 적용
+                      [styles.required]: !hasError, // 에러가 없을 경우 필수 스타일 적용
                     })}>
                     <IcoFormRequired width={8} height={8} />
                   </span>
                 )}
               </label>
             )}
-            <div className={styles.input_box} ref={(ref) => (fieldRefs.current[name] = ref)}>
-              {configType === 'text' && <Input {...formParams} />}
-              {configType === 'radio-group' && <FormRadioGroup {...formParams} />}
-              {configType === 'checkbox' && <FormCheckbox {...formParams} />}
-              {configType === 'check-group' && <FormCheckboxGroup {...formParams} />}
-              {configType === 'category-selector' && <FormCategorySelector {...formParams} />}
-              {configType === 'contents-thumbnail' && <FormContentsThumbnail {...formParams} />}
-              {configType === 'dropdown' && <FormSelect {...formParams} />}
-              {configType === 'text-popup-button' && <InputButton {...formParams} />}
-              {configType === 'text-limit' && (
-                <InputLimit {...formParams} onChange={handleOnChagne} />
-              )}
+
+            {/* 입력 영역 및 필드 참조 저장 */}
+            <div className={styles.input_box} ref={(node) => (fieldRefs.current[name] = node)}>
+              {/* children 컴포넌트 렌더링 (있다면) */}
+              {/* dialogConfig에 등록된 동적 폼 컴포넌트 렌더링 */}
+              {ChildComponent ? ChildComponent : FormComponent && <FormComponent {...formParams} />}
             </div>
-            {errorClass !== 'error' && formParams?.description && (
+
+            {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
+            {!hasError && formParams?.description && (
               <p className={cn(styles.guide_text)}>{formParams.description}</p>
             )}
-            {errorClass === 'error' && (
+            {hasError && (
               <p className={cn(styles.guide_text, styles.error)}>
-                {String(errors[name]?.message || '')}
+                {name}
+                {String(get(errors, name)?.message || '')}
               </p>
             )}
           </div>
@@ -95,4 +160,4 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
   );
 };
 
-export default DynamicFormField;
+export const DynamicFormField = DynamicFormFieldComponent;

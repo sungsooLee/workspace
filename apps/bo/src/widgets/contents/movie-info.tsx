@@ -1,7 +1,8 @@
 import { Button } from '@learnway/ui';
 import styles from './movie-info.module.css';
 import mediaImg from '../../assets/images/temp/img_temp_media.jpg';
-const MovieInfoComponent = () => {
+import { FC, forwardRef } from 'react';
+const MovieInfoComponent = forwardRef<HTMLUListElement, any>(({ name, value, onChange }, ref) => {
   // media btn list
   const buttons = [
     {
@@ -38,10 +39,10 @@ const MovieInfoComponent = () => {
   ];
   return (
     <>
-      <ul className={styles.btn_list}>
+      <ul ref={ref} className={styles.btn_list}>
         {buttons.map((btn, index) => (
-          <li>
-            <Button key={index} onClick={btn.onClick} className={styles.btn_text}>
+          <li key={index}>
+            <Button onClick={btn.onClick} className={styles.btn_text}>
               {btn.label}
             </Button>
           </li>
@@ -61,6 +62,6 @@ const MovieInfoComponent = () => {
       </ul>
     </>
   );
-};
+});
 
 export const MovieInfo = MovieInfoComponent;
