@@ -21,6 +21,7 @@ import {
   IcoCloseCircle,
   IcoUploadCloud,
   IcoLoaing,
+  IcoCheckboxChecked,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
@@ -94,9 +95,6 @@ function RouteComponent() {
     { label: '현대자동차 B', value: 'B' },
     { label: '현대자동차 C', value: 'C' },
   ];
-  const handleChange = (event: SelectOption[]) => {
-    console.log(event);
-  };
 
   //
   const [activeButtons, setActiveButtons] = useState<number[]>([]);
@@ -166,11 +164,11 @@ function RouteComponent() {
               </span>
             </label>
             {/* file upload case */}
-            <div className={cn(formStyles.input_box, formStyles.line)}>
-              <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
-              <span className={formStyles.count}>
+            <div className={formStyles.input_box}>
+              <Input id="name-1-2" type="text" value="업로드 파일명" showCounter />
+              {/* <span className={formStyles.count}>
                 <em className={formStyles.num}>7</em>/150
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
@@ -210,9 +208,6 @@ function RouteComponent() {
                 placeholder="한글,영문,숫자 포함 2500자 이하"
               />
             </div>
-            <p className={formStyles.text_limit}>
-              <em className={formStyles.num}>7</em>/2500
-            </p>
           </div>
         </div>
         {/* row */}
@@ -359,8 +354,19 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(1) ? styles.active : ''}`}>
-                      <Button className={thumbStyles.btn_check}></Button>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(1) ? thumbStyles.active : ''}`}>
+                      <Button
+                        className={thumbStyles.btn_check}
+                        onClick={() => handleButtonClick(1)}
+                        onlyIcon>
+                        <IcoCheckboxChecked
+                          className={thumbStyles.icon_check}
+                          width={12}
+                          height={13}
+                          fill="none"
+                          stroke="#ffffff"
+                        />
+                      </Button>
                       <img src={defaultImg} alt="thumb img" className={thumbStyles.img} />
                     </div>
                   </SwiperSlide>
@@ -399,7 +405,6 @@ function RouteComponent() {
                 placeholder="한글, 영문, 숫자 포함 9자 이하"
                 showInput
                 prefixCharacter="#"
-                onChange={handleChange}
               />
             </div>
             <p className={formStyles.text_limit}>
@@ -433,9 +438,6 @@ function RouteComponent() {
                   size="sm"
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </div>
@@ -465,16 +467,13 @@ function RouteComponent() {
                   size="sm"
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </div>
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={cn(formStyles.form_item, formStyles.type2)}>
+          <div className={formStyles.form_item}>
             <label htmlFor="name-1-11" className={formStyles.form_label}>
               <span className={formStyles.form_text}>교육자원 활용여부</span>
               {/* 필수 케이스 */}
@@ -493,7 +492,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={cn(formStyles.form_item, formStyles.type2)}>
+          <div className={formStyles.form_item}>
             <label htmlFor="name-1-12" className={formStyles.form_label}>
               <span className={formStyles.form_text}>보안콘텐츠 여부</span>
               {/* 필수 케이스 */}
@@ -659,6 +658,27 @@ function RouteComponent() {
               </span>
               <span className={formStyles.sub_text}>
                 {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Checkbox className={formStyles.check} />
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row no_line">
+          {/* form_item */}
+          <div className={cn(formStyles.form_item, formStyles.type2)}>
+            <label htmlFor="name-1-17" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>저작권 확인</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <span className={formStyles.sub_text}>
+                {
+                  '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
+                }
               </span>
             </label>
             <div className={formStyles.input_box}>

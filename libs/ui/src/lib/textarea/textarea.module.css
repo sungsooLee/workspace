@@ -18,3 +18,9 @@
     }
   }
 }
+.textarea_wrap {
+  @apply w-full overflow-hidden;
+}
+.text_limit {
+  @apply flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
+}

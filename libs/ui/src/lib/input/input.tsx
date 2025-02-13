@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
+import { Button } from '../button/button';
 
 import { cn } from '@learnway/shared';
 import { IcoDelete03 } from '@learnway/icons';
@@ -8,7 +9,7 @@ import { IcoDelete03 } from '@learnway/icons';
 import styles from './input.module.css';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
-  type?: 'text' | 'number' | 'mask' | 'password' | 'tel';
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
   placeHolder?: string;
   unitText?: string;
   onChange?: (value: any) => void;
@@ -18,6 +19,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   mask?: string | string[]; // mask 설정 문자열
   format?: string; // format 설정 문자열
   allowEmptyFormatting?: boolean;
+  borderNone?: boolean; // Input border 유무
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -33,6 +35,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       unitText,
       onChange,
       showCounter,
+      borderNone,
       mask,
       format = '',
       allowEmptyFormatting = true,
@@ -71,7 +74,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div className={cn(styles.start, 'nlp--input', 'flex flex-row border p-1')}>
+      <div className={cn(styles.start, 'nlp--input')}>
         {type === 'number' ? (
           <NumericFormat
             {...props}
@@ -109,6 +112,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             type={type}
             placeholder={placeHolder}
+            className={cn(styles.input, borderNone ? styles.bd_none : '')}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -118,20 +122,17 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
-        <div className={cn(styles.button, 'flex flex-row gap-2')}>
+        <div className={cn(styles.button_wrap)}>
           {/* 삭제 버튼 */}
           {isFocused && !!String(inputValue)?.length && (
-            <button
-              type="button"
-              onClick={handleClearClick}
-              className={cn(styles.clear, 'focus:outline-none')}>
+            <Button type="button" onClick={handleClearClick} className={cn(styles.clear)} onlyIcon>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-            </button>
+            </Button>
           )}
           {/* 단위 */}
           {unitText && <div className={'text-gray-6'}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {showCounter && type === 'text' && <div className={'text-gray-6'}>{'20/100'}</div>}
+          {showCounter && type === 'text' && <div className={styles.count}>{'20/100'}</div>}
         </div>
       </div>
     );

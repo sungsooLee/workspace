@@ -10,12 +10,17 @@
           @apply mt-[4px] flex text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
         }
         .btn_check {
-          @apply absolute right-[7px] top-[7px] z-20 flex h-[18px] w-[18px] items-center justify-center rounded-full border-[3px] border-[var(--gray5)] bg-transparent;
+          @apply absolute right-[7px] top-[7px] z-20 box-border flex h-[18px] w-[18px] items-center justify-center rounded-full bg-transparent;
+          border: 2px solid var(--gray5);
+          .icon_check {
+            @apply hidden;
+          }
         }
         &.active {
-          &:hover {
-            .img {
-              @apply opacity-5;
+          .btn_check {
+            @apply border-[var(--secondary1)] bg-[var(--secondary1)];
+            .icon_check {
+              @apply block;
             }
           }
         }
