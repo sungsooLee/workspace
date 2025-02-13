@@ -45,14 +45,19 @@ module.exports = {
           },
         },
         // title class add
+        '.title_2_b': {
+          ...baseTitle,
+          fontSize: '3.4rem',
+          fontWeight: '600',
+        },
         '.title_4_b': {
           ...baseTitle,
           fontSize: '2.4rem',
           fontWeight: '600',
         },
-        '.title_bo_1_b': {
+        '.title_5_b': {
           ...baseTitle,
-          fontSize: '2.2rem',
+          fontSize: '2rem',
           fontWeight: '600',
         },
         '.body_1_b': {
@@ -64,6 +69,11 @@ module.exports = {
           ...baseTitle,
           fontSize: '1.6rem',
           fontWeight: '600',
+        },
+        '.body_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
         },
         '.body_3_b': {
           ...baseTitle,
@@ -85,16 +95,15 @@ module.exports = {
           fontSize: '1.2rem',
           fontWeight: '400',
         },
-        '.input_3_r': {
+        '.body_bo_2_r': {
           ...baseTitle,
           fontSize: '1.4rem',
           fontWeight: '400',
         },
-        // lable title class add
-        '.label_1_b': {
+        '.input_3_r': {
           ...baseTitle,
           fontSize: '1.4rem',
-          fontWeight: '600',
+          fontWeight: '400',
         },
         '.btuuon_2_r': {
           ...baseTitle,
