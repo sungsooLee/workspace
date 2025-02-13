@@ -138,3 +138,6 @@
     }
   }
 }
+.text_limit {
+  @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
+}

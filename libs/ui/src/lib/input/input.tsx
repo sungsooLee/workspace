@@ -79,7 +79,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <NumericFormat
             {...props}
             getInputRef={ref}
-            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
+            className={cn(className)}
             value={inputValue}
             thousandSeparator={thousandSeparator}
             placeholder={placeHolder}
@@ -93,7 +93,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <PatternFormat
             {...props}
             getInputRef={ref}
-            className={cn(className, 'placeholder:text-gray-500 focus:outline-none')}
+            className={cn(className)}
             value={inputValue}
             format={format}
             mask={mask}
@@ -112,7 +112,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             type={type}
             placeholder={placeHolder}
-            className={cn(styles.input, borderNone ? styles.bd_none : '')}
+            className={cn(styles.input, className, borderNone ? styles.bd_none : '')}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
