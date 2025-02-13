@@ -1,9 +1,7 @@
-import { forwardRef, memo, ReactNode } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-popover';
-
-import styles from './popover.module.css';
 
 interface PopoverComponentProps extends Primitive.PopoverContentProps {
   children: ReactNode;
@@ -32,7 +30,7 @@ const PopoverComponent = forwardRef<
   );
 });
 
-const PopoverRoot = memo(PopoverComponent);
+const PopoverRoot = PopoverComponent;
 export const Popover = Object.assign(PopoverRoot, {
   Trigger: Primitive.PopoverTrigger,
   Content: Primitive.PopoverContent,

@@ -1,5 +1,5 @@
 import { FC, useEffect, useCallback, useRef, useState } from 'react';
-import { DialogItem, DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogItem, DialogProps } from '../search-box/type';
 import { Controller } from 'react-hook-form';
 import { useFetchCodeGroups } from '../../../entities/platform';
 import { useTranslation } from 'react-i18next';
@@ -110,7 +110,7 @@ const DropDown: FC<DialogProps> = ({
   useEffect(() => {
     loadItems();
   }, [itemsConfig, watchedValue]);
-
+  console.log('currentItems => ', currentItems);
   return items ? (
     <div className="builder-dialog-container dropdown" ref={dropdownRef}>
       {label && <label htmlFor={name}>{label}</label>}

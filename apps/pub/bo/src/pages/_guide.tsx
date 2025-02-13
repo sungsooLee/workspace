@@ -16,33 +16,29 @@ function RouteComponent() {
         { label: '소개', path: '/guide/info' },
         { label: '컬러', path: '/guide/color' },
         { label: '타이포그래픽', path: '/guide/typography' },
-        { label: '반응형', path: '/guide/respond' },
+        { label: 'Form', path: '/guide/form' },
       ],
     },
     {
       title: 'Component',
       subItems: [
-        { label: '레이아웃', path: '/guide/layout' },
         { label: 'Buttons', path: '/guide/buttons' },
         { label: 'Alert, Confirm', path: '/guide/alert' },
         { label: 'Modal', path: '/guide/modal' },
         { label: 'Grid 테이블', path: '/guide/grid' },
-        { label: 'Form', path: '/guide/form' },
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
         { label: 'Select', path: '/guide/select' },
         { label: 'Tootip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
+        { label: 'carousel', path: '/guide/carousel' },
+        { label: 'Pagination', path: '/guide/pagination' },
         // { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
         // { label: '이미지', path: '/guide/components/image' },
         // { label: '아이콘', path: '/guide/components/icon' },
       ],
-    },
-    {
-      title: 'Pages',
-      subItems: [{ label: '메뉴1', path: '/menu3' }],
     },
   ];
   const [visibleList, setVisibleList] = useState({});
@@ -70,7 +66,7 @@ function RouteComponent() {
         <div className="guide_wrap">
           <div className="aside">
             <h1>
-              <Link to={'/guide'}>Publish Guide</Link>
+              <Link to={'/guide'}>Publish Guide(BO)</Link>
             </h1>
             <div className="menu">
               <ul>
@@ -84,13 +80,7 @@ function RouteComponent() {
                       <ul>
                         {subItems.map(({ label, path }) => (
                           <li key={path} className={currentPath === path ? 'active' : ''}>
-                            {title === 'Pages' ? (
-                              <a href={path} target="_blank" rel="noopener noreferrer">
-                                {label}
-                              </a>
-                            ) : (
-                              <Link to={path}>{label}</Link>
-                            )}
+                            <Link to={path}>{label}</Link>
                           </li>
                         ))}
                       </ul>

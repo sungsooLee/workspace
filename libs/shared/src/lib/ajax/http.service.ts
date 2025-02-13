@@ -8,6 +8,8 @@ import axios, {
 } from 'axios';
 import { encodeQueryString } from '../../index';
 
+axios.defaults.withCredentials = true;
+
 const API_REQUEST_TIMEOUT = 5000;
 
 // sample url: https://jsonplaceholder.typicode.com/users

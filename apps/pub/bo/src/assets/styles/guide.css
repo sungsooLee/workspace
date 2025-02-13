@@ -18,13 +18,14 @@
       a {
         display: block;
         width: 100%;
-        height: 50px;
+        height: 55px;
         line-height: 60px;
         padding-left: 20px;
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         box-sizing: border-box;
         font-weight: 600;
         color: var(--gray10);
+        border-bottom: 1px solid #ccc;
       }
     }
     width: 250px;
@@ -118,6 +119,7 @@
         }
       }
       .desc {
+        @apply flex items-center;
         p:not(:first-of-type) {
           margin-top: 5px;
         }
@@ -126,6 +128,7 @@
           background-color: #e4e7f1;
           padding: 0 5px;
           border-radius: 5px;
+          margin-right: 5px;
         }
       }
       .group {
@@ -140,7 +143,10 @@
           margin-top: 40px;
         }
         .flex_box {
-          @apply flex;
+          @apply flex items-center;
+          .desc {
+            @apply flex items-center gap-[20px];
+          }
           padding: 20px;
           border: 1px dashed #ccc;
           + .code_example {

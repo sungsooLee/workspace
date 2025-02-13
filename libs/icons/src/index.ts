@@ -33,6 +33,7 @@ export { ReactComponent as IcoTrash } from './lib/ic_trash.svg';
 export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
+export { ReactComponent as IcoCaution02 } from './lib/ic_caution.svg'; // alert caution icon 24*25
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
 export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
@@ -44,6 +45,8 @@ export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
+export { ReactComponent as IcoUploadCloud } from './lib/ic_upload-cloud.svg'; // file upload 24*24
+export { ReactComponent as IcoLoaing } from './lib/ic_loading.svg'; // file uploading 24*24
 
 //export Default as Information from './lib/information.svg?react';
 

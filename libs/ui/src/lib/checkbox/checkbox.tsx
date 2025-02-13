@@ -24,7 +24,8 @@ const CheckboxComponent = forwardRef<
         id={uuid}
         ref={ref}
         className={cn(styles.checkbox_root, size && styles[size])}
-        disabled={disabled}>
+        disabled={disabled}
+        type={'button'}>
         <Primitive.Indicator className={styles.checkbox_indicator}>
           <IcoCheckboxChecked width={12} height={13} fill="none" stroke="#ffffff" />
         </Primitive.Indicator>

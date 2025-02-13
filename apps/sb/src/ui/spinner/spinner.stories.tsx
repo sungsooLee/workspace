@@ -12,10 +12,7 @@ export default {
 type Story = StoryObj<typeof Spinner>;
 
 export const Template: any = (args: any) => {
-  return (
-    <Spinner {...args} isLoading={true} />
-  )
-}
-Template.storyName = 'Spinner';
-Template.args = {
+  return <Spinner {...args} isLoading={true} showBackdrop />;
 };
+Template.storyName = 'Spinner';
+Template.args = {};

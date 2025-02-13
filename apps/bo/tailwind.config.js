@@ -1,7 +1,7 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
-const tailwindPreset = require('../../libs/config/src/lib/style/tailwind.preset');
-const tailwindShadcnPreset = require('../../libs/config/src/lib/style/tailwind.shadcn.preset');
+const tailwindPreset = require('../../../libs/config/src/lib/style/tailwind.preset');
+const tailwindShadcnPreset = require('../../../libs/config/src/lib/style/tailwind.shadcn.preset');
 
 const plugin = require('tailwindcss/plugin');
 
@@ -25,9 +25,9 @@ module.exports = {
       addComponents({
         '.scrollbar': {
           '&::-webkit-scrollbar': {
-            height: '64px',
+            height: '12px',
             width: '12px',
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
           },
           '&::-webkit-scrollbar-thumb': {
             borderRadius: '9999px',
@@ -38,7 +38,7 @@ module.exports = {
             backgroundClip: 'padding-box',
           },
           '&::-webkit-scrollbar-track': {
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
           },
           '.scroll-smooth': {
             scrollBehavior: 'smooth',

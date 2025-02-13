@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
 import styles from './success.module.css';
 import authStyles from './auth.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
 import { IcoCheck02 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/success')({

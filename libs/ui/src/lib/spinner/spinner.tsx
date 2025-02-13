@@ -1,9 +1,9 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { cn } from '@learnway/shared';
-
 import { BackDrop } from '../backdrop/backdrop';
+import { LoaderCircle } from 'lucide-react';
+
+import styles from './spinner.module.css';
+import React, { forwardRef } from 'react';
+import { cn } from '@learnway/shared';
 
 /* eslint-disable-next-line */
 export interface SpinnerProps {
@@ -12,20 +12,15 @@ export interface SpinnerProps {
   showBackdrop?: boolean;
 }
 
-export function Spinner({ className, isLoading, showBackdrop }: SpinnerProps) {
-  const { t } = useTranslation();
-  /**
-   * size
-   * delay
-   */
-  return (
-    <>
-      {isLoading && <div>{t('LOADING')}...</div>}
-      {isLoading && showBackdrop ? <BackDrop /> : ''}
-    </>
-  );
-}
+const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
+  ({ className, isLoading, showBackdrop }) => {
+    return (
+      <>
+        {isLoading && <LoaderCircle className={cn(styles.spinner, className, 'nlp--spinner')} />}
+        {isLoading && showBackdrop ? <BackDrop /> : ''}
+      </>
+    );
+  },
+);
 
-export default Spinner;
-
-//export const Spinner = memo(Spinner);
+export const Spinner = SpinnerComponent;

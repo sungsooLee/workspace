@@ -1,0 +1,43 @@
+.form-contents-thumbnail {
+  display: flex;
+  gap:20px;
+  .fct-button{
+    width: 100px;
+    height:100px;
+    button{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
+      background: #ccc;
+    }
+  }
+  .fct-thumbnails{
+    display: flex;
+    flex: 1;
+    gap: 5px;
+    .thumbnail  {
+      position:relative;
+      .check-area {
+        position:absolute;
+        right: 0;
+        top:5px;
+      }
+      .delete {
+        position:absolute;
+        left: 5px;
+        top:5px;
+        background: #fff;
+        width: 24px;
+        height: 24px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
