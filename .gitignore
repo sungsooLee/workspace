@@ -50,6 +50,6 @@ out
 
 storybook-static
 
-/apps/*/routeTree.gen.ts:
+**/routeTree.gen.ts
 
 .history/
