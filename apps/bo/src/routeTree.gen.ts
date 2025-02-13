@@ -13,8 +13,12 @@
 import { Route as rootRoute } from './pages/__root'
 import { Route as TestImport } from './pages/test'
 import { Route as LayoutImport } from './pages/_layout'
-import { Route as LoginIndexImport } from './pages/login/index'
+import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as AuthSignupImport } from './pages/_auth/signup'
+import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
+import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenuIndexImport } from './pages/_layout/menu/index'
 import { Route as LayoutLearningIndexImport } from './pages/_layout/learning/index'
 import { Route as LayoutMenuType2Import } from './pages/_layout/menu/type2'
@@ -36,9 +40,8 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  id: '/login/',
-  path: '/login/',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +49,30 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const AuthSignupRoute = AuthSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSearchAccountRoute = AuthSearchAccountImport.update({
+  id: '/search-account',
+  path: '/search-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusRoute = AuthProgressStatusImport.update({
+  id: '/progress-status',
+  path: '/progress-status',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const LayoutMenuIndexRoute = LayoutMenuIndexImport.update({
@@ -94,6 +121,13 @@ const LayoutLearningIdVideoRoute = LayoutLearningIdVideoImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout': {
       id: '/_layout'
       path: ''
@@ -108,19 +142,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status': {
+      id: '/_auth/progress-status'
+      path: '/progress-status'
+      fullPath: '/progress-status'
+      preLoaderRoute: typeof AuthProgressStatusImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/search-account': {
+      id: '/_auth/search-account'
+      path: '/search-account'
+      fullPath: '/search-account'
+      preLoaderRoute: typeof AuthSearchAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupImport
+      parentRoute: typeof AuthImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
-    }
-    '/login/': {
-      id: '/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof rootRoute
     }
     '/_layout/builder/grid': {
       id: '/_layout/builder/grid'
@@ -176,6 +231,22 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSignupRoute: AuthSignupRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBuilderGridRoute: typeof LayoutBuilderGridRoute
@@ -204,8 +275,11 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/test': typeof TestRoute
+  '/login': typeof AuthLoginRoute
+  '/progress-status': typeof AuthProgressStatusRoute
+  '/search-account': typeof AuthSearchAccountRoute
+  '/signup': typeof AuthSignupRoute
   '/': typeof LayoutIndexRoute
-  '/login': typeof LoginIndexRoute
   '/builder/grid': typeof LayoutBuilderGridRoute
   '/builder/table': typeof LayoutBuilderTableRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
@@ -216,9 +290,13 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '': typeof AuthRouteWithChildren
   '/test': typeof TestRoute
+  '/login': typeof AuthLoginRoute
+  '/progress-status': typeof AuthProgressStatusRoute
+  '/search-account': typeof AuthSearchAccountRoute
+  '/signup': typeof AuthSignupRoute
   '/': typeof LayoutIndexRoute
-  '/login': typeof LoginIndexRoute
   '/builder/grid': typeof LayoutBuilderGridRoute
   '/builder/table': typeof LayoutBuilderTableRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
@@ -230,10 +308,14 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/test': typeof TestRoute
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/progress-status': typeof AuthProgressStatusRoute
+  '/_auth/search-account': typeof AuthSearchAccountRoute
+  '/_auth/signup': typeof AuthSignupRoute
   '/_layout/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
   '/_layout/builder/grid': typeof LayoutBuilderGridRoute
   '/_layout/builder/table': typeof LayoutBuilderTableRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
@@ -248,8 +330,11 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/test'
-    | '/'
     | '/login'
+    | '/progress-status'
+    | '/search-account'
+    | '/signup'
+    | '/'
     | '/builder/grid'
     | '/builder/table'
     | '/menu/$menuId'
@@ -259,9 +344,13 @@ export interface FileRouteTypes {
     | '/learning/$id/video'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | ''
     | '/test'
-    | '/'
     | '/login'
+    | '/progress-status'
+    | '/search-account'
+    | '/signup'
+    | '/'
     | '/builder/grid'
     | '/builder/table'
     | '/menu/$menuId'
@@ -271,10 +360,14 @@ export interface FileRouteTypes {
     | '/learning/$id/video'
   id:
     | '__root__'
+    | '/_auth'
     | '/_layout'
     | '/test'
+    | '/_auth/login'
+    | '/_auth/progress-status'
+    | '/_auth/search-account'
+    | '/_auth/signup'
     | '/_layout/'
-    | '/login/'
     | '/_layout/builder/grid'
     | '/_layout/builder/table'
     | '/_layout/menu/$menuId'
@@ -286,15 +379,15 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
   TestRoute: typeof TestRoute
-  LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
   TestRoute: TestRoute,
-  LoginIndexRoute: LoginIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -307,9 +400,18 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_auth",
         "/_layout",
-        "/test",
-        "/login/"
+        "/test"
+      ]
+    },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login",
+        "/_auth/progress-status",
+        "/_auth/search-account",
+        "/_auth/signup"
       ]
     },
     "/_layout": {
@@ -328,12 +430,25 @@ export const routeTree = rootRoute
     "/test": {
       "filePath": "test.tsx"
     },
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status": {
+      "filePath": "_auth/progress-status.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/search-account": {
+      "filePath": "_auth/search-account.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup": {
+      "filePath": "_auth/signup.tsx",
+      "parent": "/_auth"
+    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
-    },
-    "/login/": {
-      "filePath": "login/index.tsx"
     },
     "/_layout/builder/grid": {
       "filePath": "_layout/builder/grid.tsx",

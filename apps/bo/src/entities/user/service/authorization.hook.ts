@@ -22,7 +22,34 @@ export interface IMutateCallback<TVariables> {
 }
 
 export function useFetchAuthUser<T = User>() {
-  return useQuery<unknown, unknown, T>(queryOptions.authUser());
+  //return useQuery<unknown, unknown, T>(queryOptions.authUser());
+
+  const { data } = useQuery<unknown, unknown, T>(queryOptions.authUser());
+
+  const queryClient = useQueryClient();
+  return {
+    data: useCreation(() => {
+      if (!data) {
+        const user = loginMock.data.data;
+        const { accountId, tenants, roles } = user;
+        //cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
+        cookieService.set('LOGIN_USER_ID', accountId);
+        cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
+        cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
+        //cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
+
+        //queryClient.clear();
+        const userData = {
+          ...user,
+          activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : undefined,
+          activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : undefined,
+        };
+        queryClient.setQueryData(queryKeys.authUser, userData);
+        return userData;
+      }
+      return data;
+    }, [data]),
+  };
 }
 
 export function useLoginUser(mutationOptions = {}) {

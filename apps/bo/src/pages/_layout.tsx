@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { GNB, Layout } from '../widgets/layout';
+import { Layout } from '../widgets/layout';
 
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
@@ -34,11 +34,8 @@ function LayoutComponent() {
   }, [tenant]);
 
   return (
-    <div className={cn('layout_wrap')}>
-      <GNB />
-      <Layout>
-        <Outlet />
-      </Layout>
-    </div>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 }

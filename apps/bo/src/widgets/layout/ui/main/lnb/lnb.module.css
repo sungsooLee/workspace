@@ -46,4 +46,12 @@
     border-left: 0;
     border-radius: 0 6px 6px 0;
   }
+  /* .depth2 {
+    .depth3 {
+      @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
+      .depth4 {
+        @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+      }
+    }
+  } */
 }

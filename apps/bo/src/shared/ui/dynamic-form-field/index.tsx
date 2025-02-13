@@ -42,11 +42,11 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
           name,
           onChange,
           onBlur,
-          value,
           disabled,
           errorClass,
           fieldRefs,
           ...buildProps,
+          value,
         };
         const handleOnChagne = (obj: any) => {
           console.log('dynamic on change = >', obj);

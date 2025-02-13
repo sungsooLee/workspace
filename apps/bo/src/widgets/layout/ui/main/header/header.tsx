@@ -5,12 +5,12 @@ import { cn } from '@learnway/shared';
 
 import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
-import { Logo, UserAvatar, Notification } from '../../../../features/layout';
-import { Language } from '../../../../features/platform';
+import { Logo, UserAvatar, Notification } from '../../../../../features/layout';
+import { Language } from '../../../../../features/platform';
 
-import styles from './gnb.module.css';
+import styles from './header.module.css';
 
-function GNBComponent() {
+function HeaderComponent() {
   const { t } = useTranslation();
 
   return (
@@ -38,4 +38,4 @@ function GNBComponent() {
   );
 }
 
-export const GNB = memo(GNBComponent);
+export const Header = memo(HeaderComponent);

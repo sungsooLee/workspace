@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
-import { LNB } from '../lnb/lnb';
+import { LNB } from './lnb/lnb';
 import { PageContainer } from '../container/page-container';
+
+import { Header } from './header/header';
 
 import styles from './layout.module.css';
 
@@ -25,16 +27,24 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     activeMenuDepth[0].children?.length > 0
   ) {
     return (
-      <div className={cn(styles.start, styles.container)}>
-        <div className={styles.container_inner}>
-          <LNB />
-          <main>{children}</main>
+      <>
+        <Header />
+        <div className={cn(styles.start, styles.container)}>
+          <div className={styles.container_inner}>
+            <LNB />
+            <main>{children}</main>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
-  return children;
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+    </>
+  );
 }
 
 export const Layout = LayoutComponent;

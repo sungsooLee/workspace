@@ -3,10 +3,10 @@ import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { MyMenu } from '../../../../../features/layout';
-import { useMenuHierarchy } from '../../../service/menu.service';
+import { MyMenu } from '../../../../../../features/layout';
+import { useMenuHierarchy } from '../../../../service/menu.service';
 
-import type { Menu } from '../../../../../types';
+import type { Menu } from '../../../../../../types';
 
 import styles from './quick-menu.module.css';
 

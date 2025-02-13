@@ -2,9 +2,12 @@
   &.depth2 {
   }
   &.depth3 {
-    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+    @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
+    .accordion_title {
+      @apply text-[var(--white)];
+    }
   }
 }
