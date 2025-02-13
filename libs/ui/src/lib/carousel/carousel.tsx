@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 
 import { cn } from '@learnway/shared';
 
@@ -8,6 +7,9 @@ import styles from './carousel.module.css';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+import { FreeMode, Navigation, Pagination } from 'swiper/modules';
 
 export interface CarouselComponentProps extends SwiperProps {
   items: Array<React.ReactNode>;
@@ -20,12 +22,10 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
       <Swiper
         {...props}
         className={cn(styles.Swiper, className, 'nlp-carousel')}
-        spaceBetween={50}
-        // slidesPerView={3}
-        navigation={true}
-        modules={[Navigation]}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}>
+        modules={[FreeMode, Pagination, Navigation]}
+        // onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper)}
+      >
         {/* items */}
         {items.map((item, index) => (
           <SwiperSlide className={styles.SwiperSlide}>{item}</SwiperSlide>
