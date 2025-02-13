@@ -34,38 +34,110 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Chips Component Guide</h2>
-      <h3 className="guide_tit3">
-        Chips 개별로 사용하는 경우(안에 label이 버튼인 경우 typeBtn props 추가)
-      </h3>
-      <Chips
-        option={{
-          label: '현대자동차 H',
-          value: 'H',
-        }}
-        prefixCharacter="#"
-        onClick={handleClick}
-      />
-      <Chips
-        option={{
-          label: '현대자동차 F',
-          value: 'F',
-        }}
-        prefixCharacter="#"
-      />
-      <Chips
-        option={{
-          label: '현대자동차 G',
-          value: 'G',
-        }}
-        prefixCharacter="#"
-      />
-      <h3 className="guide_tit3">Chips List Case</h3>
-      <ChipList
-        options={options}
-        placeholder="한글, 영문, 숫자 포함 9자 이하"
-        showInput
-        onChange={handleChange}
-      />
+      <p className="loc react">/libs/ui/src/lib/chips/chips.tsx</p>
+      <p className="info">
+        variant: 'primary' | 'secondary'; <br />
+        size: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+      </p>
+      <div className="code_example">
+        <pre className="code_block">
+          <code>
+            {`// 초기 import
+import { Chips, ChipList, SelectOption } from '@learnway/ui';
+
+// 적용방법(예시)
+<Chips
+  option={{
+    label: '현대자동차 H',
+    value: 'H',
+  }}
+  prefixCharacter="#"
+  onClick={handleClick}
+/>`}
+          </code>
+        </pre>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">
+          Chips 개별로 사용하는 경우(안에 label이 버튼인 경우 typeBtn props 추가)
+        </h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Chips
+              option={{
+                label: '현대자동차 H',
+                value: 'H',
+              }}
+              prefixCharacter="#"
+              onClick={handleClick}
+            />
+            <Chips
+              option={{
+                label: '현대자동차 F',
+                value: 'F',
+              }}
+              prefixCharacter="#"
+            />
+            <Chips
+              option={{
+                label: '현대자동차 G',
+                value: 'G',
+              }}
+              prefixCharacter="#"
+            />
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<Chips
+  option={{
+    label: '현대자동차 H',
+    value: 'H',
+  }}
+  prefixCharacter="#"
+  onClick={handleClick}
+/>
+<Chips
+  option={{
+    label: '현대자동차 F',
+    value: 'F',
+  }}
+  prefixCharacter="#"
+/>
+<Chips
+  option={{
+    label: '현대자동차 G',
+    value: 'G',
+  }}
+  prefixCharacter="#"
+/>`}</code>
+          </pre>
+        </div>
+
+        <h3 className="guide_tit3">Chips List Case</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <ChipList
+              options={options}
+              placeholder="한글, 영문, 숫자 포함 9자 이하"
+              showInput
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<ChipList
+          options={options}
+          placeholder="한글, 영문, 숫자 포함 9자 이하"
+          showInput
+          onChange={handleChange}
+        />`}</code>
+          </pre>
+        </div>
+      </div>
     </div>
   );
 }

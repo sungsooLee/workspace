@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { isFunction } from 'lodash';
 
 import { cn } from '@learnway/shared';
@@ -16,5 +15,3 @@ export function BackDrop({ className, onClick }: BackDropProps) {
 
   return <div className={cn(className)} onClick={handleClick}></div>;
 }
-
-//export const BackDrop = memo(BackDrop);

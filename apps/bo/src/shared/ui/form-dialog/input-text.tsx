@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
-import { DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogProps } from '../search-box/type';
 
 const InputText: FC<DialogProps> = ({ control, name, label, items }) => {
   return (

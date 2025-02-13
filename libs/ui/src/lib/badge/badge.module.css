@@ -1,0 +1,8 @@
+.start {
+  &.badge {
+    @apply mr-0 inline-flex min-h-[2.8rem] items-center justify-center bg-[var(--gray2)] px-[10px] text-[13px] font-light text-[var(--gray9)];
+    .label {
+      @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
+    }
+  }
+}

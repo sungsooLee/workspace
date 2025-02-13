@@ -1,12 +1,11 @@
 .start {
   @apply flex items-center;
-  &.reversed {
-    .label {
-      @apply -order-1 ml-0;
-    }
-    .switch_root {
-      @apply ml-[8px];
-    }
+
+  .label {
+    @apply -order-1 ml-0;
+  }
+  .switch_root {
+    @apply ml-[8px];
   }
 
   .switch_root {

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import { cn } from '@learnway/shared';
 import { IcoArrowDown } from '@learnway/icons';
@@ -11,6 +11,7 @@ import useSelect from './logic';
 import styles from './select.module.css';
 
 export interface SelectComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  selectedValue?: string;
   options: Array<SelectOption>;
   labelKey?: string;
   valueKey?: string;
@@ -31,13 +32,17 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       onChange,
       placeholder,
       size = 'md',
+      selectedValue,
       className,
       ...props
     },
     ref,
   ) => {
     const { selectedItem, setCurrentSelectedItem } = useSelect({ options, onChange });
-
+    // 외부에 의한 값을 처리하기 위한 effect
+    useEffect(() => {
+      setCurrentSelectedItem(value || '');
+    }, [value]);
     return (
       <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>

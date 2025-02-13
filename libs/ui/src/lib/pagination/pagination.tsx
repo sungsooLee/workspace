@@ -38,7 +38,7 @@ const PaginationComponent = forwardRef<HTMLButtonElement, PaginationComponentPro
     console.log(items);
 
     return (
-      <div className={cn(styles.root, className, 'nlp--pagination', 'flex flex-row gap-5')}>
+      <div className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         {items.map((item: any, index: number) => (
           <PaginationItem key={index} {...item} color={color} size={size} variant={variant} />
         ))}

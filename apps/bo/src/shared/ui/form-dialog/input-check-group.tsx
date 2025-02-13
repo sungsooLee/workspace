@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
-import { DialogProps } from '../../../widgets/layout/ui/search-box/type';
+import { DialogProps } from '../search-box/type';
 import { Logo } from '../../../features/layout';
 
 const InputCheckGroup: FC<DialogProps> = ({ control, name, label, items }) => {

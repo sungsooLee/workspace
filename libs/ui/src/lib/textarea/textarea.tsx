@@ -1,9 +1,6 @@
 import { forwardRef } from 'react';
-import { NumericFormat } from 'react-number-format';
 
 import { cn } from '@learnway/shared';
-
-import { BaseFieldProps } from '../type';
 
 import styles from './textarea.module.css';
 
@@ -18,18 +15,25 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
   ({ size = 'md', resize, border, className, ...props }, ref) => {
     return (
-      <textarea
-        className={cn(
-          styles.start,
-          styles.textarea,
-          className,
-          'nlp--textarea',
-          resize && styles[resize],
-          size && styles[size],
-          border && styles.bd_none,
-        )}
-        {...props}
-      />
+      <div className={styles.textarea_wrap}>
+        {/* textarea */}
+        <textarea
+          className={cn(
+            styles.start,
+            styles.textarea,
+            className,
+            'nlp--textarea',
+            resize && styles[resize],
+            size && styles[size],
+            border && styles.bd_none,
+          )}
+          {...props}
+        />
+        {/* 입력 글자수 */}
+        <p className={styles.text_limit}>
+          <span className={styles.num}>20</span>/100
+        </p>
+      </div>
     );
   },
 );

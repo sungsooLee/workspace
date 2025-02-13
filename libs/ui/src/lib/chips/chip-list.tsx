@@ -76,6 +76,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
             value={inputValue}
+            borderNone
           />
         )}
 
