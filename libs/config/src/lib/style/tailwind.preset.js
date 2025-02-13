@@ -80,326 +80,324 @@ module.exports = {
           },
         },
 
-        '.typography': {
-          // title class add (FO)
-          '.title_1_b': {
-            ...baseTitle,
-            fontSize: '4rem',
-            fontWeight: '600',
-          },
-          '.title_1_r': {
-            ...baseTitle,
-            fontSize: '4rem',
-            fontWeight: '400',
-          },
-          '.title_2_b': {
-            ...baseTitle,
-            fontSize: '3.4rem',
-            fontWeight: '600',
-          },
-          '.title_2_r': {
-            ...baseTitle,
-            fontSize: '3.4rem',
-            fontWeight: '600',
-          },
-          '.title_3_b': {
-            ...baseTitle,
-            fontSize: '2.6rem',
-            fontWeight: '600',
-          },
-          '.title_3_r': {
-            ...baseTitle,
-            fontSize: '2.6rem',
-            fontWeight: '400',
-          },
-          '.title_4_b': {
-            ...baseTitle,
-            fontSize: '2.4rem',
-            fontWeight: '600',
-          },
-          '.title_4_r': {
-            ...baseTitle,
-            fontSize: '2.4rem',
-            fontWeight: '400',
-          },
-          '.title_5_b': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '600',
-          },
-          '.title_5_r': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '400',
-          },
-          '.title_6_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '600',
-          },
-          '.body_1_b': {
-            ...baseTitle,
-            fontSize: '1.8rem',
-            fontWeight: '600',
-          },
-          '.body_1_r': {
-            ...baseTitle,
-            fontSize: '1.8rem',
-            fontWeight: '400',
-          },
-          '.body_2_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '600',
-          },
-          '.body_2_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '400',
-          },
-          '.body_3_b': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '600',
-          },
-          '.body_3_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.body_4_b': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '600',
-          },
-          '.body_4_r': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '400',
-          },
-          '.input_1_b': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '600',
-          },
-          '.input_1_r': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '600',
-          },
-          '.input_2_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '600',
-          },
-          '.input_2_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '600',
-          },
-          '.input_3_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.btuuon_1_b': {
-            ...baseTitle,
-            fontSize: '1.8rem',
-            fontWeight: '700',
-          },
-          '.btuuon_2_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '700',
-          },
-          '.btuuon_2_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '700',
-          },
-          '.btuuon_3_b': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '700',
-          },
-          '.btuuon_3_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.btuuon_4_b': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '700',
-          },
-          '.btuuon_4_r': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '400',
-          },
-          '.btuuon_5_r': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '400',
-          },
-          '.label_1_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '600',
-          },
-          '.label_1_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '400',
-          },
-          '.label_2_r': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '400',
-          },
-          '.label_3_r': {
-            ...baseTitle,
-            fontSize: '1.1rem',
-            fontWeight: '400',
-          },
+        // title class add (FO)
+        '.title_1_b': {
+          ...baseTitle,
+          fontSize: '4rem',
+          fontWeight: '600',
+        },
+        '.title_1_r': {
+          ...baseTitle,
+          fontSize: '4rem',
+          fontWeight: '400',
+        },
+        '.title_2_b': {
+          ...baseTitle,
+          fontSize: '3.4rem',
+          fontWeight: '600',
+        },
+        '.title_2_r': {
+          ...baseTitle,
+          fontSize: '3.4rem',
+          fontWeight: '600',
+        },
+        '.title_3_b': {
+          ...baseTitle,
+          fontSize: '2.6rem',
+          fontWeight: '600',
+        },
+        '.title_3_r': {
+          ...baseTitle,
+          fontSize: '2.6rem',
+          fontWeight: '400',
+        },
+        '.title_4_b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+        '.title_4_r': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '400',
+        },
+        '.title_5_b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '600',
+        },
+        '.title_5_r': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '400',
+        },
+        '.title_6_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.body_1_b': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '600',
+        },
+        '.body_1_r': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '400',
+        },
+        '.body_2_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.body_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+        '.body_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+        '.body_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.body_4_b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '600',
+        },
+        '.body_4_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+        '.input_1_b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '600',
+        },
+        '.input_1_r': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '600',
+        },
+        '.input_2_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.input_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.input_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.btuuon_1_b': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '700',
+        },
+        '.btuuon_2_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
+        },
+        '.btuuon_2_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
+        },
+        '.btuuon_3_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '700',
+        },
+        '.btuuon_3_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.btuuon_4_b': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '700',
+        },
+        '.btuuon_4_r': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+        '.btuuon_5_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+        '.label_1_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+        '.label_1_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+        '.label_2_r': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+        '.label_3_r': {
+          ...baseTitle,
+          fontSize: '1.1rem',
+          fontWeight: '400',
+        },
 
-          // title class add (BO)
-          '.title_bo_1_b': {
-            ...baseTitle,
-            fontSize: '2.2rem',
-            fontWeight: '700',
-          },
-          '.title_bo_1_r': {
-            ...baseTitle,
-            fontSize: '2.2rem',
-            fontWeight: '400',
-          },
-          '.title_bo_2_b': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '700',
-          },
-          '.title_bo_2_r': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '400',
-          },
-          '.title_bo_3_b': {
-            ...baseTitle,
-            fontSize: '1.8rem',
-            fontWeight: '700',
-          },
-          '.title_bo_4_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '700',
-          },
-          '.title_bo_4_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '400',
-          },
-          '.body_bo_1_b': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '700',
-          },
-          '.body_bo_1_r': {
-            ...baseTitle,
-            fontSize: '1.6rem',
-            fontWeight: '400',
-          },
-          '.body_bo_2_b': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '700',
-          },
-          '.body_bo_2_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.body_bo_3_b': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '700',
-          },
-          '.body_bo_3_r': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '400',
-          },
-          '.body_bo_4_b': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '700',
-          },
-          '.body_bo_4_r': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '400',
-          },
-          '.input_bo_1_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.input_bo_2_r': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '400',
-          },
-          '.button_bo_1_b': {
-            ...baseTitle,
-            fontSize: '2rem',
-            fontWeight: '700',
-          },
-          '.button_bo_2_b': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '700',
-          },
-          '.button_bo_2_r': {
-            ...baseTitle,
-            fontSize: '1.4rem',
-            fontWeight: '400',
-          },
-          '.button_bo_3_b': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '700',
-          },
-          '.button_bo_3_r': {
-            ...baseTitle,
-            fontSize: '1.3rem',
-            fontWeight: '400',
-          },
-          '.button_bo_4_r': {
-            ...baseTitle,
-            fontSize: '1rem',
-            fontWeight: '400',
-          },
-          '.label_bo_1_b': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '700',
-          },
-          '.label_bo_1_r': {
-            ...baseTitle,
-            fontSize: '1.2rem',
-            fontWeight: '400',
-          },
-          '.label_bo_2_b': {
-            ...baseTitle,
-            fontSize: '1rem',
-            fontWeight: '700',
-          },
+        // title class add (BO)
+        '.title_bo_1_b': {
+          ...baseTitle,
+          fontSize: '2.2rem',
+          fontWeight: '700',
+        },
+        '.title_bo_1_r': {
+          ...baseTitle,
+          fontSize: '2.2rem',
+          fontWeight: '400',
+        },
+        '.title_bo_2_b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '700',
+        },
+        '.title_bo_2_r': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '400',
+        },
+        '.title_bo_3_b': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '700',
+        },
+        '.title_bo_4_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
+        },
+        '.title_bo_4_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+        '.body_bo_1_b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '700',
+        },
+        '.body_bo_1_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+        '.body_bo_2_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '700',
+        },
+        '.body_bo_2_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.body_bo_3_b': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '700',
+        },
+        '.body_bo_3_r': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+        '.body_bo_4_b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '700',
+        },
+        '.body_bo_4_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+        '.input_bo_1_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.input_bo_2_r': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+        '.button_bo_1_b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '700',
+        },
+        '.button_bo_2_b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '700',
+        },
+        '.button_bo_2_r': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+        '.button_bo_3_b': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '700',
+        },
+        '.button_bo_3_r': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+        '.button_bo_4_r': {
+          ...baseTitle,
+          fontSize: '1rem',
+          fontWeight: '400',
+        },
+        '.label_bo_1_b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '700',
+        },
+        '.label_bo_1_r': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+        '.label_bo_2_b': {
+          ...baseTitle,
+          fontSize: '1rem',
+          fontWeight: '700',
+        },
 
-          '.ellipsis': {
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          },
+        '.ellipsis': {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         },
       });
     },
