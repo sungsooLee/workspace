@@ -30,6 +30,8 @@ import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagina
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
+import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
@@ -37,10 +39,7 @@ import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
-import { Route as GuideGuideButtonImport } from './pages/_guide/guide/button'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
-import { Route as GuideGuideComponentsLayoutImport } from './pages/_guide/guide/components/Layout'
-import { Route as GuideGuideComponentsButtonImport } from './pages/_guide/guide/components/Button'
 
 // Create/Update Routes
 
@@ -155,6 +154,18 @@ const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideImageRoute = GuideGuideImageImport.update({
+  id: '/guide/image',
+  path: '/guide/image',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideIconRoute = GuideGuideIconImport.update({
+  id: '/guide/icon',
+  path: '/guide/icon',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideGridRoute = GuideGuideGridImport.update({
   id: '/guide/grid',
   path: '/guide/grid',
@@ -197,33 +208,11 @@ const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
-const GuideGuideButtonRoute = GuideGuideButtonImport.update({
-  id: '/guide/button',
-  path: '/guide/button',
-  getParentRoute: () => GuideRoute,
-} as any)
-
 const GuideGuideAlertRoute = GuideGuideAlertImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideComponentsLayoutRoute = GuideGuideComponentsLayoutImport.update(
-  {
-    id: '/guide/components/Layout',
-    path: '/guide/components/Layout',
-    getParentRoute: () => GuideRoute,
-  } as any,
-)
-
-const GuideGuideComponentsButtonRoute = GuideGuideComponentsButtonImport.update(
-  {
-    id: '/guide/components/Button',
-    path: '/guide/components/Button',
-    getParentRoute: () => GuideRoute,
-  } as any,
-)
 
 // Populate the FileRoutesByPath interface
 
@@ -285,13 +274,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideAlertImport
       parentRoute: typeof GuideImport
     }
-    '/_guide/guide/button': {
-      id: '/_guide/guide/button'
-      path: '/guide/button'
-      fullPath: '/guide/button'
-      preLoaderRoute: typeof GuideGuideButtonImport
-      parentRoute: typeof GuideImport
-    }
     '/_guide/guide/buttons': {
       id: '/_guide/guide/buttons'
       path: '/guide/buttons'
@@ -339,6 +321,20 @@ declare module '@tanstack/react-router' {
       path: '/guide/grid'
       fullPath: '/guide/grid'
       preLoaderRoute: typeof GuideGuideGridImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/icon': {
+      id: '/_guide/guide/icon'
+      path: '/guide/icon'
+      fullPath: '/guide/icon'
+      preLoaderRoute: typeof GuideGuideIconImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/image': {
+      id: '/_guide/guide/image'
+      path: '/guide/image'
+      fullPath: '/guide/image'
+      preLoaderRoute: typeof GuideGuideImageImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/info': {
@@ -425,20 +421,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu3IndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_guide/guide/components/Button': {
-      id: '/_guide/guide/components/Button'
-      path: '/guide/components/Button'
-      fullPath: '/guide/components/Button'
-      preLoaderRoute: typeof GuideGuideComponentsButtonImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/components/Layout': {
-      id: '/_guide/guide/components/Layout'
-      path: '/guide/components/Layout'
-      fullPath: '/guide/components/Layout'
-      preLoaderRoute: typeof GuideGuideComponentsLayoutImport
-      parentRoute: typeof GuideImport
-    }
   }
 }
 
@@ -460,7 +442,6 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
-  GuideGuideButtonRoute: typeof GuideGuideButtonRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
@@ -468,6 +449,8 @@ interface GuideRouteChildren {
   GuideGuideColorRoute: typeof GuideGuideColorRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
+  GuideGuideIconRoute: typeof GuideGuideIconRoute
+  GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
@@ -479,13 +462,10 @@ interface GuideRouteChildren {
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
-  GuideGuideComponentsButtonRoute: typeof GuideGuideComponentsButtonRoute
-  GuideGuideComponentsLayoutRoute: typeof GuideGuideComponentsLayoutRoute
 }
 
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAlertRoute: GuideGuideAlertRoute,
-  GuideGuideButtonRoute: GuideGuideButtonRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
@@ -493,6 +473,8 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideColorRoute: GuideGuideColorRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
+  GuideGuideIconRoute: GuideGuideIconRoute,
+  GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
@@ -504,8 +486,6 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
-  GuideGuideComponentsButtonRoute: GuideGuideComponentsButtonRoute,
-  GuideGuideComponentsLayoutRoute: GuideGuideComponentsLayoutRoute,
 }
 
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
@@ -530,7 +510,6 @@ export interface FileRoutesByFullPath {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
-  '/guide/button': typeof GuideGuideButtonRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -538,6 +517,8 @@ export interface FileRoutesByFullPath {
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
+  '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -550,8 +531,6 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
-  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
 }
 
 export interface FileRoutesByTo {
@@ -561,7 +540,6 @@ export interface FileRoutesByTo {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
-  '/guide/button': typeof GuideGuideButtonRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -569,6 +547,8 @@ export interface FileRoutesByTo {
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
+  '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -581,8 +561,6 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
-  '/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
 }
 
 export interface FileRoutesById {
@@ -595,7 +573,6 @@ export interface FileRoutesById {
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
-  '/_guide/guide/button': typeof GuideGuideButtonRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -603,6 +580,8 @@ export interface FileRoutesById {
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
+  '/_guide/guide/icon': typeof GuideGuideIconRoute
+  '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
@@ -615,8 +594,6 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
-  '/_guide/guide/components/Button': typeof GuideGuideComponentsButtonRoute
-  '/_guide/guide/components/Layout': typeof GuideGuideComponentsLayoutRoute
 }
 
 export interface FileRouteTypes {
@@ -628,7 +605,6 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
-    | '/guide/button'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -636,6 +612,8 @@ export interface FileRouteTypes {
     | '/guide/color'
     | '/guide/form'
     | '/guide/grid'
+    | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
@@ -648,8 +626,6 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/guide'
     | '/menu3'
-    | '/guide/components/Button'
-    | '/guide/components/Layout'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -658,7 +634,6 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
-    | '/guide/button'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -666,6 +641,8 @@ export interface FileRouteTypes {
     | '/guide/color'
     | '/guide/form'
     | '/guide/grid'
+    | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
@@ -678,8 +655,6 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/guide'
     | '/menu3'
-    | '/guide/components/Button'
-    | '/guide/components/Layout'
   id:
     | '__root__'
     | '/_auth'
@@ -690,7 +665,6 @@ export interface FileRouteTypes {
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
-    | '/_guide/guide/button'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
@@ -698,6 +672,8 @@ export interface FileRouteTypes {
     | '/_guide/guide/color'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
+    | '/_guide/guide/icon'
+    | '/_guide/guide/image'
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
@@ -710,8 +686,6 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_guide/guide/'
     | '/_layout/menu3/'
-    | '/_guide/guide/components/Button'
-    | '/_guide/guide/components/Layout'
   fileRoutesById: FileRoutesById
 }
 
@@ -754,7 +728,6 @@ export const routeTree = rootRoute
       "filePath": "_guide.tsx",
       "children": [
         "/_guide/guide/alert",
-        "/_guide/guide/button",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
@@ -762,6 +735,8 @@ export const routeTree = rootRoute
         "/_guide/guide/color",
         "/_guide/guide/form",
         "/_guide/guide/grid",
+        "/_guide/guide/icon",
+        "/_guide/guide/image",
         "/_guide/guide/info",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
@@ -772,9 +747,7 @@ export const routeTree = rootRoute
         "/_guide/guide/switch",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
-        "/_guide/guide/",
-        "/_guide/guide/components/Button",
-        "/_guide/guide/components/Layout"
+        "/_guide/guide/"
       ]
     },
     "/_layout": {
@@ -804,10 +777,6 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/alert.tsx",
       "parent": "/_guide"
     },
-    "/_guide/guide/button": {
-      "filePath": "_guide/guide/button.tsx",
-      "parent": "/_guide"
-    },
     "/_guide/guide/buttons": {
       "filePath": "_guide/guide/buttons.tsx",
       "parent": "/_guide"
@@ -834,6 +803,14 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/grid": {
       "filePath": "_guide/guide/grid.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/icon": {
+      "filePath": "_guide/guide/icon.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/image": {
+      "filePath": "_guide/guide/image.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/info": {
@@ -883,14 +860,6 @@ export const routeTree = rootRoute
     "/_layout/menu3/": {
       "filePath": "_layout/menu3/index.tsx",
       "parent": "/_layout"
-    },
-    "/_guide/guide/components/Button": {
-      "filePath": "_guide/guide/components/Button.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/components/Layout": {
-      "filePath": "_guide/guide/components/Layout.tsx",
-      "parent": "/_guide"
     }
   }
 }

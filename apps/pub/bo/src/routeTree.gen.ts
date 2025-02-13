@@ -34,6 +34,7 @@ import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagina
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
@@ -175,6 +176,12 @@ const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
 const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   id: '/guide/info',
   path: '/guide/info',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideIconRoute = GuideGuideIconImport.update({
+  id: '/guide/icon',
+  path: '/guide/icon',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -335,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideGridImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/icon': {
+      id: '/_guide/guide/icon'
+      path: '/guide/icon'
+      fullPath: '/guide/icon'
+      preLoaderRoute: typeof GuideGuideIconImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/info': {
       id: '/_guide/guide/info'
       path: '/guide/info'
@@ -454,6 +468,7 @@ interface GuideRouteChildren {
   GuideGuideColorRoute: typeof GuideGuideColorRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
+  GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
@@ -476,6 +491,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideColorRoute: GuideGuideColorRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
+  GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
@@ -538,6 +554,7 @@ export interface FileRoutesByFullPath {
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
+  '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -568,6 +585,7 @@ export interface FileRoutesByTo {
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
+  '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -602,6 +620,7 @@ export interface FileRoutesById {
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
+  '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
@@ -635,6 +654,7 @@ export interface FileRouteTypes {
     | '/guide/color'
     | '/guide/form'
     | '/guide/grid'
+    | '/guide/icon'
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
@@ -664,6 +684,7 @@ export interface FileRouteTypes {
     | '/guide/color'
     | '/guide/form'
     | '/guide/grid'
+    | '/guide/icon'
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
@@ -696,6 +717,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/color'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
+    | '/_guide/guide/icon'
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
@@ -752,6 +774,7 @@ export const routeTree = rootRoute
         "/_guide/guide/color",
         "/_guide/guide/form",
         "/_guide/guide/grid",
+        "/_guide/guide/icon",
         "/_guide/guide/info",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
@@ -829,6 +852,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/grid": {
       "filePath": "_guide/guide/grid.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/icon": {
+      "filePath": "_guide/guide/icon.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/info": {
