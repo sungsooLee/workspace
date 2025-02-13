@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { memo, useState, useRef, useEffect } from 'react';
-import { IcoArrowForward } from '@learnway/icons';
+import { IcoArrowBackward, IcoArrowForward } from '@learnway/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Chips, SelectOption } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
@@ -40,7 +40,9 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Carousel Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/carousel/carousel.tsx</p>
-      <p className="info">영역이 넘어가면 자동으로 화살표 생성 : 디자인에 맞게 커스텀 필요</p>
+      <p className="info">
+        영역이 넘어가면 자동으로 화살표 생성 : 디자인에 맞게 커스텀 필요 (className는 제약없음)
+      </p>
       <div className="code_example">
         <pre className="code_block">
           <code>
@@ -101,7 +103,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
               slidesPerView="auto"
               loop={false}
               modules={[Navigation]}
-              className="recent_swiper flex w-full justify-start">
+              className="recent_swiper flex w-[450px] justify-start">
               <div className="lists">
                 {items.map((item, index) => (
                   <SwiperSlide
@@ -115,7 +117,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
 
             <div ref={prevRef} className="recent_button_prev">
               <div className="btn">
-                <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+                <IcoArrowBackward width={16} height={16} stroke="#6F798B" />
               </div>
             </div>
             <div ref={nextRef} className="recent_button_next">
