@@ -1,12 +1,12 @@
 import { DialogConfig } from './type';
 import UserSearchPop from '../form-dialog/user-search-pop';
-import { FormCheckbox, FormDateRangePicker, FormRadioGroup } from '@learnway/ui';
+import { FormCheckbox, FormDateRangePicker } from '@learnway/ui';
 
 export const searchDialogConfig: DialogConfig = {
   /*text: Input,
   password: Input,*/
   checkbox: FormCheckbox,
-  'radio-group': FormRadioGroup,
+  //'radio-group': FormRadioGroup,
   'date-range': FormDateRangePicker,
   /*'date-range': DateRange,
   dropdown: DropDown,
