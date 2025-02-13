@@ -45,8 +45,8 @@ export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
-export { ReactComponent as IcoUploadCloud } from './lib/ic_upload-cloud.svg'; // file upload 24*24
-export { ReactComponent as IcoLoaing } from './lib/ic_loading.svg'; // file uploading 24*24
+export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
+export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file uploading 24*24
 
 //export Default as Information from './lib/information.svg?react';
 

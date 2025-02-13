@@ -1,11 +1,11 @@
 /* thumb.module.css */
 .thumb_wrap {
+  @apply w-full;
   .thumb_swiper {
-    @apply mx-0 flex items-center justify-start overflow-hidden whitespace-nowrap;
     .slide {
-      @apply flex w-auto items-center;
+      @apply w-[128px];
       .thumb_item {
-        @apply relative flex h-[76px] w-[128px] flex-col items-center justify-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
+        @apply relative flex h-[76px] w-full flex-col items-center justify-center;
         .text {
           @apply mt-[4px] flex text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
         }
@@ -34,12 +34,21 @@
 /* file upload */
 .thumb_item {
   .btn_file {
-    @apply flex flex-col items-center justify-center;
+    @apply box-border flex h-[76px] w-[128px] flex-col items-center justify-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
     .text {
       @apply mt-[4px] flex text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
     }
   }
   .input_file {
     @apply absolute left-0 top-0 z-10 h-full w-full cursor-pointer bg-transparent opacity-0;
+  }
+  .thumb_loading {
+    @apply box-border flex h-[76px] w-[128px] flex-col items-center justify-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
+  }
+  .img_wrap {
+    @apply relative overflow-hidden rounded-[4px];
+    .img {
+      @apply h-full w-full brightness-[80%] filter;
+    }
   }
 }
