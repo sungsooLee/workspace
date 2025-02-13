@@ -32,7 +32,7 @@ function RouteComponent() {
         { label: 'Tootip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
-        { label: 'carousel', path: '/guide/carousel' },
+        { label: 'Carousel', path: '/guide/carousel' },
         { label: 'Pagination', path: '/guide/pagination' },
         // { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/components/textfield' },
