@@ -1,6 +1,6 @@
 /* thumb.module.css */
 .thumb_wrap {
-  @apply flex w-full flex-grow overflow-hidden;
+  @apply overflow-hidden;
   .thumb_swiper {
     @apply w-full;
     .slide {

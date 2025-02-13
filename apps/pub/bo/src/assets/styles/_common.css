@@ -49,6 +49,10 @@ body[data-scroll-locked][data-scroll-locked] {
   overflow: auto !important;
 }
 
+.lnb-open main {
+  max-width: calc(100vw - 263px);
+}
+
 /* 공통 레이아웃(정렬) */
 .row {
   @apply flex w-full gap-[32px];
