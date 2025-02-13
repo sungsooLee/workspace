@@ -46,7 +46,6 @@ function LNBComponent() {
     };
   }, [toggleLnb]);
 
-  // 25-02-13 End
   if (!activeMenuDepth?.[0]) {
     return <></>;
   }
