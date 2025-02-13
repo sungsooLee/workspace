@@ -63,13 +63,10 @@ function LNBComponent() {
     <div className={`${styles.start} nlp--lnb ${toggleLnb ? `${styles.open}` : `${styles.close}`}`}>
       <div className={styles.lnb_wrap}>
         <h2 className={styles.lnb_title}>
-          <button
-            type="button"
-            className={cn(styles.lnb_title_btn, buttonClass)}
-            onClick={() => handleOpenAll()}>
+          <Button className={cn(styles.lnb_title_btn, buttonClass)} onClick={() => handleOpenAll()}>
             <span className={styles.lnb_title_text}>{activeMenuDepth[0].title}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
-          </button>
+          </Button>
         </h2>
         {menus && (
           <AccordionMenu

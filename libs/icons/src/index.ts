@@ -47,6 +47,7 @@ export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; //
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
 export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
 export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file uploading 24*24
+export { ReactComponent as IcoTrash03 } from './lib/ic_trash_03.svg'; // trash
 
 //export Default as Information from './lib/information.svg?react';
 

@@ -1,6 +1,7 @@
 /* page-content.module.css */
 .main_contents {
   @apply min-h-full flex-grow pb-[28px] pr-[32px];
+  max-width: calc(100% - 449px);
 }
 .sub_contents {
   @apply box-border min-w-[448px] shrink-0 pl-[32px];

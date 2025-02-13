@@ -22,6 +22,7 @@ import {
   IcoUploadCloud,
   IcoLoading,
   IcoCheckboxChecked,
+  IcoTrash03,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
@@ -352,8 +353,9 @@ function RouteComponent() {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
+                    {/* default 이미지 CASE */}
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(1) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${thumbStyles.default} ${activeButtons.includes(1) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
                         onClick={() => handleButtonClick(1)}
@@ -372,8 +374,9 @@ function RouteComponent() {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
+                    {/* 사용자가 선택한 이미지 첫번째만 : selected 클래스 추가(hover 기능 필요) */}
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(2) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${thumbStyles.selected} ${activeButtons.includes(2) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
                         onClick={() => handleButtonClick(2)}
@@ -383,6 +386,14 @@ function RouteComponent() {
                           width={12}
                           height={13}
                           fill="none"
+                          stroke="#ffffff"
+                        />
+                      </Button>
+                      <Button className={thumbStyles.btn_delete} onlyIcon>
+                        <IcoTrash03
+                          className={thumbStyles.icon_delete}
+                          width={24}
+                          height={24}
                           stroke="#ffffff"
                         />
                       </Button>
@@ -473,10 +484,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(7) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(7)}
+                        onClick={() => handleButtonClick(6)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}
@@ -493,10 +504,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(7) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(7)}
+                        onClick={() => handleButtonClick(6)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}
@@ -513,10 +524,10 @@ function RouteComponent() {
                   </SwiperSlide>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(7) ? thumbStyles.active : ''}`}>
+                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
                       <Button
                         className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(7)}
+                        onClick={() => handleButtonClick(6)}
                         onlyIcon>
                         <IcoCheckboxChecked
                           className={thumbStyles.icon_check}
