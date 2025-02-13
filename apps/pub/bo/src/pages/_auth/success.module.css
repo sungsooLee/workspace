@@ -1,0 +1,13 @@
+/* success.module */
+.success_info {
+  @apply text-center;
+  .ico {
+    @apply m-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[var(--secondary1)];
+  }
+  h3.title {
+    @apply title_5_b mt-[24px];
+  }
+  .noti {
+    @apply body_bo_2_r mt-[8px] leading-[1.6] text-[var(--gray7)];
+  }
+}

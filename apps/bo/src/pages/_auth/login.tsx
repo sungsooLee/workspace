@@ -14,6 +14,7 @@ import DynamicFormField from '../../shared/ui/dynamic-form-field';
 import { useSetLanguage } from '../../features/platform';
 
 import styles from './login.module.css';
+import authStyles from './auth.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -60,7 +61,7 @@ function RouteComponent() {
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <div className={`${styles.start} ${styles.auth_wrap}`}>
-        <div className={styles.auth_box}>
+        <div className={authStyles.auth_box}>
           <div className={formStyles.form_row}>
             <DynamicFormField provider={provider} name={'username'} />
           </div>

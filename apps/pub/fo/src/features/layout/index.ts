@@ -1,7 +1,9 @@
 export * from './ui/logo';
+export * from './ui/logo-auth';
 export * from './ui/user-avatar';
 export * from './ui/notification';
 export * from './ui/language';
+export * from './ui/language-auth';
 export * from './ui/user-name';
 export * from './ui/navigate';
 export * from './ui/navigate-hover';
@@ -10,4 +12,3 @@ export * from './ui/tenant';
 export * from './ui/family-site';
 export * from './ui/search';
 export * from './ui/recent-visits';
-export * from './ui/auth-title';

@@ -1,4 +1,17 @@
 /* form.module.css */
+.form_row {
+  @apply flex w-full gap-[32px] text-left;
+  .row {
+    @apply mt-[16px];
+  }
+  & + .row {
+    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+    &.no_line {
+      @apply border-0;
+    }
+  }
+}
+
 .form_item {
   @apply relative w-full flex-1 pb-[16px];
   .guide_text {

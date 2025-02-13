@@ -8,17 +8,17 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
 import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
-import { Route as LoginIndexImport } from './pages/login/index'
+import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LoginLayoutImport } from './pages/login/_layout'
 import { Route as LayoutTestImport } from './pages/_layout/test'
+import { Route as AuthSuccessImport } from './pages/_auth/success'
+import { Route as AuthSignupImport } from './pages/_auth/signup'
+import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -44,17 +44,7 @@ import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
-// Create Virtual Routes
-
-const LoginImport = createFileRoute('/login')()
-
 // Create/Update Routes
-
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
@@ -66,10 +56,9 @@ const GuideRoute = GuideImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LoginRoute,
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const LayoutIndexRoute = LayoutIndexImport.update({
@@ -78,15 +67,28 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LoginLayoutRoute = LoginLayoutImport.update({
-  id: '/_layout',
-  getParentRoute: () => LoginRoute,
-} as any)
-
 const LayoutTestRoute = LayoutTestImport.update({
   id: '/test',
   path: '/test',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const AuthSuccessRoute = AuthSuccessImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupRoute = AuthSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
@@ -237,6 +239,13 @@ const GuideGuideAlertRoute = GuideGuideAlertImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/_guide': {
       id: '/_guide'
       path: ''
@@ -251,6 +260,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/success': {
+      id: '/_auth/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthSuccessImport
+      parentRoute: typeof AuthImport
+    }
     '/_layout/test': {
       id: '/_layout/test'
       path: '/test'
@@ -258,33 +288,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTestImport
       parentRoute: typeof LayoutImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/login/_layout': {
-      id: '/login/_layout'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginLayoutImport
-      parentRoute: typeof LoginRoute
-    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
-    }
-    '/login/': {
-      id: '/login/'
-      path: '/'
-      fullPath: '/login/'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof LoginImport
     }
     '/_guide/guide/alert': {
       id: '/_guide/guide/alert'
@@ -459,6 +468,20 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  AuthSuccessRoute: typeof AuthSuccessRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  AuthSuccessRoute: AuthSuccessRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
@@ -528,24 +551,13 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
-interface LoginRouteChildren {
-  LoginLayoutRoute: typeof LoginLayoutRoute
-  LoginIndexRoute: typeof LoginIndexRoute
-}
-
-const LoginRouteChildren: LoginRouteChildren = {
-  LoginLayoutRoute: LoginLayoutRoute,
-  LoginIndexRoute: LoginIndexRoute,
-}
-
-const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
-
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
-  '/login': typeof LoginLayoutRoute
   '/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
@@ -574,8 +586,10 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
-  '/login': typeof LoginIndexRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
@@ -605,13 +619,14 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/success': typeof AuthSuccessRoute
   '/_layout/test': typeof LayoutTestRoute
-  '/login': typeof LoginRouteWithChildren
-  '/login/_layout': typeof LoginLayoutRoute
   '/_layout/': typeof LayoutIndexRoute
-  '/login/': typeof LoginIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
@@ -642,10 +657,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/test'
     | '/login'
+    | '/signup'
+    | '/success'
+    | '/test'
     | '/'
-    | '/login/'
     | '/guide/alert'
     | '/guide/buttons'
     | '/guide/carousel'
@@ -673,8 +689,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/test'
     | '/login'
+    | '/signup'
+    | '/success'
+    | '/test'
     | '/'
     | '/guide/alert'
     | '/guide/buttons'
@@ -702,13 +720,14 @@ export interface FileRouteTypes {
     | '/menu3'
   id:
     | '__root__'
+    | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/login'
+    | '/_auth/signup'
+    | '/_auth/success'
     | '/_layout/test'
-    | '/login'
-    | '/login/_layout'
     | '/_layout/'
-    | '/login/'
     | '/_guide/guide/alert'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
@@ -737,15 +756,15 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
-  LoginRoute: typeof LoginRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
-  LoginRoute: LoginRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -758,9 +777,17 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_auth",
         "/_guide",
-        "/_layout",
-        "/login"
+        "/_layout"
+      ]
+    },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login",
+        "/_auth/signup",
+        "/_auth/success"
       ]
     },
     "/_guide": {
@@ -799,28 +826,25 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup": {
+      "filePath": "_auth/signup.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/success": {
+      "filePath": "_auth/success.tsx",
+      "parent": "/_auth"
+    },
     "/_layout/test": {
       "filePath": "_layout/test.tsx",
       "parent": "/_layout"
     },
-    "/login": {
-      "filePath": "login",
-      "children": [
-        "/login/_layout",
-        "/login/"
-      ]
-    },
-    "/login/_layout": {
-      "filePath": "login/_layout.tsx",
-      "parent": "/login"
-    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
-    },
-    "/login/": {
-      "filePath": "login/index.tsx",
-      "parent": "/login"
     },
     "/_guide/guide/alert": {
       "filePath": "_guide/guide/alert.tsx",

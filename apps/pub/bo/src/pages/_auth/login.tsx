@@ -5,8 +5,6 @@ import { cn } from '@learnway/shared';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
-import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -69,17 +67,7 @@ function RouteComponent() {
           <h3 className={styles.tit_sns}>소셜 로그인</h3>
           <ul className={styles.list}>
             <li>
-              <Button>
-                <img src={snsNaverImage} alt="naver" />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <img src={snskakaoImage} alt="kakao" />
-              </Button>
-            </li>
-            <li>
-              <Button>
+              <Button to={''}>
                 <img src={snsGoogleImage} alt="google" />
               </Button>
             </li>
