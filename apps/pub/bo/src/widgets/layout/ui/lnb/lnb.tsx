@@ -33,6 +33,19 @@ function LNBComponent() {
     setMenus(activeMenuDepth?.[0]?.children);
   }, [activeMenuDepth?.[0]?.children]);
 
+  // 25-02-13 Lnb 추가
+  useEffect(() => {
+    if (toggleLnb) {
+      document.body.classList.add('lnb-open');
+    } else {
+      document.body.classList.remove('lnb-open');
+    }
+
+    return () => {
+      document.body.classList.remove('lnb-open');
+    };
+  }, [toggleLnb]);
+
   if (!activeMenuDepth?.[0]) {
     return <></>;
   }

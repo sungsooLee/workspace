@@ -50,7 +50,12 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 
 /* 공통 레이아웃(정렬) */
+.lnb-open main {
+  /* lnb open */
+  max-width: calc(100vw - 263px);
+}
 .row {
+  /* form */
   @apply flex w-full gap-[32px];
   .row {
     @apply mt-[16px];
