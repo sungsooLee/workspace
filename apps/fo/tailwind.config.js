@@ -1,7 +1,7 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
-const tailwindPreset = require('../../libs/config/src/lib/style/tailwind.preset');
-const tailwindShadcnPreset = require('../../libs/config/src/lib/style/tailwind.shadcn.preset');
+const tailwindPreset = require('../../../libs/config/src/lib/style/tailwind.preset');
+const tailwindShadcnPreset = require('../../../libs/config/src/lib/style/tailwind.shadcn.preset');
 
 const plugin = require('tailwindcss/plugin');
 
@@ -54,6 +54,11 @@ module.exports = {
         '.title_4_b': {
           ...baseTitle,
           fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+        '.title_5_b': {
+          ...baseTitle,
+          fontSize: '2rem',
           fontWeight: '600',
         },
         '.body_1_b': {
