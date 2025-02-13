@@ -62,6 +62,12 @@ function RouteComponent() {
         <span className="remaining">
           남은본수 : <strong>{stats.remaining}</strong>본
         </span>
+        <span className="progress">
+          완료율 :{' '}
+          <strong>
+            {stats.total > 0 ? ((stats.completed / stats.total) * 100).toFixed(1) : 0}%
+          </strong>
+        </span>
       </div>
       <div className="stats_graph">
         <div

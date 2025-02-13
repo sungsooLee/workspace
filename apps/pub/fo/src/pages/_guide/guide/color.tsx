@@ -8,9 +8,14 @@ function RouteComponent() {
   const exampleCss = [
     {
       code: `// 적용방법(예시)
-    .title {
-      color: var(--white);
-    }`,
+.title {
+  color: var(--white);
+}
+  
+// 테일윈드(예시)
+.title {
+  @apply text-[var(--white)];
+}`,
     },
   ];
 
@@ -124,7 +129,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <h2 className="guide_tit2">Color Guide (BO)</h2>
+      <h2 className="guide_tit2">Color Guide</h2>
       <p className="loc css">CSS 위치 : /src/assets/styles/_color.css</p>
       <p className="info">
         /src/assets/styles/_color.css 컬러값을 수정하면 가이드에 자동 반영됩니다.
