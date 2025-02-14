@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { LogoAuth, LanguageAuth } from '../../../../features/layout';
+import { Logo, Language } from '../../../../features/layout';
 import styles from './header-auth.module.css';
 
 function HeaderAuthComponent() {
@@ -11,10 +11,10 @@ function HeaderAuthComponent() {
     <div className={`${styles.start} ${styles.header_auth}`}>
       <header className={styles.header_area}>
         <h1>
-          <LogoAuth />
+          <Logo />
         </h1>
 
-        <LanguageAuth />
+        <Language className={styles.auth} />
       </header>
     </div>
   );

@@ -277,8 +277,8 @@ export interface DynamicFormProvider {
   // react-hook-form의 watch 함수
   watch: (name?: string | string[]) => any;
   onFormChange: (value?: any) => void;
-  formData : UseFormGetValues<any>,
-  onFocus:(fieldName:string) => void
+  formData: UseFormGetValues<any>;
+  onFocus: (fieldName: string) => void;
 }
 
 /**
@@ -291,6 +291,7 @@ export interface DynamicFormFieldProps {
   type?: string;
   disabled?: boolean;
   children?: React.ReactNode;
+  className?: string;
 
   [key: string]: any;
 }
