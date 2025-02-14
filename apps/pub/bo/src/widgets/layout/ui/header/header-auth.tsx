@@ -14,7 +14,7 @@ function HeaderAuthComponent() {
           <Logo />
         </h1>
 
-        <Language className={styles.auth} />
+        <Language className="auth_language" />
       </header>
     </div>
   );

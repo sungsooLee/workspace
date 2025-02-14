@@ -41,7 +41,7 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
 };
 
 interface LanguageComponentProp {
-  className: string;
+  className?: string;
 }
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
@@ -49,11 +49,14 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   const { data: languageSelectOptions } = useLanguageSelectOptions();
 
   return (
-    <Popover popoverContent={<PopoverContent data={languageSelectOptions} />}>
-      <button className={cn(styles.btn_language, className)}>
-        {'KR'}
-        <IcoArrowDown width={16} height={16} stroke="#fff" />
-      </button>
+    <Popover
+      popoverContent={<PopoverContent data={languageSelectOptions} />}
+      className={cn(styles.btn_language, className)}
+      side="bottom"
+      align="end"
+      sideOffset={5}>
+      <span className={styles.select}>{'KR'}</span>
+      <IcoArrowDown width={16} height={16} stroke="#ffffff" />
     </Popover>
   );
 };

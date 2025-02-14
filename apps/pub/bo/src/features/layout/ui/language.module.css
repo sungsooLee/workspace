@@ -35,7 +35,3 @@
     }
   }
 }
-
-.auth {
-  @apply text-[var(--gray7)];
-}
