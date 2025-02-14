@@ -9,6 +9,9 @@
     @apply p-0;
   }
 }
-.datepicker {
-  @apply input_3_r flex min-h-[32px] w-full items-center rounded-[4px] border border-solid border-[var(--gray7)] !pl-[12px] !pt-[5px] text-[var(--gray9)];
+.datepicker_input {
+  @apply input_3_r flex min-h-[32px] w-full items-center rounded-[4px] border border-solid border-[var(--gray4)] !pl-[12px] !pt-[5px] text-[var(--gray9)];
+  &:focus {
+    @apply border-[var(--gray7)];
+  }
 }
