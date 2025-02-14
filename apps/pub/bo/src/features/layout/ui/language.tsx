@@ -32,7 +32,11 @@ const PopoverContent = () => {
   );
 };
 
-const LanguageComponent = () => {
+interface LanguageComponentProp {
+  className: string;
+}
+
+const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
     <Popover
       popoverContent={<PopoverContent />}
