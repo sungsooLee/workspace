@@ -18,7 +18,10 @@
   .title_wrap {
     @apply flex justify-between;
     .title {
-      @apply title_bo_1_b inline-flex;
+      @apply title_bo_1_b inline-flex items-center;
+      .btn_favorites {
+        @apply ml-[4px] flex;
+      }
     }
   }
 }

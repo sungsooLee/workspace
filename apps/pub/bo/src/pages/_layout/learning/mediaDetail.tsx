@@ -118,14 +118,6 @@ function RouteComponent() {
   // Swiper
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
-  const [isAtStart, setIsAtStart] = useState(true); // left edge Check
-  const [isAtEnd, setIsAtEnd] = useState(false); // right edge Check
-
-  const handleSlideChange = (swiper: any) => {
-    // 슬라이드가 변경될 때마다 호출됩니다.
-    setIsAtStart(swiper.isBeginning); // 왼쪽 끝인지 확인
-    setIsAtEnd(swiper.isEnd); // 오른쪽 끝인지 확인
-  };
 
   return (
     <>
@@ -342,8 +334,7 @@ function RouteComponent() {
                   freeMode={true}
                   grabCursor={true}
                   modules={[FreeMode]}
-                  className={thumbStyles.thumb_swiper}
-                  onSlideChange={handleSlideChange}>
+                  className={thumbStyles.thumb_swiper}>
                   <SwiperSlide className={thumbStyles.slide}>
                     <div className={thumbStyles.thumb_item}>
                       <Button className={thumbStyles.btn_file}>
