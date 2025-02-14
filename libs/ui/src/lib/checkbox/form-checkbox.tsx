@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import { Checkbox } from './checkbox';
 
 /**
@@ -8,20 +8,18 @@ import { Checkbox } from './checkbox';
  * @param props
  * @constructor
  */
-const FormCheckBoxComponent: FC<any> = ({
-  value: checked,
-  onChange,
-  checkLabel: label,
-  ...props
-}) => {
-  return (
-    <Checkbox
-      onCheckedChange={onChange}
-      checked={checked}
-      {...props}
-      label={label}
-      hideLabel={!label}
-    />
-  );
-};
+const FormCheckBoxComponent = forwardRef<HTMLButtonElement, any>(
+  ({ value: checked, onChange, checkLabel: label, ...props }, ref) => {
+    return (
+      <Checkbox
+        ref={ref}
+        onCheckedChange={onChange}
+        checked={checked}
+        {...props}
+        label={label}
+        hideLabel={!label}
+      />
+    );
+  },
+);
 export const FormCheckbox = FormCheckBoxComponent;

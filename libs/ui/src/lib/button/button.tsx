@@ -4,29 +4,30 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@learnway/shared';
 
 import styles from './button.module.css';
-
+export type ButtonVariantType =
+  | 'primary'
+  | 'line'
+  | 'gray'
+  | 'gray2'
+  | 'secondary'
+  | 'search'
+  | 'save'
+  | 'point'
+  | 'text'
+  | 'chips'
+  | 'expand'
+  | 'expand2'
+  | 'danger'
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'gray-outline'
+  | 'ghost'
+  | 'link';
+export type ButtonSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | 'primary'
-    | 'line'
-    | 'gray'
-    | 'gray2'
-    | 'secondary'
-    | 'search'
-    | 'save'
-    | 'point'
-    | 'text'
-    | 'chips'
-    | 'expand'
-    | 'expand2'
-    | 'danger'
-    | 'default'
-    | 'destructive'
-    | 'outline'
-    | 'gray-outline'
-    | 'ghost'
-    | 'link';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; // xs(28) , sm(32) , md(36), lg(40), xl(48)
+  variant?: ButtonVariantType;
+  size?: ButtonSizeType; // xs(28) , sm(32) , md(36), lg(40), xl(48)
   icon?: React.ReactNode;
   iconAlign?: 'left' | 'right';
   onlyIcon?: boolean;

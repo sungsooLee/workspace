@@ -21,7 +21,6 @@ module.exports = {
         letterSpacing: '-0.3px',
         lineHeight: '140%',
       };
-
       addComponents({
         '.scrollbar': {
           '&::-webkit-scrollbar': {
