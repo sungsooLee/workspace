@@ -1,12 +1,13 @@
 import { FC, isValidElement, cloneElement, ReactElement } from 'react';
-import { dialogConfig } from './config';
-import styles from './form.module.css';
-import { cn } from '@learnway/shared';
-import { IcoFormRequired } from '@learnway/icons';
 import { Controller } from 'react-hook-form';
-import { Builder, DynamicFormFieldProps, FormParams } from './type';
 import get from 'lodash/get';
 
+import { cn } from '@learnway/shared';
+import { IcoFormRequired } from '@learnway/icons';
+
+import { dialogConfig } from './config';
+import styles from './form.module.css';
+import { Builder, DynamicFormFieldProps, FormParams } from './type';
 
 /**
  * 에러 객체에서 첫 번째 메시지를 재귀적으로 추출하는 함수
@@ -50,7 +51,6 @@ function getErrorMessageForField(errors: any, fieldKey: string): string {
   // 직접 message가 없으면, 해당 필드 에러 객체 내부에서 첫번째 메시지를 찾음.
   return getFirstErrorMessage(fieldError);
 }
-
 
 /**
  * getBuilderConfig 함수
@@ -109,6 +109,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
   type,
   disabled = false,
   children,
+  className,
   ...props
 }) => {
   const { control, builders, fieldRefs, watch, onFormChange, formData, onFocus } = provider;
@@ -166,10 +167,10 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
           : null;
 
         return (
-          <div className={styles.form_item}>
+          <div className={cn(styles.form_item, className)}>
             {/* 레이블 렌더링 */}
             {label && (
-              <label htmlFor={name} className={styles.form_label}>
+              <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label')}>
                 {label}
                 {isRequired && (
                   <span
@@ -192,10 +193,12 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
 
             {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
             {!hasError && formParams?.description && (
-              <p className={cn(styles.guide_text)}>{formParams.description}</p>
+              <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
+                {formParams.description}
+              </p>
             )}
             {hasError && (
-              <p className={cn(styles.guide_text, styles.error)}>
+              <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
                 {getErrorMessageForField(errors, name)}
               </p>
             )}
