@@ -24,7 +24,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
     onDelete,
     onChange,
     showInput,
-    options,
+    options = [],
     placeholder = '태그를 입력해주세요.',
     onItemClick,
     ...props
@@ -83,7 +83,7 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
         {/* TODO: orientation(vertical, horizontal) style 처리 필요 */}
         {/* chips wrapper */}
         <div className={cn(styles.chips_wapper)}>
-          {selectedOptions.map((option) => (
+          {selectedOptions?.map((option) => (
             <Chips
               {...props}
               option={option}

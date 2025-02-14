@@ -10,6 +10,8 @@ import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-grou
 import { FormSelect } from './dialogs/form-select';
 import { FormCategorySelector } from './dialogs/form-category-selector';
 import { FormContentsThumbnail } from './dialogs/form-contents-thumbnail';
+import { FormChipList } from '@/libs/ui/src/lib/chips/form-chip-list';
+import { FormTextarea } from '@/libs/ui/src/lib/textarea/form-textarea';
 
 const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...props }) => {
   const { control, builders, fieldRefs, watch } = provider;
@@ -76,6 +78,8 @@ const DynamicFormField: FC<any> = ({ provider, name, type, disabled = false, ...
               {configType === 'contents-thumbnail' && <FormContentsThumbnail {...formParams} />}
               {configType === 'dropdown' && <FormSelect {...formParams} />}
               {configType === 'text-popup-button' && <InputButton {...formParams} />}
+              {configType === 'text-area' && <FormTextarea {...formParams} />}
+              {configType === 'chip-list' && <FormChipList {...formParams} />}
               {configType === 'text-limit' && (
                 <InputLimit {...formParams} onChange={handleOnChagne} />
               )}

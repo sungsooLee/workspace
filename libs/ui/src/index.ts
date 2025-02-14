@@ -21,7 +21,6 @@ export * from './lib/card/card';
 
 // carousel
 export * from './lib/carousel/carousel';
-export * from './lib/carousel/image-carousel';
 
 // checkbox
 export * from './lib/checkbox/checkbox';
@@ -47,6 +46,10 @@ export * from './lib/input/input-button';
 export * from './lib/checkbox/form-checkbox';
 export * from './lib/radio/form-radio-group';
 export * from './lib/date-picker/form-date-range-picker';
+
+// file-upload
+export * from './lib/file-upload/thumbnail-image-upload';
+export * from './lib/file-upload/form-thumbnail-image-upload';
 
 // form
 export * from './lib/dynamic-form-field/dynamic-form-field-control';
@@ -100,6 +103,7 @@ export * from './lib/popover/popover';
 
 // textarea
 export * from './lib/textarea/textarea';
+export * from './lib/textarea/form-textarea';
 
 // toast
 export * from './lib/toast/toast';
