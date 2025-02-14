@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { cn } from '@learnway/shared';
 import { Popover, SelectOption } from '@learnway/ui';
 import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
@@ -39,13 +40,17 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
   );
 };
 
-const LanguageComponent = () => {
+interface LanguageComponentProp {
+  className: string;
+}
+
+const LanguageComponent = ({ className }: LanguageComponentProp) => {
   const { data } = useFetchAuthUser();
   const { data: languageSelectOptions } = useLanguageSelectOptions();
 
   return (
     <Popover popoverContent={<PopoverContent data={languageSelectOptions} />}>
-      <button className={styles.btn_language}>
+      <button className={cn(styles.btn_language, className)}>
         {'KR'}
         <IcoArrowDown width={16} height={16} stroke="#fff" />
       </button>
