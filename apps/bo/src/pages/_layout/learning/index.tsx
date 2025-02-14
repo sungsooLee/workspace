@@ -4,11 +4,12 @@ import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { Button } from '@learnway/ui';
+import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import DynamicFormField from '../../../shared/ui/dynamic-form-field';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { t } from 'i18next';
 import { FormSelectChipList } from '../../../shared/ui/dynamic-form-field/dialogs/form-select-chip-list';
+import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -57,7 +58,11 @@ function RouteComponent() {
           {/* 공개대상 */}
           <ContentsRow>
             <DynamicFormField provider={provider} name={'공개대상'}>
-              <FormSelectChipList />
+              <FormSelectChipList
+                selectOptions={Array(5)
+                  .fill(null)
+                  .map((d, i) => ({ value: `value${i}`, label: `label${i}` }))}
+              />
             </DynamicFormField>
           </ContentsRow>
           {/* 과정명 */}
@@ -117,7 +122,7 @@ function RouteComponent() {
 /**
  * 필수값 : name, type
  */
-const formConfig = {
+const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'channel',
@@ -174,9 +179,9 @@ const formConfig = {
     },
     {
       name: '공개대상',
-      // type: 'text',
+      type: 'custom',
       label: t('공개대상'),
-      value: '',
+      value: [],
       placeholder: '',
       description: '',
     },
@@ -214,9 +219,14 @@ const formConfig = {
     },
     {
       name: '과정썸네일',
-      type: 'text',
+      type: 'thumbnail-image-upload',
       label: t('과정썸네일'),
-      value: '',
+      value: [
+        { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+        { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+        { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+        { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+      ],
       placeholder: '',
       description: '',
     },

@@ -31,7 +31,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
       setSelectedImages(newSelectedImages);
     };
 
-    const items = options.map((d: ImageOption) => (
+    const items = options?.map((d: ImageOption) => (
       <Thumbnail
         path={d.path}
         key={d.id}

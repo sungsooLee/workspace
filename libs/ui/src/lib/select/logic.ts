@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SelectComponentProps } from './select';
 import { SelectOption } from './type';
 
@@ -6,14 +6,14 @@ export default function useSelect({ options, onChange }: SelectComponentProps) {
   const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
   useEffect(() => {
-    const defaultSelectedItem = selectedItem ? selectedItem : options[0];
+    const defaultSelectedItem = selectedItem ? selectedItem : options?.[0];
     setSelectedItem(defaultSelectedItem);
   }, []);
 
   function setCurrentSelectedItem(value: string) {
-    let item = options.find((d) => d.value === value);
+    let item = options?.find((d) => d.value === value);
     if (!item) {
-      item = options[0];
+      item = options?.[0];
     }
     setSelectedItem(item);
 

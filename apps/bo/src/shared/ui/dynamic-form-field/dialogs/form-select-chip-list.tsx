@@ -1,50 +1,57 @@
-import { FC, useEffect, useState } from 'react';
-import { SelectOption } from '@learnway/ui';
+import { forwardRef, useEffect, useState } from 'react';
+import { Button, ChipList, Select, SelectOption } from '@learnway/ui';
+import { t } from 'i18next';
+
+export interface FormSelectChipListComponentProps {
+  value?: any[];
+  onChange?: (value: any[]) => void;
+  selectOptions: Array<SelectOption>;
+}
 
 /**
- * 공통 Form Textarea
+ * 공통 form select chip list
  * @param value
  * @param onChange
  * @param props
  * @constructor
  */
-const FormSelectChipListComponent: FC<any> = ({ value, onChange: ownerOnChange, ...props }) => {
-  const [selectedSelectOption, setSelectedSelectOption] = useState<SelectOption>();
-  const [selectedChipOptions, setSelectedChipOptions] = useState<SelectOption[]>(value);
+const FormSelectChipListComponent = forwardRef<HTMLElement, FormSelectChipListComponentProps>(
+  ({ value = [], selectOptions, onChange: ownerOnChange, ...props }, ref) => {
+    const [selectedSelectOption, setSelectedSelectOption] = useState<SelectOption>();
+    const [selectedChipOptions, setSelectedChipOptions] = useState<SelectOption[]>(value);
 
-  console.log('asdasdajsdashkjdasaksjdh');
-  console.log('asdasdajsdashkjdasaksjdh');
-  console.log('asdasdajsdashkjdasaksjdh');
-  console.log('asdasdajsdashkjdasaksjdh');
-  useEffect(() => {
-    ownerOnChange?.(selectedChipOptions);
-  }, [selectedChipOptions]);
+    useEffect(() => {
+      ownerOnChange?.(selectedChipOptions);
+    }, [selectedChipOptions]);
 
-  const handleSelectChange = (option: SelectOption) => {
-    console.log('FormSelectChipListComponent : ', option);
-    setSelectedSelectOption(option);
-  };
+    const handleSelectChange = (option: SelectOption) => {
+      setSelectedSelectOption(option);
+    };
 
-  const handleChipListChange = (event: SelectOption[]) => {
-    console.log('handleSelectChange', event);
-    setSelectedChipOptions(event);
-  };
+    const handleChipListChange = (event: SelectOption[]) => {
+      setSelectedChipOptions(event);
+    };
 
-  const handleButtonClick = () => {
-    if (selectedSelectOption) {
-      setSelectedChipOptions([...selectedChipOptions, selectedSelectOption]);
-    }
-  };
+    const handleButtonClick = () => {
+      const hasSelectedOption = !!selectedSelectOption;
+      const isDuplicated = !!selectedChipOptions?.find(
+        (d: SelectOption) => d.value === selectedSelectOption?.value,
+      );
 
-  return (
-    <h1>XX</h1>
-    // <div>
-    //   <div>
-    //     <Select {...props} onChange={handleSelectChange} />
-    //     <Button onClick={handleButtonClick}>{t('선택')}</Button>
-    //   </div>
-    //   <ChipList options={value} onChange={handleChipListChange} />
-    // </div>
-  );
-};
+      if (hasSelectedOption && !isDuplicated) {
+        setSelectedChipOptions([...selectedChipOptions, selectedSelectOption]);
+      }
+    };
+
+    return (
+      <div>
+        <div>
+          <Select {...props} options={selectOptions} onChange={handleSelectChange} />
+          <Button onClick={handleButtonClick}>{t('선택')}</Button>
+        </div>
+        <ChipList options={selectedChipOptions} onChange={handleChipListChange} />
+      </div>
+    );
+  },
+);
 export const FormSelectChipList = FormSelectChipListComponent;
