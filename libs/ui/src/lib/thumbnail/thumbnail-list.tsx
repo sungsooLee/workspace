@@ -1,16 +1,16 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 
 import { cn } from '@learnway/shared';
+import { CheckedState } from '@radix-ui/react-checkbox';
 
 import { Thumbnail, ThumbnailComponentProps } from './thumbnail';
 import { Carousel } from '../carousel/carousel';
 
 import styles from './thumbnail-list.module.css';
 import { ImageOption } from './type';
-import { CheckedState } from '@radix-ui/react-checkbox';
 
 export interface ThumbnailListComponentProps
-  extends Omit<ThumbnailComponentProps, 'onCheckedChange'> {
+  extends Omit<ThumbnailComponentProps, 'onCheckedChange' | 'path'> {
   options: ImageOption[];
   showCheckbox?: boolean;
   onChecked?: (options: ImageOption[]) => void;
@@ -33,7 +33,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
 
     const items = options.map((d: ImageOption) => (
       <Thumbnail
-        imagePath={d.path}
+        path={d.path}
         key={d.id}
         showCheckbox={showCheckbox}
         onCheckedChange={(checked: CheckedState) => handlerCheckChange(checked, d)}
@@ -41,7 +41,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
     ));
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--thumbnail-list', 'border p-3')}>
+      <div {...props} className={cn(styles.start, className, 'nlp--thumbnail-list', 'p-3')}>
         <Carousel
           {...props}
           items={items}

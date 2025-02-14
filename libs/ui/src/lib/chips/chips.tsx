@@ -14,6 +14,8 @@ export interface ChipsComponentProps extends PropsWithChildren {
   className?: string;
   prefixCharacter?: string;
   hideCloseButton?: boolean;
+  labelField?: string;
+  valueField?: string;
   onClick?: (option: SelectOption) => void;
   onDelete?: (option: SelectOption) => void;
 }
@@ -27,6 +29,8 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     onClick,
     onDelete,
     hideCloseButton,
+    labelField = 'label',
+    valueField = 'value',
     option: { label, value },
     ...props
   }) => {

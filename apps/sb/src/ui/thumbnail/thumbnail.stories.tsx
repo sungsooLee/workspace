@@ -13,7 +13,7 @@ export default {
 
 // Thumbnail
 export const Template: any = (args: any) => {
-  return <Thumbnail {...args} imagePath={'https://github.com/shadcn.png'} />;
+  return <Thumbnail {...args} path={'https://github.com/shadcn.png'} />;
 };
 Template.storyName = 'Thumbnail';
 Template.args = {};
@@ -21,7 +21,7 @@ Template.args = {};
 // Thumbnail List
 export const TemplateList: any = (args: any) => {
   return (
-    <div className={'h-[100px] w-[500px] bg-amber-500'}>
+    <div className={'h-[110px] w-[500px]'}>
       <ThumbnailList
         {...args}
         options={[
