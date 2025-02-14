@@ -18,6 +18,7 @@ import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { ELearningCategory } from '../../../shared/ui/dynamic-form-field/dialogs/e-learning-category';
 import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 import { LowerGubun } from '../../../shared/ui/dynamic-form-field/dialogs/lower-gubun';
+import { useEffect } from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,

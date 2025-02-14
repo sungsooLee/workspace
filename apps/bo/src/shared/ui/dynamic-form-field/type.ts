@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ButtonVariantType, SelectOption } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
+import { FormState, UseFormGetValues } from 'react-hook-form/dist/types/form';
 
 /*======================================
 =            API 관련 타입             =
@@ -275,6 +276,9 @@ export interface DynamicFormProvider {
   fieldRefs: React.MutableRefObject<Record<string, HTMLElement | null>>;
   // react-hook-form의 watch 함수
   watch: (name?: string | string[]) => any;
+  reset: (value?: any) => void;
+  formData : UseFormGetValues<any>,
+  onFocus:(fieldName:string) => void
 }
 
 /**
@@ -287,6 +291,7 @@ export interface DynamicFormFieldProps {
   type?: string;
   disabled?: boolean;
   children?: React.ReactNode;
+
   [key: string]: any;
 }
 

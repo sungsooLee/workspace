@@ -111,7 +111,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
   children,
   ...props
 }) => {
-  const { control, builders, fieldRefs, watch } = provider;
+  const { control, builders, fieldRefs, watch, reset, formData, onFocus } = provider;
 
   // 현재 필드에 해당하는 빌더 설정 정보 추출
   const { config: builderConfig, topLevelName } = getBuilderConfig(builders, name);
@@ -133,6 +133,9 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
         // 폼 필드에 공통적으로 전달할 파라미터
         const formParams: FormParams = {
           watch,
+          reset,
+          formData,
+          onFocus,
           ref,
           type: configType || type,
           name,

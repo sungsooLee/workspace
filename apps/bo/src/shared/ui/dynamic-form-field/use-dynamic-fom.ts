@@ -149,6 +149,17 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     isFieldRequired: (fieldName: string) => !!(config.validator && config.validator[fieldName]), // 필수 여부 확인,
   };
 
+  const handleFocus = (fieldName:string) => {
+    const errorFieldRef = fieldRefs.current[fieldName] as HTMLDivElement | null;
+    // 에러 메시지 추출 (기본 메시지: 'Validation error')
+    // 에러가 있는 필드로 스크롤 및 포커스 이동
+    if (errorFieldRef) {
+      errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      errorFieldRef.focus();
+    }
+    setFocus(fieldName);
+  }
+
   /**
    * 폼 리셋 함수.
    * @param values - 새로운 초기값 (선택 사항). 전달하지 않으면 기본값으로 리셋.
@@ -170,6 +181,8 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       reset: resetForm,
       formSubmit,
       fieldRefs,
+      formData: getValues(),
+      onFocus:handleFocus
     },
     control,
     getValues,
