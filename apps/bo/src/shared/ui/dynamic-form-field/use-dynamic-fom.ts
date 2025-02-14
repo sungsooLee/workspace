@@ -178,7 +178,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       ...config,
       control: extendedControl,
       watch,
-      reset: resetForm,
+      onFormChange: resetForm,
       formSubmit,
       fieldRefs,
       formData: getValues(),

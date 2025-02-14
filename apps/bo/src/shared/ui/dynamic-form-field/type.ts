@@ -276,7 +276,7 @@ export interface DynamicFormProvider {
   fieldRefs: React.MutableRefObject<Record<string, HTMLElement | null>>;
   // react-hook-form의 watch 함수
   watch: (name?: string | string[]) => any;
-  reset: (value?: any) => void;
+  onFormChange: (value?: any) => void;
   formData : UseFormGetValues<any>,
   onFocus:(fieldName:string) => void
 }
