@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { cn } from '@learnway/shared';
 import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
 import { IcoArrowDown } from '@learnway/icons';
@@ -33,14 +34,14 @@ const PopoverContent = () => {
 };
 
 interface LanguageComponentProp {
-  className: string;
+  className?: string;
 }
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
     <Popover
       popoverContent={<PopoverContent />}
-      className={styles.btn_language}
+      className={cn(styles.btn_language, className)}
       side="bottom"
       align="end"
       sideOffset={5}>
