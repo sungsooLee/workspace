@@ -46,7 +46,7 @@ const PopoverContent = () => {
 };
 
 interface LanguageComponentProp {
-  className: string;
+  className?: string;
 }
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {

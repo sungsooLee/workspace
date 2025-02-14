@@ -15,7 +15,7 @@
 .form_item {
   @apply relative w-full flex-1 pb-[16px];
   .guide_text {
-    @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
+    @apply mt-[8px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
     &:empty {
       @apply hidden;
     }
@@ -23,11 +23,8 @@
       @apply text-[var(--status1)];
     }
   }
-  .sub_test {
+  .sub_text {
     @apply mt-[5px] block text-[1.2rem] leading-[1rem] text-[var(--gray7)];
-  }
-  .text_limit {
-    @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
   }
   .btn_toggle {
     @apply absolute right-0 top-[3px] h-[20px] w-[20px];
@@ -43,6 +40,14 @@
   .btn_switch {
     @apply absolute right-0 top-[8px];
   }
+  &.type2 {
+    .form_label {
+      @apply pl-[40px];
+    }
+    .input_box {
+      @apply mt-0;
+    }
+  }
 }
 .input_box_wrap {
   @apply hidden;
@@ -57,7 +62,7 @@
   }
 }
 .input_box {
-  @apply mt-[8px] flex w-full items-center space-x-[8px];
+  @apply mt-[12px] flex w-full items-center space-x-[8px];
   .input {
     @apply flex-auto;
   }
@@ -74,13 +79,13 @@
     }
   }
   .radio_wrap {
-    @apply mt-[12px] flex w-full;
+    @apply flex w-full;
     & > div {
       @apply flex-1;
     }
   }
   .check {
-    @apply absolute right-0 top-[8px];
+    @apply absolute left-0 top-[10px];
   }
   .dash {
     @apply flex min-w-[8px] items-center justify-start;
@@ -116,9 +121,9 @@
 .form_label {
   @apply block overflow-hidden;
   .form_text {
-    @apply text-[1.4rem] text-[var(--gray8)];
+    @apply body_3_b;
     &.sm {
-      @apply text-[1.2rem] leading-[1rem];
+      @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
       & + .status {
         @apply -mt-[4px] align-middle;
         svg {
@@ -146,7 +151,6 @@
     }
   }
 }
-
-.id_save {
-  @apply text-[1.4rem];
+.text_limit {
+  @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
 }
