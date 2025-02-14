@@ -1,1 +1,13 @@
 /* signup.module.css */
+.signup_info {
+}
+
+.signup_step {
+}
+
+.signup_select {
+}
+
+.signup_check {
+  @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+}
