@@ -11,7 +11,7 @@
   }
 }
 .alert_wrap {
-  /* @apply -mx-[32px] -my-[24px]; */
+  @apply -mx-[32px] -my-[24px];
 }
 .title {
   @apply flex max-h-[80px] items-center justify-center pt-[32px] text-center text-[1.8rem] font-bold text-[var(--gray9)];

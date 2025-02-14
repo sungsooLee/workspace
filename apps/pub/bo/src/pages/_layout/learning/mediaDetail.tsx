@@ -11,6 +11,7 @@ import {
   Switch,
   Radio,
   Checkbox,
+  DatePicker,
 } from '@learnway/ui';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
@@ -83,6 +84,7 @@ function RouteComponent() {
     2: true, // toggleSections[2] 열려 있음
     3: true, // toggleSections[3] 열려 있음
     4: true, // toggleSections[4] 열려 있음
+    5: true, // toggleSections[5] 열려 있음
   });
 
   const toggleContent = (index: number) => {
@@ -113,6 +115,13 @@ function RouteComponent() {
         return [...prev, id];
       }
     });
+  };
+
+  // Date picker
+  const [date, setDate] = useState(new Date());
+
+  const handleDate = (value: any) => {
+    setDate(value);
   };
 
   // Swiper
@@ -244,6 +253,41 @@ function RouteComponent() {
               />
               <span className={formStyles.dash}></span>
               <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
+            </div>
+          </div>
+        </div>
+        {/* row : 2025-02-24 : 추가 */}
+        <div className="row">
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-term" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>사용기한</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <Tooltip
+                className={formStyles.tooltip}
+                side="right"
+                align="start"
+                content={'사용기한 사용기한 사용기한'}>
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Button>
+              </Tooltip>
+              <Button
+                className={formStyles.btn_toggle}
+                onlyIcon
+                onClick={() => toggleContent(5)}
+                aria-expanded={toggleSections[5] || false}>
+                <IcoArrowDown width={20} height={20} stroke="#4C515E" />
+              </Button>
+            </label>
+            <div
+              className={`${formStyles.input_box_wrap} ${toggleSections[5] ? formStyles.open : ''}`}>
+              <div className={formStyles.input_box}>
+                <DatePicker onChange={handleDate} value={date} />
+              </div>
             </div>
           </div>
         </div>

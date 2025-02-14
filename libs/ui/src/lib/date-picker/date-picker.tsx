@@ -1,9 +1,11 @@
 import { forwardRef, useState, useEffect } from 'react';
-import { CalendarIcon } from 'lucide-react';
 import Primitive from 'react-datepicker';
+import { CalendarIcon } from 'lucide-react';
 import 'react-datepicker/dist/react-datepicker.css';
+import styles from './date-picker.module.css';
+import { IcoCalendar01 } from '@learnway/icons';
 
-import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
+import { DATE_TIME_FORMAT, getDateTimeFormat, cn } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
 
@@ -23,6 +25,7 @@ export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   selectsStart?: boolean;
   selectsEnd?: boolean;
   showTimePicker?: boolean;
+  className?: string;
   onChange?: (date: Date | undefined) => void;
 }
 
@@ -83,10 +86,12 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
         maxDate={maxDate}
         selected={selectedDate}
         onChange={(date) => handleChange(date ?? undefined)}
-        icon={<CalendarIcon />}
+        icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
         isClearable={true}
         showTimeInput={showTimeInput}
         monthsShown={numberOfMonths}
+        wrapperClassName={'datepicker_wrap'}
+        className={cn('nlp--datepicker', styles.datepicker, className)}
         //customTimeInput={<ExampleCustomTimeInput />}
       />
     );
