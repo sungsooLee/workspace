@@ -8,9 +8,7 @@ import { Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 
 import { useFetchAuthUser, useLoginUser } from '../../entities/user';
-
 import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
-
 import { useSetLanguage } from '../../features/platform';
 
 import styles from './login.module.css';

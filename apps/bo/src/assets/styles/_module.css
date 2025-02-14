@@ -2,7 +2,7 @@
 
 /* _auth (회원가입) */
 .auth_language {
-  @apply text-[var(--gray7)];
+  @apply !text-[var(--gray7)];
   svg {
     stroke: #131c30;
   }

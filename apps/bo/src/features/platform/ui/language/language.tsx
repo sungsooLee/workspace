@@ -5,6 +5,7 @@ import { cn } from '@learnway/shared';
 import { Popover, SelectOption } from '@learnway/ui';
 import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
+import { getDefaultLang } from '@learnway/config';
 
 import { useSetLanguage, useLanguageSelectOptions } from '../../../platform';
 import { useFetchAuthUser } from '../../../../entities/user';
@@ -25,16 +26,20 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
   }
 
   return (
-    <div className={styles.start}>
-      <div className={styles.btn_wrap}>
-        {data.map((code: SelectOption, index: number) => (
-          <Button
-            key={`LANGUAGE${index}`}
-            className={`${styles.btn} ${code.value === i18n.language ? styles.active : ''}`}
-            onClick={() => handleLanguage(code.value)}>
-            {code.label} {code.value === i18n.language && <IcoCheck width={20} height={20} />}
-          </Button>
-        ))}
+    <div className={`${styles.language_content}`}>
+      <div className={styles.lang_wrap}>
+        <ul className={styles.lang_list}>
+          {data.map((code: SelectOption, index: number) => (
+            <li>
+              <Button
+                key={`LANGUAGE${index}`}
+                className={`${styles.btn} ${code.value === i18n.language ? styles.active : ''}`}
+                onClick={() => handleLanguage(code.value)}>
+                {code.label}
+              </Button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -48,6 +53,8 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   const { data } = useFetchAuthUser();
   const { data: languageSelectOptions } = useLanguageSelectOptions();
 
+  const { set: setLanguage } = useSetLanguage();
+
   return (
     <Popover
       popoverContent={<PopoverContent data={languageSelectOptions} />}
@@ -55,7 +62,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
       side="bottom"
       align="end"
       sideOffset={5}>
-      <span className={styles.select}>{'KR'}</span>
+      <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
       <IcoArrowDown width={16} height={16} stroke="#ffffff" />
     </Popover>
   );
