@@ -41,7 +41,9 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
     ));
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--thumbnail-list', 'p-3')}>
+      <div
+        {...props}
+        className={cn(styles.start, className, 'nlp--thumbnail-list', 'p-3', 'overflow-hidden')}>
         <Carousel
           {...props}
           items={items}

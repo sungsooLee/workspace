@@ -12,6 +12,7 @@ import {
   Radio,
   Checkbox,
   DatePicker,
+  ThumbnailList,
 } from '@learnway/ui';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
