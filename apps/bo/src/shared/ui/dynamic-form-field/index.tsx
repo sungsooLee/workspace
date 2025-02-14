@@ -7,6 +7,51 @@ import { Controller } from 'react-hook-form';
 import { Builder, DynamicFormFieldProps, FormParams } from './type';
 import get from 'lodash/get';
 
+
+/**
+ * 에러 객체에서 첫 번째 메시지를 재귀적으로 추출하는 함수
+ * @param error - 에러 객체 (중첩 가능)
+ * @returns 첫 번째로 발견된 에러 메시지 (없으면 빈 문자열)
+ */
+function getFirstErrorMessage(error: any): string {
+  if (!error || typeof error !== 'object') return '';
+  // 현재 객체에 message가 있으면 바로 반환
+  if (typeof error.message === 'string' && error.message.trim() !== '') {
+    return error.message;
+  }
+  // message가 없는 경우 내부 객체를 순회
+  for (const key in error) {
+    if (Object.prototype.hasOwnProperty.call(error, key)) {
+      const nestedMessage = getFirstErrorMessage(error[key]);
+      if (nestedMessage) return nestedMessage;
+    }
+  }
+  return '';
+}
+
+/**
+ * 특정 필드(fieldKey)의 에러 객체에서 에러 메시지를 추출하는 함수.
+ *
+ * 1. 먼저 errors[fieldKey]가 존재하는지 확인합니다.
+ * 2. 만약 바로 message 속성이 있으면 그 값을 반환합니다.
+ * 3. 그렇지 않다면, 해당 객체 내부에서 재귀적으로 첫 번째 메시지를 찾아 반환합니다.
+ *
+ * @param errors - 전체 에러 객체
+ * @param fieldKey - 특정 필드의 키 (예: "eLeaning" 또는 "lowerGubun")
+ * @returns 해당 필드의 에러 메시지 (없으면 빈 문자열)
+ */
+function getErrorMessageForField(errors: any, fieldKey: string): string {
+  if (!errors || typeof errors !== 'object') return '';
+  const fieldError = errors[fieldKey];
+  if (!fieldError) return '';
+  if (typeof fieldError.message === 'string' && fieldError.message.trim() !== '') {
+    return fieldError.message;
+  }
+  // 직접 message가 없으면, 해당 필드 에러 객체 내부에서 첫번째 메시지를 찾음.
+  return getFirstErrorMessage(fieldError);
+}
+
+
 /**
  * getBuilderConfig 함수
  * - 점(.)으로 구분된 필드 이름에서, 배열 인덱스는 건너뛰고
@@ -81,7 +126,6 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
         const isRequired = control.isFieldRequired(topLevelName);
 
         const hasError = !!errors[topLevelName];
-        console.log('errors=> ', errors);
 
         // dialogConfig에서 해당 타입의 컴포넌트를 선택 (type prop이 우선)
         const FormComponent = dialogConfig[(type || configType) as keyof typeof dialogConfig];
@@ -149,8 +193,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
             )}
             {hasError && (
               <p className={cn(styles.guide_text, styles.error)}>
-                {name}
-                {String(get(errors, name)?.message || '')}
+                {getErrorMessageForField(errors, name)}
               </p>
             )}
           </div>
