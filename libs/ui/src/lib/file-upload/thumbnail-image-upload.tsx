@@ -15,10 +15,19 @@ export interface ThumbnailImageUploadComponentProps {
   description?: string;
   onItemClick?: (option: ImageOption) => void;
   onChange?: (options: ImageOption[]) => void;
+  onCheckedChange?: (options: ImageOption[]) => void;
 }
 
 const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUploadComponentProps>(
-  ({ className, onChange, options: ownerOptions = [], description, onItemClick, ...props }) => {
+  ({
+    className,
+    options: ownerOptions = [],
+    description,
+    onItemClick,
+    onChange,
+    onCheckedChange,
+    ...props
+  }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [options, setOptions] = useState<ImageOption[]>(ownerOptions);
 
@@ -35,9 +44,12 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
       if (file) {
         const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
         // setImageSrc(imageUrl); // 상태 업데이트
-        console.log(imageUrl);
         setOptions([{ id: getRandomId(), path: imageUrl }, ...options]);
       }
+    };
+
+    const handleCheckedThumbnailList = (newOptions: ImageOption[]) => {
+      onCheckedChange?.(newOptions);
     };
 
     return (
@@ -60,11 +72,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
             style={{ display: 'none' }}
             onChange={handleFileChange}
           />
-          <ThumbnailList
-            options={options}
-            showCheckbox
-            onChecked={(selectedImages: ImageOption[]) => console.log(selectedImages)}
-          />
+          <ThumbnailList options={options} showCheckbox onChecked={handleCheckedThumbnailList} />
         </div>
       </div>
     );

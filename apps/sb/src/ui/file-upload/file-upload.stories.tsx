@@ -9,6 +9,9 @@ export default {
   component: ThumbnailImageUpload,
   tags: ['autodocs'],
   args: {},
+  argTypes: {
+    onCheckedChange: { action: 'onCheckedChange' },
+  },
 } as Meta;
 
 // ImageUpload
@@ -25,6 +28,7 @@ export const Template: any = (args: any) => {
         ]}
         description={'교육자원을 연결하면 추천 썸네일이 표시됩니다.'}
         onChange={(options: ImageOption[]) => console.log('onChange', options)}
+        onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
       />
     </div>
   );

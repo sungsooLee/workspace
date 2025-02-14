@@ -1,5 +1,10 @@
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import { Textarea } from './textarea';
+
+export interface FormTextareaComponentProps {
+  value?: any[];
+  onChange?: (value: any) => void;
+}
 
 /**
  * 공통 Form Textarea
@@ -8,11 +13,13 @@ import { Textarea } from './textarea';
  * @param props
  * @constructor
  */
-const FormTextareaComponent: FC<any> = ({ value, onChange: ownerOnChange, ...props }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    ownerOnChange(event?.target?.value);
-  };
+const FormTextareaComponent = forwardRef<HTMLElement, FormTextareaComponentProps>(
+  ({ value, onChange: ownerOnChange, ...props }) => {
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      ownerOnChange?.(event.target.value);
+    };
 
-  return <Textarea {...props} onChange={handleChange} />;
-};
+    return <Textarea {...props} onChange={handleChange} />;
+  },
+);
 export const FormTextarea = FormTextareaComponent;
