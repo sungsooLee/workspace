@@ -3,6 +3,8 @@ import React, { memo, ReactNode } from 'react';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { Button } from '@learnway/ui';
 import styles from './page-container.module.css';
+import { IcoStar } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
+import { cn } from '@learnway/shared';
 
 interface PageContainerComponentProps {
   children: ReactNode;
@@ -17,7 +19,19 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
       <div className={styles.inner}>
         {/* title_wrap */}
         <div className={styles.title_wrap}>
-          <h3 className="title_bo_1_b">동영상 상세</h3>
+          {/* 2025-02-14 버튼 케이스 추가 */}
+          <h3 className={cn(styles.title, 'title_bo_1_b')}>
+            동영상 상세
+            <Button className={styles.btn_favorites} onlyIcon>
+              <IcoStar
+                width={20}
+                height={20}
+                stroke="#FFB902"
+                fill="#FFB902"
+                className={styles.icon_star}
+              />
+            </Button>
+          </h3>
           <div className={styles.btn_wrap}>
             <Button variant="point" size="sm">
               매핑과정 보기
