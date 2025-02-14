@@ -13,7 +13,7 @@
       }
       .info {
         @apply body_3_r flex gap-[24px] text-[var(--gray8)];
-        button {
+        a {
           @apply underline;
         }
       }
