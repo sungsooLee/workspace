@@ -611,7 +611,7 @@ function RouteComponent() {
           </div>
         </div>
         {/* 2025-02-13 수정 S */}
-        <div className="row">
+        <div className="col">
           <strong className={formStyles.form_tit}>검수</strong>
           <div className="row_wrap">
             {/* row */}

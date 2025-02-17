@@ -59,17 +59,19 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 .row {
   /* form */
-  @apply flex w-full flex-wrap gap-[32px];
-  .form_tit {
-    @apply w-full;
-  }
+  @apply flex w-full gap-[32px];
   .row {
     @apply mt-[16px];
   }
-  & + .row {
+  & + .row,
+  & + .col {
     @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
     &.no_line {
       @apply border-0 pt-0;
     }
   }
+}
+/* col */
+.col {
+  @apply flex flex-col;
 }
