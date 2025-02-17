@@ -20,8 +20,12 @@ const PageContentsComponent: FC<{
   );
   return (
     <>
-      {MainContentsSlot && <div className={styles.main_contents}>{MainContentsSlot}</div>}
-      {SubContentsSlot && <div className={styles.sub_contents}>{SubContentsSlot}</div>}
+      {MainContentsSlot && MainContentsSlot.length > 0 && (
+        <div className={styles.main_contents}>{MainContentsSlot}</div>
+      )}
+      {SubContentsSlot && SubContentsSlot.length > 0 && (
+        <div className={styles.sub_contents}>{SubContentsSlot}</div>
+      )}
     </>
   );
 };

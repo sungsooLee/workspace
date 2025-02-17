@@ -17,7 +17,6 @@ export const createZodSchema = (config: Record<string, any>) => {
     },
     {} as Record<string, z.ZodTypeAny>,
   );
-  console.log('config.validator => ', config.validator);
   // global validator 추가
   const globalValidators = config.validator ?? {};
 

@@ -182,11 +182,17 @@
               "isQuickAccessArea": false,
               "path": "/builder/table"
             },{
-              "title": "상세-LMS",
+              "title": "동적폼 예제",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/menu/type2"
+            },{
+              "title": "다국어 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/translation-management"
             }
           ],
           "tenantName": "현대자동차",
