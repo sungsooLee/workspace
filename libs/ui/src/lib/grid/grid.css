@@ -2,7 +2,7 @@
   @apply scrollbar overflow-auto bg-[var(--white)];
   border: 1px solid var(--gray6);
   .thead_th {
-    @apply justify-start bg-[var(--gray1)] text-[14px] font-bold text-[#5C636E];
+    @apply box-border items-center justify-start bg-[var(--gray1)] pl-[8px] text-[14px] font-bold text-[#5C636E];
     border-bottom: 1px solid var(--gray4);
     &:not(:first-child) {
       border-left: 1px solid var(--gray3);
@@ -11,12 +11,15 @@
     }
   }
   tbody {
-    tr td {
-      @apply min-h-[40px] items-center px-[8px] py-[4px] text-[14px] font-normal text-[var(--gray7)];
-      border-left: 1px solid var(--gray4);
+    tr {
+      @apply min-h-[40px];
       border-bottom: 1px solid var(--gray4);
-      &:first-child {
-        border-left: 0;
+      td {
+        @apply box-border items-center px-[8px] text-center text-[14px] font-normal text-[var(--gray7)];
+        border-left: 1px solid var(--gray4);
+        &:first-child {
+          border-left: 0;
+        }
       }
     }
   }

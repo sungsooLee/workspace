@@ -130,7 +130,7 @@ const Grid = <T extends object>({
               // ),
               // 바디 체크 박스
               cell: ({ row }: { row: Row<T> }) => (
-                <div className="px-1">
+                <div className="inline-flex items-center justify-center">
                   <Checkbox
                     checked={row.getIsSelected()}
                     onCheckedChange={(checked) => {
@@ -358,7 +358,7 @@ const Grid = <T extends object>({
               ref={(node) => rowVirtualizer.measureElement(node)}
               key={row.id}
               className={cn(
-                'cursor-pointer border-b hover:bg-[#F4F8FF]',
+                'cursor-pointer hover:bg-[#F4F8FF]',
                 row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
               )}
               style={{
@@ -399,10 +399,7 @@ const Grid = <T extends object>({
                 key={row.id}
                 data-index={virtualRow.index}
                 ref={(node) => rowVirtualizer.measureElement(node)}
-                className={cn(
-                  'border-b hover:bg-gray-50',
-                  row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100',
-                )}
+                className={cn(row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100')}
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -416,7 +413,7 @@ const Grid = <T extends object>({
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="grid_td"
+                    className="grid_td h-[100%]"
                     style={{
                       background: cell.getIsGrouped()
                         ? '#0aff0082'
@@ -499,9 +496,9 @@ const Grid = <T extends object>({
                     <div className="flex flex-col">
                       <div
                         className={cn(
-                          'flex items-center',
+                          'flex items-center justify-center',
                           header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          'box-border min-h-[40px] px-[8px] py-[9px] text-[12px] font-bold uppercase text-[#5C636E]',
+                          'box-border min-h-[40px] text-[12px] font-bold uppercase text-[#5C636E]',
                         )}
                         onClick={header.column.getToggleSortingHandler()}>
                         {header.isPlaceholder
