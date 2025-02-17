@@ -6,6 +6,22 @@
 }
 
 .signup_select {
+  @apply mt-[48px];
+  .select_list {
+    @apply flex items-center justify-center gap-[16px] text-center;
+    li {
+      @apply w-full;
+      .select {
+        @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+        span {
+          @apply mt-[8px] block;
+        }
+      }
+      .active {
+        @apply text-[var(--primary1)];
+      }
+    }
+  }
 }
 
 .signup_check {

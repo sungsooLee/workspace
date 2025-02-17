@@ -34,7 +34,7 @@ function RouteComponent() {
         { label: 'Switch', path: '/guide/switch' },
         { label: 'Carousel', path: '/guide/carousel' },
         { label: 'Pagination', path: '/guide/pagination' },
-        // { label: 'Stepper', path: '/guide/stepper' },
+        { label: 'Stepper', path: '/guide/stepper' },
         // { label: '텍스트필드', path: '/guide/textfield' },
         // { label: '이미지', path: '/guide/image' },
         { label: 'Icon', path: '/guide/icon' },

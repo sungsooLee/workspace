@@ -4,8 +4,13 @@ import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
 
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-
+import {
+  IcoChevronLeftDouble,
+  IcoChevronLeft,
+  IcoChevronRight,
+  IcoChevronRightDouble,
+  IcoMoreHorizontal,
+} from '@learnway/icons';
 import styles from './pagination-item.module.css';
 
 export interface PaginationItemComponentProps {
@@ -46,23 +51,23 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
   }) => {
     // button icon
     const icon = {
-      previous: <ChevronLeft />,
-      next: <ChevronRight />,
-      first: <ChevronsLeft />,
-      last: <ChevronsRight />,
+      previous: <IcoChevronLeft width={32} height={32} fill="#4C515E" />,
+      next: <IcoChevronRight width={32} height={32} fill="#4C515E" />,
+      first: <IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />,
+      last: <IcoChevronRightDouble width={32} height={32} fill="#4C515E" />,
     }[type];
 
     return type === 'start-ellipsis' || type === 'end-ellipsis' ? (
-      <span>...</span>
+      <span className={styles.ellipsis}>
+        <IcoMoreHorizontal width={16} height={16} fill="#121416" />
+      </span>
     ) : (
-      <>
-        <Button
-          className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
-          icon={icon}
-          onClick={() => onClick?.()}>
-          {type === 'page' && page}
-        </Button>
-      </>
+      <Button
+        className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
+        icon={icon}
+        onClick={() => onClick?.()}>
+        {type === 'page' && page}
+      </Button>
     );
   },
 );

@@ -78,6 +78,9 @@ export * from './lib/switch/switch';
 // spinner
 export * from './lib/spinner/spinner';
 
+// stepper
+export * from './lib/stepper/stepper';
+
 // thumbnail
 export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';

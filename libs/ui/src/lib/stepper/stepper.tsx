@@ -4,17 +4,21 @@ import { cn } from '@learnway/shared';
 
 import styles from './stepper.module.css';
 import { SelectOption } from '../select/type';
+import { IcoCheckboxChecked } from '@/libs/icons/src';
+
+export type StepperType = 'number' | 'check';
 
 export interface StepperComponentProps {
   items: Array<SelectOption>;
   className?: string;
   selectedStep?: string;
   enableMoveStep?: boolean; // step 이동 가능 여부 (step onClick 사용 여부)
+  variant?: StepperType; // Stepper Type
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, onChange, enableMoveStep, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, enableMoveStep, variant, ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -45,7 +49,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', styles.stepper, 'flex flex-row gap-5')}>
+      <div className={cn(className, 'nlp-stepper', styles.stepper, variant && styles[variant])}>
         {stepperItems?.map((d: any, index: number) => (
           <div
             key={d.value}
@@ -53,16 +57,27 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               styles.step_item,
               d.isActive && styles.active,
               d.isComplete && styles.complete,
-              'flex flex-col',
             )}
             onClick={() => enableMoveStep && handleClick(d)}>
             {/* icon or step value */}
-            <div>{d.isComplete ? 'V' : index + 1}</div>
+            <div className={styles.step_status}>
+              {d.isActive || d.isComplete ? (
+                <IcoCheckboxChecked
+                  width={20}
+                  height={20}
+                  fill="none"
+                  stroke="#ffffff"
+                  className={styles.ico_check}
+                />
+              ) : (
+                <span className={styles.num}>{index + 1}</span>
+              )}
+            </div>
             {/*<div>{d.isComplete ? <Check /> : index + 1}</div>*/}
             {/* title */}
-            <div>{d.label}</div>
+            <div className={styles.title}>{d.label}</div>
             {/* help text */}
-            <div>{d.subLabel}</div>
+            <div className={styles.sub_title}>{d.subLabel}</div>
           </div>
         ))}
       </div>
