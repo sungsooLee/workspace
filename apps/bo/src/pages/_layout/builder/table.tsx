@@ -1,15 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import useSearchBox from '../../../shared/ui/search-box/use-search-box';
-import SearchBox from '../../../shared/ui/search-box';
+import { SearchBox } from '../../../shared/ui/search-box';
 
-import { useEffect, useCallback, useMemo } from 'react';
-import TableBox from '../../../shared/ui/table-box';
+import { useCallback, useEffect } from 'react';
 import useTableBox from '../../../shared/ui/table-box/use-table-box';
-import { queryOptions as userQueryOptions } from '../../../entities/api-mock/service/mock-user.queries';
-import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
-import { tableConfig, searchConfig } from '../../../entities/search-table-config';
+import { searchConfig, tableConfig } from '../../../entities/search-table-config';
 import { formUtils } from '../../../entities/form-utils';
-import { CODE_GROUP } from '@learnway/config';
+import { TableBox } from '../../../shared/ui/table-box';
 
 export const Route = createFileRoute('/_layout/builder/table')({
   component: RouteComponent,

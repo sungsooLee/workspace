@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import useSearchBox from '../../../shared/ui/search-box/use-search-box';
-import SearchBox from '../../../shared/ui/search-box';
+import { SearchBox } from '../../../shared/ui/search-box';
 import z from 'zod';
 import '../../../builder.css';
 
