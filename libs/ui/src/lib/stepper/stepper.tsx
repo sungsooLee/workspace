@@ -63,8 +63,8 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
             <div className={styles.step_status}>
               {d.isActive || d.isComplete ? (
                 <IcoCheckboxChecked
-                  width={12}
-                  height={13}
+                  width={20}
+                  height={20}
                   fill="none"
                   stroke="#ffffff"
                   className={styles.ico_check}
