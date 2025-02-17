@@ -77,6 +77,9 @@
     &.lg {
       @apply min-w-[360px];
     }
+    & + .dash {
+      @apply !w-[16px];
+    }
   }
   .radio_wrap {
     @apply flex w-full;
@@ -88,7 +91,7 @@
     @apply absolute left-0 top-[10px];
   }
   .dash {
-    @apply flex min-w-[8px] items-center justify-start;
+    @apply mx-[8px] flex min-w-[8px] items-center justify-center;
     &::after {
       @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
     }
@@ -150,6 +153,9 @@
       fill: var(--status1);
     }
   }
+}
+.dash {
+  @apply flex w-[32px] items-center justify-center;
 }
 .text_limit {
   @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];

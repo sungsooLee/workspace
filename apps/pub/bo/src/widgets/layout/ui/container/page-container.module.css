@@ -21,6 +21,9 @@
       @apply title_bo_1_b inline-flex items-center;
       .btn_favorites {
         @apply ml-[4px] flex;
+        &.active svg {
+          @apply fill-none;
+        }
       }
     }
   }

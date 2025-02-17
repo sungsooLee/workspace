@@ -10,12 +10,12 @@
 .alarm_header {
   @apply flex h-[62px] items-center justify-between px-[24px] py-[20px];
   .tit {
-    @apply text-[var(--gray9)]; /* body_bo_1_b */
+    @apply body_bo_1_b text-[var(--gray9)];
   }
   .btn_wrap {
     @apply flex min-w-[120px] flex-shrink-0 items-center;
     .btn {
-      @apply text-[var(--gray8)]; /* body_bo_2_r */
+      @apply body_bo_2_r text-[var(--gray8)];
       & + .btn {
         @apply relative ml-[10px] inline-flex items-center;
         &::before {

@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from 'react';
+import React, { memo, ReactNode, useState } from 'react';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { Button } from '@learnway/ui';
@@ -8,10 +8,15 @@ import { cn } from '@learnway/shared';
 
 interface PageContainerComponentProps {
   children: ReactNode;
+  showFavoriteButton?: boolean;
 }
 
-function PageContainerComponent({ children }: PageContainerComponentProps) {
+function PageContainerComponent({
+  children,
+  showFavoriteButton = true,
+}: PageContainerComponentProps) {
   // const { t } = useTranslation();
+  const [isFavorite, setIsFavorite] = useState(true);
 
   return (
     <div className={`${styles.start} ${styles.contents}`}>
@@ -22,15 +27,20 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
           {/* 2025-02-14 버튼 케이스 추가 */}
           <h3 className={cn(styles.title, 'title_bo_1_b')}>
             동영상 상세
-            <Button className={styles.btn_favorites} onlyIcon>
-              <IcoStar
-                width={20}
-                height={20}
-                stroke="#FFB902"
-                fill="#FFB902"
-                className={styles.icon_star}
-              />
-            </Button>
+            {showFavoriteButton && (
+              <Button
+                className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
+                onlyIcon
+                onClick={() => setIsFavorite(!isFavorite)}>
+                <IcoStar
+                  width={20}
+                  height={20}
+                  stroke="#FFB902"
+                  fill="#FFB902"
+                  className={styles.icon_star}
+                />
+              </Button>
+            )}
           </h3>
           <div className={styles.btn_wrap}>
             <Button variant="point" size="sm">

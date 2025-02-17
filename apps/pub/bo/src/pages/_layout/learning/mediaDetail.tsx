@@ -12,32 +12,16 @@ import {
   Radio,
   Checkbox,
   DatePicker,
-  ThumbnailList,
 } from '@learnway/ui';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
-import {
-  IcoFormRequired,
-  IcoArrowDown,
-  IcoAlertCircle,
-  IcoCloseCircle,
-  IcoUploadCloud,
-  IcoLoading,
-  IcoCheckboxChecked,
-  IcoTrash03,
-} from '@learnway/icons';
+import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
-import thumbStyles from './thumb.module.css'; // thumb css
 
 /* images */
-import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
-import carImg from '../../../assets/images/temp/img_car1.jpg';
-import carImg2 from '../../../assets/images/temp/img_car2.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaDetail')({
   component: RouteComponent,
@@ -104,30 +88,17 @@ function RouteComponent() {
     { label: '현대자동차 F', value: 'F' },
   ];
 
-  // Thumb 이미지 체크 버튼
-  const [activeButtons, setActiveButtons] = useState<number[]>([1]); // active 버튼 index
-
-  const handleButtonClick = (id: number) => {
-    setActiveButtons((prev) => {
-      // 버튼이 이미 active 상태라면 제거, 아니면 추가
-      if (prev.includes(id)) {
-        return prev.filter((buttonId) => buttonId !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
-  // Date picker
+  // Date picker : 2025-02-17
   const [date, setDate] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
 
   const handleDate = (value: any) => {
     setDate(value);
   };
 
-  // Swiper
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const swiperRef = useRef<any>(null);
+  const handleDate2 = (value: any) => {
+    setDate2(value);
+  };
 
   return (
     <>
@@ -284,12 +255,24 @@ function RouteComponent() {
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
+            {/* 2025-02-17 : 수정(Datepicker) S */}
             <div
               className={`${formStyles.input_box_wrap} ${toggleSections[5] ? formStyles.open : ''}`}>
               <div className={formStyles.input_box}>
-                <DatePicker onChange={handleDate} value={date} />
+                <DatePicker
+                  onChange={handleDate}
+                  value={date}
+                  className={formStyles.datepicker_item}
+                />
+                <span className={formStyles.dash}></span>
+                <DatePicker
+                  onChange={handleDate2}
+                  value={date2}
+                  className={formStyles.datepicker_item}
+                />
               </div>
             </div>
+            {/* 2025-02-17 : 수정(Datepicker) E */}
           </div>
         </div>
         {/* row */}
@@ -352,242 +335,6 @@ function RouteComponent() {
                     <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row">
-          {/* form_item */}
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-thumb" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>썸네일</span>
-              {/* 필수 케이스 */}
-              <span className={cn(formStyles.status, formStyles.required)}>
-                <IcoFormRequired width={12} height={12} />
-              </span>
-              <span className={formStyles.sub_text}>
-                {'동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'}
-              </span>
-            </label>
-            <div className={formStyles.input_box}>
-              <div className={thumbStyles.thumb_wrap}>
-                <Swiper
-                  ref={swiperRef}
-                  spaceBetween={12}
-                  slidesPerView="auto"
-                  freeMode={true}
-                  grabCursor={true}
-                  modules={[FreeMode]}
-                  className={thumbStyles.thumb_swiper}>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div className={thumbStyles.thumb_item}>
-                      <Button className={thumbStyles.btn_file}>
-                        <IcoUploadCloud width={24} height={24} stroke="#747D91" />
-                        <Input type="file" className={thumbStyles.input_file} />
-                        <span className={thumbStyles.text}>{'썸네일 업로드'}</span>
-                      </Button>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div className={thumbStyles.thumb_item}>
-                      <div className={thumbStyles.thumb_loading}>
-                        <IcoLoading width={24} height={24} stroke="#747D91" />
-                        <span className={thumbStyles.text}>{'동영상 썸네일 추출중'}</span>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    {/* default 이미지 CASE */}
-                    <div
-                      className={`${thumbStyles.thumb_item} ${thumbStyles.default} ${activeButtons.includes(1) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(1)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={defaultImg} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    {/* 사용자가 선택한 이미지 첫번째만 : selected 클래스 추가(hover 기능 필요) */}
-                    <div
-                      className={`${thumbStyles.thumb_item} ${thumbStyles.selected} ${activeButtons.includes(2) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(2)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <Button className={thumbStyles.btn_delete} onlyIcon>
-                        <IcoTrash03
-                          className={thumbStyles.icon_delete}
-                          width={24}
-                          height={24}
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(3) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(3)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(4) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(4)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(5) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(5)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(6) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(6)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(7) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(7)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(8) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(8)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className={thumbStyles.slide}>
-                    <div
-                      className={`${thumbStyles.thumb_item} ${activeButtons.includes(9) ? thumbStyles.active : ''}`}>
-                      <Button
-                        className={thumbStyles.btn_check}
-                        onClick={() => handleButtonClick(9)}
-                        onlyIcon>
-                        <IcoCheckboxChecked
-                          className={thumbStyles.icon_check}
-                          width={12}
-                          height={13}
-                          fill="none"
-                          stroke="#ffffff"
-                        />
-                      </Button>
-                      <span className={thumbStyles.img_wrap}>
-                        <img src={carImg2} alt="thumb img" className={thumbStyles.img} />
-                      </span>
-                    </div>
-                  </SwiperSlide>
-                </Swiper>
               </div>
             </div>
           </div>
