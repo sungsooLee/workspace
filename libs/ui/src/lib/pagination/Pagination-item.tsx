@@ -46,23 +46,21 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
   }) => {
     // button icon
     const icon = {
-      previous: <ChevronLeft />,
+      previous: <IcoChevronLeft width={32} height={32} fill="#4C515E" />,
       next: <ChevronRight />,
-      first: <ChevronsLeft />,
+      first: <IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />,
       last: <ChevronsRight />,
     }[type];
 
     return type === 'start-ellipsis' || type === 'end-ellipsis' ? (
-      <span>...</span>
+      <span className={styles.ellipsis}>...</span>
     ) : (
-      <>
-        <Button
-          className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
-          icon={icon}
-          onClick={() => onClick?.()}>
-          {type === 'page' && page}
-        </Button>
-      </>
+      <Button
+        className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
+        icon={icon}
+        onClick={() => onClick?.()}>
+        {type === 'page' && page}
+      </Button>
     );
   },
 );

@@ -31,9 +31,21 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Switch } from '@learnway/ui';
+import { SelectOption, Stepper } from '@learnway/ui';
             
 // 적용방법(예시)
+
+const items = [
+    { label: '스텝 1', subLabel: 'help label', value: 'step1' },
+    { label: '스텝 2', subLabel: 'help label', value: 'step2' },
+    { label: '스텝 3', subLabel: 'help label', value: 'step3' },
+    { label: '스텝 4', subLabel: 'help label', value: 'step4' },
+    { label: '스텝 5', subLabel: 'help label', value: 'step5' },
+];
+const handleChange = (event: SelectOption) => {
+  console.log(event);
+};
+
 <Stepper items={items} enableMoveStep onChange={handleChange} />
 `}
           </code>
