@@ -1,6 +1,4 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import SearchBox from '../../../shared/ui/search-box';
-import useSearchBox from '../../../shared/ui/search-box/use-search-box';
 import { CODE_GROUP } from '@learnway/config';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
@@ -11,7 +9,8 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBoxConfig } from '../../../shared/ui/search-box/type';
+import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
+import useSearchBox from '../../../shared/ui/search-box/use-search-box';
 
 export const Route = createFileRoute('/_layout/menu/translation-management')({
   component: RouteComponent,

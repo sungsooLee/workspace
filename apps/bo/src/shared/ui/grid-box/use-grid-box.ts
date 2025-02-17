@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { setConfig } from '@learnway/config';
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 /**
  * 객체를 쿼리 스트링으로 변환하는 함수
@@ -40,7 +39,6 @@ const useGridBoxHook = (config: any, getData?: any) => {
   const [gridConfig, setGridConfig] = useState(config);
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
     const queryString = objectToQueryString({ ...params, ...page });
-    console.log(' queryString => ', queryString);
     const result = (await queryClient.fetchQuery(config.query(queryString))) as any;
     if (result) {
       setGridConfig((state: any) => ({
@@ -49,7 +47,7 @@ const useGridBoxHook = (config: any, getData?: any) => {
         page: {
           ...state.page,
           pageSize: result.pageable.pageSize,
-          pageIndex: result.pageable.number,
+          pageIndex: result.pageable.number || 0,
           totalRows: result.totalElements,
         },
       }));
