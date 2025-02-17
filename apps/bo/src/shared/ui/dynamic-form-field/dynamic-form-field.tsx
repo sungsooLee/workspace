@@ -6,7 +6,6 @@ import { IcoFormRequired } from '@learnway/icons';
 import { Controller } from 'react-hook-form';
 import { Builder, DynamicFormFieldProps, FormParams } from './type';
 
-
 /**
  * 에러 객체에서 첫 번째 메시지를 재귀적으로 추출하는 함수
  * @param error - 에러 객체 (중첩 가능)
@@ -49,7 +48,6 @@ function getErrorMessageForField(errors: any, fieldKey: string): string {
   // 직접 message가 없으면, 해당 필드 에러 객체 내부에서 첫번째 메시지를 찾음.
   return getFirstErrorMessage(fieldError);
 }
-
 
 /**
  * getBuilderConfig 함수
@@ -103,13 +101,14 @@ const getBuilderConfig = (builders: Builder[], name: string): Partial<Builder> =
  * - react-hook-form의 Controller를 사용하여 동적으로 폼 필드를 렌더링합니다.
  */
 const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
-                                                                provider,
-                                                                name,
-                                                                type,
-                                                                disabled = false,
-                                                                children,
-                                                                ...props
-                                                              }) => {
+  provider,
+  name,
+  type,
+  disabled = false,
+  children,
+  className,
+  ...props
+}) => {
   const { control, builders, fieldRefs, watch, onFormChange, formData, onFocus } = provider;
 
   // 현재 필드에 해당하는 빌더 설정 정보 추출
@@ -158,17 +157,17 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
         // children이 React 요소라면 formParams를 주입하여 클론 생성
         const ChildComponent = isValidElement(children)
           ? cloneElement(children as ReactElement, {
-            ...formParams,
-            value,
-            onChange: handleCustomDynamicFormOnChange,
-          })
+              ...formParams,
+              value,
+              onChange: handleCustomDynamicFormOnChange,
+            })
           : null;
 
         return (
-          <div className={styles.form_item}>
+          <div className={cn(styles.form_item, className)}>
             {/* 레이블 렌더링 */}
             {label && (
-              <label htmlFor={name} className={styles.form_label}>
+              <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label')}>
                 {label}
                 {isRequired && (
                   <span
@@ -191,10 +190,12 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
 
             {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
             {!hasError && formParams?.description && (
-              <p className={cn(styles.guide_text)}>{formParams.description}</p>
+              <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
+                {formParams.description}
+              </p>
             )}
             {hasError && (
-              <p className={cn(styles.guide_text, styles.error)}>
+              <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
                 {getErrorMessageForField(errors, name)}
               </p>
             )}
