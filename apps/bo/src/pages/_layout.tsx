@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { Outlet, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
 
-import { Layout } from '../widgets/layout';
+import { Layout, MobileLayout } from '../widgets/layout';
 
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
@@ -34,8 +35,17 @@ function LayoutComponent() {
   }, [tenant]);
 
   return (
-    <Layout>
-      <Outlet />
-    </Layout>
+    <>
+      <BrowserView>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </BrowserView>
+      <MobileView>
+        <MobileLayout>
+          <Outlet />
+        </MobileLayout>
+      </MobileView>
+    </>
   );
 }

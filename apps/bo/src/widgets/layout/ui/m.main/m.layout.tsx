@@ -4,11 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 
 import { useActiveMenuDepthState } from '../../../../features/layout';
-import { LNB } from './lnb/lnb';
 
-import { Header } from './header/header';
+import { MobileHeader } from './m.header/m.header';
 
-import styles from './layout.module.css';
+import styles from './m.layout.module.css';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -27,11 +26,13 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   ) {
     return (
       <>
-        <Header />
+        <MobileHeader />
         <div className={cn(styles.start, styles.container)}>
           <div className={styles.container_inner}>
-            <LNB />
-            <main>{children}</main>
+            <main>
+              <p>Mobile layout </p>
+              {children}
+            </main>
           </div>
         </div>
       </>
@@ -40,10 +41,13 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <MobileHeader />
+      <main>
+        <p>Mobile layout </p>
+        {children}
+      </main>
     </>
   );
 }
 
-export const Layout = LayoutComponent;
+export const MobileLayout = LayoutComponent;

@@ -2,8 +2,4 @@
   &.layout_wrap {
     @apply min-w-[1180px];
   }
-
-  /* mobile */
-  &.mo {
-  }
 }

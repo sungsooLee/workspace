@@ -44,9 +44,6 @@ function RouteComponent() {
   }, []);
 
   const handleOnSubmit = (data: any) => {
-    //(data: z.infer<typeof schema>) => {
-    //alert(JSON.stringify(data, null, 2));
-
     login(data, {
       onSuccess: async (data, variables, context) => {
         const userLang = data.data.data.userLanguageSetCode;

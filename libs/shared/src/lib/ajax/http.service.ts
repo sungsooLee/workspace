@@ -6,9 +6,9 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from 'axios';
-import { encodeQueryString } from '../../index';
 
-axios.defaults.withCredentials = true;
+import { cookieService } from '../cookie/cookie.service';
+import { encodeQueryString } from '../../index';
 
 const API_REQUEST_TIMEOUT = 5000;
 
@@ -50,6 +50,8 @@ export class HttpService {
   private CLEAR_BEFORE_MESSAGE_TIME = 3000;
   private beforeMessage!: string;
   private beforeTimeout!: any;
+
+  public reissueProccess!: (error: any) => Promise<any>;
 
   async get<T>(
     url: string,
@@ -135,7 +137,39 @@ export class HttpService {
 
     this.cancelTokenSource = axios.CancelToken.source();
     this.httpClient = axios.create({ ...options, cancelToken: this.cancelTokenSource.token });
+    this.httpClient.interceptors.request.use(function (config) {
+      const accessToken = cookieService.get('ACCESS-TOKEN');
+      if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+      return config;
+    });
+    this.httpClient.interceptors.response.use(
+      function (config) {
+        return config;
+      },
+      async function (error) {
+        const { response: errorResponse } = error;
+        // error
+        if (errorResponse.status === 401) {
+          return await this.reissueProccess(error);
+        }
+
+        return Promise.reject(error);
+      },
+    );
     this.completed = false;
+  }
+
+  private reissue<T>(args: RequestArgs): AxiosPromise<T> {
+    const { method, url, queryParam, payload } = args;
+    return this.execute<AxiosResponse>(
+      {
+        method: HttpMethod.POST,
+        url: `${OAuthApiPrefix()}/token-reissue`,
+      },
+      { headers: { 'refresh-token': `${cookieService.get('REFRESH-TOKEN')}` } },
+    );
   }
 
   private httpRequest<T>(args: RequestArgs): AxiosPromise<T> {

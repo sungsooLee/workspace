@@ -38,19 +38,3 @@ export function OAuthApiPrefix(): string {
 export function SSOApiPrefix(): string {
   return getConfig()?.SSO_API_PREFIX || `/pms-module${API_SSO_URI}`;
 }
-
-export function PMSApiServer(): string {
-  return `${API_SERVER}/pms-module${API_BO_URI}${API_FIXED_URI}`;
-}
-export function CMSApiServer(): string {
-  return `${API_SERVER}/cms-module${API_BO_URI}${API_FIXED_URI}`;
-}
-export function LMSApiServer(): string {
-  return `${API_SERVER}/lms-module${API_BO_URI}${API_FIXED_URI}`;
-}
-export function OAuthApiServer(): string {
-  return `${API_SERVER}/pms-module${API_FIXED_URI}`;
-}
-export function SSOApiServer(): string {
-  return `${API_SERVER}/pms-module${API_SSO_URI}`;
-}

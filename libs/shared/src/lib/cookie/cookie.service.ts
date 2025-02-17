@@ -23,14 +23,6 @@ class CookieService {
   }
 
   clear() {
-    // Direct remove from login cookie
-    Cookies.remove('LOGIN_USER_ID');
-    Cookies.remove('LOGIN_TENANT_ID');
-    Cookies.remove('LOGIN_ROLE_ID');
-    Cookies.remove('LOGIN_TOKEN');
-    //Cookies.remove('REFRESH_LOGIN_TOKEN');
-
-    // remove cookies from app
     this.keys
       .filter((key: string) => key !== 'I18N_LANG')
       .forEach((key: string) => this.remove(key));

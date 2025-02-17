@@ -62,10 +62,11 @@ export function useLoginUser(mutationOptions = {}) {
 
       const user = data.data.data;
       const { accountId, tenants, roles } = user;
-      cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
       cookieService.set('LOGIN_USER_ID', accountId);
       cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
       cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
+      cookieService.set('ACCESS-TOKEN', data.headers['access-token']);
+      cookieService.set('REFRESH-TOKEN', data.headers['refresh-token']);
 
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
@@ -124,13 +125,13 @@ export function useLogoutUser(mutationOptions = {}) {
       //queryClient.clear();
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
 
-      //router.navigate({ to: '/login' });
+      router.navigate({ to: '/login' });
     },
     ...mutationOptions,
   });
 
   return {
-    logout: () => {
+    logout: (callback?: IMutateCallback<any[]>) => {
       mutate();
     },
     isSuccess,
