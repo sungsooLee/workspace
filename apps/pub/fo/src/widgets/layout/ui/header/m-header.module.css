@@ -1,0 +1,33 @@
+/* header.module.css */
+.start {
+  &.m_header {
+    @apply relative items-center;
+
+    .header_area {
+      @apply relative m-auto w-[1180px];
+
+      .top_area {
+        @apply relative flex justify-between;
+
+        .logo_inner {
+          @apply flex items-center;
+        }
+        h1 {
+          img {
+            @apply h-[60px] w-auto;
+          }
+        }
+        .search_form {
+          @apply flex-1 pt-[10px];
+        }
+        .util {
+          @apply flex items-center pr-[32px];
+        }
+      }
+    }
+
+    .nav_area {
+      @apply relative flex items-center;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/* footer.module.css */
+
+.start {
+  &.footer {
+    @apply body_3_r relative bg-[--primary1] pb-[56px] pt-[56px] text-[var(--gray7)];
+    .footer_area {
+      @apply relative m-auto w-[1180px];
+
+      .menu_list {
+        @apply flex-col;
+      }
+      .footer_info {
+        @apply flex;
+        .logo {
+          @apply absolute bottom-[0] right-[0];
+          img {
+            @apply inline-block h-[30px] w-auto;
+          }
+        }
+        .info_area {
+          .info_menu ul {
+            @apply flex gap-[48px];
+            > li {
+              a {
+                @apply text-[var(--gray5)];
+              }
+            }
+          }
+          .info_box {
+            @apply mt-[24px];
+
+            .space {
+              @apply mr-[10px];
+            }
+
+            .address {
+              @apply mt-[8px];
+              .tel {
+              }
+            }
+            .copyright {
+              @apply mt-[8px];
+            }
+          }
+        }
+      }
+
+      .family_site_info {
+        @apply absolute right-[0] top-[0];
+        button {
+          @apply w-[250px];
+        }
+      }
+    }
+  }
+}
