@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
 import { Outlet, createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-
+import { MobileView, BrowserView } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 
-import { Header, Layout, Footer } from '../widgets/layout';
+import { Header, Layout, Footer, MobileLayout } from '../widgets/layout';
 import styles from './_layout.module.css';
-
-// mobile import
-import { MHeader } from '../widgets/layout/ui/header/m-header';
-import { MFooterFixed } from '../widgets/layout/ui/footer/m-footer-fixed';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -23,19 +19,19 @@ function LayoutComponent() {
 
   return (
     <div className={`${styles.start} ${styles.layout_wrap} ${styles.mo}`}>
-      {/* pc */}
-      <Header />
+      <BrowserView>
+        <Header />
+        <Layout>
+          <Outlet />
+        </Layout>
+        <Footer />
+      </BrowserView>
 
-      {/* mobile */}
-      <MHeader />
-
-      <Layout>
-        <Outlet />
-      </Layout>
-      <Footer />
-
-      {/* mobile */}
-      <MFooterFixed />
+      <MobileView>
+        <MobileLayout>
+          <Outlet />
+        </MobileLayout>
+      </MobileView>
     </div>
   );
 }
