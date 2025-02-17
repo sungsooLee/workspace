@@ -12,6 +12,7 @@ import { FormCategorySelector } from './dialogs/form-category-selector';
 import { FormContentsThumbnail } from './dialogs/form-contents-thumbnail';
 import { FormSelect } from './dialogs/form-select';
 import { FormChipList } from '@/libs/ui/src/lib/chips/form-chip-list';
+import { FormButtonChipList } from './dialogs/form-button-chip-list';
 
 export const dialogConfig = {
   text: Input,
@@ -26,4 +27,5 @@ export const dialogConfig = {
   'text-area': FormTextarea,
   'chip-list': FormChipList,
   'thumbnail-image-upload': FormThumbnailImageUpload,
+  'button-chip-list': FormButtonChipList,
 };

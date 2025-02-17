@@ -18,7 +18,7 @@ export interface ChipListComponentProps extends Omit<ChipsComponentProps, 'optio
   onChange?: (options: Array<SelectOption>) => void;
 }
 
-const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
+const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
   ({
     className,
     onDelete,

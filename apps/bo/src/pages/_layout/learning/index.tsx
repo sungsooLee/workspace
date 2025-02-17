@@ -3,13 +3,15 @@ import { createFileRoute } from '@tanstack/react-router';
 import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button } from '@learnway/ui';
+import { Button, Input } from '@learnway/ui';
 import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { t } from 'i18next';
-import { FormSelectChipList } from '../../../shared/ui/dynamic-form-field/dialogs/form-select-chip-list';
 import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
+import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
+import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
+import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -43,77 +45,79 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
         <MainContents>
-          {/* 채널 선택 */}
+          {/* 채널 */}
+          {/* TODO: ContentRow > Row */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'channel'} />
+            <DynamicFormField provider={provider} name={'채널'} />
           </ContentsRow>
-          {/* 테넌트 선택 */}
+          {/* 강의유형 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'tenant'} />
-          </ContentsRow>
-          {/* 카테고리 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'카테고리'} />
-          </ContentsRow>
-          {/* 공개대상 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'공개대상'}>
-              <FormSelectChipList
-                selectOptions={Array(5)
-                  .fill(null)
-                  .map((d, i) => ({ value: `value${i}`, label: `label${i}` }))}
-              />
+            <DynamicFormField provider={provider} name={'강의유형'}>
+              <LectureTypeSiteUrl />
             </DynamicFormField>
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
             <DynamicFormField provider={provider} name={'과정명'} />
           </ContentsRow>
-          {/* 교육목표 */}
+          {/* 과정내용 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'교육목표'} />
+            <DynamicFormField provider={provider} name={'과정내용'} />
           </ContentsRow>
-          {/* 기대효과 */}
+          {/* 대표이미지 */}
+          {/* TODO: className 제거 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'기대효과'} />
+            <DynamicFormField provider={provider} name={'대표이미지'} className={'w-[400px]'} />
           </ContentsRow>
-          {/* 과정명 */}
+          {/* 강의유형 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'과정명'} />
-          </ContentsRow>
-          {/* 교육목표 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'교육목표'} />
-          </ContentsRow>
-          {/* 기대효과 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'기대효과'} />
-          </ContentsRow>
-          {/* 교육내용 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'교육내용'} />
-          </ContentsRow>
-          {/* 과정썸네일 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'과정썸네일'} />
-          </ContentsRow>
-          {/* 총학습시간 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'총학습시간'} />
-          </ContentsRow>
-          {/* 총학습기간 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'총학습기간'} />
+            <DynamicFormField provider={provider} name={'강의유형'} />
           </ContentsRow>
           {/* 태그 */}
           <ContentsRow>
             <DynamicFormField provider={provider} name={'태그'} />
           </ContentsRow>
+          {/* 강사 */}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'강사'}>
+              <FormTeacherChipList />
+            </DynamicFormField>
+          </ContentsRow>
+          {/* 첨부파일 */}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'첨부파일'} />
+          </ContentsRow>
+          {/* 난이도 */}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'난이도'} />
+          </ContentsRow>
           {/* 운영자 */}
           <ContentsRow>
             <DynamicFormField provider={provider} name={'운영자'} />
           </ContentsRow>
+          {/* 연락처 */}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'연락처'} />
+          </ContentsRow>
+          {/* 테넌트 */}
+          <ContentsRow>
+            <DynamicFormField provider={provider} name={'테넌트'} />
+          </ContentsRow>
+          {/* 공개대상 */}
+          {/*<ContentsRow>*/}
+          {/*  <DynamicFormField provider={provider} name={'공개대상'}>*/}
+          {/*    <FormSelectChipList*/}
+          {/*      selectOptions={Array(5)*/}
+          {/*        .fill(null)*/}
+          {/*        .map((d, i) => ({ value: `value${i}`, label: `label${i}` }))}*/}
+          {/*    />*/}
+          {/*  </DynamicFormField>*/}
+          {/*</ContentsRow>*/}
         </MainContents>
+        <SubContents>
+          <h3>Sub</h3>
+          <Input />
+        </SubContents>
       </PageContainer>
     </form>
   );
@@ -125,63 +129,23 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'channel',
-      type: 'dropdown',
-      label: t('채널 선택'),
+      name: '채널',
+      type: 'text-popup-button',
+      label: '채널',
       value: '',
-      placeholder: '',
+      placeholder: '최근 과정 개설한 채널명 또는 최근 생성된 채널명',
       description: '',
-      options: [{ value: '', label: '언어전체' }],
+      button: {
+        label: t('선택'),
+        variant: 'point',
+      },
+      onClick: () => console.log('onClick'),
     },
     {
-      name: 'tenant',
-      type: 'check-group',
-      label: t('테넌트 선택'),
-      value: '',
-      placeholder: '',
-      description: '',
-      options: [
-        { value: 'tenant1', label: 'Tenant A' },
-        { value: 'tenant2', label: 'Tenant B' },
-      ],
-    },
-    {
-      name: '카테고리',
-      type: 'text',
-      label: t('카테고리'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '과정명',
-      type: 'text',
-      label: t('과정명'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '교육목표',
-      type: 'text',
-      label: t('교육목표'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '기대효과',
-      type: 'text',
-      label: t('기대효과'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '공개대상',
+      name: '강의유형',
       type: 'custom',
-      label: t('공개대상'),
-      value: [],
+      label: t('강의유형 - 라디오버튼 + 체크박스2 + 인풋 + 라벨'),
+      value: {},
       placeholder: '',
       description: '',
     },
@@ -194,33 +158,17 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: '교육목표',
-      type: 'text',
-      label: t('교육목표'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '기대효과',
-      type: 'text',
-      label: t('기대효과'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '교육내용',
+      name: '과정내용',
       type: 'text-area',
-      label: t('교육내용'),
+      label: t('과정내용'),
       value: '',
       placeholder: '',
       description: '',
     },
     {
-      name: '과정썸네일',
+      name: '대표이미지',
       type: 'thumbnail-image-upload',
-      label: t('과정썸네일'),
+      label: t('대표이미지'),
       value: [
         { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
         { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
@@ -231,25 +179,9 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: '총학습시간',
-      type: 'text',
-      label: t('총 학습 시간'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '총학습기간',
-      type: 'text',
-      label: t('총 학습 기간'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
       name: '태그',
       type: 'chip-list',
-      label: t('태그'),
+      label: t('태그 - 인풋 칩 리스트'),
       value: [
         { label: '현대자동차 A', value: 'A' },
         { label: '현대자동차 B', value: 'B' },
@@ -260,12 +192,62 @@ const formConfig: DynamicFormConfig = {
       showInput: true,
     },
     {
-      name: '운영자',
+      name: '강사',
+      type: 'custom',
+      label: t('강사 - 다이얼로그 버튼 + 칩 리스트 (가로)'),
+      value: [],
+      placeholder: '',
+      description: '',
+      button: {
+        label: t('선택'),
+        onClick: () => {
+          // open modal
+        },
+      },
+    },
+    {
+      name: '첨부파일',
       type: 'text',
-      label: t('운영자'),
+      label: t('첨부파일 - 다이얼로그 버튼 + 칩 리스트 (가로)'),
       value: '',
       placeholder: '',
       description: '',
+    },
+    {
+      name: '난이도',
+      type: 'check-group',
+      label: t('난이도'),
+      value: [],
+      placeholder: '',
+      description: '',
+    },
+    {
+      name: '운영자',
+      type: 'text',
+      label: t('운영자 - 인풋 + 다이얼로그 버튼'),
+      value: '',
+      placeholder: '',
+      description: '',
+    },
+    {
+      name: '연락처',
+      type: 'text',
+      label: t('연락처 - 인풋 + 인풋'),
+      value: '',
+      placeholder: '',
+      description: '',
+    },
+    {
+      name: '테넌트',
+      type: 'chip-list',
+      label: t('테넌트 - 우측 액션버튼 + chip list'),
+      value: [],
+      placeholder: '',
+      description: '',
+      options: [
+        { value: 'tenant1', label: 'Tenant A' },
+        { value: 'tenant2', label: 'Tenant B' },
+      ],
     },
   ],
   validator: {

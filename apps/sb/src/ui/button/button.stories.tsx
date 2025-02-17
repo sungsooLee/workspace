@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Radio } from '@learnway/ui';
+import type { Meta } from '@storybook/react';
+import { Button } from '@learnway/ui';
 import { Camera } from 'lucide-react';
 
 export default {
@@ -16,29 +16,29 @@ export default {
 
 // Button
 export const Template: any = (args: any) => {
-  return (
-    <Button {...args}>Button</Button>
-  )
-}
+  return <Button {...args}>Button</Button>;
+};
 Template.storyName = 'Button';
 Template.args = {};
-
 
 // Loading Button
 export const TemplateLoading: any = (args: any) => {
   return (
-    <Button {...args} isLoading={true}>Button</Button>
-  )
-}
+    <Button {...args} isLoading={true}>
+      Button
+    </Button>
+  );
+};
 TemplateLoading.storyName = 'Loading Button';
 TemplateLoading.args = {};
-
 
 // Icon Button
 export const TemplateIcon: any = (args: any) => {
   return (
-    <Button {...args} icon={<Camera />}>Button</Button>
-  )
-}
+    <Button {...args} icon={<Camera />} onClick={(e: any) => console.log(e)}>
+      Button
+    </Button>
+  );
+};
 TemplateIcon.storyName = 'Icon Button';
 TemplateIcon.args = {};

@@ -36,6 +36,10 @@
   &.focused {
     @apply border-[var(--gray4)];
   }
+
+  &.mobile {
+    background: red;
+  }
 }
 
 .button_wrap {
