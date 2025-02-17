@@ -57,6 +57,7 @@ export { ReactComponent as IcoDotpoints } from './lib/ic_dotpoints-02.svg';
 export { ReactComponent as IcoGrid01 } from './lib/ic_grid-01.svg';
 export { ReactComponent as IcoMybook } from './lib/ic_mybook.svg';
 export { ReactComponent as IcoPlay02 } from './lib/ic_play-02.svg';
+export { ReactComponent as IcoMoreHorizontal } from './lib/ic_more_horizontal.svg';
 
 //export Default as Information from './lib/information.svg?react';
 

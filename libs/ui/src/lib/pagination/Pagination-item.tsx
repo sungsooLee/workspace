@@ -4,8 +4,13 @@ import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
 
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-
+import {
+  IcoChevronLeftDouble,
+  IcoChevronLeft,
+  IcoChevronRight,
+  IcoChevronRightDouble,
+  IcoMoreHorizontal,
+} from '@learnway/icons';
 import styles from './pagination-item.module.css';
 
 export interface PaginationItemComponentProps {
@@ -47,13 +52,15 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
     // button icon
     const icon = {
       previous: <IcoChevronLeft width={32} height={32} fill="#4C515E" />,
-      next: <ChevronRight />,
+      next: <IcoChevronRight width={32} height={32} fill="#4C515E" />,
       first: <IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />,
-      last: <ChevronsRight />,
+      last: <IcoChevronRightDouble width={32} height={32} fill="#4C515E" />,
     }[type];
 
     return type === 'start-ellipsis' || type === 'end-ellipsis' ? (
-      <span className={styles.ellipsis}>...</span>
+      <span className={styles.ellipsis}>
+        <IcoMoreHorizontal width={16} height={16} fill="#121416" />
+      </span>
     ) : (
       <Button
         className={cn(className, 'nlp-pagination-button', selected && styles.selected)}

@@ -31,10 +31,12 @@ import { Button } from '../button/button';
 import { CheckFieldProps } from '../checkbox/type';
 
 // paging Icons
-import { IcoChevronLeft } from '@learnway/icons';
-import { IcoChevronLeftDouble } from '@learnway/icons';
-import { IcoChevronRight } from '@learnway/icons';
-import { IcoChevronRightDouble } from '@learnway/icons';
+import {
+  IcoChevronLeftDouble,
+  IcoChevronLeft,
+  IcoChevronRight,
+  IcoChevronRightDouble,
+} from '@learnway/icons';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
