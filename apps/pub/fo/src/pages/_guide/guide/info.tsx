@@ -55,6 +55,25 @@ import signupStyles from './signup.module.css'
 <div className={signupStyles.test}></div>`}</code>
             </pre>
           </div>
+
+          <h3 className="guide_tit3">Module CSS (반응형)</h3>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`
+// 반응형 일때
+ex) test.module.css
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply hidden;
+    }
+  }
+}`}</code>
+            </pre>
+          </div>
+          <div className="info">0~767px(mobile), 768px이상부터 pc화면으로 노출된다.</div>
         </div>
       </div>
     </div>
