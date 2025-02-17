@@ -20,21 +20,28 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Stepper Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/stepper/stepper.tsx</p>
+      <p className="info">
+        클릭으로 단계 이동시 enableMoveStep 속성 추가
+        <br />
+        처음부터 단계 설정시 selectedStep={'value값'}
+        <br />
+        ex) selectedStep="step3"
+      </p>
       <div className="code_example">
         <pre className="code_block">
           <code>
             {`// 초기 import
-                import { Switch } from '@learnway/ui';
-                
-                // 적용방법(예시)
-                <Stepper items={items} enableMoveStep onChange={handleChange} />
-                `}
+import { Switch } from '@learnway/ui';
+            
+// 적용방법(예시)
+<Stepper items={items} enableMoveStep onChange={handleChange} />
+`}
           </code>
         </pre>
       </div>
       <div className="group">
         <h3 className="guide_tit3">stepper FO 기본</h3>
-        <Stepper items={items} enableMoveStep onChange={handleChange} variant="check" />
+        <Stepper items={items} onChange={handleChange} variant="check" />
         <h3 className="guide_tit3">stepper BO 기본</h3>
         <Stepper items={items} enableMoveStep onChange={handleChange} />
       </div>
