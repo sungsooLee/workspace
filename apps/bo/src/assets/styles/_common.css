@@ -59,7 +59,10 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 .row {
   /* form */
-  @apply flex w-full gap-[32px];
+  @apply flex w-full flex-wrap gap-[32px];
+  .form_tit {
+    @apply w-full;
+  }
   .row {
     @apply mt-[16px];
   }
