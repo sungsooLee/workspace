@@ -5,9 +5,6 @@
     &.sm {
       @apply h-[80px];
     }
-    &.bd_none {
-      @apply border-none pl-[12px] outline-offset-0;
-    }
     &.none {
       @apply resize-none;
     }
@@ -17,6 +14,9 @@
     &:focus {
       @apply border-0;
     }
+  }
+  &.disabled {
+    @apply bg-[var(--gray2)];
   }
   .text_limit {
     @apply flex justify-end pb-[11px] pr-[12px] text-[12px] font-normal leading-[1rem] text-[var(--gray6)];

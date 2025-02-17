@@ -47,6 +47,9 @@
     .input_box {
       @apply mt-0;
     }
+    .guide_text.error {
+      @apply ml-[40px];
+    }
   }
 }
 .input_box_wrap {

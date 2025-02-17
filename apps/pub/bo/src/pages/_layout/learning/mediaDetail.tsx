@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Input,
@@ -611,65 +611,73 @@ function RouteComponent() {
           </div>
         </div>
         {/* 2025-02-13 수정 S */}
-        <div className="row_wrap">
-          {/* row */}
-          <div className="row">
-            {/* form_item */}
-            <div className={cn(formStyles.form_item, formStyles.type2)}>
-              <label htmlFor="name-1-16" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>검수 확인</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-                <span className={formStyles.sub_text}>
-                  {'등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'}
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Checkbox className={formStyles.check} />
+        <div className="row">
+          <strong className={formStyles.form_tit}>검수</strong>
+          <div className="row_wrap">
+            {/* row */}
+            <div className="row">
+              {/* form_item */}
+              <div className={cn(formStyles.form_item, formStyles.type2)}>
+                <label htmlFor="name-1-16" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>검수 확인</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                  <span className={formStyles.sub_text}>
+                    {
+                      '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.'
+                    }
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Checkbox className={formStyles.check} />
+                </div>
+                <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
               </div>
             </div>
-          </div>
-          {/* row */}
-          <div className="row">
-            {/* form_item */}
-            <div className={cn(formStyles.form_item, formStyles.type2)}>
-              <label htmlFor="name-1-17" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>저작권 확인</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-                <span className={formStyles.sub_text}>
-                  {
-                    '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
-                  }
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Checkbox className={formStyles.check} />
+            {/* row */}
+            <div className="row">
+              {/* form_item */}
+              <div className={cn(formStyles.form_item, formStyles.type2)}>
+                <label htmlFor="name-1-17" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>저작권 확인</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                  <span className={formStyles.sub_text}>
+                    {
+                      '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
+                    }
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Checkbox className={formStyles.check} />
+                </div>
+                <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
               </div>
             </div>
-          </div>
-          {/* row */}
-          <div className="row">
-            {/* form_item */}
-            <div className={cn(formStyles.form_item, formStyles.type2)}>
-              <label htmlFor="name-1-18" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>보안 확인</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-                <span className={formStyles.sub_text}>
-                  {
-                    '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다.'
-                  }
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Checkbox className={formStyles.check} />
+            {/* row */}
+            <div className="row">
+              {/* form_item */}
+              <div className={cn(formStyles.form_item, formStyles.type2)}>
+                <label htmlFor="name-1-18" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>보안 확인</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                  <span className={formStyles.sub_text}>
+                    {
+                      '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다.'
+                    }
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Checkbox className={formStyles.check} />
+                </div>
+                <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
               </div>
             </div>
           </div>
