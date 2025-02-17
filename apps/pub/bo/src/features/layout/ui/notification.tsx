@@ -1,7 +1,7 @@
-import { memo, useState } from 'react';
+import { memo, ReactNode, useState } from 'react';
 
 import { Button, Popover } from '@learnway/ui';
-import { IcoAlarmFill, IcoXclose } from '@learnway/icons';
+import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 
@@ -33,10 +33,46 @@ const initialNotifications: NotificationInfo[] = [
     id: 2,
     date: '02.14',
     title: '시스템 점검',
-    message: '내일 오전 2시에 점검이 있습니다.',
+    message: `내일 오전 2시에 점검이 있습니다. 내일 오전 2시에 점검이 있습니다.  내일 오전 2시에 점검이 있습니다.`,
     time: '10분전',
     isRead: true,
     hasLink: false,
+  },
+  {
+    id: 3,
+    date: '02.15',
+    title: '시스템 점검2',
+    message: '내일 오전 2시에 점검이 있습니다2.',
+    time: '10분전',
+    isRead: true,
+    hasLink: false,
+  },
+  {
+    id: 4,
+    date: '02.16',
+    title: '시스템 점검3',
+    message: '내일 오전 2시에 점검이 있습니다3.',
+    time: '10분전',
+    isRead: true,
+    hasLink: false,
+  },
+  {
+    id: 4,
+    date: '02.16',
+    title: '시스템 점검4',
+    message: '내일 오전 2시에 점검이 있습니다4.',
+    time: '10분전',
+    isRead: false,
+    hasLink: true,
+  },
+  {
+    id: 5,
+    date: '02.16',
+    title: '시스템 점검5',
+    message: '내일 오전 2시에 점검이 있습니다5.',
+    time: '10분전',
+    isRead: false,
+    hasLink: true,
   },
 ];
 
@@ -58,15 +94,19 @@ const PopoverContent = () => {
         {/* alarm_header */}
         <div className={styles.alarm_header}>
           <strong className={styles.tit}>{'알림'}</strong>
-          <div className={styles.btn_wrap}>
-            <Button className={styles.btn}>전체읽음</Button>
-            <Button className={styles.btn}>전체삭제</Button>
-          </div>
+          {/* 알림 없는 경우 미노출 */}
+          {notifications.length !== 0 && (
+            <div className={styles.btn_wrap}>
+              <Button className={styles.btn}>전체읽음</Button>
+              <Button className={styles.btn}>전체삭제</Button>
+            </div>
+          )}
         </div>
         <div className={styles.alarm_contents}>
           {/* 알림 없는 경우 */}
           {notifications.length === 0 ? (
             <p className={styles.empty}>
+              <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
               새로운 알림이 없습니다.
               <span className={styles.sub_text}>알림은 30일 동안 보관됩니다.</span>
             </p>
