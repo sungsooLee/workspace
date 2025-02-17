@@ -7,7 +7,7 @@ import { ReactQueryConfigProvider } from '@learnway/config';
 
 import { routeTree } from '../routeTree.gen';
 
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
 });

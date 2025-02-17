@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-const ELearningCategoryComponent = forwardRef<HTMLDivElement, any>(
+import { BaseFormDialogProps } from '../type';
+const ELearningCategoryComponent = forwardRef<HTMLDivElement, BaseFormDialogProps>(
   ({ name, value, onChange }, ref) => {
     return (
       <div ref={ref}>

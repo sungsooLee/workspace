@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { ButtonVariantType, SelectOption } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { FormState, UseFormGetValues } from 'react-hook-form/dist/types/form';
+import { ReactNode, Ref } from 'react';
 
 /*======================================
 =            API 관련 타입             =
@@ -290,9 +291,24 @@ export interface DynamicFormFieldProps {
   name: string;
   type?: string;
   disabled?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
+  [key: string]: any;
+}
 
+/**
+ * BaseFormDialogProps 인터페이스
+ * - 다이얼로그 형태의 폼 컴포넌트에 전달할 기본 속성을 정의합니다.
+ */
+export interface BaseFormDialogProps {
+  watch: (name?: string | string[]) => any;
+  ref: Ref<any>;
+  type?: string;
+  name: string;
+  onChange: (value: any) => void;
+  onBlur: () => void;
+  value: any;
+  disabled: boolean;
   [key: string]: any;
 }
 

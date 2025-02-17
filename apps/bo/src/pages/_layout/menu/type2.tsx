@@ -1,10 +1,8 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { z } from 'zod';
-import { t } from 'i18next';
+import { z } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
-import get from 'lodash/get';
 
 import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -18,7 +16,6 @@ import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { ELearningCategory } from '../../../shared/ui/dynamic-form-field/dialogs/e-learning-category';
 import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 import { LowerGubun } from '../../../shared/ui/dynamic-form-field/dialogs/lower-gubun';
-import { useEffect } from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -324,18 +321,6 @@ const detailConfig: DynamicFormConfig = {
         },
       ],
     },
-    /*{
-      name: 'categorySelector',
-      type: 'selector',
-      label: '카테고리 선택',
-      value: [],
-    },
-    {
-      name: 'thumbnails',
-      type: 'contents-thumbnail',
-      label: '썸네일',
-      value: [],
-    },*/
     {
       name: 'lowerGubun',
       label: '하위구분',
@@ -394,19 +379,13 @@ const detailConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    eLeaning: z.string().nonempty(t('이러닝 카테고리를 선택해주세요.')),
+    eLeaning: z.string().label('이러닝').required(),
     lowerGubun: z.object({
       // 'gubun' 필드는 문자열로, 필수이며 빈 값이 아닌 경우 검증
-      gubun: z.string().nonempty({ message: '하위구분을 선택해 주세요.' }),
+      gubun: z.string().required(),
       // 'select' 필드는 체크박스 그룹이므로 문자열 배열로 처리 (선택 사항이라면 optional)
       select: z.array(z.string()).optional(),
-      url: z.string().nonempty({ message: 'url 을 입력해주세요' }),
+      url: z.string().required(),
     }),
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-     category: z.string().nonempty(t('유효성 테스트')),
-     language_code: z.string().nonempty(t('유효성 테스트')),
-     subdivision: z.string().nonempty(t('유효성 테스트')),
-     check: z.boolean(),
-     tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
   },
 };

@@ -1,4 +1,7 @@
-import { z, ZodIssueOptionalMessage } from 'zod';
+import { z } from '@learnway/shared';
+import { ZodErrorMap, ZodIssueOptionalMessage, ErrorMapCtx, ZodIssueCode } from 'zod';
+import { ZodCustomIssue } from 'zod/lib/ZodError';
+
 /**
  *  Custom zod errorMap: invalid message를 i18n code로 변경 처리
  *  z.setErrorMap global적용하거나 schema별로 별도 적용 가능
@@ -8,12 +11,15 @@ import { z, ZodIssueOptionalMessage } from 'zod';
  * @param ctx
  * @return { message: string }
  */
-const customErrorMap: z.ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: z.ErrorMapCtx) => {
+const customErrorMap: ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: ErrorMapCtx) => {
   //console.log('customErrorMap', error?.path[0], error.code, error, ctx);
-  let params;
   let validation: string | undefined;
+  // customLabel이 있으면 사용, {{label}} 사용
+  const customError = error as ZodCustomIssue;
+  const label = (customError.params as any)?.customLabel || '{{label}}';
+
   switch (error.code) {
-    case z.ZodIssueCode.invalid_type:
+    case ZodIssueCode.invalid_type:
       if (error.expected === 'string') {
         return { message: `잘못된 문자열 입력` };
       }
@@ -21,13 +27,13 @@ const customErrorMap: z.ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: z.Er
         return { message: `잘못된 숫자 입력` };
       }
       break;
-    case z.ZodIssueCode.invalid_string:
+    case ZodIssueCode.invalid_string:
       validation = (error as any)?.validation;
       if (validation === 'email') {
-        return { message: '${label}은 잘못된 이메일' };
+        return { message: `${label}은 잘못된 이메일` };
       }
       break;
-    case z.ZodIssueCode.too_small:
+    case ZodIssueCode.too_small:
       if (error.type === 'number') {
         // gte
         return { message: `Number must be greater than or equal to ${error.minimum}` };
@@ -36,14 +42,18 @@ const customErrorMap: z.ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: z.Er
         return { message: `String must contain at least ${error.minimum} character(s)` };
       }
       break;
-    case z.ZodIssueCode.custom:
+    case ZodIssueCode.custom:
       // produce a custom message using error.params
       // error.params won't be set unless you passed
       // a `params` arguments into a custom validator
-      params = error.params;
+      if ((error.params as any)?.validation === 'required') {
+        return { message: `${label}은(는) 필수 항목입니다.` };
+      }
+
+      /*params = error.params;
       if (params && params?.['myField']) {
         return { message: `Bad input: ${params.myField}` };
-      }
+      }*/
       break;
   }
 
@@ -57,16 +67,3 @@ const customErrorMap: z.ZodErrorMap = (error: ZodIssueOptionalMessage, ctx: z.Er
 export function initZod() {
   z.setErrorMap(customErrorMap);
 }
-
-const numberRequied = z.number({
-  required_error: '${label} 필수 입력 값',
-  invalid_type_error: '${label} 타입 오류',
-});
-const stringRequied = z.string().nonempty('${label} 필수 입력 값');
-const stringsRequired = z.string().array().nonempty('${label} 필수 입력 값');
-
-export const zodValidator = {
-  numberRequied,
-  stringRequied,
-  stringsRequired,
-};
