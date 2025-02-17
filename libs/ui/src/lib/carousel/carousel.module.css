@@ -9,6 +9,7 @@
 .SwiperSlide {
   text-align: center;
   font-size: 18px;
+  width: auto;
 
   /* Center slide text vertically */
   display: flex;

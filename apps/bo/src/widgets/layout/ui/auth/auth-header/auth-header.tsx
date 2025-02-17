@@ -1,23 +1,24 @@
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useLocation } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { Logo, UserAvatar, Notification } from '../../../../../features/layout';
+import { Logo } from '../../../../../features/layout';
 import { Language } from '../../../../../features/platform';
+import { isSigninPage } from '../../../../../features/platform';
 
 import styles from './auth-header.module.css';
 
 function AuthHeaderComponent() {
-  const { t } = useTranslation();
+  const location = useLocation();
 
   return (
     <div className={`${styles.start} ${styles.header_auth}`}>
       <header className={styles.header_area}>
         <h1>
-          <Logo />
+          <Logo theme={isSigninPage(location.pathname) ? 'login' : 'main'} />
         </h1>
-        <Language />
+        <Language className="auth_language" />
       </header>
     </div>
   );

@@ -48,7 +48,11 @@ export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logou
 export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
 export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file uploading 24*24
 export { ReactComponent as IcoTrash03 } from './lib/ic_trash_03.svg'; // trash
-
+export { ReactComponent as IcoCalendar01 } from './lib/ic_calendar_01.svg'; // calrendar
+export { ReactComponent as IcoBuilding01 } from './lib/ic_building-01.svg';
+export { ReactComponent as IcoOverseasDealer } from './lib/ic_overseas_dealer.svg';
+export { ReactComponent as IcoMail } from './lib/ic_mail.svg';
+export { ReactComponent as IcoPhone02 } from './lib/ic_phone-02.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

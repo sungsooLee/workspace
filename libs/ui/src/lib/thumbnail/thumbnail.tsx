@@ -10,21 +10,25 @@ export interface ThumbnailComponentProps {
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
-  imagePath: string;
+  path: string;
   showCheckbox?: boolean;
   onCheckedChange?: (checked: CheckedState) => any;
   // checked?: boolean;
 }
 
 const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
-  ({ className, variant, size, imagePath, showCheckbox, onCheckedChange, ...props }) => {
+  ({ className, variant, size, path, showCheckbox, onCheckedChange, ...props }) => {
     return (
       <div {...props} className={cn(styles.start, className, 'nlp--thumbnail', 'border')}>
         {/* checkbox */}
         {showCheckbox && (
-          <Checkbox className={cn(styles.checkbox)} size={'xs'} onCheckedChange={onCheckedChange} />
+          <Checkbox
+            className={cn(styles.checkbox, 'm-1')}
+            size={'xs'}
+            onCheckedChange={onCheckedChange}
+          />
         )}
-        <img src={imagePath} className={'h-[80px] w-[120px]'} />
+        <img src={path} className={'h-[80px] w-[120px]'} />
       </div>
     );
   },

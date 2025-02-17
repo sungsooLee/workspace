@@ -18,7 +18,7 @@ export interface SelectComponentProps extends React.ComponentProps<typeof Primit
   placeholder?: string;
   className?: string;
   size?: 'md' | 'lg';
-  onChange?: (value?: SelectOption) => void;
+  onChange?: (value: SelectOption) => void;
 }
 
 const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SelectComponentProps>(
@@ -43,6 +43,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     useEffect(() => {
       setCurrentSelectedItem(value || '');
     }, [value]);
+
     return (
       <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
@@ -66,7 +67,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
                   'min-w-[var(--radix-select-trigger-width)]',
                   size && styles[size],
                 )}>
-                {options.map(({ value, label }) => (
+                {options?.map(({ value, label }) => (
                   <SelectItem key={value} value={value} className={styles.select_item}>
                     {label}
                   </SelectItem>

@@ -49,6 +49,7 @@ import {
   IcLogOut01,
   IcoUploadCloud,
   IcoLoading,
+  IcoCalendar01,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -135,6 +136,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcLogOut01 width={30} height={30} stroke="#4C515E" />
             <IcoUploadCloud width={30} height={30} stroke="#4C515E" />
             <IcoLoading width={30} height={30} stroke="#4C515E" />
+            <IcoCalendar01 width={30} height={30} stroke="#4C515E" />
           </div>
         </div>
 

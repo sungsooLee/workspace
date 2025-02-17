@@ -22,7 +22,7 @@ import {
   Button,
   DynamicFormField,
   FieldType,
-  NumberInput,
+  Input,
 } from '@learnway/ui';
 
 export default {
@@ -800,7 +800,7 @@ const PersonTestModal = ({
 
   return (
     <div>
-      <NumberInput value={tmpData} onChange={(v) => setTmpData(v)} />
+      <Input type="number" value={tmpData} onChange={(v: any) => setTmpData(v)} />
       <Button onClick={handleSubmit}>확인</Button>
     </div>
   );

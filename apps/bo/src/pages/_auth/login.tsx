@@ -8,9 +8,7 @@ import { Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 
 import { useFetchAuthUser, useLoginUser } from '../../entities/user';
-
-import DynamicFormField from '../../shared/ui/dynamic-form-field';
-
+import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
 import { useSetLanguage } from '../../features/platform';
 
 import styles from './login.module.css';
@@ -109,7 +107,7 @@ const detailConfig = {
     {
       name: 'username',
       type: 'text',
-      label: 'USER_ID',
+      label: '아이디/이메일',
       value: '',
       placeholder: '아아디/이메일을 입력하세요',
       description: '기본 메세지',
@@ -117,7 +115,7 @@ const detailConfig = {
     {
       name: 'password',
       type: 'text',
-      label: 'PASSWORD',
+      label: '비밀번호',
       maxLength: 10,
       value: '',
       placeholder: '비밀번호를 입력하세요',
