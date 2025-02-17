@@ -1,4 +1,6 @@
-
+.ellipsis {
+  @apply inline-flex h-[32px] w-[32px] items-center justify-center;
+}
 .selected {
-  background: lightsalmon;
+  @apply body_4_b bg-[var(--gray7)] text-[var(--white)];
 }

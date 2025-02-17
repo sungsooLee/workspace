@@ -40,7 +40,14 @@ const PaginationComponent = forwardRef<HTMLButtonElement, PaginationComponentPro
     return (
       <div className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         {items.map((item: any, index: number) => (
-          <PaginationItem key={index} {...item} color={color} size={size} variant={variant} />
+          <PaginationItem
+            key={index}
+            {...item}
+            color={color}
+            size={size}
+            variant={variant}
+            className={styles.btn_number}
+          />
         ))}
       </div>
     );
