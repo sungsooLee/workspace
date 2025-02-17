@@ -163,6 +163,11 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
             })
           : null;
 
+        let errorMessage = getErrorMessageForField(errors, name);
+        if (errorMessage && errorMessage !== '' && errorMessage.indexOf('{{label}}') > -1) {
+          errorMessage = errorMessage.replace(`{{label}}`, label);
+        }
+
         return (
           <div className={cn(styles.form_item, className)}>
             {/* 레이블 렌더링 */}
@@ -196,7 +201,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
             )}
             {hasError && (
               <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
-                {getErrorMessageForField(errors, name)}
+                {errorMessage}
               </p>
             )}
           </div>

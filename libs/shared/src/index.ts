@@ -9,5 +9,6 @@ export * from './lib/utils/random-generator';
 export * from './lib/date/date-format';
 export * from './lib/date/date-util';
 export * from './lib/date/time-util';
+export * from './lib/zod';
 
 export * from './lib/types';

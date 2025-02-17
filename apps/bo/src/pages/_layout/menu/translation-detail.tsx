@@ -1,13 +1,12 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { z } from 'zod';
+import { z } from '@learnway/shared';
 import { Button, useModalControl } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
+import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/menu/translation-detail')({
@@ -212,9 +211,10 @@ const formConfig: DynamicFormConfig = {
     ...translation.map((tr) => ({ ...tr, type: 'text', value: '' })),
   ],
   validator: {
-    gnb: z.string().nonempty(t('다국어 분류를 선택해 주세요.')),
-    code: z.string().nonempty(t('다국어 코드를 입력해 주세요.')),
-    en: z.string().nonempty(t('영어 번역본을 입력해 주세요.')),
-    kr: z.string().nonempty(t('한극 번역본을 입력해 주세요.')),
+    gnb: z.string().required(),
+    code: z.string().required('필수 값을 입력 해 주세요'),
+    en: z.string().required(),
+    kr: z.string().required(),
+    ne: z.string().email().optional(),
   },
 };
