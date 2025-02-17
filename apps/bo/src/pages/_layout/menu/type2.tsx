@@ -1,6 +1,5 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { z } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 
@@ -328,7 +327,7 @@ const detailConfig: DynamicFormConfig = {
       value: {
         gubun: '01',
         select: ['01', '02'],
-        url: '',
+        url: 'adsfasfsdaf',
       },
     },
     {
@@ -379,13 +378,13 @@ const detailConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    eLeaning: z.string().label('이러닝').required(),
+    /*eLeaning: z.string().label('이러닝').required(),
     lowerGubun: z.object({
       // 'gubun' 필드는 문자열로, 필수이며 빈 값이 아닌 경우 검증
       gubun: z.string().required(),
       // 'select' 필드는 체크박스 그룹이므로 문자열 배열로 처리 (선택 사항이라면 optional)
       select: z.array(z.string()).optional(),
       url: z.string().required(),
-    }),
+    }),*/
   },
 };
