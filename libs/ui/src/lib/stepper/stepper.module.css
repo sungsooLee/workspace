@@ -1,14 +1,110 @@
 .stepper {
+  @apply flex;
+  .step_item {
+    @apply relative flex flex-1 flex-col items-center pt-[40px];
+    &::before,
+    &::after {
+      @apply absolute top-[14px] block h-[1px] w-[50%] bg-[var(--gray6)] content-[''];
+    }
+    &::before {
+      @apply left-0;
+    }
+    &::after {
+      @apply left-1/2;
+    }
+    &:nth-child(1) {
+      &::before {
+        @apply hidden;
+      }
+      &::after {
+        @apply left-1/2;
+      }
+    }
+    &:nth-last-child(1) {
+      &::after {
+        @apply hidden;
+      }
+    }
+    .title {
+      @apply body_3_b text-[var(--gray9)];
+    }
+    .sub_title {
+      @apply mt-[4px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray8)];
+    }
+    &.active {
+      &::before {
+        @apply bg-[var(--secondary1)];
+      }
+      &.complete {
+        &::after {
+          @apply bg-[var(--secondary1)];
+        }
+      }
+      .step_status {
+        @apply border-[var(--secondary1)] bg-[var(--secondary1)];
+      }
+    }
+    &.complete {
+      &::before,
+      &::after {
+        @apply bg-[var(--secondary1)];
+      }
+      .step_status {
+        @apply bg-[var(--secondary1)];
+        border: 1px solid #00afd5;
+        .ico_check {
+          @apply stroke-[var(--white)];
+        }
+      }
+    }
+    .step_status {
+      @apply body_bo_3_r absolute left-1/2 top-0 z-[1] box-border flex h-[28px] w-[28px] -translate-x-1/2 items-center justify-center rounded-full border-[1px] border-[var(--gray6)] bg-[var(--gray6)] text-[var(--white)];
+      .ico_check {
+        @apply stroke-[var(--white)];
+      }
+    }
+  }
+  &.check {
+    .step_item {
+      &::before,
+      &::after {
+        @apply bg-[var(--gray4)];
+      }
+      &.active {
+        &::before {
+          @apply bg-[var(--secondary1)];
+        }
+      }
+      &.complete {
+        &::before,
+        &::after {
+          @apply bg-[var(--secondary1)];
+        }
+        .step_status {
+          @apply border-[1px] border-[var(--secondary1)] bg-[var(--secondary5)];
+          .ico_check {
+            @apply stroke-[var(--secondary1)];
+          }
+        }
+      }
+    }
+    .step_status {
+      @apply bg-[var(--gray3)];
+      .num {
+        @apply hidden;
+      }
+    }
+  }
 }
 
 .selected_step {
   background-color: lightcoral;
 }
 
-.active {
+/* .active {
   background: #00afd5;
 }
 
 .complete {
   background: #3eb838;
-}
+} */
