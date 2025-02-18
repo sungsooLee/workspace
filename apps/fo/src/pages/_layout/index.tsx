@@ -18,14 +18,6 @@ function HomeComponent() {
       {/** Carousel */}
       <div className="flex w-full gap-5">
         <div className="min-w-32">Carousel</div>
-        {/*<ImageCarousel imageUrls={['a.png', 'b.png', 'c.png', 'd.png', 'e.png']} />*/}
-        {/*<Radio*/}
-        {/*  type={FieldType.RADIO}*/}
-        {/*  name='name'*/}
-        {/*  label='label'*/}
-        {/*  options={Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))}*/}
-        {/*/>*/}
-        {/* <Switch type={FieldType.SWITCH} name="name" label="label" /> */}
       </div>
 
       {/**primary */}

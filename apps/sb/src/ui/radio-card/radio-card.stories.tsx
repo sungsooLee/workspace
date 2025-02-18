@@ -1,26 +1,42 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, RadioCard, ToastWrapper, useToast } from '@learnway/ui';
+import { Button, RadioCard } from '@learnway/ui';
+import { IcoBuilding01, IcoOverseasDealer } from '@learnway/icons';
 
 export default {
-  title: 'Components/RadioGroup',
+  title: 'Components/RadioCard',
   component: RadioCard,
   tags: ['autodocs'],
   argTypes: {},
 } as Meta;
 type Story = StoryObj<typeof RadioCard>;
 
+const RADIO_CARD_OPTIONS = [
+  {
+    value: 'type1',
+    label: (
+      <div>
+        <IcoBuilding01 width={48} height={48} stroke="#131C30" />
+        <span>휴대폰 인증</span>
+      </div>
+    ),
+  },
+  {
+    value: 'type2',
+    label: (
+      <div>
+        <IcoOverseasDealer width={48} height={48} />
+        <span>이메일 인증</span>
+      </div>
+    ),
+  },
+];
+
 export const Template: any = (args: any) => {
   return (
     <div className="bg-gray-1 flex h-[300px] w-[500px] flex-col gap-5">
-      <RadioCard
-        disabled={true}
-        defaultValue="value0"
-        options={Array(5)
-          .fill(null)
-          .map((d, i) => ({ value: `value${i}`, label: `label${i}` }))}
-      />
+      <RadioCard defaultValue="type1" options={RADIO_CARD_OPTIONS} />
     </div>
   );
 };
@@ -39,9 +55,7 @@ export const TemplateValueControl: any = (args: any) => {
       <RadioCard
         {...args}
         value={value}
-        options={Array(5)
-          .fill(null)
-          .map((d, i) => ({ value: `value${i}`, label: `label${i}` }))}
+        options={RADIO_CARD_OPTIONS}
         onValueChange={(selectedValue: any) => setValue(selectedValue)}
       />
     </>

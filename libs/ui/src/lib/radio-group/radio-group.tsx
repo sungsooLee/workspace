@@ -4,7 +4,7 @@ import * as Primitive from '@radix-ui/react-radio-group';
 import { cn } from '@learnway/shared';
 
 import { RadioGroupOption } from './type';
-import styles from './radio.module.css';
+import styles from './radio-group.module.css';
 
 export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   options: RadioGroupOption[];

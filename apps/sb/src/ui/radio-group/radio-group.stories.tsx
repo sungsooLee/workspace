@@ -15,7 +15,6 @@ export const Template: any = (args: any) => {
   return (
     <div className="bg-gray-1 flex h-[300px] w-[500px] flex-col gap-5">
       <RadioGroup
-        disabled={true}
         defaultValue="value0"
         options={Array(5)
           .fill(null)
