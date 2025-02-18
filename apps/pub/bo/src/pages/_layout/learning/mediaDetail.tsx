@@ -351,6 +351,7 @@ function RouteComponent() {
                 <IcoFormRequired width={12} height={12} />
               </span>
             </label>
+            {/* 25-02-18 : 썸네일 수정 S */}
             <div className={formStyles.input_box}>
               <ThumbnailImageUpload
                 options={[
@@ -360,7 +361,6 @@ function RouteComponent() {
                   { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
                   { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
                   { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '7', path: 'https://lodash.com/assets/img/lodash.svg' },
                 ]}
                 description={
                   '동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'
@@ -371,6 +371,7 @@ function RouteComponent() {
                 }
               />
             </div>
+            {/* 25-02-18 : 썸네일 수정 E */}
           </div>
         </div>
         {/* row */}

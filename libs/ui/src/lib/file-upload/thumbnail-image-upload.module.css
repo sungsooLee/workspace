@@ -21,7 +21,7 @@
     }
   }
   .loading {
-    @apply box-border flex h-[84px] min-w-[128px] justify-center rounded-[4px] border border-solid border-[var(--gray3)] bg-[var(--gray1)] text-center;
+    @apply mr-[12px] box-border flex h-[84px] min-w-[128px] justify-center rounded-[4px] border border-solid border-[var(--gray3)] bg-[var(--gray1)] text-center;
     .text {
       @apply flex flex-col items-center justify-center text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
       .icon {

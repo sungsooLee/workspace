@@ -65,7 +65,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
               className={styles.btn_file}
               icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
               onClick={handleButtonClick}>
-              <span className={styles.text}>썸네일업로드</span>
+              <span className={styles.text}>썸네일 업로드</span>
             </Button>
             <Input
               type="file"
