@@ -16,9 +16,9 @@
         span {
           @apply mt-[8px] block;
         }
-      }
-      .active {
-        @apply text-[var(--primary1)];
+        &.active {
+          @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+        }
       }
     }
   }

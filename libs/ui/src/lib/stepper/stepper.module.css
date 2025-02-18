@@ -78,7 +78,7 @@
           @apply bg-[var(--secondary1)];
         }
         .title {
-          @apply font-bold;
+          @apply font-bold text-[var(--gray9)];
         }
       }
       &.complete {
@@ -92,9 +92,12 @@
             @apply stroke-[var(--secondary1)];
           }
         }
+        .title {
+          @apply text-[var(--gray9)];
+        }
       }
       .title {
-        @apply font-normal;
+        @apply font-normal text-[var(--gray7)];
       }
     }
     .step_status {

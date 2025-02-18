@@ -1,6 +1,6 @@
 /* language.module.css */
 .btn_language {
-  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between px-[24px] text-[1.4rem] text-[var(--white)];
+  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between pl-[24px] text-[1.4rem] text-[var(--white)];
   &.auth {
     @apply !text-[var(--gray7)];
   }
@@ -14,7 +14,7 @@
     transition: all 0.1s linear;
   }
   .select {
-    @apply mr-[2px] inline-block;
+    @apply mr-[8px] inline-block;
   }
 }
 .language_content {

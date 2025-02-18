@@ -1,5 +1,5 @@
 // useDynamicForm.ts
-import { useRef } from 'react';
+import { FormEventHandler, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from '../search-box/create-jod-schema';
@@ -31,6 +31,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     }
     return acc;
   }, {}); // 초기값을 담은 객체
+  console.log('defaultValues => ', defaultValues);
 
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = createZodSchema(config);
@@ -53,12 +54,13 @@ const useDynamicForm = (config: DynamicFormConfig) => {
    * @param onValid - 유효성 검사 통과 시 호출할 콜백 함수
    * @returns 폼 제출 이벤트 핸들러
    */
-  const formSubmit = (onValid: (data: any) => void): React.FormEventHandler<HTMLFormElement> => {
+  const formSubmit = (onValid: (data: any) => void): FormEventHandler<HTMLFormElement> => {
     return (event) => {
       event.preventDefault(); // 기본 폼 제출 동작 방지
 
       handleSubmit(
         (data) => {
+          console.log('submit data => ', data);
           const objectParams: any = {};
           // 각 빌더에 대해 제출된 데이터를 재구성
           config.builders.forEach((prop: any) => {

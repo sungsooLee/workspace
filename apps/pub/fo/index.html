@@ -11,6 +11,18 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- 모바일 디바이스 체크 스크립트 -->
+    <script>
+      function isMobileDevice() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        return /iphone|ipod|android|webos|blackberry|iemobile|opera mini/i.test(userAgent);
+      }
+
+      // 모바일 디바이스일 경우 body에 'mobile' 클래스 추가
+      if (isMobileDevice()) {
+        document.body.classList.add('mobile');
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -39,6 +39,7 @@ const SearchBoxHook: FC<{ config: any; onSearch: any }> = ({ config, onSearch })
 
               return DialogComponent ? (
                 <Controller
+                  key={name}
                   control={control}
                   name={name}
                   render={({ field: { onChange, onBlur, value, ref }, formState: { errors } }) => {
