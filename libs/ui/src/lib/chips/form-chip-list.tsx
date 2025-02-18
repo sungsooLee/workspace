@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { ChipList } from './chip-list';
-import { SelectOption } from '../select/type';
 
 /**
  * 공통 Form Chips List
@@ -10,7 +9,7 @@ import { SelectOption } from '../select/type';
  * @constructor
  */
 const FormChipListComponent: FC<any> = ({ value, onChange: ownerOnChange, ...props }) => {
-  const handleChange = (event: SelectOption[]) => {
+  const handleChange = (event: any[]) => {
     ownerOnChange(event);
   };
 

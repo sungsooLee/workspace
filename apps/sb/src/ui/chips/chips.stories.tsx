@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta } from '@storybook/react';
-import { ChipList, Chips, SelectOption } from '@learnway/ui';
+import { ChipList, Chips } from '@learnway/ui';
 
 export default {
   title: 'Components/Chips',
@@ -23,11 +23,11 @@ Template.args = {};
 
 // Handle Delete
 export const TemplateDelete: any = (args: any) => {
-  const handleClick = (event: SelectOption) => {
+  const handleClick = (event: any) => {
     alert('click event');
     alert(JSON.stringify(event));
   };
-  const handleDelete = (event: SelectOption) => {
+  const handleDelete = (event: any) => {
     alert('delete event');
     alert(JSON.stringify(event));
   };
@@ -44,17 +44,17 @@ TemplateDelete.args = {};
 
 // Handle Delete
 export const TemplateList: any = (args: any) => {
-  const options: SelectOption[] = [
+  const options: any[] = [
     { label: '현대자동차 A', value: 'A' },
     { label: '현대자동차 B', value: 'B' },
     { label: '현대자동차 C', value: 'C' },
     { label: '현대자동차 D', value: 'E' },
     { label: '현대자동차 F', value: 'F' },
   ];
-  const handleItemClick = (event: SelectOption) => {
+  const handleItemClick = (event: any) => {
     console.log('handleItemClick', event);
   };
-  const handleChange = (event: SelectOption[]) => {
+  const handleChange = (event: any[]) => {
     console.log('handleChange', event);
   };
   return (

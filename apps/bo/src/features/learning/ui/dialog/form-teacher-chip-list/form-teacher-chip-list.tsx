@@ -1,9 +1,11 @@
 import { forwardRef, useEffect, useState } from 'react';
+import { t } from 'i18next';
+
 import {
   Button,
   ButtonComponentProps,
   ChipList,
-  SelectOption,
+  ChipListComponentProps,
   useModalControl,
 } from '@learnway/ui';
 import { TeacherList } from './teacher-list';
@@ -12,6 +14,7 @@ export interface FormTeacherChipListProps {
   value?: any[];
   onChange?: (value: any[]) => void;
   button?: ButtonComponentProps;
+  chipList?: ChipListComponentProps;
 }
 
 /**
@@ -22,37 +25,43 @@ export interface FormTeacherChipListProps {
  * @constructor
  */
 const FormTeacherChipListComponent = forwardRef<HTMLDivElement, FormTeacherChipListProps>(
-  ({ value = [], onChange: ownerOnChange, button = {}, ...props }, ref) => {
+  ({ value = [], onChange: ownerOnChange, button = {}, chipList, ...props }, ref) => {
     const { open: openModal } = useModalControl();
-    const [selectedChipOptions, setSelectedChipOptions] = useState<SelectOption[]>(value);
+    const [selectedChipOptions, setSelectedChipOptions] = useState<any[]>(value);
 
-    const {
-      type = 'button',
-      variant = 'point',
-      size = 'sm',
-      label = '선택',
-      onClick: buttonOnClick,
-    } = button;
+    const { variant = 'point', size = 'sm', label = t('선택') } = button;
 
     useEffect(() => {
       ownerOnChange?.(selectedChipOptions);
     }, [selectedChipOptions]);
 
+    const appendSelectedChipOptions = (newOption: any) => {
+      const isDuplicated = !!selectedChipOptions?.find((d) => d.id === newOption.id); // 새로 등록하는 chips 중복 여부
+      !isDuplicated && setSelectedChipOptions([...selectedChipOptions, newOption]);
+    };
+
     const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       // const newChip = buttonOnClick?.(event);
-      openModal(<TeacherList />, { title: '강사 목록' }, (e) => {
-        console.log(e);
+      // 모달 오픈 - 강사 목록
+      openModal(<TeacherList />, { title: '강사 목록' }, (newOption) => {
+        console.log(newOption);
+        newOption && appendSelectedChipOptions(newOption);
       });
     };
 
-    const handleChipListChange = (event: SelectOption[]) => {
-      // setSelectedChipOptions(event);
+    const handleChipListChange = (newOptions: any[]) => {
+      setSelectedChipOptions(newOptions);
     };
 
     return (
-      <div ref={ref} className={'flex flex-row'}>
+      <div ref={ref} className={'flex flex-row items-center gap-3'}>
         <Button label={label} variant={variant} size={size} onClick={handleButtonClick} />
-        <ChipList options={selectedChipOptions} onChange={handleChipListChange} />
+        <ChipList
+          labelField={'name'}
+          valueField={'id'}
+          options={selectedChipOptions}
+          onChange={handleChipListChange}
+        />
       </div>
     );
   },

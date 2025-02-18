@@ -13,7 +13,7 @@ export interface TeacherListProps {
  * @param props
  * @constructor
  */
-const TeacherListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...props }, ref) => {
+const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...props }, ref) => {
   const { closeModal } = useModalContext();
   const { data }: any = getDummyDataHook();
   const columnHelper = createColumnHelper<any>();
@@ -39,33 +39,27 @@ const TeacherListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...
       <Button
         variant={'gray'}
         size={'md'}
-        label={'name1'}
-        onClick={() => closeModal({ id: '1', name: 'name1' })}
+        label={'manager1'}
+        onClick={() => closeModal({ id: '1', name: 'manager1' })}
       />
       <Button
         variant={'gray'}
-        label={'name2'}
+        label={'manager2'}
         size={'md'}
-        onClick={() => closeModal({ id: '2', name: 'name2' })}
+        onClick={() => closeModal({ id: '2', name: 'manager2' })}
       />
       <Button onClick={handleConfirmClick}>확인</Button>
     </div>
   );
 });
-export const TeacherList = TeacherListComponent;
+export const ManagerList = ManagerListComponent;
 
 const getDummyDataHook = () => {
   return {
     data: {
       data: Array(5)
         .fill(null)
-        .map((d, i) => ({ id: `id${i}`, name: `name${i}` })),
+        .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
     },
   };
-};
-
-const getDummyData = {
-  data: Array(5)
-    .fill(null)
-    .map((d, i) => ({ id: `id${i}`, name: `name${i}` })),
 };

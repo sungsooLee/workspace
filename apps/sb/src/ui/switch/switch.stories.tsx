@@ -16,6 +16,6 @@ export default {
 // Switch
 export const Template: any = (args: any) => {
   return <Switch {...args} />;
-}
+};
 Template.storyName = 'Switch';
 Template.args = {};

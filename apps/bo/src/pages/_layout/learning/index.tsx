@@ -12,6 +12,8 @@ import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
+import { FormManagerInputButton } from '../../../features/learning/ui/dialog/form-manager-input-button/form-manager-input-button';
+import { FormContactNumber } from '../../../features/learning/ui/dialog/form-contact-number/form-manager-input-button';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -83,21 +85,22 @@ function RouteComponent() {
               <FormTeacherChipList />
             </DynamicFormField>
           </ContentsRow>
-          {/* 첨부파일 */}
-          <ContentsRow>
-            <DynamicFormField provider={provider} name={'첨부파일'} />
-          </ContentsRow>
           {/* 난이도 */}
           <ContentsRow>
             <DynamicFormField provider={provider} name={'난이도'} />
           </ContentsRow>
-          {/* 운영자 */}
+          {/* 강의실설정 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'운영자'} />
+            <DynamicFormField provider={provider} name={'강의실설정'} />
           </ContentsRow>
-          {/* 연락처 */}
+          {/* 운영자 & 연락처 */}
           <ContentsRow>
-            <DynamicFormField provider={provider} name={'연락처'} />
+            <DynamicFormField provider={provider} name={'운영자'}>
+              <FormManagerInputButton />
+            </DynamicFormField>
+            <DynamicFormField provider={provider} name={'연락처'}>
+              <FormContactNumber />
+            </DynamicFormField>
           </ContentsRow>
           {/* 테넌트 */}
           <ContentsRow>
@@ -198,32 +201,47 @@ const formConfig: DynamicFormConfig = {
       value: [],
       placeholder: '',
       description: '',
-      button: {
-        label: t('선택'),
-        onClick: () => {
-          // open modal
-        },
-      },
     },
     {
-      name: '첨부파일',
-      type: 'text',
-      label: t('첨부파일 - 다이얼로그 버튼 + 칩 리스트 (가로)'),
-      value: '',
+      name: '난이도',
+      type: 'radio-group',
+      label: t('난이도'),
+      options: [
+        {
+          label: '없음',
+          value: '',
+        },
+        {
+          label: '초급',
+          value: '1',
+        },
+        {
+          label: '중급',
+          value: '2',
+        },
+        {
+          label: '고급',
+          value: '3',
+        },
+      ],
+      value: [],
       placeholder: '',
       description: '',
     },
     {
-      name: '난이도',
-      type: 'check-group',
-      label: t('난이도'),
+      name: '강의실설정',
+      type: 'checkbox-group',
+      label: t('강의실 설정'),
+      options: Array(10)
+        .fill(null)
+        .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
       value: [],
       placeholder: '',
       description: '',
     },
     {
       name: '운영자',
-      type: 'text',
+      type: 'custom',
       label: t('운영자 - 인풋 + 다이얼로그 버튼'),
       value: '',
       placeholder: '',
@@ -231,8 +249,8 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: '연락처',
-      type: 'text',
-      label: t('연락처 - 인풋 + 인풋'),
+      type: 'custom',
+      label: t('연락처 - 인풋 + label + 인풋'),
       value: '',
       placeholder: '',
       description: '',
