@@ -43,17 +43,18 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
     return (
       <div
         {...props}
-        className={cn(styles.start, className, 'nlp--thumbnail-list', 'p-3', 'overflow-hidden')}>
+        className={cn(styles.start, styles.thumbnail_list, className, 'nlp--thumbnail-list')}>
         <Carousel
           {...props}
           items={items}
-          slidesPerView={3}
-          spaceBetween={30}
+          slidesPerView={'auto'}
+          spaceBetween={12}
           freeMode={true}
+          grabCursor={true}
           // navigation={true}
-          pagination={{
-            clickable: true,
-          }}
+          // pagination={{
+          //   clickable: true,
+          // }}
         />
       </div>
     );

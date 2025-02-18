@@ -12,9 +12,11 @@ import {
   Radio,
   Checkbox,
   DatePicker,
+  ThumbnailImageUpload,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
@@ -343,6 +345,38 @@ function RouteComponent() {
         <div className="row">
           {/* form_item */}
           <div className={formStyles.form_item}>
+            <label htmlFor="name-thumbnail" className={formStyles.form_label}>
+              썸네일{/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <ThumbnailImageUpload
+                options={[
+                  { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '7', path: 'https://lodash.com/assets/img/lodash.svg' },
+                ]}
+                description={
+                  '동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'
+                }
+                onChange={(options: ImageOption[]) => console.log('onChange', options)}
+                onCheckedChange={(options: ImageOption[]) =>
+                  console.log('onCheckedChange', options)
+                }
+              />
+            </div>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={formStyles.form_item}>
             <label htmlFor="name-1-8" className={formStyles.form_label}>
               <span className={formStyles.form_text}>태그</span>
               {/* 필수 케이스 */}
@@ -358,9 +392,6 @@ function RouteComponent() {
                   <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                 </Button>
               </Tooltip>
-              <span className={formStyles.sub_text}>
-                {'동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'}
-              </span>
             </label>
             <div className={formStyles.input_box}>
               <ChipList
@@ -438,40 +469,54 @@ function RouteComponent() {
         <div className="row">
           {/* Textarea type */}
           <div className={formStyles.form_item}>
+            {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-11" className={formStyles.form_label}>
               <span className={formStyles.form_text}>교육자원 활용여부</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={formStyles.sub_text}>
+              {/* <span className={formStyles.sub_text}>
                 {'해당 동영상으로 교육 과정을 개설할 수 있습니다.'}
-              </span>
+              </span> */}
             </label>
             <div className={formStyles.input_box}>
-              <Switch id="name-1-11" className={formStyles.btn_switch} />
+              <Switch
+                id="name-1-11"
+                className={formStyles.btn_switch}
+                reversed
+                label="해당 동영상으로 교육 과정을 개설할 수 있습니다."
+              />
             </div>
+            {/* 25-02-18 : 수정 E */}
           </div>
         </div>
         {/* row */}
         <div className="row">
           {/* Textarea type */}
           <div className={formStyles.form_item}>
+            {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-12" className={formStyles.form_label}>
               <span className={formStyles.form_text}>보안콘텐츠 여부</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
-              <span className={formStyles.sub_text}>
+              {/* <span className={formStyles.sub_text}>
                 {
                   '동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 있어요.'
                 }
-              </span>
+              </span> */}
             </label>
             <div className={formStyles.input_box}>
-              <Switch id="name-1-12" className={formStyles.btn_switch} />
+              <Switch
+                id="name-1-12"
+                className={formStyles.btn_switch}
+                reversed
+                label="동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 있어요."
+              />
             </div>
+            {/* 25-02-18 : 수정 E */}
           </div>
         </div>
         {/* row */}

@@ -1,3 +1,32 @@
 .start {
-
+  .description {
+    @apply mb-[12px] block text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
+  }
+  .thumbnail_wrap {
+    @apply flex;
+    .file_upload {
+      @apply relative mr-[12px] h-[84px];
+      .btn_file + div {
+        @apply absolute bottom-0 left-0 right-0 top-0 z-10 h-[84px] w-full;
+        .input_file {
+          @apply z-[2] flex h-full w-full cursor-pointer bg-transparent opacity-0;
+        }
+      }
+    }
+  }
+  .btn_file {
+    @apply box-border flex h-[84px] min-w-[128px] flex-col items-center justify-center rounded-[4px] border border-solid border-[var(--gray3)] bg-[var(--gray1)];
+    .text {
+      @apply mt-[4px] flex text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
+    }
+  }
+  .loading {
+    @apply box-border flex h-[84px] min-w-[128px] justify-center rounded-[4px] border border-solid border-[var(--gray3)] bg-[var(--gray1)] text-center;
+    .text {
+      @apply flex flex-col items-center justify-center text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
+      .icon {
+        @apply mb-[4px] inline-flex;
+      }
+    }
+  }
 }

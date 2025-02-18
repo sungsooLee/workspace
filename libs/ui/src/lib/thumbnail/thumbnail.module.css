@@ -6,4 +6,8 @@
     top: 0;
     left: 0;
   }
+
+  .thumbnail_image {
+    @apply h-[84px] w-[128px];
+  }
 }

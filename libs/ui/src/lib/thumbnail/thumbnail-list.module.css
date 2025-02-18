@@ -1,2 +1,5 @@
 .start {
+  &.thumbnail_list {
+    @apply;
+  }
 }

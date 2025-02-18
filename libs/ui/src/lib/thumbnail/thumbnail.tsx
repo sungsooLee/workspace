@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { forwardRef } from 'react';
 
 import { CheckedState } from '@radix-ui/react-checkbox';
@@ -28,7 +29,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
             onCheckedChange={onCheckedChange}
           />
         )}
-        <img src={path} className={'h-[80px] w-[120px]'} />
+        <img src={path} className={styles.thumbnail_image} />
       </div>
     );
   },
