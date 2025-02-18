@@ -3,18 +3,21 @@ import * as Primitive from '@radix-ui/react-radio-group';
 
 import { cn } from '@learnway/shared';
 
-import { RadioOption } from './type';
-import styles from './radio.module.css';
+import { RadioGroupOption } from './type';
+import styles from './radio-group.module.css';
 
-export interface RadioComponentProps extends React.ComponentProps<typeof Primitive.Root> {
-  options: RadioOption[];
+export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  options: RadioGroupOption[];
   orientation?: 'vertical' | 'horizontal';
   defaultValue?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
   onValueChange?: (value: string) => void;
 }
 
-const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, RadioComponentProps>(
+const RadioGroupComponent = forwardRef<
+  React.ElementRef<typeof Primitive.Root>,
+  RadioGroupComponentProps
+>(
   (
     { className, options, disabled, defaultValue, size, orientation = 'horizontal', ...props },
     ref,
@@ -30,7 +33,7 @@ const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Radio
         )}
         defaultValue={defaultValue}
         {...props}>
-        {options.map((option: RadioOption) => (
+        {options.map((option: RadioGroupOption) => (
           <div className={styles.radio}>
             <Primitive.Item
               key={option.value}
@@ -50,4 +53,4 @@ const RadioComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Radio
   },
 );
 
-export const Radio = RadioComponent;
+export const RadioGroup = RadioGroupComponent;

@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
-import { Radio } from './radio';
+import { RadioGroup } from './radio-group';
 
 const FormRadioGroupComponent = forwardRef<HTMLDivElement, any>(
   ({ value, name, onChange, options, ...props }, ref) => {
     return (
-      <Radio
+      <RadioGroup
         ref={ref}
         value={value}
         defaultValue={value}

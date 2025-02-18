@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Radio } from '@learnway/ui';
+import { RadioGroup } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/radio')({
   component: RouteComponent,
@@ -35,7 +35,7 @@ import { Radio } from '@learnway/ui';
       <h3 className="guide_tit3">Basic</h3>
       <div className="flex_box">
         <div className="desc">
-          <Radio
+          <RadioGroup
             options={[
               { value: 'type1', label: 'aaaaa' },
               { value: 'type1-2', label: 'bbbbb' },
@@ -44,7 +44,7 @@ import { Radio } from '@learnway/ui';
           />
         </div>
         <div className="desc">
-          <Radio
+          <RadioGroup
             options={[
               { value: 'type2-1', label: 'aaaaa' },
               { value: 'type2-2', label: 'bbbbb' },
@@ -54,7 +54,7 @@ import { Radio } from '@learnway/ui';
           />
         </div>
         <div className="desc">
-          <Radio
+          <RadioGroup
             options={[
               { value: 'type3-1', label: 'aaaaa' },
               { value: 'type3-2', label: 'bbbbb' },
@@ -66,7 +66,7 @@ import { Radio } from '@learnway/ui';
       </div>
       <div className="code_example">
         <pre className="code_block">
-          <code>{`<Radio
+          <code>{`<RadioGroup
   options={[
     { value: 'type1', label: 'aaaaa' },
     { value: 'type1-2', label: 'bbbbb' },
@@ -74,7 +74,7 @@ import { Radio } from '@learnway/ui';
   ]}
 />
 
-<Radio
+<RadioGroup
   options={[
     { value: 'type2-1', label: 'aaaaa' },
     { value: 'type2-2', label: 'bbbbb' },
@@ -83,7 +83,7 @@ import { Radio } from '@learnway/ui';
   size="md"
 />
 
-<Radio
+<RadioGroup
   options={[
     { value: 'type3-1', label: 'aaaaa' },
     { value: 'type3-2', label: 'bbbbb' },
@@ -96,7 +96,7 @@ import { Radio } from '@learnway/ui';
       <h3 className="guide_tit3">disabled</h3>
       <div className="flex_box">
         <div className="desc">
-          <Radio
+          <RadioGroup
             options={[
               { value: 'type4-1', label: 'ddd' },
               { value: 'type4-2', label: 'eeee' },
@@ -108,7 +108,7 @@ import { Radio } from '@learnway/ui';
       </div>
       <div className="code_example">
         <pre className="code_block">
-          <code>{`<Radio
+          <code>{`<RadioGroup
   options={[
     { value: 'type4-1', label: 'ddd' },
     { value: 'type4-2', label: 'eeee' },
