@@ -12,7 +12,6 @@ export interface RadioCardComponentProps extends React.ComponentProps<typeof Pri
   defaultValue?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
   onValueChange?: (value: string) => void;
-  hiddenIndicator?: boolean;
 }
 
 const RadioCardComponent = forwardRef<
@@ -20,16 +19,7 @@ const RadioCardComponent = forwardRef<
   RadioCardComponentProps
 >(
   (
-    {
-      className,
-      options,
-      disabled,
-      defaultValue,
-      size,
-      orientation = 'horizontal',
-      hiddenIndicator = false,
-      ...props
-    },
+    { className, options, disabled, defaultValue, size, orientation = 'horizontal', ...props },
     ref,
   ) => {
     return (
@@ -51,17 +41,8 @@ const RadioCardComponent = forwardRef<
               value={option.value}
               id={option.value}
               disabled={disabled}>
-              {hiddenIndicator ? (
-                option.label
-              ) : (
-                <Primitive.Indicator className={styles.indicator} />
-              )}
+              {option.label}
             </Primitive.Item>
-            {hiddenIndicator === false && (
-              <label className={styles.label} htmlFor={option.value}>
-                {option.label}
-              </label>
-            )}
           </div>
         ))}
       </Primitive.Root>
