@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Carousel } from '@learnway/ui';
+import { Button, Carousel, Tabs } from '@learnway/ui';
 
 export default {
   title: 'Components/Carousel',

@@ -58,21 +58,23 @@ export function useLoginUser(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.login(),
     onSuccess: async (data: AxiosResponse, variables, context) => {
+      console.log('ddsfseeewtrgjdlgjlei');
       cookieService.clear();
 
-      const user = data.data.data;
-      const { accountId, tenants, roles } = user;
-      cookieService.set('LOGIN_USER_ID', accountId);
-      cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
-      cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
+      const user = data.data;
+      const { userTsid, tenants, roles } = user;
+      cookieService.set('LOGIN_USER_ID', userTsid);
+      //cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
+      //cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('ACCESS-TOKEN', data.headers['access-token']);
       cookieService.set('REFRESH-TOKEN', data.headers['refresh-token']);
 
+      /*
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
         activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
         activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
-      });
+      });*/
     },
     ...mutationOptions,
   });

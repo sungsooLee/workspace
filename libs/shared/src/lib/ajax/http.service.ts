@@ -51,7 +51,11 @@ export class HttpService {
   private beforeMessage!: string;
   private beforeTimeout!: any;
 
-  public reissueProccess!: (error: any) => Promise<any>;
+  private reissueProccess!: (error: any) => Promise<any>;
+
+  init(payload?: any): void {
+    this.reissueProccess = payload;
+  }
 
   async get<T>(
     url: string,
@@ -148,11 +152,13 @@ export class HttpService {
       function (config) {
         return config;
       },
-      async function (error) {
-        const { response: errorResponse } = error;
+      async (error) => {
+        const { config, response: errorResponse } = error;
         // error
         if (errorResponse.status === 401) {
-          return await this.reissueProccess(error);
+          if (this.reissueProccess) {
+            return await this.reissueProccess(error);
+          }
         }
 
         return Promise.reject(error);
@@ -160,7 +166,7 @@ export class HttpService {
     );
     this.completed = false;
   }
-
+  /*
   private reissue<T>(args: RequestArgs): AxiosPromise<T> {
     const { method, url, queryParam, payload } = args;
     return this.execute<AxiosResponse>(
@@ -171,7 +177,7 @@ export class HttpService {
       { headers: { 'refresh-token': `${cookieService.get('REFRESH-TOKEN')}` } },
     );
   }
-
+*/
   private httpRequest<T>(args: RequestArgs): AxiosPromise<T> {
     const { method, url, queryParam, payload } = args;
     switch (method) {
