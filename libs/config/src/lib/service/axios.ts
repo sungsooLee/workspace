@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AxiosResponse } from 'axios';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { API_SERVER } from '../const/config.constant';
 import { OAuthApiPrefix } from '../service/config.service';
@@ -9,6 +9,35 @@ import { httpService, cookieService, HttpMethod } from '@learnway/shared';
 export function initAxios() {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = API_SERVER;
+
+  const interceptors = {
+    request: {
+      onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
+        console.log('axios.interceptors');
+        const accessToken = cookieService.get('ACCESS-TOKEN');
+        if (accessToken) {
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        return config;
+      },
+      onRejected: undefined,
+    },
+    response: {
+      onFulfilled: function (config: AxiosResponse<any, any>) {
+        return config;
+      },
+      onRejected: async (error: any) => {
+        const { config, response: errorResponse } = error;
+        // error
+        if (errorResponse.status === 401) {
+          console.log('401 error');
+          return await reissueProccess(error);
+        }
+
+        return Promise.reject(error);
+      },
+    },
+  };
 
   const reissueProccess = (error: any): Promise<any> => {
     const { config, response: errorResponse } = error;
@@ -29,5 +58,5 @@ export function initAxios() {
       });
   };
 
-  httpService.init(reissueProccess);
+  httpService.init({ interceptors });
 }
