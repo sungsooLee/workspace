@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
 import { useGridBox } from '../../../shared/ui/grid-box';
 import { GridBox } from '../../../shared/ui/grid-box';
-import { translationQueryOptions } from '../../../entities/api-mock/service/mock-translation.queries';
+import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -95,11 +95,6 @@ const gridConfig = {
       type: 'numbering',
     },
     {
-      name: 'no2',
-      label: 'NO2.',
-      type: 'reverse-numbering',
-    },
-    {
       name: 'code',
       label: '다국어코드',
       render: (info: any) => (
@@ -109,8 +104,8 @@ const gridConfig = {
       ),
     },
     { name: 'useYn', label: '사용여부' },
-    { name: 'kr', label: '한국어' },
-    { name: 'en', label: '영어' },
+    { name: 'koreanName', label: '한국어' },
+    { name: 'englishName', label: '영어' },
     { name: 'registerName', label: '등록자' },
     { name: 'registerDateTime', label: '등록일시' },
     { name: 'modifierName', label: '수정자' },
