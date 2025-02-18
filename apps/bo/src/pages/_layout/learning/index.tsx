@@ -1,5 +1,6 @@
 import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { t } from 'i18next';
 import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -7,7 +8,6 @@ import { Button, Input } from '@learnway/ui';
 import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { t } from 'i18next';
 import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
