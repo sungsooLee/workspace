@@ -14,8 +14,66 @@ function RouteComponent() {
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{``}</code>
+            <code>{`// 기본 호출방법
+import signupStyles from './signup.module.css'
+
+// 사용 예제
+<div className={styles.test}></div>
+`}</code>
           </pre>
+        </div>
+
+        <div className="group">
+          <h3 className="guide_tit3">Module CSS (기본)</h3>
+          <ul className="info_ul">
+            <li>기본적으로 파일 생성후 같은 파일명으로 모듈 css를 같은 위치에 import한다.</li>
+            <li>
+              같은 형태의 디자인과 페이지에서는 여러 모듈 css를 생성할 필요없이 하나만 만들어서
+              사용가능하다. (함수명 체크)
+            </li>
+          </ul>
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`import styles from './signup.module.css'
+
+// 사용 예제
+<div className={styles.test}></div>`}</code>
+            </pre>
+          </div>
+          <div className="info">
+            주의 : 모듈 css에서는 className 지정시 '-' 대신 '_' 를 사용해야하며, <br />
+            두개 사용시 백틱 ` 으로 묶어서 사용한다. 그리고 styles을 앞에 꼭 작성해야 적용이 된다.
+          </div>
+
+          <h3 className="guide_tit3">Module CSS (응용)</h3>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`import signupStyles from './signup.module.css' // 여러페이지에서 하나의 css를 호출해서 사용하는 방법
+              
+// 사용 예제
+<div className={signupStyles.test}></div>`}</code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">Module CSS (반응형)</h3>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`
+// 반응형 일때
+ex) test.module.css
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply hidden;
+    }
+  }
+}`}</code>
+            </pre>
+          </div>
+          <div className="info">0~767px(mobile), 768px이상부터 pc화면으로 노출된다.</div>
         </div>
       </div>
     </div>

@@ -51,9 +51,6 @@ export * from './lib/date-picker/form-date-range-picker';
 export * from './lib/file-upload/thumbnail-image-upload';
 export * from './lib/file-upload/form-thumbnail-image-upload';
 
-// form
-export * from './lib/dynamic-form-field/dynamic-form-field-control';
-export * from './lib/dynamic-form-field/dynamic-form-field';
 
 // modal
 export * from './lib/modal/modal';
@@ -70,7 +67,6 @@ export * from './lib/radio-card/radio-card';
 
 // select
 export * from './lib/select/select';
-export * from './lib/select/multi-select';
 export * from './lib/select/type';
 
 // switch
@@ -130,10 +126,3 @@ export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/configs/column-factory';
 
 // form-builder
-export * from './lib/apply-form-builder';
-
-// shadcn (주석처리 예정)
-export * from './lib/shadcn/form';
-
-// 임시
-export * from './lib/dynamic-form-field/dynamic-form-field';

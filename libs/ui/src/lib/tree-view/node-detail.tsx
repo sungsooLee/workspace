@@ -1,5 +1,4 @@
-import { Card, CardContent } from '../shadcn/card';
-import { Button } from '../shadcn/button';
+import { Button } from '../button/button';
 
 const NodeDetail = ({ expandAll, collapseAll }: any) => {
   const handleExpand = () => {
@@ -11,8 +10,8 @@ const NodeDetail = ({ expandAll, collapseAll }: any) => {
   };
 
   return (
-    <Card className="w-80">
-      <CardContent className="space-y-6">
+    <div className="w-80">
+      <div className="space-y-6">
         <div className="space-y-4">
           <h3 className="text-sm font-medium">현재 노드 정보</h3>
         </div>
@@ -24,8 +23,8 @@ const NodeDetail = ({ expandAll, collapseAll }: any) => {
             노드 접기
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

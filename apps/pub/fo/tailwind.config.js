@@ -19,8 +19,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        mobile: '360px',
-        pc: '1920px',
+        mobile: { max: '767px' },
       },
     },
   },
