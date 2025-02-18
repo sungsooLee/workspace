@@ -31,7 +31,6 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     }
     return acc;
   }, {}); // 초기값을 담은 객체
-  console.log('defaultValues => ', defaultValues);
 
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = createZodSchema(config);
@@ -46,7 +45,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // react-hook-form 메서드 및 속성 추출
-  const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
+  const { control, handleSubmit, setFocus, getValues, reset, watch, formState } = methods;
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -70,14 +69,17 @@ const useDynamicForm = (config: DynamicFormConfig) => {
               objectParams['startDate'] = value.split('|')[0];
               objectParams['endDate'] = value.split('|')[1];
             } else {
-              objectParams[prop.name] = value;
+              if (!value) {
+                objectParams[prop.name] = '';
+              } else {
+                objectParams[prop.name] = value;
+              }
             }
           });
           // 가공된 데이터를 onValid 콜백에 전달
           onValid(objectParams);
         },
         (errors) => {
-          console.error('Validation Errors:', errors);
           // 첫 번째 에러 필드의 키를 추출
           const firstErrorKey = Object.keys(errors)[0];
           if (firstErrorKey) {
@@ -179,6 +181,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     provider: {
       ...config,
       control: extendedControl,
+      formState,
       watch,
       onFormChange: resetForm,
       formSubmit,
