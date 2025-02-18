@@ -1,2 +1,5 @@
 .start {
+  .thumbnail_carousel > div > div {
+    @apply !w-auto;
+  }
 }

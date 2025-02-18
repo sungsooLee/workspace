@@ -1,7 +1,7 @@
 .start {
   @apply relative;
   &.thumbnail {
-    @apply overflow-hidden rounded-[4px];
+    @apply max-w-[128px] overflow-hidden rounded-[4px];
     &.active {
       .thumbnail_image {
         @apply opacity-40;

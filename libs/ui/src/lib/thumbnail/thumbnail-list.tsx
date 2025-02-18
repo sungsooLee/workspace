@@ -51,6 +51,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
           spaceBetween={12}
           freeMode={true}
           grabCursor={true}
+          className={styles.thumbnail_carousel}
           // navigation={true}
           // pagination={{
           //   clickable: true,
