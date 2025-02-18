@@ -3,7 +3,7 @@ import { CheckFieldProps } from './checkbox/type';
 import { DateRangeFieldProps } from './date-picker/date-range-picker';
 import { NumberFieldProps } from './input/type';
 import { RadioFieldProps } from './radio/type';
-import { MultiSelectFieldProps, SelectFieldProps } from './select/type';
+import {  SelectFieldProps } from './select/type';
 import { SwitchFieldProps } from './switch/type';
 import { Control } from 'react-hook-form';
 export enum FieldType {
@@ -58,7 +58,6 @@ export type DynamicFieldProps =
   // | TextFieldProps
   | NumberFieldProps
   | SelectFieldProps
-  | MultiSelectFieldProps
   | CheckFieldProps
   | SwitchFieldProps
   | RadioFieldProps

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useModalContext } from '../../modal/modal-context';
-import { Button } from '../../shadcn/button';
+// import { Button } from '../../shadcn/button';
 import { Input } from '../../input/input';
-import { MultiSelect } from '../../select/multi-select';
+// import { MultiSelect } from '../../select/multi-select';
 import '../grid.css';
 import { debounce } from 'lodash'; // grid CSS
+import { Button } from '../../button/button';
 
 interface FilterContentProps {
   column: string;
@@ -87,7 +88,7 @@ export const FilterContent = ({
         />
       )}
 
-      {type === 'select' && (
+      {/* {type === 'select' && (
         <div className="min-h-[200px]">
           <MultiSelect
             options={options}
@@ -97,7 +98,7 @@ export const FilterContent = ({
             maxCount={5}
           />
         </div>
-      )}
+      )} */}
 
       <div className="modal_button">
         <Button variant="ghost" onClick={handleReset}>
