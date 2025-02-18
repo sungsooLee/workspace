@@ -156,6 +156,7 @@ export class HttpService {
         const { config, response: errorResponse } = error;
         // error
         if (errorResponse.status === 401) {
+          console.log('401 error');
           if (this.reissueProccess) {
             return await this.reissueProccess(error);
           }

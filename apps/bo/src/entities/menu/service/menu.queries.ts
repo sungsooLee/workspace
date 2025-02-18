@@ -11,7 +11,7 @@ export const queryKeys = {
 
 export const queryOptions = {
   all: (params?: FetchMenusParams) =>
-    params?.tenantId && params?.roleIds
+    params?.tenantId //&& params?.roleIds
       ? {
           queryKey: params.parentMenuId
             ? queryKeys.allByParentMenuId(params.parentMenuId)

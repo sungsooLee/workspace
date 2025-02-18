@@ -22,7 +22,23 @@ export interface IMutateCallback<TVariables> {
 }
 
 export function useFetchAuthUser<T = User>() {
-  //return useQuery<unknown, unknown, T>(queryOptions.authUser());
+  /*
+  const { data } = useQuery<unknown, unknown, T>(queryOptions.authUser());
+
+  const { reissue } = useReissue();
+
+  const user = useCreation(() => {
+    if (user) {
+      return user;
+    }
+
+    reissue();
+  }, [data]);
+
+  return {
+    data: user,
+  };
+  */
 
   const { data } = useQuery<unknown, unknown, T>(queryOptions.authUser());
 
@@ -31,18 +47,15 @@ export function useFetchAuthUser<T = User>() {
     data: useCreation(() => {
       if (!data) {
         const user = loginMock.data.data;
-        const { accountId, tenants, roles } = user;
-        //cookieService.set('LOGIN_TOKEN', data.headers['access-token']);
-        cookieService.set('LOGIN_USER_ID', accountId);
-        cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
-        cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
-        //cookieService.set('REFRESH_LOGIN_TOKEN', refresh_token);
+        const { userId, tenantIds } = user as any;
+        cookieService.set('LOGIN_USER_ID', userId);
+        cookieService.set('LOGIN_TENANT_ID', tenantIds?.[0]);
 
         //queryClient.clear();
         const userData = {
           ...user,
-          activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : undefined,
-          activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : undefined,
+          activeTenantId: tenantIds?.length > 0 ? tenantIds[0] : null,
+          //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
         };
         queryClient.setQueryData(queryKeys.authUser, userData);
         return userData;
@@ -58,23 +71,21 @@ export function useLoginUser(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.login(),
     onSuccess: async (data: AxiosResponse, variables, context) => {
-      console.log('ddsfseeewtrgjdlgjlei');
       cookieService.clear();
 
       const user = data.data;
-      const { userTsid, tenants, roles } = user;
-      cookieService.set('LOGIN_USER_ID', userTsid);
-      //cookieService.set('LOGIN_TENANT_ID', tenants[0]['tenantId']);
+      const { userId, tenantIds } = user;
+      cookieService.set('LOGIN_USER_ID', userId);
+      cookieService.set('LOGIN_TENANT_ID', tenantIds[0]);
       //cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
       cookieService.set('ACCESS-TOKEN', data.headers['access-token']);
       cookieService.set('REFRESH-TOKEN', data.headers['refresh-token']);
 
-      /*
       queryClient.setQueryData(queryKeys.authUser, {
         ...user,
-        activeTenantId: user.tenants?.length > 0 ? user.tenants[0].tenantId : null,
-        activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
-      });*/
+        activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
+        //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+      });
     },
     ...mutationOptions,
   });
@@ -95,13 +106,21 @@ export function useReissue(mutationOptions = {}) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.reissue(),
     onSuccess: async (data: AxiosResponse, variables, context) => {
-      console.log('reissue', data);
-      //cookieService.clear();
+      cookieService.clear();
 
-      //queryClient.clear();
-      //queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      const user = data.data;
+      const { userId, tenantIds } = user;
+      cookieService.set('LOGIN_USER_ID', userId);
+      cookieService.set('LOGIN_TENANT_ID', tenantIds[0]);
+      //cookieService.set('LOGIN_ROLE_ID', roles[0]['roleId']);
+      cookieService.set('ACCESS-TOKEN', data.headers['access-token']);
+      cookieService.set('REFRESH-TOKEN', data.headers['refresh-token']);
 
-      //router.navigate({ to: '/login' });
+      queryClient.setQueryData(queryKeys.authUser, {
+        ...user,
+        activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
+        //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+      });
     },
     ...mutationOptions,
   });
