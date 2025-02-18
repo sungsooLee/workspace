@@ -3,6 +3,7 @@ import { cn } from '@learnway/shared';
 
 import * as Primitive from '../shadcn/multi-select';
 import { MultiSelectFieldProps } from './type';
+import styles from './select.module.css';
 
 const MultiSelectComponent = forwardRef<HTMLButtonElement, MultiSelectFieldProps>(
   (
