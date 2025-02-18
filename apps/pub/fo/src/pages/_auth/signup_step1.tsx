@@ -27,13 +27,8 @@ function RouteComponent() {
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
           </div>
-<<<<<<< HEAD
           <div className={signupStyles.signup_select} role="radiogroup">
             <ul className={styles.select_list}>
-=======
-          <div className={signupStyles.signup_select}>
-            <ul className={styles.select_list} role="radiogroup">
->>>>>>> feature/pub/dev
               <li>
                 <Button
                   className={`${styles.select} ${styles.active}`}
