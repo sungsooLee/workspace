@@ -32,3 +32,16 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .btn_tenant {
+    @apply pl-[4px];
+    .select {
+      @apply hidden;
+    }
+  }
+  .tenant_content {
+    @apply w-auto max-w-[350px];
+  }
+}

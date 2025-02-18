@@ -9,7 +9,7 @@ import {
   ChipList,
   SelectOption,
   Switch,
-  Radio,
+  RadioGroup,
   Checkbox,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
@@ -495,7 +495,7 @@ function RouteComponent() {
             </Tooltip>
           </label>
           <div className={cn(formStyles.input_box)}>
-            <Radio
+            <RadioGroup
               className={formStyles.radio_wrap}
               options={[
                 { value: 'type1', label: '비공개' },

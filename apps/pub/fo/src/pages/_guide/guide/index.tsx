@@ -92,6 +92,7 @@ function RouteComponent() {
             <th scope="col">메뉴명 (2depth)</th>
             <th scope="col">메뉴명 (3depth)</th>
             <th scope="col">화면아이디</th>
+            <th scope="col">페이지타입</th>
             <th scope="col">완료일</th>
             <th scope="col">최종수정일</th>
             <th scope="col">비고</th>
@@ -109,6 +110,7 @@ function RouteComponent() {
                   {item.pageId}
                 </a>
               </td>
+              <td>{item.pageType}</td>
               <td>{item.completionDate || '-'}</td>
               <td>{item.lastUpdateDate || '-'}</td>
               <td>{item.remarks || '-'}</td>
