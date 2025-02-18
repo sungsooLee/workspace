@@ -91,7 +91,7 @@ z.ZodType.prototype.optional = function <Output, Def extends ZodTypeDef, Input>(
   const originalSchema = originalOptional.call(this);
   const processedSchema = z.preprocess((val: unknown) => {
     if (val === undefined || val === null || (typeof val === 'string' && val.trim() === ''))
-      return ''; // 빈 문자열로 유지하여 formState에서 누락되지 않도록 함
+      return undefined; // 빈 문자열로 유지하여 formState에서 누락되지 않도록 함
     return val;
   }, originalSchema);
   (processedSchema as any).unwrap = originalSchema.unwrap;

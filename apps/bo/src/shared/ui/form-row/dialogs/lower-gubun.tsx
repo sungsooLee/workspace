@@ -2,22 +2,31 @@ import { FC, useEffect, useMemo } from 'react';
 import { Button, FormRadioGroup, Input } from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
 
-const LowerGubunComponent: FC<any> = ({ onFormChange,watch, value, onChange, formData, onFocus }) => {
+const LowerGubunComponent: FC<any> = ({
+  onFormChange,
+  watch,
+  value,
+  onChange,
+  formData,
+  onFocus,
+  testName,
+}) => {
   const urlDisabled = useMemo<boolean>(() => value.gubun !== '02', [value]);
-  const title = watch('title')
-  const handleChannelNameChange =() => {
-    onFormChange({channel:'채널명을 변경했습니다..'});
-  }
+  const title = watch('title');
+  const handleChannelNameChange = () => {
+    onFormChange({ channel: '채널명을 변경했습니다..' });
+  };
 
   const handleFocusChange = () => {
-    onFocus("channel")
-  }
+    onFocus('channel');
+  };
 
   useEffect(() => {
-    console.log(formData)
-  }, [formData]);
+    console.log(value);
+    console.log(testName);
+  }, []);
   return (
-    <div style={{ display: 'flex', width:'100%' }}>
+    <div style={{ display: 'flex', width: '100%' }}>
       <FormRadioGroup
         value={value.gubun}
         options={[

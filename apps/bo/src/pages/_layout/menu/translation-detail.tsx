@@ -65,6 +65,9 @@ function RouteComponent() {
             <DynamicFormField provider={provider} name={'code'} />
           </ContentsRow>
           <ContentsRow>
+            <DynamicFormField provider={provider} name={'ru'} />
+          </ContentsRow>
+          <ContentsRow>
             <h1 className={'title_3_b'}>언어정보</h1>
           </ContentsRow>
           {translation.map((tr) => (
@@ -94,10 +97,6 @@ const translation = [
   {
     name: 'de',
     label: '독일어',
-  },
-  {
-    name: 'ru',
-    label: '러시아어',
   },
   {
     name: 'ro',
@@ -207,6 +206,12 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: '다국어 코드',
       value: '',
+    },
+    {
+      name: 'ru',
+      type: 'text',
+      label: '러시아어',
+      value: '러시아어',
     },
     ...translation.map((tr) => ({ ...tr, type: 'text', value: '' })),
   ],

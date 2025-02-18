@@ -1,8 +1,7 @@
-import { z } from 'zod';
+import { ZodTypeAny } from 'zod';
 import { ButtonVariantType, SelectOption } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
-import { FormState, UseFormGetValues } from 'react-hook-form/dist/types/form';
-import { ReactNode, Ref } from 'react';
+import { Ref } from 'react';
 
 /*======================================
 =            API 관련 타입             =
@@ -220,7 +219,7 @@ export interface ObjectBuilderConfig extends RootGroupBuilderConfig {
  * 각 필드에 대한 유효성 검증 스키마를 담는 객체.
  */
 export interface ValidatorConfig {
-  [key: string]: z.ZodTypeAny;
+  [key: string]: ZodTypeAny;
 }
 
 /*=====  End of Validator 관련 타입  =====*/
@@ -255,47 +254,6 @@ export interface Builder {
   [key: string]: any;
 }
 
-// 반환 타입 정의: 현재 설정과 최상위(depth 0)의 이름을 포함
-export interface BuilderConfigResult {
-  /** 해당 필드의 설정 정보 */
-  config: Partial<Builder>;
-  /** 최상위(부모) 필드의 이름 */
-  topLevelName: string;
-}
-
-/**
- * DynamicFormProvider 인터페이스
- * - 폼 필드 생성을 위한 프로바이더 객체입니다.
- */
-export interface DynamicFormProvider {
-  control: any & {
-    // 필수 여부 체크 함수 (react-hook-form에서 기본 제공하지 않는 경우 커스텀)
-    isFieldRequired: (name: string) => boolean;
-  };
-  builders: Builder[];
-  // 필드 DOM 노드를 저장하는 ref 객체
-  fieldRefs: React.MutableRefObject<Record<string, HTMLElement | null>>;
-  // react-hook-form의 watch 함수
-  watch: (name?: string | string[]) => any;
-  onFormChange: (value?: any) => void;
-  formData: UseFormGetValues<any>;
-  onFocus: (fieldName: string) => void;
-}
-
-/**
- * DynamicFormFieldProps 인터페이스
- * - DynamicFormField 컴포넌트의 props 타입입니다.
- */
-export interface DynamicFormFieldProps {
-  provider: DynamicFormProvider;
-  name: string;
-  type?: string;
-  disabled?: boolean;
-  children?: ReactNode;
-  className?: string;
-  [key: string]: any;
-}
-
 /**
  * BaseFormDialogProps 인터페이스
  * - 다이얼로그 형태의 폼 컴포넌트에 전달할 기본 속성을 정의합니다.
@@ -303,22 +261,6 @@ export interface DynamicFormFieldProps {
 export interface BaseFormDialogProps {
   watch: (name?: string | string[]) => any;
   ref: Ref<any>;
-  type?: string;
-  name: string;
-  onChange: (value: any) => void;
-  onBlur: () => void;
-  value: any;
-  disabled: boolean;
-  [key: string]: any;
-}
-
-/**
- * FormParams 인터페이스
- * - 각 동적 폼 필드 컴포넌트에 전달할 공통 파라미터 타입을 정의합니다.
- */
-export interface FormParams {
-  watch: (name?: string | string[]) => any;
-  ref: React.Ref<any>;
   type?: string;
   name: string;
   onChange: (value: any) => void;
