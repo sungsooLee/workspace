@@ -21,11 +21,9 @@ declare module '@tanstack/react-router' {
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <StrictMode>
-    <ReactQueryConfigProvider>
-      <AppConfigProvider>
-        <RouterProvider router={router} />
-      </AppConfigProvider>
-    </ReactQueryConfigProvider>
-  </StrictMode>,
+  <ReactQueryConfigProvider>
+    <AppConfigProvider>
+      <RouterProvider router={router} />
+    </AppConfigProvider>
+  </ReactQueryConfigProvider>,
 );
