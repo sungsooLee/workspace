@@ -46,8 +46,8 @@ function RouteComponent() {
   const handleOnSubmit = (data: any) => {
     login(data, {
       onSuccess: async (data, variables, context) => {
-        const userLang = data.data.data.userLanguageSetCode;
-        await setLanguage(userLang);
+        //const userLang = data.data.data.userLanguageSetCode;
+        //await setLanguage(userLang);
         router.navigate({ to: '/' });
       },
     });

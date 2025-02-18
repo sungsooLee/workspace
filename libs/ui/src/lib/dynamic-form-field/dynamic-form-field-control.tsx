@@ -5,7 +5,7 @@ import { MultiSelect as FormMultiSelect } from '../select/multi-select';
 import { Checkbox as FormCheckBox } from '../checkbox/checkbox';
 import { DatePicker as FormDatePicker } from '../date-picker/date-picker';
 import { DateRangePicker as FormDateRangePicker } from '../date-picker/date-range-picker';
-import { Radio as FormRadioGroup } from '../radio/radio';
+import { RadioGroup as FormRadioGroup } from '../radio-group/radio-group';
 import { Select } from '../select/select';
 import { Switch as FormSwitch } from '../switch/switch';
 

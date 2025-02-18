@@ -9,7 +9,7 @@ import {
   ChipList,
   SelectOption,
   Switch,
-  Radio,
+  RadioGroup,
   Checkbox,
   DatePicker,
   ThumbnailList,
@@ -828,7 +828,7 @@ function RouteComponent() {
               </Tooltip>
             </label>
             <div className={formStyles.input_box}>
-              <Radio
+              <RadioGroup
                 className={formStyles.radio_wrap}
                 options={[
                   { value: 'type1', label: '비공개' },

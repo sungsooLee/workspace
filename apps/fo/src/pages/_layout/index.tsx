@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FieldType, ImageCarousel, Radio, Switch } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
