@@ -52,6 +52,9 @@
   &.xl {
     @apply w-[1400px];
   }
+  &.full {
+    @apply h-[100dvh] w-[100dvw];
+  }
 }
 
 @media (min-height: 710px) {

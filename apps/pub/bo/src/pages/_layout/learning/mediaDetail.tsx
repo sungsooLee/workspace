@@ -432,6 +432,7 @@ function RouteComponent() {
                   placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
                   resize="none"
                   size="sm"
+                  disabled
                 />
               </div>
             </div>
