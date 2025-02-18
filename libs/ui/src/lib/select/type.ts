@@ -13,9 +13,3 @@ export interface SelectFieldProps extends BaseFieldProps {
   options: SelectOption[];
 }
 
-export interface MultiSelectFieldProps extends BaseFieldProps {
-  options: SelectOption[];
-  maxCount?: number;
-  animation?: number;
-  variant?: 'default' | 'secondary' | 'destructive' | 'inverted';
-}

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FieldType, Form, DynamicFormField } from '@learnway/ui';
+import { FieldType } from '@learnway/ui';
 import { Button } from '@learnway/ui';
 import { Information } from '@learnway/icons';
 import { Info } from '@learnway/icons';
@@ -71,12 +71,12 @@ function RouteComponent() {
       <div className="typo-title-[3-B]">학습자 로그인</div>
 
       <div className="rounded-lg bg-slate-200 p-10">
-        <Form {...form} schema={schema}>
+        {/* <Form {...form} schema={schema}>
           <Information width={120} height={120} stroke="red" />
           <Arrow />
           <div className="w-64">
             <DynamicFormField
-              name="orgId"
+              name="orgId"  
               label={t('ORG')}
               type={FieldType.SELECT}
               options={companyOptions ?? []}
@@ -84,10 +84,12 @@ function RouteComponent() {
             <DynamicFormField name="accountId" label={t('USER_ID')} type={FieldType.TEXT} />
             <DynamicFormField name="password" label={t('PASSWORD')} type={FieldType.PASSWORD} />
           </div>
-          <Button className="mt-10" type="submit" onClick={() => handleSubmit()}>
+      
+        </Form> */}
+
+        <Button type="submit" variant="point" size="sm" onClick={() => handleSubmit()}>
             {t('LOGIN')}
           </Button>
-        </Form>
       </div>
     </div>
   );
