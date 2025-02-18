@@ -1,15 +1,12 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import useSearchBox from '../../../../../shared/ui/search-box/use-search-box';
-import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { Button, useModalContext, useModalControl } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
 import { t } from 'i18next';
-import { CODE_GROUP } from '@learnway/config';
-import { translationQueryOptions } from '../../../../../entities/api-mock/service/mock-translation.queries';
 
 export const Route = createFileRoute('/_layout/learning/resource/education/list')({
   component: RouteComponent,
@@ -17,7 +14,7 @@ export const Route = createFileRoute('/_layout/learning/resource/education/list'
 
 function RouteComponent() {
   const router = useRouter();
-  const { config: sConfig, getData } = useSearchBox(searchConfig);
+  const { config: sConfig } = useSearchBox(searchConfig);
   const { open } = useModalControl();
 
   /**
@@ -40,7 +37,7 @@ function RouteComponent() {
   const handleNewTranslation = () => {
     //router.navigate({ to: '/learning/resource/education/view' });
     open(
-      <EducationList />,
+      <EducationListPopup />,
       {
         width: 'lg',
       },
@@ -62,7 +59,7 @@ function RouteComponent() {
   );
 }
 
-const EducationList = () => {
+const EducationListPopup = () => {
   const { closeModal } = useModalContext();
 
   return (
