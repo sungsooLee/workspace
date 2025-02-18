@@ -5,9 +5,10 @@ import { cn, getRandomId } from '@learnway/shared';
 import { ImageOption } from '../thumbnail/type';
 import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
+import { Input } from '../input/input';
 
 import styles from './thumbnail-image-upload.module.css';
-import { Upload } from 'lucide-react';
+import { IcoUploadCloud, IcoLoading } from '@learnway/icons';
 
 export interface ThumbnailImageUploadComponentProps {
   className?: string;
@@ -53,25 +54,32 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
     };
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--image-upload', 'flex flex-col')}>
+      <div {...props} className={cn(styles.start, className, 'nlp--image-upload')}>
         {/**/}
-        <span className={'text-gray-7 text-sm'}>{description}</span>
+        <p className={styles.description}>{description}</p>
         {/* ThumbnailList */}
-        <div className={cn('flex flex-row')}>
-          <Button
-            variant={'gray'}
-            size={'lg'}
-            className={'m-3'}
-            icon={<Upload />}
-            onClick={handleButtonClick}>
-            썸네일업로드
-          </Button>
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-          />
+        <div className={styles.thumbnail_wrap}>
+          {/* <div className={styles.it}></div> */}
+          <div className={styles.file_upload}>
+            <Button
+              className={styles.btn_file}
+              icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
+              onClick={handleButtonClick}>
+              <span className={styles.text}>썸네일 업로드</span>
+            </Button>
+            <Input
+              type="file"
+              ref={fileInputRef}
+              className={styles.input_file}
+              onChange={handleFileChange}
+            />
+          </div>
+          <div className={styles.loading}>
+            <span className={styles.text}>
+              <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
+              동영상 썸네일 추출중
+            </span>
+          </div>
           <ThumbnailList options={options} showCheckbox onChecked={handleCheckedThumbnailList} />
         </div>
       </div>
