@@ -1,5 +1,4 @@
 import React from 'react';
-import { useModalControl } from '../../modal/modal.hook';
 import { Button } from '../../button/button';
 
 interface CustomCellProps<T> {
