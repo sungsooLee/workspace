@@ -5,9 +5,10 @@ export const guideData = [
     depth1: '로그인',
     depth2: '로그인',
     depth3: '',
-    pageId: 'login',
-    completionDate: '2025-02-11',
-    lastUpdateDate: '',
+    pageId: 'login', // 화면아이디
+    pageType: '', // 페이지 타입
+    completionDate: '2025-02-11', // 완료일
+    lastUpdateDate: '', // 수정일
     remarks: '', // 비고
   },
 ];

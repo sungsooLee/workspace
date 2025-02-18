@@ -27,16 +27,24 @@ function RouteComponent() {
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
           </div>
+<<<<<<< HEAD
           <div className={signupStyles.signup_select} role="radiogroup">
             <ul className={styles.select_list}>
+=======
+          <div className={signupStyles.signup_select}>
+            <ul className={styles.select_list} role="radiogroup">
+>>>>>>> feature/pub/dev
               <li>
-                <Button className={`${styles.select} ${styles.active}`} role="radio">
+                <Button
+                  className={`${styles.select} ${styles.active}`}
+                  role="radio"
+                  aria-checked="true">
                   <IcoBuilding01 width={48} height={48} stroke="#131C30" />
                   <span>국내 이용자</span>
                 </Button>
               </li>
               <li>
-                <Button className={styles.select} role="radio">
+                <Button className={styles.select} role="radio" aria-checked="false">
                   <IcoOverseasDealer width={48} height={48} />
                   <span>해외딜러</span>
                 </Button>

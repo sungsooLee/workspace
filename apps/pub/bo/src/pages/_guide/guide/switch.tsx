@@ -18,11 +18,7 @@ function RouteComponent() {
 import { Switch } from '@learnway/ui';
 
 // 적용방법(예시)
-<Tooltip side="top" align="end" content={'tooltip content'}>
-  <Button onlyIcon>
-    <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
-  </Button>
-</Tooltip>
+<Switch id="id-1" label="Label" />
 `}
           </code>
         </pre>

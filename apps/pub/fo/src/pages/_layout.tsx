@@ -5,6 +5,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 
 import { Header, Layout, Footer, MobileLayout } from '../widgets/layout';
+import { MFooterFixed } from '../widgets/layout/ui/m.main/m.footer/m-footer-fixed';
 import styles from './_layout.module.css';
 
 export const Route = createFileRoute('/_layout')({
@@ -18,7 +19,7 @@ function LayoutComponent() {
   // router.navigate({ to: '/login' });
 
   return (
-    <div className={`${styles.start} ${styles.layout_wrap} ${styles.mo}`}>
+    <div className={`${styles.start} ${styles.layout_wrap}`}>
       <BrowserView>
         <Header />
         <Layout>
@@ -31,6 +32,7 @@ function LayoutComponent() {
         <MobileLayout>
           <Outlet />
         </MobileLayout>
+        <MFooterFixed />
       </MobileView>
     </div>
   );
