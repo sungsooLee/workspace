@@ -38,7 +38,7 @@ build:
   script:
     - pnpm install --no-frozen-lockfile
     - npx nx build fo
-    # - npx nx build bo
+    - npx nx build bo
   artifacts:
     paths:
       - dist/apps/fo
@@ -61,7 +61,7 @@ deploy:
     - aws configure list
     - echo "Syncing to S3..."
     - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
-    # - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
+    - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
