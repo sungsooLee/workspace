@@ -8,3 +8,29 @@
     @apply h-[20px] w-[20px];
   }
 }
+
+.start {
+  &.mymenu_wrap {
+    @apply scrollbar h-auto max-h-[772px] w-[513px] overflow-y-auto overflow-x-hidden rounded-[8px] bg-[var(--white)] p-[24px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    .tit {
+      @apply title_bo_4_b mb-[16px] block text-[var(--gray9)];
+    }
+    .word_contents {
+      .word_wrap {
+        @apply mb-[32px] flex flex-wrap gap-x-[8px] gap-y-[12px] break-all;
+        .word_item {
+          @apply bg-[var(--gray2)];
+        }
+      }
+    }
+    .empty {
+      @apply text-center;
+      .icon_menu {
+        @apply mb-[8px] inline-block;
+      }
+      .text {
+        @apply title_bo_4_b text-[var(--gray6)];
+      }
+    }
+  }
+}

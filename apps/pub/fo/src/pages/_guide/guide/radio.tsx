@@ -19,7 +19,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Radio } from '@learnway/ui';
+import { RadioGroup } from '@learnway/ui';
 
 // 적용방법(예시)
 <RadioGroup

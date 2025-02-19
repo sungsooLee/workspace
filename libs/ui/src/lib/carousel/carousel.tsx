@@ -28,9 +28,7 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
       >
         {/* items */}
         {items.map((item, index) => (
-          <SwiperSlide key={index} className={styles.SwiperSlide}>
-            {item}
-          </SwiperSlide>
+          <SwiperSlide key={index} className={cn(styles.SwiperSlide)}>{item}</SwiperSlide>
         ))}
       </Swiper>
     );

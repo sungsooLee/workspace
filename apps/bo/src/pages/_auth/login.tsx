@@ -14,6 +14,7 @@ import { useSetLanguage } from '../../features/platform';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
+import { FormRow } from '../../shared/ui/form-row';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -57,22 +58,22 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <div className={`${styles.start} ${styles.auth_wrap}`}>
         <div className={authStyles.auth_box}>
-          <div className={formStyles.form_row}>
-            <DynamicFormField provider={provider} name={'username'} />
-          </div>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'username'} />
+          </FormRow>
 
-          <div className={formStyles.form_row}>
-            <DynamicFormField provider={provider} name={'password'} />
-          </div>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'password'} />
+          </FormRow>
 
-          <div className={styles.login_info}>
-            <DynamicFormField provider={provider} name={'saveId'} />
+          <FormRow provider={provider}>
+            <DynamicFormField name={'saveId'} />
 
             <div className={styles.info}>
               <Link to="/progress-status">진행 현황</Link>
               <Link to="/search-account">아이디/비밀번호찾기</Link>
             </div>
-          </div>
+          </FormRow>
 
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>

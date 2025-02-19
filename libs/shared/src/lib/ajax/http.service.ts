@@ -10,7 +10,7 @@ import axios, {
 import { cookieService } from '../cookie/cookie.service';
 import { encodeQueryString } from '../../index';
 
-const API_REQUEST_TIMEOUT = 5000;
+const API_REQUEST_TIMEOUT = 9000;
 
 // sample url: https://jsonplaceholder.typicode.com/users
 interface RequestArgs {
@@ -51,10 +51,10 @@ export class HttpService {
   private beforeMessage!: string;
   private beforeTimeout!: any;
 
-  private reissueProccess!: (error: any) => Promise<any>;
+  private interceptors: any;
 
-  init(payload?: any): void {
-    this.reissueProccess = payload;
+  init(config?: { interceptors: any }): void {
+    this.interceptors = config?.interceptors;
   }
 
   async get<T>(
@@ -141,43 +141,14 @@ export class HttpService {
 
     this.cancelTokenSource = axios.CancelToken.source();
     this.httpClient = axios.create({ ...options, cancelToken: this.cancelTokenSource.token });
-    this.httpClient.interceptors.request.use(function (config) {
-      const accessToken = cookieService.get('ACCESS-TOKEN');
-      if (accessToken) {
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
-      }
-      return config;
-    });
+    this.httpClient.interceptors.request.use(this.interceptors?.request.onFulfilled);
     this.httpClient.interceptors.response.use(
-      function (config) {
-        return config;
-      },
-      async (error) => {
-        const { config, response: errorResponse } = error;
-        // error
-        if (errorResponse.status === 401) {
-          if (this.reissueProccess) {
-            return await this.reissueProccess(error);
-          }
-        }
-
-        return Promise.reject(error);
-      },
+      this.interceptors?.response.onFulfilled,
+      this.interceptors?.response.onRejected,
     );
     this.completed = false;
   }
-  /*
-  private reissue<T>(args: RequestArgs): AxiosPromise<T> {
-    const { method, url, queryParam, payload } = args;
-    return this.execute<AxiosResponse>(
-      {
-        method: HttpMethod.POST,
-        url: `${OAuthApiPrefix()}/token-reissue`,
-      },
-      { headers: { 'refresh-token': `${cookieService.get('REFRESH-TOKEN')}` } },
-    );
-  }
-*/
+
   private httpRequest<T>(args: RequestArgs): AxiosPromise<T> {
     const { method, url, queryParam, payload } = args;
     switch (method) {
