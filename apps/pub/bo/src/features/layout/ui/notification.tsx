@@ -1,4 +1,4 @@
-import { memo, ReactNode, useState } from 'react';
+import { memo, useState } from 'react';
 
 import { Button, Popover } from '@learnway/ui';
 import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';

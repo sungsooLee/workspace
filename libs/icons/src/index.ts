@@ -60,6 +60,7 @@ export { ReactComponent as IcoMybook } from './lib/ic_mybook.svg';
 export { ReactComponent as IcoPlay02 } from './lib/ic_play-02.svg';
 export { ReactComponent as IcoMoreHorizontal } from './lib/ic_more_horizontal.svg';
 export { ReactComponent as IcoEye } from './lib/ic_eye.svg';
+export { ReactComponent as IcoAnnouncement03 } from './lib/ic_announcement_03.svg';
 
 //export Default as Information from './lib/information.svg?react';
 

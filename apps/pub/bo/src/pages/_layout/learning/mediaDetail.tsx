@@ -462,6 +462,7 @@ function RouteComponent() {
                   placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                   resize="none"
                   size="sm"
+                  disabled
                 />
               </div>
             </div>
@@ -470,7 +471,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type_switch)}>
             {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-11" className={formStyles.form_label}>
               <span className={formStyles.form_text}>교육자원 활용여부</span>
@@ -496,7 +497,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={formStyles.form_item}>
+          <div className={cn(formStyles.form_item, formStyles.type_switch)}>
             {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-12" className={formStyles.form_label}>
               <span className={formStyles.form_text}>보안콘텐츠 여부</span>

@@ -595,7 +595,7 @@ const Grid = <T extends object>({
                 onClick={() => onPageChange(i)}
                 className={cn(
                   'h-[32px] w-[32px] rounded-[4px]',
-                  pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'border hover:bg-gray-100',
+                  pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'hover:bg-gray-100',
                 )}>
                 {i + 1}
               </Button>

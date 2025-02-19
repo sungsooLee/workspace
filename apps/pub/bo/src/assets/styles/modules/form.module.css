@@ -38,7 +38,7 @@
     }
   }
   .btn_switch {
-    @apply absolute right-0 top-[8px];
+    @apply absolute right-0 top-0;
   }
   &.type2 {
     .form_label {
@@ -49,6 +49,11 @@
     }
     .guide_text.error {
       @apply ml-[40px];
+    }
+  }
+  &.type_switch {
+    .input_box {
+      @apply mt-0;
     }
   }
 }
