@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input, Checkbox, Button } from '@learnway/ui';
+import { Input, Checkbox, Button, useModalControl } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
@@ -13,6 +13,13 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
+  const { alert: openAlert } = useModalControl();
+  const handleClickAlert = () => {
+    openAlert({
+      title: <>아이디를 확인해 주세요.</>,
+      description: <>아이디 또는 비밀번호를 다시 확인해 주세요.</>,
+    });
+  };
   return (
     <div className={`${styles.start} ${styles.auth_wrap}`}>
       <div className={authStyles.auth_box}>
@@ -27,9 +34,11 @@ function RouteComponent() {
                 type="text"
                 value=""
                 placeholder="아이디 또는 이메일을 입력하세요."
-                className={formStyles.lg}
+                className={cn(formStyles.lg, formStyles.error)}
               />
             </div>
+            {/* 에러인경우 : error 클래스 추가 */}
+            <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
           </div>
         </div>
 
@@ -58,7 +67,11 @@ function RouteComponent() {
         </div>
 
         <div className={styles.btn_box}>
-          <Button size="xl" variant="primary" className={styles.btn}>
+          <Button
+            size="xl"
+            variant="primary"
+            className={styles.btn}
+            onClick={() => handleClickAlert()}>
             로그인
           </Button>
         </div>
@@ -91,7 +104,7 @@ function RouteComponent() {
       <div className={styles.login_guide}>
         <span>
           <Link to="">회원 가입 현황</Link>
-          <Link to="">회원가입</Link>
+          <Link to="/signup_step1">회원가입</Link>
         </span>
       </div>
     </div>
