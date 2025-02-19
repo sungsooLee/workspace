@@ -20,16 +20,26 @@ function RouteComponent() {
       content: <h2>Tab B content</h2>,
     },
     {
-      title: 'Tab C',
+      title: 'Tab CCCCCCCCC',
       key: 'c',
       content: <h2>Tab C content</h2>,
+    },
+    {
+      title: 'Tab D',
+      key: 'd',
+      content: <h2>Tab D content</h2>,
+    },
+    {
+      title: 'Tab E',
+      key: 'e',
+      content: <h2>Tab E content</h2>,
     },
   ];
   return (
     <div>
       <h2 className="guide_tit2">Tabs Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/tabs/tabs.tsx</p>
-      <p className="info">variant: 'fill' | 'line' | 'round'</p>
+      <p className="info">variant: 'fill' | 'line' | 'round' | 'progress'</p>
       <div className="code_example">
         <pre className="code_block">
           <code>
@@ -52,6 +62,16 @@ const [selectedTabKey , selectedTabKey2] = useState<string>('');
       title: 'Tab C',
       key: 'c',
       content: <h2>Tab C content</h2>,
+    },
+    {
+      title: 'Tab D',
+      key: 'd',
+      content: <h2>Tab D content</h2>,
+    },
+    {
+      title: 'Tab E',
+      key: 'e',
+      content: <h2>Tab E content</h2>,
     },
   ];
 
@@ -82,6 +102,14 @@ const [selectedTabKey , selectedTabKey2] = useState<string>('');
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items} variant="round" />
+          </div>
+        </div>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">Tabs progress Case</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Tabs selectedTabKey={selectedTabKey} items={items} variant="progress" />
           </div>
         </div>
       </div>

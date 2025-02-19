@@ -64,6 +64,17 @@
         }
       }
     }
+    &.progress {
+      .list {
+        @apply flex w-full;
+        .trigger {
+          @apply body_bo_1_b relative min-h-[56px] flex-1 border border-l-0 border-r-0 border-solid border-[var(--gray5)] bg-[var(--white)] text-[var(--gray7)];
+          &[data-state='active'] {
+            @apply bg-[var(--secondary5)];
+          }
+        }
+      }
+    }
   }
 }
 
