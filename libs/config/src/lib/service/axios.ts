@@ -29,7 +29,8 @@ export function initAxios() {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         // error
-        if (errorResponse.status === 401) {
+        console.log('interceptors onRejected', error);
+        if (errorResponse?.status === 403) {
           console.log('401 error');
           return await reissueProccess(error);
         }
