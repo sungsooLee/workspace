@@ -78,12 +78,6 @@ const [selectedTabKey , selectedTabKey2] = useState<string>('');
         </div>
       </div>
       <div className="group">
-        <h3 className="guide_tit3">Tabs line Case</h3>
-        <div className="flex_box">
-          <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" />
-          </div>
-        </div>
         <h3 className="guide_tit3">Tabs round Case</h3>
         <div className="flex_box">
           <div className="desc w-full">

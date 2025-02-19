@@ -17,6 +17,7 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
   items: Array<TabItemProps>;
   className?: string;
   variant?: 'line' | 'fill' | 'round';
+  ariaLabel?: string;
   selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
   // selectedTabIndex?: number; // 최초 렌더링 이후 tab 조작 필요시 사용
   // defaultSelectedTabIndex?: number; // 최초 렌더링 할때 선택할 tab index
@@ -25,7 +26,7 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
 export const TabsComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   TabsComponentProps
->(({ className, items, variant, selectedTabKey, ...props }, ref) => {
+>(({ className, items, variant, ariaLabel, selectedTabKey, ...props }, ref) => {
   const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key);
 
   // changed selectedTabKey
@@ -39,7 +40,7 @@ export const TabsComponent = forwardRef<
       value={value}
       onValueChange={(value) => setValue(value)}>
       {/* Tab Buttons */}
-      <Primitive.List className={styles.list} aria-label="Manage your account">
+      <Primitive.List className={styles.list} aria-label={ariaLabel}>
         {items.map((d: TabItemProps, index) => (
           <Primitive.Trigger className={styles.trigger} value={d.key} key={d.key}>
             {d.title}
