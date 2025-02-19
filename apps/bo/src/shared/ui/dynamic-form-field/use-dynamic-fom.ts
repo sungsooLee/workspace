@@ -1,5 +1,5 @@
 // useDynamicForm.ts
-import { FormEventHandler, useRef } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from '../search-box/create-jod-schema';
@@ -31,13 +31,14 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     }
     return acc;
   }, {}); // 초기값을 담은 객체
+  const [originalValues, setOriginalValues] = useState(defaultValues);
 
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = createZodSchema(config);
 
   // react-hook-form 훅 초기화
   const methods = useForm<any>({
-    defaultValues,
+    defaultValues: originalValues,
     resolver: zodResolver(schema),
   });
 
@@ -167,12 +168,18 @@ const useDynamicForm = (config: DynamicFormConfig) => {
    * 폼 리셋 함수.
    * @param values - 새로운 초기값 (선택 사항). 전달하지 않으면 기본값으로 리셋.
    */
-  const resetForm = (values?: any) => {
+  const onFormChange = (values?: any) => {
     if (values) {
       reset(values);
     } else {
-      reset(defaultValues);
+      reset(originalValues);
     }
+  };
+
+  const fetchData = (fetchValues: any) => {
+    console.log('fetchData', fetchValues);
+    setOriginalValues(fetchValues);
+    reset(fetchValues);
   };
 
   // provider 객체 구성: 동적 폼에 필요한 모든 정보와 메서드 포함
@@ -183,15 +190,16 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       builders: config.builders,
       fieldRefs,
       watch,
-      onFormChange: resetForm,
+      onFormChange,
       formData: getValues(),
       onFocus: handleFocus,
       formState,
     },
+    fetchData,
     control,
     getValues,
     onSubmit: formSubmit,
-    reset: resetForm,
+    onFormChange,
   };
 };
 

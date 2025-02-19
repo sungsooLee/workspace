@@ -13,6 +13,7 @@ export interface SwitchComponentProps extends React.ComponentProps<typeof Primit
   reversed?: boolean; // label이 앞에 있는 Case
   labelAlign?: 'left' | 'right';
   showLabel?: boolean;
+  onChange?: (checked: boolean) => void;
 }
 
 const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SwitchComponentProps>(
@@ -26,6 +27,7 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
       reversed,
       labelAlign = 'left',
       showLabel = true,
+      onChange,
       ...props
     },
     ref,
@@ -47,7 +49,8 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           className={styles.switch_root}
           id={id}
           checked={checked}
-          disabled={disabled}>
+          disabled={disabled}
+          onCheckedChange={onChange}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
 
