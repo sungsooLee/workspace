@@ -125,3 +125,44 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    .btn_category {
+      @apply mr-[0];
+    }
+    &.category_area {
+      .category {
+        @apply w-auto rounded-[0] border-0 shadow-none;
+      }
+      .category_container {
+        @apply border-t-[0];
+      }
+      .category_menu {
+        @apply w-[140px];
+        .menu_list_wrap {
+          .menu_list {
+            .list {
+              > li {
+                a,
+                button {
+                  span {
+                    @apply px-[20px];
+                  }
+                }
+              }
+            }
+          }
+        }
+        .banner_list {
+          @apply px-[20px];
+        }
+      }
+
+      .category_inner {
+        @apply w-full pl-[16px] pr-[20px];
+      }
+    }
+  }
+}

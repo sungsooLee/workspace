@@ -10,12 +10,13 @@ export interface CheckboxComponentProps extends React.ComponentProps<typeof Prim
   label?: string;
   hideLabel?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
+  variant?: 'round' | 'default'; // round style
 }
 
 const CheckboxComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   CheckboxComponentProps
->(({ value, onChange, disabled, className, label, hideLabel, size, ...props }, ref) => {
+>(({ value, onChange, disabled, className, label, hideLabel, size, variant, ...props }, ref) => {
   const uuid = getRandomId();
   return (
     <div className={cn(styles.start, 'nlp--checkbox', className)}>
@@ -23,7 +24,7 @@ const CheckboxComponent = forwardRef<
         {...props}
         id={uuid}
         ref={ref}
-        className={cn(styles.checkbox_root, size && styles[size])}
+        className={cn(styles.checkbox_root, size && styles[size], variant && styles[variant])}
         disabled={disabled}
         type={'button'}>
         <Primitive.Indicator className={styles.checkbox_indicator}>

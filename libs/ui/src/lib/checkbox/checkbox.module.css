@@ -10,6 +10,14 @@
         border-color: var(--secondary1);
       }
     }
+    &.round {
+      @apply rounded-full;
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply rounded-full;
+        }
+      }
+    }
     &:disabled {
       @apply bg-[var(--gray2)];
       border-color: var(--gray4);

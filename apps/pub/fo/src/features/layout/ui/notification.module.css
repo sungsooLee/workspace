@@ -7,5 +7,15 @@
     @apply absolute right-[22px] top-[10px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
   }
 }
-.alarm_content {
+
+/* mobile */
+:global(body.mobile) {
+  .btn_alarm {
+    svg {
+      @apply h-[24px] w-[24px];
+    }
+    .noti {
+      @apply right-[18px];
+    }
+  }
 }

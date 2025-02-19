@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { Logo, Notification } from '../../../../../features/layout';
+import { Logo, Notification, Tenant, Category } from '../../../../../features/layout';
 
 import styles from './m.header.module.css';
 
@@ -15,7 +15,7 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <strong className={styles.title}>{'HRD 센터'}</strong>
+          <Tenant />
         </h1>
 
         <div className={styles.util}>

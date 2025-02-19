@@ -55,6 +55,14 @@
       }
     }
   }
+  &.vertical {
+    @apply flex-col items-start;
+    .radio {
+      & + .radio {
+        @apply ml-0;
+      }
+    }
+  }
 
   .label {
     @apply ml-[6px] text-[12px] font-normal text-[var(--gray8)];
