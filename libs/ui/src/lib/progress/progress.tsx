@@ -28,11 +28,7 @@ const ProgressComponent = forwardRef<
 
   return (
     <div className={cn(styles.progress_wrap, styles[progressClass])}>
-      {value && max && label && (
-        <p className={styles.progress_status}>
-          {value} / {max} {label}
-        </p>
-      )}
+      {label && <p className={styles.progress_status}>{label}</p>}
       <Primitive.Root className={cn(styles.start, className, 'nlp--progress')} value={progress}>
         <Primitive.Indicator
           className={styles.indicator}
