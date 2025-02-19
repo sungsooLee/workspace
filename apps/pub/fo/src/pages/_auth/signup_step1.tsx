@@ -27,33 +27,15 @@ function RouteComponent() {
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
           </div>
-          <div className={signupStyles.signup_select} role="radiogroup">
-            <ul className={styles.select_list}>
-              <li>
-                <Button
-                  className={`${styles.select} ${styles.active}`}
-                  role="radio"
-                  aria-checked="true">
-                  <IcoBuilding01 width={48} height={48} stroke="#131C30" />
-                  <span>국내 이용자</span>
-                </Button>
-              </li>
-              <li>
-                <Button className={styles.select} role="radio" aria-checked="false">
-                  <IcoOverseasDealer width={48} height={48} />
-                  <span>해외딜러</span>
-                </Button>
-              </li>
-            </ul>
-          </div>
+
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
-              className={styles.select_list}
+              className={styles.radio_card}
               options={[
                 {
                   value: 'type1',
                   label: (
-                    <div className={styles.select}>
+                    <div>
                       <IcoBuilding01 width={48} height={48} stroke="#131C30" />
                       <span>국내 이용자</span>
                     </div>
@@ -62,7 +44,7 @@ function RouteComponent() {
                 {
                   value: 'type2',
                   label: (
-                    <div className={styles.select}>
+                    <div>
                       <IcoOverseasDealer width={48} height={48} />
                       <span>해외딜러</span>
                     </div>

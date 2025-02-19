@@ -1,17 +1,15 @@
+/* style은 화면 모듈css에서 작업 */
 .start {
   @apply flex items-center justify-center gap-[16px] text-center;
   .radio {
     @apply m-auto flex w-full items-center justify-center text-center;
-  }
-  .item {
-    .select {
-      @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
-      span {
-        @apply mt-[8px] block;
+    .item {
+      div {
+        @apply flex flex-col items-center justify-center;
       }
-    }
-    &[aria-checked='true'] {
-      @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+      &[aria-checked='true'] {
+        @apply block;
+      }
     }
   }
 }
