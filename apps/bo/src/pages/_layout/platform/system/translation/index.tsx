@@ -1,18 +1,17 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { CODE_GROUP } from '@learnway/config';
-import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
-import { useGridBox } from '../../../shared/ui/grid-box';
-import { GridBox } from '../../../shared/ui/grid-box';
-import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
-import useSearchBox from '../../../shared/ui/search-box/use-search-box';
+import { CODE_GROUP } from '@learnway/config';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import useSearchBox from '../../../../../shared/ui/search-box/use-search-box';
+import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
+import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
+import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
+import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
 
-export const Route = createFileRoute('/_layout/menu/translation-management')({
+export const Route = createFileRoute('/_layout/platform/system/translation/')({
   component: RouteComponent,
 });
 
@@ -32,7 +31,7 @@ function RouteComponent() {
    * 등록화면 이동
    */
   const handleNewTranslation = () => {
-    router.navigate({ to: '/menu/translation-detail' });
+    router.navigate({ to: '/platform/system/translation/view' });
   };
 
   useEffect(() => {
@@ -98,7 +97,9 @@ const gridConfig = {
       name: 'code',
       label: '다국어코드',
       render: (info: any) => (
-        <Link className={'text-blue-600'} to={'/menu/translation-detail'}>
+        <Link
+          className={'text-blue-600'}
+          to={`/platform/system/translation/view?code=${info.getValue()}`}>
           {info.getValue()}
         </Link>
       ),
@@ -106,10 +107,10 @@ const gridConfig = {
     { name: 'useYn', label: '사용여부' },
     { name: 'koreanName', label: '한국어' },
     { name: 'englishName', label: '영어' },
-    { name: 'registerName', label: '등록자' },
-    { name: 'registerDateTime', label: '등록일시' },
-    { name: 'modifierName', label: '수정자' },
-    { name: 'modifierDateTime', label: '수정일시' },
+    { name: 'createdBy', label: '등록자' },
+    { name: 'createdDate', label: '등록일시' },
+    { name: 'lastModifiedBy', label: '수정자' },
+    { name: 'modifiedDate', label: '수정일시' },
   ],
   data: [],
   pagination: {

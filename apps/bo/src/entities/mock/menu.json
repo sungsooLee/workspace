@@ -158,12 +158,7 @@
               "tenantName": "현대자동차",
               "isQuickAccessArea": false
             },
-            {
-              "title": "다국어 관리",
-              "roles": "ROLE_ADMIN",
-              "tenantName": "현대자동차",
-              "isQuickAccessArea": false
-            },
+
             {
               "title": "동기화 관리",
               "roles": "ROLE_ADMIN",
@@ -192,7 +187,7 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu/translation-management"
+              "path": "/platform/system/translation"
             }
           ],
           "tenantName": "현대자동차",
