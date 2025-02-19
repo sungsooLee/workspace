@@ -131,7 +131,7 @@ function RouteComponent() {
                   modalConfig={{
                     content: <ManagerList />,
                     title: t('운영자 목록'),
-                    onClose: (event) => console.log('page onClose', event),
+                    onClose: (data: any) => console.log('page onClose', data),
                   }}
                 />
                 {/*<FormManagerInputButton />*/}
