@@ -15,7 +15,7 @@ export interface FormSelectChipListComponentProps {
  * @param props
  * @constructor
  */
-const FormSelectChipListComponent = forwardRef<HTMLElement, FormSelectChipListComponentProps>(
+const FormSelectChipListComponent = forwardRef<HTMLDivElement, FormSelectChipListComponentProps>(
   ({ value = [], selectOptions, onChange: ownerOnChange, ...props }, ref) => {
     const [selectedSelectOption, setSelectedSelectOption] = useState<SelectOption>();
     const [selectedChipOptions, setSelectedChipOptions] = useState<SelectOption[]>(value);
