@@ -8,8 +8,8 @@ import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { t } from 'i18next';
-import { FormSelectChipList } from '../../../shared/ui/dynamic-form-field/dialogs/form-select-chip-list';
 import { DynamicFormConfig } from '../../../shared/ui/dynamic-form-field/type';
+import { FormSelectChipList } from '../../../shared/ui/form-row/dialogs/form-select-chip-list';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
