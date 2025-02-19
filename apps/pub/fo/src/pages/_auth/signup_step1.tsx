@@ -48,23 +48,23 @@ function RouteComponent() {
           </div>
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
-              className="card dfsfsf"
+              className={styles.select_list}
               options={[
                 {
                   value: 'type1',
                   label: (
-                    <div>
+                    <div className={styles.select}>
                       <IcoBuilding01 width={48} height={48} stroke="#131C30" />
-                      <span>휴대폰 인증</span>
+                      <span>국내 이용자</span>
                     </div>
                   ),
                 },
                 {
                   value: 'type2',
                   label: (
-                    <div>
+                    <div className={styles.select}>
                       <IcoOverseasDealer width={48} height={48} />
-                      <span>이메일 인증</span>
+                      <span>해외딜러</span>
                     </div>
                   ),
                 },
