@@ -45,6 +45,7 @@ import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
+import { Route as GuideGuideAccordionImport } from './pages/_guide/guide/accordion'
 
 // Create/Update Routes
 
@@ -249,6 +250,12 @@ const GuideGuideAlertRoute = GuideGuideAlertImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideAccordionRoute = GuideGuideAccordionImport.update({
+  id: '/guide/accordion',
+  path: '/guide/accordion',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -308,6 +315,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
+    }
+    '/_guide/guide/accordion': {
+      id: '/_guide/guide/accordion'
+      path: '/guide/accordion'
+      fullPath: '/guide/accordion'
+      preLoaderRoute: typeof GuideGuideAccordionImport
+      parentRoute: typeof GuideImport
     }
     '/_guide/guide/alert': {
       id: '/_guide/guide/alert'
@@ -511,6 +525,7 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface GuideRouteChildren {
+  GuideGuideAccordionRoute: typeof GuideGuideAccordionRoute
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
@@ -536,6 +551,7 @@ interface GuideRouteChildren {
 }
 
 const GuideRouteChildren: GuideRouteChildren = {
+  GuideGuideAccordionRoute: GuideGuideAccordionRoute,
   GuideGuideAlertRoute: GuideGuideAlertRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
@@ -590,6 +606,7 @@ export interface FileRoutesByFullPath {
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
+  '/guide/accordion': typeof GuideGuideAccordionRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
@@ -625,6 +642,7 @@ export interface FileRoutesByTo {
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
+  '/guide/accordion': typeof GuideGuideAccordionRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
@@ -663,6 +681,7 @@ export interface FileRoutesById {
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/test': typeof LayoutTestRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_guide/guide/accordion': typeof GuideGuideAccordionRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
@@ -700,6 +719,7 @@ export interface FileRouteTypes {
     | '/success'
     | '/test'
     | '/'
+    | '/guide/accordion'
     | '/guide/alert'
     | '/guide/buttons'
     | '/guide/carousel'
@@ -734,6 +754,7 @@ export interface FileRouteTypes {
     | '/success'
     | '/test'
     | '/'
+    | '/guide/accordion'
     | '/guide/alert'
     | '/guide/buttons'
     | '/guide/carousel'
@@ -770,6 +791,7 @@ export interface FileRouteTypes {
     | '/_auth/success'
     | '/_layout/test'
     | '/_layout/'
+    | '/_guide/guide/accordion'
     | '/_guide/guide/alert'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
@@ -837,6 +859,7 @@ export const routeTree = rootRoute
     "/_guide": {
       "filePath": "_guide.tsx",
       "children": [
+        "/_guide/guide/accordion",
         "/_guide/guide/alert",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
@@ -891,6 +914,10 @@ export const routeTree = rootRoute
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
+    },
+    "/_guide/guide/accordion": {
+      "filePath": "_guide/guide/accordion.tsx",
+      "parent": "/_guide"
     },
     "/_guide/guide/alert": {
       "filePath": "_guide/guide/alert.tsx",

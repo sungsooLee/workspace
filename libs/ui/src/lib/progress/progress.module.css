@@ -1,5 +1,5 @@
-.Root {
-  @apply relative h-[8px] w-[300px] overflow-hidden rounded-[4px] bg-[var(--gray3)];
+.start {
+  @apply relative h-[8px] w-[152px] overflow-hidden rounded-[4px] bg-[var(--gray3)];
 
   /* Fix overflow clipping in Safari */
   /* https://gist.github.com/domske/b66047671c780a238b51c51ffde8d3a0 */
@@ -7,6 +7,7 @@
 }
 
 .progress_wrap {
+  @apply flex h-[22px] items-center;
   .progress_status {
     @apply text-[1.4rem] font-normal text-[var(--gray6)];
   }

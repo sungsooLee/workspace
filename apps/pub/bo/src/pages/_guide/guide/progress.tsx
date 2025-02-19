@@ -27,7 +27,7 @@ function RouteComponent() {
         </h3>
         <div className="flex_box">
           <div className="desc">
-            <Progress value={150} label={'mb'} max={150} />
+            <Progress value={70} label={'mb'} max={100} />
           </div>
         </div>
       </div>
