@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
-import { IcoAlertCircleGray } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
@@ -27,7 +26,7 @@ function RouteComponent() {
                 id="name5"
                 type="text"
                 value=""
-                placeholder="아이디 또는 회사 이메일을 입력하세요."
+                placeholder="아이디 또는 이메일을 입력하세요."
                 className={formStyles.lg}
               />
             </div>
@@ -54,7 +53,6 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} />
           <div className={styles.info}>
-            <Link to="">진행 현황</Link>
             <Link to="">아이디/비밀번호찾기</Link>
           </div>
         </div>
@@ -91,13 +89,9 @@ function RouteComponent() {
       </div>
 
       <div className={styles.login_guide}>
-        <IcoAlertCircleGray width={24} height={24} />
         <span>
-          아직 회원이 아니시라면{' '}
-          <Link to="" className={styles.btn_join}>
-            회원가입
-          </Link>
-          하세요.
+          <Link to="">회원 가입 현황</Link>
+          <Link to="">회원가입</Link>
         </span>
       </div>
     </div>

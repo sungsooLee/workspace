@@ -60,7 +60,7 @@ function RouteComponent() {
               취소
             </Button>
             <Button variant="primary" size="xl">
-              {isMobile ? '모바일' : '확인'}
+              {isMobile ? 'mobile 내용' : 'PC 내용'}
             </Button>
           </div>
         </div>
