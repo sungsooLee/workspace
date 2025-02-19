@@ -22,6 +22,10 @@ export default class AuthorizationService {
   }
 
   static reissue() {
+    const refresh_token = cookieService.get('REFRESH-TOKEN');
+    if (!refresh_token) {
+      return Promise.reject();
+    }
     return httpService.execute<AxiosResponse>(
       {
         method: HttpMethod.POST,
