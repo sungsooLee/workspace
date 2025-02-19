@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ModalClose, ModalConfig, ModalData } from '../modal/type';
+import { ModalClose, ModalConfig, ModalConfig2, ModalData } from '../modal/type';
 import { ReactNode } from 'react';
 
 interface ModalStore {
@@ -9,6 +9,7 @@ interface ModalStore {
     config?: ModalConfig,
     onClose?: (data?: ModalClose<T>) => void,
   ) => void;
+  open2: <T>(config: ModalConfig2) => void;
   close: <T>(index: number, data?: ModalClose<T>) => void;
 }
 
@@ -17,6 +18,11 @@ export const useModalStore = create<ModalStore>((set, get) => ({
   open: (content, config, onClose) => {
     set((state) => ({
       modals: [...state.modals, { content, config, onClose }],
+    }));
+  },
+  open2: (config) => {
+    set((state) => ({
+      modals: [...state.modals, { content: config.content, config, onClose: config.onClose }],
     }));
   },
   close: (index: number, data?: any) => {

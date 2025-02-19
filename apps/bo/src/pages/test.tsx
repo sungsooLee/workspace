@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { LNB } from '../widgets/layout';
-
 export const Route = createFileRoute('/test')({
   component: RouteComponent,
 });

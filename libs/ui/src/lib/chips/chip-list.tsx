@@ -4,22 +4,21 @@ import { isEqual } from 'lodash';
 import { cn } from '@learnway/shared';
 
 import { Chips, ChipsComponentProps } from './chips';
-import { SelectOption } from '../select/type';
 import { Input } from '../input/input';
 
 import styles from './chips.module.css';
 
 export interface ChipListComponentProps extends Omit<ChipsComponentProps, 'option' | 'onClick'> {
-  options: Array<SelectOption>;
+  options: Array<any>;
   showInput?: boolean;
   orientation?: 'vertical' | 'horizontal';
   placeholder?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
-  onItemClick?: (option: SelectOption) => void;
-  onChange?: (options: Array<SelectOption>) => void;
+  onItemClick?: (option: any) => void;
+  onChange?: (options: Array<any>) => void;
 }
 
-const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
+const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
   ({
     className,
     onDelete,
@@ -28,10 +27,12 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
     options = [],
     placeholder = '태그를 입력해주세요.',
     size,
+    labelField = 'label',
+    valueField = 'value',
     onItemClick,
     ...props
   }) => {
-    const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>(options);
+    const [selectedOptions, setSelectedOptions] = useState<any[]>(options);
     const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
@@ -51,20 +52,23 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       const value = (event.target as HTMLInputElement).value?.trim();
-      const isDuplicated = !!selectedOptions?.find((option) => option.value === value); // 새로 등록하는 chips 중복 여부
+      const newOption = { [labelField]: value, [valueField]: value };
+      const isDuplicated = !!selectedOptions?.find((option) => option[valueField] === value); // 새로 등록하는 chips 중복 여부
 
       if (event.key === 'Enter' && value && !isDuplicated) {
-        setSelectedOptions([...selectedOptions, { label: value, value }]);
+        setSelectedOptions([...selectedOptions, newOption]);
         setInputValue('');
       }
     };
 
-    const handleChipClick = (event: SelectOption) => {
+    const handleChipClick = (event: any) => {
       onItemClick?.(event);
     };
 
-    const handleChipDelete = (event: SelectOption) => {
-      const newOptions = selectedOptions?.filter((option) => option.value !== event.value);
+    const handleChipDelete = (event: any) => {
+      const newOptions = selectedOptions?.filter(
+        (option) => option[valueField] !== event[valueField],
+      );
       setSelectedOptions(newOptions);
     };
 
@@ -92,7 +96,10 @@ const ChipListComponent = forwardRef<HTMLElement, ChipListComponentProps>(
           {selectedOptions?.map((option) => (
             <Chips
               {...props}
+              key={option[valueField]}
               option={option}
+              labelField={labelField}
+              valueField={valueField}
               className={cn(styles.btn_chips, size && styles[size])}
               onClick={onItemClick && handleChipClick}
               onDelete={handleChipDelete}

@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 
-import { Button, DynamicFormField, FieldType, Form, useModalContext } from '@learnway/ui';
+import { Button, FieldType, useModalContext } from '@learnway/ui';
+import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 
 const fetchFormData = (): Promise<any> => {
   const mockData = {
@@ -124,7 +125,8 @@ const TestForm = () => {
 
   return (
     <>
-      <Form {...form} schema={schema}>
+      {/*<Form {...form} schema={schema}>*/}
+      <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <DynamicFormField name="name" label={t('form.name')} type={FieldType.TEXT} />

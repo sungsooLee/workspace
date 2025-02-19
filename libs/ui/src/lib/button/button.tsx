@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@learnway/shared';
 
 import styles from './button.module.css';
+
 export type ButtonVariantType =
   | 'primary'
   | 'line'
@@ -34,6 +35,7 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
   isLoading?: boolean;
   dummy?: boolean;
   className?: string;
+  label?: string;
 }
 
 const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
@@ -47,11 +49,14 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
     className,
     variant,
     size,
+    label,
+    type = 'button',
     ...props
   }) => {
     return (
       <button
         {...props}
+        type={type}
         className={cn(
           styles.start,
           styles.btn,
@@ -68,7 +73,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
         {iconAlign === 'left' && icon}
 
         {/* children */}
-        {children}
+        {children || label}
 
         {/* right icon */}
         {iconAlign === 'right' && icon}
