@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input, Checkbox, Button } from '@learnway/ui';
-import { IcoAlertCircleGray } from '@learnway/icons';
+import { Input, Checkbox, Button, useModalControl } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
@@ -14,6 +13,13 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
+  const { alert: openAlert } = useModalControl();
+  const handleClickAlert = () => {
+    openAlert({
+      title: <>아이디를 확인해 주세요.</>,
+      description: <>아이디 또는 비밀번호를 다시 확인해 주세요.</>,
+    });
+  };
   return (
     <div className={`${styles.start} ${styles.auth_wrap}`}>
       <div className={authStyles.auth_box}>
@@ -27,10 +33,12 @@ function RouteComponent() {
                 id="name5"
                 type="text"
                 value=""
-                placeholder="아이디 또는 회사 이메일을 입력하세요."
-                className={formStyles.lg}
+                placeholder="아이디 또는 이메일을 입력하세요."
+                className={cn(formStyles.lg, formStyles.error)}
               />
             </div>
+            {/* 에러인경우 : error 클래스 추가 */}
+            <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
           </div>
         </div>
 
@@ -54,13 +62,16 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} />
           <div className={styles.info}>
-            <Link to="">진행 현황</Link>
             <Link to="">아이디/비밀번호찾기</Link>
           </div>
         </div>
 
         <div className={styles.btn_box}>
-          <Button size="xl" variant="primary" className={styles.btn}>
+          <Button
+            size="xl"
+            variant="primary"
+            className={styles.btn}
+            onClick={() => handleClickAlert()}>
             로그인
           </Button>
         </div>
@@ -91,13 +102,9 @@ function RouteComponent() {
       </div>
 
       <div className={styles.login_guide}>
-        <IcoAlertCircleGray width={24} height={24} />
         <span>
-          아직 회원이 아니시라면{' '}
-          <Link to="" className={styles.btn_join}>
-            회원가입
-          </Link>
-          하세요.
+          <Link to="">회원 가입 현황</Link>
+          <Link to="/signup_step1">회원가입</Link>
         </span>
       </div>
     </div>

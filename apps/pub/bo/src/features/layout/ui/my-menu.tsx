@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './my-menu.module.css';
-import { ChipList, Popover, SelectOption, Button } from '@learnway/ui';
+import { ChipList, Popover, SelectOption } from '@learnway/ui';
 import { IcoStar, IcoClock01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 

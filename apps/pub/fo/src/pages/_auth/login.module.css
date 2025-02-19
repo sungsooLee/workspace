@@ -27,7 +27,7 @@
     .sns_login {
       @apply relative mt-[40px];
       .list {
-        @apply mt-[16px] flex items-center justify-center gap-[24px];
+        @apply mt-[24px] flex items-center justify-center gap-[24px];
         > li {
           @apply h-[48px] w-[48px];
         }
@@ -46,9 +46,15 @@
     }
   }
   .login_guide {
-    @apply body_3_r mt-[48px] flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray8)];
+    @apply body_3_r flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray8)];
     .btn_join {
       @apply text-[var(--secondary3)];
+    }
+    a {
+      @apply underline;
+      + a {
+        @apply ml-[16px];
+      }
     }
     svg {
       @apply mr-[4px];
