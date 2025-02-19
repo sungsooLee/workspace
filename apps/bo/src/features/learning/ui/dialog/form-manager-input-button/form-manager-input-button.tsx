@@ -31,7 +31,6 @@ const FormManagerInputButtonComponent = forwardRef<HTMLDivElement, FormManagerIn
     const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       // 모달 오픈 - 관리자 목록
       openModal(<ManagerList />, { title: '관리자 목록' }, (newOption) => {
-        console.log(newOption);
         newOption && setSelectedManager(newOption);
       });
     };

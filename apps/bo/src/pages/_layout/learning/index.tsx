@@ -1,7 +1,7 @@
 import React from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Input } from '@learnway/ui';
+import { Button, Input, InputButtonFormField } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
@@ -12,7 +12,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { FormRow } from '../../../shared/ui/form-row';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
-import { FormManagerInputButton } from '../../../features/learning/ui/dialog/form-manager-input-button/form-manager-input-button';
+import { ManagerList } from '../../../features/learning/ui/dialog/form-manager-input-button/manager-list';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -124,9 +124,19 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <FormManagerInputButton />
+                <InputButtonFormField
+                  // input={{
+                  //   disabled: true,
+                  // }}
+                  modalConfig={{
+                    content: <ManagerList />,
+                    title: t('운영자 목록'),
+                    onClose: (event) => console.log('page onClose', event),
+                  }}
+                />
+                {/*<FormManagerInputButton />*/}
               </DynamicFormField>
-              <DynamicFormField name={'연락처'}>{/*<CourseDetailForm />*/}</DynamicFormField>
+              {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>
           </ContentsRow>
           {/* 테넌트 */}
