@@ -10,7 +10,7 @@ import axios, {
 import { cookieService } from '../cookie/cookie.service';
 import { encodeQueryString } from '../../index';
 
-const API_REQUEST_TIMEOUT = 5000;
+const API_REQUEST_TIMEOUT = 9000;
 
 // sample url: https://jsonplaceholder.typicode.com/users
 interface RequestArgs {
