@@ -34,7 +34,7 @@ const RadioGroupComponent = forwardRef<
         defaultValue={defaultValue}
         {...props}>
         {options.map((option: RadioGroupOption) => (
-          <div className={styles.radio}>
+          <div className={styles.radio} key={option.value}>
             <Primitive.Item
               key={option.value}
               className={styles.item}

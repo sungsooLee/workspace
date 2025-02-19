@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { ContentsRow } from '../../../layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
 import { LectureTypeSiteUrl } from '../dialogs/lecture-type-site-url/lecture-type-site-url';
@@ -6,10 +6,14 @@ import { FormTeacherChipList } from '../../../../features/learning/ui/dialog/for
 import { FormManagerInputButton } from '../../../../features/learning/ui/dialog/form-manager-input-button/form-manager-input-button';
 import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { t } from 'i18next';
+import { FormRow } from '../../../../shared/ui/form-row';
+import { Button } from '@learnway/ui';
+import { z } from 'zod';
 
 // TODO : form 공통 영역으로 이동
 export interface FormProps {
   dummy?: any;
+  setForm?: any;
 }
 
 /**
@@ -19,71 +23,103 @@ export interface FormProps {
  * @param props
  * @constructor
  */
-const CourseDetailForm = forwardRef<HTMLDivElement, FormProps>(({ ...props }, ref) => {
+const CourseDetailForm = forwardRef<HTMLDivElement, FormProps>(({ setForm, ...props }, ref) => {
+  const customForm = useCustomForm(formConfig);
   const { provider, onSubmit, reset, control } = useCustomForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
 
+  useEffect(() => {
+    setForm?.(customForm);
+  }, []);
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'채널'} />
+        <Button type="submit" variant="point" size="sm">
+          submit
+        </Button>
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channel'} />
+        </FormRow>
       </ContentsRow>
       {/* 강의유형 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'강의유형'}>
-          <LectureTypeSiteUrl />
-        </DynamicFormField>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'강의유형'}>
+            <LectureTypeSiteUrl />
+          </DynamicFormField>
+        </FormRow>
       </ContentsRow>
       {/* 과정명 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'과정명'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'과정명'} />
+        </FormRow>
       </ContentsRow>
       {/* 과정내용 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'과정내용'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'과정내용'} />
+        </FormRow>
       </ContentsRow>
       {/* 대표이미지 */}
       {/* TODO: className 제거 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'대표이미지'} className={'w-[400px]'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'대표이미지'} className={'w-[400px]'} />
+        </FormRow>
       </ContentsRow>
       {/* 강의유형 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'강의유형'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'강의유형'} />
+        </FormRow>
       </ContentsRow>
       {/* 태그 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'태그'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'태그'} />
+        </FormRow>
       </ContentsRow>
       {/* 강사 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'강사'}>
-          <FormTeacherChipList />
-        </DynamicFormField>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'강사'}>
+            <FormTeacherChipList />
+          </DynamicFormField>
+        </FormRow>
       </ContentsRow>
       {/* 난이도 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'난이도'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'난이도'} />
+        </FormRow>
       </ContentsRow>
       {/* 강의실설정 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'강의실설정'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'강의실설정'} />
+        </FormRow>
       </ContentsRow>
       {/* 운영자 & 연락처 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'운영자'}>
-          <FormManagerInputButton />
-        </DynamicFormField>
-        <DynamicFormField provider={provider} name={'연락처'}>
-          {/*<CourseDetailForm />*/}
-        </DynamicFormField>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'운영자'}>
+            <FormManagerInputButton />
+          </DynamicFormField>
+          <DynamicFormField name={'연락처'}>{/*<CourseDetailForm />*/}</DynamicFormField>
+        </FormRow>
       </ContentsRow>
       {/* 테넌트 */}
       <ContentsRow>
-        <DynamicFormField provider={provider} name={'테넌트'} />
+        <FormRow provider={provider}>
+          <DynamicFormField name={'테넌트'} />
+        </FormRow>
       </ContentsRow>
     </form>
   );
@@ -96,7 +132,7 @@ export default CourseDetailForm;
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: '채널',
+      name: 'channel',
       type: 'text-popup-button',
       label: '채널',
       value: '',
@@ -233,7 +269,7 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    // channel: z.string().nonempty(t('채널을 선택해 주세요.')),
+    channel: z.string().nonempty(),
     /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
     category: z.string().nonempty(t('유효성 테스트')),
      language_code: z.string().nonempty(t('유효성 테스트')),

@@ -94,6 +94,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
           {selectedOptions?.map((option) => (
             <Chips
               {...props}
+              key={option[valueField]}
               option={option}
               className={styles.btn_chips}
               labelField={labelField}

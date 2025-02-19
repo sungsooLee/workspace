@@ -50,11 +50,13 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
     variant,
     size,
     label,
+    type = 'button',
     ...props
   }) => {
     return (
       <button
         {...props}
+        type={type}
         className={cn(
           styles.start,
           styles.btn,

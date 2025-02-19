@@ -12,7 +12,7 @@ import { TeacherList } from './teacher-list';
 
 export interface FormTeacherChipListProps {
   value?: any[];
-  onChange?: (value: any[]) => void;
+  onChange?: (value: any) => void;
   button?: ButtonComponentProps;
   chipList?: ChipListComponentProps;
 }
@@ -25,14 +25,15 @@ export interface FormTeacherChipListProps {
  * @constructor
  */
 const FormTeacherChipListComponent = forwardRef<HTMLDivElement, FormTeacherChipListProps>(
-  ({ value = [], onChange: ownerOnChange, button = {}, chipList, ...props }, ref) => {
+  ({ value = [], onChange, button = {}, chipList, ...props }, ref) => {
     const { open: openModal } = useModalControl();
     const [selectedChipOptions, setSelectedChipOptions] = useState<any[]>(value);
 
     const { variant = 'point', size = 'sm', label = t('선택') } = button;
 
     useEffect(() => {
-      ownerOnChange?.(selectedChipOptions);
+      console.log('>>>>> useEffect.selectedChipOptions', selectedChipOptions);
+      onChange?.(selectedChipOptions);
     }, [selectedChipOptions]);
 
     const appendSelectedChipOptions = (newOption: any) => {

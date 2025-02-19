@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { Button, Input, Radio } from '@learnway/ui';
+import { Button, Input, RadioGroup } from '@learnway/ui';
 import { isEqual } from 'lodash';
 
 const LectureTypeSiteUrlComponent = forwardRef<HTMLDivElement, any>(
@@ -23,7 +23,7 @@ const LectureTypeSiteUrlComponent = forwardRef<HTMLDivElement, any>(
         {/* 버튼 - 강의 타입 */}
         <Button>이러닝</Button>
         {/* 라디오 버튼 - 사내, 사외 */}
-        <Radio
+        <RadioGroup
           value={data.officeType}
           options={[
             { label: '사내', value: '사내' },
@@ -32,7 +32,7 @@ const LectureTypeSiteUrlComponent = forwardRef<HTMLDivElement, any>(
           onValueChange={(selectedValue) => setData({ ...data, officeType: selectedValue })}
         />
         {/* 라디오 버튼 - 별도 앱, 사외 사이트 */}
-        <Radio
+        <RadioGroup
           value={data.outOfficeType}
           options={[
             { label: '별도 앱', value: '별도 앱' },
