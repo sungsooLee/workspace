@@ -1,5 +1,15 @@
 .start {
+  @apply w-full;
   &.layout_wrap {
     @apply min-w-[1180px];
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.layout_wrap {
+      @apply min-w-[320px];
+    }
   }
 }

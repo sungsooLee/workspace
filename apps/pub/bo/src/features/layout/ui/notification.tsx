@@ -1,4 +1,4 @@
-import { memo, ReactNode, useState } from 'react';
+import { memo, useState } from 'react';
 
 import { Button, Popover } from '@learnway/ui';
 import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
@@ -57,7 +57,7 @@ const initialNotifications: NotificationInfo[] = [
     hasLink: false,
   },
   {
-    id: 4,
+    id: 5,
     date: '02.16',
     title: '시스템 점검4',
     message: '내일 오전 2시에 점검이 있습니다4.',
@@ -66,7 +66,7 @@ const initialNotifications: NotificationInfo[] = [
     hasLink: true,
   },
   {
-    id: 5,
+    id: 6,
     date: '02.16',
     title: '시스템 점검5',
     message: '내일 오전 2시에 점검이 있습니다5.',

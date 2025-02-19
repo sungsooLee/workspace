@@ -19,7 +19,7 @@ export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
   const { data } = useFetchMenus({
     parentMenuId: 1,
     tenantId: authUser?.activeTenantId,
-    roleIds: authUser?.activeRoleId,
+    //roleIds: authUser?.activeRoleId,
   });
 
   return {
@@ -44,7 +44,7 @@ export function useMenus(): HookData<Menu[]> {
   const { data } = useFetchMenus({
     parentMenuId: 1,
     tenantId: authUser?.activeTenantId,
-    roleIds: authUser?.activeRoleId,
+    //roleIds: authUser?.activeRoleId,
   });
 
   return {

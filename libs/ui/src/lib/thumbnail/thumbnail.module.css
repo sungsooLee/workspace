@@ -1,9 +1,29 @@
 .start {
-  position: relative;
+  @apply relative;
+  &.thumbnail {
+    @apply max-w-[128px] overflow-hidden rounded-[4px];
+    &.active {
+      .thumbnail_image {
+        @apply opacity-40;
+      }
+      &::before {
+        @apply absolute left-0 top-0 z-0 h-full w-full content-[''];
+      }
+    }
+  }
 
   .checkbox {
-    position: absolute;
-    top: 0;
-    left: 0;
+    @apply absolute right-[6px] top-[6px] z-[3];
+  }
+
+  .thumbnail_image {
+    @apply h-[84px] w-[128px] brightness-[80%] filter;
+    &.default_image {
+      @apply brightness-[100%];
+    }
+  }
+
+  .btn_delete {
+    @apply absolute left-1/2 top-1/2 z-[2] -ml-[12px] -mt-[12px] h-[24px] w-[24px] bg-transparent;
   }
 }

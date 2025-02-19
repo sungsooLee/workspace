@@ -19,10 +19,10 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Radio } from '@learnway/ui';
+import { RadioGroup } from '@learnway/ui';
 
 // 적용방법(예시)
-<Radio
+<RadioGroup
   options={[
     { value: 'type1', label: 'aaaaa' },
     { value: 'type1-2', label: 'bbbbb' },
@@ -41,6 +41,7 @@ import { Radio } from '@learnway/ui';
               { value: 'type1-2', label: 'bbbbb' },
               { value: 'type1-3', label: 'ccccc' },
             ]}
+            orientation="vertical"
           />
         </div>
         <div className="desc">
