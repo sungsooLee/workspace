@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -24,6 +24,7 @@ const PopoverContent = () => {
                 className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
                 onClick={() => handleClick(idx)}>
                 {langs}
+                <IcoCheck02 width={16} height={16} stroke="#131c30" className={styles.icon_check} />
               </Button>
             </li>
           ))}
