@@ -59,7 +59,6 @@ const useDynamicForm = (config: DynamicFormConfig) => {
 
       handleSubmit(
         (data) => {
-          console.log('submit data => ', data);
           const objectParams: any = {};
           // 각 빌더에 대해 제출된 데이터를 재구성
           config.builders.forEach((prop: any) => {
@@ -181,13 +180,13 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     provider: {
       ...config,
       control: extendedControl,
-      formState,
+      builders: config.builders,
+      fieldRefs,
       watch,
       onFormChange: resetForm,
-      formSubmit,
-      fieldRefs,
       formData: getValues(),
       onFocus: handleFocus,
+      formState,
     },
     control,
     getValues,

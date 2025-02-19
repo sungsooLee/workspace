@@ -11,7 +11,15 @@ const DynamicFormFieldComponent: FC<any> = ({ control, name, component: Componen
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value, ref } }) => (
-        <Component {...props} onChange={onChange} onBlur={onBlur} value={value} ref={ref} />
+        <Component
+          {...props}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          ref={ref}
+          control={control}
+        />
       )}
     />
   );

@@ -120,12 +120,19 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             placeholder={placeHolder}
             className={cn(styles.input, className, borderNone ? styles.bd_none : '')}
-            onKeyDown={onKeyDown}
+            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+              if (event.key === 'Enter') {
+                event.preventDefault(); // Enter 키 기본 동작 방지
+              }
+              onKeyDown && onKeyDown(event);
+            }}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              handleInputChange(event?.target?.value)
-            }
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              event.preventDefault();
+              event.stopPropagation();
+              handleInputChange(event?.target?.value);
+            }}
           />
         )}
 
