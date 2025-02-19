@@ -48,7 +48,7 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/menu/menu2-3-1",
+              "path": "/platform/menu",
               "children": [
                 {
                   "title": "메뉴 수정",
