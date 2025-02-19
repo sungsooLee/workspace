@@ -1,3 +1,5 @@
+import { isMobile } from 'react-device-detect';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer } from '@learnway/icons';
@@ -58,7 +60,7 @@ function RouteComponent() {
               취소
             </Button>
             <Button variant="primary" size="xl">
-              확인
+              {isMobile ? '모바일' : '확인'}
             </Button>
           </div>
         </div>
