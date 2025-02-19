@@ -14,7 +14,7 @@ import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture
 import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 import { ManagerList } from '../../../features/learning/ui/dialog/form-manager-input-button/manager-list';
 
-export const Route = createFileRoute('/_layout/learning/')({
+export const Route = createFileRoute('/_unauth/learnings/')({
   component: RouteComponent,
 });
 
@@ -85,7 +85,7 @@ function RouteComponent() {
           {/* TODO: className 제거 */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'대표이미지'} />
+              <DynamicFormField name={'대표이미지'} className={'w-[400px]'} />
             </FormRow>
           </ContentsRow>
           {/* 강의유형 */}
