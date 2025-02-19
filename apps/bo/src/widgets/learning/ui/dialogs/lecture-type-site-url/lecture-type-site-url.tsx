@@ -20,7 +20,7 @@ const LectureTypeSiteUrlComponent = forwardRef<HTMLDivElement, any>(
 
     return (
       <div ref={ref} className={'flex w-full flex-row'}>
-        {/* 버튼 - 강의 타입 */}
+        {/* 버튼 - 강의 타입 */}`
         <Button>이러닝</Button>
         {/* 라디오 버튼 - 사내, 사외 */}
         <RadioGroup

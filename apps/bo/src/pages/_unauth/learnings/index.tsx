@@ -85,7 +85,7 @@ function RouteComponent() {
           {/* TODO: className 제거 */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'대표이미지'} className={'w-[400px]'} />
+              <DynamicFormField name={'대표이미지'} />
             </FormRow>
           </ContentsRow>
           {/* 강의유형 */}
