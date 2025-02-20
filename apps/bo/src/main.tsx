@@ -8,10 +8,12 @@ import '@learnway/config/style/font.css';
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
 
+const isLocal = process.env.NODE_ENV === 'local';
+
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  basepath: '/bo',
+  basepath: import.meta.env.VITE_BO_BASE_PATH,
 });
 
 declare module '@tanstack/react-router' {

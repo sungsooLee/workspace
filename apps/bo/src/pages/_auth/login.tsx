@@ -24,7 +24,7 @@ function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { provider, onSubmit, reset, control } = useCustomForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control } = useCustomForm(detailConfig);
 
   const { data } = useFetchAuthUser();
 
@@ -38,7 +38,7 @@ function RouteComponent() {
   }, [data, inProgress]);
 
   useEffect(() => {
-    reset({
+    onFormChange({
       username: 'test2@email.com',
       password: 'hae1234',
     });

@@ -23,6 +23,7 @@ build:
       variables:
         AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID_DEV}'
         AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY_DEV}'
+        CONFIG: 'dev'
     - when: never
   before_script:
     # 넥서스 레지스트리 설정
@@ -37,8 +38,8 @@ build:
     - pnpm config set auto-install-peers true
   script:
     - pnpm install --no-frozen-lockfile
-    - npx nx build fo
-    - npx nx build bo
+    - npx nx build fo --configuration=${CONFIG}
+    - npx nx build bo --configuration=${CONFIG}
   artifacts:
     paths:
       - dist/apps/fo
