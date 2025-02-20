@@ -1,19 +1,39 @@
 /* form.module.css */
 .form_row {
+}
+
+.row {
   @apply flex w-full gap-[32px] text-left;
+
   .row {
     @apply mt-[16px];
   }
   & + .row {
     @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
     &.no_line {
-      @apply border-0;
+      @apply border-t-0 pt-0;
+    }
+  }
+}
+
+.col {
+  @apply flex-col;
+  &.no_line {
+    .row {
+      & + .row {
+        @apply border-t-0 pt-0;
+      }
+    }
+  }
+  &:has(.row .form_item) {
+    + hr.divider {
+      @apply mt-[16px];
     }
   }
 }
 
 .form_item {
-  @apply relative w-full flex-1 pb-[16px];
+  @apply relative w-full flex-1 pb-[16px] text-left;
   &.pd_none {
     @apply pb-[0];
   }
@@ -152,4 +172,8 @@
 
 .id_save {
   @apply text-[1.4rem];
+}
+
+hr.divider {
+  @apply h-[1px] w-full bg-[var(--gray3)];
 }

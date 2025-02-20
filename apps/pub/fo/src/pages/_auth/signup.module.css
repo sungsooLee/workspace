@@ -4,7 +4,7 @@
     @apply relative z-0 px-[40px] py-[48px];
 
     h4.title {
-      @apply title_6_b pb-[16px] text-left text-[var(--gray9)];
+      @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
     }
 
     .signup_info {
@@ -78,12 +78,6 @@
       @apply mt-[48px] flex items-center justify-center;
       button {
         @apply w-full;
-      }
-    }
-
-    .form_low {
-      + .btn_wrap {
-        @apply mt-[32px];
       }
     }
   }
