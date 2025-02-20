@@ -3,12 +3,11 @@ import { isMobile } from 'react-device-detect';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
-import authStyles from './auth.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import { Button, RadioCard, Stepper, SelectOption, Checkbox } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup_step1 copy')({
+export const Route = createFileRoute('/_auth/signup_step4')({
   component: RouteComponent,
 });
 
@@ -22,8 +21,8 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${styles.auth_wrap}`}>
-      <div className={authStyles.auth_box}>
+    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
+      <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
@@ -95,7 +94,7 @@ function RouteComponent() {
           </ul>
         </div>
 
-        <div className={authStyles.btn_wrap}>
+        <div className={signupStyles.btn_wrap}>
           <Button variant="gray" size="xl">
             취소
           </Button>

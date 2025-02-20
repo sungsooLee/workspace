@@ -1,12 +1,12 @@
 import { isMobile } from 'react-device-detect';
-
+import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
-import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
-import authStyles from './auth.module.css';
+import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
+import formStyles from '../../assets/styles/modules/form.module.css';
+import { Button, Stepper, SelectOption, Input } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup_step2')({
   component: RouteComponent,
@@ -22,16 +22,37 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${styles.auth_wrap}`}>
-      <div className={authStyles.auth_box}>
+    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
+      <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step2" />
           </div>
         </div>
-        <div className={authStyles.btn_wrap}>
+
+        <h4 className={signupStyles.title}>협력업체 사업자 정보 조회</h4>
+        <div className={formStyles.form_row}>
+          <div className={`${formStyles.form_item} ${formStyles.pd_none}`}>
+            <label htmlFor="name" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>사업자 등록 번호</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id="name" type="text" placeholder="숫자 10자리 입력(1234567890)" value="" />
+              <Button variant="gray" size="sm">
+                조회
+              </Button>
+            </div>
+            {/*<p className={cn(formStyles.guide_text)}>기본 메시지</p>*/}
+          </div>
+        </div>
+
+        <div className={signupStyles.btn_wrap}>
           <Button variant="gray" size="xl">
-            취소
+            이전
           </Button>
           <Button variant="primary" size="xl">
             다음

@@ -214,7 +214,7 @@ module.exports = {
         '.button_2_r': {
           ...baseTitle,
           fontSize: '1.6rem',
-          fontWeight: '700',
+          fontWeight: '400',
         },
         '.button_3_b': {
           ...baseTitle,

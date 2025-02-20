@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input, Checkbox, Button, useModalControl } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { Input, Checkbox, Button } from '@learnway/ui';
+import { IcoAlertCircleGray } from '@learnway/icons';
 import styles from './login.module.css';
-import authStyles from './auth.module.css';
+import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
@@ -13,16 +13,9 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
-  const handleClickAlert = () => {
-    openAlert({
-      title: <>아이디를 확인해 주세요.</>,
-      description: <>아이디 또는 비밀번호를 다시 확인해 주세요.</>,
-    });
-  };
   return (
-    <div className={`${styles.start} ${styles.auth_wrap}`}>
-      <div className={authStyles.auth_box}>
+    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
+      <div className={styles.auth_box}>
         <div className={formStyles.form_row}>
           <div className={formStyles.form_item}>
             <label htmlFor="name5" className={formStyles.form_label}>
@@ -33,12 +26,10 @@ function RouteComponent() {
                 id="name5"
                 type="text"
                 value=""
-                placeholder="아이디 또는 이메일을 입력하세요."
-                className={cn(formStyles.lg, formStyles.error)}
+                placeholder="아이디 또는 회사 이메일을 입력하세요."
+                className={formStyles.lg}
               />
             </div>
-            {/* 에러인경우 : error 클래스 추가 */}
-            <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
           </div>
         </div>
 
@@ -67,11 +58,7 @@ function RouteComponent() {
         </div>
 
         <div className={styles.btn_box}>
-          <Button
-            size="xl"
-            variant="primary"
-            className={styles.btn}
-            onClick={() => handleClickAlert()}>
+          <Button size="xl" variant="primary" className={styles.btn}>
             로그인
           </Button>
         </div>
