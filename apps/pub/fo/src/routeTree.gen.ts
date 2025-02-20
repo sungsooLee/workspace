@@ -24,6 +24,7 @@ import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
@@ -118,6 +119,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTabsRoute = GuideGuideTabsImport.update({
+  id: '/guide/tabs',
+  path: '/guide/tabs',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -435,6 +442,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSwitchImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/tabs': {
+      id: '/_guide/guide/tabs'
+      path: '/guide/tabs'
+      fullPath: '/guide/tabs'
+      preLoaderRoute: typeof GuideGuideTabsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -506,6 +520,7 @@ interface GuideRouteChildren {
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -531,6 +546,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -578,6 +594,7 @@ export interface FileRoutesByFullPath {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
@@ -611,6 +628,7 @@ export interface FileRoutesByTo {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
@@ -647,6 +665,7 @@ export interface FileRoutesById {
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
+  '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
@@ -682,6 +701,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/guide'
@@ -714,6 +734,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/guide'
@@ -748,6 +769,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/select'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
+    | '/_guide/guide/tabs'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_guide/guide/'
@@ -814,6 +836,7 @@ export const routeTree = rootRoute
         "/_guide/guide/select",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
+        "/_guide/guide/tabs",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -924,6 +947,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/tabs": {
+      "filePath": "_guide/guide/tabs.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tooltip": {

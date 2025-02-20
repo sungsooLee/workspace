@@ -170,7 +170,6 @@ function RouteComponent() {
                 { value: 'type2', label: '+83' },
               ]}
             />
-            <span className={formStyles.dash}></span>
             <Input
               id="name-1-6"
               type="text"
@@ -236,7 +235,6 @@ function RouteComponent() {
                       { value: 'type2', label: '+83' },
                     ]}
                   />
-                  <span className={formStyles.dash}></span>
                   <Input
                     id="name-1-7-2"
                     type="text"
