@@ -7,7 +7,7 @@ import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup_step2')({
+export const Route = createFileRoute('/_auth/signup_step3')({
   component: RouteComponent,
 });
 
@@ -25,13 +25,29 @@ function RouteComponent() {
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.signup_step}>
-            <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step2" />
+            <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step3" />
           </div>
         </div>
 
-        <h4 className={signupStyles.title}>협력업체 사업자 정보 조회</h4>
+        <h4 className={signupStyles.title}>협력업체 회사 정보</h4>
         <div className={formStyles.form_row}>
-          <div className={`${formStyles.form_item} ${formStyles.pd_none}`}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>회사명</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id="name" type="text" placeholder="" value="현대오토애버" />
+            </div>
+            <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
+          </div>
+        </div>
+
+        <div className={formStyles.form_row}>
+          <div className={formStyles.form_item}>
             <label htmlFor="name" className={formStyles.form_label}>
               <span className={formStyles.form_text}>사업자 등록 번호</span>
               {/* 필수 케이스 */}
@@ -40,12 +56,8 @@ function RouteComponent() {
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Input id="name" type="text" placeholder="숫자 10자리 입력(1234567890)" value="" />
-              <Button variant="gray" size="sm">
-                조회
-              </Button>
+              <Input id="name" type="text" placeholder="" value="123-45-67890" readOnly />
             </div>
-            <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
           </div>
         </div>
 
@@ -54,7 +66,7 @@ function RouteComponent() {
             이전
           </Button>
           <Button variant="primary" size="xl">
-            다음
+            확인
           </Button>
         </div>
       </div>

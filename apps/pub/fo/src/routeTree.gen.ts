@@ -17,6 +17,7 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupstep4Import } from './pages/_auth/signup_step4'
+import { Route as AuthSignupstep3Import } from './pages/_auth/signup_step3'
 import { Route as AuthSignupstep2Import } from './pages/_auth/signup_step2'
 import { Route as AuthSignupstep1Import } from './pages/_auth/signup_step1'
 import { Route as AuthLoginImport } from './pages/_auth/login'
@@ -76,6 +77,12 @@ const AuthSuccessRoute = AuthSuccessImport.update({
 const AuthSignupstep4Route = AuthSignupstep4Import.update({
   id: '/signup_step4',
   path: '/signup_step4',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupstep3Route = AuthSignupstep3Import.update({
+  id: '/signup_step3',
+  path: '/signup_step3',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -281,6 +288,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupstep2Import
       parentRoute: typeof AuthImport
     }
+    '/_auth/signup_step3': {
+      id: '/_auth/signup_step3'
+      path: '/signup_step3'
+      fullPath: '/signup_step3'
+      preLoaderRoute: typeof AuthSignupstep3Import
+      parentRoute: typeof AuthImport
+    }
     '/_auth/signup_step4': {
       id: '/_auth/signup_step4'
       path: '/signup_step4'
@@ -472,6 +486,7 @@ interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupstep1Route: typeof AuthSignupstep1Route
   AuthSignupstep2Route: typeof AuthSignupstep2Route
+  AuthSignupstep3Route: typeof AuthSignupstep3Route
   AuthSignupstep4Route: typeof AuthSignupstep4Route
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
@@ -480,6 +495,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupstep1Route: AuthSignupstep1Route,
   AuthSignupstep2Route: AuthSignupstep2Route,
+  AuthSignupstep3Route: AuthSignupstep3Route,
   AuthSignupstep4Route: AuthSignupstep4Route,
   AuthSuccessRoute: AuthSuccessRoute,
 }
@@ -556,6 +572,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/signup_step1': typeof AuthSignupstep1Route
   '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/signup_step4': typeof AuthSignupstep4Route
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
@@ -589,6 +606,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup_step1': typeof AuthSignupstep1Route
   '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/signup_step4': typeof AuthSignupstep4Route
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
@@ -625,6 +643,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup_step1': typeof AuthSignupstep1Route
   '/_auth/signup_step2': typeof AuthSignupstep2Route
+  '/_auth/signup_step3': typeof AuthSignupstep3Route
   '/_auth/signup_step4': typeof AuthSignupstep4Route
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -660,6 +679,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup_step1'
     | '/signup_step2'
+    | '/signup_step3'
     | '/signup_step4'
     | '/success'
     | '/'
@@ -692,6 +712,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup_step1'
     | '/signup_step2'
+    | '/signup_step3'
     | '/signup_step4'
     | '/success'
     | '/'
@@ -726,6 +747,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup_step1'
     | '/_auth/signup_step2'
+    | '/_auth/signup_step3'
     | '/_auth/signup_step4'
     | '/_auth/success'
     | '/_layout/'
@@ -788,6 +810,7 @@ export const routeTree = rootRoute
         "/_auth/login",
         "/_auth/signup_step1",
         "/_auth/signup_step2",
+        "/_auth/signup_step3",
         "/_auth/signup_step4",
         "/_auth/success"
       ]
@@ -836,6 +859,10 @@ export const routeTree = rootRoute
     },
     "/_auth/signup_step2": {
       "filePath": "_auth/signup_step2.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup_step3": {
+      "filePath": "_auth/signup_step3.tsx",
       "parent": "/_auth"
     },
     "/_auth/signup_step4": {
