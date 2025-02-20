@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import { createFileRoute } from '@tanstack/react-router';
-import { routeConfig } from '../../../../features/auth';
 
 /*
 type ProductSearchSortOptions = 'newest' | 'oldest' | 'price';
@@ -20,7 +19,6 @@ const productSearchSchema = z.object({
 export const Route = createFileRoute('/_layout/learning/$id/video')({
   component: RouteComponent,
   validateSearch: productSearchSchema,
-  ...routeConfig(),
 });
 
 function RouteComponent() {

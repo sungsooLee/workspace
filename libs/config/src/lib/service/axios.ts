@@ -1,20 +1,18 @@
 import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { API_SERVER } from '../const/config.constant';
 import { OAuthApiPrefix } from '../service/config.service';
 
-import { httpService, cookieService, HttpMethod } from '@learnway/shared';
+import { httpService, HttpMethod } from '@learnway/shared';
 
 export function initAxios() {
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = API_SERVER;
+  axios.defaults.baseURL = import.meta.env.AXIOS_BASE_URL;
 
   const interceptors = {
     request: {
       onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
-        console.log('axios.interceptors');
-        const accessToken = cookieService.get('ACCESS-TOKEN');
+        const accessToken = localStorage.getItem('ACCESS-TOKEN');
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
@@ -29,9 +27,7 @@ export function initAxios() {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         // error
-        console.log('interceptors onRejected', error);
         if (errorResponse?.status === 403) {
-          console.log('401 error');
           return await reissueProccess(error);
         }
 
@@ -42,17 +38,21 @@ export function initAxios() {
 
   const reissueProccess = (error: any): Promise<any> => {
     const { config, response: errorResponse } = error;
+    const refresh_token = localStorage.getItem('REFRESH-TOKEN');
+    if (!refresh_token) {
+      return Promise.reject();
+    }
     return httpService
       .execute<AxiosResponse>(
         {
           method: HttpMethod.POST,
           url: `${OAuthApiPrefix()}/token-reissue`,
         },
-        { headers: { 'refresh-token': `${cookieService.get('REFRESH-TOKEN')}` } },
+        { headers: { 'refresh-token': `${refresh_token}` } },
       )
       .then((data) => {
-        cookieService.set('ACCESS-TOKEN', data.headers['access-token']);
-        cookieService.set('REFRESH-TOKEN', data.headers['refresh-token']);
+        localStorage.setItem('ACCESS-TOKEN', data.headers['access-token']);
+        localStorage.setItem('REFRESH-TOKEN', data.headers['refresh-token']);
 
         config.headers.authorization = `Bearer ${data.headers['access-token']}`;
         return axios(config);

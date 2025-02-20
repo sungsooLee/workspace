@@ -30,40 +30,6 @@ export function convertHierarchyToList(
   return nodes;
 }
 
-export function convertHierarchyNode111(
-  tree: any,
-  convertFn: (node: any, depth: number, index: number, parentNode?: any) => [any, any[]],
-  childProperty = 'children',
-) {
-  if (!tree) {
-    return;
-  }
-  let index = 0;
-  const recursiveCall = (hierarchyData: any[], r: any, depth = 0, parentNode?: any) => {
-    if (!hierarchyData?.length) {
-      return;
-    }
-    depth++;
-    hierarchyData.forEach((node: any) => {
-      //const [node, children] = convertFn(data, depth, index, parentNode);
-      if (convertFn) {
-        r.push(convertFn(node, depth, index, parentNode));
-      } else {
-        r.push(node);
-      }
-
-      index++;
-      if (node?.[childProperty]?.length > 0) {
-        recursiveCall(node[childProperty], r, depth, node);
-      }
-    });
-  };
-  const convertTree: any = [];
-  recursiveCall(isArray(tree) ? tree : [tree], convertTree);
-  console.log('convertTree', convertTree);
-  return isArray(tree) ? convertTree : convertTree[0];
-}
-
 export function convertHierarchyNode(
   tree: any,
   convertFn: (node: any, depth: number, index: number, parentNode?: any) => [any, any[]],
