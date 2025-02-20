@@ -85,7 +85,7 @@ function RouteComponent() {
                   placeholder="아이디(hyundai.kim@hyundail.com)"
                   value=""
                 />
-                <Button variant="gray" size="sm">
+                <Button variant="gray" size="lg">
                   확인
                 </Button>
               </div>
@@ -175,30 +175,35 @@ function RouteComponent() {
           </div>
         </div>
 
+        <div className={signupStyles.title_box}>
+          <h4 className={signupStyles.title}>이용약관 및 개인정보정책 동의</h4>
+          <p className={styles.txt_info}>아래의 내용을 주의 깊게 확인 후 동의해주세요.</p>
+        </div>
+
         <div className={signupStyles.signup_check}>
           <div className={signupStyles.check_all}>
-            <Checkbox label="전체 약관 동의" />
+            <Checkbox label="전체 약관 동의(선택항목 포함)" />
           </div>
           <ul className={signupStyles.check_list}>
             <li>
               <Checkbox label="러닝웨이 이용약관(필수)" />
-              <Button>자세히 보기</Button>
+              <Button className={signupStyles.btn_view}>자세히 보기</Button>
             </li>
             <li>
               <Checkbox label="개인정보 이용동의(필수)" />
-              <Button>자세히 보기</Button>
+              <Button className={signupStyles.btn_view}>자세히 보기</Button>
             </li>
             <li>
               <Checkbox label="고유식별 정보 처리 동의(필수)" />
-              <Button>자세히 보기</Button>
+              <Button className={signupStyles.btn_view}>자세히 보기</Button>
             </li>
             <li>
-              <Checkbox label="개인정보 이용동의(필수)" />
-              <Button>자세히 보기</Button>
+              <Checkbox label="회원가입 및 이용 개인정보 제3자 제공동의(필수)" />
+              <Button className={signupStyles.btn_view}>자세히 보기</Button>
             </li>
             <li>
-              <Checkbox label="러닝웨이 회원가입 및 이용 개인정보 제3자 제공동의(필수)" />
-              <Button>자세히 보기</Button>
+              <Checkbox label="민감정보 수집 및 이용(선택)" />
+              <Button className={signupStyles.btn_view}>자세히 보기</Button>
             </li>
           </ul>
         </div>

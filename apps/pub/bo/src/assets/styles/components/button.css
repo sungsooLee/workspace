@@ -1,10 +1,2 @@
 .nlp--button {
-  &.outline {
-    border-color: red !important;
-  }
-  &.sm {
-    color: theme('colors.gray.4') !important;
-    @apply bg-black;
-    font-weight: 100;
-  }
 }
