@@ -10,6 +10,9 @@ import { IcoFillActive } from '@learnway/icons';
 interface TabItemProps {
   title: string;
   key: string;
+  count?: boolean;
+  number?: string;
+  alarm?: boolean;
   content: React.ReactNode;
 }
 
@@ -18,6 +21,7 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
   className?: string;
   variant?: 'line' | 'fill' | 'round' | 'progress';
   size?: 'sm' | 'md';
+  color?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   ariaLabel?: string;
   selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
   // selectedTabIndex?: number; // 최초 렌더링 이후 tab 조작 필요시 사용
@@ -27,7 +31,7 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
 export const TabsComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   TabsComponentProps
->(({ className, items, variant, size, ariaLabel, selectedTabKey, ...props }, ref) => {
+>(({ className, items, variant, size, color, ariaLabel, selectedTabKey, ...props }, ref) => {
   const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key);
 
   // changed selectedTabKey
@@ -43,6 +47,7 @@ export const TabsComponent = forwardRef<
         className,
         'nlp--tabs',
         size && styles[size],
+        color && styles[color],
         variant && styles[variant],
       )}
       value={value}
@@ -50,8 +55,12 @@ export const TabsComponent = forwardRef<
       {/* Tab Buttons */}
       <Primitive.List className={styles.list} aria-label={ariaLabel}>
         {items.map((d: TabItemProps, index) => (
-          <Primitive.Trigger className={styles.trigger} value={d.key} key={d.key}>
+          <Primitive.Trigger
+            className={cn(styles.trigger, d.alarm ? styles.alarm : '')}
+            value={d.key}
+            key={d.key}>
             {d.title}
+            {d.count && <span className={styles.count}>{d.number}</span>}
             {variant === 'fill' && (
               <IcoFillActive width={18} height={16} fill="#00AFD5" className={styles.icon_active} />
             )}
