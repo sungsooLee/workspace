@@ -99,7 +99,7 @@ const gridConfig = {
       render: (info: any) => (
         <Link
           className={'text-blue-600'}
-          to={`/platform/system/translation/view?code=${info.getValue()}`}>
+          to={'/platform/system/translation/view?code=' + info.getValue()}>
           {info.getValue()}
         </Link>
       ),

@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:fo": "npx nx serve fo",
-    "dev:bo": "cross-env NODE_ENV=local npx nx serve bo",
+    "dev:fo": "npx nx serve fo --configuration=local",
+    "dev:fo:dev": "npx nx serve fo --configuration=dev",
+    "dev:bo": "npx nx serve bo --configuration=local",
+    "dev:bo:dev": "npx nx serve bo --configuration=dev",
     "dev:pb-bo": "npx nx serve pb-bo",
     "dev:pb-fo": "npx nx serve pb-fo",
     "build:fo": "npx nx build fo",

@@ -200,6 +200,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     getValues,
     onSubmit: formSubmit,
     onFormChange,
+    reset,
   };
 };
 

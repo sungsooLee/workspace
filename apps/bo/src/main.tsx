@@ -13,7 +13,7 @@ const isLocal = process.env.NODE_ENV === 'local';
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  basepath: isLocal ? '' : '/bo',
+  basepath: import.meta.env.VITE_BO_BASE_PATH,
 });
 
 declare module '@tanstack/react-router' {
