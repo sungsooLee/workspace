@@ -96,18 +96,43 @@
       .list {
         @apply flex w-full overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
         .trigger {
-          @apply body_bo_1_b min-h-[54px] flex-1 overflow-hidden bg-[var(--white)] text-[var(--gray7)];
+          @apply body_bo_1_b -mb-[1px] min-h-[54px] flex-1 bg-[var(--white)] text-[var(--gray7)];
           &::before,
           &::after {
-            @apply absolute bg-no-repeat content-[''];
+            @apply absolute z-[1] h-full w-[18px] bg-transparent bg-[19px_auto] bg-no-repeat content-[''];
+            background-position: -1px 0;
+          }
+          &::before {
+            @apply left-0 top-0 hidden bg-[url('../../assets/images/bg/bg_progress_default.png')];
           }
           &::after {
-            @apply absolute right-0 top-0 z-[1] h-full w-[20px] bg-[var(--white)];
+            @apply -right-[18px] top-0 bg-[url('../../assets/images/bg/bg_progress_default.png')];
           }
           &[data-state='active'] {
             @apply bg-[var(--secondary5)];
+            &::before {
+              @apply block bg-[url('../../assets/images/bg/bg_progress_left_active.png')];
+            }
             &::after {
-              @apply bg-[url('../../assets/images/bg/bg_tab_progress_active.png')] bg-no-repeat;
+              @apply hidden;
+            }
+            & + .trigger {
+              &::before {
+                @apply left-0 block bg-[var(--white)] bg-[url('../../assets/images/bg/bg_progress_right_active.png')];
+              }
+            }
+          }
+          &:nth-child(1) {
+            &::before {
+              @apply hidden;
+            }
+            &::after {
+              @apply hidden;
+            }
+            &[data-state='inactive'] {
+              &::after {
+                @apply block bg-[url('../../assets/images/bg/bg_progress_default.png')];
+              }
             }
           }
           &:nth-last-child(1) {
