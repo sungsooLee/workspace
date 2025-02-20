@@ -32,12 +32,12 @@
         @apply border-t border-solid border-[var(--gray3)];
         a,
         button {
-          @apply btuuon_2_r block px-[24px] py-[20px];
+          @apply button_2_r block px-[24px] py-[20px];
         }
       }
     }
     .btn_log {
-      @apply btuuon_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
+      @apply button_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
       svg {
         @apply mr-[10px];
       }

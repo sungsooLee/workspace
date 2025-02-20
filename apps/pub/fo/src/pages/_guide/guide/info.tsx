@@ -74,6 +74,17 @@ ex) test.module.css
             </pre>
           </div>
           <div className="info">0~767px(mobile), 768px이상부터 pc화면으로 노출된다.</div>
+
+          <h3 className="guide_tit3">모바일 분기처리</h3>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`// 분기처리 import
+import { isMobile } from 'react-device-detect';
+
+{isMobile ? 'mobile 내용' : 'PC 내용'}`}</code>
+            </pre>
+          </div>
         </div>
       </div>
     </div>

@@ -163,8 +163,8 @@ function RouteComponent() {
               <Input
                 id="name-1-3"
                 type="text"
-                disabled
                 placeholder="학습자원을 분류할 카테고리를 선택하세요."
+                disabled
               />
               <Button variant="gray" size="sm">
                 선택
@@ -462,7 +462,6 @@ function RouteComponent() {
                   placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                   resize="none"
                   size="sm"
-                  disabled
                 />
               </div>
             </div>
@@ -471,7 +470,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={cn(formStyles.form_item, formStyles.type_switch)}>
+          <div className={formStyles.form_item}>
             {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-11" className={formStyles.form_label}>
               <span className={formStyles.form_text}>교육자원 활용여부</span>
@@ -497,7 +496,7 @@ function RouteComponent() {
         {/* row */}
         <div className="row">
           {/* Textarea type */}
-          <div className={cn(formStyles.form_item, formStyles.type_switch)}>
+          <div className={formStyles.form_item}>
             {/* 25-02-18 : 수정 S */}
             <label htmlFor="name-1-12" className={formStyles.form_label}>
               <span className={formStyles.form_text}>보안콘텐츠 여부</span>

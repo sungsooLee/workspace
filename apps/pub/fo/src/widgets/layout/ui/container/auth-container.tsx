@@ -14,10 +14,14 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
   const pageTitle = PAGE_TITLE_BY_PATH[location.pathname];
 
   return (
-    <div className={`${styles.start} ${styles.auth_container}`}>
+    <div
+      className={`${styles.start} ${styles.auth_container} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
       <div className={styles.auth_area}>
         <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>{pageTitle}</h2>
-        <div className={styles.auth_inner}>{children}</div>
+        <div
+          className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
+          {children}
+        </div>
         <FooterAuth />
       </div>
     </div>

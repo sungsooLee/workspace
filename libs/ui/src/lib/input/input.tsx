@@ -10,7 +10,7 @@ import styles from './input.module.css';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
-  placeHolder?: string;
+  placeholder?: string;
   unitText?: string;
   // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,7 +32,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       className,
       value = '',
       onBlur,
-      placeHolder = '값을 입력하세요.',
+      placeholder = '값을 입력하세요.',
       unitText,
       onChange,
       showCounter,
@@ -89,7 +89,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             className={cn(className)}
             value={inputValue}
             thousandSeparator={thousandSeparator}
-            placeholder={placeHolder}
+            placeholder={placeholder}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onValueChange={(values) => {
@@ -104,7 +104,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             value={inputValue}
             format={format}
             mask={mask}
-            placeholder={placeHolder}
+            placeholder={placeholder}
             allowEmptyFormatting={allowEmptyFormatting}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -118,7 +118,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             value={inputValue || ''}
             disabled={disabled}
             type={type}
-            placeholder={placeHolder}
+            placeholder={placeholder}
             className={cn(styles.input, className, borderNone ? styles.bd_none : '')}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
