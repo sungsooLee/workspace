@@ -603,7 +603,7 @@ function RouteComponent() {
             </span>
           </label>
           <div className={formStyles.input_box}>
-            <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
+            <Input id="name3" type="text" value="text" placeholder="입력" error />
           </div>
           {/* 에러인경우 : error 클래스 추가 */}
           <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
