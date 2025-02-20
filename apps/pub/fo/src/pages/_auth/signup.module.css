@@ -1,10 +1,20 @@
 /* signup.module.css */
 .auth_wrap {
   .auth_box {
-    @apply relative z-0 px-[40px] py-[48px];
+    @apply relative z-0 px-[40px] py-[48px] text-left;
 
     h4.title {
-      @apply title_6_b pb-[16px] text-left text-[var(--gray9)];
+      @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
+    }
+
+    .title_box {
+      @apply pb-[16px];
+      h4.title {
+        @apply pb-0;
+      }
+      .txt_info {
+        @apply body_3_r mt-[4px] text-[var(--gray7)];
+      }
     }
 
     .signup_info {
@@ -50,6 +60,18 @@
 
     .signup_check {
       @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+      ul {
+        > li {
+          @apply mt-[16px] flex items-center justify-between;
+          .btn_view {
+            @apply body_3_r text-[var(--gray8)] underline;
+          }
+        }
+      }
+    }
+
+    .check_all {
+      @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
     }
 
     .signup_noti {
@@ -80,11 +102,9 @@
         @apply w-full;
       }
     }
-
-    .form_low {
-      + .btn_wrap {
-        @apply mt-[32px];
-      }
-    }
   }
+}
+
+/* mobile */
+:global(body.mobile) {
 }

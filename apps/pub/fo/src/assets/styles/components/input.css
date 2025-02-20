@@ -1,2 +1,5 @@
 .nlp--input {
+  input {
+    @apply input_3_r !min-h-[40px] !rounded-[8px] !px-[16px];
+  }
 }

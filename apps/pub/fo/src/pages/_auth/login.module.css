@@ -62,9 +62,4 @@
 
 /* mobile */
 :global(body.mobile) {
-  @screen mobile {
-    .start {
-      @apply hidden;
-    }
-  }
 }

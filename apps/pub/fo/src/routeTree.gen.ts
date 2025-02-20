@@ -16,7 +16,7 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
-import { Route as AuthSignupstep4Import } from './pages/_auth/signup_step4'
+import { Route as AuthSignupstep3Import } from './pages/_auth/signup_step3'
 import { Route as AuthSignupstep2Import } from './pages/_auth/signup_step2'
 import { Route as AuthSignupstep1Import } from './pages/_auth/signup_step1'
 import { Route as AuthLoginImport } from './pages/_auth/login'
@@ -24,6 +24,7 @@ import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
@@ -73,9 +74,9 @@ const AuthSuccessRoute = AuthSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthSignupstep4Route = AuthSignupstep4Import.update({
-  id: '/signup_step4',
-  path: '/signup_step4',
+const AuthSignupstep3Route = AuthSignupstep3Import.update({
+  id: '/signup_step3',
+  path: '/signup_step3',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -118,6 +119,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTabsRoute = GuideGuideTabsImport.update({
+  id: '/guide/tabs',
+  path: '/guide/tabs',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -281,11 +288,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupstep2Import
       parentRoute: typeof AuthImport
     }
-    '/_auth/signup_step4': {
-      id: '/_auth/signup_step4'
-      path: '/signup_step4'
-      fullPath: '/signup_step4'
-      preLoaderRoute: typeof AuthSignupstep4Import
+    '/_auth/signup_step3': {
+      id: '/_auth/signup_step3'
+      path: '/signup_step3'
+      fullPath: '/signup_step3'
+      preLoaderRoute: typeof AuthSignupstep3Import
       parentRoute: typeof AuthImport
     }
     '/_auth/success': {
@@ -435,6 +442,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSwitchImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/tabs': {
+      id: '/_guide/guide/tabs'
+      path: '/guide/tabs'
+      fullPath: '/guide/tabs'
+      preLoaderRoute: typeof GuideGuideTabsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -472,7 +486,7 @@ interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupstep1Route: typeof AuthSignupstep1Route
   AuthSignupstep2Route: typeof AuthSignupstep2Route
-  AuthSignupstep4Route: typeof AuthSignupstep4Route
+  AuthSignupstep3Route: typeof AuthSignupstep3Route
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
@@ -480,7 +494,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupstep1Route: AuthSignupstep1Route,
   AuthSignupstep2Route: AuthSignupstep2Route,
-  AuthSignupstep4Route: AuthSignupstep4Route,
+  AuthSignupstep3Route: AuthSignupstep3Route,
   AuthSuccessRoute: AuthSuccessRoute,
 }
 
@@ -506,6 +520,7 @@ interface GuideRouteChildren {
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -531,6 +546,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -556,7 +572,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/signup_step1': typeof AuthSignupstep1Route
   '/signup_step2': typeof AuthSignupstep2Route
-  '/signup_step4': typeof AuthSignupstep4Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -578,6 +594,7 @@ export interface FileRoutesByFullPath {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
@@ -589,7 +606,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup_step1': typeof AuthSignupstep1Route
   '/signup_step2': typeof AuthSignupstep2Route
-  '/signup_step4': typeof AuthSignupstep4Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -611,6 +628,7 @@ export interface FileRoutesByTo {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide': typeof GuideGuideIndexRoute
@@ -625,7 +643,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup_step1': typeof AuthSignupstep1Route
   '/_auth/signup_step2': typeof AuthSignupstep2Route
-  '/_auth/signup_step4': typeof AuthSignupstep4Route
+  '/_auth/signup_step3': typeof AuthSignupstep3Route
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -647,6 +665,7 @@ export interface FileRoutesById {
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
+  '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
@@ -660,7 +679,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup_step1'
     | '/signup_step2'
-    | '/signup_step4'
+    | '/signup_step3'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -682,6 +701,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/guide'
@@ -692,7 +712,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup_step1'
     | '/signup_step2'
-    | '/signup_step4'
+    | '/signup_step3'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -714,6 +734,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/guide'
@@ -726,7 +747,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup_step1'
     | '/_auth/signup_step2'
-    | '/_auth/signup_step4'
+    | '/_auth/signup_step3'
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -748,6 +769,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/select'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
+    | '/_guide/guide/tabs'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_guide/guide/'
@@ -788,7 +810,7 @@ export const routeTree = rootRoute
         "/_auth/login",
         "/_auth/signup_step1",
         "/_auth/signup_step2",
-        "/_auth/signup_step4",
+        "/_auth/signup_step3",
         "/_auth/success"
       ]
     },
@@ -814,6 +836,7 @@ export const routeTree = rootRoute
         "/_guide/guide/select",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
+        "/_guide/guide/tabs",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -838,8 +861,8 @@ export const routeTree = rootRoute
       "filePath": "_auth/signup_step2.tsx",
       "parent": "/_auth"
     },
-    "/_auth/signup_step4": {
-      "filePath": "_auth/signup_step4.tsx",
+    "/_auth/signup_step3": {
+      "filePath": "_auth/signup_step3.tsx",
       "parent": "/_auth"
     },
     "/_auth/success": {
@@ -924,6 +947,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/tabs": {
+      "filePath": "_guide/guide/tabs.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tooltip": {

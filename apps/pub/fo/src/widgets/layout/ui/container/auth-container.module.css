@@ -29,3 +29,15 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.auth_container {
+      @apply pt-0;
+      .auth_area {
+        @apply w-full;
+      }
+    }
+  }
+}
