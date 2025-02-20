@@ -28,6 +28,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     {
       type = 'text',
       thousandSeparator = true,
+      readOnly,
       disabled,
       className,
       value = '',
@@ -116,6 +117,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             value={inputValue || ''}
+            readOnly={readOnly}
             disabled={disabled}
             type={type}
             placeholder={placeholder}

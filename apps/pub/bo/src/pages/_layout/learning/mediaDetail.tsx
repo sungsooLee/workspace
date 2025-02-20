@@ -122,7 +122,7 @@ function RouteComponent() {
                 id="name"
                 type="text"
                 placeholder="입력"
-                disabled
+                readOnly
                 value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
               />
               <Button variant="gray" size="sm">
