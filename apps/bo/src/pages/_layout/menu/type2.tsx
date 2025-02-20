@@ -13,7 +13,7 @@ import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FormRow } from '../../../shared/ui/form-row';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { ELearningCategory } from '../../../shared/ui/form-row/dialogs/e-learning-category';
 import { LowerGubun } from '../../../shared/ui/form-row/dialogs/lower-gubun';
 
@@ -21,13 +21,54 @@ export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
 });
 
+const formConfigA: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'channel',
+      label: '폼A 채널',
+      type: 'text',
+      value: '',
+    },
+  ],
+  validator: {
+    channel: z.string().required(),
+  },
+};
+const formConfigB: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'channel',
+      label: '폼B 채널',
+      type: 'text',
+      value: '',
+    },
+  ],
+  validator: {
+    channel: z.string().required(),
+  },
+};
+
 function RouteComponent() {
   /* react hook form custom */
-  const { provider, onSubmit, reset, control } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, control, onFormChange } = useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
   });
+
+  const formARef = useRef<HTMLFormElement>(null);
+  const formBRef = useRef<HTMLFormElement>(null);
+  const {
+    provider: formAProvider,
+    onSubmit: formAOnSubmit,
+    onFormChange: formAOnFormChange,
+  } = useDynamicForm(formConfigA);
+  const {
+    provider: formBProvider,
+    onSubmit: formBOnSubmit,
+    onFormChange: formBOnFormChange,
+  } = useDynamicForm(formConfigB);
+
   /**
    *
    * @param data
@@ -37,168 +78,233 @@ function RouteComponent() {
   };
 
   const handleOnReset = () => {
-    reset();
+    onFormChange();
   };
   const handleOnChange = () => {
-    reset({ contentName: '1234' });
+    onFormChange({ contentName: '1234' });
+  };
+
+  const triggerFormReset = (formName: 'A' | 'B') => {
+    if (formName === 'A') {
+      formAOnFormChange();
+    } else {
+      formBOnFormChange();
+    }
+  };
+
+  const triggerFormSubmit = (formName: 'A' | 'B') => {
+    if (formName === 'A') {
+      if (formARef?.current) {
+        formARef?.current.requestSubmit();
+      }
+    } else {
+      if (formBRef?.current) {
+        formBRef.current.requestSubmit();
+      }
+    }
+  };
+
+  const handleMultiFormOnSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <PageContainer>
-        <ContentsButtons>
-          <Button type="submit" variant="point" size="sm">
-            저장
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={handleOnChange}>
-            공유이력 보기
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            삭제
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            수정
-          </Button>
-          <Button type={'button'} variant="primary" size="sm">
-            목록
-          </Button>
-        </ContentsButtons>
-        <MainContents>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'contentName'} disabled />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language_detail'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language2'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language2_detail'} />
-            </FormRow>
-          </ContentsRow>
+    <div>
+      <form onSubmit={onSubmit(handleOnSubmit)}>
+        <PageContainer>
+          <ContentsButtons>
+            <Button type="submit" variant="point" size="sm">
+              저장
+            </Button>
+            <Button type={'button'} variant="point" size="sm" onClick={handleOnChange}>
+              공유이력 보기
+            </Button>
+            <Button type={'button'} variant="point" size="sm">
+              삭제
+            </Button>
+            <Button type={'button'} variant="point" size="sm">
+              수정
+            </Button>
+            <Button type={'button'} variant="primary" size="sm">
+              목록
+            </Button>
+          </ContentsButtons>
+          <MainContents>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'channel'} />
+              </FormRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'channel'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'contentName'} disabled />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'language'} />
+              </FormRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'language_detail'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'language2'} />
+              </FormRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'language2_detail'} />
+              </FormRow>
+            </ContentsRow>
 
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'title'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'subdivision'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'check'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenant'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'eLeaning'}>
-                <ELearningCategory />
-              </DynamicFormField>
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel2'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'lowerGubun'}>
-                <LowerGubun testName={'kim'} />
-              </DynamicFormField>
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'userInfos'}>
-              <div>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'title'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'subdivision'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'check'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'tenant'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'eLeaning'}>
+                  <ELearningCategory />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'channel2'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'lowerGubun'}>
+                  <LowerGubun testName={'kim'} />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider} name={'userInfos'}>
                 <div>
-                  <Button
-                    type={'button'}
-                    variant="gray"
-                    size="sm"
-                    onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
-                    추가
-                  </Button>
-                </div>
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>이름</th>
-                        <th>나이</th>
-                        <th>취미</th>
-                        <th>삭제</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {fields.map((_, index) => (
-                        <tr key={index}>
-                          <td>
-                            <DynamicFormField name={`userInfos.${index}.user-name`} />
-                          </td>
-                          <td>
-                            <DynamicFormField
-                              provider={provider}
-                              name={`userInfos.${index}.user-age`}
-                            />
-                          </td>
-                          <td>
-                            <DynamicFormField
-                              provider={provider}
-                              name={`userInfos.${index}.user-hobby`}
-                            />
-                          </td>
-                          <td>
-                            <Button
-                              type={'button'}
-                              variant="gray"
-                              size="sm"
-                              onClick={() => remove(index)}>
-                              삭제
-                            </Button>
-                          </td>
+                  <div>
+                    <Button
+                      type={'button'}
+                      variant="gray"
+                      size="sm"
+                      onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
+                      추가
+                    </Button>
+                  </div>
+                  <div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>이름</th>
+                          <th>나이</th>
+                          <th>취미</th>
+                          <th>삭제</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {fields.map((_, index) => (
+                          <tr key={index}>
+                            <td>
+                              <DynamicFormField name={`userInfos.${index}.user-name`} />
+                            </td>
+                            <td>
+                              <DynamicFormField
+                                provider={provider}
+                                name={`userInfos.${index}.user-age`}
+                              />
+                            </td>
+                            <td>
+                              <DynamicFormField
+                                provider={provider}
+                                name={`userInfos.${index}.user-hobby`}
+                              />
+                            </td>
+                            <td>
+                              <Button
+                                type={'button'}
+                                variant="gray"
+                                size="sm"
+                                onClick={() => remove(index)}>
+                                삭제
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <TestComponent provider={provider} />
-          </ContentsRow>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <TestComponent provider={provider} />
+            </ContentsRow>
+          </MainContents>
+          <SubContents>
+            <MovieInfo />
+          </SubContents>
+        </PageContainer>
+      </form>
+      <PageContainer>
+        <MainContents>
+          <div className={'mt-3'}>
+            <h1 style={{ fontSize: 40, fontWeight: 800 }}>멀티 폼 예제</h1>
+          </div>
+          <div className={'mb-10 mt-10'}>
+            <Button type="button" variant="point" size="sm" onClick={() => triggerFormReset('A')}>
+              초기화 A
+            </Button>
+            <Button type="button" variant="point" size="sm" onClick={() => triggerFormReset('B')}>
+              초기화 B
+            </Button>
+            <Button type="button" variant="point" size="sm" onClick={() => triggerFormSubmit('A')}>
+              저장 A
+            </Button>
+            <Button type="button" variant="point" size="sm" onClick={() => triggerFormSubmit('B')}>
+              저장 B
+            </Button>
+          </div>
+          <div>
+            <form ref={formARef} onSubmit={formAOnSubmit(handleMultiFormOnSubmit)}>
+              <h1 style={{ fontSize: 20, fontWeight: 800 }}>FORM A</h1>
+              <ContentsRow>
+                <FormRow provider={formAProvider}>
+                  <DynamicFormField name={'channel'} />
+                </FormRow>
+              </ContentsRow>
+            </form>
+            <form ref={formBRef} onSubmit={formBOnSubmit(handleMultiFormOnSubmit)}>
+              <h1 style={{ fontSize: 20, fontWeight: 800 }}>FORM B</h1>
+              <ContentsRow>
+                <FormRow provider={formBProvider}>
+                  <DynamicFormField name={'channel'} />
+                </FormRow>
+              </ContentsRow>
+            </form>
+          </div>
         </MainContents>
-        <SubContents>
-          <MovieInfo />
-        </SubContents>
       </PageContainer>
-    </form>
+    </div>
   );
 }
 

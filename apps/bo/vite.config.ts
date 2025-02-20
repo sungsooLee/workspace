@@ -44,7 +44,7 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
-  base: '/bo/',
+  base: process.env.NODE_ENV === 'development' ? '' : '/bo',
   build: {
     outDir: '../../dist/apps/bo',
     emptyOutDir: true,

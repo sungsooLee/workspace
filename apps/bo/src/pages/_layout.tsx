@@ -23,7 +23,7 @@ function LayoutComponent() {
 
   useEffect(() => {
     if (!data) {
-      //router.navigate({ to: '/login' });
+      router.navigate({ to: '/login' });
     }
   }, [data]);
 

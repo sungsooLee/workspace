@@ -20,11 +20,6 @@ const LowerGubunComponent: FC<any> = ({
   const handleFocusChange = () => {
     onFocus('channel');
   };
-
-  useEffect(() => {
-    console.log(value);
-    console.log(testName);
-  }, []);
   return (
     <div style={{ display: 'flex', width: '100%' }}>
       <FormRadioGroup
