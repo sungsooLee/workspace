@@ -141,7 +141,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
         <div className={cn(styles.button_wrap)}>
           {/* 삭제 버튼 */}
-          {isFocused && !!String(inputValue)?.length && (
+          {!readOnly && isFocused && !!String(inputValue)?.length && (
             <Button type="button" onClick={handleClearClick} className={cn(styles.clear)} onlyIcon>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
