@@ -47,7 +47,9 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     return (
       <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>
         <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
-          <Primitive.Trigger className={styles.select_trigger} aria-label="">
+          <Primitive.Trigger
+            className={cn(styles.select_trigger, size && styles[size])}
+            aria-label="">
             <Primitive.Value placeholder={placeholder} className={styles.select_text} />
             <Primitive.Icon className={styles.select_icon}>
               <IcoArrowDown width={16} height={16} stroke="#131C30" />
