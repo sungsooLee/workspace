@@ -169,25 +169,29 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false
-            },{
+            },
+            {
               "title": "그리드 빌더",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/builder/grid"
-            },{
+            },
+            {
               "title": "테이블 빌더",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/builder/table"
-            },{
+            },
+            {
               "title": "동적폼 예제",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/menu/type2"
-            },{
+            },
+            {
               "title": "다국어 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
@@ -205,7 +209,7 @@
     {
       "title": "고객사 운영",
       "roles": "ROLE_ADMIN",
-      "path": "/menu/menu3",
+      "path": "/menu/menu3777777",
       "children": [
         {
           "title": "테넌트 관리",
@@ -723,20 +727,22 @@
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/learning/resource/education/list",
-              "children" : [
+              "children": [
                 {
                   "title": "학습자원 등록",
                   "roles": "ROLE_ADMIN",
                   "tenantName": "현대자동차",
                   "isQuickAccessArea": false,
                   "path": "/learning/resource/education/register",
-                  "children" : [{
-                    "title": "동영상 등록",
-                    "roles": "ROLE_ADMIN",
-                    "tenantName": "현대자동차",
-                    "isQuickAccessArea": false,
-                    "path": "/learning/resource/education/register/video"
-                  }]
+                  "children": [
+                    {
+                      "title": "동영상 등록",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차",
+                      "isQuickAccessArea": false,
+                      "path": "/learning/resource/education/register/video"
+                    }
+                  ]
                 }
               ]
             },

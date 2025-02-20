@@ -1,7 +1,5 @@
-import type { AxiosResponse } from 'axios';
-
 import AuthorizationService from '../api/authorization';
-import { setAuthorization, removeAuthorization } from './authorization.service';
+import { assignToken, removeToken } from './authorization.service';
 import { User } from '../model/user';
 
 export const queryKeys = {
@@ -17,12 +15,20 @@ export const queryOptions = {
 
 export const mutateOptions = {
   login: () => ({
-    mutationFn: async (payload: any): Promise<AxiosResponse> => {
+    mutationFn: async (payload: any): Promise<any> => {
       try {
         const data = await AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) });
-        return setAuthorization(data);
+        assignToken(data);
+
+        const user = data.data;
+        const { tenantIds } = user;
+        return {
+          ...user,
+          activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
+          //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+        };
       } catch (e) {
-        removeAuthorization();
+        removeToken();
         throw e;
       }
     },
@@ -30,17 +36,24 @@ export const mutateOptions = {
   logout: () => ({
     mutationFn: async () => {
       await AuthorizationService.logout();
-      removeAuthorization();
+      removeToken();
     },
   }),
   reissue: () => ({
-    mutationFn: async (): Promise<AxiosResponse> => {
+    mutationFn: async (): Promise<any> => {
       try {
-        console.log('AuthorizationService.reissue');
         const data = await AuthorizationService.reissue();
-        return setAuthorization(data);
+        assignToken(data);
+
+        const user = data.data;
+        const { tenantIds } = user;
+        return {
+          ...user,
+          activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
+          //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
+        };
       } catch (e) {
-        removeAuthorization();
+        removeToken();
         throw e;
       }
     },

@@ -7,9 +7,10 @@ import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 
-import { useFetchAuthUser, useLoginUser } from '../../entities/user';
-import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
+import { useAuthSignin } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
+import { useFetchAuthUser } from '../../entities/user';
+import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
 
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
@@ -26,16 +27,16 @@ function RouteComponent() {
 
   const { provider, onSubmit, reset, control } = useCustomForm(detailConfig);
 
-  const { data } = useFetchAuthUser();
+  const { data: authData } = useFetchAuthUser();
 
-  const { login } = useLoginUser();
+  const { login } = useAuthSignin();
   const { set: setLanguage, inProgress } = useSetLanguage();
 
   useEffect(() => {
-    if ((data as any)?.username && !inProgress) {
-      //router.navigate({ to: '/' });
+    if ((authData as any)?.username && !inProgress) {
+      router.navigate({ to: '/' });
     }
-  }, [data, inProgress]);
+  }, [authData, inProgress]);
 
   useEffect(() => {
     reset({
@@ -44,14 +45,11 @@ function RouteComponent() {
     });
   }, []);
 
-  const handleOnSubmit = (data: any) => {
-    login(data, {
-      onSuccess: async (data, variables, context) => {
-        //const userLang = data.data.data.userLanguageSetCode;
-        //await setLanguage(userLang);
-        router.navigate({ to: '/' });
-      },
-    });
+  const handleOnSubmit = async (data: any) => {
+    const user = await login(data);
+    const locale = user?.locale;
+    locale && (await setLanguage(locale));
+    router.navigate({ to: '/' });
   };
 
   return (

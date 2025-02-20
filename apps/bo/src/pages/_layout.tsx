@@ -9,23 +9,18 @@ import { Layout, MobileLayout } from '../widgets/layout';
 
 import { useFetchAuthUser } from '../entities/user';
 import { useFetchTenant } from '../entities/tenant';
+import { authConfig } from '../features/auth';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
+  ...authConfig(),
 });
 
 function LayoutComponent() {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const { data } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenantId);
-
-  useEffect(() => {
-    if (!data) {
-      router.navigate({ to: '/login' });
-    }
-  }, [data]);
 
   useEffect(() => {
     if (!tenant) {
