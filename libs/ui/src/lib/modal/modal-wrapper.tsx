@@ -6,8 +6,8 @@ const ModalWrapperComponent = () => {
 
   return (
     <>
-      {Array.from(modals.entries()).map(([idx, modalData]) => (
-        <ModalContainer index={idx} key={idx} data={modalData} />
+      {Array.from(modals.entries()).map(([idx, config]) => (
+        <ModalContainer index={idx} key={idx} config={config} />
       ))}
     </>
   );

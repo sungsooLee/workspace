@@ -2,20 +2,22 @@
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
 
-import { BaseModalProps } from './type';
+import { ModalConfig } from './type';
 import { cn } from '@learnway/shared';
 import styles from './modal.module.css';
+import { Button } from '../button/button';
 
-const ModalComponent: React.FC<BaseModalProps> = ({
+const ModalComponent: React.FC<ModalConfig> = ({
   title,
   description,
-  children,
+  content,
   footer,
-  preventBackdropClose = false,
   onClose,
   width = 'auto',
   height = 'auto',
   hideCloseButton = false,
+  hideFooter = false,
+  ...props
 }) => {
   const handleOpenChange = (open: boolean) => {
     onClose?.();
@@ -30,17 +32,20 @@ const ModalComponent: React.FC<BaseModalProps> = ({
           <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
           {/* description */}
-          <Primitive.Description className={styles.description}>
-            {description}
-          </Primitive.Description>
+          {description && (
+            <Primitive.Description className={styles.description}>
+              {description}
+            </Primitive.Description>
+          )}
 
           {/* children */}
-          <div className={styles.content_body}>{children}</div>
+          <div className={styles.content_body}>{content}</div>
 
           {/* footer */}
-          {footer && (
+          {!hideFooter && (
             <div className={styles.footer}>
-              {footer}
+              <FooterComponent {...props} />
+              {/*{footer}*/}
               {/* <Primitive.Close asChild>
                 <button className={`${styles.Button} green`}>{footer}</button>
               </Primitive.Close> */}
@@ -58,6 +63,16 @@ const ModalComponent: React.FC<BaseModalProps> = ({
         </Primitive.Content>
       </Primitive.Portal>
     </Primitive.Root>
+  );
+};
+
+const FooterComponent: React.FC<any> = ({}) => {
+  const handleClick = () => {};
+  return (
+    <>
+      <Button label={'취소'} variant={'point'} size={'sm'} />
+      <Button label={'확인'} variant={'primary'} size={'sm'} onClick={handleClick} />
+    </>
   );
 };
 

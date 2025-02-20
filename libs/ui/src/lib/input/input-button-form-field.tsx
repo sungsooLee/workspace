@@ -4,10 +4,10 @@ import { Input, InputProps } from './input';
 import { Button, ButtonComponentProps } from '../button/button';
 import styles from './input.module.css';
 import { useModalControl } from '../modal/modal.hook';
-import { ModalConfig2 } from '../modal/type';
+import { ModalConfig } from '../modal/type';
 
 interface InputButtonFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
-  modalConfig: ModalConfig2;
+  modalConfig: ModalConfig;
   onChange?: (value: any) => void;
   value?: any;
   valueField?: string; // input value 설정시 사용할 key ex) value={value[valueField]}
@@ -32,7 +32,7 @@ const InputButtonFormFieldComponent = forwardRef<
     },
     ref,
   ) => {
-    const { open2: openModal } = useModalControl();
+    const { open: openModal } = useModalControl();
     const handleButtonOnClick = (e: any) => {
       openModal({
         ...modalConfig,
@@ -41,8 +41,8 @@ const InputButtonFormFieldComponent = forwardRef<
     };
     const handleOnClose = (data: any) => {
       console.log('component onClose', data);
-      onChange?.(data);
-      modalConfig?.onClose?.(data);
+      onChange?.(data); // set form value
+      modalConfig?.onClose?.(data); // optional
     };
     return (
       <div className={styles.input_box}>

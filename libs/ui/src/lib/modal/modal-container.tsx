@@ -1,12 +1,10 @@
-import { useRef } from 'react';
 import { useModalStore } from '../stores/useModalStore';
 import { Modal } from './modal';
 import { ModalProvider } from './modal-context';
 import { ModalContainerProps } from './type';
 
-const ModalContainerComponent = ({ index, data }: ModalContainerProps) => {
+const ModalContainerComponent = ({ index, config }: ModalContainerProps) => {
   const close = useModalStore((state) => state.close);
-  const { content, config } = data;
 
   const handleClose = (modalData?: any) => {
     close(index, modalData);
@@ -14,9 +12,7 @@ const ModalContainerComponent = ({ index, data }: ModalContainerProps) => {
 
   return (
     <ModalProvider value={{ closeModal: handleClose, isModal: true }}>
-      <Modal {...config} onClose={handleClose}>
-        {content}
-      </Modal>
+      <Modal {...config} onClose={handleClose} />
     </ModalProvider>
   );
 };

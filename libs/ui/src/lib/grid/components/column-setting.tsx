@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Settings } from 'lucide-react';
 import {
-  DndContext,
   closestCenter,
-  KeyboardSensor,
-  useSensor,
-  useSensors,
+  DndContext,
   DragEndEvent,
+  KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  useSensor,
+  useSensors,
 } from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
   useSortable,
+  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Table } from '@tanstack/react-table';
 import { CSS } from '@dnd-kit/utilities';
@@ -222,7 +222,8 @@ function ColumnSettings<T extends object>({
         return;
       });
 
-    open(<ColumnSettingsContent<T> onApply={handleApply} table={table} />, {
+    open({
+      content: <ColumnSettingsContent<T> onApply={handleApply} table={table} />,
       title: '컬럼 설정',
       width: 'md',
       height: 'auto',

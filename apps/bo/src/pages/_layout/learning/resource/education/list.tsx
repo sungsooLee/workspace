@@ -36,13 +36,11 @@ function RouteComponent() {
    */
   const handleNewTranslation = () => {
     //router.navigate({ to: '/learning/resource/education/view' });
-    open(
-      <EducationListPopup />,
-      {
-        width: 'lg',
-      },
-      handleClose,
-    );
+    open({
+      content: <EducationListPopup />,
+      width: 'lg',
+      onClose: handleClose,
+    });
   };
 
   return (

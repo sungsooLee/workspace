@@ -1,26 +1,26 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
-  createColumnHelper,
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
+  createColumnHelper,
   RowSelectionState,
+  SortingState,
 } from '@tanstack/react-table';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 
 import { useMemo, useState } from 'react';
 import {
-  GridState,
-  ModalWrapper,
-  Grid,
-  CustomCell,
-  useModalControl,
-  ColumnFactory,
-  useModalContext,
   Button,
+  ColumnFactory,
+  CustomCell,
+  Grid,
+  GridState,
   Input,
+  ModalWrapper,
+  useModalContext,
+  useModalControl,
 } from '@learnway/ui';
 
 export default {
@@ -259,7 +259,7 @@ export const WithColumnSettings: Story = {
       description: {
         story: `
   컬럼 설정 기능을 테스트할 수 있는 예제입니다.
-  
+
   - 항목설정 버튼을 클릭하여 컬럼 설정 모달을 엽니다.
   - 드래그 앤 드롭으로 컬럼 순서를 변경할 수 있습니다.
   - 체크박스로 컬럼을 표시하거나 숨길 수 있습니다.
@@ -675,20 +675,20 @@ const CustomCellTable = () => {
           value={info.getValue()}
           imageUrl={info.row.original.imageUrl}
           onAction={(row) => {
-            open(
-              <div className="p-4">
-                <div className="space-y-2">
-                  <p>이름:{row.firstName}</p>
-                  <p>나이:{row.age}</p>
-                  <p>상태: {row.status}</p>
-                  <p>이미지 URL:{row.imageUrl}</p>
+            open({
+              content: (
+                <div className="p-4">
+                  <div className="space-y-2">
+                    <p>이름:{row.firstName}</p>
+                    <p>나이:{row.age}</p>
+                    <p>상태: {row.status}</p>
+                    <p>이미지 URL:{row.imageUrl}</p>
+                  </div>
                 </div>
-              </div>,
-              {
-                title: '사용자 정보',
-                width: 'sm',
-              },
-            );
+              ),
+              title: '사용자 정보',
+              width: 'sm',
+            });
           }}
         />
       ),

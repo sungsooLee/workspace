@@ -1,35 +1,28 @@
-import { createElement, ReactNode, useCallback } from 'react';
+import { createElement, useCallback } from 'react';
 import { reject } from 'lodash';
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
-import { ModalClose, ModalConfig, ModalConfig2, ModalControl } from './type';
+import { ModalClose, ModalConfig, ModalControl } from './type';
 
 // TODO: rename : useModalControl > useModal
 const useModalControl = (): ModalControl => {
-  const { open: openModal, open2: openModal2 } = useModalStore();
+  const { open: openModal } = useModalStore();
 
   const open = useCallback(
-    (content: ReactNode, config?: ModalConfig, onClose?: (data?: any) => void) => {
-      openModal(content, config, onClose);
-    },
-    [openModal],
-  );
-
-  const open2 = useCallback(
-    (config: ModalConfig2) => {
-      openModal2(config);
+    (config: ModalConfig) => {
+      openModal(config);
     },
     [openModal],
   );
 
   const openAsync = useCallback(
-    <T = any>(content: ReactNode, config?: ModalConfig): Promise<ModalClose<T>> => {
+    <T = any>(config: ModalConfig): Promise<ModalClose<T>> => {
       return new Promise((resolve) => {
         const wrapper = (data?: ModalClose<T>) => {
           if (data) resolve(data);
           else reject(new Error('ERROR Async Modal'));
         };
-        openModal(content, config, wrapper);
+        openModal(config);
       });
     },
     [openModal],
@@ -37,31 +30,30 @@ const useModalControl = (): ModalControl => {
 
   const alert = useCallback(
     (props: AlertComponentProps) => {
-      const modalContent = createElement(Alert, props);
-      const modalConfig = {
+      const config: ModalConfig = {
+        content: createElement(Alert, props),
         hideCloseButton: true,
+        onClose: props.onClose,
       };
-      const onClose = props.onClose;
-      openModal(modalContent, modalConfig, onClose);
+      openModal(config);
     },
     [openModal],
   );
 
   const confirm = useCallback(
     (props: AlertComponentProps) => {
-      const modalContent = createElement(Alert, { ...props, isConfirm: true });
-      const modalConfig = {
+      const config = {
+        content: createElement(Alert, { ...props, isConfirm: true }),
         hideCloseButton: true,
+        onClose: props.onClose,
       };
-      const onClose = props.onClose;
-      openModal(modalContent, modalConfig, onClose);
+      openModal(config);
     },
     [openModal],
   );
 
   return {
     open,
-    open2,
     openAsync,
     alert,
     confirm,

@@ -1,35 +1,23 @@
 import { create } from 'zustand';
-import { ModalClose, ModalConfig, ModalConfig2, ModalData } from '../modal/type';
-import { ReactNode } from 'react';
+import { ModalClose, ModalConfig } from '../modal/type';
 
 interface ModalStore {
-  modals: ModalData[];
-  open: <T>(
-    content: ReactNode,
-    config?: ModalConfig,
-    onClose?: (data?: ModalClose<T>) => void,
-  ) => void;
-  open2: <T>(config: ModalConfig2) => void;
+  modals: ModalConfig[];
+  open: <T>(config: ModalConfig) => void;
   close: <T>(index: number, data?: ModalClose<T>) => void;
 }
 
 export const useModalStore = create<ModalStore>((set, get) => ({
   modals: [],
-  open: (content, config, onClose) => {
+  open: (config: ModalConfig) => {
     set((state) => ({
-      modals: [...state.modals, { content, config, onClose }],
-    }));
-  },
-  open2: (config) => {
-    set((state) => ({
-      modals: [...state.modals, { content: config.content, config, onClose: config.onClose }],
+      modals: [...state.modals, config],
     }));
   },
   close: (index: number, data?: any) => {
     const modal = get().modals[index];
 
-    if (modal?.onClose) modal.onClose?.(data);
-    else if (modal?.resolver) modal.resolver?.(data); // 팝업 닫을때 error 발생해서 조건 추가, (modal = undefined)
+    modal?.onClose?.(data);
 
     set((state) => ({
       modals: state.modals.filter((_, i) => i !== index),

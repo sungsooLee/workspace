@@ -5,29 +5,22 @@ const TestModal = () => {
   const { open, openAsync } = useModalControl();
 
   const handleOpenModal = () => {
-    const config = {
-      title: 'Example Modal',
-    };
-    const onClose = (data: any) => {
-      console.log(data);
-    };
-
-    open(<TestForm />, config, onClose);
+    open({ content: <TestForm />, title: 'Example Modal' });
   };
 
-  const handleOpenAsyncModal = async () => {
-    try {
-      const result = await openAsync(<TestForm />, { title: 'Async Modal' });
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleOpenAsyncModal = async () => {
+  //   try {
+  //     const result = await openAsync(<TestForm />, { title: 'Async Modal' });
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center space-y-10">
       <Button onClick={handleOpenModal}>Modal</Button>
-      <Button onClick={handleOpenAsyncModal}>Async Modal</Button>
+      {/*<Button onClick={handleOpenAsyncModal}>Async Modal</Button>*/}
     </div>
   );
 };

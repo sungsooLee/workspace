@@ -20,7 +20,14 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
-import { IcoGridFilter } from '@learnway/icons';
+// paging Icons
+import {
+  IcoChevronLeft,
+  IcoChevronLeftDouble,
+  IcoChevronRight,
+  IcoChevronRightDouble,
+  IcoGridFilter,
+} from '@learnway/icons';
 
 import { GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
@@ -29,14 +36,6 @@ import { FilterContent } from './components/filter-content';
 import { useModalControl } from '../modal/modal.hook';
 import { Button } from '../button/button';
 import { CheckFieldProps } from '../checkbox/type';
-
-// paging Icons
-import {
-  IcoChevronLeftDouble,
-  IcoChevronLeft,
-  IcoChevronRight,
-  IcoChevronRightDouble,
-} from '@learnway/icons';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
@@ -319,30 +318,30 @@ const Grid = <T extends object>({
     const filterOptions =
       column.columnDef.meta?.filterType === 'select' ? column.columnDef.meta.filterOptions : [];
 
-    open(
-      <FilterContent
-        column={column.id}
-        type={filterType as 'text' | 'range' | 'select'}
-        initialValue={currentValue}
-        onApply={(value) => {
-          column.setFilterValue(value);
-          // 필터 변경 시 상위 컴포넌트에 알림
-          if (onStateChange) {
-            onStateChange({
-              filters: columnFilters,
-              sorting,
-              columnVisibility,
-              columnOrder,
-            });
-          }
-        }}
-        options={filterOptions}
-      />,
-      {
-        title: `${column.columnDef.header as string} 필터`,
-        width: 'sm',
-      },
-    );
+    open({
+      content: (
+        <FilterContent
+          column={column.id}
+          type={filterType as 'text' | 'range' | 'select'}
+          initialValue={currentValue}
+          onApply={(value) => {
+            column.setFilterValue(value);
+            // 필터 변경 시 상위 컴포넌트에 알림
+            if (onStateChange) {
+              onStateChange({
+                filters: columnFilters,
+                sorting,
+                columnVisibility,
+                columnOrder,
+              });
+            }
+          }}
+          options={filterOptions}
+        />
+      ),
+      title: `${column.columnDef.header as string} 필터`,
+      width: 'sm',
+    });
   };
   ////
 
