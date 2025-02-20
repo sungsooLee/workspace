@@ -21,6 +21,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   format?: string; // format 설정 문자열
   allowEmptyFormatting?: boolean;
   borderNone?: boolean; // Input border 유무
+  error?: boolean; // Input border 유무
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -30,6 +31,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       thousandSeparator = true,
       readOnly,
       disabled,
+      error, // error 케이스 추가
       className,
       value = '',
       onBlur,
@@ -121,7 +123,12 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             type={type}
             placeholder={placeholder}
-            className={cn(styles.input, className, borderNone ? styles.bd_none : '')}
+            className={cn(
+              styles.input,
+              className,
+              borderNone ? styles.bd_none : '',
+              error ? styles.error : '',
+            )}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
                 event.preventDefault(); // Enter 키 기본 동작 방지
