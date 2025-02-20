@@ -46,7 +46,7 @@ function RouteComponent() {
                 조회
               </Button>
             </div>
-            {/*<p className={cn(formStyles.guide_text)}>기본 메시지</p>*/}
+            <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
           </div>
         </div>
 
