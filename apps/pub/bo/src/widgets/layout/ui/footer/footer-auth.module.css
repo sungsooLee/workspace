@@ -21,3 +21,12 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.footer_auth {
+      @apply hidden;
+    }
+  }
+}

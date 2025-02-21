@@ -17,7 +17,9 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutTestImport } from './pages/_layout/test'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
-import { Route as AuthSignupImport } from './pages/_auth/signup'
+import { Route as AuthSignupstep3Import } from './pages/_auth/signup_step3'
+import { Route as AuthSignupstep2Import } from './pages/_auth/signup_step2'
+import { Route as AuthSignupstep1Import } from './pages/_auth/signup_step1'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -83,9 +85,21 @@ const AuthSuccessRoute = AuthSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthSignupRoute = AuthSignupImport.update({
-  id: '/signup',
-  path: '/signup',
+const AuthSignupstep3Route = AuthSignupstep3Import.update({
+  id: '/signup_step3',
+  path: '/signup_step3',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupstep2Route = AuthSignupstep2Import.update({
+  id: '/signup_step2',
+  path: '/signup_step2',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupstep1Route = AuthSignupstep1Import.update({
+  id: '/signup_step1',
+  path: '/signup_step1',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -295,11 +309,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupImport
+    '/_auth/signup_step1': {
+      id: '/_auth/signup_step1'
+      path: '/signup_step1'
+      fullPath: '/signup_step1'
+      preLoaderRoute: typeof AuthSignupstep1Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup_step2': {
+      id: '/_auth/signup_step2'
+      path: '/signup_step2'
+      fullPath: '/signup_step2'
+      preLoaderRoute: typeof AuthSignupstep2Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup_step3': {
+      id: '/_auth/signup_step3'
+      path: '/signup_step3'
+      fullPath: '/signup_step3'
+      preLoaderRoute: typeof AuthSignupstep3Import
       parentRoute: typeof AuthImport
     }
     '/_auth/success': {
@@ -526,13 +554,17 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
+  AuthSignupstep1Route: typeof AuthSignupstep1Route
+  AuthSignupstep2Route: typeof AuthSignupstep2Route
+  AuthSignupstep3Route: typeof AuthSignupstep3Route
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
+  AuthSignupstep1Route: AuthSignupstep1Route,
+  AuthSignupstep2Route: AuthSignupstep2Route,
+  AuthSignupstep3Route: AuthSignupstep3Route,
   AuthSuccessRoute: AuthSuccessRoute,
 }
 
@@ -618,7 +650,9 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
+  '/signup_step1': typeof AuthSignupstep1Route
+  '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
@@ -655,7 +689,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
+  '/signup_step1': typeof AuthSignupstep1Route
+  '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
@@ -695,7 +731,9 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/signup_step1': typeof AuthSignupstep1Route
+  '/_auth/signup_step2': typeof AuthSignupstep2Route
+  '/_auth/signup_step3': typeof AuthSignupstep3Route
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/test': typeof LayoutTestRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -734,7 +772,9 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
-    | '/signup'
+    | '/signup_step1'
+    | '/signup_step2'
+    | '/signup_step3'
     | '/success'
     | '/test'
     | '/'
@@ -770,7 +810,9 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
-    | '/signup'
+    | '/signup_step1'
+    | '/signup_step2'
+    | '/signup_step3'
     | '/success'
     | '/test'
     | '/'
@@ -808,7 +850,9 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
-    | '/_auth/signup'
+    | '/_auth/signup_step1'
+    | '/_auth/signup_step2'
+    | '/_auth/signup_step3'
     | '/_auth/success'
     | '/_layout/test'
     | '/_layout/'
@@ -874,7 +918,9 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
-        "/_auth/signup",
+        "/_auth/signup_step1",
+        "/_auth/signup_step2",
+        "/_auth/signup_step3",
         "/_auth/success"
       ]
     },
@@ -922,8 +968,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
-    "/_auth/signup": {
-      "filePath": "_auth/signup.tsx",
+    "/_auth/signup_step1": {
+      "filePath": "_auth/signup_step1.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup_step2": {
+      "filePath": "_auth/signup_step2.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup_step3": {
+      "filePath": "_auth/signup_step3.tsx",
       "parent": "/_auth"
     },
     "/_auth/success": {
