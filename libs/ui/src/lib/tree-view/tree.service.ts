@@ -148,39 +148,67 @@ export const isValidDrop = (draggedKey: string, targetKey: string, nodes: TreeNo
 
 export const insertNodeAtPosition = (
   nodes: TreeNode[],
-  targetKey: string | null,
+  targetKey: string,
   newNode: TreeNode,
-  position?: NodeMovePositionType,
+  position: NodeMovePositionType,
 ): TreeNode[] => {
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
+  const result: TreeNode[] = [];
+  for (const node of nodes) {
     if (node.key === targetKey) {
-      const result = [...nodes];
-      switch (position) {
-        case 'BEFORE' as NodeMovePositionType:
-          result.splice(i, 0, newNode);
-          return result;
-        case 'INSIDE' as NodeMovePositionType:
-          return addNodeToParent(nodes, targetKey, newNode);
-        case 'AFTER' as NodeMovePositionType:
-          result.splice(i + 1, 0, newNode);
-          return result;
-        default:
-          result.splice(i + 1, 0, newNode);
-          return result;
+      if (position === 'INSIDE') {
+        result.push({ ...node, children: [...(node.children || []), newNode] });
+      } else if (position === 'BEFORE') {
+        result.push(newNode, node);
+      } else if (position === 'AFTER') {
+        result.push(node, newNode);
       }
+    } else {
+      result.push({
+        ...node,
+        children: node.children
+          ? insertNodeAtPosition(node.children, targetKey, newNode, position)
+          : undefined,
+      });
     }
   }
-
-  return nodes.map((node) => {
-    if (!node.children) return node;
-
-    return {
-      ...node,
-      children: insertNodeAtPosition(node.children, targetKey, newNode, position),
-    };
-  });
+  return result;
 };
+
+// export const insertNodeAtPosition = (
+//   nodes: TreeNode[],
+//   targetKey: string | null,
+//   newNode: TreeNode,
+//   position?: NodeMovePositionType,
+// ): TreeNode[] => {
+//   for (let i = 0; i < nodes.length; i++) {
+//     const node = nodes[i];
+//     if (node.key === targetKey) {
+//       const result = [...nodes];
+//       switch (position) {
+//         case 'BEFORE' as NodeMovePositionType:
+//           result.splice(i, 0, newNode);
+//           return result;
+//         case 'INSIDE' as NodeMovePositionType:
+//           return addNodeToParent(nodes, targetKey, newNode);
+//         case 'AFTER' as NodeMovePositionType:
+//           result.splice(i + 1, 0, newNode);
+//           return result;
+//         default:
+//           result.splice(i + 1, 0, newNode);
+//           return result;
+//       }
+//     }
+//   }
+
+//   return nodes.map((node) => {
+//     if (!node.children) return node;
+
+//     return {
+//       ...node,
+//       children: insertNodeAtPosition(node.children, targetKey, newNode, position),
+//     };
+//   });
+// };
 
 export const findSiblingNodes = (nodes: TreeNode[], targetKey: string): TreeNode[] => {
   if (nodes.some((node) => node.key === targetKey)) {
