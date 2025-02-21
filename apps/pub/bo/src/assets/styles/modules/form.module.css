@@ -195,5 +195,5 @@
 }
 
 hr.divider {
-  @apply h-[1px] w-full bg-[var(--gray3)];
+  @apply h-[1px] w-full bg-[#EDF0F7];
 }
