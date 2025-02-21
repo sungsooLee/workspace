@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalContext, useModalControl } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
