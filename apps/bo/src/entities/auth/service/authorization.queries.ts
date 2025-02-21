@@ -1,6 +1,5 @@
 import AuthorizationService from '../api/authorization';
-import { assignToken, removeToken } from './authorization.service';
-import { User } from '../model/user';
+import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
 
 export const queryKeys = {
   authUser: ['auth-user'] as const,
@@ -19,14 +18,7 @@ export const mutateOptions = {
       try {
         const data = await AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) });
         assignToken(data);
-
-        const user = data.data;
-        const { tenantIds } = user;
-        return {
-          ...user,
-          activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
-          //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
-        };
+        return convertToAuthUser(data);
       } catch (e) {
         removeToken();
         throw e;
@@ -44,14 +36,7 @@ export const mutateOptions = {
       try {
         const data = await AuthorizationService.reissue();
         assignToken(data);
-
-        const user = data.data;
-        const { tenantIds } = user;
-        return {
-          ...user,
-          activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
-          //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
-        };
+        return convertToAuthUser(data);
       } catch (e) {
         removeToken();
         throw e;

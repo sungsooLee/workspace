@@ -3,9 +3,6 @@ import type { AxiosResponse } from 'axios';
 import { httpService, HttpMethod, cookieService } from '@learnway/shared';
 import { OAuthApiPrefix } from '@learnway/config';
 
-import { User } from '../model/user';
-import { resolve } from 'path';
-
 import loginMock from '../../mock/login.json';
 
 export default class AuthorizationService {

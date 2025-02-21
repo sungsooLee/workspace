@@ -8,7 +8,7 @@ import { Button } from '@learnway/ui';
 import { getDefaultLang } from '@learnway/config';
 
 import { useSetLanguage, useLanguageSelectOptions } from '../../../platform';
-import { useFetchAuthUser } from '../../../../entities/user';
+import { useFetchAuthUser } from '../../../../entities/auth';
 
 import styles from './language.module.css';
 

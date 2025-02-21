@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 
 import { Layout, MobileLayout } from '../widgets/layout';
 
-import { useFetchAuthUser } from '../entities/user';
+import { useFetchAuthUser } from '../entities/auth';
 import { useFetchTenant } from '../entities/tenant';
 import { authConfig } from '../features/auth';
 

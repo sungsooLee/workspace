@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
-import { useFetchAuthUser } from '../../../../entities/user';
+import { useFetchAuthUser } from '../../../../entities/auth';
 import { useFetchTenant } from '../../../../entities/tenant';
 
 import logoImage from '../../../../assets/images/logo.png';

@@ -3,7 +3,7 @@ import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
 import { useFetchMenus } from '../../../entities/menu';
-import { useFetchAuthUser } from '../../../entities/user';
+import { useFetchAuthUser } from '../../../entities/auth';
 import { Menu, HookData } from '../../../types';
 
 import { useActiveMenuDepthState } from '../../../features/layout';
