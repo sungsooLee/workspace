@@ -44,6 +44,7 @@ import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
 // Create/Update Routes
@@ -243,6 +244,12 @@ const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
+  id: '/guide/badge',
+  path: '/guide/badge',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideAlertRoute = GuideGuideAlertImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
@@ -321,6 +328,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/alert'
       fullPath: '/guide/alert'
       preLoaderRoute: typeof GuideGuideAlertImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/badge': {
+      id: '/_guide/guide/badge'
+      path: '/guide/badge'
+      fullPath: '/guide/badge'
+      preLoaderRoute: typeof GuideGuideBadgeImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/buttons': {
@@ -516,6 +530,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
@@ -543,6 +558,7 @@ interface GuideRouteChildren {
 
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
@@ -592,6 +608,7 @@ export interface FileRoutesByFullPath {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -627,6 +644,7 @@ export interface FileRoutesByTo {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -665,6 +683,7 @@ export interface FileRoutesById {
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
+  '/_guide/guide/badge': typeof GuideGuideBadgeRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -702,6 +721,7 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -736,6 +756,7 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -772,6 +793,7 @@ export interface FileRouteTypes {
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
+    | '/_guide/guide/badge'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
@@ -840,6 +862,7 @@ export const routeTree = rootRoute
       "filePath": "_guide.tsx",
       "children": [
         "/_guide/guide/alert",
+        "/_guide/guide/badge",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
@@ -898,6 +921,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/alert": {
       "filePath": "_guide/guide/alert.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/badge": {
+      "filePath": "_guide/guide/badge.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/buttons": {

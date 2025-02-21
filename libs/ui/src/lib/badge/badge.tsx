@@ -38,7 +38,9 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
           size && styles[size],
         )}
         onClick={handleClick}>
-        <Button className={cn(styles.label)}>{label}</Button>
+        <Button className={cn(styles.label)} variant="text">
+          {label}
+        </Button>
       </span>
     );
   },

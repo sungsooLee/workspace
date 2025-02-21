@@ -5,6 +5,7 @@ import { cn } from '@learnway/shared';
 import * as Primitive from '@radix-ui/react-tabs';
 
 import styles from './tabs.module.css';
+import { Badge } from '../badge/badge';
 
 interface TabItemProps {
   title: string;
@@ -60,6 +61,14 @@ export const TabsComponent = forwardRef<
             key={d.key}>
             {d.title}
             {d.count && <span className={styles.count}>{d.number}</span>}
+            {d.alarm && (
+              <Badge
+                className={styles.alarm_view}
+                option={{ label: '', value: '' }}
+                variant="dot"
+                status="primary"
+              />
+            )}
           </Primitive.Trigger>
         ))}
       </Primitive.List>

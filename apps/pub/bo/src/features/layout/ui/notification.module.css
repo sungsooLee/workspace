@@ -1,7 +1,7 @@
 .alarm_info {
   @apply relative flex min-h-[40px] w-[40px] items-center;
   .count_view {
-    @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
+    @apply absolute right-[2px] top-[2px];
   }
 }
 .alarm_wrap {
