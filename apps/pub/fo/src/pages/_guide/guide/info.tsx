@@ -85,6 +85,32 @@ import { isMobile } from 'react-device-detect';
 {isMobile ? 'mobile 내용' : 'PC 내용'}`}</code>
             </pre>
           </div>
+
+          <h3 className="guide_tit3">Global CSS</h3>
+          <p className="loc css">
+            파일 위치 : /apps/pub/fo/src/assets/styles/<strong>global.css</strong>
+          </p>
+          <ul className="info_ul">
+            <li>
+              공통 콤퍼넌트에서 색상이나 스타일이 변경될때 global.css를 통해 '오버라이드' 한다.
+            </li>
+            <li>
+              오버라이드해야할 콤포넌트는 /components 에 파일 추가 후 index.css에서 import한다.
+            </li>
+
+            <li>기본 스타일이나 변수 (ex._color.css)등 전역적인 스타일은 global.css를 활용한다.</li>
+          </ul>
+          <div className="code_example">
+            <pre className="code_block">
+              <code>{`.nlp--input {
+오버라이드할 스타일(class명이 없을경우 선택자 활용)
+}`}</code>
+            </pre>
+          </div>
+          <div className="info">
+            주의 : 모듈 css에서는 className 지정시 '-' 대신 '_' 를 사용해야하며, <br />
+            두개 사용시 백틱 ` 으로 묶어서 사용한다. 그리고 styles을 앞에 꼭 작성해야 적용이 된다.
+          </div>
         </div>
       </div>
     </div>

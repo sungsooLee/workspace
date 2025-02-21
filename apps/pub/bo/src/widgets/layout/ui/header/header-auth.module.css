@@ -12,5 +12,17 @@
         }
       }
     }
+    .auth {
+      @apply !text-[var(--gray7)];
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.header_auth {
+      @apply hidden;
+    }
   }
 }
