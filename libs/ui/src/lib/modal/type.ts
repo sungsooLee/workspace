@@ -42,14 +42,24 @@ export interface ModalControl {
     config?: ModalConfig,
     onClose?: (data?: ModalClose<T>) => void,
   ) => void;
+  open2: <T = any>(props: ModalConfig2) => void;
   alert: (props: AlertComponentProps) => void;
   confirm: (props: any) => void;
   openAsync: <T = any>(content: ReactNode, config?: ModalConfig) => Promise<ModalClose<T>>;
 }
 
-export interface AlertData {
-  title?: string | ReactNode;
-  description?: string | ReactNode;
-  content?: string | ReactNode;
-  onClose?: (data?: ModalClose) => void;
+/**
+ *
+ */
+export interface ModalConfig2<T = any> {
+  content: ReactNode;
+  title?: string;
+  description?: string;
+  footer?: React.ReactNode;
+  width?: ModalSize;
+  height?: ModalHeight;
+  preventBackdropClose?: boolean;
+  hideCloseButton?: boolean;
+  config?: ModalConfig;
+  onClose?: (data?: ModalClose<T>) => void;
 }

@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { TreeEventPayload, TreeNode } from '@learnway/ui';
+import {
+  Button,
+  findNodePath,
+  Switch,
+  TreeEventPayload,
+  TreeNode,
+  updateNodeByKey,
+} from '@learnway/ui';
 import { TreeView } from '@learnway/ui';
 import { NodeDetail } from '@learnway/ui';
 import { TreeContainer } from '@learnway/ui';
@@ -26,35 +33,44 @@ const sampleData: TreeNode[] = [
   {
     key: '1',
     title: 'Root Node 1',
+    isUsed: false,
     children: [
       {
         key: '1-1',
         title: 'Child 1',
+        isUsed: true,
         children: [
-          { key: '1-1-1', title: 'Grandchild 1' },
-          { key: '1-1-2', title: 'Grandchild 2' },
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
         ],
       },
-      { key: '1-2', title: 'Child 2' },
+      { key: '1-2', title: 'Child 2', isUsed: true },
     ],
   },
   {
     key: '2',
     title: 'Root Node 2',
+    isUsed: false,
     children: [
-      { key: '2-1', title: 'Child 3' },
-      { key: '2-2', title: 'Child 4' },
+      { key: '2-1', title: 'Child 3', isUsed: false },
+      { key: '2-2', title: 'Child 4', isUsed: false },
     ],
   },
 ];
 
 export const Basic: Story = {
+  args: {
+    type: 'default',
+    expandTrigger: false,
+  },
+
   decorators: [
     (Story) => {
       const [treeData, setTreeData] = useState<TreeNode[]>(sampleData);
       const [expandSource, setExpandSource] = useState<boolean>(false);
 
       const handleAction = (payload: TreeEventPayload) => {
+        console.log(payload);
         switch (payload.type) {
           case 'NODE_SELECT':
             break;
@@ -73,6 +89,33 @@ export const Basic: Story = {
         setExpandSource(false);
       };
 
+      const handleToggleUsed = (node: TreeNode, isUsed: boolean) => {
+        console.log('스위치' + node.title);
+        // const updatedData = updateNodeByKey(treeData, node.key, { isUsed });
+        // setTreeData(updatedData);
+      };
+
+      const renderNodeButtons = (node: TreeNode, level: number) => (
+        <>
+          <Button onClick={() => console.log(node.title + '삭제')} variant="danger">
+            삭제
+          </Button>
+          {level <= 1 && (
+            <Button onClick={() => console.log(node.title + '하위 메뉴 추가')} variant="default">
+              + 하위 메뉴 추가
+            </Button>
+          )}
+          <Button onClick={() => console.log(node.title + '수정')} variant="default">
+            수정
+          </Button>
+          <Switch
+            onClick={(e) => e.preventDefault()}
+            checked={node.isUsed}
+            onCheckedChange={(checked) => handleToggleUsed(node, checked)}
+          />
+        </>
+      );
+
       return (
         <div className="flex gap-4">
           <Story
@@ -81,8 +124,16 @@ export const Basic: Story = {
               treeId: '1',
               onAction: handleAction,
               expandTrigger: expandSource,
+              nodeButtons: renderNodeButtons,
+              type: 'advanced',
             }}
           />
+          <Button
+            onClick={() => {
+              console.log(treeData);
+            }}>
+            저장
+          </Button>
           <NodeDetail expandAll={handleExpandAll} collapseAll={handleCollapseAll} />
         </div>
       );
@@ -97,6 +148,7 @@ export const DualTree: Story = {
         {
           key: 'target-1',
           title: '타겟 루트 1',
+
           children: [
             {
               key: 'target-1-1',

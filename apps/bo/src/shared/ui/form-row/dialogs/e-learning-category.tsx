@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { BaseFormDialogProps } from '../type';
+import { BaseFormDialogProps } from '../../dynamic-form-field';
+
 const ELearningCategoryComponent = forwardRef<HTMLDivElement, BaseFormDialogProps>(
   ({ name, value, onChange }, ref) => {
     return (

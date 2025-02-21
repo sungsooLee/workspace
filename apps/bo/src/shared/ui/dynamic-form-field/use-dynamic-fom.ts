@@ -1,5 +1,5 @@
 // useDynamicForm.ts
-import { FormEventHandler, useRef } from 'react';
+import { FormEventHandler, useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from '../search-box/create-jod-schema';
@@ -31,13 +31,14 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     }
     return acc;
   }, {}); // 초기값을 담은 객체
+  const [originalValues, setOriginalValues] = useState(defaultValues);
 
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = createZodSchema(config);
 
   // react-hook-form 훅 초기화
   const methods = useForm<any>({
-    defaultValues,
+    defaultValues: originalValues,
     resolver: zodResolver(schema),
   });
 
@@ -45,7 +46,17 @@ const useDynamicForm = (config: DynamicFormConfig) => {
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // react-hook-form 메서드 및 속성 추출
-  const { control, handleSubmit, setFocus, getValues, reset, watch, formState } = methods;
+  const {
+    control,
+    handleSubmit,
+    setFocus,
+    getValues,
+    reset,
+    watch,
+    formState,
+    setError,
+    clearErrors,
+  } = methods;
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -59,7 +70,6 @@ const useDynamicForm = (config: DynamicFormConfig) => {
 
       handleSubmit(
         (data) => {
-          console.log('submit data => ', data);
           const objectParams: any = {};
           // 각 빌더에 대해 제출된 데이터를 재구성
           config.builders.forEach((prop: any) => {
@@ -168,12 +178,27 @@ const useDynamicForm = (config: DynamicFormConfig) => {
    * 폼 리셋 함수.
    * @param values - 새로운 초기값 (선택 사항). 전달하지 않으면 기본값으로 리셋.
    */
-  const resetForm = (values?: any) => {
+  const onFormChange = (values?: any) => {
     if (values) {
       reset(values);
     } else {
-      reset(defaultValues);
+      reset(originalValues);
     }
+  };
+
+  const setFormError = (fieldName: string, message: string) => {
+    setError(fieldName, { type: 'custom', message });
+    const errorFieldRef = fieldRefs.current[fieldName] as HTMLDivElement | null;
+    if (errorFieldRef) {
+      errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      errorFieldRef.focus();
+    }
+    setFocus(fieldName);
+  };
+
+  const fetchData = (fetchValues: any) => {
+    setOriginalValues(fetchValues);
+    reset(fetchValues);
   };
 
   // provider 객체 구성: 동적 폼에 필요한 모든 정보와 메서드 포함
@@ -181,18 +206,23 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     provider: {
       ...config,
       control: extendedControl,
-      formState,
-      watch,
-      onFormChange: resetForm,
-      formSubmit,
+      builders: config.builders,
       fieldRefs,
+      watch,
+      onFormChange,
       formData: getValues(),
       onFocus: handleFocus,
+      formState,
     },
+    fetchData,
     control,
     getValues,
     onSubmit: formSubmit,
-    reset: resetForm,
+    onFormChange,
+    reset,
+    setFormError,
+    formState,
+    clearFormError: clearErrors,
   };
 };
 

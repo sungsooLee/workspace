@@ -1,7 +1,7 @@
 .start {
   @apply relative w-full;
   .input {
-    @apply min-h-[32px] w-full rounded-[4px] border-[1px] border-solid border-[var(--gray4)] px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
+    @apply min-h-[32px] w-full rounded-[4px] border-[1px] border-solid border-[var(--gray5)] px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
     &:focus {
       @apply border-[var(--gray7)];
     }
@@ -17,7 +17,7 @@
       border-color: var(--gray4);
     }
     &.error {
-      border-color: var(--status1);
+      @apply border-[var(--status1)];
     }
     &.lg {
       @apply min-h-[40px];
@@ -35,6 +35,10 @@
   }
   &.focused {
     @apply border-[var(--gray4)];
+  }
+
+  &.mobile {
+    background: red;
   }
 }
 

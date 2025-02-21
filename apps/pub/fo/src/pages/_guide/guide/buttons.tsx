@@ -41,6 +41,9 @@ import { Button } from '@learnway/ui';
               <Button variant="primary" size="lg">
                 버튼
               </Button>
+              <Button variant="primary" size="lg" disabled>
+                버튼
+              </Button>
             </div>
           </div>
 

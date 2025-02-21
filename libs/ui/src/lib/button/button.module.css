@@ -1,21 +1,21 @@
 .start {
   &.btn {
     @apply box-border inline-flex items-center justify-start leading-[1rem];
-    /* Size ( 28 | 32 | 36 | 40 ) */
+    /* Size ( 28 | 32 | 36 | 40 | 48 ) */
     &.xs {
-      @apply h-[28px] min-w-[48px] justify-center px-[6px];
+      @apply button_3_r h-[28px] min-w-[50px] justify-center px-[6px];
     }
     &.sm {
-      @apply h-[32px] min-w-[48px] justify-center px-[6px];
+      @apply button_3_r h-[32px] min-w-[50px] justify-center px-[6px];
     }
     &.md {
-      @apply h-[36px] min-w-[60px] justify-center px-[6px];
+      @apply button_3_r h-[36px] min-w-[50px] justify-center px-[6px];
     }
     &.lg {
-      @apply h-[40px] min-w-[80px] justify-center px-[6px];
+      @apply button_3_r h-[40px] min-w-[50px] justify-center px-[6px];
     }
     &.xl {
-      @apply h-[48px] min-w-[80px] justify-center px-[6px];
+      @apply button_2_r h-[48px] min-w-[80px] justify-center px-[6px];
     }
     & + .btn {
       @apply ml-[8px];
@@ -23,7 +23,7 @@
   }
 }
 .primary {
-  @apply justify-center rounded-[4px] bg-[var(--secondary1)] text-[14px] font-bold text-[white];
+  @apply justify-center rounded-[4px] bg-[var(--secondary1)] !font-bold text-[white];
   &:hover {
     @apply bg-[var(--secondary2)];
   }
@@ -35,7 +35,7 @@
   }
 }
 .line {
-  @apply justify-center rounded-[4px] bg-[var(--white)] text-[14px] font-bold text-[var(--secondary1)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[var(--secondary1)];
   border: 1px solid var(--secondary1);
   &:hover {
     @apply text-[var(--secondary2)];
@@ -51,7 +51,7 @@
   }
 }
 .gray {
-  @apply justify-center rounded-[4px] bg-[var(--white)] text-[14px] font-bold text-[var(--gray8)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[var(--gray8)];
   border: 1px solid var(--gray6);
   &:hover {
     @apply text-[var(--gray7)];
@@ -67,7 +67,7 @@
   }
 }
 .gray2 {
-  @apply justify-center rounded-[4px] bg-[var(--white)] text-[13px] font-medium text-[var(--gray8)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[var(--gray8)];
   border: 1px solid var(--gray5);
   &:hover {
     @apply text-[var(--gray8)];
@@ -86,7 +86,7 @@
   }
 }
 .search {
-  @apply justify-center rounded-[4px] bg-[var(--white)] pl-[8px] pr-[10px] text-[13px] font-bold text-[var(--gray9)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] pl-[8px] pr-[10px] text-[var(--gray9)];
   border: 1px solid var(--gray4);
   svg {
     @apply -ml-[2px] mr-[2px];
@@ -140,7 +140,7 @@
   }
 }
 .expand2 {
-  @apply justify-center rounded-[4px] bg-[var(--gray3)] px-[8px] text-[13px] font-bold text-[var(--primary2)];
+  @apply justify-center rounded-[4px] bg-[var(--gray3)] px-[8px] text-[var(--primary2)];
   border: 1px solid var(--gray4);
   svg {
     @apply mr-[2px];
@@ -168,7 +168,7 @@
   }
 }
 .save {
-  @apply justify-center rounded-[4px] bg-[var(--gray7)] text-[14px] font-bold text-[var(--white)];
+  @apply justify-center rounded-[4px] bg-[var(--gray7)] text-[var(--white)];
   &:hover {
     @apply bg-[var(--gray6)];
   }
@@ -180,7 +180,7 @@
   }
 }
 .point {
-  @apply justify-center rounded-[4px] bg-[var(--white)] text-[13px] font-bold text-[var(--primary2)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] text-[var(--primary2)];
   border: 1px solid var(--primary2);
   &:hover {
     @apply text-[var(--primary3)];
@@ -196,7 +196,7 @@
   }
 }
 .text {
-  @apply justify-center rounded-[4px] bg-[var(--white)] px-[8px] text-[14px] font-normal text-[var(--gray9)];
+  @apply justify-center rounded-[4px] bg-[var(--white)] px-[8px] text-[var(--gray9)];
   &:hover {
     @apply text-[var(--gray7)];
     svg {
@@ -214,7 +214,7 @@
   }
 }
 .chips {
-  @apply justify-center rounded-full bg-[var(--gray2)] px-[12px] text-[13px] font-light text-[var(--gray9)];
+  @apply justify-center rounded-full bg-[var(--gray2)] px-[12px] text-[var(--gray9)];
   svg {
     @apply ml-[2px];
   }

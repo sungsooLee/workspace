@@ -201,42 +201,42 @@ module.exports = {
           fontSize: '1.4rem',
           fontWeight: '400',
         },
-        '.btuuon_1_b': {
+        '.button_1_b': {
           ...baseTitle,
           fontSize: '1.8rem',
           fontWeight: '700',
         },
-        '.btuuon_2_b': {
+        '.button_2_b': {
           ...baseTitle,
           fontSize: '1.6rem',
           fontWeight: '700',
         },
-        '.btuuon_2_r': {
+        '.button_2_r': {
           ...baseTitle,
           fontSize: '1.6rem',
-          fontWeight: '700',
+          fontWeight: '400',
         },
-        '.btuuon_3_b': {
+        '.button_3_b': {
           ...baseTitle,
           fontSize: '1.4rem',
           fontWeight: '700',
         },
-        '.btuuon_3_r': {
+        '.button_3_r': {
           ...baseTitle,
           fontSize: '1.4rem',
           fontWeight: '400',
         },
-        '.btuuon_4_b': {
+        '.button_4_b': {
           ...baseTitle,
           fontSize: '1.3rem',
           fontWeight: '700',
         },
-        '.btuuon_4_r': {
+        '.button_4_r': {
           ...baseTitle,
           fontSize: '1.3rem',
           fontWeight: '400',
         },
-        '.btuuon_5_r': {
+        '.button_5_r': {
           ...baseTitle,
           fontSize: '1.2rem',
           fontWeight: '400',

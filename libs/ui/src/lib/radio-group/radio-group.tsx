@@ -28,13 +28,13 @@ const RadioGroupComponent = forwardRef<
           styles.start,
           'nlp--radio',
           size && styles[size],
+          orientation !== 'horizontal' ? styles.vertical : '',
           className,
-          // orientation === 'horizontal' ? horizontal_selector : vertical_selector (css 구현필요)
         )}
         defaultValue={defaultValue}
         {...props}>
         {options.map((option: RadioGroupOption) => (
-          <div className={styles.radio}>
+          <div className={styles.radio} key={option.value}>
             <Primitive.Item
               key={option.value}
               className={styles.item}

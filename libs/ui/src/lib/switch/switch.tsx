@@ -12,18 +12,34 @@ export interface SwitchComponentProps extends React.ComponentProps<typeof Primit
   disabled?: boolean;
   reversed?: boolean; // label이 앞에 있는 Case
   labelAlign?: 'left' | 'right';
+  showLabel?: boolean;
+  // onChange?: (checked: boolean) => void;
 }
 
 const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SwitchComponentProps>(
-  ({ id, label, className, checked, disabled, reversed, labelAlign = 'left', ...props }, ref) => {
+  (
+    {
+      id,
+      label,
+      className,
+      checked,
+      disabled,
+      reversed,
+      labelAlign = 'left',
+      showLabel = true,
+      // onChange,
+      onCheckedChange, // onChange 대신 onCheckedChange로 수정
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div
         className={cn(styles.start, styles.switch, className, 'nlp--switch', {
           [styles.reversed]: reversed,
         })}>
-
         {/* left label */}
-        {labelAlign === 'left' && label && (
+        {labelAlign === 'left' && showLabel && label && (
           <label className={styles.label} htmlFor={id}>
             {label}
           </label>
@@ -34,12 +50,13 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           className={styles.switch_root}
           id={id}
           checked={checked}
-          disabled={disabled}>
+          disabled={disabled}
+          onCheckedChange={onCheckedChange}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
 
         {/* right label */}
-        {labelAlign === 'right' && label && (
+        {labelAlign === 'right' && showLabel && label && (
           <label className={styles.label} htmlFor={id}>
             {label}
           </label>

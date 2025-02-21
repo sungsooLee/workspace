@@ -3,8 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <title>관리자</title>
-    <base href="/" />
-
+    <base href="%VITE_BO_BASE_PATH%/" />
+    <script>
+      // 런타임에서 환경 설정 정보를 window 객체에 저장
+      window.__ENV__ = {
+        APP_ENV: '%VITE_APP_ENV%',
+        BASE_PATH: '%VITE_BO_BASE_PATH%',
+      };
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/src/styles.css" />

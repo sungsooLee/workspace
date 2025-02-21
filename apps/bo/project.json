@@ -5,19 +5,40 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "serve": {
+      "configurations": {
+        "local": {
+          "mode": "development",
+          "envFile": ".env.local"
+        },
+        "dev": {
+          "mode": "development",
+          "envFile": ".env.dev"
+        },
+        "production": {
+          "mode": "production",
+          "envFile": ".env.prod"
+        }
+      }
+    },
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "development",
       "options": {
         "outputPath": "dist/apps/bo"
       },
       "configurations": {
-        "development": {
-          "mode": "development"
+        "local": {
+          "mode": "development",
+          "envFile": ".env.local"
+        },
+        "dev": {
+          "mode": "development",
+          "envFile": ".env.dev"
         },
         "production": {
-          "mode": "production"
+          "mode": "production",
+          "envFile": ".env.production"
         }
       }
     }

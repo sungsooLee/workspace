@@ -104,6 +104,7 @@ export interface TreeNode {
   dropPosition?: string;
   treeId?: string;
   //추후 Seq 속성 추가 될 것 같음. 해당 속성으로 무브에 대한 이벤트 targetIndex 로직 추가하면 될 것 같음.
+  isUsed?: boolean;
 }
 
 /**
@@ -114,7 +115,14 @@ export interface TreeProps {
   data: TreeNode[];
   onAction?: (payload: TreeEventPayload) => void;
   expandTrigger?: boolean;
+  type?: 'default' | 'advanced';
+  nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   // 추후 제약사항 추가 될 수 있음.
+}
+// 드랍 위치 감지를 위한 타입
+export interface IndicatorPosition {
+  targetId: string | null;
+  position: NodeMovePositionType;
 }
 
 export interface TreeNodeComponentProps {
@@ -129,6 +137,9 @@ export interface TreeNodeComponentProps {
   onNodeClick?: (node: TreeNode | null) => void | Promise<void>;
   constraints?: NodeConstraints;
   isDraggable?: boolean;
+  treeType?: 'default' | 'advanced';
+  nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
+  onToggleUsed?: (node: TreeNode, isUsed: boolean) => void;
 }
 
 /**

@@ -14,15 +14,16 @@
         @apply m-auto h-[66px] w-[66px];
       }
       .profile {
+        @apply m-auto max-w-[300px] px-[34px];
         .name {
-          @apply body_1_b mt-[16px] block text-center text-[var(--gray9)];
+          @apply body_1_b ellipsis mt-[16px] block text-center text-[var(--gray9)];
         }
         .tenant,
         .team {
-          @apply body_3_r mt-[8px] block text-center text-[var(--gray7)];
+          @apply body_3_r ellipsis mt-[8px] block text-center text-[var(--gray7)];
         }
         .team {
-          @apply mt-[0];
+          @apply ellipsis mt-[0] overflow-hidden text-ellipsis whitespace-nowrap;
         }
       }
     }
@@ -31,12 +32,12 @@
         @apply border-t border-solid border-[var(--gray3)];
         a,
         button {
-          @apply btuuon_2_r block px-[24px] py-[20px];
+          @apply button_2_r block px-[24px] py-[20px];
         }
       }
     }
     .btn_log {
-      @apply btuuon_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
+      @apply button_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
       svg {
         @apply mr-[10px];
       }

@@ -248,8 +248,14 @@ export interface DynamicFormConfig {
  */
 export interface Builder {
   name: string;
+  value?: any;
   type?: string;
   label?: string;
+  tooltip?: string;
+  options?: SelectOption[];
+  optionsConfig?: OptionsConfig;
+  subText?: string;
+  guideText?: string;
   fields?: Builder[];
   [key: string]: any;
 }

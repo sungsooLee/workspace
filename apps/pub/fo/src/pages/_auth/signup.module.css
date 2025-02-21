@@ -1,29 +1,110 @@
 /* signup.module.css */
-.signup_info {
-}
+.auth_wrap {
+  .auth_box {
+    @apply relative z-0 px-[40px] py-[48px] text-left;
 
-.signup_step {
-}
+    h4.title {
+      @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
+    }
 
-.signup_select {
-  @apply mt-[48px];
-  .select_list {
-    @apply flex items-center justify-center gap-[16px] text-center;
-    li {
-      @apply w-full;
-      .select {
-        @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
-        span {
-          @apply mt-[8px] block;
+    .title_box {
+      @apply pb-[16px];
+      h4.title {
+        @apply pb-0;
+      }
+      .txt_info {
+        @apply body_3_r mt-[4px] text-[var(--gray7)];
+      }
+    }
+
+    .signup_info {
+      + h4.title {
+        @apply mt-[48px];
+      }
+    }
+
+    .signup_step {
+      @apply pl-[140px] pr-[140px];
+    }
+
+    .signup_select {
+      @apply mt-[48px];
+      .radio_card {
+        @apply flex items-center justify-center gap-[16px] text-center;
+
+        button {
+          @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+          span {
+            @apply mt-[8px] block text-[var(--gray6)];
+          }
+          svg {
+            @apply opacity-30;
+          }
+          .ico1 {
+            @apply stroke-[var(--primary1)];
+          }
+          .ico2 {
+          }
+          &[aria-checked='true'] {
+            @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+            span {
+              @apply text-[var(--primary1)];
+            }
+            svg {
+              @apply opacity-100;
+            }
+          }
         }
-        &.active {
-          @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+      }
+    }
+
+    .signup_check {
+      @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+      ul {
+        > li {
+          @apply mt-[16px] flex items-center justify-between;
+          .btn_view {
+            @apply body_3_r text-[var(--gray8)] underline;
+          }
         }
+      }
+    }
+
+    .check_all {
+      @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
+    }
+
+    .signup_noti {
+      @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
+      .check_point {
+        @apply body_4_r text-left text-[var(--gray7)];
+        dt {
+          @apply body_4_b flex items-center justify-start;
+          svg {
+            @apply mr-[4px];
+          }
+        }
+        dd {
+          @apply relative mt-[8px] pl-[10px];
+          + dd {
+            @apply mt-[4px];
+          }
+          &::before {
+            @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+          }
+        }
+      }
+    }
+
+    .btn_wrap {
+      @apply mt-[48px] flex items-center justify-center;
+      button {
+        @apply w-full;
       }
     }
   }
 }
 
-.signup_check {
-  @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+/* mobile */
+:global(body.mobile) {
 }

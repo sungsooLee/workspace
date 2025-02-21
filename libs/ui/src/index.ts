@@ -41,8 +41,7 @@ export { default as Editor } from './lib/editor';
 
 // input
 export * from './lib/input/input';
-export * from './lib/input/input-limit';
-export * from './lib/input/input-button';
+export * from './lib/input/input-button-form-field';
 export * from './lib/checkbox/form-checkbox';
 export * from './lib/radio-group/form-radio-group';
 export * from './lib/date-picker/form-date-range-picker';
@@ -50,7 +49,6 @@ export * from './lib/date-picker/form-date-range-picker';
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
 export * from './lib/file-upload/form-thumbnail-image-upload';
-
 
 // modal
 export * from './lib/modal/modal';

@@ -11,10 +11,11 @@ import {
 } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './form.module.css';
-import { IcoFormRequired } from '@learnway/icons';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Builder, DynamicFormField } from '../dynamic-form-field';
 import { dialogConfig } from './config';
 import { FormRowProps } from './type';
+import { Button, Tooltip } from '@learnway/ui';
 
 /**
  * getBuilderConfig
@@ -73,9 +74,9 @@ const getBuilderConfig = (builders: any[], name: string): Partial<Builder> => {
  * @param children - ReactNode (children)
  * @returns 수집된 name 문자열 배열
  */
-const collectNames = (children: React.ReactNode): string[] => {
+const collectNames = (children: ReactNode): string[] => {
   const names: string[] = [];
-  const traverse = (child: React.ReactNode) => {
+  const traverse = (child: ReactNode) => {
     if (!isValidElement(child)) return;
     // DynamicFormField인 경우 name 값을 수집
     if (child.type === DynamicFormField) {
@@ -105,7 +106,7 @@ const collectNames = (children: React.ReactNode): string[] => {
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
   // provider에서 필요한 값들을 구조분해
-  const { control, builders, formState, ...providerProps } = provider;
+  const { control, builders, formState, fieldRefs, ...providerProps } = provider;
 
   // children 내부의 DynamicFormField들의 name 값을 useMemo로 한 번만 계산
   const names = useMemo(() => collectNames(children), [children]);
@@ -128,7 +129,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
    * @param child - 처리할 ReactNode
    * @returns 처리된 ReactNode
    */
-  const renderChild = (child: ReactNode): React.ReactNode => {
+  const renderChild = (child: ReactNode): ReactNode => {
     if (!isValidElement(child)) return child;
 
     // DynamicFormField인 경우: 해당 필드의 설정에 따라 추가 props 주입
@@ -187,14 +188,16 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       isError: !!errorMessage,
       message: errorMessage,
     });
-  }, [formState.errors]);
+  }, [formState.errors, names]);
 
   return (
-    <div className={cn(styles.form_item, className)}>
+    <div
+      className={cn(styles.form_item, className)}
+      ref={(node) => (fieldRefs.current[formName] = node)}>
       {/* 레이블 렌더링 */}
       {rootConfig.label && (
         <label htmlFor={formName} className={cn(styles.form_label, 'dynamic-form-field-label')}>
-          {rootConfig.label}
+          <span className={styles.form_text}>{rootConfig.label}</span>
           {isRequired && (
             <span
               className={cn(styles.status, {
@@ -204,14 +207,25 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
               <IcoFormRequired width={8} height={8} />
             </span>
           )}
+          {rootConfig.tooltip && (
+            <Tooltip
+              className={styles.tooltip}
+              side="right"
+              align="start"
+              content={rootConfig.tooltip}>
+              <Button onlyIcon>
+                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+              </Button>
+            </Tooltip>
+          )}
+          {rootConfig.subText && <span className={styles.sub_text}>{rootConfig.subText}</span>}
         </label>
       )}
-
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
       <div className={styles.input_box}>{Children.map(children, renderChild)}</div>
 
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {!error.isError && rootConfig?.description && (
+      {!error.isError && rootConfig?.guideText && (
         <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
           {rootConfig.description}
         </p>

@@ -1,14 +1,13 @@
 import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { API_SERVER } from '../const/config.constant';
 import { OAuthApiPrefix } from '../service/config.service';
 
-import { httpService, cookieService, HttpMethod } from '@learnway/shared';
+import { httpService, HttpMethod } from '@learnway/shared';
 
 export function initAxios() {
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = API_SERVER;
+  axios.defaults.baseURL = import.meta.env.AXIOS_BASE_URL;
 
   const interceptors = {
     request: {

@@ -61,7 +61,7 @@ const { open: openModal } = useModalControl();`}
               onClick={() =>
                 openModal(<BasicModalContent />, {
                   title: '타이틀',
-                  width: 'full', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                  width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   footer: <CustomFooter />,
                 })
               }>

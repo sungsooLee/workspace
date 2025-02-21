@@ -53,7 +53,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
     <Popover
       popoverContent={<PopoverContent />}
-      className={styles.btn_language}
+      className={`${styles.btn_language} ${className}`}
       side="bottom"
       align="end"
       sideOffset={5}>

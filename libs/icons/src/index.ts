@@ -11,6 +11,7 @@ export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid d
 export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid download
 export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 grid download
 export { ReactComponent as IcoClose } from './lib/ic_close.svg'; // 24*24 close
+export { ReactComponent as IcoFillActive } from './lib/ic_fill_active.svg'; // tab fill active
 export { ReactComponent as IcoArrowForward } from './lib/ic_arrow_forward.svg'; // bread arrow
 export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home BO
 export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
@@ -60,6 +61,8 @@ export { ReactComponent as IcoMybook } from './lib/ic_mybook.svg';
 export { ReactComponent as IcoPlay02 } from './lib/ic_play-02.svg';
 export { ReactComponent as IcoMoreHorizontal } from './lib/ic_more_horizontal.svg';
 export { ReactComponent as IcoEye } from './lib/ic_eye.svg';
+export { ReactComponent as IcoAnnouncement03 } from './lib/ic_announcement_03.svg';
+export { ReactComponent as IcoClock01 } from './lib/ic_clock_01.svg'; // clock
 
 //export Default as Information from './lib/information.svg?react';
 

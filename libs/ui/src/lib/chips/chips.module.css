@@ -20,6 +20,17 @@
   .chips_wapper {
     @apply mt-[8px] flex flex-wrap gap-x-[8px] gap-y-[12px];
     max-width: fit-content;
+    .btn_chips {
+      &.sm {
+        @apply min-h-[3.2rem];
+      }
+      &.md {
+        @apply min-h-[3.6rem];
+      }
+      &.lg {
+        @apply min-h-[4rem];
+      }
+    }
   }
   .close {
     @apply ml-[2px] h-auto w-[12px];
