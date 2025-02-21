@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalControl, useModalContext } from '@learnway/ui';
+import { Button, useModal, useModalContext } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModalControl();
+  const { open: openModal } = useModal();
   const BasicModalContent = () => {
     return (
       <div>
@@ -45,10 +45,10 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModalControl, useModalContext } from '@learnway/ui';
+import { Button, useModal, useModalContext } from '@learnway/ui';
 
 // 실행 함수
-const { open: openModal } = useModalControl();`}
+const { open: openModal } = useModal();`}
           </code>
         </pre>
       </div>
@@ -59,10 +59,11 @@ const { open: openModal } = useModalControl();`}
           <div className="desc">
             <Button
               onClick={() =>
-                openModal(<BasicModalContent />, {
+                openModal({
                   title: '타이틀',
                   width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   footer: <CustomFooter />,
+                  content: <BasicModalContent />,
                 })
               }>
               모달 팝업 열기

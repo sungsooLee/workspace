@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModalControl } from '@learnway/ui';
+import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '../../../assets/styles/modules/fileUpload.module.css';
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_guide/guide/fileUpload')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModalControl();
+  const { open: openModal } = useModal();
   const FileUploadContent = () => {
     return (
       <div className={styles.fileupload_wrap}>
@@ -36,9 +36,10 @@ function RouteComponent() {
   const hasRun = useRef(false);
   useEffect(() => {
     if (!hasRun.current) {
-      openModal(<FileUploadContent />, {
+      openModal({
         title: '',
         width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+        content: <FileUploadContent />,
       });
       hasRun.current = true;
     }
