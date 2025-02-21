@@ -21,6 +21,10 @@ function RouteComponent() {
           생성한다. ex) test.tsx / test.module.css
         </li>
         <li>모듈 css 사용시 클래스명에 '-' 하이폰 대신 '_'를 사용한다.</li>
+        <li>
+          공통 콤포넌트(libs) 색상이나 스타일 수정시 global.css / components에 css를 활용한다. ex)
+          nlp--input 선택자
+        </li>
       </ul>
       <div className="group"></div>
     </div>

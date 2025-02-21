@@ -8,6 +8,14 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Mobile Guide</h2>
+      <div className="info">
+        전체레이아웃(pc,mobile)은 적응형이며, 화면페이지는 반응형+적응형 조합이다.
+        <br />
+        반응형 : 파일1,모듈css1 / 적응형 : 파일2,모듈css2
+        <br />
+        여기서 반응형은 브라우저 해상도에 따른 자동조절 반응형 개념이 아닌 디바이스 분기처리
+        개념이다.
+      </div>
       <h3 className="guide_tit3">모바일 분기처리</h3>
 
       <div className="code_example">
