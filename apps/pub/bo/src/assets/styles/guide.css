@@ -5,6 +5,7 @@
   @apply flex;
   height: 100dvh;
   .aside {
+    @apply scrollbar;
     position: relative;
     overflow: auto;
     h1 {
@@ -411,6 +412,11 @@
       border-bottom: 1px solid #eee;
       > a {
         text-decoration: underline;
+      }
+      &.pages {
+        a {
+          @apply text-[#00AFD5];
+        }
       }
     }
   }

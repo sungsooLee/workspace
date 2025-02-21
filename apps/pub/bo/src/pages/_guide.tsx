@@ -16,6 +16,7 @@ function RouteComponent() {
         { label: '소개', path: '/guide/info' },
         { label: '컬러', path: '/guide/color' },
         { label: '타이포그래픽', path: '/guide/typography' },
+        { label: 'CSS', path: '/guide/css' },
         { label: 'Form', path: '/guide/form' },
       ],
     },

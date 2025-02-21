@@ -42,6 +42,7 @@ import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
+import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
@@ -236,6 +237,12 @@ const GuideGuideFormRoute = GuideGuideFormImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideCssRoute = GuideGuideCssImport.update({
+  id: '/guide/css',
+  path: '/guide/css',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideColorRoute = GuideGuideColorImport.update({
   id: '/guide/color',
   path: '/guide/color',
@@ -412,6 +419,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/color'
       fullPath: '/guide/color'
       preLoaderRoute: typeof GuideGuideColorImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/css': {
+      id: '/_guide/guide/css'
+      path: '/guide/css'
+      fullPath: '/guide/css'
+      preLoaderRoute: typeof GuideGuideCssImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/form': {
@@ -593,6 +607,7 @@ interface GuideRouteChildren {
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideCssRoute: typeof GuideGuideCssRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
@@ -621,6 +636,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideCssRoute: GuideGuideCssRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
@@ -680,6 +696,7 @@ export interface FileRoutesByFullPath {
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
@@ -720,6 +737,7 @@ export interface FileRoutesByTo {
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
@@ -763,6 +781,7 @@ export interface FileRoutesById {
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
+  '/_guide/guide/css': typeof GuideGuideCssRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
@@ -805,6 +824,7 @@ export interface FileRouteTypes {
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
@@ -844,6 +864,7 @@ export interface FileRouteTypes {
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
@@ -885,6 +906,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/checkbox'
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
+    | '/_guide/guide/css'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
@@ -957,6 +979,7 @@ export const routeTree = rootRoute
         "/_guide/guide/checkbox",
         "/_guide/guide/chips",
         "/_guide/guide/color",
+        "/_guide/guide/css",
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
@@ -1045,6 +1068,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/color": {
       "filePath": "_guide/guide/color.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/css": {
+      "filePath": "_guide/guide/css.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/form": {
