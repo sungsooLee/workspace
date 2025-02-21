@@ -8,18 +8,19 @@ import styles from './progress.module.css';
 
 interface ProgressComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   value: number;
-  max?: number;
   label?: string;
   className?: string;
+  isFailed?: boolean;
 }
 
 const ProgressComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   ProgressComponentProps
->(({ className, value, label, max, ...props }, ref) => {
+>(({ className, value, label, isFailed = false, ...props }, ref) => {
   const [progress, setProgress] = React.useState(value);
 
-  const progressClass = progress >= 100 ? 'completed' : progress >= 90 ? 'nearly' : '';
+  const progressClass =
+    progress >= 100 ? 'completed' : progress >= 90 ? 'nearly' : progress === 0 ? 'waiting' : '';
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(value), 500);
@@ -27,7 +28,7 @@ const ProgressComponent = forwardRef<
   }, [value]);
 
   return (
-    <div className={cn(styles.progress_wrap, styles[progressClass])}>
+    <div className={cn(styles.progress_wrap, styles[progressClass], isFailed ? styles.error : '')}>
       {label && <p className={styles.progress_status}>{label}</p>}
       <Primitive.Root className={cn(styles.start, className, 'nlp--progress')} value={progress}>
         <Primitive.Indicator
