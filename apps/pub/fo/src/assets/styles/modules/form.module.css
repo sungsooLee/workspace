@@ -165,7 +165,7 @@
       fill: #00afd5;
     }
     &.error svg {
-      fill: var(--status1);
+      fill: #00afd5;
     }
   }
 }
