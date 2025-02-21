@@ -1,19 +1,20 @@
 import type { AxiosResponse } from 'axios';
 
 import { AuthUser } from '../../../types';
+import { tokenService } from './token.service';
 
 export function assignToken(data: AxiosResponse) {
   try {
-    localStorage.clear();
-    localStorage.setItem('ACCESS-TOKEN', data.headers['access-token']);
-    localStorage.setItem('REFRESH-TOKEN', data.headers['refresh-token']);
+    tokenService.clear();
+    tokenService.accessToken = data.headers['access-token'];
+    tokenService.refreshToken = data.headers['refresh-token'];
   } catch (e) {
-    localStorage.clear();
+    tokenService.clear();
   }
 }
 
 export function removeToken() {
-  localStorage.clear();
+  tokenService.clear();
 }
 
 export function convertToAuthUser(data: AxiosResponse): AuthUser {

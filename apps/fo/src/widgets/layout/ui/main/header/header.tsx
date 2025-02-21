@@ -1,10 +1,11 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { cookieService } from '@learnway/shared';
+import { useFetchAuthUser } from '@learnway/config';
 
-import { Category, Search, Logo, UserAvatar } from '../../../../../features/layout';
+import { Search, Logo, UserAvatar } from '../../../../../features/layout';
+import { CategoryPopover } from '../../../../../features/category';
 import { Language, Notification, Tenants, AdminLink } from '../../../../../features/platform';
-import { useFetchAuthUser } from '../../../../../entities/auth';
 import { Tenant, useFetchTenantByUser } from '../../../../../entities/tenant';
 
 import { NavigateHover } from './navigate/navigate-hover';
@@ -91,7 +92,7 @@ function HeaderComponent() {
 
         <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
           <div className={styles.nav_area}>
-            <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+            <CategoryPopover onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
             <Navigate onMouseEnter={handleMouseEnter} />
           </div>
           {isHoverNavigate && (

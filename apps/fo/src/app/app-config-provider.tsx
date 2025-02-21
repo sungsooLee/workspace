@@ -1,7 +1,14 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios, setConfig, API_FO_URI } from '@learnway/config';
+import {
+  initI18N,
+  initZod,
+  initAxios,
+  setConfig,
+  API_FO_URI,
+  tokenService,
+} from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
@@ -31,9 +38,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   useMount(async () => {
     // set api prefix by fo
     setConfig('APP_API_URI', API_FO_URI);
-
-    const refreshToken = localStorage.getItem('REFRESH-TOKEN');
-    refreshToken && (await reissue());
+    tokenService.refreshToken && (await reissue());
   });
 
   useEffect(() => {

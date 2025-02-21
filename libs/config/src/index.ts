@@ -7,5 +7,6 @@ export * from './lib/service/i18n';
 export * from './lib/service/axios';
 export * from './lib/service/react-query';
 export * from './lib/zod';
+export * from './lib/auth/entities';
 
 export * from './lib/types';

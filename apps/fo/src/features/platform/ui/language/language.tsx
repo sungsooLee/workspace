@@ -5,10 +5,10 @@ import { cn } from '@learnway/shared';
 import { CODE_GROUP, getDefaultLang } from '@learnway/config';
 import { Popover, Button } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
+import { useFetchAuthUser } from '@learnway/config';
 
 import { useSetLanguage } from '../../service/i18n.hook';
 import { useCodesByCodeGroup, type Code } from '../../../../entities/platform';
-import { useFetchAuthUser } from '../../../../entities/auth';
 
 import styles from './language.module.css';
 
