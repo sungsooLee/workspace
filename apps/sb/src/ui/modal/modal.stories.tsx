@@ -43,9 +43,9 @@ export const Template: any = (args: any) => {
 Template.storyName = 'Basic';
 
 export const TemplateFooter: any = (args: any) => {
-  const { open: openModal } = useModal();
-  const handleOpenModal = () => {
-    const a = openModal({
+  const { open: openModal, openAsync } = useModal();
+  const handleOpenModal = async () => {
+    openModal({
       title: 'modal title',
       content: <Content />,
       footer: true, // default footer 사용
@@ -53,7 +53,6 @@ export const TemplateFooter: any = (args: any) => {
         console.log('onClose data', data);
       },
     });
-    console.log(a);
   };
   return (
     <div>
@@ -72,8 +71,8 @@ export const TemplateCustomFooter: any = (args: any) => {
       content: <Content />,
       footer: (
         <>
-          <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-          <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
+          <Button label={'취소2'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+          <Button label={'확인2'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
         </>
       ),
       onClose: (data) => {

@@ -53,7 +53,11 @@ const ModalComponent: React.FC<ModalConfig> = ({
     <Primitive.Root open={true} onOpenChange={handleOpenChange}>
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
-        <Primitive.Content className={cn(styles.content, width && styles[width])}>
+        <Primitive.Content
+          className={cn(styles.content, width && styles[width])}
+          onInteractOutside={(e) => e.preventDefault()} // Overlay 클릭 방지
+          onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
+        >
           {/* title */}
           <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
