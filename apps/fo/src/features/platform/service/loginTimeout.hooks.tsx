@@ -1,9 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { useModalControl, useModalStore } from '@learnway/ui';
-import { useLogoutUser } from '../../../entities/auth';
 import { useModal } from '@learnway/ui';
 import { useLogoutUser } from '../../../entities/auth';
-
 
 interface ExtensionModalProps {
   initialTime: number;
