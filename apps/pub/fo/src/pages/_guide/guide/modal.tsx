@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
-import { useFloatingModal } from '@/libs/editor/src/lib/context/floating-modal.context';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { useFloatingModal } from '../../../../../../../../fe/libs/editor/src/lib/context/floating-modal.context';
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
