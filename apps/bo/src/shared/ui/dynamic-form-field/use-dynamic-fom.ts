@@ -1,5 +1,5 @@
 // useDynamicForm.ts
-import { FormEventHandler, useRef, useState } from 'react';
+import { FormEventHandler, useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from '../search-box/create-jod-schema';
@@ -46,7 +46,17 @@ const useDynamicForm = (config: DynamicFormConfig) => {
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // react-hook-form 메서드 및 속성 추출
-  const { control, handleSubmit, setFocus, getValues, reset, watch, formState } = methods;
+  const {
+    control,
+    handleSubmit,
+    setFocus,
+    getValues,
+    reset,
+    watch,
+    formState,
+    setError,
+    clearErrors,
+  } = methods;
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -176,8 +186,17 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     }
   };
 
+  const setFormError = (fieldName: string, message: string) => {
+    setError(fieldName, { type: 'custom', message });
+    const errorFieldRef = fieldRefs.current[fieldName] as HTMLDivElement | null;
+    if (errorFieldRef) {
+      errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      errorFieldRef.focus();
+    }
+    setFocus(fieldName);
+  };
+
   const fetchData = (fetchValues: any) => {
-    console.log('fetchData', fetchValues);
     setOriginalValues(fetchValues);
     reset(fetchValues);
   };
@@ -201,6 +220,9 @@ const useDynamicForm = (config: DynamicFormConfig) => {
     onSubmit: formSubmit,
     onFormChange,
     reset,
+    setFormError,
+    formState,
+    clearFormError: clearErrors,
   };
 };
 

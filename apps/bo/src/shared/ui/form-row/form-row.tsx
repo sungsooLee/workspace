@@ -188,7 +188,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       isError: !!errorMessage,
       message: errorMessage,
     });
-  }, [formState.errors]);
+  }, [formState.errors, names]);
 
   return (
     <div

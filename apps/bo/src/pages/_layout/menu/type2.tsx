@@ -50,7 +50,8 @@ const formConfigB: DynamicFormConfig = {
 
 function RouteComponent() {
   /* react hook form custom */
-  const { provider, onSubmit, control, onFormChange } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, control, onFormChange, setFormError, clearFormError } =
+    useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
@@ -108,6 +109,15 @@ function RouteComponent() {
     console.log(data);
   };
 
+  const handleSetError = () => {
+    console.log('set error');
+    setFormError('channel2', 'custom message');
+  };
+
+  const handleClearError = () => {
+    console.log('clear error');
+    clearFormError('channel2');
+  };
   return (
     <div>
       <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -119,11 +129,14 @@ function RouteComponent() {
             <Button type={'button'} variant="point" size="sm" onClick={handleOnChange}>
               공유이력 보기
             </Button>
-            <Button type={'button'} variant="point" size="sm">
-              삭제
+            <Button type={'button'} variant="point" size="sm" onClick={handleOnReset}>
+              초기화
             </Button>
-            <Button type={'button'} variant="point" size="sm">
-              수정
+            <Button type={'button'} variant="point" size="sm" onClick={handleSetError}>
+              강제 에러 세팅
+            </Button>
+            <Button type={'button'} variant="point" size="sm" onClick={handleClearError}>
+              강제 에러 해제
             </Button>
             <Button type={'button'} variant="primary" size="sm">
               목록

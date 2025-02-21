@@ -205,7 +205,7 @@
         {
           "title": "테넌트 관리",
           "roles": "ROLE_ADMIN",
-          "path": "/menu/menu3-1",
+          "path": "/partners/tenant",
           "children": [
             {
               "title": "테넌트 개설",
