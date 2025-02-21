@@ -5,8 +5,8 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Popover } from '@learnway/ui';
+import { useFetchAuthUser, useLogoutUser, useReissue } from '@learnway/config';
 
-import { useFetchAuthUser, useLogoutUser, useReissue } from '../../../entities/auth';
 import type { Tenant } from '../../../types';
 
 interface ProfileMenu {

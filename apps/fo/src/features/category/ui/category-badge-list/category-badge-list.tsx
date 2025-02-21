@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
 import { IcoXclose, IcoArrowForward } from '@learnway/icons';
 import { Button, Chips } from '@learnway/ui';
 
-import { Category } from '../../../types/entities/category';
-import { useCategories } from '../services/category.service';
-import { useCategoryNavigation } from '../../../entities/category/service/category.hook';
+import { Category } from '../../../../types/entities/category';
+import { useCategories } from '../../services/category.service';
+import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
+
 import styles from './category-badge-list.module.css';
-import { Navigation } from 'swiper/modules';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;

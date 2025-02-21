@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './my-menu.module.css';
 import { Popover } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
-
-import { useFetchAuthUser } from '../../../../entities/auth';
+import { useFetchAuthUser } from '@learnway/config';
 
 const PopoverContent = () => {
   const { t } = useTranslation();

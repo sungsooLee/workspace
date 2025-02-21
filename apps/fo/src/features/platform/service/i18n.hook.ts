@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import { getDefaultLang, setDefaultLang } from '@learnway/config';
+import { getDefaultLang, setDefaultLang, useUpdateUser } from '@learnway/config';
 
 import { useFetchAsyncI18nResource } from '../../../entities/platform';
-import { useUpdateUser } from '../../../entities/auth';
 
 export function useSetLanguage() {
   const [inProgress, setInProgress] = useState<boolean>(false);

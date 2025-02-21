@@ -1,9 +1,7 @@
 import type { AxiosResponse } from 'axios';
 
-import { httpService, HttpMethod, cookieService } from '@learnway/shared';
-import { OAuthApiPrefix } from '@learnway/config';
-
-import loginMock from '../../mock/login.json';
+import { httpService, HttpMethod } from '@learnway/shared';
+import { OAuthApiPrefix } from '../../../service/config.service';
 
 export default class AuthorizationService {
   static login(payload: any): Promise<any> {

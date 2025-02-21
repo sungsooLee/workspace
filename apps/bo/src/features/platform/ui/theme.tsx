@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { values } from 'lodash';
 
 import { Avatar, Popover } from '@learnway/ui';
-
-import { useFetchAuthUser } from '../../../entities/auth';
+import { useFetchAuthUser } from '@learnway/config';
 
 enum Themes {
   DEFAULT = 'default',

@@ -1,12 +1,11 @@
 import { memo, useEffect, useState } from 'react';
-import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Avatar, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui';
 import { IcoBell02 } from '@learnway/icons';
-
 import { PMSApiPrefix } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/config';
 
-import { useFetchAuthUser } from '../../../../entities/auth';
 import { useNotifications } from '../../../../entities/notification/service/notification.hook';
 import { queryKeys } from '../../../../entities/notification/service/notification.queries';
 

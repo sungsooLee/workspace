@@ -2,9 +2,9 @@ import { memo } from 'react';
 
 import { Avatar, Popover } from '@learnway/ui';
 import { IcoAlarmFill } from '@learnway/icons';
-import styles from './notification.module.css';
+import { useFetchAuthUser } from '@learnway/config';
 
-import { useFetchAuthUser } from '../../../../entities/auth';
+import styles from './notification.module.css';
 
 const PopoverContent = () => {
   return <div className={styles.alarm_content}></div>;

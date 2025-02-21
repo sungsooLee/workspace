@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
-import { useFetchMenus } from '../../../entities/menu';
-import { useFetchAuthUser } from '../../../entities/auth';
-import { Menu, HookData } from '../../../types';
+import { useFetchAuthUser } from '@learnway/config';
 
+import { useFetchMenus } from '../../../entities/menu';
+import { Menu, HookData } from '../../../types';
 import { useActiveMenuDepthState } from '../../../features/platform';
 
 /**
