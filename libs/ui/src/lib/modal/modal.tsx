@@ -7,6 +7,7 @@ import { cn } from '@learnway/shared';
 import styles from './modal.module.css';
 
 const ModalComponent: React.FC<BaseModalProps> = ({
+  header = true,
   title,
   description,
   children,
@@ -27,7 +28,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content className={cn(styles.content, width && styles[width])}>
           {/* title */}
-          <Primitive.Title className={styles.title}>{title}</Primitive.Title>
+          {header && <Primitive.Title className={styles.title}>{title}</Primitive.Title>}
 
           {/* description */}
           <Primitive.Description className={styles.description}>
@@ -35,7 +36,7 @@ const ModalComponent: React.FC<BaseModalProps> = ({
           </Primitive.Description>
 
           {/* children */}
-          <div className={styles.content_body}>{children}</div>
+          <div className={cn(styles.content_body, !header && styles.no_header)}>{children}</div>
 
           {/* footer */}
           {footer && (
