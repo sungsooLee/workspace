@@ -17,7 +17,7 @@
       border-color: var(--gray4);
     }
     &.error {
-      border-color: var(--status1);
+      @apply border-[var(--status1)];
     }
     &.lg {
       @apply min-h-[40px];

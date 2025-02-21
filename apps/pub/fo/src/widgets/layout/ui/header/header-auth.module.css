@@ -17,3 +17,12 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.header_auth {
+      @apply hidden;
+    }
+  }
+}

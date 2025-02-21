@@ -3,6 +3,7 @@ import { useRouter } from '@tanstack/react-router';
 import type { AxiosResponse } from 'axios';
 
 import { cookieService } from '@learnway/shared';
+import type { MutateCallback } from '@learnway/shared';
 
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 import { User } from '../model/user';
@@ -11,17 +12,6 @@ import { useAtom } from 'jotai';
 import { activeTenantAtom } from '../../../features/layout';
 import AuthorizationService from '../api/authorization';
 import TenantService from '../../tenant/api/tenant';
-
-export interface IMutateCallback<TVariables> {
-  onSuccess?: (data: any, variables: TVariables, context: any) => void;
-  onSettled?: (
-    data: any | undefined,
-    error: any | null,
-    variables: TVariables,
-    context: any | undefined,
-  ) => void;
-  onError?: (err: any, variables: TVariables, context: any | undefined) => void;
-}
 
 export function useFetchAuthUser<T = User>() {
   return useQuery<unknown, unknown, T>(queryOptions.authUser());
@@ -52,7 +42,7 @@ export function useLoginUser(mutationOptions = {}) {
   });
 
   return {
-    login: (payload: any, callback?: IMutateCallback<any[]>) => {
+    login: (payload: any, callback?: MutateCallback<any[]>) => {
       mutate(payload, callback);
     },
     isSuccess,
@@ -94,7 +84,7 @@ export function useUpdateUser(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
-    updateLanguage: (languageCode: string, callback?: IMutateCallback<any[]>) => {
+    updateLanguage: (languageCode: string, callback?: MutateCallback<any[]>) => {
       const user = queryClient.getQueryData(queryKeys.authUser);
       if (!user) {
         return;

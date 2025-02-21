@@ -598,12 +598,12 @@ function RouteComponent() {
           <label htmlFor="name3" className={formStyles.form_label}>
             <span className={formStyles.form_text}>error</span>
             {/* error 케이스 */}
-            <span className={cn(formStyles.status, formStyles.error)}>
+            <span className={formStyles.status}>
               <IcoFormRequired width={12} height={12} />
             </span>
           </label>
           <div className={formStyles.input_box}>
-            <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
+            <Input id="name3" type="text" value="text" placeholder="입력" error />
           </div>
           {/* 에러인경우 : error 클래스 추가 */}
           <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
@@ -629,7 +629,7 @@ function RouteComponent() {
             <span className={formStyles.form_text}>readonly</span>
           </label>
           <div className={formStyles.input_box}>
-            <Input id="name5" type="text" placeholder="입력" readOnly />
+            <Input id="name5" type="text" placeholder="입력" value="value" readOnly />
           </div>
         </div>
       </div>

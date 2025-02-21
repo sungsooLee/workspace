@@ -17,35 +17,37 @@ function RouteComponent() {
     <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
       <div className={styles.auth_box}>
         <div className={formStyles.form_row}>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name5" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>아이디/이메일</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Input
-                id="name5"
-                type="text"
-                value=""
-                placeholder="아이디 또는 회사 이메일을 입력하세요."
-                className={formStyles.lg}
-              />
+          <div className={formStyles.row}>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name5" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>아이디/이메일</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name5"
+                  type="text"
+                  value=""
+                  placeholder="아이디(hyundai.kim@hyundail.com)"
+                  className={formStyles.lg}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={formStyles.form_row}>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name5" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>비밀번호</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Input
-                id="name5"
-                type="password"
-                value=""
-                placeholder="비밀번호를 입력하세요."
-                className={formStyles.lg}
-              />
+          <div className={`${formStyles.row} ${formStyles.no_line}`}>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name5" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>비밀번호</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name5"
+                  type="password"
+                  value=""
+                  placeholder="비밀번호를 입력하세요."
+                  className={formStyles.lg}
+                />
+              </div>
             </div>
           </div>
         </div>

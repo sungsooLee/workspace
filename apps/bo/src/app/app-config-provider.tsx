@@ -3,10 +3,9 @@ import { useMount } from 'ahooks';
 
 import { initI18N, initZod, initAxios } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
-import { cookieService } from '@learnway/shared';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
-import { useReissue } from '../entities/user';
+import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
 
@@ -27,11 +26,11 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
-  const { reissue } = useReissue();
+  const { reissue } = useAuthSignin();
 
-  useMount(() => {
-    const refreshToken = cookieService.get('REFRESH-TOKEN');
-    refreshToken && reissue();
+  useMount(async () => {
+    const refreshToken = localStorage.getItem('REFRESH-TOKEN');
+    refreshToken && (await reissue());
   });
 
   useEffect(() => {

@@ -89,11 +89,8 @@ function RouteComponent() {
             </span>
           </label>
           {/* file upload case */}
-          <div className={cn(formStyles.input_box, formStyles.line)}>
-            <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
-            <span className={formStyles.count}>
-              <em className={formStyles.num}>7</em>/150
-            </span>
+          <div className={formStyles.input_box}>
+            <Input id="name-1-2" type="text" value="업로드 파일명" showCounter />
           </div>
         </div>
       </div>
@@ -173,7 +170,6 @@ function RouteComponent() {
                 { value: 'type2', label: '+83' },
               ]}
             />
-            <span className={formStyles.dash}></span>
             <Input
               id="name-1-6"
               type="text"
@@ -239,7 +235,6 @@ function RouteComponent() {
                       { value: 'type2', label: '+83' },
                     ]}
                   />
-                  <span className={formStyles.dash}></span>
                   <Input
                     id="name-1-7-2"
                     type="text"
@@ -603,7 +598,7 @@ function RouteComponent() {
             </span>
           </label>
           <div className={formStyles.input_box}>
-            <Input id="name3" type="text" value="text" placeholder="입력" className="error" />
+            <Input id="name3" type="text" value="text" placeholder="입력" error />
           </div>
           {/* 에러인경우 : error 클래스 추가 */}
           <p className={cn(formStyles.guide_text, formStyles.error)}>에러메시지</p>
@@ -628,9 +623,7 @@ function RouteComponent() {
           <label htmlFor="name5" className={formStyles.form_label}>
             <span className={formStyles.form_text}>readonly</span>
           </label>
-          <div className={formStyles.input_box}>
-            <Input id="name5" type="text" placeholder="입력" readOnly />
-          </div>
+          <div className={formStyles.input_box}>c</div>
         </div>
       </div>
       {/* row */}

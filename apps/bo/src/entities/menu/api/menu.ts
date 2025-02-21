@@ -12,7 +12,12 @@ export default class MenuService {
       }`,
     );
 */
-    return new Promise((resolve) => setTimeout(() => resolve(menuMock as any)));
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        console.log('menu api fetch');
+        resolve(menuMock as any);
+      }),
+    );
   }
 
   static getMenu(menuId: string) {

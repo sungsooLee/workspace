@@ -122,7 +122,7 @@ function RouteComponent() {
                 id="name"
                 type="text"
                 placeholder="입력"
-                disabled
+                readOnly
                 value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
               />
               <Button variant="gray" size="sm">
@@ -225,7 +225,7 @@ function RouteComponent() {
                   { value: 'type2', label: '+83' },
                 ]}
               />
-              <span className={formStyles.dash}></span>
+              {/* <span className={formStyles.dash}></span> 25-02-20 : 삭제 */}
               <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
             </div>
           </div>
@@ -333,7 +333,7 @@ function RouteComponent() {
                         { value: 'type2', label: '+83' },
                       ]}
                     />
-                    <span className={formStyles.dash}></span>
+                    {/* <span className={formStyles.dash}></span> 25-02-20 : 삭제 */}
                     <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
                   </div>
                 </div>

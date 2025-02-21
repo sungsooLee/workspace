@@ -5,7 +5,6 @@ import { cn } from '@learnway/shared';
 import * as Primitive from '@radix-ui/react-tabs';
 
 import styles from './tabs.module.css';
-import { IcoFillActive } from '@learnway/icons';
 
 interface TabItemProps {
   title: string;
@@ -61,9 +60,6 @@ export const TabsComponent = forwardRef<
             key={d.key}>
             {d.title}
             {d.count && <span className={styles.count}>{d.number}</span>}
-            {variant === 'fill' && (
-              <IcoFillActive width={18} height={16} fill="#00AFD5" className={styles.icon_active} />
-            )}
           </Primitive.Trigger>
         ))}
       </Primitive.List>

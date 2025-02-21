@@ -10,6 +10,12 @@
       @apply rotate-180;
     }
   }
+  &.lg {
+    @apply !border-[var(--gray5)];
+    &[data-state='open'] {
+      @apply !border-[var(--gray7)];
+    }
+  }
 }
 
 .select_viewport {
@@ -40,6 +46,6 @@
 
 .lg {
   .select_trigger {
-    @apply min-h-[40px] rounded-[8px] border-[var(--gray6)] pl-[16px];
+    @apply min-h-[40px] rounded-[8px] border-[var(--gray4)] pl-[16px];
   }
 }

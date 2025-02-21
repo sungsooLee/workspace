@@ -1,4 +1,5 @@
-.start {
-  &.nlp--select {
+.nlp--select {
+  button {
+    @apply !border-[var(--gray5)];
   }
 }

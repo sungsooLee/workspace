@@ -4,7 +4,7 @@ import { values } from 'lodash';
 
 import { Avatar, Popover } from '@learnway/ui';
 
-import { useFetchAuthUser } from '../../../entities/user';
+import { useFetchAuthUser } from '../../../entities/auth';
 
 enum Themes {
   DEFAULT = 'default',
