@@ -1,7 +1,5 @@
-import { useCallback, useEffect } from 'react';
-import { t } from 'i18next';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { Button, useModalControl } from '@learnway/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { Button, useModal } from '@learnway/ui';
 import { z } from '@learnway/shared';
 
 import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
@@ -17,7 +15,7 @@ export const Route = createFileRoute('/_layout/platform/system/translation/view'
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const router = useRouter();
   const { provider, onSubmit } = useDynamicForm(formConfig);
   /**
