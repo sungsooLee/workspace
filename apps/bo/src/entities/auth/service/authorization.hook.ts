@@ -101,3 +101,21 @@ export function useUpdateUser(mutationOptions = {}) {
     },
   };
 }
+/*
+export function useAuth() {
+  const [activeTenant] = useAtom(activeTenantAtom);
+  console.log(activeTenant);
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: AuthorizationService.getCurrentUser,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // const { data: tenant } = useQuery({
+  //   queryKey: ['tenant', activeTenant],
+  //   queryFn: () => TenantService.fetchTenantsByUser(user?.data.accountId),
+  //   enabled: !!activeTenant,
+  // });
+
+  return { user, activeTenant };
+}*/

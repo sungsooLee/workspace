@@ -22,14 +22,6 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
-      proxy: {
-        '/pms-module': {
-          target:
-            'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
-          changeOrigin: true,
-          secure: true,
-        },
-      },
     },
     preview: {
       port: 4300,

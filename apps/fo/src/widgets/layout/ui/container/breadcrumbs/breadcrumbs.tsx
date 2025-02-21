@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { Menu } from '../../../../../types';
-import { useActiveMenuDepthState } from '../../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../../features/platform';
 
 import styles from './breadcrumbs.module.css';
 import { Link } from '@tanstack/react-router';

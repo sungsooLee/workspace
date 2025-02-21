@@ -7,7 +7,7 @@ import { httpService, HttpMethod } from '@learnway/shared';
 
 export function initAxios() {
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = import.meta.env.AXIOS_BASE_URL;
+  axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
 
   const interceptors = {
     request: {

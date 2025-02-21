@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { IcoHome02, IcoArrowForward } from '@learnway/icons';
 
 import { Menu } from '../../../../../types';
-import { useActiveMenuDepthState } from '../../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../../features/platform';
 
 import styles from './breadcrumbs.module.css';
 

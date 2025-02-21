@@ -6,7 +6,7 @@ import { useFetchMenus } from '../../../entities/menu';
 import { useFetchAuthUser } from '../../../entities/auth';
 import { Menu, HookData } from '../../../types';
 
-import { useActiveMenuDepthState } from '../../../features/layout';
+import { useActiveMenuDepthState } from '../../../features/platform';
 
 /**
  * 메뉴 정보를 트리 구조로 반환

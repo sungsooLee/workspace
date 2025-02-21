@@ -65,7 +65,7 @@ const AvatarComponent = () => {
 
   return (
     <Popover popoverContent={<PopoverContent />}>
-      <Avatar imageUrl="https://github.com/shadcn.png" fallback={data?.email} />
+      <Avatar imageUrl="https://github.com/shadcn.png" fallback={data?.emailAddress} />
     </Popover>
   );
 };

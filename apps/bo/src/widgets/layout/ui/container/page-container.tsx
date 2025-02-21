@@ -7,7 +7,7 @@ import styles from './page-container.module.css';
 import { ContentsButtons } from './slot/contents-buttons';
 import { PageContents } from './page-contents';
 
-import { useActiveMenuDepthState } from '../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../features/platform';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 

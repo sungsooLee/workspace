@@ -1,7 +1,7 @@
-import { convertHierarchyNode, getQuerySkipToken, getRandomId, Hierarchy } from '@learnway/shared';
+import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
 
 import MenuService from '../api/menu';
-import { FetchMenusParams, Menu } from '../../../types';
+import { FetchMenusParams, Menu } from '../../../types/entities/menu';
 
 export const queryKeys = {
   all: ['menus'] as const,
@@ -9,40 +9,25 @@ export const queryKeys = {
   detail: (menuId: string) => [...queryKeys.all, menuId] as const,
 };
 
-// export const queryOptions = {
-//   all: (params?: FetchMenusParams) =>
-//     params?.tenantId && params?.roleIds
-//       ? {
-//           queryKey: params.parentMenuId
-//             ? queryKeys.allByParentMenuId(params.parentMenuId)
-//             : queryKeys.all,
-//           queryFn: async () => {
-//             const data = await MenuService.getMenus(params);
-//             return data?.children as Menu[];
-//           },
-//         }
-//       : getQuerySkipToken<Menu[]>(),
-
-//   detail: (menuId: string) => ({
-//     queryKey: queryKeys.detail(menuId),
-//     queryFn: () => MenuService.getMenu(menuId),
-//   }),
-// };
-
 export const queryOptions = {
   all: (params?: FetchMenusParams) =>
-    params?.tenantId && params?.roleIds
+    params?.tenantId //&& params?.roleIds
       ? {
           queryKey: params.parentMenuId
             ? queryKeys.allByParentMenuId(params.parentMenuId)
             : queryKeys.all,
           queryFn: async () => {
-            const data = (await MenuService.getMenus(params)) as { children: Menu[] };
+            const data = await MenuService.getMenus(params);
+
             return convertHierarchyNode(
               data?.children,
               (node: any, depth: number, index: number, parentNode?: any) => {
+                if (parentNode) {
+                  const cloneParentNode = { ...parentNode };
+                  delete cloneParentNode.children;
+                  node['parentNode'] = cloneParentNode;
+                }
                 node['depth'] = depth;
-                node['parentNode'] = parentNode;
                 if (!node?.key) {
                   node['key'] = getRandomId();
                 }

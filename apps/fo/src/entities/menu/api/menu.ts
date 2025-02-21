@@ -4,7 +4,7 @@ import { PMSApiPrefix } from '@learnway/config';
 import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
-  static getMenus(params?: any) {
+  static getMenus(params?: any): Promise<any> {
     /*
     return httpService.get<Menu>(
       `${PMSApiPrefix()}/menus/${params.parentMenuId ?? ''}?roleIds=${params.roleIds}&tenantId=${
@@ -12,7 +12,12 @@ export default class MenuService {
       }`,
     );
 */
-    return new Promise((resolve) => setTimeout(() => resolve(menuMock as any)));
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        console.log('menu api fetch');
+        resolve(menuMock as any);
+      }),
+    );
   }
 
   static getMenu(menuId: string) {

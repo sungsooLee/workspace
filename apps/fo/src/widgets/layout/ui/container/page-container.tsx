@@ -1,5 +1,5 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../features/platform';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';

@@ -19,13 +19,6 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4300,
       host: 'localhost',
-      proxy: {
-        '/pms-module': {
-          target: 'http://localhost:8072',
-          changeOrigin: true,
-          secure: false,
-        },
-      },
     },
     preview: {
       port: 4300,

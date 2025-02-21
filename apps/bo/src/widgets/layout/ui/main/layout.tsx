@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { useActiveMenuDepthState } from '../../../../features/layout';
+import { useActiveMenuDepthState } from '../../../../features/platform';
 import { LNB } from './lnb/lnb';
 
 import { Header } from './header/header';
