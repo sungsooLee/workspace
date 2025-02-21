@@ -8,9 +8,9 @@
 
   /* content_wrap */
   .content_wrap {
-    @apply mt-[16px] box-border h-[calc(100vh-260px)] w-full rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pb-[18px] pt-[23px];
+    @apply mt-[16px] box-border h-[calc(100vh-260px)] w-full rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] py-[32px];
     .content {
-      @apply scrollbar relative flex h-[calc(100vh-300px)] items-stretch overflow-hidden overflow-y-auto px-[32px];
+      @apply scrollbar relative flex h-[calc(100vh-324px)] items-stretch overflow-hidden overflow-y-auto px-[32px];
     }
   }
 

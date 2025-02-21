@@ -57,6 +57,11 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 .row_wrap {
   @apply rounded-[8px] border border-solid border-[var(--gray5)] p-[16px];
+  .row:nth-last-child(1) {
+    & > div {
+      @apply pb-0;
+    }
+  }
 }
 .row {
   /* form */
