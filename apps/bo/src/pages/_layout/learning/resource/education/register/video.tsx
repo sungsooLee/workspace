@@ -6,8 +6,7 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView,
-  useModalContext,
-  useModalControl,
+  useModal,
 } from '@learnway/ui';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -212,7 +211,7 @@ function RouteComponent() {
 }
 
 const VideoUploadPopup = () => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const [files, setFiles] = useState<any[]>([]);
   const onDrop = useCallback((acceptedFiles: any) => {
     console.log('acceptedFiles => ', acceptedFiles);
@@ -445,7 +444,7 @@ const formConfig: DynamicFormConfig = {
 
 const ManagerComponent: FC<any> = ({ onChange, ...props }) => {
   const [displayValue, setDisplayValue] = useState('');
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const handleClose = (data: any) => {
     console.log('data => ', data);
@@ -503,7 +502,7 @@ const ContactComponent: FC<any> = ({ onChange }) => {
 };
 
 const UserSelectPop = () => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const users = [
     {
       userId: '1',

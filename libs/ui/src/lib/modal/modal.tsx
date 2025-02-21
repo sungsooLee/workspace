@@ -1,13 +1,16 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
+import React, { cloneElement, isValidElement, useEffect, useState } from 'react';
 
 import { ModalConfig } from './type';
 import { cn } from '@learnway/shared';
 import styles from './modal.module.css';
+import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
 
 const ModalComponent: React.FC<ModalConfig> = ({
+  id,
   title,
   description,
   content,
@@ -16,11 +19,34 @@ const ModalComponent: React.FC<ModalConfig> = ({
   width = 'auto',
   height = 'auto',
   hideCloseButton = false,
-  hideFooter = false,
   ...props
 }) => {
+  const { close: closeModal } = useModal();
+  const [modalData, setModalData] = useState();
+
+  useEffect(() => {
+    console.log('ModalComponent changed data', modalData);
+  }, [modalData]);
+
   const handleOpenChange = (open: boolean) => {
     onClose?.();
+  };
+
+  const handleFooterButtonClick = (key?: string) => {
+    console.log('handleFooterButtonClick', key);
+
+    // 확인 버튼 클릭
+    if (key === 'confirm') {
+      closeModal(modalData);
+    }
+    // 취소 or key 가 없는경우 (footer button 에 actionKey 설정 안된 경우)
+    else if (key === 'cancel' || !key) {
+      closeModal();
+    }
+    // reset, .....
+    else {
+      // content component 연동
+    }
   };
 
   return (
@@ -38,17 +64,20 @@ const ModalComponent: React.FC<ModalConfig> = ({
             </Primitive.Description>
           )}
 
-          {/* children */}
-          <div className={styles.content_body}>{content}</div>
+          {/* content */}
+          <div className={styles.content_body}>
+            {<ContentComponent content={content} setModalData={setModalData} />}
+          </div>
 
           {/* footer */}
-          {!hideFooter && (
+          {footer && (
             <div className={styles.footer}>
-              <FooterComponent {...props} />
-              {/*{footer}*/}
-              {/* <Primitive.Close asChild>
-                <button className={`${styles.Button} green`}>{footer}</button>
-              </Primitive.Close> */}
+              <FooterComponent
+                {...props}
+                id={id}
+                footer={footer}
+                buttonClick={handleFooterButtonClick}
+              />
             </div>
           )}
 
@@ -66,14 +95,32 @@ const ModalComponent: React.FC<ModalConfig> = ({
   );
 };
 
-const FooterComponent: React.FC<any> = ({}) => {
-  const handleClick = () => {};
-  return (
+const ContentComponent: React.FC<any> = ({ content, setModalData }) => {
+  const newContent = isValidElement(content)
+    ? cloneElement(content as React.ReactElement<{ setModalData: (value: any) => void }>, {
+        setModalData,
+      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setData 사용을 위해 타입 단언
+    : null;
+  return newContent;
+};
+
+const FooterComponent: React.FC<any> = ({ footer, buttonClick }) => {
+  const handleClick = (event: any) => {
+    const isButton = event.target instanceof HTMLButtonElement;
+    const actionKey = event.target?.getAttribute('actionKey');
+    isButton && buttonClick(actionKey);
+  };
+
+  const defaultFooter = (
     <>
-      <Button label={'취소'} variant={'point'} size={'sm'} />
-      <Button label={'확인'} variant={'primary'} size={'sm'} onClick={handleClick} />
+      <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+      <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
     </>
   );
+
+  console.log('Footer', footer || defaultFooter);
+
+  return <div onClick={handleClick}>{isValidElement(footer) ? footer : defaultFooter}</div>;
 };
 
 export const Modal = ModalComponent;

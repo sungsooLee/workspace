@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import { ModalClose, ModalConfig } from '../modal/type';
+import { ModalConfig } from '../modal/type';
 
 interface ModalStore {
-  modals: ModalConfig[];
-  open: <T>(config: ModalConfig) => void;
-  close: <T>(index: number, data?: ModalClose<T>) => void;
+  modals: ModalConfig[]; // modal stack
+  open: (config: ModalConfig) => void;
+  close: (data?: any) => void;
+  closeAll: () => void;
 }
 
 export const useModalStore = create<ModalStore>((set, get) => ({
@@ -14,13 +15,14 @@ export const useModalStore = create<ModalStore>((set, get) => ({
       modals: [...state.modals, config],
     }));
   },
-  close: (index: number, data?: any) => {
-    const modal = get().modals[index];
+  close: (data?: any) => {
+    const modal = get().modals?.at(-1); // 마지막 모달 (현재 떠있는 모달)
 
     modal?.onClose?.(data);
 
     set((state) => ({
-      modals: state.modals.filter((_, i) => i !== index),
+      modals: state.modals?.slice(0, -1), // 마지막 모달만 제외한 새로운 배열 반환
     }));
   },
+  closeAll: () => set({ modals: [] }),
 }));

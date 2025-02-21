@@ -1,13 +1,18 @@
 import { useModalStore } from '../stores/useModalStore';
-import { ModalContainer } from './modal-container';
+import { ModalConfig } from './type';
+import { Modal } from './modal';
 
 const ModalWrapperComponent = () => {
-  const modals = useModalStore((state) => state.modals);
+  const { modals, close } = useModalStore();
+
+  const handleClose = (modalData?: any) => {
+    close(modalData);
+  };
 
   return (
     <>
-      {Array.from(modals.entries()).map(([idx, config]) => (
-        <ModalContainer index={idx} key={idx} config={config} />
+      {modals?.map((config: ModalConfig, index: number) => (
+        <Modal key={index} {...config} onClose={handleClose} />
       ))}
     </>
   );

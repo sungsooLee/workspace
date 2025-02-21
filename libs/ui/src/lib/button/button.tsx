@@ -36,6 +36,7 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
   dummy?: boolean;
   className?: string;
   label?: string;
+  actionKey?: 'confirm' | 'cancel' | 'reset';
 }
 
 const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(

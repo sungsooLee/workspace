@@ -3,7 +3,7 @@ import useSearchBox from '../../../../../shared/ui/search-box/use-search-box';
 import { useCallback } from 'react';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, useModalContext, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
 import { t } from 'i18next';
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_layout/learning/resource/education/list'
 function RouteComponent() {
   const router = useRouter();
   const { config: sConfig } = useSearchBox(searchConfig);
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   /**
    * @param data
@@ -58,7 +58,7 @@ function RouteComponent() {
 }
 
 const EducationListPopup = () => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
 
   return (
     <div className="w-full p-8">

@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { useModalControl, useModalStore } from '@learnway/ui';
+import { useModal } from '@learnway/ui';
 import { useLogoutUser } from '../../../entities/user';
+
 interface ExtensionModalProps {
   initialTime: number;
   onTimeout: () => void;
@@ -46,12 +47,12 @@ export function useLoginTimeout() {
   const endTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timer | null>(null);
   const isCancelAlert = useRef<boolean | null>(false);
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert, closeAll: closeAllModal } = useModal();
   const { logout } = useLogoutUser();
 
   const handleLogout = useCallback(() => {
     try {
-      useModalStore.setState({ modals: [] });
+      closeAllModal();
       openAlert({
         title: '자동 로그아웃',
         description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',

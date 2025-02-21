@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
-import { Button, useModalContext } from '@learnway/ui';
-import { ColumnDef, createColumnHelper, RowSelectionState } from '@tanstack/react-table';
+import { Button } from '@learnway/ui';
 
 export interface TeacherListProps {
   dummy?: boolean;
+  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
@@ -13,53 +13,30 @@ export interface TeacherListProps {
  * @param props
  * @constructor
  */
-const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...props }, ref) => {
-  const { closeModal } = useModalContext();
-  const { data }: any = getDummyDataHook();
-  const columnHelper = createColumnHelper<any>();
-  const columns = [
-    columnHelper.accessor('name', {
-      cell: (info) => info.getValue(),
-      header: '강사명',
-    }),
-  ] as ColumnDef<any, unknown>[];
+const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
+  ({ setModalData, ...props }, ref) => {
+    const handleSelectedData = (newData: any) => {
+      setModalData?.(newData);
+    };
 
-  const handleRowSelect = (selectRowState: RowSelectionState) => {
-    // console.log(selectRowState);
-  };
-
-  const handleConfirmClick = () => {
-    closeModal({ id: `1`, name: `name1` });
-  };
-
-  return (
-    <div className="p-4">
-      {/*<Grid data={getDummyData.data} columns={columns} />*/}
-      <h2>Grid</h2>
-      <Button
-        variant={'gray'}
-        size={'md'}
-        label={'manager1'}
-        onClick={() => closeModal({ id: '1', name: 'manager1' })}
-      />
-      <Button
-        variant={'gray'}
-        label={'manager2'}
-        size={'md'}
-        onClick={() => closeModal({ id: '2', name: 'manager2' })}
-      />
-      <Button onClick={handleConfirmClick}>확인</Button>
-    </div>
-  );
-});
+    return (
+      <div className="p-4">
+        {/*<Grid data={getDummyData.data} columns={columns} />*/}
+        <h2>Grid</h2>
+        <Button
+          variant={'gray'}
+          size={'md'}
+          label={'set manager1'}
+          onClick={() => handleSelectedData({ id: '1', name: 'manager1' })}
+        />
+        <Button
+          variant={'gray'}
+          label={'get manager2'}
+          size={'md'}
+          onClick={() => handleSelectedData({ id: '2', name: 'manager2' })}
+        />
+      </div>
+    );
+  },
+);
 export const ManagerList = ManagerListComponent;
-
-const getDummyDataHook = () => {
-  return {
-    data: {
-      data: Array(5)
-        .fill(null)
-        .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
-    },
-  };
-};

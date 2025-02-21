@@ -19,8 +19,7 @@ import {
   GridState,
   Input,
   ModalWrapper,
-  useModalContext,
-  useModalControl,
+  useModal,
 } from '@learnway/ui';
 
 export default {
@@ -660,7 +659,7 @@ const mockData: Person[] = [
 ];
 
 const CustomCellTable = () => {
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
@@ -789,7 +788,7 @@ const PersonTestModal = ({
   data: Person;
   onConfirm: (updatedData: Person) => void;
 }) => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const [tmpData, setTmpData] = useState(data.visits);
   const handleSubmit = () => {
     onConfirm({ ...data, visits: tmpData });
@@ -895,7 +894,7 @@ export const createPersonColumns = (columnFactory: ColumnFactory<Person>): Colum
 };
 
 const ColumnFactoryTable = () => {
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,

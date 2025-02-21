@@ -19,10 +19,9 @@ import {
 import { Table } from '@tanstack/react-table';
 import { CSS } from '@dnd-kit/utilities';
 
-import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../button/button';
-import { useModalControl } from '../../modal/modal.hook';
 import { Checkbox } from '../../checkbox/checkbox';
+import { useModal } from '../../modal/modal.hook';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -84,7 +83,7 @@ function ColumnSettingsContent<T extends object>({
   table: Table<T>;
   onApply: (settings: ColumnSetting[]) => void;
 }) {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const leafColumns = table.getAllLeafColumns().filter((col) => col.id !== 'select'); //체크박스 컬럼 제외
   console.log(leafColumns);
 
@@ -213,7 +212,7 @@ function ColumnSettings<T extends object>({
   onColumnChange,
   table,
 }: ColumnSettingsProps<T>): JSX.Element {
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const handleOpenSettings = () => {
     const handleApply =

@@ -33,7 +33,7 @@ import { GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
 import { FilterContent } from './components/filter-content';
 
-import { useModalControl } from '../modal/modal.hook';
+import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
 import { CheckFieldProps } from '../checkbox/type';
 import './grid.css'; // grid CSS
@@ -76,7 +76,7 @@ const Grid = <T extends object>({
 }: GridProps<T>) => {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
-  const { open } = useModalControl();
+  const { open } = useModal();
   const [expanded, setExpanded] = useState({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);

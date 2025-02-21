@@ -3,17 +3,26 @@ import { reject } from 'lodash';
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
 import { ModalClose, ModalConfig, ModalControl } from './type';
+import { getRandomId } from '@learnway/shared';
 
-// TODO: rename : useModalControl > useModal
-const useModalControl = (): ModalControl => {
-  const { open: openModal } = useModalStore();
+// TODO: rename : useModal > useModal
+const useModal = (): ModalControl => {
+  const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
 
   const open = useCallback(
     (config: ModalConfig) => {
-      openModal(config);
+      const newConfig: ModalConfig = {
+        ...config,
+        id: getRandomId(),
+      };
+      openModal(newConfig);
     },
     [openModal],
   );
+
+  const close = useCallback((data?: any) => closeModal(data), [closeModal]);
+
+  const closeAll = useCallback(() => closeAllModal(), [closeAllModal]);
 
   const openAsync = useCallback(
     <T = any>(config: ModalConfig): Promise<ModalClose<T>> => {
@@ -54,10 +63,13 @@ const useModalControl = (): ModalControl => {
 
   return {
     open,
-    openAsync,
+    close,
+    closeAll,
+    openAsync, // 언제 사용?
     alert,
     confirm,
+    modals,
   };
 };
 
-export { useModalControl };
+export { useModal };

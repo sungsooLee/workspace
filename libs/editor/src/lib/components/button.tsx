@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, MouseEvent } from 'react';
+import React, { FC, MouseEvent, ReactNode } from 'react';
 
 interface ButtonProps {
   children: ReactNode; // 자식요소
@@ -37,7 +37,7 @@ const Button: FC<ButtonProps> = ({
     <button
       onClick={handleOnClick}
       disabled={disabled}
-      className={`flex justify-center items-center hover:bg-gray-3 rounded-lg disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:opacity-25 ${
+      className={`hover:bg-gray-3 flex items-center justify-center rounded-lg disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-transparent ${
         active ? 'bg-gray-2 text-gray-10' : ''
       } ${className}`}>
       {children}

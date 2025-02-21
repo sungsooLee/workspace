@@ -131,7 +131,6 @@ function RouteComponent() {
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerList />,
-                    onClose: (data: any) => console.log('page onClose', data),
                   }}
                 />
               </DynamicFormField>

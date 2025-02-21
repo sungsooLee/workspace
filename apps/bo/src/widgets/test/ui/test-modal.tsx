@@ -1,8 +1,8 @@
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import TestForm from './test-form';
 
 const TestModal = () => {
-  const { open, openAsync } = useModalControl();
+  const { open, openAsync } = useModal();
 
   const handleOpenModal = () => {
     open({ content: <TestForm />, title: 'Example Modal' });

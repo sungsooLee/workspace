@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { Input, InputProps } from './input';
 import { Button, ButtonComponentProps } from '../button/button';
 import styles from './input.module.css';
-import { useModalControl } from '../modal/modal.hook';
+import { useModal } from '../modal/modal.hook';
 import { ModalConfig } from '../modal/type';
 
 interface InputButtonFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,7 +32,7 @@ const InputButtonFormFieldComponent = forwardRef<
     },
     ref,
   ) => {
-    const { open: openModal } = useModalControl();
+    const { open: openModal } = useModal();
     const handleButtonOnClick = (e: any) => {
       openModal({
         ...modalConfig,

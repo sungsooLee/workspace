@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Button, useModalContext } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper, RowSelectionState } from '@tanstack/react-table';
 
 export interface TeacherListProps {
@@ -14,7 +14,7 @@ export interface TeacherListProps {
  * @constructor
  */
 const TeacherListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...props }, ref) => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const { data }: any = getDummyDataHook();
   const columnHelper = createColumnHelper<any>();
   const columns = [

@@ -4,14 +4,17 @@ import { AlertComponentProps } from '../alert/alert';
 
 export type ModalSize = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'; // sm : 600px , md : 800px, lg : 1024px, xl : 1400px
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
+export type FooterButtonType = 'cancel' | 'confirm' | 'reset';
 
-export interface BaseModalProps extends ModalConfig {
+export interface BaseModalProps {
+  setModalData: (data: any) => void;
   onClose?: (data?: any) => void;
   children: React.ReactNode;
 }
 
 export interface ModalConfig<T = any> {
   content: ReactNode;
+  id?: string; // modal.hook 에서 open시 자동생성
   title?: string;
   description?: string;
   width?: ModalSize;
@@ -20,14 +23,9 @@ export interface ModalConfig<T = any> {
   hideCloseButton?: boolean;
   onClose?: (data?: ModalClose<T>) => void;
   children?: React.ReactNode;
-  hideFooter?: boolean;
-  footer?:
-    | React.ReactNode
-    | {
-        resetLabel?: string; // 초기화 버튼 label, 기본값: '초기화'
-        cancelLabel?: string; // 취소 버튼 label, 기본값: '취소'
-        confirmLabel?: string; // 확인 버튼 label, 기본값: '확인'
-      };
+  footer?: React.ReactNode | boolean; // true 설정시 default footer 사용
+  // footerButton?: Button[];
+  params?: any; // modal 에 보낼 parameter
 }
 
 export interface ModalClose<T = any> {
@@ -41,7 +39,10 @@ export interface ModalContainerProps {
 
 // TODO: rename : ModalControl > useModalReturnValue
 export interface ModalControl {
-  open: <T = any>(props: ModalConfig) => void;
+  modals: ModalConfig[];
+  open: (props: ModalConfig) => void;
+  close: (data?: any) => void;
+  closeAll: () => void;
   alert: (props: AlertComponentProps) => void;
   confirm: (props: any) => void;
   openAsync: <T = any>(props: ModalConfig) => Promise<ModalClose<T>>;
