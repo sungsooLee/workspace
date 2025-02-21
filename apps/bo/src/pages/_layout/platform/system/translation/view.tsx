@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_layout/platform/system/translation/view'
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const router = useRouter();
   const { provider, onSubmit } = useDynamicForm(formConfig);
   /**
