@@ -1,8 +1,37 @@
 .start {
   &.badge {
-    @apply mr-0 inline-flex min-h-[2.8rem] items-center justify-center bg-[var(--gray2)] px-[10px] text-[13px] font-light text-[var(--gray9)];
+    @apply mr-0 inline-flex h-auto w-auto items-center justify-center overflow-hidden bg-[var(--gray2)] text-[13px] font-light text-[var(--gray9)];
     .label {
       @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
+    }
+    &.dot {
+      @apply h-[8px] w-[8px] rounded-[4px];
+      &.primary {
+        @apply bg-[var(--secondary1)];
+      }
+      &.disabled {
+        @apply bg-[var(--gray3)];
+      }
+      &.success,
+      &.caution {
+        @apply bg-transparent;
+      }
+      &.warning {
+        @apply bg-[var(--status2)];
+      }
+      &.new,
+      &.error {
+        @apply bg-[var(--status1)];
+      }
+      &.sm {
+        @apply h-[4px] w-[4px] rounded-[2px];
+      }
+    }
+    &.number {
+      @apply body_bo_4_b h-[20px] min-w-[20px] rounded-[10px] text-[var(--white)];
+      &.primary {
+        @apply bg-[var(--secondary1)];
+      }
     }
   }
 }
