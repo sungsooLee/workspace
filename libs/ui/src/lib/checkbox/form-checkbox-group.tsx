@@ -1,5 +1,6 @@
 import { FC, forwardRef, Fragment } from 'react';
 import { Checkbox } from './checkbox';
+import styles from './form-checkbox-group.module.css';
 
 const FormCheckBoxGroupComponent = forwardRef<HTMLDivElement, any>(
   ({ value = [], onChange, checkLabel: label, options = [], name, ...props }, ref) => {
@@ -14,7 +15,7 @@ const FormCheckBoxGroupComponent = forwardRef<HTMLDivElement, any>(
       onChange(checkedValues);
     };
     return (
-      <div ref={ref}>
+      <div ref={ref} className={styles.checkbox_list}>
         {options &&
           options.map((item: any) => (
             <Fragment key={item.value}>

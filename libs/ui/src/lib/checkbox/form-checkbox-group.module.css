@@ -1,0 +1,3 @@
+.checkbox_list {
+  @apply grid w-full grid-cols-4 gap-4;
+}
