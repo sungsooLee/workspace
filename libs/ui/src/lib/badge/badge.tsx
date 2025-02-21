@@ -8,14 +8,15 @@ import { Button } from '../button/button';
 
 export interface BadgeComponentProps extends PropsWithChildren {
   option: SelectOption;
-  variant?: 'primary' | 'secondary';
+  variant?: 'dot' | 'number' | 'flag';
+  status?: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
   onClick?: (option: SelectOption) => void;
 }
 
 const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
-  ({ className, variant, size, onClick, option: { label, value }, ...props }) => {
+  ({ className, variant, size, status, onClick, option: { label, value }, ...props }) => {
     const handleClick = (event: React.MouseEvent) => {
       const option: SelectOption = {
         label,
@@ -27,7 +28,15 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
     return (
       <span
         {...props}
-        className={cn(styles.start, styles.badge, className, 'nlp--badge')}
+        className={cn(
+          styles.start,
+          styles.badge,
+          className,
+          'nlp--badge',
+          variant && styles[variant],
+          status && styles[status],
+          size && styles[size],
+        )}
         onClick={handleClick}>
         <Button className={cn(styles.label)}>{label}</Button>
       </span>
