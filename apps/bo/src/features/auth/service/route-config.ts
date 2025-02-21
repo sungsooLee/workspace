@@ -3,7 +3,7 @@ import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 
 import type { AuthUser } from '../../../types';
-import { authUserQueryKeys } from '../../../entities/user';
+import { authUserQueryKeys } from '../../../entities/auth';
 
 export function authConfig() {
   return {

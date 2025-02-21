@@ -9,7 +9,7 @@ import { IcoAlertCircleGray } from '@learnway/icons';
 
 import { useAuthSignin } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
-import { useFetchAuthUser } from '../../entities/user';
+import { useFetchAuthUser } from '../../entities/auth';
 import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
 
 import styles from './login.module.css';

@@ -1,4 +1,4 @@
-import { useLoginUser, useReissue, useUpdateUser } from '../../../entities/user';
+import { useLoginUser, useReissue, useUpdateUser } from '../../../entities/auth';
 import { useAsycFetchMenus } from '../../../entities/menu';
 import type { AuthUser } from '../../../types';
 
