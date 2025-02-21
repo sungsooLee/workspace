@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios } from '@learnway/config';
+import { initI18N, initZod, initAxios, tokenService } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
@@ -29,8 +29,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { reissue } = useAuthSignin();
 
   useMount(async () => {
-    const refreshToken = localStorage.getItem('REFRESH-TOKEN');
-    refreshToken && (await reissue());
+    tokenService.refreshToken && (await reissue());
   });
 
   useEffect(() => {
