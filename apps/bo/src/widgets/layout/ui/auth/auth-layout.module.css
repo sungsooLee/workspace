@@ -1,7 +1,7 @@
 /* layout.module.css */
 .start {
   &.container {
-    @apply m-auto h-[100vh] w-full min-w-[600px] bg-[var(--gray1)] text-center;
+    @apply m-auto w-full min-w-[600px] bg-[var(--gray1)] text-center;
     .inner {
       @apply relative;
     }

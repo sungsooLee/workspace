@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 
-import { Button, Popover } from '@learnway/ui';
+import { Button, Popover, Badge } from '@learnway/ui';
 import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
@@ -11,7 +11,6 @@ import styles from './notification.module.css';
 
 interface NotificationInfo {
   id: number;
-  date?: string;
   title: string;
   message: string;
   time: string;
@@ -22,7 +21,6 @@ interface NotificationInfo {
 const initialNotifications: NotificationInfo[] = [
   {
     id: 1,
-    date: '02.14',
     title: '새 공지',
     message: `${'관리자'}로 부터 ${'김현대'}님에게 요청이 왔습니다.`,
     time: '10분전',
@@ -31,7 +29,6 @@ const initialNotifications: NotificationInfo[] = [
   },
   {
     id: 2,
-    date: '02.14',
     title: '시스템 점검',
     message: `내일 오전 2시에 점검이 있습니다. 내일 오전 2시에 점검이 있습니다.  내일 오전 2시에 점검이 있습니다.`,
     time: '10분전',
@@ -40,7 +37,6 @@ const initialNotifications: NotificationInfo[] = [
   },
   {
     id: 3,
-    date: '02.15',
     title: '시스템 점검2',
     message: '내일 오전 2시에 점검이 있습니다2.',
     time: '10분전',
@@ -49,7 +45,6 @@ const initialNotifications: NotificationInfo[] = [
   },
   {
     id: 4,
-    date: '02.16',
     title: '시스템 점검3',
     message: '내일 오전 2시에 점검이 있습니다3.',
     time: '10분전',
@@ -58,7 +53,6 @@ const initialNotifications: NotificationInfo[] = [
   },
   {
     id: 5,
-    date: '02.16',
     title: '시스템 점검4',
     message: '내일 오전 2시에 점검이 있습니다4.',
     time: '10분전',
@@ -67,7 +61,6 @@ const initialNotifications: NotificationInfo[] = [
   },
   {
     id: 6,
-    date: '02.16',
     title: '시스템 점검5',
     message: '내일 오전 2시에 점검이 있습니다5.',
     time: '10분전',
@@ -112,16 +105,13 @@ const PopoverContent = () => {
             </p>
           ) : (
             <ul className={styles.info_list}>
-              {notifications.map(({ id, date, title, message, time, isRead, hasLink }) => (
+              {notifications.map(({ id, title, message, time, isRead, hasLink }) => (
                 <li
                   key={id}
                   className={`${styles.info_item} ${!isRead ? styles.yet : ''}`}
                   onClick={() => markAsRead(id)}>
                   <div className={styles.title_wrap}>
-                    <strong className={styles.title}>
-                      {title}
-                      <span className={styles.date}>{date}</span>
-                    </strong>
+                    <strong className={styles.title}>{title}</strong>
                     <Button
                       className={styles.btn_close}
                       onClick={(e) => {
@@ -158,7 +148,13 @@ const NotificationComponent = () => {
     <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
       <span className={styles.alarm_info}>
         <IcoAlarmFill width={32} height={32} stroke="#fff" />
-        <em className={styles.count_view}>99</em>
+        <Badge
+          className={styles.count_view}
+          option={{ label: '99', value: 'A' }}
+          variant="number"
+          status="new"
+          size="sm"
+        />
       </span>
     </Popover>
   );

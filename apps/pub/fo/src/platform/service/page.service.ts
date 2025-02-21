@@ -2,6 +2,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/signup': '회원가입',
   '/signup_step1': '회원가입',
   '/signup_step2': '회원가입',
+  '/signup_step3': '회원가입',
   '/login': 'Welcome\nLearning-Way',
   '/success': '',
   '/progress-status': '진행현황',

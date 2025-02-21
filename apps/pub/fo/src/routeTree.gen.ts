@@ -33,17 +33,20 @@ import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
+import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
+import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
 // Create/Update Routes
@@ -177,6 +180,12 @@ const GuideGuideModalRoute = GuideGuideModalImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideMobileRoute = GuideGuideMobileImport.update({
+  id: '/guide/mobile',
+  path: '/guide/mobile',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
@@ -213,6 +222,12 @@ const GuideGuideFormRoute = GuideGuideFormImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideCssRoute = GuideGuideCssImport.update({
+  id: '/guide/css',
+  path: '/guide/css',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideColorRoute = GuideGuideColorImport.update({
   id: '/guide/color',
   path: '/guide/color',
@@ -240,6 +255,12 @@ const GuideGuideCarouselRoute = GuideGuideCarouselImport.update({
 const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
+  id: '/guide/badge',
+  path: '/guide/badge',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -323,6 +344,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideAlertImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/badge': {
+      id: '/_guide/guide/badge'
+      path: '/guide/badge'
+      fullPath: '/guide/badge'
+      preLoaderRoute: typeof GuideGuideBadgeImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/buttons': {
       id: '/_guide/guide/buttons'
       path: '/guide/buttons'
@@ -356,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/color'
       fullPath: '/guide/color'
       preLoaderRoute: typeof GuideGuideColorImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/css': {
+      id: '/_guide/guide/css'
+      path: '/guide/css'
+      fullPath: '/guide/css'
+      preLoaderRoute: typeof GuideGuideCssImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/form': {
@@ -398,6 +433,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/layout'
       fullPath: '/guide/layout'
       preLoaderRoute: typeof GuideGuideLayoutImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/mobile': {
+      id: '/_guide/guide/mobile'
+      path: '/guide/mobile'
+      fullPath: '/guide/mobile'
+      preLoaderRoute: typeof GuideGuideMobileImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/modal': {
@@ -516,17 +558,20 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideCssRoute: typeof GuideGuideCssRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
+  GuideGuideMobileRoute: typeof GuideGuideMobileRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
@@ -543,17 +588,20 @@ interface GuideRouteChildren {
 
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideCssRoute: GuideGuideCssRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
+  GuideGuideMobileRoute: GuideGuideMobileRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
@@ -592,17 +640,20 @@ export interface FileRoutesByFullPath {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
@@ -627,17 +678,20 @@ export interface FileRoutesByTo {
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
@@ -665,17 +719,20 @@ export interface FileRoutesById {
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
+  '/_guide/guide/badge': typeof GuideGuideBadgeRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
+  '/_guide/guide/css': typeof GuideGuideCssRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
+  '/_guide/guide/mobile': typeof GuideGuideMobileRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
@@ -702,17 +759,20 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
     | '/guide/layout'
+    | '/guide/mobile'
     | '/guide/modal'
     | '/guide/pagination'
     | '/guide/progress'
@@ -736,17 +796,20 @@ export interface FileRouteTypes {
     | '/success'
     | '/'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
     | '/guide/layout'
+    | '/guide/mobile'
     | '/guide/modal'
     | '/guide/pagination'
     | '/guide/progress'
@@ -772,17 +835,20 @@ export interface FileRouteTypes {
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
+    | '/_guide/guide/badge'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
+    | '/_guide/guide/css'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
     | '/_guide/guide/image'
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
+    | '/_guide/guide/mobile'
     | '/_guide/guide/modal'
     | '/_guide/guide/pagination'
     | '/_guide/guide/progress'
@@ -840,17 +906,20 @@ export const routeTree = rootRoute
       "filePath": "_guide.tsx",
       "children": [
         "/_guide/guide/alert",
+        "/_guide/guide/badge",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
         "/_guide/guide/chips",
         "/_guide/guide/color",
+        "/_guide/guide/css",
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
         "/_guide/guide/image",
         "/_guide/guide/info",
         "/_guide/guide/layout",
+        "/_guide/guide/mobile",
         "/_guide/guide/modal",
         "/_guide/guide/pagination",
         "/_guide/guide/progress",
@@ -900,6 +969,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/alert.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/badge": {
+      "filePath": "_guide/guide/badge.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/buttons": {
       "filePath": "_guide/guide/buttons.tsx",
       "parent": "/_guide"
@@ -918,6 +991,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/color": {
       "filePath": "_guide/guide/color.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/css": {
+      "filePath": "_guide/guide/css.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/form": {
@@ -942,6 +1019,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/layout": {
       "filePath": "_guide/guide/layout.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/mobile": {
+      "filePath": "_guide/guide/mobile.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/modal": {

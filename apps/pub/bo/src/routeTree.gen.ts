@@ -17,7 +17,9 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutTestImport } from './pages/_layout/test'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
-import { Route as AuthSignupImport } from './pages/_auth/signup'
+import { Route as AuthSignupstep3Import } from './pages/_auth/signup_step3'
+import { Route as AuthSignupstep2Import } from './pages/_auth/signup_step2'
+import { Route as AuthSignupstep1Import } from './pages/_auth/signup_step1'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -40,11 +42,14 @@ import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
+import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/fileUpload'
+import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 import { Route as GuideGuideAccordionImport } from './pages/_guide/guide/accordion'
 
@@ -83,9 +88,21 @@ const AuthSuccessRoute = AuthSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthSignupRoute = AuthSignupImport.update({
-  id: '/signup',
-  path: '/signup',
+const AuthSignupstep3Route = AuthSignupstep3Import.update({
+  id: '/signup_step3',
+  path: '/signup_step3',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupstep2Route = AuthSignupstep2Import.update({
+  id: '/signup_step2',
+  path: '/signup_step2',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupstep1Route = AuthSignupstep1Import.update({
+  id: '/signup_step1',
+  path: '/signup_step1',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -221,6 +238,18 @@ const GuideGuideFormRoute = GuideGuideFormImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideFileUploadRoute = GuideGuideFileUploadImport.update({
+  id: '/guide/fileUpload',
+  path: '/guide/fileUpload',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideCssRoute = GuideGuideCssImport.update({
+  id: '/guide/css',
+  path: '/guide/css',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideColorRoute = GuideGuideColorImport.update({
   id: '/guide/color',
   path: '/guide/color',
@@ -248,6 +277,12 @@ const GuideGuideCarouselRoute = GuideGuideCarouselImport.update({
 const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
+  id: '/guide/badge',
+  path: '/guide/badge',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -295,11 +330,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupImport
+    '/_auth/signup_step1': {
+      id: '/_auth/signup_step1'
+      path: '/signup_step1'
+      fullPath: '/signup_step1'
+      preLoaderRoute: typeof AuthSignupstep1Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup_step2': {
+      id: '/_auth/signup_step2'
+      path: '/signup_step2'
+      fullPath: '/signup_step2'
+      preLoaderRoute: typeof AuthSignupstep2Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup_step3': {
+      id: '/_auth/signup_step3'
+      path: '/signup_step3'
+      fullPath: '/signup_step3'
+      preLoaderRoute: typeof AuthSignupstep3Import
       parentRoute: typeof AuthImport
     }
     '/_auth/success': {
@@ -337,6 +386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideAlertImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/badge': {
+      id: '/_guide/guide/badge'
+      path: '/guide/badge'
+      fullPath: '/guide/badge'
+      preLoaderRoute: typeof GuideGuideBadgeImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/buttons': {
       id: '/_guide/guide/buttons'
       path: '/guide/buttons'
@@ -370,6 +426,20 @@ declare module '@tanstack/react-router' {
       path: '/guide/color'
       fullPath: '/guide/color'
       preLoaderRoute: typeof GuideGuideColorImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/css': {
+      id: '/_guide/guide/css'
+      path: '/guide/css'
+      fullPath: '/guide/css'
+      preLoaderRoute: typeof GuideGuideCssImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/fileUpload': {
+      id: '/_guide/guide/fileUpload'
+      path: '/guide/fileUpload'
+      fullPath: '/guide/fileUpload'
+      preLoaderRoute: typeof GuideGuideFileUploadImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/form': {
@@ -526,13 +596,17 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
+  AuthSignupstep1Route: typeof AuthSignupstep1Route
+  AuthSignupstep2Route: typeof AuthSignupstep2Route
+  AuthSignupstep3Route: typeof AuthSignupstep3Route
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
+  AuthSignupstep1Route: AuthSignupstep1Route,
+  AuthSignupstep2Route: AuthSignupstep2Route,
+  AuthSignupstep3Route: AuthSignupstep3Route,
   AuthSuccessRoute: AuthSuccessRoute,
 }
 
@@ -541,11 +615,14 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface GuideRouteChildren {
   GuideGuideAccordionRoute: typeof GuideGuideAccordionRoute
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
@@ -568,11 +645,14 @@ interface GuideRouteChildren {
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAccordionRoute: GuideGuideAccordionRoute,
   GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
@@ -618,17 +698,22 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
+  '/signup_step1': typeof AuthSignupstep1Route
+  '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
+  '/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
@@ -655,17 +740,22 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
+  '/signup_step1': typeof AuthSignupstep1Route
+  '/signup_step2': typeof AuthSignupstep2Route
+  '/signup_step3': typeof AuthSignupstep3Route
   '/success': typeof AuthSuccessRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
+  '/guide/css': typeof GuideGuideCssRoute
+  '/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
@@ -695,17 +785,22 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/signup_step1': typeof AuthSignupstep1Route
+  '/_auth/signup_step2': typeof AuthSignupstep2Route
+  '/_auth/signup_step3': typeof AuthSignupstep3Route
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/test': typeof LayoutTestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/accordion': typeof GuideGuideAccordionRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
+  '/_guide/guide/badge': typeof GuideGuideBadgeRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
+  '/_guide/guide/css': typeof GuideGuideCssRoute
+  '/_guide/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
@@ -734,17 +829,22 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
-    | '/signup'
+    | '/signup_step1'
+    | '/signup_step2'
+    | '/signup_step3'
     | '/success'
     | '/test'
     | '/'
     | '/guide/accordion'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
+    | '/guide/fileUpload'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
@@ -770,17 +870,22 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
-    | '/signup'
+    | '/signup_step1'
+    | '/signup_step2'
+    | '/signup_step3'
     | '/success'
     | '/test'
     | '/'
     | '/guide/accordion'
     | '/guide/alert'
+    | '/guide/badge'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
     | '/guide/chips'
     | '/guide/color'
+    | '/guide/css'
+    | '/guide/fileUpload'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
@@ -808,17 +913,22 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
-    | '/_auth/signup'
+    | '/_auth/signup_step1'
+    | '/_auth/signup_step2'
+    | '/_auth/signup_step3'
     | '/_auth/success'
     | '/_layout/test'
     | '/_layout/'
     | '/_guide/guide/accordion'
     | '/_guide/guide/alert'
+    | '/_guide/guide/badge'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
+    | '/_guide/guide/css'
+    | '/_guide/guide/fileUpload'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
@@ -874,7 +984,9 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
-        "/_auth/signup",
+        "/_auth/signup_step1",
+        "/_auth/signup_step2",
+        "/_auth/signup_step3",
         "/_auth/success"
       ]
     },
@@ -883,11 +995,14 @@ export const routeTree = rootRoute
       "children": [
         "/_guide/guide/accordion",
         "/_guide/guide/alert",
+        "/_guide/guide/badge",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
         "/_guide/guide/chips",
         "/_guide/guide/color",
+        "/_guide/guide/css",
+        "/_guide/guide/fileUpload",
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
@@ -922,8 +1037,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
-    "/_auth/signup": {
-      "filePath": "_auth/signup.tsx",
+    "/_auth/signup_step1": {
+      "filePath": "_auth/signup_step1.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup_step2": {
+      "filePath": "_auth/signup_step2.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup_step3": {
+      "filePath": "_auth/signup_step3.tsx",
       "parent": "/_auth"
     },
     "/_auth/success": {
@@ -946,6 +1069,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/alert.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/badge": {
+      "filePath": "_guide/guide/badge.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/buttons": {
       "filePath": "_guide/guide/buttons.tsx",
       "parent": "/_guide"
@@ -964,6 +1091,14 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/color": {
       "filePath": "_guide/guide/color.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/css": {
+      "filePath": "_guide/guide/css.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/fileUpload": {
+      "filePath": "_guide/guide/fileUpload.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/form": {

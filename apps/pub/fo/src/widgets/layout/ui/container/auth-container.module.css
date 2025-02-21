@@ -41,3 +41,13 @@
     }
   }
 }
+
+/* .start {
+  &.auth_container {
+    &.login {
+      .auth_area {
+        @apply flex;
+      }
+    }
+  }
+} */

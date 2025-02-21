@@ -5,6 +5,7 @@
   @apply flex;
   height: 100dvh;
   .aside {
+    @apply scrollbar;
     position: relative;
     overflow: auto;
     h1 {
@@ -173,6 +174,9 @@
         }
         + .info {
           margin-top: 20px;
+        }
+        + .info_ul {
+          @apply mt-[20px];
         }
       }
       img {
@@ -408,6 +412,11 @@
       border-bottom: 1px solid #eee;
       > a {
         text-decoration: underline;
+      }
+      &.pages {
+        a {
+          @apply text-[#00AFD5];
+        }
       }
     }
   }

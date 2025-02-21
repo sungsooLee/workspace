@@ -165,7 +165,7 @@
       fill: #00afd5;
     }
     &.error svg {
-      fill: var(--status1);
+      fill: #00afd5;
     }
   }
 }
@@ -175,5 +175,5 @@
 }
 
 hr.divider {
-  @apply h-[1px] w-full bg-[var(--gray3)];
+  @apply h-[1px] w-full bg-[#EDF0F7];
 }

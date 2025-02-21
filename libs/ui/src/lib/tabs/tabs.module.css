@@ -186,7 +186,7 @@
       @apply relative;
       &.alarm {
         @apply pr-[8px];
-        &::after {
+        .alarm_view {
           @apply absolute right-0 top-[8px] block h-[8px] w-[8px] rounded-[4px] bg-[var(--secondary1)] content-[''];
         }
       }
