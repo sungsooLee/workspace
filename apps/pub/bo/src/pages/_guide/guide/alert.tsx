@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/alert')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const handleClickAlert = () => {
     openAlert({
       title: (
@@ -114,10 +114,10 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 
 // 실행 함수 (한번만 선언)
-const { alert: openAlert } = useModalControl();
+const { alert: openAlert } = useModal();
 
 // 적용방법(예시)
 <Button variant="text" onClick={() => handleClickAlert()}>Confirm창 열기</Button>`}
@@ -138,7 +138,7 @@ const { alert: openAlert } = useModalControl();
           <pre className="code_block">
             <code>
               {`// 실행 함수
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
 
 // 예시 함수
 const handleClickAlert = () => {
@@ -182,7 +182,7 @@ const handleClickAlert = () => {
           <pre className="code_block">
             <code>
               {`// 실행 함수
-const { alert: openAlert } = useModalControl();
+const { alert: openAlert } = useModal();
 
 // 예시 함수
  const handleClickAlert2 = () => {
@@ -222,7 +222,7 @@ const { alert: openAlert } = useModalControl();
           <pre className="code_block">
             <code>
               {`// 실행 함수
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
 
 // 예시 함수
  const handleClickAlert3 = () => {
@@ -259,7 +259,7 @@ const { alert: openAlert } = useModalControl();
           <pre className="code_block">
             <code>
               {`// 실행 함수
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
 
 // 예시 함수
 const handleClickAlert4 = () => {
@@ -298,7 +298,7 @@ const handleClickAlert4 = () => {
           <pre className="code_block">
             <code>
               {`// 실행 함수
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
 
 // 예시 함수
 const handleClickAlert5 = () => {
@@ -337,7 +337,7 @@ const handleClickAlert5 = () => {
           <pre className="code_block">
             <code>
               {`// 실행 함수
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
 
 // 예시 함수
 const handleClickAlert6 = () => {

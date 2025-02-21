@@ -1,14 +1,14 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { IcLogOut01 } from '@learnway/icons';
 
 import { Avatar, Popover } from '@learnway/ui';
 import styles from './user-avatar.module.css';
 
 const PopoverContent = () => {
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
 
   const handleClickAlert1 = () => {
