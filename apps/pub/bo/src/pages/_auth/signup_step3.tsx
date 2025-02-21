@@ -164,7 +164,6 @@ function RouteComponent() {
                 ]}
                 size="lg"
               />
-              <span className={formStyles.dash}></span>
               <Input
                 id="name-1-6"
                 type="text"

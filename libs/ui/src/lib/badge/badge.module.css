@@ -1,8 +1,8 @@
 .start {
   &.badge {
-    @apply mr-0 inline-flex h-auto w-auto items-center justify-center overflow-hidden bg-[var(--gray2)] text-[13px] font-light text-[var(--gray9)];
+    @apply inline-flex h-auto w-auto items-center justify-center overflow-hidden bg-transparent text-center;
     .label {
-      @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
+      @apply pointer-events-none flex items-center justify-center !bg-transparent px-0;
     }
     &.dot {
       @apply h-[8px] w-[8px] rounded-[4px];
@@ -28,9 +28,21 @@
       }
     }
     &.number {
-      @apply body_bo_4_b h-[20px] min-w-[20px] rounded-[10px] text-[var(--white)];
+      @apply body_bo_4_b box-border h-[2.4rem] w-auto min-w-[2.4rem] rounded-[12px];
+      .label {
+        @apply px-[8px] -indent-[1px] !text-[var(--white)];
+      }
       &.primary {
         @apply bg-[var(--secondary1)];
+      }
+      &.new {
+        @apply bg-[var(--status1)];
+      }
+      &.sm {
+        @apply h-[2rem] min-w-[2rem];
+        .label {
+          @apply px-[6px];
+        }
       }
     }
   }

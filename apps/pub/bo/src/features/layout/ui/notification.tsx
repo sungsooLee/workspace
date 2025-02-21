@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 
-import { Button, Popover } from '@learnway/ui';
+import { Button, Popover, Badge } from '@learnway/ui';
 import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
@@ -158,7 +158,13 @@ const NotificationComponent = () => {
     <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
       <span className={styles.alarm_info}>
         <IcoAlarmFill width={32} height={32} stroke="#fff" />
-        <em className={styles.count_view}>99</em>
+        <Badge
+          className={styles.count_view}
+          option={{ label: '99', value: 'A' }}
+          variant="number"
+          status="new"
+          size="sm"
+        />
       </span>
     </Popover>
   );
