@@ -42,7 +42,7 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <Input id="name" type="text" placeholder="숫자 10자리 입력(1234567890)" value="" />
-                <Button variant="gray" size="sm">
+                <Button variant="gray" size="lg">
                   조회
                 </Button>
               </div>
