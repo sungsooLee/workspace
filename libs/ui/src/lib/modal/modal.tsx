@@ -108,23 +108,25 @@ const ContentComponent: React.FC<any> = ({ content, setModalData }) => {
   return newContent;
 };
 
-const FooterComponent: React.FC<any> = ({ footer, buttonClick }) => {
+const FooterComponent: React.FC<any> = ({ footer: customFooter, buttonClick }) => {
   const handleClick = (event: any) => {
     const isButton = event.target instanceof HTMLButtonElement;
     const actionKey = event.target?.getAttribute('actionKey');
     isButton && buttonClick(actionKey);
   };
 
-  const defaultFooter = (
-    <>
-      <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-      <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
-    </>
+  return (
+    <div onClick={handleClick}>
+      {isValidElement(customFooter) ? (
+        customFooter
+      ) : (
+        <>
+          <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+          <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
+        </>
+      )}
+    </div>
   );
-
-  console.log('Footer', footer || defaultFooter);
-
-  return <div onClick={handleClick}>{isValidElement(footer) ? footer : defaultFooter}</div>;
 };
 
 export const Modal = ModalComponent;
