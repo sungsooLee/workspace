@@ -21,9 +21,12 @@ const TreeNodeComponent = ({
   onDrop,
   isDraggable,
   onNodeClick,
+  treeType,
+  nodeButtons,
 }: TreeNodeComponentProps) => {
   const hasChildren = node.children && node.children.length > 0;
   const isExpanded = expandedKeys.includes(node.key);
+  const isAdvancedMode = treeType === 'advanced';
 
   // 드랍 위치(before, inside, after)
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
@@ -120,6 +123,13 @@ const TreeNodeComponent = ({
     if (node === selectedNode && onNodeClick) onNodeClick(null);
   };
 
+  // 햄버거 버튼으로 드래그 시작 (advanced 모드)
+  const handleHamburgerDragStart = (e: React.DragEvent) => {
+    e.stopPropagation();
+    if (!isDraggable || node.constraints?.drag === false) return;
+    onDragStart?.(node);
+  };
+
   return (
     <div className="relative select-none">
       <div
@@ -128,8 +138,8 @@ const TreeNodeComponent = ({
           paddingLeft: `${level * 20}px`,
           cursor: node.constraints?.drag === false ? 'not-allowed' : 'grab',
         }}
-        draggable={isActuallyDraggable}
-        onDragStart={handleDragStart}
+        draggable={isAdvancedMode ? false : isActuallyDraggable}
+        onDragStart={isAdvancedMode ? undefined : handleDragStart}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -139,26 +149,42 @@ const TreeNodeComponent = ({
         }}>
         {dropPosition && <div className={dropIndicatorStyle[dropPosition]} />}
         <span
-          className="w-6 h-6 flex items-center justify-center cursor-pointer"
+          className="flex h-6 w-6 cursor-pointer items-center justify-center"
           onClick={handleToggleExpand}>
           {hasChildren ? (
             isExpanded ? (
-              <ChevronDown className="w-4 h-4 text-gray-600" />
+              <ChevronDown className="h-4 w-4 text-gray-600" />
             ) : (
-              <ChevronRight className="w-4 h-4 text-gray-600" />
+              <ChevronRight className="h-4 w-4 text-gray-600" />
             )
           ) : null}
         </span>
-        <span className="w-6 h-6 flex items-center justify-center mr-1">
+        <span className="mr-1 flex h-6 w-6 items-center justify-center">
           {hasChildren ? (
-            <Folder className="w-4 h-4 text-blue-500" />
+            <Folder className="h-4 w-4 text-blue-500" />
           ) : (
-            <File className="w-4 h-4 text-gray-500" />
+            <File className="h-4 w-4 text-gray-500" />
           )}
         </span>
-        <span className="text-sm flex-grow">
+        <span className="flex-grow text-sm">
           {node.title} / Depth : {level}
         </span>
+
+        {treeType === 'advanced' && (
+          <div className="relative flex">
+            {nodeButtons && (
+              <div className="mr-2 flex space-x-1" onClick={(e) => e.stopPropagation()}>
+                {nodeButtons(node, level)}
+              </div>
+            )}
+            <span
+              className={`ml-2 flex h-6 w-6 items-center justify-center transition-opacity ${isAdvancedMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
+              draggable={isAdvancedMode && isActuallyDraggable}
+              onDragStart={isAdvancedMode ? handleHamburgerDragStart : undefined}>
+              ☰
+            </span>
+          </div>
+        )}
       </div>
 
       {hasChildren && isExpanded && (
@@ -176,6 +202,8 @@ const TreeNodeComponent = ({
                 onDrop={onDrop}
                 isDraggable={isDraggable}
                 onNodeClick={onNodeClick}
+                treeType={treeType}
+                nodeButtons={nodeButtons}
               />
             ))}
         </div>
@@ -184,7 +212,7 @@ const TreeNodeComponent = ({
   );
 };
 
-const TreeView = ({ treeId, data, onAction, expandTrigger }: TreeProps) => {
+const TreeView = ({ treeId, data, onAction, expandTrigger, type, nodeButtons }: TreeProps) => {
   const [treeData, setTreeData] = useState(data);
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -273,7 +301,7 @@ const TreeView = ({ treeId, data, onAction, expandTrigger }: TreeProps) => {
 
   return (
     <div
-      className="border rounded-lg p-4 bg-white shadow-sm"
+      className="rounded-lg border bg-white p-4 shadow-sm"
       onDragOver={(e) => {
         e.preventDefault();
         e.currentTarget.classList.add('bg-blue-100');
@@ -288,19 +316,27 @@ const TreeView = ({ treeId, data, onAction, expandTrigger }: TreeProps) => {
         handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}>
       <div className="tree">
-        {treeData.map((node) => (
-          <TreeNodeComponent
-            key={node.key}
-            node={node}
-            selectedNode={selectedNode}
-            expandedKeys={expandedKeys}
-            setExpandedKeys={setExpandedKeys}
-            onDragStart={handleDragStart}
-            onDrop={handleDrop}
-            isDraggable={canDragNode(node)}
-            onNodeClick={handleNodeClick}
-          />
-        ))}
+        {treeData.length > 0 ? (
+          treeData.map((node) => (
+            <TreeNodeComponent
+              key={node.key}
+              node={node}
+              selectedNode={selectedNode}
+              expandedKeys={expandedKeys}
+              setExpandedKeys={setExpandedKeys}
+              onDragStart={handleDragStart}
+              onDrop={handleDrop}
+              isDraggable={canDragNode(node)}
+              onNodeClick={handleNodeClick}
+              nodeButtons={nodeButtons}
+              treeType={type}
+            />
+          ))
+        ) : (
+          <div className="py-4 text-center text-gray-500">
+            트리에 노드가 없습니다. 노드를 추가해주세요.
+          </div>
+        )}
       </div>
     </div>
   );
