@@ -36,6 +36,7 @@ function RouteComponent() {
         { label: 'Pagination', path: '/guide/pagination' },
         { label: 'Stepper', path: '/guide/stepper' },
         { label: 'Tabs', path: '/guide/tabs' },
+        { label: 'Progress', path: '/guide/progress' },
         // { label: '텍스트필드', path: '/guide/textfield' },
         // { label: '이미지', path: '/guide/image' },
         { label: 'Icon', path: '/guide/icon' },
