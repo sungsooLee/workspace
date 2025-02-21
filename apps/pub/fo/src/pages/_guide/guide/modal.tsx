@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal, useModalContext } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { useFloatingModal } from '../../../../../../../../fe/libs/editor/src/lib/context/floating-modal.context';
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
@@ -20,7 +22,7 @@ function RouteComponent() {
     );
   };
   const CustomFooter = () => {
-    const { closeModal } = useModalContext();
+    const { closeModal } = useFloatingModal();
     return (
       <>
         <Button variant="gray" size="lg" onClick={() => closeModal()}>
@@ -60,10 +62,10 @@ const { open: openModal } = useModal();`}
             <Button
               onClick={() =>
                 openModal({
-                  title: '타이틀',
-                  width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                  footer: <CustomFooter />,
+                  title: '',
+                  width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <BasicModalContent />,
+                  footer: true,
                 })
               }>
               모달 팝업 열기
@@ -78,7 +80,7 @@ onClick={() =>
   openModal(<BasicModalContent />, {
     title: '타이틀',
     width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
-    footer: <CustomFooter />,
+    footer: true,
   })
 }>
 모달 팝업 열기
