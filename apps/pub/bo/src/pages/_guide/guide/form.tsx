@@ -51,6 +51,39 @@ function RouteComponent() {
       <h3 className="guide_tit3">
         Form 사용 케이스(row는 정렬할때 사용- form요소가 아니더라도 사용 가능)
       </h3>
+      <p className="loc css">
+        파일 위치 : /assets/styles/modules/<strong>form.module.css</strong>
+      </p>
+      <ul className="info_ul">
+        <li>form.module.css import 한 후 필요한 콤포넌트 적용.</li>
+        <li>전체 폼은 form_row 감싼다.</li>
+
+        <li>폼영역은 row 로 감싼다. (다만, 한줄씩 떨어질때는 form_row에 col을 같이 사용한다.</li>
+      </ul>
+      <div className="code_example">
+        <pre className="code_block">
+          <code>{`// module css import
+import formStyles from '../../assets/styles/modules/form.module.css';
+
+// 예시
+<div className={formStyles.form_row}>
+  <div className={formStyles.row}>
+    <div className={formStyles.form_item}>
+        form_item
+    </div>
+
+    <div className={formStyles.form_item}>
+        form_item
+    </div>
+  </div>
+
+  <div className={formStyles.row}>
+    row
+  </div>
+</div>`}</code>
+        </pre>
+      </div>
+      <h3 className="guide_tit3">Form 예제</h3>
       {/* row */}
       <div className="row">
         {/* form_item */}
@@ -89,8 +122,11 @@ function RouteComponent() {
             </span>
           </label>
           {/* file upload case */}
-          <div className={formStyles.input_box}>
-            <Input id="name-1-2" type="text" value="업로드 파일명" showCounter />
+          <div className={cn(formStyles.input_box, formStyles.line)}>
+            <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
+            <span className={formStyles.count}>
+              <em className={formStyles.num}>7</em>/150
+            </span>
           </div>
         </div>
       </div>
@@ -170,6 +206,7 @@ function RouteComponent() {
                 { value: 'type2', label: '+83' },
               ]}
             />
+            <span className={formStyles.dash}></span>
             <Input
               id="name-1-6"
               type="text"
@@ -235,6 +272,7 @@ function RouteComponent() {
                       { value: 'type2', label: '+83' },
                     ]}
                   />
+                  <span className={formStyles.dash}></span>
                   <Input
                     id="name-1-7-2"
                     type="text"
@@ -593,7 +631,7 @@ function RouteComponent() {
           <label htmlFor="name3" className={formStyles.form_label}>
             <span className={formStyles.form_text}>error</span>
             {/* error 케이스 */}
-            <span className={cn(formStyles.status, formStyles.error)}>
+            <span className={formStyles.status}>
               <IcoFormRequired width={12} height={12} />
             </span>
           </label>
@@ -623,7 +661,9 @@ function RouteComponent() {
           <label htmlFor="name5" className={formStyles.form_label}>
             <span className={formStyles.form_text}>readonly</span>
           </label>
-          <div className={formStyles.input_box}>c</div>
+          <div className={formStyles.input_box}>
+            <Input id="name5" type="text" placeholder="입력" value="value" readOnly />
+          </div>
         </div>
       </div>
       {/* row */}

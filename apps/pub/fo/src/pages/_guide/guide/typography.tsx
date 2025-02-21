@@ -405,14 +405,14 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Typography Guide</h2>
-      <p className="loc css">
-        설장파일 위치 : /apps/pub/bo/<strong>tailwind.config.js</strong>
+      <p className="loc react">
+        설장파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
       </p>
       <p className="info">
         타이틀은 h1~h6까지 의미있는(시멘틱) 태그를 부여한다.
         <br />
-        테일윈드 <strong>tailwind.config.js</strong> 에 디자인 클래스명과 동일하게 추가 후 @apply
-        body_2_r 형식으로 활용해서 사용한다.
+        테일윈드 <strong>tailwind.config.js</strong> 에 디자인(피그마) 클래스명과 동일하게 추가 후
+        @apply body_2_r 형식으로 활용해서 사용한다.
       </p>
 
       <div>

@@ -51,6 +51,39 @@ function RouteComponent() {
       <h3 className="guide_tit3">
         Form 사용 케이스(row는 정렬할때 사용- form요소가 아니더라도 사용 가능)
       </h3>
+      <p className="loc css">
+        파일 위치 : /assets/styles/modules/<strong>form.module.css</strong>
+      </p>
+      <ul className="info_ul">
+        <li>form.module.css import 한 후 필요한 콤포넌트 적용.</li>
+        <li>전체 폼은 form_row 감싼다.</li>
+
+        <li>폼영역은 row 로 감싼다. (다만, 한줄씩 떨어질때는 form_row에 col을 같이 사용한다.</li>
+      </ul>
+      <div className="code_example">
+        <pre className="code_block">
+          <code>{`// module css import
+import formStyles from '../../assets/styles/modules/form.module.css';
+
+// 예시
+<div className={formStyles.form_row}>
+  <div className={formStyles.row}>
+    <div className={formStyles.form_item}>
+        form_item
+    </div>
+
+    <div className={formStyles.form_item}>
+        form_item
+    </div>
+  </div>
+
+  <div className={formStyles.row}>
+    row
+  </div>
+</div>`}</code>
+        </pre>
+      </div>
+      <h3 className="guide_tit3">Form 예제</h3>
       {/* row */}
       <div className="row">
         {/* form_item */}

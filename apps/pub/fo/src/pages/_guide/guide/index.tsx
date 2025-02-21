@@ -88,6 +88,7 @@ function RouteComponent() {
       <table className="pub_table">
         <thead>
           <tr>
+            <th scope="col">구분</th>
             <th scope="col">메뉴명 (1depth)</th>
             <th scope="col">메뉴명 (2depth)</th>
             <th scope="col">메뉴명 (3depth)</th>
@@ -102,6 +103,7 @@ function RouteComponent() {
         <tbody>
           {guideData.map((item, index) => (
             <tr key={index}>
+              <td>{item.depth0}</td>
               <td>{item.depth1}</td>
               <td>{item.depth2}</td>
               <td>{item.depth3}</td>
