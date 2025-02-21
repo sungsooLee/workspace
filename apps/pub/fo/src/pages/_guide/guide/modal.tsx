@@ -47,7 +47,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModal, useModalContext } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { useFloatingModal } from '../../../../../../../../fe/libs/editor/src/lib/context/floating-modal.context';
 
 // 실행 함수
 const { open: openModal } = useModal();`}
