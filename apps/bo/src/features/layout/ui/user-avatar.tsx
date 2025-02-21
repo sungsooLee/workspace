@@ -53,8 +53,8 @@ const PopoverContent = () => {
           </li>
         );
       })}
-      {map(data?.tenants, (tenant: Tenant, index: number) => {
-        return <li key={`MY-PROFILE-TENAT${index}`}>{tenant.name}</li>;
+      {map(data?.tenantIds, (tenantId: number, index: number) => {
+        return <li key={`MY-PROFILE-TENAT${index}`}>{tenantId}</li>;
       })}
     </div>
   );

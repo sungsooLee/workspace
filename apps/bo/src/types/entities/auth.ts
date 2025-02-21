@@ -4,5 +4,6 @@ export interface AuthUser {
   tenantIds: number[];
   activeTenantId: number;
   locale?: string;
+  email?: string;
   menus?: any;
 }

@@ -28,8 +28,11 @@ export function initAxios() {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         // error
-        if (errorResponse?.status === 403) {
+        if (errorResponse?.status === 401) {
           return await reissueProccess(error);
+        }
+        if (errorResponse?.status === 403) {
+          //return await reissueProccess(error);
         }
 
         return Promise.reject(error);

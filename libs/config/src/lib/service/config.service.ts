@@ -1,9 +1,10 @@
-import { API_FIXED_URI, API_BO_URI, API_SSO_URI, API_SERVER } from '../const/config.constant';
+import { API_FIXED_URI, API_BO_URI, API_SSO_URI } from '../const/config.constant';
 
 export interface LearnwayConfiguration {
   CODE: any;
   HTTP_PORT?: number;
   // API
+  APP_API_URI?: string;
   PMS_API_PREFIX?: string;
   LMS_API_PREFIX?: string;
   CMS_API_PREFIX?: string;
@@ -24,13 +25,13 @@ export function getConfig(): LearnwayConfiguration {
 }
 
 export function PMSApiPrefix(): string {
-  return getConfig()?.PMS_API_PREFIX || `/pms-module${API_BO_URI}${API_FIXED_URI}`;
+  return `/pms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function CMSApiPrefix(): string {
-  return getConfig()?.CMS_API_PREFIX || `/cms-module${API_BO_URI}${API_FIXED_URI}`;
+  return `/cms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function LMSApiPrefix(): string {
-  return getConfig()?.LMS_API_PREFIX || `/lms-module${API_BO_URI}${API_FIXED_URI}`;
+  return `/lms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function OAuthApiPrefix(): string {
   return getConfig()?.OAuth_API_PREFIX || `/pms-module${API_FIXED_URI}`;

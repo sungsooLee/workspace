@@ -1,6 +1,7 @@
 import { useEffect, useState, ReactNode } from 'react';
+import { useMount } from 'ahooks';
 
-import { initI18N } from '@learnway/config';
+import { initI18N, setConfig, API_FO_URI } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/system';
@@ -24,6 +25,11 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
+
+  useMount(async () => {
+    // set api prefix by fo
+    setConfig('APP_API_URI', API_FO_URI);
+  });
 
   useEffect(() => {
     if (!i18nData) {
