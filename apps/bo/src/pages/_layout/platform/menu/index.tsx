@@ -11,7 +11,11 @@ import { CSS } from '@dnd-kit/utilities';
 import useDynamicForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { DynamicFormConfig } from '../../../../shared/ui/dynamic-form-field';
 import { useFieldArray } from 'react-hook-form';
-
+import { useMenuMangerFetchMenus } from '../../../../entities/menu/service/menu-manager.hook';
+import { useQueryClient } from '@tanstack/react-query';
+import { menuManagerQueryOptions } from '../../../../entities/menu/service/menu-manager.queries';
+import { httpService } from '@learnway/shared';
+import { PMSApiPrefix } from '@learnway/config';
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
 });
@@ -33,11 +37,26 @@ const formConfig: DynamicFormConfig = {
 };
 
 function RouteComponent() {
+  const { data: menuData, isLoading } = useMenuMangerFetchMenus();
+  const queryClient = useQueryClient();
   const { control, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log(data);
   };
+
+  const init = async () => {
+    /*const result = await httpService.get<any>(
+      `http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/menus`,
+    );
+    console.log(result);*/
+    console.log(await queryClient.fetchQuery(menuManagerQueryOptions.all()));
+    console.log('menuData => ', menuData);
+  };
+
+  useEffect(() => {
+    init();
+  }, [menuData]);
 
   useEffect(() => {
     fetchData({
