@@ -6,7 +6,7 @@ import {
   ButtonComponentProps,
   ChipList,
   ChipListComponentProps,
-  useModalControl,
+  useModal,
 } from '@learnway/ui';
 import { TeacherList } from './teacher-list';
 
@@ -26,7 +26,7 @@ export interface FormTeacherChipListProps {
  */
 const FormTeacherChipListComponent = forwardRef<HTMLDivElement, FormTeacherChipListProps>(
   ({ value = [], onChange: ownerOnChange, button = {}, chipList, ...props }, ref) => {
-    const { open: openModal } = useModalControl();
+    const { open: openModal } = useModal();
     const [selectedChipOptions, setSelectedChipOptions] = useState<any[]>(value);
 
     const { variant = 'point', size = 'sm', label = t('선택') } = button;
@@ -43,8 +43,12 @@ const FormTeacherChipListComponent = forwardRef<HTMLDivElement, FormTeacherChipL
     const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       // const newChip = buttonOnClick?.(event);
       // 모달 오픈 - 강사 목록
-      openModal(<TeacherList />, { title: '강사 목록' }, (newOption) => {
-        newOption && appendSelectedChipOptions(newOption);
+      openModal({
+        title: '강사 목록',
+        content: <TeacherList />,
+        onClose: (newOption) => {
+          newOption && appendSelectedChipOptions(newOption);
+        },
       });
     };
 

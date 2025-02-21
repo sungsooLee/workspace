@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import { Settings } from 'lucide-react';
 import {
-  DndContext,
   closestCenter,
-  KeyboardSensor,
-  useSensor,
-  useSensors,
+  DndContext,
   DragEndEvent,
+  KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  useSensor,
+  useSensors,
 } from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
   useSortable,
+  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Table } from '@tanstack/react-table';
 import { CSS } from '@dnd-kit/utilities';
 
-import { useModalContext } from '../../modal/modal-context';
 import { Button } from '../../button/button';
-import { useModalControl } from '../../modal/modal.hook';
 import { Checkbox } from '../../checkbox/checkbox';
+import { useModal } from '../../modal/modal.hook';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -84,7 +83,7 @@ function ColumnSettingsContent<T extends object>({
   table: Table<T>;
   onApply: (settings: ColumnSetting[]) => void;
 }) {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const leafColumns = table.getAllLeafColumns().filter((col) => col.id !== 'select'); //체크박스 컬럼 제외
   console.log(leafColumns);
 
@@ -213,7 +212,7 @@ function ColumnSettings<T extends object>({
   onColumnChange,
   table,
 }: ColumnSettingsProps<T>): JSX.Element {
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const handleOpenSettings = () => {
     const handleApply =
@@ -222,7 +221,8 @@ function ColumnSettings<T extends object>({
         return;
       });
 
-    open(<ColumnSettingsContent<T> onApply={handleApply} table={table} />, {
+    open({
+      content: <ColumnSettingsContent<T> onApply={handleApply} table={table} />,
       title: '컬럼 설정',
       width: 'md',
       height: 'auto',

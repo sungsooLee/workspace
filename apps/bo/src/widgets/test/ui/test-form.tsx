@@ -4,7 +4,7 @@ import { Form, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 
-import { Button, FieldType, useModalContext } from '@learnway/ui';
+import { Button, FieldType, useModal } from '@learnway/ui';
 import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 
 const fetchFormData = (): Promise<any> => {
@@ -35,7 +35,7 @@ const TestForm = () => {
     queryKey: ['formData'],
     queryFn: fetchFormData,
   });
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const schema = z.object({
     name: z.string().min(2, {
       message: t('validation.min', { field: t('form.name'), min: 2 }),

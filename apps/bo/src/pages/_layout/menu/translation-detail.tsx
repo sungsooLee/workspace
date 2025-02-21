@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { z } from '@learnway/shared';
-import { Button, useModalControl } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_layout/menu/translation-detail')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const router = useRouter();
   const { provider, onSubmit } = useDynamicForm(formConfig);
   /**

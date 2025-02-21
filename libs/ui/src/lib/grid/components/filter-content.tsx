@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { useModalContext } from '../../modal/modal-context';
-// import { Button } from '../../shadcn/button';
 import { Input } from '../../input/input';
-// import { MultiSelect } from '../../select/multi-select';
 import '../grid.css';
 import { debounce } from 'lodash'; // grid CSS
 import { Button } from '../../button/button';
+import { useModal } from '../../modal/modal.hook';
 
 interface FilterContentProps {
   column: string;
@@ -27,7 +25,7 @@ export const FilterContent = ({
   onApply,
   options = [],
 }: FilterContentProps) => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
 
   const getInitialValue = () => {
     if (type === 'range') {

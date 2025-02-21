@@ -3,7 +3,6 @@ import { ContentsRow } from '../../../layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
 import { LectureTypeSiteUrl } from '../dialogs/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
-import { FormManagerInputButton } from '../../../../features/learning/ui/dialog/form-manager-input-button/form-manager-input-button';
 import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { t } from 'i18next';
 import { FormRow } from '../../../../shared/ui/form-row';
@@ -109,9 +108,7 @@ const CourseDetailForm = forwardRef<HTMLDivElement, FormProps>(({ setForm, ...pr
       {/* 운영자 & 연락처 */}
       <ContentsRow>
         <FormRow provider={provider}>
-          <DynamicFormField name={'운영자'}>
-            <FormManagerInputButton />
-          </DynamicFormField>
+          <DynamicFormField name={'운영자'}></DynamicFormField>
           <DynamicFormField name={'연락처'}>{/*<CourseDetailForm />*/}</DynamicFormField>
         </FormRow>
       </ContentsRow>

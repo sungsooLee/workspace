@@ -4,7 +4,7 @@ import { Link, useRouter } from '@tanstack/react-router';
 import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
-import { Avatar, Button, Popover, useModalControl } from '@learnway/ui';
+import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 
 import { useFetchAuthUser, useLogoutUser } from '../../../../entities/auth';
 import { Tenant } from '../../../../entities/tenant';
@@ -20,7 +20,7 @@ interface ProfileMenu {
 const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { alert: openAlert } = useModalControl();
+  const { alert: openAlert } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
   //const { startSession } = useLoginTimeout();

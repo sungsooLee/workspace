@@ -6,8 +6,7 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView,
-  useModalContext,
-  useModalControl,
+  useModal,
 } from '@learnway/ui';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -23,8 +22,8 @@ import useDynamicForm from '../../../../../../shared/ui/dynamic-form-field/use-d
 import { SubContents } from '../../../../../../widgets/layout/ui/container/slot/sub-contents';
 import { MovieInfo } from '../../../../../../widgets/contents/movie-info';
 import { FormRow } from '../../../../../../shared/ui/form-row';
-import { z } from '@learnway/shared';
 import { useFieldArray } from 'react-hook-form';
+
 const sampleData: TreeNode[] = [
   {
     key: '1',
@@ -57,7 +56,6 @@ export const Route = createFileRoute('/_layout/learning/resource/education/regis
 function RouteComponent() {
   const { provider, onSubmit } = useDynamicForm(formConfig);
   const router = useRouter();
-  const { open } = useModalControl();
   const [file, setFile] = useState<any>();
   const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
   const handleAction = (payload: TreeEventPayload) => {
@@ -213,7 +211,7 @@ function RouteComponent() {
 }
 
 const VideoUploadPopup = () => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const [files, setFiles] = useState<any[]>([]);
   const onDrop = useCallback((acceptedFiles: any) => {
     console.log('acceptedFiles => ', acceptedFiles);
@@ -446,7 +444,7 @@ const formConfig: DynamicFormConfig = {
 
 const ManagerComponent: FC<any> = ({ onChange, ...props }) => {
   const [displayValue, setDisplayValue] = useState('');
-  const { open } = useModalControl();
+  const { open } = useModal();
 
   const handleClose = (data: any) => {
     console.log('data => ', data);
@@ -455,14 +453,12 @@ const ManagerComponent: FC<any> = ({ onChange, ...props }) => {
   };
 
   const handleModalOpen = () => {
-    open(
-      <UserSelectPop />,
-      {
-        title: '학습 자료 업로드',
-        width: 'lg',
-      },
-      handleClose,
-    );
+    open({
+      content: <UserSelectPop />,
+      title: '학습 자료 업로드',
+      width: 'lg',
+      onClose: handleClose,
+    });
   };
 
   return (
@@ -506,7 +502,7 @@ const ContactComponent: FC<any> = ({ onChange }) => {
 };
 
 const UserSelectPop = () => {
-  const { closeModal } = useModalContext();
+  const { close: closeModal } = useModal();
   const users = [
     {
       userId: '1',

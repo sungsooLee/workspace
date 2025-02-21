@@ -12,7 +12,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { FormRow } from '../../../shared/ui/form-row';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
-import { ManagerList } from '../../../features/learning/ui/dialog/form-manager-input-button/manager-list';
+import { ManagerList } from '../../../features/learning/ui/modal/manager-list/manager-list';
 
 export const Route = createFileRoute('/_unauth/learnings/')({
   component: RouteComponent,
@@ -85,7 +85,7 @@ function RouteComponent() {
           {/* TODO: className 제거 */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'대표이미지'} className={'w-[400px]'} />
+              <DynamicFormField name={'대표이미지'} />
             </FormRow>
           </ContentsRow>
           {/* 강의유형 */}
@@ -129,12 +129,10 @@ function RouteComponent() {
                   //   disabled: true,
                   // }}
                   modalConfig={{
-                    content: <ManagerList />,
                     title: t('운영자 목록'),
-                    onClose: (data: any) => console.log('page onClose', data),
+                    content: <ManagerList />,
                   }}
                 />
-                {/*<FormManagerInputButton />*/}
               </DynamicFormField>
               {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>

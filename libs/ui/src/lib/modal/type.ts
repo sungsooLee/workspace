@@ -4,62 +4,42 @@ import { AlertComponentProps } from '../alert/alert';
 
 export type ModalSize = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'; // sm : 600px , md : 800px, lg : 1024px, xl : 1400px
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
-export interface ModalConfig {
-  title?: string;
-  description?: string;
-  footer?: React.ReactNode;
-  width?: ModalSize;
-  height?: ModalHeight;
-  preventBackdropClose?: boolean;
-  hideCloseButton?: boolean;
-}
 
-export interface BaseModalProps extends ModalConfig {
+export interface BaseModalProps {
+  setModalData: (data: any) => void;
   onClose?: (data?: any) => void;
   children: React.ReactNode;
+}
+
+export interface ModalConfig<T = any> {
+  content: ReactNode;
+  id?: string; // modal.hook 에서 open시 자동생성
+  title?: string;
+  description?: string;
+  width?: ModalSize;
+  height?: ModalHeight;
+  hideCloseButton?: boolean;
+  onClose?: (data?: ModalClose<T>) => void;
+  children?: React.ReactNode;
+  footer?: React.ReactNode | boolean; // true 설정시 default footer 사용
 }
 
 export interface ModalClose<T = any> {
   data?: T;
 }
-export interface ModalData {
-  content: React.ReactNode;
-  config?: ModalConfig;
-  onClose?: (data?: ModalClose) => void;
-  resolver?: (data?: ModalClose) => void;
-}
 
 export interface ModalContainerProps {
   index: number;
-  data: ModalData;
+  config: ModalConfig;
 }
 
 // TODO: rename : ModalControl > useModalReturnValue
 export interface ModalControl {
-  // TODO: open: (modal: ModalData) => void
-  open: <T = any>(
-    content: ReactNode,
-    config?: ModalConfig,
-    onClose?: (data?: ModalClose<T>) => void,
-  ) => void;
-  open2: <T = any>(props: ModalConfig2) => void;
+  modals: ModalConfig[];
+  open: (props: ModalConfig) => void;
+  close: (data?: any) => void;
+  closeAll: () => void;
   alert: (props: AlertComponentProps) => void;
   confirm: (props: any) => void;
-  openAsync: <T = any>(content: ReactNode, config?: ModalConfig) => Promise<ModalClose<T>>;
-}
-
-/**
- *
- */
-export interface ModalConfig2<T = any> {
-  content: ReactNode;
-  title?: string;
-  description?: string;
-  footer?: React.ReactNode;
-  width?: ModalSize;
-  height?: ModalHeight;
-  preventBackdropClose?: boolean;
-  hideCloseButton?: boolean;
-  config?: ModalConfig;
-  onClose?: (data?: ModalClose<T>) => void;
+  openAsync: <T = any>(props: ModalConfig) => Promise<any>;
 }

@@ -12,7 +12,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { FormRow } from '../../../shared/ui/form-row';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
-import { ManagerList } from '../../../features/learning/ui/dialog/form-manager-input-button/manager-list';
+import { ManagerList } from '../../../features/learning/ui/modal/manager-list/manager-list';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -125,7 +125,7 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
                 <InputButtonFormField
-                  // input={{
+                  // input={{`
                   //   disabled: true,
                   // }}
                   modalConfig={{
@@ -134,7 +134,6 @@ function RouteComponent() {
                     onClose: (data: any) => console.log('page onClose', data),
                   }}
                 />
-                {/*<FormManagerInputButton />*/}
               </DynamicFormField>
               {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>

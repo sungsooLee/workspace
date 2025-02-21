@@ -1,71 +1,78 @@
-import { createElement, ReactNode, useCallback } from 'react';
-import { reject } from 'lodash';
+import { createElement, useCallback } from 'react';
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
-import { ModalClose, ModalConfig, ModalConfig2, ModalControl } from './type';
+import { ModalConfig, ModalControl } from './type';
+import { getRandomId } from '@learnway/shared';
 
-// TODO: rename : useModalControl > useModal
-const useModalControl = (): ModalControl => {
-  const { open: openModal, open2: openModal2 } = useModalStore();
+// TODO: rename : useModal > useModal
+const useModal = (): ModalControl => {
+  const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
 
   const open = useCallback(
-    (content: ReactNode, config?: ModalConfig, onClose?: (data?: any) => void) => {
-      openModal(content, config, onClose);
-    },
-    [openModal],
-  );
-
-  const open2 = useCallback(
-    (config: ModalConfig2) => {
-      openModal2(config);
+    (config: ModalConfig) => {
+      const newConfig: ModalConfig = {
+        ...config,
+        id: getRandomId(),
+      };
+      openModal(newConfig);
     },
     [openModal],
   );
 
   const openAsync = useCallback(
-    <T = any>(content: ReactNode, config?: ModalConfig): Promise<ModalClose<T>> => {
-      return new Promise((resolve) => {
-        const wrapper = (data?: ModalClose<T>) => {
-          if (data) resolve(data);
-          else reject(new Error('ERROR Async Modal'));
+    (config: ModalConfig): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        const newConfig: ModalConfig = {
+          ...config,
+          id: getRandomId(),
+          onClose: (data?: any) => {
+            config?.onClose?.(data);
+            resolve(data);
+          },
         };
-        openModal(content, config, wrapper);
+        openModal(newConfig);
       });
     },
     [openModal],
   );
 
+  const close = useCallback((data?: any) => closeModal(data), [closeModal]);
+
+  const closeAll = useCallback(() => closeAllModal(), [closeAllModal]);
+
   const alert = useCallback(
     (props: AlertComponentProps) => {
-      const modalContent = createElement(Alert, props);
-      const modalConfig = {
+      const config: ModalConfig = {
+        content: createElement(Alert, props),
         hideCloseButton: true,
+        onClose: props.onClose,
       };
-      const onClose = props.onClose;
-      openModal(modalContent, modalConfig, onClose);
+      openModal(config);
     },
     [openModal],
   );
 
   const confirm = useCallback(
     (props: AlertComponentProps) => {
-      const modalContent = createElement(Alert, { ...props, isConfirm: true });
-      const modalConfig = {
+      const config = {
+        content: createElement(Alert, { ...props, isConfirm: true }),
         hideCloseButton: true,
+        onClose: props.onClose,
       };
-      const onClose = props.onClose;
-      openModal(modalContent, modalConfig, onClose);
+      openModal(config);
     },
     [openModal],
   );
 
   return {
     open,
-    open2,
-    openAsync,
+    close,
+    closeAll,
+    openAsync, // 언제 사용?
     alert,
     confirm,
+    modals,
   };
 };
 
-export { useModalControl };
+export { useModal };

@@ -3,9 +3,9 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
-import { useModalContext } from '../modal/modal-context';
-import { IcoCaution, IcoWarning, IcoError, IcoComplete } from '@learnway/icons'; // icon
+import { IcoCaution, IcoComplete, IcoError, IcoWarning } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
+import { useModal } from '../modal/modal.hook';
 
 export interface AlertComponentProps {
   className?: string;
@@ -41,7 +41,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     },
     ref,
   ) => {
-    const { closeModal } = useModalContext();
+    const { close: closeModal } = useModal();
 
     // description scroll check Start
     const MAX_HEIGHT = 160;

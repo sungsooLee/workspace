@@ -54,9 +54,7 @@ export * from './lib/file-upload/form-thumbnail-image-upload';
 export * from './lib/modal/modal';
 export * from './lib/modal/modal.hook';
 export * from './lib/modal/modal-wrapper';
-export * from './lib/modal/modal-container';
 export * from './lib/stores/useModalStore';
-export * from './lib/modal/modal-context';
 
 // radio
 export * from './lib/radio-group/radio-group';
