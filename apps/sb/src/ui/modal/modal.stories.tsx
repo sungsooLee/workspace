@@ -32,7 +32,7 @@ export const Template: any = (args: any) => {
   const { open: openModal } = useModal();
   const handleOpenModal = () => {
     openModal({
-      title: 'modal title',
+      title: '',
       content: <Content />,
     });
   };

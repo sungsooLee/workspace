@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';

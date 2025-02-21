@@ -69,7 +69,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
           )}
 
           {/* content */}
-          <div className={styles.content_body}>
+          <div className={cn(styles.content_body, !title && styles.notitle)}>
             {<ContentComponent content={content} setModalData={setModalData} />}
           </div>
 
