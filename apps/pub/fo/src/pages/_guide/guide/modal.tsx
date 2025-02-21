@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal, useModalContext } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
+import { useFloatingModal } from '@/libs/editor/src/lib/context/floating-modal.context';
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
@@ -20,7 +21,7 @@ function RouteComponent() {
     );
   };
   const CustomFooter = () => {
-    const { closeModal } = useModalContext();
+    const { closeModal } = useFloatingModal();
     return (
       <>
         <Button variant="gray" size="lg" onClick={() => closeModal()}>
