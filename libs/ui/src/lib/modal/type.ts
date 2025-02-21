@@ -5,7 +5,6 @@ import { AlertComponentProps } from '../alert/alert';
 export type ModalSize = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'; // sm : 600px , md : 800px, lg : 1024px, xl : 1400px
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
 export interface ModalConfig {
-  header?: boolean;
   title?: string;
   description?: string;
   footer?: React.ReactNode;
