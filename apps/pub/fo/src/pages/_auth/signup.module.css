@@ -96,6 +96,14 @@
       }
     }
 
+    /* search id passowrd */
+    .search_info {
+      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+
     .btn_wrap {
       @apply mt-[48px] flex items-center justify-center;
       button {

@@ -24,7 +24,7 @@
     }
   }
   .sns_login {
-    @apply relative mt-[40px] pb-[48px];
+    @apply relative mt-[40px] text-center;
     .list {
       @apply mt-[24px] flex items-center justify-center gap-[24px];
       > li {

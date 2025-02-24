@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_auth/success')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={signupStyles.auth_box}>
+      <div className={`${signupStyles.auth_box} ${signupStyles.success}`}>
         <div className={styles.success_info}>
           <i className={styles.ico}>
             <IcoCheck02 width={32} height={24} stroke="#ffffff" />
