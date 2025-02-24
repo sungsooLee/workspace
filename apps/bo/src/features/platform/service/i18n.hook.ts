@@ -4,9 +4,9 @@ import { useCreation } from 'ahooks';
 import { SelectOption } from '@learnway/ui';
 import { CODE_GROUP, Code } from '@learnway/config';
 import { getDefaultLang, setDefaultLang } from '@learnway/config';
+import { useUpdateUser } from '@learnway/config';
 
 import { useCodesByCodeGroup, useFetchAsyncI18nResource } from '../../../entities/platform';
-import { useUpdateUser } from '../../../entities/auth';
 
 const AVALIABLE_LANGUAGES = ['en', 'ko'];
 

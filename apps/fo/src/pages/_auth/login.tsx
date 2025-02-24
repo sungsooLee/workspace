@@ -3,14 +3,14 @@ import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
-import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
+import { useFetchAuthUser } from '@learnway/config';
 
 import { useAuthSignin } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
-import { useFetchAuthUser } from '../../entities/auth';
 import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
+import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 
 import styles from './login.module.css';
 import authStyles from './auth.module.css';

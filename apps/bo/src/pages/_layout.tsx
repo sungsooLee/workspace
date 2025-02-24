@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
+import { useFetchAuthUser } from '@learnway/config';
 
 import { Layout, MobileLayout } from '../widgets/layout';
-
-import { useFetchAuthUser } from '../entities/auth';
 import { useFetchTenant } from '../entities/tenant';
 import { authConfig } from '../features/auth';
 

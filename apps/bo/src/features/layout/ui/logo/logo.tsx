@@ -2,7 +2,8 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
-import { useFetchAuthUser } from '../../../../entities/auth';
+import { useFetchAuthUser } from '@learnway/config';
+
 import { useFetchTenant } from '../../../../entities/tenant';
 
 import logoImage from '../../../../assets/images/logo.png';

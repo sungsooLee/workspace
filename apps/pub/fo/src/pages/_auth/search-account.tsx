@@ -1,19 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard } from '@learnway/ui';
+import { Button, RadioCard, Tabs } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.signup_info}>
+  const [selectedTabKey, selectedTabKey2] = useState<string>('');
+  const items = [
+    {
+      title: '아이디 찾기',
+      key: 'a',
+      content: (
+        <>
+          <div className={signupStyles.search_info}>
+            <strong>본인인증</strong> 후<br /> 아이디를 확인 할 수 있습니다.
+          </div>
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
               className={styles.radio_card}
@@ -39,7 +46,6 @@ function RouteComponent() {
               ]}
             />
           </div>
-
           <div className={signupStyles.signup_noti}>
             <dl className={styles.check_point}>
               <dt>
@@ -50,7 +56,20 @@ function RouteComponent() {
               <dd>HTA/HTACV Member는 해외에 현대자동차 승용/상용 회원입니다.</dd>
             </dl>
           </div>
-        </div>
+        </>
+      ),
+    },
+    {
+      title: '비밀번호 찾기',
+      key: 'b',
+      content: <h2>Tab B content</h2>,
+    },
+  ];
+  return (
+    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
+      <div className={signupStyles.auth_box}>
+        <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" color="primary" />
+
         <div className={signupStyles.btn_wrap}>
           <Button variant="gray" size="xl">
             취소

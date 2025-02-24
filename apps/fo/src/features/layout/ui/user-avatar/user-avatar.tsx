@@ -1,13 +1,11 @@
-import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useRouter } from '@tanstack/react-router';
 import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
+import { useFetchAuthUser, useLogoutUser } from '@learnway/config';
 
-import { useFetchAuthUser, useLogoutUser } from '../../../../entities/auth';
-import { Tenant } from '../../../../entities/tenant';
 import styles from './user-avatar.module.css';
 import { IcLogOut01 } from '@learnway/icons';
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';

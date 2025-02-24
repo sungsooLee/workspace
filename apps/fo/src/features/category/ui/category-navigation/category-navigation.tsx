@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useCategories } from '../services/category.service';
-import { CategoryBadgeList } from './category-badge-list';
-import styles from './category-layer.module.css';
 import { Link } from '@tanstack/react-router';
-import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+
+import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 
-import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
-import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
-import { Category } from '../../../types/entities/category';
-import { Hierarchy } from '../../../types/hierarchy';
-import { useCategoryNavigation } from '../../../entities/category/service/category.hook';
+import { Category } from '../../../../types';
+import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
+import { useCategories } from '../../services/category.service';
+import { CategoryBadgeList } from '../category-badge-list/category-badge-list';
+import bnrImage1 from '../../../../assets/images/banner/banner_cate1.png';
+import bnrImage2 from '../../../../assets/images/banner/banner_cate2.png';
+
+import styles from './category-navigation.module.css';
 
 interface CategoryLayerProps {
   isOpen: boolean;
 }
 
-export function CategoryLayer({ isOpen }: CategoryLayerProps) {
+export function CategoryNavigation({ isOpen }: CategoryLayerProps) {
   const { data: categories } = useCategories();
   const [selectedDepth1, setSelectedDepth1] = useState<number | null>(null);
   const depth1Categories = categories.filter((cat) => cat.depth === 1);

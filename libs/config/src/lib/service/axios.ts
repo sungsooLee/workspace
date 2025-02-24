@@ -1,9 +1,10 @@
 import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { OAuthApiPrefix } from '../service/config.service';
-
 import { httpService, HttpMethod } from '@learnway/shared';
+
+import { tokenService } from '../auth/entities';
+import { OAuthApiPrefix } from '../service/config.service';
 
 export function initAxios() {
   axios.defaults.withCredentials = true;
@@ -12,7 +13,7 @@ export function initAxios() {
   const interceptors = {
     request: {
       onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
-        const accessToken = localStorage.getItem('ACCESS-TOKEN');
+        const accessToken = tokenService.accessToken;
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
@@ -41,7 +42,7 @@ export function initAxios() {
 
   const reissueProccess = (error: any): Promise<any> => {
     const { config, response: errorResponse } = error;
-    const refresh_token = localStorage.getItem('REFRESH-TOKEN');
+    const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
       return Promise.reject();
     }
@@ -54,10 +55,10 @@ export function initAxios() {
         { headers: { 'refresh-token': `${refresh_token}` } },
       )
       .then((data) => {
-        localStorage.setItem('ACCESS-TOKEN', data.headers['access-token']);
-        localStorage.setItem('REFRESH-TOKEN', data.headers['refresh-token']);
+        tokenService.accessToken = data.headers['access-token'];
+        tokenService.refreshToken = data.headers['refresh-token'];
 
-        config.headers.authorization = `Bearer ${data.headers['access-token']}`;
+        config.headers.authorization = `Bearer ${tokenService.accessToken}`;
         return axios(config);
       });
   };

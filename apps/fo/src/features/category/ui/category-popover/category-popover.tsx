@@ -1,22 +1,19 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
-import { Button, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui';
 import { IcoMenu01, IcoXclose } from '@learnway/icons';
 
-import { CategoryLayer } from '../../../category/ui/category-layer';
+import { CategoryNavigation } from '../category-navigation/category-navigation';
 
-import styles from './category.module.css';
+import styles from './category-popover.module.css';
 
-interface CategoryProps {
+interface CategoryPopoverProps {
   onOpenChange: (isOpen: boolean) => void;
   isOpen: boolean;
 }
 
-const CategoryContent = ({ isOpen }: any) => {
-  return <CategoryLayer isOpen={isOpen} />;
-};
-const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
+export const CategoryPopover = ({ onOpenChange, isOpen }: CategoryPopoverProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -31,7 +28,7 @@ const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
         open={isOpen}
         onOpenChange={onOpenChange}
         className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
-        popoverContent={<CategoryContent isOpen={isOpen} />}
+        popoverContent={<CategoryNavigation isOpen={isOpen} />}
         side="bottom"
         align="start"
         sideOffset={15}>
@@ -46,5 +43,3 @@ const CategoryComponent = ({ onOpenChange, isOpen }: CategoryProps) => {
     </div>
   );
 };
-
-export const Category = memo(CategoryComponent);

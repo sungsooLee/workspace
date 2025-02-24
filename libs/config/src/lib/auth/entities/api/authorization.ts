@@ -1,9 +1,8 @@
 import type { AxiosResponse } from 'axios';
 
-import { httpService, HttpMethod, cookieService } from '@learnway/shared';
-import { OAuthApiPrefix } from '@learnway/config';
-
-import loginMock from '../../mock/login.json';
+import { httpService, HttpMethod } from '@learnway/shared';
+import { OAuthApiPrefix } from '../../../service/config.service';
+import { tokenService } from '../service/token.service';
 
 export default class AuthorizationService {
   static login(payload: any): Promise<any> {
@@ -19,7 +18,7 @@ export default class AuthorizationService {
   }
 
   static reissue() {
-    const refresh_token = localStorage.getItem('REFRESH-TOKEN');
+    const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
       return Promise.reject();
     }
