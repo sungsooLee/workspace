@@ -1,33 +1,19 @@
-import { isMobile } from 'react-device-detect';
-
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
+import { Button, RadioCard } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup_step1')({
+export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const items = [
-    { label: '회원유형선택', subLabel: '', value: 'step1' },
-    { label: '사업자 정보 조회', subLabel: '', value: 'step2' },
-    { label: '회원정보입력', subLabel: '', value: 'step3' },
-  ];
-  const handleChange = (event: SelectOption) => {
-    console.log(event);
-  };
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
-          <div className={signupStyles.signup_step}>
-            <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
-          </div>
-
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
               className={styles.radio_card}

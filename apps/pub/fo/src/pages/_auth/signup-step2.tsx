@@ -7,7 +7,7 @@ import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup_step2')({
+export const Route = createFileRoute('/_auth/signup-step2')({
   component: RouteComponent,
 });
 
