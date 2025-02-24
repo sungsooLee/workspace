@@ -53,7 +53,6 @@ function RouteComponent() {
       </div>
     );
   };
-  // refresh path #00AFD5  rect white / pause rect : #A9AFB8  /  rect   completed : fill="#3EB838"
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {
@@ -66,7 +65,6 @@ function RouteComponent() {
       });
       hasRun.current = true;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
   return <div>파일 업로드 팝업 화면</div>;
 }
