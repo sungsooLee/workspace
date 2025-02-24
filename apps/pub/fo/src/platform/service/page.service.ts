@@ -6,7 +6,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/login': 'Welcome\nLearning-Way',
   '/success': '',
   '/progress-status': '진행현황',
-  '/search-account': '아이디/비밀번호 찾기',
+  '/search-account': '아이디 / 비밀번호 찾기',
 };
 
 export function isSigninPage(path: string): boolean {
