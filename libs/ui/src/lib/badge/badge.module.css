@@ -12,6 +12,9 @@
       &.disabled {
         @apply bg-[var(--gray3)];
       }
+      &.ing {
+        @apply bg-[#3EB838];
+      }
       &.success,
       &.caution {
         @apply bg-transparent;
