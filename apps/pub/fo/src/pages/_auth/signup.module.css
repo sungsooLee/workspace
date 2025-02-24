@@ -17,6 +17,7 @@
       }
     }
 
+    /* 회원가입 유형 */
     .signup_info {
       + h4.title {
         @apply mt-[48px];
@@ -54,6 +55,17 @@
               @apply opacity-100;
             }
           }
+        }
+      }
+    }
+
+    .signup_step {
+      .signup_select {
+        .ico1 {
+          @apply stroke-[var(--primary1)];
+        }
+        .ico2 {
+          @apply stroke-[var(--primary1)];
         }
       }
     }

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { IcoBuilding01 } from '@learnway/icons';
+import { IcoPhone02, IcoMail } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
@@ -29,7 +29,7 @@ function RouteComponent() {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoBuilding01 width={48} height={48} className={styles.ico1} />
+                      <IcoPhone02 width={48} height={48} className={styles.ico1} />
                       <span>일반 회원</span>
                     </div>
                   ),
@@ -38,7 +38,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoOverseasDealer width={48} height={48} className={styles.ico2} />
+                      <IcoMail width={48} height={48} className={styles.ico2} />
                       <span>HTA/HTACV 이용자</span>
                     </div>
                   ),
@@ -52,8 +52,7 @@ function RouteComponent() {
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
               </dt>
-              <dd>일반회원은 한국 내 협력사, 산학협력등 업체 회원입니다.</dd>
-              <dd>HTA/HTACV Member는 해외에 현대자동차 승용/상용 회원입니다.</dd>
+              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
             </dl>
           </div>
         </>
