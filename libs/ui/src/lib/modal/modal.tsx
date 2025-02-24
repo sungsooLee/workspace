@@ -1,4 +1,3 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
 import React, { cloneElement, isValidElement, useEffect, useState } from 'react';

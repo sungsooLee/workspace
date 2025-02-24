@@ -17,11 +17,17 @@
     &.xl {
       @apply button_2_r h-[48px] min-w-[80px] justify-center px-[12px];
     }
+    &.xs,
+    &.sm,
+    &.md,
+    &.lg,
+    &.xl {
+      &:has(svg) {
+        @apply !px-[8px];
+      }
+    }
     & + .btn {
       @apply ml-[8px];
-    }
-    &:has(svg) {
-      @apply !px-[8px];
     }
   }
 }
