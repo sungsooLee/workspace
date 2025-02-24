@@ -18,6 +18,28 @@ function RouteComponent() {
         <p>11111</p>
         <p>11111</p>
         <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
       </div>
     );
   };
@@ -64,7 +86,7 @@ const { open: openModal } = useModal();`}
             <Button
               onClick={() =>
                 openModal({
-                  title: '',
+                  title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <BasicModalContent />,
                   footer: true,

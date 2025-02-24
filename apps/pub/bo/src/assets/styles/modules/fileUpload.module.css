@@ -33,9 +33,9 @@
   }
 }
 .wrap {
-  @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[20px] py-[14px];
+  @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--white)];
   .contents {
-    @apply scrollbar max-h-[280px] overflow-y-auto overflow-x-hidden;
+    @apply scrollbar box-border h-[308px] overflow-y-auto overflow-x-hidden px-[20px] py-[14px];
   }
 }
 
@@ -61,6 +61,9 @@
   }
   .progress {
     @apply !w-[152px] flex-shrink overflow-hidden;
+    p {
+      @apply !inline-flex;
+    }
   }
   .btn_status {
     @apply ml-[16px] flex-shrink;

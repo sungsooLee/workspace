@@ -62,6 +62,7 @@ function RouteComponent() {
         title: '',
         width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <FileUploadContent />,
+        footer: true,
       });
       hasRun.current = true;
     }
