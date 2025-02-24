@@ -25,6 +25,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     onChange,
     showInput,
     options = [],
+    orientation,
     placeholder = '태그를 입력해주세요.',
     size,
     labelField = 'label',
@@ -92,7 +93,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
 
         {/* TODO: orientation(vertical, horizontal) style 처리 필요 */}
         {/* chips wrapper */}
-        <div className={cn(styles.chips_wapper)}>
+        <div className={cn(styles.chips_wapper, orientation && styles[orientation])}>
           {selectedOptions?.map((option) => (
             <Chips
               {...props}

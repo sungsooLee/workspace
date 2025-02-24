@@ -45,28 +45,28 @@
 .file_item {
   @apply flex items-center;
   .file_info {
-    @apply body_bo_1_b ellipsis flex flex-grow items-center overflow-hidden text-left;
+    @apply body_bo_1_b ellipsis flex w-full flex-grow items-center overflow-hidden text-left;
     .icon_file {
-      @apply mr-[8px];
+      @apply mr-[8px] flex-shrink;
       rect {
         @apply h-[24px] w-[24px] fill-[var(--white)];
       }
     }
     .name {
-      @apply text-[var(--gray8)];
+      @apply ellipsis flex-grow-[1] text-[var(--gray8)];
     }
   }
   .size {
     @apply body_bo_2_r mx-[16px] flex items-center justify-end text-right text-[var(--gray6)];
   }
   .progress {
-    @apply !w-[152px] flex-shrink overflow-hidden;
+    @apply mr-[8px] !w-[152px] flex-shrink;
     p {
       @apply !inline-flex;
     }
   }
   .btn_status {
-    @apply ml-[16px] flex-shrink;
+    @apply flex-shrink;
     .pause {
       path {
         @apply fill-[#A9AFB8] stroke-[var(--white)];
@@ -77,6 +77,6 @@
     }
   }
   .btn_delete {
-    @apply ml-[16px] flex-shrink;
+    @apply ml-[8px] flex-shrink;
   }
 }
