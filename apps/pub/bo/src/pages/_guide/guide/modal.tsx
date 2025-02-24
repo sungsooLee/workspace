@@ -17,6 +17,9 @@ function RouteComponent() {
         <p>11111</p>
         <p>11111</p>
         <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
+        <p>11111</p>
       </div>
     );
   };
@@ -112,6 +115,40 @@ onClick={() =>
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <BasicModalContent />,
                   footer: <CustomFooter />,
+                })
+              }>
+              모달 팝업 열기
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="code_example">
+        <pre className="code_block">
+          <code>{`
+import { Button, useModal } from '@learnway/ui';      
+<Button
+onClick={() =>
+  openModal(<BasicModalContent />, {
+    title: '',
+    width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
+    footer: true,
+  })
+}>
+모달 팝업 열기
+</Button>`}</code>
+        </pre>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">Modal title 없는 케이스</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Button
+              onClick={() =>
+                openModal({
+                  title: '',
+                  width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                  content: <BasicModalContent />,
+                  footer: true,
                 })
               }>
               모달 팝업 열기

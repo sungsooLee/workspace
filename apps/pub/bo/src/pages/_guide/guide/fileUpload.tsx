@@ -165,6 +165,42 @@ function RouteComponent() {
                   <IcoTrash03 width={20} height={20} stroke="#131C30" />
                 </Button>
               </div>
+              {/* file_item */}
+              <div className={styles.file_item}>
+                <p className={styles.file_info}>
+                  <IcoFileMp4 width={24} height={24} className={styles.icon_file} />
+                  <span className={styles.name}>{'파일명.mp4'}</span>
+                </p>
+                <span className={styles.size}>100MB</span>
+                {/* 업로드 취소 */}
+                <div className={styles.status_view}>
+                  <p className={styles.status_text}>업로드 취소</p>
+                  <Button className={styles.btn_status} onlyIcon>
+                    <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                  </Button>
+                </div>
+                <Button className={styles.btn_delete} onlyIcon>
+                  <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                </Button>
+              </div>
+              {/* file_item */}
+              <div className={styles.file_item}>
+                <p className={styles.file_info}>
+                  <IcoFileMp4 width={24} height={24} className={styles.icon_file} />
+                  <span className={styles.name}>{'파일명.mp4'}</span>
+                </p>
+                <span className={styles.size}>100MB</span>
+                {/* 업로드 취소 */}
+                <div className={styles.status_view}>
+                  <p className={styles.status_text}>업로드 취소</p>
+                  <Button className={styles.btn_status} onlyIcon>
+                    <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                  </Button>
+                </div>
+                <Button className={styles.btn_delete} onlyIcon>
+                  <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>

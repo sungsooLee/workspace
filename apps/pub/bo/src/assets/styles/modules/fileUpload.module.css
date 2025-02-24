@@ -33,9 +33,9 @@
   }
 }
 .wrap {
-  @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--white)];
+  @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--white)] py-[14px];
   .contents {
-    @apply scrollbar box-border h-[308px] overflow-y-auto overflow-x-hidden px-[20px] py-[14px];
+    @apply scrollbar box-border h-[308px] overflow-y-auto overflow-x-hidden px-[20px];
   }
 }
 
