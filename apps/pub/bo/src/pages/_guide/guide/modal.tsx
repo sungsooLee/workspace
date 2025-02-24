@@ -19,41 +19,7 @@ function RouteComponent() {
         <p>11111</p>
         <p>11111</p>
         <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
       </div>
-    );
-  };
-  const CustomFooter = () => {
-    const { closeModal } = useFloatingModal();
-    return (
-      <>
-        <Button variant="gray" size="lg" onClick={() => closeModal()}>
-          취소
-        </Button>
-        <Button variant="primary" size="lg" onClick={() => closeModal()}>
-          확인
-        </Button>
-      </>
     );
   };
 
