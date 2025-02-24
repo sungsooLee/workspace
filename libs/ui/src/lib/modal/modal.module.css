@@ -36,6 +36,9 @@
   }
   &.auto {
     @apply w-[360px];
+    .content_body {
+      @apply !overflow-hidden;
+    }
   }
   &.sm {
     @apply w-[600px];
