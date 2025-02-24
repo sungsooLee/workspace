@@ -63,6 +63,10 @@ export { ReactComponent as IcoMoreHorizontal } from './lib/ic_more_horizontal.sv
 export { ReactComponent as IcoEye } from './lib/ic_eye.svg';
 export { ReactComponent as IcoAnnouncement03 } from './lib/ic_announcement_03.svg';
 export { ReactComponent as IcoClock01 } from './lib/ic_clock_01.svg'; // clock
+export { ReactComponent as IcoRefresh } from './lib/ic_refresh.svg'; // refresh
+export { ReactComponent as IcoPause } from './lib/ic_pause.svg'; // pause
+export { ReactComponent as IcoComplete02 } from './lib/ic_complete02.svg'; // complete02
+export { ReactComponent as IcoFileMp4 } from './lib/ic_file_mp4.svg'; // mp4
 
 //export Default as Information from './lib/information.svg?react';
 
