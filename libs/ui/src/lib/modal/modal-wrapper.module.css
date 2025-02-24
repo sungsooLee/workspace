@@ -1,8 +1,6 @@
 .start {
-
 }
 
 .dim {
-  background: gray;
-
+  @apply bg-black bg-opacity-40;
 }
