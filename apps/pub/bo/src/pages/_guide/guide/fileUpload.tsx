@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useModal, Progress, Button } from '@learnway/ui';
-import { IcoTrash03, IcoPause, IcoFileMp4 } from '@learnway/icons';
+import { IcoTrash03, IcoPause, IcoFileMp4, IcoComplete02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from '../../../assets/styles/modules/fileUpload.module.css';
 
@@ -36,12 +36,36 @@ function RouteComponent() {
               <div className={styles.file_item}>
                 <p className={styles.file_info}>
                   <IcoFileMp4 width={24} height={24} className={styles.icon_file} />
-                  <span className={styles.name}>{'파일명'}</span>
+                  <span className={styles.name}>
+                    {
+                      '파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명'
+                    }
+                  </span>
                 </p>
                 <span className={styles.size}>100MB</span>
                 <Progress className={styles.progress} value={100} label={'완료'} />
                 <Button className={styles.btn_status} onlyIcon>
                   <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.pause} />
+                </Button>
+                <Button className={styles.btn_delete} onlyIcon>
+                  <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                </Button>
+              </div>
+              {/* file_item */}
+              <div className={styles.file_item}>
+                <p className={styles.file_info}>
+                  <IcoFileMp4 width={24} height={24} className={styles.icon_file} />
+                  <span className={styles.name}>{'파일명.mp4'}</span>
+                </p>
+                <span className={styles.size}>100MB</span>
+                <Progress className={styles.progress} value={0} label={'대기중'} />
+                <Button className={styles.btn_status} onlyIcon>
+                  <IcoComplete02
+                    width={20}
+                    height={20}
+                    fill="#3EB838"
+                    className={styles.complete}
+                  />
                 </Button>
                 <Button className={styles.btn_delete} onlyIcon>
                   <IcoTrash03 width={20} height={20} stroke="#131C30" />

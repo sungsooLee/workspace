@@ -41,13 +41,19 @@
 
 .file_wrap {
   @apply flex flex-col;
+  .file_item {
+    @apply pr-[36px];
+    .btn_delete {
+      @apply absolute right-0 top-1/2 -mt-[10px];
+    }
+  }
 }
 .file_item {
-  @apply flex items-center;
+  @apply relative flex h-[42px] items-center;
   .file_info {
     @apply body_bo_1_b ellipsis flex w-full flex-grow items-center overflow-hidden text-left;
     .icon_file {
-      @apply mr-[8px] flex-shrink;
+      @apply mr-[8px] h-[24px] w-[24px] flex-shrink-0;
       rect {
         @apply h-[24px] w-[24px] fill-[var(--white)];
       }
@@ -67,13 +73,15 @@
   }
   .btn_status {
     @apply flex-shrink;
-    .pause {
+    &.pause {
       path {
         @apply fill-[#A9AFB8] stroke-[var(--white)];
       }
       rect {
         @apply h-[20px] w-[20px] fill-[var(--white)];
       }
+    }
+    &.complete {
     }
   }
   .btn_delete {
