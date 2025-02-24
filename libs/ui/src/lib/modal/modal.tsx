@@ -88,9 +88,9 @@ const ModalComponent: React.FC<ModalConfig> = ({
           {/* close button */}
           {!hideCloseButton && (
             <Primitive.Close asChild>
-              <button className={styles.btn_close} aria-label="Close">
+              <Button className={styles.btn_close} aria-label="Close" onlyIcon>
                 <IcoXclose width={24} height={24} stroke="#131C30" />
-              </button>
+              </Button>
             </Primitive.Close>
           )}
         </Primitive.Content>
@@ -116,13 +116,13 @@ const FooterComponent: React.FC<any> = ({ footer: customFooter, buttonClick }) =
   };
 
   return (
-    <div onClick={handleClick}>
+    <div className={styles.btn_wrap} onClick={handleClick}>
       {isValidElement(customFooter) ? (
         customFooter
       ) : (
         <>
-          <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-          <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
+          <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} actionKey={'confirm'} />
         </>
       )}
     </div>

@@ -1,7 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { useFloatingModal } from '../../../../../../../../fe/libs/editor/src/lib/context/floating-modal.context';
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
@@ -19,36 +17,15 @@ function RouteComponent() {
         <p>11111</p>
         <p>11111</p>
         <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
       </div>
     );
   };
   const CustomFooter = () => {
-    const { closeModal } = useFloatingModal();
+    const { close: closeModal } = useModal();
     return (
       <>
         <Button variant="gray" size="lg" onClick={() => closeModal()}>
-          취소
+          취소버튼입니다
         </Button>
         <Button variant="primary" size="lg" onClick={() => closeModal()}>
           확인
@@ -59,7 +36,7 @@ function RouteComponent() {
 
   return (
     <div className="content">
-      <h2 className="guide_tit2">Modal Component Guide(작업중)</h2>
+      <h2 className="guide_tit2">Modal Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/modal/modal.tsx</p>
       <p className="info">
         모달 size(가로 기준) : sm(600px), md(800px), lg(1024px), xl(1400px) width 속성 적용
@@ -70,8 +47,6 @@ function RouteComponent() {
           <code>
             {`// 초기 import
 import { Button, useModal } from '@learnway/ui';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { useFloatingModal } from '../../../../../../../../fe/libs/editor/src/lib/context/floating-modal.context';
 
 // 실행 함수
 const { open: openModal } = useModal();`}
@@ -96,10 +71,25 @@ const { open: openModal } = useModal();`}
             </Button>
           </div>
         </div>
-
-        <div className="code_example">
-          <pre className="code_block">
-            <code>{`<Button
+      </div>
+      <div className="code_example">
+        <pre className="code_block">
+          <code>{`
+import { Button, useModal, closeModal } from '@learnway/ui';
+const CustomFooter = () => {
+    const { close: closeModal } = useModal();
+    return (
+      <>
+        <Button variant="gray" size="lg" onClick={() => closeModal()}>
+          취소버튼입니다
+        </Button>
+        <Button variant="primary" size="lg" onClick={() => closeModal()}>
+          확인
+        </Button>
+      </>
+    );
+  };          
+<Button
 onClick={() =>
   openModal(<BasicModalContent />, {
     title: '타이틀',
@@ -109,7 +99,24 @@ onClick={() =>
 }>
 모달 팝업 열기
 </Button>`}</code>
-          </pre>
+        </pre>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">Modal(footer custom) 케이스</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Button
+              onClick={() =>
+                openModal({
+                  title: '타이틀',
+                  width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                  content: <BasicModalContent />,
+                  footer: <CustomFooter />,
+                })
+              }>
+              모달 팝업 열기
+            </Button>
+          </div>
         </div>
       </div>
     </div>
