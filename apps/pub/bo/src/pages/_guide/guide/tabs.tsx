@@ -107,6 +107,14 @@ const [selectedTabKey , selectedTabKey2] = useState<string>('');
       content: <h2>Tab E content</h2>,
     },
   ];
+  
+// div 내용이 여러줄일경우 (<></>), 묶어준다.
+content: (
+  <>
+    <div>여러줄일경우</div>
+    <div>여러줄일경우</div>
+  </>
+),
 
 // 적용방법(예시)
 <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" />

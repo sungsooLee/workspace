@@ -7,7 +7,7 @@ import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup_step1')({
+export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
 });
 

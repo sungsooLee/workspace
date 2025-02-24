@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal } from '@learnway/ui';
+import { useModal, Progress, Button } from '@learnway/ui';
+import { IcoTrash03, IcoPause, IcoFileMp4 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from '../../../assets/styles/modules/fileUpload.module.css';
 
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/_guide/guide/fileUpload')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
+
   const FileUploadContent = () => {
     return (
       <div className={styles.fileupload_wrap}>
@@ -27,11 +29,31 @@ function RouteComponent() {
           <p className={styles.text}>{'선택한 관리채널명채널명채널명'}</p>
         </div>
         <div className={styles.wrap}>
-          <div className={styles.contents}></div>
+          <div className={styles.contents}>
+            {/* file_wrap */}
+            <div className={styles.file_wrap}>
+              {/* file_item */}
+              <div className={styles.file_item}>
+                <p className={styles.file_info}>
+                  <IcoFileMp4 width={24} height={24} className={styles.icon_file} />
+                  <span className={styles.name}>{'파일명'}</span>
+                </p>
+                <span className={styles.size}>100MB</span>
+                <Progress className={styles.progress} value={100} label={'완료'} />
+                <Button className={styles.btn_status} onlyIcon>
+                  <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.pause} />
+                </Button>
+                <Button className={styles.btn_delete} onlyIcon>
+                  <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   };
+  // refresh path #00AFD5  rect white / pause rect : #A9AFB8  /  rect   completed : fill="#3EB838"
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {
@@ -43,6 +65,7 @@ function RouteComponent() {
       });
       hasRun.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
   return <div>파일 업로드 팝업 화면</div>;
 }
