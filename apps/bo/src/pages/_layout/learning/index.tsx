@@ -1,7 +1,7 @@
 import React from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Input, InputButtonFormField } from '@learnway/ui';
+import { Button, Input, InputModalButtonFormField } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
@@ -124,7 +124,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <InputButtonFormField
+                <InputModalButtonFormField
                   // input={{`
                   //   disabled: true,
                   // }}

@@ -72,6 +72,8 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       setSelectedOptions(newOptions);
     };
 
+    console.log('placeholder', placeholder);
+
     return (
       <div
         {...props}

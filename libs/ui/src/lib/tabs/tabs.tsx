@@ -19,9 +19,9 @@ interface TabItemProps {
 interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   items: Array<TabItemProps>;
   className?: string;
-  variant?: 'line' | 'fill' | 'round' | 'progress';
+  type?: 'line' | 'fill' | 'round' | 'progress';
+  variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   size?: 'sm' | 'md';
-  color?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   ariaLabel?: string;
   selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
   // selectedTabIndex?: number; // 최초 렌더링 이후 tab 조작 필요시 사용
@@ -31,7 +31,7 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
 export const TabsComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   TabsComponentProps
->(({ className, items, variant, size, color, ariaLabel, selectedTabKey, ...props }, ref) => {
+>(({ className, items, variant, size = 'md', type, ariaLabel, selectedTabKey, ...props }, ref) => {
   const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key);
 
   // changed selectedTabKey
@@ -47,7 +47,7 @@ export const TabsComponent = forwardRef<
         className,
         'nlp--tabs',
         size && styles[size],
-        color && styles[color],
+        type && styles[type],
         variant && styles[variant],
       )}
       value={value}

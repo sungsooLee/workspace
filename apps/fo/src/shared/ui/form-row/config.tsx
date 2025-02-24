@@ -1,12 +1,12 @@
 import {
   FormCheckbox,
   FormRadioGroup,
-  FormThumbnailImageUpload,
   FormTextarea,
+  FormThumbnailImageUpload,
   Input,
+  InputModalButtonFormField,
   Switch,
   Textarea,
-  InputButtonFormField,
 } from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
 import { FormChipList } from '@/libs/ui/src/lib/chips/form-chip-list';
@@ -20,7 +20,7 @@ export const dialogConfig = {
   dropdown: FormSelect,
   switch: Switch,
   textarea: Textarea,
-  'text-popup-button': InputButtonFormField,
+  'text-popup-button': InputModalButtonFormField,
   'text-area': FormTextarea,
   'chip-list': FormChipList,
   'thumbnail-image-upload': FormThumbnailImageUpload,

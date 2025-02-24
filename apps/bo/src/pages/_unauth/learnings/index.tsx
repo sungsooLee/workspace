@@ -1,7 +1,12 @@
 import React from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Input, InputButtonFormField } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalButtonFormField,
+  Input,
+  InputModalButtonFormField,
+} from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
@@ -11,8 +16,8 @@ import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { FormRow } from '../../../shared/ui/form-row';
 import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
-import { FormTeacherChipList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 import { ManagerList } from '../../../features/learning/ui/modal/manager-list/manager-list';
+import { TeacherList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/teacher-list';
 
 export const Route = createFileRoute('/_unauth/learnings/')({
   component: RouteComponent,
@@ -104,7 +109,13 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
-                <FormTeacherChipList />
+                <ChipListModalButtonFormField
+                  modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'value',
+                  }}
+                />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -124,10 +135,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <InputButtonFormField
-                  // input={{
-                  //   disabled: true,
-                  // }}
+                <InputModalButtonFormField
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerList />,

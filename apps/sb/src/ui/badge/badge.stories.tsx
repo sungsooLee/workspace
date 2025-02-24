@@ -7,8 +7,9 @@ export default {
   component: Badge,
   tags: ['autodocs'],
   args: {
-    // variant: 'primary',
-    // size: 'md'
+    variant: 'number',
+    size: 'md',
+    status: 'primary',
   },
 } as Meta;
 

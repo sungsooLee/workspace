@@ -463,7 +463,7 @@ const Grid = <T extends object>({
         ref={tableContainerRef}
         className={cn('grid_table')}
         style={{
-          height: '600px',
+          height: '300px',
           width: '100%',
         }}>
         <table

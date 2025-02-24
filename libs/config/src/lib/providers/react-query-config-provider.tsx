@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { merge } from 'lodash';
 
@@ -12,7 +11,7 @@ export interface ReactQueryConfigProviderProps {
   children?: any;
 }
 
-export function ReactQueryConfigProvider({
+export default function ReactQueryConfigProvider({
   options = {},
   children,
 }: ReactQueryConfigProviderProps) {

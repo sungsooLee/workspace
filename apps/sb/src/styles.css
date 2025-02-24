@@ -46,3 +46,7 @@
     font-weight: 600;
   }
 }
+
+#storybook-root {
+  width: 100%;
+}

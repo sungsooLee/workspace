@@ -16,10 +16,13 @@ export default {
 
 // Chips
 export const Template: any = (args: any) => {
-  return <Chips option={{ label: '현대자동차', value: 'H' }}>Chips</Chips>;
+  return (
+    <Chips {...args} option={{ label: '현대자동차', value: 'H' }}>
+      Chips
+    </Chips>
+  );
 };
 Template.storyName = 'Chips';
-Template.args = {};
 
 // Handle Delete
 export const TemplateDelete: any = (args: any) => {
@@ -33,6 +36,7 @@ export const TemplateDelete: any = (args: any) => {
   };
   return (
     <Chips
+      {...args}
       option={{ label: '현대자동차', value: 'H' }}
       onClick={handleClick}
       onDelete={handleDelete}
@@ -40,7 +44,6 @@ export const TemplateDelete: any = (args: any) => {
   );
 };
 TemplateDelete.storyName = 'Handle Delete';
-TemplateDelete.args = {};
 
 // Handle Delete
 export const TemplateList: any = (args: any) => {
@@ -68,4 +71,3 @@ export const TemplateList: any = (args: any) => {
   );
 };
 TemplateList.storyName = 'Chips List';
-TemplateList.args = {};
