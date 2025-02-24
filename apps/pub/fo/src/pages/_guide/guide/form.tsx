@@ -103,7 +103,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
               disabled
               value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
             />
-            <Button variant="gray" size="sm">
+            <Button variant="gray" size="lg">
               선택
             </Button>
           </div>
@@ -144,7 +144,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
               disabled
               placeholder="학습자원을 분류할 카테고리를 선택하세요."
             />
-            <Button variant="gray" size="sm">
+            <Button variant="gray" size="lg">
               선택
             </Button>
           </div>
@@ -184,7 +184,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
           </label>
           <div className={formStyles.input_box}>
             <Input id="name-1-5" type="text" disabled value="김현대" placeholder="" />
-            <Button variant="gray" size="sm">
+            <Button variant="gray" size="lg">
               선택
             </Button>
           </div>
@@ -234,7 +234,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
             className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}>
             <div className={formStyles.input_box}>
               <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
-              <Button variant="gray" size="sm">
+              <Button variant="gray" size="lg">
                 선택
               </Button>
             </div>
@@ -251,7 +251,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 </label>
                 <div className={formStyles.input_box}>
                   <Input id="name-1-7-1" type="text" disabled value="김현대" placeholder="" />
-                  <Button variant="gray" size="sm">
+                  <Button variant="gray" size="lg">
                     선택
                   </Button>
                 </div>
@@ -346,7 +346,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 cols={33}
                 placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
                 resize="none"
-                size="sm"
+                size="lg"
               />
             </div>
             <p className={formStyles.text_limit}>
@@ -378,7 +378,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 cols={33}
                 placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                 resize="none"
-                size="sm"
+                size="lg"
               />
             </div>
             <p className={formStyles.text_limit}>
@@ -460,7 +460,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                 value="영어자막.smi"
               />
-              <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+              <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                 자막 변경
               </Button>
               <Button onlyIcon className={formStyles.btn_delete}>
@@ -481,7 +481,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                 value="영어자막2.smi"
               />
-              <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+              <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                 자막 변경
               </Button>
               <Button onlyIcon className={formStyles.btn_delete}>
@@ -501,7 +501,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 readOnly
                 placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
               />
-              <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+              <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                 자막 추가
               </Button>
               <Button onlyIcon className={formStyles.btn_delete}>
@@ -557,7 +557,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
           </label>
           <div className={cn(formStyles.input_box)}>
             <Input id="name-1-15" type="text" readOnly value="채널명" placeholder="" />
-            <Button variant="gray" size="sm">
+            <Button variant="gray" size="lg">
               선택
             </Button>
           </div>

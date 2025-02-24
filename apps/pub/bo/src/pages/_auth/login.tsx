@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={styles.auth_box}>
+      <div className={`${signupStyles.auth_box} ${signupStyles.login}`}>
         <div className={formStyles.form_row}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
@@ -55,7 +55,7 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} />
           <div className={styles.info}>
-            <Link to="">아이디/비밀번호찾기</Link>
+            <Link to="/search-account">아이디/비밀번호찾기</Link>
           </div>
         </div>
 
@@ -92,8 +92,8 @@ function RouteComponent() {
 
       <div className={styles.login_guide}>
         <span>
-          <Link to="">회원 가입 현황</Link>
-          <Link to="/signup_step1">회원가입</Link>
+          <Link to="/progress-status">회원 가입 현황</Link>
+          <Link to="/signup-step1">회원가입</Link>
         </span>
       </div>
     </div>

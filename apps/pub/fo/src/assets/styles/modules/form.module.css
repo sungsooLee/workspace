@@ -135,6 +135,9 @@
       @apply border-[var(--gray7)];
     }
   }
+  button {
+    @apply whitespace-nowrap;
+  }
 }
 .form_label {
   @apply block overflow-hidden;

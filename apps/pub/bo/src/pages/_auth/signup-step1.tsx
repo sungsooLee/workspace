@@ -22,7 +22,7 @@ function RouteComponent() {
   };
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={signupStyles.auth_box}>
+      <div className={`${signupStyles.auth_box} ${signupStyles.signup_step}`}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.signup_step}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />

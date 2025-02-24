@@ -144,33 +144,27 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className={formStyles.row}>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-1-6" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>연락처</span>
-              {/* 필수 케이스 */}
-              <span className={cn(formStyles.status, formStyles.required)}>
-                <IcoFormRequired width={12} height={12} />
-              </span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Select
-                className={formStyles.select_option}
-                options={[
-                  { value: 'type1', label: '+82' },
-                  { value: 'type2', label: '+83' },
-                ]}
-                size="lg"
-              />
-              <span className={formStyles.dash}></span>
-              <Input
-                id="name-1-6"
-                type="text"
-                placeholder="- 제외한 숫자만 입력"
-                className={formStyles.dash}
-              />
+          <div className={formStyles.row}>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-1-6" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>연락처</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Select
+                  className={formStyles.select_option}
+                  options={[
+                    { value: 'type1', label: '+82' },
+                    { value: 'type2', label: '+83' },
+                  ]}
+                  size="lg"
+                />
+                <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
+              </div>
             </div>
           </div>
         </div>

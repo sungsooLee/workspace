@@ -58,14 +58,21 @@
         }
       }
     }
-
-    .signup_step {
+    /* 아이디/비밀번호 찾기 */
+    &.search_account {
       .signup_select {
-        .ico1 {
-          @apply stroke-[var(--primary1)];
+        .radio_card {
+          button {
+            .ico2 {
+              @apply stroke-[var(--primary1)];
+            }
+          }
         }
-        .ico2 {
-          @apply stroke-[var(--primary1)];
+        + .auth_form {
+          @apply mt-[48px];
+          + .signup_noti {
+            @apply mt-[8px];
+          }
         }
       }
     }
@@ -119,7 +126,7 @@
     .btn_wrap {
       @apply mt-[48px] flex items-center justify-center;
       button {
-        @apply w-full;
+        @apply w-full max-w-[294px];
       }
     }
   }
