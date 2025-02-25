@@ -6,7 +6,6 @@ import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 
 import { useSetLanguage, useLanguageSelectOptions } from '../../../platform';
-import { useFetchAuthUser } from '../../../../entities/user';
 
 import styles from './language.module.css';
 
@@ -40,7 +39,6 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
 };
 
 const LanguageComponent = () => {
-  const { data } = useFetchAuthUser();
   const { data: languageSelectOptions } = useLanguageSelectOptions();
 
   return (

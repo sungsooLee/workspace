@@ -38,12 +38,20 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  base: '/pb-fo',
   build: {
-    outDir: '../../dist/apps/pub/fo',
+    outDir: '../../../dist/apps/pb-fo',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash][extname]',
+      },
     },
   },
 });

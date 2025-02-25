@@ -40,11 +40,15 @@ build:
     - pnpm install --no-frozen-lockfile
     - npx nx build fo --configuration=${CONFIG}
     - npx nx build bo --configuration=${CONFIG}
+    #퍼블리싱 가이드 프로젝트
+    - npx nx build pb-fo
+    - npx nx build pb-bo
   artifacts:
     paths:
       - dist/apps/fo
       - dist/apps/bo
-
+      - dist/apps/pb-fo
+      - dist/apps/pb-bo
 deploy:
   stage: deploy
   image: docker
@@ -63,6 +67,8 @@ deploy:
     - echo "Syncing to S3..."
     - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
     - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
+    - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
+    - aws s3 sync dist/apps/pb-bo s3://4{S3_BUCKET}/pb-bo --delete
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
