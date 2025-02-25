@@ -1,0 +1,7 @@
+/* popup-learningRegisteration.module.css */
+.wrap {
+  @apply relative;
+  .title {
+    @apply title_bo_3_b text-center;
+  }
+}

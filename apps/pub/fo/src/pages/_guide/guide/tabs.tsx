@@ -117,10 +117,10 @@ content: (
 ),
 
 // 적용방법(예시)
-<Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" />
-<Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" color="" />
-<Tabs selectedTabKey={selectedTabKey} items={items} variant="line" />
-<Tabs selectedTabKey={selectedTabKey} items={items} variant="round" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="fill" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
 `}
           </code>
         </pre>
@@ -129,13 +129,13 @@ content: (
         <h3 className="guide_tit3">Tabs fill Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs fill(primary) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" color="primary" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs fill(primary, sm) Case</h3>
@@ -144,7 +144,7 @@ content: (
             <Tabs
               selectedTabKey={selectedTabKey}
               items={items}
-              variant="fill"
+              type="fill"
               color="primary"
               size="sm"
             />
@@ -153,31 +153,31 @@ content: (
         <h3 className="guide_tit3">Tabs line Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="line" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs line(count, number, alarm) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items2} variant="line" color="gray" />
+            <Tabs selectedTabKey={selectedTabKey} items={items2} type="line" color="gray" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs round Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="round" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs progress Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="progress" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="progress" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs progress(size : sm) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} variant="progress" size="sm" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="progress" size="sm" />
           </div>
         </div>
       </div>
