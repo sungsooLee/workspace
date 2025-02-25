@@ -14,7 +14,9 @@
       }
     }
     .auth {
-      @apply !text-[#6f798b];
+      span {
+        @apply !text-[1.6rem] !font-normal !text-[#6f798b];
+      }
       svg {
         @apply !stroke-[#131c30];
       }

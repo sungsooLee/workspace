@@ -20,6 +20,9 @@ import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
+import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
+import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -103,6 +106,24 @@ const AuthSignupStep2Route = AuthSignupStep2Import.update({
 const AuthSignupStep1Route = AuthSignupStep1Import.update({
   id: '/signup-step1',
   path: '/signup-step1',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSearchIdSuccessRoute = AuthSearchIdSuccessImport.update({
+  id: '/search-id-success',
+  path: '/search-id-success',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSearchAccountRoute = AuthSearchAccountImport.update({
+  id: '/search-account',
+  path: '/search-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusRoute = AuthProgressStatusImport.update({
+  id: '/progress-status',
+  path: '/progress-status',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -328,6 +349,27 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status': {
+      id: '/_auth/progress-status'
+      path: '/progress-status'
+      fullPath: '/progress-status'
+      preLoaderRoute: typeof AuthProgressStatusImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/search-account': {
+      id: '/_auth/search-account'
+      path: '/search-account'
+      fullPath: '/search-account'
+      preLoaderRoute: typeof AuthSearchAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/search-id-success': {
+      id: '/_auth/search-id-success'
+      path: '/search-id-success'
+      fullPath: '/search-id-success'
+      preLoaderRoute: typeof AuthSearchIdSuccessImport
       parentRoute: typeof AuthImport
     }
     '/_auth/signup-step1': {
@@ -596,6 +638,9 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
   AuthSignupStep2Route: typeof AuthSignupStep2Route
   AuthSignupStep3Route: typeof AuthSignupStep3Route
@@ -604,6 +649,9 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
   AuthSignupStep2Route: AuthSignupStep2Route,
   AuthSignupStep3Route: AuthSignupStep3Route,
@@ -698,6 +746,9 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/progress-status': typeof AuthProgressStatusRoute
+  '/search-account': typeof AuthSearchAccountRoute
+  '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
@@ -740,6 +791,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/progress-status': typeof AuthProgressStatusRoute
+  '/search-account': typeof AuthSearchAccountRoute
+  '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
@@ -785,6 +839,9 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/progress-status': typeof AuthProgressStatusRoute
+  '/_auth/search-account': typeof AuthSearchAccountRoute
+  '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
   '/_auth/signup-step2': typeof AuthSignupStep2Route
   '/_auth/signup-step3': typeof AuthSignupStep3Route
@@ -829,6 +886,9 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/progress-status'
+    | '/search-account'
+    | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
     | '/signup-step3'
@@ -870,6 +930,9 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/progress-status'
+    | '/search-account'
+    | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
     | '/signup-step3'
@@ -913,6 +976,9 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
+    | '/_auth/progress-status'
+    | '/_auth/search-account'
+    | '/_auth/search-id-success'
     | '/_auth/signup-step1'
     | '/_auth/signup-step2'
     | '/_auth/signup-step3'
@@ -984,6 +1050,9 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
+        "/_auth/progress-status",
+        "/_auth/search-account",
+        "/_auth/search-id-success",
         "/_auth/signup-step1",
         "/_auth/signup-step2",
         "/_auth/signup-step3",
@@ -1035,6 +1104,18 @@ export const routeTree = rootRoute
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status": {
+      "filePath": "_auth/progress-status.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/search-account": {
+      "filePath": "_auth/search-account.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/search-id-success": {
+      "filePath": "_auth/search-id-success.tsx",
       "parent": "/_auth"
     },
     "/_auth/signup-step1": {
