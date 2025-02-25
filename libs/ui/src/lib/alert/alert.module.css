@@ -3,6 +3,9 @@
   .btn_cancel + .btn_confirm {
     @apply ml-[8px];
   }
+  button {
+    @apply !min-w-[80px];
+  }
 }
 .icon {
   @apply mb-[8px] flex items-center justify-center pt-[24px];
@@ -11,7 +14,7 @@
   }
 }
 .alert_wrap {
-  @apply -mx-[32px] -my-[24px];
+  @apply -mx-[32px] -my-[24px] px-[20px];
 }
 .title {
   @apply flex max-h-[80px] items-center justify-center pt-[32px] text-center text-[1.8rem] font-bold text-[var(--gray9)];

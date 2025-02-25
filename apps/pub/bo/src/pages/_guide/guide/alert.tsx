@@ -16,11 +16,7 @@ function RouteComponent() {
       ),
       description: (
         <>
-          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
-          <br /> 줄바꿈 적용
-          <br /> 줄바꿈 적용
-          <br /> 줄바꿈 적용
-          <br /> 줄바꿈 적용
+          이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용방법
         </>
       ),
       okButtonLabel: '확인 버튼명',
