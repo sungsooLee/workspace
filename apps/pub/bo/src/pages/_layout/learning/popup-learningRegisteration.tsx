@@ -23,7 +23,31 @@ function RouteComponent() {
     return (
       <div className={styles.wrap}>
         <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-        <div className={styles.select_wrap}></div>
+        <div className={styles.select_wrap}>
+          <RadioCard
+            className={styles.radio_card}
+            options={[
+              {
+                value: 'type1',
+                label: (
+                  <div>
+                    {/* <IcoPhone02 width={48} height={48} className={styles.ico1} /> */}
+                    <span>동영상</span>
+                  </div>
+                ),
+              },
+              {
+                value: 'type2',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <span>멀티 동영상</span>
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
       </div>
     );
   };
