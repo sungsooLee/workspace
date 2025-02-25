@@ -25,14 +25,15 @@ function RouteComponent() {
         <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
         <div className={styles.select_wrap}>
           <RadioCard
-            className={styles.radio_card}
+            className={styles.select_item}
             options={[
               {
                 value: 'type1',
                 label: (
                   <div>
                     {/* <IcoPhone02 width={48} height={48} className={styles.ico1} /> */}
-                    <span>동영상</span>
+                    <strong className={styles.select_title}>동영상</strong>
+                    <p className={styles.select_text}>1개 동영상 업로드</p>
                   </div>
                 ),
               },
@@ -41,7 +42,46 @@ function RouteComponent() {
                 label: (
                   <div>
                     {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
-                    <span>멀티 동영상</span>
+                    <strong className={styles.select_title}>멀티 동영상</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type3',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>HTML 동영상</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type4',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>이미지</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type5',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>기타</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
                   </div>
                 ),
               },
