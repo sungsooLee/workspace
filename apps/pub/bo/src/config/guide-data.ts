@@ -20,7 +20,7 @@ export const guideData = [
     pageId: '/pb-bo/learning/popup-learningRegisteration',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '작업중', // 비고
+    remarks: '아이콘 추후 작업 예정', // 비고
   },
   {
     depth1: '홈',
