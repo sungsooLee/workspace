@@ -5,6 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { Chips, ChipsComponentProps } from './chips';
 import { Input } from '../input/input';
+import { t } from 'i18next';
 
 import styles from './chips.module.css';
 
@@ -25,7 +26,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     onChange,
     showInput,
     options = [],
-    placeholder = '태그를 입력해주세요.',
+    placeholder = t('태그를 입력해주세요.'),
     size,
     labelField = 'label',
     valueField = 'value',

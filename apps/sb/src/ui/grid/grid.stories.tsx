@@ -9,7 +9,6 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-
 import { useMemo, useState } from 'react';
 import {
   Button,
@@ -200,6 +199,10 @@ export const Base: Story = {
         <Story />
         <ModalWrapper />
       </ReactQueryConfigProvider>
+      // <ReactQueryConfigProvider>
+      //   <Story />
+      //   <ModalWrapper />
+      // </ReactQueryConfigProvider>
     ),
   ],
   render: () => <BaseTable />,

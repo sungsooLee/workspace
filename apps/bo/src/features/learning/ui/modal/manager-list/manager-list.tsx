@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { Button } from '@learnway/ui';
+import { Button, Grid } from '@learnway/ui';
+import { ColumnDef, createColumnHelper, RowSelectionState } from '@tanstack/react-table';
 
 export interface TeacherListProps {
   dummy?: boolean;
@@ -15,14 +16,27 @@ export interface TeacherListProps {
  */
 const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
   ({ setModalData, ...props }, ref) => {
+    const { data: gridData }: any = getDummyDataHook();
+    const columnHelper = createColumnHelper<any>();
+    const columns = [
+      columnHelper.accessor('name', {
+        cell: (info) => info.getValue(),
+        header: '강사명',
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    const handleRowSelect = (selectRowState: RowSelectionState) => {
+      // console.log(selectRowState);
+    };
+
     const handleSelectedData = (newData: any) => {
       setModalData?.(newData);
     };
 
     return (
       <div className="p-4">
-        {/*<Grid data={getDummyData.data} columns={columns} />*/}
         <h2>Grid</h2>
+        <Grid data={gridData} columns={columns} />
         <Button
           variant={'gray'}
           size={'md'}
@@ -40,3 +54,13 @@ const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
   },
 );
 export const ManagerList = ManagerListComponent;
+
+const getDummyDataHook = () => {
+  return {
+    data: {
+      data: Array(5)
+        .fill(null)
+        .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
+    },
+  };
+};
