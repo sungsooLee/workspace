@@ -285,9 +285,15 @@ function RouteComponent() {
     },
   ];
   return (
+<<<<<<< HEAD
     <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
       <div className={signupStyles.auth_box}>
         <Tabs selectedTabKey={selectedTabKey} items={items} variant="fill" color="primary" />
+=======
+    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
+      <div className={`${signupStyles.auth_box} ${signupStyles.search_account}`}>
+        <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
+>>>>>>> 9cad3ca20908023542f49c0ac080d5961c45a2a5
 
         <div className={signupStyles.btn_wrap}>
           <Button variant="gray" size="xl">
