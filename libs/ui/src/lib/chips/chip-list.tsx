@@ -26,12 +26,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     onChange,
     showInput,
     options = [],
-<<<<<<< HEAD
     placeholder = t('태그를 입력해주세요.'),
-=======
-    orientation,
-    placeholder = '태그를 입력해주세요.',
->>>>>>> feature/pub/dev
     size,
     labelField = 'label',
     valueField = 'value',
