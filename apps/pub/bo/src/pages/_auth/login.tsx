@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
-import styles from './login.module.css';
+
 import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
@@ -14,8 +14,8 @@ export const Route = createFileRoute('/_auth/login')({
 
 function RouteComponent() {
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={`${signupStyles.auth_box} ${signupStyles.login}`}>
+    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
+      <div className={signupStyles.auth_box}>
         <div className={formStyles.form_row}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
@@ -52,22 +52,22 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={styles.login_info}>
-          <Checkbox label="아이디 저장" className={styles.id_save} />
-          <div className={styles.info}>
+        <div className={signupStyles.login_info}>
+          <Checkbox label="아이디 저장" className={signupStyles.id_save} />
+          <div className={signupStyles.info}>
             <Link to="/search-account">아이디/비밀번호찾기</Link>
           </div>
         </div>
 
-        <div className={styles.btn_box}>
-          <Button size="xl" variant="primary" className={styles.btn}>
+        <div className={signupStyles.btn_box}>
+          <Button size="xl" variant="primary" className={signupStyles.btn}>
             로그인
           </Button>
         </div>
 
-        <div className={styles.sns_login}>
-          <h3 className={styles.tit_sns}>소셜 로그인</h3>
-          <ul className={styles.list}>
+        <div className={signupStyles.sns_login}>
+          <h3 className={signupStyles.tit_sns}>소셜 로그인</h3>
+          <ul className={signupStyles.list}>
             <li>
               <Button>
                 <img src={snsNaverImage} alt="naver" />
@@ -84,13 +84,13 @@ function RouteComponent() {
               </Button>
             </li>
           </ul>
-          <div className={styles.noti}>
+          <div className={signupStyles.noti}>
             회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
           </div>
         </div>
       </div>
 
-      <div className={styles.login_guide}>
+      <div className={signupStyles.login_guide}>
         <span>
           <Link to="/progress-status">회원 가입 현황</Link>
           <Link to="/signup-step1">회원가입</Link>

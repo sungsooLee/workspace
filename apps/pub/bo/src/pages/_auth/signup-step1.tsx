@@ -21,10 +21,10 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap}`}>
-      <div className={`${signupStyles.auth_box} ${signupStyles.signup_step}`}>
+    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
+      <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
-          <div className={signupStyles.signup_step}>
+          <div className={signupStyles.step_box}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
           </div>
 
