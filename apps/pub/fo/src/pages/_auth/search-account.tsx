@@ -243,6 +243,7 @@ function RouteComponent() {
               </div>
             </div>
 
+            {/* 휴대폰 인증일때 */}
             <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
@@ -264,8 +265,42 @@ function RouteComponent() {
                   <Input
                     id="name-1-6"
                     type="text"
-                    placeholder="- -없이 휴대폰 번호입력(0102345678)"
+                    placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
+                </div>
+              </div>
+            </div>
+
+            {/* 이메일 인증일때 */}
+            <div className={formStyles.row}>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-1-6" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>이메일</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
+                </div>
+              </div>
+            </div>
+
+            <div className={formStyles.row}>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>인증번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name" type="text" placeholder="인증번호 입력" value="" />
+                  <Button variant="gray" size="lg">
+                    재전송
+                  </Button>
                 </div>
               </div>
             </div>
