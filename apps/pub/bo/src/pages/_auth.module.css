@@ -1,6 +1,5 @@
 /* _auth.module.css */
 .start {
   &.layout_wrap {
-    @apply scrollbar;
   }
 }

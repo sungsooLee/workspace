@@ -23,7 +23,7 @@
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
-  &.no_header {
+  &.notitle {
     @apply pt-[48px];
   }
 }
@@ -54,6 +54,11 @@
   }
   &.full {
     @apply left-0 top-0 h-[100dvh] w-[100dvw] translate-x-0 translate-y-0 rounded-none;
+  }
+}
+.btn_wrap {
+  button {
+    @apply !min-w-[80px];
   }
 }
 

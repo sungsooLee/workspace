@@ -3,25 +3,26 @@ import { Button } from '@learnway/ui';
 import signupStyles from './signup.module.css';
 import { IcoCheck02 } from '@learnway/icons';
 
-export const Route = createFileRoute('/_auth/success')({
+export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.success}`}>
+    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_auth}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.success_info}>
           <i className={signupStyles.ico}>
             <IcoCheck02 width={32} height={24} />
           </i>
-          <h3 className={signupStyles.title}>가입 신청완료</h3>
-          <p className={signupStyles.noti}>
-            가입승인은 신청일부터 최대 5일 이내 완료됩니다.
-            <br /> 회원가입 시 입력된 메일 주소로 가입승인 메일이 발송됩니다.
-          </p>
+          <h3 className={signupStyles.title}>
+            입력하신 정보로 가입된 아이디는
+            <br />
+            아래와 같습니다.
+          </h3>
+          <p className={signupStyles.noti_box}>hyundai.kim@hyundai.com</p>
           <div className={signupStyles.btn_txt}>
-            <Link to="/progress-status">진행현황 확인</Link>
+            <Link to="/progress-status">비밀번호 찾기</Link>
           </div>
         </div>
 

@@ -17,6 +17,7 @@
       }
     }
 
+    /* 회원가입 유형 */
     .signup_info {
       + h4.title {
         @apply mt-[48px];
@@ -53,6 +54,24 @@
             svg {
               @apply opacity-100;
             }
+          }
+        }
+      }
+    }
+    /* 아이디/비밀번호 찾기 */
+    &.search_account {
+      .signup_select {
+        .radio_card {
+          button {
+            .ico2 {
+              @apply stroke-[var(--primary1)];
+            }
+          }
+        }
+        + .auth_form {
+          @apply mt-[48px];
+          + .signup_noti {
+            @apply mt-[8px];
           }
         }
       }
@@ -96,10 +115,18 @@
       }
     }
 
+    /* search id passowrd */
+    .search_info {
+      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+
     .btn_wrap {
       @apply mt-[48px] flex items-center justify-center;
       button {
-        @apply w-full;
+        @apply w-full max-w-[294px];
       }
     }
   }
