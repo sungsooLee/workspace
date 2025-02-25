@@ -139,6 +139,7 @@ function RouteComponent() {
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerList />,
+                    footer: true,
                   }}
                 />
               </DynamicFormField>
@@ -225,7 +226,7 @@ const formConfig: DynamicFormConfig = {
         { label: '현대자동차 B', value: 'B' },
         { label: '현대자동차 C', value: 'C' },
       ],
-      placeholder: '',
+      // placeholder: '',
       description: '',
       showInput: true,
     },
