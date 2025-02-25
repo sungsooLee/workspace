@@ -103,7 +103,7 @@ const ContentComponent: React.FC<any> = ({ content, setModalData }) => {
   const newContent = isValidElement(content)
     ? cloneElement(content as React.ReactElement<{ setModalData: (value: any) => void }>, {
         setModalData,
-      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setData 사용을 위해 타입 단언
+      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setModalData 사용을 위해 타입 단언
     : null;
   return newContent;
 };
