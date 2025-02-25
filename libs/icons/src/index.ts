@@ -67,6 +67,14 @@ export { ReactComponent as IcoRefresh } from './lib/ic_refresh.svg'; // refresh
 export { ReactComponent as IcoPause } from './lib/ic_pause.svg'; // pause
 export { ReactComponent as IcoComplete02 } from './lib/ic_complete02.svg'; // complete02
 export { ReactComponent as IcoFileMp4 } from './lib/ic_file_mp4.svg'; // mp4
+export { ReactComponent as IcoBlog } from './lib/ic_blog.svg'; // blog
+export { ReactComponent as IcoEntrust } from './lib/ic_entrust.svg'; // entrust
+export { ReactComponent as IcoInfoCircle } from './lib/ic_info_circle.svg'; // link
+export { ReactComponent as IcoImage01 } from './lib/ic_image_01.svg'; // image
+export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; // video
+export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
+export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
+export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 
 //export Default as Information from './lib/information.svg?react';
 
