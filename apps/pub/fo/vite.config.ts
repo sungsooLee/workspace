@@ -11,7 +11,7 @@ const isTest = process.env.NODE_ENV === 'test';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/pub/fo',
+  cacheDir: '../../../node_modules/.vite/apps/pub/fo',
   server: {
     port: 4200,
     host: 'localhost',
@@ -40,7 +40,7 @@ export default defineConfig({
   // },
   base: '/pb-fo',
   build: {
-    outDir: '../../dist/apps/pb-fo',
+    outDir: '../../../dist/apps/pb-fo',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
