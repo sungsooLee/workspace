@@ -5,6 +5,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-bo/progress-status': '진행현황',
   '/pb-bo/search-account': '아이디 찾기',
   '/pb-bo/search-account-pw': '비밀번호 찾기',
+  '/pb-bo/signup-step1': '관리자 회원가입',
 };
 
 export function isSigninPage(path: string): boolean {
