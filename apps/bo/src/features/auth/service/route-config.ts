@@ -2,8 +2,7 @@ import { createElement } from 'react';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 
-import type { AuthUser } from '../../../types';
-import { authUserQueryKeys } from '../../../entities/auth';
+import { AuthUser, authUserQueryKeys } from '@learnway/config';
 
 export function authConfig() {
   return {
