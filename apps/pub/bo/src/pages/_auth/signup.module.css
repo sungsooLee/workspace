@@ -4,7 +4,7 @@
   .auth_box {
     @apply relative z-0 p-[40px] text-left;
     input {
-      @apply !min-h-[40px];
+      @apply !min-h-[40px] rounded-[8px];
     }
     label + div {
       @apply -mb-[4px] mt-[4px];

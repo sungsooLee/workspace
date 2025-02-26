@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
@@ -27,6 +28,7 @@ function RouteComponent() {
                   className={formStyles.lg}
                 />
               </div>
+              <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </div>
 
@@ -44,6 +46,7 @@ function RouteComponent() {
                   className={formStyles.lg}
                 />
               </div>
+              <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
             </div>
           </div>
         </div>

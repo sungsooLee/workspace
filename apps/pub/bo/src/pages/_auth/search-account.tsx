@@ -1,16 +1,34 @@
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard, Input, Select } from '@learnway/ui';
+import { Button, RadioCard, Input, Select, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [selectedValue, setSelectedValue] = useState<string>('type1');
+
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+  };
+  const { alert: openAlert } = useModal();
+  const handleClickAlert = () => {
+    openAlert({
+      title: <>입력 정보를 확인해 주세요.</>,
+      description: (
+        <>
+          입력하신 정보가 등록되어 있지 않습니다. <br />
+          정확한 정보를 다시 입력해 주세요.
+        </>
+      ),
+    });
+  };
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
       <div className={signupStyles.auth_box}>
@@ -40,6 +58,8 @@ function RouteComponent() {
                 ),
               },
             ]}
+            defaultValue={'type1'}
+            onValueChange={handleValueChange}
           />
         </div>
 
@@ -76,29 +96,51 @@ function RouteComponent() {
             </div>
           </div>
 
-          {/* 휴대폰 인증일때 */}
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-1-6" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>휴대폰 번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Select
-                  className={formStyles.select_option}
-                  options={[
-                    { value: 'type1', label: '+82' },
-                    { value: 'type2', label: '+83' },
-                  ]}
-                  size="lg"
-                />
-                <Input id="name-1-6" type="text" placeholder="-없이 휴대폰 번호입력(0102345678)" />
+          {selectedValue === 'type1' ? (
+            <div className={formStyles.row}>
+              {/* 휴대폰 인증일때 */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-1-6" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>휴대폰 번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '+82' },
+                      { value: 'type2', label: '+83' },
+                    ]}
+                    size="lg"
+                  />
+                  <Input
+                    id="name-1-6"
+                    type="text"
+                    placeholder="-없이 휴대폰 번호입력(0102345678)"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className={formStyles.row}>
+              {/* 이메일 인증일때 */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-1-6" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>이메일</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-1-6" type="text" placeholder="아이디(hyundai.kim@hyundail.com)" />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className={signupStyles.signup_noti}>
@@ -114,7 +156,7 @@ function RouteComponent() {
           <Button variant="gray" size="xl">
             취소
           </Button>
-          <Button variant="primary" size="xl">
+          <Button variant="primary" size="xl" onClick={handleClickAlert}>
             {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
             인증번호 요청
           </Button>

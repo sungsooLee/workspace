@@ -79,7 +79,7 @@ export const guideData = [
     pageId: '/pb-bo/learning/mediaDetail',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '기획/디자인 수정중', // 비고
+    remarks: '디자인 수정 퍼블 반영중', // 비고
   },
 ];
 

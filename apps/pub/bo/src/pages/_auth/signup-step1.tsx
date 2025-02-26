@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01, IcoUser01 } from '@learnway/icons';
 import signupStyles from './signup.module.css';
@@ -10,11 +10,13 @@ export const Route = createFileRoute('/_auth/signup-step1')({
 });
 
 function RouteComponent() {
+  // CP사 회원가입
   const items = [
     { label: '회원유형선택', value: 'step1' },
     { label: '사업자 정보 조회', value: 'step2' },
     { label: '회원정보입력', value: 'step3' },
   ];
+  // 관리자 권한 신청
   const items2 = [
     { label: '회원유형선택', value: 'step1' },
     { label: '아이디 확인', value: 'step2' },
@@ -22,7 +24,7 @@ function RouteComponent() {
     { label: '권한정보입력', value: 'step4' },
   ];
 
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState<string>('type1');
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value);
@@ -61,6 +63,7 @@ function RouteComponent() {
                   ),
                 },
               ]}
+              defaultValue={'type1'}
               onValueChange={handleValueChange}
             />
           </div>
