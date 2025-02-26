@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input, Checkbox, Select } from '@learnway/ui';
 
