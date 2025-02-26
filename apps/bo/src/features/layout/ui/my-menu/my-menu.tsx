@@ -21,7 +21,6 @@ const PopoverContent = () => {
 
 const MyMenuCompoment = () => {
   const { t } = useTranslation();
-
   const { data } = useFetchAuthUser();
 
   return (
