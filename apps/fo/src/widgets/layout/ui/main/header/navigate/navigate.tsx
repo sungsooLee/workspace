@@ -60,7 +60,7 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
               // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
               className={`${styles.slide}`}>
               <Link
-                to={'/'}
+                to={menu.path}
                 onMouseEnter={onMouseEnter}
                 onClick={(e) => e.preventDefault()}
                 preload={false}>
