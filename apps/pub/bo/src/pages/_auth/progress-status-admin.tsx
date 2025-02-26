@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DatePicker } from '@learnway/ui';
+import { Button, DatePicker, Input } from '@learnway/ui';
 import { IcoCheck02, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '../../assets/styles/modules/form.module.css';
@@ -30,6 +30,86 @@ function RouteComponent() {
         </div>
         <div
           className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-tenant" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>테넌트</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-tenant"
+                type="text"
+                value="테넌트명"
+                placeholder=""
+                readOnly
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-company" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>회사명</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-company"
+                type="text"
+                value="회사명"
+                placeholder=""
+                readOnly
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-admin" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>테넌트 관리자</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-admin"
+                type="text"
+                value="김현대"
+                placeholder=""
+                readOnly
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-approve" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>승인 상태</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-approve"
+                type="text"
+                value="신청"
+                placeholder=""
+                readOnly
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-term" className={formStyles.form_label}>
