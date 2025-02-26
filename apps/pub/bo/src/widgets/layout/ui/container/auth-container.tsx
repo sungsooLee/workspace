@@ -3,7 +3,7 @@ import { useLocation } from '@tanstack/react-router';
 
 import { PAGE_TITLE_BY_PATH, isSigninPage } from '../../../../platform/service/page.service';
 import styles from './auth-container.module.css';
-import { FooterAuth } from '../footer/footer-auth';
+// import { FooterAuth } from '../footer/footer-auth';
 
 interface AuthContainerComponentProps {
   children: ReactNode;
@@ -22,7 +22,7 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
           className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
           {children}
         </div>
-        <FooterAuth />
+        {/* <FooterAuth /> */}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
+    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.step_box}>

@@ -3,7 +3,7 @@ import { Button } from '@learnway/ui';
 import signupStyles from './signup.module.css';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
-export const Route = createFileRoute('/_auth/search-id-success')({
+export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
 });
 
