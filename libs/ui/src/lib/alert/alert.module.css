@@ -3,6 +3,9 @@
   .btn_cancel + .btn_confirm {
     @apply ml-[8px];
   }
+  button {
+    @apply !min-w-[80px];
+  }
 }
 .icon {
   @apply mb-[8px] flex items-center justify-center pt-[24px];
@@ -11,10 +14,10 @@
   }
 }
 .alert_wrap {
-  @apply -mx-[32px] -my-[24px];
+  @apply -mx-[32px] -my-[16px] px-[20px];
 }
 .title {
-  @apply flex max-h-[80px] items-center justify-center pt-[32px] text-center text-[1.8rem] font-bold text-[var(--gray9)];
+  @apply flex max-h-[80px] items-center justify-center pt-[8px] text-center text-[1.8rem] font-bold text-[var(--gray9)];
 }
 .description {
   @apply scrollbar block max-h-[160px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-center text-[1.4rem] font-normal text-[var(--gray7)];

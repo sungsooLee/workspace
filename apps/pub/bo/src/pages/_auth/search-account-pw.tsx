@@ -4,30 +4,19 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, Input, useModal } from '@learnway/ui';
+import { Button, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/progress-status')({
+export const Route = createFileRoute('/_auth/search-account-pw')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModal();
-  const handleClickAlert = () => {
-    openAlert({
-      title: <>진행현황이 없습니다.</>,
-      description: (
-        <>
-          입력하신 아이디의 진행현황이 없습니다.
-          <br />
-          정확한 정보를 다시 입력해 주세요.
-        </>
-      ),
-    });
-  };
   return (
     <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
       <div className={signupStyles.auth_box}>
-        <div className={signupStyles.search_info}>진행현황 확인을 위해 이메일을 입력해 주세요.</div>
+        <div className={signupStyles.search_info}>
+          비밀번호를 찾고자 하는 아이디를 먼저 확인해 주세요.
+        </div>
 
         {/* 인증폼 */}
         <div
@@ -55,15 +44,15 @@ function RouteComponent() {
               <IcoCaution width={16} height={16} stroke="#6F798B" />
               유의사항
             </dt>
-            <dd>아이디로 사용하는 이메일을 입력해야 진행현황을 확인할 수 있습니다.</dd>
+            <dd>아이디로 사용하는 이메일을 입력해야 비밀번호를 확인할 수 있습니다.</dd>
           </dl>
         </div>
         <div className={signupStyles.btn_wrap}>
           <Button variant="gray" size="xl">
             취소
           </Button>
-          <Button variant="primary" size="xl" onClick={() => handleClickAlert()}>
-            진행현황 확인
+          <Button variant="primary" size="xl">
+            아이디 확인
           </Button>
         </div>
       </div>

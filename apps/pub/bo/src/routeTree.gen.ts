@@ -21,6 +21,7 @@ import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
+import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account-pw'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthLoginImport } from './pages/_auth/login'
@@ -113,6 +114,12 @@ const AuthSignupStep1Route = AuthSignupStep1Import.update({
 const AuthSearchIdSuccessRoute = AuthSearchIdSuccessImport.update({
   id: '/search-id-success',
   path: '/search-id-success',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSearchAccountPwRoute = AuthSearchAccountPwImport.update({
+  id: '/search-account-pw',
+  path: '/search-account-pw',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -371,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/search-account'
       fullPath: '/search-account'
       preLoaderRoute: typeof AuthSearchAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/search-account-pw': {
+      id: '/_auth/search-account-pw'
+      path: '/search-account-pw'
+      fullPath: '/search-account-pw'
+      preLoaderRoute: typeof AuthSearchAccountPwImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-id-success': {
@@ -655,6 +669,7 @@ interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
   AuthSignupStep2Route: typeof AuthSignupStep2Route
@@ -666,6 +681,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
   AuthSignupStep2Route: AuthSignupStep2Route,
@@ -766,6 +782,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/search-account': typeof AuthSearchAccountRoute
+  '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
@@ -812,6 +829,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/search-account': typeof AuthSearchAccountRoute
+  '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
@@ -861,6 +879,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
+  '/_auth/search-account-pw': typeof AuthSearchAccountPwRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
   '/_auth/signup-step2': typeof AuthSignupStep2Route
@@ -909,6 +928,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/progress-status'
     | '/search-account'
+    | '/search-account-pw'
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
@@ -954,6 +974,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/progress-status'
     | '/search-account'
+    | '/search-account-pw'
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
@@ -1001,6 +1022,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/progress-status'
     | '/_auth/search-account'
+    | '/_auth/search-account-pw'
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
     | '/_auth/signup-step2'
@@ -1076,6 +1098,7 @@ export const routeTree = rootRoute
         "/_auth/login",
         "/_auth/progress-status",
         "/_auth/search-account",
+        "/_auth/search-account-pw",
         "/_auth/search-id-success",
         "/_auth/signup-step1",
         "/_auth/signup-step2",
@@ -1137,6 +1160,10 @@ export const routeTree = rootRoute
     },
     "/_auth/search-account": {
       "filePath": "_auth/search-account.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/search-account-pw": {
+      "filePath": "_auth/search-account-pw.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-id-success": {
