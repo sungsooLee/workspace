@@ -15,11 +15,23 @@ export const guideData = [
     depth2: '교육자원',
     depth3: '학습자원 관리',
     depth4: '학습자원 조회',
-    depth5: '동영상 상세',
-    pageId: '/learning/mediaDetail',
+    depth5: '나의 학습자원',
+    depth6: '등록',
+    pageId: '/pb-bo/learning/popup-learningRegisteration',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '작업중', // 비고
+  },
+  {
+    depth1: '홈',
+    depth2: '교육자원',
+    depth3: '학습자원 관리',
+    depth4: '학습자원 조회',
+    depth5: '동영상 상세',
+    pageId: '/pb-bo/learning/mediaDetail',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '기획/디자인 수정중', // 비고
   },
 ];
 

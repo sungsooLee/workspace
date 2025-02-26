@@ -15,11 +15,11 @@ import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fo
 import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { FormRow } from '../../../shared/ui/form-row';
-import { LectureTypeSiteUrl } from '../../../widgets/learning/ui/dialogs/lecture-type-site-url/lecture-type-site-url';
-import { ManagerList } from '../../../features/learning/ui/modal/manager-list/manager-list';
-import { TeacherList } from '../../../features/learning/ui/dialog/form-teacher-chip-list/teacher-list';
+import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
+import { ManagerList } from '../../../features/operation/ui/manager-list/manager-list';
+import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 
-export const Route = createFileRoute('/_unauth/learnings/')({
+export const Route = createFileRoute('/_unauth/operation_test/')({
   component: RouteComponent,
 });
 
@@ -114,6 +114,7 @@ function RouteComponent() {
                   chipList={{
                     labelField: 'name',
                     valueField: 'value',
+                    hideBorder: true,
                   }}
                 />
               </DynamicFormField>

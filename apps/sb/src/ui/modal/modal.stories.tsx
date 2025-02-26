@@ -124,3 +124,41 @@ export const TemplateCustomFooter: any = (args: any) => {
   );
 };
 TemplateCustomFooter.storyName = 'Custom Footer';
+
+/**
+ * Multi Modal
+ * @param args
+ * @constructor
+ */
+export const TemplateMultiModal: any = (args: any) => {
+  const { open: openModal } = useModal();
+  const handleOpenModal = () => {
+    openModal({
+      title: 'first modal',
+      content: (
+        <div>
+          <h1>second modal content</h1>
+          <Button
+            variant={'primary'}
+            size={'md'}
+            label={'open second modal'}
+            onClick={handleOpenSecondModal}
+          />{' '}
+        </div>
+      ),
+    });
+  };
+  const handleOpenSecondModal = () => {
+    openModal({
+      title: 'second modal',
+      content: <h1>second modal content</h1>,
+    });
+  };
+  return (
+    <div>
+      <Button onClick={() => handleOpenModal()}>Open Modal</Button>
+      <ModalWrapper {...args} />
+    </div>
+  );
+};
+TemplateMultiModal.storyName = 'Multi Modal';
