@@ -1,25 +1,39 @@
 /* page-container.module.css */
 .start {
   &.auth_container {
-    @apply relative box-border flex min-h-[calc(100vh-65px)] items-center justify-center bg-[var(--gray1)];
+    @apply relative box-border flex min-h-[calc(100vh-65px)] justify-center bg-[var(--gray1)];
     &.login {
-      @apply bg-[url('../../../../assets/images/common/bg_login.png')] bg-cover bg-[center_center] bg-center;
+      @apply items-center justify-start bg-[url('../../../../assets/images/common/bg_login.png')] bg-cover bg-center;
+      .auth_area {
+        @apply flex w-[877px] flex-row;
+        h2 {
+          @apply px-[40px] pt-[48px] text-left;
+        }
+      }
+      .auth_inner {
+        @apply w-[calc(100%-277px)] !rounded-l-none rounded-r-[16px] !border-[var(--white)];
+      }
+    }
+    &:not(.login) {
+      @apply items-start;
     }
 
     .auth_area {
-      @apply m-auto flex w-[877px] flex-row;
+      @apply mx-auto w-[680px];
       h2 {
-        @apply title_2_b flex items-start whitespace-pre px-[40px] pt-[48px] text-left;
-
+        @apply title_2_b flex items-center whitespace-pre pb-[32px] pt-[80px] text-center;
         &.title_login {
           @apply title_3_b h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[var(--white)];
+        }
+        &:not(.title_login) {
+          @apply justify-center;
         }
         .tit {
           @apply block;
         }
       }
       .auth_inner {
-        @apply w-[calc(100%-277px)] rounded-r-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
+        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
       }
     }
   }

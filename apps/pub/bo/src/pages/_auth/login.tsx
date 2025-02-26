@@ -23,7 +23,7 @@ function RouteComponent() {
                   id="name5"
                   type="text"
                   value=""
-                  placeholder="아이디(hyundai.kim@hyundail.com)"
+                  placeholder="아이디 또는 회사 이메일을 입력하세요."
                   className={formStyles.lg}
                 />
               </div>
@@ -52,7 +52,7 @@ function RouteComponent() {
           <Checkbox label="아이디 저장" className={signupStyles.id_save} />
           <div className={signupStyles.info}>
             <Link to="/search-account">아이디 찾기</Link>
-            <Link to="/search-account">비밀번호 찾기</Link>
+            <Link to="/search-account-pw">비밀번호 찾기</Link>
           </div>
         </div>
 
