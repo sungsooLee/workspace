@@ -1,0 +1,108 @@
+import { useEffect, useRef } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { useModal, Button, RadioCard } from '@learnway/ui';
+import styles from './popup-learningRegisteration.module.css';
+// import { IcoTrash03, IcoPause, IcoFileMp4, IcoComplete02, IcoRefresh } from '@learnway/icons';
+// import { cn } from '@learnway/shared';
+
+export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const { open: openModal } = useModal();
+  const CustomFooter = () => {
+    const { close: closeModal } = useModal();
+    return (
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        {'취소'}
+      </Button>
+    );
+  };
+  const TypeSelectContent = () => {
+    return (
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+        <div className={styles.select_wrap}>
+          <RadioCard
+            className={styles.select_item}
+            options={[
+              {
+                value: 'type1',
+                label: (
+                  <div>
+                    {/* <IcoPhone02 width={48} height={48} className={styles.ico1} /> */}
+                    <strong className={styles.select_title}>동영상</strong>
+                    <p className={styles.select_text}>1개 동영상 업로드</p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type2',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>멀티 동영상</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type3',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>HTML 동영상</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type4',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>이미지</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                value: 'type5',
+                label: (
+                  <div>
+                    {/* <IcoMail width={48} height={48} className={styles.ico2} /> */}
+                    <strong className={styles.select_title}>기타</strong>
+                    <p className={styles.select_text}>
+                      설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄
+                    </p>
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </div>
+    );
+  };
+  // 한번만 실행
+  const hasRun = useRef(false);
+  useEffect(() => {
+    if (!hasRun.current) {
+      openModal({
+        title: '',
+        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+        content: <TypeSelectContent />,
+        footer: <CustomFooter />,
+      });
+      hasRun.current = true;
+    }
+  }, [openModal]);
+  return <div>학습자원 조회 유형 선택 팝업</div>;
+}

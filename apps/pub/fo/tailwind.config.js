@@ -14,7 +14,12 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   blocklist: ['outline'],
-  plugins: [require('./src/assets/tailwind-plugins/typo.plugin'), function ({ addComponents }) {}],
+  plugins: [
+    require('./src/assets/tailwind-plugins/typo.plugin'),
+    function ({ addComponents }) {
+      addComponents({});
+    },
+  ],
 
   theme: {
     extend: {

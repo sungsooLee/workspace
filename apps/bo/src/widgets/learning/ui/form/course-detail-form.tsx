@@ -1,13 +1,13 @@
 import React, { forwardRef, useEffect } from 'react';
 import { ContentsRow } from '../../../layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
-import { LectureTypeSiteUrl } from '../dialogs/lecture-type-site-url/lecture-type-site-url';
-import { FormTeacherChipList } from '../../../../features/learning/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { t } from 'i18next';
 import { FormRow } from '../../../../shared/ui/form-row';
 import { Button } from '@learnway/ui';
 import { z } from 'zod';
+import { LectureTypeSiteUrl } from '../../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
+import { FormTeacherChipList } from '../../../../features/operation/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 
 // TODO : form 공통 영역으로 이동
 export interface FormProps {

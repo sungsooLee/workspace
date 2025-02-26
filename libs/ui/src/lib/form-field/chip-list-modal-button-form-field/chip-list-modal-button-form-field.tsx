@@ -45,8 +45,6 @@ const ChipListModalButtonFormFieldComponent = forwardRef<
     const { open: openModal } = useModal();
     const [selectedChipOptions, setSelectedChipOptions] = useState<any[]>(value);
 
-    // const { variant = 'point', size = 'sm', label = t('선택') } = buttonProps;
-
     useEffect(() => {
       ownerOnChange?.(selectedChipOptions);
     }, [selectedChipOptions]);

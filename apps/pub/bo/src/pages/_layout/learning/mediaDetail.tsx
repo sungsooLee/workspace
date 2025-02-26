@@ -94,10 +94,12 @@ function RouteComponent() {
   const [date, setDate] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate = (value: any) => {
     setDate(value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate2 = (value: any) => {
     setDate2(value);
   };

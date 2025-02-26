@@ -2,8 +2,7 @@ import { createElement } from 'react';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 
-import { authUserQueryKeys } from '@learnway/config';
-import type { AuthUser } from '@learnway/config';
+import { AuthUser, authUserQueryKeys } from '@learnway/config';
 
 export function authConfig() {
   return {
@@ -17,7 +16,7 @@ export function authConfig() {
 
       if (location.pathname === '/' || !authUser?.menus) {
         if (authUser === undefined) {
-          throw redirect({ to: '/login', search: { redirect: location.pathname } });
+          throw redirect({ to: '/login' });
         }
         return true;
       }

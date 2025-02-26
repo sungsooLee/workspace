@@ -1,4 +1,3 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import * as Primitive from '@radix-ui/react-dialog';
 import { IcoXclose } from '@learnway/icons';
 import React, { cloneElement, isValidElement, useEffect, useState } from 'react';
@@ -88,9 +87,9 @@ const ModalComponent: React.FC<ModalConfig> = ({
           {/* close button */}
           {!hideCloseButton && (
             <Primitive.Close asChild>
-              <button className={styles.btn_close} aria-label="Close">
+              <Button className={styles.btn_close} aria-label="Close" onlyIcon>
                 <IcoXclose width={24} height={24} stroke="#131C30" />
-              </button>
+              </Button>
             </Primitive.Close>
           )}
         </Primitive.Content>
@@ -103,7 +102,7 @@ const ContentComponent: React.FC<any> = ({ content, setModalData }) => {
   const newContent = isValidElement(content)
     ? cloneElement(content as React.ReactElement<{ setModalData: (value: any) => void }>, {
         setModalData,
-      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setData 사용을 위해 타입 단언
+      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setModalData 사용을 위해 타입 단언
     : null;
   return newContent;
 };
@@ -116,13 +115,13 @@ const FooterComponent: React.FC<any> = ({ footer: customFooter, buttonClick }) =
   };
 
   return (
-    <div onClick={handleClick}>
+    <div className={styles.btn_wrap} onClick={handleClick}>
       {isValidElement(customFooter) ? (
         customFooter
       ) : (
         <>
-          <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-          <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
+          <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} actionKey={'confirm'} />
         </>
       )}
     </div>

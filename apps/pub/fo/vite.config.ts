@@ -40,7 +40,7 @@ export default defineConfig({
   // },
   base: '/pb-fo',
   build: {
-    outDir: '../../../dist/apps/pb-fo',
+    outDir: '../../dist/apps/pb-fo',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {

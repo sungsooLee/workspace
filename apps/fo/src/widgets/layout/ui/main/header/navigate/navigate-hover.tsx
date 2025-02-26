@@ -15,15 +15,15 @@ function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps
       title: '교육제도',
       link: '/',
       subMenu: [
-        { title: '금융자격지원제도', link: '/' },
-        { title: 'SPA 승진제도', link: '/' },
+        { title: '금융자격지원제도', link: '/menu/menu2' },
+        { title: 'SPA 승진제도', link: '/menu/menu3' },
       ],
     },
     {
       title: '학습계획',
       link: '',
       subMenu: [
-        { title: '진단', link: '' },
+        { title: '진단', link: '/menu3' },
         { title: '계획수립', link: '' },
       ],
     },

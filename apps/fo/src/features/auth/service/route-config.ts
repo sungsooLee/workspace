@@ -5,6 +5,12 @@ import type { ParsedLocation } from '@tanstack/react-router';
 import { authUserQueryKeys } from '@learnway/config';
 import type { AuthUser } from '@learnway/config';
 
+import { PageMeta } from '../../../types';
+
+const defaultPageMeta: PageMeta = {
+  mobile: { showFooter: false },
+};
+
 export function authConfig() {
   return {
     /**
@@ -14,7 +20,7 @@ export function authConfig() {
     beforeLoad: async ({ location, context }: { location: ParsedLocation; context: any }) => {
       const queryClient = context.queryClient;
       const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
-
+      console.log('authUser', authUser);
       if (location.pathname === '/' || !authUser?.menus) {
         if (authUser === undefined) {
           throw redirect({ to: '/login', search: { redirect: location.pathname } });
@@ -25,7 +31,7 @@ export function authConfig() {
       const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
       if (!unauthScreen) {
         console.log('Error 화면 접근 권한 없음');
-        throw redirect({ to: '/' });
+        //throw redirect({ to: '/' });
       }
 
       //router.history.push(search.redirect)
@@ -36,5 +42,17 @@ export function authConfig() {
       return createElement(ErrorComponent, { error });
     },
     staleTime: 0,
+  };
+}
+
+export function metaConfig(pageMeta?: PageMeta) {
+  return {
+    beforeLoad: ({ context }: any) => {
+      if (pageMeta) {
+        context.setPageLayoutState({ ...defaultPageMeta, ...pageMeta });
+      } else {
+        context.setPageLayoutState(defaultPageMeta);
+      }
+    },
   };
 }
