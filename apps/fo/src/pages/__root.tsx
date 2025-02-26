@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
+import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { ModalWrapper } from '@learnway/ui';
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
@@ -13,7 +13,12 @@ const NotFound = () => {
   );
 };
 
-export const Route = createRootRoute({
+interface RouterContext {
+  setPageMeta?: any;
+  queryClient?: any;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
   notFoundComponent: NotFound,
 });
