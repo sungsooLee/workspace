@@ -5,7 +5,7 @@
 
     .auth_area {
       @apply m-auto w-[600px];
-      h2 {
+      & > h2 {
         @apply title_2_b px-[31px] pb-[32px] text-center;
         &.title_login {
           @apply text-[var(--primary2)];
