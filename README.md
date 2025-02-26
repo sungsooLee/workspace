@@ -160,3 +160,12 @@ And join the Nx community:
 - [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
 - [Our Youtube channel](https://www.youtube.com/@nxdevtools)
 - [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+
+## Test
+
+### fireEvent
+- fireEvent는 React Testing Library에서 제공하는 유틸리티 함수로, DOM 이벤트(예: click, change, blur, submit 등)를 프로그램matically(프로그램 코드로) 발생시킬 때 사용
+
+### 테스트 접근 방법
+1. 컴포넌트의 의존성 파악하기

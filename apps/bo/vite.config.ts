@@ -66,6 +66,26 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    test: {
+      watch: true,
+      globals: true,
+      environment: 'jsdom',
+      include: ['__tests__/**/*.{test,spec}.{ts,tsx}'],
+      coverage: {
+        all: true, // 테스트된 파일만 포함
+        reportsDirectory: '../../coverage/apps/bo',
+        provider: 'istanbul',
+        setupFiles: './setupTests.ts', // 테스트 실행 전 실행할 파일
+        include: ['src/pages/**/*.tsx', 'src/features/**/*.tsx', 'src/widgets/**/*.tsx'],
+        exclude: ['node_modules/', 'dist/', 'coverage/', 'src/app', '__tests__', 'src/pages/*.tsx'],
+        thresholds: {
+          statements: 35, // 전체 statement 커버리지 기준
+          branches: 25, // 조건문 커버리지 기준
+          functions: 0, // 함수 커버리지 기준,
+          lines: 0, // 라인 커버리지 기준
+        },
+      },
+    },
   };
 });
 // export default defineConfig({

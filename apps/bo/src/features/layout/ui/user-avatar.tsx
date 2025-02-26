@@ -14,7 +14,7 @@ interface ProfileMenu {
   action: () => void;
 }
 
-const PopoverContent = () => {
+export const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
 

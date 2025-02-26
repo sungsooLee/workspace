@@ -7,12 +7,10 @@ import styles from './notification.module.css';
 import { useFetchAuthUser } from '../../../../entities/auth';
 
 const PopoverContent = () => {
-  return <div className={styles.alarm_content}></div>;
+  return <div className={styles.alarm_content}>PopoverContent</div>;
 };
 
 const NotificationComponent = () => {
-  const { data } = useFetchAuthUser();
-
   return (
     <Popover popoverContent={<PopoverContent />}>
       {/* <Avatar imageUrl="https://*.png" fallback="Noti" /> */}
