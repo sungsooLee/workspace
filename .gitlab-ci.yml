@@ -68,7 +68,7 @@ deploy:
     - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
     - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
     - aws s3 sync apps/dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
-    - aws s3 sync apps/dist/apps/pb-bo s3://4{S3_BUCKET}/pb-bo --delete
+    - aws s3 sync apps/dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
