@@ -13,10 +13,18 @@ export const Route = createFileRoute('/_auth/progress-status-admin')({
 function RouteComponent() {
   // Date picker
   const [date, setDate] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
+  const [date3, setDate3] = useState(new Date());
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate = (value: any) => {
     setDate(value);
+  };
+  const handleDate2 = (value: any) => {
+    setDate2(value);
+  };
+  const handleDate3 = (value: any) => {
+    setDate3(value);
   };
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap}`}>
@@ -154,7 +162,52 @@ function RouteComponent() {
                   { value: 'type1', label: '관리자 그룹1' },
                   { value: 'type2', label: '관리자 그룹2' },
                 ]}
-                disabled
+                size="lg"
+                readOnly={true}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-type" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>관리자 유형</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Select
+                className={formStyles.select_option}
+                options={[
+                  { value: 'type1', label: '채널 소유자' },
+                  { value: 'type2', label: '채널 소유자2' },
+                ]}
+                size="lg"
+                readOnly={true}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-type" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>권한 신청 기간</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <DatePicker
+                onChange={handleDate}
+                value={date}
+                className={formStyles.datepicker_item}
+              />
+              <span className={formStyles.dash}></span>
+              <DatePicker
+                onChange={handleDate2}
+                value={date2}
+                className={formStyles.datepicker_item}
               />
             </div>
           </div>
@@ -252,8 +305,8 @@ function RouteComponent() {
             </label>
             <div className={formStyles.input_box}>
               <DatePicker
-                onChange={handleDate}
-                value={date}
+                onChange={handleDate3}
+                value={date3}
                 className={formStyles.datepicker_item}
               />
             </div>
