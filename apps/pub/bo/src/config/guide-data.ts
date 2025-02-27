@@ -83,6 +83,30 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    depth1: '',
+    depth2: '',
+    depth3: '',
+    depth4: '관리자 권한 신청 결과',
+    depth5: '',
+    depth6: '',
+    pageId: '/pb-bo/progress-status-admin',
+    completionDate: '2025-02-26',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    depth1: '',
+    depth2: '',
+    depth3: '',
+    depth4: 'CP사 회원가입 결과',
+    depth5: '',
+    depth6: '',
+    pageId: '/pb-bo/progress-status-cp',
+    completionDate: '2025-02-26',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
     depth1: '홈',
     depth2: '교육자원',
     depth3: '학습자원 관리',

@@ -15,8 +15,17 @@
       @apply border-0;
     }
   }
+  &.readonly {
+    @apply pointer-events-none bg-[var(--gray2)];
+    .textarea {
+      @apply !bg-[var(--gray2)] text-[var(--gray8)];
+    }
+  }
   &.disabled {
     @apply bg-[var(--gray2)];
+    .textarea {
+      @apply !bg-[var(--gray2)] !text-[#a9afb8];
+    }
   }
   .text_limit {
     @apply flex justify-end pb-[11px] pr-[12px] text-[12px] font-normal leading-[1rem] text-[var(--gray6)];

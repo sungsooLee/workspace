@@ -91,7 +91,7 @@
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   .select_option {
-    @apply min-w-[132px];
+    @apply w-full min-w-[132px];
     &.lg {
       @apply min-w-[360px];
     }
@@ -106,9 +106,12 @@
     @apply absolute right-0 top-[8px];
   }
   .dash {
-    @apply flex min-w-[8px] items-center justify-start;
+    @apply !mx-0 flex min-w-[23px] items-center justify-center;
     &::after {
       @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+    }
+    & + div {
+      @apply !mx-0;
     }
   }
   .btn_edit {
