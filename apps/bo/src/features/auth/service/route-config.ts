@@ -16,7 +16,7 @@ export function authConfig() {
 
       if (location.pathname === '/' || !authUser?.menus) {
         if (authUser === undefined) {
-          throw redirect({ to: '/login' });
+          //throw redirect({ to: '/login' });
         }
         return true;
       }

@@ -11,6 +11,7 @@ import {
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
 import { FormChipList } from '@/libs/ui/src/lib/chips/form-chip-list';
 import { FormSelect } from './dialogs/form-select';
+import { FormSwitch } from './dialogs/form-switch';
 
 export const dialogConfig = {
   text: Input,
@@ -18,7 +19,7 @@ export const dialogConfig = {
   checkbox: FormCheckbox,
   'checkbox-group': FormCheckboxGroup,
   dropdown: FormSelect,
-  switch: Switch,
+  switch: FormSwitch,
   textarea: Textarea,
   'text-popup-button': InputModalButtonFormField,
   'text-area': FormTextarea,
