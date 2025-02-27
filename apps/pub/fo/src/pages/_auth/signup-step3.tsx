@@ -170,7 +170,7 @@ function RouteComponent() {
 
         <div className={signupStyles.title_box}>
           <h4 className={signupStyles.title}>이용약관 및 개인정보정책 동의</h4>
-          <p className={styles.txt_info}>아래의 내용을 주의 깊게 확인 후 동의해주세요.</p>
+          <p className={signupStyles.txt_info}>아래의 내용을 주의 깊게 확인 후 동의해주세요.</p>
         </div>
 
         <div className={signupStyles.signup_check}>

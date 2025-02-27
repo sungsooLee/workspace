@@ -81,6 +81,9 @@
       }
       .noti_box {
         @apply title_5_b mt-[24px] rounded-[8px] bg-[#EDFCFF] px-[32px] py-[32px] text-[#009ABC];
+        &.type2 {
+          @apply body_3_r px-[16px] py-[16px] text-left;
+        }
       }
       .btn_txt {
         @apply body_3_r mt-[24px] text-[var(--gray8)] underline;

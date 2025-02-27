@@ -28,7 +28,7 @@ function RouteComponent() {
             <br />
             찾을 수 없습니다.
           </h3>
-          <p className={signupStyles.noti_box}>hyundai.kim@hyundai.com</p>
+          <div className={signupStyles.noti_box}>hyundai.kim@hyundai.com</div>
           <div className={signupStyles.btn_txt}>
             <Link to="/progress-status">비밀번호 찾기</Link>
           </div>
