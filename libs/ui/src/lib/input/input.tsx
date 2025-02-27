@@ -4,7 +4,7 @@ import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
 
 import { cn } from '@learnway/shared';
-import { IcoDelete03 } from '@learnway/icons';
+import { IcoDelete03, IcoSearch } from '@learnway/icons';
 
 import styles from './input.module.css';
 
@@ -22,6 +22,9 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   allowEmptyFormatting?: boolean;
   borderNone?: boolean; // Input border 유무
   error?: boolean; // Input border 유무
+  //
+  showSearchIcon?: boolean; // 검색 아이콘 표시 유무
+  onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -44,6 +47,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       format = '',
       allowEmptyFormatting = true,
       onKeyDown,
+      showSearchIcon,
+      onEnterKeyDown,
       ...props
     },
     ref,
@@ -132,6 +137,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
                 event.preventDefault(); // Enter 키 기본 동작 방지
+                onEnterKeyDown?.(); // onEnterKeyDown callback
               }
               onKeyDown && onKeyDown(event);
             }}
@@ -157,6 +163,16 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {unitText && <div className={'text-gray-6'}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
           {showCounter && type === 'text' && <div className={styles.count}>{'20/100'}</div>}
+          {/* 돋보기 */}
+          {showSearchIcon && (
+            <Button
+              type="button"
+              onClick={() => onEnterKeyDown?.()}
+              className={cn(styles.clear)}
+              onlyIcon>
+              <IcoSearch width={20} height={20} stroke={'#131C30'} />
+            </Button>
+          )}
         </div>
       </div>
     );

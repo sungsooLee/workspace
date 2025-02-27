@@ -1,10 +1,10 @@
-import { forwardRef, useState, useEffect } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useCreation } from 'ahooks';
 
 import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
 
 import { DatePicker, DatePickerComponentProps } from './date-picker';
-import { FieldType, DateRange } from '../type';
+import { DateRange, FieldType } from '../type';
 
 export interface DateRangeFieldProps extends Omit<DatePickerComponentProps, 'value' | 'onChange'> {
   type: FieldType.DATE_RANGE;
@@ -12,6 +12,8 @@ export interface DateRangeFieldProps extends Omit<DatePickerComponentProps, 'val
   onChange?: (range: DateRange | undefined) => void;
   fromLabel?: string;
   toLabel?: string;
+  readOnly?: boolean;
+  disabled?: boolean;
 }
 
 const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>(
@@ -25,6 +27,8 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
       placeholder = 'Pick a date range',
       fromLabel = 'From',
       toLabel = 'To',
+      readOnly,
+      disabled,
       ...props
     },
     ref,
@@ -59,12 +63,14 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
       <DatePicker
         dateTimeFormat={dateFormat}
         value={endDate}
-        onChange={(date) => handleEndChange(date)}
+        readOnly={readOnly}
+        disabled={disabled}
         selectsEnd
         startDate={startDate}
         endDate={endDate}
         minDate={startDate}
         numberOfMonths={2}
+        onChange={(date) => handleEndChange(date)}
       />
     );
   },
