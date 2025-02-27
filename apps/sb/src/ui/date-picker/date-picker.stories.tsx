@@ -18,7 +18,7 @@ const BaseWrapper: React.FC<any> = (args) => {
   const handleDate = (value: any) => {
     setDate(value);
   };
-  return <DatePicker {...args} onChange={handleDate} value={date} />;
+  return <DatePicker {...args} readOnly={true} onChange={handleDate} value={date} />;
 };
 
 const BaseRangeWrapper: React.FC<any> = (args) => {

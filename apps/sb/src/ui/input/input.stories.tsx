@@ -24,6 +24,7 @@ export const Template: any = (args: any) => {
       <Input {...args} unitText={'명'} onChange={handleChange} />
       <Input {...args} showCounter onChange={handleChange} />
       <Input {...args} unitText={'명'} showCounter onChange={handleChange} />
+      <Input {...args} showSearchIcon onEnterKeyDown={() => console.log('enter')} />
     </div>
   );
 };

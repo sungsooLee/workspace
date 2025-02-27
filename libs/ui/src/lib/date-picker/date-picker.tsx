@@ -1,11 +1,11 @@
-import { forwardRef, useState, useEffect } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import Primitive from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './date-picker.module.css';
 import './date-picker.css'; // date-picker style
 import { IcoCalendar01 } from '@learnway/icons';
 
-import { DATE_TIME_FORMAT, getDateTimeFormat, cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
 
@@ -26,6 +26,8 @@ export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   selectsEnd?: boolean;
   showTimePicker?: boolean;
   className?: string;
+  readOnly?: boolean;
+  disabled?: boolean;
   onChange?: (date: Date | undefined) => void;
 }
 
@@ -45,6 +47,8 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
       timeFormat = '24',
       minuteStep = 15,
       className,
+      readOnly,
+      disabled,
     },
     ref,
   ) => {
@@ -83,6 +87,8 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
           showIcon
           dateFormat={dateFormat}
           shouldCloseOnSelect
+          readOnly={readOnly}
+          disabled={disabled}
           minDate={minDate}
           maxDate={maxDate}
           selected={selectedDate}
