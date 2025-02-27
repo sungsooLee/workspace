@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DatePicker, Input, Select } from '@learnway/ui';
+import { Button, DatePicker, Input, Select, Textarea } from '@learnway/ui';
 import { IcoCheck02, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '../../assets/styles/modules/form.module.css';
@@ -208,6 +208,48 @@ function RouteComponent() {
                 onChange={handleDate2}
                 value={date2}
                 className={formStyles.datepicker_item}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-myStatus" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>권한 상태</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-myStatus"
+                type="text"
+                value="대기"
+                placeholder=""
+                readOnly
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-reason" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>신청 사유</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Textarea
+                id="name-reason"
+                rows={5}
+                cols={33}
+                placeholder=""
+                value="관리자 권한 신청시 입력한 사유 출력(없는 경우 출력 안함)"
+                resize="none"
+                size="sm"
+                disabled
               />
             </div>
           </div>
