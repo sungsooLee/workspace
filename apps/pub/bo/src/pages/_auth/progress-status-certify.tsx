@@ -7,7 +7,7 @@ import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import { Button, RadioCard, Input, Select, useModal } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/search-account')({
+export const Route = createFileRoute('/_auth/progress-status-certify')({
   component: RouteComponent,
 });
 
@@ -149,7 +149,11 @@ function RouteComponent() {
               <IcoCaution width={16} height={16} stroke="#6F798B" />
               유의사항
             </dt>
-            <dd>관리자 계정의 정보를 정확하게 입력해야 본인인증을 할 수 있습니다. </dd>
+            <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+            <dd>
+              법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
+              있습니다.
+            </dd>
           </dl>
         </div>
         <div className={signupStyles.btn_wrap}>
@@ -157,7 +161,6 @@ function RouteComponent() {
             취소
           </Button>
           <Button variant="primary" size="xl" onClick={handleClickAlert}>
-            {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
             인증번호 요청
           </Button>
         </div>

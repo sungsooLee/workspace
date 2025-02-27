@@ -2,7 +2,16 @@
 .auth_wrap {
   /* 공통 */
   .auth_box {
-    @apply relative z-0 px-[40px] py-[48px] text-left;
+    @apply relative z-0 p-[40px] text-left;
+    input {
+      @apply !min-h-[40px] rounded-[8px];
+    }
+    label + div {
+      @apply -mb-[4px] mt-[4px];
+    }
+    .search_info {
+      @apply mb-[48px] pt-[8px];
+    }
 
     h4.title {
       @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
@@ -25,31 +34,25 @@
     }
 
     .step_box {
-      @apply pl-[140px] pr-[140px];
+      @apply mb-[48px] pl-[140px] pr-[140px];
     }
 
     .signup_select {
-      @apply mt-[48px];
       .radio_card {
         @apply flex items-center justify-center gap-[16px] text-center;
 
         button {
-          @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+          @apply m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
           span {
-            @apply mt-[8px] block text-[var(--gray6)];
+            @apply body_3_r mt-[8px] block text-[var(--gray7)];
           }
           svg {
-            @apply opacity-30;
-          }
-          .ico1 {
-            @apply stroke-[var(--primary1)];
-          }
-          .ico2 {
+            @apply stroke-[var(--primary1)] opacity-30;
           }
           &[aria-checked='true'] {
             @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
             span {
-              @apply text-[var(--primary1)];
+              @apply body_3_b text-[var(--primary1)];
             }
             svg {
               @apply opacity-100;
@@ -76,10 +79,13 @@
       .btn_txt {
         @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
       }
+      .text {
+        @apply body_3_r mt-[8px] text-[var(--gray7)];
+      }
     }
 
     .signup_noti {
-      @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
+      @apply mt-[16px] rounded-[8px] bg-[var(--gray1)] p-[16px];
       .check_point {
         @apply body_4_r text-left text-[var(--gray7)];
         dt {
@@ -99,20 +105,44 @@
         }
       }
     }
+
+    .auth_info {
+      @apply body_3_r mb-[48px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary3)];
+      p .date {
+        @apply body_3_b ml-[4px] inline-block text-[var(--secondary3)];
+      }
+    }
+  }
+
+  /* 중간 라인 버튼 */
+  .btn_txt {
+    @apply text-center;
+    a {
+      @apply body_3_r text-[var(--gray8)] underline;
+    }
+    & + .signup_noti {
+      @apply pt-[24px];
+    }
+  }
+  .auth_form + .btn_txt {
+    @apply pt-[8px];
   }
 
   /* 하단 버튼 */
   .btn_wrap {
     @apply mt-[48px] flex items-center justify-center;
     button {
-      @apply w-full max-w-[294px];
+      @apply w-full flex-1 !rounded-[8px];
+      & + button {
+        @apply ml-[12px];
+      }
     }
   }
 
   /* 로그인 */
   &.login {
     .login_info {
-      @apply flex items-center justify-between;
+      @apply mt-[8px] flex items-center justify-between;
       .id_save {
         label {
           @apply text-[1.4rem] text-[var(--gray8)];
@@ -128,7 +158,7 @@
     .btn_box {
       @apply mt-[24px];
       .btn {
-        @apply w-full;
+        @apply w-full !rounded-[8px];
       }
     }
 
@@ -154,12 +184,12 @@
     }
 
     .login_guide {
-      @apply body_3_r flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray7)];
+      @apply body_3_r flex items-center justify-center text-[var(--gray7)];
       .btn_join {
         @apply text-[var(--secondary3)];
       }
       a {
-        @apply underline;
+        @apply text-[var(--gray7)] underline;
         + a {
           @apply ml-[16px];
         }
@@ -211,14 +241,10 @@
   /* 가입완료, 찾기완료 */
   &.search_account {
     .search_info {
-      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
+      @apply body_2_r text-center text-[var(--gray7)];
       strong {
         @apply text-[var(--gray8)];
       }
     }
   }
-}
-
-/* mobile */
-:global(body.mobile) {
 }

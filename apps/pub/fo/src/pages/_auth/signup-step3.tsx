@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input, Checkbox, Select } from '@learnway/ui';
 
@@ -21,7 +20,7 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
+    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.step_box}>
@@ -171,7 +170,7 @@ function RouteComponent() {
 
         <div className={signupStyles.title_box}>
           <h4 className={signupStyles.title}>이용약관 및 개인정보정책 동의</h4>
-          <p className={styles.txt_info}>아래의 내용을 주의 깊게 확인 후 동의해주세요.</p>
+          <p className={signupStyles.txt_info}>아래의 내용을 주의 깊게 확인 후 동의해주세요.</p>
         </div>
 
         <div className={signupStyles.signup_check}>

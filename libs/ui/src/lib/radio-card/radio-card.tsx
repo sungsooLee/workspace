@@ -27,10 +27,9 @@ const RadioCardComponent = forwardRef<
       )}
       defaultValue={defaultValue}
       {...props}>
-      {options.map((option: RadioCardOption) => (
-        <div className={styles.radio}>
+      {options.map((option: RadioCardOption, index: number) => (
+        <div className={styles.radio} key={index}>
           <Primitive.Item
-            key={option.value}
             className={styles.item}
             value={option.value}
             id={option.value}
