@@ -13,7 +13,7 @@
   .datepicker_wrap .react-datepicker__close-icon {
     @apply right-[32px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 pr-0;
     &::after {
-      @apply h-[16px] w-[16px] bg-transparent bg-[url('../../images/icon/ic_close_circle.png')] bg-[16px_auto] bg-[position:center_center] bg-no-repeat content-[''];
+      @apply h-[16px] w-[16px] bg-transparent bg-[url('../../assets/images/icon/ic_close_circle.png')] bg-[16px_auto] bg-[position:center_center] bg-no-repeat content-[''];
     }
   }
   .react-datepicker-popper .react-datepicker__triangle {
@@ -30,11 +30,11 @@
         @apply h-[20px] w-[20px] border-0 bg-transparent bg-[20px_auto] bg-[position:center_center] bg-no-repeat content-[''];
       }
       &::after {
-        @apply bg-[url('../../images/icon/ic_arrow_backward.png')];
+        @apply bg-[url('../../assets/images/icon/ic_arrow_backward.png')];
       }
     }
     .react-datepicker__navigation-icon--next::after {
-      @apply bg-[url('../../images/icon/ic_arrow_forward.png')];
+      @apply bg-[url('../../assets/images/icon/ic_arrow_forward.png')];
     }
     .react-datepicker__navigation--previous {
       @apply left-[16px] top-[16px];
@@ -52,7 +52,7 @@
     }
     .react-datepicker__day-names,
     .react-datepicker__week {
-      @apply flex px-[16px];
+      @apply mb-0 flex px-[16px];
     }
     .react-datepicker__day-name,
     .react-datepicker__day {
@@ -79,4 +79,20 @@
       }
     }
   }
+}
+
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  @apply rounded-full bg-transparent;
+  &:hover {
+    @apply bg-transparent;
+  }
+}
+.react-datepicker__day--keyboard-selected:not([aria-disabled='true']):hover,
+.react-datepicker__month-text--keyboard-selected:not([aria-disabled='true']):hover,
+.react-datepicker__quarter-text--keyboard-selected:not([aria-disabled='true']):hover,
+.react-datepicker__year-text--keyboard-selected:not([aria-disabled='true']):hover {
+  @apply bg-transparent;
 }

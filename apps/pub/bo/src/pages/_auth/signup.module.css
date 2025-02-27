@@ -79,6 +79,9 @@
       .btn_txt {
         @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
       }
+      .text {
+        @apply body_3_r mt-[8px] text-[var(--gray7)];
+      }
     }
 
     .signup_noti {
@@ -102,13 +105,37 @@
         }
       }
     }
+
+    .auth_info {
+      @apply body_3_r mb-[48px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary3)];
+      p .date {
+        @apply body_3_b ml-[4px] inline-block text-[var(--secondary3)];
+      }
+    }
+  }
+
+  /* 중간 라인 버튼 */
+  .btn_txt {
+    @apply text-center;
+    a {
+      @apply body_3_r text-[var(--gray8)] underline;
+    }
+    & + .signup_noti {
+      @apply pt-[24px];
+    }
+  }
+  .auth_form + .btn_txt {
+    @apply pt-[8px];
   }
 
   /* 하단 버튼 */
   .btn_wrap {
     @apply mt-[48px] flex items-center justify-center;
     button {
-      @apply w-full max-w-[294px] !rounded-[8px];
+      @apply w-full flex-1 !rounded-[8px];
+      & + button {
+        @apply ml-[12px];
+      }
     }
   }
 
