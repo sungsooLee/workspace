@@ -92,13 +92,13 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
           minDate={minDate}
           maxDate={maxDate}
           selected={selectedDate}
-          onChange={(date) => handleChange(date ?? undefined)}
           icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
           isClearable={true}
           showTimeInput={showTimeInput}
           monthsShown={numberOfMonths}
           wrapperClassName={'datepicker_wrap'}
           className={cn(styles.datepicker_input, className)}
+          onChange={(date) => handleChange(date ?? undefined)}
           //customTimeInput={<ExampleCustomTimeInput />}
         />
       </div>

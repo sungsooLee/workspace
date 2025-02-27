@@ -41,12 +41,15 @@ export const DateTimePickerStory: Story = {
   name: 'DateTimePicker',
   args: {
     dateTimeFormat: DATE_TIME_FORMAT.DATETIME_MIN,
+    disabled: true,
   },
   render: (args) => <BaseWrapper {...args} />,
 };
 
 export const DateRangePickerStory: Story = {
   name: 'DateRangePicker',
-  args: {},
+  args: {
+    disabled: true,
+  },
   render: (args) => <BaseRangeWrapper {...args} />,
 };
