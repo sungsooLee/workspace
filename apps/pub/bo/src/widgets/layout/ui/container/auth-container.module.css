@@ -1,20 +1,32 @@
 /* page-container.module.css */
 .start {
   &.auth_container {
-    @apply relative bg-[var(--gray1)] pb-[40px] pt-[80px];
+    @apply relative box-border flex min-h-[calc(100vh-65px)] justify-center bg-[var(--gray1)] pb-[120px];
     &.login {
-      @apply bg-cover bg-center;
-      background-image: url(../../../../assets/images/common/bg_login.png);
+      @apply items-center justify-start bg-[url('../../../../assets/images/common/bg_login.png')] bg-cover bg-center;
+      .auth_area {
+        @apply flex w-[877px] flex-row;
+        & > h2 {
+          @apply px-[40px] pt-[48px] text-left;
+        }
+      }
+      .auth_inner {
+        @apply w-[calc(100%-277px)] !rounded-l-none rounded-r-[16px] !border-[var(--white)] pb-[32px];
+      }
+    }
+    &:not(.login) {
+      @apply items-start;
     }
 
     .auth_area {
-      @apply m-auto w-[680px];
-      h2 {
-        @apply title_2_b flex items-center justify-center whitespace-pre px-[31px] pb-[32px] text-center;
-
+      @apply mx-auto w-[680px];
+      & > h2 {
+        @apply title_2_b flex items-center justify-stretch whitespace-pre pb-[32px] pt-[80px] text-center;
         &.title_login {
-          @apply title_3_b h-[160px] flex-col rounded-tl-[16px] rounded-tr-[16px] bg-cover bg-center pb-[0] text-[var(--white)];
-          background-image: url(../../../../assets/images/common/bg_login_tit.png);
+          @apply title_3_b min-h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[var(--white)];
+        }
+        &:not(.title_login) {
+          @apply justify-center;
         }
         .tit {
           @apply block;
@@ -22,32 +34,7 @@
       }
       .auth_inner {
         @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
-        &.login {
-          @apply rounded-tl-none rounded-tr-none;
-        }
       }
     }
   }
 }
-
-/* mobile */
-:global(body.mobile) {
-  .start {
-    &.auth_container {
-      @apply pt-0;
-      .auth_area {
-        @apply w-full;
-      }
-    }
-  }
-}
-
-/* .start {
-  &.auth_container {
-    &.login {
-      .auth_area {
-        @apply flex;
-      }
-    }
-  }
-} */

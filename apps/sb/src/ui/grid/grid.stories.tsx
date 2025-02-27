@@ -285,6 +285,7 @@ const MultiSelectTable = () => {
   });
 
   const handleStateChange = (newState: GridState) => {
+    console.log(newState);
     setTableState((prev) => ({
       ...prev,
       sorting: newState.sorting || prev.sorting,

@@ -23,7 +23,7 @@ const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
         cell: (info) => info.getValue(),
         header: '강사명',
       }),
-    ] as ColumnDef<any, unknown>[];
+    ] as ColumnDef<object, unknown>[];
 
     const handleRowSelect = (selectRowState: RowSelectionState) => {
       // console.log(selectRowState);

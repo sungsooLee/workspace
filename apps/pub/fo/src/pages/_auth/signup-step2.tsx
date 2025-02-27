@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input } from '@learnway/ui';
 
@@ -21,7 +20,7 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
+    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.signup_info}>
           <div className={signupStyles.step_box}>

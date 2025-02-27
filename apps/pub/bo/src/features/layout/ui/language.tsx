@@ -7,7 +7,7 @@ import styles from './language.module.css';
 import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 
 const PopoverContent = () => {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
   const langs = ['Korea', 'English'];
   const handleClick = (idx: number): void => {
     setActiveIdx(idx);

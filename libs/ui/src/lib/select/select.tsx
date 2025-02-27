@@ -15,6 +15,9 @@ export interface SelectComponentProps extends React.ComponentProps<typeof Primit
   options: Array<SelectOption>;
   labelKey?: string;
   valueKey?: string;
+  error?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
   placeholder?: string;
   className?: string;
   size?: 'md' | 'lg';
@@ -28,6 +31,8 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       value,
       labelKey = 'label',
       valueKey = 'value',
+      error,
+      readOnly,
       disabled,
       onChange,
       placeholder,
@@ -45,10 +50,25 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     }, [value]);
 
     return (
-      <div className={cn(styles.start, 'nlp--select', className, size && styles[size])}>
-        <Primitive.Root value={selectedItem?.value} onValueChange={setCurrentSelectedItem}>
+      <div
+        className={cn(
+          styles.start,
+          'nlp--select',
+          className,
+          size && styles[size],
+          error && styles.error,
+        )}>
+        <Primitive.Root
+          value={selectedItem?.value}
+          onValueChange={setCurrentSelectedItem}
+          disabled={disabled}>
           <Primitive.Trigger
-            className={cn(styles.select_trigger, size && styles[size])}
+            className={cn(
+              styles.select_trigger,
+              size && styles[size],
+              disabled && styles.disabled,
+              readOnly && styles.readonly,
+            )}
             aria-label="">
             <Primitive.Value placeholder={placeholder} className={styles.select_text} />
             <Primitive.Icon className={styles.select_icon}>

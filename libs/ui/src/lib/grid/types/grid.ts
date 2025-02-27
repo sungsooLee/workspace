@@ -22,7 +22,9 @@ export interface GridProps<T extends object> {
   // 로딩 여부
   isLoading?: boolean;
   // 로우 클릭에 대한 콜백 처리
-  onRowSelect?: (row: any) => void;
+  onRowSelect?: (selectedRow: any) => void;
+  // 멀티 로우 클릭에 대한 콜백 처리
+  onRowsSelect?: (selectedRows: any[]) => void;
   // 컬럼, 그리드 설정 변경에 따른 콜백 함수
   onStateChange?: (state: GridState) => void;
   // 그리드 타이틀
@@ -46,6 +48,12 @@ export interface GridProps<T extends object> {
   columnPinning?: {
     columns: string[];
   };
+  // 항목설정 버튼 표시 여부
+  hideColumnSettings?: boolean;
+  // 전체 rows 개수 표시 여부
+  hideTotalCount?: boolean;
+  // 선택 rows 개수 표시 여부
+  hideSelectedCount?: boolean;
 }
 
 export interface GridState {
@@ -53,4 +61,9 @@ export interface GridState {
   sorting?: SortingState;
   columnVisibility?: VisibilityState;
   columnOrder?: string[];
+}
+
+// grid useImperativeHandle() interface
+export interface GridImperative {
+  resetRowSelection: () => void;
 }

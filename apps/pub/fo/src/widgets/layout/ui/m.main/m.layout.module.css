@@ -1,6 +1,0 @@
-/* m.layout.mobule.css */
-.start {
-  &.container {
-    @apply w-full min-w-[320px];
-  }
-}
