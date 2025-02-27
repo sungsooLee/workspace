@@ -36,6 +36,12 @@
   &.pd_none {
     @apply pb-[0];
   }
+  .form_title {
+    @apply title_6_b text-[var(--gray9)];
+    & + .form_label {
+      @apply mt-[16px];
+    }
+  }
   .guide_text {
     @apply mt-[8px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
     &:empty {

@@ -112,6 +112,9 @@
         @apply body_3_b ml-[4px] inline-block text-[var(--secondary3)];
       }
     }
+    .success_info + .auth_info {
+      @apply mt-[24px];
+    }
   }
 
   /* 중간 라인 버튼 */
