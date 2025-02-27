@@ -217,3 +217,11 @@
 hr.divider {
   @apply h-[1px] w-full bg-[#EDF0F7];
 }
+
+/* 검색 인풋 */
+.input_wrap {
+  @apply relative flex w-full;
+  .btn_search {
+    @apply absolute left-0 top-0 z-[1] h-[32px] w-full bg-transparent -indent-[9999px] text-opacity-0;
+  }
+}
