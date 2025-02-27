@@ -65,7 +65,7 @@
     .success_info {
       @apply text-center;
       .ico {
-        @apply m-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
+        @apply m-auto inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
       }
       h3.title {
         @apply title_5_b mt-[24px];

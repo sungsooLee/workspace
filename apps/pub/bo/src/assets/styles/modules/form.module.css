@@ -109,7 +109,7 @@
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   .select_option {
-    @apply w-full min-w-[132px];
+    @apply w-full min-w-[120px];
     &.lg {
       @apply min-w-[360px];
       & > button {
@@ -160,6 +160,11 @@
     }
     &.focused {
       @apply border-[var(--gray7)];
+    }
+  }
+  & > div.short {
+    button {
+      @apply !w-[120px];
     }
   }
 }
