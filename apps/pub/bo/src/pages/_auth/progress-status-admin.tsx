@@ -15,16 +15,23 @@ function RouteComponent() {
   const [date, setDate] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
   const [date3, setDate3] = useState(new Date());
+  const [date4, setDate4] = useState(new Date());
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate = (value: any) => {
     setDate(value);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate2 = (value: any) => {
     setDate2(value);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDate3 = (value: any) => {
     setDate3(value);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDate4 = (value: any) => {
+    setDate4(value);
   };
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap}`}>
@@ -201,12 +208,32 @@ function RouteComponent() {
               <DatePicker
                 onChange={handleDate}
                 value={date}
+                disabled
                 className={formStyles.datepicker_item}
               />
               <span className={formStyles.dash}></span>
               <DatePicker
                 onChange={handleDate2}
                 value={date2}
+                disabled
+                className={formStyles.datepicker_item}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-date" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>권한 신청일</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <DatePicker
+                onChange={handleDate3}
+                value={date3}
+                disabled
                 className={formStyles.datepicker_item}
               />
             </div>
@@ -249,7 +276,8 @@ function RouteComponent() {
                 value="관리자 권한 신청시 입력한 사유 출력(없는 경우 출력 안함)"
                 resize="none"
                 size="sm"
-                disabled
+                className={formStyles.textarea}
+                readOnly
               />
             </div>
           </div>
@@ -347,8 +375,9 @@ function RouteComponent() {
             </label>
             <div className={formStyles.input_box}>
               <DatePicker
-                onChange={handleDate3}
-                value={date3}
+                onChange={handleDate4}
+                value={date4}
+                disabled
                 className={formStyles.datepicker_item}
               />
             </div>

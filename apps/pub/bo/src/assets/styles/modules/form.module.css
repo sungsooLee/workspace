@@ -141,6 +141,9 @@
   .btn_delete {
     @apply !ml-[16px];
   }
+  .textarea {
+    @apply !rounded-[8px];
+  }
   &.type2 {
     @apply mt-0;
   }

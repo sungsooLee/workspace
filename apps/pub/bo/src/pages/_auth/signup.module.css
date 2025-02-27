@@ -127,8 +127,13 @@
       @apply pt-[24px];
     }
   }
-  .auth_form + .btn_txt {
-    @apply pt-[8px];
+  .auth_form {
+    & + .btn_txt {
+      @apply pt-[8px];
+    }
+    & + .auth_form {
+      @apply mt-[16px] border-t-[1px] border-solid border-[#e3e9ef] pt-[24px];
+    }
   }
 
   /* 하단 버튼 */
