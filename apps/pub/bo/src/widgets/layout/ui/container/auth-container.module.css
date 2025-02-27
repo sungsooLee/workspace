@@ -1,7 +1,7 @@
 /* page-container.module.css */
 .start {
   &.auth_container {
-    @apply relative box-border flex min-h-[calc(100vh-65px)] justify-center bg-[var(--gray1)];
+    @apply relative box-border flex min-h-[calc(100vh-65px)] justify-center bg-[var(--gray1)] pb-[120px];
     &.login {
       @apply items-center justify-start bg-[url('../../../../assets/images/common/bg_login.png')] bg-cover bg-center;
       .auth_area {

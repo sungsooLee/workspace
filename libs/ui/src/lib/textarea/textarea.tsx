@@ -9,13 +9,21 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
   className?: string;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
   size?: 'sm' | 'md'; // textarea 높이(basic : md)
+  readOnly?: boolean;
   disabled?: boolean;
 }
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
-  ({ size = 'md', resize, className, disabled, ...props }, ref) => {
+  ({ size = 'md', resize, className, disabled, readOnly, ...props }, ref) => {
     return (
-      <div className={cn(styles.start, styles.textarea_wrap, disabled ? styles.disabled : '')}>
+      <div
+        className={cn(
+          styles.start,
+          styles.textarea_wrap,
+          disabled && styles.disabled,
+          readOnly && styles.readonly,
+          className,
+        )}>
         {/* textarea */}
         <textarea
           className={cn(

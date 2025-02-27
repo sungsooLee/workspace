@@ -65,7 +65,7 @@
     .success_info {
       @apply text-center;
       .ico {
-        @apply m-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
+        @apply m-auto inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
       }
       h3.title {
         @apply title_5_b mt-[24px];
@@ -112,6 +112,9 @@
         @apply body_3_b ml-[4px] inline-block text-[var(--secondary3)];
       }
     }
+    .success_info + .auth_info {
+      @apply mt-[24px];
+    }
   }
 
   /* 중간 라인 버튼 */
@@ -124,8 +127,13 @@
       @apply pt-[24px];
     }
   }
-  .auth_form + .btn_txt {
-    @apply pt-[8px];
+  .auth_form {
+    & + .btn_txt {
+      @apply pt-[8px];
+    }
+    & + .auth_form {
+      @apply mt-[16px] border-t-[1px] border-solid border-[#e3e9ef] pt-[24px];
+    }
   }
 
   /* 하단 버튼 */

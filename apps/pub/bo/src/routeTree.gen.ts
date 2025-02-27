@@ -23,6 +23,7 @@ import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
 import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account-pw'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
 import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
@@ -129,6 +130,12 @@ const AuthSearchAccountPwRoute = AuthSearchAccountPwImport.update({
 const AuthSearchAccountRoute = AuthSearchAccountImport.update({
   id: '/search-account',
   path: '/search-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
+  id: '/progress-status-cp',
+  path: '/progress-status-cp',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -413,6 +420,13 @@ declare module '@tanstack/react-router' {
       path: '/progress-status-certify'
       fullPath: '/progress-status-certify'
       preLoaderRoute: typeof AuthProgressStatusCertifyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-cp': {
+      id: '/_auth/progress-status-cp'
+      path: '/progress-status-cp'
+      fullPath: '/progress-status-cp'
+      preLoaderRoute: typeof AuthProgressStatusCpImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-account': {
@@ -713,6 +727,7 @@ interface AuthRouteChildren {
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
   AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
+  AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
   AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
@@ -728,6 +743,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
   AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
+  AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
   AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
@@ -832,6 +848,7 @@ export interface FileRoutesByFullPath {
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -882,6 +899,7 @@ export interface FileRoutesByTo {
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -935,6 +953,7 @@ export interface FileRoutesById {
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/_auth/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/_auth/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
   '/_auth/search-account-pw': typeof AuthSearchAccountPwRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -987,6 +1006,7 @@ export interface FileRouteTypes {
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-certify'
+    | '/progress-status-cp'
     | '/search-account'
     | '/search-account-pw'
     | '/search-id-success'
@@ -1036,6 +1056,7 @@ export interface FileRouteTypes {
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-certify'
+    | '/progress-status-cp'
     | '/search-account'
     | '/search-account-pw'
     | '/search-id-success'
@@ -1087,6 +1108,7 @@ export interface FileRouteTypes {
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
     | '/_auth/progress-status-certify'
+    | '/_auth/progress-status-cp'
     | '/_auth/search-account'
     | '/_auth/search-account-pw'
     | '/_auth/search-id-success'
@@ -1166,6 +1188,7 @@ export const routeTree = rootRoute
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
         "/_auth/progress-status-certify",
+        "/_auth/progress-status-cp",
         "/_auth/search-account",
         "/_auth/search-account-pw",
         "/_auth/search-id-success",
@@ -1237,6 +1260,10 @@ export const routeTree = rootRoute
     },
     "/_auth/progress-status-certify": {
       "filePath": "_auth/progress-status-certify.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-cp": {
+      "filePath": "_auth/progress-status-cp.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-account": {
