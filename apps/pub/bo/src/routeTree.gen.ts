@@ -16,6 +16,7 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutTestImport } from './pages/_layout/test'
+import { Route as LayoutMenuIdImport } from './pages/_layout/$menuId'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
@@ -88,6 +89,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LayoutTestRoute = LayoutTestImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMenuIdRoute = LayoutMenuIdImport.update({
+  id: '/$menuId',
+  path: '/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -478,6 +485,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_layout/$menuId': {
+      id: '/_layout/$menuId'
+      path: '/$menuId'
+      fullPath: '/$menuId'
+      preLoaderRoute: typeof LayoutMenuIdImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/test': {
       id: '/_layout/test'
       path: '/test'
@@ -818,6 +832,7 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
+  LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
@@ -828,6 +843,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
@@ -856,6 +872,7 @@ export interface FileRoutesByFullPath {
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
   '/success': typeof AuthSuccessRoute
+  '/$menuId': typeof LayoutMenuIdRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
@@ -907,6 +924,7 @@ export interface FileRoutesByTo {
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
   '/success': typeof AuthSuccessRoute
+  '/$menuId': typeof LayoutMenuIdRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
@@ -961,6 +979,7 @@ export interface FileRoutesById {
   '/_auth/signup-step2': typeof AuthSignupStep2Route
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/success': typeof AuthSuccessRoute
+  '/_layout/$menuId': typeof LayoutMenuIdRoute
   '/_layout/test': typeof LayoutTestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/accordion': typeof GuideGuideAccordionRoute
@@ -1014,6 +1033,7 @@ export interface FileRouteTypes {
     | '/signup-step2'
     | '/signup-step3'
     | '/success'
+    | '/$menuId'
     | '/test'
     | '/'
     | '/guide/accordion'
@@ -1064,6 +1084,7 @@ export interface FileRouteTypes {
     | '/signup-step2'
     | '/signup-step3'
     | '/success'
+    | '/$menuId'
     | '/test'
     | '/'
     | '/guide/accordion'
@@ -1116,6 +1137,7 @@ export interface FileRouteTypes {
     | '/_auth/signup-step2'
     | '/_auth/signup-step3'
     | '/_auth/success'
+    | '/_layout/$menuId'
     | '/_layout/test'
     | '/_layout/'
     | '/_guide/guide/accordion'
@@ -1233,6 +1255,7 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
+        "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
         "/_layout/learning/mediaDetail",
@@ -1293,6 +1316,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_layout/$menuId": {
+      "filePath": "_layout/$menuId.tsx",
+      "parent": "/_layout"
     },
     "/_layout/test": {
       "filePath": "_layout/test.tsx",
