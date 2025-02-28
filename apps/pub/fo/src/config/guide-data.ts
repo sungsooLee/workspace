@@ -183,6 +183,117 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '이용약관_FOOTER',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1016', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '개인정보처리방침_FOOTER',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1017', //스크린아이디
+    pageType: 'Pop-up',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '문의하기',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1018', //스크린아이디
+    pageType: 'Pop-up',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '휴먼계정해제_휴대폰인증',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1018', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '휴먼계정해제_이메일인증',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1019', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '휴먼계정해제_비밀번호변경',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1020', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '휴먼계정해제_해제결과',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1021', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_이메일입력_KR',
+    pageId: 'progress-status',
+    screenId: 'NLP_FO_CPS_1000', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_휴대폰인증_KR',
+    pageId: '',
+    screenId: 'NLP_FO_CPS_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_이메일인증_KR',
+    pageId: '',
+    screenId: 'NLP_FO_CPS_1002', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_결과',
+    pageId: 'progress-status',
+    screenId: 'NLP_FO_CPS_1003', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-02-28', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_유형선택',
     pageId: 'signup-step1',
     screenId: 'NLP_FO_MER_1000', //스크린아이디
@@ -208,46 +319,6 @@ export const guideData = [
     screenId: 'NLP_FO_MER_1002', //스크린아이디
     pageType: 'Page',
     completionDate: '2025-02-24', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '회원가입진행현황_이메일입력_KR',
-    pageId: 'progress-status',
-    screenId: 'NLP_FO_MER_1000', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '회원가입진행현황_휴대폰인증_KR',
-    pageId: '',
-    screenId: 'NLP_FO_MER_1001', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '회원가입진행현황_이메일인증_KR',
-    pageId: '',
-    screenId: 'NLP_FO_MER_1002', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '회원가입진행현황_결과',
-    pageId: 'progress-status',
-    screenId: 'NLP_FO_MER_1003', //스크린아이디
-    pageType: 'Page',
-    completionDate: '2025-02-28', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
