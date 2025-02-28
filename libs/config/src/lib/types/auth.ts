@@ -16,3 +16,15 @@ export interface AuthUser {
   activeTenantId?: number;
   menus?: any;
 }
+
+export interface AuthSSOHealthcheck {
+  clientId: string;
+  redirectUri: string;
+  state: string;
+}
+
+export interface AuthSSOLogin {
+  state: string;
+  authorizationCode: string;
+  timezone: string;
+}

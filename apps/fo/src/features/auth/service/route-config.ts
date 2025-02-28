@@ -49,9 +49,9 @@ export function metaConfig(pageMeta?: PageMeta) {
   return {
     beforeLoad: ({ context }: any) => {
       if (pageMeta) {
-        context.setPageLayoutState({ ...defaultPageMeta, ...pageMeta });
+        context.setPageMeta({ ...defaultPageMeta, ...pageMeta });
       } else {
-        context.setPageLayoutState(defaultPageMeta);
+        context.setPageMeta(defaultPageMeta);
       }
     },
   };

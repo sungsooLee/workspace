@@ -1,26 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router';
-// import { useState } from 'react';
-// import { Accordion } from '@learnway/ui';
-// import { getRandomId } from '@learnway/shared';
+import { useState } from 'react';
+import { Accordion } from '@learnway/ui';
+import { getRandomId } from '@learnway/shared';
 
 export const Route = createFileRoute('/_guide/guide/accordion')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  //   const [value, setValue] = useState<string>('');
-  //   const dummyItems = [
-  //     {
-  //       value: getRandomId(),
-  //       title: 'title A',
-  //       children: <div>Content A</div>,
-  //     },
-  //     {
-  //       value: getRandomId(),
-  //       title: 'title B',
-  //       children: <div>Content B</div>,
-  //     },
-  //   ];
+  const [value, setValue] = useState<string>('');
+  const dummyItems = [
+    {
+      value: getRandomId(),
+      title: 'title A',
+      children: <div>Content A</div>,
+    },
+    {
+      value: getRandomId(),
+      title: 'title B',
+      children: <div>Content B</div>,
+    },
+  ];
 
   return (
     <div>
@@ -55,11 +55,13 @@ function RouteComponent() {
         <h3 className="guide_tit3">multiple</h3>
         <div className="flex_box">
           <div className="desc">
-            {/* <Accordion
-              items={dummyItems}
-              value={value}
-              onValueChange={(value: string) => setValue(value)}
-            /> */}
+            {
+              <Accordion
+                items={dummyItems}
+                value={value}
+                onValueChange={(value) => setValue(value as string)}
+              />
+            }
           </div>
         </div>
       </div>
