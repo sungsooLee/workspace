@@ -3,9 +3,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
-import { Spinner, Input, Textarea } from '@learnway/ui';
+import { Spinner, Input, Textarea, Button } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { IcoFormRequired } from '@learnway/icons';
+import { IcoFormRequired, IcoStatusFail } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/mediaRegister')({
@@ -67,12 +67,29 @@ function RouteComponent() {
       {/* sub_contents */}
       <div className={styles.sub_contents}>
         <strong className={movieInfoStyles.title}>업로드 파일</strong>
-        <div className={movieInfoStyles.ing_wrap}>
+        {/* 인코딩 진행 중 */}
+        <div className={movieInfoStyles.status_wrap}>
           <Spinner isLoading={true} showBackdrop className={movieInfoStyles.loading} />
           <p className={movieInfoStyles.text}>
             <strong>인코딩 진행 중입니다.</strong>
             인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
           </p>
+        </div>
+        {/* 인코딩 실패 */}
+        <div className={movieInfoStyles.status_wrap}>
+          <IcoStatusFail className={movieInfoStyles.fail} />
+          <p className={movieInfoStyles.text}>
+            <strong>인코딩이 실패되었습니다.</strong>
+            다시 시도해 주세요.
+          </p>
+          <div className={movieInfoStyles.btn_box}>
+            <Button className={movieInfoStyles.btn} variant="gray" size="sm">
+              재시도
+            </Button>
+            <Button className={movieInfoStyles.btn} variant="primary" size="sm">
+              동영상 변경
+            </Button>
+          </div>
         </div>
       </div>
     </PageContainer>

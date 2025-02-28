@@ -36,8 +36,8 @@
   }
 }
 
-/* loading */
-.ing_wrap {
+/* incoding :  loading, fail */
+.status_wrap {
   @apply flex h-[273px] w-full flex-col items-center justify-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
   .loading {
     @apply h-[56px] w-[56px];
@@ -47,5 +47,8 @@
     strong {
       @apply body_3_b block text-[var(--gray9)];
     }
+  }
+  .fail {
+    @apply h-[51px] w-[56px] stroke-[#FFB902];
   }
 }

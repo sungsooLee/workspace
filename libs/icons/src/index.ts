@@ -77,6 +77,7 @@ export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
 export { ReactComponent as IcoSpinner } from './lib/ic_spinner.svg'; // spinner
+export { ReactComponent as IcoStatusFail } from './lib/ic_status_failed.svg'; // Status fail
 
 //export Default as Information from './lib/information.svg?react';
 
