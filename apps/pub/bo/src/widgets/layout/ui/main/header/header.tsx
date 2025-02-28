@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
 import { Logo, UserAvatar, Notification } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
+import { Language } from '../../../../../features/layout/ui/language';
 
 import styles from './header.module.css';
 

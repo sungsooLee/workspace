@@ -639,14 +639,14 @@ const Grid = forwardRef(
     };
 
     return (
-      <div className="flex h-full w-full flex-col">
-        <div className="mb-4 flex w-full flex-row">
+      <div className="table_info_wrap">
+        <div className="table_info_item">
           {/* 제목 */}
-          {title && <div className="px-4 text-lg font-semibold">{title}</div>}
+          {title && <div className="title">{title}</div>}
           {/* 전체 개수  */}
           {!hideTotalCount && (
-            <div>
-              | {t('전체')} {data?.length}
+            <div className="sub_info">
+              {t('전체')} <strong className="num">{data?.length}</strong>
             </div>
           )}
           {/* 컬럼 설정 */}

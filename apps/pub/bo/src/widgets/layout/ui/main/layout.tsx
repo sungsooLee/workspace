@@ -7,7 +7,7 @@ import { useActiveMenuDepthState } from '../../../../features/platform';
 import { LNB } from './lnb/lnb';
 
 import { Header } from './header/header';
-
+import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import styles from './layout.module.css';
 
 interface LayoutComponentProps {
@@ -31,7 +31,9 @@ function LayoutComponent({ children }: LayoutComponentProps) {
         <div className={cn(styles.start, styles.container)}>
           <div className={styles.container_inner}>
             <LNB />
-            <main>{children}</main>
+            <main>
+              <PageContainer>{children}</PageContainer>
+            </main>
           </div>
         </div>
       </>
@@ -41,7 +43,14 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <div className={cn(styles.start, styles.container)}>
+        <div className={styles.container_inner}>
+          <LNB />
+          <main>
+            <PageContainer>{children}</PageContainer>
+          </main>
+        </div>
+      </div>
     </>
   );
 }
