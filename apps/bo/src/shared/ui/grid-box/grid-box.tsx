@@ -8,7 +8,7 @@ import { Grid } from '@learnway/ui';
  * @constructor
  */
 const GridBoxComponent: FC<any> = ({ config }) => {
-  const { data: data, page, gridFetch, columns } = config;
+  const { data: data, page, totalRows, gridFetch, columns } = config;
   const columnHelper = createColumnHelper<any>();
   const girdColumns = columns.map((column: any) => {
     switch (column.type) {
@@ -16,13 +16,17 @@ const GridBoxComponent: FC<any> = ({ config }) => {
         return columnHelper.display({
           id: column.name,
           header: column.label,
-          cell: ({ row }) => page.pageIndex * page.pageSize + row.index + 1,
+          cell: ({ row }) =>
+            page ? page.pageIndex * page.pageSize + row.index + 1 : row.index + 1,
         });
       case 'reverse-numbering':
         return columnHelper.display({
           id: column.name,
           header: column.label,
-          cell: ({ row }) => page.totalRows - (page.pageIndex * page.pageSize + row.index),
+          cell: ({ row }) =>
+            page
+              ? page.totalRows - (page.pageIndex * page.pageSize + row.index)
+              : totalRows - row.index,
         });
       default:
         return columnHelper.accessor(column.name, {
@@ -47,18 +51,24 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   const handleChangePageSize = (pageSize: number) => {
     console.log('page size');
   };
+  console.log('page =>  ', page);
 
   return (
     <Grid
       data={data}
       columns={girdColumns}
       pagination={
-        page && {
-          ...page,
-          onPageChange: handleChangePage,
-          onPageSizeChange: handleChangePageSize,
-        }
+        page
+          ? {
+              ...page,
+              onPageChange: handleChangePage,
+              onPageSizeChange: handleChangePageSize,
+            }
+          : undefined
       }
+      /*pagination={
+
+      }*/
     />
   );
 };

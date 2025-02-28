@@ -59,4 +59,16 @@ export default class LeaningResourceService {
       });
     });
   }
+
+  static fetchProgramGuideDownload() {
+    return new Promise((resolve) => {
+      const sharedHistories = Array.from({ length: 10 }, (_, id) => ({
+        id: id + 1,
+        fileName: faker.food.fruit(),
+      }));
+      resolve({
+        content: sharedHistories,
+      });
+    });
+  }
 }

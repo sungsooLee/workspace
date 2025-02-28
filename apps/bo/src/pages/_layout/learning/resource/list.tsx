@@ -13,6 +13,7 @@ import { leaningResourceQueryOptions } from '../../../../entities/leaning-resour
 import TestForm from '../../../../widgets/test/ui/test-form';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
+import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
@@ -80,7 +81,21 @@ function RouteComponent() {
           variant="point"
           size="sm"
           onClick={() =>
-            open({ content: <SharedHistoryPopup />, width: 'sm', height: 'md', title: '맵핑과정' })
+            open({ content: <SharedHistoryPopup />, width: 'sm', height: 'md', title: '공유이력' })
+          }>
+          공유이력팝업
+        </Button>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() =>
+            open({
+              content: <ProgramGuideDownloadPopup />,
+              width: 'sm',
+              height: 'sm',
+              title: '프로그램/가이드 다운로드',
+            })
           }>
           공유이력팝업
         </Button>
