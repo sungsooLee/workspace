@@ -14,6 +14,7 @@ import TestForm from '../../../../widgets/test/ui/test-form';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
+import { RegistrantPopup } from '../../../../features/learning/ui/resource/registrant-popup';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
@@ -97,7 +98,44 @@ function RouteComponent() {
               title: '프로그램/가이드 다운로드',
             })
           }>
-          공유이력팝업
+          프로그램가이드다운로드 팝업
+        </Button>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() =>
+            open({
+              content: (
+                <RegistrantPopup
+                  name={'김현대'}
+                  employeeNumber={'8883721'}
+                  email={'hd@hd.com'}
+                  contact={'+82 1011112222'}
+                />
+              ),
+              width: 'sm',
+              height: 'sm',
+              title: '등록자',
+            })
+          }>
+          등록자 팝업 (연락처있음)
+        </Button>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() =>
+            open({
+              content: (
+                <RegistrantPopup name={'김현대'} employeeNumber={'8883721'} email={'hd@hd.com'} />
+              ),
+              width: 'sm',
+              height: 'sm',
+              title: '등록자 정보',
+            })
+          }>
+          등록자 팝업 (연락처없음)
         </Button>
       </MainContents>
     </PageContainer>
