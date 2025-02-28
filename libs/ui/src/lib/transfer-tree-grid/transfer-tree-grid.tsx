@@ -2,16 +2,17 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import styles from './transfer-grid.module.css';
+import styles from './transfer-tree-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Grid } from '../grid';
+import { TreeView } from '../tree-view/tree';
 import { IcoChevronLeft, IcoChevronRight } from '@learnway/icons';
 import { GridImperative } from '@/libs/ui/src';
 
-export interface TransferGridProps {
+export interface TransferTreeGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
-  gridData: any; // 그리드 데이터
+  treeData: any; // 그리드 데이터
   rowKey: string;
   className?: string;
   leftTitle?: string; // 좌측 그리드 title
@@ -19,15 +20,26 @@ export interface TransferGridProps {
   onChange?: (newGridData: any) => void;
 }
 
-const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
-  ({ gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props }) => {
+const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>(
+  ({
+    treeData: ownerTreeData = [],
+    columns,
+    rowKey,
+    className,
+    leftTitle,
+    rightTitle,
+    onChange,
+    ...props
+  }) => {
     const [selectedItems, setSelectedItems] = useState<any>();
-    const [leftGridData, setLeftGridData] = useState<any>(gridData);
-    const [rightGridData, setRightGridData] = useState<any>([]);
-    const [leftSelectedRows, setLeftSelectedRows] = useState<any>();
-    const [rightSelectedRows, setRightSelectedRows] = useState<any>();
-    const leftGridRef = useRef<GridImperative>(null);
-    const rightGridRef = useRef<GridImperative>(null);
+    const [treeData, setTreeData] = useState<any>(ownerTreeData);
+    const [selectedTreeItems, setSelectedTreeItems] = useState<any>();
+
+    const [gridData, setGridData] = useState<any>([]);
+    const [selectedGridRows, setSelectedGridRows] = useState<any>();
+    const gridRef = useRef<GridImperative>(null);
+
+    const [expandTrigger, setExpandTrigger] = useState<boolean>(true);
 
     useEffect(() => {
       // selectedItems && onChange?.(selectedItems);
@@ -35,34 +47,33 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
 
     const handleAppendClick = (event: React.MouseEvent) => {
       // 좌측 그리드 데이터 갱신 : 좌측 그리드 데이터 - 좌측 그리드 선택된 rows
-      const newLeftGridData = leftGridData?.filter(
-        (d: any) => !leftSelectedRows?.find((x: any) => x[rowKey] === d[rowKey]),
-      );
-      setLeftGridData(newLeftGridData);
+      // const newLeftGridData = treeData?.filter(
+      //   (d: any) => !leftSelectedRows?.find((x: any) => x[rowKey] === d[rowKey]),
+      // );
+      // setTreeData(newLeftGridData);
 
       // 우측 그리드 데이터 갱신 : 우측 그리드 데이터 + 좌측 그리드 선택된 rows
-      const newRightGridData = [...rightGridData, ...leftSelectedRows];
-      setRightGridData(newRightGridData);
+      const newGridData = [...gridData, ...selectedTreeItems];
+      setGridData(newGridData);
 
       // 좌측 우측 그리드 선택 초기화
-      leftGridRef.current?.resetRowSelection();
-      // rightGridRef.current?.resetRowSelection();
+      // gridRef.current?.resetRowSelection();
     };
 
     const handleRemoveClick = (event: React.MouseEvent) => {
       // 좌측 그리드 데이터 갱신 : 좌측 그리드 데이터 + 우측 그리드 선택된 rows
-      const newLeftGridData = [...leftGridData, ...rightSelectedRows];
-      setLeftGridData(newLeftGridData);
+      // const newLeftGridData = [...treeData, ...selectedGridRows];
+      // setTreeData(newLeftGridData);
 
       // 우측 그리드 데이터 갱신 : 우측 그리드 데이터 - 우측 그리드 선택된 rows
-      const newRightGridData = rightGridData?.filter(
-        (d: any) => !rightSelectedRows?.find((x: any) => x[rowKey] === d[rowKey]),
+      const newGridData = gridData?.filter(
+        (d: any) => !selectedGridRows?.find((x: any) => x[rowKey] === d[rowKey]),
       );
-      setRightGridData(newRightGridData);
+      setGridData(newGridData);
 
       // 좌측 우측 그리드 선택 초기화
       // leftGridRef.current?.resetRowSelection();
-      rightGridRef.current?.resetRowSelection();
+      // gridRef.current?.resetRowSelection();
     };
 
     return (
@@ -75,14 +86,12 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         )}>
         {/* left grid */}
         <div>
-          <Grid
-            ref={leftGridRef}
-            title={leftTitle}
-            data={leftGridData}
-            columns={columns}
-            hideColumnSettings
-            multiSelectable
-            onRowsSelect={(newSelectedRows) => setLeftSelectedRows(newSelectedRows)}
+          <TreeView
+            data={treeData}
+            treeId={'1'}
+            expandTrigger={expandTrigger}
+            // nodeButtons={renderNodeButtons}
+            type={'default'}
           />
         </div>
         {/* buttons */}
@@ -100,13 +109,13 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         {/* right grid */}
         <div>
           <Grid
-            ref={rightGridRef}
+            ref={gridRef}
             title={rightTitle}
-            data={rightGridData}
+            data={gridData}
             columns={columns}
             hideColumnSettings
             multiSelectable
-            onRowsSelect={(newSelectedRows) => setRightSelectedRows(newSelectedRows)}
+            onRowsSelect={(newSelectedRows) => setSelectedGridRows(newSelectedRows)}
           />
         </div>
       </div>
@@ -114,4 +123,4 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
   },
 );
 
-export const TransferGrid = TransferGridComponent;
+export const TransferTreeGrid = TransferTreeGridComponent;
