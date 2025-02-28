@@ -12,6 +12,7 @@ import { translationQueryOptions } from '../../../../entities/translation/servic
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import TestForm from '../../../../widgets/test/ui/test-form';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
+import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
@@ -72,6 +73,16 @@ function RouteComponent() {
             open({ content: <MappingCoursePopup />, width: 'md', height: 'md', title: '맵핑과정' })
           }>
           매핑과정팝업
+        </Button>
+
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() =>
+            open({ content: <SharedHistoryPopup />, width: 'sm', height: 'md', title: '맵핑과정' })
+          }>
+          공유이력팝업
         </Button>
       </MainContents>
     </PageContainer>

@@ -45,4 +45,18 @@ export default class LeaningResourceService {
       });
     });
   }
+  static fetchSharedHistories(params: any) {
+    return new Promise((resolve) => {
+      const sharedHistories = Array.from({ length: 10 }, (_, id) => ({
+        id: id + 1,
+        tenant: faker.food.fruit(),
+        channel: faker.food.fruit(),
+        sharedDt: faker.date.anytime().toDateString(),
+      }));
+      resolve({
+        content: sharedHistories,
+        pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 },
+      });
+    });
+  }
 }
