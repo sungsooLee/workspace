@@ -414,8 +414,12 @@
         text-decoration: underline;
       }
       &.pages {
+        @apply text-left;
         a {
           @apply text-[#00AFD5];
+        }
+        .screen {
+          @apply ml-[5px] text-[12px] text-[#999];
         }
       }
     }
