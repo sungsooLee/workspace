@@ -13,10 +13,12 @@ import {
   DatePicker,
   Switch,
   Select,
+  ThumbnailImageUpload,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { IcoFormRequired, IcoStatusFail, IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
 export const Route = createFileRoute('/_layout/learning/mediaRegister')({
   component: RouteComponent,
@@ -120,21 +122,23 @@ function RouteComponent() {
                   <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                 </Button>
               </Tooltip>
-              {/* Switch : '무기한' : '기간 설정' , input_box 영역 hide / show */}
+              {/* Switch 텍스트 : '무기한' : '기간 설정' , input_box_wrap 영역 hide / show */}
               <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} />
             </label>
-            <div className={formStyles.input_box}>
-              <DatePicker
-                onChange={handleDate}
-                value={date}
-                className={formStyles.datepicker_item}
-              />
-              <span className={formStyles.dash}></span>
-              <DatePicker
-                onChange={handleDate2}
-                value={date2}
-                className={formStyles.datepicker_item}
-              />
+            <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
+              <div className={formStyles.input_box}>
+                <DatePicker
+                  onChange={handleDate}
+                  value={date}
+                  className={formStyles.datepicker_item}
+                />
+                <span className={formStyles.dash}></span>
+                <DatePicker
+                  onChange={handleDate2}
+                  value={date2}
+                  className={formStyles.datepicker_item}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -143,7 +147,7 @@ function RouteComponent() {
           <div className={formStyles.form_item}>
             <label htmlFor="name-term" className={formStyles.form_label}>
               <span className={formStyles.form_text}>외주개발업체 정보</span>
-              {/* Switch : '있음' : '없음' , input_box 영역 hide / show */}
+              {/* Switch 텍스트 : '있음' : '없음' , input_box_wrap 영역 hide / show */}
               <Switch id="switch02" className={formStyles.btn_switch} label={'없음'} />
             </label>
             <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
@@ -260,6 +264,36 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-thumbnail" className={formStyles.form_label}>
+              썸네일{/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <ThumbnailImageUpload
+                options={[
+                  { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
+                  { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
+                ]}
+                onChange={(options: ImageOption[]) => console.log('onChange', options)}
+                onCheckedChange={(options: ImageOption[]) =>
+                  console.log('onCheckedChange', options)
+                }
+              />
+            </div>
+            <p className={formStyles.guide_text}>
+              학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+            </p>
           </div>
         </div>
       </div>

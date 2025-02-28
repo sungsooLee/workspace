@@ -83,6 +83,7 @@ export { ReactComponent as IcoPlay } from './lib/ic_play.svg'; // play
 export { ReactComponent as IcoRating } from './lib/ic_rating.svg'; // rating
 export { ReactComponent as IcoHeart } from './lib/ic_heart.svg'; // heart
 export { ReactComponent as IcoMonitor01 } from './lib/ic_monitor-01.svg'; // monitor01
+export { ReactComponent as IcoStatusFail } from './lib/ic_status_failed.svg'; // status fail
 
 //export Default as Information from './lib/information.svg?react';
 

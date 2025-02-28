@@ -94,6 +94,7 @@
   }
 }
 .input_box_wrap {
+  @apply mt-[16px];
   .input_box {
     @apply mt-[4px];
     & + .input_box {
