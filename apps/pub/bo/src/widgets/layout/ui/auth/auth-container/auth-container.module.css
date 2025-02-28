@@ -1,9 +1,9 @@
-/* page-container.module.css */
+/* auth-container.module.css */
 .start {
   &.auth_container {
     @apply relative box-border flex min-h-[calc(100vh-65px)] justify-center bg-[var(--gray1)] pb-[120px];
     &.login {
-      @apply items-center justify-start bg-[url('../../../../assets/images/common/bg_login.png')] bg-cover bg-center;
+      @apply items-center justify-start bg-[url('../../../../../assets/images/common/bg_login.png')] bg-cover bg-center pb-0;
       .auth_area {
         @apply flex w-[877px] flex-row;
         & > h2 {
@@ -23,7 +23,7 @@
       & > h2 {
         @apply title_2_b flex items-center justify-stretch whitespace-pre pb-[32px] pt-[80px] text-center;
         &.title_login {
-          @apply title_3_b min-h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[var(--white)];
+          @apply title_3_b min-h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[var(--white)];
         }
         &:not(.title_login) {
           @apply justify-center;

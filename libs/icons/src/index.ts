@@ -76,6 +76,7 @@ export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; /
 export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
+export { ReactComponent as IcoSpinner } from './lib/ic_spinner.svg'; // spinner
 
 //export Default as Information from './lib/information.svg?react';
 
