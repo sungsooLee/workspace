@@ -108,6 +108,9 @@
           &::before {
             @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
           }
+          .link {
+            @apply ml-[8px] text-[#009ABC] underline;
+          }
         }
       }
     }

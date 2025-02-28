@@ -1,11 +1,11 @@
 export const PAGE_TITLE_BY_PATH: Record<string, string> = {
-  '/signup': '회원가입',
-  '/login': `LEARNING WAY (시스템명)`,
-  '/success': '',
-  '/progress-status': '진행현황',
-  '/search-account': '아이디/비밀번호 찾기',
+  '/pb-bo/signup': '회원가입',
+  '/pb-bo/login': `LEARNING WAY (시스템명)`,
+  '/pb-bo/success': '',
+  '/pb-bo/progress-status': '진행현황',
+  '/pb-bo/search-account': '아이디/비밀번호 찾기',
 };
 
 export function isSigninPage(path: string): boolean {
-  return path === '/login';
+  return path === '/pb-bo/login';
 }

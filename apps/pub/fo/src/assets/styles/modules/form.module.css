@@ -138,6 +138,11 @@
       @apply border-[var(--gray7)];
     }
   }
+  & > div.short {
+    button {
+      @apply !w-[120px] !min-w-[120px];
+    }
+  }
   button {
     @apply whitespace-nowrap;
   }

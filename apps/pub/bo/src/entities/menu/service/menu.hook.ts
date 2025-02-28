@@ -4,13 +4,13 @@ import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions } from './menu.queries';
 import { FetchMenusParams } from '../../../types/entities/menu';
-
+import menuMock from '../../mock/menu.json';
 export function useFetchMenus(params: FetchMenusParams) {
-  return useQuery(queryOptions.all(params));
+  return { data: menuMock.children }; //useQuery(queryOptions.all(params));
 }
 
 export function useFetchMenu({ menuId }: { menuId: string }) {
-  return useQuery(queryOptions.detail(menuId));
+  return { data: menuMock.children }; //return useQuery(queryOptions.detail(menuId));
 }
 
 export function useAsycFetchMenus(mutationOptions = {}) {
