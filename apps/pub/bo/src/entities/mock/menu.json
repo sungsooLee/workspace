@@ -1,0 +1,1510 @@
+{
+  "title": "ROOT",
+  "roles": "ROLE_ADMIN",
+  "path": "/",
+  "children": [
+    {
+      "title": "플랫폼 관리",
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu2",
+      "children": [
+        {
+          "title": "서비스 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/menu2-1"
+        },
+        {
+          "title": "권한관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-2",
+          "children": [
+            {
+              "title": "학습자 역할 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-2-1"
+            },
+            {
+              "title": "관리자 권한 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-2-2"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "메뉴 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-3",
+          "children": [
+            {
+              "title": "FO 메뉴 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/platform/menu",
+              "children": [
+                {
+                  "title": "메뉴 수정",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차",
+                  "isQuickAccessArea": false,
+                  "path": "/menu/menu2-3-1-1"
+                },
+                {
+                  "title": "메뉴 생성",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차",
+                  "isQuickAccessArea": false,
+                  "path": "/menu/menu2-3-1-2"
+                }
+              ]
+            },
+            {
+              "title": "BO 메뉴 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-3-2"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "요소 설정 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-4",
+          "children": [
+            {
+              "title": "템플릿 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-1"
+            },
+            {
+              "title": "엡 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-2"
+            },
+            {
+              "title": "모듈 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-4-3"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "플랫폼 시스템 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu2-5",
+          "children": [
+            {
+              "title": "공통코드 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-1"
+            },
+            {
+              "title": "프로그램 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-2"
+            },
+            {
+              "title": "시스템 메시지 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-3"
+            },
+            {
+              "title": "에러 메시지 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu2-5-4"
+            },
+            {
+              "title": "API 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "IF 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "배치 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+
+            {
+              "title": "동기화 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "그리드 빌더",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/builder/grid"
+            },
+            {
+              "title": "테이블 빌더",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/builder/table"
+            },
+            {
+              "title": "동적폼 예제",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/type2"
+            },
+            {
+              "title": "다국어 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/platform/system/translation"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "고객사 운영",
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/menu3777777",
+      "children": [
+        {
+          "title": "테넌트 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/partners/tenant",
+          "children": [
+            {
+              "title": "테넌트 개설",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-1-1"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "테넌트 운영 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-2",
+          "children": [
+            {
+              "title": "LXP 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-1"
+            },
+            {
+              "title": "전시 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-2"
+            },
+            {
+              "title": "검색 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-2-3"
+            },
+            {
+              "title": "테마/토픽(카테고리) 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "공지사항 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "Q&A 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "개인정보 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "메시지 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "결재 관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-3",
+          "children": [
+            {
+              "title": "결재 라인 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-3-1"
+            },
+            {
+              "title": "결재 내역 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/menu/menu3-3-2"
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "인사관리",
+          "roles": "ROLE_ADMIN",
+          "path": "/menu/menu3-4",
+          "children": [
+            {
+              "title": "회사/조직 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "학습자 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "관리자 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "관리자 그룹 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "관리자 권한 신청 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "캡쳐 보안 예외 처리 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "CP/협력사 관리(전체)",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "CP 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "강사 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "채널 관리",
+      "roles": "ROLE_ADMIN",
+      "children": [
+        {
+          "title": "채널 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "상세",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "공지사항 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "채널 운영 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "채널 카테고리 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "채널 홈 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육과정 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "숏폼 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "패키지 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "플레이 리스트 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "커뮤니티 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "채널 개설 신청 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "채널 개설(관리자)",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "채널 관리자 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "교육운영",
+      "roles": "ROLE_ADMIN",
+      "path": "/learning",
+      "children": [
+        {
+          "title": "과정 조회",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "과정 개설",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "상시학습",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "이러닝",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "집합",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "컨퍼런스/포럼/워크샵",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "라이브",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "시험",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "패키지(기획전 형태)",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "일괄 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "학습 운영",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "운영 스케쥴",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "학습 알림",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "수강신청/현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "학습현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "수료 처리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "대리 결재자 지정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "고용보험",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "CoP결과 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "S-OJT",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "설문 운영",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "설문 개설",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "설문 결과",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "시험(E-TEST) 운영",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "시험 개설",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "시험 채점",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "시험 결과",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "과제 운영",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "과제 채점",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "과제 채점 결과",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "강사 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "강사정보 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "강사 실적 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "사내 강사료 신청",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "교육장소 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "현지화 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "교육자원",
+      "roles": "ROLE_ADMIN",
+      "path": "/learning/resource",
+      "children": [
+        {
+          "title": "학습자원 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "학습자원 조회",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/learning/resource/education/list",
+              "children": [
+                {
+                  "title": "학습자원 등록",
+                  "roles": "ROLE_ADMIN",
+                  "tenantName": "현대자동차",
+                  "isQuickAccessArea": false,
+                  "path": "/learning/resource/education/register",
+                  "children": [
+                    {
+                      "title": "동영상 등록",
+                      "roles": "ROLE_ADMIN",
+                      "tenantName": "현대자동차",
+                      "isQuickAccessArea": false,
+                      "path": "/learning/resource/education/register/video"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "학습자원 조회",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "일반 콘텐츠 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "Scorm 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "Kit 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "학습자원 검수",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "학습자원 공유",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "설문 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "설문지 조회",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "설문지 복사",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "설문지 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "시험(E-TEST) 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "과제 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "과제 출제",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "교육 제도",
+      "roles": "ROLE_ADMIN",
+      "children": [
+        {
+          "title": "성장진단",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "진단정보관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "진단실시관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "IDP관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "성장계획수립",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "팀 육성목표 작성 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "IDP 수립/승인 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "IDP 학습 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "IDP 코칭 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "팀 IDP 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "개인 IDP 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "기술인증",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "제도관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "인원관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "평가관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "배지관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "배지 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "배지 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "배지 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "자격증 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "자격증 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "자격증 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "자격증 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "자격증 후기",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "포인트 관리",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "포인트 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "포인트 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "어학시험",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "어학 분류 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "어학시험 조회",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "어학시험 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "어학시험 운영",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "응시료 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "개인정보위탁관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "어학당 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "교육 지원",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "교육비 지원 설정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "강의장 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "강의장 예약 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "강의장 예약 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "출강 신청",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육/채널 요청",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "완성차 교육예산",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "사업계획",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "운영계획",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육예산품의",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육운영조직",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "세부산출근거",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "현황통계",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "R&D 교육예산",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "년간 교육계획",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "R&D 교육신청",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "R&D 교육예산",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "R&D 교육예산 이력",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "R&D 교육 결과",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "센터 담당자 관리",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "R&D 교육예산 현황",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "커뮤니티 운영",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "러닝랩",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "지식공유",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "OJT",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "코칭",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "교육통계",
+      "roles": "ROLE_ADMIN",
+      "children": [
+        {
+          "title": "교육 지표",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "효율성",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "효과성",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "HRD 성과",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "과정별 이력",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "정규과정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "상시과정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "외부교육",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "개인별 이력",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "기술교육",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "월별",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "인당교육시간",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "개인별소집교육이력",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육참석률",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "이러닝 교육실적",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "열린학습",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "어학 통계",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "자격증 통계",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "수료증 통계",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "콘텐츠 통계",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "정규과정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "상시과정",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "리포트",
+          "roles": "ROLE_ADMIN",
+          "children": [
+            {
+              "title": "성장목표 리포트",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "부문 리포트",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육실적 리포트",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            },
+            {
+              "title": "교육성과 리포트",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false
+            }
+          ],
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "교육지원 통계",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "성장진단 통계",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": false
+    },
+    {
+      "title": "마켓플레이스",
+      "roles": "ROLE_ADMIN",
+      "path": "/menu/marketplace",
+      "children": [
+        {
+          "title": "마켓플레이스 목록",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-list"
+        },
+        {
+          "title": "공유하기 설정",
+          "roles": "ROLE_ADMIN",
+          "isQuickAccessArea": false,
+          "path": "/menu/marketplace-shared",
+          "messageCode": "course_search"
+        },
+        {
+          "title": "공유요청 승인",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "내가 공유한 내역",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "나의 공유신청 내역",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "콘텐츠 정산 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": "FALSE"
+    },
+    {
+      "title": "업무지원",
+      "roles": "ROLE_ADMIN",
+      "children": [
+        {
+          "title": "지원요청 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "매뉴얼 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "FAQ 관리",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        },
+        {
+          "title": "1:1 문의",
+          "roles": "ROLE_ADMIN",
+          "tenantName": "현대자동차",
+          "isQuickAccessArea": false
+        }
+      ],
+      "tenantName": "현대자동차",
+      "isQuickAccessArea": "FALSE"
+    }
+  ],
+  "tenantName": "현대자동차",
+  "isQuickAccessArea": false
+}

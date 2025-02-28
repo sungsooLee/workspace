@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
@@ -93,7 +93,7 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <Select
-                    className={formStyles.select_option}
+                    className={formStyles.short}
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
@@ -209,6 +209,9 @@ function RouteComponent() {
                     placeholder="이메일(hyundai.kim@hyundai.com)"
                     value=""
                   />
+                  <Button variant="gray" size="lg">
+                    아이디확인
+                  </Button>
                 </div>
               </div>
             </div>
@@ -255,7 +258,7 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <Select
-                    className={formStyles.select_option}
+                    className={formStyles.short}
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
@@ -313,6 +316,13 @@ function RouteComponent() {
                 유의사항
               </dt>
               <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+              <dd>
+                법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
+                있습니다.{' '}
+                <Link to="" className={signupStyles.link}>
+                  구글 OTP 인증 가이드
+                </Link>
+              </dd>
             </dl>
           </div>
         </>
