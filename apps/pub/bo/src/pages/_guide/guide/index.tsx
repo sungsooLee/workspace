@@ -88,14 +88,14 @@ function RouteComponent() {
       <table className="pub_table">
         <thead>
           <tr>
-            <th scope="col">메뉴명 (1depth)</th>
-            <th scope="col">메뉴명 (2depth)</th>
+            <th scope="col">메뉴명</th>
+            {/* <th scope="col">메뉴명 (2depth)</th>
             <th scope="col">메뉴명 (3depth)</th>
             <th scope="col">
               메뉴명
               <br /> (4depth)
             </th>
-            <th scope="col">메뉴명 (5depth)</th>
+            <th scope="col">메뉴명 (5depth)</th> */}
             <th scope="col">화면아이디</th>
             <th scope="col">완료일</th>
             <th scope="col">최종수정일</th>
@@ -106,13 +106,9 @@ function RouteComponent() {
         <tbody>
           {guideData.map((item, index) => (
             <tr key={index}>
-              <td>{item.depth1}</td>
-              <td>{item.depth2}</td>
-              <td>{item.depth3}</td>
-              <td>{item.depth4}</td>
-              <td>{item.depth5}</td>
+              <td className="menu_name">{item.depth1}</td>
               <td className="pages">
-                <a href={item.pageId} target="_blank" rel="noopener noreferrer">
+                <a href={`/pb-bo/${item.pageId}`} target="_blank" rel="noopener noreferrer">
                   {item.pageId}
                 </a>
               </td>

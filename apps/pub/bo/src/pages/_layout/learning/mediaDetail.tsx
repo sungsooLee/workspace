@@ -14,15 +14,10 @@ import {
   DatePicker,
   ThumbnailImageUpload,
 } from '@learnway/ui';
-import {
-  IcoFormRequired,
-  IcoArrowDown,
-  IcoAlertCircle,
-  IcoCloseCircle,
-  IcoSearch,
-} from '@learnway/icons';
+import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
@@ -111,7 +106,7 @@ function RouteComponent() {
   };
 
   return (
-    <>
+    <PageContainer>
       {/* main_contents */}
       <div className={styles.main_contents}>
         {/* row */}
@@ -153,10 +148,13 @@ function RouteComponent() {
             </label>
             {/* file upload case */}
             <div className={formStyles.input_box}>
-              <Input id="name-1-2" type="text" value="업로드 파일명" showCounter />
-              {/* <span className={formStyles.count}>
-                <em className={formStyles.num}>7</em>/150
-              </span> */}
+              <Input
+                id="name-1-2"
+                type="text"
+                value="업로드 파일명"
+                className={formStyles.input}
+                showCounter
+              />
             </div>
           </div>
         </div>
@@ -748,6 +746,6 @@ function RouteComponent() {
           ))}
         </ul>
       </div>
-    </>
+    </PageContainer>
   );
 }

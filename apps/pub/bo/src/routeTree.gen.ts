@@ -35,6 +35,7 @@ import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
+import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -205,6 +206,13 @@ const LayoutLearningPopupLearningRegisterationRoute =
   LayoutLearningPopupLearningRegisterationImport.update({
     id: '/learning/popup-learningRegisteration',
     path: '/learning/popup-learningRegisteration',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningMediaRegisterRoute =
+  LayoutLearningMediaRegisterImport.update({
+    id: '/learning/mediaRegister',
+    path: '/learning/mediaRegister',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -709,6 +717,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningMediaDetailImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/mediaRegister': {
+      id: '/_layout/learning/mediaRegister'
+      path: '/learning/mediaRegister'
+      fullPath: '/learning/mediaRegister'
+      preLoaderRoute: typeof LayoutLearningMediaRegisterImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/popup-learningRegisteration': {
       id: '/_layout/learning/popup-learningRegisteration'
       path: '/learning/popup-learningRegisteration'
@@ -852,6 +867,7 @@ interface LayoutRouteChildren {
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
+  LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
@@ -863,6 +879,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
+  LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
@@ -919,6 +936,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -972,6 +990,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -1028,6 +1047,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -1083,6 +1103,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
+    | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -1135,6 +1156,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
+    | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -1189,6 +1211,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/learning/mediaDetail'
+    | '/_layout/learning/mediaRegister'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -1282,6 +1305,7 @@ export const routeTree = rootRoute
         "/_layout/test",
         "/_layout/",
         "/_layout/learning/mediaDetail",
+        "/_layout/learning/mediaRegister",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
@@ -1462,6 +1486,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/mediaDetail": {
       "filePath": "_layout/learning/mediaDetail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/mediaRegister": {
+      "filePath": "_layout/learning/mediaRegister.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/popup-learningRegisteration": {

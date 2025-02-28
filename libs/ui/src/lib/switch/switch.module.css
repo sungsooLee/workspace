@@ -29,6 +29,12 @@
   }
 
   .label {
-    @apply ml-[8px] select-none text-[14px] font-normal leading-[1.4rem] text-[var(--gray8)];
+    @apply ml-[8px] select-none text-[14px] font-normal leading-[1.4rem] text-[var(--gray6)];
+  }
+}
+
+.active {
+  .label {
+    @apply text-[var(--secondary1)];
   }
 }
