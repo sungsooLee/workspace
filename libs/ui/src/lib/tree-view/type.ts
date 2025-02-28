@@ -105,6 +105,7 @@ export interface TreeNode {
   treeId?: string;
   //추후 Seq 속성 추가 될 것 같음. 해당 속성으로 무브에 대한 이벤트 targetIndex 로직 추가하면 될 것 같음.
   isUsed?: boolean;
+  [key: string]: any;
 }
 
 /**

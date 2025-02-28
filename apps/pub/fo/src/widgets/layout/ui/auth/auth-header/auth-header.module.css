@@ -1,0 +1,28 @@
+/* auth_header.module.css */
+.start {
+  &.auth_header {
+    @apply w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
+
+    .header_area {
+      @apply flex h-[70px] items-center justify-between pl-[32px] pr-[8px];
+
+      h1 {
+        img {
+          @apply h-[70px] w-auto;
+        }
+      }
+    }
+    /* .auth {
+      @apply !text-[var(--gray7)];
+    } */
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    &.auth-header {
+      @apply hidden;
+    }
+  }
+}

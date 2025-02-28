@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 
-import { Header, Layout, Footer, MobileLayout } from '../widgets/layout';
-import { MFooterFixed } from '../widgets/layout/ui/m.main/m.footer/m-footer-fixed';
+import { Layout, MobileLayout } from '../widgets/layout';
 import styles from './_layout.module.css';
 
 export const Route = createFileRoute('/_layout')({
@@ -21,18 +20,14 @@ function LayoutComponent() {
   return (
     <div className={`${styles.start} ${styles.layout_wrap}`}>
       <BrowserView>
-        <Header />
         <Layout>
           <Outlet />
         </Layout>
-        <Footer />
       </BrowserView>
-
       <MobileView>
         <MobileLayout>
           <Outlet />
         </MobileLayout>
-        <MFooterFixed />
       </MobileView>
     </div>
   );

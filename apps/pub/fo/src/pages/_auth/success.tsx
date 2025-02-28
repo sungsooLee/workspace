@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import signupStyles from './signup.module.css';
-import { IcoCheck02 } from '@learnway/icons';
+import { IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/success')({
   component: RouteComponent,
@@ -13,7 +13,8 @@ function RouteComponent() {
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.success_info}>
           <i className={signupStyles.ico}>
-            <IcoCheck02 width={32} height={24} />
+            {/* 정상처리 */}
+            <IcoComplete width={32} height={24} className={signupStyles.ico1} />
           </i>
           <h3 className={signupStyles.title}>가입 신청완료</h3>
           <p className={signupStyles.noti}>
