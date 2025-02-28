@@ -16,7 +16,7 @@ export interface AccordionItem {
 }
 
 export interface AccordionComponentProps {
-  type: accordionType;
+  type?: accordionType;
   items: AccordionItem[];
   className?: string;
   value?: string | string[];

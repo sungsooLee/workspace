@@ -65,10 +65,6 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
       rightGridRef.current?.resetRowSelection();
     };
 
-    const onChangeRightGrid = (newItems: any) => {
-      setSelectedItems(newItems);
-    };
-
     return (
       <div
         className={cn(
@@ -79,17 +75,15 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         )}>
         {/* left grid */}
         <div>
-          {
-            <Grid
-              ref={leftGridRef}
-              title={leftTitle}
-              data={leftGridData}
-              columns={columns}
-              hideColumnSettings
-              multiSelectable
-              onRowsSelect={(newSelectedRows) => setLeftSelectedRows(newSelectedRows)}
-            />
-          }
+          <Grid
+            ref={leftGridRef}
+            title={leftTitle}
+            data={leftGridData}
+            columns={columns}
+            hideColumnSettings
+            multiSelectable
+            onRowsSelect={(newSelectedRows) => setLeftSelectedRows(newSelectedRows)}
+          />
         </div>
         {/* buttons */}
         <div>
@@ -105,17 +99,15 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         </div>
         {/* right grid */}
         <div>
-          {
-            <Grid
-              ref={rightGridRef}
-              title={rightTitle}
-              data={rightGridData}
-              columns={columns}
-              hideColumnSettings
-              multiSelectable
-              onRowsSelect={(newSelectedRows) => setRightSelectedRows(newSelectedRows)}
-            />
-          }
+          <Grid
+            ref={rightGridRef}
+            title={rightTitle}
+            data={rightGridData}
+            columns={columns}
+            hideColumnSettings
+            multiSelectable
+            onRowsSelect={(newSelectedRows) => setRightSelectedRows(newSelectedRows)}
+          />
         </div>
       </div>
     );
