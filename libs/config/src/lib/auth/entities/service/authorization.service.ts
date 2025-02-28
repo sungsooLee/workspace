@@ -21,11 +21,13 @@ export function removeToken() {
 }
 
 export function convertToAuthUser(data: AxiosResponse): AuthUser {
+  console.log('convertToAuthUser', data);
   const user = data.data;
-  const { tenantIds } = user;
+  const { tenants } = user;
   return {
     ...user,
-    activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
+    activeTenantId: user.tenants?.length > 0 ? tenants?.[0].tenantId : null,
+    //activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
     //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
   };
 }
