@@ -26,6 +26,7 @@ import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
@@ -141,6 +142,12 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
+} as any)
+
+const LayoutCategoryDetailRoute = LayoutCategoryDetailImport.update({
+  id: '/category/detail',
+  path: '/category/detail',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
@@ -589,6 +596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/category/detail': {
+      id: '/_layout/category/detail'
+      path: '/category/detail'
+      fullPath: '/category/detail'
+      preLoaderRoute: typeof LayoutCategoryDetailImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -700,11 +714,13 @@ const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -750,6 +766,7 @@ export interface FileRoutesByFullPath {
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/category/detail': typeof LayoutCategoryDetailRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -793,6 +810,7 @@ export interface FileRoutesByTo {
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/category/detail': typeof LayoutCategoryDetailRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -839,6 +857,7 @@ export interface FileRoutesById {
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -884,6 +903,7 @@ export interface FileRouteTypes {
     | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/category/detail'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -926,6 +946,7 @@ export interface FileRouteTypes {
     | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/category/detail'
     | '/guide'
     | '/menu3'
   id:
@@ -970,6 +991,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tabs'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
+    | '/_layout/category/detail'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1053,6 +1075,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/category/detail",
         "/_layout/menu3/"
       ]
     },
@@ -1203,6 +1226,10 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/category/detail": {
+      "filePath": "_layout/category/detail.tsx",
+      "parent": "/_layout"
     },
     "/_guide/guide/": {
       "filePath": "_guide/guide/index.tsx",

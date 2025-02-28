@@ -76,11 +76,8 @@ export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; /
 export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
-export { ReactComponent as IcoArray } from './lib/ic_array.svg'; // array
-export { ReactComponent as IcoPlay } from './lib/ic_play.svg'; // play
-export { ReactComponent as IcoRating } from './lib/ic_rating.svg'; // rating
-export { ReactComponent as IcoHeart } from './lib/ic_heart.svg'; // heart
-export { ReactComponent as IcoMonitor01 } from './lib/ic_monitor-01.svg'; // monitor01
+export { ReactComponent as IcoSpinner } from './lib/ic_spinner.svg'; // spinner
+export { ReactComponent as IcoStatusFail } from './lib/ic_status_failed.svg'; // Status fail
 
 //export Default as Information from './lib/information.svg?react';
 

@@ -1,0 +1,9 @@
+.array {
+  @apply flex;
+  button {
+    @apply body_3_r text-[var(--gray8)];
+    &.active {
+      @apply body_3_b;
+    }
+  }
+}
