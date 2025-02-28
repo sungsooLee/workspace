@@ -1,21 +1,27 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import useSearchBox from '../../../../../shared/ui/search-box/use-search-box';
-import { useCallback } from 'react';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import useSearchBox from '../../../../shared/ui/search-box/use-search-box';
+import { useCallback, useEffect } from 'react';
+import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { Button, useModal } from '@learnway/ui';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
+import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
+import { SearchBox, SearchBoxConfig } from '../../../../shared/ui/search-box';
 import { t } from 'i18next';
+import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
+import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
+import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
+import TestForm from '../../../../widgets/test/ui/test-form';
+import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 
-export const Route = createFileRoute('/_layout/learning/resource/education/list')({
+export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const router = useRouter();
-  const { config: sConfig } = useSearchBox(searchConfig);
+  const { config: sConfig, getData } = useSearchBox(searchConfig);
   const { open } = useModal();
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getData);
 
   /**
    * @param data
@@ -43,6 +49,10 @@ function RouteComponent() {
     });
   };
 
+  useEffect(() => {
+    gridFetch({});
+  }, []);
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -52,6 +62,17 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        <GridBox config={gConfig} />
+
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() =>
+            open({ content: <MappingCoursePopup />, width: 'md', height: 'md', title: '맵핑과정' })
+          }>
+          매핑과정팝업
+        </Button>
       </MainContents>
     </PageContainer>
   );
@@ -240,18 +261,47 @@ const EducationListPopup = () => {
 const searchConfig: SearchBoxConfig = {
   builders: [
     {
+      name: 'tenant',
+      type: 'dropdown',
+      label: t('테넌트'),
+      value: '',
+      options: [
+        { value: '', label: t('전체') },
+        { value: 'tenantA', label: t('테넌트A') },
+        { value: 'tenantB', label: t('테넌트B') },
+        { value: 'tenantC', label: t('테넌트C') },
+        { value: 'tenantD', label: t('테넌트D') },
+        { value: 'tenantE', label: t('테넌트E') },
+        { value: 'tenantF', label: t('테넌트F') },
+      ],
+    },
+    {
       name: 'channel',
       type: 'dropdown',
       label: t('채널'),
       value: '',
-      options: [{ value: '', label: t('전체') }],
+      options: [
+        { value: '', label: t('전체') },
+        { value: 'channelA', label: t('채널A') },
+        { value: 'channelB', label: t('채널B') },
+        { value: 'channelC', label: t('채널C') },
+        { value: 'channelD', label: t('채널D') },
+        { value: 'channelE', label: t('채널E') },
+        { value: 'channelF', label: t('채널F') },
+      ],
     },
     {
       name: 'type',
       type: 'dropdown',
       label: t('유형'),
       value: '',
-      options: [{ value: '', label: t('전체') }],
+      options: [
+        { value: '', label: t('전체') },
+        { value: 'video', label: t('동영상') },
+        { value: 'ebook', label: t('이북') },
+        { value: 'class', label: t('클래스') },
+        { value: 'web', label: t('웹') },
+      ],
     },
     {
       name: 'managerName',
@@ -260,17 +310,15 @@ const searchConfig: SearchBoxConfig = {
       value: '',
     },
     {
-      name: 'educationResourceName',
-      type: 'text',
-      label: t('학습자원명'),
-      value: '',
-    },
-    {
-      name: 'externalPartner',
+      name: 'isEducationResource',
       type: 'dropdown',
-      label: t('출처/외주개발업체'),
+      label: t('외주여부'),
       value: '',
-      options: [{ value: '', label: t('전체') }],
+      options: [
+        { value: '', label: t('전체') },
+        { value: 'Y', label: t('외주') },
+        { value: 'N', label: t('외주아님') },
+      ],
     },
     {
       name: 'useYn',
@@ -287,11 +335,57 @@ const searchConfig: SearchBoxConfig = {
       options: [{ value: '', label: t('전체') }],
     },
     {
-      name: 'qualityInspection',
-      type: 'dropdown',
-      label: t('검수'),
+      name: 'educationResourceName',
+      type: 'text',
+      label: t('학습자원명'),
       value: '',
-      options: [{ value: '', label: t('전체') }],
     },
   ],
+};
+
+const gridConfig = {
+  query: leaningResourceQueryOptions.getLearningResources,
+  columns: [
+    {
+      name: 'no1',
+      label: 'NO.',
+      type: 'numbering',
+    },
+    {
+      name: 'tenant',
+      label: '테넌트',
+    },
+    { name: 'channel', label: t('채널') },
+    { name: 'type', label: t('유형') },
+    {
+      name: 'leaningResourceName',
+      label: t('학습자원명'),
+      render: (info: any) => (
+        <Link className={'text-blue-600'} to={'/menu/translation-detail'}>
+          학습자원명
+        </Link>
+      ),
+    },
+    { name: 'fileType', label: t('파일형식') },
+    { name: 'fileSize', label: t('파일용량') },
+    { name: 'managerName', label: t('담당자') },
+    { name: 'source', label: '출처' },
+    { name: 'preview', label: '미리보기' },
+    { name: 'educationConjugation', label: '교육활용' },
+    { name: 'procedureCnt', label: '과정수' },
+    { name: 'isSecureContents', label: '보안콘텐츠' },
+    { name: 'sharedChannel', label: '공유채널' },
+    { name: 'inspection', label: '검수' },
+    { name: 'available', label: '사용가능' },
+    { name: 'registerUser', label: '등록자' },
+    { name: 'registerDateTime', label: '등록일' },
+    { name: 'modifyUser', label: '수정자' },
+    { name: 'modifyDateTime', label: '수정일' },
+  ],
+  data: [],
+  pagination: {
+    pageSize: 10,
+    pageIndex: 0,
+    totalRows: 0,
+  },
 };

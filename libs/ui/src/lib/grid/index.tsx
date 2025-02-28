@@ -631,8 +631,7 @@ const Grid = forwardRef(
           <span className="count_wrap">
             {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
           {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
-            {pageIndex * pageSize + 1}-{Math.min((pageIndex + 1) * pageSize, totalRows)} /{' '}
-            {totalRows} Page
+            {pageIndex * pageSize + 1}-{totalPages} Page
           </span>
         </div>
       );

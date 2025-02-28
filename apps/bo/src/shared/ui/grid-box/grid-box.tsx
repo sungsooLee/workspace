@@ -11,7 +11,6 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   const { data: data, page, gridFetch, columns } = config;
   const columnHelper = createColumnHelper<any>();
   const girdColumns = columns.map((column: any) => {
-    console.log(page);
     switch (column.type) {
       case 'numbering':
         return columnHelper.display({
@@ -39,7 +38,6 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   });
 
   const handleChangePage = (pageIndex: number) => {
-    console.log('change page => ', pageIndex);
     gridFetch({
       pageSize: page.pageSize,
       pageIndex,

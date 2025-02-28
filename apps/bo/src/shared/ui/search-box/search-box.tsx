@@ -60,6 +60,9 @@ const SearchBoxHook: FC<{ config: any; onSearch: any }> = ({ config, onSearch })
 
                     return (
                       <div key={property.name}>
+                        {property?.label && (
+                          <label htmlFor={property.name}>{property?.label}</label>
+                        )}
                         <DialogComponent {...formParams} />
                       </div>
                     );

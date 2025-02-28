@@ -15,6 +15,7 @@ export interface SearchBoxBuilder {
   value?: any;
   options?: { value: string; label: string }[];
   optionsConfig?: Record<string, any>; // 실제 옵션 설정에 맞게 수정 가능
+  placeholder?: string;
 }
 
 /**
