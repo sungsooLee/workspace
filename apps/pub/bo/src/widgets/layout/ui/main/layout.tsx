@@ -41,7 +41,12 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <div className={cn(styles.start, styles.container)}>
+        <div className={styles.container_inner}>
+          <LNB />
+          <main>{children}</main>
+        </div>
+      </div>
     </>
   );
 }
