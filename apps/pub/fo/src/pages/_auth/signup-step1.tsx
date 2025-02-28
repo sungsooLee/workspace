@@ -4,7 +4,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
@@ -30,13 +29,13 @@ function RouteComponent() {
 
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
-              className={styles.radio_card}
+              className={signupStyles.radio_card}
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoBuilding01 width={48} height={48} className={styles.ico1} />
+                      <IcoBuilding01 width={48} height={48} className={signupStyles.ico1} />
                       <span>일반 회원</span>
                     </div>
                   ),
@@ -45,7 +44,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoOverseasDealer width={48} height={48} className={styles.ico2} />
+                      <IcoOverseasDealer width={48} height={48} className={signupStyles.ico2} />
                       <span>HTA/HTACV 이용자</span>
                     </div>
                   ),
@@ -55,7 +54,7 @@ function RouteComponent() {
           </div>
 
           <div className={signupStyles.signup_noti}>
-            <dl className={styles.check_point}>
+            <dl className={signupStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항

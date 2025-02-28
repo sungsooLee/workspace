@@ -15,8 +15,9 @@ function RouteComponent() {
           <i className={signupStyles.ico}>
             {/* 정상처리 */}
             <IcoComplete width={32} height={24} className={signupStyles.ico1} />
-            {/* 확인불가 */}
+            {/* 확인불가 
             <IcoCaution02 width={32} height={24} className={signupStyles.ico2} />
+            */}
           </i>
           <h3 className={signupStyles.title}>
             {/* 정상처리 */}
@@ -24,9 +25,9 @@ function RouteComponent() {
             <br />
             아래와 같습니다.
             {/* 확인불가 */}
-            입력하신 정보로 가입된 아이디를
+            {/*입력하신 정보로 가입된 아이디를
             <br />
-            찾을 수 없습니다.
+            찾을 수 없습니다.*/}
           </h3>
           <div className={signupStyles.noti_box}>hyundai.kim@hyundai.com</div>
           <div className={signupStyles.btn_txt}>
@@ -35,7 +36,7 @@ function RouteComponent() {
         </div>
 
         <div className={signupStyles.btn_wrap}>
-          <Button variant="primary" size="xl">
+          <Button variant="primary" size="xl" className={signupStyles.max}>
             로그인
           </Button>
         </div>

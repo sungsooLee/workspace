@@ -3,47 +3,23 @@ import { cn } from '@learnway/shared';
 import { Button, Input } from '@learnway/ui';
 import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import { IcoCaution, IcoFormRequired, IcoEye } from '@learnway/icons';
+import { IcoCaution } from '@learnway/icons';
 
-export const Route = createFileRoute('/_auth/password-modify')({
+export const Route = createFileRoute('/_auth/password-input')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
     <div
-      className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.password_modify}`}>
+      className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.password_input}`}>
       <div className={signupStyles.auth_box}>
-        <div className={signupStyles.success_info}>
-          <div className={`${signupStyles.noti_box} ${signupStyles.type2}`}>
-            마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
-          </div>
-        </div>
         <div
           className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>현재 비밀번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name" type="text" placeholder="비밀번호" value="" />
-              </div>
-            </div>
-          </div>
-
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>새로운 비밀번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
@@ -60,22 +36,12 @@ function RouteComponent() {
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>새로운 비밀번호 확인</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input id="name" type="text" placeholder="새로운 비밀번호 재입력" value="" />
               </div>
             </div>
           </div>
-        </div>
-
-        <div className={signupStyles.noti_info_txt}>
-          <Link to="" className={signupStyles.btn_txt}>
-            1개월 후 변경
-          </Link>
         </div>
 
         <div className={signupStyles.signup_noti}>

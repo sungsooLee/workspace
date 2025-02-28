@@ -86,7 +86,10 @@
         }
       }
       .btn_txt {
-        @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
+        @apply mt-[24px];
+      }
+      + .auth_form {
+        @apply mt-[48px];
       }
     }
 
@@ -114,13 +117,28 @@
         }
       }
     }
+
+    .btn_txt {
+      @apply body_3_r text-[var(--gray8)] underline;
+    }
+    .auth_form {
+      + .noti_info_txt {
+        @apply mt-[8px] text-center;
+        + .signup_noti {
+          @apply mt-[24px];
+        }
+      }
+    }
   }
 
   /* 하단 버튼 */
   .btn_wrap {
     @apply mt-[48px] flex items-center justify-center;
     button {
-      @apply w-full max-w-[294px];
+      @apply w-full;
+      &.max {
+        @apply max-w-[294px];
+      }
     }
   }
 
@@ -229,6 +247,16 @@
       @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
       strong {
         @apply text-[var(--gray8)];
+      }
+    }
+  }
+
+  /* 비밀번호 입력 */
+  &.password_input,
+  &.password_modify {
+    .auth_form {
+      + .signup_noti {
+        @apply mt-[8px];
       }
     }
   }

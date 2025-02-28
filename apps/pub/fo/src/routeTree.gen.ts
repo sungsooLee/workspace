@@ -23,6 +23,7 @@ import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-succ
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
+import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -31,6 +32,7 @@ import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
+import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
@@ -124,6 +126,12 @@ const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthPasswordInputRoute = AuthPasswordInputImport.update({
+  id: '/password-input',
+  path: '/password-input',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
@@ -169,6 +177,12 @@ const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
 const GuideGuideStepperRoute = GuideGuideStepperImport.update({
   id: '/guide/stepper',
   path: '/guide/stepper',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideSpinnerRoute = GuideGuideSpinnerImport.update({
+  id: '/guide/spinner',
+  path: '/guide/spinner',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -328,6 +342,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/password-input': {
+      id: '/_auth/password-input'
+      path: '/password-input'
+      fullPath: '/password-input'
+      preLoaderRoute: typeof AuthPasswordInputImport
       parentRoute: typeof AuthImport
     }
     '/_auth/password-modify': {
@@ -540,6 +561,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSelectImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/spinner': {
+      id: '/_guide/guide/spinner'
+      path: '/guide/spinner'
+      fullPath: '/guide/spinner'
+      preLoaderRoute: typeof GuideGuideSpinnerImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/stepper': {
       id: '/_guide/guide/stepper'
       path: '/guide/stepper'
@@ -596,6 +624,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
@@ -608,6 +637,7 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
@@ -642,6 +672,7 @@ interface GuideRouteChildren {
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
+  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
@@ -672,6 +703,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
+  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
@@ -698,6 +730,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/search-account': typeof AuthSearchAccountRoute
@@ -728,6 +761,7 @@ export interface FileRoutesByFullPath {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -740,6 +774,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/search-account': typeof AuthSearchAccountRoute
@@ -770,6 +805,7 @@ export interface FileRoutesByTo {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -785,6 +821,7 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
@@ -815,6 +852,7 @@ export interface FileRoutesById {
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
+  '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
@@ -829,6 +867,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/password-input'
     | '/password-modify'
     | '/progress-status'
     | '/search-account'
@@ -859,6 +898,7 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
@@ -870,6 +910,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/password-input'
     | '/password-modify'
     | '/progress-status'
     | '/search-account'
@@ -900,6 +941,7 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
@@ -913,6 +955,7 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
+    | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/progress-status'
     | '/_auth/search-account'
@@ -943,6 +986,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
     | '/_guide/guide/select'
+    | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
     | '/_guide/guide/tabs'
@@ -984,6 +1028,7 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
+        "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/progress-status",
         "/_auth/search-account",
@@ -1018,6 +1063,7 @@ export const routeTree = rootRoute
         "/_guide/guide/radio",
         "/_guide/guide/respond",
         "/_guide/guide/select",
+        "/_guide/guide/spinner",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
         "/_guide/guide/tabs",
@@ -1035,6 +1081,10 @@ export const routeTree = rootRoute
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/password-input": {
+      "filePath": "_auth/password-input.tsx",
       "parent": "/_auth"
     },
     "/_auth/password-modify": {
@@ -1155,6 +1205,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/select": {
       "filePath": "_guide/guide/select.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/spinner": {
+      "filePath": "_guide/guide/spinner.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/stepper": {

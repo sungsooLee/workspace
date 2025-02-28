@@ -88,8 +88,9 @@ function RouteComponent() {
       <table className="pub_table">
         <thead>
           <tr>
+            <th scope="col">번호</th>
             <th scope="col">구분</th>
-            <th scope="col">메뉴명</th>
+            <th scope="col">스크린 명</th>
             <th scope="col">페이지링크(화면아이디)</th>
             <th scope="col">페이지타입</th>
             <th scope="col">완료일</th>
@@ -100,7 +101,8 @@ function RouteComponent() {
         </thead>
         <tbody>
           {guideData.map((item, index) => (
-            <tr key={index}>
+            <tr key={index + 1}>
+              <td>{index + 1}</td>
               <td>{item.layoutType}</td>
               <td className="text-left">{item.screenName}</td>
               <td className="pages">
@@ -112,9 +114,9 @@ function RouteComponent() {
               <td>{item.pageType}</td>
               <td>{item.completionDate || '-'}</td>
               <td>{item.lastUpdateDate || '-'}</td>
-              <td>{item.remarks || '-'}</td>
-              <td className={`${item.completionDate ? 'completed' : ''}`}>
-                {item.completionDate ? '완료' : '-'}
+              <td className="remarks">{item.remarks}</td>
+              <td className={`${item.completionDate ? 'completed' : 'status'}`}>
+                {item.completionDate ? '완료' : '진행예정'}
               </td>
             </tr>
           ))}
