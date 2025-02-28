@@ -155,9 +155,6 @@ function RouteComponent() {
                 className={formStyles.input}
                 showCounter
               />
-              {/* <span className={formStyles.count}>
-                <em className={formStyles.num}>7</em>/150
-              </span> */}
             </div>
           </div>
         </div>

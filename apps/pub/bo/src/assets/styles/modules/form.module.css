@@ -3,7 +3,7 @@
 }
 
 .row {
-  @apply flex w-full gap-[32px] text-left;
+  @apply flex w-full gap-[40px] text-left;
   .row {
     @apply mt-[16px];
   }
@@ -35,6 +35,30 @@
   @apply relative w-full flex-1 pb-[16px] text-left;
   &.pd_none {
     @apply pb-[0];
+  }
+  &.type2 {
+    .form_label {
+      @apply pl-[40px];
+    }
+    .input_box {
+      @apply mt-0;
+    }
+    .guide_text.error {
+      @apply ml-[40px];
+    }
+  }
+  &.type_switch {
+    .input_box {
+      @apply mt-0;
+    }
+  }
+  &.col {
+    .input_box {
+      @apply flex-col;
+      & > div + div {
+        @apply mx-0 mt-[8px];
+      }
+    }
   }
   .form_title {
     @apply title_6_b text-[var(--gray9)];
@@ -68,27 +92,10 @@
   .btn_switch {
     @apply absolute right-0 top-0;
   }
-  &.type2 {
-    .form_label {
-      @apply pl-[40px];
-    }
-    .input_box {
-      @apply mt-0;
-    }
-    .guide_text.error {
-      @apply ml-[40px];
-    }
-  }
-  &.type_switch {
-    .input_box {
-      @apply mt-0;
-    }
-  }
 }
 .input_box_wrap {
-  @apply hidden;
   .input_box {
-    @apply mt-[8px];
+    @apply mt-[4px];
     & + .input_box {
       @apply mt-[16px];
     }
@@ -99,8 +106,8 @@
 }
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];
-  .input {
-    @apply flex-auto border-[var(--gray4)];
+  input {
+    @apply flex-auto !border-[var(--gray4)];
   }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
@@ -130,7 +137,7 @@
     @apply absolute left-0 top-[10px];
   }
   .dash {
-    @apply flex min-w-[23px] items-center justify-center;
+    @apply flex min-w-[40px] items-center justify-center;
     &::after {
       @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
     }

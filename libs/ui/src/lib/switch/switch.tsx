@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import * as Primitive from '@radix-ui/react-switch';
 
 import { cn } from '@learnway/shared';
@@ -33,11 +33,23 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
     },
     ref,
   ) => {
+    const [isChecked, setIsChecked] = useState(false);
+    // onCheckedChange 핸들러
+    const handleCheckedChange = (checked: boolean) => {
+      setIsChecked(checked);
+    };
     return (
       <div
-        className={cn(styles.start, styles.switch, className, 'nlp--switch', {
-          [styles.reversed]: reversed,
-        })}>
+        className={cn(
+          styles.start,
+          styles.switch,
+          className,
+          'nlp--switch',
+          isChecked && styles.active,
+          {
+            [styles.reversed]: reversed,
+          },
+        )}>
         {/* left label */}
         {labelAlign === 'left' && showLabel && label && (
           <label className={styles.label} htmlFor={id}>
@@ -51,7 +63,7 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           id={id}
           checked={checked}
           disabled={disabled}
-          onCheckedChange={onCheckedChange}>
+          onCheckedChange={handleCheckedChange}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
 

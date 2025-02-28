@@ -1,6 +1,6 @@
 .start {
   &.btn {
-    @apply box-border inline-flex items-center justify-start font-bold leading-[1rem];
+    @apply box-border inline-flex items-center justify-start leading-[1rem];
     /* Size ( 28 | 32 | 36 | 40 | 48 ) */
     &.xs {
       @apply button_3_r h-[28px] min-w-[50px] justify-center px-[12px] font-bold;

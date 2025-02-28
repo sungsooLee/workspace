@@ -51,4 +51,7 @@
   .fail {
     @apply h-[51px] w-[56px] stroke-[#FFB902];
   }
+  .btn_box {
+    @apply mt-[16px];
+  }
 }
