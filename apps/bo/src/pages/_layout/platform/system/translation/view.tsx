@@ -9,12 +9,15 @@ import { MainContents } from '../../../../../widgets/layout/ui/container/slot/ma
 import { ContentsRow } from '../../../../../widgets/layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
 import { FormRow } from '../../../../../shared/ui/form-row';
+import { FormTranslationBox } from '../../../../../features/platform/ui/platform/system/translation/form-translation-box';
+import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { save, update } = useTranslation();
   const { alert: openAlert } = useModal();
   const router = useRouter();
   const { provider, onSubmit } = useDynamicForm(formConfig);
@@ -22,7 +25,7 @@ function RouteComponent() {
    * 목록으로 이동
    */
   const handleGoToListPage = () => {
-    router.navigate({ to: '/menu/translation-management' });
+    router.navigate({ to: '/platform/system/translation' });
   };
 
   /**
@@ -30,8 +33,24 @@ function RouteComponent() {
    * @param data
    */
   const handleOnSubmit = (data: any) => {
-    openAlert({
-      title: <></>,
+    console.log('data {} => ', data);
+    const saveData = {
+      ...data,
+      isUsed: data.isUsed ? 'TRUE' : 'FALSE',
+      parentId: 1,
+      translations: [
+        {
+          locale: data.locale,
+          translation: data.translation,
+        },
+      ],
+    };
+    delete saveData.locale;
+    delete saveData.translation;
+    console.log('saveData => ', saveData);
+    save(saveData);
+
+    /*openAlert({
       description: <>다국어를 저장하시겠습니까?</>,
       isConfirm: true,
       iconVisible: false,
@@ -41,9 +60,22 @@ function RouteComponent() {
           console.log('data {} => ', data);
         }
       },
-    });
+    });*/
   };
-
+  /*
+{
+  "commonCodeId": 1,
+  "code": "LANGUAGE_CODE",
+  "koreanName": "언어코드",
+  "englishName": "LANGUAGE CODE",
+  "commonCodeDesc": "Refer to ISO 639-1 for list of languages and codes.",
+  "depth": 2,
+  "sortOrder": 1,
+  "isUsed": "TRUE",
+  "isDeleted": "FALSE",
+  "parentId": 1
+}
+* */
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
@@ -61,29 +93,29 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'gnb'} />
+              <DynamicFormField name={'keyType'} />
             </FormRow>
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'code'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'ru'} />
+              <DynamicFormField name={'translation'}>
+                <FormTranslationBox />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <h1 className={'title_3_b'}>언어정보</h1>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'messageDesc'} />
+            </FormRow>
           </ContentsRow>
-          {translation.map((tr) => (
-            <ContentsRow key={tr.name}>
-              <FormRow provider={provider}>
-                <DynamicFormField name={tr.name} />
-              </FormRow>
-            </ContentsRow>
-          ))}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isUsed'} />
+            </FormRow>
+          </ContentsRow>
         </MainContents>
       </PageContainer>
     </form>
@@ -210,11 +242,16 @@ const translation = [
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'gnb',
+      name: 'keyType',
       type: 'dropdown',
       label: '다국어 분류',
-      value: '01',
-      options: [{ value: '01', label: '공통코드' }],
+      value: 'COMMON_CODE',
+      options: [
+        { value: 'COMMON_CODE', label: '공통코드' },
+        { value: 'MENU', label: '메뉴' },
+        { value: 'ERROR', label: '에러' },
+        { value: 'LABEL', label: '라벨' },
+      ],
     },
     {
       name: 'code',
@@ -222,12 +259,35 @@ const formConfig: DynamicFormConfig = {
       label: '다국어 코드',
       value: '',
     },
-    ...translation.map((tr) => ({ ...tr, type: 'text', value: '' })),
+    {
+      name: 'locale',
+      type: 'text',
+      label: '언어',
+      value: 'kr',
+    },
+    {
+      name: 'translation',
+      type: 'custom',
+      label: '기준언어(한국어)',
+      value: '',
+    },
+    {
+      name: 'messageDesc',
+      type: 'textarea',
+      label: '설명',
+      value: '',
+    },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: '사용여부',
+      value: false,
+    },
   ],
   validator: {
-    gnb: z.string().required(),
+    keyType: z.string().required(),
     code: z.string().required(),
-    en: z.string().required(),
-    kr: z.string().required(),
+    translation: z.string().required(),
+    locale: z.string().required(),
   },
 };

@@ -1,4 +1,7 @@
 import TranslationService from '../api/translation';
+import { Tenant } from '../../../types';
+import TenantService from '../../tenant/api/tenant';
+import { skipToken } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['translation-all'] as const,
@@ -11,5 +14,18 @@ export const translationQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: false,
+  }),
+};
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: Tenant) => TranslationService.createTranslation(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: Tenant) => TranslationService.updateTranslation(payload),
+  }),
+  delete: () => ({
+    mutationFn: (tenantId?: number) =>
+      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
   }),
 };
