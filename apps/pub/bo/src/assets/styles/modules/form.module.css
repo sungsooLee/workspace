@@ -100,7 +100,7 @@
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];
   .input {
-    @apply flex-auto;
+    @apply flex-auto border-[var(--gray4)];
   }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];

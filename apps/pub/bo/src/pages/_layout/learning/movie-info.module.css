@@ -1,4 +1,11 @@
 /* media_wrap */
+
+/* title */
+.title {
+  @apply title_bo_4_b mb-[16px] block text-[var(--gray9)];
+}
+
+/* button */
 .btn_list {
   @apply flex;
   li {
@@ -25,6 +32,20 @@
     }
     .text {
       @apply ml-[24px] text-[1.4rem] font-normal leading-[1.6rem] text-[var(--gray8)];
+    }
+  }
+}
+
+/* loading */
+.ing_wrap {
+  @apply flex h-[273px] w-full flex-col items-center justify-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
+  .loading {
+    @apply h-[56px] w-[56px];
+  }
+  .text {
+    @apply body_4_r mt-[16px] text-center text-[var(--gray7)];
+    strong {
+      @apply body_3_b block text-[var(--gray9)];
     }
   }
 }

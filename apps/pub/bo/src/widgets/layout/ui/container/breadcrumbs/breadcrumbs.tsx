@@ -11,7 +11,7 @@ function BreadcrumbsComponent() {
 
   const [activeMenu, setActiveMenu] = useState('home'); // 초기값 설정
 
-  const menuItems = ['menu1', 'menu2', 'menu3', 'menu4'];
+  const menuItems = ['Home', 'menu1', 'menu2', 'menu3', 'menu4'];
   return (
     <div className={styles.start}>
       <ul className={styles.breadcrumbs}>
@@ -23,12 +23,10 @@ function BreadcrumbsComponent() {
               className={`${activeMenu === item ? styles.active : ''}`}>
               {idx === 0 && <IcoHome02 width={12} height={12} stroke="#131C30" />}
 
-              {idx !== menuItems.length - 1 && (
-                <>
-                  <IcoArrowForward width={12} height={12} stroke="#131C30" />
-                  {item}
-                </>
+              {idx !== 0 && idx !== menuItems.length && (
+                <IcoArrowForward width={12} height={12} stroke="#131C30" />
               )}
+              {item}
             </Link>
           </li>
         ))}
