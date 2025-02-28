@@ -30,7 +30,6 @@ import formStyles from '../../../assets/styles/modules/form.module.css'; // form
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 export const Route = createFileRoute('/_layout/learning/mediaDetail')({
   component: RouteComponent,
@@ -112,7 +111,7 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer>
+    <>
       {/* main_contents */}
       <div className={styles.main_contents}>
         {/* row */}
@@ -749,6 +748,6 @@ function RouteComponent() {
           ))}
         </ul>
       </div>
-    </PageContainer>
+    </>
   );
 }
