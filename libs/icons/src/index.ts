@@ -84,6 +84,8 @@ export { ReactComponent as IcoRating } from './lib/ic_rating.svg'; // rating
 export { ReactComponent as IcoHeart } from './lib/ic_heart.svg'; // heart
 export { ReactComponent as IcoMonitor01 } from './lib/ic_monitor-01.svg'; // monitor01
 export { ReactComponent as IcoStatusFail } from './lib/ic_status_failed.svg'; // status fail
+export { ReactComponent as IcoShieldTick01 } from './lib/ic_shield-tick-01.svg'; // mpass otp
+export { ReactComponent as IcoFaceId01 } from './lib/ic_face-id-01.svg'; // mpass fido
 
 //export Default as Information from './lib/information.svg?react';
 

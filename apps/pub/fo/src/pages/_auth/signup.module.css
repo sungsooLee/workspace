@@ -18,6 +18,22 @@
       }
     }
 
+    .search_info {
+      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+
+    .signup_select {
+      + .auth_form {
+        @apply mt-[48px];
+        + .signup_noti {
+          @apply mt-[8px];
+        }
+      }
+    }
+
     .signup_info {
       + h4.title {
         @apply mt-[48px];
@@ -232,22 +248,20 @@
           }
         }
       }
-      + .auth_form {
-        @apply mt-[48px];
-        + .signup_noti {
-          @apply mt-[8px];
-        }
-      }
     }
   }
 
   /* 가입완료, 찾기완료 */
   &.search_account {
     .search_info {
-      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
-      strong {
-        @apply text-[var(--gray8)];
-      }
+      @apply pt-[48px];
+    }
+  }
+
+  /* MPASS 인증 */
+  &.mpass_cert {
+    .search_info {
+      @apply pt-0;
     }
   }
 
