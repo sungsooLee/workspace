@@ -522,7 +522,8 @@ function RouteComponent() {
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-time" className={formStyles.form_label}>
-                동영상 재생 시간{/* 필수 케이스 */}
+                <span className={formStyles.form_text}>동영상 재생 시간</span>
+                {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
@@ -559,7 +560,8 @@ function RouteComponent() {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-thumbnail" className={formStyles.form_label}>
-                썸네일{/* 필수 케이스 */}
+                <span className={formStyles.form_text}>썸네일</span>
+                {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
