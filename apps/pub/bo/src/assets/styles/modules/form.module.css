@@ -1,7 +1,4 @@
 /* form.module.css */
-.form_row {
-}
-
 .row {
   @apply flex w-full gap-[40px] text-left;
   .row {

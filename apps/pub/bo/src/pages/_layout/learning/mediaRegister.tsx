@@ -15,6 +15,8 @@ import {
   Switch,
   Select,
   ThumbnailImageUpload,
+  ChipList,
+  SelectOption,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -163,6 +165,15 @@ function RouteComponent() {
   const handleDate2 = (value: any) => {
     setDate2(value);
   };
+
+  // chip List
+  const options: SelectOption[] = [
+    { label: '현대자동차 A', value: 'A' },
+    { label: '현대자동차 B', value: 'B' },
+    { label: '현대자동차 C', value: 'C' },
+    { label: '현대자동차 D', value: 'E' },
+    { label: '현대자동차 F', value: 'F' },
+  ];
 
   return (
     <PageContainer>
@@ -498,6 +509,40 @@ function RouteComponent() {
             </div>
             <p className={formStyles.guide_text}>
               학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+            </p>
+          </div>
+        </div>
+        {/* row */}
+        <div className="row">
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-1-8" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>태그</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <Tooltip
+                className={formStyles.tooltip}
+                side="right"
+                align="start"
+                content={'tooltip content'}>
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Button>
+              </Tooltip>
+            </label>
+            <div className={formStyles.input_box}>
+              <ChipList
+                className={formStyles.chips_wrap}
+                options={options}
+                placeholder="한글, 영문, 숫자 포함 9자 이하"
+                showInput
+                prefixCharacter="#"
+              />
+            </div>
+            <p className={formStyles.text_limit}>
+              <em className={formStyles.num}>14개</em>/200개
             </p>
           </div>
         </div>

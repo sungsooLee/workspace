@@ -13,41 +13,39 @@ function RouteComponent() {
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
       <div className={signupStyles.auth_box}>
-        <div className={formStyles.form_row}>
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name5" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>아이디/이메일</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name5"
-                  type="text"
-                  value=""
-                  placeholder="아이디 또는 회사 이메일을 입력하세요."
-                  className={formStyles.lg}
-                />
-              </div>
-              <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+        <div className={formStyles.row}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>아이디/이메일</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name5"
+                type="text"
+                value=""
+                placeholder="아이디 또는 회사 이메일을 입력하세요."
+                className={formStyles.lg}
+              />
             </div>
+            <p className={cn(formStyles.guide_text)}>기본 메시지</p>
           </div>
+        </div>
 
-          <div className={`${formStyles.row} ${formStyles.no_line}`}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name5" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>비밀번호</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name5"
-                  type="password"
-                  value=""
-                  placeholder="비밀번호를 입력하세요."
-                  className={formStyles.lg}
-                />
-              </div>
-              <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
+        <div className={`${formStyles.row} ${formStyles.no_line}`}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>비밀번호</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name5"
+                type="password"
+                value=""
+                placeholder="비밀번호를 입력하세요."
+                className={formStyles.lg}
+              />
             </div>
+            <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
           </div>
         </div>
 

@@ -64,8 +64,7 @@ function RouteComponent() {
         </div>
 
         {/* 인증폼 */}
-        <div
-          className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+        <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
