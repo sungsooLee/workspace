@@ -157,6 +157,9 @@
   .textarea {
     @apply !rounded-[8px];
   }
+  .btn_switch {
+    @apply top-[11px];
+  }
   &.type2 {
     @apply mt-0;
   }
