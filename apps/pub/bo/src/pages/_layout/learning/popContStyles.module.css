@@ -1,0 +1,14 @@
+/* popContStyles.module.css */
+.contents {
+  .title {
+    @apply title_bo_3_b mb-[24px] block text-center text-[var(--gray9)];
+    & + div {
+      & > div {
+        @apply !pb-0;
+      }
+      label + div {
+        @apply !mt-0;
+      }
+    }
+  }
+}

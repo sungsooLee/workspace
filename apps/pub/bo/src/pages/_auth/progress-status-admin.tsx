@@ -51,7 +51,7 @@ function RouteComponent() {
             승인일시 :<strong className={signupStyles.date}>{'YYYY-MM-DD'}</strong>
           </p>
         </div>
-        <div className={`${formStyles.form_row} ${formStyles.col} ${signupStyles.auth_form}`}>
+        <div className={`${formStyles.col} ${signupStyles.auth_form}`}>
           {/* form_item */}
           <div className={formStyles.form_item}>
             <strong className={formStyles.form_title}>관리자 권한 신청 정보</strong>
@@ -282,7 +282,7 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={`${formStyles.form_row} ${formStyles.col} ${signupStyles.auth_form}`}>
+        <div className={`${formStyles.col} ${signupStyles.auth_form}`}>
           {/* form_item */}
           <div className={formStyles.form_item}>
             <strong className={formStyles.form_title}>관리자 권한 승인 정보</strong>
