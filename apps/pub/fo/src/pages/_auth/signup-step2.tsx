@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Input } from '@learnway/ui';
+import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
   component: RouteComponent,
@@ -20,17 +20,19 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.signup_info}>
-          <div className={signupStyles.step_box}>
-            <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step2" />
+    <form className="form_row">
+      <div
+        className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
+        <div className={signupStyles.auth_box}>
+          <div className={signupStyles.signup_info}>
+            <div className={signupStyles.step_box}>
+              <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step2" />
+            </div>
           </div>
-        </div>
 
-        <h4 className={signupStyles.title}>협력업체 사업자 정보 조회</h4>
-        <div className={formStyles.form_row}>
-          <div className={formStyles.row}>
+          <h4 className={signupStyles.title}>협력업체 사업자 정보 조회</h4>
+
+          <ContentsRow>
             <div className={`${formStyles.form_item} ${formStyles.pd_none}`}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>사업자 등록 번호</span>
@@ -47,18 +49,18 @@ function RouteComponent() {
               </div>
               <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
             </div>
+          </ContentsRow>
+
+          <div className={signupStyles.btn_wrap}>
+            <Button variant="gray" size="xl">
+              이전
+            </Button>
+            <Button variant="primary" size="xl">
+              다음
+            </Button>
           </div>
         </div>
-
-        <div className={signupStyles.btn_wrap}>
-          <Button variant="gray" size="xl">
-            이전
-          </Button>
-          <Button variant="primary" size="xl">
-            다음
-          </Button>
-        </div>
       </div>
-    </div>
+    </form>
   );
 }

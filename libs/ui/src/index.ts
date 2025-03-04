@@ -134,3 +134,6 @@ export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/configs/column-factory';
 
 // form-builder
+
+// contents-row
+export * from './lib/contents-row/contents-row';
