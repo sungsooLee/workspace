@@ -25,47 +25,51 @@ function RouteComponent() {
     });
   };
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.search_info}>진행현황 확인을 위해 이메일을 입력해 주세요.</div>
+    <form className="form_row">
+      <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
+        <div className={signupStyles.auth_box}>
+          <div className={signupStyles.search_info}>
+            진행현황 확인을 위해 이메일을 입력해 주세요.
+          </div>
 
-        {/* 인증폼 */}
-        <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
-          {/* 이메일 인증일때 */}
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-1-6" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>이메일</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name-1-6" type="text" placeholder="아이디(hyundai.kim@hyundail.com)" />
+          {/* 인증폼 */}
+          <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+            {/* 이메일 인증일때 */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-1-6" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>이메일</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-1-6" type="text" placeholder="아이디(hyundai.kim@hyundail.com)" />
+                </div>
               </div>
-            </div>
-          </ContentsRow>
-        </div>
+            </ContentsRow>
+          </div>
 
-        <div className={signupStyles.signup_noti}>
-          <dl className={styles.check_point}>
-            <dt>
-              <IcoCaution width={16} height={16} stroke="#6F798B" />
-              유의사항
-            </dt>
-            <dd>아이디로 사용하는 이메일을 입력해야 진행현황을 확인할 수 있습니다.</dd>
-          </dl>
-        </div>
-        <div className={signupStyles.btn_wrap}>
-          <Button variant="gray" size="xl">
-            취소
-          </Button>
-          <Button variant="primary" size="xl" onClick={() => handleClickAlert()}>
-            진행현황 확인
-          </Button>
+          <div className={signupStyles.signup_noti}>
+            <dl className={styles.check_point}>
+              <dt>
+                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                유의사항
+              </dt>
+              <dd>아이디로 사용하는 이메일을 입력해야 진행현황을 확인할 수 있습니다.</dd>
+            </dl>
+          </div>
+          <div className={signupStyles.btn_wrap}>
+            <Button variant="gray" size="xl">
+              취소
+            </Button>
+            <Button variant="primary" size="xl" onClick={() => handleClickAlert()}>
+              진행현황 확인
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

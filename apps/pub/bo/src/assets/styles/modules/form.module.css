@@ -95,9 +95,12 @@
 }
 .input_box_wrap {
   @apply mt-[16px];
-  .input_box {
-    @apply mt-[4px];
-    & + .input_box {
+  label + div {
+    @apply !mt-[4px];
+  }
+  & > div {
+    @apply !mt-[4px];
+    & + div {
       @apply mt-[16px];
     }
   }
