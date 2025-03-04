@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
+import popContStyles from './popContStyles.module.css'; // popup contents css
 import {
   Spinner,
   Input,
@@ -16,7 +17,14 @@ import {
   ThumbnailImageUpload,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { IcoFormRequired, IcoStatusFail, IcoAlertCircle } from '@learnway/icons';
+import {
+  IcoFormRequired,
+  IcoStatusFail,
+  IcoAlertCircle,
+  IcoSearch,
+  IcoRefresh02,
+} from '@learnway/icons';
+import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
@@ -25,6 +33,123 @@ export const Route = createFileRoute('/_layout/learning/mediaRegister')({
 });
 
 function RouteComponent() {
+  // Modal : 채널 검색
+  const { open: openModal } = useModal();
+  const ModalChannelContent = () => {
+    return (
+      <div className={popContStyles.contents}>
+        <strong className={popContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
+        {/* form */}
+        <div className="row">
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-search" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>테넌트</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Select
+                className={formStyles.select_option}
+                options={[
+                  { value: 'type1', label: '선택' },
+                  { value: 'type2', label: '선택2' },
+                ]}
+              />
+            </div>
+          </div>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-channel2" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>채널명</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-channel2"
+                type="text"
+                placeholder="채널명으로 조회하세요."
+                value=""
+                className={formStyles.input}
+              />
+            </div>
+          </div>
+          <div className={cn(formStyles.form_item, formStyles.form_auto)}>
+            <div className={formStyles.btn_box}>
+              <Button
+                type="button"
+                className={formStyles.btn_refresh}
+                variant="search"
+                size="sm"
+                onlyIcon>
+                <IcoRefresh02 className={formStyles.icon_refresh} />
+              </Button>
+              <Button type="button" variant="search" size="sm" className={formStyles.btn_search}>
+                <IcoSearch className={formStyles.icon_sm_search} />
+                조회
+              </Button>
+            </div>
+          </div>
+        </div>
+        {/* 채널 리스트 */}
+        <div className={popContStyles.channel_wrap}>추후 컴포넌트 작업 예정</div>
+      </div>
+    );
+  };
+
+  // Modal : 담당자 검색
+  const ModalManagerContent = () => {
+    return (
+      <div className={popContStyles.contents}>
+        <strong className={popContStyles.title}>{'담당자를 선택하세요.'}</strong>
+        {/* form */}
+        <div className="row">
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-channelName" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>채널</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Select
+                className={formStyles.select_option}
+                options={[
+                  { value: 'type1', label: '선택' },
+                  { value: 'type2', label: '선택2' },
+                ]}
+              />
+            </div>
+          </div>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-managerName" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>담당자명</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-managerName"
+                type="text"
+                placeholder="담당자명으로 조회하세요."
+                value=""
+                className={formStyles.input}
+              />
+            </div>
+          </div>
+          <div className={cn(formStyles.form_item, formStyles.form_auto)}>
+            <div className={formStyles.btn_box}>
+              <Button
+                type="button"
+                className={formStyles.btn_refresh}
+                variant="search"
+                size="sm"
+                onlyIcon>
+                <IcoRefresh02 className={formStyles.icon_refresh} />
+              </Button>
+              <Button type="button" variant="search" size="sm" className={formStyles.btn_search}>
+                <IcoSearch className={formStyles.icon_sm_search} />
+                조회
+              </Button>
+            </div>
+          </div>
+        </div>
+        {/* 채널 리스트 */}
+        <div className={popContStyles.channel_wrap}>추후 컴포넌트 작업 예정</div>
+      </div>
+    );
+  };
+
   // Date picker : 2025-02-17
   const [date, setDate] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
@@ -55,7 +180,28 @@ function RouteComponent() {
             </label>
             {/* file upload case */}
             <div className={formStyles.input_box}>
-              <p>검색 영역 추후 작업 예정</p>
+              <div className={formStyles.search_wrap}>
+                <Input
+                  id="name-channel"
+                  type="text"
+                  placeholder="채널명을 선택하세요."
+                  value="채널명노출"
+                  borderNone
+                  className={formStyles.input}
+                />
+                <Button
+                  className={formStyles.btn_search}
+                  onClick={() =>
+                    openModal({
+                      title: '',
+                      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                      content: <ModalChannelContent />,
+                      footer: true,
+                    })
+                  }>
+                  <IcoSearch className={formStyles.icon_search} />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -101,6 +247,61 @@ function RouteComponent() {
                 value=""
                 placeholder="콘텐츠에 대한 설명을 입력해주세요."
               />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-manager" className={formStyles.form_label}>
+              <span className={cn(formStyles.form_text, formStyles.sm)}>담당자</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={formStyles.search_wrap}>
+                <Input
+                  id="name-manager"
+                  type="text"
+                  placeholder="담당자를 선택하세요."
+                  value="담당자명"
+                  borderNone
+                  className={formStyles.input}
+                />
+                <Button
+                  className={formStyles.btn_search}
+                  onClick={() =>
+                    openModal({
+                      title: '',
+                      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                      content: <ModalManagerContent />,
+                      footer: true,
+                    })
+                  }>
+                  <IcoSearch className={formStyles.icon_search} />
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-managerNum" className={formStyles.form_label}>
+              <span className={cn(formStyles.form_text, formStyles.sm)}>연락처</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Select
+                className={formStyles.short}
+                options={[
+                  { value: 'type1', label: '+82' },
+                  { value: 'type2', label: '+83' },
+                ]}
+              />
+              {/* <span className={formStyles.dash}></span> 25-02-20 : 삭제 */}
+              <Input id="name-managerNum" type="text" placeholder="- 제외한 숫자만 입력" />
             </div>
           </div>
         </div>
@@ -157,7 +358,11 @@ function RouteComponent() {
                     <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <p>검색 영역 추후 작업 예정</p>
+                    <div className={formStyles.search_wrap}>
+                      <Button className={formStyles.btn_search}>
+                        <IcoSearch className={formStyles.icon_search} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
