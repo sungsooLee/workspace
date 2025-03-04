@@ -17,6 +17,7 @@ import {
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
@@ -105,7 +106,7 @@ function RouteComponent() {
   };
 
   return (
-    <>
+    <PageContainer>
       {/* main_contents */}
       <div className={styles.main_contents}>
         {/* row */}
@@ -120,16 +121,16 @@ function RouteComponent() {
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Input
-                id="name"
-                type="text"
-                placeholder="입력"
-                readOnly
-                value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
-              />
-              <Button variant="gray" size="sm">
-                선택
-              </Button>
+              <div className={formStyles.input_wrap}>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="입력"
+                  readOnly
+                  value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
+                />
+                <Button className={formStyles.btn_search}>검색</Button>
+              </div>
             </div>
             <p className={formStyles.guide_text}>기본 메시지</p>
           </div>
@@ -147,10 +148,13 @@ function RouteComponent() {
             </label>
             {/* file upload case */}
             <div className={formStyles.input_box}>
-              <Input id="name-1-2" type="text" value="업로드 파일명" showCounter />
-              {/* <span className={formStyles.count}>
-                <em className={formStyles.num}>7</em>/150
-              </span> */}
+              <Input
+                id="name-1-2"
+                type="text"
+                value="업로드 파일명"
+                className={formStyles.input}
+                showCounter
+              />
             </div>
           </div>
         </div>
@@ -158,35 +162,17 @@ function RouteComponent() {
         <div className="row">
           {/* form_item */}
           <div className={formStyles.form_item}>
-            <label htmlFor="name-1-3" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>카테고리</span>
+            <label htmlFor="name-explain" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>학습자원 설명</span>
             </label>
-            <div className={formStyles.input_box}>
-              <Input
-                id="name-1-3"
-                type="text"
-                placeholder="학습자원을 분류할 카테고리를 선택하세요."
-                disabled
-              />
-              <Button variant="gray" size="sm">
-                선택
-              </Button>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row">
-          {/* Textarea type */}
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-1-4" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>콘텐츠 설명</span>
-            </label>
+            {/* file upload case */}
             <div className={formStyles.input_box}>
               <Textarea
-                id="name-1-4"
+                id="name-explain"
                 rows={5}
                 cols={33}
                 resize="none"
+                value="콘텐츠에 대한 설명을 입력입력입력입력입력.  콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. 콘텐츠에 대한 설명을 입력입력입력입력입력. "
                 placeholder="한글,영문,숫자 포함 2500자 이하"
               />
             </div>
@@ -204,10 +190,10 @@ function RouteComponent() {
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Input id="name-1-5" type="text" disabled value="김현대" placeholder="" />
-              <Button variant="gray" size="sm">
-                선택
-              </Button>
+              <div className={formStyles.input_wrap}>
+                <Input id="name-1-5" type="text" placeholder="입력" readOnly value="김현대" />
+                <Button className={formStyles.btn_search}>검색</Button>
+              </div>
             </div>
           </div>
           {/* form_item */}
@@ -760,6 +746,6 @@ function RouteComponent() {
           ))}
         </ul>
       </div>
-    </>
+    </PageContainer>
   );
 }

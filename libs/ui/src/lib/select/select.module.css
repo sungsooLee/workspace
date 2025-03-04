@@ -11,10 +11,15 @@
     }
   }
   &.lg {
-    @apply !border-[var(--gray5)];
     &[data-state='open'] {
       @apply !border-[var(--gray7)];
     }
+  }
+  &.readonly {
+    @apply pointer-events-none !bg-[var(--gray1)];
+  }
+  &.disabled {
+    @apply !bg-[var(--gray1)] !text-[var(--gray4)];
   }
 }
 
@@ -47,5 +52,11 @@
 .lg {
   .select_trigger {
     @apply min-h-[40px] rounded-[8px] border-[var(--gray4)] pl-[16px];
+  }
+}
+
+.error {
+  .select_trigger {
+    @apply !border-[var(--status1)];
   }
 }

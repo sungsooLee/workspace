@@ -1,255 +1,247 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, Switch, TreeEventPayload, TreeView } from '@learnway/ui';
+import { Button, TreeNode } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { FC, useEffect } from 'react';
-import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
-import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import useDynamicForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig } from '../../../../shared/ui/dynamic-form-field';
-import { useFieldArray } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { MenuTree } from '../../../../features/platform/ui/menu/menu-tree';
+import MenuView from '../../../../features/platform/ui/menu/menu-view';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
 });
 
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'eventMenu',
-      type: 'custom',
-      value: [],
-    },
-    {
-      name: 'gnbMenu',
-      type: 'custom',
-      value: [],
-    },
-  ],
-  validator: {},
-};
-
 function RouteComponent() {
-  const { control, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  const [initData, setInitData] = useState<any>(initTreeData);
+  const [treeData, setTreeData] = useState<any>();
+  const [selectedTreeData, setSelectedTreeData] = useState<any>({});
+  /**
+   * 기초 GNB 메뉴 추가로 세팅
+   */
+  const initDefaultData = () => {
+    const key = new Date().getTime().toString();
+    setSelectedTreeData({
+      type: 'ADD',
+      node: {
+        location: 'Root >',
+        key: key,
+        code: '',
+        title: '',
+        url: '',
+        isPersonalInfo: false,
+        description: '',
+        isUsed: false,
+      },
+    });
+  };
+  /**
+   * 트리 데이터를 변경하는 작업을 처리합니다.
+   * 이 함수는 데이터를 매개변수로 받아 콘솔에 해당 데이터를 출력한 뒤,
+   * 트리 데이터 상태를 새로운 데이터로 업데이트합니다.
+   * @param {any} data - 처리 및 저장할 갱신된 트리 데이터.
+   */
+  const handleTreeDataChange = (data: any) => {
+    setTreeData(data);
+  };
+  const handleReset = () => {
+    setTreeData(initData);
+  };
+  const handleCurdTreeDataChange = (data: any) => {
+    const { type, node } = data;
 
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
+    initDefaultData();
+    switch (type) {
+      case 'ADD':
+        if (!node.parentKey || node.parentKey === '') {
+          setInitData([...treeData, { ...node }]);
+          break;
+        } else {
+          const treeNodes = addNode(treeData, node.parentKey, node);
+          setInitData(treeNodes);
+          break;
+        }
+      case 'EDIT':
+        if (!node.key) {
+          return treeData;
+        }
+        setInitData(modifyNode(treeData, node.key, node));
+
+        break;
+      case 'DELETE':
+        if (!node.key) {
+          return treeData;
+        }
+        setInitData(deleteNode(treeData, node.key));
+    }
+  };
+
+  /**
+   * 부모 key에 해당하는 곳에 새 노드 추가
+   */
+  const addNode = (tree: TreeNode[], parentKey: string, newNode: TreeNode): TreeNode[] => {
+    return tree.map((node) => {
+      if (node.key === parentKey) {
+        return {
+          ...node,
+          children: [...(node.children || []), newNode], // 자식 리스트에 추가
+        };
+      }
+      return {
+        ...node,
+        children: node.children ? addNode(node.children, parentKey, newNode) : node.children,
+      };
+    });
+  };
+
+  /**
+   * 특정 key를 가진 노드 수정
+   */
+  const modifyNode = (
+    tree: TreeNode[],
+    key: string,
+    updatedNode: Partial<TreeNode>,
+  ): TreeNode[] => {
+    return tree.map((node) => {
+      if (node.key === key) {
+        return { ...node, ...updatedNode }; // 기존 값 + 수정된 값
+      }
+      return {
+        ...node,
+        children: node.children ? modifyNode(node.children, key, updatedNode) : node.children,
+      };
+    });
+  };
+
+  /**
+   * 특정 key를 가진 노드를 삭제
+   */
+  const deleteNode = (tree: TreeNode[], key: string): TreeNode[] => {
+    return tree
+      .filter((node) => node.key !== key) // 현재 노드가 삭제 대상이면 제거
+      .map((node) => ({
+        ...node,
+        children: node.children ? deleteNode(node.children, key) : node.children,
+      }));
+  };
+
+  const handleSaveTree = () => {
+    setInitData(treeData);
   };
 
   useEffect(() => {
-    fetchData({
-      eventMenu: [
-        {
-          id: 1,
-          isUsed: true,
-          menus: [
-            {
-              key: '1',
-              title: '이벤트 메뉴 1',
-            },
-            {
-              key: '1',
-              title: '이벤트 메뉴 1',
-            },
-            {
-              key: '1',
-              title: '이벤트 메뉴 1',
-              children: [
-                {
-                  key: '1',
-                  title: '이벤트 메뉴 1',
-                },
-              ],
-            },
-            {
-              key: '1',
-              title: '이벤트 메뉴 1',
-            },
-          ],
-        },
-      ],
-      gnbMenu: [
-        {
-          id: 1,
-          isUsed: true,
-          menus: [
-            {
-              key: '1',
-              title: 'GNB 메뉴 1',
-            },
-          ],
-        },
-        {
-          id: 2,
-          isUsed: true,
-          menus: [
-            {
-              key: '1',
-              title: 'GNB 메뉴 2',
-            },
-          ],
-        },
-      ],
-    });
-  }, []);
+    setTreeData(initData);
+  }, [initData]);
+
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <PageContainer>
-        <ContentsButtons>
-          <Button type="button" variant="point" size="sm" onClick={() => onFormChange()}>
-            초기화
-          </Button>
-          <Button type="submit" variant="point" size="sm">
-            저장
-          </Button>
-        </ContentsButtons>
-        <MainContents>
-          <ContentsRow>
-            <MenuContainer
-              control={control}
-              name={'eventMenu'}
-              title={'이벤트 메뉴'}
-              maxLength={2}
+    <PageContainer>
+      <ContentsButtons>
+        <Button type="button" variant="point" size="sm" onClick={handleReset}>
+          GNB 메뉴 초기화
+        </Button>
+        <Button type="button" variant="point" size="sm" onClick={handleSaveTree}>
+          GNB 메뉴 저장
+        </Button>
+      </ContentsButtons>
+      <MainContents>
+        <div className={'mt-2 flex gap-[20px]'}>
+          {treeData && (
+            <MenuTree
+              treeData={treeData}
+              selectedChange={setSelectedTreeData}
+              onChange={handleTreeDataChange}
             />
-          </ContentsRow>
-          <ContentsRow>
-            <MenuContainer control={control} name={'gnbMenu'} title={'GNB 메뉴'} maxLength={2} />
-          </ContentsRow>
-        </MainContents>
-      </PageContainer>
-    </form>
+          )}
+          <MenuView treeData={selectedTreeData} onChange={handleCurdTreeDataChange} />
+        </div>
+      </MainContents>
+    </PageContainer>
   );
 }
 
-const Title: FC<any> = ({ title }) => {
-  return (
-    <div className="flex w-full flex-col">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="font-medium text-gray-800">{title}</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button type={'button'} variant="point" size="sm">
-            + 메뉴추가
-          </Button>
-        </div>
-      </div>
-      <hr className="mt-2 w-full border-t-2 border-gray-900" />
-    </div>
-  );
-};
-const MenuContainer: FC<any> = ({ control, name, title, maxLength }) => {
-  /*
-  배열형태의 데이터가 아니면 useController 사용 가능
-  const {
-    field: { value: values, onChange },
-  } = useController({
-    name,
-    control,
-  });*/
-  const { fields, append, update, move } = useFieldArray({
-    control,
-    name: name,
-  });
+const initTreeData: TreeNode[] = [
+  {
+    key: '1',
+    title: 'Root Node 1',
+    code: 'ROOT',
+    isUsed: false,
+    url: '/root',
+    description: 'ROOT 메뉴 입니다.',
+    isPersonalInfo: false,
 
-  // 드래그가 끝났을 때 실행되는 콜백
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    // 드래그가 끝난 위치(over)가 있고, 위치가 바뀌었다면 재정렬
-    if (over && active.id !== over.id) {
-      const newIndex = fields.findIndex((field) => field.id === active.id);
-      const oldIndex = fields.findIndex((field) => field.id === over.id);
-      return move(oldIndex, newIndex);
-    }
-  };
-
-  const handleAddMenu = () => {
-    console.log('add menu');
-  };
-
-  const handleChangeRow = (menus: any, isUsed: any, index: number) => {
-    update(index, {
-      menus: menus,
-      isUsed: isUsed,
-    });
-  };
-
-  return (
-    <div className={'w-full'}>
-      <Title title={title} onClick={handleAddMenu} />
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext
-          items={fields.map((field) => field.id)}
-          strategy={verticalListSortingStrategy}>
-          {fields &&
-            fields.map((field: any, index: number) => (
-              <MenuRow
-                key={index}
-                id={field.id}
-                menu={field}
-                onChange={(menu: any, isUsed: any) => handleChangeRow(menu, isUsed, index)}
-              />
-            ))}
-        </SortableContext>
-      </DndContext>
-    </div>
-  );
-};
-
-const MenuRow: FC<any> = ({ id, menu, onChange }) => {
-  const handleAction = (payload: TreeEventPayload) => {
-    console.log('payload => ', payload);
-    switch (payload.type) {
-      case 'NODE_SELECT':
-        break;
-      case 'NODE_MOVE':
-        break;
-      case 'NODE_COPY':
-        break;
-    }
-  };
-
-  // useSortable 훅을 사용해 드래그/드롭 기능 활성화
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-  });
-
-  // 전체 로우 스타일 (드래그 애니메이션 포함)
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    border: '1px solid #ccc',
-    padding: '8px 12px',
-    marginBottom: '4px',
-    backgroundColor: isDragging ? '#f0f0f0' : '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
-
-  // 햄버거 아이콘 스타일 (드래그 핸들)
-  const handleStyle: React.CSSProperties = {
-    padding: '4px',
-    cursor: 'grab',
-    userSelect: 'none',
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes}>
-      {/* 항목 내용 */}
-      <span>
-        <TreeView treeId="source" data={menu.menus} onAction={handleAction} />
-      </span>
-      <div className={'flex gap-10'}>
-        <Switch checked={menu.isUsed} onChange={(checked) => onChange(menu.menus, checked)} />
-        {/* 여기서만 드래그 이벤트를 적용 */}
-        <div {...listeners} style={handleStyle}>
-          ☰
-        </div>
-      </div>
-    </div>
-  );
-};
+    children: [
+      {
+        key: '1-1',
+        parentKey: '1',
+        title: 'Child 1',
+        isUsed: false,
+        code: '1-1',
+        url: '/root/1-1',
+        description: '1-1 메뉴 입니다.',
+        isPersonalInfo: false,
+        children: [
+          {
+            key: '1-1-1',
+            parentKey: '1-1',
+            title: 'Grandchild 1',
+            isUsed: false,
+            code: '1-1-1',
+            url: '/root/1-1-1',
+            description: '1-1-1 메뉴 입니다.',
+            isPersonalInfo: false,
+          },
+          {
+            key: '1-1-2',
+            parentKey: '1-1',
+            title: 'Grandchild 2',
+            isUsed: false,
+            code: '1-1-2',
+            url: '/root/1-1-2',
+            description: '1-1-2 메뉴 입니다.',
+            isPersonalInfo: false,
+          },
+        ],
+      },
+      {
+        key: '1-2',
+        parentKey: '1',
+        title: 'Child 2',
+        isUsed: false,
+        code: '1-2',
+        url: '/root/1-2',
+        description: '1-2 메뉴 입니다.',
+        isPersonalInfo: false,
+      },
+    ],
+  },
+  {
+    key: '2',
+    title: 'Root Node 2',
+    isUsed: false,
+    code: 'ROOT2',
+    url: '/root2',
+    description: 'ROOT2 메뉴 입니다.',
+    isPersonalInfo: false,
+    children: [
+      {
+        key: '2-1',
+        parentKey: '2',
+        title: 'Child 3',
+        isUsed: false,
+        code: '2-1',
+        url: '/root/2-1',
+        description: '2-1 메뉴 입니다.',
+        isPersonalInfo: false,
+      },
+      {
+        key: '2-2',
+        parentKey: '2',
+        title: 'Child 4',
+        isUsed: false,
+        code: '2-2',
+        url: '/root/2-2',
+        description: '2-2 메뉴 입니다.',
+        isPersonalInfo: false,
+      },
+    ],
+  },
+];

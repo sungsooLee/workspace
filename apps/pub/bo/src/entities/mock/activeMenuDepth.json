@@ -1,0 +1,694 @@
+[
+    {
+        "title": "플랫폼 관리",
+        "roles": "ROLE_ADMIN",
+        "path": "/menu/menu2",
+        "children": [
+            {
+                "title": "서비스 관리",
+                "roles": "ROLE_ADMIN",
+                "tenantName": "현대자동차",
+                "isQuickAccessArea": false,
+                "path": "/menu/menu2-1",
+                "parentNode": {
+                    "title": "플랫폼 관리",
+                    "roles": "ROLE_ADMIN",
+                    "path": "/menu/menu2",
+                    "tenantName": "현대자동차",
+                    "isQuickAccessArea": false,
+                    "depth": 1,
+                    "key": "cig9ubtdeas"
+                },
+                "depth": 2,
+                "key": "kxky3yhhs7f"
+            },
+            {
+                "title": "권한관리",
+                "roles": "ROLE_ADMIN",
+                "path": "/menu/menu2-2",
+                "children": [
+                    {
+                        "title": "학습자 역할 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-2-1",
+                        "parentNode": {
+                            "title": "권한관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-2",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "m4pofwr40gq"
+                        },
+                        "depth": 3,
+                        "key": "3j0oa2rr7z5"
+                    },
+                    {
+                        "title": "관리자 권한 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-2-2",
+                        "parentNode": {
+                            "title": "권한관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-2",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "m4pofwr40gq"
+                        },
+                        "depth": 3,
+                        "key": "ar3sed2v6as"
+                    }
+                ],
+                "tenantName": "현대자동차",
+                "isQuickAccessArea": false,
+                "parentNode": {
+                    "title": "플랫폼 관리",
+                    "roles": "ROLE_ADMIN",
+                    "path": "/menu/menu2",
+                    "tenantName": "현대자동차",
+                    "isQuickAccessArea": false,
+                    "depth": 1,
+                    "key": "cig9ubtdeas"
+                },
+                "depth": 2,
+                "key": "m4pofwr40gq"
+            },
+            {
+                "title": "메뉴 관리",
+                "roles": "ROLE_ADMIN",
+                "path": "/menu/menu2-3",
+                "children": [
+                    {
+                        "title": "FO 메뉴 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/platform/menu",
+                        "children": [
+                            {
+                                "title": "메뉴 수정",
+                                "roles": "ROLE_ADMIN",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "path": "/menu/menu2-3-1-1",
+                                "parentNode": {
+                                    "title": "FO 메뉴 관리",
+                                    "roles": "ROLE_ADMIN",
+                                    "tenantName": "현대자동차",
+                                    "isQuickAccessArea": false,
+                                    "path": "/platform/menu",
+                                    "parentNode": {
+                                        "title": "메뉴 관리",
+                                        "roles": "ROLE_ADMIN",
+                                        "path": "/menu/menu2-3",
+                                        "tenantName": "현대자동차",
+                                        "isQuickAccessArea": false,
+                                        "parentNode": {
+                                            "title": "플랫폼 관리",
+                                            "roles": "ROLE_ADMIN",
+                                            "path": "/menu/menu2",
+                                            "tenantName": "현대자동차",
+                                            "isQuickAccessArea": false,
+                                            "depth": 1,
+                                            "key": "cig9ubtdeas"
+                                        },
+                                        "depth": 2,
+                                        "key": "a3m74fu3hxk"
+                                    },
+                                    "depth": 3,
+                                    "key": "nrfpccl48bo"
+                                },
+                                "depth": 4,
+                                "key": "r58qarqhuzl"
+                            },
+                            {
+                                "title": "메뉴 생성",
+                                "roles": "ROLE_ADMIN",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "path": "/menu/menu2-3-1-2",
+                                "parentNode": {
+                                    "title": "FO 메뉴 관리",
+                                    "roles": "ROLE_ADMIN",
+                                    "tenantName": "현대자동차",
+                                    "isQuickAccessArea": false,
+                                    "path": "/platform/menu",
+                                    "parentNode": {
+                                        "title": "메뉴 관리",
+                                        "roles": "ROLE_ADMIN",
+                                        "path": "/menu/menu2-3",
+                                        "tenantName": "현대자동차",
+                                        "isQuickAccessArea": false,
+                                        "parentNode": {
+                                            "title": "플랫폼 관리",
+                                            "roles": "ROLE_ADMIN",
+                                            "path": "/menu/menu2",
+                                            "tenantName": "현대자동차",
+                                            "isQuickAccessArea": false,
+                                            "depth": 1,
+                                            "key": "cig9ubtdeas"
+                                        },
+                                        "depth": 2,
+                                        "key": "a3m74fu3hxk"
+                                    },
+                                    "depth": 3,
+                                    "key": "nrfpccl48bo"
+                                },
+                                "depth": 4,
+                                "key": "mrahc5ev2vq"
+                            }
+                        ],
+                        "parentNode": {
+                            "title": "메뉴 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-3",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "a3m74fu3hxk"
+                        },
+                        "depth": 3,
+                        "key": "nrfpccl48bo"
+                    },
+                    {
+                        "title": "BO 메뉴 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-3-2",
+                        "parentNode": {
+                            "title": "메뉴 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-3",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "a3m74fu3hxk"
+                        },
+                        "depth": 3,
+                        "key": "v390l6mhxx"
+                    }
+                ],
+                "tenantName": "현대자동차",
+                "isQuickAccessArea": false,
+                "parentNode": {
+                    "title": "플랫폼 관리",
+                    "roles": "ROLE_ADMIN",
+                    "path": "/menu/menu2",
+                    "tenantName": "현대자동차",
+                    "isQuickAccessArea": false,
+                    "depth": 1,
+                    "key": "cig9ubtdeas"
+                },
+                "depth": 2,
+                "key": "a3m74fu3hxk"
+            },
+            {
+                "title": "요소 설정 관리",
+                "roles": "ROLE_ADMIN",
+                "path": "/menu/menu2-4",
+                "children": [
+                    {
+                        "title": "템플릿 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-4-1",
+                        "parentNode": {
+                            "title": "요소 설정 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-4",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "ijw9a5g45l"
+                        },
+                        "depth": 3,
+                        "key": "tpxc92p8jgi"
+                    },
+                    {
+                        "title": "엡 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-4-2",
+                        "parentNode": {
+                            "title": "요소 설정 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-4",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "ijw9a5g45l"
+                        },
+                        "depth": 3,
+                        "key": "r3f3plfwbzi"
+                    },
+                    {
+                        "title": "모듈 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-4-3",
+                        "parentNode": {
+                            "title": "요소 설정 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-4",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "ijw9a5g45l"
+                        },
+                        "depth": 3,
+                        "key": "7ncyj418mvk"
+                    }
+                ],
+                "tenantName": "현대자동차",
+                "isQuickAccessArea": false,
+                "parentNode": {
+                    "title": "플랫폼 관리",
+                    "roles": "ROLE_ADMIN",
+                    "path": "/menu/menu2",
+                    "tenantName": "현대자동차",
+                    "isQuickAccessArea": false,
+                    "depth": 1,
+                    "key": "cig9ubtdeas"
+                },
+                "depth": 2,
+                "key": "ijw9a5g45l"
+            },
+            {
+                "title": "플랫폼 시스템 관리",
+                "roles": "ROLE_ADMIN",
+                "path": "/menu/menu2-5",
+                "children": [
+                    {
+                        "title": "공통코드 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-5-1",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "sam07c4qv8r"
+                    },
+                    {
+                        "title": "프로그램 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-5-2",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "x6am8nhdwi9"
+                    },
+                    {
+                        "title": "시스템 메시지 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-5-3",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "41xb5ggtpvc"
+                    },
+                    {
+                        "title": "에러 메시지 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/menu2-5-4",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "dhit8faydlj"
+                    },
+                    {
+                        "title": "API 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "7gu2uui2uj"
+                    },
+                    {
+                        "title": "IF 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "2tyljdw6522"
+                    },
+                    {
+                        "title": "배치 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "2g69q2vlbo2"
+                    },
+                    {
+                        "title": "동기화 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "aopnt21yio6"
+                    },
+                    {
+                        "title": "그리드 빌더",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/builder/grid",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "xa39miuksyl"
+                    },
+                    {
+                        "title": "테이블 빌더",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/builder/table",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "gwywx7zcd4r"
+                    },
+                    {
+                        "title": "동적폼 예제",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/menu/type2",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "vg899qqjlo"
+                    },
+                    {
+                        "title": "다국어 관리",
+                        "roles": "ROLE_ADMIN",
+                        "tenantName": "현대자동차",
+                        "isQuickAccessArea": false,
+                        "path": "/platform/system/translation",
+                        "parentNode": {
+                            "title": "플랫폼 시스템 관리",
+                            "roles": "ROLE_ADMIN",
+                            "path": "/menu/menu2-5",
+                            "tenantName": "현대자동차",
+                            "isQuickAccessArea": false,
+                            "parentNode": {
+                                "title": "플랫폼 관리",
+                                "roles": "ROLE_ADMIN",
+                                "path": "/menu/menu2",
+                                "tenantName": "현대자동차",
+                                "isQuickAccessArea": false,
+                                "depth": 1,
+                                "key": "cig9ubtdeas"
+                            },
+                            "depth": 2,
+                            "key": "nbdtte4ojgn"
+                        },
+                        "depth": 3,
+                        "key": "f71adkme62u"
+                    }
+                ],
+                "tenantName": "현대자동차",
+                "isQuickAccessArea": false,
+                "parentNode": {
+                    "title": "플랫폼 관리",
+                    "roles": "ROLE_ADMIN",
+                    "path": "/menu/menu2",
+                    "tenantName": "현대자동차",
+                    "isQuickAccessArea": false,
+                    "depth": 1,
+                    "key": "cig9ubtdeas"
+                },
+                "depth": 2,
+                "key": "nbdtte4ojgn"
+            }
+        ],
+        "tenantName": "현대자동차",
+        "isQuickAccessArea": false,
+        "depth": 1,
+        "key": "cig9ubtdeas"
+    }
+]

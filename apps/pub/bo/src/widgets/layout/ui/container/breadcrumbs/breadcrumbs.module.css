@@ -17,11 +17,16 @@
           @apply mx-[8px];
         }
       }
-      a {
-        &.active {
-          @apply text-[var(--gray9)];
+      &:nth-last-child(1) {
+        a {
+          @apply text-[var(--secondary3)];
         }
-        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray8)];
+      }
+      a {
+        @apply body_bo_2_r flex items-center text-[var(--gray8)];
+        &.active {
+          @apply text-[var(--secondary3)];
+        }
       }
     }
   }

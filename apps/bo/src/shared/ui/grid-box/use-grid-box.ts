@@ -44,12 +44,18 @@ const useGridBoxHook = (config: any, getData?: any) => {
       setGridConfig((state: any) => ({
         ...state,
         data: result.content,
-        page: {
-          ...state.page,
-          pageSize: result.pageable.pageSize,
-          pageIndex: result.pageable.number || 0,
-          totalRows: result.totalElements,
-        },
+        ...(state.page && {
+          // 조건부로 page가 존재할 때만 추가
+          page: {
+            ...state.page,
+            pageSize: result.pageable.pageSize,
+            pageIndex: result.pageable.number || 0,
+            totalRows: result.pageable.totalElements,
+          },
+        }),
+        totalRows: result?.pageable?.totalElements
+          ? result.pageable.totalElements
+          : result.content.length,
       }));
     }
   };

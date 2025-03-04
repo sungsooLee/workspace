@@ -406,6 +406,9 @@
       &.completed {
         color: var(--status3);
       }
+      &.menu_name {
+        @apply text-left;
+      }
     }
     td {
       text-align: center;

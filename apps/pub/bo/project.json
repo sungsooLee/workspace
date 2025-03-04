@@ -1,6 +1,6 @@
 {
   "name": "pb-bo",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/pub/bo/src",
   "projectType": "application",
   "tags": [],

@@ -16,25 +16,33 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LayoutTestImport } from './pages/_layout/test'
+import { Route as LayoutMenuIdImport } from './pages/_layout/$menuId'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
+import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account-pw'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
+import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
+import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
+import { Route as AuthPasswordChangeImport } from './pages/_auth/password-change'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
+import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
+import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
@@ -86,6 +94,12 @@ const LayoutTestRoute = LayoutTestImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutMenuIdRoute = LayoutMenuIdImport.update({
+  id: '/$menuId',
+  path: '/$menuId',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const AuthSuccessRoute = AuthSuccessImport.update({
   id: '/success',
   path: '/success',
@@ -116,15 +130,45 @@ const AuthSearchIdSuccessRoute = AuthSearchIdSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthSearchAccountPwRoute = AuthSearchAccountPwImport.update({
+  id: '/search-account-pw',
+  path: '/search-account-pw',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthSearchAccountRoute = AuthSearchAccountImport.update({
   id: '/search-account',
   path: '/search-account',
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
+  id: '/progress-status-cp',
+  path: '/progress-status-cp',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusCertifyRoute = AuthProgressStatusCertifyImport.update({
+  id: '/progress-status-certify',
+  path: '/progress-status-certify',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusAdminRoute = AuthProgressStatusAdminImport.update({
+  id: '/progress-status-admin',
+  path: '/progress-status-admin',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthProgressStatusRoute = AuthProgressStatusImport.update({
   id: '/progress-status',
   path: '/progress-status',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthPasswordChangeRoute = AuthPasswordChangeImport.update({
+  id: '/password-change',
+  path: '/password-change',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -165,6 +209,13 @@ const LayoutLearningPopupLearningRegisterationRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutLearningMediaRegisterRoute =
+  LayoutLearningMediaRegisterImport.update({
+    id: '/learning/mediaRegister',
+    path: '/learning/mediaRegister',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutLearningMediaDetailRoute = LayoutLearningMediaDetailImport.update({
   id: '/learning/mediaDetail',
   path: '/learning/mediaDetail',
@@ -198,6 +249,12 @@ const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
 const GuideGuideStepperRoute = GuideGuideStepperImport.update({
   id: '/guide/stepper',
   path: '/guide/stepper',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideSpinnerRoute = GuideGuideSpinnerImport.update({
+  id: '/guide/spinner',
+  path: '/guide/spinner',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -359,6 +416,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/password-change': {
+      id: '/_auth/password-change'
+      path: '/password-change'
+      fullPath: '/password-change'
+      preLoaderRoute: typeof AuthPasswordChangeImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/progress-status': {
       id: '/_auth/progress-status'
       path: '/progress-status'
@@ -366,11 +430,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthProgressStatusImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/progress-status-admin': {
+      id: '/_auth/progress-status-admin'
+      path: '/progress-status-admin'
+      fullPath: '/progress-status-admin'
+      preLoaderRoute: typeof AuthProgressStatusAdminImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-certify': {
+      id: '/_auth/progress-status-certify'
+      path: '/progress-status-certify'
+      fullPath: '/progress-status-certify'
+      preLoaderRoute: typeof AuthProgressStatusCertifyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-cp': {
+      id: '/_auth/progress-status-cp'
+      path: '/progress-status-cp'
+      fullPath: '/progress-status-cp'
+      preLoaderRoute: typeof AuthProgressStatusCpImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/search-account': {
       id: '/_auth/search-account'
       path: '/search-account'
       fullPath: '/search-account'
       preLoaderRoute: typeof AuthSearchAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/search-account-pw': {
+      id: '/_auth/search-account-pw'
+      path: '/search-account-pw'
+      fullPath: '/search-account-pw'
+      preLoaderRoute: typeof AuthSearchAccountPwImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-id-success': {
@@ -407,6 +499,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/success'
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
+    }
+    '/_layout/$menuId': {
+      id: '/_layout/$menuId'
+      path: '/$menuId'
+      fullPath: '/$menuId'
+      preLoaderRoute: typeof LayoutMenuIdImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/test': {
       id: '/_layout/test'
@@ -569,6 +668,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSelectImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/spinner': {
+      id: '/_guide/guide/spinner'
+      path: '/guide/spinner'
+      fullPath: '/guide/spinner'
+      preLoaderRoute: typeof GuideGuideSpinnerImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/stepper': {
       id: '/_guide/guide/stepper'
       path: '/guide/stepper'
@@ -609,6 +715,13 @@ declare module '@tanstack/react-router' {
       path: '/learning/mediaDetail'
       fullPath: '/learning/mediaDetail'
       preLoaderRoute: typeof LayoutLearningMediaDetailImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/mediaRegister': {
+      id: '/_layout/learning/mediaRegister'
+      path: '/learning/mediaRegister'
+      fullPath: '/learning/mediaRegister'
+      preLoaderRoute: typeof LayoutLearningMediaRegisterImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/learning/popup-learningRegisteration': {
@@ -653,8 +766,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthPasswordChangeRoute: typeof AuthPasswordChangeRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
+  AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
+  AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
   AuthSignupStep2Route: typeof AuthSignupStep2Route
@@ -664,8 +782,13 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthPasswordChangeRoute: AuthPasswordChangeRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
+  AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
+  AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
   AuthSignupStep2Route: AuthSignupStep2Route,
@@ -697,6 +820,7 @@ interface GuideRouteChildren {
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
+  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
@@ -727,6 +851,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
+  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
@@ -738,9 +863,11 @@ const GuideRouteChildren: GuideRouteChildren = {
 const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 
 interface LayoutRouteChildren {
+  LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
+  LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
@@ -748,9 +875,11 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
+  LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
@@ -764,13 +893,19 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/password-change': typeof AuthPasswordChangeRoute
   '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
+  '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
   '/success': typeof AuthSuccessRoute
+  '/$menuId': typeof LayoutMenuIdRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
@@ -794,12 +929,14 @@ export interface FileRoutesByFullPath {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -810,13 +947,19 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/password-change': typeof AuthPasswordChangeRoute
   '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
+  '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
   '/signup-step3': typeof AuthSignupStep3Route
   '/success': typeof AuthSuccessRoute
+  '/$menuId': typeof LayoutMenuIdRoute
   '/test': typeof LayoutTestRoute
   '/': typeof LayoutIndexRoute
   '/guide/accordion': typeof GuideGuideAccordionRoute
@@ -840,12 +983,14 @@ export interface FileRoutesByTo {
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
   '/guide/select': typeof GuideGuideSelectRoute
+  '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -859,13 +1004,19 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/password-change': typeof AuthPasswordChangeRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
+  '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/_auth/progress-status-certify': typeof AuthProgressStatusCertifyRoute
+  '/_auth/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
+  '/_auth/search-account-pw': typeof AuthSearchAccountPwRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
   '/_auth/signup-step2': typeof AuthSignupStep2Route
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/success': typeof AuthSuccessRoute
+  '/_layout/$menuId': typeof LayoutMenuIdRoute
   '/_layout/test': typeof LayoutTestRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/accordion': typeof GuideGuideAccordionRoute
@@ -889,12 +1040,14 @@ export interface FileRoutesById {
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
+  '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
+  '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -907,13 +1060,19 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/password-change'
     | '/progress-status'
+    | '/progress-status-admin'
+    | '/progress-status-certify'
+    | '/progress-status-cp'
     | '/search-account'
+    | '/search-account-pw'
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
     | '/signup-step3'
     | '/success'
+    | '/$menuId'
     | '/test'
     | '/'
     | '/guide/accordion'
@@ -937,12 +1096,14 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
+    | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -952,13 +1113,19 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/password-change'
     | '/progress-status'
+    | '/progress-status-admin'
+    | '/progress-status-certify'
+    | '/progress-status-cp'
     | '/search-account'
+    | '/search-account-pw'
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
     | '/signup-step3'
     | '/success'
+    | '/$menuId'
     | '/test'
     | '/'
     | '/guide/accordion'
@@ -982,12 +1149,14 @@ export interface FileRouteTypes {
     | '/guide/radio'
     | '/guide/respond'
     | '/guide/select'
+    | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
+    | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -999,13 +1168,19 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
+    | '/_auth/password-change'
     | '/_auth/progress-status'
+    | '/_auth/progress-status-admin'
+    | '/_auth/progress-status-certify'
+    | '/_auth/progress-status-cp'
     | '/_auth/search-account'
+    | '/_auth/search-account-pw'
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
     | '/_auth/signup-step2'
     | '/_auth/signup-step3'
     | '/_auth/success'
+    | '/_layout/$menuId'
     | '/_layout/test'
     | '/_layout/'
     | '/_guide/guide/accordion'
@@ -1029,12 +1204,14 @@ export interface FileRouteTypes {
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
     | '/_guide/guide/select'
+    | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
     | '/_guide/guide/tabs'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/learning/mediaDetail'
+    | '/_layout/learning/mediaRegister'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -1074,8 +1251,13 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
+        "/_auth/password-change",
         "/_auth/progress-status",
+        "/_auth/progress-status-admin",
+        "/_auth/progress-status-certify",
+        "/_auth/progress-status-cp",
         "/_auth/search-account",
+        "/_auth/search-account-pw",
         "/_auth/search-id-success",
         "/_auth/signup-step1",
         "/_auth/signup-step2",
@@ -1107,6 +1289,7 @@ export const routeTree = rootRoute
         "/_guide/guide/radio",
         "/_guide/guide/respond",
         "/_guide/guide/select",
+        "/_guide/guide/spinner",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
         "/_guide/guide/tabs",
@@ -1118,9 +1301,11 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
+        "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
         "/_layout/learning/mediaDetail",
+        "/_layout/learning/mediaRegister",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
@@ -1131,12 +1316,32 @@ export const routeTree = rootRoute
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
+    "/_auth/password-change": {
+      "filePath": "_auth/password-change.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/progress-status": {
       "filePath": "_auth/progress-status.tsx",
       "parent": "/_auth"
     },
+    "/_auth/progress-status-admin": {
+      "filePath": "_auth/progress-status-admin.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-certify": {
+      "filePath": "_auth/progress-status-certify.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-cp": {
+      "filePath": "_auth/progress-status-cp.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/search-account": {
       "filePath": "_auth/search-account.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/search-account-pw": {
+      "filePath": "_auth/search-account-pw.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-id-success": {
@@ -1158,6 +1363,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_layout/$menuId": {
+      "filePath": "_layout/$menuId.tsx",
+      "parent": "/_layout"
     },
     "/_layout/test": {
       "filePath": "_layout/test.tsx",
@@ -1251,6 +1460,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/select.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/spinner": {
+      "filePath": "_guide/guide/spinner.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/stepper": {
       "filePath": "_guide/guide/stepper.tsx",
       "parent": "/_guide"
@@ -1273,6 +1486,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/mediaDetail": {
       "filePath": "_layout/learning/mediaDetail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/mediaRegister": {
+      "filePath": "_layout/learning/mediaRegister.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/popup-learningRegisteration": {

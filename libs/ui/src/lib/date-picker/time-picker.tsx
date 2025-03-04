@@ -23,6 +23,8 @@ export interface TimePickerComponentProps extends BaseFieldProps<Date> {
   selectsStart?: boolean;
   selectsEnd?: boolean;
   showTimePicker?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
   onChange?: (date: Date | undefined) => void;
 }
 
@@ -42,6 +44,8 @@ const TimePickerComponent = forwardRef<HTMLDivElement, TimePickerComponentProps>
       timeFormat = '24',
       minuteStep = 15,
       className,
+      readOnly,
+      disabled,
     },
     ref,
   ) => {
@@ -77,14 +81,16 @@ const TimePickerComponent = forwardRef<HTMLDivElement, TimePickerComponentProps>
         showIcon
         dateFormat={dateFormat}
         shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+        readOnly={readOnly}
+        disabled={disabled}
         minDate={minDate} // minDate 이전 날짜 선택 불가
         maxDate={maxDate} // maxDate 이후 날짜 선택 불가
         selected={selectedDate}
-        onChange={(date) => handleChange(date ?? undefined)}
         icon={<CalendarIcon />}
         isClearable={true}
         showTimeInput={showTimeInput}
         customTimeInput={<ExampleCustomTimeInput />}
+        onChange={(date) => handleChange(date ?? undefined)}
       />
     );
   },

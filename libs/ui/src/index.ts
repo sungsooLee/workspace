@@ -81,6 +81,12 @@ export * from './lib/stepper/stepper';
 export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
 
+// transfer grid
+export * from './lib/transfer-grid/transfer-grid';
+
+// transfer tree grid
+export * from './lib/transfer-tree-grid/transfer-tree-grid';
+
 // progress
 export * from './lib/progress/progress';
 

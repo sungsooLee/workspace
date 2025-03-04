@@ -4,10 +4,7 @@
     .accordion_btn {
       @apply relative box-border flex max-h-[70px] w-full items-center py-[13px] pl-0 pr-[32px];
       & > span {
-        @apply overflow-hidden text-left text-[14px] leading-[22px] text-[var(--gray9)];
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        @apply text-left text-[14px] leading-[22px] text-[var(--gray9)];
       }
       &[data-state='open'] {
         @apply font-bold;

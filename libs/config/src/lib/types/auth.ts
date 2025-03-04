@@ -6,6 +6,7 @@ export interface AuthUser {
   companyId: number;
   companyCode: string;
   emailAddress: string;
+  tenants: Tenant[];
   tenantIds: number[];
   stateCode: string;
   locale: string;
@@ -27,4 +28,9 @@ export interface AuthSSOLogin {
   state: string;
   authorizationCode: string;
   timezone: string;
+}
+
+export interface Tenant {
+  tenantId: number;
+  tenantName: string;
 }

@@ -1,6 +1,9 @@
 .start {
   .description {
     @apply mb-[12px] block text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
+    &:empty {
+      @apply hidden;
+    }
   }
   .thumbnail_wrap {
     @apply flex overflow-hidden;

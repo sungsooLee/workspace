@@ -3,7 +3,7 @@
 }
 
 .row {
-  @apply flex w-full gap-[32px] text-left;
+  @apply flex w-full gap-[40px] text-left;
   .row {
     @apply mt-[16px];
   }
@@ -36,6 +36,36 @@
   &.pd_none {
     @apply pb-[0];
   }
+  &.type2 {
+    .form_label {
+      @apply pl-[40px];
+    }
+    .input_box {
+      @apply mt-0;
+    }
+    .guide_text.error {
+      @apply ml-[40px];
+    }
+  }
+  &.type_switch {
+    .input_box {
+      @apply mt-0;
+    }
+  }
+  &.col {
+    .input_box {
+      @apply flex-col;
+      & > div + div {
+        @apply mx-0 mt-[8px];
+      }
+    }
+  }
+  .form_title {
+    @apply title_6_b text-[var(--gray9)];
+    & + .form_label {
+      @apply mt-[16px];
+    }
+  }
   .guide_text {
     @apply mt-[8px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
     &:empty {
@@ -62,27 +92,11 @@
   .btn_switch {
     @apply absolute right-0 top-0;
   }
-  &.type2 {
-    .form_label {
-      @apply pl-[40px];
-    }
-    .input_box {
-      @apply mt-0;
-    }
-    .guide_text.error {
-      @apply ml-[40px];
-    }
-  }
-  &.type_switch {
-    .input_box {
-      @apply mt-0;
-    }
-  }
 }
 .input_box_wrap {
-  @apply hidden;
+  @apply mt-[16px];
   .input_box {
-    @apply mt-[8px];
+    @apply mt-[4px];
     & + .input_box {
       @apply mt-[16px];
     }
@@ -93,8 +107,8 @@
 }
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];
-  .input {
-    @apply flex-auto;
+  input {
+    @apply flex-auto !border-[var(--gray4)];
   }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
@@ -103,9 +117,12 @@
     @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
   }
   .select_option {
-    @apply min-w-[132px];
+    @apply w-full min-w-[120px];
     &.lg {
       @apply min-w-[360px];
+      & > button {
+        @apply !border-[var(--gray4)];
+      }
     }
     & + .dash {
       @apply !w-[16px];
@@ -121,7 +138,7 @@
     @apply absolute left-0 top-[10px];
   }
   .dash {
-    @apply mx-[8px] flex min-w-[8px] items-center justify-center;
+    @apply flex min-w-[40px] items-center justify-center;
     &::after {
       @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
     }
@@ -131,6 +148,9 @@
   }
   .btn_delete {
     @apply !ml-[16px];
+  }
+  .textarea {
+    @apply !rounded-[8px];
   }
   &.type2 {
     @apply mt-0;
@@ -150,11 +170,19 @@
       @apply border-[var(--gray7)];
     }
   }
+  & > div.short {
+    button {
+      @apply !w-[120px];
+    }
+  }
+  button {
+    @apply whitespace-nowrap;
+  }
 }
 .form_label {
   @apply block overflow-hidden;
   .form_text {
-    @apply body_3_b;
+    @apply body_3_r;
     &.sm {
       @apply text-[1.2rem] leading-[1rem] text-[var(--gray8)];
       & + .status {
@@ -177,15 +205,18 @@
   .status {
     @apply ml-[2px] inline-flex align-text-top;
     &.required svg {
-      fill: #00afd5;
+      @apply fill-[#00afd5];
     }
     &.error svg {
-      fill: #00afd5;
+      @apply fill-[#00afd5];
     }
   }
 }
 .dash {
-  @apply flex w-[32px] items-center justify-center;
+  @apply !mx-0 flex w-[23px] items-center justify-center;
+  & + div {
+    @apply !mx-0;
+  }
 }
 .text_limit {
   @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
@@ -196,4 +227,12 @@
 
 hr.divider {
   @apply h-[1px] w-full bg-[#EDF0F7];
+}
+
+/* 검색 인풋 */
+.input_wrap {
+  @apply relative flex w-full;
+  .btn_search {
+    @apply absolute left-0 top-0 z-[1] h-[32px] w-full bg-transparent -indent-[9999px] text-opacity-0;
+  }
 }

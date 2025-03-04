@@ -721,7 +721,7 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
-              "path": "/learning/resource/education/list",
+              "path": "/learning/resource/list",
               "children": [
                 {
                   "title": "학습자원 등록",

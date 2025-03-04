@@ -26,7 +26,7 @@ function PageContainerComponent({
         <div className={styles.title_wrap}>
           {/* 2025-02-14 버튼 케이스 추가 */}
           <h3 className={cn(styles.title, 'title_bo_1_b')}>
-            동영상 상세
+            타이틀
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}

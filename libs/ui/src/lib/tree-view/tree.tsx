@@ -41,7 +41,7 @@ const TreeNodeComponent = ({
 
   const getNodeStyle = () => {
     const styles = [
-      `flex items-center py-1 px-2 rounded group
+      `flex items-center py-1 rounded group min-h-[40px]
         ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}`,
     ];
     if (selectedNode && selectedNode.key === node.key) {
@@ -167,18 +167,18 @@ const TreeNodeComponent = ({
           )}
         </span>
         <span className="flex-grow text-sm">
-          {node.title} / Depth : {level}
+          {node.title} / key = {node.key} / Depth : {level}
         </span>
 
         {treeType === 'advanced' && (
-          <div className="relative flex">
+          <div className="relative flex items-center">
             {nodeButtons && (
               <div className="mr-2 flex space-x-1" onClick={(e) => e.stopPropagation()}>
                 {nodeButtons(node, level)}
               </div>
             )}
             <span
-              className={`ml-2 flex h-6 w-6 items-center justify-center transition-opacity ${isAdvancedMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
+              className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isAdvancedMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
               draggable={isAdvancedMode && isActuallyDraggable}
               onDragStart={isAdvancedMode ? handleHamburgerDragStart : undefined}>
               ☰

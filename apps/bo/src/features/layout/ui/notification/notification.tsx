@@ -7,12 +7,10 @@ import { useFetchAuthUser } from '@learnway/config';
 import styles from './notification.module.css';
 
 const PopoverContent = () => {
-  return <div className={styles.alarm_content}></div>;
+  return <div className={styles.alarm_content}>PopoverContent</div>;
 };
 
 const NotificationComponent = () => {
-  const { data } = useFetchAuthUser();
-
   return (
     <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
       {/* <Avatar imageUrl="https://*.png" fallback="Noti" /> */}

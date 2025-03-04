@@ -67,7 +67,6 @@ const useDynamicForm = (config: DynamicFormConfig) => {
   const formSubmit = (onValid: (data: any) => void): FormEventHandler<HTMLFormElement> => {
     return (event) => {
       event.preventDefault(); // 기본 폼 제출 동작 방지
-
       handleSubmit(
         (data) => {
           const objectParams: any = {};
@@ -87,9 +86,11 @@ const useDynamicForm = (config: DynamicFormConfig) => {
             }
           });
           // 가공된 데이터를 onValid 콜백에 전달
+          console.log('on callback');
           onValid(objectParams);
         },
         (errors) => {
+          console.error('Validation Errors:', errors);
           // 첫 번째 에러 필드의 키를 추출
           const firstErrorKey = Object.keys(errors)[0];
           if (firstErrorKey) {
