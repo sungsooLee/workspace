@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 
 import { httpService, HttpMethod } from '@learnway/shared';
-import { OAuthApiPrefix } from '../../../service/config.service';
+import { OAuthApiPrefix, SSOApiPrefix } from '../../../service/config.service';
 import { tokenService } from '../service/token.service';
 
 export default class AuthorizationService {
@@ -29,5 +29,25 @@ export default class AuthorizationService {
       },
       { headers: { 'refresh-token': `${refresh_token}` } },
     );
+  }
+
+  static healthcheck(comanyCode: string) {
+    return httpService.execute<AxiosResponse>({
+      method: HttpMethod.POST,
+      url: `${SSOApiPrefix()}/healthcheck`,
+      payload: {
+        comanyCode,
+        upForm: 'N',
+        userIp: '111.11.11.11',
+      },
+    });
+  }
+
+  static ssoLogin(payload: any) {
+    return httpService.execute<AxiosResponse>({
+      method: HttpMethod.POST,
+      url: `${SSOApiPrefix()}/sso/login`,
+      payload,
+    });
   }
 }

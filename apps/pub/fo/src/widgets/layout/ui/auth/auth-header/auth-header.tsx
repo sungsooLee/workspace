@@ -3,8 +3,8 @@ import { useLocation } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { Logo } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
+import { Logo, Language } from '../../../../../features/layout';
+// import { Language } from '../../../../../features/platform';
 import { isSigninPage } from '../../../../../features/platform';
 
 import styles from './auth-header.module.css';
@@ -19,7 +19,7 @@ function AuthHeaderComponent() {
           <Logo />
         </h1>
 
-        <Language />
+        <Language className={styles.auth} />
       </header>
     </div>
   );

@@ -27,7 +27,7 @@ function RouteComponent() {
         </div>
 
         <div className={signupStyles.btn_wrap}>
-          <Button variant="primary" size="xl">
+          <Button variant="primary" size="xl" className={signupStyles.max}>
             로그인
           </Button>
         </div>

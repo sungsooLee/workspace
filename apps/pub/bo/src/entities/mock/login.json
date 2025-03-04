@@ -1,0 +1,66 @@
+{
+  "data": {
+    "status": 200,
+    "data": {
+      "userId": 2,
+      "userTsid": "0H0NV84A0FWN1",
+      "employeeNumber": "9480336",
+      "name": "????",
+      "companyId": 1,
+      "companyCode": "H101",
+      "emailAddress": "test2@email.com",
+      "tenantIds": [2, 3, 6],
+      "stateCode": "NORMAL",
+      "locale": "ko",
+      "username": "test2@email.com",
+      "accountNonExpired": true,
+      "accountNonLocked": true,
+      "credentialsNonExpired": true
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGVfaWRzIjoiUk9MRV9BRE1JTixST0xFX0hFQ19VU0VSLFJPTEVfSEFFX1VTRVIiLCJleHAiOjE3MzM4MDQwMTd9.Gv6egJx2EmlYbu1vzGCqhyiixodcdTvI_V28Dfbzz3KjN5_7v-GdjKm_ilWAbaUmfcaG-APBTVtOffKfybJJKg",
+      "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+      "connection": "close",
+      "content-length": "471",
+      "content-type": "application/json;charset=utf-8",
+      "date": "Tue, 10 Dec 2024 02:33:37 GMT",
+      "expires": "0",
+      "pragma": "no-cache",
+      "refresh-token-exp": "1733808017934",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "x-xss-protection": "0"
+    },
+    "config": {
+      "transitional": {
+        "silentJSONParsing": true,
+        "forcedJSONParsing": true,
+        "clarifyTimeoutError": false
+      },
+      "adapter": ["xhr", "http", "fetch"],
+      "transformRequest": [null],
+      "transformResponse": [null],
+      "timeout": 5000,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1,
+      "env": {},
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+      },
+      "cancelToken": {
+        "promise": {},
+        "_listeners": []
+      },
+      "method": "post",
+      "url": "/pms-module/admin/api/v1/login",
+      "data": "{\"orgId\":1,\"accountId\":\"user1\",\"password\":\"hae1234\"}"
+    },
+    "request": {}
+  }
+}

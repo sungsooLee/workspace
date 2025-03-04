@@ -403,20 +403,32 @@
     td {
       padding: 10px;
       font-size: 1.4rem;
+      white-space: pre;
       &.completed {
         color: var(--status3);
       }
+      &.status {
+        color: var(--status2);
+      }
     }
     td {
+      @apply text-[13px];
       text-align: center;
       border-bottom: 1px solid #eee;
       > a {
         text-decoration: underline;
       }
       &.pages {
+        @apply text-left;
         a {
           @apply text-[#00AFD5];
         }
+        .screen {
+          @apply ml-[5px] text-[12px] text-[#999];
+        }
+      }
+      &.remarks {
+        @apply text-left text-[12px] leading-[1.4];
       }
     }
   }

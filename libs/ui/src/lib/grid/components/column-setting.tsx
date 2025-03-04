@@ -22,6 +22,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { Button } from '../../button/button';
 import { Checkbox } from '../../checkbox/checkbox';
 import { useModal } from '../../modal/modal.hook';
+import { IcoSetting } from '@learnway/icons';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -230,8 +231,12 @@ function ColumnSettings<T extends object>({
   };
 
   return (
-    <Button variant="outline" size="sm" className="ml-auto" onClick={handleOpenSettings}>
-      <Settings className="mr-2 h-4 w-4" />
+    <Button
+      variant="outline"
+      size="sm"
+      className="btn_setting ml-auto"
+      onClick={handleOpenSettings}>
+      <IcoSetting width={16} height={16} stroke="#131C30" />
       항목설정
     </Button>
   );

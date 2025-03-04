@@ -33,7 +33,7 @@ import signupStyles from './signup.module.css'
           </ul>
           <div className="code_example">
             <pre className="code_block">
-              <code>{`import styles from './signup.module.css'
+              <code>{`import signStyles from './signup.module.css'
 
 // 사용 예제
 <div className={styles.test}></div>`}</code>

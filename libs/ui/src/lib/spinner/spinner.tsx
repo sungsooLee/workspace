@@ -1,5 +1,5 @@
 import { BackDrop } from '../backdrop/backdrop';
-import { LoaderCircle } from 'lucide-react';
+import { IcoSpinner } from '@learnway/icons';
 
 import styles from './spinner.module.css';
 import React, { forwardRef } from 'react';
@@ -16,7 +16,7 @@ const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ className, isLoading, showBackdrop }) => {
     return (
       <>
-        {isLoading && <LoaderCircle className={cn(styles.spinner, className, 'nlp--spinner')} />}
+        {isLoading && <IcoSpinner className={cn(styles.spinner, className, 'nlp--spinner')} />}
         {isLoading && showBackdrop ? <BackDrop /> : ''}
       </>
     );

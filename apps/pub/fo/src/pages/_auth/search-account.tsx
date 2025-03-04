@@ -1,10 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
 import { Button, RadioCard, Tabs, Input, Select } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
@@ -24,13 +23,13 @@ function RouteComponent() {
           </div>
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
-              className={styles.radio_card}
+              className={signupStyles.radio_card}
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoPhone02 width={48} height={48} className={styles.ico1} />
+                      <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
                       <span>휴대폰 인증</span>
                     </div>
                   ),
@@ -39,7 +38,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoMail width={48} height={48} className={styles.ico2} />
+                      <IcoMail width={48} height={48} className={signupStyles.ico2} />
                       <span>이메일 인증</span>
                     </div>
                   ),
@@ -93,7 +92,7 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <Select
-                    className={formStyles.select_option}
+                    className={formStyles.short}
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
@@ -145,7 +144,7 @@ function RouteComponent() {
           </div>
 
           <div className={signupStyles.signup_noti}>
-            <dl className={styles.check_point}>
+            <dl className={signupStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -166,13 +165,13 @@ function RouteComponent() {
           </div>
           <div className={signupStyles.signup_select} role="radiogroup">
             <RadioCard
-              className={styles.radio_card}
+              className={signupStyles.radio_card}
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoPhone02 width={48} height={48} className={styles.ico1} />
+                      <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
                       <span>휴대폰 인증</span>
                     </div>
                   ),
@@ -181,7 +180,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoMail width={48} height={48} className={styles.ico2} />
+                      <IcoMail width={48} height={48} className={signupStyles.ico2} />
                       <span>이메일 인증</span>
                     </div>
                   ),
@@ -209,6 +208,9 @@ function RouteComponent() {
                     placeholder="이메일(hyundai.kim@hyundai.com)"
                     value=""
                   />
+                  <Button variant="gray" size="lg">
+                    아이디확인
+                  </Button>
                 </div>
               </div>
             </div>
@@ -255,7 +257,7 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <Select
-                    className={formStyles.select_option}
+                    className={formStyles.short}
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
@@ -307,12 +309,19 @@ function RouteComponent() {
           </div>
 
           <div className={signupStyles.signup_noti}>
-            <dl className={styles.check_point}>
+            <dl className={signupStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
               </dt>
               <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+              <dd>
+                법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
+                있습니다.{' '}
+                <Link to="" className={signupStyles.link}>
+                  구글 OTP 인증 가이드
+                </Link>
+              </dd>
             </dl>
           </div>
         </>
@@ -320,7 +329,8 @@ function RouteComponent() {
     },
   ];
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
+    <div
+      className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
       <div className={signupStyles.auth_box}>
         <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
 
