@@ -96,7 +96,6 @@ export function useUpdateUser(mutationOptions = {}) {
       }
       const updateUser = { ...user, menus };
       queryClient.setQueryData(queryKeys.authUser, updateUser);
-      console.log('updateMenu', updateUser);
       return updateUser as AuthUser;
     },
   };
