@@ -16,43 +16,41 @@ function RouteComponent() {
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
       <div className={signupStyles.auth_box}>
-        <div className={formStyles.form_row}>
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name5" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>아이디/이메일</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name5"
-                  type="text"
-                  value=""
-                  placeholder="아이디(hyundai.kim@hyundail.com)"
-                  className={formStyles.lg}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className={`${formStyles.row} ${formStyles.no_line}`}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name5" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>비밀번호</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name5"
-                  type="password"
-                  value=""
-                  placeholder="비밀번호를 입력하세요."
-                  className={formStyles.lg}
-                />
-              </div>
+        <div className={formStyles.row}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>아이디/이메일</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name5"
+                type="text"
+                value=""
+                placeholder="아이디(hyundai.kim@hyundail.com)"
+                className={formStyles.lg}
+              />
             </div>
           </div>
         </div>
 
-        <div className={signupStyles.login_info}>
+        <div className={`${formStyles.row} ${formStyles.no_line}`}>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>비밀번호</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name5"
+                type="password"
+                value=""
+                placeholder="비밀번호를 입력하세요."
+                className={formStyles.lg}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={`${formStyles.row} ${formStyles.login_info}`}>
           <Checkbox label="아이디 저장" className={signupStyles.id_save} />
           <div className={signupStyles.info}>
             <Link to="/search-account">아이디/비밀번호찾기</Link>

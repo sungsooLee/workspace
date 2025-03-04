@@ -1,16 +1,20 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
-import { Button, RadioCard, Tabs, Input, Select } from '@learnway/ui';
+import modalStyles from './mpass-modal.module.css';
+import { Button, RadioCard, Input, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/mpass_cert')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+  const MpassModalContent = () => {
+    return <div className={`${modalStyles.start} ${modalStyles.mpass_modal}`}></div>;
+  };
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.mpass_cert}`}>
       <div className={signupStyles.auth_box}>
@@ -25,8 +29,8 @@ function RouteComponent() {
                 value: 'type1',
                 label: (
                   <div>
-                    <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
-                    <span>휴대폰 인증</span>
+                    <IcoShieldTick01 width={48} height={48} className={signupStyles.ico1} />
+                    <span>OTP</span>
                   </div>
                 ),
               },
@@ -34,8 +38,8 @@ function RouteComponent() {
                 value: 'type2',
                 label: (
                   <div>
-                    <IcoMail width={48} height={48} className={signupStyles.ico2} />
-                    <span>이메일 인증</span>
+                    <IcoFaceId01 width={48} height={48} className={signupStyles.ico2} />
+                    <span>FIDO</span>
                   </div>
                 ),
               },
@@ -43,93 +47,26 @@ function RouteComponent() {
           />
         </div>
 
-        {/* 인증폼 */}
+        <div className={signupStyles.select_txt}>
+          {/* FIDO 일때 문구 */}
+          생체인증(지문/안면인식) 인증 옵션을 선택하셨습니다. <br />
+          MPASS 인증 버튼 클릭 후 모바일 앱으로 인증을 진행해 주세요.
+        </div>
+
+        {/* OTP 인증폼 */}
         <div
           className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>이름</span>
+                <span className={formStyles.form_text}>OTP 번호</span>
                 {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Input id="name" type="text" placeholder="이름(김현대)" value="" />
-              </div>
-            </div>
-          </div>
-
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>생년월일</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
-              </div>
-            </div>
-          </div>
-
-          {/* 휴대폰 인증일때 */}
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-1-6" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>휴대폰 번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Select
-                  className={formStyles.short}
-                  options={[
-                    { value: 'type1', label: '+82' },
-                    { value: 'type2', label: '+83' },
-                  ]}
-                  size="lg"
-                />
-                <Input id="name-1-6" type="text" placeholder="-없이 휴대폰 번호입력(0102345678)" />
-              </div>
-            </div>
-          </div>
-
-          {/* 이메일 인증일때 */}
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-1-6" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>이메일</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
-              </div>
-            </div>
-          </div>
-
-          <div className={formStyles.row}>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>인증번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name" type="text" placeholder="인증번호 입력" value="" />
-                <Button variant="gray" size="lg">
-                  재전송
-                </Button>
+                <Input id="name" type="text" placeholder="OTP 번호 입력" value="" />
               </div>
             </div>
           </div>
@@ -141,7 +78,10 @@ function RouteComponent() {
               <IcoCaution width={16} height={16} stroke="#6F798B" />
               유의사항
             </dt>
-            <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+            {/* OTP일때 문구 출력 */}
+            <dd>OTP를 선택한 경우 MPASS 앱에서 OTP번호를 확인하고 입력해 주세요.</dd>
+            {/* FIDO 문구 출력 */}
+            <dd>FIDO를 선택한 경우 MPASS 앱에서 생체인식(지문/안면) 후 로그인을 진행해 주세요. </dd>
           </dl>
         </div>
 
@@ -149,9 +89,19 @@ function RouteComponent() {
           <Button variant="gray" size="xl">
             취소
           </Button>
-          <Button variant="primary" size="xl">
-            {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-            인증번호 요청
+
+          <Button
+            size="xl"
+            variant="primary"
+            onClick={() =>
+              openModal({
+                title: 'FIDO 인증',
+                width: 'sm',
+                content: <MpassModalContent />,
+                footer: false,
+              })
+            }>
+            MPASS 인증
           </Button>
         </div>
       </div>

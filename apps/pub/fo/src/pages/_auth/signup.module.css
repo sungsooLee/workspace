@@ -19,7 +19,7 @@
     }
 
     .search_info {
-      @apply body_2_b pt-[48px] text-center text-[var(--gray7)];
+      @apply body_2_r pt-[48px] text-center text-[var(--gray7)];
       strong {
         @apply text-[var(--gray8)];
       }
@@ -31,6 +31,9 @@
         + .signup_noti {
           @apply mt-[8px];
         }
+      }
+      + .select_txt {
+        @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
       }
     }
 
@@ -143,6 +146,9 @@
         + .signup_noti {
           @apply mt-[24px];
         }
+      }
+      + .signup_noti {
+        @apply mt-[8px];
       }
     }
   }
@@ -262,16 +268,6 @@
   &.mpass_cert {
     .search_info {
       @apply pt-0;
-    }
-  }
-
-  /* 비밀번호 입력 */
-  &.password_input,
-  &.password_modify {
-    .auth_form {
-      + .signup_noti {
-        @apply mt-[8px];
-      }
     }
   }
 }
