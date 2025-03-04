@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { IcoFormRequired, IcoSucess } from '@learnway/icons';
+import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Input, Select, ContentsRow } from '@learnway/ui';
@@ -18,13 +18,28 @@ function RouteComponent() {
         <div className={signupStyles.auth_box}>
           <div className={signupStyles.success_info}>
             <i className={signupStyles.ico}>
-              {/* 정상처리 */}
+              {/* 대기중 */}
               <IcoSucess width={56} height={56} fill="#06226A" />
+              {/* 승인완료 
+              <IcoComplete width={56} height={56} stroke="#00AFD5" />*/}
+              {/* 반려 
+              <IcoCaution02 width={56} height={56} stroke="#FFB902" />*/}
             </i>
-            <h3 className={signupStyles.title}>회원가입이 대기 중입니다.</h3>
+            <h3 className={signupStyles.title}>
+              {/* 대기중 */}
+              회원가입이 대기 중입니다.
+              {/* 승인완료 
+              회원가입 승인완료되었습니다.*/}
+              {/* 반려 
+              회원가입이 반려되었습니다.*/}
+            </h3>
             <p className={signupStyles.noti}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
             <div className={`${signupStyles.noti_box} ${signupStyles.type2}`}>
               신청일시 : <strong>YYYY-MM-DD</strong>
+              {/* 승인완료 
+              승인일시 : <strong>YYYY-MM-DD</strong>*/}
+              {/* 반려 
+              반려일시 : <strong>YYYY-MM-DD</strong>*/}
             </div>
           </div>
 
