@@ -96,7 +96,7 @@ function RouteComponent() {
             <th scope="col">완료일</th>
             <th scope="col">최종수정일</th>
             <th scope="col">비고</th>
-            <th scope="col">작업</th>
+            <th scope="col">상태</th>
           </tr>
         </thead>
         <tbody>
