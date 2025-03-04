@@ -1,5 +1,5 @@
 .nlp--modal {
-  .title {
+  h2 {
     @apply border-[var(--gray5)];
   }
 }
