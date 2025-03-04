@@ -18,8 +18,6 @@ export default {
   },
   // args: {
   // variant: 'primary',
-  // size: 'md'
-  // prefixCharacter: '#',
   // },
 } as Meta;
 
@@ -27,6 +25,10 @@ export default {
 export const Template: any = (args: any) => {
   const columnHelper = createColumnHelper();
   const columns = [
+    columnHelper.accessor('id', {
+      header: 'ID',
+      cell: (info) => info.getValue(),
+    }),
     columnHelper.accessor('name', {
       header: 'Last Name',
       cell: (info) => info.getValue(),
@@ -38,8 +40,8 @@ export const Template: any = (args: any) => {
       gridData={dummyData}
       columns={columns}
       rowKey={'id'}
-      leftTitle={'강사 목록'}
-      rightTitle={'선택 목록'}
+      leftTitle={'OOO 목록'}
+      rightTitle={'OOO 목록'}
     />
   );
 };
