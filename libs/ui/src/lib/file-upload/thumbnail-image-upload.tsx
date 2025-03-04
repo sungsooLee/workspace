@@ -74,6 +74,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
               onChange={handleFileChange}
             />
           </div>
+          {/* 처음에만 노출 */}
           <div className={styles.loading}>
             <span className={styles.text}>
               <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />

@@ -5,7 +5,6 @@ import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
-import thumbStyles from './thumbStyles.module.css'; // thumb nail css
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Spinner,
@@ -29,6 +28,7 @@ import {
   IcoAlertCircle,
   IcoSearch,
   IcoRefresh02,
+  IcoCloseCircle,
 } from '@learnway/icons';
 import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -618,8 +618,180 @@ function RouteComponent() {
                 />
               </div>
               <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>14개</em>/200개
+                여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
+                /200개
               </p>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-auto" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+              </label>
+              <div className={formStyles.input_box_wrap}>
+                <div className={formStyles.input_box}>
+                  <Textarea
+                    id="name-auto"
+                    rows={5}
+                    cols={33}
+                    placeholder="키워드는 AI 자동 추출되어 표기됩니다.   "
+                    resize="none"
+                    size="sm"
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-auto2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>키워드 (AI 자동 추출)</span>
+              </label>
+              <div className={formStyles.input_box_wrap}>
+                <div className={formStyles.input_box}>
+                  <Textarea
+                    id="name-auto2"
+                    rows={5}
+                    cols={33}
+                    placeholder="키워드는 AI 자동 추출되어 표기됩니다."
+                    resize="none"
+                    size="sm"
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-conjugation" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>교육자원 활용여부</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+                <span className={formStyles.sub_text}>
+                  {'해당 학습자원으로 교육 과정을 개설할 수 없습니다.'}
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-use"
+                  className={formStyles.btn_switch}
+                  reversed
+                  label="활용 불가"
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-conjugation2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>보안콘텐츠 여부</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+                <span className={formStyles.sub_text}>
+                  {'보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다.'}
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-use2"
+                  className={formStyles.btn_switch}
+                  reversed
+                  label="보안 미적용"
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-add" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>자막 추가</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+                <Switch
+                  id="name-title"
+                  className={formStyles.btn_switch}
+                  reversed
+                  label="자막 없음"
+                />
+              </label>
+              <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.short}
+                    options={[
+                      { value: 'language1', label: '영어' },
+                      { value: 'language2', label: '한국어' },
+                    ]}
+                  />
+                  <Input
+                    id="name-1-14"
+                    type="text"
+                    readOnly
+                    placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                    value="영어자막.smi"
+                  />
+                  <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                    자막 변경
+                  </Button>
+                  <Button onlyIcon className={formStyles.btn_delete}>
+                    <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                  </Button>
+                </div>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.short}
+                    options={[
+                      { value: 'language1', label: '영어' },
+                      { value: 'language2', label: '한국어' },
+                    ]}
+                  />
+                  <Input
+                    type="text"
+                    readOnly
+                    placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                    value="영어자막2.smi"
+                  />
+                  <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                    자막 변경
+                  </Button>
+                  <Button onlyIcon className={formStyles.btn_delete}>
+                    <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                  </Button>
+                </div>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.short}
+                    options={[
+                      { value: 'language1', label: '영어' },
+                      { value: 'language2', label: '한국어' },
+                    ]}
+                  />
+                  <Input
+                    type="text"
+                    readOnly
+                    placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                  />
+                  <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                    자막 추가
+                  </Button>
+                  <Button onlyIcon className={formStyles.btn_delete}>
+                    <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </ContentsRow>
         </div>
