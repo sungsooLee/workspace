@@ -5,6 +5,8 @@ import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import modalStyles from './mpass-modal.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
+import imgGuide1 from '../../assets/images/modal/img_mpass_guide1.png';
+import imgGuide2 from '../../assets/images/modal/img_mpass_guide2.png';
 
 export const Route = createFileRoute('/_auth/mpass_cert')({
   component: RouteComponent,
@@ -12,8 +14,28 @@ export const Route = createFileRoute('/_auth/mpass_cert')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
+  const { close: closeModal } = useModal();
   const MpassModalContent = () => {
-    return <div className={`${modalStyles.start} ${modalStyles.mpass_modal}`}></div>;
+    return (
+      <div className={`${modalStyles.start} ${modalStyles.mpass_modal}`}>
+        <div className={modalStyles.title_box}>
+          <h3>현재 본인 확인이 진행 중입니다.</h3>
+          <p>모바일 MPASS 앱에서 인증을 진행해 주세요</p>
+        </div>
+
+        <div className={modalStyles.guide_info}>
+          <div className={modalStyles.time}>
+            남은 시간 <strong>30초</strong>
+          </div>
+          <div className={modalStyles.guide}>
+            남은 시간 내에 모바일 MPASS 앱에서 본인 확인을 진행해 주세요. 현재 창을 닫으면 본인
+            확인이 종료됩니다.
+          </div>
+        </div>
+
+        <div className={modalStyles.inquiry}>지원 문의 계정인증 개발팀 : +82-2-6296-6409</div>
+      </div>
+    );
   };
   return (
     <form className="form_row">
@@ -100,7 +122,7 @@ function RouteComponent() {
                   title: 'FIDO 인증',
                   width: 'sm',
                   content: <MpassModalContent />,
-                  footer: false,
+                  footer: true,
                 })
               }>
               MPASS 인증
