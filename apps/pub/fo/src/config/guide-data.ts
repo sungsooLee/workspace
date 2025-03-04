@@ -355,10 +355,10 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '개인정보처리방침(회원가입시정보입력)',
-    pageId: 'success',
+    pageId: '',
     screenId: 'NLP_FO_MER_1007', //스크린아이디
     pageType: 'Page',
-    completionDate: '2025-02-24', // 완료일
+    completionDate: '', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
