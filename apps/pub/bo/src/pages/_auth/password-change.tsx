@@ -4,7 +4,7 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, Input, useModal } from '@learnway/ui';
+import { Button, Input, useModal, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/password-change')({
   component: RouteComponent,
@@ -29,7 +29,7 @@ function RouteComponent() {
         </div>
         {/* 인증폼 */}
         <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="pw-now" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>현재 비밀번호</span>
@@ -42,8 +42,8 @@ function RouteComponent() {
                 <Input id="pw-now" type="password" placeholder="비밀번호" value="" />
               </div>
             </div>
-          </div>
-          <div className={formStyles.row}>
+          </ContentsRow>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="pw-new" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>새로운 비밀번호</span>
@@ -61,8 +61,8 @@ function RouteComponent() {
                 />
               </div>
             </div>
-          </div>
-          <div className={formStyles.row}>
+          </ContentsRow>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="pw-new-confirm" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>새로운 비밀번호 확인</span>
@@ -80,7 +80,7 @@ function RouteComponent() {
                 />
               </div>
             </div>
-          </div>
+          </ContentsRow>
         </div>
         {/* 180일 경과 */}
         <div className={signupStyles.btn_txt}>

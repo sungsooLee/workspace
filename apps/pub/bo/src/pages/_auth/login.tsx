@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input, Checkbox, Button } from '@learnway/ui';
+import { Input, Checkbox, Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import signupStyles from './signup.module.css';
@@ -13,7 +13,7 @@ function RouteComponent() {
   return (
     <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
       <div className={signupStyles.auth_box}>
-        <div className={formStyles.row}>
+        <ContentsRow>
           <div className={formStyles.form_item}>
             <label htmlFor="name5" className={formStyles.form_label}>
               <span className={formStyles.form_text}>아이디/이메일</span>
@@ -29,9 +29,8 @@ function RouteComponent() {
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>
           </div>
-        </div>
-
-        <div className={`${formStyles.row} ${formStyles.no_line}`}>
+        </ContentsRow>
+        <ContentsRow className={formStyles.no_line}>
           <div className={formStyles.form_item}>
             <label htmlFor="name5" className={formStyles.form_label}>
               <span className={formStyles.form_text}>비밀번호</span>
@@ -47,7 +46,7 @@ function RouteComponent() {
             </div>
             <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
           </div>
-        </div>
+        </ContentsRow>
 
         <div className={signupStyles.login_info}>
           <Checkbox label="아이디 저장" className={signupStyles.id_save} />

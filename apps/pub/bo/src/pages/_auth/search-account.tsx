@@ -5,7 +5,7 @@ import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icon
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard, Input, Select, useModal } from '@learnway/ui';
+import { Button, RadioCard, Input, Select, useModal, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
@@ -64,9 +64,8 @@ function RouteComponent() {
         </div>
 
         {/* 인증폼 */}
-        <div
-          className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
-          <div className={formStyles.row}>
+        <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>이름</span>
@@ -79,9 +78,9 @@ function RouteComponent() {
                 <Input id="name" type="text" placeholder="이름(김현대)" value="" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>생년월일</span>
@@ -94,10 +93,10 @@ function RouteComponent() {
                 <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
           {selectedValue === 'type1' ? (
-            <div className={formStyles.row}>
+            <ContentsRow>
               {/* 휴대폰 인증일때 */}
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
@@ -123,9 +122,9 @@ function RouteComponent() {
                   />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
           ) : (
-            <div className={formStyles.row}>
+            <ContentsRow>
               {/* 이메일 인증일때 */}
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
@@ -139,7 +138,7 @@ function RouteComponent() {
                   <Input id="name-1-6" type="text" placeholder="아이디(hyundai.kim@hyundail.com)" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
           )}
         </div>
 

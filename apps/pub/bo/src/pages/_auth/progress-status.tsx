@@ -4,7 +4,7 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, Input, useModal } from '@learnway/ui';
+import { Button, Input, useModal, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
   component: RouteComponent,
@@ -30,10 +30,9 @@ function RouteComponent() {
         <div className={signupStyles.search_info}>진행현황 확인을 위해 이메일을 입력해 주세요.</div>
 
         {/* 인증폼 */}
-        <div
-          className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+        <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
           {/* 이메일 인증일때 */}
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-6" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>이메일</span>
@@ -46,7 +45,7 @@ function RouteComponent() {
                 <Input id="name-1-6" type="text" placeholder="아이디(hyundai.kim@hyundail.com)" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
         </div>
 
         <div className={signupStyles.signup_noti}>

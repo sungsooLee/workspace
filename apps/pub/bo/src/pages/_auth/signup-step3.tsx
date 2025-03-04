@@ -1,11 +1,10 @@
-import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Input, Checkbox, Select } from '@learnway/ui';
+import { Button, Stepper, SelectOption, Input, Checkbox, Select, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,
@@ -31,8 +30,8 @@ function RouteComponent() {
 
         <h4 className={signupStyles.title}>협력업체 회사 정보</h4>
 
-        <div className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col}`}>
-          <div className={formStyles.row}>
+        <div className={`${formStyles.no_line} ${formStyles.col}`}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>회사명</span>
@@ -46,9 +45,9 @@ function RouteComponent() {
               </div>
               <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>사업자 등록 번호</span>
@@ -61,15 +60,15 @@ function RouteComponent() {
                 <Input id="name" type="text" placeholder="" value="123-45-67890" readOnly />
               </div>
             </div>
-          </div>
+          </ContentsRow>
         </div>
 
         <hr className={formStyles.divider} />
 
         <h4 className={signupStyles.title}>개인정보 입력</h4>
 
-        <div className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col}`}>
-          <div className={formStyles.row}>
+        <div className={`${formStyles.no_line} ${formStyles.col}`}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>이메일</span>
@@ -90,9 +89,9 @@ function RouteComponent() {
                 </Button>
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>비밀번호</span>
@@ -113,9 +112,9 @@ function RouteComponent() {
                 <Input id="name" type="password" placeholder="비밀번호 확인" value="" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>이름</span>
@@ -128,9 +127,9 @@ function RouteComponent() {
                 <Input id="name" type="text" placeholder="이름(김현대)" value="" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>직위</span>
@@ -143,9 +142,9 @@ function RouteComponent() {
                 <Input id="name" type="text" placeholder="컨버전스 본부 / 책임" value="" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
 
-          <div className={formStyles.row}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-6" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>연락처</span>
@@ -166,7 +165,7 @@ function RouteComponent() {
                 <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
               </div>
             </div>
-          </div>
+          </ContentsRow>
         </div>
 
         <div className={signupStyles.title_box}>
