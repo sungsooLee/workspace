@@ -2,6 +2,8 @@
   @apply relative;
   &.thumbnail {
     @apply max-w-[128px] overflow-hidden rounded-[4px];
+    &:nth-last-child(1) {
+    }
     &.active {
       .thumbnail_image {
         @apply opacity-40;

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cn, toArray } from '@learnway/shared';
 
 import { SelectOption } from '../select/type';
+import styles from './list.module.css';
 import React, { useEffect, useState } from 'react';
 
 export interface ListComponentProps {
@@ -54,13 +55,13 @@ const ListComponent = function ({
   };
 
   return (
-    <ul className={cn(className, 'nlp--list', 'list-none p-2')}>
+    <ul className={cn(className, 'nlp--list', styles.list_wrap)}>
       {/* options */}
       {options?.map((d: any) => (
         <li
           className={cn(
-            'border-b p-2',
-            selectedOptions?.find((x: any) => x[valueField] === d[valueField]) && 'bg-amber-100', // selected row style
+            styles.item,
+            selectedOptions?.find((x: any) => x[valueField] === d[valueField]) && styles.active, // selected row style
           )}
           key={d[valueField]}
           onClick={() =>

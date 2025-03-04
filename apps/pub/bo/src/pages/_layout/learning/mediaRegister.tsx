@@ -4,7 +4,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
-import popContStyles from './popContStyles.module.css'; // popup contents css
+import searchContStyles from './searchContStyles.module.css'; // popup contents css
+import thumbStyles from './thumbStyles.module.css'; // thumb nail css
+import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Spinner,
   Input,
@@ -18,6 +20,7 @@ import {
   ChipList,
   SelectOption,
   ContentsRow,
+  List,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -40,8 +43,8 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const ModalChannelContent = () => {
     return (
-      <div className={popContStyles.contents}>
-        <strong className={popContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
+      <div className={searchContStyles.contents}>
+        <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
         {/* form */}
         <ContentsRow>
           <div className={formStyles.form_item}>
@@ -90,7 +93,23 @@ function RouteComponent() {
           </div>
         </ContentsRow>
         {/* 채널 리스트 */}
-        <div className={popContStyles.channel_wrap}>추후 컴포넌트 작업 예정</div>
+        <div className={searchContStyles.channel_wrap}>
+          <List
+            options={[
+              { value: 'type1', label: '경영지원시스템 채널 01' },
+              { value: 'type2', label: '경영지원시스템 채널 02' },
+              { value: 'type3', label: '경영지원시스템 채널 03' },
+              { value: 'type4', label: '경영지원시스템 채널 04' },
+              { value: 'type5', label: '경영지원시스템 채널 05' },
+              { value: 'type6', label: '경영지원시스템 채널 06' },
+              { value: 'type7', label: '경영지원시스템 채널 07' },
+              { value: 'type8', label: '경영지원시스템 채널 08' },
+              { value: 'type9', label: '경영지원시스템 채널 09' },
+              { value: 'type10', label: '경영지원시스템 채널 10' },
+            ]}
+            onOptionsSelect={(options) => console.log(options)}
+          />
+        </div>
       </div>
     );
   };
@@ -98,8 +117,8 @@ function RouteComponent() {
   // Modal : 담당자 검색
   const ModalManagerContent = () => {
     return (
-      <div className={popContStyles.contents}>
-        <strong className={popContStyles.title}>{'담당자를 선택하세요.'}</strong>
+      <div className={searchContStyles.contents}>
+        <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
         {/* form */}
         <ContentsRow>
           <div className={formStyles.form_item}>
@@ -148,7 +167,23 @@ function RouteComponent() {
           </div>
         </ContentsRow>
         {/* 채널 리스트 */}
-        <div className={popContStyles.channel_wrap}>추후 컴포넌트 작업 예정</div>
+        <div className={searchContStyles.channel_wrap}>
+          <List
+            options={[
+              { value: 'type1', label: '선택한 채널의 소속 채널 소유자명 (사번 또는 이메일)' },
+              { value: 'type2', label: '선택한 채널의 소속 채널 소유자명2 (사번 또는 이메일)' },
+              { value: 'type3', label: '선택한 채널의 소속 채널 소유자명3 (사번 또는 이메일)' },
+              { value: 'type4', label: '선택한 채널의 소속 채널 소유자명4 (사번 또는 이메일)' },
+              { value: 'type5', label: '선택한 채널의 소속 채널 소유자명5 (사번 또는 이메일)' },
+              { value: 'type6', label: '선택한 채널의 소속 채널 소유자명6 (사번 또는 이메일)' },
+              { value: 'type7', label: '선택한 채널의 소속 채널 소유자명7 (사번 또는 이메일)' },
+              { value: 'type8', label: '선택한 채널의 소속 채널 소유자명8 (사번 또는 이메일)' },
+              { value: 'type9', label: '선택한 채널의 소속 채널 소유자명9 (사번 또는 이메일)' },
+              { value: 'type10', label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)' },
+            ]}
+            onOptionsSelect={(options) => console.log(options)}
+          />
+        </div>
       </div>
     );
   };
@@ -485,6 +520,42 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-time" className={formStyles.form_label}>
+                동영상 재생 시간{/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
+                  <Input
+                    type="text"
+                    unitText={'시간'}
+                    value={'5'}
+                    className={formStyles.input_time}
+                  />
+                </div>
+                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
+                  <Input
+                    type="text"
+                    unitText={'분'}
+                    value={'15'}
+                    className={formStyles.input_time}
+                  />
+                </div>
+                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
+                  <Input
+                    type="text"
+                    unitText={'초'}
+                    value={'30'}
+                    className={formStyles.input_time}
+                  />
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-thumbnail" className={formStyles.form_label}>
@@ -496,12 +567,15 @@ function RouteComponent() {
               <div className={formStyles.input_box}>
                 <ThumbnailImageUpload
                   options={[
-                    { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    /* 동영상 추출 전 */
+                    { id: '1', path: defaultImg },
+                    /* 동영상 추출 후 */
+                    // { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    // { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    // { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    // { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    // { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
+                    // { id: '6', path: defaultImg,} /* default 추천 썸네일 */,
                   ]}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
@@ -526,9 +600,9 @@ function RouteComponent() {
                 </span>
                 <Tooltip
                   className={formStyles.tooltip}
-                  side="right"
+                  side="bottom"
                   align="start"
-                  content={'tooltip content'}>
+                  content={'태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}>
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -538,7 +612,7 @@ function RouteComponent() {
                 <ChipList
                   className={formStyles.chips_wrap}
                   options={options}
-                  placeholder="한글, 영문, 숫자 포함 9자 이하"
+                  placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
                   showInput
                   prefixCharacter="#"
                 />

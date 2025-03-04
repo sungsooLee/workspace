@@ -30,36 +30,6 @@
 
 .form_item {
   @apply relative w-full flex-1 pb-[16px] text-left;
-  &.pd_none {
-    @apply pb-[0];
-  }
-  &.type2 {
-    .form_label {
-      @apply pl-[40px];
-    }
-    .input_box {
-      @apply mt-0;
-    }
-    .guide_text.error {
-      @apply ml-[40px];
-    }
-  }
-  &.type_switch {
-    .input_box {
-      @apply mt-0;
-    }
-  }
-  &.col {
-    .input_box {
-      @apply flex-col;
-      & > div + div {
-        @apply mx-0 mt-[8px];
-      }
-    }
-  }
-  &.form_auto {
-    @apply flex !w-auto flex-shrink-0 flex-grow-0 items-end justify-end;
-  }
   .form_title {
     @apply title_6_b text-[var(--gray9)];
     & + .form_label {
@@ -92,14 +62,46 @@
   .btn_switch {
     @apply absolute right-0 top-0;
   }
+  .input_time {
+    @apply !min-w-[154px];
+  }
+  .form_item {
+    @apply pb-0;
+  }
+  &.pd_none {
+    @apply pb-[0];
+  }
+  &.type2 {
+    .form_label {
+      @apply pl-[40px];
+    }
+    .input_box {
+      @apply mt-0;
+    }
+    .guide_text.error {
+      @apply ml-[40px];
+    }
+  }
+  &.type_switch {
+    .input_box {
+      @apply mt-0;
+    }
+  }
+  &.col {
+    .input_box {
+      @apply flex-col;
+      & > div + div {
+        @apply mx-0 mt-[8px];
+      }
+    }
+  }
+  &.form_auto {
+    @apply flex !w-auto flex-shrink-0 flex-grow-0 items-end justify-end;
+  }
 }
 .input_box_wrap {
   @apply mt-[16px];
-  label + div {
-    @apply !mt-[4px];
-  }
   & > div {
-    @apply !mt-[4px];
     & + div {
       @apply mt-[16px];
     }
