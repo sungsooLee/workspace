@@ -39,8 +39,10 @@ strong {
 [dir='rtl'] {
   direction: rtl;
   text-align: right;
+  @apply flex-row-reverse;
 }
 
+/* 일반 */
 [dir='ltr'] {
   direction: ltr;
   text-align: left;
