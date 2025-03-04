@@ -80,13 +80,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
     };
 
     return (
-      <div
-        className={cn(
-          styles.start,
-          className,
-          'nlp--transfer-grid',
-          'flex h-[300px] flex-row bg-amber-100',
-        )}>
+      <div className={cn(styles.start, className, 'nlp--transfer-grid', 'flex flex-row')}>
         {/* left grid */}
         <div>
           <Grid
