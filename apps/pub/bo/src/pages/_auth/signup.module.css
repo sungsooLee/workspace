@@ -37,6 +37,13 @@
       @apply mb-[48px] pl-[140px] pr-[140px];
     }
 
+    .search_info {
+      @apply body_2_r pt-[48px] text-center text-[var(--gray7)];
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+
     .signup_select {
       .radio_card {
         @apply flex items-center justify-center gap-[16px] text-center;
@@ -59,6 +66,15 @@
             }
           }
         }
+      }
+      + .auth_form {
+        @apply mt-[48px];
+        + .signup_noti {
+          @apply mt-[8px];
+        }
+      }
+      + .select_txt {
+        @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
       }
     }
 
@@ -253,6 +269,12 @@
       strong {
         @apply text-[var(--gray8)];
       }
+    }
+  }
+  /* MPASS 인증 */
+  &.mpass_cert {
+    .search_info {
+      @apply pt-0;
     }
   }
 }
