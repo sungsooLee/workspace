@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -6,7 +6,6 @@ import styles from './transfer-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Grid } from '../grid';
-import { IcoChevronLeft, IcoChevronRight } from '@learnway/icons';
 import { GridImperative } from '@/libs/ui/src';
 
 export interface TransferGridProps {
@@ -21,48 +20,63 @@ export interface TransferGridProps {
 
 const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
   ({ gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props }) => {
-    const [selectedItems, setSelectedItems] = useState<any>();
     const [leftGridData, setLeftGridData] = useState<any>(gridData);
     const [rightGridData, setRightGridData] = useState<any>([]);
-    const [leftSelectedRows, setLeftSelectedRows] = useState<any>();
-    const [rightSelectedRows, setRightSelectedRows] = useState<any>();
     const leftGridRef = useRef<GridImperative>(null);
     const rightGridRef = useRef<GridImperative>(null);
 
-    useEffect(() => {
-      // selectedItems && onChange?.(selectedItems);
-    }, [selectedItems]);
+    const leftGridColumns: ColumnDef<object>[] = [
+      ...columns,
+      {
+        accessorKey: 'select-col',
+        header: ({ table }) => '선택',
+        cell: ({ row }) => (
+          <div>
+            <Button
+              label={'선택'}
+              variant={
+                rightGridData?.find((d: any) => d[rowKey] === (row?.original as any)?.[rowKey])
+                  ? 'primary'
+                  : 'point'
+              }
+              size={'sm'}
+              onClick={() => handleLeftRowSelect(row.original)}
+            />
+          </div>
+        ),
+      },
+    ];
 
-    const handleAppendClick = (event: React.MouseEvent) => {
-      // 좌측 그리드 데이터 갱신 : 좌측 그리드 데이터 - 좌측 그리드 선택된 rows
-      const newLeftGridData = leftGridData?.filter(
-        (d: any) => !leftSelectedRows?.find((x: any) => x[rowKey] === d[rowKey]),
-      );
-      setLeftGridData(newLeftGridData);
+    const rightGridColumns: ColumnDef<object>[] = [
+      ...columns,
+      {
+        accessorKey: 'select-col',
+        header: ({ table }) => '선택',
+        cell: ({ row }) => (
+          <div>
+            <Button
+              label={'선택'}
+              variant={'point'}
+              size={'sm'}
+              onClick={() => handleRightRowSelect(row.original)}
+            />
+          </div>
+        ),
+      },
+    ];
 
-      // 우측 그리드 데이터 갱신 : 우측 그리드 데이터 + 좌측 그리드 선택된 rows
-      const newRightGridData = [...rightGridData, ...leftSelectedRows];
+    const handleLeftRowSelect = (selectedRow: any) => {
+      console.log(selectedRow);
+      const isDelete = rightGridData.find((d: any) => d[rowKey] === selectedRow[rowKey]);
+      const appendedData = [...rightGridData, selectedRow];
+      const deletedData = rightGridData?.filter((d: any) => d[rowKey] !== selectedRow[rowKey]);
+      const newRightGridData = isDelete ? deletedData : appendedData;
       setRightGridData(newRightGridData);
-
-      // 좌측 우측 그리드 선택 초기화
-      leftGridRef.current?.resetRowSelection();
-      // rightGridRef.current?.resetRowSelection();
     };
 
-    const handleRemoveClick = (event: React.MouseEvent) => {
-      // 좌측 그리드 데이터 갱신 : 좌측 그리드 데이터 + 우측 그리드 선택된 rows
-      const newLeftGridData = [...leftGridData, ...rightSelectedRows];
-      setLeftGridData(newLeftGridData);
-
-      // 우측 그리드 데이터 갱신 : 우측 그리드 데이터 - 우측 그리드 선택된 rows
-      const newRightGridData = rightGridData?.filter(
-        (d: any) => !rightSelectedRows?.find((x: any) => x[rowKey] === d[rowKey]),
-      );
+    const handleRightRowSelect = (selectedRow: any) => {
+      const newRightGridData = rightGridData?.filter((d: any) => d[rowKey] !== selectedRow[rowKey]);
       setRightGridData(newRightGridData);
-
-      // 좌측 우측 그리드 선택 초기화
-      // leftGridRef.current?.resetRowSelection();
-      rightGridRef.current?.resetRowSelection();
     };
 
     return (
@@ -79,34 +93,21 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             ref={leftGridRef}
             title={leftTitle}
             data={leftGridData}
-            columns={columns}
+            columns={leftGridColumns}
             hideColumnSettings
             multiSelectable
-            onRowsSelect={(newSelectedRows) => setLeftSelectedRows(newSelectedRows)}
+            enableRowSelectionToggle={false}
           />
         </div>
-        {/* buttons */}
-        <div>
-          <Button
-            icon={<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-            onClick={handleRemoveClick}
-          />
-          <Button
-            icon={<IcoChevronRight width={32} height={32} fill="#4C515E" />}
-            onClick={handleAppendClick}
-          />
-          {/*<Button icon={<IcoChevronRight />} label={'x'} />*/}
-        </div>
-        {/* right grid */}
         <div>
           <Grid
             ref={rightGridRef}
             title={rightTitle}
             data={rightGridData}
-            columns={columns}
+            columns={rightGridColumns}
             hideColumnSettings
             multiSelectable
-            onRowsSelect={(newSelectedRows) => setRightSelectedRows(newSelectedRows)}
+            enableRowSelectionToggle={false}
           />
         </div>
       </div>

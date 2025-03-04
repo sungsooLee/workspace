@@ -74,6 +74,7 @@ const Grid = forwardRef(
       onRowSelect,
       onRowsSelect,
       multiSelectable = false,
+      enableRowSelectionToggle = true,
       pagination,
       title,
       isLoading,
@@ -127,7 +128,7 @@ const Grid = forwardRef(
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
     const columnsWithCheckbox = useMemo(
       () =>
-        multiSelectable
+        multiSelectable && enableRowSelectionToggle
           ? [
               {
                 id: 'select',
@@ -143,15 +144,6 @@ const Grid = forwardRef(
                     }}
                   />
                 ),
-                // header: ({ table }: { table: Table<T> }) => (
-                //   <IndeterminateCheckbox
-                //     value={table.getIsAllRowsSelected()}
-                //     indeterminate={table.getIsSomeRowsSelected()}
-                //     onChange={(checked) => {
-                //       table.toggleAllRowsSelected(!!checked);
-                //     }}
-                //   />
-                // ),
                 // 바디 체크 박스
                 cell: ({ row }: { row: Row<T> }) => (
                   <div className="inline-flex items-center justify-center">
@@ -169,21 +161,6 @@ const Grid = forwardRef(
                     />
                   </div>
                 ),
-                // cell: ({ row }: { row: Row<T> }) => (
-                //   <div className="px-1">
-                //     <IndeterminateCheckbox
-                //       value={row.getIsSelected()}
-                //       onChange={(checked) => {
-                //         // 그룹핑된 행은 체크박스 비활성화
-                //         if (row.getIsGrouped()) {
-                //           return;
-                //         }
-                //         row.toggleSelected(!!checked);
-                //       }}
-                //       disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
-                //     />
-                //   </div>
-                // ),
               },
               ...columns,
             ]
@@ -382,7 +359,7 @@ const Grid = forwardRef(
                   transform: `translateY(${virtualRow.start}px)`,
                   width: '100%',
                 }}
-                onClick={() => row.toggleSelected()}>
+                onClick={() => enableRowSelectionToggle && row.toggleSelected()}>
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
@@ -424,7 +401,9 @@ const Grid = forwardRef(
                     transform: `translateY(${virtualRow.start}px)`,
                     display: 'flex',
                   }}
-                  onClick={() => !row.getIsGrouped() && row.toggleSelected()}>
+                  onClick={() =>
+                    !row.getIsGrouped() && enableRowSelectionToggle && row.toggleSelected()
+                  }>
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
