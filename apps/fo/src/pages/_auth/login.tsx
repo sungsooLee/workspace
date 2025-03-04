@@ -40,7 +40,7 @@ function RouteComponent() {
 
   useEffect(() => {
     onFormChange({
-      username: 'test2@email.com',
+      username: '@ict-companion.com',
       password: 'hae1234',
     });
   }, []);

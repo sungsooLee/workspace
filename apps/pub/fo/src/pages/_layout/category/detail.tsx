@@ -225,12 +225,10 @@ function RouteComponent() {
           slidesPerView={2.2}
           loop={false}
           modules={[Navigation]}
-          className="recent_swiper w-100 flex justify-start">
-          <div className="lists">
+          className={styles.recent_swiper}>
+          <div>
             {items.map((item, index) => (
-              <SwiperSlide
-                key={index}
-                className="slide flex w-[520px] items-center justify-start overflow-hidden">
+              <SwiperSlide key={index} className={styles.slide}>
                 <Link to="">
                   <img src={item.url} alt="" />
                 </Link>
@@ -286,9 +284,9 @@ function RouteComponent() {
           </div>
         </div>
 
-        <ul className={styles.list}>
+        <div className={styles.list}>
           {lists.map((list, index) => (
-            <li key={index}>
+            <div key={index} className={styles.listBox}>
               <Link to="">
                 <div className={styles.img_box}>
                   <ul className={styles.label_box}>
@@ -346,9 +344,9 @@ function RouteComponent() {
                   </div>
                 </div>
               </Link>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

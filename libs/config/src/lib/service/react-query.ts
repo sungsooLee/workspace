@@ -12,8 +12,8 @@ class ReactQueryClient {
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       retry: false,
-      staleTime: twentyFourHoursInMs,
-      cacheTime: fiveMinutes,
+      staleTime: 0, //twentyFourHoursInMs,
+      cacheTime: 0, //fiveMinutes,
     },
   };
 
@@ -27,6 +27,13 @@ class ReactQueryClient {
   getQueryClient() {
     return this.queryClient;
   }
+
+  cacheOptions() {
+    return {
+      staleTime: twentyFourHoursInMs,
+      cacheTime: fiveMinutes,
+    };
+  }
 }
 
-export const ReactQueryConfig = new ReactQueryClient();
+export const QueryConfig = new ReactQueryClient();
