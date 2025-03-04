@@ -45,11 +45,12 @@
 .button_wrap {
   @apply absolute right-[10px] top-1/2 flex min-w-[75px] -translate-y-1/2 flex-row justify-end gap-2;
   .count {
-    @apply flex items-center text-[1.4rem] font-normal text-[var(--gray5)];
+    @apply button_5_r flex items-center text-[#8c97ae];
+  }
+  .unit {
+    @apply input_bo_1_r flex items-center text-[#747d91];
   }
 }
-
-
 
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];

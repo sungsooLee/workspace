@@ -1,11 +1,10 @@
-.start {
-  background: white;
-  .header {
-    .title {
+/* list.module.css */
+.list_wrap {
+  @apply scrollbar flex max-h-[400px] w-full flex-col overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
+  .item {
+    @apply body_bo_2_r flex min-h-[40px] cursor-pointer items-center justify-start overflow-hidden rounded-[2px] px-[8px] text-[var(--gray8)];
+    &.active {
+      @apply bg-[#d8f8ff];
     }
-    .actions {
-    }
-  }
-  .body {
   }
 }

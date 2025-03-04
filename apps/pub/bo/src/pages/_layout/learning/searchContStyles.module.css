@@ -1,4 +1,4 @@
-/* popContStyles.module.css */
+/* searchContStyles.module.css */
 .contents {
   .title {
     @apply title_bo_3_b mb-[24px] block text-center text-[var(--gray9)];
@@ -10,5 +10,8 @@
         @apply !mt-0;
       }
     }
+  }
+  .channel_wrap {
+    @apply mt-[24px];
   }
 }

@@ -53,7 +53,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
-          className={cn(styles.content, width && styles[width])}
+          className={cn(styles.content, 'nlp--modal', width && styles[width])}
           onInteractOutside={(e) => e.preventDefault()} // Overlay 클릭 방지
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
         >
