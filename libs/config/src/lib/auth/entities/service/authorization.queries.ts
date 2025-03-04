@@ -1,6 +1,8 @@
 import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
 
+import { QueryConfig } from '@learnway/config';
+
 import type { AuthSSOLogin } from '../../../types';
 
 export const queryKeys = {
@@ -12,6 +14,7 @@ export const queryOptions = {
   authUser: () => ({
     queryKey: queryKeys.authUser,
     queryFn: async () => new Promise((resolve) => resolve(null)),
+    ...QueryConfig.cacheOptions(),
   }),
   healthcheck: (comanyCode: string) => ({
     queryKey: queryKeys.authSSO,
