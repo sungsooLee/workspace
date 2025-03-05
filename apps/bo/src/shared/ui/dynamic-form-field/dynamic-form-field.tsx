@@ -7,21 +7,23 @@ import { Controller } from 'react-hook-form';
  */
 const DynamicFormFieldComponent: FC<any> = ({ control, name, component: Component, ...props }) => {
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, onBlur, value, ref } }) => (
-        <Component
-          {...props}
-          name={name}
-          onChange={onChange}
-          onBlur={onBlur}
-          value={value}
-          ref={ref}
-          control={control}
-        />
-      )}
-    />
+    <>
+      <Controller
+        control={control}
+        name={name}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Component
+            {...props}
+            name={name}
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value}
+            ref={ref}
+            control={control}
+          />
+        )}
+      />
+    </>
   );
 };
 DynamicFormFieldComponent.displayName = 'DynamicFormField';

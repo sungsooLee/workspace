@@ -33,6 +33,9 @@ import { Button, Tooltip } from '@learnway/ui';
  * @returns { config: Partial<Builder> }
  */
 const getBuilderConfig = (builders: any[], name: string): Partial<Builder> => {
+  if (!name) {
+    return {};
+  }
   // name을 '.' 기준으로 분할.
   const parts = name.split('.');
   let parentConfig: Partial<any> | undefined;
@@ -59,9 +62,10 @@ const getBuilderConfig = (builders: any[], name: string): Partial<Builder> => {
     (parentConfig.type === 'object' || parentConfig.type === 'array') &&
     currentConfig
   ) {
-    currentConfig.label = parentConfig.label;
+    if (!currentConfig.label) {
+      currentConfig.label = parentConfig.label;
+    }
   }
-
   return currentConfig || {};
 };
 
@@ -184,6 +188,9 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         errorMessage = errorMessage.replace(`{{label}}`, rootConfig.label || '');
       }
     }
+    console.log('formState.errors => ', formState.errors);
+    console.log('formState.errors => ', formState.errors['translations']);
+    console.log(formState.errors?.translations);
     setError({
       isError: !!errorMessage,
       message: errorMessage,

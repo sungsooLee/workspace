@@ -5,6 +5,7 @@ import { skipToken } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['translation-all'] as const,
+  get: ['translation'] as const,
 };
 
 export const translationQueryOptions = {
@@ -13,7 +14,12 @@ export const translationQueryOptions = {
     queryFn: () => TranslationService.fetchTranslations(),
     cacheTime: 0,
     staleTime: 0,
-    enabled: false,
+  }),
+  get: (messageId: any) => ({
+    queryKey: queryKeys.get,
+    queryFn: () => TranslationService.fetchTranslation(messageId),
+    cacheTime: 0,
+    staleTime: 0,
   }),
 };
 
