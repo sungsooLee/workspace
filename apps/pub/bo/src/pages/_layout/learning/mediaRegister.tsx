@@ -632,7 +632,6 @@ function RouteComponent() {
               </p>
             </div>
           </ContentsRow>
-          {/* row */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -653,18 +652,21 @@ function RouteComponent() {
                 </Tooltip>
               </label>
               <div className={formStyles.input_box}>
-                <ChipList
-                  className={formStyles.chips_wrap}
-                  options={options}
-                  placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
-                  showInput
-                  prefixCharacter="#"
-                />
+                <div className={formStyles.tag_wrap}>
+                  <ChipList
+                    className={formStyles.chips_wrap}
+                    options={options}
+                    placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
+                    showInput
+                    prefixCharacter="#"
+                    hideBorder
+                  />
+                  <p className={formStyles.text_limit}>
+                    여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
+                    /200개
+                  </p>
+                </div>
               </div>
-              <p className={formStyles.text_limit}>
-                여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
-                /200개
-              </p>
             </div>
           </ContentsRow>
           <ContentsRow>
