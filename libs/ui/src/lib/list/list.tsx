@@ -59,6 +59,7 @@ const ListComponent = function ({
       {/* options */}
       {options?.map((d: any) => (
         <li
+          role="button"
           className={cn(
             styles.item,
             selectedOptions?.find((x: any) => x[valueField] === d[valueField]) && styles.active, // selected row style
