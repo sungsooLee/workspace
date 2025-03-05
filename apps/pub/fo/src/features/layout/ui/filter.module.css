@@ -1,0 +1,17 @@
+.filter_wrap {
+  @apply flex items-start;
+  .filter_btn_box {
+    .filter_btn {
+      @apply flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white;
+    }
+  }
+  .select_box {
+    @apply ml-[12px] flex flex-wrap justify-start;
+    .select_btn {
+      @apply button_3_r flex h-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white pl-[12px] pr-[12px] text-[var(--gray8)];
+      & + .select_btn {
+        @apply ml-[8px];
+      }
+    }
+  }
+}
