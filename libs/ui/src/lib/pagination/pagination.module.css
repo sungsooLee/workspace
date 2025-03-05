@@ -3,12 +3,15 @@
 .pagination {
   @apply flex justify-center;
   .btn_number {
-    @apply title_bo_4_r inline-flex h-[32px] w-[32px] items-center justify-center rounded-[4px];
+    @apply inline-flex h-[32px] w-[32px] items-center justify-center rounded-[50%];
     & + .btn_number {
-      @apply ml-0;
+      @apply ml-[8px];
     }
     &:nth-child(2) {
       @apply mr-[16px];
+    }
+    &:nth-child(3) {
+      @apply ml-0;
     }
     &:nth-last-child(2) {
       @apply ml-[16px];

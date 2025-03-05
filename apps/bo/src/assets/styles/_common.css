@@ -7,6 +7,7 @@
 html {
   font-size: 62.5%;
   overflow-x: hidden;
+  @apply scrollbar;
 }
 
 html {
@@ -56,10 +57,15 @@ body[data-scroll-locked][data-scroll-locked] {
 }
 .row_wrap {
   @apply rounded-[8px] border border-solid border-[var(--gray5)] p-[16px];
+  .row:nth-last-child(1) {
+    & > div {
+      @apply pb-0;
+    }
+  }
 }
 .row {
   /* form */
-  @apply flex w-full gap-[32px];
+  @apply flex w-full gap-[40px];
   .row {
     @apply mt-[16px];
   }
@@ -74,4 +80,13 @@ body[data-scroll-locked][data-scroll-locked] {
 /* col */
 .col {
   @apply flex flex-col;
+}
+
+.input_box_wrap {
+  .row > div {
+    @apply pb-0;
+  }
+  .row + .row {
+    @apply border-0 pt-0;
+  }
 }

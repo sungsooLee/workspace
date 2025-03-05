@@ -16,15 +16,15 @@
     }
   }
   &.readonly {
-    @apply pointer-events-none bg-[var(--gray2)];
+    @apply pointer-events-none bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[var(--gray2)] text-[var(--gray8)];
+      @apply !bg-[var(--gray1)] text-[var(--gray8)];
     }
   }
   &.disabled {
-    @apply bg-[var(--gray2)];
+    @apply bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[var(--gray2)] !text-[#a9afb8];
+      @apply !bg-[var(--gray1)] !text-[#a9afb8];
     }
   }
   .text_limit {

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input, Checkbox, Button } from '@learnway/ui';
+import { Input, Checkbox, Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import signupStyles from './signup.module.css';
@@ -11,10 +11,10 @@ export const Route = createFileRoute('/_auth/login')({
 
 function RouteComponent() {
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={formStyles.form_row}>
-          <div className={formStyles.row}>
+    <form className="form_row">
+      <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
+        <div className={signupStyles.auth_box}>
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name5" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>아이디/이메일</span>
@@ -30,9 +30,8 @@ function RouteComponent() {
               </div>
               <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
-          </div>
-
-          <div className={`${formStyles.row} ${formStyles.no_line}`}>
+          </ContentsRow>
+          <ContentsRow className={formStyles.no_line}>
             <div className={formStyles.form_item}>
               <label htmlFor="name5" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>비밀번호</span>
@@ -48,30 +47,30 @@ function RouteComponent() {
               </div>
               <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
             </div>
+          </ContentsRow>
+
+          <div className={signupStyles.login_info}>
+            <Checkbox label="아이디 저장" className={signupStyles.id_save} />
+            <div className={signupStyles.info}>
+              <Link to="/search-account">아이디 찾기</Link>
+              <Link to="/search-account-pw">비밀번호 찾기</Link>
+            </div>
+          </div>
+
+          <div className={signupStyles.btn_box}>
+            <Button size="xl" variant="primary" className={signupStyles.btn}>
+              로그인
+            </Button>
           </div>
         </div>
 
-        <div className={signupStyles.login_info}>
-          <Checkbox label="아이디 저장" className={signupStyles.id_save} />
-          <div className={signupStyles.info}>
-            <Link to="/search-account">아이디 찾기</Link>
-            <Link to="/search-account-pw">비밀번호 찾기</Link>
-          </div>
-        </div>
-
-        <div className={signupStyles.btn_box}>
-          <Button size="xl" variant="primary" className={signupStyles.btn}>
-            로그인
-          </Button>
+        <div className={signupStyles.login_guide}>
+          <span>
+            <Link to="/progress-status">회원 가입 현황</Link>
+            <Link to="/signup-step1">관리자 회원가입</Link>
+          </span>
         </div>
       </div>
-
-      <div className={signupStyles.login_guide}>
-        <span>
-          <Link to="/progress-status">회원 가입 현황</Link>
-          <Link to="/signup-step1">관리자 회원가입</Link>
-        </span>
-      </div>
-    </div>
+    </form>
   );
 }

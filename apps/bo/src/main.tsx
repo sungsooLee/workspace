@@ -2,7 +2,7 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import { ReactQueryConfig } from '@learnway/config';
+import { QueryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
@@ -25,16 +25,13 @@ declare module '@tanstack/react-router' {
   }
 }
 
-ReactQueryConfig.init({});
+QueryConfig.init({});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <QueryClientProvider client={ReactQueryConfig.getQueryClient()}>
+  <QueryClientProvider client={QueryConfig.getQueryClient()}>
     <AppConfigProvider>
-      <RouterProvider
-        router={router}
-        context={{ queryClient: ReactQueryConfig.getQueryClient() }}
-      />
+      <RouterProvider router={router} context={{ queryClient: QueryConfig.getQueryClient() }} />
     </AppConfigProvider>
   </QueryClientProvider>,
 );

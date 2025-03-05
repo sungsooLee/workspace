@@ -24,7 +24,9 @@ import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
+import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
+import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
@@ -133,9 +135,21 @@ const AuthPasswordInputRoute = AuthPasswordInputImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthMpassCertRoute = AuthMpassCertImport.update({
+  id: '/mpass-cert',
+  path: '/mpass-cert',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthGoogleCertRoute = AuthGoogleCertImport.update({
+  id: '/google-cert',
+  path: '/google-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -344,11 +358,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/google-cert': {
+      id: '/_auth/google-cert'
+      path: '/google-cert'
+      fullPath: '/google-cert'
+      preLoaderRoute: typeof AuthGoogleCertImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/mpass-cert': {
+      id: '/_auth/mpass-cert'
+      path: '/mpass-cert'
+      fullPath: '/mpass-cert'
+      preLoaderRoute: typeof AuthMpassCertImport
       parentRoute: typeof AuthImport
     }
     '/_auth/password-input': {
@@ -637,7 +665,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
@@ -650,7 +680,9 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
+  AuthMpassCertRoute: AuthMpassCertRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
@@ -745,7 +777,9 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
+  '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -790,7 +824,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
+  '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -838,7 +874,9 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
@@ -885,7 +923,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/google-cert'
     | '/login'
+    | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -929,7 +969,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/google-cert'
     | '/login'
+    | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -975,7 +1017,9 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/google-cert'
     | '/_auth/login'
+    | '/_auth/mpass-cert'
     | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/progress-status'
@@ -1049,7 +1093,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/google-cert",
         "/_auth/login",
+        "/_auth/mpass-cert",
         "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/progress-status",
@@ -1102,8 +1148,16 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
+    "/_auth/google-cert": {
+      "filePath": "_auth/google-cert.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/mpass-cert": {
+      "filePath": "_auth/mpass-cert.tsx",
       "parent": "/_auth"
     },
     "/_auth/password-input": {

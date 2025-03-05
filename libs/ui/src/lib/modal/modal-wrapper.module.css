@@ -2,5 +2,5 @@
 }
 
 .dim {
-  @apply fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-black bg-opacity-40;
+  @apply fixed bottom-0 left-0 right-0 top-0 z-[150] bg-black bg-opacity-40;
 }

@@ -45,6 +45,9 @@ export * from './lib/checkbox/form-checkbox';
 export * from './lib/radio-group/form-radio-group';
 export * from './lib/date-picker/form-date-range-picker';
 
+// list
+export * from './lib/list/list';
+
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
 export * from './lib/file-upload/form-thumbnail-image-upload';
@@ -68,9 +71,9 @@ export * from './lib/radio-card/radio-card';
 export * from './lib/select/select';
 export * from './lib/select/type';
 // dropdown-list
-export * from './lib/dropdown-list/dropdown-list'
-export * from './lib/dropdown-list/auto-complete'
-export * from './lib/dropdown-list/type'
+export * from './lib/dropdown-list/dropdown-list';
+export * from './lib/dropdown-list/auto-complete';
+export * from './lib/dropdown-list/type';
 
 // switch
 export * from './lib/switch/switch';
@@ -136,5 +139,5 @@ export * from './lib/grid/configs/column-factory';
 
 // form-builder
 
-
-
+// contents-row
+export * from './lib/contents-row/contents-row';

@@ -1,0 +1,97 @@
+.fileupload_wrap {
+  @apply text-center;
+  .title {
+    @apply title_bo_3_b text-[var(--gray9)];
+  }
+  .text {
+    @apply body_bo_2_r mt-[4px] text-[var(--gray8)];
+    .status {
+      @apply ml-[8px] inline-flex;
+      &:first-child {
+        @apply ml-0;
+      }
+      &.complete {
+        .num {
+          @apply text-[var(--status3)];
+        }
+      }
+      &.error {
+        .num {
+          @apply text-[var(--status1)];
+        }
+      }
+      .num {
+        @apply ml-[4px];
+      }
+    }
+  }
+  .selected_text {
+    @apply mb-[16px] mt-[24px];
+    .text {
+      @apply rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[16px] py-[20px] text-left text-[var(--gray8)];
+    }
+  }
+}
+.wrap {
+  @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--white)] py-[14px];
+  .contents {
+    @apply scrollbar box-border h-[308px] overflow-y-auto overflow-x-hidden px-[20px];
+  }
+}
+
+.file_wrap {
+  @apply flex flex-col;
+  .file_item {
+    @apply pr-[28px];
+    .btn_delete {
+      @apply absolute right-0 top-1/2 -mt-[10px];
+    }
+  }
+}
+.file_item {
+  @apply relative flex h-[42px] items-center;
+  .file_info {
+    @apply body_bo_1_b ellipsis flex w-full flex-grow items-center overflow-hidden text-left;
+    .icon_file {
+      @apply mr-[8px] h-[24px] w-[24px] flex-shrink-0;
+      rect {
+        @apply h-[24px] w-[24px] fill-[var(--white)];
+      }
+    }
+    .name {
+      @apply ellipsis flex-grow-[1] text-[var(--gray8)];
+    }
+  }
+  .size {
+    @apply body_bo_2_r mx-[16px] flex items-center justify-end text-right text-[var(--gray6)];
+  }
+  .progress {
+    @apply mr-[8px] !w-[152px] flex-shrink;
+    p {
+      @apply !inline-flex;
+    }
+  }
+  .status_view {
+    @apply flex w-[232px] flex-shrink-0 items-center justify-end;
+    .status_text {
+      @apply body_bo_2_r mr-[14px] text-[var(--gray6)];
+    }
+    .file_status {
+      @apply mx-[2px] !h-[16px] !w-[16px] rounded-[8px];
+    }
+  }
+  .btn_status {
+    @apply flex-shrink;
+    .pause {
+      path {
+        @apply fill-[#A9AFB8] stroke-[var(--white)];
+      }
+      rect {
+        @apply h-[20px] w-[20px] fill-[var(--white)];
+      }
+    }
+  }
+  .btn_delete {
+    @apply ml-[8px] flex-shrink;
+  }
+}

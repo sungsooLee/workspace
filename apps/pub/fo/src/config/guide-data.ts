@@ -94,37 +94,37 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_OTP',
-    pageId: '',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1008', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO',
-    pageId: '',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1009', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    pageType: 'Page',
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: 'NLP_FO_LOG_1008에 포함\n- 케이스별 (주석처리)',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO 인증안내팝업',
-    pageId: '',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1010', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1011', //스크린아이디
     pageType: 'Page',
     completionDate: '', // 완료일
@@ -324,11 +324,41 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '업무담당회사정보조회',
+    pageId: '',
+    screenId: 'NLP_FO_MER_1003', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입_약관상세(공통)',
+    pageId: '',
+    screenId: 'NLP_FO_MER_1004', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_신청가입완료',
     pageId: 'success',
     screenId: 'NLP_FO_MER_1005', //스크린아이디
     pageType: 'Page',
     completionDate: '2025-02-24', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '개인정보처리방침(회원가입시정보입력)',
+    pageId: '',
+    screenId: 'NLP_FO_MER_1007', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },

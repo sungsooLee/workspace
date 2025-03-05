@@ -160,7 +160,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             </Button>
           )}
           {/* 단위 */}
-          {unitText && <div className={'text-gray-6'}>{unitText}</div>}
+          {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
           {showCounter && type === 'text' && <div className={styles.count}>{'20/100'}</div>}
           {/* 돋보기 */}

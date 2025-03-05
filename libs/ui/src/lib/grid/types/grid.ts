@@ -31,6 +31,8 @@ export interface GridProps<T extends object> {
   title?: string;
   // 다중선택을 위한 Props
   multiSelectable?: boolean;
+  // row onClick 시 row 선택 작동 여부
+  enableRowSelectionToggle?: boolean;
   // 페이지네이션 관련 Props
   pagination?: {
     pageSize: number;
