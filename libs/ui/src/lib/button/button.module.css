@@ -3,10 +3,10 @@
     @apply box-border inline-flex items-center justify-start leading-[1rem];
     /* Size ( 28 | 32 | 36 | 40 | 48 ) */
     &.xs {
-      @apply button_3_r h-[28px] min-w-[50px] justify-center px-[12px] font-bold;
+      @apply button_3_r h-[28px] min-w-[50px] justify-center px-[6px] font-bold;
     }
     &.sm {
-      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[12px] font-bold;
+      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[6px] font-bold;
     }
     &.md {
       @apply button_3_r h-[36px] min-w-[50px] justify-center px-[12px] font-bold;

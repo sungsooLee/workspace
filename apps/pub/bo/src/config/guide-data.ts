@@ -119,6 +119,13 @@ export const guideData = [
     remarks: '진행중', // 비고
   },
   {
+    depth1: '학습자원등록 동영상 등록',
+    pageId: 'learning/mediaRegister',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
+  },
+  {
     depth1: '학습자원 조회상세(동영상)',
     pageId: 'learning/mediaDetail',
     completionDate: '',
