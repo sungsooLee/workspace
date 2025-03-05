@@ -127,7 +127,7 @@ export const guideData = [
   },
   {
     depth1: 'MPASS 인증',
-    pageId: 'mpass_cert',
+    pageId: 'mpass-cert',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '작업완료', // 비고

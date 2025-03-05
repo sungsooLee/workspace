@@ -82,6 +82,24 @@
       @apply text-center;
       .ico {
         @apply m-auto inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
+        &.fail {
+          @apply border-none stroke-none;
+          svg {
+            @apply fill-none;
+            circle {
+              @apply stroke-[#FFB902];
+            }
+            path {
+              @apply stroke-[#FFB902];
+            }
+          }
+        }
+        &.progress {
+          @apply border-none stroke-none;
+          svg {
+            @apply fill-none;
+          }
+        }
       }
       h3.title {
         @apply title_5_b mt-[24px];
