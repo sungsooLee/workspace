@@ -140,9 +140,13 @@
     .btn_txt {
       @apply body_3_r text-[var(--gray8)] underline;
     }
+
+    .noti_info_txt {
+      @apply body_3_r mt-[24px] text-center;
+    }
     .auth_form {
       + .noti_info_txt {
-        @apply mt-[8px] text-center;
+        @apply mt-[8px];
         + .signup_noti {
           @apply mt-[24px];
         }
