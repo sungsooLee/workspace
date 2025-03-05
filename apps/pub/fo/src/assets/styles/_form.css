@@ -1,32 +1,4 @@
 /* _form.css */
-.form_row {
-  .row {
-    @apply flex w-full gap-[32px] text-left;
-
-    .row {
-      @apply mt-[16px];
-    }
-    & + .row {
-      @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
-      &.no_line {
-        @apply border-t-0 pt-0;
-      }
-    }
-  }
-
-  .col {
-    @apply flex-col;
-    &.no_line {
-      .row {
-        & + .row {
-          @apply border-t-0 pt-0;
-        }
-      }
-    }
-    &:has(.row .form_item) {
-      + hr.divider {
-        @apply mt-[16px];
-      }
-    }
-  }
+.dynamic-form-field-label {
+  @apply !text-[1.4rem] !text-[var(--gray8)];
 }

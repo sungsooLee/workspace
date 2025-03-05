@@ -114,7 +114,7 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO 인증안내팝업',
-    pageId: 'mpass_cert',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1010', //스크린아이디
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일

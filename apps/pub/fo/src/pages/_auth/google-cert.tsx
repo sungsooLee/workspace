@@ -8,7 +8,7 @@ import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import imgGuide1 from '../../assets/images/modal/img_mpass_guide1.png';
 import imgGuide2 from '../../assets/images/modal/img_mpass_guide2.png';
 
-export const Route = createFileRoute('/_auth/mpass_cert')({
+export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
 });
 
@@ -78,15 +78,6 @@ function RouteComponent() {
                     <div>
                       <IcoShieldTick01 width={48} height={48} className={signupStyles.ico1} />
                       <span>OTP</span>
-                    </div>
-                  ),
-                },
-                {
-                  value: 'type2',
-                  label: (
-                    <div>
-                      <IcoFaceId01 width={48} height={48} className={signupStyles.ico2} />
-                      <span>FIDO</span>
                     </div>
                   ),
                 },

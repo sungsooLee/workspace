@@ -5,7 +5,7 @@ const ContentsRowComponent: FC<{ children: ReactNode; className?: string }> = ({
   children,
   className,
 }) => {
-  return <div className={cn(styles.row, className)}>{children}</div>;
+  return <div className={cn(styles.row, className, 'nlp--contents-row')}>{children}</div>;
 };
 ContentsRowComponent.displayName = 'ContentsRow';
 
