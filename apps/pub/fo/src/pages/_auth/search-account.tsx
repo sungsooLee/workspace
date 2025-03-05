@@ -49,7 +49,7 @@ function RouteComponent() {
 
           {/* 인증폼 */}
           <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -64,7 +64,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -80,7 +80,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 휴대폰 인증일때 */}
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -108,7 +108,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 이메일 인증일때 */}
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -123,7 +123,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>
@@ -190,7 +190,7 @@ function RouteComponent() {
 
           {/* 인증폼 */}
           <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>아이디/이메일</span>
@@ -213,7 +213,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -228,7 +228,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -244,7 +244,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 휴대폰 인증일때 */}
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -272,7 +272,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 이메일 인증일때 */}
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -287,7 +287,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>

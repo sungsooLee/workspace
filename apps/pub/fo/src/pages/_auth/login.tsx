@@ -19,7 +19,7 @@ function RouteComponent() {
       <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
         <div className={signupStyles.auth_box}>
           <div className="no_line col">
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name5" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>아이디/이메일</span>
@@ -36,7 +36,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name5" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>비밀번호</span>

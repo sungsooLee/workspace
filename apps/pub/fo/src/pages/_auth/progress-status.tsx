@@ -45,7 +45,7 @@ function RouteComponent() {
 
           <h4 className={signupStyles.title}>협력업체 회사 정보</h4>
           <div className="no_line col">
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>회사명</span>
@@ -61,7 +61,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>사업자 등록 번호</span>
@@ -82,7 +82,7 @@ function RouteComponent() {
           <h4 className={signupStyles.title}>개인정보</h4>
 
           <div className="no_line col">
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>아이디(이메일)</span>
@@ -99,7 +99,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -110,7 +110,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>직위</span>
@@ -121,7 +121,7 @@ function RouteComponent() {
               </div>
             </ContentsRow>
 
-            <ContentsRow className="row">
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰번호</span>
