@@ -127,19 +127,19 @@ export const guideData = [
     pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1011', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증키 생성_QR 인증키생성팝업',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1012', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',

@@ -1,5 +1,5 @@
-/* mpass-modal.module.css */
-.mpass_modal {
+/* mpass-popup.module.css */
+.mpass_popup {
   @apply text-center;
   .title_box {
     @apply py-[24px] text-center;

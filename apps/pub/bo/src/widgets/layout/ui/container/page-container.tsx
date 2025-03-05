@@ -44,10 +44,15 @@ function PageContainerComponent({
             )}
           </h3>
           <div className={styles.btn_wrap}>
-            <div className={styles.link_area}>
-              <Link to={'/'}>상시 학습 개설</Link>
-              <Link to={'/'}>이러닝 개설</Link>
-              <Link to={'/'}>라이브개설</Link>
+            <div className={styles.link_box}>
+              <div className={styles.link}>
+                <Link to={'/'}>상시 학습 개설</Link>
+                <Link to={'/'}>이러닝 개설</Link>
+                <Link to={'/'}>라이브개설</Link>
+              </div>
+              <Button variant="point" size="sm">
+                목록
+              </Button>
             </div>
             <Button variant="point" size="sm">
               매핑과정 보기

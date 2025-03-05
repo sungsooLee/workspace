@@ -487,12 +487,12 @@ const Grid = forwardRef(
                         display: paginationGrid ? 'table-cell' : 'flex',
                       }}
                       className="thead_th">
-                      <div className="flex flex-col">
+                      <div className="th_wrap">
                         <div
                           className={cn(
-                            'flex items-center justify-center',
+                            'th_cell',
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                            'box-border min-h-[40px] text-[12px] font-bold uppercase text-[#5C636E]',
+                            'min-h-[40px] text-[12px] font-bold uppercase text-[#5C636E]',
                           )}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
