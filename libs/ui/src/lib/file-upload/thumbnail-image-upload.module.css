@@ -29,7 +29,17 @@
       @apply flex flex-col items-center justify-center text-[1.2rem] font-bold leading-[1.6rem] text-[var(--gray7)];
       .icon {
         @apply mb-[4px] inline-flex;
+        animation: spin 1s linear infinite;
       }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

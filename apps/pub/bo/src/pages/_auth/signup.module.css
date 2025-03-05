@@ -37,6 +37,13 @@
       @apply mb-[48px] pl-[140px] pr-[140px];
     }
 
+    .search_info {
+      @apply body_2_r text-center text-[var(--gray7)];
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+
     .signup_select {
       .radio_card {
         @apply flex items-center justify-center gap-[16px] text-center;
@@ -60,12 +67,39 @@
           }
         }
       }
+      + .auth_form {
+        @apply mt-[48px];
+        + .signup_noti {
+          @apply mt-[8px];
+        }
+      }
+      + .select_txt {
+        @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
+      }
     }
 
     .success_info {
       @apply text-center;
       .ico {
         @apply m-auto inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
+        &.fail {
+          @apply border-none stroke-none;
+          svg {
+            @apply fill-none;
+            circle {
+              @apply stroke-[#FFB902];
+            }
+            path {
+              @apply stroke-[#FFB902];
+            }
+          }
+        }
+        &.progress {
+          @apply border-none stroke-none;
+          svg {
+            @apply fill-none;
+          }
+        }
       }
       h3.title {
         @apply title_5_b mt-[24px];
@@ -230,13 +264,6 @@
   /* 아이디/비밀번호 찾기 */
   &.search_account {
     .signup_select {
-      .radio_card {
-        button {
-          .ico2 {
-            @apply stroke-[var(--primary1)];
-          }
-        }
-      }
       + .auth_form {
         @apply mt-[48px];
         + .signup_noti {
@@ -253,6 +280,12 @@
       strong {
         @apply text-[var(--gray8)];
       }
+    }
+  }
+  /* MPASS 인증 */
+  &.mpass_cert {
+    .search_info {
+      @apply pt-0;
     }
   }
 }

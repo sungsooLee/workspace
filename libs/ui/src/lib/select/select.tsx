@@ -77,7 +77,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
           </Primitive.Trigger>
           <Primitive.Portal>
             <Primitive.Content
-              className="w-auto min-w-[var(--radix-select-trigger-width)]"
+              className="z-[151] w-auto min-w-[var(--radix-select-trigger-width)]"
               position="popper"
               sideOffset={4}>
               {/* <Primitive.ScrollUpButton className={styles.select_scrollbtn}>

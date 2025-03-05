@@ -63,8 +63,7 @@ body[data-scroll-locked][data-scroll-locked] {
     }
   }
 }
-.row {
-  /* form */
+/* .row {
   @apply flex w-full gap-[40px];
   .row {
     @apply mt-[16px];
@@ -76,7 +75,7 @@ body[data-scroll-locked][data-scroll-locked] {
       @apply border-0 pt-0;
     }
   }
-}
+} */
 /* col */
 .col {
   @apply flex flex-col;

@@ -125,6 +125,13 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '진행중', // 비고
   },
+  {
+    depth1: 'MPASS 인증',
+    pageId: 'mpass-cert',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업완료', // 비고
+  },
 ];
 
 export default guideData;

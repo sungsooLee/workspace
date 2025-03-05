@@ -14,4 +14,13 @@
   &:focus {
     @apply border-[var(--gray7)];
   }
+  &:read-only {
+    @apply bg-[var(--gray1)] text-[var(--gray8)];
+    & + button {
+      @apply hidden;
+    }
+  }
+  &:disabled {
+    @apply bg-[var(--gray1)] text-[var(--gray5)];
+  }
 }

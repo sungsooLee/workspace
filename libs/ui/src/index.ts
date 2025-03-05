@@ -30,6 +30,9 @@ export * from './lib/checkbox/form-checkbox';
 export * from './lib/chips/chips';
 export * from './lib/chips/chip-list';
 
+// contents-row
+export * from './lib/contents-row/contents-row';
+
 // date-picker
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
