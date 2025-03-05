@@ -12,6 +12,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
   placeholder?: string;
   unitText?: string;
+  timerText?: string; // timer input 에서만 사용
   // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // for text type
@@ -40,6 +41,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onBlur,
       placeholder = '값을 입력하세요.',
       unitText,
+      timerText,
       onChange,
       showCounter,
       borderNone,
@@ -159,6 +161,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
           )}
+          {/* 타이머 */}
+          {timerText && <div className={styles.unit}>{timerText}</div>}
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}

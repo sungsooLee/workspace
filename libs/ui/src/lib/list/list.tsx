@@ -4,6 +4,7 @@ import { cn, toArray } from '@learnway/shared';
 import { SelectOption } from '../select/type';
 import styles from './list.module.css';
 import React, { useEffect, useState } from 'react';
+import { isEqual } from 'lodash';
 
 export interface ListComponentProps {
   options: Array<SelectOption>;
@@ -33,7 +34,10 @@ const ListComponent = function ({
 
   // changed value from parent component
   useEffect(() => {
-    setSelectedOptions(getOptionsFromValue(options, value));
+    const newSelectedOptions = getOptionsFromValue(options, value);
+    if (!isEqual(selectedOptions, newSelectedOptions)) {
+      setSelectedOptions(newSelectedOptions);
+    }
   }, [value]);
 
   // callback function

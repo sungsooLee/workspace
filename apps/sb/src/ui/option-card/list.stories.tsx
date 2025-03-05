@@ -1,5 +1,5 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
 import { OptionCard } from '@learnway/ui';
 import { IcoBuilding01 } from '@learnway/icons';
@@ -71,3 +71,17 @@ export const TemplateMultiple: any = (args: any) => {
   );
 };
 TemplateMultiple.storyName = 'Multiple';
+
+// Value Control
+export const TemplateValueControl: any = (args: any) => {
+  const [value, setValue] = useState('value2');
+  return (
+    <OptionCard
+      {...args}
+      options={dummyOptions}
+      value={value}
+      onOptionsSelect={(options) => console.log('list.stories.tsx', options)}
+    />
+  );
+};
+TemplateValueControl.storyName = 'Value Control';

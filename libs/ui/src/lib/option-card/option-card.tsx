@@ -3,6 +3,7 @@ import { cn, toArray } from '@learnway/shared';
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import styles from './option-card.module.css';
+import { isEqual } from 'lodash';
 
 export interface OptionCardItem {
   label: string;
@@ -37,7 +38,10 @@ const OptionCardComponent = function ({
 
   // changed value from parent component
   useEffect(() => {
-    setSelectedOptions(toArray(value));
+    const newSelectedOptions = getOptionsFromValue(options, value);
+    if (!isEqual(selectedOptions, newSelectedOptions)) {
+      setSelectedOptions(newSelectedOptions);
+    }
   }, [value]);
 
   // callback function

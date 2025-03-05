@@ -50,9 +50,7 @@ export * from './lib/grid/configs/column-factory';
 
 // input
 export * from './lib/input/input';
-export * from './lib/checkbox/form-checkbox';
-export * from './lib/radio-group/form-radio-group';
-export * from './lib/date-picker/form-date-range-picker';
+export * from './lib/input/input-timer';
 
 // list
 export * from './lib/list/list';
