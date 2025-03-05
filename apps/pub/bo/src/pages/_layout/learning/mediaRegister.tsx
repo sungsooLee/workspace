@@ -372,6 +372,7 @@ function RouteComponent() {
                   </Button>
                 </Tooltip>
                 {/* Switch 텍스트 : '무기한' : '기간 설정' , input_box_wrap 영역 hide / show */}
+                {/* <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} /> */}
                 <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} />
               </label>
               <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
