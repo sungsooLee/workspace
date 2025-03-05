@@ -153,16 +153,6 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
-    screenName: '구글 OTP인증키 생성_인증키생성팝업',
-    pageId: '',
-    screenId: 'NLP_FO_LOG_1013', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증_OTP번호입력팝업',
     pageId: '',
     screenId: 'NLP_FO_LOG_1014', //스크린아이디
