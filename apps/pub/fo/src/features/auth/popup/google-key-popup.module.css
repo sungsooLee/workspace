@@ -1,5 +1,5 @@
-/* google-cert1-popup.module.css */
-.google_cert_popup {
+/* google-key-popup.module.css */
+.google_key_popup {
   @apply text-center;
   .otp_key {
     @apply mt-[8px] rounded-[8px] bg-[var(--secondary5)] px-[24px] py-[24px] text-center;

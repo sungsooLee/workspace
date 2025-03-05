@@ -1,17 +1,17 @@
 import { memo } from 'react';
 
-import styles from './google-cert1-popup.module.css';
+import styles from './google-qrcode-popup.module.css';
 import signupStyles from '../../../pages/_auth/signup.module.css';
 import { IcoCaution } from '@learnway/icons';
 import imgQrcode from '../../../assets/images/temp/img_qrcode.png';
 import { Button, useModal } from '@learnway/ui';
-import { GoogleCert2Popup } from '../../../features/auth';
+import { GoogleKeyPopup } from '../../../features/auth';
 
-const GoogleCert1PopupCompoment = () => {
+const GoogleQrcodePopupCompoment = () => {
   const { open: openModal } = useModal();
   const { close: closeModal } = useModal();
   return (
-    <div className={`${styles.start} ${styles.google_cert_popup}`}>
+    <div className={`${styles.start} ${styles.google_qrcode_popup}`}>
       <figure className={styles.qrcode}>
         <img src={imgQrcode} alt="qrcode" />
       </figure>
@@ -24,7 +24,7 @@ const GoogleCert1PopupCompoment = () => {
             openModal({
               title: '구글 OTP 인증키 생성',
               width: 'sm',
-              content: <GoogleCert2Popup />,
+              content: <GoogleKeyPopup />,
               footer: true,
             });
           }}>
@@ -45,4 +45,4 @@ const GoogleCert1PopupCompoment = () => {
   );
 };
 
-export const GoogleCert1Popup = memo(GoogleCert1PopupCompoment);
+export const GoogleQrcodePopup = memo(GoogleQrcodePopupCompoment);

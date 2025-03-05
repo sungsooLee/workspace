@@ -1,5 +1,5 @@
-/* google-cert1-popup.module.css */
-.google_cert_popup {
+/* google-qrcode-popup.module.css */
+.google_qrcode_popup {
   @apply text-center;
   .qrcode {
     @apply pt-[16px];
