@@ -109,6 +109,30 @@
   &.open {
     @apply block;
   }
+  &.line {
+    @apply rounded-[8px] border border-solid border-[#d6dae1] p-[16px];
+    .required {
+      @apply align-top;
+    }
+    .input_box {
+      @apply mt-0;
+      .sub_text {
+        @apply pl-[28px];
+      }
+      & + .guide_text {
+        @apply pb-[16px] pl-[28px];
+      }
+      & + .input_box {
+        @apply border-t border-[#edf0f7] pt-[16px];
+        border-top: 1px solid #edf0f7;
+      }
+      &:nth-last-child(1) {
+        .guide_text {
+          @apply pb-0;
+        }
+      }
+    }
+  }
 }
 .input_box {
   @apply mt-[12px] flex w-full items-center space-x-[8px];
@@ -217,6 +241,18 @@
     }
     &.error svg {
       @apply fill-[#00afd5];
+    }
+  }
+  .info_area {
+    @apply absolute right-0 top-0 flex items-center;
+    .info_text {
+      @apply body_bo_2_r text-[var(--gray6)];
+      em {
+        @apply ml-[5px] inline-flex;
+      }
+      & + button {
+        @apply ml-[16px];
+      }
     }
   }
 }

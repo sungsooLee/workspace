@@ -27,4 +27,30 @@
       }
     }
   }
+
+  /* btn_wrap */
+  .btn_wrap {
+    @apply flex;
+    .link_box {
+      @apply mr-[8px] flex;
+      .link {
+        @apply flex items-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[10px];
+        a {
+          @apply button_bo_3_r inline-flex min-h-[32px] items-center text-[var(--primary2)];
+          & + a {
+            @apply ml-[12px];
+            &::before {
+              @apply mr-[12px] flex h-[12px] w-[1px] bg-[var(--gray4)] content-[''];
+            }
+          }
+        }
+        & + button {
+          @apply mx-[8px];
+        }
+      }
+      &::after {
+        @apply flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
 }
