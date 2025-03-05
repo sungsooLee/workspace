@@ -12,6 +12,7 @@ import {
   RadioGroup,
   Checkbox,
   ContentsRow,
+  InputTimer,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -696,6 +697,18 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className="lg"
                 showSearchIcon
               />
+            </div>
+            <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="nameTimer" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>타이머</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <InputTimer startTimer={1} initialTime={300} />
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>
           </div>
