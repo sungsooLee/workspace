@@ -68,8 +68,8 @@ function RouteComponent() {
 import formStyles from '../../assets/styles/modules/form.module.css';
 
 // 예시
-<div className={formStyles.form_row}>
-  <div className={formStyles.row}>
+<div className='form_row'>
+  <ContentsRow>
     <div className={formStyles.form_item}>
         form_item
     </div>
@@ -77,11 +77,11 @@ import formStyles from '../../assets/styles/modules/form.module.css';
     <div className={formStyles.form_item}>
         form_item
     </div>
-  </div>
+  </ContentsRow>
 
-  <div className={formStyles.row}>
+  <ContentsRow>
     row
-  </div>
+  </ContentsRow>
 </div>`}</code>
         </pre>
       </div>
