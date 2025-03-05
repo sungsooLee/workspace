@@ -9,6 +9,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/password-input': '비밀번호 입력',
   '/pb-fo/password-modify': '비밀번호 변경',
   '/pb-fo/search-id-success': '아이디찾기',
+  '/pb-fo/mpass_cert': 'MPASS 인증',
 };
 
 export function isSigninPage(path: string): boolean {

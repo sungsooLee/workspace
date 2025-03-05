@@ -45,6 +45,9 @@ export * from './lib/checkbox/form-checkbox';
 export * from './lib/radio-group/form-radio-group';
 export * from './lib/date-picker/form-date-range-picker';
 
+// list
+export * from './lib/list/list';
+
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
 export * from './lib/file-upload/form-thumbnail-image-upload';
@@ -131,3 +134,6 @@ export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/configs/column-factory';
 
 // form-builder
+
+// contents-row
+export * from './lib/contents-row/contents-row';

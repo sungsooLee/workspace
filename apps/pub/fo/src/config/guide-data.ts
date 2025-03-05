@@ -94,32 +94,32 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_OTP',
-    pageId: '',
+    pageId: 'mpass_cert',
     screenId: 'NLP_FO_LOG_1008', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO',
-    pageId: '',
+    pageId: 'mpass_cert',
     screenId: 'NLP_FO_LOG_1009', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    pageType: 'Page',
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: 'NLP_FO_LOG_1008에 포함\n- 케이스별 (주석처리)',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO 인증안내팝업',
-    pageId: '',
+    pageId: 'mpass_cert',
     screenId: 'NLP_FO_LOG_1010', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: 'NLP_FO_LOG_1008에 포함\n- 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',

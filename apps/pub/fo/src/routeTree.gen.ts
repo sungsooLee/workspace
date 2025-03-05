@@ -24,6 +24,7 @@ import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
+import { Route as AuthMpasscertImport } from './pages/_auth/mpass_cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -130,6 +131,12 @@ const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
 const AuthPasswordInputRoute = AuthPasswordInputImport.update({
   id: '/password-input',
   path: '/password-input',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthMpasscertRoute = AuthMpasscertImport.update({
+  id: '/mpass_cert',
+  path: '/mpass_cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -349,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/mpass_cert': {
+      id: '/_auth/mpass_cert'
+      path: '/mpass_cert'
+      fullPath: '/mpass_cert'
+      preLoaderRoute: typeof AuthMpasscertImport
       parentRoute: typeof AuthImport
     }
     '/_auth/password-input': {
@@ -638,6 +652,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthMpasscertRoute: typeof AuthMpasscertRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
@@ -651,6 +666,7 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthMpasscertRoute: AuthMpasscertRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
@@ -746,6 +762,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/mpass_cert': typeof AuthMpasscertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -791,6 +808,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/mpass_cert': typeof AuthMpasscertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -839,6 +857,7 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/mpass_cert': typeof AuthMpasscertRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
@@ -886,6 +905,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/mpass_cert'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -930,6 +950,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/mpass_cert'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -976,6 +997,7 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
+    | '/_auth/mpass_cert'
     | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/progress-status'
@@ -1050,6 +1072,7 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
+        "/_auth/mpass_cert",
         "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/progress-status",
@@ -1104,6 +1127,10 @@ export const routeTree = rootRoute
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/mpass_cert": {
+      "filePath": "_auth/mpass_cert.tsx",
       "parent": "/_auth"
     },
     "/_auth/password-input": {
