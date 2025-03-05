@@ -188,9 +188,9 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         errorMessage = errorMessage.replace(`{{label}}`, rootConfig.label || '');
       }
     }
-    console.log('formState.errors => ', formState.errors);
+    /*console.log('formState.errors => ', formState.errors);
     console.log('formState.errors => ', formState.errors['translations']);
-    console.log(formState.errors?.translations);
+    console.log(formState.errors?.translations);*/
     setError({
       isError: !!errorMessage,
       message: errorMessage,

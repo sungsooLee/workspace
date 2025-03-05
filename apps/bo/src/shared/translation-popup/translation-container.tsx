@@ -39,6 +39,7 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
   );
   useEffect(() => {
     if (translations) {
+      console.log('set count translations => ', translations);
       setCount({
         translationCount: translations.filter((item: any) => item.translation.trim() !== '').length,
         totalCount: translations.length,
@@ -96,7 +97,7 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
 export default TranslationContainer;
 
 const localeCodes: { [key: string]: string } = {
-  kr: 'kr',
+  ko_KR: 'ko_KR',
   ar: 'ar',
   zh: 'zh',
   'zh-TW': 'zh-TW',

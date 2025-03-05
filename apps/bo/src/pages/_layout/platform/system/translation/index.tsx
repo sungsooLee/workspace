@@ -35,13 +35,21 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    gridFetch();
+    gridFetch(getData(), { page: 0, size: 10 });
   }, []);
   return (
     <PageContainer>
       <ContentsButtons>
         <Button type="button" variant="point" size="sm" onClick={handleNewTranslation}>
           등록
+        </Button>
+
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => router.navigate({ to: '/platform/system/translation/view?messageId=20' })}>
+          수정
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -56,15 +64,18 @@ function RouteComponent() {
 const searchConfig: SearchBoxConfig = {
   builders: [
     {
-      name: 'languageCode',
+      name: 'keyType',
       type: 'dropdown',
       label: t('다국어 분류'),
       value: '',
-      options: [{ value: '', label: '전체' }],
-      optionsConfig: {
-        type: 'self',
-        codeGroup: CODE_GROUP.LANGUAGE_CODE,
-      },
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('공통코드') },
+        { value: 'LABEL', label: t('라벨') },
+        { value: 'CATEGORY', label: t('카테고리') },
+        { value: 'ERROR', label: t('에러') },
+        { value: 'MESSAGE', label: t('메세지') },
+      ],
     },
     {
       name: 'translationCode',

@@ -2,35 +2,18 @@ import { httpService } from '@learnway/shared';
 import { Tenant } from '../../../types';
 
 export default class TranslationService {
-  static fetchTranslations() {
-    //return httpService.get<any>(`/pms-module/admin/api/v1/codes`);
-    return new Promise((resolve) => {
-      resolve({
-        messageId: 1,
-      });
-    });
+  static fetchTranslations(params: string) {
+    // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/i18n?page=0&size=10&keyType=&code=&locale=&isUsed=true
+    //return httpService.get<any>(`/pms-module/admin/api/v1/codes${params ? `?${params}` : ''}`);
+    return httpService.get<any>(
+      `/pms-module/admin/api/v1/i18n?page=0&size=10&keyType&code&locale&isUsed=true`,
+    );
   }
   static fetchTranslation(messageId: string) {
-    //return httpService.get<any>(`/pms-module/admin/api/v1/codes`);
-    return new Promise((resolve) => {
-      resolve({
-        messageId: messageId,
-        code: 'TEST_CODE',
-        keyType: 'COMMON_CODE',
-        messageDesc: '테스트 다국어 입니다.',
-        isUsed: true,
-        parent: '',
-        translations: [
-          ...localeCodes
-            .filter((lc) => lc !== 'kr')
-            .map((item) => ({ locale: item, translation: '' })),
-          { locale: 'kr', translation: '한국어' },
-        ],
-      });
-    });
+    return httpService.get<any>(`/pms-module/admin/api/v1/i18n/${messageId}`);
   }
   static updateTranslation(payload: any) {
-    return httpService.patch<Tenant>(`/pms-module/admin/api/v1/i18n`, payload);
+    return httpService.put<Tenant>(`/pms-module/admin/api/v1/i18n/${payload.messageId}`, payload);
   }
   static createTranslation(payload: any) {
     return httpService.post<Tenant>(`/pms-module/admin/api/v1/i18n`, payload);

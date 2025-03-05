@@ -182,7 +182,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
    */
   const onFormChange = (values?: any) => {
     if (values) {
-      reset(values);
+      reset({ ...getValues(), ...values });
     } else {
       reset(originalValues);
     }

@@ -11,7 +11,7 @@ export const queryKeys = {
 export const translationQueryOptions = {
   all: (params: any) => ({
     queryKey: queryKeys.all,
-    queryFn: () => TranslationService.fetchTranslations(),
+    queryFn: () => TranslationService.fetchTranslations(params),
     cacheTime: 0,
     staleTime: 0,
   }),
