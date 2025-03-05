@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cn, toArray } from '@learnway/shared';
 import React, { ReactNode, useEffect, useState } from 'react';
 
+import { Button } from '../button/button';
 import styles from './option-card.module.css';
 import { isEqual } from 'lodash';
 
@@ -20,6 +21,7 @@ export interface OptionCardComponentProps {
   valueField?: string;
   multiple?: boolean;
   cols?: number; // row length
+  size?: 'md' | 'lg';
   onOptionSelect?: (option: any) => void;
   onOptionsSelect?: (options: any[]) => void;
 }
@@ -29,6 +31,7 @@ const OptionCardComponent = function ({
   options,
   value,
   cols,
+  size,
   multiple,
   onOptionSelect,
   onOptionsSelect,
@@ -72,22 +75,24 @@ const OptionCardComponent = function ({
       }}>
       {/* options */}
       {options?.map((d: OptionCardItem) => (
-        <div
+        <Button
+          type="button"
           className={cn(
             styles.card_item,
-            selectedOptions?.find((x: OptionCardItem) => x.value === d.value) && 'bg-amber-100', // selected row style
+            selectedOptions?.find((x: OptionCardItem) => x.value === d.value) && styles.active, // selected row style
+            size && styles[size],
           )}
           key={d.value}
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
           {/* Icon */}
-          {d.icon && <div>{d.icon}</div>}
+          {d.icon && <span className={styles.icon}>{d.icon}</span>}
           {/* label */}
-          {d.label && <div>{d.label}</div>}
+          {d.label && <span className={styles.label}>{d.label}</span>}
           {/* descrition */}
-          {d.description && <div>{d.description}</div>}
-        </div>
+          {d.description && <span className={styles.description}>{d.description}</span>}
+        </Button>
       ))}
     </div>
   );

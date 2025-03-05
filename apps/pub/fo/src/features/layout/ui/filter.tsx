@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Button, useModal } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
+import { cn } from '@learnway/shared';
 
 import styles from './filter.module.css';
 
-import { IcoFilter } from '@learnway/icons';
+import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 
 const FilterComponent = () => {
   // modal
   const { open: openModal } = useModal();
 
-  const [selectCheck, setSelectCheck] = useState(false);
+  // 선택된 값이 있으면 true 변경
+  const [selectCheck, setSelectCheck] = useState(true);
   const selectBtn = [
     { text: '클래스', checked: false },
     { text: '동영상', checked: false },
@@ -21,7 +23,7 @@ const FilterComponent = () => {
     <div className={styles.filter_wrap}>
       <div className={styles.filter_btn_box}>
         <Button
-          className={styles.filter_btn}
+          className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
           onClick={() =>
             openModal({
               title: '필터',
@@ -30,7 +32,11 @@ const FilterComponent = () => {
               footer: true,
             })
           }>
-          <IcoFilter width={20} height={20} fill="none" stroke="#07287e"></IcoFilter>
+          <IcoFilter
+            width={20}
+            height={20}
+            fill="none"
+            stroke={selectCheck === true ? '#fff' : '#07287e'}></IcoFilter>
         </Button>
       </div>
 
@@ -40,6 +46,17 @@ const FilterComponent = () => {
             클래스
           </Button>
         ))}
+        <div className={styles.reset}>
+          <Button className={styles.btn_reset}>
+            <IcoRefresh02
+              className={styles.ico_reset}
+              width={20}
+              height={20}
+              fill="none"
+              stroke="#131c30"></IcoRefresh02>
+            초기화
+          </Button>
+        </div>
       </div>
     </div>
   );

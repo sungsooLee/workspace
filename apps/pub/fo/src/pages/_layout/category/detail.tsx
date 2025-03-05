@@ -4,9 +4,7 @@ import { cn } from '@learnway/shared';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Select, Button, Pagination, Input, ContentsRow, useModal } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
-import { Arrays } from '../../../features/layout/ui/arrays';
-import { Heart } from '../../../features/layout/ui/heart';
-import { Filter } from '../../../features/layout/ui/filter';
+import { Arrays, Heart, Filter } from '../../../features/layout';
 import {
   IcoArray,
   IcoPlay,
