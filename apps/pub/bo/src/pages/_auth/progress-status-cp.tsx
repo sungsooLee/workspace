@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Input, Select } from '@learnway/ui';
-import { IcoCheck02, IcoFormRequired } from '@learnway/icons';
+import { IcoProgress, IcoCheck02, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
@@ -15,15 +15,24 @@ function RouteComponent() {
       <div className={`${signupStyles.start} ${signupStyles.auth_wrap}`}>
         <div className={signupStyles.auth_box}>
           <div className={signupStyles.success_info}>
+            {/* 대기중 Case */}
+            <i className={cn(signupStyles.ico, signupStyles.progress)}>
+              <IcoProgress width={56} height={56} />
+            </i>
+            <h3 className={signupStyles.title}>CP 회원가입 대기 중입니다.</h3>
+            {/* 승인완료 Case */}
             <i className={signupStyles.ico}>
               <IcoCheck02 width={32} height={24} />
             </i>
-            <h3 className={signupStyles.title}>CP 회원가입 대기 중입니다.</h3>
+            <h3 className={signupStyles.title}>CP 회원가입 승인완료되었습니다.</h3>
             <p className={signupStyles.text}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
           </div>
           <div className={signupStyles.auth_info}>
             <p>
               신청일시 :<strong className={signupStyles.date}>{'YYYY-MM-DD'}</strong>
+            </p>
+            <p>
+              승인일시 :<strong className={signupStyles.date}>{'YYYY-MM-DD'}</strong>
             </p>
           </div>
           <div className={`${formStyles.form_row} ${formStyles.col} ${signupStyles.auth_form}`}>

@@ -13,7 +13,7 @@
       }
     }
     &:disabled {
-      @apply bg-[var(--gray2)] text-[var(--gray5)];
+      @apply bg-[var(--gray1)] text-[var(--gray5)];
       border-color: var(--gray4);
     }
     &.error {
