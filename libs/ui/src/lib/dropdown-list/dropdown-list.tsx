@@ -2,45 +2,45 @@ import React, { forwardRef } from 'react';
 import Select, { components, MultiValue, SingleValue, ActionMeta } from 'react-select';
 import { getRandomId } from '@learnway/shared';
 import { DropdownComponentProps, DropdownOption } from './type';
-  
+
 const CustomValueContainer = ({ children, ...props }: any) => {
-    const { getValue, hasValue, selectProps } = props;
-    console.log(props);
-    const values = getValue();
-    const isTextVariant = selectProps['data-variant'] === 'text';
-    // isMulti가 아니거나 text 변형이 아닌 경우 기본 컴포넌트 사용
-    if (!selectProps.isMulti || !isTextVariant) {
-      return <components.ValueContainer {...props}>{children}</components.ValueContainer>;
-    }
-    
-    // 선택된 값이 없는 경우
-    if (!hasValue || values.length === 0) {
-      return <components.ValueContainer {...props}>{children}</components.ValueContainer>;
-    }
-    
-    return (
-      <components.ValueContainer {...props}>
-        <div style={{ 
-          display: 'flex', 
+  const { getValue, hasValue, selectProps } = props;
+  console.log(props);
+  const values = getValue();
+  const isTextVariant = selectProps['data-variant'] === 'text';
+  // isMulti가 아니거나 text 변형이 아닌 경우 기본 컴포넌트 사용
+  if (!selectProps.isMulti || !isTextVariant) {
+    return <components.ValueContainer {...props}>{children}</components.ValueContainer>;
+  }
+
+  // 선택된 값이 없는 경우
+  if (!hasValue || values.length === 0) {
+    return <components.ValueContainer {...props}>{children}</components.ValueContainer>;
+  }
+
+  return (
+    <components.ValueContainer {...props}>
+      <div
+        style={{
+          display: 'flex',
           flexWrap: 'wrap',
           maxWidth: '100%',
           overflow: 'hidden',
-          textOverflow: 'ellipsis'
+          textOverflow: 'ellipsis',
         }}>
-          {values.length > 0 && (
-            <span>
-              {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
-            </span>
-          )}
-        </div>
-        {/* 중요: 숨겨진 입력 필드 등을 유지하기 위한 원래 children 렌더링 */}
-        {React.Children.map(children, child =>
-          child && child.type !== components.MultiValue ? child : null
+        {values.length > 0 && (
+          <span>
+            {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
+          </span>
         )}
-      </components.ValueContainer>
-    );
-  };
-  
+      </div>
+      {/* 중요: 숨겨진 입력 필드 등을 유지하기 위한 원래 children 렌더링 */}
+      {React.Children.map(children, (child) =>
+        child && child.type !== components.MultiValue ? child : null,
+      )}
+    </components.ValueContainer>
+  );
+};
 
 // 체크박스가 있는 옵션 컴포넌트
 const Option = (props: any) => {
@@ -81,13 +81,13 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       onBlur,
       ...props
     },
-    ref
+    ref,
   ) => {
     const uuid = getRandomId();
     const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
     const customProps = {
       'data-variant': variant,
-      ...props
+      ...props,
     };
     return (
       <div className={dropdownClass.trim()}>
@@ -104,7 +104,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           isClearable={isClearable}
           name={name}
           onBlur={onBlur}
-          className='w-full'
+          className="w-full"
           classNamePrefix="nlp-select"
           components={{
             Option,
@@ -117,7 +117,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 // FormDropdown 컴포넌트 - DynamicFormField와 함께 사용하기 위한 wrapper
@@ -126,7 +126,7 @@ const FormDropdownComponent = forwardRef<any, any>(
     // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
     const handleChange = (
       newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-      actionMeta: ActionMeta<DropdownOption>
+      actionMeta: ActionMeta<DropdownOption>,
     ) => {
       if (isMulti) {
         const multiValues = newValue as MultiValue<DropdownOption>;
@@ -140,17 +140,19 @@ const FormDropdownComponent = forwardRef<any, any>(
     // value를 react-select 형식으로 변환
     const getFormattedValue = () => {
       if (value === null || value === undefined) return null;
-      
+
       const safeOptions = Array.isArray(options) ? options : [];
-      
+
       if (isMulti && Array.isArray(value)) {
         return value
           .map((val) => safeOptions.find((option) => option.value === val))
           .filter(Boolean); // undefined 값 제거
       }
-      
-      return safeOptions.find((option: DropdownOption) => option.value === value) || 
-        (typeof value === 'string' ? { value, label: value } : null);
+
+      return (
+        safeOptions.find((option: DropdownOption) => option.value === value) ||
+        (typeof value === 'string' ? { value, label: value } : null)
+      );
     };
 
     return (
@@ -164,9 +166,8 @@ const FormDropdownComponent = forwardRef<any, any>(
         {...props}
       />
     );
-  }
+  },
 );
-
 
 DropdownComponent.displayName = 'Dropdown';
 FormDropdownComponent.displayName = 'FormDropdown';

@@ -1,4 +1,4 @@
-import { ActionMeta, MultiValue, SingleValue } from "react-select";
+import { ActionMeta, MultiValue, SingleValue } from 'react-select';
 
 export interface DropdownOption {
   value: string;
@@ -10,7 +10,7 @@ export interface DropdownComponentProps {
   value?: DropdownOption | readonly DropdownOption[] | null;
   onChange?: (
     newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-    actionMeta: ActionMeta<DropdownOption>
+    actionMeta: ActionMeta<DropdownOption>,
   ) => void;
   placeholder?: string;
   isDisabled?: boolean;
@@ -24,4 +24,10 @@ export interface DropdownComponentProps {
   className?: string;
   name?: string;
   onBlur?: () => void;
+}
+
+export interface AutoCompleteProps extends Omit<DropdownComponentProps, 'options'> {
+  loadOptions: (inputValue: string) => Promise<DropdownOption[]>;
+  defaultOptions?: boolean | DropdownOption[];
+  cacheOptions?: boolean;
 }
