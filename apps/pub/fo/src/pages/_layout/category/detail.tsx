@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Select, Button, Pagination, Input, ContentsRow, useModal } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 import { Arrays } from '../../../features/layout/ui/arrays';
 import { Heart } from '../../../features/layout/ui/heart';
-import { FilterPopup } from '../../../features/layout/popup/filter-popup';
+import { Filter } from '../../../features/layout/ui/filter';
 import {
   IcoArray,
   IcoPlay,
@@ -56,6 +56,18 @@ function RouteComponent() {
       heart: '33',
       eye: '55',
       related: [
+        { txt: '모바일전용', icon: IcoPhone02 },
+        { txt: '사내IP전용', icon: IcoMonitor01 },
+        { txt: '#AI기술', icon: 'none' },
+        { txt: '#C', icon: 'none' },
+        { txt: '모바일전용', icon: IcoPhone02 },
+        { txt: '사내IP전용', icon: IcoMonitor01 },
+        { txt: '#AI기술', icon: 'none' },
+        { txt: '#C', icon: 'none' },
+        { txt: '모바일전용', icon: IcoPhone02 },
+        { txt: '사내IP전용', icon: IcoMonitor01 },
+        { txt: '#AI기술', icon: 'none' },
+        { txt: '#C', icon: 'none' },
         { txt: '모바일전용', icon: IcoPhone02 },
         { txt: '사내IP전용', icon: IcoMonitor01 },
         { txt: '#AI기술', icon: 'none' },
@@ -227,6 +239,15 @@ function RouteComponent() {
     }
   }, []);
 
+  const [listUi, setListUi] = useState(false);
+  const list_ui = () => {
+    if (listUi === true) {
+      setListUi(false);
+    } else {
+      setListUi(true);
+    }
+  };
+
   return (
     <div className={styles.start}>
       <div className={styles.swiper}>
@@ -302,17 +323,7 @@ function RouteComponent() {
             </div>
           </li>
           <li>
-            <Button
-              onClick={() =>
-                openModal({
-                  title: '필터',
-                  width: 'md',
-                  content: <FilterPopup />,
-                  footer: true,
-                })
-              }>
-              필터팝업열기
-            </Button>
+            <Filter></Filter>
           </li>
         </ul>
       </div>
@@ -338,17 +349,17 @@ function RouteComponent() {
               />
             </div>
             <div className={styles.box}>
-              <Button>
+              <Button onClick={list_ui}>
                 <IcoArray width={24} height={24} stroke="#a9afb8" fill="none" />
               </Button>
             </div>
           </div>
         </div>
 
-        <div className={styles.list}>
+        <div className={cn(styles.list, listUi === true ? styles.tpye2 : '')}>
           {lists.map((list, index) => (
             <div key={index} className={styles.listBox}>
-              <Link to="">
+              <Link to="" className={styles.link}>
                 <div className={styles.img_box}>
                   <ul className={styles.label_box}>
                     {list.label.map((labels, index) => (
@@ -390,6 +401,7 @@ function RouteComponent() {
                       <span className={styles.txt}>{list.eye}</span>
                     </span>
                   </div>
+
                   <div className={styles.related_box}>
                     {list.related.map((relateds, index) => (
                       <span className={styles.related} key={index}>

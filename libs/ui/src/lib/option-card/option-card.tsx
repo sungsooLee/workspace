@@ -19,6 +19,7 @@ export interface OptionCardComponentProps {
   labelField?: string;
   valueField?: string;
   multiple?: boolean;
+  cols?: number; // row length
   onOptionSelect?: (option: any) => void;
   onOptionsSelect?: (options: any[]) => void;
 }
@@ -27,6 +28,7 @@ const OptionCardComponent = function ({
   className,
   options,
   value,
+  cols,
   multiple,
   onOptionSelect,
   onOptionsSelect,
@@ -64,17 +66,15 @@ const OptionCardComponent = function ({
 
   return (
     <div
-      className={cn(
-        styles.start,
-        className,
-        'nlp--option-card',
-        'grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
-      )}>
+      className={cn(styles.start, styles.option_card_wrap, className, 'nlp--option-card')}
+      style={{
+        gridTemplateColumns: `repeat(${cols}, 1fr)`, // cols 값에 따라 열 개수를 설정
+      }}>
       {/* options */}
       {options?.map((d: OptionCardItem) => (
         <div
           className={cn(
-            'border p-4',
+            styles.card_item,
             selectedOptions?.find((x: OptionCardItem) => x.value === d.value) && 'bg-amber-100', // selected row style
           )}
           key={d.value}
