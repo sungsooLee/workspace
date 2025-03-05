@@ -8,7 +8,7 @@ const FilterPopupComponent = () => {
     <>
       <ul className={styles.filter_wrap}>
         <li>
-          <strong className={styles.tit}>aaa</strong>
+          <strong className={styles.tit}>작업중</strong>
           <div className={styles.filter_box}></div>
         </li>
       </ul>

@@ -24,9 +24,12 @@
   @apply mt-[40px] overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px];
 }
 
-.division {
+.divisio_box {
   li {
     @apply block;
+    & + li {
+      @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray4)] pt-[12px];
+    }
   }
 }
 
@@ -71,6 +74,31 @@
 
 /* list */
 .list {
+  &.tpye2 {
+    .listBox {
+      @apply mr-0 w-full;
+      .link {
+        @apply flex items-start;
+        .img_box {
+          @apply mr-[16px] w-[237px];
+        }
+        .text_box {
+          @apply flex-1 overflow-hidden;
+          .ico_box {
+            .heart {
+              @apply left-[inherit] top-[inhetit];
+            }
+          }
+        }
+      }
+      & + .listBox {
+        @apply mt-[53px];
+      }
+      .heart {
+        @apply left-[201px] right-[inherit] top-[121px];
+      }
+    }
+  }
   @apply flex flex-wrap justify-items-start text-[0];
   .listBox {
     @apply relative;
@@ -164,7 +192,7 @@
       }
     }
     .heart {
-      @apply absolute right-[16px] top-[147px] text-[0];
+      @apply absolute right-[14px] top-[147px] text-[0];
     }
   }
 }
