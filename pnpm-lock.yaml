@@ -436,10 +436,10 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2(postcss@8.4.38)
       prettier:
-        specifier: ^3.4.2
+        specifier: ^3.5.3
         version: 3.5.3
       prettier-plugin-tailwindcss:
-        specifier: ^0.6.9
+        specifier: ^0.6.11
         version: 0.6.11(prettier@3.5.3)
       react-number-format:
         specifier: ^5.4.3

@@ -67,6 +67,10 @@ export * from './lib/radio-card/radio-card';
 // select
 export * from './lib/select/select';
 export * from './lib/select/type';
+// dropdown-list
+export * from './lib/dropdown-list/dropdown-list'
+export * from './lib/dropdown-list/auto-complete'
+export * from './lib/dropdown-list/type'
 
 // switch
 export * from './lib/switch/switch';
@@ -131,3 +135,6 @@ export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/configs/column-factory';
 
 // form-builder
+
+
+
