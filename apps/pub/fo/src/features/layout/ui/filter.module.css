@@ -3,14 +3,26 @@
   .filter_btn_box {
     .filter_btn {
       @apply flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white;
+      &.selected {
+        @apply relative border-0 bg-[var(--primary2)];
+        &::after {
+          @apply absolute right-0 top-0 h-[12px] w-[12px] -translate-y-1/2 translate-x-1/2 rounded-[50%] bg-[var(--secondary1)] content-[''];
+        }
+      }
     }
   }
   .select_box {
-    @apply ml-[12px] flex flex-wrap justify-start;
+    @apply relative ml-[12px] flex w-full flex-wrap justify-start;
     .select_btn {
       @apply button_3_r flex h-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white pl-[12px] pr-[12px] text-[var(--gray8)];
       & + .select_btn {
         @apply ml-[8px];
+      }
+    }
+    .reset {
+      @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
+      .ico_reset {
+        @apply mr-[8px];
       }
     }
   }
