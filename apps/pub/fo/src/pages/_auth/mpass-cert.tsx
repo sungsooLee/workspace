@@ -3,10 +3,8 @@ import { cn } from '@learnway/shared';
 import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
-
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-
-import { MpassModal } from '../../features/auth';
+import { MpassPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,
@@ -98,7 +96,7 @@ function RouteComponent() {
                 openModal({
                   title: 'FIDO 인증',
                   width: 'sm',
-                  content: <MpassModal />,
+                  content: <MpassPopup />,
                   footer: true,
                 })
               }>

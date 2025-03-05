@@ -4,7 +4,7 @@ import { IcoShieldTick01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-import { MpassModal } from '../../features/auth';
+import { MpassPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
@@ -92,7 +92,7 @@ function RouteComponent() {
                 openModal({
                   title: '구글 OTP 인증',
                   width: 'sm',
-                  content: <MpassModal />,
+                  content: <MpassPopup />,
                   footer: true,
                 })
               }>
