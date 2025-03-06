@@ -51,7 +51,7 @@ export const formatDate = (value: Date | string | number, format?: string) => {
  * duration 연산후 문자열로 리턴
  * format 이 없으면 Date type 리턴
  * @param value date | string
- * @param config 계산할 단위의 조합 object {
+ * @param config 계산할 단위의 조합 config = {
  *   days: 1,
  *   hours: 5,
  *   minutes: 30,
