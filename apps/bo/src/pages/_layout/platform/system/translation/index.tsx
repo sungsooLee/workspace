@@ -10,6 +10,7 @@ import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
 import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/')({
   component: RouteComponent,
@@ -35,13 +36,21 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    gridFetch();
+    gridFetch(getData(), { page: 0, size: 10 });
   }, []);
   return (
     <PageContainer>
       <ContentsButtons>
         <Button type="button" variant="point" size="sm" onClick={handleNewTranslation}>
           등록
+        </Button>
+
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => router.navigate({ to: '/platform/system/translation/view?messageId=20' })}>
+          수정
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -56,15 +65,18 @@ function RouteComponent() {
 const searchConfig: SearchBoxConfig = {
   builders: [
     {
-      name: 'languageCode',
+      name: 'keyType',
       type: 'dropdown',
       label: t('다국어 분류'),
       value: '',
-      options: [{ value: '', label: '전체' }],
-      optionsConfig: {
-        type: 'self',
-        codeGroup: CODE_GROUP.LANGUAGE_CODE,
-      },
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('공통코드') },
+        { value: 'LABEL', label: t('라벨') },
+        { value: 'CATEGORY', label: t('카테고리') },
+        { value: 'ERROR', label: t('에러') },
+        { value: 'MESSAGE', label: t('메세지') },
+      ],
     },
     {
       name: 'translationCode',
@@ -99,18 +111,47 @@ const gridConfig = {
       render: (info: any) => (
         <Link
           className={'text-blue-600'}
-          to={'/platform/system/translation/view?code=' + info.getValue()}>
+          to={'/platform/system/translation/view?messageId=' + info.row.original.messageId}>
           {info.getValue()}
         </Link>
       ),
     },
-    { name: 'useYn', label: '사용여부' },
-    { name: 'koreanName', label: '한국어' },
-    { name: 'englishName', label: '영어' },
+    { name: 'translation', label: '기준언어' },
+    {
+      name: 'translationCount',
+      label: '다국어번역',
+      render: (info: any) => info.getValue() + ' / 28',
+    },
+    {
+      name: 'translationCount_B',
+      label: '다국어번역',
+      render: (info: any) => (info.row.original.translationCount < 28 ? '번역필요' : '번역완료'),
+    },
+    {
+      name: 'useYn',
+      label: '사용여부',
+      render: (info: any) => (info.getValue() ? '사용' : '미사용'),
+    },
     { name: 'createdBy', label: '등록자' },
-    { name: 'createdDate', label: '등록일시' },
+    {
+      name: 'createdDate',
+      label: '등록일시',
+      render: (info: any) => (
+        <span className={'whitespace-nowrap'}>
+          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC)}
+        </span>
+      ),
+    },
     { name: 'lastModifiedBy', label: '수정자' },
-    { name: 'modifiedDate', label: '수정일시' },
+    {
+      name: 'modifiedDate',
+      label: '수정일시',
+      render: (info: any) => (
+        <span className={'whitespace-nowrap'}>
+          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC)}
+        </span>
+      ),
+    },
   ],
   data: [],
   pagination: {
@@ -119,3 +160,4 @@ const gridConfig = {
     totalRows: 0,
   },
 };
+// 2025-03-05 04:06:10
