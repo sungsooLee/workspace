@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { Tenant } from '../../../../entities/tenant';
+import logoImage from '../../../../assets/images/logo.png';
 
 import styles from './logo.module.css';
 
@@ -10,6 +11,16 @@ interface LogoComponentProps {
 }
 
 const LogoComponent = ({ activeTenant }: LogoComponentProps) => {
+  if (!activeTenant) {
+    return (
+      <div className={`${styles.start} ${styles.logo}`}>
+        <Link to={'/'}>
+          <img src={logoImage} alt="Logo" />
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.start} ${styles.logo}`}>
       <Link to={'/'}>

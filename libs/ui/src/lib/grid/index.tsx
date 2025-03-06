@@ -366,6 +366,10 @@ const Grid = forwardRef(
                     style={{
                       display: 'flex',
                       width: cell.column.getSize(),
+                      textAlign:
+                        cell.column.columnDef.meta?.cellAlign ||
+                        cell.column.columnDef.meta?.align ||
+                        'left',
                     }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -419,6 +423,10 @@ const Grid = forwardRef(
                         width: cell.column.getSize(),
                         display: 'flex',
                         alignItems: 'center',
+                        textAlign:
+                          cell.column.columnDef.meta?.cellAlign ||
+                          cell.column.columnDef.meta?.align ||
+                          'left',
                       }}>
                       {cell.getIsGrouped() ? (
                         <button
@@ -461,12 +469,14 @@ const Grid = forwardRef(
           }}>
           <table
             style={{
-              display: paginationGrid ? 'table' : 'grid', // 가상 스크롤일 때 grid 사용
+              // display: paginationGrid ? 'table' : 'grid', // 가상 스크롤일 때 grid 사용
+              display: 'grid',
               width: '100%',
             }}>
             <thead
               style={{
-                display: paginationGrid ? 'table-header-group' : 'grid',
+                // display: paginationGrid ? 'table-header-group' : 'grid',/
+                display: 'grid',
                 position: 'sticky',
                 top: 0,
                 zIndex: 1,
@@ -476,15 +486,23 @@ const Grid = forwardRef(
                 <tr
                   key={headerGroup.id}
                   style={{
-                    display: paginationGrid ? 'table-row' : 'flex',
+                    // display: paginationGrid ? 'table-row' : 'flex',
+                    display: 'flex',
                     width: '100%',
                   }}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
                       style={{
-                        width: paginationGrid ? undefined : header.getSize(),
-                        display: paginationGrid ? 'table-cell' : 'flex',
+                        // width: paginationGrid ? undefined : header.getSize(),
+                        // display: paginationGrid ? 'table-cell' : 'flex',
+                        // 정렬 속성 추가
+                        textAlign:
+                          header.column.columnDef.meta?.headerAlign ||
+                          header.column.columnDef.meta?.align ||
+                          'left',
+                        display: 'flex',
+                        width: header.getSize(),
                       }}
                       className="thead_th">
                       <div className="th_wrap">
@@ -520,9 +538,11 @@ const Grid = forwardRef(
             </thead>
             <tbody
               style={{
-                display: paginationGrid ? 'table-row-group' : 'grid',
+                // display: paginationGrid ? 'table-row-group' : 'grid',
+                display: 'grid',
                 position: 'relative',
-                height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
+                // height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
+                height: `${rowVirtualizer.getTotalSize()}px`,
               }}>
               {isLoading ? <p>Loading...</p> : renderRows()}
             </tbody>
