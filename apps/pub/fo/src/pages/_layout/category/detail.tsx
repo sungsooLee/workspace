@@ -422,7 +422,7 @@ function RouteComponent() {
       </div>
 
       <Pagination
-        className={cn(styles.pagenation, styles.paginationItem, 'aaa')}
+        className={cn(styles.pagenation, styles.paginationItem)}
         count={3}
         page={page}
         onChange={handlePageChange}

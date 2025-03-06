@@ -29,6 +29,7 @@ import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -41,6 +42,7 @@ import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
+import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
@@ -165,6 +167,12 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const LayoutCategoryDetailmRoute = LayoutCategoryDetailmImport.update({
+  id: '/category/detail_m',
+  path: '/category/detail_m',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutCategoryDetailRoute = LayoutCategoryDetailImport.update({
   id: '/category/detail',
   path: '/category/detail',
@@ -234,6 +242,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
 const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
+  id: '/guide/optionCard',
+  path: '/guide/optionCard',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -561,6 +575,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideModalImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/optionCard': {
+      id: '/_guide/guide/optionCard'
+      path: '/guide/optionCard'
+      fullPath: '/guide/optionCard'
+      preLoaderRoute: typeof GuideGuideOptionCardImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/pagination': {
       id: '/_guide/guide/pagination'
       path: '/guide/pagination'
@@ -645,6 +666,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/category/detail_m': {
+      id: '/_layout/category/detail_m'
+      path: '/category/detail_m'
+      fullPath: '/category/detail_m'
+      preLoaderRoute: typeof LayoutCategoryDetailmImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -713,6 +741,7 @@ interface GuideRouteChildren {
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideMobileRoute: typeof GuideGuideMobileRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
@@ -744,6 +773,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideMobileRoute: GuideGuideMobileRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
@@ -763,12 +793,14 @@ const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
+  LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
+  LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -806,6 +838,7 @@ export interface FileRoutesByFullPath {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -818,6 +851,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
+  '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -853,6 +887,7 @@ export interface FileRoutesByTo {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -865,6 +900,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
+  '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -903,6 +939,7 @@ export interface FileRoutesById {
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/mobile': typeof GuideGuideMobileRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
+  '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
@@ -915,6 +952,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
+  '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -952,6 +990,7 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -964,6 +1003,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
+    | '/category/detail_m'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -998,6 +1038,7 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -1010,6 +1051,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
+    | '/category/detail_m'
     | '/guide'
     | '/menu3'
   id:
@@ -1046,6 +1088,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/layout'
     | '/_guide/guide/mobile'
     | '/_guide/guide/modal'
+    | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
@@ -1058,6 +1101,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
+    | '/_layout/category/detail_m'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1126,6 +1170,7 @@ export const routeTree = rootRoute
         "/_guide/guide/layout",
         "/_guide/guide/mobile",
         "/_guide/guide/modal",
+        "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
@@ -1145,6 +1190,7 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/category/detail",
+        "/_layout/category/detail_m",
         "/_layout/menu3/"
       ]
     },
@@ -1264,6 +1310,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/modal.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/optionCard": {
+      "filePath": "_guide/guide/optionCard.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/pagination": {
       "filePath": "_guide/guide/pagination.tsx",
       "parent": "/_guide"
@@ -1310,6 +1360,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail": {
       "filePath": "_layout/category/detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/category/detail_m": {
+      "filePath": "_layout/category/detail_m.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {
