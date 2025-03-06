@@ -9,3 +9,4 @@ export * from './lib/zod';
 export * from './lib/auth/entities';
 export * from './lib/providers/react-query-config-provider';
 export * from './lib/types';
+export * from './lib/const/learning-type.constatnt';
