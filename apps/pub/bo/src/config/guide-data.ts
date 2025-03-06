@@ -107,6 +107,18 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    depth1: '회원유형선택(관리자 회원가입)',
+    // depth2: '',
+    // depth3: '',
+    // depth4: '',
+    // depth5: '',
+    // depth6: '',
+    pageId: 'signup-step1',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
     depth1: '학습유형선택(팝업)',
     // depth2: '교육자원',
     // depth3: '학습자원 관리',
