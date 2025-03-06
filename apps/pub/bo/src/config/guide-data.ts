@@ -19,9 +19,18 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '로그인/비밀번호 변경',
+    pageId: 'password-change',
+    screenId: 'NLP_BO_LOG_1000_02',
+    pageType: 'Page',
+    completionDate: '2025-02-26',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
     screenName: '로그인/아이디 찾기',
     pageId: 'search-account',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1008',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
@@ -30,25 +39,17 @@ export const guideData = [
   {
     screenName: '로그인/비밀번호 찾기',
     pageId: 'search-account-pw',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1013',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
   },
-  {
-    screenName: '로그인/비밀번호 변경',
-    pageId: 'password-change',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
-  },
+
   {
     screenName: '로그인/진행 현황 확인',
     pageId: 'progress-status',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1001',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
@@ -57,7 +58,7 @@ export const guideData = [
   {
     screenName: '로그인/본인인증(휴대폰/이메일 인증)',
     pageId: 'progress-status-certify',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1014',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
@@ -66,7 +67,7 @@ export const guideData = [
   {
     screenName: '로그인/관리자 권한 신청 결과',
     pageId: 'progress-status-admin',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1001_02',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
@@ -75,7 +76,7 @@ export const guideData = [
   {
     screenName: '로그인/CP사 회원가입 결과',
     pageId: 'progress-status-cp',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1001_03',
     pageType: 'Page',
     completionDate: '2025-02-26',
     lastUpdateDate: '',
@@ -93,7 +94,7 @@ export const guideData = [
   {
     screenName: '로그인/MPASS 인증',
     pageId: 'mpass-cert',
-    screenId: '',
+    screenId: 'NLP_BO_LOG_1018',
     pageType: 'Page',
     completionDate: '2025-03-06',
     lastUpdateDate: '',
