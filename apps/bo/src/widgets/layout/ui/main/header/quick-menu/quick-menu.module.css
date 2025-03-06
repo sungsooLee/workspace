@@ -6,9 +6,9 @@
       @apply flex items-center justify-start;
       li {
         &:not(:nth-child(1)) {
-          @apply ml-[28px];
+          @apply ml-[20px];
           a {
-            @apply relative px-[28px];
+            @apply relative px-[20px];
             &::before {
               @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white opacity-15 content-[''];
             }

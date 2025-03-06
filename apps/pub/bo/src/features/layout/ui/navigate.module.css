@@ -2,12 +2,12 @@
 .start {
   .nav {
     ul {
-      @apply flex justify-start gap-[48px] pb-[8px];
+      @apply flex justify-start gap-[40px];
       > li {
         a {
-          color: var(--white);
-          @apply inline-flex h-[40px] items-center text-[20px];
-          &:hover {
+          @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
+          &:hover,
+          &:active {
             @apply font-bold;
           }
         }
