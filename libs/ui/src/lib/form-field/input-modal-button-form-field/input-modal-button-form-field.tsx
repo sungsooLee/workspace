@@ -1,6 +1,5 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { Input, InputProps } from '../../input/input';
-import { ButtonComponentProps } from '../../button/button';
 import styles from './input-modal-button-form-field.module.css';
 import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
@@ -12,7 +11,6 @@ interface InputModalButtonFormFieldComponentProps extends InputHTMLAttributes<HT
   onChange?: (value: any) => void;
   valueField?: string; // input value 설정시 사용할 key ex) value={value[valueField]}
   input?: InputProps;
-  button?: ButtonComponentProps;
 }
 
 const InputModalButtonFormFieldComponent = forwardRef<
@@ -23,7 +21,6 @@ const InputModalButtonFormFieldComponent = forwardRef<
     {
       onClick,
       input: inputProps = {},
-      button: buttonProps = {},
       modalConfig,
       valueField = 'name',
       value,
@@ -34,11 +31,11 @@ const InputModalButtonFormFieldComponent = forwardRef<
   ) => {
     const { open: openModal } = useModal();
 
-    const handleButtonOnClick = (e: any) => {
+    const handleClick = () => {
+      console.log('xxx');
       openModal({
         ...modalConfig,
         onClose: (data: any) => {
-          console.log('component onClose', data);
           ownerOnChange?.(data); // set form value
           modalConfig?.onClose?.(data); // optional
         },
@@ -46,7 +43,7 @@ const InputModalButtonFormFieldComponent = forwardRef<
     };
 
     return (
-      <div className={cn(styles.start, 'nlp--input-button-form-field')}>
+      <div className={cn(styles.start, 'nlp--input-button-form-field')} onClick={handleClick}>
         <Input
           {...inputProps}
           ref={ref}
