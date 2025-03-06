@@ -55,6 +55,19 @@
   &.full {
     @apply left-0 top-0 h-[100dvh] w-[100dvw] translate-x-0 translate-y-0 rounded-none;
   }
+  /* mobile full */
+  &.m_full {
+    @apply left-0 top-0 h-[100dvh] w-[100dvw] translate-x-0 translate-y-0 rounded-none;
+    h2 {
+      @apply body_2_b h-[56px] border-0 pl-[20px] pr-[16px] text-[var(--gray9)];
+    }
+    .btn_close {
+      @apply top-[16px];
+    }
+    .content_body {
+      @apply h-full max-h-none;
+    }
+  }
 }
 .btn_wrap {
   button {

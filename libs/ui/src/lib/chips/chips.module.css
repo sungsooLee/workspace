@@ -32,6 +32,16 @@
       &.lg {
         @apply min-h-[4rem];
       }
+      &.line {
+        @apply rounded-[8px] border border-solid border-[#06226a] bg-[var(--white)];
+        span,
+        button {
+          @apply button_3_b text-[#06226a];
+        }
+        .close {
+          @apply h-[16px] w-[16px] stroke-[#06226a];
+        }
+      }
     }
     &.vertical {
       @apply flex-col;

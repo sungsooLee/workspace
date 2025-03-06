@@ -13,12 +13,13 @@
   }
   .select_box {
     @apply relative ml-[12px] flex w-full flex-wrap justify-start;
-    .select_btn {
-      @apply button_3_r flex h-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white pl-[12px] pr-[12px] text-[var(--gray8)];
-      & + .select_btn {
-        @apply ml-[8px];
+    .chip_list {
+      @apply pr-[80px];
+      & > div {
+        @apply mt-0;
       }
     }
+
     .reset {
       @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
       .ico_reset {

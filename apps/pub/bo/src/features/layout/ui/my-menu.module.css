@@ -1,6 +1,6 @@
 /* my-menu.module.css */
 .btn_menu {
-  @apply relative flex h-[40px] min-w-[153px] items-center justify-center;
+  @apply relative flex h-[40px] min-w-[93px] items-center justify-center;
   .btn_text {
     @apply ml-[8px] text-[16px] text-white;
   }

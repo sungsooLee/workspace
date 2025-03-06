@@ -50,53 +50,8 @@ const options: any[] = [
   { label: '시험', value: 'F' },
 ];
 
-const FilterPopupComponent = () => {
-  return (
-    <div>
-      <ul className={styles.filter_wrap}>
-        <li>
-          <strong className={styles.tit}>강의유형</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>수강신청</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter2} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>학습시간</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter3} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>교육기간</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter4} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>난이도</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter5} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>언어</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter5} multiple />
-          </div>
-        </li>
-      </ul>
-
-      <div className={styles.look}>
-        <ChipList options={options} className={styles.chip_list} hideBorder type="line" size="sm" />
-      </div>
-    </div>
-  );
+const CategoryPopupComponent = () => {
+  return <div></div>;
 };
 
-export const FilterPopup = memo(FilterPopupComponent);
+export const CategoryPopup = memo(CategoryPopupComponent);
