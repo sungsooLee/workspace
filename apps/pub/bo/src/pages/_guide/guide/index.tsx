@@ -11,9 +11,7 @@ export const Route = createFileRoute('/_guide/guide/')({
 function RouteComponent() {
   // 데이터 아이템의 타입 정의
   interface ListItem {
-    depth1: string;
-    depth2: string;
-    depth3: string;
+    screenName: string;
     pageId: string;
     completionDate: string;
     lastUpdateDate: string;
@@ -106,7 +104,7 @@ function RouteComponent() {
         <tbody>
           {guideData.map((item, index) => (
             <tr key={index}>
-              <td className="menu_name">{item.depth1}</td>
+              <td className="menu_name">{item.screenName}</td>
               <td className="pages">
                 <a href={`/pb-bo/${item.pageId}`} target="_blank" rel="noopener noreferrer">
                   {item.pageId}

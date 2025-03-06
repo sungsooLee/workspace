@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useModal, Button, OptionCard } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
+import eBookstyles from './eBook.module.css';
 import {
   IcoMybook,
   IcoBlog,
@@ -21,7 +22,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 });
 
 function RouteComponent() {
-  const { open: openModal, alert: openAlert } = useModal();
+  const { open: openModal } = useModal();
   const CustomFooter = () => {
     const { close: closeModal } = useModal();
     return (
@@ -89,6 +90,45 @@ function RouteComponent() {
     { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
 
+  const EbookFooter = () => {
+    const { close: closeModal } = useModal();
+    return (
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal();
+        }}>
+        {'확인'}
+      </Button>
+    );
+  };
+
+  const EbookContent = () => {
+    return (
+      <div className={eBookstyles.wrap}>
+        <h2 className={eBookstyles.title}>
+          이북 등록은
+          <br />
+          TOAST 프로그램에서 진행합니다.
+        </h2>
+        <div className={eBookstyles.contents}>
+          <p className={eBookstyles.text}>
+            TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
+          </p>
+        </div>
+        <div className={eBookstyles.btn_box}>
+          <Button variant="gray" size="sm">
+            {'TOAST 프로그램 설치 파일'}
+          </Button>
+          <Button variant="gray" size="sm">
+            {'TOAST 이북 제작 가이드'}
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   const TypeSelectContent = () => {
     return (
       <div className={styles.wrap}>
@@ -101,26 +141,12 @@ function RouteComponent() {
           onOptionSelect={(option) => {
             console.log('selected', option);
             option?.label === '이북' &&
-              openAlert({
-                title: (
-                  <>
-                    이북 등록은 <br />
-                    TOAST 프로그램에서 진행합니다
-                  </>
-                ),
-                description: (
-                  <>
-                    TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
-                    <div className={styles.btn_box}>
-                      <Button variant="gray" size="sm">
-                        {'TOAST 프로그램 설치 파일'}
-                      </Button>
-                      <Button variant="gray" size="sm">
-                        {'TOAST 이북 제작 가이드'}
-                      </Button>
-                    </div>
-                  </>
-                ),
+              openModal({
+                title: '',
+                hideCloseButton: true,
+                width: 'auto',
+                content: <EbookContent />,
+                footer: <EbookFooter />,
               });
           }}
         />
