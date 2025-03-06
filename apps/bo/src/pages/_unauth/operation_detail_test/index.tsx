@@ -19,7 +19,7 @@ import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-
 import { ManagerList } from '../../../features/operation/ui/manager-list/manager-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 
-export const Route = createFileRoute('/_unauth/operation_test/')({
+export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
 });
 

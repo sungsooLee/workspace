@@ -20,7 +20,7 @@ export const Template: any = (args: any) => {
   };
   return (
     <div className={'flex flex-col gap-3'}>
-      <Input {...args} onChange={handleChange} />
+      <Input {...args} maxLength={20} onChange={handleChange} />
       <Input {...args} unitText={'명'} onChange={handleChange} />
       <Input {...args} showCounter onChange={handleChange} />
       <Input {...args} unitText={'명'} showCounter onChange={handleChange} />
@@ -30,7 +30,7 @@ export const Template: any = (args: any) => {
 };
 Template.storyName = 'Text';
 
-// Text
+// Value Control
 export const TemplateValueControl: any = (args: any) => {
   const [value, setValue] = React.useState('');
   const handleChange = (value: any) => {
