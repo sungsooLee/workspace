@@ -10,6 +10,7 @@ const useTranslationHook = () => {
   const router = useRouter();
   const [processType, setProcessType] = useState('LOADING');
   const queryClient = useQueryClient();
+  const [messageId, setMessageId] = useState();
   const { alert: openAlert } = useModal();
   const { mutate: saveMutate } = useMutation({
     ...mutateOptions.create(),
@@ -56,12 +57,14 @@ const useTranslationHook = () => {
     const query = router.state.location.search;
     console.log(query);
     if (query.hasOwnProperty('messageId')) {
+      setMessageId(query['messageId']);
       setProcessType('MODIFY');
     } else {
       setProcessType('REGISTER');
     }
   }, []);
   return {
+    messageId,
     save: handleSave,
     update: handleModify,
     getTranslation: handleGetTranslation,

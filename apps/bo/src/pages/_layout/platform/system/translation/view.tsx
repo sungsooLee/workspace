@@ -23,10 +23,10 @@ export const Route = createFileRoute('/_layout/platform/system/translation/view'
 });
 const DEFAULT_LANG = 'ko_KR';
 function RouteComponent() {
-  const { processType, save, update, getTranslation } = useTranslation();
+  const { messageId, processType, save, update, getTranslation } = useTranslation();
   const { confirm: openConfirm, open } = useModal();
   const router = useRouter();
-  const { provider, control, onSubmit, fetchData, getValues, onFormChange } =
+  const { provider, control, onSubmit, fetchData, getValues, onFormChange, setFormError } =
     useDynamicForm(formConfig);
 
   /**
@@ -102,8 +102,8 @@ function RouteComponent() {
     });*/
   };
   const init = async () => {
-    const translation = (await getTranslation('20')) as any;
-    console.log(translation);
+    if (!messageId) return;
+    const translation = (await getTranslation(messageId)) as any;
     const translations = Object.entries(localeCodes).map(([key, value]) => {
       const findTranslation = translation.translations.find((ts: any) => ts.locale === key) as any;
       if (findTranslation) {
@@ -111,7 +111,6 @@ function RouteComponent() {
       }
       return { locale: key, translation: '' };
     });
-
     const newTranslation = {
       messageId: translation.messageId + '',
       code: translation.code,
@@ -120,8 +119,15 @@ function RouteComponent() {
       translations,
       isUsed: true,
     };
-    console.log('newTranslation => ', newTranslation);
     fetchData(newTranslation);
+  };
+
+  const handleCodeDuplicationCheck = () => {
+    const code = getValues().code;
+    if (!code) {
+      setFormError('code', '다국어코드를 입력해주세요.');
+    }
+    console.log('code => ', code);
   };
 
   useEffect(() => {
@@ -135,10 +141,15 @@ function RouteComponent() {
       <form onSubmit={onSubmit(handleOnSubmit)}>
         <PageContainer>
           <ContentsButtons>
-            <Button type="button" variant="point" size="sm" onClick={() => handleOpenTranslation()}>
-              다국어
-            </Button>
-
+            {processType === 'MODIFY' && (
+              <Button
+                type="button"
+                variant="point"
+                size="sm"
+                onClick={() => handleOpenTranslation()}>
+                다국어
+              </Button>
+            )}
             <Button type="submit" variant="point" size="sm">
               {processType === 'REGISTER' ? '저장' : '수정'}
             </Button>
@@ -157,6 +168,13 @@ function RouteComponent() {
                 </FormRow>
                 <FormRow provider={provider}>
                   <DynamicFormField name={'code'} />
+                  <Button
+                    type="button"
+                    variant="point"
+                    size="sm"
+                    onClick={handleCodeDuplicationCheck}>
+                    중복확인
+                  </Button>
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
@@ -218,13 +236,24 @@ const translationItemSchema = z
       data.locale !== DEFAULT_LANG ||
       (data.locale === DEFAULT_LANG && data.translation.trim() !== ''),
     {
-      message: `locale이 ${DEFAULT_LANG} 인 경우 translation은 필수입니다.`,
+      message: ``,
       path: ['translation'], // 에러 메시지가 translation 필드에 붙습니다.
     },
   );
 
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: 'isCodeChecked',
+      type: 'switch',
+      value: false,
+    },
+    {
+      name: 'code',
+      type: 'text',
+      label: '다국어 코드',
+      value: '',
+    },
     {
       name: 'messageId',
       type: 'text',
@@ -243,12 +272,7 @@ const formConfig: DynamicFormConfig = {
         { value: 'LABEL', label: '라벨' },
       ],
     },
-    {
-      name: 'code',
-      type: 'text',
-      label: '다국어 코드',
-      value: '',
-    },
+
     {
       ...translationBuilderConfig,
     },
@@ -266,6 +290,20 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
+    code: z.string().required(),
+    /*isCodeChecked: z.boolean(),
+    code: z
+      .string()
+      .required()
+      .superRefine((data: any, ctx) => {
+        console.log('data => ', data);
+        if (!data.isCodeChecked && data.code.trim() === '') {
+          ctx.addIssue({
+            path: ['code'],
+            message: 'isCodeChecked가 false일 때는 code가 비워져 있으면 안 됩니다.',
+          });
+        }
+      }),*/
     /*translations: z.array(translationItemSchema),
     keyType: z.string().required(),*/
   },
