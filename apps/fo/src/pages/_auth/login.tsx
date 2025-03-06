@@ -3,18 +3,26 @@ import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@learnway/ui';
+import { Button, ContentsRow } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 import { useFetchAuthUser } from '@learnway/config';
+import { cn, cookieService } from '@learnway/shared';
 
-import { useAuthSignin } from '../../features/auth';
+import { useAuthSignin, getSavedUserid } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
 import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 
+import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
+import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
+import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
+
+import signupStyles from './signup.module.css';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
+import './siginup.css';
+
 import { FormRow } from '../../shared/ui/form-row';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -40,7 +48,7 @@ function RouteComponent() {
 
   useEffect(() => {
     onFormChange({
-      username: '@ict-companion.com',
+      username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
     });
   }, []);
@@ -53,41 +61,67 @@ function RouteComponent() {
   };
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <div className={`${styles.start} ${styles.auth_wrap}`}>
-        <div className={authStyles.auth_box}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'username'} />
-          </FormRow>
+    <form onSubmit={onSubmit(handleOnSubmit)} className={'form_row'}>
+      <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
+        <div className={signupStyles.auth_box}>
+          <div className="no_line col">
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'username'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'password'} />
+              </FormRow>
+            </ContentsRow>
+          </div>
 
-          <FormRow provider={provider}>
-            <DynamicFormField name={'password'} />
-          </FormRow>
-
-          <FormRow provider={provider}>
-            <DynamicFormField name={'saveId'} />
-
-            <div className={styles.info}>
-              <Link to="/progress-status">진행 현황</Link>
+          <ContentsRow className={signupStyles.login_info}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'saveId'} />
+            </FormRow>
+            {/*<Link to="/progress-status">진행 현황</Link>*/}
+            <div className={signupStyles.info}>
               <Link to="/search-account">아이디/비밀번호찾기</Link>
             </div>
-          </FormRow>
+          </ContentsRow>
 
-          <div className={styles.btn_box}>
-            <Button type="submit" size="xl" variant="primary" className={styles.btn}>
+          <div className={signupStyles.btn_box}>
+            <Button type="submit" size="xl" variant="primary" className={signupStyles.btn}>
               로그인
             </Button>
           </div>
+
+          <div className={signupStyles.sns_login}>
+            <h3 className={signupStyles.tit_sns}>소셜 로그인</h3>
+            <ul className={signupStyles.list}>
+              <li>
+                <Button>
+                  <img src={snsNaverImage} alt="naver" />
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <img src={snskakaoImage} alt="kakao" />
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <img src={snsGoogleImage} alt="google" />
+                </Button>
+              </li>
+            </ul>
+            <div className={signupStyles.noti}>
+              회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
+            </div>
+          </div>
         </div>
 
-        <div className={styles.login_guide}>
-          <IcoAlertCircleGray width={24} height={24} />
+        <div className={signupStyles.login_guide}>
           <span>
-            아직 회원이 아니시라면{' '}
-            <Link to="/signup" className={styles.btn_join}>
-              회원가입
-            </Link>
-            하세요.
+            <Link to="/progress-status">회원 가입 현황</Link>
+            <Link to="/signup">회원가입</Link>
           </span>
         </div>
       </div>

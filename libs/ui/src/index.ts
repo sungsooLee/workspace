@@ -37,6 +37,7 @@ export * from './lib/contents-row/contents-row';
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
 export * from './lib/date-picker/form-date-range-picker';
+export * from './lib/date-picker/time-picker';
 
 // editor
 export * from './lib/editor/hooks/editor.hook';

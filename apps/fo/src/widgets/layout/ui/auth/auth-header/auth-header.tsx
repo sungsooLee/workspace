@@ -13,12 +13,12 @@ function AuthHeaderComponent() {
   const location = useLocation();
 
   return (
-    <div className={`${styles.start} ${styles.header_auth}`}>
+    <div className={`${styles.start} ${styles.auth_header}`}>
       <header className={styles.header_area}>
         <h1>
           <Logo />
         </h1>
-        <Language className="auth_language" />
+        <Language className={styles.auth} />
       </header>
     </div>
   );

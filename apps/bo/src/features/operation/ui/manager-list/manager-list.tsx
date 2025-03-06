@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { Button, Grid } from '@learnway/ui';
-import { ColumnDef, createColumnHelper, RowSelectionState } from '@tanstack/react-table';
+import { Grid } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export interface TeacherListProps {
   dummy?: boolean;
@@ -16,7 +16,7 @@ export interface TeacherListProps {
  */
 const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
   ({ setModalData, ...props }, ref) => {
-    const { data: gridData }: any = getDummyDataHook();
+    const { data: gridData }: any = getMockData();
     const columnHelper = createColumnHelper<any>();
     const columns = [
       columnHelper.accessor('name', {
@@ -25,42 +25,24 @@ const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
       }),
     ] as ColumnDef<object, unknown>[];
 
-    const handleRowSelect = (selectRowState: RowSelectionState) => {
-      // console.log(selectRowState);
-    };
-
-    const handleSelectedData = (newData: any) => {
-      setModalData?.(newData);
+    const handleRowSelect = (row: any) => {
+      setModalData?.(row);
     };
 
     return (
       <div className="p-4">
         <h2>Grid</h2>
-        <Grid data={gridData} columns={columns} />
-        <Button
-          variant={'gray'}
-          size={'md'}
-          label={'set manager1'}
-          onClick={() => handleSelectedData({ id: '1', name: 'manager1' })}
-        />
-        <Button
-          variant={'gray'}
-          label={'get manager2'}
-          size={'md'}
-          onClick={() => handleSelectedData({ id: '2', name: 'manager2' })}
-        />
+        <Grid data={gridData} columns={columns} hideColumnSettings onRowSelect={handleRowSelect} />
       </div>
     );
   },
 );
 export const ManagerList = ManagerListComponent;
 
-const getDummyDataHook = () => {
+const getMockData = () => {
   return {
-    data: {
-      data: Array(5)
-        .fill(null)
-        .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
-    },
+    data: Array(5)
+      .fill(null)
+      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
   };
 };
