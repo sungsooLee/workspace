@@ -1,12 +1,13 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from '@tanstack/react-router';
+import { isFunction } from 'lodash';
 
 import { IcoPhone02, IcoMail } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { RadioCard } from '@learnway/ui';
 
-import signupStyles from '../signup.module.css';
+import styles from './auth-tool-form-field.module.css';
 
 export type AuthTool = 'phone' | 'email';
 
@@ -24,16 +25,16 @@ function AuthToolFormFieldComponent({
   const { t } = useTranslation();
 
   return (
-    <div className={className} role="radiogroup">
+    <div className={styles.start} role="radiogroup">
       <RadioCard
-        className={signupStyles.radio_card}
+        className={styles.radio_card}
         value={value}
         options={[
           {
             value: 'phone',
             label: (
               <div>
-                <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
+                <IcoPhone02 width={48} height={48} className={styles.ico1} />
                 <span>휴대폰 인증</span>
               </div>
             ),
@@ -42,12 +43,13 @@ function AuthToolFormFieldComponent({
             value: 'email',
             label: (
               <div>
-                <IcoMail width={48} height={48} className={signupStyles.ico2} />
+                <IcoMail width={48} height={48} className={styles.ico2} />
                 <span>이메일 인증</span>
               </div>
             ),
           },
         ]}
+        onValueChange={(value: string) => isFunction(onChange) && onChange(value as AuthTool)}
       />
     </div>
   );
