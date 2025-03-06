@@ -1,34 +1,29 @@
 import { memo } from 'react';
+import { cn } from '@learnway/shared';
 import styles from './google-input-popup.module.css';
 import signupStyles from '../../../pages/_auth/signup.module.css';
-import { IcoCaution } from '@learnway/icons';
-import { GoogleQrcodePopup } from '../../../features/auth';
-import { Button, useModal } from '@learnway/ui';
+import formStyles from '../../../assets/styles/modules/form.module.css';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { ContentsRow, Input } from '@learnway/ui';
 
 const GoogleInputPopupCompoment = () => {
-  const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
   return (
     <div className={`${styles.start} ${styles.google_input_popup}`}>
-      <div className={styles.otp_key}>
-        <span className={styles.txt}>구글 OTP 설정 키</span>
-        <div className={styles.key}>aqwe fder dfdg 4dfd dfdf 3a4g 6ki7 6hj9</div>
-      </div>
-      <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
-      <div className={signupStyles.noti_info_txt}>
-        <Button
-          className={signupStyles.btn_txt}
-          onClick={() => {
-            closeModal(); // 모달 닫기 함수 호출
-            openModal({
-              title: '구글 OTP 인증키 생성',
-              width: 'sm',
-              content: <GoogleQrcodePopup />,
-              footer: true,
-            });
-          }}>
-          QR코드 스캔
-        </Button>
+      <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
+        <ContentsRow>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>구글 OTP 번호</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id="name" type="password" placeholder="구글 OTP 번호 입력" value="" />
+            </div>
+          </div>
+        </ContentsRow>
       </div>
       <div className={signupStyles.signup_noti}>
         <dl className={signupStyles.check_point}>

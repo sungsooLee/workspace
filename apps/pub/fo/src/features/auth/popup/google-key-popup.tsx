@@ -2,8 +2,35 @@ import { memo } from 'react';
 import styles from './google-key-popup.module.css';
 import signupStyles from '../../../pages/_auth/signup.module.css';
 import { IcoCaution } from '@learnway/icons';
-import { GoogleQrcodePopup } from '../../../features/auth';
+import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
 import { Button, useModal } from '@learnway/ui';
+
+const CustomFooter = () => {
+  const { close: closeModal } = useModal();
+  const { open: openModal } = useModal();
+  return (
+    <>
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        취소
+      </Button>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal(); // 모달 닫기 함수 호출
+          openModal({
+            title: '구글 OTP 인증키 생성',
+            width: 'sm',
+            content: <GoogleInputPopup />,
+            footer: true,
+          });
+          console.log('1111');
+        }}>
+        다음
+      </Button>
+    </>
+  );
+};
 
 const GoogleKeyPopupCompoment = () => {
   const { open: openModal } = useModal();
@@ -24,7 +51,7 @@ const GoogleKeyPopupCompoment = () => {
               title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleQrcodePopup />,
-              footer: true,
+              footer: <CustomFooter />,
             });
           }}>
           QR코드 스캔
