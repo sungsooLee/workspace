@@ -1,6 +1,8 @@
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
 import { QueryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
@@ -24,6 +26,9 @@ declare module '@tanstack/react-router' {
     router: typeof router;
   }
 }
+
+// dayjs
+dayjs.extend(duration);
 
 QueryConfig.init({});
 

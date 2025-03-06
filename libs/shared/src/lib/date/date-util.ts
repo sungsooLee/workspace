@@ -1,7 +1,7 @@
-import { t } from 'i18next';
 import dayjs, { ManipulateType } from 'dayjs';
 import { DATE_TIME_FORMAT } from '../types/date-time';
 import { getDateTimeFormat } from './date-format';
+
 /**
  *  Date 형식을 지정된 format 형태의 문자열로 반환
  * @param date date 객체
@@ -30,4 +30,37 @@ export const dateCalculator = (date: Date, unit: ManipulateType, offset = 0) => 
  */
 export const getStringToDate = (stringDate: string, format = DATE_TIME_FORMAT.DATE) => {
   return dayjs(stringDate, getDateTimeFormat(format)).toDate();
+};
+
+/**
+ * value 를 Dayjs format 형태의 문자열로 리턴
+ * format 이 없으면 Date type 리턴
+ * @param value date | string
+ * @param format 변환 포맷
+ * @return string
+ */
+export const formatDate = (value: Date | string | number, format?: string) => {
+  const d = dayjs(value);
+  if (d.isValid()) {
+    return format ? d.format(format) : d.toDate();
+  }
+  return '';
+};
+
+/**
+ * duration 연산후 문자열로 리턴
+ * format 이 없으면 Date type 리턴
+ * @param value date | string
+ * @param config 계산할 단위의 조합 object {
+ *   days: 1,
+ *   hours: 5,
+ *   minutes: 30,
+ *   seconds: 15
+ * }
+ * @param format 변환 포맷
+ * @return string
+ */
+export const duration = (config: any, format?: string) => {
+  const d = (dayjs as any).duration(config);
+  return formatDate(d, format);
 };

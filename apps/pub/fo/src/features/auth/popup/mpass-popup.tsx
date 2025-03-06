@@ -5,7 +5,7 @@ import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
 
 const MpassPopupCompoment = () => {
   return (
-    <div className={`${styles.start} ${styles.mpass_modal}`}>
+    <div className={`${styles.start} ${styles.mpass_popup}`}>
       <div className={styles.title_box}>
         <h3 className={styles.tit}>현재 본인 확인이 진행 중입니다.</h3>
         <p className={styles.txt}>모바일 MPASS 앱에서 인증을 진행해 주세요</p>
