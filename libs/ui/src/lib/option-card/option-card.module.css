@@ -17,6 +17,7 @@
       }
       &.lg {
         @apply min-h-[158px] px-[24px];
+        &:hover,
         &.active {
           @apply border-none;
           &::after {
