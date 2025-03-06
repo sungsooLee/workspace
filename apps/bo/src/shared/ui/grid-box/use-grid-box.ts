@@ -37,15 +37,20 @@ function objectToQueryString(params: Record<string, any>): string {
 const useGridBoxHook = (config: any, getData?: any) => {
   const queryClient = useQueryClient();
   const [gridConfig, setGridConfig] = useState(config);
+
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
-    const queryString = objectToQueryString({ ...params, ...page });
+    const newParams = {
+      ...params,
+      isUsed: true,
+    };
+    const queryString = objectToQueryString({ ...newParams, ...page });
     const result = (await queryClient.fetchQuery(config.query(queryString))) as any;
     console.log('result => ', result);
     if (result) {
       setGridConfig((state: any) => ({
         ...state,
         data: result.content,
-        ...(state.page && {
+        ...(result.pageable && {
           // 조건부로 page가 존재할 때만 추가
           page: {
             ...state.page,

@@ -64,7 +64,8 @@ function RouteComponent() {
    * @param data
    */
   const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data);
+    setFormError('code', '중복체크');
+
     if (processType === 'REGISTER') {
       openConfirm({
         description: <>다국어를 저장 하시겠습니까?</>,
@@ -212,7 +213,7 @@ const translationBuilderConfig = {
       value: '',
     },
     {
-      label: '기준 언어',
+      label: '제목',
       name: 'translation',
       type: 'translationBox',
       value: '',
@@ -272,7 +273,6 @@ const formConfig: DynamicFormConfig = {
         { value: 'LABEL', label: '라벨' },
       ],
     },
-
     {
       ...translationBuilderConfig,
     },
