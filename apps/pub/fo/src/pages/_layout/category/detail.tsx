@@ -310,7 +310,7 @@ function RouteComponent() {
                 className={styles.search_select}
                 size="lg"
                 options={[
-                  { value: 'a', label: '중분류' },
+                  { value: 'a', label: '소분류' },
                   { value: 'b', label: '상품정보' },
                   { value: 'c', label: '기술정보' },
                 ]}
