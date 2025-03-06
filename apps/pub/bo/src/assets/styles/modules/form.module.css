@@ -184,6 +184,15 @@
   .btn_switch {
     @apply top-[11px];
   }
+  .radio_box {
+    @apply flex w-full;
+    & > div {
+      @apply flex-1;
+      label {
+        @apply w-full cursor-pointer;
+      }
+    }
+  }
   &.type2 {
     @apply mt-0;
   }
@@ -206,6 +215,9 @@
     button {
       @apply !w-[120px];
     }
+  }
+  & > div + button {
+    @apply !min-w-[43px];
   }
   button {
     @apply whitespace-nowrap;

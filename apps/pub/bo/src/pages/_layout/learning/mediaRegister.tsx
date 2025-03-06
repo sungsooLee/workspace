@@ -21,6 +21,7 @@ import {
   ContentsRow,
   List,
   Checkbox,
+  RadioGroup,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -186,6 +187,33 @@ function RouteComponent() {
               { value: 'type10', label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)' },
             ]}
             onOptionsSelect={(options) => console.log(options)}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  // 출처
+  const ModalSourceContent = () => {
+    return (
+      <div className={searchContStyles.contents}>
+        <strong className={searchContStyles.title}>{'출처를 선택하세요.'}</strong>
+        {/* 출처 리스트 */}
+        <div className={searchContStyles.channel_wrap}>
+          <List
+            options={[
+              { value: 'type1', label: '경영지원시스템 채널 01' },
+              { value: 'type2', label: '경영지원시스템 채널 02' },
+              { value: 'type3', label: '경영지원시스템 채널 03' },
+              { value: 'type4', label: '경영지원시스템 채널 04' },
+              { value: 'type5', label: '경영지원시스템 채널 05' },
+              { value: 'type6', label: '경영지원시스템 채널 06' },
+              { value: 'type7', label: '경영지원시스템 채널 07' },
+              { value: 'type8', label: '경영지원시스템 채널 08' },
+              { value: 'type9', label: '경영지원시스템 채널 09' },
+              { value: 'type10', label: '경영지원시스템 채널 10' },
+            ]}
+            onOptionSelect={(option) => console.log(option)}
           />
         </div>
       </div>
@@ -561,6 +589,80 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
+          {/* 2025-03-06 추가 S */}
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-source" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>출처</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={formStyles.search_wrap}>
+                  <Input
+                    id="name-source"
+                    type="text"
+                    placeholder="출처를 선택하세요."
+                    value="유투브"
+                    borderNone
+                    className={formStyles.input}
+                  />
+                  <Button
+                    className={formStyles.btn_search}
+                    onClick={() =>
+                      openModal({
+                        title: '',
+                        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                        content: <ModalSourceContent />,
+                        footer: true,
+                      })
+                    }>
+                    <IcoSearch className={formStyles.icon_search} />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-url" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>URL 구분</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <RadioGroup
+                  options={[
+                    { value: 'type1', label: '웹' },
+                    { value: 'type2', label: '앱' },
+                  ]}
+                  className={formStyles.radio_box}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-contUrl" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>외부 콘텐츠 URL</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  type="text"
+                  placeholder="http://, https:// 를 포함한 URL정보를 입력하세요."
+                  value=""
+                />
+                <Button size="sm" variant="gray">
+                  적용
+                </Button>
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 2025-03-06 추가 E */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-time" className={formStyles.form_label}>
