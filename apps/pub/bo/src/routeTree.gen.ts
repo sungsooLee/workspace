@@ -50,6 +50,7 @@ import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
+import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
@@ -300,6 +301,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
 const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
+  id: '/guide/optionCard',
+  path: '/guide/optionCard',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -662,6 +669,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideModalImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/optionCard': {
+      id: '/_guide/guide/optionCard'
+      path: '/guide/optionCard'
+      fullPath: '/guide/optionCard'
+      preLoaderRoute: typeof GuideGuideOptionCardImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/pagination': {
       id: '/_guide/guide/pagination'
       path: '/guide/pagination'
@@ -848,6 +862,7 @@ interface GuideRouteChildren {
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
@@ -879,6 +894,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
@@ -959,6 +975,7 @@ export interface FileRoutesByFullPath {
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -1015,6 +1032,7 @@ export interface FileRoutesByTo {
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -1074,6 +1092,7 @@ export interface FileRoutesById {
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
+  '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
@@ -1132,6 +1151,7 @@ export interface FileRouteTypes {
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -1187,6 +1207,7 @@ export interface FileRouteTypes {
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -1244,6 +1265,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
+    | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
@@ -1331,6 +1353,7 @@ export const routeTree = rootRoute
         "/_guide/guide/info",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
+        "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
@@ -1493,6 +1516,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/modal": {
       "filePath": "_guide/guide/modal.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/optionCard": {
+      "filePath": "_guide/guide/optionCard.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/pagination": {

@@ -112,38 +112,6 @@
       }
     }
 
-    .signup_noti {
-      @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
-      .check_point {
-        @apply body_4_r text-left text-[var(--gray7)];
-        dt {
-          @apply body_4_b flex items-center justify-start;
-          svg {
-            @apply mr-[4px];
-          }
-        }
-        dd {
-          @apply relative mt-[8px] pl-[10px];
-          + dd {
-            @apply mt-[4px];
-          }
-          &::before {
-            @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
-          }
-          .link {
-            @apply ml-[8px] text-[#009ABC] underline;
-          }
-        }
-      }
-    }
-
-    .btn_txt {
-      @apply body_3_r text-[var(--gray8)] underline;
-    }
-
-    .noti_info_txt {
-      @apply body_3_r mt-[24px] text-center;
-    }
     .auth_form {
       + .noti_info_txt {
         @apply mt-[8px];
@@ -272,6 +240,41 @@
   &.mpass_cert {
     .search_info {
       @apply pt-0;
+    }
+  }
+}
+
+.noti_info_txt {
+  @apply body_3_r mt-[24px] text-center;
+  .btn_txt {
+    @apply body_3_r text-[var(--gray8)] underline;
+  }
+  + .signup_noti {
+    @apply mt-[32px];
+  }
+}
+
+.signup_noti {
+  @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
+  .check_point {
+    @apply body_4_r text-left text-[var(--gray7)];
+    dt {
+      @apply body_4_b flex items-center justify-start;
+      svg {
+        @apply mr-[4px];
+      }
+    }
+    dd {
+      @apply relative mt-[8px] pl-[10px];
+      + dd {
+        @apply mt-[4px];
+      }
+      &::before {
+        @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+      }
+      .link {
+        @apply ml-[8px] text-[#009ABC] underline;
+      }
     }
   }
 }

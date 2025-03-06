@@ -43,8 +43,8 @@ const GridBoxComponent: FC<any> = ({ config }) => {
 
   const handleChangePage = (pageIndex: number) => {
     gridFetch({
-      pageSize: page.pageSize,
-      pageIndex,
+      size: page.pageSize,
+      page: pageIndex,
     });
   };
 

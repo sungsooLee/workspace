@@ -162,7 +162,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             </Button>
           )}
           {/* 타이머 */}
-          {timerText && <div className={styles.unit}>{timerText}</div>}
+          {timerText && <div className={styles.time}>{timerText}</div>}
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}

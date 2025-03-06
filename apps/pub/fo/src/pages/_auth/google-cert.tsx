@@ -4,7 +4,7 @@ import { IcoShieldTick01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-import { MpassPopup } from '../../features/auth';
+import { MpassPopup, GoogleQrcodePopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
@@ -75,9 +75,18 @@ function RouteComponent() {
           </div>
 
           <div className={signupStyles.noti_info_txt}>
-            <Link to="" className={signupStyles.btn_txt}>
+            <Button
+              className={signupStyles.btn_txt}
+              onClick={() =>
+                openModal({
+                  title: '구글 OTP 인증키 생성',
+                  width: 'sm',
+                  content: <GoogleQrcodePopup />,
+                  footer: true,
+                })
+              }>
               QR코드로 인증키 생성
-            </Link>
+            </Button>
           </div>
 
           <div className={signupStyles.btn_wrap}>
@@ -96,7 +105,7 @@ function RouteComponent() {
                   footer: true,
                 })
               }>
-              MPASS 인증
+              구글 OTP 인증
             </Button>
           </div>
         </div>

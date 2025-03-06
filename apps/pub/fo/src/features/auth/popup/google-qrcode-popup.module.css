@@ -1,0 +1,13 @@
+/* google-qrcode-popup.module.css */
+.google_qrcode_popup {
+  @apply text-center;
+  .qrcode {
+    @apply pt-[16px];
+    img {
+      @apply m-auto h-[160px] w-[160px];
+    }
+  }
+  .txt_info {
+    @apply body_3_r mt-[24px] text-[var(--gray7)];
+  }
+}

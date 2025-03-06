@@ -75,7 +75,7 @@ const { open: openModal } = useModal();`}
         <div className="code_example">
           <pre className="code_block">
             <code>{`
-import { Button, useModal, closeModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 const CustomFooter = () => {
     const { close: closeModal } = useModal();
     return (
@@ -189,6 +189,32 @@ export const MpassPopup = memo(MpassPopupCompoment);
           <br />
           모달은 popup 이름으로 생성한다. ex)mpass-popup.tsx
           <br />각 팝업마다 모듈css를 생성한다.
+        </div>
+
+        <h3 className="guide_tit3">Modal (두개일경우 닫고+열기)</h3>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import
+import { Button, useModal } from '@learnway/ui';
+
+// 호출
+const { open: openModal } = useModal();
+const { close: closeModal } = useModal();
+
+<Button
+  onClick={() => {
+    closeModal(); // 모달 닫기 함수 호출
+    openModal({
+      title: '구글 OTP 인증키 생성',
+      width: 'sm',
+      content: <GoogleCert2Popup />,
+      footer: true,
+    });
+  }}>
+  스캔할 수 없나요?
+</Button>`}</code>
+          </pre>
         </div>
       </div>
     </div>

@@ -7,7 +7,8 @@
     &:not(:first-child) {
       border-left: 1px solid var(--gray3);
     }
-    .btn_filter {
+    .th_cell {
+      @apply flex items-center;
     }
   }
   tbody {

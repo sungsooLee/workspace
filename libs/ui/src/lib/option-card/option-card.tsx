@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cn, toArray } from '@learnway/shared';
 import React, { ReactNode, useEffect, useState } from 'react';
 
+import { Button } from '../button/button';
 import styles from './option-card.module.css';
 import { isEqual } from 'lodash';
 
@@ -19,6 +20,8 @@ export interface OptionCardComponentProps {
   labelField?: string;
   valueField?: string;
   multiple?: boolean;
+  cols?: number; // row length
+  size?: 'md' | 'lg';
   onOptionSelect?: (option: any) => void;
   onOptionsSelect?: (options: any[]) => void;
 }
@@ -27,6 +30,8 @@ const OptionCardComponent = function ({
   className,
   options,
   value,
+  cols,
+  size,
   multiple,
   onOptionSelect,
   onOptionsSelect,
@@ -64,30 +69,30 @@ const OptionCardComponent = function ({
 
   return (
     <div
-      className={cn(
-        styles.start,
-        className,
-        'nlp--option-card',
-        'grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
-      )}>
+      className={cn(styles.start, styles.option_card_wrap, className, 'nlp--option-card')}
+      style={{
+        gridTemplateColumns: `repeat(${cols}, 1fr)`, // cols 값에 따라 열 개수를 설정
+      }}>
       {/* options */}
       {options?.map((d: OptionCardItem) => (
-        <div
+        <Button
+          type="button"
           className={cn(
-            'border p-4',
-            selectedOptions?.find((x: OptionCardItem) => x.value === d.value) && 'bg-amber-100', // selected row style
+            styles.card_item,
+            selectedOptions?.find((x: OptionCardItem) => x.value === d.value) && styles.active, // selected row style
+            size && styles[size],
           )}
           key={d.value}
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
           {/* Icon */}
-          {d.icon && <div>{d.icon}</div>}
+          {d.icon && <span className={styles.icon}>{d.icon}</span>}
           {/* label */}
-          {d.label && <div>{d.label}</div>}
+          {d.label && <span className={styles.label}>{d.label}</span>}
           {/* descrition */}
-          {d.description && <div>{d.description}</div>}
-        </div>
+          {d.description && <span className={styles.description}>{d.description}</span>}
+        </Button>
       ))}
     </div>
   );
