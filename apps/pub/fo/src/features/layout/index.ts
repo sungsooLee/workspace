@@ -10,3 +10,7 @@ export * from './ui/tenant';
 export * from './ui/family-site';
 export * from './ui/search';
 export * from './ui/recent-visits';
+export * from './popup/filter-popup';
+export * from './ui/arrays';
+export * from './ui/heart';
+export * from './ui/filter';

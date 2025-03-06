@@ -3,7 +3,7 @@ import { Button } from '@learnway/ui';
 import styles from './arrays.module.css';
 
 const ArraysButton = () => {
-  const [arraysActive, arraysActives] = useState([true, false, false]);
+  const [arraysActive, setArraysActive] = useState([true, false, false]);
   const arrays = [
     { title: '최신순', active: arraysActive[0] },
     { title: '과정명순', active: arraysActive[1] },
@@ -11,9 +11,15 @@ const ArraysButton = () => {
   ];
 
   const handleOnChange = (key: number) => {
+    const arrayChange = [...arraysActive];
     arrays.map((array, index) => {
-      // const value = key == index ? (arraysActives[index] = true) : false;
+      if (key === index) {
+        arrayChange[index] = true;
+      } else {
+        arrayChange[index] = false;
+      }
     });
+    setArraysActive(arrayChange);
   };
 
   return (

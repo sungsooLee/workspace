@@ -1,7 +1,8 @@
 import { ZodTypeAny } from 'zod';
 import { ButtonVariantType, SelectOption } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
-import { Ref } from 'react';
+import { ReactNode, Ref } from 'react';
+import { FormRowProvider } from '../form-row/type';
 
 /*======================================
 =            API 관련 타입             =
@@ -274,4 +275,11 @@ export interface BaseFormDialogProps {
   value: any;
   disabled: boolean;
   [key: string]: any;
+}
+
+export interface I18nFieldProps {
+  control: any; // use dynamic form control
+  name: string; // 다국어 배열명
+  children: ReactNode;
+  defaultLang: string; // default 랭귀지
 }

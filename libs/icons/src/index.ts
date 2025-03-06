@@ -87,6 +87,9 @@ export { ReactComponent as IcoMonitor01 } from './lib/ic_monitor-01.svg'; // mon
 export { ReactComponent as IcoStatusFail } from './lib/ic_status_failed.svg'; // status fail
 export { ReactComponent as IcoShieldTick01 } from './lib/ic_shield-tick-01.svg'; // mpass otp
 export { ReactComponent as IcoFaceId01 } from './lib/ic_face-id-01.svg'; // mpass fido
+export { ReactComponent as IcoCompanion } from './lib/ic_companion.svg'; // admin fail
+export { ReactComponent as IcoProgress } from './lib/ic_progress.svg'; // admin progress
+export { ReactComponent as IcoFilter } from './lib/ic_filter.svg'; // filter
 
 //export Default as Information from './lib/information.svg?react';
 

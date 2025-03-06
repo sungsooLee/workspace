@@ -2,7 +2,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from '@learnway/ui';
+import { Button, Input, InputTimer } from '@learnway/ui';
 
 export default {
   title: 'Components/Input',
@@ -29,7 +29,6 @@ export const Template: any = (args: any) => {
   );
 };
 Template.storyName = 'Text';
-Template.args = {};
 
 // Text
 export const TemplateValueControl: any = (args: any) => {
@@ -45,7 +44,6 @@ export const TemplateValueControl: any = (args: any) => {
   );
 };
 TemplateValueControl.storyName = 'Value Control';
-TemplateValueControl.args = {};
 
 // Number
 export const TemplateNumber: any = (args: any) => {
@@ -55,7 +53,6 @@ export const TemplateNumber: any = (args: any) => {
   return <Input {...args} type="number" onChange={handleChange} />;
 };
 TemplateNumber.storyName = 'Number';
-TemplateNumber.args = {};
 
 // Mask
 export const TemplateMask: any = (args: any) => {
@@ -67,4 +64,33 @@ export const TemplateMask: any = (args: any) => {
   );
 };
 TemplateMask.storyName = 'Mask';
-TemplateMask.args = {};
+
+// Timer
+export const TemplateTimer: any = (args: any) => {
+  const [startTimer, setStartTimer] = React.useState(0);
+  return (
+    <>
+      <div className={'mb-5 flex flex-row gap-3'}>
+        <Button
+          label={'타이머 시작'}
+          variant={'point'}
+          size={'sm'}
+          onClick={() => setStartTimer((prev) => prev + 1)}
+        />
+        <Button
+          label={'타이머 종료'}
+          variant={'point'}
+          size={'sm'}
+          onClick={() => setStartTimer(0)}
+        />
+      </div>
+      <InputTimer
+        {...args}
+        startTimer={startTimer}
+        initialTime={300}
+        onTimerEnd={() => alert('End Timer')}
+      />
+    </>
+  );
+};
+TemplateTimer.storyName = 'Timer';

@@ -8,13 +8,12 @@ import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import imgGuide1 from '../../assets/images/modal/img_mpass_guide1.png';
 import imgGuide2 from '../../assets/images/modal/img_mpass_guide2.png';
 
-export const Route = createFileRoute('/_auth/mpass_cert')({
+export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
   const MpassModalContent = () => {
     return (
       <div className={`${modalStyles.start} ${modalStyles.mpass_modal}`}>

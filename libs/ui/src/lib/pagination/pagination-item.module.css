@@ -1,6 +1,9 @@
 .ellipsis {
   @apply inline-flex h-[32px] w-[32px] items-center justify-center;
 }
+button {
+  @apply body_bo_1_r;
+}
 .selected {
-  @apply body_4_b bg-[var(--gray7)] text-[var(--white)];
+  @apply body_2_b bg-[var(--gray3)] text-[var(--primary2)];
 }

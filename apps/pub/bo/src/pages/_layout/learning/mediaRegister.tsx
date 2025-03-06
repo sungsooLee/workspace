@@ -20,6 +20,7 @@ import {
   SelectOption,
   ContentsRow,
   List,
+  Checkbox,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -33,6 +34,9 @@ import {
 import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+
+/* images */
+import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaRegister')({
   component: RouteComponent,
@@ -211,6 +215,41 @@ function RouteComponent() {
     { label: '현대자동차 F', value: 'F' },
   ];
 
+  // media btn list
+  const buttons = [
+    {
+      label: '원본 다운로드',
+      onClick: () => console.log('btn 1'),
+    },
+    {
+      label: '동영상 변경',
+      onClick: () => console.log('btn 2'),
+    },
+    {
+      label: '콘텐츠 URL보기',
+      onClick: () => console.log('btn 3'),
+    },
+    {
+      label: '미리보기',
+      onClick: () => console.log('btn 4'),
+    },
+  ];
+
+  // media info_list
+  const infoList = [
+    { title: '파일명', text: '파일명이 들어갑니다' },
+    { title: '재생시간', text: '1시간' },
+    { title: '원본용량', text: '2GB' },
+    { title: '720P  용량', text: '1.6GB' },
+    { title: '480P 용량', text: '900MB' },
+    { title: '해상도', text: '1902 X 968' },
+    { title: '파일형식', text: 'MOV' },
+    { title: '비디오 코덱', text: 'H264' },
+    { title: '비디오 프레임레이트', text: '' },
+    { title: '오디오 코덱', text: '' },
+    { title: '오디오 샘플레이트', text: '' },
+  ];
+
   return (
     <form className="form_row">
       <PageContainer>
@@ -277,6 +316,7 @@ function RouteComponent() {
                 <em className={formStyles.num}>7</em>/150
               </span> */}
               </div>
+              <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </ContentsRow>
           <ContentsRow>
@@ -296,6 +336,7 @@ function RouteComponent() {
                   placeholder="콘텐츠에 대한 설명을 입력해주세요."
                 />
               </div>
+              <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </ContentsRow>
           <ContentsRow>
@@ -372,6 +413,7 @@ function RouteComponent() {
                   </Button>
                 </Tooltip>
                 {/* Switch 텍스트 : '무기한' : '기간 설정' , input_box_wrap 영역 hide / show */}
+                {/* <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} /> */}
                 <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} />
               </label>
               <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
@@ -522,7 +564,8 @@ function RouteComponent() {
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-time" className={formStyles.form_label}>
-                동영상 재생 시간{/* 필수 케이스 */}
+                <span className={formStyles.form_text}>동영상 재생 시간</span>
+                {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
@@ -559,7 +602,8 @@ function RouteComponent() {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-thumbnail" className={formStyles.form_label}>
-                썸네일{/* 필수 케이스 */}
+                <span className={formStyles.form_text}>썸네일</span>
+                {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
@@ -588,7 +632,6 @@ function RouteComponent() {
               </p>
             </div>
           </ContentsRow>
-          {/* row */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -609,18 +652,21 @@ function RouteComponent() {
                 </Tooltip>
               </label>
               <div className={formStyles.input_box}>
-                <ChipList
-                  className={formStyles.chips_wrap}
-                  options={options}
-                  placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
-                  showInput
-                  prefixCharacter="#"
-                />
+                <div className={formStyles.tag_wrap}>
+                  <ChipList
+                    className={formStyles.chips_wrap}
+                    options={options}
+                    placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
+                    showInput
+                    prefixCharacter="#"
+                    hideBorder
+                  />
+                  <p className={formStyles.text_limit}>
+                    여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
+                    /200개
+                  </p>
+                </div>
               </div>
-              <p className={formStyles.text_limit}>
-                여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
-                /200개
-              </p>
             </div>
           </ContentsRow>
           <ContentsRow>
@@ -720,12 +766,7 @@ function RouteComponent() {
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
-                <Switch
-                  id="name-title"
-                  className={formStyles.btn_switch}
-                  reversed
-                  label="자막 없음"
-                />
+                <Switch id="name-title" className={formStyles.btn_switch} label="자막 없음" />
               </label>
               <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
                 <div className={formStyles.input_box}>
@@ -739,7 +780,6 @@ function RouteComponent() {
                   <Input
                     id="name-1-14"
                     type="text"
-                    readOnly
                     placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                     value="영어자막.smi"
                   />
@@ -760,7 +800,6 @@ function RouteComponent() {
                   />
                   <Input
                     type="text"
-                    readOnly
                     placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                     value="영어자막2.smi"
                   />
@@ -781,7 +820,6 @@ function RouteComponent() {
                   />
                   <Input
                     type="text"
-                    readOnly
                     placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                   />
                   <Button variant="gray" size="sm" className={formStyles.btn_edit}>
@@ -790,6 +828,124 @@ function RouteComponent() {
                   <Button onlyIcon className={formStyles.btn_delete}>
                     <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
                   </Button>
+                </div>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.short}
+                    options={[
+                      { value: 'language1', label: '언어선택' },
+                      { value: 'language2', label: '한국어' },
+                      { value: 'language3', label: '영어' },
+                    ]}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                  />
+                  <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                    자막 추가
+                  </Button>
+                  <Button onlyIcon className={formStyles.btn_delete}>
+                    <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-share" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>공유채널 설정</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}>
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+                <span className={formStyles.info_area}>
+                  <span className={formStyles.info_text}>
+                    채널<em>10</em>개
+                  </span>
+                  <Button variant="search" size="sm">
+                    채널선택
+                  </Button>
+                </span>
+              </label>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-confirm" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>최종 확인</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={cn(formStyles.input_box_wrap, formStyles.line)}>
+                <div className={formStyles.input_box}>
+                  <div className={formStyles.form_item}>
+                    <label className={formStyles.form_label}>
+                      <Checkbox label="검수 확인" />
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <p className={formStyles.sub_text}>
+                        등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이
+                        확인되었습니다.
+                      </p>
+                    </div>
+                    <p className={cn(formStyles.guide_text, formStyles.error)}>
+                      ‘검수 확인’ 체크하세요.
+                    </p>
+                  </div>
+                </div>
+                <div className={formStyles.input_box}>
+                  <div className={formStyles.form_item}>
+                    <label className={formStyles.form_label}>
+                      <Checkbox label="저작권 확인" />
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <p className={formStyles.sub_text}>
+                        저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만
+                        이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법
+                        위반에 해당될 수 있음에 동의합니다.
+                      </p>
+                    </div>
+                    <p className={cn(formStyles.guide_text, formStyles.error)}>
+                      ‘저작권 확인’ 체크하세요.
+                    </p>
+                  </div>
+                </div>
+                <div className={formStyles.input_box}>
+                  <div className={formStyles.form_item}>
+                    <label className={formStyles.form_label}>
+                      <Checkbox label="보안 확인" />
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <p className={formStyles.sub_text}>
+                        보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에
+                        따른 피해를 입을 수 있음에 인지합니다.
+                      </p>
+                    </div>
+                    <p className={cn(formStyles.guide_text, formStyles.error)}>
+                      ‘보안 확인’ 체크하세요.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -823,6 +979,29 @@ function RouteComponent() {
               </Button>
             </div>
           </div>
+          {/* btn_list */}
+          <ul className={movieInfoStyles.btn_list}>
+            {buttons.map((btn, index) => (
+              <li>
+                <Button key={index} onClick={btn.onClick} className={movieInfoStyles.btn_text}>
+                  {btn.label}
+                </Button>
+              </li>
+            ))}
+          </ul>
+          {/* media(비디오 영역) */}
+          <div className={movieInfoStyles.media}>
+            <img src={mediaImg} width="100%" alt="" />
+          </div>
+          {/* info_list */}
+          <ul className={movieInfoStyles.info_list}>
+            {infoList.map((item, index) => (
+              <li key={index}>
+                <span className={movieInfoStyles.title}>{item.title}</span>
+                <span className={movieInfoStyles.text}>{item.text}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </PageContainer>
     </form>

@@ -94,7 +94,7 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_OTP',
-    pageId: 'mpass_cert',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1008', //스크린아이디
     pageType: 'Page',
     completionDate: '2025-03-05', // 완료일
@@ -104,7 +104,7 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO',
-    pageId: 'mpass_cert',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1009', //스크린아이디
     pageType: 'Page',
     completionDate: '2025-03-05', // 완료일
@@ -114,42 +114,32 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: 'MPASS 2차인증_FIDO 인증안내팝업',
-    pageId: 'mpass_cert',
+    pageId: 'mpass-cert',
     screenId: 'NLP_FO_LOG_1010', //스크린아이디
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: 'NLP_FO_LOG_1008에 포함\n- 버튼 클릭',
+    remarks: '- 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1011', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증키 생성_QR 인증키생성팝업',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1012', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '구글 OTP인증키 생성_인증키생성팝업',
-    pageId: '',
-    screenId: 'NLP_FO_LOG_1013', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',

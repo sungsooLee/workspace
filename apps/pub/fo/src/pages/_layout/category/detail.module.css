@@ -22,10 +22,24 @@
 
 .gray_box {
   @apply mt-[40px] overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px];
-  .division {
-    li {
-      @apply block;
+}
+
+.divisio_box {
+  li {
+    @apply block;
+    & + li {
+      @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray4)] pt-[12px];
     }
+  }
+}
+
+.search_division {
+  @apply flex items-center;
+  .search_select {
+    @apply mr-[12px] w-[140px];
+  }
+  .search {
+    @apply w-[240px];
   }
 }
 
@@ -60,8 +74,34 @@
 
 /* list */
 .list {
+  &.tpye2 {
+    .listBox {
+      @apply mr-0 w-full;
+      .link {
+        @apply flex items-start;
+        .img_box {
+          @apply mr-[16px] w-[237px];
+        }
+        .text_box {
+          @apply flex-1 overflow-hidden;
+          .ico_box {
+            .heart {
+              @apply left-[inherit] top-[inhetit];
+            }
+          }
+        }
+      }
+      & + .listBox {
+        @apply mt-[53px];
+      }
+      .heart {
+        @apply left-[201px] right-[inherit] top-[121px];
+      }
+    }
+  }
   @apply flex flex-wrap justify-items-start text-[0];
   .listBox {
+    @apply relative;
     &:nth-child(4n) {
       @apply mr-0;
     }
@@ -81,12 +121,6 @@
           & + li {
             @apply ml-[4px];
           }
-        }
-      }
-      .heart {
-        @apply absolute bottom-[16px] right-[16px];
-        img {
-          @apply h-[24px] w-[24px];
         }
       }
     }
@@ -127,6 +161,9 @@
         .ico {
           @apply h-[16px] w-[16px];
         }
+        .heart {
+          @apply right-0 top-0;
+        }
         .eye {
           .ico {
             path {
@@ -153,6 +190,27 @@
           @apply absolute right-0 top-0 h-[100%] w-[40px] bg-gradient-to-r from-white/0 to-white content-[''];
         }
       }
+    }
+    .heart {
+      @apply absolute right-[14px] top-[147px] text-[0];
+    }
+  }
+}
+
+.pagenation {
+  @apply mt-[40px];
+}
+
+.filter_wrap {
+  li {
+    .tit {
+      @apply body_3_b text-[var(--gray8)];
+    }
+    .filter_box {
+      @apply mt-[8px];
+    }
+    & + li {
+      @apply mt-[24px];
     }
   }
 }

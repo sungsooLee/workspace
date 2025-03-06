@@ -192,6 +192,13 @@
               "tenantName": "현대자동차",
               "isQuickAccessArea": false,
               "path": "/platform/system/translation"
+            },
+            {
+              "title": "다국어 등록",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/platform/system/translation/view"
             }
           ],
           "tenantName": "현대자동차",

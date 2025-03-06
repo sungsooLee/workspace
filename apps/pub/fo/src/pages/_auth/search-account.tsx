@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
-import { Button, RadioCard, Tabs, Input, Select, ContentsRow } from '@learnway/ui';
+import { Button, RadioCard, Tabs, Input, Select, InputTimer } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
@@ -48,8 +48,9 @@ function RouteComponent() {
           </div>
 
           {/* 인증폼 */}
-          <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
-            <ContentsRow className="row">
+          <div
+            className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -62,9 +63,9 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="이름(김현대)" value="" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -77,10 +78,10 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
             {/* 휴대폰 인증일때 */}
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -105,10 +106,10 @@ function RouteComponent() {
                   />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
             {/* 이메일 인증일때 */}
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -121,9 +122,9 @@ function RouteComponent() {
                   <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>
@@ -133,13 +134,14 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="인증번호 입력" value="" />
+                  {/* 인증번호 콤포넌트 추가 */}
+                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
                   <Button variant="gray" size="lg">
                     재전송
                   </Button>
                 </div>
               </div>
-            </ContentsRow>
+            </div>
           </div>
 
           <div className={signupStyles.signup_noti}>
@@ -189,8 +191,9 @@ function RouteComponent() {
           </div>
 
           {/* 인증폼 */}
-          <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
-            <ContentsRow className="row">
+          <div
+            className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>아이디/이메일</span>
@@ -211,9 +214,9 @@ function RouteComponent() {
                   </Button>
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -226,9 +229,9 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="이름(김현대)" value="" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -241,10 +244,10 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
             {/* 휴대폰 인증일때 */}
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -269,10 +272,10 @@ function RouteComponent() {
                   />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
             {/* 이메일 인증일때 */}
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -285,9 +288,9 @@ function RouteComponent() {
                   <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
                 </div>
               </div>
-            </ContentsRow>
+            </div>
 
-            <ContentsRow className="row">
+            <div className={formStyles.row}>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>
@@ -297,13 +300,14 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="인증번호 입력" value="" />
+                  {/* 인증번호 콤포넌트 추가 */}
+                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
                   <Button variant="gray" size="lg">
                     재전송
                   </Button>
                 </div>
               </div>
-            </ContentsRow>
+            </div>
           </div>
 
           <div className={signupStyles.signup_noti}>
@@ -327,23 +331,21 @@ function RouteComponent() {
     },
   ];
   return (
-    <form className="form_row">
-      <div
-        className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-        <div className={signupStyles.auth_box}>
-          <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
+    <div
+      className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
+      <div className={signupStyles.auth_box}>
+        <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
 
-          <div className={signupStyles.btn_wrap}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
-            <Button variant="primary" size="xl">
-              {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-              인증번호 요청
-            </Button>
-          </div>
+        <div className={signupStyles.btn_wrap}>
+          <Button variant="gray" size="xl">
+            취소
+          </Button>
+          <Button variant="primary" size="xl">
+            {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+            인증번호 요청
+          </Button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }

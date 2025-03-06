@@ -26,9 +26,11 @@ import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
 import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
+import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthPasswordChangeImport } from './pages/_auth/password-change'
+import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -48,6 +50,7 @@ import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
+import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
@@ -154,6 +157,13 @@ const AuthProgressStatusCertifyRoute = AuthProgressStatusCertifyImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthProgressStatusAdminFailRoute =
+  AuthProgressStatusAdminFailImport.update({
+    id: '/progress-status-admin-fail',
+    path: '/progress-status-admin-fail',
+    getParentRoute: () => AuthRoute,
+  } as any)
+
 const AuthProgressStatusAdminRoute = AuthProgressStatusAdminImport.update({
   id: '/progress-status-admin',
   path: '/progress-status-admin',
@@ -169,6 +179,12 @@ const AuthProgressStatusRoute = AuthProgressStatusImport.update({
 const AuthPasswordChangeRoute = AuthPasswordChangeImport.update({
   id: '/password-change',
   path: '/password-change',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthMpassCertRoute = AuthMpassCertImport.update({
+  id: '/mpass-cert',
+  path: '/mpass-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -285,6 +301,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
 const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
+  id: '/guide/optionCard',
+  path: '/guide/optionCard',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -416,6 +438,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/mpass-cert': {
+      id: '/_auth/mpass-cert'
+      path: '/mpass-cert'
+      fullPath: '/mpass-cert'
+      preLoaderRoute: typeof AuthMpassCertImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/password-change': {
       id: '/_auth/password-change'
       path: '/password-change'
@@ -435,6 +464,13 @@ declare module '@tanstack/react-router' {
       path: '/progress-status-admin'
       fullPath: '/progress-status-admin'
       preLoaderRoute: typeof AuthProgressStatusAdminImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-admin-fail': {
+      id: '/_auth/progress-status-admin-fail'
+      path: '/progress-status-admin-fail'
+      fullPath: '/progress-status-admin-fail'
+      preLoaderRoute: typeof AuthProgressStatusAdminFailImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-certify': {
@@ -633,6 +669,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideModalImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/optionCard': {
+      id: '/_guide/guide/optionCard'
+      path: '/guide/optionCard'
+      fullPath: '/guide/optionCard'
+      preLoaderRoute: typeof GuideGuideOptionCardImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/pagination': {
       id: '/_guide/guide/pagination'
       path: '/guide/pagination'
@@ -766,9 +809,11 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthPasswordChangeRoute: typeof AuthPasswordChangeRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
+  AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
   AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
   AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
@@ -782,9 +827,11 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthMpassCertRoute: AuthMpassCertRoute,
   AuthPasswordChangeRoute: AuthPasswordChangeRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
+  AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
   AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
   AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
@@ -815,6 +862,7 @@ interface GuideRouteChildren {
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
@@ -846,6 +894,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
@@ -893,9 +942,11 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/mpass-cert': typeof AuthMpassCertRoute
   '/password-change': typeof AuthPasswordChangeRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
@@ -924,6 +975,7 @@ export interface FileRoutesByFullPath {
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -947,9 +999,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/mpass-cert': typeof AuthMpassCertRoute
   '/password-change': typeof AuthPasswordChangeRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/search-account': typeof AuthSearchAccountRoute
@@ -978,6 +1032,7 @@ export interface FileRoutesByTo {
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
@@ -1004,9 +1059,11 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/password-change': typeof AuthPasswordChangeRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
+  '/_auth/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
   '/_auth/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/_auth/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
@@ -1035,6 +1092,7 @@ export interface FileRoutesById {
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
+  '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
@@ -1060,9 +1118,11 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/mpass-cert'
     | '/password-change'
     | '/progress-status'
     | '/progress-status-admin'
+    | '/progress-status-admin-fail'
     | '/progress-status-certify'
     | '/progress-status-cp'
     | '/search-account'
@@ -1091,6 +1151,7 @@ export interface FileRouteTypes {
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -1113,9 +1174,11 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/mpass-cert'
     | '/password-change'
     | '/progress-status'
     | '/progress-status-admin'
+    | '/progress-status-admin-fail'
     | '/progress-status-certify'
     | '/progress-status-cp'
     | '/search-account'
@@ -1144,6 +1207,7 @@ export interface FileRouteTypes {
     | '/guide/info'
     | '/guide/layout'
     | '/guide/modal'
+    | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/progress'
     | '/guide/radio'
@@ -1168,9 +1232,11 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/login'
+    | '/_auth/mpass-cert'
     | '/_auth/password-change'
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
+    | '/_auth/progress-status-admin-fail'
     | '/_auth/progress-status-certify'
     | '/_auth/progress-status-cp'
     | '/_auth/search-account'
@@ -1199,6 +1265,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/info'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
+    | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
@@ -1251,9 +1318,11 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login",
+        "/_auth/mpass-cert",
         "/_auth/password-change",
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
+        "/_auth/progress-status-admin-fail",
         "/_auth/progress-status-certify",
         "/_auth/progress-status-cp",
         "/_auth/search-account",
@@ -1284,6 +1353,7 @@ export const routeTree = rootRoute
         "/_guide/guide/info",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
+        "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
@@ -1316,6 +1386,10 @@ export const routeTree = rootRoute
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
+    "/_auth/mpass-cert": {
+      "filePath": "_auth/mpass-cert.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/password-change": {
       "filePath": "_auth/password-change.tsx",
       "parent": "/_auth"
@@ -1326,6 +1400,10 @@ export const routeTree = rootRoute
     },
     "/_auth/progress-status-admin": {
       "filePath": "_auth/progress-status-admin.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-admin-fail": {
+      "filePath": "_auth/progress-status-admin-fail.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-certify": {
@@ -1438,6 +1516,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/modal": {
       "filePath": "_guide/guide/modal.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/optionCard": {
+      "filePath": "_guide/guide/optionCard.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/pagination": {

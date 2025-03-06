@@ -13,7 +13,7 @@
       }
     }
     &:disabled {
-      @apply bg-[var(--gray2)] text-[var(--gray5)];
+      @apply bg-[var(--gray1)] text-[var(--gray5)];
       border-color: var(--gray4);
     }
     &.error {
@@ -47,7 +47,8 @@
   .count {
     @apply button_5_r flex items-center text-[#8c97ae];
   }
-  .unit {
+  .unit,
+  .time {
     @apply input_bo_1_r flex items-center text-[#747d91];
   }
 }
