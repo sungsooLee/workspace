@@ -16,7 +16,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // for text type
-  showCounter?: boolean; // 입력글자수/최대입력가능글자수 표시 여부
+  hideInputLength?: boolean; // 입력글자수/최대입력가능글자수 표시 여부, maxLength 설정은 했지만 글자수 표시 안보이게 할 경우 사용
   // for mask type
   mask?: string | string[]; // mask 설정 문자열
   format?: string; // format 설정 문자열
@@ -26,6 +26,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   //
   showSearchIcon?: boolean; // 검색 아이콘 표시 유무
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
+  //
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -43,7 +44,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       unitText,
       timerText,
       onChange,
-      showCounter,
+      hideInputLength,
       borderNone,
       mask,
       format = '',
@@ -51,6 +52,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onKeyDown,
       showSearchIcon,
       onEnterKeyDown,
+      maxLength = 0,
       ...props
     },
     ref,
@@ -86,7 +88,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onBlur?.(event);
     };
 
-    const handleClearClick = () => {
+    const handleClearClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
       setInputValue('');
     };
 
@@ -157,7 +160,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         <div className={cn(styles.button_wrap)}>
           {/* 삭제 버튼 */}
           {!readOnly && isFocused && !!String(inputValue)?.length && (
-            <Button type="button" onClick={handleClearClick} className={cn(styles.clear)} onlyIcon>
+            <Button
+              type="button"
+              className={cn(styles.clear)}
+              onlyIcon
+              onMouseDown={handleClearClick}>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
           )}
@@ -166,7 +173,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {showCounter && type === 'text' && <div className={styles.count}>{'20/100'}</div>}
+          {!hideInputLength && maxLength > 0 && type === 'text' && (
+            <div
+              className={styles.count}>{`${(value?.toString() || '').length} / ${maxLength}`}</div>
+          )}
           {/* 돋보기 */}
           {showSearchIcon && (
             <Button
