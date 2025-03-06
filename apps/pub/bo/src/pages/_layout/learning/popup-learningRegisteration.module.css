@@ -2,9 +2,13 @@
 .wrap {
   @apply relative;
   .title {
-    @apply title_bo_3_b mb-[50px] text-center;
+    @apply title_bo_3_b text-center;
+  }
+  .text {
+    @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
   }
   .select_wrap {
+    @apply mt-[50px];
     button {
       span {
         &:nth-last-child(1) {
@@ -12,6 +16,19 @@
         }
       }
     }
+  }
+}
+
+.upload_wrap {
+  @apply mt-[24px] flex h-[368px] flex-col items-center justify-center rounded-[8px] border border-solid border-[var(--gray4)];
+  .icon {
+    @apply mb-[12px] inline-flex;
+  }
+  .tit_upload {
+    @apply body_bo_1_b text-[var(--gray8)];
+  }
+  .guide {
+    @apply body_bo_2_r mt-[4px] text-[var(--gray7)];
   }
 }
 

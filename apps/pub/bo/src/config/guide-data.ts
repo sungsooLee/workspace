@@ -114,14 +114,21 @@ export const guideData = [
     // depth5: '나의 학습자원',
     // depth6: '등록',
     pageId: 'learning/popup-learningRegisteration',
-    completionDate: '',
+    completionDate: '2025-03-06',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '완료(아이콘 추후 적용 예정)', // 비고
+  },
+  {
+    depth1: '파일업로드(팝업)',
+    pageId: 'learning/popup-upload',
+    completionDate: '2025-03-06',
+    lastUpdateDate: '',
+    remarks: '완료(아이콘 추후 적용 예정)', // 비고
   },
   {
     depth1: '학습자원등록 동영상 등록',
     pageId: 'learning/mediaRegister',
-    completionDate: '2025-03-05',
+    completionDate: '2025-03-06',
     lastUpdateDate: '',
     remarks: '완료', // 비고
   },
