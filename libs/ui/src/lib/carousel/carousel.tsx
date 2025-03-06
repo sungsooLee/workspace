@@ -21,6 +21,7 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
     return (
       <Swiper
         {...props}
+        ref={ref}
         className={cn(styles.Swiper, className, 'nlp-carousel')}
         modules={[FreeMode, Pagination, Navigation]}
         // onSlideChange={() => console.log('slide change')}
@@ -28,7 +29,9 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
       >
         {/* items */}
         {items.map((item, index) => (
-          <SwiperSlide key={index} className={cn(styles.SwiperSlide)}>{item}</SwiperSlide>
+          <SwiperSlide key={index} className={cn(styles.SwiperSlide)}>
+            {item}
+          </SwiperSlide>
         ))}
       </Swiper>
     );

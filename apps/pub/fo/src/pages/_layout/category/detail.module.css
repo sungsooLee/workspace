@@ -1,11 +1,11 @@
 /* swiper */
 .swiper {
-  @apply relative z-0;
   .recent_swiper {
     .slide {
       @apply flex w-auto items-center justify-start overflow-hidden;
     }
   }
+  @apply relative;
   .recent_button_prev {
     @apply absolute left-0 top-[50%] z-[1] -translate-x-1/2 -translate-y-1/2;
     .btn {

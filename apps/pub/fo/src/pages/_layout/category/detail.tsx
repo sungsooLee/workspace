@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Select, Button, Pagination, Input, ContentsRow, useModal } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 import { Arrays, Heart, Filter } from '../../../features/layout';
+import { Carousel } from '@/libs/ui/src';
 import {
   IcoArray,
   IcoPlay,
@@ -32,11 +33,25 @@ export const Route = createFileRoute('/_layout/category/detail')({
 function RouteComponent() {
   // 상단 배너 스와이퍼
   const items = [
-    { url: bnrCImage1 },
-    { url: bnrCImage2 },
-    { url: bnrCImage1 },
-    { url: bnrCImage2 },
+    <Link to="">
+      <img src={bnrCImage1} alt="" />
+    </Link>,
+    <Link to="">
+      <img src={bnrCImage2} alt="" />
+    </Link>,
+    <Link to="">
+      <img src={bnrCImage1} alt="" />
+    </Link>,
   ];
+  // 배너 스와이퍼 옵션
+  const carouselOption = {
+    spaceBetween: 20,
+    slidesPerView: 2.2,
+  };
+  // 배너 스와이퍼 좌우 버튼
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<any>(null);
 
   // 강의
   const lists = [
@@ -214,10 +229,6 @@ function RouteComponent() {
     },
   ];
 
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<any>(null);
-
   // modal
   const { open: openModal } = useModal();
 
@@ -228,6 +239,7 @@ function RouteComponent() {
   };
 
   useEffect(() => {
+    // carousel btn
     if (swiperRef.current && prevRef.current && nextRef.current) {
       const swiperInstance = swiperRef.current.swiper;
       swiperInstance.params.navigation.prevEl = prevRef.current;
@@ -249,23 +261,13 @@ function RouteComponent() {
   return (
     <div className={styles.start}>
       <div className={styles.swiper}>
-        <Swiper
+        <Carousel
+          items={items}
+          className={styles.recent_swiper}
+          spaceBetween={carouselOption.spaceBetween}
+          slidesPerView={carouselOption.slidesPerView}
           ref={swiperRef}
-          spaceBetween={20}
-          slidesPerView={2.2}
-          loop={false}
-          modules={[Navigation]}
-          className={styles.recent_swiper}>
-          <div>
-            {items.map((item, index) => (
-              <SwiperSlide key={index} className={styles.slide}>
-                <Link to="">
-                  <img src={item.url} alt="" />
-                </Link>
-              </SwiperSlide>
-            ))}
-          </div>
-        </Swiper>
+        />
 
         <div ref={prevRef} className={styles.recent_button_prev}>
           <div className={styles.btn}>
