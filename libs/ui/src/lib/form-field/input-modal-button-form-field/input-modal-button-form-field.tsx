@@ -1,7 +1,6 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
-import { t } from 'i18next';
 import { Input, InputProps } from '../../input/input';
-import { Button, ButtonComponentProps } from '../../button/button';
+import { ButtonComponentProps } from '../../button/button';
 import styles from './input-modal-button-form-field.module.css';
 import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
@@ -53,14 +52,15 @@ const InputModalButtonFormFieldComponent = forwardRef<
           ref={ref}
           value={value?.[valueField]}
           disabled={inputProps?.disabled ?? true}
+          showSearchIcon
         />
-        <Button
-          {...buttonProps}
-          label={buttonProps?.label || t('선택')}
-          variant={buttonProps?.variant || 'point'}
-          size={buttonProps?.size || 'sm'}
-          onClick={handleButtonOnClick}
-        />
+        {/*<Button*/}
+        {/*  {...buttonProps}*/}
+        {/*  label={buttonProps?.label || t('선택')}*/}
+        {/*  variant={buttonProps?.variant || 'point'}*/}
+        {/*  size={buttonProps?.size || 'sm'}*/}
+        {/*  onClick={handleButtonOnClick}*/}
+        {/*/>*/}
       </div>
     );
   },
