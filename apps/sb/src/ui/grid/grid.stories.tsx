@@ -111,6 +111,7 @@ const columns = [
     footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
     meta: {
       filterType: 'text',
+      align: 'left', // 기본 정렬 - 헤더와 셀 모두 적용
     },
     enableGrouping: false,
   }),
@@ -118,6 +119,10 @@ const columns = [
     cell: (info) => info.getValue(),
     header: 'Last Name',
     enableGrouping: false,
+    meta: {
+      headerAlign: 'center', // 헤더만 가운데 정렬
+      cellAlign: 'right', // 셀은 오른쪽 정렬
+    },
   }),
   columnHelper.accessor('age', {
     cell: (info) => info.getValue(),
