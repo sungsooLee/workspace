@@ -366,6 +366,10 @@ const Grid = forwardRef(
                     style={{
                       display: 'flex',
                       width: cell.column.getSize(),
+                      textAlign:
+                        cell.column.columnDef.meta?.cellAlign ||
+                        cell.column.columnDef.meta?.align ||
+                        'left',
                     }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -419,6 +423,10 @@ const Grid = forwardRef(
                         width: cell.column.getSize(),
                         display: 'flex',
                         alignItems: 'center',
+                        textAlign:
+                          cell.column.columnDef.meta?.cellAlign ||
+                          cell.column.columnDef.meta?.align ||
+                          'left',
                       }}>
                       {cell.getIsGrouped() ? (
                         <button
@@ -488,6 +496,11 @@ const Grid = forwardRef(
                       style={{
                         // width: paginationGrid ? undefined : header.getSize(),
                         // display: paginationGrid ? 'table-cell' : 'flex',
+                        // 정렬 속성 추가
+                        textAlign:
+                          header.column.columnDef.meta?.headerAlign ||
+                          header.column.columnDef.meta?.align ||
+                          'left',
                         display: 'flex',
                         width: header.getSize(),
                       }}
