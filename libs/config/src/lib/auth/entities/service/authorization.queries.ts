@@ -1,7 +1,7 @@
 import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
 
-import { QueryConfig } from '@learnway/config';
+import { queryConfig } from '../../../service/react-query';
 
 import type { AuthSSOLogin } from '../../../types';
 
@@ -14,7 +14,7 @@ export const queryOptions = {
   authUser: () => ({
     queryKey: queryKeys.authUser,
     queryFn: async () => new Promise((resolve) => resolve(null)),
-    ...QueryConfig.cacheOptions(),
+    ...queryConfig.cacheOptions(),
   }),
   healthcheck: (comanyCode: string) => ({
     queryKey: queryKeys.authSSO,

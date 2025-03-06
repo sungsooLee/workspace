@@ -1,34 +1,39 @@
 import { useState } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
-import { useInterval, useBoolean } from 'react-use';
+import { useBoolean, useCounter } from 'react-use';
 
-import { Button, Tabs, ContentsRow } from '@learnway/ui';
+import { IcoCaution } from '@learnway/icons';
+import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
 
-import { SearchAccountForm } from '../../widgets/account';
+import { SearchAccountForm } from './-components/search-account-form';
 import {
   useVerifyEmail,
   useSendVerifyEmail,
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
-} from '../../entities/user';
+} from '../../../entities/user';
 
-import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { FormRow } from '../../shared/ui/form-row';
-import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
+import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
+import { FormRow } from '../../../shared/ui/form-row';
+import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 
-import signupStyles from './signup.module.css';
+import { NoticeBox } from '../../../shared/ui';
 
-export const Route = createFileRoute('/_auth/search-account')({
+import signupStyles from '../signup.module.css';
+import Placeholder from 'react-select/dist/declarations/src/components/Placeholder';
+
+export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
 });
 
+const TIME_LIMIT_VERIFY = 180;
 function RouteComponent() {
   const router = useRouter();
   const [selectedTabKey, setSelectedTabKey] = useState<string>('account');
-  const [verifyTimer, setVerifyTimer] = useState<string>('');
+  const [verifyTimer, verifyTimerCounter] = useCounter(0);
 
-  const [isRunningTimer, toggleIsRunningTimer] = useBoolean(false);
+  const [sendedVerifyNumber, setSendedVerifyNumber] = useBoolean(false);
 
   const { provider, onSubmit, onFormChange, control, getValues } = useCustomForm(detailConfig);
   const { verify: verifyEmail } = useVerifyEmail();
@@ -36,23 +41,18 @@ function RouteComponent() {
   const { send: sendVerifyEmail } = useSendVerifyEmail();
   const { send: sendVerifyPhone } = useSendVerifyPhoneNumber();
 
-  useInterval(
-    () => {
-      setVerifyTimer('');
-    },
-    isRunningTimer ? 1000 : null,
-  );
-
   const handleActiveTab = (value: string) => {
     onFormChange({
       authToolType: 'phone',
       userId: '',
-      name: '',
-      birthday: '',
-      phoneNumber: '',
+      name: '김현대',
+      birthday: '19891106',
+      phoneNumber: '01044444444',
       phoneNumberLocale: '',
       email: '',
+      verificationCode: 'dek479',
     });
+    setSendedVerifyNumber(false);
     setSelectedTabKey(value);
   };
 
@@ -83,7 +83,8 @@ function RouteComponent() {
         { ...payload, phoneNumber: data.phoneNumber },
         {
           onSuccess: (data, variables, context) => {
-            toggleIsRunningTimer();
+            setSendedVerifyNumber(true);
+            verifyTimerCounter.inc();
           },
         },
       );
@@ -92,7 +93,8 @@ function RouteComponent() {
         { ...payload, email: data.email },
         {
           onSuccess: (data, variables, context) => {
-            toggleIsRunningTimer();
+            setSendedVerifyNumber(true);
+            verifyTimerCounter.inc();
           },
         },
       );
@@ -110,7 +112,7 @@ function RouteComponent() {
         { ...payload, phoneNumber: data.phoneNumber },
         {
           onSuccess: (data, variables, context) => {
-            toggleIsRunningTimer();
+            verifyTimerCounter.set(0);
           },
         },
       );
@@ -119,7 +121,7 @@ function RouteComponent() {
         { ...payload, email: data.email },
         {
           onSuccess: (data, variables, context) => {
-            toggleIsRunningTimer();
+            verifyTimerCounter.set(0);
           },
         },
       );
@@ -128,6 +130,10 @@ function RouteComponent() {
 
   const handleCancel = () => {
     router.navigate({ to: '/login' });
+  };
+
+  const handleTimeOver = () => {
+    verifyTimerCounter.set(0);
   };
 
   return (
@@ -143,20 +149,41 @@ function RouteComponent() {
             onActiveTab={handleActiveTab}
           />
 
-          {verifyTimer && (
+          {sendedVerifyNumber && (
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'verificationCode'} />
+                <DynamicFormField name={'verificationCode'}>
+                  <InputTimer
+                    initialTime={TIME_LIMIT_VERIFY}
+                    startTimer={verifyTimer}
+                    onTimerEnd={() => handleTimeOver()}
+                    disabled={verifyTimer === 0}
+                  />
+                </DynamicFormField>
               </FormRow>
+              <Button variant="gray" size="lg" onClick={() => handleSendVerify()}>
+                재전송
+              </Button>
             </ContentsRow>
           )}
+
+          <NoticeBox title={'유의사항'}>
+            <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+            <dd>
+              법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
+              있습니다.{' '}
+              <Link to="" className={signupStyles.link}>
+                구글 OTP 인증 가이드
+              </Link>
+            </dd>
+          </NoticeBox>
 
           <div className={signupStyles.btn_wrap}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               취소
             </Button>
-            {verifyTimer ? (
-              <Button type="submit" variant="primary" size="xl">
+            {sendedVerifyNumber ? (
+              <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
                 인증번호 확인
               </Button>
             ) : (
@@ -203,25 +230,28 @@ const detailConfig = {
       label: '생년월일',
       maxLength: 10,
       value: '',
-      placeholder: '비밀번호를 입력하세요',
+      placeholder: '생년월일(19991229)',
     },
     {
       name: 'phoneNumber',
       type: 'text',
       label: '휴대폰 번호',
       value: '',
+      placeholder: '-없이 휴대폰 번호입력(0102345678)',
     },
     {
       name: 'email',
       type: 'text',
       label: '이메일',
       value: '',
+      placeholder: '이메일(hyunidai.kim@hyundai.com)',
     },
     {
       name: 'verificationCode',
-      type: 'text',
+      type: 'custom',
       label: '인증번호',
       value: '',
+      placeholder: '인증번호 입력',
     },
   ],
   validator: {

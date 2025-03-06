@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter, createRootRouteWithContext } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import { QueryConfig } from '@learnway/config';
+import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
@@ -29,17 +29,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
-QueryConfig.init({});
+appConfig.init({});
 
 function App() {
   const [, setPageMeta] = usePageMetaState();
   // Inject the returned value from the hook into the router context
   return (
-    <QueryClientProvider client={QueryConfig.getQueryClient()}>
+    <QueryClientProvider client={queryConfig.getQueryClient()}>
       <AppConfigProvider>
         <RouterProvider
           router={router}
-          context={{ queryClient: QueryConfig.getQueryClient(), setPageMeta }}
+          context={{ queryClient: queryConfig.getQueryClient(), setPageMeta }}
         />
       </AppConfigProvider>
     </QueryClientProvider>

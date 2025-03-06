@@ -1,10 +1,13 @@
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 
-import { ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
+import { RadioCard } from '@learnway/ui';
 
-import signupStyles from '../signup.module.css';
+import signupStyles from '../../signup.module.css';
 
 import { AuthToolFormField, AuthTool } from '../../../../features/auth';
 
