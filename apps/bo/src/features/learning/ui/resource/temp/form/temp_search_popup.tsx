@@ -1,7 +1,8 @@
-import { Button, CardComponentProps, Input } from '@learnway/ui';
+import { Button, Input } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 import formStyles from './form-style.module.css';
 import { forwardRef } from 'react';
+
 const TempSearchPopupComponent = forwardRef<any, any>(({ name }) => {
   return (
     <div className={formStyles.search_wrap}>

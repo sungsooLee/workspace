@@ -6,6 +6,7 @@ import { PageContainer } from '../../../../widgets/layout/ui/container/page-cont
 import { useState } from 'react';
 import { LearningTypeChoicePopup, VideoUploadPopup } from '../../../../features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
+import { UploadProvider } from '../../../../features/learning/ui/resource/uploader/tus-provider';
 
 export const Route = createFileRoute('/_layout/learning/resource/')({
   component: RouteComponent,
@@ -30,12 +31,17 @@ function RouteComponent() {
     })) as LEARNING_TYPE;
     switch (typeResult) {
       case LEARNING_TYPE.VIDEO: {
-        /*const videoUploadResult = await openAsync({
-          content: <VideoUploadPopup />,
+        const videoUploadResult = await openAsync({
+          content: (
+            <UploadProvider>
+              <VideoUploadPopup />
+            </UploadProvider>
+          ),
           width: 'lg',
           footer: true,
         });
-        break;*/
+        break;
+        console.log('videoUploadResult => ', videoUploadResult);
       }
     }
     router.navigate({ to: '/learning/resource/view/video' });

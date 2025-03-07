@@ -118,7 +118,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   const formName = name || names[0];
   // 해당 필드의 빌더 설정을 가져옵니다.
   const rootConfig = getBuilderConfig(builders, formName);
-  console.log('rootConfig => ', rootConfig);
+
   // 필드가 필수인지 여부 (control에 isFieldRequired 함수가 있다고 가정)
   const isRequired = control.isFieldRequired(formName);
   // 에러 상태를 관리하는 상태값 (초기: 에러 없음)
