@@ -1,21 +1,21 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
-  Spinner,
-  Input,
-  Textarea,
-  Button,
-  Tooltip,
-  DatePicker,
-  Switch,
-  Select,
-  ThumbnailImageUpload,
-  ChipList,
-  SelectOption,
+  // Spinner,
+  // Input,
+  // Textarea,
+  // Button,
+  // Tooltip,
+  // DatePicker,
+  // Switch,
+  // Select,
+  // ThumbnailImageUpload,
+  // ChipList,
+  // SelectOption,
   ContentsRow,
-  List,
-  Checkbox,
-  RadioGroup,
+  // List,
+  // Checkbox,
+  // RadioGroup,
 } from '@learnway/ui';
 import styles from './page-content.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
