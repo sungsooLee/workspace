@@ -69,10 +69,14 @@ const OptionCardComponent = function ({
 
   return (
     <div
-      className={cn(styles.start, styles.option_card_wrap, className, 'nlp--option-card')}
-      style={{
-        gridTemplateColumns: `repeat(${cols}, 1fr)`, // cols 값에 따라 열 개수를 설정
-      }}>
+      className={cn(
+        styles.start,
+        styles.option_card_wrap,
+        className,
+        'nlp--option-card',
+        !cols && styles.type_flex,
+      )}
+      style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}>
       {/* options */}
       {options?.map((d: OptionCardItem) => (
         <Button
