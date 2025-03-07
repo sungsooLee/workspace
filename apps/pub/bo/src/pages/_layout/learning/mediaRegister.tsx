@@ -773,18 +773,16 @@ function RouteComponent() {
               <label htmlFor="name-auto" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
               </label>
-              <div className={formStyles.input_box_wrap}>
-                <div className={formStyles.input_box}>
-                  <Textarea
-                    id="name-auto"
-                    rows={5}
-                    cols={33}
-                    placeholder="키워드는 AI 자동 추출되어 표기됩니다.   "
-                    resize="none"
-                    size="sm"
-                    readOnly
-                  />
-                </div>
+              <div className={formStyles.input_box}>
+                <Textarea
+                  id="name-auto"
+                  rows={5}
+                  cols={33}
+                  placeholder="키워드는 AI 자동 추출되어 표기됩니다.   "
+                  resize="none"
+                  size="sm"
+                  readOnly
+                />
               </div>
             </div>
           </ContentsRow>
@@ -794,18 +792,16 @@ function RouteComponent() {
               <label htmlFor="name-auto2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>키워드 (AI 자동 추출)</span>
               </label>
-              <div className={formStyles.input_box_wrap}>
-                <div className={formStyles.input_box}>
-                  <Textarea
-                    id="name-auto2"
-                    rows={5}
-                    cols={33}
-                    placeholder="키워드는 AI 자동 추출되어 표기됩니다."
-                    resize="none"
-                    size="sm"
-                    readOnly
-                  />
-                </div>
+              <div className={formStyles.input_box}>
+                <Textarea
+                  id="name-auto2"
+                  rows={5}
+                  cols={33}
+                  placeholder="키워드는 AI 자동 추출되어 표기됩니다."
+                  resize="none"
+                  size="sm"
+                  readOnly
+                />
               </div>
             </div>
           </ContentsRow>

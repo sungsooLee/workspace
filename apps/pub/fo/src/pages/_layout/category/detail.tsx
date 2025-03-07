@@ -2,27 +2,14 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
-import { Arrays, Heart, Filter, Label, ThumnailList } from '../../../features/layout';
+import { Arrays, Filter, ThumnailList } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
-import {
-  IcoArray,
-  IcoPlay,
-  IcoRating,
-  IcoHeart,
-  IcoEye,
-  IcoPhone02,
-  IcoMonitor01,
-  IcoArrowBackward,
-  IcoArrowForward,
-} from '@learnway/icons';
+import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
 // 예시 이미지
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
-import listImage1 from '../../../assets/images/temp/category_product_01.png';
-import listImage2 from '../../../assets/images/temp/category_product_02.png';
-import listImage3 from '../../../assets/images/temp/category_product_03.png';
 
 export const Route = createFileRoute('/_layout/category/detail')({
   component: RouteComponent,
@@ -142,7 +129,11 @@ function RouteComponent() {
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>
-                <IcoArray width={24} height={24} stroke="#a9afb8" fill="none" />
+                {listUi === 'type2' ? (
+                  <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                ) : (
+                  <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                )}
               </Button>
             </div>
           </div>
