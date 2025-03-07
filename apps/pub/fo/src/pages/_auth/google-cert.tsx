@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoShieldTick01, IcoCaution, IcoFormRequired } from '@learnway/icons';

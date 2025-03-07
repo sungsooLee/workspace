@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import signupStyles from './signup.module.css';

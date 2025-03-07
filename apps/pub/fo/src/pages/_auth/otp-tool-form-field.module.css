@@ -1,5 +1,5 @@
-.nlp--signup-select {
-  + .nlp--auth-form {
+.signup_select {
+  + .auth_form {
     @apply mt-[48px];
     + .signup_noti {
       @apply mt-[8px];

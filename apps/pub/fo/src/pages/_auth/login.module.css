@@ -1,6 +1,11 @@
 /* login.module.css */
 
 .login {
+  &.auth_wrap {
+    .auth_box {
+      @apply relative z-0 text-left;
+    }
+  }
   .login_info {
     @apply flex items-center justify-between;
     .id_save {

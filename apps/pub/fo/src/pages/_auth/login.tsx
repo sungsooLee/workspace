@@ -1,7 +1,6 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
-
-import signupStyles from './signup.module.css';
 import styles from './login.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
@@ -14,8 +13,8 @@ export const Route = createFileRoute('/_auth/login')({
 
 function RouteComponent() {
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${styles.login}`}>
-      <div className={signupStyles.auth_box}>
+    <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
+      <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={formStyles.form_row}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>

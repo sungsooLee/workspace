@@ -1,8 +1,11 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
+import otpToolFormField from './otp-tool-form-field.module.css';
+import styles from './mpass-cert.module.css';
+import noticeBoxStyles from './notice-box.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
@@ -14,20 +17,24 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   return (
     <form className="form_row">
-      <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.mpass_cert}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.search_info}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={styles.search_info}>
             안전한 로그인을 위해 <strong>2차 인증</strong>을 진행해 주세요.
           </div>
-          <div className={signupStyles.signup_select} role="radiogroup">
+
+          {/* 인증선택 모듈 */}
+          <div
+            className={cn(otpToolFormField.signup_select, 'auth--signup-select')}
+            role="radiogroup">
             <RadioCard
-              className={signupStyles.radio_card}
+              className="radio_card"
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoShieldTick01 width={48} height={48} className={signupStyles.ico1} />
+                      <IcoShieldTick01 width={48} height={48} className="ico1" />
                       <span>OTP</span>
                     </div>
                   ),
@@ -36,7 +43,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoFaceId01 width={48} height={48} className={signupStyles.ico2} />
+                      <IcoFaceId01 width={48} height={48} className="ico2" />
                       <span>FIDO</span>
                     </div>
                   ),
@@ -44,15 +51,16 @@ function RouteComponent() {
               ]}
             />
           </div>
+          {/* 인증선택 모듈 */}
 
-          <div className={signupStyles.select_txt}>
-            {/* FIDO 일때 문구 */}
+          {/* FIDO 일때 문구출력 */}
+          <div className={styles.select_txt}>
             생체인증(지문/안면인식) 인증 옵션을 선택하셨습니다. <br />
             MPASS 인증 버튼 클릭 후 모바일 앱으로 인증을 진행해 주세요.
           </div>
 
           {/* OTP 인증폼 */}
-          <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -69,8 +77,9 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={signupStyles.signup_noti}>
-            <dl className={signupStyles.check_point}>
+          {/* 유의사항 모듈 */}
+          <div className={`${noticeBoxStyles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -83,8 +92,9 @@ function RouteComponent() {
               </dd>
             </dl>
           </div>
+          {/* 유의사항 모듈 */}
 
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
@@ -8,7 +9,6 @@ import styles from './search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import noticeBoxStyles from './notice-box.module.css';
-import './auth-tool-form-field.css';
 
 import { Button, RadioCard, Tabs, Input, Select, InputTimer, ContentsRow } from '@learnway/ui';
 
@@ -28,39 +28,33 @@ function RouteComponent() {
             <strong>본인인증</strong> 후<br /> 아이디를 확인 할 수 있습니다.
           </div>
 
-          <div className={styles.signup_select_box}>
-            {/* 인증선택 모듈 */}
-            <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
-              <RadioCard
-                className={authToolFormFieldStyles.radio_card}
-                options={[
-                  {
-                    value: 'type1',
-                    label: (
-                      <div>
-                        <IcoPhone02
-                          width={48}
-                          height={48}
-                          className={authToolFormFieldStyles.ico1}
-                        />
-                        <span>휴대폰 인증</span>
-                      </div>
-                    ),
-                  },
-                  {
-                    value: 'type2',
-                    label: (
-                      <div>
-                        <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
-                        <span>이메일 인증</span>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
-            {/* 인증선택 모듈 */}
+          {/* 인증선택 모듈 */}
+          <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
+            <RadioCard
+              className={authToolFormFieldStyles.radio_card}
+              options={[
+                {
+                  value: 'type1',
+                  label: (
+                    <div>
+                      <IcoPhone02 width={48} height={48} className={authToolFormFieldStyles.ico1} />
+                      <span>휴대폰 인증</span>
+                    </div>
+                  ),
+                },
+                {
+                  value: 'type2',
+                  label: (
+                    <div>
+                      <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
+                      <span>이메일 인증</span>
+                    </div>
+                  ),
+                },
+              ]}
+            />
           </div>
+          {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
