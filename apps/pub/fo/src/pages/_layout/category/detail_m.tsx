@@ -10,13 +10,5 @@ export const Route = createFileRoute('/_layout/category/detail_m')({
 });
 
 function RouteComponent() {
-  // 상단 배너 스와이퍼
-  const items = [1, 3, 2];
-  // 배너 스와이퍼 옵션
-  const carouselOption = {
-    spaceBetween: 20,
-    slidesPerView: 2.2,
-  };
-
   return <div className={styles.start}></div>;
 }

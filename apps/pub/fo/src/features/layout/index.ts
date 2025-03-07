@@ -17,3 +17,4 @@ export * from './ui/filter';
 export * from './ui/category-layer-button';
 export * from './popup/category-popup';
 export * from './ui/label';
+export * from './ui/thumnail-list';
