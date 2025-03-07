@@ -1,6 +1,8 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import signupStyles from './signup.module.css';
+import styles from './search-id-success.module.css';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
@@ -9,7 +11,7 @@ export const Route = createFileRoute('/_auth/search-id-success')({
 
 function RouteComponent() {
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_auth}`}>
+    <div className={`${styles.start} ${signupStyles.auth_wrap} ${styles.search_auth}`}>
       <div className={signupStyles.auth_box}>
         <div className={signupStyles.success_info}>
           <i className={signupStyles.ico}>

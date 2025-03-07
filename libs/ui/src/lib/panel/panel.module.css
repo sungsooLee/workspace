@@ -1,5 +1,4 @@
 .start {
-  background: white;
   .header {
     .title {
     }
@@ -7,5 +6,8 @@
     }
   }
   .body {
+  }
+  &.line {
+    @apply w-full rounded-[16px] border border-solid border-[#e3e9ef] bg-[var(--white)] px-[40px] py-[48px];
   }
 }

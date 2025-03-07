@@ -36,11 +36,14 @@ import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
+import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
+import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
@@ -49,6 +52,7 @@ import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
@@ -218,6 +222,12 @@ const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLearningPopupUploadRoute = LayoutLearningPopupUploadImport.update({
+  id: '/learning/popup-upload',
+  path: '/learning/popup-upload',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutLearningPopupLearningRegisterationRoute =
   LayoutLearningPopupLearningRegisterationImport.update({
     id: '/learning/popup-learningRegisteration',
@@ -238,6 +248,13 @@ const LayoutLearningMediaDetailRoute = LayoutLearningMediaDetailImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLearningLearningSearchRoute =
+  LayoutLearningLearningSearchImport.update({
+    id: '/learning/learningSearch',
+    path: '/learning/learningSearch',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
@@ -247,6 +264,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTestRoute = GuideGuideTestImport.update({
+  id: '/guide/test',
+  path: '/guide/test',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -295,6 +318,12 @@ const GuideGuideRadioRoute = GuideGuideRadioImport.update({
 const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   id: '/guide/progress',
   path: '/guide/progress',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuidePanelRoute = GuideGuidePanelImport.update({
+  id: '/guide/panel',
+  path: '/guide/panel',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -683,6 +712,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuidePaginationImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/panel': {
+      id: '/_guide/guide/panel'
+      path: '/guide/panel'
+      fullPath: '/guide/panel'
+      preLoaderRoute: typeof GuideGuidePanelImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/progress': {
       id: '/_guide/guide/progress'
       path: '/guide/progress'
@@ -739,6 +775,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTabsImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/test': {
+      id: '/_guide/guide/test'
+      path: '/guide/test'
+      fullPath: '/guide/test'
+      preLoaderRoute: typeof GuideGuideTestImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -752,6 +795,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/guide/typography'
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
+    }
+    '/_layout/learning/learningSearch': {
+      id: '/_layout/learning/learningSearch'
+      path: '/learning/learningSearch'
+      fullPath: '/learning/learningSearch'
+      preLoaderRoute: typeof LayoutLearningLearningSearchImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/learning/mediaDetail': {
       id: '/_layout/learning/mediaDetail'
@@ -772,6 +822,13 @@ declare module '@tanstack/react-router' {
       path: '/learning/popup-learningRegisteration'
       fullPath: '/learning/popup-learningRegisteration'
       preLoaderRoute: typeof LayoutLearningPopupLearningRegisterationImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/popup-upload': {
+      id: '/_layout/learning/popup-upload'
+      path: '/learning/popup-upload'
+      fullPath: '/learning/popup-upload'
+      preLoaderRoute: typeof LayoutLearningPopupUploadImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/menu4/menu5': {
@@ -864,6 +921,7 @@ interface GuideRouteChildren {
   GuideGuideModalRoute: typeof GuideGuideModalRoute
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
+  GuideGuidePanelRoute: typeof GuideGuidePanelRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -872,6 +930,7 @@ interface GuideRouteChildren {
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
+  GuideGuideTestRoute: typeof GuideGuideTestRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -896,6 +955,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideModalRoute: GuideGuideModalRoute,
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
+  GuideGuidePanelRoute: GuideGuidePanelRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -904,6 +964,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
+  GuideGuideTestRoute: GuideGuideTestRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -915,9 +976,11 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
+  LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
@@ -927,10 +990,12 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
+  LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
@@ -977,6 +1042,7 @@ export interface FileRoutesByFullPath {
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
+  '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -985,11 +1051,14 @@ export interface FileRoutesByFullPath {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/guide': typeof GuideGuideIndexRoute
@@ -1034,6 +1103,7 @@ export interface FileRoutesByTo {
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
+  '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1042,11 +1112,14 @@ export interface FileRoutesByTo {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/guide': typeof GuideGuideIndexRoute
@@ -1094,6 +1167,7 @@ export interface FileRoutesById {
   '/_guide/guide/modal': typeof GuideGuideModalRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
+  '/_guide/guide/panel': typeof GuideGuidePanelRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -1102,11 +1176,14 @@ export interface FileRoutesById {
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
+  '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_guide/guide/': typeof GuideGuideIndexRoute
@@ -1153,6 +1230,7 @@ export interface FileRouteTypes {
     | '/guide/modal'
     | '/guide/optionCard'
     | '/guide/pagination'
+    | '/guide/panel'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1161,11 +1239,14 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
+    | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/guide'
@@ -1209,6 +1290,7 @@ export interface FileRouteTypes {
     | '/guide/modal'
     | '/guide/optionCard'
     | '/guide/pagination'
+    | '/guide/panel'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1217,11 +1299,14 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
+    | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/guide'
@@ -1267,6 +1352,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/modal'
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
+    | '/_guide/guide/panel'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -1275,11 +1361,14 @@ export interface FileRouteTypes {
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
     | '/_guide/guide/tabs'
+    | '/_guide/guide/test'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
+    | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
     | '/_layout/learning/popup-learningRegisteration'
+    | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_guide/guide/'
@@ -1355,6 +1444,7 @@ export const routeTree = rootRoute
         "/_guide/guide/modal",
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
+        "/_guide/guide/panel",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -1363,6 +1453,7 @@ export const routeTree = rootRoute
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
         "/_guide/guide/tabs",
+        "/_guide/guide/test",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -1374,9 +1465,11 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
         "/_layout/learning/popup-learningRegisteration",
+        "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/menu3/"
@@ -1526,6 +1619,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/pagination.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/panel": {
+      "filePath": "_guide/guide/panel.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/progress": {
       "filePath": "_guide/guide/progress.tsx",
       "parent": "/_guide"
@@ -1558,6 +1655,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/tabs.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/test": {
+      "filePath": "_guide/guide/test.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/tooltip": {
       "filePath": "_guide/guide/tooltip.tsx",
       "parent": "/_guide"
@@ -1565,6 +1666,10 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/learning/learningSearch": {
+      "filePath": "_layout/learning/learningSearch.tsx",
+      "parent": "/_layout"
     },
     "/_layout/learning/mediaDetail": {
       "filePath": "_layout/learning/mediaDetail.tsx",
@@ -1576,6 +1681,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/popup-learningRegisteration": {
       "filePath": "_layout/learning/popup-learningRegisteration.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/popup-upload": {
+      "filePath": "_layout/learning/popup-upload.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu4/menu5": {

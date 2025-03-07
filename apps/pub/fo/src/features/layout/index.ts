@@ -12,5 +12,7 @@ export * from './ui/search';
 export * from './ui/recent-visits';
 export * from './popup/filter-popup';
 export * from './ui/arrays';
-export * from './ui/heart';
 export * from './ui/filter';
+export * from './ui/category-layer-button';
+export * from './popup/category-popup';
+export * from './ui/thumnail-list';

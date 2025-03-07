@@ -1,0 +1,13 @@
+/* search-account.module.css */
+.search_account {
+  .auth_form {
+    @apply mt-[48px];
+
+    .signup_noti {
+      @apply mt-[8px];
+    }
+  }
+  .signup_select_box {
+    @apply mt-[48px];
+  }
+}

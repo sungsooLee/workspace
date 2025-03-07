@@ -1,0 +1,24 @@
+.signup_noti {
+  @apply rounded-[8px] bg-[var(--gray1)] p-[16px];
+  .check_point {
+    @apply body_4_r text-left text-[var(--gray7)];
+    dt {
+      @apply body_4_b flex items-center justify-start;
+      svg {
+        @apply mr-[4px];
+      }
+    }
+    dd {
+      @apply relative mt-[8px] pl-[10px];
+      + dd {
+        @apply mt-[4px];
+      }
+      &::before {
+        @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+      }
+      .link {
+        @apply ml-[8px] text-[#009ABC] underline;
+      }
+    }
+  }
+}
