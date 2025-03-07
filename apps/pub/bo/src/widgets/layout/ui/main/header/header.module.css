@@ -3,14 +3,14 @@
   .header {
     @apply relative box-border h-[100px] min-w-[1400px] bg-[#012277] px-[32px];
     h1 {
-      @apply inline-flex items-center;
+      @apply mt-[5px] inline-flex items-center;
       img {
-        @apply h-[50px] w-auto;
+        @apply h-[40px] w-auto;
       }
       .title {
-        @apply relative ml-[6px] box-border inline-flex min-h-[50px] pl-[6px] pt-[18px] text-[16px] font-bold text-white;
+        @apply relative ml-[6px] box-border inline-flex min-h-[50px] pl-[6px] pt-[14px] text-[16px] font-bold text-white;
         &::before {
-          @apply absolute left-0 top-[36px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
+          @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
         }
       }
     }
