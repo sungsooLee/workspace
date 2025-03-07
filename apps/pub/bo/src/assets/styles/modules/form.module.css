@@ -307,12 +307,15 @@ hr.divider {
 
 .row_wrap {
   .inner_row {
-    @apply !mx-0 pb-[16px];
+    @apply !mx-0 mt-0;
     label + div {
       @apply !mt-0;
     }
     & + .inner_row {
-      @apply border-0;
+      @apply !mt-0 border-0;
+    }
+    &:first-child {
+      @apply !mt-0;
     }
   }
   &.col {
