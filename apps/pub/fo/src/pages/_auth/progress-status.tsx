@@ -2,7 +2,7 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway/icons';
-import signupStyles from './signup.module.css';
+import styles from './progress-status.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import { Button, Input, Select, ContentsRow } from '@learnway/ui';
 
@@ -13,11 +13,10 @@ export const Route = createFileRoute('/_auth/progress-status')({
 function RouteComponent() {
   return (
     <form className="form_row">
-      <div
-        className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.success_info}>
-            <i className={signupStyles.ico}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={styles.success_info}>
+            <i className={styles.ico}>
               {/* 대기중 */}
               <IcoSucess width={56} height={56} fill="#06226A" />
               {/* 승인완료 
@@ -25,7 +24,7 @@ function RouteComponent() {
               {/* 반려 
               <IcoCaution02 width={56} height={56} stroke="#FFB902" />*/}
             </i>
-            <h3 className={signupStyles.title}>
+            <h3 className={styles.title}>
               {/* 대기중 */}
               회원가입이 대기 중입니다.
               {/* 승인완료 
@@ -33,8 +32,8 @@ function RouteComponent() {
               {/* 반려 
               회원가입이 반려되었습니다.*/}
             </h3>
-            <p className={signupStyles.noti}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
-            <div className={`${signupStyles.noti_box} ${signupStyles.type2}`}>
+            <p className={styles.noti}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
+            <div className={`${styles.noti_box} ${styles.type2}`}>
               신청일시 : <strong>YYYY-MM-DD</strong>
               {/* 승인완료 
               승인일시 : <strong>YYYY-MM-DD</strong>*/}
@@ -43,7 +42,7 @@ function RouteComponent() {
             </div>
           </div>
 
-          <h4 className={signupStyles.title}>협력업체 회사 정보</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>협력업체 회사 정보</h4>
           <div className="no_line col">
             <ContentsRow>
               <div className={formStyles.form_item}>
@@ -77,9 +76,9 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <hr className={formStyles.divider} />
+          <hr className={`${formStyles.divider} ${styles.divider}`} />
 
-          <h4 className={signupStyles.title}>개인정보</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>개인정보</h4>
 
           <div className="no_line col">
             <ContentsRow>
@@ -141,7 +140,7 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
             <Button variant="primary" size="xl">
               로그인
             </Button>

@@ -1,0 +1,12 @@
+.start {
+  @apply flex h-[56px] items-center justify-between px-[16px];
+  .left {
+    @apply flex items-center;
+    h1 {
+      @apply body_2_b;
+    }
+    & > button {
+      @apply mr-[8px];
+    }
+  }
+}

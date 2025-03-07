@@ -1,8 +1,10 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Button, Input, ContentsRow } from '@learnway/ui';
-import signupStyles from './signup.module.css';
+import styles from './password-input.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
+import noticeBoxStyles from './notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/password-input')({
@@ -12,10 +14,9 @@ export const Route = createFileRoute('/_auth/password-input')({
 function RouteComponent() {
   return (
     <form className="form_row">
-      <div
-        className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.password_input}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -44,8 +45,8 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={signupStyles.signup_noti}>
-            <dl className={signupStyles.check_point}>
+          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -66,14 +67,14 @@ function RouteComponent() {
               <dd>
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
                 있습니다.
-                <Link to="" className={signupStyles.link}>
+                <Link to="" className={noticeBoxStyles.link}>
                   구글 OTP 인증 가이드
                 </Link>
               </dd>
             </dl>
           </div>
 
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

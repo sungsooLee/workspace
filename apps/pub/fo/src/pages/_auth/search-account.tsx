@@ -1,10 +1,16 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
-import { Button, RadioCard, Tabs, Input, Select, InputTimer } from '@learnway/ui';
+import styles from './search-account.module.css';
+import searchAccountFormStyles from './search-account-form.module.css';
+import authToolFormFieldStyles from './auth-tool-form-field.module.css';
+import noticeBoxStyles from './notice-box.module.css';
+
+import { Button, RadioCard, Tabs, Input, Select, InputTimer, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
@@ -18,18 +24,20 @@ function RouteComponent() {
       key: 'a',
       content: (
         <>
-          <div className={signupStyles.search_info}>
+          <div className={searchAccountFormStyles.search_info}>
             <strong>본인인증</strong> 후<br /> 아이디를 확인 할 수 있습니다.
           </div>
-          <div className={signupStyles.signup_select} role="radiogroup">
+
+          {/* 인증선택 모듈 */}
+          <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
             <RadioCard
-              className={signupStyles.radio_card}
+              className={authToolFormFieldStyles.radio_card}
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
+                      <IcoPhone02 width={48} height={48} className={authToolFormFieldStyles.ico1} />
                       <span>휴대폰 인증</span>
                     </div>
                   ),
@@ -38,7 +46,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoMail width={48} height={48} className={signupStyles.ico2} />
+                      <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
                       <span>이메일 인증</span>
                     </div>
                   ),
@@ -46,11 +54,11 @@ function RouteComponent() {
               ]}
             />
           </div>
+          {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
-          <div
-            className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
-            <div className={formStyles.row}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -63,9 +71,9 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="이름(김현대)" value="" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -78,10 +86,10 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
             {/* 휴대폰 인증일때 */}
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -106,10 +114,10 @@ function RouteComponent() {
                   />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
             {/* 이메일 인증일때 */}
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -122,9 +130,9 @@ function RouteComponent() {
                   <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>
@@ -141,17 +149,21 @@ function RouteComponent() {
                   </Button>
                 </div>
               </div>
-            </div>
+            </ContentsRow>
           </div>
 
-          <div className={signupStyles.signup_noti}>
-            <dl className={signupStyles.check_point}>
-              <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
-                유의사항
-              </dt>
-              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
-            </dl>
+          <div className={styles.signup_noti_box}>
+            {/* 유의사항 모듈 */}
+            <div className={noticeBoxStyles.signup_noti}>
+              <dl className={noticeBoxStyles.check_point}>
+                <dt>
+                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  유의사항
+                </dt>
+                <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+              </dl>
+            </div>
+            {/* 유의사항 모듈 */}
           </div>
         </>
       ),
@@ -161,39 +173,47 @@ function RouteComponent() {
       key: 'b',
       content: (
         <>
-          <div className={signupStyles.search_info}>
+          <div className={searchAccountFormStyles.search_info}>
             <strong>본인인증</strong> 후<br /> 비밀번호를 재설정 할 수 있습니다.
           </div>
-          <div className={signupStyles.signup_select} role="radiogroup">
-            <RadioCard
-              className={signupStyles.radio_card}
-              options={[
-                {
-                  value: 'type1',
-                  label: (
-                    <div>
-                      <IcoPhone02 width={48} height={48} className={signupStyles.ico1} />
-                      <span>휴대폰 인증</span>
-                    </div>
-                  ),
-                },
-                {
-                  value: 'type2',
-                  label: (
-                    <div>
-                      <IcoMail width={48} height={48} className={signupStyles.ico2} />
-                      <span>이메일 인증</span>
-                    </div>
-                  ),
-                },
-              ]}
-            />
+
+          <div className={styles.signup_select_box}>
+            {/* 인증선택 모듈 */}
+            <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
+              <RadioCard
+                className={authToolFormFieldStyles.radio_card}
+                options={[
+                  {
+                    value: 'type1',
+                    label: (
+                      <div>
+                        <IcoPhone02
+                          width={48}
+                          height={48}
+                          className={authToolFormFieldStyles.ico1}
+                        />
+                        <span>휴대폰 인증</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    value: 'type2',
+                    label: (
+                      <div>
+                        <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
+                        <span>이메일 인증</span>
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            </div>
+            {/* 인증선택 모듈 */}
           </div>
 
           {/* 인증폼 */}
-          <div
-            className={`${formStyles.form_row} ${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
-            <div className={formStyles.row}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>아이디/이메일</span>
@@ -214,9 +234,9 @@ function RouteComponent() {
                   </Button>
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이름</span>
@@ -229,9 +249,9 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="이름(김현대)" value="" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>생년월일</span>
@@ -244,10 +264,10 @@ function RouteComponent() {
                   <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
             {/* 휴대폰 인증일때 */}
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>휴대폰 번호</span>
@@ -272,10 +292,10 @@ function RouteComponent() {
                   />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
             {/* 이메일 인증일때 */}
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name-1-6" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>이메일</span>
@@ -288,9 +308,9 @@ function RouteComponent() {
                   <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
                 </div>
               </div>
-            </div>
+            </ContentsRow>
 
-            <div className={formStyles.row}>
+            <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>인증번호</span>
@@ -307,11 +327,12 @@ function RouteComponent() {
                   </Button>
                 </div>
               </div>
-            </div>
+            </ContentsRow>
           </div>
 
-          <div className={signupStyles.signup_noti}>
-            <dl className={signupStyles.check_point}>
+          {/* 유의사항 모듈 */}
+          <div className={`${noticeBoxStyles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -319,33 +340,35 @@ function RouteComponent() {
               <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
               <dd>
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-                있습니다.{' '}
-                <Link to="" className={signupStyles.link}>
+                있습니다.
+                <Link to="" className={noticeBoxStyles.link}>
                   구글 OTP 인증 가이드
                 </Link>
               </dd>
             </dl>
           </div>
+          {/* 유의사항 모듈 */}
         </>
       ),
     },
   ];
   return (
-    <div
-      className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-      <div className={signupStyles.auth_box}>
-        <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
+    <form className="form_row">
+      <div className={`${styles.start} ${signupStyles.auth_wrap} ${styles.search_account}`}>
+        <div className={signupStyles.auth_box}>
+          <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 
-        <div className={signupStyles.btn_wrap}>
-          <Button variant="gray" size="xl">
-            취소
-          </Button>
-          <Button variant="primary" size="xl">
-            {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-            인증번호 요청
-          </Button>
+          <div className={signupStyles.btn_wrap}>
+            <Button variant="gray" size="xl">
+              취소
+            </Button>
+            <Button variant="primary" size="xl">
+              {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+              인증번호 요청
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

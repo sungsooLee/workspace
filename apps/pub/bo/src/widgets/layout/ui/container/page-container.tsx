@@ -34,8 +34,8 @@ function PageContainerComponent({
                 onlyIcon
                 onClick={() => setIsFavorite(!isFavorite)}>
                 <IcoStar
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   stroke="#FFB902"
                   fill="#FFB902"
                   className={styles.icon_star}

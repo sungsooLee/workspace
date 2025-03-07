@@ -1,14 +1,71 @@
+import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoShieldTick01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-import { MpassPopup, GoogleQrcodePopup } from '../../features/auth';
+import { MpassPopup, GoogleQrcodePopup, GoogleInputPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
 });
+
+const GoogleInputFooter = () => {
+  const { close: closeModal } = useModal();
+  const { open: openModal } = useModal();
+  return (
+    <>
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        취소
+      </Button>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal(); // 모달 닫기 함수 호출
+          setTimeout(() => {
+            openModal({
+              title: '구글 OTP 인증키 생성',
+              width: 'sm',
+              content: <GoogleInputPopup />,
+              footer: true,
+            });
+          });
+        }}>
+        다음
+      </Button>
+    </>
+  );
+};
+
+const QrPopupFooter = () => {
+  const { close: closeModal } = useModal();
+  const { open: openModal } = useModal();
+  return (
+    <>
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        취소
+      </Button>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal(); // 모달 닫기 함수 호출
+          setTimeout(() => {
+            openModal({
+              title: '구글 OTP 인증키 생성',
+              width: 'sm',
+              content: <GoogleInputPopup />,
+              footer: <GoogleInputFooter />,
+            });
+          });
+        }}>
+        다음
+      </Button>
+    </>
+  );
+};
 
 function RouteComponent() {
   const { open: openModal } = useModal();
@@ -82,7 +139,7 @@ function RouteComponent() {
                   title: '구글 OTP 인증키 생성',
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
-                  footer: true,
+                  footer: <QrPopupFooter />,
                 })
               }>
               QR코드로 인증키 생성

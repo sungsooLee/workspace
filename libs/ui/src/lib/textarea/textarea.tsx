@@ -50,7 +50,6 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
       setInputValue(e.target.value);
     };
 
-    console.log(inputValue?.toString || '');
     return (
       <div
         className={cn(

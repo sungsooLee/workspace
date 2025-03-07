@@ -117,6 +117,37 @@ onClick={() =>
             </Button>
           </div>
         </div>
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`const CustomFooter = () => {
+  const { close: closeModal } = useModal();
+  return (
+    <>
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        취소버튼입니다
+      </Button>
+      <Button variant="primary" size="lg" onClick={() => closeModal()}>
+        확인
+      </Button>
+    </>
+  );
+};
+
+// 예시
+<Button
+  onClick={() =>
+    openModal({
+      title: '타이틀',
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <BasicModalContent />,
+      footer: <CustomFooter />,
+    })
+  }>
+  모달 팝업 열기
+</Button>
+`}</code>
+          </pre>
+        </div>
 
         <h3 className="guide_tit3">Modal (외부)</h3>
 
@@ -205,11 +236,13 @@ const { close: closeModal } = useModal();
 <Button
   onClick={() => {
     closeModal(); // 모달 닫기 함수 호출
-    openModal({
-      title: '구글 OTP 인증키 생성',
-      width: 'sm',
-      content: <GoogleCert2Popup />,
-      footer: true,
+    setTimeout(() => {
+      openModal({
+        title: '구글 OTP 인증키 생성',
+        width: 'sm',
+        content: <GoogleCert2Popup />,
+        footer: true,
+      });
     });
   }}>
   스캔할 수 없나요?

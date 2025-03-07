@@ -25,10 +25,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return (
     <>
       <MobileHeader />
-      <main>
-        <p>Mobile layout </p>
-        {children}
-      </main>
+      <main>{children}</main>
       {pageMeta?.mobile?.showFooter && <MobileFooter />}
     </>
   );

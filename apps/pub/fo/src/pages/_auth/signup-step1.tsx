@@ -1,5 +1,4 @@
 import { isMobile } from 'react-device-detect';
-
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
