@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
 import styles from './search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
@@ -29,15 +28,17 @@ function RouteComponent() {
           </div>
 
           {/* 인증선택 모듈 */}
-          <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
+          <div
+            className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
+            role="radiogroup">
             <RadioCard
-              className={authToolFormFieldStyles.radio_card}
+              className="radio_card"
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoPhone02 width={48} height={48} className={authToolFormFieldStyles.ico1} />
+                      <IcoPhone02 width={48} height={48} className="ico1" />
                       <span>휴대폰 인증</span>
                     </div>
                   ),
@@ -46,7 +47,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
+                      <IcoMail width={48} height={48} className="ico2" />
                       <span>이메일 인증</span>
                     </div>
                   ),
@@ -57,7 +58,7 @@ function RouteComponent() {
           {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
-          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+          <div className={cn(searchAccountFormStyles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -152,19 +153,17 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={styles.signup_noti_box}>
-            {/* 유의사항 모듈 */}
-            <div className={noticeBoxStyles.signup_noti}>
-              <dl className={noticeBoxStyles.check_point}>
-                <dt>
-                  <IcoCaution width={16} height={16} stroke="#6F798B" />
-                  유의사항
-                </dt>
-                <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
-              </dl>
-            </div>
-            {/* 유의사항 모듈 */}
+          {/* 유의사항 모듈 */}
+          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
+              <dt>
+                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                유의사항
+              </dt>
+              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+            </dl>
           </div>
+          {/* 유의사항 모듈 */}
         </>
       ),
     },
@@ -177,39 +176,35 @@ function RouteComponent() {
             <strong>본인인증</strong> 후<br /> 비밀번호를 재설정 할 수 있습니다.
           </div>
 
-          <div className={styles.signup_select_box}>
-            {/* 인증선택 모듈 */}
-            <div className={authToolFormFieldStyles.signup_select} role="radiogroup">
-              <RadioCard
-                className={authToolFormFieldStyles.radio_card}
-                options={[
-                  {
-                    value: 'type1',
-                    label: (
-                      <div>
-                        <IcoPhone02
-                          width={48}
-                          height={48}
-                          className={authToolFormFieldStyles.ico1}
-                        />
-                        <span>휴대폰 인증</span>
-                      </div>
-                    ),
-                  },
-                  {
-                    value: 'type2',
-                    label: (
-                      <div>
-                        <IcoMail width={48} height={48} className={authToolFormFieldStyles.ico2} />
-                        <span>이메일 인증</span>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
-            {/* 인증선택 모듈 */}
+          {/* 인증선택 모듈 */}
+          <div
+            className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
+            role="radiogroup">
+            <RadioCard
+              className="radio_card"
+              options={[
+                {
+                  value: 'type1',
+                  label: (
+                    <div>
+                      <IcoPhone02 width={48} height={48} className="ico1" />
+                      <span>휴대폰 인증</span>
+                    </div>
+                  ),
+                },
+                {
+                  value: 'type2',
+                  label: (
+                    <div>
+                      <IcoMail width={48} height={48} className="ico2" />
+                      <span>이메일 인증</span>
+                    </div>
+                  ),
+                },
+              ]}
+            />
           </div>
+          {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
@@ -331,7 +326,7 @@ function RouteComponent() {
           </div>
 
           {/* 유의사항 모듈 */}
-          <div className={`${noticeBoxStyles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -354,11 +349,11 @@ function RouteComponent() {
   ];
   return (
     <form className="form_row">
-      <div className={`${styles.start} ${signupStyles.auth_wrap} ${styles.search_account}`}>
-        <div className={signupStyles.auth_box}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
           <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
