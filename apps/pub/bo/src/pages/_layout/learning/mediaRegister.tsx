@@ -1001,7 +1001,7 @@ function RouteComponent() {
                 <IcoFormRequired width={12} height={12} />
               </span>
             </strong>
-            <div className={formStyles.col}>
+            <div className={formStyles.form_contents}>
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label htmlFor="name-confirm" className={formStyles.form_label}>

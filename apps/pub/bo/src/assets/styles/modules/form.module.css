@@ -307,6 +307,7 @@ hr.divider {
 }
 
 .form_contents_wrap {
+  @apply border-t border-solid border-[#eaf1fa] pt-[16px];
   .tit_sub {
     @apply body_3_r mb-[12px] inline-flex text-[var(--gray9)];
     .required {
@@ -317,7 +318,22 @@ hr.divider {
     @apply relative;
   }
   .checkbox {
-    @apply absolute left-0 top-0;
+    @apply absolute left-0 top-[3px];
+  }
+  .form_contents {
+    @apply rounded-[8px] border border-solid border-[#d6dae1] p-[16px];
+    .form_text {
+      @apply pl-[32px];
+    }
+    .input_box {
+      @apply mt-0 pl-[32px];
+    }
+    .guide_text {
+      @apply mt-[8px] pl-[32px];
+    }
+    & > div:nth-last-child(1) .form_item {
+      @apply pb-0;
+    }
   }
 }
 
