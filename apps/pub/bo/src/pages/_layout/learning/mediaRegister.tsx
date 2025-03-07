@@ -338,7 +338,6 @@ function RouteComponent() {
                   placeholder="학습명을 입력하세요."
                   value=""
                   className={formStyles.input}
-                  showCounter
                 />
                 {/* <span className={formStyles.count}>
                 <em className={formStyles.num}>7</em>/150
