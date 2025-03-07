@@ -1,7 +1,7 @@
 .start {
   /* breadCrumbs */
   .breadcrumbs {
-    @apply flex min-h-[52px] items-center bg-[var(--white)] pl-[24px];
+    @apply flex min-h-[40px] items-center bg-[var(--white)] pl-[24px];
     border-bottom: 1px solid var(--gray4);
     li {
       &:nth-child(1) {
@@ -18,10 +18,10 @@
         }
       }
       a {
+        @apply body_bo_2_r flex items-center text-[var(--gray8)];
         &.active {
-          @apply text-[var(--gray9)];
+          @apply text-[var(--gray8)];
         }
-        @apply flex flex-row items-center text-[14px] font-semibold text-[var(--gray8)];
       }
     }
   }

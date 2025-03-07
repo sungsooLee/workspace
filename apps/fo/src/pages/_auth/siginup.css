@@ -1,0 +1,7 @@
+.login-form {
+  .dynamic-form-field-label {
+    span {
+      color: red;
+    }
+  }
+}

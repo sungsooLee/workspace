@@ -12,6 +12,7 @@ import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-grou
 import { FormChipList } from '@/libs/ui/src/lib/chips/form-chip-list';
 import { FormSelect } from './dialogs/form-select';
 import { FormSwitch } from './dialogs/form-switch';
+import { FormTranslationBox } from '../../../features/platform/ui/platform/system/translation/form-translation-box';
 
 export const dialogConfig = {
   text: Input,
@@ -25,4 +26,5 @@ export const dialogConfig = {
   'text-area': FormTextarea,
   'chip-list': FormChipList,
   'thumbnail-image-upload': FormThumbnailImageUpload,
+  translationBox: FormTranslationBox,
 };

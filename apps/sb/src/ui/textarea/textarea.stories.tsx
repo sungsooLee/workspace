@@ -12,14 +12,11 @@ export default {
 type Story = StoryObj<typeof Textarea>;
 
 const Template: React.FC<any> = (args) => {
-  return (
-    <Textarea {...args} rows={5} cols={33} />
-  )
+  return <Textarea {...args} rows={5} cols={33} maxLength={1000} />;
 };
 
 // Name 충돌로 Story 명에 suffix(***Story) 붙임 (정책 정해지면 수정 필요)
 export const Text: Story = {
-  args: {
-  },
+  args: {},
   render: (args) => <Template {...args} />,
 };
