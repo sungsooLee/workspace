@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
-import { IcoArray } from '@learnway/icons';
+import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
 // 예시 이미지
@@ -129,7 +129,11 @@ function RouteComponent() {
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>
-                <IcoArray width={24} height={24} stroke="#a9afb8" fill="none" />
+                {listUi === 'type2' ? (
+                  <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                ) : (
+                  <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                )}
               </Button>
             </div>
           </div>
