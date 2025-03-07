@@ -60,7 +60,7 @@
     }
   }
   .btn_switch {
-    @apply absolute right-0 top-0;
+    @apply absolute right-0 top-[10px];
   }
   .input_time {
     @apply !min-w-[154px];
@@ -97,41 +97,6 @@
   }
   &.form_auto {
     @apply flex !w-auto flex-shrink-0 flex-grow-0 items-end justify-end;
-  }
-}
-.input_box_wrap {
-  @apply mt-[16px];
-  & > div {
-    & + div {
-      @apply mt-[16px];
-    }
-  }
-  &.open {
-    @apply block;
-  }
-  &.line {
-    @apply rounded-[8px] border border-solid border-[#d6dae1] p-[16px];
-    .required {
-      @apply align-top;
-    }
-    .input_box {
-      @apply mt-0;
-      .sub_text {
-        @apply pl-[28px];
-      }
-      & + .guide_text {
-        @apply pb-[16px] pl-[28px];
-      }
-      & + .input_box {
-        @apply border-t border-[#edf0f7] pt-[16px];
-        border-top: 1px solid #edf0f7;
-      }
-      &:nth-last-child(1) {
-        .guide_text {
-          @apply pb-0;
-        }
-      }
-    }
   }
 }
 .input_box {
@@ -190,6 +155,12 @@
       }
     }
   }
+  .sub_text {
+    @apply body_bo_4_r !ml-0 text-[var(--gray6)];
+  }
+  .btn_switch + .sub_text {
+    @apply -mt-[8px];
+  }
   &.type2 {
     @apply mt-0;
   }
@@ -243,15 +214,6 @@
       @apply ml-[4px] inline-flex;
     }
   }
-  .status {
-    @apply ml-[2px] inline-flex align-text-top;
-    &.required svg {
-      @apply fill-[#00afd5];
-    }
-    &.error svg {
-      @apply fill-[#00afd5];
-    }
-  }
   .info_area {
     @apply absolute right-0 top-0 flex items-center;
     .info_text {
@@ -263,6 +225,15 @@
         @apply ml-[16px];
       }
     }
+  }
+}
+.status {
+  @apply ml-[2px] inline-flex align-text-top;
+  &.required svg {
+    @apply fill-[#00afd5];
+  }
+  &.error svg {
+    @apply fill-[#ff4646];
   }
 }
 .dash {
@@ -308,7 +279,7 @@ hr.divider {
 .row_wrap {
   .inner_row {
     @apply !mx-0 mt-0;
-    label + div {
+    .input_box {
       @apply !mt-0;
     }
     & + .inner_row {
@@ -318,12 +289,35 @@ hr.divider {
       @apply !mt-0;
     }
   }
+  .btn_switch {
+    @apply !top-0;
+    & + .inner_row {
+      .input_box {
+        @apply !mt-0;
+      }
+    }
+  }
   &.col {
     & > .form_item {
       & > .input_box {
         @apply flex-col;
       }
     }
+  }
+}
+
+.form_contents_wrap {
+  .tit_sub {
+    @apply body_3_r mb-[12px] inline-flex text-[var(--gray9)];
+    .required {
+      @apply inline-flex;
+    }
+  }
+  .row {
+    @apply relative;
+  }
+  .checkbox {
+    @apply absolute left-0 top-0;
   }
 }
 

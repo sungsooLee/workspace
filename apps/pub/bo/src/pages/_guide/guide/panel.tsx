@@ -15,16 +15,12 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { RadioGroup } from '@learnway/ui';
+import { Panel } from '@learnway/ui';
 
-// 적용방법(예시)
-<RadioGroup
-  options={[
-    { value: 'type1', label: 'aaaaa' },
-    { value: 'type1-2', label: 'bbbbb' },
-    { value: 'type1-3', label: 'ccccc' },
-  ]}
-/>`}
+// 적용방법(예시) 
+<Panel type="line" hideHeaderUnderline>
+            <p>content</p>
+          </Panel>`}
           </code>
         </pre>
       </div>
