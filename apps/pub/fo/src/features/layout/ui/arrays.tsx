@@ -23,7 +23,7 @@ const ArraysButton = () => {
   };
 
   return (
-    <div className={styles.array}>
+    <div className={`${styles.start} ${styles.array}`}>
       {arrays.map((arrays, index) => (
         <Button
           key={index}

@@ -1,5 +1,12 @@
 /* swiper */
+.category_swiper {
+}
+.swiper-button-prev {
+  @apply bg-[#fff];
+}
+
 .swiper {
+  @apply z-0;
   .recent_swiper {
     .slide {
       @apply flex w-auto items-center justify-start overflow-hidden;
@@ -21,7 +28,7 @@
 }
 
 .gray_box {
-  @apply mt-[40px] overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px];
+  @apply mt-[40px] overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px] pb-[12px];
 }
 
 .divisio_box {
@@ -60,6 +67,7 @@
     }
     .right {
       @apply flex items-center;
+      .arrays_box,
       .box {
         & + .box {
           @apply relative ml-[24px] flex items-center pl-[24px];
@@ -94,7 +102,7 @@
       & + .listBox {
         @apply mt-[53px];
       }
-      .heart {
+      .heart_box {
         @apply left-[201px] right-[inherit] top-[121px];
       }
     }
@@ -115,13 +123,7 @@
         @apply overflow-hidden rounded-[8px];
       }
       .label_box {
-        @apply absolute left-[8px] top-[8px] flex;
-        li {
-          @apply label_3_r mr-0 inline-block w-auto rounded-[4px] p-[4.5px] pl-[6px] pr-[6px] text-white;
-          & + li {
-            @apply ml-[4px];
-          }
-        }
+        @apply absolute left-[8px] top-[8px];
       }
     }
     .text_box {
@@ -191,7 +193,7 @@
         }
       }
     }
-    .heart {
+    .heart_box {
       @apply absolute right-[14px] top-[147px] text-[0];
     }
   }

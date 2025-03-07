@@ -18,7 +18,7 @@ const HeartButton = () => {
   };
 
   return (
-    <div className={styles.heart}>
+    <div className={`${styles.start} ${styles.heart}`}>
       <Button
         className={cn(styles.btn_heart, heart === true ? styles.active : '')}
         onClick={eventClick}>
