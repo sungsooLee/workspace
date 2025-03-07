@@ -16,3 +16,4 @@ export * from './ui/heart';
 export * from './ui/filter';
 export * from './ui/category-layer-button';
 export * from './popup/category-popup';
+export * from './ui/label';

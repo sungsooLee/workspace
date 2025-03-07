@@ -58,7 +58,7 @@ const FilterComponent = () => {
   ];
 
   return (
-    <div className={styles.filter_wrap}>
+    <div className={`${styles.start} ${styles.filter_wrap}`}>
       <div className={styles.filter_btn_box}>
         <Button
           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
@@ -79,20 +79,20 @@ const FilterComponent = () => {
       </div>
 
       <div className={styles.select_box}>
-        <OptionCard cols={8} options={filter} multiple />
+        <OptionCard cols={8} options={filter} multiple className={styles.option_card} />
         <ChipList options={options} className={styles.chip_list} hideBorder type="line" size="lg" />
+      </div>
 
-        <div className={styles.reset}>
-          <Button className={styles.btn_reset}>
-            <IcoRefresh02
-              className={styles.ico_reset}
-              width={20}
-              height={20}
-              fill="none"
-              stroke="#131c30"></IcoRefresh02>
-            초기화
-          </Button>
-        </div>
+      <div className={styles.reset}>
+        <Button className={styles.btn_reset}>
+          <IcoRefresh02
+            className={styles.ico_reset}
+            width={20}
+            height={20}
+            fill="none"
+            stroke="#131c30"></IcoRefresh02>
+          초기화
+        </Button>
       </div>
     </div>
   );

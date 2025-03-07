@@ -1,11 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Select, Button, Pagination, Input, ContentsRow, useModal } from '@learnway/ui';
+import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
+import { Arrays, Heart, Filter, Label } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
-import { Arrays, Heart, Filter } from '../../../features/layout';
-import { Carousel } from '@/libs/ui/src';
 import {
   IcoArray,
   IcoPlay,
@@ -56,11 +54,6 @@ function RouteComponent() {
   // 강의
   const lists = [
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -88,11 +81,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -108,11 +96,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage3,
       type: '동영상',
       time: '04:59',
@@ -128,11 +111,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -148,11 +126,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -168,11 +141,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage3,
       type: '동영상',
       time: '04:59',
@@ -188,11 +156,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -208,11 +171,6 @@ function RouteComponent() {
       ],
     },
     {
-      label: [
-        { text: 'New', color: '#00afd5' },
-        { text: '접수중', color: '#06226a' },
-        { text: 'D-7', color: '#ff4646' },
-      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -228,9 +186,6 @@ function RouteComponent() {
       ],
     },
   ];
-
-  // modal
-  const { open: openModal } = useModal();
 
   // pagenation
   const [page, setPage] = React.useState(1);
@@ -263,13 +218,15 @@ function RouteComponent() {
       <div className={styles.swiper}>
         <Carousel
           items={items}
-          className={styles.recent_swiper}
+          className={`${styles.recent_swiper} category_swiper`}
           spaceBetween={carouselOption.spaceBetween}
           slidesPerView={carouselOption.slidesPerView}
           ref={swiperRef}
+          modules={[Navigation]}
+          navigation={true}
         />
 
-        <div ref={prevRef} className={styles.recent_button_prev}>
+        {/* <div ref={prevRef} className={styles.recent_button_prev}>
           <div className={styles.btn}>
             <IcoArrowBackward width={24} height={24} stroke="#6F798B" />
           </div>
@@ -278,7 +235,7 @@ function RouteComponent() {
           <div className={styles.btn}>
             <IcoArrowForward width={24} height={24} stroke="#6F798B" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.gray_box}>
@@ -336,9 +293,7 @@ function RouteComponent() {
             </span>
           </div>
           <div className={styles.right}>
-            <div className={styles.box}>
-              <Arrays></Arrays>
-            </div>
+            <Arrays className={styles.array}></Arrays>
             <div className={styles.box}>
               <Select
                 options={[
@@ -361,13 +316,7 @@ function RouteComponent() {
             <div key={index} className={styles.listBox}>
               <Link to="" className={styles.link}>
                 <div className={styles.img_box}>
-                  <ul className={styles.label_box}>
-                    {list.label.map((labels, index) => (
-                      <li key={index} style={{ backgroundColor: labels.color }}>
-                        {labels.text}
-                      </li>
-                    ))}
-                  </ul>
+                  <Label className={styles.label}></Label>
                   <div className={styles.img}>
                     <img src={list.imgSrc} alt="" />
                   </div>
@@ -385,17 +334,17 @@ function RouteComponent() {
                   </div>
                   <p className={styles.text}>{list.text}</p>
                   <div className={styles.ico_box}>
-                    <span className={styles.rating}>
+                    <span className={styles.ico_rating}>
                       <IcoRating className={styles.ico}></IcoRating>
                       {/* rating */}
                       <span className={styles.txt}>{list.rating}</span>
                     </span>
-                    <span className={styles.heart}>
+                    <span className={styles.ico_heart}>
                       <IcoHeart className={styles.ico} fill="none" stroke="#a9afb8"></IcoHeart>
                       {/* heart */}
                       <span className={styles.txt}>{list.heart}</span>
                     </span>
-                    <span className={styles.eye}>
+                    <span className={styles.ico_eye}>
                       <IcoEye className={styles.ico} fill="none" stroke="#a9afb8" />
                       {/* eye */}
                       <span className={styles.txt}>{list.eye}</span>
@@ -415,9 +364,7 @@ function RouteComponent() {
                 </div>
               </Link>
 
-              <div className={styles.heart}>
-                <Heart></Heart>
-              </div>
+              <Heart className={styles.heart}></Heart>
             </div>
           ))}
         </div>

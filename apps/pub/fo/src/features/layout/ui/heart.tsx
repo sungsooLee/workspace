@@ -6,7 +6,11 @@ import styles from './heart.module.css';
 
 import { IcoHeart } from '@learnway/icons';
 
-const HeartButton = () => {
+interface HeartProps {
+  className?: string;
+}
+
+const HeartButton = ({ className }: HeartProps) => {
   const [heart, setHeart] = useState(false);
 
   const eventClick = () => {
@@ -18,7 +22,7 @@ const HeartButton = () => {
   };
 
   return (
-    <div className={styles.heart}>
+    <div className={cn(styles.start, styles.heart, className)}>
       <Button
         className={cn(styles.btn_heart, heart === true ? styles.active : '')}
         onClick={eventClick}>

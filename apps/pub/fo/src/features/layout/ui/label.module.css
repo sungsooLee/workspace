@@ -1,0 +1,9 @@
+.label {
+  @apply flex;
+  li {
+    @apply label_3_r mr-0 inline-block w-auto rounded-[4px] p-[4.5px] pl-[6px] pr-[6px] text-white;
+    & + li {
+      @apply ml-[4px];
+    }
+  }
+}
