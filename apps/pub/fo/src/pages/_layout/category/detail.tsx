@@ -293,9 +293,7 @@ function RouteComponent() {
             </span>
           </div>
           <div className={styles.right}>
-            <div className={styles.arrays_box}>
-              <Arrays></Arrays>
-            </div>
+            <Arrays className={styles.array}></Arrays>
             <div className={styles.box}>
               <Select
                 options={[
@@ -318,9 +316,7 @@ function RouteComponent() {
             <div key={index} className={styles.listBox}>
               <Link to="" className={styles.link}>
                 <div className={styles.img_box}>
-                  <div className={styles.label_box}>
-                    <Label></Label>
-                  </div>
+                  <Label className={styles.label}></Label>
                   <div className={styles.img}>
                     <img src={list.imgSrc} alt="" />
                   </div>
@@ -338,17 +334,17 @@ function RouteComponent() {
                   </div>
                   <p className={styles.text}>{list.text}</p>
                   <div className={styles.ico_box}>
-                    <span className={styles.rating}>
+                    <span className={styles.ico_rating}>
                       <IcoRating className={styles.ico}></IcoRating>
                       {/* rating */}
                       <span className={styles.txt}>{list.rating}</span>
                     </span>
-                    <span className={styles.heart}>
+                    <span className={styles.ico_heart}>
                       <IcoHeart className={styles.ico} fill="none" stroke="#a9afb8"></IcoHeart>
                       {/* heart */}
                       <span className={styles.txt}>{list.heart}</span>
                     </span>
-                    <span className={styles.eye}>
+                    <span className={styles.ico_eye}>
                       <IcoEye className={styles.ico} fill="none" stroke="#a9afb8" />
                       {/* eye */}
                       <span className={styles.txt}>{list.eye}</span>
@@ -368,9 +364,7 @@ function RouteComponent() {
                 </div>
               </Link>
 
-              <div className={styles.heart_box}>
-                <Heart></Heart>
-              </div>
+              <Heart className={styles.heart}></Heart>
             </div>
           ))}
         </div>

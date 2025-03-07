@@ -67,7 +67,7 @@
     }
     .right {
       @apply flex items-center;
-      .arrays_box,
+      .array,
       .box {
         & + .box {
           @apply relative ml-[24px] flex items-center pl-[24px];
@@ -93,7 +93,7 @@
         .text_box {
           @apply flex-1 overflow-hidden;
           .ico_box {
-            .heart {
+            .ico_heart {
               @apply left-[inherit] top-[inhetit];
             }
           }
@@ -102,7 +102,7 @@
       & + .listBox {
         @apply mt-[53px];
       }
-      .heart_box {
+      .heart {
         @apply left-[201px] right-[inherit] top-[121px];
       }
     }
@@ -122,7 +122,7 @@
       .img {
         @apply overflow-hidden rounded-[8px];
       }
-      .label_box {
+      .label {
         @apply absolute left-[8px] top-[8px];
       }
     }
@@ -163,10 +163,10 @@
         .ico {
           @apply h-[16px] w-[16px];
         }
-        .heart {
+        .ico_heart {
           @apply right-0 top-0;
         }
-        .eye {
+        .ico_eye {
           .ico {
             path {
               @apply stroke-[var(--gray6)];
@@ -193,7 +193,7 @@
         }
       }
     }
-    .heart_box {
+    .heart {
       @apply absolute right-[14px] top-[147px] text-[0];
     }
   }
