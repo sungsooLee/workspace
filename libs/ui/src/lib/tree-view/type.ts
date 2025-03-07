@@ -41,6 +41,7 @@ export interface MoveEventPayload extends BaseEventPayload {
   sourceNode: TreeNode;
   targetNode: TreeNode | null;
   position: NodeMovePositionType;
+  // updateNodes: TreeNode[];
   targetIndex?: number;
 }
 
@@ -108,6 +109,12 @@ export interface TreeNode {
   [key: string]: any;
 }
 
+// 검색을 추가하면서 검색 결과에 따라 표시 결정 여부 속성 추가
+export interface EnhancedTreeNode extends TreeNode {
+  _visible?: boolean;
+  children?: EnhancedTreeNode[];
+}
+
 /**
  * 트리 Prop
  */
@@ -118,6 +125,7 @@ export interface TreeProps {
   expandTrigger?: boolean;
   type?: 'default' | 'advanced';
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
+  searchKeyword?: string;
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -141,6 +149,7 @@ export interface TreeNodeComponentProps {
   treeType?: 'default' | 'advanced';
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   onToggleUsed?: (node: TreeNode, isUsed: boolean) => void;
+  searchKeyword?: string;
 }
 
 /**
