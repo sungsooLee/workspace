@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
-import { Arrays, Heart, Filter, Label } from '../../../features/layout';
+import { Arrays, Heart, Filter, Label, ThumnailList } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
 import {
   IcoArray,
@@ -41,151 +41,10 @@ function RouteComponent() {
       <img src={bnrCImage1} alt="" />
     </Link>,
   ];
-  // 배너 스와이퍼 옵션
-  const carouselOption = {
-    spaceBetween: 20,
-    slidesPerView: 2.2,
-  };
   // 배너 스와이퍼 좌우 버튼
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
-
-  // 강의
-  const lists = [
-    {
-      imgSrc: listImage1,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage2,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage3,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage1,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage2,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage3,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage1,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-    {
-      imgSrc: listImage2,
-      type: '동영상',
-      time: '04:59',
-      text: '필수개발과정',
-      rating: '4.2',
-      heart: '33',
-      eye: '55',
-      related: [
-        { txt: '모바일전용', icon: IcoPhone02 },
-        { txt: '사내IP전용', icon: IcoMonitor01 },
-        { txt: '#AI기술', icon: 'none' },
-        { txt: '#C', icon: 'none' },
-      ],
-    },
-  ];
 
   // pagenation
   const [page, setPage] = React.useState(1);
@@ -193,23 +52,12 @@ function RouteComponent() {
     setPage(value);
   };
 
-  useEffect(() => {
-    // carousel btn
-    if (swiperRef.current && prevRef.current && nextRef.current) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.params.navigation.prevEl = prevRef.current;
-      swiperInstance.params.navigation.nextEl = nextRef.current;
-      swiperInstance.navigation.init();
-      swiperInstance.navigation.update();
-    }
-  }, []);
-
-  const [listUi, setListUi] = useState(false);
+  const [listUi, setListUi] = useState('type');
   const list_ui = () => {
-    if (listUi === true) {
-      setListUi(false);
+    if (listUi === 'type') {
+      setListUi('type2');
     } else {
-      setListUi(true);
+      setListUi('type');
     }
   };
 
@@ -219,23 +67,12 @@ function RouteComponent() {
         <Carousel
           items={items}
           className={`${styles.recent_swiper} category_swiper`}
-          spaceBetween={carouselOption.spaceBetween}
-          slidesPerView={carouselOption.slidesPerView}
+          spaceBetween={20}
+          slidesPerView={2.2}
           ref={swiperRef}
           modules={[Navigation]}
           navigation={true}
         />
-
-        {/* <div ref={prevRef} className={styles.recent_button_prev}>
-          <div className={styles.btn}>
-            <IcoArrowBackward width={24} height={24} stroke="#6F798B" />
-          </div>
-        </div>
-        <div ref={nextRef} className={styles.recent_button_next}>
-          <div className={styles.btn}>
-            <IcoArrowForward width={24} height={24} stroke="#6F798B" />
-          </div>
-        </div> */}
       </div>
 
       <div className={styles.gray_box}>
@@ -311,63 +148,7 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.list, listUi === true ? styles.tpye2 : '')}>
-          {lists.map((list, index) => (
-            <div key={index} className={styles.listBox}>
-              <Link to="" className={styles.link}>
-                <div className={styles.img_box}>
-                  <Label className={styles.label}></Label>
-                  <div className={styles.img}>
-                    <img src={list.imgSrc} alt="" />
-                  </div>
-                </div>
-
-                <div className={styles.text_box}>
-                  <div className={styles.type}>
-                    {/* type */}
-                    <span className={styles.txt}>{list.type}</span>
-                    <span className={styles.time}>
-                      <IcoPlay width={12} height={12} fill="#6f798b" />
-                      {/* 시간 */}
-                      {list.time}
-                    </span>
-                  </div>
-                  <p className={styles.text}>{list.text}</p>
-                  <div className={styles.ico_box}>
-                    <span className={styles.ico_rating}>
-                      <IcoRating className={styles.ico}></IcoRating>
-                      {/* rating */}
-                      <span className={styles.txt}>{list.rating}</span>
-                    </span>
-                    <span className={styles.ico_heart}>
-                      <IcoHeart className={styles.ico} fill="none" stroke="#a9afb8"></IcoHeart>
-                      {/* heart */}
-                      <span className={styles.txt}>{list.heart}</span>
-                    </span>
-                    <span className={styles.ico_eye}>
-                      <IcoEye className={styles.ico} fill="none" stroke="#a9afb8" />
-                      {/* eye */}
-                      <span className={styles.txt}>{list.eye}</span>
-                    </span>
-                  </div>
-
-                  <div className={styles.related_box}>
-                    {list.related.map((relateds, index) => (
-                      <span className={styles.related} key={index}>
-                        {relateds.icon === 'none' ? null : (
-                          <relateds.icon className={styles.ico} fill="none" stroke="#4c515e" />
-                        )}
-                        <span className={styles.txt}>{relateds.txt}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Link>
-
-              <Heart className={styles.heart}></Heart>
-            </div>
-          ))}
-        </div>
+        <ThumnailList className={styles.list} listUi={listUi}></ThumnailList>
       </div>
 
       <Pagination
