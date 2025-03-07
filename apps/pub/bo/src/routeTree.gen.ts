@@ -42,6 +42,7 @@ import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/lear
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
@@ -255,6 +256,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTestRoute = GuideGuideTestImport.update({
+  id: '/guide/test',
+  path: '/guide/test',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -760,6 +767,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTabsImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/test': {
+      id: '/_guide/guide/test'
+      path: '/guide/test'
+      fullPath: '/guide/test'
+      preLoaderRoute: typeof GuideGuideTestImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -901,6 +915,7 @@ interface GuideRouteChildren {
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
+  GuideGuideTestRoute: typeof GuideGuideTestRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -934,6 +949,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
+  GuideGuideTestRoute: GuideGuideTestRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -1018,6 +1034,7 @@ export interface FileRoutesByFullPath {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1077,6 +1094,7 @@ export interface FileRoutesByTo {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1139,6 +1157,7 @@ export interface FileRoutesById {
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
+  '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1200,6 +1219,7 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
@@ -1258,6 +1278,7 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/learning/mediaDetail'
@@ -1318,6 +1339,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
     | '/_guide/guide/tabs'
+    | '/_guide/guide/test'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/learning/mediaDetail'
@@ -1408,6 +1430,7 @@ export const routeTree = rootRoute
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
         "/_guide/guide/tabs",
+        "/_guide/guide/test",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -1606,6 +1629,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/tabs": {
       "filePath": "_guide/guide/tabs.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/test": {
+      "filePath": "_guide/guide/test.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tooltip": {

@@ -181,9 +181,6 @@
   .textarea {
     @apply !rounded-[8px];
   }
-  .btn_switch {
-    @apply top-[11px];
-  }
   .radio_box {
     @apply flex w-full;
     & > div {
@@ -304,6 +301,25 @@ hr.divider {
     }
     svg {
       @apply !mr-0 h-[16px] w-[16px] stroke-[var(--gray9)];
+    }
+  }
+}
+
+.row_wrap {
+  .inner_row {
+    @apply !mx-0 pb-[16px];
+    label + div {
+      @apply !mt-0;
+    }
+    & + .inner_row {
+      @apply border-0;
+    }
+  }
+  &.col {
+    & > .form_item {
+      & > .input_box {
+        @apply flex-col;
+      }
     }
   }
 }

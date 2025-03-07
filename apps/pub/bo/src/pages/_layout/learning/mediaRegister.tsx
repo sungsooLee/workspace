@@ -421,6 +421,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
+          {/* 2025-03-07 수정 : Switch  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -439,37 +440,35 @@ function RouteComponent() {
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
                 </Tooltip>
-                {/* Switch 텍스트 : '무기한' : '기간 설정' , input_box_wrap 영역 hide / show */}
+              </label>
+              <div className={formStyles.input_box}>
+                {/* Switch 텍스트 : '무기한' : '기간 설정' */}
                 {/* <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} /> */}
                 <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} />
-              </label>
-              <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
-                <div className={formStyles.input_box}>
-                  <DatePicker
-                    onChange={handleDate}
-                    value={date}
-                    className={formStyles.datepicker_item}
-                  />
-                  <span className={formStyles.dash}></span>
-                  <DatePicker
-                    onChange={handleDate2}
-                    value={date2}
-                    className={formStyles.datepicker_item}
-                  />
-                </div>
+                <DatePicker
+                  onChange={handleDate}
+                  value={date}
+                  className={formStyles.datepicker_item}
+                />
+                <span className={formStyles.dash}></span>
+                <DatePicker
+                  onChange={handleDate2}
+                  value={date2}
+                  className={formStyles.datepicker_item}
+                />
               </div>
             </div>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow className={cn(formStyles.row_wrap, formStyles.col)}>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-term" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>외주개발업체 정보</span>
-                {/* Switch 텍스트 : '있음' : '없음' , input_box_wrap 영역 hide / show */}
-                <Switch id="switch02" className={formStyles.btn_switch} label={'없음'} />
               </label>
-              <div className={cn('input_box_wrap', formStyles.input_box_wrap)}>
-                <ContentsRow>
+              <div className={formStyles.input_box}>
+                {/* Switch 텍스트 : '있음' : '없음' */}
+                <Switch id="switch02" className={formStyles.btn_switch} label={'없음'} />
+                <ContentsRow className={formStyles.inner_row}>
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-company" className={formStyles.form_label}>
                       <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
@@ -483,7 +482,7 @@ function RouteComponent() {
                     </div>
                   </div>
                 </ContentsRow>
-                <ContentsRow>
+                <ContentsRow className={formStyles.inner_row}>
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-1-7-1" className={formStyles.form_label}>
                       <span className={cn(formStyles.form_text, formStyles.sm)}>
@@ -521,7 +520,7 @@ function RouteComponent() {
                     </div>
                   </div>
                 </ContentsRow>
-                <ContentsRow>
+                <ContentsRow className={formStyles.inner_row}>
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-owner2" className={formStyles.form_label}>
                       <span className={cn(formStyles.form_text, formStyles.sm)}>
@@ -540,7 +539,7 @@ function RouteComponent() {
                     </p>
                   </div>
                 </ContentsRow>
-                <ContentsRow>
+                <ContentsRow className={formStyles.inner_row}>
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-url" className={formStyles.form_label}>
                       <span className={cn(formStyles.form_text, formStyles.sm)}>
@@ -560,9 +559,8 @@ function RouteComponent() {
                     </p>
                   </div>
                 </ContentsRow>
-                <ContentsRow>
-                  {/* 인풋 컴포넌트가 풀로 나란히 배치되는 경우 : col 클래스 추가*/}
-                  <div className={cn(formStyles.form_item, formStyles.col)}>
+                <ContentsRow className={formStyles.inner_row}>
+                  <div className={formStyles.form_item}>
                     <label htmlFor="name-parameter" className={formStyles.form_label}>
                       <span className={cn(formStyles.form_text, formStyles.sm)}>
                         외부학습시작 파라미터
