@@ -1,7 +1,7 @@
 import react, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Heart, Label } from '../../../features/layout';
+import { Button } from '@learnway/ui';
 
 import styles from './thumnail-list.module.css';
 
@@ -21,6 +21,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
   // 강의
   const lists = [
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -48,6 +53,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -63,6 +73,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage3,
       type: '동영상',
       time: '04:59',
@@ -78,6 +93,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -93,6 +113,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -108,6 +133,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage3,
       type: '동영상',
       time: '04:59',
@@ -123,6 +153,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage1,
       type: '동영상',
       time: '04:59',
@@ -138,6 +173,11 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
       ],
     },
     {
+      label: [
+        { text: 'New', color: '#00afd5' },
+        { text: '접수중', color: '#06226a' },
+        { text: 'D-7', color: '#ff4646' },
+      ],
       imgSrc: listImage2,
       type: '동영상',
       time: '04:59',
@@ -154,13 +194,26 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
     },
   ];
 
+  const [heart, setHeart] = useState(() => [true, false, false, false, false, false, false, false]);
+  const custody = [...heart];
+  const eventClick = () => {
+    setHeart(custody);
+  };
+
   return (
     <div className={cn(styles.list, className, listUi === 'type2' ? styles.tpye2 : 'type')}>
       {lists.map((list, index) => (
         <div key={index} className={styles.listBox}>
           <Link to="" className={styles.link}>
             <div className={styles.img_box}>
-              <Label className={styles.label}></Label>
+              <ul className={styles.label}>
+                {list.label.map((labels, index) => (
+                  <li key={index} style={{ backgroundColor: labels.color }}>
+                    {labels.text}
+                  </li>
+                ))}
+              </ul>
+
               <div className={styles.img}>
                 <img src={list.imgSrc} alt="" />
               </div>
@@ -172,7 +225,7 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
                 <span className={styles.txt}>{list.type}</span>
                 <span className={styles.time}>
                   <IcoPlay width={12} height={12} fill="#6f798b" />
-                  {/* 시간 */}
+                  {/* time */}
                   {list.time}
                 </span>
               </div>
@@ -208,7 +261,21 @@ const ThumnailListCompoment = ({ className, listUi }: ThumnailListProps) => {
             </div>
           </Link>
 
-          <Heart className={styles.heart}></Heart>
+          {/* haert */}
+          <div className={styles.heart}>
+            <Button
+              className={cn(styles.btn_heart, heart[index] === true ? styles.active : '')}
+              onClick={() => {
+                custody[index] === true ? (custody[index] = false) : (custody[index] = true);
+                eventClick();
+              }}>
+              <IcoHeart
+                width={24}
+                height={24}
+                fill={heart[index] === true ? '#fff' : 'none'}
+                stroke="#fff"></IcoHeart>
+            </Button>
+          </div>
         </div>
       ))}
     </div>
