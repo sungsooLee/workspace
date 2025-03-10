@@ -37,6 +37,19 @@
   }
 }
 
+.form_auto {
+  @apply flex;
+  & > div {
+    @apply w-[154px];
+  }
+  div + div {
+    @apply ml-[16px];
+  }
+  .btn_info {
+    @apply !font-normal;
+  }
+}
+
 .btn_switch {
   @apply translate-y-1/2;
 }

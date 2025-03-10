@@ -327,6 +327,9 @@ hr.divider {
       @apply pb-0;
     }
   }
+  & + div:not(:empty) {
+    @apply !mt-[32px];
+  }
 }
 
 .search_contents_wrap {
