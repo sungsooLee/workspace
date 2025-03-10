@@ -1,7 +1,7 @@
 /* dynamic.form.module.css */
 
 .multiple_row {
-  @apply flex flex-col;
+  @apply flex w-full flex-col;
   & > div {
     @apply !mt-0;
     label + div {
@@ -11,4 +11,32 @@
       @apply !border-0;
     }
   }
+  &.type2 {
+    & > div {
+      &:nth-child(1) {
+        & > div > div {
+          @apply !mt-0;
+        }
+      }
+      & + div {
+        @apply !pt-0;
+      }
+      & > div > div {
+        @apply relative pr-[40px];
+      }
+    }
+    .short {
+      @apply !min-w-[224px] shrink-0;
+    }
+    .btn_edit {
+      @apply !min-w-[68px] shrink-0;
+    }
+    .btn_delete {
+      @apply absolute right-0 top-1/2 -translate-y-1/2;
+    }
+  }
+}
+
+.btn_switch {
+  @apply translate-y-1/2;
 }
