@@ -2,26 +2,26 @@ import { forwardRef } from 'react';
 import { Grid } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-export interface TeacherListProps {
+export interface ChannelListProps {
   dummy?: boolean;
   setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
- * 강사 리스트
+ * 채널 리스트
  * @param value
  * @param onChange
  * @param props
  * @constructor
  */
-const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
+const ChannelListComponent = forwardRef<HTMLDivElement, ChannelListProps>(
   ({ setModalData, ...props }, ref) => {
     const { data: gridData }: any = getMockData();
     const columnHelper = createColumnHelper<any>();
     const columns = [
       columnHelper.accessor('name', {
         cell: (info) => info.getValue(),
-        header: '강사명',
+        header: '채널명',
       }),
     ] as ColumnDef<object, unknown>[];
 
@@ -37,12 +37,12 @@ const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
     );
   },
 );
-export const ManagerList = ManagerListComponent;
+export const ChannelList = ChannelListComponent;
 
 const getMockData = () => {
   return {
     data: Array(5)
       .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
+      .map((d, i) => ({ id: `id${i}`, name: `channel${i}` })),
   };
 };
