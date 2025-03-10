@@ -55,7 +55,7 @@
     }
   }
   .category_inner {
-    @apply h-[calc(100vh-126px)] flex-1 overflow-y-scroll pl-[16px] pr-[20px];
+    @apply h-[calc(100vh-126px)] flex-1 overflow-y-scroll pb-[20px] pl-[16px] pr-[20px];
     .tit_head {
       @apply h-[52px] border-b-[1px] border-solid border-[var(--primary2)];
       h2 {

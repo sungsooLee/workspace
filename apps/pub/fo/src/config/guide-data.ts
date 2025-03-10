@@ -352,6 +352,16 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '',
   },
+  {
+    layoutType: '적응형 (PC)',
+    screenName: '카테고리_상세화면',
+    pageId: 'category/detail',
+    screenId: 'NLP_FO_CAT_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-10', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
 ];
 
 export default guideData;
