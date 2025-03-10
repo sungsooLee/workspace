@@ -24,6 +24,7 @@ const InputModalButtonFormFieldComponent = forwardRef<
       modalConfig,
       valueField = 'name',
       value,
+      disabled = true,
       onChange: ownerOnChange,
       ...props
     },
@@ -32,7 +33,6 @@ const InputModalButtonFormFieldComponent = forwardRef<
     const { open: openModal } = useModal();
 
     const handleClick = () => {
-      console.log('xxx');
       openModal({
         ...modalConfig,
         onClose: (data: any) => {
@@ -48,16 +48,9 @@ const InputModalButtonFormFieldComponent = forwardRef<
           {...inputProps}
           ref={ref}
           value={value?.[valueField]}
-          disabled={inputProps?.disabled ?? true}
+          readOnly={true}
           showSearchIcon
         />
-        {/*<Button*/}
-        {/*  {...buttonProps}*/}
-        {/*  label={buttonProps?.label || t('선택')}*/}
-        {/*  variant={buttonProps?.variant || 'point'}*/}
-        {/*  size={buttonProps?.size || 'sm'}*/}
-        {/*  onClick={handleButtonOnClick}*/}
-        {/*/>*/}
       </div>
     );
   },

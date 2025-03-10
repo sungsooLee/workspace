@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import { Grid } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export interface TeacherListProps {
@@ -32,12 +31,11 @@ const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
     return (
       <div className="p-4">
         <h2>Grid</h2>
-        <Grid data={gridData} columns={columns} hideColumnSettings onRowSelect={handleRowSelect} />
       </div>
     );
   },
 );
-export const ManagerList = ManagerListComponent;
+export const CourseTypeOptionCard = ManagerListComponent;
 
 const getMockData = () => {
   return {
