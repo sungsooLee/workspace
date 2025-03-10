@@ -37,7 +37,7 @@ const GoogleInputFooter = () => {
             });
           });
         }}>
-        다음
+        구글 OTP 인증
       </Button>
     </>
   );
