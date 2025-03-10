@@ -5,6 +5,7 @@ import { Button, Input, ContentsRow } from '@learnway/ui';
 import styles from './password-input.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import noticeBoxStyles from './notice-box.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 import { IcoCaution } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/password-input')({
@@ -74,7 +75,7 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               취소
             </Button>

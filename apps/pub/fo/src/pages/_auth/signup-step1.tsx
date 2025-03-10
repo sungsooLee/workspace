@@ -5,6 +5,7 @@ import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import styles from './signup-step1.module.css';
 import noticeBoxStyles from './notice-box.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 import memberToolFormField from './member-tool-form-field.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
@@ -49,7 +50,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoOverseasDealer width={48} height={48} className="ico2" />
+                      <IcoOverseasDealer width={48} height={48} />
                       <span>HTA/HTACV 이용자</span>
                     </div>
                   ),
@@ -70,7 +71,7 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+        <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
           <Button variant="gray" size="xl">
             취소
           </Button>

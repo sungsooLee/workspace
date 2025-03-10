@@ -3,6 +3,7 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import styles from './success.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 import { IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/success')({
@@ -16,7 +17,7 @@ function RouteComponent() {
         <div className={styles.success_info}>
           <i className={styles.ico}>
             {/* 정상처리 */}
-            <IcoComplete width={56} height={56} className={styles.ico1} />
+            <IcoComplete className={styles.ico1} />
           </i>
           <h3 className={styles.title}>가입 신청완료</h3>
           <p className={styles.noti}>
@@ -28,8 +29,8 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
-          <Button variant="primary" size="xl" className="max">
+        <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <Button variant="primary" size="xl" className={authBottomBtnStyles.max}>
             로그인
           </Button>
         </div>
