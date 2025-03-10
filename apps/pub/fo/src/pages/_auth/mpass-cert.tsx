@@ -5,8 +5,8 @@ import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@lear
 import formStyles from '../../assets/styles/modules/form.module.css';
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
-import noticeBoxStyles from './notice-box.module.css';
-import authBottomBtnStyles from './authBottomBtn.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
@@ -79,7 +79,8 @@ function RouteComponent() {
           </div>
 
           {/* 유의사항 모듈 */}
-          <div className={`${noticeBoxStyles.signup_noti}`}>
+          <div
+            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -95,7 +96,7 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

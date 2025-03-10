@@ -7,7 +7,7 @@ import styles from './google-cert.module.css';
 import googleOtpFormStyles from './google-otp-form.module.css';
 import otpToolFormFieldStyles from './otp-tool-form-field.module.css';
 import noticeBoxStyles from './notice-box.module.css';
-import authBottomBtnStyles from './authBottomBtn.module.css';
+
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import {
   MpassPopup,
@@ -135,7 +135,7 @@ function RouteComponent() {
               <dd>
                 구글 OTP 인증 가이드를 보고 이용 방법을 확인해 보세요.
                 <Button
-                  className={noticeBoxStyles.link}
+                  className={cn(styles.link, 'auth--otp-guide-link')}
                   onClick={() =>
                     openModal({
                       title: 'FIDO 인증',
@@ -166,7 +166,7 @@ function RouteComponent() {
             </Button>
           </div>
 
-          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

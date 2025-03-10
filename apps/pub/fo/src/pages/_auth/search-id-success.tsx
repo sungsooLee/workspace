@@ -2,7 +2,6 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
@@ -39,8 +38,8 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
-          <Button variant="primary" size="xl" className={authBottomBtnStyles.max}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="primary" size="xl" className="max">
             로그인
           </Button>
         </div>

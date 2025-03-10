@@ -27,9 +27,6 @@
     }
     & + .horizontal {
       @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pt-[16px];
-      & + .row {
-        @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pt-[16px];
-      }
     }
     label ~ p {
       @apply w-full !flex-none;
