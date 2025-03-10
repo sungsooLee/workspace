@@ -55,21 +55,21 @@ export const FilterContent = ({
       {type === 'range' && (
         <div className="space-y-3">
           <div className="flex flex-col">
-            <label className="mb-1 text-sm text-gray-600">최소값</label>
+            <label className="text-[1.4rem] text-[#3e4550]">최소값</label>
             <Input
               type="number"
               value={(value as [number, number])[0]}
               onChange={(e) => setValue(([_, max]) => [Number(e.target.value), max as number])}
-              className="w-full rounded border p-2"
+              className="w-full"
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-1 text-sm text-gray-600">최대값</label>
+            <label className="text-[1.4rem] text-[#3e4550]">최대값</label>
             <Input
               type="number"
               value={(value as [number, number])[1]}
               onChange={(e) => setValue(([min, _]) => [min as number, Number(e.target.value)])}
-              className="w-full rounded border p-2"
+              className="w-full"
             />
           </div>
         </div>
