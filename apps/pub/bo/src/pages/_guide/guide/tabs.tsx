@@ -70,8 +70,8 @@ function RouteComponent() {
       <h2 className="guide_tit2">Tabs Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/tabs/tabs.tsx</p>
       <p className="info">
-        variant: 'fill' | 'line' | 'round' | 'progress' <br />
-        color: 'primary' | 'secondary' | 'gray'
+        type: 'fill' | 'line' | 'round' | 'progress' <br />
+        variant: 'primary' | 'secondary' | 'gray'
       </p>
       <div className="code_example">
         <pre className="code_block">
@@ -118,7 +118,7 @@ content: (
 
 // 적용방법(예시)
 <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" />
-<Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
 <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
 `}
@@ -135,7 +135,7 @@ content: (
         <h3 className="guide_tit3">Tabs fill(primary) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" color="primary" />
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs fill(primary, sm) Case</h3>
@@ -145,7 +145,7 @@ content: (
               selectedTabKey={selectedTabKey}
               items={items}
               type="fill"
-              color="primary"
+              variant="primary"
               size="sm"
             />
           </div>
@@ -159,7 +159,7 @@ content: (
         <h3 className="guide_tit3">Tabs line(count, number, alarm) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items2} type="line" color="gray" />
+            <Tabs selectedTabKey={selectedTabKey} items={items2} type="line" variant="gray" />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs round Case</h3>

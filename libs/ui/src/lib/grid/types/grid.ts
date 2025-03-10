@@ -11,6 +11,9 @@ declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     filterType?: 'text' | 'range' | 'select';
     filterOptions?: { label: string; value: string }[];
+    align?: 'left' | 'center' | 'right'; // 기본 정렬 (헤더와 셀 모두에 적용)
+    headerAlign?: 'left' | 'center' | 'right'; // 헤더 전용 정렬
+    cellAlign?: 'left' | 'center' | 'right'; // 셀 전용 정렬
   }
 }
 

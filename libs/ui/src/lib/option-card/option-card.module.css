@@ -1,8 +1,11 @@
 .start {
   &.option_card_wrap {
-    @apply grid grid-cols-2 gap-[16px];
+    @apply grid w-full gap-[16px];
+    &.type_flex {
+      @apply flex flex-wrap;
+    }
     .card_item {
-      @apply button_3_r flex min-h-[40px] flex-col items-center justify-center rounded-[8px] border border-solid border-[#d6dae1] bg-[var(--white)] text-[#4c515e];
+      @apply button_3_r relative m-0 flex min-h-[40px] flex-col items-center justify-center rounded-[8px] border border-solid border-[#d6dae1] bg-[var(--white)] text-[#4c515e];
       .label {
         @apply body_3_b block text-center text-[var(--gray9)];
       }
@@ -17,8 +20,12 @@
       }
       &.lg {
         @apply min-h-[158px] px-[24px];
+        &:hover,
         &.active {
-          @apply border-[var(--secondary1)];
+          @apply border-none;
+          &::after {
+            @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--secondary1)] content-[''];
+          }
         }
       }
     }

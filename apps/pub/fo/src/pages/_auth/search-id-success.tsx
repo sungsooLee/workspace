@@ -1,6 +1,8 @@
+import { isMobile } from 'react-device-detect';
+import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import signupStyles from './signup.module.css';
+import styles from './search-id-success.module.css';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
@@ -9,17 +11,17 @@ export const Route = createFileRoute('/_auth/search-id-success')({
 
 function RouteComponent() {
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_auth}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.success_info}>
-          <i className={signupStyles.ico}>
+    <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
+      <div className={cn(styles.auth_box, 'auth--box')}>
+        <div className={styles.success_info}>
+          <i className={styles.ico}>
             {/* 정상처리 */}
-            <IcoComplete width={32} height={24} className={signupStyles.ico1} />
+            <IcoComplete width={56} height={56} className={styles.ico1} />
             {/* 확인불가 
-            <IcoCaution02 width={32} height={24} className={signupStyles.ico2} />
+            <IcoCaution02 width={56} height={56} className={styles.ico2} />
             */}
           </i>
-          <h3 className={signupStyles.title}>
+          <h3 className={styles.title}>
             {/* 정상처리 */}
             입력하신 정보로 가입된 아이디는
             <br />
@@ -29,14 +31,14 @@ function RouteComponent() {
             <br />
             찾을 수 없습니다.*/}
           </h3>
-          <div className={signupStyles.noti_box}>hyundai.kim@hyundai.com</div>
-          <div className={signupStyles.btn_txt}>
+          <div className={styles.noti_box}>hyundai.kim@hyundai.com</div>
+          <div className={styles.btn_txt}>
             <Link to="/progress-status">비밀번호 찾기</Link>
           </div>
         </div>
 
-        <div className={signupStyles.btn_wrap}>
-          <Button variant="primary" size="xl" className={signupStyles.max}>
+        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <Button variant="primary" size="xl" className="max">
             로그인
           </Button>
         </div>

@@ -17,6 +17,7 @@ export interface PanelComponentProps {
   collapsed?: boolean; // 외부에서 collapsed 컨트롤 필요한 경우 사용
   headerClassName?: string;
   hideHeaderUnderline?: boolean;
+  type?: 'line' | 'fill';
 }
 
 const PanelComponent = function ({
@@ -27,6 +28,7 @@ const PanelComponent = function ({
   collapsible,
   collapsed: ownerCollapsed,
   hideHeaderUnderline = false,
+  type,
 }: PanelComponentProps) {
   const { t } = useTranslation();
 
@@ -41,7 +43,7 @@ const PanelComponent = function ({
   }, [ownerCollapsed]);
 
   return (
-    <div className={cn(styles.start, className, 'nlp--panel')}>
+    <div className={cn(styles.start, className, 'nlp--panel', type && styles[type])}>
       {/* Header */}
       <div className={cn(styles.header, 'flex flex-row')}>
         {/* Title */}

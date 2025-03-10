@@ -1,7 +1,8 @@
-import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider, createRouter, createRootRouteWithContext } from '@tanstack/react-router';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
 import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';

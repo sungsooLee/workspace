@@ -1,6 +1,8 @@
+import { isMobile } from 'react-device-detect';
+import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import signupStyles from './signup.module.css';
+import styles from './success.module.css';
 import { IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/success')({
@@ -9,25 +11,25 @@ export const Route = createFileRoute('/_auth/success')({
 
 function RouteComponent() {
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.success}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.success_info}>
-          <i className={signupStyles.ico}>
+    <div className={`${styles.start} ${styles.auth_wrap} ${styles.success}`}>
+      <div className={cn(styles.auth_box, 'auth--box')}>
+        <div className={styles.success_info}>
+          <i className={styles.ico}>
             {/* 정상처리 */}
-            <IcoComplete width={32} height={24} className={signupStyles.ico1} />
+            <IcoComplete width={56} height={56} className={styles.ico1} />
           </i>
-          <h3 className={signupStyles.title}>가입 신청완료</h3>
-          <p className={signupStyles.noti}>
+          <h3 className={styles.title}>가입 신청완료</h3>
+          <p className={styles.noti}>
             가입승인은 신청일부터 최대 5일 이내 완료됩니다.
             <br /> 회원가입 시 입력된 메일 주소로 가입승인 메일이 발송됩니다.
           </p>
-          <div className={signupStyles.btn_txt}>
+          <div className={styles.btn_txt}>
             <Link to="/progress-status">진행현황 확인</Link>
           </div>
         </div>
 
-        <div className={signupStyles.btn_wrap}>
-          <Button variant="primary" size="xl" className={signupStyles.max}>
+        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <Button variant="primary" size="xl" className="max">
             로그인
           </Button>
         </div>

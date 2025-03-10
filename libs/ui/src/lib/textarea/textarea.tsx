@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -11,10 +11,45 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
   size?: 'sm' | 'md'; // textarea 높이(basic : md)
   readOnly?: boolean;
   disabled?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
-  ({ size = 'md', resize, className, disabled, readOnly, ...props }, ref) => {
+  (
+    {
+      size = 'md',
+      resize,
+      className,
+      disabled,
+      readOnly,
+      maxLength = 0,
+      value,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
+    const [inputValue, setInputValue] = useState(value);
+
+    useEffect(() => {
+      setInputValue(value);
+    }, [value]);
+
+    useEffect(() => {
+      if (value !== inputValue) {
+        const event = {
+          target: {
+            value: inputValue,
+          },
+        } as React.ChangeEvent<HTMLTextAreaElement>;
+        onChange?.(event);
+      }
+    }, [inputValue]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setInputValue(e.target.value);
+    };
+
     return (
       <div
         className={cn(
@@ -26,6 +61,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
         )}>
         {/* textarea */}
         <textarea
+          value={value}
           className={cn(
             styles.textarea,
             className,
@@ -34,12 +70,15 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
             size && styles[size],
           )}
           disabled={disabled}
+          onChange={handleChange}
           {...props}
         />
         {/* 입력 글자수 */}
-        <p className={styles.text_limit}>
-          <span className={styles.num}>20</span>/100
-        </p>
+        {maxLength > 0 && (
+          <p className={styles.text_limit}>
+            <span className={styles.num}>{(inputValue?.toString() || '').length}</span>/{maxLength}
+          </p>
+        )}
       </div>
     );
   },
