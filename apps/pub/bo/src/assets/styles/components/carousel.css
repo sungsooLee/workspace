@@ -9,17 +9,12 @@
       @apply hidden;
     }
   }
-  .swiper-container {
-    overflow: visible !important;
-  }
   .swiper-button-prev {
-    @apply left-0 -translate-x-1/2;
     &::after {
       @apply bg-[url(../../images/icon/ic_arrow_backward.png)];
     }
   }
   .swiper-button-next {
-    @apply right-0 translate-x-1/2;
     &::after {
       @apply bg-[url(../../images/icon/ic_arrow_forward.png)];
     }

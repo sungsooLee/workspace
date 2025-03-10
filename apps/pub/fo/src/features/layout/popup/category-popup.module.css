@@ -12,7 +12,7 @@
 .category_wrap {
   @apply -mx-[32px] flex pt-[24px];
   .menu_list_wrap {
-    @apply h-[calc(100vh-102px)] w-[140px] overflow-y-scroll bg-[#1e4098];
+    @apply h-[calc(100vh-126px)] w-[140px] overflow-y-scroll bg-[#1e4098];
     .menu_list {
       li {
         button {
@@ -55,7 +55,7 @@
     }
   }
   .category_inner {
-    @apply h-[calc(100vh-102px)] flex-1 overflow-y-scroll pl-[16px] pr-[20px];
+    @apply h-[calc(100vh-126px)] flex-1 overflow-y-scroll pb-[20px] pl-[16px] pr-[20px];
     .tit_head {
       @apply h-[52px] border-b-[1px] border-solid border-[var(--primary2)];
       h2 {
@@ -76,6 +76,9 @@
       .depth_wrap {
         .tit {
           @apply flex h-[48px] items-center justify-between border-b-[1px] border-solid border-[var(--gray4)];
+          h3 {
+            @apply body_3_b text-[var(--gray8)];
+          }
           .btn_cate {
             transition: all 0.1s linear;
             &.active {
@@ -99,6 +102,12 @@
             }
           }
         }
+      }
+    }
+    .banner_box {
+      @apply mt-[32px];
+      .banner_link {
+        @apply mb-[8px] block;
       }
     }
   }

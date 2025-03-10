@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
@@ -28,10 +28,6 @@ function RouteComponent() {
       <img src={bnrCImage1} alt="" />
     </Link>,
   ];
-  // 배너 스와이퍼 좌우 버튼
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<any>(null);
 
   // pagenation
   const [page, setPage] = React.useState(1);
@@ -56,7 +52,6 @@ function RouteComponent() {
           className={`${styles.recent_swiper} category_swiper`}
           spaceBetween={20}
           slidesPerView={2.2}
-          ref={swiperRef}
           modules={[Navigation]}
           navigation={true}
         />

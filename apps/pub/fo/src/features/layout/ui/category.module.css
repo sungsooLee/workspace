@@ -75,7 +75,7 @@
           }
         }
         .banner_list {
-          @apply px-[32px] py-[34px];
+          @apply px-[32px] pt-[8px];
           .banner {
             @apply mt-[8px] block;
           }
@@ -84,6 +84,7 @@
     }
 
     .category_inner {
+      @apply flex-1;
       .btn_cate {
         @apply inline-block pl-[10px];
         svg {
