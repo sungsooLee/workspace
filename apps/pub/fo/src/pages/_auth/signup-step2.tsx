@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
@@ -50,7 +51,7 @@ function RouteComponent() {
             </div>
           </ContentsRow>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               이전
             </Button>

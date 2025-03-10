@@ -1,0 +1,6 @@
+.search_info {
+  @apply body_2_r pb-[32px] text-center text-[var(--gray7)];
+  strong {
+    @apply text-[var(--gray8)];
+  }
+}

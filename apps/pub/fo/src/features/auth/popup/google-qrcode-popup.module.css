@@ -10,4 +10,14 @@
   .txt_info {
     @apply body_3_r mt-[24px] text-[var(--gray7)];
   }
+  .noti_info_txt {
+    @apply mt-[24px];
+    button,
+    a {
+      @apply body_3_r text-center text-[var(--gray8)] underline;
+    }
+  }
+  .signup_noti {
+    @apply mt-[32px];
+  }
 }

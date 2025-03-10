@@ -8,6 +8,7 @@ import styles from './search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import noticeBoxStyles from './notice-box.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 
 import { Button, RadioCard, Tabs, Input, Select, InputTimer, ContentsRow } from '@learnway/ui';
 
@@ -353,7 +354,7 @@ function RouteComponent() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               취소
             </Button>

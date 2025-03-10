@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styles from './google-key-popup.module.css';
-import signupStyles from '../../../pages/_auth/signup.module.css';
+import noticeBoxStyles from '../../../pages/_auth/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
 import { Button, useModal } from '@learnway/ui';
@@ -18,13 +18,14 @@ const CustomFooter = () => {
         size="lg"
         onClick={() => {
           closeModal(); // 모달 닫기 함수 호출
-          openModal({
-            title: '구글 OTP 인증키 생성',
-            width: 'sm',
-            content: <GoogleInputPopup />,
-            footer: true,
+          setTimeout(() => {
+            openModal({
+              title: '구글 OTP 인증키 생성',
+              width: 'sm',
+              content: <GoogleInputPopup />,
+              footer: true,
+            });
           });
-          console.log('1111');
         }}>
         다음
       </Button>
@@ -42,9 +43,9 @@ const GoogleKeyPopupCompoment = () => {
         <div className={styles.key}>aqwe fder dfdg 4dfd dfdf 3a4g 6ki7 6hj9</div>
       </div>
       <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
-      <div className={signupStyles.noti_info_txt}>
+      <div className={styles.noti_info_txt}>
         <Button
-          className={signupStyles.btn_txt}
+          className={styles.btn_txt}
           onClick={() => {
             closeModal(); // 모달 닫기 함수 호출
             openModal({
@@ -57,8 +58,8 @@ const GoogleKeyPopupCompoment = () => {
           QR코드 스캔
         </Button>
       </div>
-      <div className={signupStyles.signup_noti}>
-        <dl className={signupStyles.check_point}>
+      <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+        <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />
             유의사항

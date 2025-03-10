@@ -6,6 +6,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from './notice-box.module.css';
+import authBottomBtnStyles from './authBottomBtn.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
@@ -94,7 +95,7 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               취소
             </Button>

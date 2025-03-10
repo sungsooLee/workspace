@@ -59,9 +59,6 @@
       }
     }
   }
-  .btn_switch {
-    @apply absolute right-0 top-[10px];
-  }
   .input_time {
     @apply !min-w-[154px];
   }
@@ -80,11 +77,6 @@
     }
     .guide_text.error {
       @apply ml-[40px];
-    }
-  }
-  &.type_switch {
-    .input_box {
-      @apply mt-0;
     }
   }
   &.col {
@@ -157,9 +149,6 @@
   }
   .sub_text {
     @apply body_bo_4_r !ml-0 text-[var(--gray6)];
-  }
-  .btn_switch + .sub_text {
-    @apply -mt-[8px];
   }
   &.type2 {
     @apply mt-0;
@@ -298,14 +287,6 @@ hr.divider {
     }
     &:first-child {
       @apply !mt-0;
-    }
-  }
-  .btn_switch {
-    @apply !top-0;
-    & + .inner_row {
-      .input_box {
-        @apply !mt-0;
-      }
     }
   }
   &.col {
