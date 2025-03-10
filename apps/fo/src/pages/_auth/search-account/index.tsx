@@ -164,7 +164,7 @@ function RouteComponent() {
   };
 
   const handleCancel = () => {
-    router.navigate({ to: '/login', state: { tttt: 'dsfsf' } });
+    router.navigate({ to: '/login' });
   };
 
   const handleTimeOver = () => {
@@ -213,9 +213,6 @@ function RouteComponent() {
           </NoticeBox>
 
           <div className={styles.btn_wrap}>
-            <Link to="/login" state={{ pa: 'ddddd' }}>
-              login
-            </Link>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               취소
             </Button>
