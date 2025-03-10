@@ -28,8 +28,8 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
-          <Button variant="primary" size="xl" className={authBottomBtnStyles.max}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="primary" size="xl" className="max">
             로그인
           </Button>
         </div>
