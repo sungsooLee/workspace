@@ -25,7 +25,7 @@
       }
       &.primary {
         .trigger {
-          @apply font-normal;
+          @apply border-b border-t border-[#E3E9EF] border-b-[#F0F3FB] border-t-[#F0F3FB] bg-[#F0F3FB] font-normal;
           &[data-state='active'] {
             @apply border-[#0F3492] bg-[#0F3492] font-bold;
             &::after {

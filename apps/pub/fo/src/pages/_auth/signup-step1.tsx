@@ -1,9 +1,11 @@
 import { isMobile } from 'react-device-detect';
-
 import { createFileRoute } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
-import signupStyles from './signup.module.css';
+import styles from './signup-step1.module.css';
+import noticeBoxStyles from './notice-box.module.css';
+import memberToolFormField from './member-tool-form-field.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
@@ -20,22 +22,25 @@ function RouteComponent() {
     console.log(event);
   };
   return (
-    <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.signup_info}>
-          <div className={signupStyles.step_box}>
+    <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
+      <div className={cn(styles.auth_box, 'auth--box')}>
+        <div className={styles.signup_info}>
+          <div className={styles.step_box}>
             <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step1" />
           </div>
 
-          <div className={signupStyles.signup_select} role="radiogroup">
+          {/* 회원유형 모듈 */}
+          <div
+            className={cn(memberToolFormField.signup_select, 'auth--signup-select')}
+            role="radiogroup">
             <RadioCard
-              className={signupStyles.radio_card}
+              className="radio_card"
               options={[
                 {
                   value: 'type1',
                   label: (
                     <div>
-                      <IcoBuilding01 width={48} height={48} className={signupStyles.ico1} />
+                      <IcoBuilding01 width={48} height={48} className="ico1" />
                       <span>일반 회원</span>
                     </div>
                   ),
@@ -44,7 +49,7 @@ function RouteComponent() {
                   value: 'type2',
                   label: (
                     <div>
-                      <IcoOverseasDealer width={48} height={48} className={signupStyles.ico2} />
+                      <IcoOverseasDealer width={48} height={48} className="ico2" />
                       <span>HTA/HTACV 이용자</span>
                     </div>
                   ),
@@ -52,9 +57,10 @@ function RouteComponent() {
               ]}
             />
           </div>
+          {/* 회원유형 모듈 */}
 
-          <div className={signupStyles.signup_noti}>
-            <dl className={signupStyles.check_point}>
+          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -64,7 +70,7 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div className={signupStyles.btn_wrap}>
+        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
           <Button variant="gray" size="xl">
             취소
           </Button>

@@ -1,0 +1,18 @@
+.auth_box {
+  @apply px-[40px] py-[48px];
+  .search_info {
+    @apply body_2_r mb-[48px] text-center text-[var(--gray7)];
+    strong {
+      @apply text-[var(--gray8)];
+    }
+  }
+  .select_txt {
+    @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
+  }
+  .auth_form {
+    @apply mt-[48px];
+  }
+  .btn_wrap {
+    @apply mt-[48px];
+  }
+}

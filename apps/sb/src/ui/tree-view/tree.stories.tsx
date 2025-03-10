@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   Button,
   findNodePath,
+  Input,
   Switch,
   TreeEventPayload,
   TreeNode,
@@ -68,6 +69,7 @@ export const Basic: Story = {
     (Story) => {
       const [treeData, setTreeData] = useState<TreeNode[]>(sampleData);
       const [expandSource, setExpandSource] = useState<boolean>(false);
+      const [searchKeyword, setSearchKeyword] = useState('');
 
       const handleAction = (payload: TreeEventPayload) => {
         console.log(payload);
@@ -118,23 +120,34 @@ export const Basic: Story = {
 
       return (
         <div className="flex gap-4">
-          <Story
-            args={{
-              data: treeData,
-              treeId: '1',
-              onAction: handleAction,
-              expandTrigger: expandSource,
-              nodeButtons: renderNodeButtons,
-              type: 'advanced',
-            }}
-          />
-          <Button
-            onClick={() => {
-              console.log(treeData);
-            }}>
-            저장
-          </Button>
-          <NodeDetail expandAll={handleExpandAll} collapseAll={handleCollapseAll} />
+          <div>
+            <Story
+              args={{
+                data: treeData,
+                treeId: '1',
+                onAction: handleAction,
+                expandTrigger: expandSource,
+                nodeButtons: renderNodeButtons,
+                // type: 'advanced',
+                searchKeyword: searchKeyword,
+              }}
+            />
+            <Button
+              onClick={() => {
+                console.log(treeData);
+              }}>
+              저장
+            </Button>
+          </div>
+          <div>
+            <Input
+              type="text"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              placeholder="트리 검색..."
+            />
+            <NodeDetail expandAll={handleExpandAll} collapseAll={handleCollapseAll} />
+          </div>
         </div>
       );
     },

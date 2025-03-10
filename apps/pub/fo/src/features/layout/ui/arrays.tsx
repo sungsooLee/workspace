@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@learnway/ui';
-import styles from './arrays.module.css';
+import { cn } from '@learnway/shared';
 
-const ArraysButton = () => {
+import styles from './arrays.module.css';
+interface ArraysProps {
+  className?: string;
+}
+
+const ArraysButton = ({ className }: ArraysProps) => {
   const [arraysActive, setArraysActive] = useState([true, false, false]);
   const arrays = [
     { title: '최신순', active: arraysActive[0] },
@@ -23,7 +28,7 @@ const ArraysButton = () => {
   };
 
   return (
-    <div className={styles.array}>
+    <div className={cn(styles.start, styles.array, className)}>
       {arrays.map((arrays, index) => (
         <Button
           key={index}

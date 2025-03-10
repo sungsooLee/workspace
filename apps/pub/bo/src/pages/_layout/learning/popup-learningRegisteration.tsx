@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Button } from '@learnway/ui';
+import { useModal, Button, OptionCard } from '@learnway/ui';
+import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
+import eBookstyles from './eBook.module.css';
 import {
   IcoMybook,
   IcoBlog,
@@ -19,15 +21,8 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
   component: RouteComponent,
 });
 
-interface value {
-  icon: React.ReactNode; // 아이콘 컴포넌트
-  title: string;
-  text: string;
-  onClick?: () => void;
-}
-
 function RouteComponent() {
-  const { open: openModal, alert: openAlert } = useModal();
+  const { open: openModal } = useModal();
   const CustomFooter = () => {
     const { close: closeModal } = useModal();
     return (
@@ -42,86 +37,119 @@ function RouteComponent() {
     );
   };
 
-  const options: value[] = [
+  const data = [
     {
-      title: '동영상',
-      text: '1개 동영상 업로드',
-      icon: <IcoVideo01 className={styles.icon} />,
+      label: '동영상',
+      value: getRandomId(),
+      icon: <IcoVideo01 />,
+      description: '1개 동영상 업로드',
     },
     {
-      title: '멀티 동영상',
-      text: '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
-      icon: <IcoVideo02 className={styles.icon} />,
+      label: '멀티 동영상',
+      value: getRandomId(),
+      icon: <IcoVideo02 />,
+      description:
+        '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
     },
-    { title: 'HTML 동영상', text: '설명문구2줄설명', icon: <IcoHtml className={styles.icon} /> },
-    { title: '이미지', text: '설명문구2줄설명', icon: <IcoImage01 className={styles.icon} /> },
-    { title: '기타', text: '설명문구2줄설명', icon: <IcoEtc className={styles.icon} /> },
     {
-      title: '외부 링크',
-      text: '설명문구2줄설명',
-      icon: <IcoInfoCircle className={styles.icon} />,
+      label: 'HTML 동영상',
+      value: getRandomId(),
+      icon: <IcoHtml />,
+      description: '설명 문구는 최대 2줄까지 노출됩니다. ',
     },
-    { title: '외부 위탁', text: '설명문구2줄설명', icon: <IcoEntrust className={styles.icon} /> },
-    { title: '블로그', text: '설명문구2줄설명', icon: <IcoBlog className={styles.icon} /> },
     {
-      title: '이북',
-      text: '설명문구2줄설명',
-      icon: <IcoMybook className={styles.icon} />,
-      onClick: () => {
-        openAlert({
-          title: (
-            <>
-              이북 등록은 <br />
-              TOAST 프로그램에서 진행합니다
-            </>
-          ),
-          description: (
-            <>
-              TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
-              <div className={styles.btn_box}>
-                <Button variant="gray" size="sm">
-                  {'TOAST 프로그램 설치 파일'}
-                </Button>
-                <Button variant="gray" size="sm">
-                  {'TOAST 이북 제작 가이드'}
-                </Button>
-              </div>
-            </>
-          ),
-        });
-      },
+      label: '이미지',
+      value: getRandomId(),
+      icon: <IcoImage01 />,
+      description: '설명 문구는 최대 2줄까지 노출됩니다. ',
     },
-    { title: '스콤', text: '설명문구2줄설명', icon: <IcoMybook className={styles.icon} /> },
-    { title: '멀티 스콤', text: '설명문구2줄설명', icon: <IcoMybook className={styles.icon} /> },
-    { title: '설문지', text: '설명문구2줄설명', icon: <IcoMybook className={styles.icon} /> },
-    { title: '시험지', text: '설명문구2줄설명', icon: <IcoMybook className={styles.icon} /> },
-    { title: '과제', text: '설명문구2줄설명', icon: <IcoMybook className={styles.icon} /> },
+    { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    {
+      label: '외부 링크',
+      value: getRandomId(),
+      icon: <IcoInfoCircle />,
+      description: '설명문구2줄설명',
+    },
+    {
+      label: '외부 위탁',
+      value: getRandomId(),
+      icon: <IcoEntrust />,
+      description: '설명문구2줄설명',
+    },
+    { label: '블로그', value: getRandomId(), icon: <IcoBlog />, description: '설명문구2줄설명' },
+    {
+      label: '이북',
+      value: getRandomId(),
+      icon: <IcoMybook />,
+      description: '설명문구2줄설명',
+    },
+    { label: '스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '멀티 스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '설문지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '시험지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
 
+  const EbookFooter = () => {
+    const { close: closeModal } = useModal();
+    return (
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal();
+        }}>
+        {'확인'}
+      </Button>
+    );
+  };
+
+  const EbookContent = () => {
+    return (
+      <div className={eBookstyles.wrap}>
+        <h2 className={eBookstyles.title}>
+          이북 등록은
+          <br />
+          TOAST 프로그램에서 진행합니다.
+        </h2>
+        <div className={eBookstyles.contents}>
+          <p className={eBookstyles.text}>
+            TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
+          </p>
+        </div>
+        <div className={eBookstyles.btn_box}>
+          <Button variant="gray" size="sm">
+            {'TOAST 프로그램 설치 파일'}
+          </Button>
+          <Button variant="gray" size="sm">
+            {'TOAST 이북 제작 가이드'}
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   const TypeSelectContent = () => {
-    const [activeIdx, setActiveIdx] = useState<number | null>(null);
-    const handleClick = (idx: number, onClick: () => void) => {
-      setActiveIdx(idx);
-      if (onClick) {
-        onClick?.();
-      }
-    };
     return (
       <div className={styles.wrap}>
         <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-        <div className={styles.select_wrap}>
-          {options.map((item, idx) => (
-            <Button
-              key={idx}
-              className={`${styles.select_item} ${activeIdx === idx ? styles.active : ''}`}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              onClick={() => handleClick(idx, item.onClick!)}>
-              {item.icon}
-              <strong className={styles.select_title}>{item.title}</strong>
-              <p className={styles.select_text}>{item.text}</p>
-            </Button>
-          ))}
-        </div>
+        <OptionCard
+          cols={5}
+          size="lg"
+          className={styles.select_wrap}
+          options={data}
+          onOptionSelect={(option) => {
+            console.log('selected', option);
+            option?.label === '이북' &&
+              openModal({
+                title: '',
+                hideCloseButton: true,
+                width: 'auto',
+                content: <EbookContent />,
+                footer: <EbookFooter />,
+              });
+          }}
+        />
       </div>
     );
   };

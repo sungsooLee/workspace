@@ -5,7 +5,35 @@ import signupStyles from '../../../pages/_auth/signup.module.css';
 import { IcoCaution } from '@learnway/icons';
 import imgQrcode from '../../../assets/images/temp/img_qrcode.png';
 import { Button, useModal } from '@learnway/ui';
-import { GoogleKeyPopup } from '../../../features/auth';
+import { GoogleKeyPopup, GoogleInputPopup } from '../../../features/auth';
+
+const CustomFooter = () => {
+  const { close: closeModal } = useModal();
+  const { open: openModal } = useModal();
+  return (
+    <>
+      <Button variant="gray" size="lg" onClick={() => closeModal()}>
+        취소
+      </Button>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          closeModal(); // 모달 닫기 함수 호출
+          setTimeout(() => {
+            openModal({
+              title: '구글 OTP 인증키 생성',
+              width: 'sm',
+              content: <GoogleInputPopup />,
+              footer: true,
+            });
+          });
+        }}>
+        다음
+      </Button>
+    </>
+  );
+};
 
 const GoogleQrcodePopupCompoment = () => {
   const { open: openModal } = useModal();
@@ -21,11 +49,13 @@ const GoogleQrcodePopupCompoment = () => {
           className={signupStyles.btn_txt}
           onClick={() => {
             closeModal(); // 모달 닫기 함수 호출
-            openModal({
-              title: '구글 OTP 인증키 생성',
-              width: 'sm',
-              content: <GoogleKeyPopup />,
-              footer: true,
+            setTimeout(() => {
+              openModal({
+                title: '구글 OTP 인증키 생성',
+                width: 'sm',
+                content: <GoogleKeyPopup />,
+                footer: <CustomFooter />,
+              });
             });
           }}>
           스캔할 수 없나요?

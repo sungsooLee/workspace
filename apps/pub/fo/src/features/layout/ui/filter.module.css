@@ -1,5 +1,5 @@
 .filter_wrap {
-  @apply flex items-start;
+  @apply relative flex items-start pr-[80px];
   .filter_btn_box {
     .filter_btn {
       @apply flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white;
@@ -11,19 +11,51 @@
       }
     }
   }
+  .option_card {
+    @apply w-auto;
+    div,
+    button,
+    span {
+      @apply !inline;
+    }
+
+    button {
+      @apply px-[10px];
+    }
+  }
+
   .select_box {
-    @apply relative ml-[12px] flex w-full flex-wrap justify-start;
-    .select_btn {
-      @apply button_3_r flex h-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white pl-[12px] pr-[12px] text-[var(--gray8)];
-      & + .select_btn {
-        @apply ml-[8px];
+    @apply relative ml-[12px];
+    .option_card {
+      @apply !inline align-top;
+      button {
+        @apply mb-[8px] mr-[8px] !inline align-top;
+        span {
+          @apply !text-[var(--gray8)];
+        }
+        &[class*='active'] {
+          span {
+            @apply font-bold !text-[var(--primary1)];
+          }
+        }
       }
     }
-    .reset {
-      @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
-      .ico_reset {
-        @apply mr-[8px];
+
+    .chip_list {
+      @apply !inline align-top;
+      & > div {
+        @apply mt-0 !inline align-top;
+        span {
+          @apply mb-[8px] mr-[8px] !inline-flex items-center;
+        }
       }
+    }
+  }
+
+  .reset {
+    @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
+    .ico_reset {
+      @apply mr-[8px];
     }
   }
 }

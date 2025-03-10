@@ -26,12 +26,15 @@
 .info_list {
   @apply mt-[10px] border-b-[1px] border-solid border-[var(--gray3)];
   li {
-    @apply flex min-h-[44px] items-center border-t-[1px] border-solid border-[var(--gray3)] py-[4px];
+    @apply flex min-h-[44px] items-center py-[4px];
     .title {
-      @apply min-w-[114px] text-[1.4rem] font-bold text-[var(--gray9)];
+      @apply mb-0 min-w-[114px] text-[1.4rem] font-normal text-[var(--gray9)];
     }
     .text {
       @apply ml-[24px] text-[1.4rem] font-normal leading-[1.6rem] text-[var(--gray8)];
+    }
+    & + li {
+      @apply border-t-[1px] border-solid border-[var(--gray3)];
     }
   }
 }

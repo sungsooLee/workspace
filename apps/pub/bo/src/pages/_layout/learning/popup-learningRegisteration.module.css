@@ -4,38 +4,30 @@
   .title {
     @apply title_bo_3_b text-center;
   }
+  .text {
+    @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
+  }
   .select_wrap {
-    @apply mt-[52px] grid grid-cols-5 gap-[16px];
-    .select_item {
-      @apply relative block !h-[158px] w-auto overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] p-[24px] text-center;
-      &.active {
-        @apply border-transparent;
-        &::after {
-          @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--secondary1)] content-[''];
+    @apply mt-[50px];
+    button {
+      span {
+        &:nth-last-child(1) {
+          @apply line-clamp-2;
         }
-      }
-      & + .select_item {
-        @apply m-0;
-      }
-      .select_title {
-        @apply body_3_b block text-center text-[var(--gray9)];
-      }
-      .select_text {
-        @apply body_bo_4_r mt-[2px] line-clamp-2 text-[var(--gray8)];
-      }
-      .icon {
-        @apply mb-[16px] inline-block h-[32px] w-auto fill-none stroke-[#06226A];
       }
     }
   }
 }
 
-.btn_box {
-  @apply mt-[24px] flex flex-col;
-  button {
-    @apply !ml-0 w-full;
-    & + button {
-      @apply mt-[8px];
-    }
+.upload_wrap {
+  @apply mt-[24px] flex h-[368px] flex-col items-center justify-center rounded-[8px] border border-solid border-[var(--gray4)];
+  .icon {
+    @apply mb-[12px] inline-flex;
+  }
+  .tit_upload {
+    @apply body_bo_1_b text-[var(--gray8)];
+  }
+  .guide {
+    @apply body_bo_2_r mt-[4px] text-[var(--gray7)];
   }
 }

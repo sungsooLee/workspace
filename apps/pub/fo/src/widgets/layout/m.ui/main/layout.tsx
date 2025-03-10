@@ -5,6 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { usePageMetaState } from '../../../../entities/platform';
 
+import { MobileContainerHeader } from './container/container-header';
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
 
@@ -24,11 +25,9 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   }, [pageMeta]);
   return (
     <>
-      <MobileHeader />
-      <main>
-        <p>Mobile layout </p>
-        {children}
-      </main>
+      <MobileContainerHeader />
+      {/* <MobileHeader /> */}
+      <main>{children}</main>
       {pageMeta?.mobile?.showFooter && <MobileFooter />}
     </>
   );

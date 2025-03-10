@@ -13,6 +13,7 @@ export interface ChipListComponentProps extends Omit<ChipsComponentProps, 'optio
   options: Array<any>;
   showInput?: boolean;
   orientation?: 'vertical' | 'horizontal';
+  type?: 'line' | 'round';
   placeholder?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   hideBorder?: boolean;
@@ -29,6 +30,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     options = [],
     placeholder = t('태그를 입력해주세요.'),
     orientation,
+    type,
     size,
     hideBorder,
     labelField = 'label',
@@ -105,7 +107,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
               option={option}
               labelField={labelField}
               valueField={valueField}
-              className={cn(styles.btn_chips, size && styles[size])}
+              className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
               onClick={onItemClick && handleChipClick}
               onDelete={handleChipDelete}
             />

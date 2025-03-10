@@ -1,16 +1,16 @@
 /* header.module.css */
 .start {
   .header {
-    @apply relative box-border h-[116px] min-w-[1400px] bg-[#012277] px-[32px];
+    @apply relative box-border h-[100px] min-w-[1400px] bg-[#012277] px-[32px];
     h1 {
-      @apply inline-flex items-center;
+      @apply mt-[5px] inline-flex items-center;
       img {
-        @apply h-[60px] w-auto;
+        @apply h-[40px] w-auto;
       }
       .title {
-        @apply relative ml-[6px] box-border inline-flex min-h-[60px] pl-[6px] pt-[24px] text-[16px] font-bold text-white;
+        @apply relative ml-[6px] box-border inline-flex min-h-[50px] pl-[6px] pt-[14px] text-[16px] font-bold text-white;
         &::before {
-          @apply absolute left-0 top-[36px] -mt-[6px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
+          @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
         }
       }
     }
@@ -20,8 +20,7 @@
           @apply flex justify-start gap-[48px];
           > li {
             a {
-              color: var(--white);
-              @apply inline-flex h-[40px] items-center text-[20px];
+              @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
               &:hover {
                 @apply font-bold;
               }
@@ -31,25 +30,24 @@
       }
     }
     .util {
-      @apply absolute right-[32px] top-[10px] flex items-center;
+      @apply absolute right-[32px] top-[6px] flex items-center;
       button:not(:nth-child(1)) {
-        @apply ml-[24px];
+        @apply ml-[20px];
       }
     }
     .quick_menu {
-      @apply absolute bottom-[8px] right-0 min-w-[380px];
+      @apply absolute bottom-[8px] right-0 min-w-[344px];
       ul {
         @apply flex;
         > li {
           a {
-            color: var(--white);
-            @apply inline-flex h-[40px] items-center text-[16px];
+            @apply body_2_b inline-flex h-[40px] items-center text-[var(--white)];
           }
         }
         & + button {
-          @apply relative;
+          @apply body_2_b relative pl-[20px];
           &::before {
-            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white opacity-15 content-[''];
+            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
           }
         }
       }
