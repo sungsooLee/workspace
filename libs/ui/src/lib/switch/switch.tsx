@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-switch';
 
 import { cn } from '@learnway/shared';

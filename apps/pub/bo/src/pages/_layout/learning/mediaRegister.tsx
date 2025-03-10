@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
 import styles from './page-content.module.css';
@@ -6,6 +6,7 @@ import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
 import dynamicFormStyles from '../../../assets/styles/modules/dynamic.form.module.css'; // form css
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
+import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Spinner,
@@ -718,29 +719,28 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
-                  <Input
-                    type="text"
-                    unitText={'시간'}
-                    value={'5'}
-                    className={formStyles.input_time}
-                  />
-                </div>
-                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
-                  <Input
-                    type="text"
-                    unitText={'분'}
-                    value={'15'}
-                    className={formStyles.input_time}
-                  />
-                </div>
-                <div className={cn(formStyles.form_item, formStyles.form_auto)}>
-                  <Input
-                    type="text"
-                    unitText={'초'}
-                    value={'30'}
-                    className={formStyles.input_time}
-                  />
+                <div className={formStyles.form_item}>
+                  {/* 2025-03-10 : 수정 */}
+                  <div className={dynamicFormStyles.form_auto}>
+                    <Input
+                      type="text"
+                      unitText={'시간'}
+                      value={'5'}
+                      className={formStyles.input_time}
+                    />
+                    <Input
+                      type="text"
+                      unitText={'분'}
+                      value={'15'}
+                      className={formStyles.input_time}
+                    />
+                    <Input
+                      type="text"
+                      unitText={'초'}
+                      value={'30'}
+                      className={formStyles.input_time}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1141,6 +1141,19 @@ function RouteComponent() {
                 </div>
               </ContentsRow>
             </div>
+          </div>
+          <div className={cn(editInfoStyles.start, editInfoStyles.wrap)}>
+            <p>
+              {'최초 등록'} <span className={editInfoStyles.info}>{'홍길동'}</span>
+              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
+            </p>
+            <p>
+              {'최종 수정'} <span className={editInfoStyles.info}>{'김현대'}</span>
+              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
+            </p>
+            <Button size="xs" variant="gray2" className={editInfoStyles.btn_info}>
+              {'이력정보'}
+            </Button>
           </div>
         </div>
         <hr className={styles.vertical_line} />
