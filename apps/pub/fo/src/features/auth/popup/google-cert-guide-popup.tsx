@@ -13,7 +13,12 @@ const GoogleCertGuidePopupCompoment = () => {
             <li>구글 OTP 앱 소개 PC 화면(휴대폰에 앱 설치 필수)</li>
           </ul>
           <div className={styles.btn_box}>
-            <Button>AOS 다운로드</Button> <Button>IOS 다운로드</Button>
+            <Button variant="gray" size="sm">
+              AOS 다운로드
+            </Button>{' '}
+            <Button variant="gray" size="sm">
+              IOS 다운로드
+            </Button>
           </div>
         </div>
 

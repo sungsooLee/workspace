@@ -146,38 +146,7 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>인증번호</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={12} height={12} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  {/* 인증번호 콤포넌트 추가 */}
-                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
-                  <Button variant="gray" size="lg">
-                    재전송
-                  </Button>
-                </div>
-              </div>
-            </ContentsRow>
           </div>
-
-          {/* 유의사항 모듈 */}
-          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
-            <dl className={noticeBoxStyles.check_point}>
-              <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
-                유의사항
-              </dt>
-              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
-            </dl>
-          </div>
-          {/* 유의사항 모듈 */}
         </>
       ),
     },
@@ -318,28 +287,49 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>인증번호</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={12} height={12} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  {/* 인증번호 콤포넌트 추가 */}
-                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
-                  <Button variant="gray" size="lg">
-                    재전송
-                  </Button>
-                </div>
-              </div>
-            </ContentsRow>
           </div>
+        </>
+      ),
+    },
+  ];
+  return (
+    <form className="form_row">
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>인증번호</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                {/* 인증번호 콤포넌트 추가 */}
+                <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
+                <Button variant="gray" size="lg">
+                  재전송
+                </Button>
+              </div>
+            </div>
+          </ContentsRow>
+
+          {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
+          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
+              <dt>
+                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                유의사항
+              </dt>
+              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+            </dl>
+          </div>
           {/* 유의사항 모듈 */}
+
+          {/* 유의사항 모듈 - 비번 찾기일때 내용 */}
           <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
@@ -366,15 +356,6 @@ function RouteComponent() {
             </dl>
           </div>
           {/* 유의사항 모듈 */}
-        </>
-      ),
-    },
-  ];
-  return (
-    <form className="form_row">
-      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
-        <div className={cn(styles.auth_box, 'auth--box')}>
-          <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 
           <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
