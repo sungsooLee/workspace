@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useLocation } from '@tanstack/react-router';
 
 import { pageRouteConfig } from '../../../features/auth';
 
@@ -16,6 +16,8 @@ export const Route = createFileRoute('/_auth/search-account/result')({
 });
 
 function RouteComponent() {
+  //const { state} = useLocation();
+
   const { state } = Route.useRouteContext();
 
   return (

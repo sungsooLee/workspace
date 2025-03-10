@@ -4,6 +4,7 @@ import { useCreation } from 'ahooks';
 import { useBoolean, useCounter } from 'react-use';
 
 import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 import { SearchAccountForm } from './-components/search-account-form';
 import {
@@ -20,7 +21,7 @@ import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 
 import { NoticeBox } from '../../../shared/ui';
 
-import signupStyles from '../signup.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
@@ -172,9 +173,8 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
-      <div
-        className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-        <div className={signupStyles.auth_box}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
           <Tabs
             selectedTabKey={selectedTabKey}
             items={items}
@@ -206,14 +206,16 @@ function RouteComponent() {
             <dd>
               법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
               있습니다.{' '}
-              <Link to="" className={signupStyles.link}>
+              <Link to="" className={styles.link}>
                 구글 OTP 인증 가이드
               </Link>
             </dd>
           </NoticeBox>
 
-          <div className={signupStyles.btn_wrap}>
-            <Link to="/login">login</Link>
+          <div className={styles.btn_wrap}>
+            <Link to="/login" state={{ pa: 'ddddd' }}>
+              login
+            </Link>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               취소
             </Button>

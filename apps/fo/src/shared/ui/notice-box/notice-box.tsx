@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { IcoCaution } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
-import styles from './notice-box.module.css';
+import styles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 
 interface NoticeBoxComponentProps {
   title: string;

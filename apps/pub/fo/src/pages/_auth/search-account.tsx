@@ -7,9 +7,11 @@ import formStyles from '../../assets/styles/modules/form.module.css';
 import styles from './search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
-import noticeBoxStyles from './notice-box.module.css';
+//import noticeBoxStyles from './notice-box.module.css';
 import authBottomBtnStyles from './authBottomBtn.module.css';
 import { GoogleCertGuidePopup } from '../../features/auth';
+
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 
 import {
   Button,

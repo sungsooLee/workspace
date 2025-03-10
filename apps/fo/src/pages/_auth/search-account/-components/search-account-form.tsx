@@ -1,18 +1,15 @@
-import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 
-import { Button, ContentsRow } from '@learnway/ui';
+import { ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { RadioCard } from '@learnway/ui';
-
-import signupStyles from '../../signup.module.css';
 
 import { AuthToolFormField, AuthTool } from '../../../../features/auth';
 
 import { FormRow } from '../../../../shared/ui/form-row';
 import { DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
+
+import styles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 
 interface SearchAccountFormComponentProps {
   type: 'account' | 'password';
@@ -26,10 +23,11 @@ function SearchAccountFormComponent({ provider, type }: SearchAccountFormCompone
 
   return (
     <>
-      <div className={signupStyles.search_info}>
+      <div className={styles.search_info}>
         <strong>본인인증</strong> 후<br />
         {type === 'account' ? `아이디를 확인 할 수 있습니다.` : `비밀번호를 재설정 할 수 있습니다.`}
       </div>
+
       <ContentsRow>
         <FormRow provider={provider}>
           <DynamicFormField name={'authToolType'}>
@@ -39,7 +37,7 @@ function SearchAccountFormComponent({ provider, type }: SearchAccountFormCompone
         </FormRow>
       </ContentsRow>
 
-      <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
+      <div className={cn(styles.auth_form, 'no_line', 'col')}>
         {type === 'password' && (
           <ContentsRow>
             <FormRow provider={provider}>

@@ -7,8 +7,8 @@ import { IcoPhone02, IcoMail } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { RadioCard } from '@learnway/ui';
 
-import styles from './auth-tool-form-field.module.css';
-//import  styles from '@learnway/styles/fo/features/auth/auth-tool-form-field.module.css';
+//import styles from './auth-tool-form-field.module.css';
+import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
 
 export type AuthTool = 'phone' | 'email';
 
@@ -26,7 +26,7 @@ function AuthToolFormFieldComponent({
   const { t } = useTranslation();
 
   return (
-    <div className={styles.start} role="radiogroup">
+    <div className={cn(styles.start, 'auth--signup-select')} role="radiogroup">
       <RadioCard
         className={styles.radio_card}
         value={value}

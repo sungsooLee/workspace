@@ -5,7 +5,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { Button } from '@learnway/ui';
 import { pageRouteConfig } from '../../../features/auth';
 
-import { MobileContainerFooter } from '../../../shared/mo/container-footer/container-footer';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_layout/menu3/')({
   component: RouteComponent,
