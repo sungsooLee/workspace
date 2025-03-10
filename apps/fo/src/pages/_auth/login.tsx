@@ -17,6 +17,8 @@ import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
+import { useExtendRouter } from '../../entities/platform';
+
 import signupStyles from './signup.module.css';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
@@ -32,6 +34,9 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { state } = Route.useRouteContext();
+
+  console.log('state', state);
 
   const { provider, onSubmit, onFormChange, control } = useCustomForm(detailConfig);
 

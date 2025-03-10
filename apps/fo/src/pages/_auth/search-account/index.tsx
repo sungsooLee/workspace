@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
 import { useBoolean, useCounter } from 'react-use';
 
-import { IcoCaution } from '@learnway/icons';
 import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
 
 import { SearchAccountForm } from './-components/search-account-form';
 import {
   useVerifyEmail,
   useSendVerifyEmail,
+  useAsyncFetchEmail,
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
 } from '../../../entities/user';
@@ -21,7 +21,6 @@ import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { NoticeBox } from '../../../shared/ui';
 
 import signupStyles from '../signup.module.css';
-import Placeholder from 'react-select/dist/declarations/src/components/Placeholder';
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
@@ -35,8 +34,16 @@ function RouteComponent() {
 
   const [sendedVerifyNumber, setSendedVerifyNumber] = useBoolean(false);
 
-  const { provider, onSubmit, onFormChange, control, getValues } = useCustomForm(detailConfig);
+  const {
+    provider,
+    onSubmit,
+    onFormChange,
+    control,
+    getValues,
+    formState: { errors },
+  } = useCustomForm(detailConfig);
   const { verify: verifyEmail } = useVerifyEmail();
+  const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
   const { verify: verifyPhone } = useVerifyPhoneNumber();
   const { send: sendVerifyEmail } = useSendVerifyEmail();
   const { send: sendVerifyPhone } = useSendVerifyPhoneNumber();
@@ -45,9 +52,9 @@ function RouteComponent() {
     onFormChange({
       authToolType: 'phone',
       userId: '',
-      name: '김현대',
-      birthday: '19891106',
-      phoneNumber: '01044444444',
+      name: '배성련',
+      birthday: '19781223',
+      phoneNumber: '01093432161',
       phoneNumberLocale: '',
       email: '',
       verificationCode: 'dek479',
@@ -74,6 +81,7 @@ function RouteComponent() {
 
   const handleSendVerify = () => {
     const data = getValues();
+    console.log('handleSendVerify data', data, errors);
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -107,12 +115,17 @@ function RouteComponent() {
       birthday: data.birthday,
       verificationCode: data.verificationCode,
     };
+
     if (data.authToolType === 'phone') {
       verifyPhone(
         { ...payload, phoneNumber: data.phoneNumber },
         {
-          onSuccess: (data, variables, context) => {
+          onSuccess: async (d, variables, context) => {
             verifyTimerCounter.set(0);
+            asyncFetchAccount(d);
+          },
+          onError: (error: any) => {
+            console.log('verifyPhone error', error);
           },
         },
       );
@@ -128,8 +141,29 @@ function RouteComponent() {
     }
   };
 
+  const asyncFetchAccount = (data: any) => {
+    asyncFetchEmail(
+      {
+        name: data.name,
+        birthday: data.birthday,
+        phoneNumber: data.phoneNumber,
+      },
+      {
+        onSuccess: (email, variables, context) => {
+          router.navigate({
+            to: '/search-account/result',
+            state: { email },
+          });
+        },
+        onError: (error: any) => {
+          console.log('asyncFetchAccount error', error);
+        },
+      },
+    );
+  };
+
   const handleCancel = () => {
-    router.navigate({ to: '/login' });
+    router.navigate({ to: '/login', state: { tttt: 'dsfsf' } });
   };
 
   const handleTimeOver = () => {
@@ -179,6 +213,7 @@ function RouteComponent() {
           </NoticeBox>
 
           <div className={signupStyles.btn_wrap}>
+            <Link to="/login">login</Link>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               취소
             </Button>
