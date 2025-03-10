@@ -136,7 +136,7 @@ function RouteComponent() {
           </div>
         </div>
 
-        {/* 가로형 */}
+        {/* 세로형 */}
         <div className={cn(styles.list)}>
           <ThumnailList direction=""></ThumnailList>
           <ThumnailList direction=""></ThumnailList>
@@ -148,7 +148,7 @@ function RouteComponent() {
           <ThumnailList direction=""></ThumnailList>
         </div>
 
-        {/* 세로형 */}
+        {/* 가로형 */}
         <div className={cn(styles.list, styles.horizontal)}>
           <ThumnailList direction="horizontal"></ThumnailList>
           <ThumnailList direction="horizontal"></ThumnailList>
