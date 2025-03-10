@@ -9,6 +9,7 @@ import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
 import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import useSearchBox from '../../../shared/ui/search-box/use-search-box';
+import { CourseTypeOptionCard } from '../../../features/operation';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
@@ -37,14 +38,15 @@ function RouteComponent() {
     gridFetch(data);
   }, []);
 
-  const handleNewTranslation = () => {
-    router.navigate({ to: '/platform/system/translation/view' });
-  };
+  // const handleNewTranslation = () => {
+  // router.navigate({ to: '/platform/system/translation/view' });
+  // };
 
   const handleOpenModalCourseType = () => {
     openModal({
       title: t(''),
-      content: '',
+      content: <CourseTypeOptionCard />,
+      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
   };
 
@@ -56,7 +58,7 @@ function RouteComponent() {
           variant="point"
           size="sm"
           label={t('과정 개설')}
-          onClick={handleNewTranslation}
+          onClick={handleOpenModalCourseType}
         />
       </ContentsButtons>
       <MainContents>

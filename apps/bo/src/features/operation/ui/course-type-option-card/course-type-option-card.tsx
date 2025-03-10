@@ -1,7 +1,11 @@
 import { forwardRef } from 'react';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { CommonReactElementProps, OptionCard } from '@learnway/ui';
+import { getRandomId } from '@learnway/shared';
+import { IcoVideo01 } from '@learnway/icons';
+import { useRouter } from '@tanstack/react-router';
+import styles from './course-type-option-card.module.css';
 
-export interface TeacherListProps {
+export interface CourseTypeOptionCardProps extends CommonReactElementProps {
   dummy?: boolean;
   setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
@@ -13,34 +17,89 @@ export interface TeacherListProps {
  * @param props
  * @constructor
  */
-const ManagerListComponent = forwardRef<HTMLDivElement, TeacherListProps>(
-  ({ setModalData, ...props }, ref) => {
-    const { data: gridData }: any = getMockData();
-    const columnHelper = createColumnHelper<any>();
-    const columns = [
-      columnHelper.accessor('name', {
-        cell: (info) => info.getValue(),
-        header: '강사명',
-      }),
-    ] as ColumnDef<object, unknown>[];
+const CourseTypeOptionCardComponent = forwardRef<HTMLDivElement, CourseTypeOptionCardProps>(
+  ({ setModalData, closeModal, ...props }, ref) => {
+    const router = useRouter();
+    const { data: optionsData }: any = getMockData();
 
-    const handleRowSelect = (row: any) => {
-      setModalData?.(row);
+    const handleCardSelect = (option: any) => {
+      console.log('----', option);
+      closeModal?.(); //router-config 에서 처리되면 삭제 예정
+      router.navigate({ to: '/operation_detail_test' });
     };
 
     return (
-      <div className="p-4">
-        <h2>Grid</h2>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+        <p className={styles.text}>
+          {
+            ' 과정 유형별로 학습 기간, 수강신청 여부, 차수 생성 등의 세부 내용을 설 정할 수 있습니다. '
+          }
+        </p>
+        <OptionCard
+          cols={4}
+          size="lg"
+          className={styles.select_wrap}
+          options={optionsData}
+          onOptionSelect={handleCardSelect}
+        />
       </div>
     );
   },
 );
-export const CourseTypeOptionCard = ManagerListComponent;
+export const CourseTypeOptionCard = CourseTypeOptionCardComponent;
 
 const getMockData = () => {
   return {
-    data: Array(5)
-      .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
+    data: [
+      {
+        label: '클래스',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '동영상',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '이북',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '링크',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '웹',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '라이브',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '시험',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+      {
+        label: '페키지',
+        value: getRandomId(),
+        icon: <IcoVideo01 />,
+        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+      },
+    ],
   };
 };
