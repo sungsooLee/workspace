@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import styles from './success.module.css';
-import authBottomBtnStyles from './authBottomBtn.module.css';
 import { IcoComplete } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/success')({

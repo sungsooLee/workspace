@@ -1,0 +1,21 @@
+/* google-input-popup.module.css */
+.start {
+  &.google_input_popup {
+    @apply text-center;
+    .otp_key {
+      @apply mt-[8px] rounded-[8px] bg-[var(--secondary5)] px-[24px] py-[24px] text-center;
+      .txt {
+        @apply body_3_r block w-full text-[var(--secondary3)];
+      }
+      .key {
+        @apply title_5_b mt-[8px] text-[var(--secondary3)];
+      }
+    }
+    .txt_info {
+      @apply body_3_r mt-[8px] text-[var(--gray7)];
+    }
+    .signup_noti {
+      @apply mt-[24px];
+    }
+  }
+}

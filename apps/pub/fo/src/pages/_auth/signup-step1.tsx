@@ -4,8 +4,7 @@ import { cn } from '@learnway/shared';
 import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import styles from './signup-step1.module.css';
-import noticeBoxStyles from './notice-box.module.css';
-import authBottomBtnStyles from './authBottomBtn.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import memberToolFormField from './member-tool-form-field.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
@@ -60,7 +59,8 @@ function RouteComponent() {
           </div>
           {/* 회원유형 모듈 */}
 
-          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div
+            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -71,7 +71,7 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div className={`${authBottomBtnStyles.btn_wrap} ${styles.btn_wrap}`}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="gray" size="xl">
             취소
           </Button>
