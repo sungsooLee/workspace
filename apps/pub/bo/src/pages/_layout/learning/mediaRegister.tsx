@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
+import dynamicFormStyles from '../../../assets/styles/modules/dynamic.form.module.css'; // form css
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
@@ -421,8 +422,8 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 2025-03-07 수정 : Switch S */}
-          <ContentsRow>
+          {/* 2025-03-10 수정 */}
+          <ContentsRow type="horizontal">
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-term" className={formStyles.form_label}>
@@ -445,6 +446,12 @@ function RouteComponent() {
                 {/* Switch 텍스트 : '무기한' : '기간 설정' */}
                 {/* <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} /> */}
                 <Switch id="switch01" className={formStyles.btn_switch} label={'무기한'} />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <div className={formStyles.input_box}>
                 <DatePicker
                   onChange={handleDate}
                   value={date}
@@ -459,7 +466,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.row_wrap, formStyles.col)}>
+          <ContentsRow type="horizontal">
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-term" className={formStyles.form_label}>
@@ -468,124 +475,133 @@ function RouteComponent() {
               <div className={formStyles.input_box}>
                 {/* Switch 텍스트 : '있음' : '없음' */}
                 <Switch id="switch02" className={formStyles.btn_switch} label={'없음'} />
-                <ContentsRow className={formStyles.inner_row}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-company" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <div className={formStyles.search_wrap}>
-                        <Button className={formStyles.btn_search}>
-                          <IcoSearch className={formStyles.icon_search} />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </ContentsRow>
-                <ContentsRow className={formStyles.inner_row}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-1-7-1" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>
-                        외주개발업체 담당자
-                      </span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-1-7-2" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>
-                        외주개발업체 연락처
-                      </span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.short}
-                        options={[
-                          { value: 'type1', label: '+82' },
-                          { value: 'type2', label: '+83' },
-                        ]}
-                      />
-                      <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
-                    </div>
-                  </div>
-                </ContentsRow>
-                <ContentsRow className={formStyles.inner_row}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-owner2" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>
-                        외주업체 과정코드
-                      </span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input id="name-owner2" type="text" placeholder="개발코스를 입력하세요." />
-                    </div>
-                    <p className={formStyles.guide_text}>
-                      개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
-                    </p>
-                  </div>
-                </ContentsRow>
-                <ContentsRow className={formStyles.inner_row}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-url" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>
-                        외부학습시작 URL(비표준)
-                      </span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
-                    </div>
-                    <p className={formStyles.guide_text}>
-                      개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로 노출하거나
-                      아이콘을 통해 노출)
-                    </p>
-                  </div>
-                </ContentsRow>
-                <ContentsRow className={formStyles.inner_row}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-parameter" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text, formStyles.sm)}>
-                        외부학습시작 파라미터
-                      </span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input
-                        id="name-parameter"
-                        type="text"
-                        placeholder="Param Value 값을 입력하세요."
-                      />
-                      <Input type="text" placeholder="Param Value 값을 입력하세요." />
-                    </div>
-                    <p className={formStyles.guide_text}>
-                      개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
-                    </p>
-                  </div>
-                </ContentsRow>
               </div>
             </div>
           </ContentsRow>
-          {/* 2025-03-07 수정 : Switch E */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.multiple_row}>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-company" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <div className={formStyles.search_wrap}>
+                          <Button className={formStyles.btn_search}>
+                            <IcoSearch className={formStyles.icon_search} />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-1-7-1" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>
+                          외주개발업체 담당자
+                        </span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
+                      </div>
+                    </div>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-1-7-2" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>
+                          외주개발업체 연락처
+                        </span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Select
+                          className={formStyles.short}
+                          options={[
+                            { value: 'type1', label: '+82' },
+                            { value: 'type2', label: '+83' },
+                          ]}
+                        />
+                        <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
+                      </div>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-owner2" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>
+                          외주업체 과정코드
+                        </span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Input id="name-owner2" type="text" placeholder="개발코스를 입력하세요." />
+                      </div>
+                      <p className={formStyles.guide_text}>
+                        개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
+                      </p>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-url" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>
+                          외부학습시작 URL(비표준)
+                        </span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
+                      </div>
+                      <p className={formStyles.guide_text}>
+                        개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로 노출하거나
+                        아이콘을 통해 노출)
+                      </p>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-parameter" className={formStyles.form_label}>
+                        <span className={cn(formStyles.form_text, formStyles.sm)}>
+                          외부학습시작 파라미터
+                        </span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Input
+                          id="name-parameter"
+                          type="text"
+                          placeholder="Param Value 값을 입력하세요."
+                        />
+                        <Input type="text" placeholder="Param Value 값을 입력하세요." />
+                      </div>
+                      <p className={formStyles.guide_text}>
+                        개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
+                      </p>
+                    </div>
+                  </ContentsRow>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 2025-03-10 수정 */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-source" className={formStyles.form_label}>
@@ -805,8 +821,8 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 2025-03-07 수정 S */}
-          <ContentsRow>
+          {/* 2025-03-10 수정 S */}
+          <ContentsRow type="horizontal">
             {/* Textarea type */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-conjugation" className={formStyles.form_label}>
@@ -823,13 +839,13 @@ function RouteComponent() {
                   reversed
                   label="활용 불가"
                 />
-                <p className={formStyles.sub_text}>
-                  해당 학습자원으로 교육 과정을 개설할 수 없습니다.
-                </p>
               </div>
+              <p className={formStyles.guide_text}>
+                해당 학습자원으로 교육 과정을 개설할 수 없습니다.
+              </p>
             </div>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="horizontal">
             {/* Textarea type */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-conjugation2" className={formStyles.form_label}>
@@ -846,13 +862,13 @@ function RouteComponent() {
                   reversed
                   label="보안 미적용"
                 />
-                <p className={formStyles.sub_text}>
-                  보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다.
-                </p>
               </div>
+              <p className={formStyles.guide_text}>
+                보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다.
+              </p>
             </div>
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.row_wrap, formStyles.col)}>
+          <ContentsRow type="horizontal">
             {/* Textarea type */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-add" className={formStyles.form_label}>
@@ -865,6 +881,13 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <Switch id="name-title" className={formStyles.btn_switch} label="자막 없음" />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow className={cn(formStyles.row_wrap, formStyles.col)}>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <div className={formStyles.input_box}>
                 <ContentsRow className={formStyles.inner_row}>
                   <div className={formStyles.form_item}>
                     <div className={formStyles.input_box}>

@@ -1,0 +1,14 @@
+/* dynamic.form.module.css */
+
+.multiple_row {
+  @apply flex flex-col;
+  & > div {
+    @apply !mt-0;
+    label + div {
+      @apply !mt-0;
+    }
+    & + div {
+      @apply !border-0;
+    }
+  }
+}
