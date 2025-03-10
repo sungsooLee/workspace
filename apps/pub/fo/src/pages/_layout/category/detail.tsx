@@ -35,12 +35,13 @@ function RouteComponent() {
     setPage(value);
   };
 
-  const [listUi, setListUi] = useState('type');
+  // list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
   const list_ui = () => {
-    if (listUi === 'type') {
-      setListUi('type2');
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
     } else {
-      setListUi('type');
+      setListUi('vertical'); // 세로형
     }
   };
 
@@ -105,6 +106,8 @@ function RouteComponent() {
       </div>
 
       <div className={styles.lists_wrap}>
+        <p className={styles.search_text}>“파파파파”의 검색결과</p>
+
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
@@ -134,7 +137,16 @@ function RouteComponent() {
           </div>
         </div>
 
-        <ThumnailList className={styles.list} listUi={listUi}></ThumnailList>
+        <div className={cn(styles.list, styles[listUi])}>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+        </div>
       </div>
 
       <Pagination

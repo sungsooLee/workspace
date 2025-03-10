@@ -1,10 +1,10 @@
 /* page-content.module.css */
 .main_contents {
-  @apply box-border min-h-full flex-grow pb-[28px];
+  @apply box-border min-h-full flex-auto pb-[28px];
 }
 .sub_contents {
   @apply box-border min-w-[448px] shrink-0 pl-[32px];
 }
 .vertical_line {
-  @apply sticky top-0 ml-[32px] flex h-full w-[1px] border-0 bg-[var(--gray4)];
+  @apply sticky top-0 ml-[32px] flex h-full w-[1px] shrink-0 border-0 bg-[var(--gray4)];
 }
