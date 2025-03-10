@@ -105,6 +105,8 @@ function RouteComponent() {
       </div>
 
       <div className={styles.lists_wrap}>
+        <p className={styles.search_text}>“파파파파”의 검색결과</p>
+
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
@@ -134,7 +136,25 @@ function RouteComponent() {
           </div>
         </div>
 
-        <ThumnailList className={styles.list} listUi={listUi}></ThumnailList>
+        {/* 가로형 */}
+        <div className={cn(styles.list)}>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+          <ThumnailList direction=""></ThumnailList>
+        </div>
+
+        {/* 세로형 */}
+        <div className={cn(styles.list, styles.horizontal)}>
+          <ThumnailList direction="horizontal"></ThumnailList>
+          <ThumnailList direction="horizontal"></ThumnailList>
+          <ThumnailList direction="horizontal"></ThumnailList>
+          <ThumnailList direction="horizontal"></ThumnailList>
+        </div>
       </div>
 
       <Pagination

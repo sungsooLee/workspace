@@ -1,39 +1,9 @@
-.list {
-  &.tpye2 {
-    .listBox {
-      @apply mr-0 w-full;
-      .link {
-        @apply flex items-start;
-        .img_box {
-          @apply mr-[16px] w-[237px];
-        }
-        .text_box {
-          @apply flex-1 overflow-hidden;
-          .ico_box {
-            .ico_heart {
-              @apply left-[inherit] top-[inhetit];
-            }
-          }
-        }
-      }
-      & + .listBox {
-        @apply mt-[53px];
-      }
-      .heart {
-        @apply left-[201px] right-[inherit] top-[121px];
-      }
+.start {
+  &.list_box {
+    @apply relative mr-[20px] inline-block w-[280px] align-top;
+    &.horizontal {
+      @apply w-full;
     }
-  }
-  @apply flex flex-wrap justify-items-start text-[0];
-  .listBox {
-    @apply relative;
-    &:nth-child(4n) {
-      @apply mr-0;
-    }
-    &:nth-child(n + 5) {
-      @apply mt-[40px];
-    }
-    @apply mr-[20px] inline-block w-[280px] align-top;
     .img_box {
       @apply relative;
       .img {
@@ -118,6 +88,28 @@
     }
     .heart {
       @apply absolute right-[14px] top-[147px] text-[0];
+    }
+
+    /* 가로형 */
+    &.horizontal {
+      @apply mr-0 w-full;
+      .link {
+        @apply flex items-start;
+        .img_box {
+          @apply mr-[16px] w-[237px];
+        }
+        .text_box {
+          @apply flex-1 overflow-hidden;
+          .ico_box {
+            .ico_heart {
+              @apply left-[inherit] top-[inhetit];
+            }
+          }
+        }
+      }
+      .heart {
+        @apply left-[201px] right-[inherit] top-[121px];
+      }
     }
   }
 }

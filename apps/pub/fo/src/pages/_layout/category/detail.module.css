@@ -52,15 +52,34 @@
 
 .list {
   @apply mt-[24px];
+  & > div {
+    @apply mr-[20px];
+  }
+  & > div:nth-child(4n) {
+    @apply mr-0;
+  }
+  & > div:nth-child(n + 5) {
+    @apply mt-[40px];
+  }
+  &.horizontal {
+    & > div {
+      & + div {
+        @apply mt-[54px];
+      }
+    }
+  }
 }
 
 .lists_wrap {
   @apply mt-[40px];
+  .search_text {
+    @apply body_2_r text-[var(--gray9)];
+  }
   .list {
     @apply mt-[24px];
   }
   .align {
-    @apply flex w-[100%] items-center justify-between;
+    @apply mt-[8px] flex w-[100%] items-center justify-between;
     .left {
       span {
         @apply title_6_b inline-block text-[var(--gray9)];
