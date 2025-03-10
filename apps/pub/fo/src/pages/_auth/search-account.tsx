@@ -9,14 +9,25 @@ import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import noticeBoxStyles from './notice-box.module.css';
 import authBottomBtnStyles from './authBottomBtn.module.css';
+import { GoogleCertGuidePopup } from '../../features/auth';
 
-import { Button, RadioCard, Tabs, Input, Select, InputTimer, ContentsRow } from '@learnway/ui';
+import {
+  Button,
+  RadioCard,
+  Tabs,
+  Input,
+  Select,
+  InputTimer,
+  ContentsRow,
+  useModal,
+} from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const [selectedTabKey, selectedTabKey2] = useState<string>('');
   const items = [
     {
@@ -337,9 +348,18 @@ function RouteComponent() {
               <dd>
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
                 있습니다.
-                <Link to="" className={noticeBoxStyles.link}>
+                <Button
+                  className={noticeBoxStyles.link}
+                  onClick={() =>
+                    openModal({
+                      title: 'FIDO 인증',
+                      width: 'sm',
+                      content: <GoogleCertGuidePopup />,
+                      footer: false,
+                    })
+                  }>
                   구글 OTP 인증 가이드
-                </Link>
+                </Button>
               </dd>
             </dl>
           </div>

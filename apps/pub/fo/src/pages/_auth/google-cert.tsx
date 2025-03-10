@@ -9,7 +9,12 @@ import otpToolFormFieldStyles from './otp-tool-form-field.module.css';
 import noticeBoxStyles from './notice-box.module.css';
 import authBottomBtnStyles from './authBottomBtn.module.css';
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-import { MpassPopup, GoogleQrcodePopup, GoogleInputPopup } from '../../features/auth';
+import {
+  MpassPopup,
+  GoogleQrcodePopup,
+  GoogleInputPopup,
+  GoogleCertGuidePopup,
+} from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
@@ -129,9 +134,18 @@ function RouteComponent() {
               </dd>
               <dd>
                 구글 OTP 인증 가이드를 보고 이용 방법을 확인해 보세요.
-                <Link to="" className={noticeBoxStyles.link}>
+                <Button
+                  className={noticeBoxStyles.link}
+                  onClick={() =>
+                    openModal({
+                      title: 'FIDO 인증',
+                      width: 'sm',
+                      content: <GoogleCertGuidePopup />,
+                      footer: false,
+                    })
+                  }>
                   구글 OTP 인증 가이드
-                </Link>
+                </Button>
               </dd>
             </dl>
           </div>

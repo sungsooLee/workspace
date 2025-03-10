@@ -1,18 +1,20 @@
 import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Input, ContentsRow } from '@learnway/ui';
+import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
 import styles from './password-modify.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import noticeBoxStyles from './notice-box.module.css';
 import authBottomBtnStyles from './authBottomBtn.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { GoogleCertGuidePopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
@@ -75,9 +77,7 @@ function RouteComponent() {
           </div>
 
           <div className={styles.noti_info_txt}>
-            <Link to="" className={styles.btn_txt}>
-              1개월 후 변경
-            </Link>
+            <Button className={styles.btn_txt}>1개월 후 변경</Button>
           </div>
 
           <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
@@ -102,9 +102,18 @@ function RouteComponent() {
               <dd>
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
                 있습니다.
-                <Link to="" className={noticeBoxStyles.link}>
+                <Button
+                  className={noticeBoxStyles.link}
+                  onClick={() =>
+                    openModal({
+                      title: 'FIDO 인증',
+                      width: 'sm',
+                      content: <GoogleCertGuidePopup />,
+                      footer: false,
+                    })
+                  }>
                   구글 OTP 인증 가이드
-                </Link>
+                </Button>
               </dd>
             </dl>
           </div>
