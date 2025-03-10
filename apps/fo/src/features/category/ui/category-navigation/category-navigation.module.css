@@ -10,11 +10,11 @@
     }
   }
   &.category_area {
-    @apply flex items-center bg-[var(--white)];
+    @apply flex items-center;
 
     .category {
       z-index: 2;
-      @apply absolute left-[-20px] top-[15px] w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+      @apply w-[1180px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     }
 
     .category_container {
@@ -53,16 +53,22 @@
                 @apply flex items-center justify-between;
                 a,
                 button {
-                  @apply body_3_b flex w-full justify-between py-[15px] text-left text-[var(--white)];
+                  @apply body_3_b flex w-full justify-between rounded-[0] py-[15px] text-left text-[var(--white)];
                   span {
                     @apply inline-block px-[32px];
                   }
+                  i {
+                    @apply hidden;
+                  }
                   &.active {
                     @apply bg-[var(--white)] text-[var(--primary2)];
+                    span {
+                      @apply pr-[8px];
+                    }
+                    i {
+                      @apply inline-block pr-[8px];
+                    }
                   }
-                }
-                i {
-                  @apply pr-[8px];
                 }
               }
             }
@@ -115,6 +121,47 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    .btn_category {
+      @apply mr-[0];
+    }
+    &.category_area {
+      .category {
+        @apply w-auto rounded-[0] border-0 shadow-none;
+      }
+      .category_container {
+        @apply border-t-[0];
+      }
+      .category_menu {
+        @apply w-[140px];
+        .menu_list_wrap {
+          .menu_list {
+            .list {
+              > li {
+                a,
+                button {
+                  span {
+                    @apply px-[20px];
+                  }
+                }
+              }
+            }
+          }
+        }
+        .banner_list {
+          @apply px-[20px];
+        }
+      }
+
+      .category_inner {
+        @apply w-full pl-[16px] pr-[20px];
       }
     }
   }
