@@ -2,9 +2,11 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import styles from './search-id-success.module.css';
+
 import authBottomBtnStyles from './authBottomBtn.module.css';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
+
+import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,
