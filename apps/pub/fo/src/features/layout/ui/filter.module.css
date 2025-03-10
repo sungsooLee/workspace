@@ -47,6 +47,9 @@
         @apply mt-0 !inline align-top;
         span {
           @apply mb-[8px] mr-[8px] !inline-flex items-center;
+          button {
+            @apply !p-0;
+          }
         }
       }
     }
