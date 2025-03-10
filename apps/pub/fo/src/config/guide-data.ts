@@ -360,7 +360,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-10', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
 ];
 

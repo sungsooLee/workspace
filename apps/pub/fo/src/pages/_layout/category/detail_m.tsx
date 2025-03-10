@@ -10,5 +10,9 @@ export const Route = createFileRoute('/_layout/category/detail_m')({
 });
 
 function RouteComponent() {
-  return <div className={styles.start}></div>;
+  return (
+    <div className={styles.start}>
+      '<div className={styles.category_box}></div>
+    </div>
+  );
 }
