@@ -11,6 +11,9 @@
     }
   }
   .txt_info {
-    @apply body_3_r mt-[24px] text-[var(--gray7)];
+    @apply body_3_r mt-[8px] text-[var(--gray7)];
+  }
+  .signup_noti {
+    @apply mt-[24px];
   }
 }

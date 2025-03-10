@@ -3,15 +3,6 @@
 .auth--box {
   @apply px-[40px] py-[48px];
 }
-.auth--btn-wrap {
-  @apply flex items-center justify-center;
-  button {
-    @apply w-full;
-    &.max {
-      @apply max-w-[294px];
-    }
-  }
-}
 
 h4.auth--title {
   @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
