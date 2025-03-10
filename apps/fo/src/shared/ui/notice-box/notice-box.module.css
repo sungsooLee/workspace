@@ -78,37 +78,43 @@
       }
     }
 
-    .signup_noti {
-      @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
-      .check_point {
-        @apply body_4_r text-left text-[var(--gray7)];
-        dt {
-          @apply body_4_b flex items-center justify-start;
-          svg {
-            @apply mr-[4px];
-          }
+    .success_info {
+      @apply text-center;
+      .ico {
+        @apply m-auto inline-flex items-center justify-center;
+        svg {
+          @apply h-[56px] w-[56px];
         }
-        dd {
-          @apply relative mt-[8px] pl-[10px];
-          + dd {
-            @apply mt-[4px];
-          }
-          &::before {
-            @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
-          }
-          .link {
-            @apply ml-[8px] text-[#009ABC] underline;
-          }
+        .ico1 {
+          @apply stroke-[#00AFD5];
         }
+        .ico2 {
+          @apply stroke-[#FFB902];
+        }
+      }
+      h3.title {
+        @apply title_5_b mt-[24px];
+      }
+      .noti {
+        @apply body_bo_2_r mt-[8px] leading-[1.6] text-[var(--gray7)];
+      }
+      .noti_box {
+        @apply title_5_b mt-[24px] rounded-[8px] bg-[#EDFCFF] px-[32px] py-[32px] text-[#009ABC];
+        &.type2 {
+          @apply body_3_r px-[16px] py-[16px] text-left;
+        }
+      }
+      .btn_txt {
+        @apply mt-[24px];
+      }
+      + .auth_form {
+        @apply mt-[48px];
       }
     }
 
-    .btn_txt {
-      @apply body_3_r text-[var(--gray8)] underline;
-    }
     .auth_form {
       + .noti_info_txt {
-        @apply mt-[8px] text-center;
+        @apply mt-[8px];
         + .signup_noti {
           @apply mt-[24px];
         }
@@ -128,10 +134,6 @@
         @apply max-w-[294px];
       }
     }
-  }
-
-  .btn_wrap1111 {
-    border-color: red;
   }
 
   /* 로그인 */
@@ -238,6 +240,41 @@
   &.mpass_cert {
     .search_info {
       @apply pt-0;
+    }
+  }
+}
+
+.noti_info_txt {
+  @apply body_3_r mt-[24px] text-center;
+  .btn_txt {
+    @apply body_3_r text-[var(--gray8)] underline;
+  }
+  + .signup_noti {
+    @apply mt-[32px];
+  }
+}
+
+.signup_noti {
+  @apply mt-[48px] rounded-[8px] bg-[var(--gray1)] p-[16px];
+  .check_point {
+    @apply body_4_r text-left text-[var(--gray7)];
+    dt {
+      @apply body_4_b flex items-center justify-start;
+      svg {
+        @apply mr-[4px];
+      }
+    }
+    dd {
+      @apply relative mt-[8px] pl-[10px];
+      + dd {
+        @apply mt-[4px];
+      }
+      &::before {
+        @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+      }
+      .link {
+        @apply ml-[8px] text-[#009ABC] underline;
+      }
     }
   }
 }

@@ -12,10 +12,7 @@ export interface InputTimerProps extends InputProps {
 }
 
 const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
-  (
-    { type = 'text', className, value = '', startTimer, initialTime, onTimerEnd, ...props },
-    ref,
-  ) => {
+  ({ startTimer, initialTime, onTimerEnd, ...props }, ref) => {
     const [seconds, setSeconds] = useState(initialTime);
 
     const timerText = startTimer === 0 ? '' : duration({ seconds }, 'mm:ss').toString();

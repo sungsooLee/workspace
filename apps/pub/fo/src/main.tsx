@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { routeTree } from './routeTree.gen';
+
+import { appConfig } from '@learnway/config';
 
 const router = createRouter({
   routeTree,
@@ -17,8 +17,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-// dayjs
-dayjs.extend(duration);
+appConfig.init({});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

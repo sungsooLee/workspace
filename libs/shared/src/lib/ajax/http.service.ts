@@ -178,7 +178,12 @@ export class HttpService {
 
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
-        return response.data.data;
+        console.log('response.data.data', response.data);
+        if (response.data?.status === 200) {
+          return response.data.data;
+        } else {
+          throw response.data;
+        }
       })
       .catch((error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
