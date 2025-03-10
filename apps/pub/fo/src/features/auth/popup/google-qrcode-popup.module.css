@@ -1,23 +1,25 @@
 /* google-qrcode-popup.module.css */
-.google_qrcode_popup {
-  @apply text-center;
-  .qrcode {
-    @apply pt-[16px];
-    img {
-      @apply m-auto h-[160px] w-[160px];
+.start {
+  &.google_qrcode_popup {
+    @apply text-center;
+    .qrcode {
+      @apply pt-[16px];
+      img {
+        @apply m-auto h-[160px] w-[160px];
+      }
     }
-  }
-  .txt_info {
-    @apply body_3_r mt-[24px] text-[var(--gray7)];
-  }
-  .noti_info_txt {
-    @apply mt-[24px];
-    button,
-    a {
-      @apply body_3_r text-center text-[var(--gray8)] underline;
+    .txt_info {
+      @apply body_3_r mt-[24px] text-[var(--gray7)];
     }
-  }
-  .signup_noti {
-    @apply mt-[32px];
+    .noti_info_txt {
+      @apply mt-[24px];
+      button,
+      a {
+        @apply body_3_r text-center text-[var(--gray8)] underline;
+      }
+    }
+    .signup_noti {
+      @apply mt-[32px];
+    }
   }
 }
