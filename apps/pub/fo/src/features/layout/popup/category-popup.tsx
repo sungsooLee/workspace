@@ -6,6 +6,9 @@ import { Navigation } from 'swiper/modules';
 
 import { IcoArrowForward, IcoArrowDown } from '@learnway/icons';
 
+import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
+import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
+
 import styles from './category-popup.module.css';
 
 const CategoryPopupComponent = () => {
@@ -197,6 +200,15 @@ const CategoryPopupComponent = () => {
                   )}
                 </div>
               ))}
+            </div>
+
+            <div className={styles.banner_box}>
+              <Link to="" className={styles.banner_link}>
+                <img src={bnrImage1} />
+              </Link>
+              <Link to="" className={styles.banner_link}>
+                <img src={bnrImage2} />
+              </Link>
             </div>
           </div>
         </div>
