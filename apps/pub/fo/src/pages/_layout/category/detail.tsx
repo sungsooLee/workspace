@@ -35,12 +35,13 @@ function RouteComponent() {
     setPage(value);
   };
 
-  const [listUi, setListUi] = useState('type');
+  // list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
   const list_ui = () => {
-    if (listUi === 'type') {
-      setListUi('type2');
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
     } else {
-      setListUi('type');
+      setListUi('vertical'); // 세로형
     }
   };
 
@@ -136,24 +137,15 @@ function RouteComponent() {
           </div>
         </div>
 
-        {/* 세로형 */}
-        <div className={cn(styles.list)}>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-          <ThumnailList direction=""></ThumnailList>
-        </div>
-
-        {/* 가로형 */}
-        <div className={cn(styles.list, styles.horizontal)}>
-          <ThumnailList direction="horizontal"></ThumnailList>
-          <ThumnailList direction="horizontal"></ThumnailList>
-          <ThumnailList direction="horizontal"></ThumnailList>
-          <ThumnailList direction="horizontal"></ThumnailList>
+        <div className={cn(styles.list, styles[listUi])}>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
         </div>
       </div>
 

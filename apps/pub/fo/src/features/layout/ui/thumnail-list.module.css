@@ -88,6 +88,9 @@
     }
     .heart {
       @apply absolute right-[14px] top-[147px] text-[0];
+      button {
+        @apply !p-0;
+      }
     }
 
     /* 가로형 */

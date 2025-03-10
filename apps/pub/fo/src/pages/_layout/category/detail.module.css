@@ -1,7 +1,5 @@
 .start {
   /* swiper */
-  .category_swiper {
-  }
   .swiper-button-prev {
     @apply bg-[#fff];
   }
