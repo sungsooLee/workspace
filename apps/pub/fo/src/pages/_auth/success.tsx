@@ -4,6 +4,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import styles from './success.module.css';
 import { IcoComplete } from '@learnway/icons';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 export const Route = createFileRoute('/_auth/success')({
   component: RouteComponent,
@@ -28,8 +29,9 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="primary" size="xl" className="max">
+        <div
+          className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <Button variant="primary" size="xl" className={googleOtpGuideButtonStyles.max}>
             로그인
           </Button>
         </div>

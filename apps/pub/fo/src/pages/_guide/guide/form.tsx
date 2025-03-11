@@ -16,7 +16,7 @@ import {
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import formStyles from '../../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,
@@ -65,7 +65,7 @@ function RouteComponent() {
       <div className="code_example">
         <pre className="code_block">
           <code>{`// module css import
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 
 // 예시
 <div className='form_row'>

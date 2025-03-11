@@ -1,4 +1,0 @@
-/* _form.css */
-.dynamic-form-field-label {
-  @apply !text-[1.4rem] !text-[var(--gray8)];
-}

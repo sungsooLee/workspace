@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { guideData } from '../../../config'; // 퍼블 목록 데이터
-import '../../../assets/styles/guide.css';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import '../../../../../../../libs/styles/src/lib/fo/assets/styles/guide.css';
 
 export const Route = createFileRoute('/_guide/guide/')({
   component: RouteComponent,
