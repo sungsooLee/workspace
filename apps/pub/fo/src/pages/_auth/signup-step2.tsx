@@ -3,7 +3,8 @@ import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
@@ -50,7 +51,8 @@ function RouteComponent() {
             </div>
           </ContentsRow>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <div
+            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               이전
             </Button>

@@ -7,6 +7,7 @@ import styles from './signup-step1.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import memberToolFormField from './member-tool-form-field.module.css';
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
@@ -71,7 +72,8 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+        <div
+          className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
           <Button variant="gray" size="xl">
             취소
           </Button>
