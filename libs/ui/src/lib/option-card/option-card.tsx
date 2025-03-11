@@ -51,8 +51,10 @@ const OptionCardComponent = function ({
 
   // callback function
   useEffect(() => {
-    onOptionSelect?.(selectedOptions?.[0]);
-    onOptionsSelect?.(selectedOptions);
+    if (selectedOptions?.length) {
+      onOptionSelect?.(selectedOptions?.[0]);
+      onOptionsSelect?.(selectedOptions);
+    }
   }, [selectedOptions]);
 
   const handleOptionClickForSingle = (option: OptionCardItem) => {

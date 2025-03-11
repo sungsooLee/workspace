@@ -1,0 +1,41 @@
+/* popup-learningRegisteration.module.css */
+.wrap {
+  @apply relative;
+  .title {
+    @apply title_bo_3_b text-center;
+  }
+  .select_wrap {
+    @apply mt-[52px] grid grid-cols-5 gap-[16px];
+    .select_item {
+      @apply relative block !h-[158px] w-auto overflow-hidden rounded-[8px] border border-solid border-[var(--gray4)] p-[24px] text-center;
+      &.active {
+        @apply border-transparent;
+        &::after {
+          @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--secondary1)] content-[''];
+        }
+      }
+      & + .select_item {
+        @apply m-0;
+      }
+      .select_title {
+        @apply body_3_b block text-center text-[var(--gray9)];
+      }
+      .select_text {
+        @apply body_bo_4_r mt-[2px] line-clamp-2 text-[var(--gray8)];
+      }
+      .icon {
+        @apply mb-[16px] inline-block h-[32px] w-auto fill-none stroke-[#06226A];
+      }
+    }
+  }
+}
+
+.btn_box {
+  @apply mt-[24px] flex flex-col;
+  button {
+    @apply !ml-0 w-full;
+    & + button {
+      @apply mt-[8px];
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import selectStyles from './lib/select/select.module.css';
 // accordion
 export * from './lib/accordion/accordion';
 
@@ -42,6 +43,9 @@ export * from './lib/date-picker/time-picker';
 // editor
 export * from './lib/editor/hooks/editor.hook';
 export { default as Editor } from './lib/editor';
+
+// empty-text
+export * from './lib/empty-text/empty-text';
 
 // grid
 export * from './lib/grid';
@@ -94,6 +98,8 @@ export * from './lib/radio-group/form-radio-group';
 export * from './lib/radio-card/radio-card';
 
 // select
+
+export { selectStyles };
 export * from './lib/select/select';
 export * from './lib/select/type';
 // dropdown-list

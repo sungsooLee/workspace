@@ -69,7 +69,13 @@ const ModalComponent: React.FC<ModalConfig> = ({
 
           {/* content */}
           <div className={cn(styles.content_body, !title && styles.notitle)}>
-            {<ContentComponent content={content} setModalData={setModalData} />}
+            {
+              <ContentComponent
+                content={content}
+                setModalData={setModalData}
+                closeModal={closeModal}
+              />
+            }
           </div>
 
           {/* footer */}
@@ -98,11 +104,18 @@ const ModalComponent: React.FC<ModalConfig> = ({
   );
 };
 
-const ContentComponent: React.FC<any> = ({ content, setModalData }) => {
+const ContentComponent: React.FC<any> = ({ content, setModalData, closeModal }) => {
   const newContent = isValidElement(content)
-    ? cloneElement(content as React.ReactElement<{ setModalData: (value: any) => void }>, {
-        setModalData,
-      }) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setModalData 사용을 위해 타입 단언
+    ? cloneElement(
+        content as React.ReactElement<{
+          setModalData: (value: any) => void;
+          closeModal: (value?: any) => void;
+        }>,
+        {
+          setModalData,
+          closeModal,
+        },
+      ) // content 는 어떤 컴포넌트가 들어올지 모르기때문에 setModalData 사용을 위해 타입 단언
     : null;
   return newContent;
 };

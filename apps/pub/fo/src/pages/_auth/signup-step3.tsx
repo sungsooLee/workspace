@@ -212,7 +212,7 @@ function RouteComponent() {
             </ul>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               이전
             </Button>

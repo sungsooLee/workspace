@@ -23,8 +23,12 @@ const PageContentsComponent: FC<{
       {MainContentsSlot && MainContentsSlot.length > 0 && (
         <div className={styles.main_contents}>{MainContentsSlot}</div>
       )}
+
       {SubContentsSlot && SubContentsSlot.length > 0 && (
-        <div className={styles.sub_contents}>{SubContentsSlot}</div>
+        <>
+          <hr className={styles.vertical_line} />
+          <div className={styles.sub_contents}>{SubContentsSlot}</div>
+        </>
       )}
     </>
   );

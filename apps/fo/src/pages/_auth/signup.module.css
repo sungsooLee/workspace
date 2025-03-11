@@ -130,6 +130,10 @@
     }
   }
 
+  .btn_wrap1111 {
+    border-color: red;
+  }
+
   /* 로그인 */
   &.login {
     .login_info {

@@ -113,12 +113,12 @@ module.exports = {
         },
         '.title_4_b': {
           ...baseTitle,
-          fontSize: '2.4rem',
+          fontSize: '2.2rem',
           fontWeight: '600',
         },
         '.title_4_r': {
           ...baseTitle,
-          fontSize: '2.4rem',
+          fontSize: '2.2rem',
           fontWeight: '400',
         },
         '.title_5_b': {

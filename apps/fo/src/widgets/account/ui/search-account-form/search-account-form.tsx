@@ -1,15 +1,12 @@
-import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 
-import { Button, ContentsRow } from '@learnway/ui';
+import { ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { RadioCard } from '@learnway/ui';
 
 import signupStyles from '../signup.module.css';
 
-import { AuthToolFormField, AuthTool } from '../auth-tool-form-field/auth-tool-form-field';
+import { AuthToolFormField, AuthTool } from '../../../../features/auth';
 
 import { FormRow } from '../../../../shared/ui/form-row';
 import { DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
@@ -24,13 +21,6 @@ function SearchAccountFormComponent({ provider, type }: SearchAccountFormCompone
 
   const authToolType = useWatch({ control: provider.control, name: 'authToolType' });
 
-  /*
-  const [authTool, setAuthTool] = useState<AuthTool>('phone');
-
-  const handleOnChangeAuthTool = (value: AuthTool) => {
-    setAuthTool(value);
-  };
-  */
   return (
     <>
       <div className={signupStyles.search_info}>

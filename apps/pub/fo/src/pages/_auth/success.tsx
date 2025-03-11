@@ -16,7 +16,7 @@ function RouteComponent() {
         <div className={styles.success_info}>
           <i className={styles.ico}>
             {/* 정상처리 */}
-            <IcoComplete width={56} height={56} className={styles.ico1} />
+            <IcoComplete className={styles.ico1} />
           </i>
           <h3 className={styles.title}>가입 신청완료</h3>
           <p className={styles.noti}>
@@ -28,7 +28,7 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="primary" size="xl" className="max">
             로그인
           </Button>

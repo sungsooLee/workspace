@@ -13,9 +13,10 @@ export interface FormRowProvider {
   fieldRefs: MutableRefObject<Record<string, HTMLElement | null>>;
   watch: (name?: string | string[]) => any;
   onFormChange: (value?: any) => void;
-  formData: any;
+  getValues: UseFormGetValues<any>;
   onFocus: (fieldName: string) => void;
   formState: FormState<any>;
+  originalValues: { [key: string]: any };
 }
 
 /**
@@ -40,8 +41,16 @@ export interface FormRowProps {
  */
 export interface DynamicFormReturn {
   provider: FormRowProvider;
+
   control: Control;
   getValues: UseFormGetValues<any>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   reset: (values?: any) => void;
+}
+
+export interface FormDisplayProps {
+  provider: FormRowProvider;
+  dependencies?: { name: string; value: any }[];
+  onDisplay?: (values: { [key: string]: any }) => boolean;
+  children: ReactNode;
 }

@@ -1,0 +1,14 @@
+.start {
+  &.empty_wrap {
+    @apply flex flex-col items-center justify-center;
+    .title {
+      @apply title_bo_1_b mt-[16px] block text-[#3E4550];
+    }
+    .text {
+      @apply button_bo_2_r mt-[4px] text-[#747D91];
+    }
+    .footer {
+      @apply mt-[32px];
+    }
+  }
+}

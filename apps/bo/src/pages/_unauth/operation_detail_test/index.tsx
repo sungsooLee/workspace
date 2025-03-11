@@ -16,8 +16,8 @@ import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { FormRow } from '../../../shared/ui/form-row';
 import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
-import { ManagerList } from '../../../features/operation/ui/manager-list/manager-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
+import { ChannelList, ManagerList } from '../../../features/operation';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
@@ -63,7 +63,15 @@ function RouteComponent() {
         <MainContents>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
+              <DynamicFormField name={'channel'}>
+                <InputModalButtonFormField
+                  modalConfig={{
+                    title: t('채널 목록'),
+                    content: <ChannelList />,
+                    footer: true,
+                  }}
+                />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
           {/* 강의유형 */}

@@ -15,7 +15,9 @@ export const queryOptions = {};
 
 export const mutateOptions = {
   sendVerifyPhoneNumber: () => ({
-    mutationFn: (payload: any) => VerificationsService.sendVerifyPhoneNumer(payload),
+    mutationFn: (payload: any) => {
+      return VerificationsService.sendVerifyPhoneNumer(payload);
+    },
   }),
   sendVerifyEmail: () => ({
     mutationFn: (payload: any) => VerificationsService.sendVerifyEmail(payload),
@@ -25,5 +27,8 @@ export const mutateOptions = {
   }),
   verifyEmail: () => ({
     mutationFn: (payload: any) => VerificationsService.verifyEmail(payload),
+  }),
+  fetchEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.fetchEmail(payload),
   }),
 };

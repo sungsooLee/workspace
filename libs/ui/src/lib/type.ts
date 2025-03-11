@@ -6,6 +6,7 @@ import { RadioFieldProps } from './radio-group/type';
 import { SelectFieldProps } from './select/type';
 import { SwitchFieldProps } from './switch/type';
 import { Control } from 'react-hook-form';
+
 export enum FieldType {
   TEXT = 'text',
   PASSWORD = 'password',
@@ -96,4 +97,15 @@ export interface FormDialogItem {
   value: string;
   label: string;
   [key: string]: any;
+}
+
+/**
+ * feature or widget component 에서 사용할 공통 props
+ * 지금은 modal 관련 내용만 구성됨
+ */
+export interface CommonReactElementProps {
+  className?: string;
+  style?: React.CSSProperties;
+  setModalData?: (value: any) => void; // modal 에서 onClose 할때 사용할 데이터 set state 함수
+  closeModal?: (value?: any) => void; // modal 에서 onClose 하기위한 prop
 }

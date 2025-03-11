@@ -17,6 +17,7 @@ import { FormTranslationBox } from '../../../../../features/platform/ui/platform
 import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 import { useEffect } from 'react';
 import { TranslationPopup } from '../../../../../shared/translation-popup/translation-popup';
+import { LOCALES } from '@learnway/config';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
@@ -105,7 +106,7 @@ function RouteComponent() {
   const init = async () => {
     if (!messageId) return;
     const translation = (await getTranslation(messageId)) as any;
-    const translations = Object.entries(localeCodes).map(([key, value]) => {
+    const translations = Object.entries(LOCALES).map(([key, value]) => {
       const findTranslation = translation.translations.find((ts: any) => ts.locale === key) as any;
       if (findTranslation) {
         return findTranslation;
@@ -321,34 +322,4 @@ const translationConfig: DynamicFormConfig = {
     },
   ],
   validator: {},
-};
-const localeCodes: { [key: string]: string } = {
-  ko_KR: 'ko_KR',
-  ar: 'ar',
-  zh: 'zh',
-  'zh-TW': 'zh-TW',
-  hr: 'hr',
-  de: 'de',
-  en: 'en',
-  'en-AU': 'en-AU',
-  et: 'et',
-  fr: 'fr',
-  he: 'he',
-  hi: 'hi',
-  id: 'id',
-  it: 'it',
-  ja: 'ja',
-  ms: 'ms',
-  ne: 'ne',
-  fa: 'fa',
-  pt: 'pt',
-  'pt-BR': 'pt-BR',
-  ro: 'ro',
-  ru: 'ru',
-  sk: 'sk',
-  es: 'es',
-  'es-LA': 'es-LA',
-  th: 'th',
-  tr: 'tr',
-  vi: 'vi',
 };

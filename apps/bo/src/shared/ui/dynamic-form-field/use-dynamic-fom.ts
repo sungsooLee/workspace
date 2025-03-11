@@ -1,5 +1,5 @@
 // useDynamicForm.ts
-import { FormEventHandler, useRef, useState } from 'react';
+import { FormEventHandler, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from '../search-box/create-jod-schema';
@@ -14,24 +14,29 @@ import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
  */
 const useDynamicForm = (config: DynamicFormConfig) => {
   // 초기값 생성: 각 빌더의 기본 값을 설정
-  const defaultValues = config.builders.reduce((acc: any, prop: any) => {
-    // 각 필드의 타입에 따라 초기값을 설정
-    switch (prop.type) {
-      case 'date-range':
-        // date-range의 경우, from과 to 값을 '|' 구분자로 연결하여 저장
-        acc[prop.name] = (prop.value.from || new Date()) + '|' + (prop.value.to || new Date());
-        break;
-      case 'multi-dropdown':
-        // multi-dropdown은 배열 타입으로 초기화
-        acc[prop.name] = prop.value || [];
-        break;
-      default:
-        // 기본: prop.value가 있으면 사용, 없으면 빈 문자열 할당
-        acc[prop.name] = prop.value || '';
-        break;
-    }
-    return acc;
-  }, {}); // 초기값을 담은 객체
+  const defaultValues = useMemo(
+    () =>
+      config.builders.reduce((acc: any, prop: any) => {
+        // 각 필드의 타입에 따라 초기값을 설정
+        switch (prop.type) {
+          case 'date-range':
+            // date-range의 경우, from과 to 값을 '|' 구분자로 연결하여 저장
+            acc[prop.name] = (prop.value.from || new Date()) + '|' + (prop.value.to || new Date());
+            break;
+          case 'multi-dropdown':
+            // multi-dropdown은 배열 타입으로 초기화
+            acc[prop.name] = prop.value || [];
+            break;
+          default:
+            // 기본: prop.value가 있으면 사용, 없으면 빈 문자열 할당
+            acc[prop.name] = prop.value;
+            break;
+        }
+        console.log('default value', acc);
+        return acc;
+      }, {}),
+    [],
+  ); // 초기값을 담은 객체
   const [originalValues, setOriginalValues] = useState(defaultValues);
 
   // Zod 스키마 생성 (유효성 검증 스키마)
@@ -212,9 +217,10 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       fieldRefs,
       watch,
       onFormChange,
-      formData: getValues(),
+      getValues,
       onFocus: handleFocus,
       formState,
+      originalValues,
     },
     fetchData,
     control,

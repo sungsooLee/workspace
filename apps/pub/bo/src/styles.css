@@ -1,17 +1,20 @@
 @import '../../../../libs/config/src/lib/style/font.css';
 @import '../../../../libs/config/src/lib/style/theme.css';
 
-@import 'tailwindcss/base';
-
 /*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 */
+@import 'tailwindcss/base';
+@import 'tailwindcss/utilities';
 
+/*
 @import './assets/styles/components/index.css';
 @import './assets/styles/global.css';
-@import 'tailwindcss/utilities';
+*/
+@import '../../../../libs/styles/src/lib/bo/assets/styles/components/index.css';
+@import '../../../../libs/styles/src/lib/bo/assets/styles/global.css';
 
 @layer base {
 }

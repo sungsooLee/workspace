@@ -5,11 +5,11 @@ import { Button } from '@learnway/ui';
 
 import { usePageMetaState } from '../../entities/platform';
 
-import { metaConfig } from '../../features/auth';
+import { pageRouteConfig } from '../../features/auth';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
-  ...metaConfig({ mobile: { showFooter: true } }),
+  ...pageRouteConfig({ meta: { mobile: { showFooter: true } } }),
 });
 
 function HomeComponent() {

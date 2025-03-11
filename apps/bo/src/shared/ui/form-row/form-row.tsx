@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Builder, DynamicFormField } from '../dynamic-form-field';
 import { dialogConfig } from './config';
@@ -118,6 +118,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   const formName = name || names[0];
   // 해당 필드의 빌더 설정을 가져옵니다.
   const rootConfig = getBuilderConfig(builders, formName);
+
   // 필드가 필수인지 여부 (control에 isFieldRequired 함수가 있다고 가정)
   const isRequired = control.isFieldRequired(formName);
   // 에러 상태를 관리하는 상태값 (초기: 에러 없음)
@@ -230,11 +231,10 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
       <div className={styles.input_box}>{Children.map(children, renderChild)}</div>
-
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
       {!error.isError && rootConfig?.guideText && (
         <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
-          {rootConfig.description}
+          {rootConfig.guideText}
         </p>
       )}
       {error.isError && (

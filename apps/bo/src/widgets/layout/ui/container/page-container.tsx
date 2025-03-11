@@ -1,5 +1,4 @@
-import { FC, ReactNode, Children, isValidElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Children, FC, isValidElement, ReactNode } from 'react';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 
@@ -18,11 +17,9 @@ import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
  * @constructor
  */
 const PageContainerComponent: FC<{
-  children: ReactNode;
-  panel?: boolean;
-}> = ({ children, panel = false }) => {
-  const { t } = useTranslation();
-
+  children?: ReactNode; // 자식 요소
+  displayContent?: boolean; // 컨텐츠를 출력할지 여부를 결정한다. 기본값은 출력
+}> = ({ children, displayContent = true }) => {
   const [activeMenuDepth] = useActiveMenuDepthState();
 
   const title = useCreation(() => {
@@ -43,15 +40,16 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={styles.title_wrap}>
           <h3 className={styles.title}>{title || '테스트 제목'}</h3>
-          {ButtonSlot && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
+          {ButtonSlot && displayContent && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
         </div>
-        {/* contents_wrap */}
-        <div className={styles.contents_wrap}>
-          {/* contents */}
-          <div className={styles.contents}>
-            <PageContents>{BodySlot}</PageContents>
+        {/* contents */}
+        {BodySlot.length > 0 && displayContent && (
+          <div className={styles.content_wrap}>
+            <div className={styles.content}>
+              <PageContents>{BodySlot}</PageContents>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

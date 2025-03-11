@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { t } from 'i18next';
 import { useWatch } from 'react-hook-form';
+import { LOCALES } from '@learnway/config';
 
 const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
   const translations = useWatch({ control: control, name: 'translations' });
@@ -48,7 +49,7 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
       if (!activeLocale) {
         const find = translations.find((translation: any) => translation.locale !== defaultLang);
         if (find) {
-          setActiveLocale(localeCodes[find.locale] as any);
+          setActiveLocale(LOCALES[find.locale] as any);
         }
       }
     }
@@ -66,7 +67,7 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
                 type={'button'}
                 className={`rounded bg-gray-200 px-4 py-2 ${activeLocale === translation.locale ? 'bg-blue-500 text-white' : ''}`}
                 onClick={() => setActiveLocale(translation.locale)}>
-                {t(localeCodes[translation.locale])}
+                {t(LOCALES[translation.locale])}
               </button>
             ))}
         </div>
@@ -95,34 +96,3 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
 };
 
 export default TranslationContainer;
-
-const localeCodes: { [key: string]: string } = {
-  ko_KR: 'ko_KR',
-  ar: 'ar',
-  zh: 'zh',
-  'zh-TW': 'zh-TW',
-  hr: 'hr',
-  de: 'de',
-  en: 'en',
-  'en-AU': 'en-AU',
-  et: 'et',
-  fr: 'fr',
-  he: 'he',
-  hi: 'hi',
-  id: 'id',
-  it: 'it',
-  ja: 'ja',
-  ms: 'ms',
-  ne: 'ne',
-  fa: 'fa',
-  pt: 'pt',
-  'pt-BR': 'pt-BR',
-  ro: 'ro',
-  ru: 'ru',
-  sk: 'sk',
-  es: 'es',
-  'es-LA': 'es-LA',
-  th: 'th',
-  tr: 'tr',
-  vi: 'vi',
-};
