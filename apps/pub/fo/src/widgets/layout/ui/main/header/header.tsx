@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -17,6 +17,22 @@ import styles from './header.module.css';
 
 function HeaderComponent() {
   const { t } = useTranslation();
+
+  const handleMouseEnter = () => {
+    setIsHoverNavigate(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHoverNavigate(false);
+  };
+  const handleCategoryOpen = (isOpen: boolean) => {
+    if (isOpen && isHoverNavigate) {
+      setIsHoverNavigate(false);
+    }
+    setIsCategoryOpen(isOpen);
+  };
+
+  const [isHoverNavigate, setIsHoverNavigate] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   return (
     <div className={`${styles.start} ${styles.header}`}>
@@ -41,12 +57,14 @@ function HeaderComponent() {
           </div>
         </div>
 
-        <div className={styles.nav_area}>
-          <Category />
-          <Navigate />
+        <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
+          <div className={styles.nav_area}>
+            <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+            <Navigate onMouseEnter={handleMouseEnter} />
+          </div>
+          {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
         </div>
       </header>
-      <NavigateHover />
     </div>
   );
 }
