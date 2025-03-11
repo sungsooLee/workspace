@@ -5,6 +5,7 @@ import { Button } from '@learnway/ui';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,
@@ -38,8 +39,9 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="primary" size="xl" className="max">
+        <div
+          className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <Button variant="primary" size="xl" className={googleOtpGuideButtonStyles.max}>
             로그인
           </Button>
         </div>

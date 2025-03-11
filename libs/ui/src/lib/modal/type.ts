@@ -21,7 +21,7 @@ export interface ModalConfig<T = any> {
   hideCloseButton?: boolean;
   onClose?: (data?: ModalClose<T>) => void;
   children?: React.ReactNode;
-  footer?: React.ReactNode | boolean; // true 설정시 default footer 사용
+  footer?: React.ReactNode; // true 설정시 default footer 사용
 }
 
 export interface ModalClose<T = any> {
