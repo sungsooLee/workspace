@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styles from './google-key-popup.module.css';
-import noticeBoxStyles from '../../../pages/_auth/notice-box.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
 import { Button, useModal } from '@learnway/ui';
@@ -58,7 +58,8 @@ const GoogleKeyPopupCompoment = () => {
           QR코드 스캔
         </Button>
       </div>
-      <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+      <div
+        className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />

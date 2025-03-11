@@ -3,7 +3,8 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway/icons';
 import styles from './progress-status.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import { Button, Input, Select, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
@@ -140,7 +141,8 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <div
+            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="primary" size="xl">
               로그인
             </Button>

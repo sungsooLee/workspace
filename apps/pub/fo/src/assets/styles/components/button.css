@@ -1,6 +1,0 @@
-.nlp--button {
-  @apply rounded-[8px] !font-[400];
-  &[class^='primary'] {
-    @apply !font-[700];
-  }
-}

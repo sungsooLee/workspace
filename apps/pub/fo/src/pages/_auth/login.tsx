@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
 import styles from './login.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
