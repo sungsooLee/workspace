@@ -9,8 +9,12 @@
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
+/*
 @import './assets/styles/components/index.css';
 @import './assets/styles/global.css';
+*/
+@import '../../../../libs/styles/src/lib/fo/assets/styles/components/index.css';
+@import '../../../../libs/styles/src/lib/fo/assets/styles/global.css';
 
 @layer base {
 }

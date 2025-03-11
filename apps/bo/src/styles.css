@@ -1,18 +1,19 @@
 @import '../../../libs/config/src/lib/style/theme/bo.css';
 
-@import 'tailwindcss/base';
-
 /*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 */
-
-@import './assets/styles/components/index.css';
-
+@import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
 
-@import './assets/styles/global.css'; /*퍼블 css */
+/*
+@import './assets/styles/components/index.css';
+@import './assets/styles/global.css';
+*/
+@import '../../../libs/styles/src/lib/bo/assets/styles/components/index.css';
+@import '../../../libs/styles/src/lib/bo/assets/styles/global.css';
 
 @layer base {
 }
