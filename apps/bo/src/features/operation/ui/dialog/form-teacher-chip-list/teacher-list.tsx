@@ -34,7 +34,6 @@ const TeacherListComponent = forwardRef<HTMLDivElement, TeacherListProps>(({ ...
 
   return (
     <div className="p-4">
-      {/*<Grid data={getDummyData.data} columns={columns} />*/}
       <h2>Grid</h2>
       <Button
         variant={'gray'}

@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React from 'react';
 import type { Meta } from '@storybook/react';
-import { Button, ModalWrapper, useModal } from '@learnway/ui';
+import { Button, CommonReactElementProps, Grid, ModalWrapper, useModal } from '@learnway/ui';
 
 export default {
   title: 'Components/Modal',
@@ -10,15 +10,26 @@ export default {
   argTypes: {},
 } as Meta;
 
-const Content = ({ setModalData }: any) => {
-  const handleClick = () => {
-    setModalData?.({ key: 'xxx' });
+const Content = ({ setModalData }: CommonReactElementProps) => {
+  const handleRowSelect = (row: any) => {
+    console.log(row);
+    setModalData?.(row);
   };
   return (
     <div>
-      <h4>Content</h4>
-      <h4>Content</h4>
-      <Button label={'setModalData'} variant={'primary'} size={'sm'} onClick={handleClick} />
+      <h4>
+        선택한 row 값 setModalData(row) 수행하면 footer 에서 onClose 시 부모창으로 row 값 전달
+      </h4>
+      <Grid
+        title={'grid title'}
+        data={[
+          { id: 'id1', name: 'name1' },
+          { id: 'id2', name: 'name2' },
+          { id: 'id3', name: 'name3' },
+        ]}
+        columns={[{ accessorKey: 'id' }, { accessorKey: 'name' }]}
+        onRowSelect={handleRowSelect}
+      />
     </div>
   );
 };
@@ -34,6 +45,15 @@ export const Template: any = (args: any) => {
     openModal({
       title: '',
       content: <Content />,
+      footer: (
+        <>
+          <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+          <Button label={'확인'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
+        </>
+      ),
+      onClose: (data) => {
+        console.log('onClose data', data);
+      },
     });
   };
   return (
@@ -67,63 +87,6 @@ export const TemplateDescription: any = (args: any) => {
   );
 };
 TemplateDescription.storyName = 'Description';
-
-/**
- * Default Footer
- * @param args
- * @constructor
- */
-export const TemplateFooter: any = (args: any) => {
-  const { open: openModal, openAsync } = useModal();
-  const handleOpenModal = async () => {
-    openModal({
-      title: 'modal title',
-      content: <Content />,
-      footer: true, // default footer 사용
-      onClose: (data) => {
-        console.log('onClose data', data);
-      },
-    });
-  };
-  return (
-    <div>
-      <Button onClick={() => handleOpenModal()}>Open Modal</Button>
-      <ModalWrapper {...args} />
-    </div>
-  );
-};
-TemplateFooter.storyName = 'Default Footer';
-
-/**
- * Custom Footer
- * @param args
- * @constructor
- */
-export const TemplateCustomFooter: any = (args: any) => {
-  const { open: openModal } = useModal();
-  const handleOpenModal = () => {
-    openModal({
-      title: 'modal title',
-      content: <Content />,
-      footer: (
-        <>
-          <Button label={'취소2'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-          <Button label={'확인2'} variant={'primary'} size={'sm'} actionKey={'confirm'} />
-        </>
-      ),
-      onClose: (data) => {
-        console.log('onClose data', data);
-      },
-    });
-  };
-  return (
-    <div>
-      <Button onClick={() => handleOpenModal()}>Open Modal</Button>
-      <ModalWrapper {...args} />
-    </div>
-  );
-};
-TemplateCustomFooter.storyName = 'Custom Footer';
 
 /**
  * Multi Modal
