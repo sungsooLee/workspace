@@ -16,6 +16,7 @@ import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
 import { selectStyles } from '@learnway/ui';
 import { FormSubtitles } from '../../../../../features/learning';
+import { useWatch } from 'react-hook-form';
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
@@ -23,7 +24,19 @@ export const Route = createFileRoute('/_layout/learning/resource/view/video')({
 function RouteComponent() {
   const { state } = useLocation();
   const router = useRouter();
-  const { provider, onSubmit } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control } = useDynamicForm(formConfig);
+  const [manager] = useWatch({
+    control,
+    name: ['manager'],
+  });
+  const [isTest, setIsTest] = useState(false);
+
+  const handleOnDisplay = useCallback(
+    (values: any) => {
+      return values['manager'] === '10' && isTest;
+    },
+    [manager, isTest],
+  );
 
   const handleFormSubmit = (data: any) => {
     console.log(data);
@@ -45,8 +58,13 @@ function RouteComponent() {
             onClick={() => router.navigate({ to: '/learning/resource' })}>
             목록
           </Button>
+          <Button type={'button'} variant={'point'} onClick={() => setIsTest(!isTest)}>
+            테스트 변경
+          </Button>
         </ContentsButtons>
         <MainContents>
+          {isTest ? '테스트 완료' : '테스트 미진행'}
+
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'channel'}>
@@ -82,7 +100,10 @@ function RouteComponent() {
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isSubtitles', value: true }]}
+            onDisplay={handleOnDisplay}>
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
@@ -91,12 +112,12 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          {/*<ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
-          </ContentsRow>
-          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+          </ContentsRow>*/}
+          {/*<FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
@@ -104,7 +125,7 @@ function RouteComponent() {
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
-          </FormDisplay>
+          </FormDisplay>*/}
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
               <FormRow provider={provider}>

@@ -212,7 +212,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       fieldRefs,
       watch,
       onFormChange,
-      formData: getValues(),
+      getValues,
       onFocus: handleFocus,
       formState,
       originalValues,
