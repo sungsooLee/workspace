@@ -5,7 +5,7 @@ import { ThumbnailImageUpload } from '@learnway/ui';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
 export default {
-  title: 'Components/ImageUpload',
+  title: 'Components/FileUpload',
   component: ThumbnailImageUpload,
   tags: ['autodocs'],
   args: {},
@@ -14,8 +14,8 @@ export default {
   },
 } as Meta;
 
-// ImageUpload
-export const Template: any = (args: any) => {
+// Thumbnail Image Upload
+export const TemplateThumbnailImage: any = (args: any) => {
   return (
     <div className={'h-[120px] w-[500px]'}>
       <ThumbnailImageUpload
@@ -33,5 +33,4 @@ export const Template: any = (args: any) => {
     </div>
   );
 };
-Template.storyName = 'Thumbnail Image Upload ';
-Template.args = {};
+TemplateThumbnailImage.storyName = 'Thumbnail Image Upload ';
