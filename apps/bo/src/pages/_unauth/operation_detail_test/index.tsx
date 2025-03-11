@@ -68,7 +68,17 @@ function RouteComponent() {
                   modalConfig={{
                     title: t('채널 목록'),
                     content: <ChannelList />,
-                    footer: true,
+                    footer: (
+                      <>
+                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+                        <Button
+                          label={'확인'}
+                          variant={'primary'}
+                          size={'sm'}
+                          actionKey={'confirm'}
+                        />
+                      </>
+                    ),
                   }}
                 />
               </DynamicFormField>
@@ -148,7 +158,17 @@ function RouteComponent() {
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerList />,
-                    footer: true,
+                    footer: (
+                      <>
+                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
+                        <Button
+                          label={'확인'}
+                          variant={'primary'}
+                          size={'sm'}
+                          actionKey={'confirm'}
+                        />
+                      </>
+                    ),
                   }}
                 />
               </DynamicFormField>

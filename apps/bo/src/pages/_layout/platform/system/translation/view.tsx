@@ -22,7 +22,7 @@ import { LOCALES } from '@learnway/config';
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
 });
-const DEFAULT_LANG = 'ko_KR';
+const DEFAULT_LANG = 'ko';
 function RouteComponent() {
   const { messageId, processType, save, update, getTranslation } = useTranslation();
   const { confirm: openConfirm, open } = useModal();
@@ -272,6 +272,8 @@ const formConfig: DynamicFormConfig = {
         { value: 'MENU', label: '메뉴' },
         { value: 'ERROR', label: '에러' },
         { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
+        { value: 'CATEGORY', label: '카테고리' },
       ],
     },
     {
@@ -287,7 +289,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: '사용여부',
-      value: false,
+      value: true,
     },
   ],
   validator: {

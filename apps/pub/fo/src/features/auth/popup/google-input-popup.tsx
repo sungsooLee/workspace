@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './google-input-popup.module.css';
-import formStyles from '../../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '../../../pages/_auth/notice-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { ContentsRow, Input } from '@learnway/ui';
@@ -26,7 +26,8 @@ const GoogleInputPopupCompoment = () => {
         </ContentsRow>
       </div>
       <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
-      <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+      <div
+        className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />

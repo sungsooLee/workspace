@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
+import { Select, Button, Pagination, Input, ContentsRow, Carousel, EmptyText } from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
@@ -137,24 +137,36 @@ function RouteComponent() {
           </div>
         </div>
 
-        <div className={cn(styles.list, styles[listUi])}>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
-          <ThumnailList direction={listUi}></ThumnailList>
+        {/* 검색결과 있음 */}
+        <div className={styles.list}>
+          <div className={cn(styles.list_box, styles[listUi])}>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+          </div>
+
+          {/* pagination */}
+          <Pagination
+            className={cn(styles.pagenation, styles.paginationItem)}
+            count={3}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </div>
+
+        {/* 검색결과 없음 */}
+        <div className={styles.empty}>
+          <EmptyText
+            text={'검색 결과를 찾을 수 없습니다.'}
+            description={'다른 과정명으로 검색해 보세요.'}
+          />
         </div>
       </div>
-
-      <Pagination
-        className={cn(styles.pagenation, styles.paginationItem)}
-        count={3}
-        page={page}
-        onChange={handlePageChange}
-      />
     </div>
   );
 }
