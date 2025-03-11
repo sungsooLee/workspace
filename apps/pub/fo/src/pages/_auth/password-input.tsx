@@ -76,7 +76,7 @@ function RouteComponent() {
                   onClick={() =>
                     openModal({
                       title: 'FIDO 인증',
-                      width: 'sm',
+                      width: 'md',
                       content: <GoogleCertGuidePopup />,
                       footer: false,
                     })
