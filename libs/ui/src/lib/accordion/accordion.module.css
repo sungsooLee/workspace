@@ -27,7 +27,7 @@
         }
         .accordion_content {
           .accordion_btn {
-            span {
+            & > span {
               @apply relative pl-[16px] text-white;
             }
             svg {

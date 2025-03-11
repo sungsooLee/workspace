@@ -6,8 +6,16 @@
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    .accordion_title {
-      @apply text-[var(--white)];
+    & > div span {
+      [data-status='active'] {
+        @apply relative flex items-center justify-start;
+        &::before {
+          @apply absolute -left-[12px] top-[8px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+        }
+      }
     }
+  }
+  [data-status='active'] {
+    @apply font-bold;
   }
 }
