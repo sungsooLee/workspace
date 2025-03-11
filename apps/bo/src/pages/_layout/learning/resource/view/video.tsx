@@ -76,18 +76,35 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
-          <ContentsRow className={'flex flex-col'}>
+
+          <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
-            <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+          </ContentsRow>
+          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+            <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
                   <FormSubtitles />
                 </DynamicFormField>
               </FormRow>
-            </FormDisplay>
+            </ContentsRow>
+          </FormDisplay>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isSubtitles'} />
+            </FormRow>
           </ContentsRow>
+          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'subtitles'}>
+                  <FormSubtitles />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+          </FormDisplay>
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
               <FormRow provider={provider}>
@@ -191,6 +208,54 @@ const formConfig: DynamicFormConfig = {
         '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
       type: 'checkbox',
       value: false,
+    },
+    {
+      label: t('외주개발업체정보'),
+      name: 'isExternalDevelopmentCompany',
+      type: 'checkbox',
+      value: false,
+    },
+    {
+      label: t('개발업체'),
+      name: 'externalDevelopmentCompany',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('외주개발업체'),
+      name: 'externalDevelopmentCompany',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('외주개발업체 담당자'),
+      name: 'externalDevelopmentCompanyManager',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('외주개발업체 연락처'),
+      name: 'externalDevelopmentCompanyContact',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('외주개발업체 과정코드'),
+      name: 'externalDevelopmentCompanyResourceCode',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('외주학습시작 URL(비표준)'),
+      name: 'externalDevelopmentCompanyResourceUrl',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('오히부학습시작 파라미터'),
+      name: 'externalDevelopmentCompanyResourceParams',
+      type: 'text',
+      value: [],
     },
   ],
   validator: {

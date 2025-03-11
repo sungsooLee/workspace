@@ -16,6 +16,7 @@ export interface FormRowProvider {
   formData: any;
   onFocus: (fieldName: string) => void;
   formState: FormState<any>;
+  originalValues: { [key: string]: any };
 }
 
 /**
@@ -40,8 +41,16 @@ export interface FormRowProps {
  */
 export interface DynamicFormReturn {
   provider: FormRowProvider;
+
   control: Control;
   getValues: UseFormGetValues<any>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   reset: (values?: any) => void;
+}
+
+export interface FormDisplayProps {
+  provider: FormRowProvider;
+  dependencies: string[];
+  values: any[];
+  children: ReactNode;
 }
