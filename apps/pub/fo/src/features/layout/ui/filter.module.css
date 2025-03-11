@@ -1,64 +1,66 @@
-.filter_wrap {
-  @apply relative flex items-start pr-[80px];
-  .filter_btn_box {
-    .filter_btn {
-      @apply flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white;
-      &.selected {
-        @apply relative border-0 bg-[var(--primary2)];
-        &::after {
-          @apply absolute right-0 top-0 h-[12px] w-[12px] -translate-y-1/2 translate-x-1/2 rounded-[50%] bg-[var(--secondary1)] content-[''];
+.start {
+  &.filter_wrap {
+    @apply relative flex items-start pr-[80px];
+    .filter_btn_box {
+      .filter_btn {
+        @apply flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white;
+        &.selected {
+          @apply relative border-0 bg-[var(--primary2)];
+          &::after {
+            @apply absolute right-0 top-0 h-[12px] w-[12px] -translate-y-1/2 translate-x-1/2 rounded-[50%] bg-[var(--secondary1)] content-[''];
+          }
         }
       }
     }
-  }
-  .option_card {
-    @apply w-auto;
-    div,
-    button,
-    span {
-      @apply !inline;
-    }
-
-    button {
-      @apply px-[10px];
-    }
-  }
-
-  .select_box {
-    @apply relative ml-[12px];
     .option_card {
-      @apply !inline align-top;
+      @apply w-auto;
+      div,
+      button,
+      span {
+        @apply !inline;
+      }
+
       button {
-        @apply mb-[8px] mr-[8px] !inline align-top;
-        span {
-          @apply !text-[var(--gray8)];
-        }
-        &[class*='active'] {
+        @apply px-[10px];
+      }
+    }
+
+    .select_box {
+      @apply relative ml-[12px];
+      .option_card {
+        @apply !inline align-top;
+        button {
+          @apply mb-[8px] mr-[8px] !inline align-top;
           span {
-            @apply font-bold !text-[var(--primary1)];
+            @apply !text-[var(--gray8)];
+          }
+          &[class*='active'] {
+            span {
+              @apply font-bold !text-[var(--primary1)];
+            }
+          }
+        }
+      }
+
+      .chip_list {
+        @apply !inline align-top;
+        & > div {
+          @apply mt-0 !inline align-top;
+          span {
+            @apply mb-[8px] mr-[8px] !inline-flex items-center;
+            button {
+              @apply !p-0 !font-bold;
+            }
           }
         }
       }
     }
 
-    .chip_list {
-      @apply !inline align-top;
-      & > div {
-        @apply mt-0 !inline align-top;
-        span {
-          @apply mb-[8px] mr-[8px] !inline-flex items-center;
-          button {
-            @apply !p-0 !font-bold;
-          }
-        }
+    .reset {
+      @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
+      .ico_reset {
+        @apply mr-[8px];
       }
-    }
-  }
-
-  .reset {
-    @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
-    .ico_reset {
-      @apply mr-[8px];
     }
   }
 }

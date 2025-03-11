@@ -52,7 +52,7 @@ const options: any[] = [
 
 const FilterPopupComponent = () => {
   return (
-    <div>
+    <div className={styles.start}>
       <ul className={styles.filter_wrap}>
         <li>
           <strong className={styles.tit}>강의유형</strong>

@@ -53,10 +53,6 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleNavigateHoverClose = () => {
-    console.log('a');
-  };
-
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
       <nav className={styles.nav} onMouseLeave={onMouseLeave}>
