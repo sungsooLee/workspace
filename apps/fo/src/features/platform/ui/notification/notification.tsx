@@ -61,8 +61,8 @@ const NotificationComponent = ({ userUUID }: any) => {
         queryClient.invalidateQueries({ queryKey: queryKeys.unreadCount(userUUID) });
       });
     };
-    // 초기 연결 시도
-    connectSSE();
+    // 초기 연결 시도 SSE 연결 구현 완료 되면 추가 예정.
+    // connectSSE();
 
     return () => {
       if (eventSource) {
