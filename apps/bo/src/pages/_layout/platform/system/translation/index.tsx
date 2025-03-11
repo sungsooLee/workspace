@@ -44,14 +44,6 @@ function RouteComponent() {
         <Button type="button" variant="point" size="sm" onClick={handleNewTranslation}>
           등록
         </Button>
-        {/*
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          onClick={() => router.navigate({ to: '/platform/system/translation/view?messageId=20' })}>
-          수정
-        </Button>*/}
       </ContentsButtons>
       <MainContents>
         <SearchBox config={sConfig} onSearch={handleOnSearch} />

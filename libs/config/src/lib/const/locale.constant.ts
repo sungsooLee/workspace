@@ -1,5 +1,5 @@
 export const LOCALES: { [key: string]: string } = {
-  ko_KR: 'ko_KR',
+  ko: 'ko',
   ar: 'ar',
   zh: 'zh',
   'zh-TW': 'zh-TW',

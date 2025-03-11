@@ -22,7 +22,7 @@ import { LOCALES } from '@learnway/config';
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
 });
-const DEFAULT_LANG = 'ko_KR';
+const DEFAULT_LANG = 'ko';
 function RouteComponent() {
   const { messageId, processType, save, update, getTranslation } = useTranslation();
   const { confirm: openConfirm, open } = useModal();
