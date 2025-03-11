@@ -59,7 +59,7 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
         ? watchedValue.length === dependencies.length &&
           watchedValue.every((value: any, index: number) => value === dependencies[index].value)
         : true,
-    [watchedValue],
+    [dependencies, watchedValue],
   );
 
   // 사용된 필드 이름 저장 (동적 필드 추적용)
