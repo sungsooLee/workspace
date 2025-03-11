@@ -1,7 +1,7 @@
 import { cn } from '@learnway/shared';
 import React from 'react';
 import styles from './empty-text.module.css';
-import { IcoSearch } from '@learnway/icons';
+import { IcoCaution } from '@learnway/icons';
 import { useTranslation } from 'react-i18next';
 
 export interface EmptyTextComponentProps {
@@ -23,15 +23,15 @@ const EmptyTextComponent = function ({
 }: EmptyTextComponentProps) {
   const { t } = useTranslation();
   return (
-    <div className={cn(styles.start, className, 'nlp--empty-text', 'flex flex-col')}>
+    <div className={cn(styles.start, styles.empty_wrap, className, 'nlp--empty-text')}>
       {/* icon  */}
-      <IcoSearch width={20} height={20} stroke={'#131C30'} />
+      <IcoCaution width={48} height={48} stroke={'#A9AFB8'} className={styles.icon} />
       {/* text */}
-      <p>{text || t('Default Text')}</p>
+      <strong className={styles.title}>{text || t('Default Text')}</strong>
       {/* description */}
-      <p>{description}</p>
+      <p className={styles.text}>{description}</p>
       {/* footer */}
-      {footer}
+      <div className={styles.footer}>{footer}</div>
     </div>
   );
 };
