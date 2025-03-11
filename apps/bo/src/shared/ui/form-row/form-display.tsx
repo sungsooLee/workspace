@@ -1,19 +1,66 @@
-import { FC, isValidElement, ReactNode, useEffect, useRef, useState } from 'react';
+import { FC, isValidElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { DynamicFormField } from '../dynamic-form-field';
 import { FormDisplayProps } from './type';
 import { useWatch } from 'react-hook-form';
 
+/**
+ * 특정 Value 에 의존해 특정 내용들에 대한 Display 을 처리 하는 컴포넌트.
+ * dependencies 는 form 내에 값들에 대한 AND 조건을 처리 합니다.
+ * onDisplay 함수는 외부값에 대한 Display 에 대한 처리를 지원 합니다.
+ * 아래는 onDisplay 함수에 대한 사용 예제 입니다. onDisplay 함수에는 반드시 useCallback 을 사용해주셔야 하고
+ * dependency 를 걸어주셔야 정상 적동 합니다.
+ *
+ * 가급 적이면 dependencies 를 활용해 주세요
+
+ const { provider, onSubmit, control } = useDynamicForm(formConfig);
+ const [manager] = useWatch({
+   control,
+   name: ['manager'],
+ });
+ const [isTest, setIsTest] = useState(false);
+
+ const handleOnDisplay = useCallback((values: any) => {
+    return values['manager'] === '10' && isTest;
+ },[manager, isTest]);
+
+ * @param provider
+ * @param children
+ * @param dependencies
+ * @param onDisplay
+ * @constructor
+ */
 const FormDisplayComponent: FC<FormDisplayProps> = ({
-  values,
   provider,
   children,
   dependencies,
+  onDisplay,
 }) => {
   // provider에서 control, onFormChange, originalValues 추출
-  const { control, onFormChange, originalValues } = provider;
+  const { control, onFormChange, originalValues, getValues } = provider;
 
-  // 상태 관리: 폼이 보이는지 여부 상태 관리
-  const [show, setShow] = useState(false);
+  /**
+   * 🔎 useWatch로 상태 변화 감지
+   * - control 객체를 기반으로 dependencies 값 변경 감지
+   * - useWatch는 react-hook-form에서 제공하는 훅으로 상태 관찰 가능
+   */
+  const watchedValue = useWatch({
+    control,
+    name: dependencies ? dependencies.map((dep) => dep.name) : [], // 의존성 값 설정
+  });
+  // onDisplay 함수가 존재하면 해당 함수에서 Display 여부를 받아오고 아니면 무조건 노출
+  const isOnDisplay = useMemo(
+    () => (onDisplay ? onDisplay(getValues()) : true),
+    [getValues, onDisplay],
+  );
+  // dependencies 가 존재하면 watch 와 비교해서 논리연산을 하고 아니면 무조건 노출
+  const isDependencies = useMemo(
+    () =>
+      dependencies
+        ? watchedValue.length === dependencies.length &&
+          watchedValue.every((value: any, index: number) => value === dependencies[index].value)
+        : true,
+    [watchedValue],
+  );
 
   // 사용된 필드 이름 저장 (동적 필드 추적용)
   const [usedNames, setUsedNames] = useState<string[]>([]);
@@ -46,40 +93,9 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
     renderChild(children);
   }, []); // 처음 마운트될 때만 실행
 
-  /**
-   * 🔎 useWatch로 상태 변화 감지
-   * - control 객체를 기반으로 dependencies 값 변경 감지
-   * - useWatch는 react-hook-form에서 제공하는 훅으로 상태 관찰 가능
-   */
-  const watchedValue = useWatch({
-    control,
-    name: dependencies, // 의존성 값 설정
-  });
-
-  // 상태 변경 방지용 ref (무한 루프 방지)
-  const isResettingRef = useRef(false);
-
   useEffect(() => {
-    // reset()이 실행된 후 상태 변경 시에는 아무 작업도 하지 않고 종료
-    if (isResettingRef.current) {
-      isResettingRef.current = false; // 다음 상태 변경 허용
-      return;
-    }
-
-    /**
-     * 🔎 watchedValue와 values의 값이 일치하는지 확인
-     * - 값이 완전히 일치하면 true → show 상태 활성화
-     * - 값이 일치하지 않으면 false → reset()으로 상태 재설정 필요
-     */
-    const isShow =
-      watchedValue.length === values.length &&
-      watchedValue.every((value: any, index: number) => value === values[index]);
-
-    // 상태 업데이트 (값이 일치하면 true, 일치하지 않으면 false)
-    setShow(isShow);
-
     // 값이 일치하지 않는 경우에만 상태를 초기화
-    if (!isShow) {
+    if (!isOnDisplay && !isOnDisplay) {
       // 초기값 설정용 객체
       const oriValues: any = {};
 
@@ -88,16 +104,13 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
         oriValues[dep] = originalValues[dep];
       });
 
-      // 상태 변경 트리거를 방지하기 위해 ref 값 설정
-      isResettingRef.current = true;
-
       // reset 호출 → 상태 변경 발생 → useWatch에서 다시 감지됨
       onFormChange(oriValues);
     }
-  }, [watchedValue]); // watchedValue가 변경될 때마다 실행됨
+  }, [isOnDisplay, isDependencies]);
 
   // 상태가 true일 때 children을 렌더링
-  return show && children;
+  return isDependencies && isOnDisplay && children;
 };
 
 export const FormDisplay = FormDisplayComponent;
