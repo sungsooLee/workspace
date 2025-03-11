@@ -37,6 +37,7 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
     // onCheckedChange 핸들러
     const handleCheckedChange = (checked: boolean) => {
       setIsChecked(checked);
+      onCheckedChange && onCheckedChange(checked);
     };
     return (
       <div

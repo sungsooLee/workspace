@@ -1,11 +1,11 @@
+import { useState } from 'react';
+import { Button, ContentsRow, useModal } from '@learnway/ui';
+import { LEARNING_TYPE } from '@learnway/config';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, ContentsRow, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { useState } from 'react';
 import { LearningTypeChoicePopup, VideoUploadPopup } from '../../../../features/learning';
-import { LEARNING_TYPE } from '@learnway/config';
 import { UploadProvider } from '../../../../features/learning/ui/resource/uploader/tus-provider';
 
 export const Route = createFileRoute('/_layout/learning/resource/')({

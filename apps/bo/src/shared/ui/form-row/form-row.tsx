@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './form.module.css';
+import styles from '../../../assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Builder, DynamicFormField } from '../dynamic-form-field';
 import { dialogConfig } from './config';

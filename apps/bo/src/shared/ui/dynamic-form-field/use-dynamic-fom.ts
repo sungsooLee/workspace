@@ -215,6 +215,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
       formData: getValues(),
       onFocus: handleFocus,
       formState,
+      originalValues,
     },
     fetchData,
     control,

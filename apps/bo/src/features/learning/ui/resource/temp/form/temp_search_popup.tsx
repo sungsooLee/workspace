@@ -1,6 +1,6 @@
 import { Button, Input } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
-import formStyles from './form-style.module.css';
+import formStyles from '../../../../../../assets/styles/modules/form.module.css';
 import { forwardRef } from 'react';
 
 const TempSearchPopupComponent = forwardRef<any, any>(({ name }) => {

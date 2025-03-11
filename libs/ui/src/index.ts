@@ -1,3 +1,4 @@
+import selectStyles from './lib/select/select.module.css';
 // accordion
 export * from './lib/accordion/accordion';
 
@@ -94,6 +95,8 @@ export * from './lib/radio-group/form-radio-group';
 export * from './lib/radio-card/radio-card';
 
 // select
+
+export { selectStyles };
 export * from './lib/select/select';
 export * from './lib/select/type';
 // dropdown-list

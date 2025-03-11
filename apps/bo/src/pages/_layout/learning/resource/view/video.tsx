@@ -4,7 +4,7 @@ import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot
 import { Button, ContentsRow } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { FormRow } from '../../../../../shared/ui/form-row';
+import { FormDisplay, FormGroup, FormRow } from '../../../../../shared/ui/form-row';
 import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
 import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
 import { z } from '@learnway/shared';
@@ -14,7 +14,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
 import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
-
+import { selectStyles } from '@learnway/ui';
+import { FormSubtitles } from '../../../../../features/learning';
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
@@ -22,73 +23,95 @@ export const Route = createFileRoute('/_layout/learning/resource/view/video')({
 function RouteComponent() {
   const { state } = useLocation();
   const router = useRouter();
-  const { provider } = useDynamicForm(formConfig);
+  const { provider, onSubmit } = useDynamicForm(formConfig);
+
+  const handleFormSubmit = (data: any) => {
+    console.log(data);
+  };
   useEffect(() => {
     console.log(state);
   }, []);
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button type="button" variant="point" size="sm">
-          등록
-        </Button>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          onClick={() => router.navigate({ to: '/learning/resource' })}>
-          목록
-        </Button>
-      </ContentsButtons>
-      <MainContents>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'channel'}>
-              <TempSearchPopup />
-            </DynamicFormField>
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'learningResourceName'} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'learningResourceDescription'} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'manager'}>
-              <TempSearchPopup />
-            </DynamicFormField>
-          </FormRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'contact'}>
-              <TempContact />
-            </DynamicFormField>
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'expirationDate'} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <VideoThumbnailExtractor />
-        </ContentsRow>
-      </MainContents>
-      <SubContents>
-        <ReactPlayer
-          url={'http://localhost:8080/videos/d38ef8df-811b-415a-ab88-74dd28b36ef9_720p.m3u8'}
-          controls
-          width="100%"
-        />
-
-        <VideoPlayerWithUpload />
-      </SubContents>
-    </PageContainer>
+    <form onSubmit={onSubmit(handleFormSubmit)}>
+      <PageContainer>
+        <ContentsButtons>
+          <Button type="submit" variant="point" size="sm" className={selectStyles.select_item}>
+            등록
+          </Button>
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            onClick={() => router.navigate({ to: '/learning/resource' })}>
+            목록
+          </Button>
+        </ContentsButtons>
+        <MainContents>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'channel'}>
+                <TempSearchPopup />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'learningResourceName'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'learningResourceDescription'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'manager'}>
+                <TempSearchPopup />
+              </DynamicFormField>
+            </FormRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'contact'}>
+                <TempContact />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow className={'flex flex-col'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isSubtitles'} />
+            </FormRow>
+            <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'subtitles'}>
+                  <FormSubtitles />
+                </DynamicFormField>
+              </FormRow>
+            </FormDisplay>
+          </ContentsRow>
+          <FormGroup title={'최종확인'} required={true}>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'isInspectionConfirmed'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'isCopyrightConfirmed'} />
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'isSecurityConfirmed'} />
+              </FormRow>
+            </ContentsRow>
+          </FormGroup>
+          <ContentsRow>
+            <VideoThumbnailExtractor />
+          </ContentsRow>
+        </MainContents>
+        <SubContents>123123</SubContents>
+      </PageContainer>
+    </form>
   );
 }
 
@@ -135,13 +158,52 @@ const formConfig: DynamicFormConfig = {
       value: '',
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
+    {
+      label: t('자막여부'),
+      name: 'isSubtitles',
+      type: 'switch',
+      value: true,
+    },
+    {
+      name: 'subtitles',
+      type: 'custom',
+      value: [],
+    },
+    {
+      label: t('검수확인'),
+      name: 'isInspectionConfirmed',
+      type: 'checkbox',
+      guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
+      value: false,
+    },
+    {
+      label: t('저작권확인'),
+      name: 'isCopyrightConfirmed',
+      guideText:
+        '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
+      type: 'checkbox',
+      value: false,
+    },
+    {
+      label: t('보안확인'),
+      name: 'isSecurityConfirmed',
+      guideText:
+        '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
+      type: 'checkbox',
+      value: false,
+    },
   ],
   validator: {
-    channel: z.string().required(),
+    /*channel: z.string().required(),*/
     learningResourceName: z.string().required(),
     manager: z.string().required(),
     contact: z.string().required(),
     expirationDate: z.string().required(),
+    isInspectionConfirmed: z.boolean().refine((value) => !value, {
+      message: '‘{{label}}’ 체크하세요..',
+    }),
+    isCopyrightConfirmed: z.boolean().refine((value) => !value, {}),
+    isSecurityConfirmed: z.boolean().refine((value) => !value, {}),
   },
 };
 

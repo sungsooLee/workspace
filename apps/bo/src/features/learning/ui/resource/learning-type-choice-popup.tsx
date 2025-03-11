@@ -17,7 +17,7 @@ import clsx from 'clsx';
 
 // 학습 유형 선택 팝업 컴포넌트
 const LearningTypeChoicePopupComponent = () => {
-  const { close } = useModal();
+  const { close, alert } = useModal();
   // 현재 활성화된 학습 유형의 상태를 관리 (기본값으로 learningTypes 배열의 첫 번째 학습 유형 사용)
   const [activeType, setActiveType] = useState(learningTypes[0].type);
 
@@ -28,6 +28,7 @@ const LearningTypeChoicePopupComponent = () => {
    */
   const handleChoiceLearningType = (type: LEARNING_TYPE) => {
     if (type === LEARNING_TYPE.E_BOOK) {
+      console.log('pop');
     }
     close(type);
   };
