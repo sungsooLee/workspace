@@ -7,11 +7,11 @@ import { useFetchAuthUser } from '@learnway/config';
 
 import { Layout } from '../widgets/layout';
 import { useFetchTenant } from '../entities/tenant';
-import { authConfig } from '../features/auth';
+import { pageRouteConfig } from '../features/auth';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
-  ...authConfig(),
+  ...pageRouteConfig({ authorization: true }),
 });
 
 function LayoutComponent() {

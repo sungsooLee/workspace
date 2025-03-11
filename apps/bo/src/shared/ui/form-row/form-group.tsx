@@ -1,6 +1,6 @@
 import { cn } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
-import styles from '../../../assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { FC, ReactNode } from 'react';
 
 const FormGroupComponent: FC<{ children: ReactNode; required?: boolean; title?: string }> = ({

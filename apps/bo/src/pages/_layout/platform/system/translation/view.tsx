@@ -272,6 +272,8 @@ const formConfig: DynamicFormConfig = {
         { value: 'MENU', label: '메뉴' },
         { value: 'ERROR', label: '에러' },
         { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
+        { value: 'CATEGORY', label: '카테고리' },
       ],
     },
     {
@@ -287,7 +289,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: '사용여부',
-      value: false,
+      value: true,
     },
   ],
   validator: {
