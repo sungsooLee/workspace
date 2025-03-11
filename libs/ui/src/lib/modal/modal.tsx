@@ -85,7 +85,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
                 {...props}
                 id={id}
                 footer={footer}
-                buttonClick={handleFooterButtonClick}
+                onButtonClick={handleFooterButtonClick}
               />
             </div>
           )}
@@ -120,11 +120,11 @@ const ContentComponent: React.FC<any> = ({ content, setModalData, closeModal }) 
   return newContent;
 };
 
-const FooterComponent: React.FC<any> = ({ footer: customFooter, buttonClick }) => {
+const FooterComponent: React.FC<any> = ({ footer: customFooter, onButtonClick }) => {
   const handleClick = (event: any) => {
     const isButton = event.target instanceof HTMLButtonElement;
     const actionKey = event.target?.getAttribute('actionKey');
-    isButton && buttonClick(actionKey);
+    isButton && onButtonClick?.(actionKey);
   };
 
   return (

@@ -1,20 +1,20 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
+import { useDropzone } from 'react-dropzone';
 import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { Button, ContentsRow, DateRangePicker } from '@learnway/ui';
+import { z } from '@learnway/shared';
+import { selectStyles } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, ContentsRow } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import { FormDisplay, FormGroup, FormRow } from '../../../../../shared/ui/form-row';
 import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
 import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
-import { z } from '@learnway/shared';
-import { t } from 'i18next';
 import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
-import ReactPlayer from 'react-player';
-import { useDropzone } from 'react-dropzone';
-import { selectStyles } from '@learnway/ui';
 import { FormSubtitles } from '../../../../../features/learning';
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
@@ -45,10 +45,14 @@ function RouteComponent() {
             onClick={() => router.navigate({ to: '/learning/resource' })}>
             목록
           </Button>
+          <Button type={'button'} variant={'point'}>
+            테스트 변경
+          </Button>
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
             <FormRow provider={provider}>
+              {/* 채널 */}
               <DynamicFormField name={'channel'}>
                 <TempSearchPopup />
               </DynamicFormField>
@@ -56,33 +60,37 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
+              {/*학습자원명*/}
               <DynamicFormField name={'learningResourceName'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
+              {/*학습자원 설명*/}
               <DynamicFormField name={'learningResourceDescription'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'manager'}>
+                {/*담당자*/}
                 <TempSearchPopup />
               </DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'contact'}>
+                {/*연락처*/}
                 <TempContact />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
-
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isSubtitles'} />
+              {/*사용기한*/}
+              <DynamicFormField name={'expirationDate'} />
             </FormRow>
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+          <FormDisplay provider={provider} dependencies={[{ name: 'expirationDate', value: true }]}>
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
@@ -91,12 +99,13 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
+
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={['isSubtitles']} values={[true]}>
+          <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
