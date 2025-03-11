@@ -36,4 +36,4 @@ class ReactQueryClient {
   }
 }
 
-export const QueryConfig = new ReactQueryClient();
+export const queryConfig = new ReactQueryClient();

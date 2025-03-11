@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { metaConfig } from '../../../features/auth';
+import { pageRouteConfig } from '../../../features/auth';
 
 export const Route = createFileRoute('/_layout/menu4/menu5')({
   component: RouteComponent,
-  ...metaConfig(),
+  ...pageRouteConfig(),
 });
 
 function RouteComponent() {

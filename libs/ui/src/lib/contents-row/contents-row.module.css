@@ -12,4 +12,24 @@
       @apply border-0 pt-0;
     }
   }
+  &.horizontal {
+    & > div {
+      @apply !flex flex-row flex-wrap pb-0;
+      label {
+        @apply flex-1;
+        & + div {
+          @apply mt-0 flex flex-1 justify-end;
+        }
+      }
+    }
+    & + .row {
+      @apply border-0 pt-0;
+    }
+    & + .horizontal {
+      @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pt-[16px];
+    }
+    label ~ p {
+      @apply w-full !flex-none;
+    }
+  }
 }

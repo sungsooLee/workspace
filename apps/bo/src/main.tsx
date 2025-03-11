@@ -1,10 +1,8 @@
 import * as ReactDOM from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 
-import { QueryConfig } from '@learnway/config';
+import { queryConfig, appConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
@@ -27,16 +25,13 @@ declare module '@tanstack/react-router' {
   }
 }
 
-// dayjs
-dayjs.extend(duration);
-
-QueryConfig.init({});
+appConfig.init({});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <QueryClientProvider client={QueryConfig.getQueryClient()}>
+  <QueryClientProvider client={queryConfig.getQueryClient()}>
     <AppConfigProvider>
-      <RouterProvider router={router} context={{ queryClient: QueryConfig.getQueryClient() }} />
+      <RouterProvider router={router} context={{ queryClient: queryConfig.getQueryClient() }} />
     </AppConfigProvider>
   </QueryClientProvider>,
 );

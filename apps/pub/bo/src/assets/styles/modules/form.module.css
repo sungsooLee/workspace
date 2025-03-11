@@ -59,9 +59,6 @@
       }
     }
   }
-  .btn_switch {
-    @apply absolute right-0 top-[10px];
-  }
   .input_time {
     @apply !min-w-[154px];
   }
@@ -80,11 +77,6 @@
     }
     .guide_text.error {
       @apply ml-[40px];
-    }
-  }
-  &.type_switch {
-    .input_box {
-      @apply mt-0;
     }
   }
   &.col {
@@ -157,9 +149,6 @@
   }
   .sub_text {
     @apply body_bo_4_r !ml-0 text-[var(--gray6)];
-  }
-  .btn_switch + .sub_text {
-    @apply -mt-[8px];
   }
   &.type2 {
     @apply mt-0;
@@ -254,7 +243,18 @@ hr.divider {
 }
 
 .btn_box {
-  @apply flex items-center;
+  @apply flex items-center justify-center;
+  .btn_expand {
+    &:has(svg) {
+      @apply !w-[32px] !max-w-[32px] !px-0;
+    }
+    svg {
+      @apply !mr-0 fill-none stroke-none;
+      path {
+        @apply stroke-[var(--gray9)];
+      }
+    }
+  }
   .btn_refresh {
     &:has(svg) {
       @apply !w-[32px] !max-w-[32px] !px-0;
@@ -268,7 +268,7 @@ hr.divider {
   }
   .btn_search {
     &:has(svg) {
-      @apply !w-[56px] !px-[4px];
+      @apply !w-[60px] !px-[4px];
     }
     svg {
       @apply !mr-0 h-[16px] w-[16px] stroke-[var(--gray9)];
@@ -287,14 +287,6 @@ hr.divider {
     }
     &:first-child {
       @apply !mt-0;
-    }
-  }
-  .btn_switch {
-    @apply !top-0;
-    & + .inner_row {
-      .input_box {
-        @apply !mt-0;
-      }
     }
   }
   &.col {
@@ -334,6 +326,24 @@ hr.divider {
     & > div:nth-last-child(1) .form_item {
       @apply pb-0;
     }
+  }
+  & + div:not(:empty) {
+    @apply !mt-[32px];
+  }
+}
+
+.search_contents_wrap {
+  @apply relative mx-[-32px] pl-[32px] pr-[213px];
+  .search_contents {
+    .form_item {
+      @apply !pb-0;
+    }
+    & + .search_contents {
+      @apply !mt-0 border-0;
+    }
+  }
+  .btn_box {
+    @apply absolute bottom-0 right-[32px];
   }
 }
 

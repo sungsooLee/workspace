@@ -1,30 +1,30 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  ChipListModalButtonFormField,
-  Input,
-  InputModalButtonFormField,
-} from '@learnway/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { Button, useModal } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { FormRow } from '../../../shared/ui/form-row';
-import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
-import { ManagerList } from '../../../features/operation/ui/manager-list/manager-list';
-import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
+import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
+import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
+import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
+import useSearchBox from '../../../shared/ui/search-box/use-search-box';
+import { CourseTypeOptionCard } from '../../../features/operation';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, reset, control } = useDynamicForm(formConfig);
+  const router = useRouter();
+  const { open: openModal } = useModal();
+
+  const { config: sConfig, getData } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getData);
+
+  useEffect(() => {
+    gridFetch(getData(), { page: 0, size: 10 });
+  }, []);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -34,272 +34,139 @@ function RouteComponent() {
     console.log('data {} => ', data);
   };
 
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(data);
+  }, []);
+
+  // const handleNewTranslation = () => {
+  // router.navigate({ to: '/platform/system/translation/view' });
+  // };
+
+  const handleOpenModalCourseType = () => {
+    openModal({
+      title: t(''),
+      content: <CourseTypeOptionCard />,
+      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+    });
+  };
+
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <PageContainer>
-        <ContentsButtons>
-          <Button type="submit" variant="point" size="sm" label={t('등록')} />
-        </ContentsButtons>
-        <MainContents>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'}>
-                <InputModalButtonFormField
-                  modalConfig={{
-                    title: t('운영자 목록'),
-                    content: <ManagerList />,
-                    footer: true,
-                  }}
-                />
-              </DynamicFormField>
-            </FormRow>
-          </ContentsRow>
-          {/* 강의유형 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의유형'}>
-                <LectureTypeSiteUrl />
-              </DynamicFormField>
-            </FormRow>
-          </ContentsRow>
-          {/* 과정명 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'과정명'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 과정내용 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'과정내용'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 대표이미지 */}
-          {/* TODO: className 제거 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'대표이미지'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 강의유형 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의유형'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 태그 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'태그'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 강사 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강사'}>
-                <ChipListModalButtonFormField
-                  modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
-                  chipList={{
-                    labelField: 'name',
-                    valueField: 'value',
-                    hideBorder: true,
-                  }}
-                />
-              </DynamicFormField>
-            </FormRow>
-          </ContentsRow>
-          {/* 난이도 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'난이도'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 강의실설정 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의실설정'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 운영자 & 연락처 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'운영자'}>
-                <InputModalButtonFormField
-                  modalConfig={{
-                    title: t('운영자 목록'),
-                    content: <ManagerList />,
-                    footer: true,
-                  }}
-                />
-              </DynamicFormField>
-              {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
-            </FormRow>
-          </ContentsRow>
-          {/* 테넌트 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'테넌트'} />
-            </FormRow>
-          </ContentsRow>
-        </MainContents>
-        <SubContents>
-          {/*<CourseDetailForm setForm={setForm2} />*/}
-          <Input />
-        </SubContents>
-      </PageContainer>
-    </form>
+    <PageContainer>
+      <ContentsButtons>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={t('과정 개설')}
+          onClick={handleOpenModalCourseType}
+        />
+      </ContentsButtons>
+      <MainContents>
+        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        <div style={{ height: '100px' }}></div>
+        <GridBox config={gConfig} />
+      </MainContents>
+    </PageContainer>
   );
 }
 
-/**
- * 필수값 : name, type
- */
-const formConfig: DynamicFormConfig = {
+const searchConfig: SearchBoxConfig = {
   builders: [
     {
-      name: 'channel',
-      type: 'custom',
-      label: '채널',
+      name: '채널',
+      type: 'dropdown',
+      label: t('채널'),
       value: '',
-      placeholder: '최근 과정 개설한 채널명 또는 최근 생성된 채널명',
-      description: '',
-      button: {
-        label: t('선택'),
-        variant: 'point',
-      },
-      onClick: () => console.log('onClick'),
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('채널') },
+      ],
     },
     {
-      name: '강의유형',
-      type: 'custom',
-      label: t('강의유형 - 라디오버튼 + 체크박스2 + 인풋 + 라벨'),
-      value: {},
-      placeholder: '',
-      description: '',
+      name: '테넌',
+      type: 'dropdown',
+      label: t('테넌'),
+      value: '',
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('테넌트') },
+      ],
+    },
+    {
+      name: '유형',
+      type: 'dropdown',
+      label: t('유형'),
+      value: '',
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('유형') },
+      ],
+    },
+    {
+      name: '운영자',
+      type: 'text',
+      label: t('운영자'),
+    },
+    {
+      name: '개설년도',
+      type: 'dropdown',
+      label: t('개설년도'),
+      value: '',
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('개설년도') },
+      ],
+    },
+    {
+      name: '사용여부',
+      type: 'dropdown',
+      label: t('사용여부'),
+      value: '',
+      options: [
+        { value: '', label: '전체' },
+        { value: 'COMMON_CODE', label: t('사용여부') },
+      ],
+    },
+    {
+      name: '과정코드',
+      type: 'text',
+      label: t('과정코드'),
     },
     {
       name: '과정명',
       type: 'text',
       label: t('과정명'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '과정내용',
-      type: 'text-area',
-      label: t('과정내용'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '대표이미지',
-      type: 'thumbnail-image-upload',
-      label: t('대표이미지'),
-      value: [
-        { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
-      ],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '태그',
-      type: 'chip-list',
-      label: t('태그 - 인풋 칩 리스트'),
-      value: [
-        { label: '현대자동차 A', value: 'A' },
-        { label: '현대자동차 B', value: 'B' },
-        { label: '현대자동차 C', value: 'C' },
-      ],
-      // placeholder: '',
-      description: '',
-      showInput: true,
-    },
-    {
-      name: '강사',
-      type: 'custom',
-      label: t('강사 - 다이얼로그 버튼 + 칩 리스트 (가로)'),
-      value: [],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '난이도',
-      type: 'radio-group',
-      label: t('난이도'),
-      options: [
-        {
-          label: '없음',
-          value: '',
-        },
-        {
-          label: '초급',
-          value: '1',
-        },
-        {
-          label: '중급',
-          value: '2',
-        },
-        {
-          label: '고급',
-          value: '3',
-        },
-      ],
-      value: [],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '강의실설정',
-      type: 'checkbox-group',
-      label: t('강의실 설정'),
-      options: Array(10)
-        .fill(null)
-        .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
-      value: [],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '운영자',
-      type: 'custom',
-      label: t('운영자 - 인풋 + 다이얼로그 버튼'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '연락처',
-      type: 'custom',
-      label: t('연락처 - 인풋 + label + 인풋'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '테넌트',
-      type: 'chip-list',
-      label: t('테넌트 - 우측 액션버튼 + chip list'),
-      value: [],
-      placeholder: '',
-      description: '',
-      options: [
-        { value: 'tenant1', label: 'Tenant A' },
-        { value: 'tenant2', label: 'Tenant B' },
-      ],
     },
   ],
-  validator: {
-    // channel: z.string().nonempty(),
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-    category: z.string().nonempty(t('유효성 테스트')),
-     language_code: z.string().nonempty(t('유효성 테스트')),
-     subdivision: z.string().nonempty(t('유효성 테스트')),
-     check: z.boolean(),
-     tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+};
+
+const gridConfig = {
+  query: translationQueryOptions.all,
+  columns: [
+    {
+      name: 'no1',
+      label: 'NO.',
+      type: 'numbering',
+    },
+    { name: '채널', label: '채널' },
+    { name: '테넌트', label: '테넌트' },
+    { name: '과정유형', label: '과정유형' },
+    { name: '과정코드', label: '과정코드' },
+    { name: '과정', label: '과정명' },
+    { name: '차수', label: '차수' },
+    { name: '담당자', label: '담당자' },
+    { name: '운영자', label: '운영자' },
+    { name: '사용여부', label: '사용여부' },
+    { name: '개설년도', label: '개설년도' },
+    { name: '미리보기', label: '미리보기' },
+    { name: '등록일', label: '등록일' },
+    { name: '등록자', label: '등록자' },
+    { name: 'URL 생성', label: 'URL 생성' },
+  ],
+  data: [],
+  pagination: {
+    pageSize: 10,
+    pageIndex: 0,
+    totalRows: 0,
   },
 };

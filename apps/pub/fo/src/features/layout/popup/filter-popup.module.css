@@ -5,6 +5,16 @@
     }
     .filter_box {
       @apply mt-[8px];
+      button {
+        span {
+          @apply !text-[var(--gray8)];
+        }
+        &[class*='active'] {
+          span {
+            @apply !font-bold !text-[var(--primary1)];
+          }
+        }
+      }
     }
   }
 }
@@ -14,6 +24,9 @@
   .chip_list {
     & > div {
       @apply !mt-0;
+      button {
+        @apply !font-normal;
+      }
     }
   }
 }

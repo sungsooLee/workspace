@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Select, Button, Pagination, Input, ContentsRow, Carousel } from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
 import { Navigation } from 'swiper/modules';
-import { IcoArray } from '@learnway/icons';
+import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
 // 예시 이미지
@@ -28,10 +28,6 @@ function RouteComponent() {
       <img src={bnrCImage1} alt="" />
     </Link>,
   ];
-  // 배너 스와이퍼 좌우 버튼
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<any>(null);
 
   // pagenation
   const [page, setPage] = React.useState(1);
@@ -39,12 +35,13 @@ function RouteComponent() {
     setPage(value);
   };
 
-  const [listUi, setListUi] = useState('type');
+  // list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
   const list_ui = () => {
-    if (listUi === 'type') {
-      setListUi('type2');
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
     } else {
-      setListUi('type');
+      setListUi('vertical'); // 세로형
     }
   };
 
@@ -56,7 +53,6 @@ function RouteComponent() {
           className={`${styles.recent_swiper} category_swiper`}
           spaceBetween={20}
           slidesPerView={2.2}
-          ref={swiperRef}
           modules={[Navigation]}
           navigation={true}
         />
@@ -110,6 +106,8 @@ function RouteComponent() {
       </div>
 
       <div className={styles.lists_wrap}>
+        <p className={styles.search_text}>“파파파파”의 검색결과</p>
+
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
@@ -129,13 +127,26 @@ function RouteComponent() {
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>
-                <IcoArray width={24} height={24} stroke="#a9afb8" fill="none" />
+                {listUi === 'type2' ? (
+                  <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                ) : (
+                  <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                )}
               </Button>
             </div>
           </div>
         </div>
 
-        <ThumnailList className={styles.list} listUi={listUi}></ThumnailList>
+        <div className={cn(styles.list, styles[listUi])}>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+        </div>
       </div>
 
       <Pagination

@@ -133,6 +133,7 @@ function RouteComponent() {
     return (
       <div className={styles.wrap}>
         <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+        <p className={styles.text}>{'서브텍스트입니다.'}</p>
         <OptionCard
           cols={5}
           size="lg"

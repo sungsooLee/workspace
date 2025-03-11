@@ -1,6 +1,4 @@
 import './styles.css';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
+import { appConfig } from '@learnway/config';
 
-// dayjs
-dayjs.extend(duration);
+appConfig.init({});

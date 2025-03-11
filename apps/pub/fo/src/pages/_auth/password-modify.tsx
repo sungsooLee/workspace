@@ -1,17 +1,19 @@
 import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Input, ContentsRow } from '@learnway/ui';
+import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
 import styles from './password-modify.module.css';
 import formStyles from '../../assets/styles/modules/form.module.css';
-import noticeBoxStyles from './notice-box.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { GoogleCertGuidePopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
@@ -74,12 +76,11 @@ function RouteComponent() {
           </div>
 
           <div className={styles.noti_info_txt}>
-            <Link to="" className={styles.btn_txt}>
-              1개월 후 변경
-            </Link>
+            <Button className={styles.btn_txt}>1개월 후 변경</Button>
           </div>
 
-          <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div
+            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -101,14 +102,23 @@ function RouteComponent() {
               <dd>
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
                 있습니다.
-                <Link to="" className={noticeBoxStyles.link}>
+                <Button
+                  className={cn(styles.link, 'auth--otp-guide-link')}
+                  onClick={() =>
+                    openModal({
+                      title: 'FIDO 인증',
+                      width: 'sm',
+                      content: <GoogleCertGuidePopup />,
+                      footer: false,
+                    })
+                  }>
                   구글 OTP 인증 가이드
-                </Link>
+                </Button>
               </dd>
             </dl>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

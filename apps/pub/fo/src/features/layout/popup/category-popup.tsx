@@ -6,6 +6,9 @@ import { Navigation } from 'swiper/modules';
 
 import { IcoArrowForward, IcoArrowDown } from '@learnway/icons';
 
+import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
+import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
+
 import styles from './category-popup.module.css';
 
 const CategoryPopupComponent = () => {
@@ -69,131 +72,144 @@ const CategoryPopupComponent = () => {
       <div className={styles.category_wrap}>
         {/* 카테고리 영역 - 좌측메뉴 */}
         <div className={styles.menu_list_wrap}>
-          {/* list 1 */}
-          <ul className={`${styles.menu_list} ${styles.sec1}`}>
-            <li>
-              {/* 버튼 활성화 시 active 추가 */}
-              <Button className={styles.active}>
-                <span>기업경영</span>
-                <IcoArrowForward
-                  className={styles.ico_arrow}
-                  width={16}
-                  height={16}
-                  stroke="#07287E"
-                />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>리더십/비즈스킬</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>어학</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>IT</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>HR/총무</span>
-              </Button>
-            </li>
-          </ul>
+          <div className={styles.scroll_box}>
+            {/* list 1 */}
+            <ul className={`${styles.menu_list} ${styles.sec1}`}>
+              <li>
+                {/* 버튼 활성화 시 active 추가 */}
+                <Button className={styles.active}>
+                  <span>기업경영</span>
+                  <IcoArrowForward
+                    className={styles.ico_arrow}
+                    width={16}
+                    height={16}
+                    stroke="#07287E"
+                  />
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>리더십/비즈스킬</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>어학</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>IT</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>HR/총무</span>
+                </Button>
+              </li>
+            </ul>
 
-          {/* list 2 */}
-          <ul className={`${styles.menu_list} ${styles.sec2}`}>
-            <li>
-              <Button>
-                <span>경영/기획</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>고객 서비스</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>마케팅 및 세일즈</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>법무/보안</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>생산</span>
-              </Button>
-            </li>
-          </ul>
+            {/* list 2 */}
+            <ul className={`${styles.menu_list} ${styles.sec2}`}>
+              <li>
+                <Button>
+                  <span>경영/기획</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>고객 서비스</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>마케팅 및 세일즈</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>법무/보안</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>생산</span>
+                </Button>
+              </li>
+            </ul>
 
-          {/* list 3 */}
-          <ul className={`${styles.menu_list} ${styles.sec3}`}>
-            <li>
-              <Button>
-                <span>서비스</span>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <span>연구개발</span>
-              </Button>
-            </li>
-          </ul>
+            {/* list 3 */}
+            <ul className={`${styles.menu_list} ${styles.sec3}`}>
+              <li>
+                <Button>
+                  <span>서비스</span>
+                </Button>
+              </li>
+              <li>
+                <Button>
+                  <span>연구개발</span>
+                </Button>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* 카테고리 영역 - 뎁스영역 */}
         <div className={styles.category_inner}>
-          <div className={styles.tit_head}>
-            <h2>
-              <Link to="" className={styles.tit}>
-                기업경영
-              </Link>
-              <Button
-                onClick={categoryAll}
-                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
-                <IcoArrowDown width={16} height={16} stroke="#07287E" />
-              </Button>
-            </h2>
-          </div>
+          <div className={styles.scroll_box}>
+            <div className={styles.tit_head}>
+              <h2>
+                <Link to="" className={styles.tit}>
+                  기업경영
+                </Link>
+                <Button
+                  onClick={categoryAll}
+                  className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                  <IcoArrowDown width={16} height={16} stroke="#07287E" />
+                </Button>
+              </h2>
+            </div>
 
-          <div className={styles.depth_area}>
-            {/* 3dapth */}
-            {categories.map((category, index) => (
-              <div key={index} className={styles.depth_wrap}>
-                <div className={styles.tit}>
-                  <h3>
-                    <Link to={category.link}>{category.title}</Link>
-                  </h3>
-                  <Button
-                    className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                    onClick={() => categoryDepth(index)}>
-                    <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
-                  </Button>
-                </div>
-
-                {!openStates[index] && (
-                  <div className={styles.depth_info}>
-                    <ul className={styles.list}>
-                      {category.subCategories.map((sub, subIndex) => (
-                        <li key={subIndex}>
-                          <Link className={styles.txt} to={sub.link}>
-                            {sub.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+            <div className={styles.depth_area}>
+              {/* 3dapth */}
+              {categories.map((category, index) => (
+                <div key={index} className={styles.depth_wrap}>
+                  <div className={styles.tit}>
+                    <h3>
+                      <Link to={category.link}>{category.title}</Link>
+                    </h3>
+                    <Button
+                      className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
+                      onClick={() => categoryDepth(index)}>
+                      <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
+                    </Button>
                   </div>
-                )}
-              </div>
-            ))}
+
+                  {!openStates[index] && (
+                    <div className={styles.depth_info}>
+                      <ul className={styles.list}>
+                        {category.subCategories.map((sub, subIndex) => (
+                          <li key={subIndex}>
+                            <Link className={styles.txt} to={sub.link}>
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.banner_box}>
+              <Link to="" className={styles.banner_link}>
+                <img src={bnrImage1} />
+              </Link>
+              <Link to="" className={styles.banner_link}>
+                <img src={bnrImage2} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

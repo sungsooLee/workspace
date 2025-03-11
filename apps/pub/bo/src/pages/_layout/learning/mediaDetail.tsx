@@ -13,8 +13,15 @@ import {
   Checkbox,
   DatePicker,
   ThumbnailImageUpload,
+  Spinner,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
+import {
+  IcoFormRequired,
+  IcoArrowDown,
+  IcoAlertCircle,
+  IcoCloseCircle,
+  IcoStatusFail,
+} from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -148,13 +155,7 @@ function RouteComponent() {
             </label>
             {/* file upload case */}
             <div className={formStyles.input_box}>
-              <Input
-                id="name-1-2"
-                type="text"
-                value="업로드 파일명"
-                className={formStyles.input}
-                showCounter
-              />
+              <Input id="name-1-2" type="text" value="업로드 파일명" className={formStyles.input} />
             </div>
           </div>
         </div>
@@ -722,6 +723,31 @@ function RouteComponent() {
       <hr className={styles.vertical_line} />
       {/* sub_contents */}
       <div className={styles.sub_contents}>
+        <strong className={movieInfoStyles.title}>업로드 파일</strong>
+        {/* 인코딩 진행 중 */}
+        <div className={movieInfoStyles.status_wrap}>
+          <Spinner isLoading={true} showBackdrop className={movieInfoStyles.loading} />
+          <p className={movieInfoStyles.text}>
+            <strong>인코딩 진행 중입니다.</strong>
+            인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
+          </p>
+        </div>
+        {/* 인코딩 실패 */}
+        <div className={movieInfoStyles.status_wrap}>
+          <IcoStatusFail className={movieInfoStyles.fail} />
+          <p className={movieInfoStyles.text}>
+            <strong>인코딩이 실패되었습니다.</strong>
+            다시 시도해 주세요.
+          </p>
+          <div className={movieInfoStyles.btn_box}>
+            <Button className={movieInfoStyles.btn} variant="gray" size="sm">
+              재시도
+            </Button>
+            <Button className={movieInfoStyles.btn} variant="primary" size="sm">
+              동영상 변경
+            </Button>
+          </div>
+        </div>
         {/* btn_list */}
         <ul className={movieInfoStyles.btn_list}>
           {buttons.map((btn, index) => (

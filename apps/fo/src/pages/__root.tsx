@@ -3,7 +3,7 @@ import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tans
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { ModalWrapper } from '@learnway/ui';
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
-
+import { useGlobalRouterEvent } from '../entities/platform';
 const NotFound = () => {
   return (
     <div>
@@ -25,6 +25,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   useRenewalMenuStateFromRouting();
+  useGlobalRouterEvent();
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-switch';
 
 import { cn } from '@learnway/shared';
@@ -13,7 +13,7 @@ export interface SwitchComponentProps extends React.ComponentProps<typeof Primit
   reversed?: boolean; // label이 앞에 있는 Case
   labelAlign?: 'left' | 'right';
   showLabel?: boolean;
-  // onChange?: (checked: boolean) => void;
+  onCheckedChange?: (checked: boolean) => void;
 }
 
 const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, SwitchComponentProps>(
@@ -33,11 +33,6 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
     },
     ref,
   ) => {
-    const [isChecked, setIsChecked] = useState(false);
-    // onCheckedChange 핸들러
-    const handleCheckedChange = (checked: boolean) => {
-      setIsChecked(checked);
-    };
     return (
       <div
         className={cn(
@@ -45,7 +40,7 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           styles.switch,
           className,
           'nlp--switch',
-          isChecked && styles.active,
+          checked && styles.active,
           {
             [styles.reversed]: reversed,
           },
@@ -63,7 +58,7 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           id={id}
           checked={checked}
           disabled={disabled}
-          onCheckedChange={handleCheckedChange}>
+          onCheckedChange={onCheckedChange}>
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
 

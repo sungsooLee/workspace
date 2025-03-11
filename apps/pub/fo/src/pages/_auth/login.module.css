@@ -1,66 +1,67 @@
 /* login.module.css */
-
-.login {
-  &.auth_wrap {
-    .auth_box {
-      @apply relative z-0 text-left;
-    }
-  }
-  .login_info {
-    @apply flex items-center justify-between;
-    .id_save {
-      label {
-        @apply text-[1.4rem] text-[var(--gray8)];
+.start {
+  &.login {
+    &.auth_wrap {
+      .auth_box {
+        @apply relative z-0 text-left;
       }
     }
-    .info {
-      @apply body_3_r flex gap-[24px] text-[var(--gray7)];
+    .login_info {
+      @apply flex items-center justify-between;
+      .id_save {
+        label {
+          @apply text-[1.4rem] text-[var(--gray8)];
+        }
+      }
+      .info {
+        @apply body_3_r flex gap-[24px] text-[var(--gray7)];
+        a {
+          @apply underline;
+        }
+      }
+    }
+    .btn_box {
+      @apply mt-[24px];
+      .btn {
+        @apply w-full;
+      }
+    }
+
+    .sns_login {
+      @apply relative mt-[40px] text-center;
+      .list {
+        @apply mt-[24px] flex items-center justify-center gap-[24px];
+        > li {
+          @apply h-[48px] w-[48px];
+        }
+      }
+      &::before {
+        @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
+        z-index: 0;
+      }
+      .tit_sns {
+        @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray7)];
+        z-index: 2;
+      }
+      .noti {
+        @apply body_bo_2_r mt-[24px] text-[var(--gray7)];
+      }
+    }
+
+    .login_guide {
+      @apply body_3_r flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray7)];
+      .btn_join {
+        @apply text-[var(--secondary3)];
+      }
       a {
         @apply underline;
+        + a {
+          @apply ml-[16px];
+        }
       }
-    }
-  }
-  .btn_box {
-    @apply mt-[24px];
-    .btn {
-      @apply w-full;
-    }
-  }
-
-  .sns_login {
-    @apply relative mt-[40px] text-center;
-    .list {
-      @apply mt-[24px] flex items-center justify-center gap-[24px];
-      > li {
-        @apply h-[48px] w-[48px];
+      svg {
+        @apply mr-[4px];
       }
-    }
-    &::before {
-      @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
-      z-index: 0;
-    }
-    .tit_sns {
-      @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray7)];
-      z-index: 2;
-    }
-    .noti {
-      @apply body_bo_2_r mt-[24px] text-[var(--gray7)];
-    }
-  }
-
-  .login_guide {
-    @apply body_3_r flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray7)];
-    .btn_join {
-      @apply text-[var(--secondary3)];
-    }
-    a {
-      @apply underline;
-      + a {
-        @apply ml-[16px];
-      }
-    }
-    svg {
-      @apply mr-[4px];
     }
   }
 }

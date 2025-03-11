@@ -43,6 +43,9 @@ export * from './lib/date-picker/time-picker';
 export * from './lib/editor/hooks/editor.hook';
 export { default as Editor } from './lib/editor';
 
+// empty-text
+export * from './lib/empty-text/empty-text';
+
 // grid
 export * from './lib/grid';
 export * from './lib/grid/types';

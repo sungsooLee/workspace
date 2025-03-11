@@ -30,6 +30,14 @@
       @apply !inline align-top;
       button {
         @apply mb-[8px] mr-[8px] !inline align-top;
+        span {
+          @apply !text-[var(--gray8)];
+        }
+        &[class*='active'] {
+          span {
+            @apply font-bold !text-[var(--primary1)];
+          }
+        }
       }
     }
 
@@ -39,6 +47,9 @@
         @apply mt-0 !inline align-top;
         span {
           @apply mb-[8px] mr-[8px] !inline-flex items-center;
+          button {
+            @apply !p-0 !font-bold;
+          }
         }
       }
     }

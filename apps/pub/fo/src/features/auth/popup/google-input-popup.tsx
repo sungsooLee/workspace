@@ -1,15 +1,15 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './google-input-popup.module.css';
-import signupStyles from '../../../pages/_auth/signup.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css';
+import noticeBoxStyles from '../../../pages/_auth/notice-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { ContentsRow, Input } from '@learnway/ui';
 
 const GoogleInputPopupCompoment = () => {
   return (
     <div className={`${styles.start} ${styles.google_input_popup}`}>
-      <div className={cn(signupStyles.auth_form, 'no_line', 'col')}>
+      <div className={cn(styles.auth_form, 'no_line', 'col')}>
         <ContentsRow>
           <div className={formStyles.form_item}>
             <label htmlFor="name" className={formStyles.form_label}>
@@ -25,8 +25,9 @@ const GoogleInputPopupCompoment = () => {
           </div>
         </ContentsRow>
       </div>
-      <div className={signupStyles.signup_noti}>
-        <dl className={signupStyles.check_point}>
+      <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
+      <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+        <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />
             유의사항

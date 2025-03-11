@@ -2,21 +2,22 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
   // Spinner,
-  // Input,
   // Textarea,
-  // Button,
+  Button,
   // Tooltip,
   // DatePicker,
   // Switch,
-  // Select,
+  Select,
   // ThumbnailImageUpload,
   // ChipList,
   // SelectOption,
   ContentsRow,
+  Input,
   // List,
   // Checkbox,
   // RadioGroup,
 } from '@learnway/ui';
+import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from './page-content.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
 
@@ -30,14 +31,134 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-channel" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>테넌트</span>
-              </label>
-              <div className={formStyles.input_box}></div>
+          <div className={formStyles.search_contents_wrap}>
+            <ContentsRow className={formStyles.search_contents}>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-select1" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>테넌트</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-channel" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>채널</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-type" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>유형</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-owner" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>담당자</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+                </div>
+              </div>
+            </ContentsRow>
+            <ContentsRow className={formStyles.search_contents}>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-select2" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>외주여부</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-useable" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>사용가능</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-usage" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>교육활용</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-resources" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>학습자원명</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-resources" type="text" placeholder="학습자원명으로 조회하세요." />
+                </div>
+              </div>
+            </ContentsRow>
+            <div className={formStyles.btn_box}>
+              <Button
+                type="button"
+                className={formStyles.btn_expand}
+                variant="search"
+                size="sm"
+                onlyIcon>
+                <IcoArrowDownDouble className={formStyles.ico_expand} />
+              </Button>
+              <Button
+                type="button"
+                className={formStyles.btn_refresh}
+                variant="search"
+                size="sm"
+                onlyIcon>
+                <IcoRefresh02 className={formStyles.icon_refresh} />
+              </Button>
+              <Button type="button" variant="search" size="sm" className={formStyles.btn_search}>
+                <IcoSearch className={formStyles.icon_sm_search} />
+                조회
+              </Button>
             </div>
-          </ContentsRow>
+          </div>
         </div>
       </PageContainer>
     </form>

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { metaConfig } from '../../../features/auth';
+import { pageRouteConfig } from '../../../features/auth';
 
 interface MenuParams {
   menuId?: string;
@@ -8,7 +8,7 @@ interface MenuParams {
 
 export const Route = createFileRoute('/_layout/menu/$menuId')({
   component: RouteComponent,
-  ...metaConfig({ mobile: { showFooter: false } }),
+  ...pageRouteConfig({ meta: { mobile: { showFooter: false } } }),
 });
 
 function RouteComponent() {
