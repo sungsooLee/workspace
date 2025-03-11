@@ -9,7 +9,7 @@ h4.auth--title {
 }
 
 .auth--signup-select {
-  .radio_card {
+  .nlp--radio {
     @apply flex items-center justify-center gap-[16px] text-center;
 
     button {

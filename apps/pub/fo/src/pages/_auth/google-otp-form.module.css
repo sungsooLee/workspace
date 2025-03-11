@@ -1,5 +1,11 @@
 .search_info {
-  @apply body_2_r pb-[32px] text-center text-[var(--gray7)];
+  @apply body_2_r m-auto flex-col justify-center pb-[32px] text-[var(--gray7)];
+  svg {
+    @apply m-auto rotate-180;
+  }
+  .txt {
+    @apply mt-[12px];
+  }
   strong {
     @apply text-[var(--gray8)];
   }
