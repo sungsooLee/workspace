@@ -1,5 +1,5 @@
 import { Input, Select } from '@learnway/ui';
-import formStyles from '../../../../../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { forwardRef } from 'react';
 
 const TempContactComponent = forwardRef<any, any>(({ name }) => {

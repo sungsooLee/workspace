@@ -3,8 +3,9 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
 import styles from './password-input.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import { IcoCaution } from '@learnway/icons';
 import { GoogleCertGuidePopup } from '../../features/auth';
 
@@ -86,7 +87,8 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <div
+            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               취소
             </Button>

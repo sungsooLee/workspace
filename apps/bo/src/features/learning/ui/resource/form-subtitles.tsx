@@ -1,5 +1,5 @@
 import { ChangeEvent, forwardRef, useEffect, useRef, useState } from 'react';
-import formStyles from '../../../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Button, Input, Select, useToast } from '@learnway/ui';
 import { useFieldArray } from 'react-hook-form';
 import { LOCALES } from '@learnway/config';
