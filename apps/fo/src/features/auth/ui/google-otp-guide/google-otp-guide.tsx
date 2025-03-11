@@ -1,10 +1,16 @@
-import { memo } from 'react';
+import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { IcoCaution } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
-//import styles from './google-cert-guide-popup.module.css';
+import { useModal, Button } from '@learnway/ui';
+
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 
-const GoogleCertGuidePopupCompoment = () => {
+function GoogleOtpGuideComponent() {
+  const { t } = useTranslation();
+  const { open: openModal } = useModal();
+
   return (
     <div className={`${styles.start} ${styles.google_cert_guide_popup}`}>
       <div className={styles.guide_list}>
@@ -33,6 +39,6 @@ const GoogleCertGuidePopupCompoment = () => {
       </div>
     </div>
   );
-};
+}
 
-export const GoogleCertGuidePopup = memo(GoogleCertGuidePopupCompoment);
+export const GoogleOtpGuide = GoogleOtpGuideComponent;
