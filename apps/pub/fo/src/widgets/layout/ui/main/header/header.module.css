@@ -14,7 +14,7 @@
         }
         h1 {
           img {
-            @apply h-[60px] w-auto;
+            @apply h-[64px] w-auto;
           }
         }
         .search_form {
