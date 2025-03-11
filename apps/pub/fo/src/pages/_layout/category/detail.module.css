@@ -51,16 +51,16 @@
 
   .list {
     @apply mt-[24px];
-    & > div {
+    .list_box > div {
       @apply mr-[20px];
     }
-    & > div:nth-child(4n) {
+    .list_box > div:nth-child(4n) {
       @apply mr-0;
     }
-    & > div:nth-child(n + 5) {
+    .list_box > div:nth-child(n + 5) {
       @apply mt-[40px];
     }
-    &.horizontal {
+    .list_box.horizontal {
       & > div {
         & + div {
           @apply mt-[54px];
@@ -99,6 +99,9 @@
           }
         }
       }
+    }
+    .empty {
+      @apply mt-[64px];
     }
   }
 

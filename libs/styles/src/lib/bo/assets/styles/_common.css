@@ -6,8 +6,7 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
-  @apply scrollbar;
+  overflow: hidden !important;
 }
 
 html {
@@ -34,6 +33,7 @@ body {
   font-weight: 400;
   color: var(--gray9);
   line-height: 160%;
+  overflow-y: hidden !important;
 }
 
 strong {
@@ -55,15 +55,34 @@ body[data-scroll-locked][data-scroll-locked] {
   /* lnb open */
   @apply !max-w-[calc(100vw-263px)];
 }
-.row_wrap {
-  @apply rounded-[8px] border border-solid border-[var(--gray5)] p-[16px];
-  .row:nth-last-child(1) {
-    & > div {
-      @apply pb-0;
+
+.scrolled {
+  header {
+    @apply !h-[50px] !overflow-hidden;
+    h1,
+    .util {
+      @apply !hidden;
+    }
+    .nav_area {
+      @apply !pt-[4px];
+    }
+    .quick_menu {
+      @apply !bottom-[4px];
     }
   }
-}
-/* col */
-.col {
-  @apply flex flex-col;
+  .container_inner {
+    @apply !min-h-[calc(100vh-50px)];
+    .scroll_inner {
+      @apply !min-h-[calc(100vh-90px)];
+      .title_wrap {
+        @apply border-b-[1px] border-solid border-[var(--gray4)];
+      }
+      .content_wrap {
+        @apply !min-h-[calc(100vh-186px)] pb-[32px];
+        & > div {
+          @apply !min-h-[calc(100vh-252px)];
+        }
+      }
+    }
+  }
 }

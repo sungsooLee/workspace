@@ -52,18 +52,21 @@ function NavigateComponent() {
       <nav className={styles.nav}>
         <Swiper
           ref={swiperRef}
-          spaceBetween={48}
           slidesPerView="auto"
           loop={false}
           modules={[Navigation]}
           simulateTouch={isMobile}
           allowTouchMove={isMobile}
+          observer={true}
+          observeParents={true}
           className={styles.gnb_swiper}>
           {gnb.map((gnb, index) => (
             <SwiperSlide
               key={index}
               className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}>
-              <Link to={gnb.link}>{gnb.name}</Link>
+              <Link to={gnb.link}>
+                <span>{gnb.name}</span>
+              </Link>
               {/* 라벨 표시 */}
               {gnb.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>}
             </SwiperSlide>

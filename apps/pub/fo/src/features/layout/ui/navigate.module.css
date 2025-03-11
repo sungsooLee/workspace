@@ -7,14 +7,18 @@
       .gnb_swiper {
         @apply flex w-[1100px] justify-start;
         .slide {
-          @apply body_2_b relative flex w-auto items-center justify-start gap-[8px] whitespace-nowrap;
+          @apply body_2_b relative flex !w-auto items-center justify-start gap-[8px] whitespace-nowrap;
           a {
-            color: var(--gray9);
-            @apply relative inline-flex h-[64px] items-center text-[1.6rem];
+            @apply relative inline-flex h-[64px] items-center px-[24px] text-[1.6rem];
+            span {
+              @apply relative leading-[64px] text-[var(--gray9)];
+            }
             &:hover {
-              @apply text-[var(--secondary1)];
-              &::before {
-                @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-[''];
+              span {
+                @apply text-[var(--secondary1)];
+                &::before {
+                  @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-[''];
+                }
               }
               .menu_all {
                 @apply block;
@@ -23,14 +27,14 @@
           }
           &.division {
             &::after {
-              @apply absolute right-[-32px] inline-block h-5 w-px bg-[var(--gray5)] content-[''];
+              @apply absolute right-0 inline-block h-[20px] w-px bg-[var(--gray5)] content-[''];
             }
-            + .slide {
-              @apply ml-[12px];
+            a {
+              @apply pr-[32px];
             }
           }
           .label {
-            @apply body_4_b absolute left-1/2 top-[0] inline-flex h-[20px] items-center whitespace-nowrap rounded-[10px] bg-[var(--status1)] px-[8px] text-[var(--white)];
+            @apply body_4_b absolute left-[46%] top-[0] inline-flex h-[20px] items-center whitespace-nowrap rounded-[10px] bg-[var(--status1)] px-[8px] text-[var(--white)];
           }
         }
       }
