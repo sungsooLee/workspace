@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
-import '../assets/styles/global.css';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import '../../../../../libs/styles/src/lib/bo/assets/styles/global.css';
 import '../assets/styles/guide.css';
 // import styles from './_guide.module.css';
-
 export const Route = createFileRoute('/_guide')({
   component: RouteComponent,
 });
