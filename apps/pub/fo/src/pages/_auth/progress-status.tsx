@@ -140,7 +140,7 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn-wrap')}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="primary" size="xl">
               로그인
             </Button>

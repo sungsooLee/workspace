@@ -38,4 +38,8 @@ export default class VerificationsService {
   static verifyEmail(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/users/verifications/verify-email`, payload);
   }
+
+  static fetchEmail(payload: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/users/verifications/find-my-id`, payload);
+  }
 }

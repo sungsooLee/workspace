@@ -1,9 +1,9 @@
 .array {
   @apply flex items-center;
   button {
-    @apply body_3_r text-[var(--gray8)];
+    @apply !body_3_r text-[var(--gray8)];
     &.active {
-      @apply body_3_b;
+      @apply !body_3_b;
     }
     & + button {
       @apply relative ml-[8px] pl-[8px];

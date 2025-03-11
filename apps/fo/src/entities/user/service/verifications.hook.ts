@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
+import type { MutateCallback } from '@learnway/shared';
+
 import { queryKeys, queryOptions, mutateOptions } from './verifications.queries';
 
 interface VerifyPhoneNumber {
@@ -85,6 +87,22 @@ export function useVerifyEmail(mutationOptions = {}) {
   return {
     verify: (payload: VerifyEmail, callback?: MutateOptions<unknown, unknown, VerifyEmail>) => {
       mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
+export function useAsyncFetchEmail(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.fetchEmail(),
+    ...mutationOptions,
+  });
+
+  return {
+    asyncFetch: (payload: any, callback?: MutateCallback<any[]>) => {
+      return mutateAsync(payload, callback);
     },
     isSuccess,
     isError,

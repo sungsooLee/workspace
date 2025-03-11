@@ -8,7 +8,7 @@ export interface TeacherListProps {
 }
 
 /**
- * 공통 form select chip list
+ * 강사 리스트
  * @param value
  * @param onChange
  * @param props

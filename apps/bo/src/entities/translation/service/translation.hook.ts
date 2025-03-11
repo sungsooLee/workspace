@@ -56,7 +56,7 @@ const useTranslationHook = () => {
   useEffect(() => {
     const query = router.state.location.search as any;
     console.log(query);
-    if (Object.prototype.hasOwnProperty.call(query, 'messageId')) {
+    if ('messageId' in query) {
       setMessageId(query['messageId']);
       setProcessType('MODIFY');
     } else {

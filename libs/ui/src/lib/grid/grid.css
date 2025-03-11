@@ -73,3 +73,7 @@
     }
   }
 }
+
+.nlp--input input {
+  @apply body_bo_2_r min-h-[32px] rounded-[4px] border border-solid border-[#c8d2e5] px-[8px] text-[var(--gray8)];
+}

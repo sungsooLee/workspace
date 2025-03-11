@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import styles from './google-qrcode-popup.module.css';
-import signupStyles from '../../../pages/_auth/signup.module.css';
+import noticeBoxStyles from '../../../pages/_auth/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 import imgQrcode from '../../../assets/images/temp/img_qrcode.png';
 import { Button, useModal } from '@learnway/ui';
@@ -44,9 +44,9 @@ const GoogleQrcodePopupCompoment = () => {
         <img src={imgQrcode} alt="qrcode" />
       </figure>
       <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
-      <div className={signupStyles.noti_info_txt}>
+      <div className={styles.noti_info_txt}>
         <Button
-          className={signupStyles.btn_txt}
+          className={styles.btn_txt}
           onClick={() => {
             closeModal(); // 모달 닫기 함수 호출
             setTimeout(() => {
@@ -61,8 +61,8 @@ const GoogleQrcodePopupCompoment = () => {
           스캔할 수 없나요?
         </Button>
       </div>
-      <div className={signupStyles.signup_noti}>
-        <dl className={signupStyles.check_point}>
+      <div className={`${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+        <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />
             유의사항
