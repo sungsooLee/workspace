@@ -17,11 +17,12 @@ import { FormTranslationBox } from '../../../../../features/platform/ui/platform
 import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 import { useEffect } from 'react';
 import { TranslationPopup } from '../../../../../shared/translation-popup/translation-popup';
+import { LOCALES } from '@learnway/config';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
 });
-const DEFAULT_LANG = 'ko_KR';
+const DEFAULT_LANG = 'ko';
 function RouteComponent() {
   const { messageId, processType, save, update, getTranslation } = useTranslation();
   const { confirm: openConfirm, open } = useModal();
@@ -105,7 +106,7 @@ function RouteComponent() {
   const init = async () => {
     if (!messageId) return;
     const translation = (await getTranslation(messageId)) as any;
-    const translations = Object.entries(localeCodes).map(([key, value]) => {
+    const translations = Object.entries(LOCALES).map(([key, value]) => {
       const findTranslation = translation.translations.find((ts: any) => ts.locale === key) as any;
       if (findTranslation) {
         return findTranslation;
@@ -271,6 +272,8 @@ const formConfig: DynamicFormConfig = {
         { value: 'MENU', label: '메뉴' },
         { value: 'ERROR', label: '에러' },
         { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
+        { value: 'CATEGORY', label: '카테고리' },
       ],
     },
     {
@@ -286,7 +289,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: '사용여부',
-      value: false,
+      value: true,
     },
   ],
   validator: {
@@ -321,34 +324,4 @@ const translationConfig: DynamicFormConfig = {
     },
   ],
   validator: {},
-};
-const localeCodes: { [key: string]: string } = {
-  ko_KR: 'ko_KR',
-  ar: 'ar',
-  zh: 'zh',
-  'zh-TW': 'zh-TW',
-  hr: 'hr',
-  de: 'de',
-  en: 'en',
-  'en-AU': 'en-AU',
-  et: 'et',
-  fr: 'fr',
-  he: 'he',
-  hi: 'hi',
-  id: 'id',
-  it: 'it',
-  ja: 'ja',
-  ms: 'ms',
-  ne: 'ne',
-  fa: 'fa',
-  pt: 'pt',
-  'pt-BR': 'pt-BR',
-  ro: 'ro',
-  ru: 'ru',
-  sk: 'sk',
-  es: 'es',
-  'es-LA': 'es-LA',
-  th: 'th',
-  tr: 'tr',
-  vi: 'vi',
 };

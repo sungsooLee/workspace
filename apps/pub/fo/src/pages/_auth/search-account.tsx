@@ -3,7 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
@@ -11,6 +11,7 @@ import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import { GoogleCertGuidePopup } from '../../features/auth';
 
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 import {
   Button,
@@ -358,7 +359,8 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <div
+            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
             <Button variant="gray" size="xl">
               취소
             </Button>

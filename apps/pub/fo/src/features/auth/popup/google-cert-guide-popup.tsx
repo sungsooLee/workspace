@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
-import styles from './google-cert-guide-popup.module.css';
+//import styles from './google-cert-guide-popup.module.css';
+import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 
 const GoogleCertGuidePopupCompoment = () => {
   return (

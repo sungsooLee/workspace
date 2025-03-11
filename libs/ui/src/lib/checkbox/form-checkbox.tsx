@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { Checkbox } from './checkbox';
 
 /**
@@ -9,7 +9,10 @@ import { Checkbox } from './checkbox';
  * @constructor
  */
 const FormCheckBoxComponent = forwardRef<HTMLButtonElement, any>(
-  ({ value: checked, onChange, checkLabel: label, ...props }, ref) => {
+  ({ value: checked, name, onChange, checkLabel: label, ...props }, ref) => {
+    useEffect(() => {
+      console.log(name, checked);
+    }, [checked]);
     return (
       <Checkbox
         ref={ref}

@@ -19,7 +19,7 @@
         }
         .info_area {
           .info_menu ul {
-            @apply flex gap-[48px];
+            @apply flex gap-[28px];
             > li {
               a {
                 @apply text-[var(--gray5)];

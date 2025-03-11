@@ -1,29 +1,33 @@
-import { FC } from 'react';
+import { cloneElement, FC } from 'react';
 import { Controller } from 'react-hook-form';
 
 /**
  * DynamicFormField 컴포넌트
  * - react-hook-form의 Controller를 사용하여 동적으로 폼 필드를 렌더링합니다.
  */
-const DynamicFormFieldComponent: FC<any> = ({ control, name, component: Component, ...props }) => {
+const DynamicFormFieldComponent: FC<any> = ({
+  control,
+  name,
+  component: Component,
+  children,
+  ...props
+}) => {
   return (
-    <>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Component
-            {...props}
-            name={name}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            ref={ref}
-            control={control}
-          />
-        )}
-      />
-    </>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field: { onChange, onBlur, value, ref } }) => (
+        <Component
+          {...props}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          ref={ref}
+          control={control}
+        />
+      )}
+    />
   );
 };
 DynamicFormFieldComponent.displayName = 'DynamicFormField';

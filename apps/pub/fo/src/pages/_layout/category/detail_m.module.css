@@ -25,7 +25,7 @@
       .select {
         @apply w-full;
         button {
-          @apply h-[40px] rounded-[8px];
+          @apply h-[40px] rounded-[8px] px-[16px];
         }
       }
       & + .box {

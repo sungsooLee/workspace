@@ -29,7 +29,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       <>
         <Header />
         <div className={cn(styles.start, styles.container)}>
-          <div className={styles.container_inner}>
+          <div className={cn(styles.container_inner, 'container_inner')}>
             <LNB />
             <main>{children}</main>
           </div>

@@ -1,0 +1,11 @@
+.start {
+  &.btn_wrap {
+    @apply flex items-center justify-between;
+    button {
+      @apply w-full;
+      &.max {
+        @apply m-auto max-w-[294px];
+      }
+    }
+  }
+}

@@ -1,33 +1,67 @@
+/* eslint-disable no-useless-catch */
 import { createElement } from 'react';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
+import { isFunction } from 'lodash';
 
-import { AuthUser, authUserQueryKeys } from '@learnway/config';
+import { authUserQueryKeys, ERROR } from '@learnway/config';
+import type { AuthUser, PageRouteConfig } from '@learnway/config';
 
-export function authConfig() {
+import type { PageMeta } from '../../../types';
+
+const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
+  authorization: true,
+  meta: {
+    mobile: { showFooter: false },
+  },
+};
+
+function authorization({ location, context }: { location: ParsedLocation; context: any }) {
+  const queryClient = context.queryClient;
+  const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
+
+  if (location.pathname === '/' || !authUser?.menus) {
+    if (authUser === undefined) {
+      throw ERROR.AUTHORIZATION;
+    }
+    return;
+  }
+
+  const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
+  if (!unauthScreen) {
+    throw ERROR.PAGE_ACCESS_RIGHTS;
+  }
+
+  //router.history.push(search.redirect)
+}
+
+export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
-    /**
-     * 로그인 사용자의 접근 권한 확인,
-     * location.path에 대한 접근 권한 여부 확인 ('/'(home)화면 제외)
-     */
-    beforeLoad: async ({ location, context }: { location: ParsedLocation; context: any }) => {
-      const queryClient = context.queryClient;
-      const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
-
-      if (location.pathname === '/' || !authUser?.menus) {
-        if (authUser === undefined) {
-          throw redirect({ to: '/login' });
+    beforeLoad: ({ location, context, params, search }: any) => {
+      if (routeConfig?.meta) {
+        context.setPageMeta({ ...defaultPageRouteConfig.meta, ...routeConfig.meta });
+      } else {
+        context.setPageMeta(defaultPageRouteConfig.meta);
+      }
+      if (routeConfig?.validate) {
+        try {
+          routeConfig.validate({ params, search, state: location?.state });
+        } catch (e) {
+          throw new Error(String(e));
         }
-        return true;
       }
-
-      const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
-      if (!unauthScreen) {
-        console.log('Error 화면 접근 권한 없음');
-        throw redirect({ to: '/' });
+      if (routeConfig?.authorization) {
+        try {
+          authorization({ location, context });
+        } catch (e) {
+          if (e === ERROR.PAGE_ACCESS_RIGHTS) {
+            throw redirect({ to: '/' });
+          } else {
+            throw redirect({ to: '/login', search: { redirect: location.pathname } });
+          }
+        }
       }
-
-      //router.history.push(search.redirect)
+      return { ...context, state: location?.state };
     },
     errorComponent: ({ error }: any) => {
       console.log('errorComponent', error);

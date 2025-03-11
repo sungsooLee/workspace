@@ -20,17 +20,17 @@ function HeaderComponent() {
           <Logo />
           <strong className={styles.title}>{'HRD 센터'}</strong>
         </h1>
-        <div className={styles.nav_area}>
+        <div className={cn(styles.nav_area, 'nav_area')}>
           <Navigate />
         </div>
 
-        <div className={styles.util}>
+        <div className={cn(styles.util, 'util')}>
           <Language />
           <Notification />
           <UserAvatar />
         </div>
 
-        <div className={styles.quick_menu}>
+        <div className={cn(styles.quick_menu, 'quick_menu')}>
           <QuickMenu />
         </div>
       </header>

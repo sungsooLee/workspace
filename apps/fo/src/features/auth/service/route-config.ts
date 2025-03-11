@@ -5,11 +5,11 @@ import type { ParsedLocation } from '@tanstack/react-router';
 import { isFunction } from 'lodash';
 
 import { authUserQueryKeys, ERROR } from '@learnway/config';
-import type { AuthUser } from '@learnway/config';
+import type { AuthUser, PageRouteConfig } from '@learnway/config';
 
-import { PageRouteConfig, PageMeta } from '../../../types';
+import type { PageMeta } from '../../../types';
 
-const defaultPageRouteConfig: PageRouteConfig = {
+const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   authorization: true,
   meta: {
     mobile: { showFooter: false },
@@ -19,7 +19,7 @@ const defaultPageRouteConfig: PageRouteConfig = {
 function authorization({ location, context }: { location: ParsedLocation; context: any }) {
   const queryClient = context.queryClient;
   const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
-  
+
   if (location.pathname === '/' || !authUser?.menus) {
     if (authUser === undefined) {
       throw ERROR.AUTHORIZATION;
@@ -35,7 +35,7 @@ function authorization({ location, context }: { location: ParsedLocation; contex
   //router.history.push(search.redirect)
 }
 
-export function pageRouteConfig(routeConfig?: PageRouteConfig) {
+export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: ({ location, context, params, search }: any) => {
       if (routeConfig?.meta) {

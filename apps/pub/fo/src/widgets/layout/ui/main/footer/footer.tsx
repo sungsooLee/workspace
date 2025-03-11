@@ -51,7 +51,7 @@ function FooterComponent() {
                 <span className={styles.space}>주소 : 서울시 강남구 테헤란로 510</span>{' '}
                 <span className={styles.space}>호스팅 서비스 제공 : 현대오토에버(주)</span>{' '}
                 <span className={styles.space}>
-                  고객센터 : <span className={styles.tel}>080-600-6000</span>
+                  고객센터 : <span className={styles.tel}>080-600-6000, 080-200-6000</span>
                 </span>
               </address>
               <div className={styles.copyright}>

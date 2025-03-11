@@ -39,13 +39,8 @@ const useGridBoxHook = (config: any, getData?: any) => {
   const [gridConfig, setGridConfig] = useState(config);
 
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
-    const newParams = {
-      ...params,
-      isUsed: true,
-    };
-    const queryString = objectToQueryString({ ...newParams, ...page });
+    const queryString = objectToQueryString({ ...params, ...page });
     const result = (await queryClient.fetchQuery(config.query(queryString))) as any;
-    console.log('result => ', result);
     if (result) {
       setGridConfig((state: any) => ({
         ...state,
@@ -56,12 +51,10 @@ const useGridBoxHook = (config: any, getData?: any) => {
             ...state.page,
             pageSize: result.pageable.pageSize,
             pageIndex: result.pageable.number || 0,
-            totalRows: result.pageable.totalElements,
+            totalRows: result.totalPages,
           },
         }),
-        totalRows: result?.pageable?.totalElements
-          ? result.pageable.totalElements
-          : result.content.length,
+        totalRows: result?.totalPages ? result.totalPages : result.content.length,
       }));
     }
   };

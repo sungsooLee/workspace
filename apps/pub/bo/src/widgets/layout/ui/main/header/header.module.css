@@ -1,7 +1,7 @@
 /* header.module.css */
 .start {
   .header {
-    @apply relative box-border h-[100px] min-w-[1400px] bg-[#012277] px-[32px];
+    @apply relative box-border h-[100px] min-w-[1400px] bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
     h1 {
       @apply mt-[5px] inline-flex items-center;
       img {

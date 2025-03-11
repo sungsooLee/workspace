@@ -4,7 +4,7 @@ import { useCreation } from 'ahooks';
 import { useBoolean, useCounter } from 'react-use';
 
 import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { cn, z } from '@learnway/shared';
 
 import { SearchAccountForm } from './-components/search-account-form';
 import {
@@ -15,6 +15,7 @@ import {
   useSendVerifyPhoneNumber,
 } from '../../../entities/user';
 
+import { GoogleOtpGuideButton } from '../../../features/auth';
 import useCustomForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { FormRow } from '../../../shared/ui/form-row';
 import { DynamicFormField } from '../../../shared/ui/dynamic-form-field';
@@ -205,10 +206,7 @@ function RouteComponent() {
             <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
             <dd>
               법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-              있습니다.{' '}
-              <Link to="" className={styles.link}>
-                구글 OTP 인증 가이드
-              </Link>
+              있습니다. <GoogleOtpGuideButton />
             </dd>
           </NoticeBox>
 
@@ -249,6 +247,7 @@ const detailConfig = {
       value: '',
       placeholder: '아이디/이메일을 입력하세요',
       description: '',
+      required: true,
     },
     {
       name: 'name',
@@ -279,6 +278,7 @@ const detailConfig = {
       label: '이메일',
       value: '',
       placeholder: '이메일(hyunidai.kim@hyundai.com)',
+      //required: true,
     },
     {
       name: 'verificationCode',
@@ -289,6 +289,8 @@ const detailConfig = {
     },
   ],
   validator: {
+    name: z.string().required(),
+    birthday: z.string().required(),
     /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
     category: z.string().nonempty(t('유효성 테스트')),
      language_code: z.string().nonempty(t('유효성 테스트')),
