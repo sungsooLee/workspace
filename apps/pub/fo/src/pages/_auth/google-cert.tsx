@@ -85,11 +85,13 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={googleOtpFormStyles.search_info}>
-            안전한 로그인을 위해 <strong>2차 인증</strong>을 진행해 주세요.
+            <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
+            <p className={googleOtpFormStyles.txt}>
+              안전한 로그인을 위해 <strong>2차 인증</strong>을 진행해 주세요.
+            </p>
           </div>
           <div className={cn(otpToolFormFieldStyles.signup_select, 'auth--signup-select')}>
             <RadioCard
-              className="radio_card"
               options={[
                 {
                   value: 'type1',
@@ -141,7 +143,7 @@ function RouteComponent() {
                   onClick={() =>
                     openModal({
                       title: 'FIDO 인증',
-                      width: 'sm',
+                      width: 'md',
                       content: <GoogleCertGuidePopup />,
                       footer: false,
                     })

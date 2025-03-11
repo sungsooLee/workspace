@@ -1,2 +1,44 @@
 .start {
+  &.google_cert_guide_popup {
+    @apply py-[16px];
+  }
+  .btn_box {
+    @apply mt-[16px];
+    .btn_download {
+      @apply px-[12px];
+    }
+  }
+
+  .guide_list {
+    .list_box {
+      &:not(:first-child) {
+        @apply mt-[32px];
+      }
+      h3 {
+        @apply title_6_b text-[var(--gray9)];
+      }
+      .info_list {
+        @apply mt-[8px];
+        li {
+          @apply body_3_r relative pl-[12px] text-[#6F798B];
+          &:not(:first-child) {
+            @apply mt-[8px];
+          }
+          &::before {
+            @apply absolute left-0 top-[8px] inline-block h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+          }
+        }
+      }
+    }
+  }
+
+  .guide_img_box {
+    @apply mt-[16px] rounded-[8px] bg-[var(--gray1)] px-[16px] py-[16px];
+    figure {
+      @apply flex justify-center;
+      img {
+        @apply h-[231px];
+      }
+    }
+  }
 }
