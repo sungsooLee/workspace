@@ -1,0 +1,38 @@
+/* dropdown.css */
+.nlp-select__menu-list {
+  @apply !scrollbar !max-h-[150px];
+}
+.nlp-select__control {
+  @apply h-[38px] border-[#C8D2E5];
+  &--is-focused {
+    @apply !border-[#6F798B] !shadow-none;
+  }
+}
+.nlp-select__option {
+  @apply flex !h-[32px] !min-h-[32px] !cursor-pointer items-center !px-0;
+  &--is-focused {
+    @apply !bg-[var(--gray1)];
+  }
+}
+.nlp-select__menu {
+  @apply border border-solid !border-[#6F798B] !shadow-none;
+}
+.nlp-select__control--menu-is-open {
+  @apply border-[#6F798B];
+  &:hover {
+    @apply !border-[#6F798B];
+  }
+}
+.nlp-select__single-value,
+.nlp-select__placeholder {
+  @apply input_bo_1_r mx-0 text-[var(--gray8)];
+}
+.nlp-select__indicator-separator {
+  @apply hidden;
+}
+
+.lg {
+  .nlp-select__option {
+    @apply !h-[40px] !min-h-[40px];
+  }
+}
