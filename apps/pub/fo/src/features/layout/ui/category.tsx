@@ -1,11 +1,16 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { memo, useState, useEffect } from 'react';
+import { Link, useRouter } from '@tanstack/react-router';
 import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button, Popover } from '@learnway/ui';
 import styles from './category.module.css';
 import { RecentVisits } from './recent-visits';
 import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
 import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
+
+interface CategoryPopoverProps {
+  onOpenChange: (isOpen: boolean) => void;
+  isOpen: boolean;
+}
 
 const PopoverContent = () => {
   const categories = [
@@ -188,14 +193,21 @@ const PopoverContent = () => {
   );
 };
 
-const CategoryCompoment = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const CategoryCompoment = ({ onOpenChange, isOpen }: CategoryPopoverProps) => {
+  // const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    return router.history.subscribe((navigation) => {
+      onOpenChange(false);
+    });
+  }, [router.history, onOpenChange]);
 
   return (
     <div className={styles.start}>
       <Popover
         open={isOpen}
-        onOpenChange={setIsOpen}
+        onOpenChange={onOpenChange}
         popoverContent={<PopoverContent />}
         className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
         side="bottom"

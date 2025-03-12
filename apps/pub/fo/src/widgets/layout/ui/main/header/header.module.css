@@ -21,7 +21,7 @@
           @apply flex-1 pt-[10px];
         }
         .util {
-          @apply flex items-center pr-[32px];
+          @apply flex items-center;
         }
       }
     }

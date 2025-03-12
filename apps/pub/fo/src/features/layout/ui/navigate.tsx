@@ -5,7 +5,12 @@ import { IcoArrowForward } from '@learnway/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
-function NavigateComponent() {
+interface NavigateComponentProps {
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+}
+
+function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
   const gnb = [
     { name: '기술인증', link: '/', isLabel: false, hasDivision: false },
     { name: '수강신청', link: '/', isLabel: true, hasDivision: true },
@@ -47,9 +52,10 @@ function NavigateComponent() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} onMouseLeave={onMouseLeave}>
         <Swiper
           ref={swiperRef}
           slidesPerView="auto"
@@ -57,14 +63,12 @@ function NavigateComponent() {
           modules={[Navigation]}
           simulateTouch={isMobile}
           allowTouchMove={isMobile}
-          observer={true}
-          observeParents={true}
           className={styles.gnb_swiper}>
           {gnb.map((gnb, index) => (
             <SwiperSlide
               key={index}
               className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}>
-              <Link to={gnb.link}>
+              <Link to={gnb.link} onMouseEnter={onMouseEnter}>
                 <span>{gnb.name}</span>
               </Link>
               {/* 라벨 표시 */}

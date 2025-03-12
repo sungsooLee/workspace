@@ -3,7 +3,11 @@ import { Link } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
 import styles from './navigate-hover.module.css';
 
-function NavigateHoverComponent() {
+interface NavigateHoverProps {
+  isOpen: boolean;
+}
+
+function NavigateHoverComponent({ isOpen }: NavigateHoverProps) {
   const menuData = [
     {
       title: '교육제도',
@@ -90,8 +94,7 @@ function NavigateHoverComponent() {
     },
   ];
   return (
-    <div className={`${styles.start} ${styles.menu_all}`}>
-      {/* ${styles.active} */}
+    <div className={`${styles.start} ${styles.menu_all} ${isOpen ? styles.active : ''}`}>
       <div className={styles.menu_inner}>
         {menuData.map((menu, index) => (
           <div key={index} className={styles.menu_div}>

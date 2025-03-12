@@ -1,31 +1,33 @@
-.filter_wrap {
-  li {
-    & + li {
-      @apply mt-[16px];
-    }
-    .filter_box {
-      @apply mt-[8px];
-      button {
-        span {
-          @apply !text-[var(--gray8)];
-        }
-        &[class*='active'] {
+.start {
+  .filter_wrap {
+    li {
+      & + li {
+        @apply mt-[16px];
+      }
+      .filter_box {
+        @apply mt-[8px];
+        button {
           span {
-            @apply !font-bold !text-[var(--primary1)];
+            @apply !text-[var(--gray8)];
+          }
+          &[class*='active'] {
+            span {
+              @apply !font-bold !text-[var(--primary1)];
+            }
           }
         }
       }
     }
   }
-}
 
-.look {
-  @apply sticky -bottom-[16px] left-0 -mx-[32px] -mb-[16px] mt-[32px] w-[calc(100%+64px)] border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
-  .chip_list {
-    & > div {
-      @apply !mt-0;
-      button {
-        @apply !font-normal;
+  .look {
+    @apply sticky -bottom-[16px] left-0 -mx-[32px] -mb-[16px] mt-[32px] w-[calc(100%+64px)] border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
+    .chip_list {
+      & > div {
+        @apply !mt-0;
+        button {
+          @apply !font-normal;
+        }
       }
     }
   }

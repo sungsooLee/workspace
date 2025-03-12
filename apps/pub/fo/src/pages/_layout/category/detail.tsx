@@ -127,7 +127,7 @@ function RouteComponent() {
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>
-                {listUi === 'type2' ? (
+                {listUi === 'horizontal' ? (
                   <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
                 ) : (
                   <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
