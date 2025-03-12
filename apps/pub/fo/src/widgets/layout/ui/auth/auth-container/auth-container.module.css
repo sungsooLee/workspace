@@ -10,7 +10,7 @@
     .auth_area {
       @apply m-auto w-[680px];
       & > h2 {
-        @apply title_2_b flex items-center justify-center whitespace-pre px-[31px] pb-[32px] text-center;
+        @apply title_3_b flex items-center justify-center whitespace-pre px-[31px] pb-[32px] text-center;
 
         &.title_login {
           @apply title_3_b mt-[40px] h-[160px] flex-col rounded-tl-[16px] rounded-tr-[16px] bg-cover bg-center pb-[0] text-[var(--white)];
