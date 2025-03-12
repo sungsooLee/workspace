@@ -13,7 +13,7 @@ const SearchCompoment = () => {
       <Button aria-label="search">
         <IcoSearch width={20} height={20} stroke="#131C30" />
       </Button>
-      <SearchPopover className={styles.search_popover} />
+      {/* <SearchPopover className={styles.search_popover} /> */}
     </div>
   );
 };
