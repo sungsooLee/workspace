@@ -31,12 +31,13 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
       setSelectedImages(newSelectedImages);
     };
 
-    const items = options?.map((d: ImageOption) => (
+    const items = options?.map((d: ImageOption, index: number) => (
       <Thumbnail
         path={d.path}
         key={d.id}
         showCheckbox={showCheckbox}
         onCheckedChange={(checked: CheckedState) => handlerCheckChange(checked, d)}
+        showDeleteBtn={index === 0}
       />
     ));
 

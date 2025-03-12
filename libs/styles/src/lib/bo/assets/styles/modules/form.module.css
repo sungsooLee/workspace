@@ -355,13 +355,10 @@ hr.divider {
   }
 }
 
-/* 검색 인풋 */
-.search_wrap {
-  @apply relative flex h-[32px] w-full items-center justify-start overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
-  .btn_search {
-    @apply absolute left-0 top-0 flex h-full w-full flex-grow-[1] justify-end bg-transparent pr-[7px];
-    .icon_search {
-      @apply h-[20px] w-[20px] stroke-[var(--gray8)];
+.type_search {
+  .input_box {
+    & > div {
+      @apply mt-0;
     }
   }
 }

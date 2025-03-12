@@ -52,3 +52,7 @@
     }
   }
 }
+
+.search_wrap {
+  @apply relative flex h-[32px] w-full items-center justify-start;
+}

@@ -42,7 +42,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
           />
         )}
         {/* 마우스 오버시 노출 */}
-        {(showDeleteBtn || isHovered) && (
+        {showDeleteBtn && isHovered && (
           <Button className={styles.btn_delete}>
             <IcoTrash03 className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
           </Button>

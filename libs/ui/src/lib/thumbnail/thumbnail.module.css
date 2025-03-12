@@ -10,12 +10,6 @@
         .thumbnail_image {
           @apply opacity-100;
         }
-        .btn_delete {
-          @apply hidden;
-        }
-        &::before {
-          @apply hidden;
-        }
       }
     }
     &.active {
