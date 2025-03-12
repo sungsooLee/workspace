@@ -11,7 +11,7 @@ import {
 import { getRandomId } from '@learnway/shared';
 import { IcoVideo01 } from '@learnway/icons';
 import { useRouter } from '@tanstack/react-router';
-import styles from './course-type-option-card.module.css';
+import styles from './course-type-option-card-modal.module.css';
 import { useTranslation } from 'react-i18next';
 
 export interface CourseTypeOptionCardModalProps extends CommonReactElementProps {
