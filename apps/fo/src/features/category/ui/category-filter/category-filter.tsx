@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, useModal, ChipList } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { OptionCard } from '@learnway/ui';
-import styles from './category-filter.module.css';
+import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 import { CategoryFilterPopup } from './category-filter-popup';

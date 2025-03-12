@@ -9,7 +9,7 @@ import { Category } from '../../../../types/entities/category';
 import { useCategories } from '../../services/category.service';
 import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
 
-import styles from './category-badge-list.module.css';
+import styles from '@learnway/styles/fo/features/category/category-badge-list.module.css';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;

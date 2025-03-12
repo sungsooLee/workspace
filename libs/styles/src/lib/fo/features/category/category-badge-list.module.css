@@ -1,0 +1,55 @@
+/* recent_visits.module.css */
+.start {
+  &.recent_visits {
+    @apply relative flex items-center pb-[26px] pl-[32px] pr-[68px] pt-[24px];
+    .tit {
+      @apply inline-block w-[108px];
+    }
+    .recent_swiper {
+      @apply flex w-full justify-start;
+    }
+    .slide {
+      @apply flex w-auto items-center justify-start gap-[8px] overflow-hidden whitespace-nowrap;
+      > .item {
+        @apply body_3_r flex h-[32px] max-w-[143px] items-center rounded-[8px] bg-[var(--gray1)] pl-[12px] pr-[10px] text-[var(--gray8)];
+        .remove {
+          @apply ml-[4px];
+        }
+        svg {
+          @apply ml-[4px] h-[auto] w-[16px];
+        }
+      }
+    }
+    [class*='recent_button'] {
+      @apply absolute top-1/2 z-[3] flex translate-y-[-16px];
+      .btn {
+        @apply absolute top-[0] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
+      }
+      &::before {
+        background: url(../../assets/images/common/bg_swipe_shadow.png) no-repeat;
+        @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[32px] w-[110px] bg-[length:110px_32px] bg-no-repeat content-[''];
+      }
+    }
+    .recent_button_next {
+      @apply right-[68px];
+
+      &::before {
+        @apply right-[-28px] rotate-[180deg];
+      }
+    }
+    .recent_button_prev {
+      @apply left-[128px];
+
+      &::before {
+        @apply left-[-28px];
+      }
+
+      svg {
+        @apply rotate-[180deg];
+      }
+    }
+    .no_visits {
+      @apply w-auto text-[1.4rem] font-medium text-[var(--gray7)];
+    }
+  }
+}

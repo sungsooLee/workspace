@@ -4,7 +4,7 @@ import { getRandomId } from '@learnway/shared';
 import { cn } from '@learnway/shared';
 import { ChipList } from '@learnway/ui';
 
-import styles from './category-filter-popup.module.css';
+import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
 
 interface FilterPopupComponentProps {
   initialFilters?: any; // 초기 필터 값 (이전에 선택한 값)
