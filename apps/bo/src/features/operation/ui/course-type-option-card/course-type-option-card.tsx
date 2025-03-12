@@ -1,13 +1,21 @@
-import { forwardRef } from 'react';
-import { CommonReactElementProps, OptionCard } from '@learnway/ui';
+import React, { forwardRef } from 'react';
+import {
+  Button,
+  CommonReactElementProps,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  OptionCard,
+  useModal,
+} from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import { IcoVideo01 } from '@learnway/icons';
 import { useRouter } from '@tanstack/react-router';
 import styles from './course-type-option-card.module.css';
+import { useTranslation } from 'react-i18next';
 
 export interface CourseTypeOptionCardProps extends CommonReactElementProps {
   dummy?: boolean;
-  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
@@ -18,8 +26,10 @@ export interface CourseTypeOptionCardProps extends CommonReactElementProps {
  * @constructor
  */
 const CourseTypeOptionCardComponent = forwardRef<HTMLDivElement, CourseTypeOptionCardProps>(
-  ({ setModalData, closeModal, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const router = useRouter();
+    const { t } = useTranslation();
+    const { close: closeModal } = useModal();
     const { data: optionsData }: any = getMockData();
 
     const handleCardSelect = (option: any) => {
@@ -29,21 +39,28 @@ const CourseTypeOptionCardComponent = forwardRef<HTMLDivElement, CourseTypeOptio
     };
 
     return (
-      <div className={styles.wrap}>
-        <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-        <p className={styles.text}>
-          {
-            ' 과정 유형별로 학습 기간, 수강신청 여부, 차수 생성 등의 세부 내용을 설 정할 수 있습니다. '
-          }
-        </p>
-        <OptionCard
-          cols={4}
-          size="lg"
-          className={styles.select_wrap}
-          options={optionsData}
-          onOptionSelect={handleCardSelect}
-        />
-      </div>
+      <ModalContainer>
+        <ModalBody>
+          <div className={styles.wrap}>
+            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            <p className={styles.text}>
+              {
+                ' 과정 유형별로 학습 기간, 수강신청 여부, 차수 생성 등의 세부 내용을 설 정할 수 있습니다. '
+              }
+            </p>
+            <OptionCard
+              cols={4}
+              size="lg"
+              className={styles.select_wrap}
+              options={optionsData}
+              onOptionSelect={handleCardSelect}
+            />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'point'} size={'sm'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   },
 );
