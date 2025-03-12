@@ -99,15 +99,15 @@ export const FilterContent = ({
       )} */}
 
       <div className="modal_button">
-        <Button variant="ghost" onClick={handleReset}>
+        <Button variant="gray" size="lg" onClick={handleReset}>
           초기화
         </Button>
-        <div className="space-x-2">
-          <Button variant="outline" onClick={() => closeModal()}>
-            취소
-          </Button>
-          <Button onClick={handleApply}>적용</Button>
-        </div>
+        <Button variant="gray" size="lg" onClick={() => closeModal()}>
+          취소
+        </Button>
+        <Button variant="primary" size="lg" onClick={handleApply}>
+          적용
+        </Button>
       </div>
     </div>
   );
