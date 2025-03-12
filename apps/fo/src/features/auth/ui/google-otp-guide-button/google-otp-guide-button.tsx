@@ -5,7 +5,7 @@ import { IcoCaution } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { useModal, Button } from '@learnway/ui';
 
-import { GoogleOtpGuide } from './google-otp-guide';
+import { GoogleOtpGuideModal } from './google-otp-guide-modal';
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 //interface GoogleOtpGuideButtonComponentProps {}
@@ -21,7 +21,7 @@ function GoogleOtpGuideButtonComponent() {
         openModal({
           title: 'FIDO 인증',
           width: 'sm',
-          content: <GoogleOtpGuide />,
+          content: <GoogleOtpGuideModal />,
           footer: false,
         })
       }>

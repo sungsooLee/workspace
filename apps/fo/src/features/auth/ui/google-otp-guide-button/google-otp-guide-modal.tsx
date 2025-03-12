@@ -7,9 +7,8 @@ import { useModal, Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 
-function GoogleOtpGuideComponent() {
+function GoogleOtpGuideModalComponent() {
   const { t } = useTranslation();
-  const { open: openModal } = useModal();
 
   return (
     <div className={`${styles.start} ${styles.google_cert_guide_popup}`}>
@@ -41,4 +40,4 @@ function GoogleOtpGuideComponent() {
   );
 }
 
-export const GoogleOtpGuide = GoogleOtpGuideComponent;
+export const GoogleOtpGuideModal = GoogleOtpGuideModalComponent;
