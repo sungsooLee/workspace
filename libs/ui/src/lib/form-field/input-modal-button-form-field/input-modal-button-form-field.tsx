@@ -43,7 +43,9 @@ const InputModalButtonFormFieldComponent = forwardRef<
     };
 
     return (
-      <div className={cn(styles.start, 'nlp--input-button-form-field')} onClick={handleClick}>
+      <div
+        className={cn(styles.start, styles.search_wrap, 'nlp--input-button-form-field')}
+        onClick={handleClick}>
         <Input
           {...inputProps}
           ref={ref}
