@@ -59,9 +59,9 @@ function RouteComponent() {
   }, []);
 
   const handleOnSubmit = async (data: any) => {
-    // const user = await login(data);
-    // const locale = user?.locale;
-    // locale && (await setLanguage(locale));
+    const user = await login(data);
+    const locale = user?.locale;
+    locale && (await setLanguage(locale));
     router.navigate({ to: '/' });
   };
 
