@@ -44,11 +44,11 @@ const CourseTypeOptionCardModalComponent = forwardRef<
     <ModalContainer>
       <ModalBody>
         <div className={styles.wrap}>
-          <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+          <h2 className={styles.title}>{t('등록할 학습자원의 유형을 선택하세요.')}</h2>
           <p className={styles.text}>
-            {
-              ' 과정 유형별로 학습 기간, 수강신청 여부, 차수 생성 등의 세부 내용을 설 정할 수 있습니다. '
-            }
+            {t(
+              ' 과정 유형별로 학습 기간, 수강신청 여부, 차수 생성 등의 세부 내용을 설 정할 수 있습니다.',
+            )}
           </p>
           <OptionCard
             cols={4}

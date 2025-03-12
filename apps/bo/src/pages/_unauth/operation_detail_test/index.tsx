@@ -17,7 +17,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { FormRow } from '../../../shared/ui/form-row';
 import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ChannelList, ManagerList } from '../../../features/operation';
+import { ChannelListModal, ManagerListModal } from '../../../features/operation';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
@@ -66,19 +66,7 @@ function RouteComponent() {
               <DynamicFormField name={'channel'}>
                 <InputModalButtonFormField
                   modalConfig={{
-                    title: t('채널 목록'),
-                    content: <ChannelList />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'sm'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
+                    content: <ChannelListModal />,
                   }}
                 />
               </DynamicFormField>
@@ -157,7 +145,7 @@ function RouteComponent() {
                 <InputModalButtonFormField
                   modalConfig={{
                     title: t('운영자 목록'),
-                    content: <ManagerList />,
+                    content: <ManagerListModal />,
                     footer: (
                       <>
                         <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
@@ -198,16 +186,9 @@ const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'channel',
-      type: 'text-popup-button',
+      type: 'custom',
       label: '채널',
       value: '',
-      placeholder: '최근 과정 개설한 채널명 또는 최근 생성된 채널명',
-      description: '',
-      button: {
-        label: t('선택'),
-        variant: 'point',
-      },
-      onClick: () => console.log('onClick'),
     },
     {
       name: '강의유형',

@@ -19,7 +19,7 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({ title, childre
   return (
     <div className={cn(styles.start, 'nlp--modal-content')}>
       {/* title */}
-      <Primitive.Title className={styles.title}>{title || TitleSlot}</Primitive.Title>
+      <Primitive.Title className={styles.title}>{TitleSlot}</Primitive.Title>
       {/* description */}
       {DescSlot && (
         <Primitive.Description className={styles.description}>{DescSlot}</Primitive.Description>
