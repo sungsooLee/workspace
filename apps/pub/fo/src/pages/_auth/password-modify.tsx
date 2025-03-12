@@ -21,7 +21,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
-            <div className={`${styles.noti_box} ${styles.type2}`}>
+            <div className={styles.noti_box}>
               마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
             </div>
           </div>

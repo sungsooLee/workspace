@@ -144,32 +144,32 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증키 생성_인증키생성팝업',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1013', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 페이지내 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증_OTP번호입력팝업',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1014', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 페이지내 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '구글 OTP인증 가이드팝업',
-    pageId: '',
+    pageId: 'google-cert',
     screenId: 'NLP_FO_LOG_1015', //스크린아이디
     pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 페이지내 버튼 클릭',
   },
   {
     layoutType: '반응형 (PC)',
@@ -224,22 +224,22 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '휴먼계정해제_비밀번호변경',
-    pageId: '',
+    pageId: 'password-input',
     screenId: 'NLP_FO_LOG_1020', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 비밀변호 변경과 동일(타이틀 제외)',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '휴먼계정해제_해제결과',
-    pageId: '',
+    pageId: 'success',
     screenId: 'NLP_FO_LOG_1021', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 가입신청완료와 동일',
   },
 
   {
