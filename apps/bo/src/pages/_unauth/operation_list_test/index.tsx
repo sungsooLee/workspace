@@ -44,7 +44,6 @@ function RouteComponent() {
 
   const handleOpenModalCourseType = () => {
     openModal({
-      title: t(''),
       content: <CourseTypeOptionCard />,
       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
