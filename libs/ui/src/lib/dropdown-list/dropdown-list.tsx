@@ -1,7 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import Select, { components, MultiValue, SingleValue, ActionMeta } from 'react-select';
-import { getRandomId } from '@learnway/shared';
+import { getRandomId, cn } from '@learnway/shared';
+import { Checkbox } from '../checkbox/checkbox';
+import { IcoArrowDown } from '@learnway/icons';
 import { DropdownComponentProps, DropdownOption } from './type';
+
+import styles from './dropdown.module.css';
 
 const CustomValueContainer = ({ children, ...props }: any) => {
   const { getValue, hasValue, selectProps } = props;
@@ -20,14 +24,7 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 
   return (
     <components.ValueContainer {...props}>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          maxWidth: '100%',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        }}>
+      <div className={styles.container}>
         {values.length > 0 && (
           <span>
             {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
@@ -46,18 +43,20 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 const Option = (props: any) => {
   return (
     <components.Option {...props}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {props.isMulti && (
-          <input
-            type="checkbox"
-            checked={props.isSelected}
-            onChange={() => null}
-            style={{ marginRight: '8px' }}
-          />
-        )}
+      <div className={styles.select_item}>
+        {props.isMulti && <Checkbox checked={props.isSelected} onChange={() => null} />}
         <span>{props.label}</span>
       </div>
     </components.Option>
+  );
+};
+
+// 화살표
+const dropdownIndicator = (props: any) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
+    </components.DropdownIndicator>
   );
 };
 
@@ -84,10 +83,30 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     ref,
   ) => {
     const uuid = getRandomId();
-    const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
+    // const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
+    const dropdownClass = cn(styles.select_wrap);
     const customProps = {
       'data-variant': variant,
       ...props,
+    };
+
+    const [isFocused, setIsFocused] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
+    const handleBlur = () => {
+      setIsFocused(false);
+    };
+    // 드롭다운이 닫힐 때 상태 처리
+    const handleMenuClose = () => {
+      setIsMenuOpen(false);
+      setIsFocused(false); // 드롭다운 닫힐 때 포커스 상태도 해제
+    };
+
+    // 드롭다운이 열릴 때 상태 처리
+    const handleMenuOpen = () => {
+      setIsMenuOpen(true);
     };
     return (
       <div className={dropdownClass.trim()}>
@@ -103,11 +122,19 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           isSearchable={isSearchable}
           isClearable={isClearable}
           name={name}
-          onBlur={onBlur}
-          className="w-full"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onMenuOpen={handleMenuOpen}
+          onMenuClose={handleMenuClose}
+          className={cn(
+            styles.select,
+            isFocused || isMenuOpen ? styles.focused : '',
+            size && [size],
+          )}
           classNamePrefix="nlp-select"
           components={{
             Option,
+            DropdownIndicator: dropdownIndicator,
             // ValueContainer : CustomValueContainer
             // ValueContainer:  (props) => <CustomValueContainer {...props} variant={variant}/>,
           }}
@@ -115,6 +142,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           hideSelectedOptions={false}
           {...customProps}
         />
+        <div className={styles.select_contents}></div>
       </div>
     );
   },

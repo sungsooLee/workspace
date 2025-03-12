@@ -20,6 +20,7 @@ import {
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from './page-content.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
+import searchStyles from './search.module.css';
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,
