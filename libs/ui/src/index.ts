@@ -72,6 +72,7 @@ export * from './lib/form-field/chip-list-modal-button-form-field/chip-list-moda
 // modal
 export * from './lib/modal/modal';
 export * from './lib/modal/modal.hook';
+export * from './lib/modal/modal-container';
 export * from './lib/modal/modal-wrapper';
 export * from './lib/stores/useModalStore';
 
@@ -103,6 +104,7 @@ export * from './lib/radio-card/radio-card';
 export { selectStyles };
 export * from './lib/select/select';
 export * from './lib/select/type';
+
 // dropdown-list
 export * from './lib/dropdown-list/dropdown-list';
 export * from './lib/dropdown-list/auto-complete';

@@ -1,0 +1,19 @@
+/* dropdown.module */
+.container {
+  @apply line-clamp-1 flex w-full flex-wrap;
+}
+
+.select_item {
+  @apply body_bo_2_r flex items-center px-[8px] py-0 text-[#4C515E];
+}
+
+.select_wrap {
+  .focused {
+    .icon_arrow {
+      @apply rotate-180 transition-all duration-300 ease-in-out;
+    }
+  }
+  [aria-selected='true'] {
+    @apply !bg-[#D8F8FF];
+  }
+}

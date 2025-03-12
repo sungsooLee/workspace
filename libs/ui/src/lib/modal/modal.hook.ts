@@ -9,17 +9,6 @@ const useModal = (): ModalControl => {
   const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
 
   const open = useCallback(
-    (config: ModalConfig) => {
-      const newConfig: ModalConfig = {
-        ...config,
-        id: getRandomId(),
-      };
-      openModal(newConfig);
-    },
-    [openModal],
-  );
-
-  const openAsync = useCallback(
     (config: ModalConfig): Promise<any> => {
       return new Promise((resolve, reject) => {
         const newConfig: ModalConfig = {
@@ -36,30 +25,68 @@ const useModal = (): ModalControl => {
     [openModal],
   );
 
+  // open 만 사용 예정
+  const openAsync = useCallback(
+    (config: ModalConfig): Promise<any> => {
+      return open(config);
+    },
+    [openModal],
+  );
+
   const close = useCallback((data?: any) => closeModal(data), [closeModal]);
 
   const closeAll = useCallback(() => closeAllModal(), [closeAllModal]);
 
   const alert = useCallback(
-    (props: AlertComponentProps) => {
-      const config: ModalConfig = {
-        content: createElement(Alert, props),
-        hideCloseButton: true,
-        onClose: props.onClose,
-      };
-      openModal(config);
+    (props: AlertComponentProps | string): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        const defaultProps =
+          typeof props === 'string'
+            ? {
+                title: props,
+                onClose: () => null,
+              }
+            : {
+                ...props,
+              };
+        const config: ModalConfig = {
+          content: createElement(Alert, defaultProps),
+          hideCloseButton: true,
+          onClose: (value: any) => {
+            defaultProps?.onClose?.(value);
+            resolve(value);
+          },
+        };
+        openModal(config);
+      });
     },
     [openModal],
   );
 
   const confirm = useCallback(
-    (props: AlertComponentProps) => {
-      const config = {
-        content: createElement(Alert, { ...props, isConfirm: true }),
-        hideCloseButton: true,
-        onClose: props.onClose,
-      };
-      openModal(config);
+    (props: AlertComponentProps | string): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        const defaultProps =
+          typeof props === 'string'
+            ? {
+                title: props,
+                isConfirm: true,
+                onClose: () => null,
+              }
+            : {
+                ...props,
+                isConfirm: true,
+              };
+        const config = {
+          content: createElement(Alert, defaultProps),
+          hideCloseButton: true,
+          onClose: (value: any) => {
+            defaultProps?.onClose?.(value);
+            resolve(value);
+          },
+        };
+        openModal(config);
+      });
     },
     [openModal],
   );

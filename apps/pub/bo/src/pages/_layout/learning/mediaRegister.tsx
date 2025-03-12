@@ -301,8 +301,8 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 S  */}
-          <ContentsRow className={formStyles.type_search}>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-channel" className={formStyles.form_label}>
@@ -335,7 +335,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 E  */}
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -382,8 +382,8 @@ function RouteComponent() {
               <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 S  */}
-          <ContentsRow className={formStyles.type_search}>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-manager" className={formStyles.form_label}>
                 <span className={cn(formStyles.form_text)}>담당자</span>
@@ -434,7 +434,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 E  */}
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow type="horizontal">
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -634,8 +634,8 @@ function RouteComponent() {
             </ContentsRow>
           )}
           {/* 2025-03-10 수정 */}
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 S  */}
-          <ContentsRow className={formStyles.type_search}>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
@@ -662,7 +662,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정, type_search 클래스 추가 E  */}
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-url" className={formStyles.form_label}>

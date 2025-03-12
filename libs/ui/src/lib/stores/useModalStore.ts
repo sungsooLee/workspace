@@ -6,6 +6,7 @@ interface ModalStore {
   open: (config: ModalConfig) => void;
   close: (data?: any) => void;
   closeAll: () => void;
+  getModal: (id: string) => ModalConfig | undefined;
 }
 
 export const useModalStore = create<ModalStore>((set, get) => ({
@@ -25,4 +26,7 @@ export const useModalStore = create<ModalStore>((set, get) => ({
     }));
   },
   closeAll: () => set({ modals: [] }),
+  getModal: (id: string) => {
+    return get().modals?.find((d: ModalConfig) => d.id === id); // 마지막 모달 (현재 떠있는 모달)
+  },
 }));
