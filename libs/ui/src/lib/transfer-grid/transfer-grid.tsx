@@ -7,6 +7,7 @@ import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Grid } from '../grid';
 import { GridImperative } from '@/libs/ui/src';
+import { IcoNarrowRight } from '@learnway/icons';
 
 export interface TransferGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
@@ -30,16 +31,22 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
       {
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
+        size: 100,
         cell: ({ row }) => (
-          <div>
+          <div className={styles.btn_select}>
             <Button
               label={'선택'}
               variant={
                 rightGridData?.find((d: any) => d[rowKey] === (row?.original as any)?.[rowKey])
                   ? 'primary'
-                  : 'point'
+                  : 'gray2'
               }
-              size={'sm'}
+              className={
+                rightGridData?.find((d: any) => d[rowKey] === (row?.original as any)?.[rowKey])
+                  ? styles.active
+                  : ''
+              }
+              size={'xs'}
               onClick={() => handleLeftRowSelect(row.original)}
             />
           </div>
@@ -52,12 +59,13 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
       {
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
+        size: 100,
         cell: ({ row }) => (
-          <div>
+          <div className={styles.btn_select}>
             <Button
               label={'선택'}
-              variant={'point'}
-              size={'sm'}
+              variant={'gray2'}
+              size={'xs'}
               onClick={() => handleRightRowSelect(row.original)}
             />
           </div>
@@ -80,9 +88,9 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
     };
 
     return (
-      <div className={cn(styles.start, className, 'nlp--transfer-grid', 'flex flex-row')}>
+      <div className={cn(styles.start, styles.transfer_grid, className, 'nlp--transfer-grid')}>
         {/* left grid */}
-        <div>
+        <div className={styles.grid_wrap}>
           <Grid
             ref={leftGridRef}
             title={leftTitle}
@@ -93,7 +101,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             enableRowSelectionToggle={false}
           />
         </div>
-        <div>
+        <div className={styles.icon_arrow}>
+          <IcoNarrowRight width={24} height={24} stroke={'#B5C2D7'} />
+        </div>
+        <div className={styles.grid_wrap}>
           <Grid
             ref={rightGridRef}
             title={rightTitle}

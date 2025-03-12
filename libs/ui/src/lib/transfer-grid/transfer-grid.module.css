@@ -1,2 +1,28 @@
 .start {
+  &.transfer_grid {
+    @apply flex;
+    .grid_wrap {
+      @apply flex-1;
+      &:first-child {
+        @apply ml-0;
+      }
+      table tbody td {
+        &:nth-child(3) {
+          @apply !justify-center;
+        }
+      }
+    }
+    .icon_arrow {
+      @apply flex w-[72px] shrink-0 items-center justify-center pt-[44px];
+    }
+  }
+}
+
+.btn_select {
+  button {
+    @apply !h-[20px] !w-[32px] !min-w-[32px] !rounded-[4px] !p-0 !text-[10px] !font-normal !text-[var(--gray7)];
+    &.active {
+      @apply !text-[var(--white)];
+    }
+  }
 }
