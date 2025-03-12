@@ -38,6 +38,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
         showCheckbox={showCheckbox}
         onCheckedChange={(checked: CheckedState) => handlerCheckChange(checked, d)}
         showDeleteBtn={index === 0}
+        selected={index === 0}
       />
     ));
 

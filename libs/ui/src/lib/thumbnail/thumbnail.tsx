@@ -16,12 +16,23 @@ export interface ThumbnailComponentProps {
   path: string;
   showCheckbox?: boolean;
   showDeleteBtn?: boolean; // delete button
+  selected?: boolean;
   onCheckedChange?: (checked: CheckedState) => any;
   // checked?: boolean;
 }
 
 const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
-  ({ className, variant, size, path, showCheckbox, showDeleteBtn, onCheckedChange, ...props }) => {
+  ({
+    className,
+    variant,
+    size,
+    path,
+    showCheckbox,
+    showDeleteBtn,
+    selected,
+    onCheckedChange,
+    ...props
+  }) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleHover = (state: boolean) => setIsHovered(state);
     return (
@@ -29,6 +40,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
         {...props}
         className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
           [styles.active]: isHovered,
+          [styles.selected]: selected,
         })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
         onMouseLeave={() => handleHover(false)}>

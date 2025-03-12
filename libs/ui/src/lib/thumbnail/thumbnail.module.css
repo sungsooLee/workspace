@@ -2,7 +2,7 @@
   @apply relative;
   &.thumbnail {
     @apply max-w-[128px] overflow-hidden rounded-[4px];
-    &:nth-last-child(1) {
+    /* &:nth-last-child(1) {
       img {
         @apply filter-none;
       }
@@ -11,13 +11,12 @@
           @apply opacity-100;
         }
       }
-    }
+    } */
     &.active {
-      .thumbnail_image {
-        @apply opacity-40;
-      }
-      &::before {
-        @apply absolute left-0 top-0 z-0 h-full w-full content-[''];
+      &.selected {
+        img {
+          @apply opacity-40;
+        }
       }
     }
   }
