@@ -9,7 +9,7 @@ import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
 import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import useSearchBox from '../../../shared/ui/search-box/use-search-box';
-import { CourseTypeOptionCard } from '../../../features/operation';
+import { CourseTypeOptionCardModal } from '../../../features/operation';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
@@ -44,7 +44,7 @@ function RouteComponent() {
 
   const handleOpenModalCourseType = () => {
     openModal({
-      content: <CourseTypeOptionCard />,
+      content: <CourseTypeOptionCardModal />,
       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
   };
