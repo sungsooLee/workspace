@@ -57,3 +57,13 @@ const InputModalButtonFormFieldComponent = forwardRef<
 );
 
 export const InputModalButtonFormField = InputModalButtonFormFieldComponent;
+/*
+
+<InputModalButtonFormField
+                  modalConfig={{
+                    content: <ChannelChoicePopup />,
+                    footer: true,
+                  }}k
+                />
+
+* */
