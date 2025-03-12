@@ -29,8 +29,9 @@ function RouteComponent() {
         placeholder="여러 항목 선택"
         label="다중 선택 (체크박스)"
         variant="text"
-        isMulti={true}
+        // isMulti={true}
         size={'sm'}
+        isSearchable={true}
       />
     </div>
   );
