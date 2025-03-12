@@ -5,6 +5,7 @@ import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway
 import styles from './progress-status.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import { Button, Input, Select, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
@@ -34,7 +35,8 @@ function RouteComponent() {
               회원가입이 반려되었습니다.*/}
             </h3>
             <p className={styles.noti}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
-            <div className={`${styles.noti_box} ${styles.type2}`}>
+            {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
+            <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
               신청일시 : <strong>YYYY-MM-DD</strong>
               {/* 승인완료 
               승인일시 : <strong>YYYY-MM-DD</strong>*/}

@@ -27,6 +27,7 @@ import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
+import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
@@ -153,6 +154,12 @@ const AuthLoginRoute = AuthLoginImport.update({
 const AuthGoogleCertRoute = AuthGoogleCertImport.update({
   id: '/google-cert',
   path: '/google-cert',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthDormantAccountRoute = AuthDormantAccountImport.update({
+  id: '/dormant-account',
+  path: '/dormant-account',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -378,6 +385,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/dormant-account': {
+      id: '/_auth/dormant-account'
+      path: '/dormant-account'
+      fullPath: '/dormant-account'
+      preLoaderRoute: typeof AuthDormantAccountImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/google-cert': {
       id: '/_auth/google-cert'
@@ -707,6 +721,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthDormantAccountRoute: typeof AuthDormantAccountRoute
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
@@ -722,6 +737,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthDormantAccountRoute: AuthDormantAccountRoute,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
@@ -825,6 +841,7 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -875,6 +892,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -928,6 +946,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
@@ -980,6 +999,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/dormant-account'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1029,6 +1049,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/dormant-account'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1080,6 +1101,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/dormant-account'
     | '/_auth/google-cert'
     | '/_auth/login'
     | '/_auth/mpass-cert'
@@ -1159,6 +1181,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/dormant-account",
         "/_auth/google-cert",
         "/_auth/login",
         "/_auth/mpass-cert",
@@ -1216,6 +1239,10 @@ export const routeTree = rootRoute
         "/_layout/category/detail_m",
         "/_layout/menu3/"
       ]
+    },
+    "/_auth/dormant-account": {
+      "filePath": "_auth/dormant-account.tsx",
+      "parent": "/_auth"
     },
     "/_auth/google-cert": {
       "filePath": "_auth/google-cert.tsx",

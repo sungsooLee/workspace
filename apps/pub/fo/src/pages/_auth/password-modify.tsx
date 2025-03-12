@@ -6,7 +6,7 @@ import styles from './password-modify.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { GoogleCertGuidePopup } from '../../features/auth';
 
@@ -21,7 +21,8 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
-            <div className={styles.noti_box}>
+            {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
+            <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
               마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
             </div>
           </div>

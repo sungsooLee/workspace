@@ -1,8 +1,29 @@
 /* search-account.module.css */
 .start {
   &.search_account {
+    .search_info {
+      @apply body_2_r m-auto mt-[48px] flex-col justify-center pb-[32px] text-[#131C30];
+      &.dormant {
+        @apply my-0;
+      }
+      svg {
+        @apply m-auto rotate-180;
+      }
+      .txt {
+        @apply mt-[12px];
+      }
+      strong {
+        @apply text-[var(--gray8)];
+      }
+      + .noti_box {
+        @apply mb-[36px];
+      }
+    }
     .auth_form {
-      @apply mt-[48px];
+      @apply mt-[32px];
+    }
+    .noti_box {
+      @apply body_3_r mt-[24px] rounded-[8px] bg-[#EDFCFF] px-[16px] py-[16px] text-left text-[#045161];
     }
     .signup_select_box {
       @apply mt-[48px];

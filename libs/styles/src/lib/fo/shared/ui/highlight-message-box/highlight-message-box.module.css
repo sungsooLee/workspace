@@ -1,2 +1,3 @@
 .start {
+  @apply body_3_r rounded-[8px] bg-[#EDFCFF] px-[16px] py-[16px] text-left text-[#045161];
 }
