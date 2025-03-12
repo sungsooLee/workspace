@@ -32,7 +32,6 @@ const useDynamicForm = (config: DynamicFormConfig) => {
             acc[prop.name] = prop.value;
             break;
         }
-        console.log('default value', acc);
         return acc;
       }, {}),
     [],
