@@ -30,7 +30,7 @@ function RouteComponent() {
         label="다중 선택 (체크박스)"
         variant="text"
         isMulti={true}
-        size={'lg'}
+        size={'sm'}
       />
     </div>
   );

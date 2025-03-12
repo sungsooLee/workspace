@@ -3,7 +3,7 @@
   @apply !scrollbar !max-h-[150px];
 }
 .nlp-select__control {
-  @apply h-[38px] border-[#C8D2E5];
+  @apply h-[32px] min-h-[32px] items-center border-[#C8D2E5];
   &--is-focused {
     @apply !border-[#6F798B] !shadow-none;
   }
@@ -30,9 +30,32 @@
 .nlp-select__indicator-separator {
   @apply hidden;
 }
+.nlp-select__multi-value__remove {
+  &:hover {
+    @apply !bg-transparent;
+    svg {
+      @apply fill-inherit;
+    }
+  }
+}
 
 .lg {
-  .nlp-select__option {
+  .nlp-select__control {
     @apply !h-[40px] !min-h-[40px];
+  }
+}
+
+.sm {
+  .nlp-select__control {
+    @apply !h-[32px] !min-h-[32px];
+  }
+  .nlp-select__value-container {
+    @apply py-0;
+  }
+  .nlp-select__multi-value {
+    @apply inline-flex h-[24px] items-center py-0;
+  }
+  .nlp-select__multi-value__label {
+    @apply py-0;
   }
 }
