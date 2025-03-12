@@ -6,7 +6,7 @@
     }
   }
   .thumbnail_wrap {
-    @apply flex overflow-hidden;
+    @apply relative z-0 flex overflow-hidden;
     .file_upload {
       @apply relative mr-[12px] h-[84px];
       .btn_file + div {

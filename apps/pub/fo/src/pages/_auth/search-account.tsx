@@ -38,40 +38,44 @@ function RouteComponent() {
       content: (
         <>
           <div className={searchAccountFormStyles.search_info}>
-            <strong>본인인증</strong> 후<br /> 아이디를 확인 할 수 있습니다.
+            {/* 퍼블수정 20250312 : 내용 */}
+            본인인증 후 아이디를 확인 할 수 있습니다.
           </div>
 
-          {/* 인증선택 모듈 */}
-          <div
-            className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
-            role="radiogroup">
-            <RadioCard
-              className="radio_card"
-              options={[
-                {
-                  value: 'type1',
-                  label: (
-                    <div>
-                      <IcoPhone02 width={48} height={48} className="ico1" />
-                      <span>휴대폰 인증</span>
-                    </div>
-                  ),
-                },
-                {
-                  value: 'type2',
-                  label: (
-                    <div>
-                      <IcoMail width={48} height={48} className="ico2" />
-                      <span>이메일 인증</span>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </div>
-          {/* 인증선택 모듈 */}
-
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              {/* 인증선택 모듈 */}
+              <div
+                className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
+                role="radiogroup">
+                <RadioCard
+                  options={[
+                    {
+                      value: 'type1',
+                      label: (
+                        <div>
+                          <IcoPhone02 width={48} height={48} className="ico1" />
+                          <span>휴대폰 인증</span>
+                        </div>
+                      ),
+                    },
+                    {
+                      value: 'type2',
+                      label: (
+                        <div>
+                          <IcoMail width={48} height={48} className="ico2" />
+                          <span>이메일 인증</span>
+                        </div>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
+              {/* 인증선택 모듈 */}
+            </div>
+          </ContentsRow>
           {/* 인증폼 */}
+
           <div className={cn(searchAccountFormStyles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
@@ -156,7 +160,8 @@ function RouteComponent() {
       content: (
         <>
           <div className={searchAccountFormStyles.search_info}>
-            <strong>본인인증</strong> 후<br /> 비밀번호를 재설정 할 수 있습니다.
+            {/* 퍼블수정 20250312 : 내용 */}
+            본인인증 후 비밀번호를 재설정 할 수 있습니다.
           </div>
 
           {/* 인증선택 모듈 */}
@@ -347,7 +352,7 @@ function RouteComponent() {
                   onClick={() =>
                     openModal({
                       title: 'FIDO 인증',
-                      width: 'sm',
+                      width: 'md',
                       content: <GoogleCertGuidePopup />,
                       footer: false,
                     })

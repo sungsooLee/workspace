@@ -5,14 +5,14 @@
     .otp_key {
       @apply mt-[8px] rounded-[8px] bg-[var(--secondary5)] px-[24px] py-[24px] text-center;
       .txt {
-        @apply body_3_r block w-full text-[var(--secondary3)];
+        @apply body_3_r block w-full text-[#045161];
       }
       .key {
-        @apply title_5_b mt-[8px] text-[var(--secondary3)];
+        @apply title_5_b mt-[8px] text-[#045161];
       }
     }
     .txt_info {
-      @apply body_3_r mt-[8px] text-[var(--gray7)];
+      @apply body_3_r mt-[8px] text-[#6F798B];
     }
     .signup_noti {
       @apply mt-[24px];

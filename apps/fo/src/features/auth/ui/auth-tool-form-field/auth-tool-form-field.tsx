@@ -28,23 +28,21 @@ function AuthToolFormFieldComponent({
   return (
     <div className={cn(styles.start, 'auth--signup-select')} role="radiogroup">
       <RadioCard
-        className={styles.radio_card}
-        value={value}
         options={[
           {
-            value: 'phone',
+            value: 'type1',
             label: (
               <div>
-                <IcoPhone02 width={48} height={48} className={styles.ico1} />
+                <IcoPhone02 width={48} height={48} className="ico1" />
                 <span>휴대폰 인증</span>
               </div>
             ),
           },
           {
-            value: 'email',
+            value: 'type2',
             label: (
               <div>
-                <IcoMail width={48} height={48} className={styles.ico2} />
+                <IcoMail width={48} height={48} className="ico2" />
                 <span>이메일 인증</span>
               </div>
             ),
