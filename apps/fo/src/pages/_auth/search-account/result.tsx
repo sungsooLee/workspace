@@ -1,10 +1,13 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { isEmpty } from 'lodash';
 
 import { IcoComplete, IcoCaution02 } from '@learnway/icons';
 import { pageRouteConfig } from '../../../features/auth';
 
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
+
+import { ProccessResult } from '../../../widgets/auth';
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
 
 export const Route = createFileRoute('/_auth/search-account/result')({
@@ -33,34 +36,17 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state.email ? (
-          <div className={styles.success_info}>
-            <i className={styles.ico}>
-              <IcoComplete className={styles.ico1} />
-            </i>
-            <h3 className={styles.title}>
-              입력하신 정보로 가입된 아이디는
-              <br />
-              아래와 같습니다.
-            </h3>
-            <div className={styles.noti_box}>{state.email}</div>
-            <div className={styles.btn_txt}>
-              <Link to="/progress-status">비밀번호 찾기</Link>
-            </div>
-          </div>
+          <ProccessResult
+            title={'입력하신 정보로 가입된 아이디는 \n아래와 같습니다.'}
+            resultMessage={state.email}>
+            <Link to="/progress-status">비밀번호 찾기</Link>
+          </ProccessResult>
         ) : (
-          <div className={styles.success_info}>
-            <i className={styles.ico}>
-              <IcoCaution02 className={styles.ico2} />
-            </i>
-            <h3 className={styles.title}>
-              입력하신 정보로 가입된 아이디를
-              <br />
-              찾을 수 없습니다.
-            </h3>
-            <div className={styles.btn_txt}>
-              <Link to="/search-account">아아디 찾기</Link>
-            </div>
-          </div>
+          <ProccessResult
+            isSuccess={false}
+            title={'입력하신 정보로 가입된 아이디를 \n찾을 수 없습니다.'}>
+            <Link to="/search-account">아아디 찾기</Link>
+          </ProccessResult>
         )}
 
         <div className={`${styles.btn_wrap}`}>

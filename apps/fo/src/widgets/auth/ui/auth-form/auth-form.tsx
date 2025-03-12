@@ -43,6 +43,8 @@ export interface AuthFormData {
 interface AuthFormComponentProps {
   includeUserId?: boolean;
   defaultValues?: AuthFormData;
+  onSuccess?: () => void;
+  onCancel?: () => void;
 }
 
 function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentProps) {

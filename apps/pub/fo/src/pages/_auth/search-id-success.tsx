@@ -7,6 +7,8 @@ import { IcoCaution02, IcoComplete } from '@learnway/icons';
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
+//import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
+
 export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,
 });
