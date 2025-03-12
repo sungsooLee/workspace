@@ -185,6 +185,7 @@ const useDynamicForm = (config: DynamicFormConfig) => {
    * @param values - 새로운 초기값 (선택 사항). 전달하지 않으면 기본값으로 리셋.
    */
   const onFormChange = (values?: any) => {
+    console.log('onFormChange values => ', values);
     if (values) {
       reset({ ...getValues(), ...values });
     } else {

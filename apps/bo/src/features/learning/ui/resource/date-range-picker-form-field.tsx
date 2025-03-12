@@ -19,17 +19,6 @@ const DateRangePickerFormFieldComponent: FC<any> = ({ onFormChange, onChangeGuid
   }, []);
   return (
     <>
-      <Button
-        type="button"
-        variant="point"
-        size="sm"
-        onClick={() => onChangeGuideText('가이드 텍스트')}>
-        가이트 텍스트 추가
-      </Button>
-
-      <Button type="button" variant="point" size="sm" onClick={() => onChangeGuideText('')}>
-        가이트 텍스트 삭제
-      </Button>
       <DatePicker onChange={handleDate} value={date} className={styles.datepicker_item} />
       <span className={styles.dash}></span>
       <DatePicker onChange={handleDate2} value={date2} className={styles.datepicker_item} />

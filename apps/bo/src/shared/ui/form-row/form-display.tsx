@@ -37,6 +37,7 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
 }) => {
   // provider에서 control, onFormChange, originalValues 추출
   const { control, onFormChange, originalValues, getValues } = provider;
+  const isDependenciesRef = useRef<boolean>(false);
 
   /**
    * 🔎 useWatch로 상태 변화 감지
@@ -47,21 +48,28 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
     control,
     name: dependencies ? dependencies.map((dep) => dep.name) : [], // 의존성 값 설정
   });
-  // onDisplay 함수가 존재하면 해당 함수에서 Display 여부를 받아오고 아니면 무조건 노출
-  const isOnDisplay = useMemo(
-    () => (onDisplay ? onDisplay(getValues()) : true),
-    [getValues, onDisplay],
-  );
-  // dependencies 가 존재하면 watch 와 비교해서 논리연산을 하고 아니면 무조건 노출
-  const isDependencies = useMemo(
-    () =>
-      dependencies
-        ? watchedValue.length === dependencies.length &&
-          watchedValue.every((value: any, index: number) => value === dependencies[index].value)
-        : true,
-    [dependencies, watchedValue],
-  );
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (dependencies) {
+      const isDependenciesMet =
+        watchedValue.length === dependencies.length &&
+        watchedValue.every((value: any, index: number) => value === dependencies[index].value);
+
+      const isDisplayMet = onDisplay ? onDisplay(getValues()) : true;
+
+      // 상태가 실제로 변경될 때만 상태 업데이트 → 불필요한 렌더링 방지
+      const newValue = isDependenciesMet && isDisplayMet;
+      if (isVisible !== newValue) {
+        setIsVisible(newValue);
+      }
+    } else {
+      const newValue = onDisplay ? onDisplay(getValues()) : true;
+      if (isVisible !== newValue) {
+        setIsVisible(newValue);
+      }
+    }
+  }, [watchedValue, dependencies, onDisplay, getValues]);
   // 사용된 필드 이름 저장 (동적 필드 추적용)
   const [usedNames, setUsedNames] = useState<string[]>([]);
 
@@ -75,10 +83,10 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
     const renderChild = (child: ReactNode): ReactNode => {
       if (!isValidElement(child)) return child; // 유효한 React 엘리먼트인지 확인
 
-      // DynamicFormField인 경우 필드 이름 저장
       if (child.type === DynamicFormField) {
-        // 이미 추가된 이름이 아니면 저장 (중복 방지)
-        setUsedNames((prev) => [...new Set([...prev, child.props.name])]);
+        setUsedNames((prev) =>
+          prev.includes(child.props.name) ? prev : [...prev, child.props.name],
+        );
       }
 
       // 자식 엘리먼트가 존재하면 재귀적으로 탐색
@@ -94,23 +102,16 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
   }, []); // 처음 마운트될 때만 실행
 
   useEffect(() => {
-    // 값이 일치하지 않는 경우에만 상태를 초기화
-    if (!isOnDisplay && !isOnDisplay) {
-      // 초기값 설정용 객체
+    if (!isVisible) {
       const oriValues: any = {};
-
-      // usedNames에 저장된 필드 이름을 기반으로 originalValues에서 값 추출
       usedNames.forEach((dep: string) => {
         oriValues[dep] = originalValues[dep];
       });
-
-      // reset 호출 → 상태 변경 발생 → useWatch에서 다시 감지됨
       onFormChange(oriValues);
     }
-  }, [isOnDisplay, isDependencies]);
+  }, [isVisible]);
 
-  // 상태가 true일 때 children을 렌더링
-  return isDependencies && isOnDisplay && children;
+  return isVisible ? children : null;
 };
 
 export const FormDisplay = FormDisplayComponent;

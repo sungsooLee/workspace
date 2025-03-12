@@ -1,11 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
-import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, DateRangePicker, InputModalButtonFormField } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  InputModalButtonFormField,
+  selectStyles,
+  ThumbnailImageUpload,
+} from '@learnway/ui';
 import { z } from '@learnway/shared';
-import { selectStyles } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
@@ -15,21 +20,30 @@ import { TempSearchPopup } from '../../../../../features/learning/ui/resource/te
 import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
 import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
-import { ChannelChoicePopup, FormSubtitles } from '../../../../../features/learning';
+import {
+  ChannelChoicePopup,
+  FormSubtitles,
+  ThumbnailUploaderFormField,
+} from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
+import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { state } = useLocation();
   const router = useRouter();
-  const { provider, onSubmit } = useDynamicForm(formConfig);
+  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const handleFormSubmit = (data: any) => {
     console.log(data);
   };
 
+  const openModal = () => {
+    // 모달 다으면 oncofmr(value)
+  };
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -52,11 +66,12 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               {/* 채널 */}
-              <DynamicFormField name={'channel'}>
+              <DynamicFormField name={'channelName'}>
                 <InputModalButtonFormField
                   modalConfig={{
                     content: <ChannelChoicePopup />,
                     footer: true,
+                    width: 'md',
                   }}
                 />
               </DynamicFormField>
@@ -76,9 +91,15 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'manager'}>
-                {/*담당자*/}
-                <TempSearchPopup />
+              {/*담당자*/}
+              <DynamicFormField name={'managerName'}>
+                <InputModalButtonFormField
+                  modalConfig={{
+                    content: <ManagerChoicePopup />,
+                    footer: true,
+                    width: 'md',
+                  }}
+                />
               </DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
@@ -118,6 +139,11 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <ThumbnailUploaderFormField name="thumbnails" />
+            </FormRow>
+          </ContentsRow>
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
               <FormRow provider={provider}>
@@ -148,8 +174,13 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
+      name: 'channelId',
+      type: 'hidden',
+      value: '',
+    },
+    {
       label: t('채널'),
-      name: 'channel',
+      name: 'channelName',
       type: 'custom',
       value: '',
     },
@@ -170,9 +201,14 @@ const formConfig: DynamicFormConfig = {
       maxLength: 2000,
     },
     {
-      label: t('담당자'),
-      name: 'manager',
+      name: 'managerId',
       type: 'text',
+      value: '',
+    },
+    {
+      label: t('담당자'),
+      name: 'managerName',
+      type: 'custom',
       value: '',
     },
     {
@@ -241,10 +277,16 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       value: '',
     },
-    {
+    /*{
       label: t('오히부학습시작 파라미터'),
       name: 'externalDevelopmentCompanyResourceParams',
       type: 'text',
+      value: '',
+    },*/
+    {
+      label: t('썸네일'),
+      name: 'thumbnails',
+      type: 'custom',
       value: [],
     },
     {
@@ -284,7 +326,7 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     /*channel: z.string().required(),*/
-    learningResourceName: z.string().required(),
+    /*learningResourceName: z.string().required(),
     manager: z.string().required(),
     contact: z.string().required(),
     expirationDate: z.string().required(),
@@ -292,7 +334,7 @@ const formConfig: DynamicFormConfig = {
       message: '‘{{label}}’ 체크하세요..',
     }),
     isCopyrightConfirmed: z.boolean().refine((value) => !value, {}),
-    isSecurityConfirmed: z.boolean().refine((value) => !value, {}),
+    isSecurityConfirmed: z.boolean().refine((value) => !value, {}),*/
   },
   /*globalValidator: (({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
