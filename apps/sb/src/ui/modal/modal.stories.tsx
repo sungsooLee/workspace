@@ -21,7 +21,7 @@ export default {
   argTypes: {},
 } as Meta;
 
-const ModalContent = () => {
+const ContentModal = () => {
   const { close: closeModal } = useModal();
   const [selectedRow, setSelectedRow] = useState();
   const { t } = useTranslation();
@@ -64,7 +64,7 @@ export const Template: any = (args: any) => {
   const handleOpenModal = () => {
     openModal({
       width: 'sm',
-      content: <ModalContent />,
+      content: <ContentModal />,
       onClose: (data) => console.log('onClose data', data),
     });
   };
@@ -88,7 +88,7 @@ export const TemplateAsync: any = (args: any) => {
     const result = await openModal({
       title: 'modal title',
       description: 'modal description',
-      content: <ModalContent />,
+      content: <ContentModal />,
     });
     console.log(result);
   };
