@@ -242,40 +242,6 @@ hr.divider {
   @apply h-[1px] w-full bg-[#EDF0F7];
 }
 
-.btn_box {
-  @apply flex items-center justify-center;
-  .btn_expand {
-    &:has(svg) {
-      @apply !w-[32px] !max-w-[32px] !px-0;
-    }
-    svg {
-      @apply !mr-0 fill-none stroke-none;
-      path {
-        @apply stroke-[var(--gray9)];
-      }
-    }
-  }
-  .btn_refresh {
-    &:has(svg) {
-      @apply !w-[32px] !max-w-[32px] !px-0;
-    }
-    svg {
-      @apply !mr-0 fill-none stroke-none;
-      path {
-        @apply stroke-[var(--gray9)];
-      }
-    }
-  }
-  .btn_search {
-    &:has(svg) {
-      @apply !w-[60px] !px-[4px];
-    }
-    svg {
-      @apply !mr-0 h-[16px] w-[16px] stroke-[var(--gray9)];
-    }
-  }
-}
-
 .row_wrap {
   .inner_row {
     @apply !mx-0 mt-0;
@@ -331,22 +297,6 @@ hr.divider {
     @apply !mt-[32px];
   }
 }
-
-.search_contents_wrap {
-  @apply relative mx-[-32px] pl-[32px] pr-[213px];
-  .search_contents {
-    .form_item {
-      @apply !pb-0;
-    }
-    & + .search_contents {
-      @apply !mt-0 border-0;
-    }
-  }
-  .btn_box {
-    @apply absolute bottom-0 right-[32px];
-  }
-}
-
 /* 태그 */
 .tag_wrap {
   @apply w-full rounded-[4px] border border-solid border-[var(--gray4)] p-[12px];
