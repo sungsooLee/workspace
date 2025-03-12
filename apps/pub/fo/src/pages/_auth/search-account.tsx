@@ -4,14 +4,18 @@ import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from './search-account.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 import searchAccountFormStyles from './search-account-form.module.css';
+
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 
 import { GoogleCertGuidePopup } from '../../features/auth';
 
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
+
+import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 
 import {
   Button,

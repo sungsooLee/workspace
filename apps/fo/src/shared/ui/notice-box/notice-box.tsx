@@ -16,7 +16,7 @@ function NoticeBoxComponent({ title, children, className }: NoticeBoxComponentPr
   const { t } = useTranslation();
 
   return (
-    <div className={cn(styles.start, className)}>
+    <div className={cn(styles.start, styles.signup_noti, className)}>
       <dl className={cn(styles.check_point, 'notice-box-check-point')}>
         {title && (
           <dt>
