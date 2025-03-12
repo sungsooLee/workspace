@@ -8,7 +8,7 @@
   }
 }
 .alarm_wrap {
-  @apply h-auto w-[513px] rounded-[8px] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+  @apply h-auto w-[513px] rounded-[8px] bg-[var(--white)] shadow-[0px_2px_6px_rgba(0,0,0,0.08)];
 }
 .alarm_header {
   @apply flex h-[62px] items-center justify-between px-[24px] py-[20px];
