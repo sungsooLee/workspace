@@ -1,5 +1,24 @@
 .start {
   &.related {
-    @apply block;
+    @apply flex items-center;
+    .tit_box {
+      @apply mr-[16px];
+      strong {
+        @apply title_6_b whitespace-nowrap text-[var(--gray9)];
+      }
+    }
+    .swiper {
+      @apply contents;
+      .related_swiper {
+        > div {
+          > div {
+            @apply !w-auto max-w-[130px];
+            button {
+              @apply block w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-[var(--gray8)];
+            }
+          }
+        }
+      }
+    }
   }
 }

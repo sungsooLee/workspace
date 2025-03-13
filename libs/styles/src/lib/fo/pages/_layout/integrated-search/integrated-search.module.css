@@ -1,0 +1,29 @@
+.start {
+  &.integrated {
+    .result_txt_box {
+      .result_txt {
+        p {
+          @apply title_6_r text-[var(--gray9)];
+          strong {
+            @apply title_6_b;
+          }
+        }
+      }
+      .proposal_txt {
+        @apply mt-[24px] flex items-center;
+        strong {
+          @apply title_6_b text-[var(--gray9)];
+        }
+        p {
+          @apply title_6_r relative ml-[12px] pl-[12px] text-[var(--gray9)];
+          &::before {
+            @apply absolute left-0 top-1/2 h-[14px] w-px -translate-y-1/2 bg-[var(--gray6)] content-[''];
+          }
+        }
+        a {
+          @apply label_12_500 ml-[16px] text-[var(--gray8)] underline decoration-[var(--gray8)] underline-offset-[4px];
+        }
+      }
+    }
+  }
+}
