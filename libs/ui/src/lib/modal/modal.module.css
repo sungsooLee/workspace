@@ -19,12 +19,12 @@
 }
 
 .content_body {
-  @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[16px];
+  @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden;
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
   &.notitle {
-    @apply pt-[48px];
+    @apply relative;
   }
 }
 
@@ -97,7 +97,10 @@
 
 .footer {
   @apply flex items-center justify-center pb-[24px] pt-[16px];
-  .btn + .btn {
+  button {
+    @apply !min-w-[80px];
+  }
+  button + button {
     @apply ml-[8px];
   }
 }
