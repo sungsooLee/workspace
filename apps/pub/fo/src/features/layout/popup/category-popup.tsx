@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Carousel } from '@/libs/ui/src';
+import { Carousel } from '@learnway/ui';
 import { Chips, Button } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 

@@ -41,7 +41,7 @@ import {
 } from '@learnway/icons';
 import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import { ImageOption } from '@learnway/ui';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';

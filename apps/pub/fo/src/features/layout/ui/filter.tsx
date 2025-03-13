@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, useModal, ChipList } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
-import { OptionCard } from '@/libs/ui/src';
+import { OptionCard } from '@learnway/ui';
 import styles from './filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';

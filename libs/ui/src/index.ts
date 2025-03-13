@@ -122,6 +122,7 @@ export * from './lib/stepper/stepper';
 // thumbnail
 export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
+export * from './lib/thumbnail/type';
 
 // transfer grid
 export * from './lib/transfer-grid/transfer-grid';
