@@ -245,7 +245,7 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입진행현황_이메일입력_KR',
-    pageId: 'progress-status',
+    pageId: 'progress-status-email',
     screenId: 'NLP_FO_CPS_1000', //스크린아이디
     pageType: 'Page',
     completionDate: '', // 완료일

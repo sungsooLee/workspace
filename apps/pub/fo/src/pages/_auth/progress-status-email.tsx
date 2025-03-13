@@ -8,6 +8,7 @@ import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
+import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
@@ -22,7 +23,7 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={searchAccountFormStyles.search_info}>
+          <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className={searchAccountFormStyles.txt}>
               진행현황 확인을 위해 이메일을 입력해 주세요.
