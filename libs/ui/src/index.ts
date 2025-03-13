@@ -63,6 +63,7 @@ export * from './lib/list/list';
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
 export * from './lib/file-upload/form-thumbnail-image-upload';
+export * from './lib/file-upload/uppy-file-upload';
 
 // form-field
 export * from './lib/form-field/input-modal-button-form-field/input-modal-button-form-field';
@@ -71,6 +72,7 @@ export * from './lib/form-field/chip-list-modal-button-form-field/chip-list-moda
 // modal
 export * from './lib/modal/modal';
 export * from './lib/modal/modal.hook';
+export * from './lib/modal/modal-container';
 export * from './lib/modal/modal-wrapper';
 export * from './lib/stores/useModalStore';
 
@@ -102,6 +104,7 @@ export * from './lib/radio-card/radio-card';
 export { selectStyles };
 export * from './lib/select/select';
 export * from './lib/select/type';
+
 // dropdown-list
 export * from './lib/dropdown-list/dropdown-list';
 export * from './lib/dropdown-list/auto-complete';
@@ -147,3 +150,6 @@ export * from './lib/toast/toast-wrapper';
 
 // type
 export * from './lib/type';
+
+// phone number
+export * from './lib/phone-number/phone-number';

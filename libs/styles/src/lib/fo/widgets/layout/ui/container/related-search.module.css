@@ -1,0 +1,5 @@
+.start {
+  &.related {
+    @apply block;
+  }
+}

@@ -4,7 +4,6 @@ import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/config';
 
 import { Search, Logo, UserAvatar } from '../../../../../features/layout';
-import { CategoryPopover } from '../../../../../features/category';
 import { Language, Notification, Tenants, AdminLink } from '../../../../../features/platform';
 import { Tenant, useFetchTenantByUser } from '../../../../../entities/tenant';
 
@@ -13,6 +12,7 @@ import { SessionTimer } from '../../../../../features/platform/ui/sessionTimer';
 
 import { Navigate } from './navigate/navigate';
 import styles from './header.module.css';
+import { CategoryButton } from '../../../../../features/category';
 
 function HeaderComponent() {
   const { data: authUser } = useFetchAuthUser();
@@ -92,7 +92,7 @@ function HeaderComponent() {
 
         <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
           <div className={styles.nav_area}>
-            <CategoryPopover onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+            <CategoryButton onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
             <Navigate onMouseEnter={handleMouseEnter} />
           </div>
           {isHoverNavigate && (

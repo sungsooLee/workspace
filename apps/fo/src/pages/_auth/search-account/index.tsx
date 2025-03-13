@@ -6,6 +6,7 @@ import { Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import { AuthForm, AuthFormData } from '../../../widgets/auth';
+import { useAsyncFetchEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
@@ -14,19 +15,23 @@ export const Route = createFileRoute('/_auth/search-account/')({
 });
 
 function RouteComponent() {
+  const router = useRouter();
+
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
   const [selectedTabKey, setSelectedTabKey] = useState<string>('account');
+
+  const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
   const handleActiveTab = (value: string) => {
     setDefaultAuthValues({
       authToolType: 'phone',
       userId: '',
-      name: '배성련',
-      birthday: '19781223',
-      phoneNumber: '01093432161',
+      name: '',
+      birthday: '',
+      phoneNumber: '',
       phoneNumberLocale: '',
       email: '',
-      verificationCode: 'dek479',
+      verificationCode: '',
     });
 
     setSelectedTabKey(value);
@@ -48,6 +53,31 @@ function RouteComponent() {
     [],
   );
 
+  const handleSuccess = (data: any) => {
+    asyncFetchEmail(
+      {
+        name: data.name,
+        birthday: data.birthday,
+        phoneNumber: data.phoneNumber,
+      },
+      {
+        onSuccess: (data, variables, context) => {
+          router.navigate({
+            to: '/search-account/result',
+            state: { email: data.email },
+          });
+        },
+        onError: (error: any) => {
+          console.log('asyncFetchAccount error', error);
+        },
+      },
+    );
+  };
+
+  const handleCancel = () => {
+    router.navigate({ to: '/login' });
+  };
+
   return (
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
@@ -65,7 +95,12 @@ function RouteComponent() {
             : `본인인증 후 비밀번호를 재설정 할 수 있습니다.`}
         </div>
 
-        <AuthForm defaultValues={defaultAuthValues} />
+        <AuthForm
+          defaultValues={defaultAuthValues}
+          includeUserId={selectedTabKey === 'password'}
+          onSuccess={(data: any) => handleSuccess(data)}
+          onCancel={() => handleCancel()}
+        />
       </div>
     </div>
   );

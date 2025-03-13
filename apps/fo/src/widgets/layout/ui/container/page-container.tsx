@@ -3,6 +3,7 @@ import { useActiveMenuDepthState } from '../../../../features/platform';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
+import styles from './page-container.module.css';
 
 interface PageContainerComponentProps {
   children: ReactNode;
@@ -16,9 +17,10 @@ function PageContainerComponent({ children }: PageContainerComponentProps) {
   }, [activeMenuDepth]);
 
   return (
-    <div className="bg-secondary-1 flex flex-col">
+    <div className={`${styles.start} ${styles.page_container}`}>
       {/* <div>{title}</div> */}
-      <div>{children}</div>
+      {/* <div className={styles.title}>{title}</div> */}
+      {children}
     </div>
   );
 }

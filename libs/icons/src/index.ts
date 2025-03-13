@@ -91,6 +91,8 @@ export { ReactComponent as IcoCompanion } from './lib/ic_companion.svg'; // admi
 export { ReactComponent as IcoProgress } from './lib/ic_progress.svg'; // admin progress
 export { ReactComponent as IcoFilter } from './lib/ic_filter.svg'; // filter
 export { ReactComponent as IcoArrowDownDouble } from './lib/ic_arrow_down_double.svg'; // filter
+export { ReactComponent as IcoNarrowRight } from './lib/ic_arrow_narrow_right.svg'; // transfer grid
+export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
 
 //export Default as Information from './lib/information.svg?react';
 

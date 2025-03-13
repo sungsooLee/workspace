@@ -9,7 +9,7 @@ import { Category } from '../../../../types/entities/category';
 import { useCategories } from '../../services/category.service';
 import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
 
-import styles from './category-badge-list.module.css';
+import styles from '@learnway/styles/fo/features/category/category-badge-list.module.css';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;
@@ -79,39 +79,32 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
       <h3 className={styles.tit}>최근방문</h3>
-      <Swiper
-        ref={swiperRef}
-        spaceBetween={8}
-        slidesPerView="auto"
-        loop={false}
-        modules={[Navigation]}
-        className={styles.recent_swiper}>
-        <div className={styles.lists}>
-          {recentCategories.map((item) => (
-            <SwiperSlide
-              key={item.categoryId}
-              className={styles.slide}
-              onClick={() => handleClick(item)}>
-              {/* <div className={styles.item}>
-                <Button className={styles.txt} onClick={() => handleCategoryClick(item)}>
-                  {item.name}
-                </Button>
-                <Button
-                  aria-label="remove"
-                  onClick={(e) => handleClose(e, item.categoryId)}
-                  className={styles.remove}>
-                  <IcoXclose width={16} height={16} stroke="#131C30" />
-                </Button>
-              </div> */}
-              <Chips
-                className={styles.item}
-                option={{ label: item.name, value: item.categoryId + '' }}
-                onDelete={() => handleDelete(item.categoryId)}
-              />
-            </SwiperSlide>
-          ))}
-        </div>
-      </Swiper>
+      {recentCategories.length === 0 ? (
+        <div className={styles.no_visits}>최근 방문한 카테고리가 없습니다.</div>
+      ) : (
+        <Swiper
+          ref={swiperRef}
+          spaceBetween={8}
+          slidesPerView="auto"
+          loop={false}
+          modules={[Navigation]}
+          className={styles.recent_swiper}>
+          <div className={styles.lists}>
+            {recentCategories.map((item) => (
+              <SwiperSlide
+                key={item.categoryId}
+                className={styles.slide}
+                onClick={() => handleClick(item)}>
+                <Chips
+                  className={styles.item}
+                  option={{ label: item.name, value: item.categoryId + '' }}
+                  onDelete={() => handleDelete(item.categoryId)}
+                />
+              </SwiperSlide>
+            ))}
+          </div>
+        </Swiper>
+      )}
 
       <div ref={prevRef} className={styles.recent_button_prev}>
         <div className={styles.btn}>

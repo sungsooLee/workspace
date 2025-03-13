@@ -64,6 +64,7 @@ import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/fileUpload'
 import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
+import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
@@ -395,6 +396,12 @@ const GuideGuideEmptyRoute = GuideGuideEmptyImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
+  id: '/guide/drop-down',
+  path: '/guide/drop-down',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideCssRoute = GuideGuideCssImport.update({
   id: '/guide/css',
   path: '/guide/css',
@@ -661,6 +668,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/css'
       fullPath: '/guide/css'
       preLoaderRoute: typeof GuideGuideCssImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/drop-down': {
+      id: '/_guide/guide/drop-down'
+      path: '/guide/drop-down'
+      fullPath: '/guide/drop-down'
+      preLoaderRoute: typeof GuideGuideDropDownImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/empty': {
@@ -940,6 +954,7 @@ interface GuideRouteChildren {
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
   GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
   GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
   GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
@@ -975,6 +990,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
   GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideDropDownRoute: GuideGuideDropDownRoute,
   GuideGuideEmptyRoute: GuideGuideEmptyRoute,
   GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
@@ -1065,6 +1081,7 @@ export interface FileRoutesByFullPath {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -1128,6 +1145,7 @@ export interface FileRoutesByTo {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -1194,6 +1212,7 @@ export interface FileRoutesById {
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/css': typeof GuideGuideCssRoute
+  '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
   '/_guide/guide/empty': typeof GuideGuideEmptyRoute
   '/_guide/guide/fileUpload': typeof GuideGuideFileUploadRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
@@ -1259,6 +1278,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/drop-down'
     | '/guide/empty'
     | '/guide/fileUpload'
     | '/guide/form'
@@ -1321,6 +1341,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/drop-down'
     | '/guide/empty'
     | '/guide/fileUpload'
     | '/guide/form'
@@ -1385,6 +1406,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
     | '/_guide/guide/css'
+    | '/_guide/guide/drop-down'
     | '/_guide/guide/empty'
     | '/_guide/guide/fileUpload'
     | '/_guide/guide/form'
@@ -1479,6 +1501,7 @@ export const routeTree = rootRoute
         "/_guide/guide/chips",
         "/_guide/guide/color",
         "/_guide/guide/css",
+        "/_guide/guide/drop-down",
         "/_guide/guide/empty",
         "/_guide/guide/fileUpload",
         "/_guide/guide/form",
@@ -1627,6 +1650,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/css": {
       "filePath": "_guide/guide/css.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/drop-down": {
+      "filePath": "_guide/guide/drop-down.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/empty": {

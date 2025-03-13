@@ -12,8 +12,10 @@ export const useCategoryNavigation = () => {
 
   const handleCategoryClick = (category: Category) => {
     router.navigate({
-      to: '/category/$categoryId',
-      params: { categoryId: category.categoryId.toString() },
+      to: '/category',
+      state: {
+        categoryId: category.categoryId.toString(),
+      },
     });
 
     const recentCategories = JSON.parse(localStorage.getItem('recentCategories') || '[]');
