@@ -16,6 +16,15 @@
         }
         & + div {
           @apply !mt-[4px];
+          .half {
+            @apply flex;
+            & > div {
+              @apply order-1 !flex-1;
+            }
+            &::before {
+              @apply order-2 ml-[40px] h-full w-full flex-1 justify-stretch content-[''];
+            }
+          }
           & > div {
             @apply flex-1;
           }
