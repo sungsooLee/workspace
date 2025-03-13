@@ -1,12 +1,12 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 
-import { Button, ButtonComponentProps } from '../../button/button';
+import { ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
 
-export interface ChipListModalButtonFormFieldProps {
+export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
   value?: any;
   onChange?: (value: any) => void;
@@ -21,9 +21,9 @@ export interface ChipListModalButtonFormFieldProps {
  * @param props
  * @constructor
  */
-const ChipListModalButtonFormFieldComponent = forwardRef<
+const ChipListModalSelectorFormFieldComponent = forwardRef<
   HTMLDivElement,
-  ChipListModalButtonFormFieldProps
+  ChipListModalSelectorFormFieldProps
 >(
   (
     {
@@ -51,19 +51,14 @@ const ChipListModalButtonFormFieldComponent = forwardRef<
 
     const appendSelectedChipOptions = (newOption: any) => {
       const key = chipListProps?.valueField || 'value';
-      const isDuplicated = !!selectedChipOptions?.find((d) => d[key] === newOption[key]); // 새로 등록하는 chips 중복 여부
+      const isDuplicated = !!selectedChipOptions?.find((d) => d[key] === newOption[key]); // 새로 등록하는 chip 중복 여부
       !isDuplicated && setSelectedChipOptions([...selectedChipOptions, newOption]);
     };
 
-    const handleButtonOnClick = (e: any) => {
-      openModal({
-        ...modalConfig,
-        onClose: (data: any) => {
-          console.log('component onClose', data);
-          appendSelectedChipOptions(data);
-          modalConfig?.onClose?.(data); // optional
-        },
-      });
+    const handleChipListClick = async () => {
+      const data = await openModal(modalConfig);
+      appendSelectedChipOptions(data);
+      modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
 
     const handleChipListChange = (newOptions: any[]) => {
@@ -71,15 +66,22 @@ const ChipListModalButtonFormFieldComponent = forwardRef<
     };
 
     return (
-      <div ref={ref} className={'flex flex-row items-center gap-3'}>
-        <Button {...buttonProps} onClick={handleButtonOnClick} />
-        <ChipList
-          {...chipListProps}
-          options={selectedChipOptions}
-          onChange={handleChipListChange}
-        />
-      </div>
+      <ChipList
+        {...chipListProps}
+        onChipListClick={handleChipListClick}
+        options={selectedChipOptions}
+        onChange={handleChipListChange}
+      />
+      // <div ref={ref} className={'border-1 h-[50px] w-full bg-amber-500'}>
+      //   {/*<Button {...buttonProps} onClick={handleButtonOnClick} />*/}
+      //   <ChipList
+      //     {...chipListProps}
+      //     onChipListClick={handleChipListClick}
+      //     options={selectedChipOptions}
+      //     onChange={handleChipListChange}
+      //   />
+      // </div>
     );
   },
 );
-export const ChipListModalButtonFormField = ChipListModalButtonFormFieldComponent;
+export const ChipListModalSelectorFormField = ChipListModalSelectorFormFieldComponent;

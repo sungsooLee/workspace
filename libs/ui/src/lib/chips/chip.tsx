@@ -3,10 +3,10 @@ import React, { forwardRef, PropsWithChildren } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoXclose } from '@learnway/icons';
 
-import styles from './chips.module.css';
+import styles from './chip.module.css';
 import { Button } from '../button/button';
 
-export interface ChipsComponentProps extends PropsWithChildren {
+export interface ChipComponentProps extends PropsWithChildren {
   option: any;
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
@@ -19,7 +19,7 @@ export interface ChipsComponentProps extends PropsWithChildren {
   onDelete?: (option: any) => void;
 }
 
-const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
+const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
   ({
     className,
     variant,
@@ -37,6 +37,7 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
     const isButtonMode = !!onClick;
 
     const handleClick = (event: React.MouseEvent) => {
+      event.stopPropagation();
       onClick?.(option);
     };
 
@@ -69,4 +70,4 @@ const ChipsComponent = forwardRef<HTMLElement, ChipsComponentProps>(
   },
 );
 
-export const Chips = ChipsComponent;
+export const Chip = ChipComponent;

@@ -8,12 +8,11 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
-import styles from './manager-list-modal.module.css';
+import styles from './teacher-list-modal.module.css';
 import { useTranslation } from 'react-i18next';
 
-export interface ManagerListModalProps {
+export interface TeacherListModalProps {
   dummy?: boolean;
-  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
@@ -23,13 +22,13 @@ export interface ManagerListModalProps {
  * @param props
  * @constructor
  */
-const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalProps>(
-  ({ setModalData, ...props }, ref) => {
+const TeacherListModalComponent = forwardRef<HTMLDivElement, TeacherListModalProps>(
+  ({ ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data: gridData }: any = getMockData();
     const [selectedRow, setSelectedRow] = useState();
-    const columns = [{ header: t('운영자'), accessorKey: 'name' }];
+    const columns = [{ header: t('강사명'), accessorKey: 'name' }];
 
     const handleRowSelect = (row: any) => {
       setSelectedRow(row);
@@ -37,7 +36,7 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
 
     return (
       <ModalContainer>
-        <ModalTitle>{t('운영자 리스트')}</ModalTitle>
+        <ModalTitle>{t('강사 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
             <h2>Grid</h2>
@@ -62,7 +61,7 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
     );
   },
 );
-export const ManagerListModal = ManagerListModalComponent;
+export const TeacherListModal = TeacherListModalComponent;
 
 const getMockData = () => {
   return {

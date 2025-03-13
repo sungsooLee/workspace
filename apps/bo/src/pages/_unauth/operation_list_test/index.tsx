@@ -82,9 +82,9 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
     {
-      name: '테넌',
+      name: '테넌트',
       type: 'dropdown',
-      label: t('테넌'),
+      label: t('테넌트'),
       value: '',
       options: [
         { value: '', label: '전체' },
