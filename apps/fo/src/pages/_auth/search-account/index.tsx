@@ -1,24 +1,29 @@
 import { useState } from 'react';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
+import { useTranslation } from 'react-i18next';
 
-import { Tabs } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { Tabs, useModal } from '@learnway/ui';
+import { cn, z } from '@learnway/shared';
 
-import { AuthForm, AuthFormData } from '../../../widgets/auth';
+import { AuthForm, AuthFormData } from '../../../features/auth';
 import { useAsyncFetchEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
+  validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
+  const { tabKey } = Route.useSearch();
   const router = useRouter();
+  const { alert: openAlert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('account');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(tabKey);
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
@@ -40,12 +45,12 @@ function RouteComponent() {
   const items = useCreation(
     () => [
       {
-        title: '아이디 찾기',
+        title: t('LABEL.SEARCH_ACCOUNT'),
         key: 'account',
         content: <></>,
       },
       {
-        title: '비밀번호 찾기',
+        title: t('LABEL.SEARCH_PASSWORD'),
         key: 'password',
         content: <></>,
       },
@@ -54,6 +59,11 @@ function RouteComponent() {
   );
 
   const handleSuccess = (data: any) => {
+    if (selectedTabKey === 'password') {
+      router.navigate({ to: '/change-password' });
+      return;
+    }
+
     asyncFetchEmail(
       {
         name: data.name,
@@ -68,7 +78,11 @@ function RouteComponent() {
           });
         },
         onError: (error: any) => {
-          console.log('asyncFetchAccount error', error);
+          // 인증 성공 후 사용자 정보 조회 실패
+          openAlert({
+            title: 'MESSAGE.INVALID_INPUT_INFORMATION',
+            description: 'MESSAGE.INVALID_INPUT_INFORMATION_DESCRIPTION',
+          });
         },
       },
     );
@@ -90,9 +104,11 @@ function RouteComponent() {
         />
 
         <div className={styles.search_info}>
-          {selectedTabKey === 'account'
-            ? `본인인증 후 아이디를 확인 할 수 있습니다.`
-            : `본인인증 후 비밀번호를 재설정 할 수 있습니다.`}
+          {t(
+            selectedTabKey === 'account'
+              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
+              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
+          )}
         </div>
 
         <AuthForm

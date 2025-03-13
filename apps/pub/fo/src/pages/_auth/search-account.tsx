@@ -8,7 +8,7 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 영역
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css'; // 블루박스
 import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
 
@@ -182,7 +182,7 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>
@@ -383,7 +383,7 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>

@@ -7,7 +7,7 @@ import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 영역
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 찾기폼
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';

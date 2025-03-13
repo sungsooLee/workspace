@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '../../../features/auth';
 
@@ -23,6 +24,8 @@ export const Route = createFileRoute('/_auth/search-account/result')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const { state } = Route.useRouteContext();
@@ -35,26 +38,28 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state.email ? (
-          <ProccessResult title={'입력하신 정보로 가입된 아이디는 \n아래와 같습니다.'} className="">
+          <ProccessResult title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')} className="">
             <div className={styles.result_message}>{state.email}</div>
           </ProccessResult>
         ) : (
           <ProccessResult
             isSuccess={false}
-            title={'입력하신 정보로 가입된 아이디를 \n찾을 수 없습니다.'}></ProccessResult>
+            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT_NOT_FOUND')}></ProccessResult>
         )}
 
         <div className={styles.btn_txt}>
           {isEmpty(state.email) ? (
-            <Link to="/search-account">아아디 찾기</Link>
+            <Link to="/search-account">{t('LABEL.SEARCH_ACCOUNT')}</Link>
           ) : (
-            <Link to="/search-account">비밀번호 찾기</Link>
+            <Link to="/search-account" search={{ tabKey: 'password' }}>
+              {t('LABEL.SEARCH_PASSWORD')}
+            </Link>
           )}
         </div>
 
         <div className={`${styles.btn_wrap}`}>
           <Button variant="primary" size="xl" onClick={() => handleGoLogin()}>
-            로그인
+            {t('LABEL.LOGIN')}
           </Button>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
-import { isFunction } from 'lodash';
+import { isFunction, isArray } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
-import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
+import { Button, Tabs, ContentsRow, InputTimer, PhoneNumber } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 
 import {
@@ -20,7 +21,7 @@ import { AuthToolFormField, AuthTool, VerifyUserIdFormField } from '../../../../
 
 import { NoticeBox } from '../../../../shared/ui';
 
-import styles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
+import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 
 const TIME_LIMIT_VERIFY = 180;
 
@@ -58,15 +59,10 @@ function AuthFormComponent({
   onSuccess,
   onCancel,
 }: AuthFormComponentProps) {
-  //  const { t } = useTranslation();
-  const {
-    provider,
-    onSubmit,
-    onFormChange,
-    control,
-    getValues,
-    formState: { errors },
-  } = useCustomForm(detailConfig);
+  const { t } = useTranslation();
+
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError } =
+    useCustomForm(detailConfig);
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
 
@@ -83,24 +79,33 @@ function AuthFormComponent({
     if (!defaultValues) {
       return;
     }
-    onFormChange({
-      authToolType: 'phone',
-      userId: '',
-      name: '',
-      birthday: '',
-      phoneNumber: '',
-      phoneNumberLocale: '',
-      email: '',
-      verificationCode: '',
-    });
-    setSendedVerifyNumber(false);
+    handleReset(defaultValues);
   }, [defaultValues]);
+
+  useEffect(() => {
+    handleReset(undefined, authToolType);
+  }, [authToolType]);
 
   const handleSendVerify = () => {
     onFormChange({
       verificationCode: '',
     });
+
     const data = getValues();
+    try {
+      validator(data);
+    } catch (e) {
+      console.log('validator', (e as any)?.ZodError);
+      if (isArray(e)) {
+        console.log('e is array');
+        (e ?? []).forEach((error: any) => {
+          console.log('error', error);
+          setFormError(error.path[0], 'eeeee');
+        });
+      }
+      return;
+    }
+
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -148,6 +153,7 @@ function AuthFormComponent({
           },
           onError: (error: any) => {
             console.log('verifyPhone error', error);
+            setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
           },
         },
       );
@@ -162,6 +168,10 @@ function AuthFormComponent({
               onSuccess(data);
             }
           },
+          onError: (error: any) => {
+            console.log('verifyEmail error', error);
+            setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
+          },
         },
       );
     }
@@ -175,6 +185,41 @@ function AuthFormComponent({
 
   const handleTimeOver = () => {
     verifyTimerCounter.set(0);
+  };
+
+  const handleReset = (defaultValue?: any, authToolType?: string) => {
+    onFormChange(
+      defaultValue ?? {
+        authToolType: authToolType ?? 'phone',
+        userId: '',
+        name: '',
+        birthday: '',
+        phoneNumber: '',
+        phoneNumberLocale: '',
+        email: '',
+        verificationCode: '',
+      },
+    );
+    setSendedVerifyNumber(false);
+  };
+
+  const validator = (data: AuthFormData) => {
+    const authSchema = z.object({
+      authToolType: z.enum(['phone', 'email']),
+      userId: includeUserId ? z.string().required() : z.string(),
+      name: z.string().required(),
+      birthday: z.string().required(),
+      phoneNumber: data.authToolType === 'phone' ? z.string().required() : z.string(),
+      email: data.authToolType === 'email' ? z.string().required() : z.string(),
+      verificationCode: z.string().required(),
+    });
+
+    const r = authSchema.safeParse(data);
+    if (!r.success) {
+      r.error.issues.forEach((error: any) => {
+        setFormError(error.path[0], error.message);
+      });
+    }
   };
 
   return (
@@ -211,7 +256,9 @@ function AuthFormComponent({
         {authToolType === 'phone' ? (
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'phoneNumber'} />
+              <DynamicFormField name={'phoneNumber'}>
+                <PhoneNumber />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
         ) : (
@@ -232,7 +279,7 @@ function AuthFormComponent({
                 startTimer={verifyTimer}
                 onTimerEnd={() => handleTimeOver()}
                 onReset={() => handleSendVerify()}
-                resetLabel={'재전송'}
+                resetLabel={t('LABEL.RESEND')}
                 disabled={verifyTimer === 0}
               />
             </DynamicFormField>
@@ -240,25 +287,26 @@ function AuthFormComponent({
         </ContentsRow>
       )}
 
-      <NoticeBox title={'유의사항'}>
-        <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+      <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
+        <dd>{t('MESSAGE.SEARCH_ACCOUNT_NOTICE')}</dd>
+        {/*
         <dd>
           법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
           있습니다. <GoogleOtpGuideButton />
-        </dd>
+        </dd>*/}
       </NoticeBox>
 
-      <div className={styles.btn_wrap}>
+      <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
         <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-          취소
+          {t('LABEL.CANCEL')}
         </Button>
         {sendedVerifyNumber ? (
           <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
-            인증번호 확인
+            {t('LABEL.CHECK_AUTH_NUMBER')}
           </Button>
         ) : (
           <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
-            인증번호 요청
+            {t('LABEL.CHECK_AUTH_REQUEST')}
           </Button>
         )}
       </div>
@@ -305,7 +353,7 @@ const detailConfig = {
     },
     {
       name: 'phoneNumber',
-      type: 'text',
+      type: 'custom',
       label: '휴대폰 번호',
       value: '',
       placeholder: '-없이 휴대폰 번호입력(0102345678)',
