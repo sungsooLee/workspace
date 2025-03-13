@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 
-import { IcoComplete, IcoCaution02 } from '@learnway/icons';
 import { pageRouteConfig } from '../../../features/auth';
 
 import { cn } from '@learnway/shared';
@@ -36,18 +35,22 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state.email ? (
-          <ProccessResult
-            title={'입력하신 정보로 가입된 아이디는 \n아래와 같습니다.'}
-            resultMessage={state.email}>
-            <Link to="/progress-status">비밀번호 찾기</Link>
+          <ProccessResult title={'입력하신 정보로 가입된 아이디는 \n아래와 같습니다.'} className="">
+            <div className={styles.result_message}>{state.email}</div>
           </ProccessResult>
         ) : (
           <ProccessResult
             isSuccess={false}
-            title={'입력하신 정보로 가입된 아이디를 \n찾을 수 없습니다.'}>
-            <Link to="/search-account">아아디 찾기</Link>
-          </ProccessResult>
+            title={'입력하신 정보로 가입된 아이디를 \n찾을 수 없습니다.'}></ProccessResult>
         )}
+
+        <div className={styles.btn_txt}>
+          {isEmpty(state.email) ? (
+            <Link to="/search-account">아아디 찾기</Link>
+          ) : (
+            <Link to="/progress-status">비밀번호 찾기</Link>
+          )}
+        </div>
 
         <div className={`${styles.btn_wrap}`}>
           <Button variant="primary" size="xl" onClick={() => handleGoLogin()}>

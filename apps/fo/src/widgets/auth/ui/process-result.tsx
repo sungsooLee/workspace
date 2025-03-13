@@ -10,13 +10,11 @@ interface ProccessResultComponentProps {
   isSuccess?: boolean;
   title: string;
   className?: string;
-  resultMessage?: string;
-  children: ReactNode[] | ReactNode;
+  children?: ReactNode[] | ReactNode;
 }
 
 function ProccessResultComponent({
-  isSuccess = true,
-  resultMessage,
+  isSuccess,
   children,
   className,
   title,
@@ -33,8 +31,7 @@ function ProccessResultComponent({
         )}
       </i>
       <h3 className={styles.title}>{title}</h3>
-      {resultMessage && <div className={styles.noti_box}>{resultMessage}</div>}
-      <div className={styles.btn_txt}>{children}</div>
+      <div className={cn(styles.noti_box)}>{children}</div>
     </div>
   );
 }
