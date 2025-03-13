@@ -6,7 +6,6 @@
 
 html {
   font-size: 62.5%;
-  overflow: hidden !important;
 }
 
 html {
@@ -33,7 +32,6 @@ body {
   font-weight: 400;
   color: var(--gray9);
   line-height: 160%;
-  overflow-y: hidden !important;
 }
 
 strong {

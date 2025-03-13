@@ -10,7 +10,7 @@ function RouteComponent() {
     <div className="content">
       <h2 className="guide_tit2">PhoneNumber Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/phone-number/phone-number.tsx (공통)</p>
-      <p className="info">핸드폰 번호 입력시 사용</p>
+      <p className="info">핸드폰 번호 입력시 사용(size : sm | lg)</p>
 
       <div className="code_example">
         <pre className="code_block">
@@ -31,6 +31,7 @@ function RouteComponent() {
                 { value: 'type2', label: '016' },
                 { value: 'type3', label: '017' },
               ]}
+              size={'lg'}
             />
           </div>
         </div>
