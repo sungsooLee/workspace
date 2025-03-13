@@ -26,8 +26,7 @@ const GoogleInputPopupCompoment = () => {
         </ContentsRow>
       </div>
       <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
-      <div
-        className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+      <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />

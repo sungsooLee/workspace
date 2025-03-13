@@ -40,10 +40,6 @@ h4.auth--title {
   }
 }
 
-.auth--otp-guide-link {
-  @apply ml-[8px] text-[#009ABC] underline;
-}
-
 .auth--btn_wrap {
   @apply flex items-center justify-between;
   button {

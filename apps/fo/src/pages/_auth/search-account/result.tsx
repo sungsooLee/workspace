@@ -48,7 +48,7 @@ function RouteComponent() {
           {isEmpty(state.email) ? (
             <Link to="/search-account">아아디 찾기</Link>
           ) : (
-            <Link to="/progress-status">비밀번호 찾기</Link>
+            <Link to="/search-account">비밀번호 찾기</Link>
           )}
         </div>
 

@@ -48,8 +48,7 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -72,7 +71,7 @@ function RouteComponent() {
                 법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
                 있습니다.
                 <Button
-                  className={cn(styles.link, 'auth--otp-guide-link')}
+                  className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
                       title: 'FIDO 인증',
@@ -87,8 +86,7 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

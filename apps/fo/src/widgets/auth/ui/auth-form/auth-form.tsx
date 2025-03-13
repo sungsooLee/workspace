@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { useCreation } from 'ahooks';
+import { useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
+import { isFunction } from 'lodash';
 
 import { Button, Tabs, ContentsRow, InputTimer } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
@@ -10,24 +9,30 @@ import { cn, z } from '@learnway/shared';
 import {
   useVerifyEmail,
   useSendVerifyEmail,
-  useAsyncFetchEmail,
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
 } from '../../../../entities/user';
-
 import { GoogleOtpGuideButton } from '../../../../features/auth';
 import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { FormRow } from '../../../../shared/ui/form-row';
 import { DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
-import { AuthToolFormField, AuthTool } from '../../../../features/auth';
+import { AuthToolFormField, AuthTool, VerifyUserIdFormField } from '../../../../features/auth';
 
 import { NoticeBox } from '../../../../shared/ui';
-
-//import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
 import styles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
 
 const TIME_LIMIT_VERIFY = 180;
+
+export interface AuthResultData {
+  authToolType: 'phone' | 'email';
+  userId: string;
+  name: string;
+  birthday: string;
+  phoneNumber: string;
+  phoneNumberLocale: string;
+  email: string;
+}
 
 export interface AuthFormData {
   authToolType: 'phone' | 'email';
@@ -43,11 +48,16 @@ export interface AuthFormData {
 interface AuthFormComponentProps {
   includeUserId?: boolean;
   defaultValues?: AuthFormData;
-  onSuccess?: () => void;
+  onSuccess?: (authData: any) => void;
   onCancel?: () => void;
 }
 
-function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentProps) {
+function AuthFormComponent({
+  defaultValues,
+  includeUserId,
+  onSuccess,
+  onCancel,
+}: AuthFormComponentProps) {
   //  const { t } = useTranslation();
   const {
     provider,
@@ -60,14 +70,11 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
 
-  const router = useRouter();
-
   const [verifyTimer, verifyTimerCounter] = useCounter(0);
 
   const [sendedVerifyNumber, setSendedVerifyNumber] = useBoolean(false);
 
   const { verify: verifyEmail } = useVerifyEmail();
-  const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
   const { verify: verifyPhone } = useVerifyPhoneNumber();
   const { send: sendVerifyEmail } = useSendVerifyEmail();
   const { send: sendVerifyPhone } = useSendVerifyPhoneNumber();
@@ -76,23 +83,24 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
     if (!defaultValues) {
       return;
     }
-
     onFormChange({
       authToolType: 'phone',
       userId: '',
-      name: '배성련',
-      birthday: '19781223',
-      phoneNumber: '01093432161',
+      name: '',
+      birthday: '',
+      phoneNumber: '',
       phoneNumberLocale: '',
       email: '',
-      verificationCode: 'dek479',
+      verificationCode: '',
     });
     setSendedVerifyNumber(false);
   }, [defaultValues]);
 
   const handleSendVerify = () => {
+    onFormChange({
+      verificationCode: '',
+    });
     const data = getValues();
-    console.log('handleSendVerify data', data, errors);
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -133,7 +141,10 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
         {
           onSuccess: async (d, variables, context) => {
             verifyTimerCounter.set(0);
-            asyncFetchAccount(d);
+            if (isFunction(onSuccess)) {
+              const { verificationCode, ...data } = variables;
+              onSuccess(data);
+            }
           },
           onError: (error: any) => {
             console.log('verifyPhone error', error);
@@ -146,35 +157,20 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
         {
           onSuccess: (data, variables, context) => {
             verifyTimerCounter.set(0);
+            if (isFunction(onSuccess)) {
+              const { verificationCode, ...data } = variables;
+              onSuccess(data);
+            }
           },
         },
       );
     }
   };
 
-  const asyncFetchAccount = (data: any) => {
-    asyncFetchEmail(
-      {
-        name: data.name,
-        birthday: data.birthday,
-        phoneNumber: data.phoneNumber,
-      },
-      {
-        onSuccess: (email, variables, context) => {
-          router.navigate({
-            to: '/search-account/result',
-            state: { email },
-          });
-        },
-        onError: (error: any) => {
-          console.log('asyncFetchAccount error', error);
-        },
-      },
-    );
-  };
-
   const handleCancel = () => {
-    router.navigate({ to: '/login' });
+    if (isFunction(onCancel)) {
+      onCancel();
+    }
   };
 
   const handleTimeOver = () => {
@@ -196,7 +192,9 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
         {includeUserId && (
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'userId'} />
+              <DynamicFormField name={'userId'}>
+                <VerifyUserIdFormField />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
         )}
@@ -233,13 +231,12 @@ function AuthFormComponent({ defaultValues, includeUserId }: AuthFormComponentPr
                 initialTime={TIME_LIMIT_VERIFY}
                 startTimer={verifyTimer}
                 onTimerEnd={() => handleTimeOver()}
+                onReset={() => handleSendVerify()}
+                resetLabel={'재전송'}
                 disabled={verifyTimer === 0}
               />
             </DynamicFormField>
           </FormRow>
-          <Button variant="gray" size="lg" onClick={() => handleSendVerify()}>
-            재전송
-          </Button>
         </ContentsRow>
       )}
 
@@ -283,7 +280,7 @@ const detailConfig = {
     },
     {
       name: 'userId',
-      type: 'text',
+      type: 'custom',
       label: '아이디/이메일',
       value: '',
       placeholder: '아이디/이메일을 입력하세요',

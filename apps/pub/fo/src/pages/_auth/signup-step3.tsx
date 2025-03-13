@@ -213,8 +213,7 @@ function RouteComponent() {
             </ul>
           </div>
 
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               이전
             </Button>

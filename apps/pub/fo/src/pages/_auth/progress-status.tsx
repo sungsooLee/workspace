@@ -4,8 +4,8 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway/icons';
 import styles from './progress-status.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
+import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import { Button, Input, Select, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
@@ -17,16 +17,16 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={styles.success_info}>
-            <i className={styles.ico}>
+          <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
+            <i className={proccessResultStyles.ico}>
               {/* 대기중 */}
               <IcoSucess width={56} height={56} fill="#06226A" />
-              {/* 승인완료 
-              <IcoComplete width={56} height={56} stroke="#00AFD5" />*/}
-              {/* 반려 
-              <IcoCaution02 width={56} height={56} stroke="#FFB902" />*/}
+              {/* 승인완료 */}
+              {/* <IcoComplete width={56} height={56} stroke="#00AFD5" /> */}
+              {/* 반려 */}
+              {/* <IcoCaution02 width={56} height={56} stroke="#FFB902" /> */}
             </i>
-            <h3 className={styles.title}>
+            <h3 className={proccessResultStyles.title}>
               {/* 대기중 */}
               회원가입이 대기 중입니다.
               {/* 승인완료 
@@ -34,7 +34,9 @@ function RouteComponent() {
               {/* 반려 
               회원가입이 반려되었습니다.*/}
             </h3>
-            <p className={styles.noti}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
+            <p className={proccessResultStyles.noti}>
+              회원가입 결과는 입력하신 메일로 발송되었습니다.
+            </p>
             {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
             <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
               신청일시 : <strong>YYYY-MM-DD</strong>
@@ -143,8 +145,7 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="primary" size="xl">
               로그인
             </Button>
