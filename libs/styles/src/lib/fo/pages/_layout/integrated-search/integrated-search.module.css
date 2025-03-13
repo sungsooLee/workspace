@@ -25,9 +25,14 @@
         }
       }
     }
-
+    .tab_all {
+      @apply mt-[24px];
+    }
     .tab_procedure {
       @apply mt-[24px];
+      .filter_box {
+        @apply mb-[40px] rounded-[8px] bg-[var(--gray1)] p-[20px];
+      }
       .result_txt_box {
         @apply flex items-center justify-between;
         .classify {
@@ -38,6 +43,13 @@
               @apply ml-[24px] pl-[24px];
               &::before {
                 @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+              }
+            }
+          }
+          .box {
+            & > div {
+              button {
+                @apply border-0;
               }
             }
           }

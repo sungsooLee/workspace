@@ -134,10 +134,11 @@ function RouteComponent() {
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>
+                {/* 퍼블수정 20250313 : 아이콘 사이즈 수정 */}
                 {listUi === 'horizontal' ? (
-                  <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                  <IcoArray width={20} height={20} stroke="#4c515e" fill="none" />
                 ) : (
-                  <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                  <IcoDotpoints width={20} height={20} stroke="#4c515e" fill="none" />
                 )}
               </Button>
             </div>

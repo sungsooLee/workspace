@@ -4,6 +4,7 @@ import { Tabs, Select, Button } from '@learnway/ui';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import {
   Arrays,
+  Filter,
   IntegratedSearchProcedure,
   IntegratedSearchShorts,
   IntegratedSearchChannel,
@@ -80,6 +81,9 @@ function RouteComponent() {
       number: '5',
       content: (
         <div className={styles.tab_procedure}>
+          <div className={styles.filter_box}>
+            <Filter></Filter>
+          </div>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -100,9 +104,9 @@ function RouteComponent() {
               <div className={styles.box}>
                 <Button onClick={list_ui}>
                   {listUi === 'horizontal' ? (
-                    <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                    <IcoArray width={20} height={20} stroke="#4c515e" fill="none" />
                   ) : (
-                    <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                    <IcoDotpoints width={20} height={20} stroke="#4c515e" fill="none" />
                   )}
                 </Button>
               </div>
