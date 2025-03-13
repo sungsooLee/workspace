@@ -6,7 +6,7 @@ import {
   // Textarea,
   Button,
   // Tooltip,
-  // DatePicker,
+  DatePicker,
   // Switch,
   Select,
   // ThumbnailImageUpload,
@@ -29,13 +29,28 @@ export const Route = createFileRoute('/_layout/learning/learningSearch')({
 });
 
 function RouteComponent() {
+  // expand btn
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // Date picker
+  const [date, setDate] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDate = (value: any) => {
+    setDate(value);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDate2 = (value: any) => {
+    setDate2(value);
+  };
   return (
     <form className="form_row">
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <div className={cn(searchStyles.start, searchStyles.search_contents_wrap)}>
+          <div className={cn(searchStyles.start, searchStyles.wrap)}>
             <div className={searchStyles.contents}>
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -149,53 +164,30 @@ function RouteComponent() {
               {isExpanded && (
                 <ContentsRow>
                   <div className={formStyles.form_item}>
-                    <label htmlFor="name-select1" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>테넌트</span>
+                    <label htmlFor="name-term" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>공유기간</span>
                     </label>
                     <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '전체' },
-                          { value: 'type2', label: '항목' },
-                        ]}
+                      <DatePicker
+                        onChange={handleDate}
+                        value={date}
+                        className={formStyles.datepicker_item}
+                      />
+                      <span className={formStyles.dash}></span>
+                      <DatePicker
+                        onChange={handleDate2}
+                        value={date2}
+                        className={formStyles.datepicker_item}
                       />
                     </div>
                   </div>
                   <div className={formStyles.form_item}>
-                    <label htmlFor="name-channel" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>채널</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '전체' },
-                          { value: 'type2', label: '항목' },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-type" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>유형</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '전체' },
-                          { value: 'type2', label: '항목' },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-owner" className={formStyles.form_label}>
+                    <label htmlFor="name-owner2" className={formStyles.form_label}>
                       <span className={formStyles.form_text}>담당자</span>
                     </label>
                     <div className={formStyles.input_box}>
-                      <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+                      <Input id="name-owner2" type="text" placeholder="담당자명을 입력하세요." />
+                      <div className={searchStyles.space}></div>
                     </div>
                   </div>
                 </ContentsRow>
