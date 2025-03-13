@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import React, { useEffect, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
-import { IcoXclose, IcoArrowForward } from '@learnway/icons';
-import { Button, Chips } from '@learnway/ui';
+import { IcoArrowForward } from '@learnway/icons';
+import { Chip } from '@learnway/ui';
 
 import { Category } from '../../../../types/entities/category';
 import { useCategories } from '../../services/category.service';
@@ -95,7 +95,7 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
                 key={item.categoryId}
                 className={styles.slide}
                 onClick={() => handleClick(item)}>
-                <Chips
+                <Chip
                   className={styles.item}
                   option={{ label: item.name, value: item.categoryId + '' }}
                   onDelete={() => handleDelete(item.categoryId)}
