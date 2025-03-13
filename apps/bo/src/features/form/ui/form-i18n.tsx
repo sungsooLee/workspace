@@ -2,12 +2,7 @@ import { Children, cloneElement, FC, isValidElement, ReactElement, ReactNode } f
 import { useWatch } from 'react-hook-form';
 import { I18nFieldProps } from './type';
 
-const I18nFieldContainerComponent: FC<I18nFieldProps> = ({
-  control,
-  name,
-  children,
-  defaultLang,
-}) => {
+const FormI18nComponent: FC<I18nFieldProps> = ({ control, name, children, defaultLang }) => {
   const fields = useWatch({ control, name: 'translations' });
   // 재귀적으로 자식 요소를 업데이트하는 함수
   const updateChild = (child: ReactNode): ReactNode => {
@@ -50,4 +45,4 @@ const I18nFieldContainerComponent: FC<I18nFieldProps> = ({
   return <>{updatedChildren}</>;
 };
 
-export const I18nContainer = I18nFieldContainerComponent;
+export const FormI18n = FormI18nComponent;

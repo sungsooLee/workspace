@@ -1,11 +1,11 @@
 import { Switch } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
 
-const FormSwitchComponent = forwardRef<any, any>(({ value, onChange }, ref) => {
+const SwitchFormFieldComponent = forwardRef<any, any>(({ value, onChange }, ref) => {
   useEffect(() => {
     console.log('switch value changed => ', value);
   }, [value]);
   return <Switch ref={ref} checked={value} onCheckedChange={onChange} />;
 });
 
-export const FormSwitch = FormSwitchComponent;
+export const SwitchFormField = SwitchFormFieldComponent;

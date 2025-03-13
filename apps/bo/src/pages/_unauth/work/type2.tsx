@@ -1,50 +1,46 @@
-import { useFieldArray } from 'react-hook-form'
-import { createFileRoute } from '@tanstack/react-router'
-import { Button } from '@learnway/ui'
-import { CODE_GROUP } from '@learnway/config'
-import { z } from '@learnway/shared'
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom'
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons'
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents'
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents'
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row'
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container'
-import {
-  DynamicFormConfig,
-  DynamicFormField,
-} from '../../../shared/ui/dynamic-form-field'
-import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries'
-import { MovieInfo } from '../../../widgets/contents/movie-info'
-import { FormRow } from '../../../shared/ui/form-row'
-import { FC } from 'react'
-import { ELearningCategory } from '../../../shared/ui/form-row/dialogs/e-learning-category'
-import { LowerGubun } from '../../../shared/ui/form-row/dialogs/lower-gubun'
+import { useFieldArray } from 'react-hook-form';
+import { createFileRoute } from '@tanstack/react-router';
+import { Button } from '@learnway/ui';
+import { CODE_GROUP } from '@learnway/config';
+import { z } from '@learnway/shared';
+import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
+import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
+import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
+import { MovieInfo } from '../../../widgets/contents/movie-info';
+import { FC } from 'react';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { FormRow } from '../../../widgets/form/form-row';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormConfig, FormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/work/type2')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   /* react hook form custom */
-  const { provider, onSubmit, reset, control } = useDynamicForm(detailConfig)
+  const { provider, onSubmit, reset, control } = useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
-  })
+  });
   /**
    *
    * @param data
    */
   const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data)
-  }
+    console.log('data {} => ', data);
+  };
 
   const handleOnReset = () => {
-    reset()
-  }
+    reset();
+  };
   const handleOnChange = () => {
-    reset({ contentName: '1234' })
-  }
+    reset({ contentName: '1234' });
+  };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -53,12 +49,7 @@ function RouteComponent() {
           <Button type="submit" variant="point" size="sm">
             저장
           </Button>
-          <Button
-            type={'button'}
-            variant="point"
-            size="sm"
-            onClick={handleOnChange}
-          >
+          <Button type={'button'} variant="point" size="sm" onClick={handleOnChange}>
             공유이력 보기
           </Button>
           <Button type={'button'} variant="point" size="sm">
@@ -123,11 +114,7 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'eLeaning'}>
-                <ELearningCategory />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider}></FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
@@ -135,11 +122,7 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'lowerGubun'}>
-                <LowerGubun testName={'kim'} />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider}></FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'userInfos'}>
@@ -155,8 +138,7 @@ function RouteComponent() {
                         'user-name': '',
                         'user-hobby': '',
                       })
-                    }
-                  >
+                    }>
                     추가
                   </Button>
                 </div>
@@ -174,9 +156,7 @@ function RouteComponent() {
                       {fields.map((_, index) => (
                         <tr key={index}>
                           <td>
-                            <DynamicFormField
-                              name={`userInfos.${index}.user-name`}
-                            />
+                            <DynamicFormField name={`userInfos.${index}.user-name`} />
                           </td>
                           <td>
                             <DynamicFormField
@@ -195,8 +175,7 @@ function RouteComponent() {
                               type={'button'}
                               variant="gray"
                               size="sm"
-                              onClick={() => remove(index)}
-                            >
+                              onClick={() => remove(index)}>
                               삭제
                             </Button>
                           </td>
@@ -217,7 +196,7 @@ function RouteComponent() {
         </SubContents>
       </PageContainer>
     </form>
-  )
+  );
 }
 
 /**
@@ -227,7 +206,7 @@ const detailConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'channel',
-      type: 'text-popup-button',
+      type: 'custom',
       label: '채널',
       value: '',
       placeholder: '최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명',
@@ -243,15 +222,10 @@ const detailConfig: DynamicFormConfig = {
     },
     {
       name: 'category',
-      type: 'text-popup-button',
+      type: 'custom',
       label: '카테고리',
       value: '',
       placeholder: '학습자원을 분류할 카테고리를 선택하세요.',
-      button: {
-        label: '선택',
-        variant: 'gray',
-        size: 'sm',
-      },
     },
     {
       name: 'language',
@@ -293,7 +267,7 @@ const detailConfig: DynamicFormConfig = {
             ...res,
             value: res.code,
             label: res.name,
-          }))
+          }));
         },
       },
     },
@@ -313,7 +287,7 @@ const detailConfig: DynamicFormConfig = {
             ...res,
             value: res.code,
             label: res.name,
-          }))
+          }));
         },
       },
     },
@@ -326,7 +300,7 @@ const detailConfig: DynamicFormConfig = {
     },
     {
       name: 'subdivision',
-      type: 'radio-group',
+      type: 'custom',
       label: '하위 구분',
       value: '',
       options: [
@@ -343,13 +317,15 @@ const detailConfig: DynamicFormConfig = {
     {
       name: 'check',
       type: 'checkbox',
-      checkLabel: '테넌트A',
+      dpOptions: {
+        label: '테넌트A',
+      },
       label: '체크박스',
       value: true,
     },
     {
       name: 'tenant',
-      type: 'checkbox-group',
+      type: 'custom',
       label: '테넌트 선택',
       value: ['tenantA'],
       options: [
@@ -466,18 +442,8 @@ const detailConfig: DynamicFormConfig = {
   ],
   validator: {
     channel2: z.string().required(),
-    b: z.string().required('B 를 입력해주세요'),
-    d: z.string().required('A 를 입력해주세요'),
-    /*eLeaning: z.string().label('이러닝').required(),
-    lowerGubun: z.object({
-      // 'gubun' 필드는 문자열로, 필수이며 빈 값이 아닌 경우 검증
-      gubun: z.string().required(),
-      // 'select' 필드는 체크박스 그룹이므로 문자열 배열로 처리 (선택 사항이라면 optional)
-      select: z.array(z.string()).optional(),
-      url: z.string().required(),
-    }),*/
   },
-}
+};
 const TestComponent: FC<any> = ({ provider }) => {
   return (
     <FormRow provider={provider}>
@@ -496,5 +462,5 @@ const TestComponent: FC<any> = ({ provider }) => {
         </div>
       </div>
     </FormRow>
-  )
-}
+  );
+};

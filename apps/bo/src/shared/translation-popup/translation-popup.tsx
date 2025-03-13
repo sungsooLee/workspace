@@ -1,12 +1,12 @@
 import { FC, useEffect } from 'react';
 import TranslationContainer from './translation-container';
-import useDynamicForm from '../ui/dynamic-form-field/use-dynamic-fom';
 import { TranslationBody } from './translation-body';
-import { FormRow } from '../ui/form-row';
-import { DynamicFormField } from '../ui/dynamic-form-field';
 import { FormTranslationBox } from '../../features/platform/ui/platform/system/translation/form-translation-box';
 import { ContentsRow } from '../../widgets/layout/ui/container/parts/contents-row';
 import { Button, useModal } from '@learnway/ui';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { FormRow } from '../../widgets/form/form-row';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 
 const TranslationPopupComponent: FC<any> = ({ translations, config, defaultLang }) => {
   const { provider, control, onSubmit, fetchData } = useDynamicForm(config);

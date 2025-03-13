@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import {
   Button,
   ContentsRow,
+  FormDropdown,
   InputModalButtonFormField,
   selectStyles,
   ThumbnailImageUpload,
@@ -15,10 +16,7 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { FormDisplay, FormGroup, FormRow } from '../../../../../shared/ui/form-row';
 import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
-import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
-import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
 import {
   ChannelChoicePopup,
@@ -28,6 +26,12 @@ import {
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormConfig } from '@learnway/hooks';
+import { FormRow } from '../../../../../widgets/form/form-row';
+import { FormDisplay } from '../../../../../features/form/ui/form-display';
+import { FormGroup } from '../../../../../shared/ui/form';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
@@ -63,6 +67,9 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
         <MainContents>
+          <ContentsRow>
+            <FormDropdown />
+          </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
               {/* 채널 */}
@@ -125,6 +132,40 @@ function RouteComponent() {
             </ContentsRow>
           </FormDisplay>
           {/*외주개발업체 정보*/}
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isExternalDevelopmentCompany'} />
+            </FormRow>
+          </ContentsRow>
+          {/*외주개발업체 상세*/}
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompany'}>
+                  <InputModalButtonFormField
+                    modalConfig={{
+                      content: <ManagerChoicePopup />,
+                      footer: true,
+                      width: 'md',
+                    }}
+                  />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
+              </FormRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompanyContact'}>
+                  <TempContact />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+          </FormDisplay>
+
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
@@ -221,7 +262,7 @@ const formConfig: DynamicFormConfig = {
       label: t('사용기한'),
       name: 'expirationDate',
       type: 'switch',
-      value: '',
+      value: false,
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
     {
@@ -238,19 +279,13 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('외주개발업체정보'),
       name: 'isExternalDevelopmentCompany',
-      type: 'checkbox',
+      type: 'switch',
       value: false,
-    },
-    {
-      label: t('개발업체'),
-      name: 'externalDevelopmentCompany',
-      type: 'text',
-      value: '',
     },
     {
       label: t('외주개발업체'),
       name: 'externalDevelopmentCompany',
-      type: 'text',
+      type: 'custom',
       value: '',
     },
     {
@@ -262,7 +297,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('외주개발업체 연락처'),
       name: 'externalDevelopmentCompanyContact',
-      type: 'text',
+      type: 'custom',
       value: '',
     },
     {
@@ -325,26 +360,8 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    /*channel: z.string().required(),*/
-    /*learningResourceName: z.string().required(),
     manager: z.string().required(),
-    contact: z.string().required(),
-    expirationDate: z.string().required(),
-    isInspectionConfirmed: z.boolean().refine((value) => !value, {
-      message: '‘{{label}}’ 체크하세요..',
-    }),
-    isCopyrightConfirmed: z.boolean().refine((value) => !value, {}),
-    isSecurityConfirmed: z.boolean().refine((value) => !value, {}),*/
   },
-  /*globalValidator: (({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Passwords don't match",
-        path: ['confirmPassword'],
-      });
-    }
-  });*/
 };
 
 const VideoThumbnailExtractor: React.FC = () => {

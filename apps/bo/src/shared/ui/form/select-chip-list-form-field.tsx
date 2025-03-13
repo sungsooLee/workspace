@@ -54,4 +54,4 @@ const FormSelectChipListComponent = forwardRef<HTMLDivElement, FormSelectChipLis
     );
   },
 );
-export const FormSelectChipList = FormSelectChipListComponent;
+export const SelectChipListFormField = FormSelectChipListComponent;
