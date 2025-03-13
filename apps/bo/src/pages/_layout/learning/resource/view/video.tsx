@@ -28,7 +28,7 @@ import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
 import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
 import { FormRow } from '../../../../../widgets/form/form-row';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { FormGroup } from '../../../../../shared/ui/form';
@@ -39,9 +39,9 @@ export const Route = createFileRoute('/_layout/learning/resource/view/video')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
 

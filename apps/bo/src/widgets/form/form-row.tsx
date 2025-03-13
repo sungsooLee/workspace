@@ -4,8 +4,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, Tooltip } from '@learnway/ui';
 import { FormRowProps, useFormRow } from '@learnway/hooks';
-import { FormGuideText } from '../../shared/ui/form';
-import { formFieldConfig } from '../../shared/ui/form/form-field-config';
+import { formFieldConfig, FormGuideText } from '../../shared/ui/form';
 
 /**
  * FormRowComponent

@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useMemo, useRef, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from './create-jod-schema';
@@ -11,7 +11,7 @@ import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
  * @param config - 동적 폼 설정 객체 (DynamicFormConfig)
  * @returns 동적 폼 생성 및 관리에 필요한 메서드와 provider 객체
  */
-const useDynamicForm = (config: DynamicFormConfig): UseDynamicFormResult => {
+const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
   // 초기값 생성: 각 빌더의 기본 값을 설정
   const defaultValues = useMemo<Record<string, any>>(
     () =>

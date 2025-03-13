@@ -1,19 +1,16 @@
 import { Children, cloneElement, FC, isValidElement, ReactElement, ReactNode } from 'react';
 import { useWatch } from 'react-hook-form';
-import { I18nFieldProps } from './type';
+import { FormI18nProps, TranslationField } from './type';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 
-const FormI18nComponent: FC<I18nFieldProps> = ({ control, name, children, defaultLang }) => {
+const FormI18nComponent: FC<FormI18nProps> = ({ control, name, children, defaultLang }) => {
   const fields = useWatch({ control, name: 'translations' });
   // 재귀적으로 자식 요소를 업데이트하는 함수
   const updateChild = (child: ReactNode): ReactNode => {
     if (!isValidElement(child)) return child;
 
     // DynamicFormField 컴포넌트 확인 (displayName 또는 name 속성을 사용)
-    if (
-      typeof child.type !== 'string' &&
-      ((child.type as any).displayName === 'DynamicFormField' ||
-        (child.type as any).name === 'DynamicFormField')
-    ) {
+    if (typeof child.type !== 'string' && child.type === DynamicFormField) {
       const nameProp: string = child.props.name;
       // container의 name과 점(.)이 포함된 자식만 변경합니다.
       const prefix = `${name}.`;
@@ -21,7 +18,7 @@ const FormI18nComponent: FC<I18nFieldProps> = ({ control, name, children, defaul
         return child;
       }
       // fields 배열에서 locale이 defaultLang (또는 'kr')인 요소의 인덱스를 찾음
-      const index = fields.findIndex((field: any) => field.locale === defaultLang);
+      const index = fields.findIndex((field: TranslationField) => field.locale === defaultLang);
       // index가 -1이면 해당 요소는 렌더링하지 않음
       if (index === -1) {
         return null;

@@ -11,10 +11,15 @@ import {
 import { t } from 'i18next';
 import { useWatch } from 'react-hook-form';
 import { LOCALES } from '@learnway/config';
+import { TranslationContainerProps, TranslationField } from './type';
 
-const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
+const TranslationContainer: FC<TranslationContainerProps> = ({
+  control,
+  defaultLang,
+  children,
+}) => {
   const translations = useWatch({ control: control, name: 'translations' });
-  const [activeLocale, setActiveLocale] = useState();
+  const [activeLocale, setActiveLocale] = useState<string>();
   const [{ translationCount, totalCount }, setCount] = useState({
     translationCount: 0,
     totalCount: 0,
@@ -42,14 +47,18 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
     if (translations) {
       console.log('set count translations => ', translations);
       setCount({
-        translationCount: translations.filter((item: any) => item.translation.trim() !== '').length,
+        translationCount: translations.filter(
+          (item: TranslationField) => item.translation.trim() !== '',
+        ).length,
         totalCount: translations.length,
       });
 
       if (!activeLocale) {
-        const find = translations.find((translation: any) => translation.locale !== defaultLang);
+        const find = translations.find(
+          (translation: TranslationField) => translation.locale !== defaultLang,
+        );
         if (find) {
-          setActiveLocale(LOCALES[find.locale] as any);
+          setActiveLocale(LOCALES[find.locale]);
         }
       }
     }
@@ -60,8 +69,8 @@ const TranslationContainer: FC<any> = ({ control, defaultLang, children }) => {
       <>
         <div className="flex items-center space-x-2 bg-white p-4 shadow-md">
           {translations
-            .filter((translation: any) => translation.locale !== defaultLang)
-            .map((translation: any) => (
+            .filter((translation: TranslationField) => translation.locale !== defaultLang)
+            .map((translation: TranslationField) => (
               <button
                 key={translation.locale}
                 type={'button'}

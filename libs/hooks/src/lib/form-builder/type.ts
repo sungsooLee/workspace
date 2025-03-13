@@ -157,6 +157,11 @@ export type UseDynamicFormResult = {
   };
 };
 
+// dynamic form config value 추적을 위한 타입 정의
+export type DynamicFormValues<T extends DynamicFormConfig> = {
+  [K in T['builders'][number]['name']]: any; // 각 필드의 이름을 Key로 추가
+};
+
 /*===================================
     useFormRow Type 정의
   ===================================*/
@@ -170,23 +175,25 @@ export type ErrorState = {
 
 // 공통으로 넘겨줄 props 정의
 export interface BaseFormFieldProps<T = any> {
+  control: UseFormReturn['control'] & {
+    isFieldRequired: (fieldName: string) => boolean;
+  };
   value?: T;
   name: string; // name은 필수로 넘겨줘야 함
-  onChange?: (value: T) => void;
+  onChange: (value: T) => void;
   disabled?: boolean;
 }
 
 // 컴포넌트에서 추가적으로 사용할 props 정의
-export type FormFieldComponent<P = {}> = ForwardRefExoticComponent<
-  BaseFormFieldProps & P & RefAttributes<HTMLDivElement>
+export type FormFieldProps<P = {}, R = HTMLDivElement, T = any> = ForwardRefExoticComponent<
+  BaseFormFieldProps<T> & P & RefAttributes<R>
 >;
 
-export type FormFieldConfig = Record<string, FormFieldComponent<any>>;
+export type FormFieldConfig = Record<string, FormFieldProps<any>>;
 
 export interface FormRowProps {
   className?: string;
   provider: DynamicFormProvider;
   children: ReactNode;
   name?: string;
-  control: UseFormReturn['control'] & {};
 }

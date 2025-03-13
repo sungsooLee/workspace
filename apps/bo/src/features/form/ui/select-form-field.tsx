@@ -1,27 +1,25 @@
-import React, {
-  ElementRef,
-  forwardRef,
-  LegacyRef,
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useFetchCodeGroups } from '../../../entities/platform';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import { Select, SelectOption } from '@learnway/ui';
-import { BaseFormFieldConfigProps, FormFieldComponent } from '@learnway/hooks';
+import { BaseFormFieldProps, FormFieldProps } from '@learnway/hooks';
 import { useWatch } from 'react-hook-form';
 import * as Primitive from '@radix-ui/react-select';
 
-const SelectFormFieldComponent: FormFieldComponent<
-  { optionsConfig: any },
-  React.ElementRef<typeof Primitive.Root>
+interface SelectFormFieldProps {
+  options: SelectOption[];
+  optionsConfig: any;
+}
+
+const SelectFormFieldComponent: FormFieldProps<
+  SelectFormFieldProps,
+  React.ElementRef<typeof Primitive.Root>,
+  string
 > = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
-  BaseFormFieldConfigProps<string> & { optionsConfig: any }
->(({ control, value, name, onChange, options, optionsConfig, ...props }, ref) => {
+  BaseFormFieldProps<string> & SelectFormFieldProps
+>(({ control, value, onChange, options, optionsConfig }, ref) => {
   const watchedValue = useWatch({
     control,
     name: optionsConfig.target,
