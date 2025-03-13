@@ -1,38 +1,33 @@
 /* search-account.module.css */
 .start {
-  &.search_account {
-    .search_info {
-      @apply body_2_r m-auto mt-[48px] flex-col justify-center pb-[32px] text-[#131C30];
-      &.dormant {
-        @apply my-0;
-      }
-      svg {
-        @apply m-auto rotate-180;
-      }
-      .txt {
-        @apply mt-[12px];
-      }
-      strong {
-        @apply text-[var(--gray8)];
-      }
-      + .noti_box {
-        @apply mb-[36px];
-      }
+  .search_info {
+    @apply mt-[48px] pb-[48px];
+    &.dormant {
+      @apply my-0;
     }
-    .auth_form {
-      @apply mt-[32px];
+    svg {
+      @apply m-auto rotate-180;
     }
-    .noti_box {
-      @apply body_3_r mt-[24px] rounded-[8px] bg-[#EDFCFF] px-[16px] py-[16px] text-left text-[#045161];
+    .txt {
+      @apply mt-[12px];
     }
-    .signup_select_box {
-      @apply mt-[48px];
+    strong {
+      @apply text-[var(--gray8)];
     }
-    .signup_noti {
-      @apply mt-[8px];
+    + .noti_box {
+      @apply mb-[36px];
     }
-    .btn_wrap {
-      @apply mt-[48px];
-    }
+  }
+  .auth_form {
+    @apply mt-[32px];
+  }
+  .signup_select_box {
+    @apply mt-[48px];
+  }
+  .signup_noti {
+    @apply mt-[8px];
+  }
+  .btn_wrap {
+    @apply mt-[48px];
   }
 }

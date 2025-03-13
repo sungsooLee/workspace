@@ -6,7 +6,9 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
+import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 찾기폼
+//import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
@@ -21,10 +23,10 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={styles.search_info}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             {/* 퍼블수정 20250311 : 아이콘 추가, strong 제거 및 txt class 추가 */}
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={styles.txt}>안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
+            <p className={authFormStyles.txt}>안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
           </div>
 
           {/* 인증선택 모듈 */}
@@ -63,7 +65,7 @@ function RouteComponent() {
           </div>
 
           {/* OTP 인증폼 */}
-          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -81,8 +83,7 @@ function RouteComponent() {
           </div>
 
           {/* 유의사항 모듈 */}
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -98,8 +99,7 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
