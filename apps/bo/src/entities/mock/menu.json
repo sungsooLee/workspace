@@ -783,6 +783,13 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isQuickAccessArea": false
+            },
+            {
+              "title": "파일 업로드",
+              "roles": "ROLE_ADMIN",
+              "tenantName": "현대자동차",
+              "isQuickAccessArea": false,
+              "path": "/upload-temp"
             }
           ],
           "tenantName": "현대자동차",

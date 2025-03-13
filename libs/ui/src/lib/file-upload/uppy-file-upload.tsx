@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Uppy, { type Meta, type Body, type UIPluginOptions, type State } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
+import { httpService } from '@learnway/shared';
 
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
@@ -75,7 +76,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
   const [error, setError] = useState<string | null>(null);
   const uppyRef = useRef<Uppy | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const retryTimersRef = useRef<Record<string, NodeJS.Timeout>>({});
+  // const retryTimersRef = useRef<Record<string, NodeJS.Timeout>>({});
 
   // 진행중인 업로드 파일 ID를 추적
   const [activeUploads, setActiveUploads] = useState<Record<string, boolean>>({});
@@ -106,31 +107,31 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
         try {
           const filename = `${folderPath}${file.name}`;
 
-          const response = await fetch(`${API_BASE_URL}/s3/multipart`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+          const response = await httpService.post(
+            `${API_BASE_URL}/s3/multipart`,
+            JSON.stringify({
               filename: filename,
             }),
-          });
-
-          if (!response.ok) {
-            const errorData = await response.json();
-            const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-            throw new Error(errorMessage);
-          }
-          const data = await response.json();
-
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          );
+          // if (!response.ok) {
+          //   const errorData = await response.json();
+          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
+          //   throw new Error(errorMessage);
+          // }
+          const data: any = response;
           // 파일 정보 업데이트 - uploadId와 key 저장
           setFiles((prevFiles) =>
             prevFiles.map((f) =>
               f.id === file.id
                 ? {
                     ...f,
-                    uploadId: data.data.uploadId,
-                    key: data.data.key,
+                    uploadId: data.uploadId,
+                    key: data.key,
                     // 파트 정보 초기화
                     parts: calculateParts(file.size as number).map((partNumber) => ({
                       partNumber,
@@ -143,8 +144,8 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           );
 
           return {
-            uploadId: data.data.uploadId,
-            key: data.data.key,
+            uploadId: data.uploadId,
+            key: data.key,
           };
         } catch (error: any) {
           updateFileError(file.id, `멀티파트 업로드 초기화 실패: ${error.message}`);
@@ -156,24 +157,23 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       signPart: async (file, { uploadId, key, partNumber }) => {
         try {
           const encodedKey = encodeURIComponent(key);
-          const response = await fetch(
+          const response = await httpService.get(
             `${API_BASE_URL}/s3/multipart/${uploadId}/${partNumber}?key=${encodedKey}`,
           );
 
-          if (!response.ok) {
-            const errorData = await response.json();
-            const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-            throw new Error(errorMessage);
-          }
+          // if (!response.ok) {
+          //   const errorData = await response.json();
+          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
+          //   throw new Error(errorMessage);
+          // }
 
-          const data = await response.json();
+          const data: any = await response;
 
           // 파트 상태 업데이트
           updatePartStatus(file.id, partNumber, 'uploading');
 
-          console.log(data);
           return {
-            url: data.data.url,
+            url: data.url,
             headers: {
               'Content-Type': file.type,
             },
@@ -194,25 +194,24 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
             partNumber: part.partNumber,
             eTag: part.eTag,
           }));
-
-          const response = await fetch(
+          console.log(JSON.stringify({ parts: formattedParts }));
+          const response = await httpService.post(
             `${API_BASE_URL}/s3/multipart/${uploadId}/complete?key=${encodedKey}`,
+            JSON.stringify({ parts: formattedParts }),
             {
-              method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ parts: formattedParts }),
             },
           );
 
-          if (!response.ok) {
-            const errorData = await response.json();
-            const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-            throw new Error(errorMessage);
-          }
+          // if (!response.ok) {
+          //   const errorData = await response.json();
+          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
+          //   throw new Error(errorMessage);
+          // }
 
-          const data = await response.json();
+          const data: any = response;
 
           // 업로드 완료된 파일에서 activeUploads 제거
           setActiveUploads((prev) => {
@@ -237,15 +236,12 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       abortMultipartUpload: async (file, { uploadId, key }) => {
         try {
           const encodedKey = encodeURIComponent(key);
-          const response = await fetch(
+          const response = await httpService.delete(
             `${API_BASE_URL}/s3/multipart/${uploadId}?key=${encodedKey}`,
-            {
-              method: 'DELETE',
-            },
           );
-          if (!response.ok) {
-            console.warn(`멀티파트 업로드 중단 실패: ${response.status}`);
-          }
+          // if (!response.ok) {
+          //   console.warn(`멀티파트 업로드 중단 실패: ${response.status}`);
+          // }
           // 업로드 취소된 파일에서 activeUploads 제거
           setActiveUploads((prev) => {
             const updated = { ...prev };
@@ -263,23 +259,26 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           const filename = `${folderPath}${file.name}`;
           const encodedFilename = encodeURIComponent(filename);
 
-          const response = await fetch(`${API_BASE_URL}/s3/uploader?key=${encodedFilename}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await httpService.get(
+            `${API_BASE_URL}/s3/uploader?key=${encodedFilename}`,
+            null,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
             },
-          });
+          );
 
-          if (!response.ok) {
-            const errorData = await response.json();
-            const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-            throw new Error(errorMessage);
-          }
-          const data = await response.json();
+          // if (!response.ok) {
+          //   const errorData = await response.json();
+          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
+          //   throw new Error(errorMessage);
+          // }
+          const data: any = response;
 
           return {
             method: 'PUT',
-            url: data.data.url,
+            url: data.url,
             headers: {
               'Content-Type': file.type,
             },
@@ -292,13 +291,11 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
     });
 
     uppy.on('upload', (data: any) => {
-      console.log(data);
       setIsUploading(true);
       setError(null);
 
       // 업로드 시작 시 activeUploads에 추가
       const newActiveUploads = { ...activeUploads };
-      console.log(data);
       const tmpData = [...data];
       tmpData.forEach((id: any) => {
         newActiveUploads[id] = true;
@@ -354,10 +351,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       });
 
       // 만약 이 파일에 대한 재시도 타이머가 있으면 제거
-      if (retryTimersRef.current[file.id]) {
-        clearTimeout(retryTimersRef.current[file.id]);
-        delete retryTimersRef.current[file.id];
-      }
+      // if (retryTimersRef.current[file.id]) {
+      //   clearTimeout(retryTimersRef.current[file.id]);
+      //   delete retryTimersRef.current[file.id];
+      // }
     });
 
     uppy.on('upload-error', (file: any) => {
@@ -370,26 +367,26 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           const errorMsg = error || '알 수 없는 오류';
 
           // 최대 재시도 횟수보다 적게 시도했으면 자동 재시도
-          if (retryCount < maxRetries) {
-            // 재시도 타이머 설정
-            if (retryTimersRef.current[file.id]) {
-              clearTimeout(retryTimersRef.current[file.id]);
-            }
+          // if (retryCount < maxRetries) {
+          //   // 재시도 타이머 설정
+          //   if (retryTimersRef.current[file.id]) {
+          //     clearTimeout(retryTimersRef.current[file.id]);
+          //   }
 
-            retryTimersRef.current[file.id] = setTimeout(() => {
-              console.log(
-                `Auto-retrying upload for ${file.name}, attempt ${retryCount + 1}/${maxRetries}`,
-              );
-              uppyRef.current?.retryUpload(file.id);
-            }, retryDelay);
+          //   retryTimersRef.current[file.id] = setTimeout(() => {
+          //     console.log(
+          //       `Auto-retrying upload for ${file.name}, attempt ${retryCount + 1}/${maxRetries}`,
+          //     );
+          //     uppyRef.current?.retryUpload(file.id);
+          //   }, retryDelay);
 
-            return {
-              ...f,
-              status: 'error',
-              errorMessage: `오류: ${errorMsg} (자동 재시도 ${retryCount + 1}/${maxRetries} 예정)`,
-              retryCount: retryCount + 1,
-            };
-          }
+          //   return {
+          //     ...f,
+          //     status: 'error',
+          //     errorMessage: `오류: ${errorMsg} (자동 재시도 ${retryCount + 1}/${maxRetries} 예정)`,
+          //     retryCount: retryCount + 1,
+          //   };
+          // }
 
           // 최대 재시도 횟수에 도달하면 에러 상태로 표시
           return {
@@ -430,27 +427,27 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       // );
     });
 
-    uppy.on('cancel-all', () => {
-      console.log('All uploads cancelled');
-      setIsUploading(false);
+    // uppy.on('cancel-all', () => {
+    //   console.log('All uploads cancelled');
+    //   setIsUploading(false);
 
-      // 진행 중이던 타이머 모두 취소
-      Object.keys(retryTimersRef.current).forEach((id) => {
-        clearTimeout(retryTimersRef.current[id]);
-      });
-      retryTimersRef.current = {};
+    //   // 진행 중이던 타이머 모두 취소
+    //   Object.keys(retryTimersRef.current).forEach((id) => {
+    //     clearTimeout(retryTimersRef.current[id]);
+    //   });
+    //   retryTimersRef.current = {};
 
-      setActiveUploads({});
-    });
+    //   setActiveUploads({});
+    // });
 
     uppyRef.current = uppy;
 
     // 컴포넌트 언마운트 시 정리
     return () => {
       // 모든 타이머 정리
-      Object.keys(retryTimersRef.current).forEach((id) => {
-        clearTimeout(retryTimersRef.current[id]);
-      });
+      // Object.keys(retryTimersRef.current).forEach((id) => {
+      //   clearTimeout(retryTimersRef.current[id]);
+      // });
 
       // 진행 중인 모든 업로드 취소
       if (uppy) {
@@ -546,10 +543,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
     }
 
     // 재시도 타이머가 있으면 정리
-    if (retryTimersRef.current[fileId]) {
-      clearTimeout(retryTimersRef.current[fileId]);
-      delete retryTimersRef.current[fileId];
-    }
+    // if (retryTimersRef.current[fileId]) {
+    //   clearTimeout(retryTimersRef.current[fileId]);
+    //   delete retryTimersRef.current[fileId];
+    // }
 
     // 활성 업로드 목록에서 제거
     setActiveUploads((prev) => {
