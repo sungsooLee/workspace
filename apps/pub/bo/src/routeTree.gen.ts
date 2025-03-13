@@ -53,6 +53,7 @@ import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
@@ -327,6 +328,12 @@ const GuideGuideRadioRoute = GuideGuideRadioImport.update({
 const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   id: '/guide/progress',
   path: '/guide/progress',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
+  id: '/guide/phone-number',
+  path: '/guide/phone-number',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -754,6 +761,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuidePanelImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/phone-number': {
+      id: '/_guide/guide/phone-number'
+      path: '/guide/phone-number'
+      fullPath: '/guide/phone-number'
+      preLoaderRoute: typeof GuideGuidePhoneNumberImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/progress': {
       id: '/_guide/guide/progress'
       path: '/guide/progress'
@@ -966,6 +980,7 @@ interface GuideRouteChildren {
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
+  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -1002,6 +1017,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
+  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -1093,6 +1109,7 @@ export interface FileRoutesByFullPath {
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1157,6 +1174,7 @@ export interface FileRoutesByTo {
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1224,6 +1242,7 @@ export interface FileRoutesById {
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
+  '/_guide/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -1290,6 +1309,7 @@ export interface FileRouteTypes {
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1353,6 +1373,7 @@ export interface FileRouteTypes {
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1418,6 +1439,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
+    | '/_guide/guide/phone-number'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -1513,6 +1535,7 @@ export const routeTree = rootRoute
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
+        "/_guide/guide/phone-number",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -1698,6 +1721,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/panel": {
       "filePath": "_guide/guide/panel.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/phone-number": {
+      "filePath": "_guide/guide/phone-number.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/progress": {

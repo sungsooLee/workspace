@@ -37,12 +37,13 @@ const PhoneNumberComponent = function ({
   };
 
   return (
-    <div className={cn(styles.start)}>
+    <div className={cn(styles.start, styles.wrap)}>
       <Select
         options={options ?? nationOptions}
         onChange={(option: SelectOption) => handleSelect(option)}
+        className={styles.select_area}
       />
-      <Input value={value} onChange={onChange} {...props} />
+      <Input value={value} onChange={onChange} {...props} className={styles.input_area} />
     </div>
   );
 };
