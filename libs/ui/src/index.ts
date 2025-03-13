@@ -150,3 +150,6 @@ export * from './lib/toast/toast-wrapper';
 
 // type
 export * from './lib/type';
+
+// phone number
+export * from './lib/phone-number/phone-number';
