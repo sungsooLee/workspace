@@ -1,0 +1,11 @@
+.start {
+  &.input_timer {
+    @apply flex w-full items-center;
+    input {
+      @apply min-h-[40px] rounded-[8px];
+    }
+    .btn {
+      @apply button_3_r ml-[8px] min-w-[72px] rounded-[8px] border-[#A9AFB8] px-0;
+    }
+  }
+}

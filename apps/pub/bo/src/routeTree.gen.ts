@@ -59,6 +59,7 @@ import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagina
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
+import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
@@ -364,6 +365,12 @@ const GuideGuideModalRoute = GuideGuideModalImport.update({
 const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
+  id: '/guide/input-timer',
+  path: '/guide/input-timer',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -726,6 +733,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideInfoImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/input-timer': {
+      id: '/_guide/guide/input-timer'
+      path: '/guide/input-timer'
+      fullPath: '/guide/input-timer'
+      preLoaderRoute: typeof GuideGuideInputTimerImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/layout': {
       id: '/_guide/guide/layout'
       path: '/guide/layout'
@@ -975,6 +989,7 @@ interface GuideRouteChildren {
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
@@ -1012,6 +1027,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
@@ -1104,6 +1120,7 @@ export interface FileRoutesByFullPath {
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
@@ -1169,6 +1186,7 @@ export interface FileRoutesByTo {
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
@@ -1237,6 +1255,7 @@ export interface FileRoutesById {
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
+  '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
@@ -1304,6 +1323,7 @@ export interface FileRouteTypes {
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/info'
+    | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/modal'
     | '/guide/optionCard'
@@ -1368,6 +1388,7 @@ export interface FileRouteTypes {
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/info'
+    | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/modal'
     | '/guide/optionCard'
@@ -1434,6 +1455,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
     | '/_guide/guide/info'
+    | '/_guide/guide/input-timer'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
     | '/_guide/guide/optionCard'
@@ -1530,6 +1552,7 @@ export const routeTree = rootRoute
         "/_guide/guide/grid",
         "/_guide/guide/icon",
         "/_guide/guide/info",
+        "/_guide/guide/input-timer",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
         "/_guide/guide/optionCard",
@@ -1701,6 +1724,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/info": {
       "filePath": "_guide/guide/info.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/input-timer": {
+      "filePath": "_guide/guide/input-timer.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/layout": {

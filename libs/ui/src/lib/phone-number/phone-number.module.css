@@ -7,5 +7,16 @@
     .input_area {
       @apply flex-auto;
     }
+    &.lg {
+      .select_area button {
+        @apply min-h-[40px] rounded-[8px] border-[#D6DAE1];
+        &[aria-expanded='true'] {
+          @apply border-[#6F798B];
+        }
+      }
+      .input_area {
+        @apply min-h-[40px] rounded-[8px] border-[#D6DAE1];
+      }
+    }
   }
 }

@@ -44,6 +44,7 @@ const PhoneNumberComponent = function ({
         options={options ?? nationOptions}
         onChange={(option: SelectOption) => handleSelect(option)}
         className={styles.select_area}
+        size={size}
       />
       <Input value={value} onChange={onChange} {...props} className={styles.input_area} />
     </div>
