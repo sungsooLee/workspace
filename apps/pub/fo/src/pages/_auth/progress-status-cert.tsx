@@ -172,7 +172,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
-            <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
+            <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
                   <IcoCaution width={16} height={16} stroke="#6F798B" />
