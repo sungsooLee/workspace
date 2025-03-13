@@ -36,8 +36,8 @@ function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
           {siblings.map((sibling: Category) => (
             <li key={sibling.categoryId}>
               <Link
-                to="/category/$categoryId"
-                params={{ categoryId: sibling.categoryId.toString() }}
+                to="/category"
+                state={{ categoryId: sibling.categoryId.toString() }}
                 className={sibling.categoryId === category.categoryId ? styles.active : ''}>
                 {sibling.name}
               </Link>

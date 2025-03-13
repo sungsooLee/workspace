@@ -28,7 +28,7 @@ export * from './lib/checkbox/checkbox';
 export * from './lib/checkbox/form-checkbox';
 
 // chips
-export * from './lib/chips/chips';
+export * from './lib/chips/chip';
 export * from './lib/chips/chip-list';
 
 // contents-row
@@ -67,7 +67,7 @@ export * from './lib/file-upload/uppy-file-upload';
 
 // form-field
 export * from './lib/form-field/input-modal-button-form-field/input-modal-button-form-field';
-export * from './lib/form-field/chip-list-modal-button-form-field/chip-list-modal-button-form-field';
+export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
 
 // modal
 export * from './lib/modal/modal';
@@ -150,3 +150,6 @@ export * from './lib/toast/toast-wrapper';
 
 // type
 export * from './lib/type';
+
+// phone number
+export * from './lib/phone-number/phone-number';

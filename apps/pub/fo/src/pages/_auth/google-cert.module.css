@@ -1,4 +1,7 @@
 .start {
+  .search_info {
+    @apply mb-[48px];
+  }
   .auth_form {
     @apply mt-[48px];
   }

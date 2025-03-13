@@ -45,6 +45,8 @@ function RouteComponent() {
         { label: 'Spinner', path: '/guide/spinner' },
         { label: 'OptionCard', path: '/guide/optionCard' },
         { label: 'Panel', path: '/guide/panel' },
+        { label: 'PhoneNumber', path: '/guide/phone-number' },
+        { label: 'InputTimer', path: '/guide/input-timer' },
         // { label: '텍스트필드', path: '/guide/textfield' },
         // { label: '이미지', path: '/guide/image' },
         { label: 'Icon', path: '/guide/icon' },

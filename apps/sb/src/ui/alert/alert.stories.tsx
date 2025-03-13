@@ -13,10 +13,11 @@ export default {
 export const Template: any = (args: any) => {
   const { alert: openAlert } = useModal();
   const handleClickAlert = () => {
-    openAlert({
-      title: 'alert title',
-      description: 'alert description',
-    });
+    openAlert('title');
+    // openAlert({
+    //   title: 'alert title',
+    //   description: 'alert description',
+    // });
   };
   return (
     <div className="flex flex-col gap-5">

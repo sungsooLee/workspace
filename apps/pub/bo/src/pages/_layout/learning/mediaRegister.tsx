@@ -8,6 +8,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 /* 퍼블수정 20240312 : libs로 경로 수정 E  */
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
+import searchStyles from './search.module.css'; // search css
 import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
@@ -27,6 +28,7 @@ import {
   Checkbox,
   RadioGroup,
   InputModalButtonFormField,
+  PhoneNumber,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -55,53 +57,63 @@ function RouteComponent() {
     return (
       <div className={searchContStyles.contents}>
         <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
-        {/* form */}
-        <ContentsRow>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-search" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>테넌트</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Select
-                className={formStyles.select_option}
-                options={[
-                  { value: 'type1', label: '선택' },
-                  { value: 'type2', label: '선택2' },
-                ]}
-              />
-            </div>
+        {/* 퍼블수정 20240313 : search 영역 수정 */}
+        <div className={cn(searchStyles.start, searchStyles.wrap)}>
+          <div className={searchStyles.contents}>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-select1" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>테넌트</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-channel" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>채널</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '전체' },
+                      { value: 'type2', label: '항목' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-owner" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>담당자</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+                </div>
+              </div>
+            </ContentsRow>
           </div>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-channel2" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>채널명</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Input
-                id="name-channel2"
-                type="text"
-                placeholder="채널명으로 조회하세요."
-                value=""
-                className={formStyles.input}
-              />
-            </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
           </div>
-          <div className={cn(formStyles.form_item, formStyles.form_auto)}>
-            <div className={formStyles.btn_box}>
-              <Button
-                type="button"
-                className={formStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={formStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={formStyles.btn_search}>
-                <IcoSearch className={formStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
-          </div>
-        </ContentsRow>
+        </div>
         {/* 채널 리스트 */}
         <div className={searchContStyles.channel_wrap}>
           <List
@@ -129,53 +141,55 @@ function RouteComponent() {
     return (
       <div className={searchContStyles.contents}>
         <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
-        {/* form */}
-        <ContentsRow>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-channelName" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>채널</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Select
-                className={formStyles.select_option}
-                options={[
-                  { value: 'type1', label: '선택' },
-                  { value: 'type2', label: '선택2' },
-                ]}
-              />
-            </div>
+        {/* 퍼블수정 20240313 : search 영역 수정 */}
+        <div className={cn(searchStyles.start, searchStyles.wrap)}>
+          <div className={searchStyles.contents}>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-channelName" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>채널</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Select
+                    className={formStyles.select_option}
+                    options={[
+                      { value: 'type1', label: '선택' },
+                      { value: 'type2', label: '선택2' },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-managerName" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>담당자명</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input
+                    id="name-managerName"
+                    type="text"
+                    placeholder="담당자명으로 조회하세요."
+                    value=""
+                    className={formStyles.input}
+                  />
+                </div>
+              </div>
+            </ContentsRow>
           </div>
-          <div className={formStyles.form_item}>
-            <label htmlFor="name-managerName" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>담당자명</span>
-            </label>
-            <div className={formStyles.input_box}>
-              <Input
-                id="name-managerName"
-                type="text"
-                placeholder="담당자명으로 조회하세요."
-                value=""
-                className={formStyles.input}
-              />
-            </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
           </div>
-          <div className={cn(formStyles.form_item, formStyles.form_auto)}>
-            <div className={formStyles.btn_box}>
-              <Button
-                type="button"
-                className={formStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={formStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={formStyles.btn_search}>
-                <IcoSearch className={formStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
-          </div>
-        </ContentsRow>
+        </div>
         {/* 채널 리스트 */}
         <div className={searchContStyles.channel_wrap}>
           <List
@@ -422,15 +436,14 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Select
-                  className={formStyles.short}
+                {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
+                <PhoneNumber
                   options={[
                     { value: 'type1', label: '+82' },
                     { value: 'type2', label: '+83' },
                   ]}
                 />
-                {/* <span className={formStyles.dash}></span> 25-02-20 : 삭제 */}
-                <Input id="name-managerNum" type="text" placeholder="- 제외한 숫자만 입력" />
+                {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
               </div>
             </div>
           </ContentsRow>
@@ -516,11 +529,29 @@ function RouteComponent() {
                           <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
                         </label>
                         <div className={formStyles.input_box}>
-                          <div className={formStyles.search_wrap}>
-                            <Button className={formStyles.btn_search}>
-                              <IcoSearch className={formStyles.icon_search} />
-                            </Button>
-                          </div>
+                          <InputModalButtonFormField
+                            modalConfig={{
+                              title: '',
+                              width: 'md',
+                              content: <ModalChannelContent />,
+                              footer: (
+                                <>
+                                  <Button
+                                    label={'취소'}
+                                    variant={'gray'}
+                                    size={'lg'}
+                                    actionKey={'cancel'}
+                                  />
+                                  <Button
+                                    label={'확인'}
+                                    variant={'primary'}
+                                    size={'lg'}
+                                    actionKey={'confirm'}
+                                  />
+                                </>
+                              ),
+                            }}
+                          />
                         </div>
                       </div>
                     </ContentsRow>
@@ -550,14 +581,14 @@ function RouteComponent() {
                           </span>
                         </label>
                         <div className={formStyles.input_box}>
-                          <Select
-                            className={formStyles.short}
+                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
+                          <PhoneNumber
                             options={[
                               { value: 'type1', label: '+82' },
                               { value: 'type2', label: '+83' },
                             ]}
                           />
-                          <Input id="name-1-7-2" type="text" placeholder="- 제외한 숫자만 입력" />
+                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
                         </div>
                       </div>
                     </ContentsRow>

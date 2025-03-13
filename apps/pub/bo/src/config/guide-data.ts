@@ -127,9 +127,18 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '완료', // 비고
   },
+  // {
+  //   screenName: 'CMS/학습자원 조회상세(동영상)',
+  //   pageId: 'learning/mediaDetail',
+  //   screenId: '',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '진행중', // 비고
+  // },
   {
-    screenName: 'CMS/학습자원 조회상세(동영상)',
-    pageId: 'learning/mediaDetail',
+    screenName: 'CMS/학습자원조회',
+    pageId: 'learning/learningSearch',
     screenId: '',
     pageType: 'Page',
     completionDate: '',

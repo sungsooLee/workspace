@@ -3,15 +3,16 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from './search-account.module.css';
-import searchAccountFormStyles from './search-account-form.module.css';
-import authToolFormFieldStyles from './auth-tool-form-field.module.css';
+
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css'; // 페이지모듈
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css'; // 블루박스
+import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
 
 import { GoogleCertGuidePopup } from '../../features/auth';
-
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 import {
   Button,
@@ -22,6 +23,7 @@ import {
   InputTimer,
   ContentsRow,
   useModal,
+  PhoneNumber,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
@@ -37,7 +39,7 @@ function RouteComponent() {
       key: 'a',
       content: (
         <>
-          <div className={searchAccountFormStyles.search_info}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 아이디를 확인 할 수 있습니다.
           </div>
@@ -76,7 +78,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 인증폼 */}
 
-          <div className={cn(searchAccountFormStyles.auth_form, 'no_line', 'col')}>
+          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -118,17 +120,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
-                  />
-                  <Input
-                    id="name-1-6"
-                    type="text"
                     placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
                 </div>
@@ -150,6 +148,49 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>인증번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  {/* 퍼블수정 20250313 : 인증번호 콤포넌트 추가 */}
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={300}
+                    placeholder="인증번호 입력"
+                    resetLabel="재전송"
+                  />
+                </div>
+              </div>
+            </ContentsRow>
+
+            {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
+            <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
+              <dl className={noticeBoxStyles.check_point}>
+                <dt>
+                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  유의사항
+                </dt>
+                <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+              </dl>
+            </div>
+            {/* 유의사항 모듈 */}
+
+            <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
+              <Button variant="primary" size="xl">
+                {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+                인증번호 요청
+              </Button>
+            </div>
           </div>
         </>
       ),
@@ -159,39 +200,43 @@ function RouteComponent() {
       key: 'b',
       content: (
         <>
-          <div className={searchAccountFormStyles.search_info}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 비밀번호를 재설정 할 수 있습니다.
           </div>
 
           {/* 인증선택 모듈 */}
-          <div
-            className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
-            role="radiogroup">
-            <RadioCard
-              className="radio_card"
-              options={[
-                {
-                  value: 'type1',
-                  label: (
-                    <div>
-                      <IcoPhone02 width={48} height={48} className="ico1" />
-                      <span>휴대폰 인증</span>
-                    </div>
-                  ),
-                },
-                {
-                  value: 'type2',
-                  label: (
-                    <div>
-                      <IcoMail width={48} height={48} className="ico2" />
-                      <span>이메일 인증</span>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </div>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <div
+                className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
+                role="radiogroup">
+                <RadioCard
+                  className="radio_card"
+                  options={[
+                    {
+                      value: 'type1',
+                      label: (
+                        <div>
+                          <IcoPhone02 width={48} height={48} className="ico1" />
+                          <span>휴대폰 인증</span>
+                        </div>
+                      ),
+                    },
+                    {
+                      value: 'type2',
+                      label: (
+                        <div>
+                          <IcoMail width={48} height={48} className="ico2" />
+                          <span>이메일 인증</span>
+                        </div>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </ContentsRow>
           {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
@@ -260,17 +305,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
-                  />
-                  <Input
-                    id="name-1-6"
-                    type="text"
                     placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
                 </div>
@@ -292,6 +333,65 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>인증번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  {/* 퍼블수정 20250313 : 인증번호 콤포넌트 추가 */}
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={300}
+                    placeholder="인증번호 입력"
+                    resetLabel="재전송"
+                  />
+                </div>
+              </div>
+            </ContentsRow>
+
+            {/* 유의사항 모듈 - 비번 찾기일때 내용 */}
+            <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
+              <dl className={noticeBoxStyles.check_point}>
+                <dt>
+                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  유의사항
+                </dt>
+                <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+                <dd>
+                  법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실
+                  수 있습니다.
+                  <Button
+                    className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
+                    onClick={() =>
+                      openModal({
+                        title: 'FIDO 인증',
+                        width: 'md',
+                        content: <GoogleCertGuidePopup />,
+                        footer: false,
+                      })
+                    }>
+                    구글 OTP 인증 가이드
+                  </Button>
+                </dd>
+              </dl>
+            </div>
+            {/* 유의사항 모듈 */}
+
+            <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
+              <Button variant="primary" size="xl">
+                {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+                인증번호 요청
+              </Button>
+            </div>
           </div>
         </>
       ),
@@ -302,78 +402,6 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
-
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>인증번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                {/* 인증번호 콤포넌트 추가 */}
-                <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
-                <Button variant="gray" size="lg">
-                  재전송
-                </Button>
-              </div>
-            </div>
-          </ContentsRow>
-
-          {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
-            <dl className={noticeBoxStyles.check_point}>
-              <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
-                유의사항
-              </dt>
-              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
-            </dl>
-          </div>
-          {/* 유의사항 모듈 */}
-
-          {/* 유의사항 모듈 - 비번 찾기일때 내용 */}
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
-            <dl className={noticeBoxStyles.check_point}>
-              <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
-                유의사항
-              </dt>
-              <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
-              <dd>
-                법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-                있습니다.
-                <Button
-                  className={cn(styles.link, 'auth--otp-guide-link')}
-                  onClick={() =>
-                    openModal({
-                      title: 'FIDO 인증',
-                      width: 'md',
-                      content: <GoogleCertGuidePopup />,
-                      footer: false,
-                    })
-                  }>
-                  구글 OTP 인증 가이드
-                </Button>
-              </dd>
-            </dl>
-          </div>
-          {/* 유의사항 모듈 */}
-
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
-            <Button variant="primary" size="xl">
-              {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-              인증번호 요청
-            </Button>
-          </div>
         </div>
       </div>
     </form>

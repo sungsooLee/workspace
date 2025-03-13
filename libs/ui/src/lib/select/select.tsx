@@ -36,7 +36,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
       disabled,
       onChange,
       placeholder,
-      size = 'md',
+      size,
       selectedValue,
       className,
       ...props
@@ -86,11 +86,14 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
               <Primitive.Viewport
                 className={cn(
                   styles.select_viewport,
-                  'min-w-[var(--radix-select-trigger-width)]',
                   size && styles[size],
+                  'min-w-[var(--radix-select-trigger-width)]',
                 )}>
                 {options?.map(({ value, label }) => (
-                  <SelectItem key={value} value={value} className={styles.select_item}>
+                  <SelectItem
+                    key={value}
+                    value={value}
+                    className={cn(styles.select_item, size && styles[size])}>
                     {label}
                   </SelectItem>
                 ))}

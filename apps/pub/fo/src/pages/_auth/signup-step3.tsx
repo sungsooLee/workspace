@@ -4,8 +4,16 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired, IcoArrowForward } from '@learnway/icons';
 import styles from './signup-step3.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-import { Button, Stepper, SelectOption, Input, Checkbox, Select, ContentsRow } from '@learnway/ui';
+import {
+  Button,
+  Stepper,
+  SelectOption,
+  Input,
+  Checkbox,
+  Select,
+  ContentsRow,
+  PhoneNumber,
+} from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,
@@ -156,15 +164,15 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
+                    placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
-                  <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
                 </div>
               </div>
             </ContentsRow>
@@ -213,8 +221,7 @@ function RouteComponent() {
             </ul>
           </div>
 
-          <div
-            className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               이전
             </Button>

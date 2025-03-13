@@ -7,7 +7,7 @@
     @apply mt-[48px];
   }
 
-  .signup_step {
+  &.signup_step {
     .signup_check {
       @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
       ul {

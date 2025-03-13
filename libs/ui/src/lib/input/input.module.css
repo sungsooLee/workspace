@@ -47,9 +47,11 @@
   .count {
     @apply button_5_r flex items-center text-[#8c97ae];
   }
-  .unit,
-  .time {
+  .unit {
     @apply input_bo_1_r flex items-center text-[#747d91];
+  }
+  .time {
+    @apply input_bo_1_r flex items-center font-bold text-[#07287E];
   }
 }
 
