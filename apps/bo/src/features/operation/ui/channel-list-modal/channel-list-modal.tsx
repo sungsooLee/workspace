@@ -1,6 +1,14 @@
 import React, { forwardRef, useState } from 'react';
-import { Button, Grid, ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui';
-import styles from '../course-type-option-card-modal/course-type-option-card-modal.module.css';
+import {
+  Button,
+  Grid,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  useModal,
+} from '@learnway/ui';
+import styles from './channel-list-modal.module.css';
 import { useTranslation } from 'react-i18next';
 
 export interface ChannelListModalProps {
@@ -29,6 +37,7 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
 
     return (
       <ModalContainer>
+        <ModalTitle>{t('채널 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
             <h2>Grid</h2>

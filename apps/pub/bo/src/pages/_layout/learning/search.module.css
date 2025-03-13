@@ -1,7 +1,7 @@
 /* search.module.css */
 .start {
-  &.search_contents_wrap {
-    @apply relative mx-[-32px] flex justify-between px-[32px];
+  &.wrap {
+    @apply relative flex justify-between;
     .contents {
       @apply flex-grow;
       & > div > div {
@@ -16,11 +16,26 @@
         }
         & + div {
           @apply !mt-[4px];
+          .half {
+            @apply flex;
+            & > div {
+              @apply order-1 !flex-1;
+            }
+            &::before {
+              @apply order-2 ml-[40px] h-full w-full flex-1 justify-stretch content-[''];
+            }
+          }
+          & > div {
+            @apply flex-1;
+          }
+          .space {
+            @apply ml-[40px];
+          }
         }
       }
     }
     .btn_box {
-      @apply ml-[40px] flex min-w-[140px] shrink-0 items-end justify-end;
+      @apply flex w-auto shrink-0 items-end justify-end pl-[40px];
     }
   }
 }

@@ -21,14 +21,18 @@ import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
-import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
+import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
+import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
+import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
+import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -41,12 +45,14 @@ import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
+import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
@@ -120,9 +126,21 @@ const AuthSearchAccountRoute = AuthSearchAccountImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthProgressStatusRoute = AuthProgressStatusImport.update({
-  id: '/progress-status',
-  path: '/progress-status',
+const AuthProgressStatusResultRoute = AuthProgressStatusResultImport.update({
+  id: '/progress-status-result',
+  path: '/progress-status-result',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
+  id: '/progress-status-email',
+  path: '/progress-status-email',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+  id: '/progress-status-cert',
+  path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -156,6 +174,12 @@ const AuthGoogleCertRoute = AuthGoogleCertImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthDormantAccountRoute = AuthDormantAccountImport.update({
+  id: '/dormant-account',
+  path: '/dormant-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
@@ -167,6 +191,13 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   path: '/guide/',
   getParentRoute: () => GuideRoute,
 } as any)
+
+const LayoutIntegratedSearchIntegratedSearchRoute =
+  LayoutIntegratedSearchIntegratedSearchImport.update({
+    id: '/integrated-search/integrated-search',
+    path: '/integrated-search/integrated-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutCategoryDetailmRoute = LayoutCategoryDetailmImport.update({
   id: '/category/detail_m',
@@ -240,6 +271,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
+  id: '/guide/phone-number',
+  path: '/guide/phone-number',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuidePanelRoute = GuideGuidePanelImport.update({
   id: '/guide/panel',
   path: '/guide/panel',
@@ -273,6 +310,12 @@ const GuideGuideMobileRoute = GuideGuideMobileImport.update({
 const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
+  id: '/guide/input-timer',
+  path: '/guide/input-timer',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -379,6 +422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/dormant-account': {
+      id: '/_auth/dormant-account'
+      path: '/dormant-account'
+      fullPath: '/dormant-account'
+      preLoaderRoute: typeof AuthDormantAccountImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/google-cert': {
       id: '/_auth/google-cert'
       path: '/google-cert'
@@ -414,11 +464,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPasswordModifyImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/progress-status': {
-      id: '/_auth/progress-status'
-      path: '/progress-status'
-      fullPath: '/progress-status'
-      preLoaderRoute: typeof AuthProgressStatusImport
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-email': {
+      id: '/_auth/progress-status-email'
+      path: '/progress-status-email'
+      fullPath: '/progress-status-email'
+      preLoaderRoute: typeof AuthProgressStatusEmailImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-result': {
+      id: '/_auth/progress-status-result'
+      path: '/progress-status-result'
+      fullPath: '/progress-status-result'
+      preLoaderRoute: typeof AuthProgressStatusResultImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-account': {
@@ -561,6 +625,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideInfoImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/input-timer': {
+      id: '/_guide/guide/input-timer'
+      path: '/guide/input-timer'
+      fullPath: '/guide/input-timer'
+      preLoaderRoute: typeof GuideGuideInputTimerImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/layout': {
       id: '/_guide/guide/layout'
       path: '/guide/layout'
@@ -601,6 +672,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/panel'
       fullPath: '/guide/panel'
       preLoaderRoute: typeof GuideGuidePanelImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/phone-number': {
+      id: '/_guide/guide/phone-number'
+      path: '/guide/phone-number'
+      fullPath: '/guide/phone-number'
+      preLoaderRoute: typeof GuideGuidePhoneNumberImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/progress': {
@@ -687,6 +765,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/integrated-search/integrated-search': {
+      id: '/_layout/integrated-search/integrated-search'
+      path: '/integrated-search/integrated-search'
+      fullPath: '/integrated-search/integrated-search'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -707,12 +792,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthDormantAccountRoute: typeof AuthDormantAccountRoute
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
-  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
+  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
+  AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
@@ -722,12 +810,15 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthDormantAccountRoute: AuthDormantAccountRoute,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
-  AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
+  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
+  AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
@@ -752,12 +843,14 @@ interface GuideRouteChildren {
   GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideMobileRoute: typeof GuideGuideMobileRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
+  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -785,12 +878,14 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideMobileRoute: GuideGuideMobileRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
+  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -810,6 +905,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -817,6 +913,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutIntegratedSearchIntegratedSearchRoute:
+    LayoutIntegratedSearchIntegratedSearchRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -825,12 +923,15 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
-  '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
+  '/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/progress-status-result': typeof AuthProgressStatusResultRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
@@ -851,12 +952,14 @@ export interface FileRoutesByFullPath {
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -869,18 +972,22 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
-  '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
+  '/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/progress-status-result': typeof AuthProgressStatusResultRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
@@ -901,12 +1008,14 @@ export interface FileRoutesByTo {
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -919,6 +1028,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -928,12 +1038,15 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
-  '/_auth/progress-status': typeof AuthProgressStatusRoute
+  '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
+  '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/_auth/progress-status-result': typeof AuthProgressStatusResultRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
@@ -954,12 +1067,14 @@ export interface FileRoutesById {
   '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
+  '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/mobile': typeof GuideGuideMobileRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
+  '/_guide/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -972,6 +1087,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -980,12 +1096,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/dormant-account'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
-    | '/progress-status'
+    | '/progress-status-cert'
+    | '/progress-status-email'
+    | '/progress-status-result'
     | '/search-account'
     | '/search-id-success'
     | '/signup-step1'
@@ -1006,12 +1125,14 @@ export interface FileRouteTypes {
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
+    | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1024,17 +1145,21 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/dormant-account'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
-    | '/progress-status'
+    | '/progress-status-cert'
+    | '/progress-status-email'
+    | '/progress-status-result'
     | '/search-account'
     | '/search-id-success'
     | '/signup-step1'
@@ -1055,12 +1180,14 @@ export interface FileRouteTypes {
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
+    | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1073,6 +1200,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
   id:
@@ -1080,12 +1208,15 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/dormant-account'
     | '/_auth/google-cert'
     | '/_auth/login'
     | '/_auth/mpass-cert'
     | '/_auth/password-input'
     | '/_auth/password-modify'
-    | '/_auth/progress-status'
+    | '/_auth/progress-status-cert'
+    | '/_auth/progress-status-email'
+    | '/_auth/progress-status-result'
     | '/_auth/search-account'
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
@@ -1106,12 +1237,14 @@ export interface FileRouteTypes {
     | '/_guide/guide/icon'
     | '/_guide/guide/image'
     | '/_guide/guide/info'
+    | '/_guide/guide/input-timer'
     | '/_guide/guide/layout'
     | '/_guide/guide/mobile'
     | '/_guide/guide/modal'
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
+    | '/_guide/guide/phone-number'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -1124,6 +1257,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/integrated-search/integrated-search'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1159,12 +1293,15 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/dormant-account",
         "/_auth/google-cert",
         "/_auth/login",
         "/_auth/mpass-cert",
         "/_auth/password-input",
         "/_auth/password-modify",
-        "/_auth/progress-status",
+        "/_auth/progress-status-cert",
+        "/_auth/progress-status-email",
+        "/_auth/progress-status-result",
         "/_auth/search-account",
         "/_auth/search-id-success",
         "/_auth/signup-step1",
@@ -1189,12 +1326,14 @@ export const routeTree = rootRoute
         "/_guide/guide/icon",
         "/_guide/guide/image",
         "/_guide/guide/info",
+        "/_guide/guide/input-timer",
         "/_guide/guide/layout",
         "/_guide/guide/mobile",
         "/_guide/guide/modal",
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
+        "/_guide/guide/phone-number",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -1214,8 +1353,13 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/integrated-search/integrated-search",
         "/_layout/menu3/"
       ]
+    },
+    "/_auth/dormant-account": {
+      "filePath": "_auth/dormant-account.tsx",
+      "parent": "/_auth"
     },
     "/_auth/google-cert": {
       "filePath": "_auth/google-cert.tsx",
@@ -1237,8 +1381,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/password-modify.tsx",
       "parent": "/_auth"
     },
-    "/_auth/progress-status": {
-      "filePath": "_auth/progress-status.tsx",
+    "/_auth/progress-status-cert": {
+      "filePath": "_auth/progress-status-cert.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-email": {
+      "filePath": "_auth/progress-status-email.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-result": {
+      "filePath": "_auth/progress-status-result.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-account": {
@@ -1321,6 +1473,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/info.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/input-timer": {
+      "filePath": "_guide/guide/input-timer.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/layout": {
       "filePath": "_guide/guide/layout.tsx",
       "parent": "/_guide"
@@ -1343,6 +1499,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/panel": {
       "filePath": "_guide/guide/panel.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/phone-number": {
+      "filePath": "_guide/guide/phone-number.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/progress": {
@@ -1391,6 +1551,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/integrated-search/integrated-search": {
+      "filePath": "_layout/integrated-search/integrated-search.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

@@ -4,7 +4,7 @@
     @apply w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
 
     .header_area {
-      @apply flex h-[70px] items-center justify-between pl-[32px] pr-[8px];
+      @apply flex h-[64px] items-center justify-between pl-[32px] pr-[8px];
 
       h1 {
         img {

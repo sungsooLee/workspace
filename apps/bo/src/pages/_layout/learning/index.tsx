@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
-  ChipListModalButtonFormField,
+  ChipListModalSelectorFormField,
   Input,
   InputModalButtonFormField,
 } from '@learnway/ui';
@@ -15,9 +15,8 @@ import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fo
 import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { FormRow } from '../../../shared/ui/form-row';
-import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
-import { ManagerList } from '../../../features/operation/ui/manager-list/manager-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
+import { ManagerListModal, TeacherListModal } from '../../../features/operation';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -109,8 +108,8 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
-                <ChipListModalButtonFormField
-                  modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
+                <ChipListModalSelectorFormField
+                  modalConfig={{ content: <TeacherListModal /> }}
                   chipList={{
                     labelField: 'name',
                     valueField: 'value',
@@ -139,7 +138,7 @@ function RouteComponent() {
                 <InputModalButtonFormField
                   modalConfig={{
                     title: t('운영자 목록'),
-                    content: <ManagerList />,
+                    content: <ManagerListModal />,
                     footer: (
                       <>
                         <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />

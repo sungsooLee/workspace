@@ -131,6 +131,11 @@ module.exports = {
           fontSize: '2rem',
           fontWeight: '400',
         },
+        '.title_6_r': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
         '.title_6_b': {
           ...baseTitle,
           fontSize: '1.6rem',
@@ -260,6 +265,11 @@ module.exports = {
           ...baseTitle,
           fontSize: '1.1rem',
           fontWeight: '400',
+        },
+        '.label_12_500': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '500',
         },
 
         // title class add (BO)

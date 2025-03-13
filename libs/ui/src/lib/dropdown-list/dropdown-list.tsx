@@ -2,10 +2,11 @@ import React, { forwardRef, useState } from 'react';
 import Select, { components, MultiValue, SingleValue, ActionMeta } from 'react-select';
 import { getRandomId, cn } from '@learnway/shared';
 import { Checkbox } from '../checkbox/checkbox';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
 import { DropdownComponentProps, DropdownOption } from './type';
 
-import styles from './dropdown.module.css';
+import './dropdown.css';
+import { Button } from '../button/button';
 
 const CustomValueContainer = ({ children, ...props }: any) => {
   const { getValue, hasValue, selectProps } = props;
@@ -24,9 +25,9 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 
   return (
     <components.ValueContainer {...props}>
-      <div className={styles.container}>
+      <div className="container">
         {values.length > 0 && (
-          <span>
+          <span className="result_text">
             {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
           </span>
         )}
@@ -43,7 +44,7 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 const Option = (props: any) => {
   return (
     <components.Option {...props}>
-      <div className={styles.select_item}>
+      <div className="select_item">
         {props.isMulti && <Checkbox checked={props.isSelected} onChange={() => null} />}
         <span>{props.label}</span>
       </div>
@@ -55,8 +56,19 @@ const Option = (props: any) => {
 const dropdownIndicator = (props: any) => {
   return (
     <components.DropdownIndicator {...props}>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
+      <IcoArrowDown width={16} height={16} stroke="#131C30" className="icon_arrow" />
     </components.DropdownIndicator>
+  );
+};
+
+// clear 버튼
+const clearIndicator = (props: any) => {
+  return (
+    <components.ClearIndicator {...props}>
+      <Button onlyIcon className="btn_clear">
+        <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+      </Button>
+    </components.ClearIndicator>
   );
 };
 
@@ -84,7 +96,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
   ) => {
     const uuid = getRandomId();
     // const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
-    const dropdownClass = cn(styles.select_wrap);
+    const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className}`;
     const customProps = {
       'data-variant': variant,
       ...props,
@@ -126,15 +138,12 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
-          className={cn(
-            styles.select,
-            isFocused || isMenuOpen ? styles.focused : '',
-            size && [size],
-          )}
+          className={cn('select', isFocused || isMenuOpen ? 'focused' : '')}
           classNamePrefix="nlp-select"
           components={{
             Option,
             DropdownIndicator: dropdownIndicator,
+            ClearIndicator: clearIndicator,
             // ValueContainer : CustomValueContainer
             // ValueContainer:  (props) => <CustomValueContainer {...props} variant={variant}/>,
           }}
@@ -142,7 +151,6 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           hideSelectedOptions={false}
           {...customProps}
         />
-        <div className={styles.select_contents}></div>
       </div>
     );
   },

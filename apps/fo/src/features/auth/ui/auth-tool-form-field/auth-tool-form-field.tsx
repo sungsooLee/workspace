@@ -28,9 +28,10 @@ function AuthToolFormFieldComponent({
   return (
     <div className={cn(styles.start, 'auth--signup-select')} role="radiogroup">
       <RadioCard
+        value={value}
         options={[
           {
-            value: 'type1',
+            value: 'phone',
             label: (
               <div>
                 <IcoPhone02 width={48} height={48} className="ico1" />
@@ -39,7 +40,7 @@ function AuthToolFormFieldComponent({
             ),
           },
           {
-            value: 'type2',
+            value: 'email',
             label: (
               <div>
                 <IcoMail width={48} height={48} className="ico2" />

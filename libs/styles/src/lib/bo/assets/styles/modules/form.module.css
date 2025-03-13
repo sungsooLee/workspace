@@ -126,7 +126,7 @@
   .dash {
     @apply flex min-w-[40px] items-center justify-center;
     &::after {
-      @apply flex h-[1px] w-[8px] bg-[var(--gray6)] content-[''];
+      @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
     }
   }
   .btn_edit {
@@ -230,6 +230,9 @@
   & + div {
     @apply !mx-0;
   }
+}
+.space {
+  @apply flex-1;
 }
 .text_limit {
   @apply mt-[8px] flex justify-end text-[12px] font-normal leading-[1rem] text-[var(--gray6)];

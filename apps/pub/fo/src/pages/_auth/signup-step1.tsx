@@ -5,9 +5,8 @@ import { IcoBuilding01 } from '@learnway/icons';
 import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
 import styles from './signup-step1.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import memberToolFormField from './member-tool-form-field.module.css';
+import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
@@ -59,8 +58,7 @@ function RouteComponent() {
           </div>
           {/* 회원유형 모듈 */}
 
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -71,8 +69,7 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div
-          className={`${googleOtpGuideButtonStyles.start} ${googleOtpGuideButtonStyles.btn_wrap} ${styles.btn_wrap}`}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="gray" size="xl">
             취소
           </Button>

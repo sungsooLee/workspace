@@ -58,8 +58,7 @@ const GoogleKeyPopupCompoment = () => {
           QR코드 스캔
         </Button>
       </div>
-      <div
-        className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+      <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
             <IcoCaution width={16} height={16} stroke="#6F798B" />

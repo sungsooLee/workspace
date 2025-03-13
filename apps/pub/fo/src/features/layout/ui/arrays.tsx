@@ -1,40 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import styles from './arrays.module.css';
+
+// 퍼블수정 20250313 : 값 받아서 뿌려주게 전체수정
 interface ArraysProps {
+  arraysData: { items: string[]; initialSelectedItem: number | null };
   className?: string;
 }
 
-const ArraysButton = ({ className }: ArraysProps) => {
-  const [arraysActive, setArraysActive] = useState([true, false, false]);
-  const arrays = [
-    { title: '최신순', active: arraysActive[0] },
-    { title: '과정명순', active: arraysActive[1] },
-    { title: '조회순', active: arraysActive[2] },
-  ];
+const ArraysButton = ({ className, arraysData }: ArraysProps) => {
+  const { items, initialSelectedItem } = arraysData;
+  const [selectedItem, setSelectedItem] = useState<number | null>(initialSelectedItem);
 
-  const handleOnChange = (key: number) => {
-    const arrayChange = [...arraysActive];
-    arrays.map((array, index) => {
-      if (key === index) {
-        arrayChange[index] = true;
-      } else {
-        arrayChange[index] = false;
-      }
-    });
-    setArraysActive(arrayChange);
+  const handleOnChange = (index: number) => {
+    setSelectedItem((prev) => (prev === index ? null : index));
   };
+
+  useEffect(() => {
+    setSelectedItem(initialSelectedItem);
+  }, [initialSelectedItem]);
 
   return (
     <div className={cn(styles.start, styles.array, className)}>
-      {arrays.map((arrays, index) => (
+      {items.map((item, index) => (
         <Button
           key={index}
-          className={`${arrays.active === true ? styles.active : ''}`}
+          className={`${selectedItem === index ? styles.active : ''}`}
           onClick={() => handleOnChange(index)}>
-          {arrays.title}
+          {item}
         </Button>
       ))}
     </div>

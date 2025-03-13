@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
-  ChipListModalButtonFormField,
+  ChipListModalSelectorFormField,
   Input,
   InputModalButtonFormField,
 } from '@learnway/ui';
@@ -115,7 +115,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
-                <ChipListModalButtonFormField
+                <ChipListModalSelectorFormField
                   modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
                   chipList={{
                     labelField: 'name',
