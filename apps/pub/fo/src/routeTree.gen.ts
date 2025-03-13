@@ -30,6 +30,7 @@ import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -42,6 +43,7 @@ import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
@@ -175,6 +177,13 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const LayoutIntegratedSearchIntegratedSearchRoute =
+  LayoutIntegratedSearchIntegratedSearchImport.update({
+    id: '/integrated-search/integrated-search',
+    path: '/integrated-search/integrated-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCategoryDetailmRoute = LayoutCategoryDetailmImport.update({
   id: '/category/detail_m',
   path: '/category/detail_m',
@@ -244,6 +253,12 @@ const GuideGuideRadioRoute = GuideGuideRadioImport.update({
 const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   id: '/guide/progress',
   path: '/guide/progress',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
+  id: '/guide/phone-number',
+  path: '/guide/phone-number',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -617,6 +632,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuidePanelImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/phone-number': {
+      id: '/_guide/guide/phone-number'
+      path: '/guide/phone-number'
+      fullPath: '/guide/phone-number'
+      preLoaderRoute: typeof GuideGuidePhoneNumberImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/progress': {
       id: '/_guide/guide/progress'
       path: '/guide/progress'
@@ -701,6 +723,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/integrated-search/integrated-search': {
+      id: '/_layout/integrated-search/integrated-search'
+      path: '/integrated-search/integrated-search'
+      fullPath: '/integrated-search/integrated-search'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -774,6 +803,7 @@ interface GuideRouteChildren {
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
+  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -807,6 +837,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
+  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -826,6 +857,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -833,6 +865,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutIntegratedSearchIntegratedSearchRoute:
+    LayoutIntegratedSearchIntegratedSearchRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -874,6 +908,7 @@ export interface FileRoutesByFullPath {
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -886,6 +921,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -925,6 +961,7 @@ export interface FileRoutesByTo {
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
+  '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -937,6 +974,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -979,6 +1017,7 @@ export interface FileRoutesById {
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
+  '/_guide/guide/phone-number': typeof GuideGuidePhoneNumberRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -991,6 +1030,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1032,6 +1072,7 @@ export interface FileRouteTypes {
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1044,6 +1085,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1082,6 +1124,7 @@ export interface FileRouteTypes {
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
+    | '/guide/phone-number'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -1094,6 +1137,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
   id:
@@ -1134,6 +1178,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
+    | '/_guide/guide/phone-number'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -1146,6 +1191,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/integrated-search/integrated-search'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1218,6 +1264,7 @@ export const routeTree = rootRoute
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
+        "/_guide/guide/phone-number",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -1237,6 +1284,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/integrated-search/integrated-search",
         "/_layout/menu3/"
       ]
     },
@@ -1372,6 +1420,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/panel.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/phone-number": {
+      "filePath": "_guide/guide/phone-number.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/progress": {
       "filePath": "_guide/guide/progress.tsx",
       "parent": "/_guide"
@@ -1418,6 +1470,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/integrated-search/integrated-search": {
+      "filePath": "_layout/integrated-search/integrated-search.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

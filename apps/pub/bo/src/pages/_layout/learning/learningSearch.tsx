@@ -186,8 +186,9 @@ function RouteComponent() {
                       <span className={formStyles.form_text}>담당자</span>
                     </label>
                     <div className={formStyles.input_box}>
-                      <Input id="name-owner2" type="text" placeholder="담당자명을 입력하세요." />
-                      <div className={searchStyles.space}></div>
+                      <div className={searchStyles.half}>
+                        <Input id="name-owner2" type="text" placeholder="담당자명을 입력하세요." />
+                      </div>
                     </div>
                   </div>
                 </ContentsRow>

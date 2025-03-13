@@ -14,12 +14,14 @@ export interface PhoneNumberComponentProps extends InputProps {
   options: SelectOption[];
   value?: any;
   className?: string;
+  size?: any;
 }
 
 const PhoneNumberComponent = function ({
   className,
   options,
   value,
+  size,
   onChange,
   ...props
 }: PhoneNumberComponentProps) {
@@ -37,12 +39,13 @@ const PhoneNumberComponent = function ({
   };
 
   return (
-    <div className={cn(styles.start)}>
+    <div className={cn(styles.start, styles.wrap, size && styles[size])}>
       <Select
         options={options ?? nationOptions}
         onChange={(option: SelectOption) => handleSelect(option)}
+        className={styles.select_area}
       />
-      <Input value={value} onChange={onChange} {...props} />
+      <Input value={value} onChange={onChange} {...props} className={styles.input_area} />
     </div>
   );
 };

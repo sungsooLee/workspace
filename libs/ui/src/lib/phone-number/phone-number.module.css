@@ -1,2 +1,11 @@
 .start {
+  &.wrap {
+    @apply flex w-full items-center;
+    .select_area {
+      @apply mr-[8px] min-w-[120px];
+    }
+    .input_area {
+      @apply flex-auto;
+    }
+  }
 }
