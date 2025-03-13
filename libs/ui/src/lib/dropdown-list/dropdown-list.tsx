@@ -134,7 +134,6 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           isSearchable={isSearchable}
           isClearable={isClearable}
           name={name}
-          menuIsOpen
           onFocus={handleFocus}
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
