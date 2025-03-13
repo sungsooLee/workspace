@@ -1,6 +1,13 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from '@tanstack/react-router';
+import {
+  Route,
+  useMatch,
+  useMatches,
+  useParams,
+  useRouteContext,
+  useRouterState,
+} from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
@@ -21,7 +28,12 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
   const shouldShowBreadcrumbs = useShowBreadcrumbs();
-  const { categoryId } = useParams({ strict: false });
+
+  const matches = useMatches();
+
+  const categoryMatch = matches.find((match) => match.routeId.includes('/category'));
+
+  const categoryId = categoryMatch?.context?.categoryId;
 
   const currentCategoryId = categoryId ? Number(categoryId) : null;
 
