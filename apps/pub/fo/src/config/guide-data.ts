@@ -248,34 +248,34 @@ export const guideData = [
     pageId: 'progress-status-email',
     screenId: 'NLP_FO_CPS_1000', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-13', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입진행현황_휴대폰인증_KR',
-    pageId: '',
+    pageId: 'progress-status-cert',
     screenId: 'NLP_FO_CPS_1001', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-13', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입진행현황_이메일인증_KR',
-    pageId: '',
+    pageId: 'progress-status-cert',
     screenId: 'NLP_FO_CPS_1002', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-13', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입진행현황_결과',
-    pageId: 'progress-status',
+    pageId: 'progress-status-result',
     screenId: 'NLP_FO_CPS_1003', //스크린아이디
     pageType: 'Page',
     completionDate: '2025-02-28', // 완료일

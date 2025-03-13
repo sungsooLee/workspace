@@ -29,7 +29,7 @@ import {
   PhoneNumber,
 } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/dormant-account')({
+export const Route = createFileRoute('/_auth/progress-status-cert')({
   component: RouteComponent,
 });
 
@@ -42,15 +42,7 @@ function RouteComponent() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={`${authFormStyles.search_info} ${styles.search_info} ${styles.dormant}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={authFormStyles.txt}>본인인증 후 휴면계정 해제할 수 있습니다.</p>
-          </div>
-
-          <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
-            마지막 이용일 : <strong>YYYY-MM-DD</strong>
-            <br />
-            휴면 전환일 : <strong>YYYY-MM-DD</strong>
-            <br />
-            별도 분리 보관 정보항목 : <strong>아이디 및 회원정보</strong>
+            <p className={authFormStyles.txt}>본인인증 후 아이디를 확인 할 수 있습니다.</p>
           </div>
 
           <ContentsRow>
@@ -187,6 +179,10 @@ function RouteComponent() {
                   유의사항
                 </dt>
                 <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+                <dd>
+                  법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실
+                  수 있습니다.
+                </dd>
               </dl>
             </div>
             {/* 유의사항 모듈 */}

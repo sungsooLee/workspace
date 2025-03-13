@@ -159,11 +159,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  {/* 인증번호 콤포넌트 추가 */}
-                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
-                  <Button variant="gray" size="lg">
-                    재전송
-                  </Button>
+                  {/* 퍼블수정 20250313 : 인증번호 콤포넌트 추가 */}
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={300}
+                    placeholder="인증번호 입력"
+                    resetLabel="재전송"
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -342,11 +344,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  {/* 인증번호 콤포넌트 추가 */}
-                  <InputTimer startTimer={1} initialTime={300} placeholder="인증번호 입력" />
-                  <Button variant="gray" size="lg">
-                    재전송
-                  </Button>
+                  {/* 퍼블수정 20250313 : 인증번호 콤포넌트 추가 */}
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={300}
+                    placeholder="인증번호 입력"
+                    resetLabel="재전송"
+                  />
                 </div>
               </div>
             </ContentsRow>

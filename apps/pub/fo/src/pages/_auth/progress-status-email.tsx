@@ -6,9 +6,7 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
-import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
+import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 영역
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
@@ -23,11 +21,9 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={searchAccountFormStyles.txt}>
-              진행현황 확인을 위해 이메일을 입력해 주세요.
-            </p>
+            <p className={authFormStyles.txt}>진행현황 확인을 위해 이메일을 입력해 주세요.</p>
           </div>
 
           {/* OTP 인증폼 */}
@@ -35,14 +31,19 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>OTP 번호</span>
+                  <span className={formStyles.form_text}>이메일</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="password" placeholder="OTP 번호 입력" value="" />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="아이디(hyundai.kim@hyundail.com)"
+                    value=""
+                  />
                 </div>
               </div>
             </ContentsRow>

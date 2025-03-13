@@ -21,8 +21,9 @@ import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
 import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
-import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
+import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
@@ -124,15 +125,21 @@ const AuthSearchAccountRoute = AuthSearchAccountImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthProgressStatusResultRoute = AuthProgressStatusResultImport.update({
+  id: '/progress-status-result',
+  path: '/progress-status-result',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
   id: '/progress-status-email',
   path: '/progress-status-email',
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthProgressStatusRoute = AuthProgressStatusImport.update({
-  id: '/progress-status',
-  path: '/progress-status',
+const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+  id: '/progress-status-cert',
+  path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -450,11 +457,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPasswordModifyImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/progress-status': {
-      id: '/_auth/progress-status'
-      path: '/progress-status'
-      fullPath: '/progress-status'
-      preLoaderRoute: typeof AuthProgressStatusImport
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-email': {
@@ -462,6 +469,13 @@ declare module '@tanstack/react-router' {
       path: '/progress-status-email'
       fullPath: '/progress-status-email'
       preLoaderRoute: typeof AuthProgressStatusEmailImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-result': {
+      id: '/_auth/progress-status-result'
+      path: '/progress-status-result'
+      fullPath: '/progress-status-result'
+      preLoaderRoute: typeof AuthProgressStatusResultImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-account': {
@@ -770,8 +784,9 @@ interface AuthRouteChildren {
   AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
-  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
+  AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
@@ -787,8 +802,9 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthMpassCertRoute: AuthMpassCertRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
-  AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
+  AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
@@ -897,8 +913,9 @@ export interface FileRoutesByFullPath {
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
-  '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/progress-status-result': typeof AuthProgressStatusResultRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
@@ -951,8 +968,9 @@ export interface FileRoutesByTo {
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
-  '/progress-status': typeof AuthProgressStatusRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/progress-status-result': typeof AuthProgressStatusResultRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
@@ -1008,8 +1026,9 @@ export interface FileRoutesById {
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
-  '/_auth/progress-status': typeof AuthProgressStatusRoute
+  '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
+  '/_auth/progress-status-result': typeof AuthProgressStatusResultRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
@@ -1064,8 +1083,9 @@ export interface FileRouteTypes {
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
-    | '/progress-status'
+    | '/progress-status-cert'
     | '/progress-status-email'
+    | '/progress-status-result'
     | '/search-account'
     | '/search-id-success'
     | '/signup-step1'
@@ -1117,8 +1137,9 @@ export interface FileRouteTypes {
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
-    | '/progress-status'
+    | '/progress-status-cert'
     | '/progress-status-email'
+    | '/progress-status-result'
     | '/search-account'
     | '/search-id-success'
     | '/signup-step1'
@@ -1172,8 +1193,9 @@ export interface FileRouteTypes {
     | '/_auth/mpass-cert'
     | '/_auth/password-input'
     | '/_auth/password-modify'
-    | '/_auth/progress-status'
+    | '/_auth/progress-status-cert'
     | '/_auth/progress-status-email'
+    | '/_auth/progress-status-result'
     | '/_auth/search-account'
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
@@ -1255,8 +1277,9 @@ export const routeTree = rootRoute
         "/_auth/mpass-cert",
         "/_auth/password-input",
         "/_auth/password-modify",
-        "/_auth/progress-status",
+        "/_auth/progress-status-cert",
         "/_auth/progress-status-email",
+        "/_auth/progress-status-result",
         "/_auth/search-account",
         "/_auth/search-id-success",
         "/_auth/signup-step1",
@@ -1335,12 +1358,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/password-modify.tsx",
       "parent": "/_auth"
     },
-    "/_auth/progress-status": {
-      "filePath": "_auth/progress-status.tsx",
+    "/_auth/progress-status-cert": {
+      "filePath": "_auth/progress-status-cert.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-email": {
       "filePath": "_auth/progress-status-email.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-result": {
+      "filePath": "_auth/progress-status-result.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-account": {

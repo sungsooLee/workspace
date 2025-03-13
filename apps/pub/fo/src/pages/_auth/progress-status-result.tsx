@@ -2,13 +2,13 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoFormRequired, IcoSucess, IcoComplete, IcoCaution02 } from '@learnway/icons';
-import styles from './progress-status.module.css';
+import styles from './progress-status-result.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import { Button, Input, Select, ContentsRow, PhoneNumber } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/progress-status')({
+export const Route = createFileRoute('/_auth/progress-status-result')({
   component: RouteComponent,
 });
 
