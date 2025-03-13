@@ -23,6 +23,7 @@ import {
   InputTimer,
   ContentsRow,
   useModal,
+  PhoneNumber,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
@@ -119,17 +120,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
-                  />
-                  <Input
-                    id="name-1-6"
-                    type="text"
                     placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
                 </div>
@@ -307,17 +304,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
-                  />
-                  <Input
-                    id="name-1-6"
-                    type="text"
                     placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
                 </div>
