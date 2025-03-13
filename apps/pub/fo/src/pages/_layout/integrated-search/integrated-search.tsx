@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Tabs } from '@learnway/ui';
-import { IntegratedSearchProcedure } from '../../../features/layout/ui/integrated-search-procedure'; // 과정
-import { IntegratedSearchShorts } from '../../../features/layout/ui/integrated-search-shorts'; // 숏츠
-import { IntegratedSearchChannel } from '../../../features/layout/ui/integrated-search-channel'; // 채널
-import { IntegratedSearchRunning } from '../../../features/layout/ui/integrated-search-running'; // 러닝랩
-import { IntegratedSearchKnowledge } from '../../../features/layout/ui/integrated-search-knowledge'; // 지식공유
-import { IntegratedSearchCoaching } from '../../../features/layout/ui/integrated-search-coaching'; // 코칭
+import { Tabs, Select, Button } from '@learnway/ui';
+import { IcoArray, IcoDotpoints } from '@learnway/icons';
+import {
+  Arrays,
+  IntegratedSearchProcedure,
+  IntegratedSearchShorts,
+  IntegratedSearchChannel,
+  IntegratedSearchRunning,
+  IntegratedSearchKnowledge,
+  IntegratedSearchCoaching,
+} from '../../../features/layout';
 
 import styles from '@learnway/styles/fo/pages/_layout/integrated-search/integrated-search.module.css';
 
@@ -15,6 +19,22 @@ export const Route = createFileRoute('/_layout/integrated-search/integrated-sear
 });
 
 function RouteComponent() {
+  // 과정 탭 list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
+  const list_ui = () => {
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
+    } else {
+      setListUi('vertical'); // 세로형
+    }
+  };
+
+  // 과정 탭 소팅 필터
+  const arrays = {
+    items: ['정확도순', '최신순'],
+    initialSelectedItem: 0, // 초기 선택값
+  };
+
   const [selectedTabKey, selectedTabKey2] = useState<string>('a');
   const items = [
     {
@@ -23,7 +43,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_all}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -40,6 +60,16 @@ function RouteComponent() {
 
           {/* 과정 */}
           <IntegratedSearchProcedure />
+          {/* 숏츠 */}
+          <IntegratedSearchShorts />
+          {/* 채널 */}
+          <IntegratedSearchChannel />
+          {/* 러닝랩 */}
+          <IntegratedSearchRunning />
+          {/* 지식공유 */}
+          <IntegratedSearchKnowledge />
+          {/* 코칭 */}
+          <IntegratedSearchCoaching />
         </div>
       ),
     },
@@ -49,18 +79,33 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_procedure}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
                 <strong>"파이씬"</strong> 검색결과
               </p>
             </div>
-
-            <div className={styles.proposal_txt}>
-              <strong>제안</strong>
-              <p>"파이씬" 로 검색한 결과입니다.</p>
-              <Link to="">'파이썬' 검색결과 보기</Link>
+            <div className={styles.classify}>
+              <Arrays arraysData={arrays}></Arrays>
+              <div className={styles.box}>
+                <Select
+                  options={[
+                    { value: '20', label: '20개씩' },
+                    { value: '50', label: '50개씩' },
+                    { value: '80', label: '80개씩' },
+                  ]}
+                />
+              </div>
+              <div className={styles.box}>
+                <Button onClick={list_ui}>
+                  {listUi === 'horizontal' ? (
+                    <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                  ) : (
+                    <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -75,7 +120,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_shorts}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -101,7 +146,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_channel}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -127,7 +172,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_running}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -153,7 +198,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_knowledge}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>
@@ -179,7 +224,7 @@ function RouteComponent() {
       count: true,
       number: '5',
       content: (
-        <div className={styles.tab01}>
+        <div className={styles.tab_coaching}>
           <div className={styles.result_txt_box}>
             <div className={styles.result_txt}>
               <p>

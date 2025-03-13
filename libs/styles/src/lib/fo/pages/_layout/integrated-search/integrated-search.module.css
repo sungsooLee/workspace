@@ -25,5 +25,24 @@
         }
       }
     }
+
+    .tab_procedure {
+      @apply mt-[24px];
+      .result_txt_box {
+        @apply flex items-center justify-between;
+        .classify {
+          @apply flex items-center;
+          > div {
+            @apply relative flex items-center;
+            & + div {
+              @apply ml-[24px] pl-[24px];
+              &::before {
+                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

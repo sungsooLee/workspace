@@ -45,6 +45,12 @@ function RouteComponent() {
     }
   };
 
+  // 퍼블수정 20250313 : 리스트 소팅 조건 값들 (최신순, 과정명순, 조회순) 넣기
+  const arrays = {
+    items: ['최신순', '과정명순', '조회순'],
+    initialSelectedItem: 0, // 초기 선택값
+  };
+
   return (
     <div className={styles.start}>
       <div className={styles.swiper}>
@@ -115,7 +121,8 @@ function RouteComponent() {
             </span>
           </div>
           <div className={styles.right}>
-            <Arrays className={styles.array}></Arrays>
+            {/* 퍼블수정 20250313 : arraysData 데이터 삽입 */}
+            <Arrays arraysData={arrays} className={styles.array}></Arrays>
             <div className={styles.box}>
               <Select
                 options={[
