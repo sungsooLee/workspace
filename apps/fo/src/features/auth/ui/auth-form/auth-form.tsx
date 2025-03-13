@@ -92,19 +92,8 @@ function AuthFormComponent({
     });
 
     const data = getValues();
-    try {
-      validator(data);
-    } catch (e) {
-      console.log('validator', (e as any)?.ZodError);
-      if (isArray(e)) {
-        console.log('e is array');
-        (e ?? []).forEach((error: any) => {
-          console.log('error', error);
-          setFormError(error.path[0], 'eeeee');
-        });
-      }
-      return;
-    }
+
+    validator(data);
 
     const payload = {
       name: data.name,
