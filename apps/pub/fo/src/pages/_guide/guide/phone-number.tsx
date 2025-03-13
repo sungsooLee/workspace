@@ -31,6 +31,7 @@ function RouteComponent() {
                 { value: 'type2', label: '016' },
                 { value: 'type3', label: '017' },
               ]}
+              size="lg"
             />
           </div>
         </div>

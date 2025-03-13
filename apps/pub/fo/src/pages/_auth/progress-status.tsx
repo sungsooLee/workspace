@@ -6,7 +6,7 @@ import styles from './progress-status.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
-import { Button, Input, Select, ContentsRow } from '@learnway/ui';
+import { Button, Input, Select, ContentsRow, PhoneNumber } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
   component: RouteComponent,
@@ -131,15 +131,15 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>휴대폰번호</span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.short}
+                  {/* 퍼블수정 20250313 : 공통 변경 */}
+                  <PhoneNumber
                     options={[
                       { value: 'type1', label: '+82' },
                       { value: 'type2', label: '+83' },
                     ]}
                     size="lg"
+                    placeholder="-없이 휴대폰 번호입력(0102345678)"
                   />
-                  <Input id="name-1-6" type="text" placeholder="- 제외한 숫자만 입력" />
                 </div>
               </div>
             </ContentsRow>

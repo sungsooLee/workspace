@@ -48,8 +48,7 @@ function RouteComponent() {
           </div>
 
           {/* 유의사항 모듈 */}
-          <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -60,7 +59,7 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={`${googleOtpGuideButtonStyles.start} ${styles.btn_wrap}`}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
