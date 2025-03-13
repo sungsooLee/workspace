@@ -3,19 +3,16 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
-import searchAccountFormStyles from './search-account-form.module.css';
 
-import authToolFormFieldStyles from './auth-tool-form-field.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css'; // 페이지모듈
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
+import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 영역
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css'; // 블루박스
+import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
 
 import { GoogleCertGuidePopup } from '../../features/auth';
-
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-// import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
-import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 
 import {
   Button,
@@ -41,7 +38,7 @@ function RouteComponent() {
       key: 'a',
       content: (
         <>
-          <div className={searchAccountFormStyles.search_info}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 아이디를 확인 할 수 있습니다.
           </div>
@@ -187,7 +184,7 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={authFormStyles.btn_wrap}>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>
@@ -205,7 +202,7 @@ function RouteComponent() {
       key: 'b',
       content: (
         <>
-          <div className={searchAccountFormStyles.search_info}>
+          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 비밀번호를 재설정 할 수 있습니다.
           </div>
@@ -245,7 +242,7 @@ function RouteComponent() {
           {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
-          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -363,8 +360,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 유의사항 모듈 - 비번 찾기일때 내용 */}
-            <div
-              className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
                   <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -375,7 +371,7 @@ function RouteComponent() {
                   법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실
                   수 있습니다.
                   <Button
-                    className={cn(styles.link, 'auth--otp-guide-link')}
+                    className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                     onClick={() =>
                       openModal({
                         title: 'FIDO 인증',
@@ -391,7 +387,7 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={authFormStyles.btn_wrap}>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>

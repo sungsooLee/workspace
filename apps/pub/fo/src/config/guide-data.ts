@@ -204,20 +204,20 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '휴먼계정해제_휴대폰인증',
-    pageId: '',
+    pageId: 'dormant-account',
     screenId: 'NLP_FO_LOG_1018', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '휴먼계정해제_이메일인증',
-    pageId: '',
+    pageId: 'dormant-account',
     screenId: 'NLP_FO_LOG_1019', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
     remarks: '',
   },

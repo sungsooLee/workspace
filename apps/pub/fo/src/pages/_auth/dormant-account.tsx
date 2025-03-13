@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
-import searchAccountFormStyles from './search-account-form.module.css';
+// import searchAccountFormStyles from './search-account-form.module.css';
 
 import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 
@@ -181,8 +181,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
-            <div
-              className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
                   <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -193,7 +192,7 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={authFormStyles.btn_wrap}>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>
