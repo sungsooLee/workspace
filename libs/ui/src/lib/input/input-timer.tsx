@@ -1,10 +1,11 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useCounter } from 'react-use';
 
-import { duration } from '@learnway/shared';
+import { duration, cn } from '@learnway/shared';
 
 import { Input, InputProps } from './input';
 import { Button } from '../button/button';
+import styles from './input-timer.module.css';
 
 export interface InputTimerProps extends InputProps {
   // 타이머 시작 유무
@@ -59,9 +60,9 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
     };
 
     return (
-      <div>
-        <Input {...props} timerText={timerText} />
-        <Button variant="gray" size="lg" onClick={() => handleReset()}>
+      <div className={cn(styles.start, styles.input_timer)}>
+        <Input {...props} timerText={timerText} className={styles.input_area} />
+        <Button className={styles.btn} variant="gray2" size="lg" onClick={() => handleReset()}>
           {resetLabel}
         </Button>
       </div>
