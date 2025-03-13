@@ -1,1 +1,1 @@
-export * from './ui/category-popover/category-popover';
+export * from './ui/category-button/category-button';

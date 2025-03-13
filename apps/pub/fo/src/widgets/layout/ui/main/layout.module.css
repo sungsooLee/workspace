@@ -8,5 +8,8 @@
     .breadcrums {
       @apply flex h-[46px] items-center bg-[var(--gray1)];
     }
+    .related {
+      @apply flex h-[82px] items-center bg-[var(--gray1)];
+    }
   }
 }

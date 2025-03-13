@@ -36,10 +36,10 @@ export interface ModalContainerProps {
 // TODO: rename : ModalControl > useModalReturnValue
 export interface ModalControl {
   modals: ModalConfig[];
-  open: (props: ModalConfig) => void;
+  open: (props: ModalConfig) => Promise<any>;
   close: (data?: any) => void;
   closeAll: () => void;
-  alert: (props: AlertComponentProps) => void;
-  confirm: (props: any) => void;
+  alert: (props: AlertComponentProps | string) => void;
+  confirm: (props: AlertComponentProps | string) => void;
   openAsync: <T = any>(props: ModalConfig) => Promise<any>;
 }

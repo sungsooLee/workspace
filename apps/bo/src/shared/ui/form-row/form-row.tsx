@@ -16,6 +16,7 @@ import { Builder, DynamicFormField } from '../dynamic-form-field';
 import { dialogConfig } from './config';
 import { FormRowProps } from './type';
 import { Button, Tooltip } from '@learnway/ui';
+import { FormGuideText } from './form-guid-text';
 
 /**
  * getBuilderConfig
@@ -124,6 +125,9 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   // 에러 상태를 관리하는 상태값 (초기: 에러 없음)
   const [error, setError] = useState<{ isError: boolean; message?: string }>({ isError: false });
 
+  const [guideText, setGuideText] = useState<string>('');
+
+  const onChangeGuideText = (text: string) => setGuideText(text);
   /**
    * renderChild
    * -----------------------------------------------------------------
@@ -136,6 +140,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
    */
   const renderChild = (child: ReactNode): ReactNode => {
     if (!isValidElement(child)) return child;
+    // FormGuideText는 제외하고 렌더링하지 않음
 
     // DynamicFormField인 경우: 해당 필드의 설정에 따라 추가 props 주입
     if (child.type === DynamicFormField) {
@@ -147,6 +152,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       return cloneElement(child, {
         ...formConfig, // 빌더 설정값 (예: label, description 등)
         ...providerProps, // provider에서 전달받은 추가 props들
+        onChangeGuideText,
         control, // react-hook-form control
         name: child.props.name, // 기존의 name prop 유지
         component:
@@ -189,9 +195,6 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         errorMessage = errorMessage.replace(`{{label}}`, rootConfig.label || '');
       }
     }
-    /*console.log('formState.errors => ', formState.errors);
-    console.log('formState.errors => ', formState.errors['translations']);
-    console.log(formState.errors?.translations);*/
     setError({
       isError: !!errorMessage,
       message: errorMessage,
@@ -232,11 +235,12 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
       <div className={styles.input_box}>{Children.map(children, renderChild)}</div>
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {!error.isError && rootConfig?.guideText && (
-        <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
-          {rootConfig.guideText}
-        </p>
-      )}
+      {!error.isError &&
+        (guideText ? (
+          <FormGuideText>{guideText}</FormGuideText>
+        ) : (
+          rootConfig.guideText && <FormGuideText>{rootConfig.guideText}</FormGuideText>
+        ))}
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
           {error.message}

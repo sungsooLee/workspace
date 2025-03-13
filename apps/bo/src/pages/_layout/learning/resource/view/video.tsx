@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
 import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, DateRangePicker } from '@learnway/ui';
+import { Button, ContentsRow, DateRangePicker, InputModalButtonFormField } from '@learnway/ui';
 import { z } from '@learnway/shared';
 import { selectStyles } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
@@ -15,7 +15,8 @@ import { TempSearchPopup } from '../../../../../features/learning/ui/resource/te
 import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
 import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
-import { FormSubtitles } from '../../../../../features/learning';
+import { ChannelChoicePopup, FormSubtitles } from '../../../../../features/learning';
+import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
@@ -28,9 +29,7 @@ function RouteComponent() {
   const handleFormSubmit = (data: any) => {
     console.log(data);
   };
-  useEffect(() => {
-    console.log(state);
-  }, []);
+
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -54,7 +53,12 @@ function RouteComponent() {
             <FormRow provider={provider}>
               {/* 채널 */}
               <DynamicFormField name={'channel'}>
-                <TempSearchPopup />
+                <InputModalButtonFormField
+                  modalConfig={{
+                    content: <ChannelChoicePopup />,
+                    footer: true,
+                  }}
+                />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -93,13 +97,13 @@ function RouteComponent() {
           <FormDisplay provider={provider} dependencies={[{ name: 'expirationDate', value: true }]}>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'subtitles'}>
-                  <FormSubtitles />
+                <DynamicFormField name={'expirationDateFrom'}>
+                  <DateRangePickerFormField />
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
           </FormDisplay>
-
+          {/*외주개발업체 정보*/}
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
@@ -185,38 +189,15 @@ const formConfig: DynamicFormConfig = {
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
     {
-      label: t('자막여부'),
-      name: 'isSubtitles',
-      type: 'switch',
-      value: true,
-    },
-    {
-      name: 'subtitles',
+      name: 'expirationDateFrom',
       type: 'custom',
-      value: [],
+      value: '',
+      guideText: '사용기한 가이드 텍스트',
     },
     {
-      label: t('검수확인'),
-      name: 'isInspectionConfirmed',
-      type: 'checkbox',
-      guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
-      value: false,
-    },
-    {
-      label: t('저작권확인'),
-      name: 'isCopyrightConfirmed',
-      guideText:
-        '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
-      type: 'checkbox',
-      value: false,
-    },
-    {
-      label: t('보안확인'),
-      name: 'isSecurityConfirmed',
-      guideText:
-        '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
-      type: 'checkbox',
-      value: false,
+      name: 'expirationDateTo',
+      type: 'custom',
+      value: '',
     },
     {
       label: t('외주개발업체정보'),
@@ -266,6 +247,40 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       value: [],
     },
+    {
+      label: t('자막여부'),
+      name: 'isSubtitles',
+      type: 'switch',
+      value: true,
+    },
+    {
+      name: 'subtitles',
+      type: 'custom',
+      value: [],
+    },
+    {
+      label: t('검수확인'),
+      name: 'isInspectionConfirmed',
+      type: 'checkbox',
+      guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
+      value: false,
+    },
+    {
+      label: t('저작권확인'),
+      name: 'isCopyrightConfirmed',
+      guideText:
+        '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
+      type: 'checkbox',
+      value: false,
+    },
+    {
+      label: t('보안확인'),
+      name: 'isSecurityConfirmed',
+      guideText:
+        '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
+      type: 'checkbox',
+      value: false,
+    },
   ],
   validator: {
     /*channel: z.string().required(),*/
@@ -279,6 +294,15 @@ const formConfig: DynamicFormConfig = {
     isCopyrightConfirmed: z.boolean().refine((value) => !value, {}),
     isSecurityConfirmed: z.boolean().refine((value) => !value, {}),
   },
+  /*globalValidator: (({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords don't match",
+        path: ['confirmPassword'],
+      });
+    }
+  });*/
 };
 
 const VideoThumbnailExtractor: React.FC = () => {

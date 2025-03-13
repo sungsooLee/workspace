@@ -106,6 +106,4 @@ export interface FormDialogItem {
 export interface CommonReactElementProps {
   className?: string;
   style?: React.CSSProperties;
-  setModalData?: (value: any) => void; // modal 에서 onClose 할때 사용할 데이터 set state 함수
-  closeModal?: (value?: any) => void; // modal 에서 onClose 하기위한 prop
 }

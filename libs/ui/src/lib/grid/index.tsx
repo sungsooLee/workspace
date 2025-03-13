@@ -29,6 +29,7 @@ import {
   IcoChevronRight,
   IcoChevronRightDouble,
   IcoGridFilter,
+  IcoGridOrder,
 } from '@learnway/icons';
 
 import { GridImperative, GridProps } from './types/grid';
@@ -510,24 +511,40 @@ const Grid = forwardRef(
                           className={cn(
                             'th_cell',
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                            'min-h-[40px] text-[12px] font-bold uppercase text-[#5C636E]',
+                            'font-bold uppercase text-[#5C636E]',
                           )}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(header.column.columnDef.header, header.getContext())}
                           {{
-                            asc: ' 🔼',
-                            desc: ' 🔽',
+                            asc: (
+                              <IcoGridOrder
+                                width={7}
+                                height={4}
+                                fill={'#00afd5'}
+                                stroke={'#00afd5'}
+                                className="icon_up"
+                              />
+                            ),
+                            desc: (
+                              <IcoGridOrder
+                                width={7}
+                                height={4}
+                                fill={'#00afd5'}
+                                stroke={'#00afd5'}
+                                className="icon_down"
+                              />
+                            ),
                           }[header.column.getIsSorted() as string] ?? null}
                           {/* 필터 */}
                           {header.column.columnDef.meta?.filterType && (
-                            <button
+                            <Button
                               type="button"
                               onClick={(e) => openFilterPopup(e, header.column)}
                               className="btn_filter">
                               <IcoGridFilter width={16} height={16} />
-                            </button>
+                            </Button>
                           )}
                         </div>
                       </div>

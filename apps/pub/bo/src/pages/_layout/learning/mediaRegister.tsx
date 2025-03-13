@@ -3,8 +3,10 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
-import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
-import dynamicFormStyles from '../../../assets/styles/modules/dynamic.form.module.css'; // form css
+/* 퍼블수정 20240312 : libs로 경로 수정 S  */
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+/* 퍼블수정 20240312 : libs로 경로 수정 E  */
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
 import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
@@ -24,6 +26,7 @@ import {
   List,
   Checkbox,
   RadioGroup,
+  InputModalButtonFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -298,6 +301,7 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -310,31 +314,28 @@ function RouteComponent() {
               </label>
               {/* file upload case */}
               <div className={formStyles.input_box}>
-                <div className={formStyles.search_wrap}>
-                  <Input
-                    id="name-channel"
-                    type="text"
-                    placeholder="채널명을 선택하세요."
-                    value="채널명노출"
-                    borderNone
-                    className={formStyles.input}
-                  />
-                  <Button
-                    className={formStyles.btn_search}
-                    onClick={() =>
-                      openModal({
-                        title: '',
-                        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                        content: <ModalChannelContent />,
-                        footer: true,
-                      })
-                    }>
-                    <IcoSearch className={formStyles.icon_search} />
-                  </Button>
-                </div>
+                <InputModalButtonFormField
+                  modalConfig={{
+                    title: '',
+                    width: 'md',
+                    content: <ModalChannelContent />,
+                    footer: (
+                      <>
+                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
+                        <Button
+                          label={'확인'}
+                          variant={'primary'}
+                          size={'lg'}
+                          actionKey={'confirm'}
+                        />
+                      </>
+                    ),
+                  }}
+                />
               </div>
             </div>
           </ContentsRow>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -381,6 +382,7 @@ function RouteComponent() {
               <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </ContentsRow>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-manager" className={formStyles.form_label}>
@@ -391,28 +393,24 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={formStyles.search_wrap}>
-                  <Input
-                    id="name-manager"
-                    type="text"
-                    placeholder="담당자를 선택하세요."
-                    value="담당자명"
-                    borderNone
-                    className={formStyles.input}
-                  />
-                  <Button
-                    className={formStyles.btn_search}
-                    onClick={() =>
-                      openModal({
-                        title: '',
-                        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                        content: <ModalManagerContent />,
-                        footer: true,
-                      })
-                    }>
-                    <IcoSearch className={formStyles.icon_search} />
-                  </Button>
-                </div>
+                <InputModalButtonFormField
+                  modalConfig={{
+                    title: '',
+                    width: 'md',
+                    content: <ModalManagerContent />,
+                    footer: (
+                      <>
+                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
+                        <Button
+                          label={'확인'}
+                          variant={'primary'}
+                          size={'lg'}
+                          actionKey={'confirm'}
+                        />
+                      </>
+                    ),
+                  }}
+                />
               </div>
             </div>
             <div className={formStyles.form_item}>
@@ -436,7 +434,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 2025-03-10 수정 */}
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow type="horizontal">
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -636,37 +634,35 @@ function RouteComponent() {
             </ContentsRow>
           )}
           {/* 2025-03-10 수정 */}
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={formStyles.search_wrap}>
-                  <Input
-                    id="name-source"
-                    type="text"
-                    placeholder="출처를 선택하세요."
-                    value="유투브"
-                    borderNone
-                    className={formStyles.input}
-                  />
-                  <Button
-                    className={formStyles.btn_search}
-                    onClick={() =>
-                      openModal({
-                        title: '',
-                        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                        content: <ModalSourceContent />,
-                        footer: true,
-                      })
-                    }>
-                    <IcoSearch className={formStyles.icon_search} />
-                  </Button>
-                </div>
+                <InputModalButtonFormField
+                  modalConfig={{
+                    title: '',
+                    width: 'md',
+                    content: <ModalSourceContent />,
+                    footer: (
+                      <>
+                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
+                        <Button
+                          label={'확인'}
+                          variant={'primary'}
+                          size={'lg'}
+                          actionKey={'confirm'}
+                        />
+                      </>
+                    ),
+                  }}
+                />
               </div>
             </div>
           </ContentsRow>
+          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-url" className={formStyles.form_label}>
