@@ -9,8 +9,6 @@ import {
   ReactElement,
 } from 'react';
 import { DynamicFormProvider, ErrorState, FormConfig, FormFieldConfig } from './type';
-import { Builder } from 'postcss';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 
 /**
  * getBuilderConfig
@@ -80,7 +78,7 @@ const collectNames = (children: ReactNode): string[] => {
   const traverse = (child: ReactNode) => {
     if (!isValidElement(child)) return;
     // DynamicFormField인 경우 name 값을 수집
-    if (child.type === DynamicFormField) {
+    if ((child.type as any).displayName === 'DynamicFormField') {
       names.push(child.props.name);
     }
     // 자식이 있으면 재귀적으로 순회
@@ -116,7 +114,7 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
   const renderFormRowContent = (child: ReactNode, formFieldConfig: FormFieldConfig): ReactNode => {
     if (!isValidElement(child)) return child;
 
-    if (child.type === DynamicFormField) {
+    if ((child.type as any).displayName === 'DynamicFormField') {
       const formConfig = getBuilderConfig(provider.builders, child.props.name);
 
       const FormComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
