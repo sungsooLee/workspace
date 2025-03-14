@@ -85,6 +85,12 @@
 .nlp-select__clear-indicator {
   @apply mr-[8px];
 }
+.nlp-select__multi-value {
+  @apply !m-0 flex h-[23px] items-center justify-center !rounded-full bg-[var(--gray2)] px-[6px] !text-[14px] text-[var(--gray9)];
+  & + .nlp-select__multi-value {
+    @apply !ml-[4px];
+  }
+}
 /* 
 .lg {
   .nlp-select__control {

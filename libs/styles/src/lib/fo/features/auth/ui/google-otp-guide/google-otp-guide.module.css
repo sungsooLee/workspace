@@ -1,6 +1,6 @@
 .start {
   &.google_cert_guide_popup {
-    @apply py-[16px];
+    @apply pb-[16px];
   }
   .btn_box {
     @apply mt-[16px];
