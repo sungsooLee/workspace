@@ -105,11 +105,6 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       setSelectedOptions(newOptions);
     };
 
-    const handleOverChipClick = () => {
-      console.log('xxxxxx');
-      openAlert('기획...');
-    };
-
     return (
       <div
         {...props}

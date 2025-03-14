@@ -1,15 +1,15 @@
-import { forwardRef, useEffect, useState } from 'react';
-import { t } from 'i18next';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import { ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
+import { BaseFormFieldProps, FormFieldProps } from '@learnway/hooks';
 
 export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
-  value?: any;
-  onChange?: (value: any) => void;
+  // value?: any;
+  // onChange?: (value: any) => void;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
 }
@@ -21,20 +21,16 @@ export interface ChipListModalSelectorFormFieldProps {
  * @param props
  * @constructor
  */
-const ChipListModalSelectorFormFieldComponent = forwardRef<
+const ChipListModalSelectorFormFieldComponent: FormFieldProps<
+  ChipListModalSelectorFormFieldProps,
   HTMLDivElement,
-  ChipListModalSelectorFormFieldProps
->(
+  any[]
+> = forwardRef<HTMLDivElement, BaseFormFieldProps<any[]> & ChipListModalSelectorFormFieldProps>(
   (
     {
       modalConfig,
       value = [],
       onChange: ownerOnChange,
-      button: buttonProps = {
-        variant: 'point',
-        size: 'sm',
-        label: t('선택'),
-      },
       chipList: chipListProps = {
         labelField: 'label',
         valueField: 'value',
@@ -68,9 +64,10 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     return (
       <ChipList
         {...chipListProps}
-        onChipListClick={handleChipListClick}
+        // value={value}
         options={selectedChipOptions}
         onChange={handleChipListChange}
+        onChipListClick={handleChipListClick}
       />
       // <div ref={ref} className={'border-1 h-[50px] w-full bg-amber-500'}>
       //   {/*<Button {...buttonProps} onClick={handleButtonOnClick} />*/}
