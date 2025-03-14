@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Button, OptionCard } from '@learnway/ui';
+import { Button, OptionCard, useModal } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
 import eBookstyles from './eBook.module.css';
 import {
-  IcoMybook,
   IcoBlog,
   IcoEntrust,
-  IcoInfoCircle,
+  IcoEtc,
+  IcoHtml,
   IcoImage01,
+  IcoInfoCircle,
+  IcoMybook,
   IcoVideo01,
   IcoVideo02,
-  IcoHtml,
-  IcoEtc,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
@@ -147,7 +147,7 @@ function RouteComponent() {
                 hideCloseButton: true,
                 width: 'auto',
                 content: <EbookContent />,
-                footer: <EbookFooter />,
+                // footer: <EbookFooter />,
               });
           }}
         />
@@ -162,7 +162,7 @@ function RouteComponent() {
         title: '',
         width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <TypeSelectContent />,
-        footer: <CustomFooter />,
+        // footer: <CustomFooter />,
       });
       hasRun.current = true;
     }

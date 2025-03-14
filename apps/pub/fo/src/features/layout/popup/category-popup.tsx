@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Carousel } from '@/libs/ui/src';
-import { Chips, Button } from '@learnway/ui';
+import { Button, Chip } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowForward, IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 
 import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
 import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
@@ -14,11 +14,11 @@ import styles from './category-popup.module.css';
 const CategoryPopupComponent = () => {
   // 상단 배너 스와이퍼
   const items = [
-    <Chips option={{ label: '기업경영', value: 'a' }} />,
-    <Chips option={{ label: 'Ai교육', value: 'b' }} />,
-    <Chips option={{ label: 'IT', value: 'c' }} />,
-    <Chips option={{ label: '마케팅', value: 'd' }} />,
-    <Chips option={{ label: '경영/기획', value: 'e' }} />,
+    <Chip option={{ label: '기업경영', value: 'a' }} />,
+    <Chip option={{ label: 'Ai교육', value: 'b' }} />,
+    <Chip option={{ label: 'IT', value: 'c' }} />,
+    <Chip option={{ label: '마케팅', value: 'd' }} />,
+    <Chip option={{ label: '경영/기획', value: 'e' }} />,
   ];
 
   const categories = [

@@ -60,7 +60,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'point'} size={'sm'} onClick={() => closeModal()} />
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );

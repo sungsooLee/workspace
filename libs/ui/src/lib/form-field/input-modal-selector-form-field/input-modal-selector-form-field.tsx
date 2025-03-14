@@ -1,11 +1,11 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { Input, InputProps } from '../../input/input';
-import styles from './input-modal-button-form-field.module.css';
+import styles from './input-modal-selector-form-field.module.css';
 import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 
-interface InputModalButtonFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputModalSelectorFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
   modalConfig: ModalConfig;
   value?: any;
   onChange?: (value: any) => void;
@@ -13,9 +13,9 @@ interface InputModalButtonFormFieldComponentProps extends InputHTMLAttributes<HT
   onFormChange?: (value?: any) => void;
 }
 
-const InputModalButtonFormFieldComponent = forwardRef<
+const InputModalSelectorFormFieldComponent = forwardRef<
   HTMLInputElement,
-  InputModalButtonFormFieldComponentProps
+  InputModalSelectorFormFieldComponentProps
 >(
   (
     {
@@ -47,4 +47,4 @@ const InputModalButtonFormFieldComponent = forwardRef<
   },
 );
 
-export const InputModalButtonFormField = InputModalButtonFormFieldComponent;
+export const InputModalSelectorFormField = InputModalSelectorFormFieldComponent;

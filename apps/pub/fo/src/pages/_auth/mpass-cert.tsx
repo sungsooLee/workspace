@@ -1,16 +1,13 @@
-import { isMobile } from 'react-device-detect';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { IcoCaution, IcoFaceId01, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 찾기폼
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
-
-import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
@@ -112,7 +109,6 @@ function RouteComponent() {
                   title: 'FIDO 인증',
                   width: 'sm',
                   content: <MpassPopup />,
-                  footer: true,
                 })
               }>
               MPASS 인증

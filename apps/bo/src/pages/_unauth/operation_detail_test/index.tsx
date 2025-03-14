@@ -6,7 +6,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -65,7 +65,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'channel'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelListModal />,
                   }}
@@ -143,21 +143,10 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerListModal />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'sm'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </DynamicFormField>

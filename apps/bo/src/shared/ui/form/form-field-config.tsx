@@ -3,7 +3,7 @@ import {
   FormRadioGroup,
   FormTextarea,
   Input,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
   Textarea,
 } from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
@@ -20,7 +20,7 @@ export const formFieldConfig: FormFieldConfig = {
   dropdown: SelectFormField,
   switch: SwitchFormField,
   textarea: Textarea,
-  'text-popup-button': InputModalButtonFormField,
+  'text-popup-button': InputModalSelectorFormField,
   'text-area': FormTextarea,
   translationBox: FormTranslationBox,
 };

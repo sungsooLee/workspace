@@ -12,34 +12,34 @@ import searchStyles from './search.module.css'; // search css
 import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
-  Spinner,
-  Input,
-  Textarea,
   Button,
-  Tooltip,
-  DatePicker,
-  Switch,
-  Select,
-  ThumbnailImageUpload,
-  ChipList,
-  SelectOption,
-  ContentsRow,
-  List,
   Checkbox,
-  RadioGroup,
-  InputModalButtonFormField,
+  ChipList,
+  ContentsRow,
+  DatePicker,
+  Input,
+  InputModalSelectorFormField,
+  List,
   PhoneNumber,
+  RadioGroup,
+  Select,
+  SelectOption,
+  Spinner,
+  Switch,
+  Textarea,
+  ThumbnailImageUpload,
+  Tooltip,
+  useModal,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
-  IcoFormRequired,
-  IcoStatusFail,
   IcoAlertCircle,
-  IcoSearch,
-  IcoRefresh02,
   IcoCloseCircle,
+  IcoFormRequired,
+  IcoRefresh02,
+  IcoSearch,
+  IcoStatusFail,
 } from '@learnway/icons';
-import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
@@ -315,7 +315,7 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -328,28 +328,17 @@ function RouteComponent() {
               </label>
               {/* file upload case */}
               <div className={formStyles.input_box}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     title: '',
                     width: 'md',
                     content: <ModalChannelContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -396,7 +385,7 @@ function RouteComponent() {
               <p className={cn(formStyles.guide_text)}>기본 메시지</p>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-manager" className={formStyles.form_label}>
@@ -407,22 +396,11 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     title: '',
                     width: 'md',
                     content: <ModalManagerContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
@@ -447,7 +425,7 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
           <ContentsRow type="horizontal">
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -529,7 +507,7 @@ function RouteComponent() {
                           <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
                         </label>
                         <div className={formStyles.input_box}>
-                          <InputModalButtonFormField
+                          <InputModalSelectorFormField
                             modalConfig={{
                               title: '',
                               width: 'md',
@@ -665,35 +643,24 @@ function RouteComponent() {
             </ContentsRow>
           )}
           {/* 2025-03-10 수정 */}
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 S  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
               </label>
               <div className={formStyles.input_box}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     title: '',
                     width: 'md',
                     content: <ModalSourceContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
             </div>
           </ContentsRow>
-          {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
+          {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-url" className={formStyles.form_label}>

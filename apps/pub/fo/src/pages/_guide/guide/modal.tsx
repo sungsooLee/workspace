@@ -65,7 +65,6 @@ const { open: openModal } = useModal();`}
                   title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <BasicModalContent />,
-                  footer: true,
                 })
               }>
               모달 팝업 열기
@@ -110,7 +109,7 @@ onClick={() =>
                   title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <BasicModalContent />,
-                  footer: <CustomFooter />,
+                  // footer: <CustomFooter />,
                 })
               }>
               모달 팝업 열기
@@ -140,7 +139,6 @@ onClick={() =>
       title: '타이틀',
       width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
       content: <BasicModalContent />,
-      footer: <CustomFooter />,
     })
   }>
   모달 팝업 열기
@@ -241,7 +239,6 @@ const { close: closeModal } = useModal();
         title: '구글 OTP 인증키 생성',
         width: 'sm',
         content: <GoogleCert2Popup />,
-        footer: true,
       });
     });
   }}>
