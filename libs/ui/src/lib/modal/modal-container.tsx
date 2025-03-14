@@ -25,7 +25,7 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({ title, childre
         <Primitive.Description className={styles.description}>{DescSlot}</Primitive.Description>
       )}
       {/* body */}
-      <div className={cn(styles.contents)}>{BodySlot}</div>
+      <div className={cn(styles.contents, 'modal-content')}>{BodySlot}</div>
       {/* footer */}
       {FooterSlot && <div className={styles.footer}>{FooterSlot}</div>}
     </div>
