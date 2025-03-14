@@ -17,12 +17,34 @@ import {
   // List,
   // Checkbox,
   // RadioGroup,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  useModal,
+  ChipListModalSelectorFormField,
 } from '@learnway/ui';
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from './page-content.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form css
 import searchStyles from './search.module.css'; // search css
 import { cn } from '@/libs/shared/src';
+
+const ContentModal = () => {
+  const { close: closeModal } = useModal();
+  return (
+    <ModalContainer>
+      <ModalTitle>{'타이틀'}</ModalTitle>
+      <ModalBody>
+        <p>컨텐츠 영역</p>
+      </ModalBody>
+      <ModalFooter>
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+      </ModalFooter>
+    </ModalContainer>
+  );
+};
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,
@@ -217,6 +239,16 @@ function RouteComponent() {
                 조회
               </Button>
             </div>
+          </div>
+          <div>
+            <ChipListModalSelectorFormField
+              modalConfig={{ content: <ContentModal /> }}
+              chipList={{
+                labelField: 'name',
+                valueField: 'value',
+                hideBorder: true,
+              }}
+            />
           </div>
         </div>
       </PageContainer>
