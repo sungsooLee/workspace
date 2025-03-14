@@ -1,5 +1,5 @@
 /* auto-complete.module.css */
-.nlp-select__dropdown-indicator {
+.hide_arrow .nlp-select__dropdown-indicator {
   @apply !hidden;
 }
 .nlp-select__indicators {

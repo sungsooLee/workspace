@@ -85,6 +85,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       isClearable = false,
       label,
       hideLabel = false,
+      hideArrow = false,
       size = 'sm',
       variant = 'default',
       className = '',

@@ -33,6 +33,7 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
       hideLabel = false,
       size = 'sm',
       variant = 'default',
+      hideArrow = true,
       className = '',
       name,
       onBlur,
@@ -46,6 +47,7 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
       typeof window !== 'undefined' ? `dropdown-${Math.random().toString(36).substring(2, 9)}` : '';
     const dropdownClass = cn(
       `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
+      hideArrow && 'hide_arrow',
     );
     const customProps = {
       'data-variant': variant,
