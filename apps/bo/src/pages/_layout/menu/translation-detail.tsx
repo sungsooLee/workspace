@@ -5,9 +5,9 @@ import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/conte
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { t } from 'i18next';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/menu/translation-detail')({
   component: RouteComponent,

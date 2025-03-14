@@ -32,6 +32,8 @@ export type BaseFormFieldConfigProps<T = string> = {
   guideText?: string;
   /* 서브 텍스트 */
   subText?: string;
+
+  [key: string]: any;
 };
 
 /**
@@ -90,7 +92,7 @@ export type FormConfig =
     })
   | (BaseFormFieldConfigProps<any> & {
       /** 필드 타입이 Display 하지 않을 경우 */
-      type: 'hidden';
+      type: 'hidden' | string;
     });
 
 /**
@@ -143,10 +145,11 @@ export type UseDynamicFormResult = {
   /** 필드에 에러 메시지 설정 */
   setFormError: (fieldName: string, message: string) => void;
   /** 필드 에러 제거 */
-  clearFormError: () => void;
+  clearFormError: (field: string) => void;
   /** 현재 폼 상태 */
   formState: UseFormReturn['formState'];
-
+  /** 현재 폼 데이터 가져오기 */
+  getValues: UseFormReturn['getValues'];
   /** 필드 값 변경 핸들러 */
   onFormChange: (values?: Record<string, any>) => void;
 
@@ -197,3 +200,51 @@ export interface FormRowProps {
   children: ReactNode;
   name?: string;
 }
+
+/*===================================
+    searchBox Type 정의
+  ===================================*/
+/**
+ * OnValidCallback
+ * 폼 제출 후 유효성 검증에 통과한 데이터를 인자로 받는 콜백 함수 타입.
+ */
+export type OnValidCallback = (params: Record<string, any>) => void;
+
+/**
+ * SearchBoxBuilder
+ * 각 검색 필드의 구성을 정의합니다.
+ */
+export interface SearchBoxBuilder {
+  name: string;
+  type: 'date-range' | 'multi-dropdown' | 'dropdown' | 'text' | string;
+  label?: string;
+  /**
+   * 1depth 필드에서는 value가 필수.
+   * 단, 그룹(하위) 필드에서는 value를 생략할 수 있다.
+   */
+  value?: any;
+  options?: { value: string; label: string }[];
+  optionsConfig?: Record<string, any>; // 실제 옵션 설정에 맞게 수정 가능
+  placeholder?: string;
+}
+
+/**
+ * SearchBoxConfig
+ * useSearchBox 훅에 전달하는 설정 객체의 타입.
+ */
+export interface SearchBoxConfig {
+  builders: SearchBoxBuilder[];
+  // validator 객체는 각 필드에 대한 유효성 스키마를 포함합니다.
+  validator?: Record<string, any>;
+}
+
+export type UseSearchBoxReturn = {
+  config: SearchBoxConfig & {
+    control: UseFormReturn<any>['control'] & {
+      isFieldRequired: (fieldName: string) => boolean;
+    };
+    reset: (values?: Record<string, any>) => void;
+    formSubmit: (onValid: OnValidCallback) => void;
+  };
+  getData: () => Record<string, any>;
+};

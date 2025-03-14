@@ -3,19 +3,18 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { z } from '@learnway/shared';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
-import { FormRow } from '../../../shared/ui/form-row';
 import { FC, useRef } from 'react';
-import { ELearningCategory } from '../../../shared/ui/form-row/dialogs/e-learning-category';
-import { LowerGubun } from '../../../shared/ui/form-row/dialogs/lower-gubun';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
+import { FormRow } from '../../../widgets/form/form-row';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -195,9 +194,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'eLeaning'}>
-                  <ELearningCategory />
-                </DynamicFormField>
+                <DynamicFormField name={'eLeaning'}>삭제</DynamicFormField>
               </FormRow>
             </ContentsRow>
             <ContentsRow>
@@ -207,9 +204,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'lowerGubun'}>
-                  <LowerGubun testName={'kim'} />
-                </DynamicFormField>
+                <DynamicFormField name={'lowerGubun'}>삭제</DynamicFormField>
               </FormRow>
             </ContentsRow>
             <ContentsRow>

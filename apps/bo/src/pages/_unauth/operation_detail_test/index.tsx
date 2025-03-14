@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
+  ContentsRow,
   Input,
   InputModalButtonFormField,
 } from '@learnway/ui';
@@ -11,13 +12,13 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { FormRow } from '../../../shared/ui/form-row';
 import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 import { ChannelListModal, ManagerListModal } from '../../../features/operation';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { FormRow } from '../../../widgets/form/form-row';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,

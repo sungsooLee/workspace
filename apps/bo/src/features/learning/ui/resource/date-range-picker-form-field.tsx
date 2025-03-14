@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Button, DatePicker } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { FormGuideText } from '../../../../shared/ui/form-row';
 
 const DateRangePickerFormFieldComponent: FC<any> = ({ onFormChange, onChangeGuideText }) => {
   const [date, setDate] = useState(new Date('2024-01-01'));

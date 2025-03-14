@@ -204,6 +204,7 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
     onSubmit: formSubmit,
     reset,
     setFormError,
+    getValues,
     clearFormError: clearErrors,
     formState,
     onFormChange,

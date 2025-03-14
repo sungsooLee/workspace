@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { searchDialogConfig } from './config';
 import { Controller } from 'react-hook-form';
 import { Button } from '@learnway/ui';
+import { searchDialogConfig } from '../../shared/ui/search-box/config';
+import { SearchBoxProps } from './type';
 
 /**
  * 퍼블 완료 되면 주석 및 코드 리팩터링 추가 예정
@@ -9,17 +10,8 @@ import { Button } from '@learnway/ui';
  * @param onSearch
  * @constructor
  */
-const SearchBoxHook: FC<{ config: any; onSearch: any }> = ({ config, onSearch }) => {
-  const {
-    builders: initBuilders,
-    control,
-    formSubmit,
-    reset,
-    watch,
-    onFormChange,
-    formData,
-    onFocus,
-  } = config;
+const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
+  const { builders: initBuilders, control, formSubmit, reset } = config;
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault();
@@ -45,10 +37,9 @@ const SearchBoxHook: FC<{ config: any; onSearch: any }> = ({ config, onSearch })
                   render={({ field: { onChange, onBlur, value, ref }, formState: { errors } }) => {
                     // 폼 필드에 공통적으로 전달할 파라미터
                     const formParams: any = {
-                      watch,
-                      onFormChange,
+                      /*  onFormChange,
                       formData,
-                      onFocus,
+                      onFocus,*/
                       ref,
                       type,
                       name,
@@ -84,4 +75,4 @@ const SearchBoxHook: FC<{ config: any; onSearch: any }> = ({ config, onSearch })
     </form>
   );
 };
-export const SearchBox = SearchBoxHook;
+export const SearchBox = SearchBoxComponent;

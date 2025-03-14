@@ -3,19 +3,18 @@ import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
-import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { Button } from '@learnway/ui';
 import { IcoAlertCircleGray } from '@learnway/icons';
 import { useFetchAuthUser } from '@learnway/config';
 
 import { useAuthSignin } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
-import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
 
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
-import { FormRow } from '../../shared/ui/form-row';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { FormRow } from '../../widgets/form/form-row';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -25,7 +24,7 @@ function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { provider, onSubmit, onFormChange, control } = useCustomForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
   const { data: authData } = useFetchAuthUser();
 

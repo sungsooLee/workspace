@@ -114,7 +114,9 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}></FormRow>
+            <FormRow provider={provider}>
+              <span></span>
+            </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
@@ -122,7 +124,9 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}></FormRow>
+            <FormRow provider={provider}>
+              <span></span>
+            </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'userInfos'}>

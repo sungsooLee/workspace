@@ -23,7 +23,10 @@ export interface TranslationContainerProps {
 }
 
 export interface TranslationPopupProps {
-  translations: Record<string, any>[]; // 기존 번역 데이터
+  translations: {
+    keyType?: string;
+    translations: Record<string, any>[];
+  }; // 기존 번역 데이터
   config: any; // 폼 내 동적인 동작을 정의하기 위한 구성 객체
   defaultLang: string; // 기본 언어 코드 (예: 'en', 'ko', 'ja')
 }

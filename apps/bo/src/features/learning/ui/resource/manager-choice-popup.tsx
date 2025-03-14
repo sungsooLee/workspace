@@ -1,9 +1,10 @@
 import { Button, ContentsRow, Input, List, Select, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
-import { SearchBox, SearchBoxConfig } from '../../../../shared/ui/search-box';
 import { t } from 'i18next';
-import useSearchBox from '../../../../shared/ui/search-box/use-search-box';
 import { useState } from 'react';
+import { SearchBox } from '../../../../widgets/search-box/search-box';
+import { SearchBoxConfig } from '@learnway/hooks';
+import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
 const ManagerChoicePopupComponent = () => {
   const { close } = useModal();
   const { config: sConfig } = useSearchBox(searchConfig);
