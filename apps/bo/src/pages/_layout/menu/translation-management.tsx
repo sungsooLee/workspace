@@ -9,8 +9,9 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
-import useSearchBox from '../../../shared/ui/search-box/use-search-box';
+import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
+import { SearchBox } from '../../../widgets/search-box/search-box';
+import { SearchBoxConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/menu/translation-management')({
   component: RouteComponent,
