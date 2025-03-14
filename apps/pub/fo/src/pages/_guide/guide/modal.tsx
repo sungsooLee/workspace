@@ -99,8 +99,7 @@ onClick={() =>
                 openModal({
                   title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                  content: <BasicModalContent />,
-                  footer: <CustomFooter />,
+                  content: <ContentModal />,
                 })
               }>
               모달 팝업 열기

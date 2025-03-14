@@ -30,6 +30,9 @@ import {
   ThumbnailImageUpload,
   Tooltip,
   useModal,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -40,7 +43,6 @@ import {
   IcoSearch,
   IcoStatusFail,
 } from '@learnway/icons';
-import { useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
@@ -549,22 +551,6 @@ function RouteComponent() {
                               title: '',
                               width: 'md',
                               content: <ModalChannelContent />,
-                              footer: (
-                                <>
-                                  <Button
-                                    label={'취소'}
-                                    variant={'gray'}
-                                    size={'lg'}
-                                    actionKey={'cancel'}
-                                  />
-                                  <Button
-                                    label={'확인'}
-                                    variant={'primary'}
-                                    size={'lg'}
-                                    actionKey={'confirm'}
-                                  />
-                                </>
-                              ),
                             }}
                           />
                         </div>
