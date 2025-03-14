@@ -5,7 +5,12 @@
   "security": [{ "Access Token": [] }],
   "tags": [
     { "name": "[BO] API 관리", "description": "API 관리 서비스입니다." },
+    { "name": "[BO] File 다운로드", "description": "File 다운로드 서비스입니다." },
     { "name": "[BO] S3 File 업로드", "description": "S3 File 업로드 서비스입니다." },
+    {
+      "name": "[BO] File 정보 - Internal API",
+      "description": "내부 시스템 연동을 위한 File 정보 서비스입니다."
+    },
     { "name": "[공통] LoginSpec", "description": "Security 관련 문서입니다. 실제 호출 X" },
     { "name": "[BO] 사용자 관리", "description": "사용자 관리 서비스입니다." },
     { "name": "[BO] 메뉴 관리", "description": "메뉴관리 서비스입니다." },
@@ -121,6 +126,25 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/com.ever.edu.pms.user.dto.req.ChangePasswordByEmailReqDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/admin/api/v1/users/issue-new-password": {
+      "put": {
+        "tags": ["[BO] 사용자 관리"],
+        "summary": "임시 비밀번호 발급",
+        "description": "특정 사용자의 비밀번호를 임시 비밀번호로 변경한다.",
+        "operationId": "issueNewPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.ever.edu.pms.user.dto.req.IssueNewPasswordReqDto"
               }
             }
           },
@@ -363,6 +387,32 @@
       }
     },
     "/admin/api/v1/menus/{menuId}": {
+      "get": {
+        "tags": ["[BO] 메뉴 관리"],
+        "summary": "메뉴 단건 조회",
+        "description": "메뉴 단건 조회",
+        "operationId": "findById_1",
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.ever.edu.pms.menu.dto.res.MenuResDto$DetailOnAdmin"
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "tags": ["[BO] 메뉴 관리"],
         "summary": "메뉴 수정",
@@ -825,7 +875,7 @@
         "tags": ["authorization-admin-controller"],
         "summary": "권한 단건 조회",
         "description": "권한 상세를 조회한다.",
-        "operationId": "findById_1",
+        "operationId": "findById_2",
         "parameters": [
           {
             "name": "authorizationNo",
@@ -2012,7 +2062,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileInfoResDto"
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileInfoDetailResDto"
                 }
               }
             }
@@ -2024,7 +2074,7 @@
       "post": {
         "tags": ["[BO] S3 File 업로드"],
         "summary": "S3 멀티파트 업로드 시작 요청",
-        "description": "S3 멀티파트(파일분할) 업로드 시작을 요청한다.<br> 응답 받은 uploadId를 이용하여 멀티파트(파일분할) 업로드를 진행해야 한다.",
+        "description": "S3 멀티파트(파일분할) 업로드 시작을 요청한다.<br>응답 받은 uploadId를 이용하여 멀티파트(파일분할) 업로드를 진행해야 한다.<br><br>1. S3 멀티파트 업로드 시작 요청<br>2. S3 업로드 Presigned URL 요청<br>3. Ajax Put 파일업로드<br>4. S3 멀티파트 업로드 완료 요청",
         "operationId": "initiateUpload",
         "requestBody": {
           "content": {
@@ -2054,7 +2104,7 @@
       "post": {
         "tags": ["[BO] S3 File 업로드"],
         "summary": "S3 멀티파트 업로드 완료 요청",
-        "description": "S3 멀티파트 업로드 완료 요청한다.<br> 단일 파일의 경우 호출할 필요가 없다.",
+        "description": "S3 멀티파트 업로드 완료를 요청한다.<br> 단일 파일 업로드의 경우(uploadId 없음) 호출 할 필요 없다.",
         "operationId": "completeUpload",
         "parameters": [
           {
@@ -2067,10 +2117,10 @@
           {
             "name": "key",
             "in": "query",
-            "description": "S3 파일 경로, S3 키로 사용",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
             "required": true,
             "schema": { "type": "string" },
-            "example": "upload/contents/file.ppt"
+            "example": "upload/community/board/2025/01/02/file.ppt"
           }
         ],
         "requestBody": {
@@ -2656,6 +2706,24 @@
         }
       }
     },
+    "/api/v1/file/{fileId}/download": {
+      "get": {
+        "tags": ["[BO] File 다운로드"],
+        "summary": "파일 다운로드",
+        "description": "파일을 다운로드한다.",
+        "operationId": "fileDownload",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "파일Id",
+            "required": true,
+            "schema": { "minimum": 1, "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
     "/api/v1/alarm/{userUUID}": {
       "get": {
         "tags": ["[FO]알람 관리"],
@@ -3111,7 +3179,8 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string", "enum": ["FO", "BO", "EX"] }
-          }
+          },
+          { "name": "locale", "in": "query", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
@@ -3151,7 +3220,8 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string", "enum": ["FO", "BO", "EX"] }
-          }
+          },
+          { "name": "locale", "in": "query", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
@@ -3365,6 +3435,62 @@
             "in": "path",
             "description": "파일Id",
             "required": true,
+            "schema": { "minimum": 1, "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileInfoDetailResDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/file/{fileId}/kafka": {
+      "get": {
+        "tags": ["[BO] File 정보 - Internal API"],
+        "summary": "Kafka 파일 암/복호화 이벤트 - 사용금지(임시 테스트용)",
+        "description": "Kafka outbox pattern을 이용해서 파일업로드 암/복호화 이벤트 전달한다.",
+        "operationId": "testKafkaFileEvent",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "파일Id",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "object", "additionalProperties": { "type": "object" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/file/{fileId}/internal": {
+      "get": {
+        "tags": ["[BO] File 정보 - Internal API"],
+        "summary": "인코딩 파일 정보 조회 - Internal API(Module-VPS)",
+        "description": "인코딩 파일 정보를 조회한다.<BR>Module-VPS에서 파일 인코딩 처리 시 파일 정보를 조회한다",
+        "operationId": "getFileInfoForEncoding",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "파일Id",
+            "required": true,
             "schema": { "type": "integer", "format": "int64" }
           }
         ],
@@ -3374,7 +3500,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileInfoResDto"
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.EncodingFileInfoResDto"
                 }
               }
             }
@@ -3386,16 +3512,16 @@
       "get": {
         "tags": ["[BO] S3 File 업로드"],
         "summary": "S3 Presigned URL 요청",
-        "description": "S3 단일 파일 업로드 Presigned URL 요청한다.",
+        "description": "S3 단일 파일 업로드 Presigned URL을 요청한다.<br>URL을 수신 후 Ajax Put 파일 업로드 해야 한다.",
         "operationId": "presignedUrl",
         "parameters": [
           {
             "name": "key",
             "in": "query",
-            "description": "S3 파일 경로, S3 키로 사용",
+            "description": "S3 파일 경로, S3 키로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
             "required": true,
             "schema": { "type": "string" },
-            "example": "upload/contents/file.ppt"
+            "example": "upload/community/board/2025/01/02/file.ppt"
           }
         ],
         "responses": {
@@ -3412,11 +3538,83 @@
         }
       }
     },
+    "/admin/api/v1/file/s3/multipart/{uploadId}": {
+      "get": {
+        "tags": ["[BO] S3 File 업로드"],
+        "summary": "S3 멀티파트 업로드 Part 목록 요청",
+        "description": "S3 멀티파트 업로드 Part 목록을 요청한다.",
+        "operationId": "partList",
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "description": "S3 업로드Id",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "upload/community/board/2025/01/02/file.ppt"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.ListUploadPartsResDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["[BO] S3 File 업로드"],
+        "summary": "S3 멀티파트 업로드 Abort 요청",
+        "description": "S3 멀티파트 업로드 Abort 요청한다.",
+        "operationId": "abortUpload",
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "description": "S3 업로드Id",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "upload/community/board/2025/01/02/file.ppt"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.AbortUploadResDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/admin/api/v1/file/s3/multipart/{uploadId}/{partNumber}": {
       "get": {
         "tags": ["[BO] S3 File 업로드"],
         "summary": "S3 업로드 Presigned URL 요청",
-        "description": "S3 멀티파트 업로드 Presigned URL 요청한다.",
+        "description": "S3 멀티파트 업로드 Presigned URL을 요청한다.",
         "operationId": "presignedUrl_1",
         "parameters": [
           {
@@ -3429,17 +3627,18 @@
           {
             "name": "partNumber",
             "in": "path",
-            "description": "S3 멀티파트 업로드 파트 번호(1 ~ 1000)",
+            "description": "S3 멀티파트 업로드 파트 번호(1 ~ 10000)",
             "required": true,
-            "schema": { "type": "integer", "format": "int32" }
+            "schema": { "type": "integer", "format": "int32" },
+            "example": 1
           },
           {
             "name": "key",
             "in": "query",
-            "description": "S3 파일 경로, S3 키로 사용",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
             "required": true,
             "schema": { "type": "string" },
-            "example": "upload/contents/file.ppt"
+            "example": "upload/community/board/2025/01/02/file.ppt"
           }
         ],
         "responses": {
@@ -3456,12 +3655,22 @@
         }
       }
     },
-    "/admin/api/v1/file/groups": {
+    "/admin/api/v1/file/s3/files": {
       "get": {
-        "tags": ["[BO] File 정보"],
-        "summary": "파일그룹 정보 목록 조회",
-        "description": "파일그룹 정보 목록을 조회한다.",
-        "operationId": "getGroupInfoList",
+        "tags": ["[BO] S3 File 업로드"],
+        "summary": "S3 파일 리스트 목록 - 사용금지(임시 테스트용)",
+        "description": "S3 파일 리스트 목록을 요청한다.",
+        "operationId": "getBucketFileList",
+        "parameters": [
+          {
+            "name": "s3path",
+            "in": "query",
+            "description": "S3 파일 경로, S3 키로 사용",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "upload/community/board/2025/03/06"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3470,8 +3679,28 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileGroupInfoResDto"
+                    "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.S3ObjectListResDto"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/file/groups": {
+      "get": {
+        "tags": ["[BO] File 정보"],
+        "summary": "파일그룹 목록 조회",
+        "description": "파일그룹 목록을 조회한다.",
+        "operationId": "getGroupInfoList",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileGroupInfoListResDto"
                 }
               }
             }
@@ -3491,7 +3720,7 @@
             "in": "path",
             "description": "파일 그룹Id",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": { "minimum": 1, "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -3511,8 +3740,8 @@
     "/admin/api/v1/file/group/{groupId}/files": {
       "get": {
         "tags": ["[BO] File 정보"],
-        "summary": "그룹 파일정보 목록 조회",
-        "description": "그룹 파일정보 목록을 조회한다.",
+        "summary": "파일그룹 파일 목록 조회",
+        "description": "파일그룹 파일 목록을 조회한다.",
         "operationId": "getGroupFileInfoList",
         "parameters": [
           {
@@ -3520,7 +3749,7 @@
             "in": "path",
             "description": "파일 그룹Id",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": { "minimum": 1, "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -3719,27 +3948,20 @@
         "responses": { "200": { "description": "OK" } }
       }
     },
-    "/admin/api/v1/file/s3/multipart/{uploadId}": {
+    "/admin/api/v1/file/s3/delete": {
       "delete": {
         "tags": ["[BO] S3 File 업로드"],
-        "summary": "S3 멀티파트 업로드 Abort 요청",
-        "description": "S3 멀티파트 업로드 Abort 요청한다.",
-        "operationId": "abortUpload",
+        "summary": "S3 파일 삭제 요청 - 사용금지(임시 테스트용)",
+        "description": "SS3 파일 삭제 요청한다.",
+        "operationId": "deleteS3File",
         "parameters": [
-          {
-            "name": "uploadId",
-            "in": "path",
-            "description": "S3 업로드Id",
-            "required": true,
-            "schema": { "type": "string" }
-          },
           {
             "name": "key",
             "in": "query",
-            "description": "S3 파일 경로, S3 키로 사용",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
             "required": true,
             "schema": { "type": "string" },
-            "example": "upload/contents/file.ppt"
+            "example": "upload/community/board/2025/01/02/file.pp"
           }
         ],
         "responses": {
@@ -3747,9 +3969,7 @@
             "description": "No Content",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.AbortUploadResDto"
-                }
+                "schema": { "type": "object", "additionalProperties": { "type": "object" } }
               }
             }
           }
@@ -3831,6 +4051,18 @@
             "description": "변경할 비밀번호",
             "nullable": true,
             "example": "P@ssw0rd"
+          }
+        }
+      },
+      "com.ever.edu.pms.user.dto.req.IssueNewPasswordReqDto": {
+        "title": "[BO] 임시 비밀번호 발급 요청 DTO",
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "로그인 ID",
+            "nullable": true,
+            "example": "9480292@ict-companion.com"
           }
         }
       },
@@ -4106,9 +4338,23 @@
           "createDate": { "type": "string", "format": "date-time" }
         }
       },
+      "com.ever.edu.pms.locale.dto.req.MessageSaveReqDto$TranslationDto": {
+        "title": "Translation 번역 dto",
+        "required": ["locale", "translation"],
+        "type": "object",
+        "properties": {
+          "locale": { "type": "string", "description": "지역", "example": "ko_KR" },
+          "translation": { "type": "string", "description": "번역값", "example": "테스트 번역값" }
+        },
+        "description": "번역 리스트",
+        "example": [
+          { "locale": "ko", "translation": "번역 값" },
+          { "locale": "en", "translation": "translation value" }
+        ]
+      },
       "com.ever.edu.pms.menu.dto.req.MenuSaveReqDto$MenuDto": {
         "title": "[관리자]메뉴 객체 저장 DTO",
-        "required": ["menuName"],
+        "required": ["translations"],
         "type": "object",
         "properties": {
           "menuId": {
@@ -4118,7 +4364,6 @@
             "nullable": true,
             "example": 2
           },
-          "menuName": { "type": "string", "description": "메뉴명", "example": "메뉴명" },
           "menuCode": { "type": "string", "description": "메뉴코드", "example": "메뉴코드" },
           "path": {
             "type": "string",
@@ -4169,7 +4414,25 @@
             "type": "boolean",
             "description": "개인정보포함여부",
             "nullable": true,
-            "example": false
+            "example": true
+          },
+          "isVisibleMobile": {
+            "type": "boolean",
+            "description": "디바이스 노출여부 - 모바일",
+            "nullable": true,
+            "example": true
+          },
+          "isVisiblePc": {
+            "type": "boolean",
+            "description": "디바이스 노출여부 - PC",
+            "nullable": true,
+            "example": true
+          },
+          "menuDesc": {
+            "type": "string",
+            "description": "메뉴 설명",
+            "nullable": true,
+            "example": "메뉴 설명"
           },
           "parentId": {
             "type": "integer",
@@ -4177,6 +4440,17 @@
             "format": "int64",
             "nullable": true,
             "example": 1
+          },
+          "translations": {
+            "type": "array",
+            "description": "번역 리스트",
+            "example": [
+              { "locale": "ko", "translation": "번역 값" },
+              { "locale": "en", "translation": "translation value" }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/com.ever.edu.pms.locale.dto.req.MessageSaveReqDto$TranslationDto"
+            }
           }
         }
       },
@@ -4186,6 +4460,7 @@
         "type": "object",
         "properties": {
           "menuId": { "type": "integer", "format": "int64" },
+          "menuCode": { "type": "string" },
           "menuName": { "type": "string" },
           "path": { "type": "string" },
           "depth": { "type": "integer", "format": "int32" },
@@ -4193,12 +4468,16 @@
           "isQuickAccessArea": { "type": "boolean" },
           "isUsed": { "type": "boolean" },
           "isDeleted": { "type": "boolean" },
+          "isPersonalDataContained": { "type": "boolean" },
+          "isVisibleMobile": { "type": "boolean" },
+          "isVisiblePc": { "type": "boolean" },
+          "menuDesc": { "type": "string" },
           "parent": { "$ref": "#/components/schemas/com.ever.edu.pms.menu.dto.res.MenuResDto" }
         }
       },
       "com.ever.edu.pms.menu.dto.req.MenuSaveReqDto$TenantMenuDto": {
         "title": "[관리자]테넌트 메뉴 객체 저장 DTO",
-        "required": ["englishName", "koreanName"],
+        "required": ["translations"],
         "type": "object",
         "properties": {
           "menuId": {
@@ -4208,23 +4487,37 @@
             "nullable": true,
             "example": 2
           },
+          "sortOrder": {
+            "type": "integer",
+            "description": "정렬순서",
+            "format": "int32",
+            "nullable": true,
+            "example": 1
+          },
+          "isUsed": {
+            "type": "boolean",
+            "description": "사용여부",
+            "nullable": true,
+            "example": true
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "삭제여부",
+            "nullable": true,
+            "example": false
+          },
+          "tenantId": {
+            "type": "integer",
+            "description": "테넌트ID",
+            "format": "int64",
+            "nullable": true,
+            "example": 1
+          },
           "menuCode": {
             "type": "string",
             "description": "메뉴CODE",
             "nullable": true,
             "example": "2"
-          },
-          "koreanName": {
-            "type": "string",
-            "description": "메뉴한글명",
-            "nullable": true,
-            "example": "메뉴한글명"
-          },
-          "englishName": {
-            "type": "string",
-            "description": "메뉴영문명",
-            "nullable": true,
-            "example": "menuName"
           },
           "path": {
             "type": "string",
@@ -4239,43 +4532,17 @@
             "nullable": true,
             "example": 1
           },
-          "sortOrder": {
-            "type": "integer",
-            "description": "정렬순서",
-            "format": "int32",
-            "nullable": true,
-            "example": 1
-          },
           "isQuickAccessArea": {
             "type": "boolean",
             "description": "바로가기영역여부",
             "nullable": true,
             "example": true
           },
-          "isUsed": {
-            "type": "boolean",
-            "description": "사용여부",
-            "nullable": true,
-            "example": true
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "삭제여부",
-            "nullable": true,
-            "example": false
-          },
           "isPersonalDataContained": {
             "type": "boolean",
             "description": "개인정보포함여부",
             "nullable": true,
             "example": false
-          },
-          "tenantId": {
-            "type": "integer",
-            "description": "테넌트ID",
-            "format": "int64",
-            "nullable": true,
-            "example": 1
           },
           "menuScope": {
             "type": "string",
@@ -4302,6 +4569,17 @@
             "format": "int64",
             "nullable": true,
             "example": 1
+          },
+          "translations": {
+            "type": "array",
+            "description": "번역 리스트",
+            "example": [
+              { "locale": "ko", "translation": "번역 값" },
+              { "locale": "en", "translation": "translation value" }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/com.ever.edu.pms.locale.dto.req.MessageSaveReqDto$TranslationDto"
+            }
           }
         }
       },
@@ -4374,7 +4652,7 @@
             "type": "array",
             "description": "번역 리스트",
             "example": [
-              { "locale": "ko_KR", "translation": "번역 값" },
+              { "locale": "ko", "translation": "번역 값" },
               { "locale": "en", "translation": "translation value" }
             ],
             "items": {
@@ -4382,20 +4660,6 @@
             }
           }
         }
-      },
-      "com.ever.edu.pms.locale.dto.req.MessageSaveReqDto$TranslationDto": {
-        "title": "Translation 번역 dto",
-        "required": ["locale", "translation"],
-        "type": "object",
-        "properties": {
-          "locale": { "type": "string", "description": "지역", "example": "ko_KR" },
-          "translation": { "type": "string", "description": "번역값", "example": "테스트 번역값" }
-        },
-        "description": "번역 리스트",
-        "example": [
-          { "locale": "ko_KR", "translation": "번역 값" },
-          { "locale": "en", "translation": "translation value" }
-        ]
       },
       "com.ever.edu.pms.locale.dto.res.MessageResDto$DetailOnAdmin": {
         "title": "[관리자] 다국어 상세 응답 객체",
@@ -4501,7 +4765,7 @@
       },
       "com.ever.edu.pms.common_code.dto.req.CommonCodeSaveReqDto": {
         "title": "CommonCode 객체 저장 Dto",
-        "required": ["code"],
+        "required": ["code", "translations"],
         "type": "object",
         "properties": {
           "commonCodeId": {
@@ -4516,18 +4780,6 @@
             "description": "공통코드값",
             "nullable": true,
             "example": "LANGUAGE_CODE"
-          },
-          "koreanName": {
-            "type": "string",
-            "description": "공통코드한글명",
-            "nullable": true,
-            "example": "언어코드"
-          },
-          "englishName": {
-            "type": "string",
-            "description": "공통코드영문명",
-            "nullable": true,
-            "example": "LANGUAGE CODE"
           },
           "commonCodeDesc": {
             "type": "string",
@@ -4567,6 +4819,23 @@
             "format": "int64",
             "nullable": true,
             "example": 1
+          },
+          "i18nCode": {
+            "type": "string",
+            "description": "다국어코드",
+            "nullable": true,
+            "example": "status.approved"
+          },
+          "translations": {
+            "type": "array",
+            "description": "번역 리스트",
+            "example": [
+              { "locale": "ko", "translation": "번역 값" },
+              { "locale": "en", "translation": "translation value" }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/com.ever.edu.pms.locale.dto.req.MessageSaveReqDto$TranslationDto"
+            }
           }
         }
       },
@@ -5243,48 +5512,118 @@
         }
       },
       "com.ever.edu.pms.file.dto.req.FileInfoReqDto": {
-        "title": "파일 정보를 생성을 요청하는 데이터 정의",
+        "title": "파일 정보를 생성 요청 데이터",
+        "required": ["fileDetailLocation", "fileTypeCode", "originalFileName", "serverFileName"],
         "type": "object",
         "properties": {
           "fileGroupId": {
+            "minimum": 1,
             "type": "integer",
-            "description": "파일 그룹 아이디",
+            "description": "파일그룹 아이디",
             "format": "int64",
             "example": 1
           },
           "originalFileName": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
             "description": "원본파일이름",
             "example": "file.ppt"
           },
           "serverFileName": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
             "description": "서버파일이름(S3에 저장된 파일의 이름)",
             "example": "file.ppt"
           },
           "fileSize": {
+            "minimum": 0,
             "type": "integer",
             "description": "파일크기",
             "format": "int64",
             "example": 1024
           },
           "fileDetailLocation": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
-            "description": "파일세부경로(S3 Key에서 파일명을 제외한 경로 정보)",
-            "example": "upload/contents"
+            "description": "파일세부경로, S3경로에서 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02",
+            "example": "/2025/01/02"
           },
           "fileTypeCode": { "type": "string", "description": "파일유형코드", "example": "WEB" }
         }
       },
-      "com.ever.edu.pms.file.dto.res.FileInfoResDto": {
-        "title": "파일 정보 응답 데이터 정의",
+      "com.ever.edu.pms.file.dto.res.FileGroupInfoResDto": {
+        "title": "파일 그룹 요청 응답 데이터",
         "type": "object",
         "properties": {
-          "groupId": {
+          "fileGroupId": {
             "type": "integer",
-            "description": "파일 그룹 아이디",
+            "description": "파일그룹 아이디",
             "format": "int64",
             "example": 1
+          },
+          "fileGroupName": {
+            "type": "string",
+            "description": "파일 그룹 명",
+            "example": "파일 그룹"
+          },
+          "groupClassCode": {
+            "type": "string",
+            "description": "그룹분류코드",
+            "example": "ATTATCH",
+            "enum": ["ATTATCH", "CONTENTS", "SCORM"]
+          },
+          "serviceClassCode": {
+            "type": "string",
+            "description": "서비스분류코드",
+            "example": "LXP",
+            "enum": ["GEC", "GDA", "HMGP", "GES", "LXP"]
+          },
+          "businessClassCode": {
+            "type": "string",
+            "description": "업무분류코드",
+            "example": "LMS",
+            "enum": ["LMS", "CMS", "PMS"]
+          },
+          "s3BucketName": {
+            "type": "string",
+            "description": "S3버킷명",
+            "example": "hmgnlp-dev-static-resource"
+          },
+          "s3BucketLocation": {
+            "type": "string",
+            "description": "S3경로 상위 1-2Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board",
+            "example": "upload/community/board"
+          },
+          "languageCode": {
+            "type": "string",
+            "description": "언어코드",
+            "example": "KOR",
+            "enum": ["KOR", "ENG"]
+          },
+          "isDeleted": {
+            "type": "string",
+            "description": "삭제여부",
+            "example": "FALSE",
+            "enum": ["TRUE", "FALSE"]
+          },
+          "isUsed": {
+            "type": "string",
+            "description": "사용여부",
+            "example": "TRUE",
+            "enum": ["TRUE", "FALSE"]
+          }
+        },
+        "description": "파일 그룹 정보"
+      },
+      "com.ever.edu.pms.file.dto.res.FileInfoDetailResDto": {
+        "title": "파일 상세 정보 요청 응답 데이터",
+        "type": "object",
+        "properties": {
+          "group": {
+            "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileGroupInfoResDto"
           },
           "fileId": {
             "type": "integer",
@@ -5310,10 +5649,10 @@
           },
           "fileDetailLocation": {
             "type": "string",
-            "description": "파일세부경로(S3 Key에서 파일명을 제외한 경로 정보)",
-            "example": "upload/contents"
+            "description": "파일세부경로, S3경로에서 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02",
+            "example": "/2025/01/02"
           },
-          "fileExtension": { "type": "string", "description": "파일확장자", "example": ".ppt" },
+          "fileExtension": { "type": "string", "description": "파일확장자", "example": "ppt" },
           "fileTypeCode": {
             "type": "string",
             "description": "파일유형코드",
@@ -5347,24 +5686,25 @@
         }
       },
       "com.ever.edu.pms.file.dto.req.InitiateUploadReqDto": {
-        "title": "S3 멀티파트 업로드 시작 요청 데이터 정의",
+        "title": "S3 멀티파트 업로드 시작 요청 데이터",
+        "required": ["filename"],
         "type": "object",
         "properties": {
           "filename": {
             "type": "string",
-            "description": "S3 파일 경로, S3 키로 사용",
-            "example": "upload/contents/file.ppt"
+            "description": "S3 파일 경로, S3 Key로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)",
+            "example": "upload/community/board/2025/01/02/file.ppt"
           }
         }
       },
       "com.ever.edu.pms.file.dto.res.InitiateUploadResDto": {
-        "title": "S3 멀티파트 업로드 시작 요청에 대한 응답 데이터 정의",
+        "title": "S3 멀티파트 업로드 시작 요청 응답 데이터",
         "type": "object",
         "properties": {
           "key": {
             "type": "string",
-            "description": "S3 key",
-            "example": "upload/contents/file.ppt"
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt",
+            "example": "upload/community/board/2025/01/02/file.ppt"
           },
           "uploadId": {
             "type": "string",
@@ -5374,7 +5714,7 @@
         }
       },
       "com.ever.edu.pms.file.dto.req.CompleteUploadReqDto": {
-        "title": "S3 멀티파트 업로드 완료 요청 데이터 정의",
+        "title": "S3 멀티파트 업로드 완료 요청 데이터",
         "type": "object",
         "properties": {
           "parts": {
@@ -5387,40 +5727,69 @@
         }
       },
       "com.ever.edu.pms.file.dto.req.UploadETagPartsReqDto": {
-        "title": "S3 멀티파트 업로드 완료 요청 Part 데이터 정의",
+        "title": "S3 멀티파트 업로드 완료 Part 데이터",
+        "required": ["ETag"],
         "type": "object",
         "properties": {
-          "etag": { "type": "string" },
-          "partNumber": { "type": "integer", "format": "int32" }
+          "ETag": {
+            "type": "string",
+            "description": "S3 Part 업로드 ETag",
+            "example": "9a8725f3c9a6a6df49882eeb7dcfe18a"
+          },
+          "PartNumber": {
+            "maximum": 10000,
+            "minimum": 1,
+            "type": "integer",
+            "description": "업로드 파트 번호(1 ~ 10000)",
+            "format": "int32",
+            "example": 1
+          }
         },
         "description": "ETag 및 PartNumber 속성이 있는 객체 배열"
       },
       "com.ever.edu.pms.file.dto.res.CompleteUploadResDto": {
-        "title": "S3 멀티파트 업로드 완료 요청에 대한 응답 데이터 정의",
+        "title": "S3 멀티파트 업로드 완료 요청 응답 데이터",
         "type": "object",
         "properties": {
-          "etag": { "type": "string" },
           "Location": {
             "type": "string",
             "description": "업로드 파일 최종 경로",
-            "example": "http://{the-bucket-name}.s3.<Region>.amazonaws.com/{key}"
+            "example": "https://{the-bucket-name}.s3.<Region>.amazonaws.com/{key}"
           },
-          "Bucket": { "type": "string", "description": "S3 Bucket", "example": "the-bucket-name" },
+          "Bucket": {
+            "type": "string",
+            "description": "S3 Bucket",
+            "example": "hmgnlp-dev-static-resource"
+          },
           "Key": {
             "type": "string",
-            "description": "파일 이름, S3 키로 사용",
-            "example": "contents/file.ppt"
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt",
+            "example": "upload/community/board/2025/01/02/file.ppt"
           },
-          "ETag": { "type": "string", "description": "업로드 파일 ETag값", "example": "ETag값" }
+          "ETag": {
+            "type": "string",
+            "description": "업로드 파일 ETag 값",
+            "example": "\"4f4cac6a812b980bfcd46d247a3c0506\""
+          }
         }
       },
       "com.ever.edu.pms.file.dto.req.FileGroupInfoReqDto": {
-        "title": "파일 그룹정보를 생성을 요청하는 데이터 정의",
+        "title": "파일 그룹정보 생성 요청 데이터",
+        "required": [
+          "businessClassCode",
+          "fileGroupName",
+          "groupClassCode",
+          "languageCode",
+          "s3BucketLocation",
+          "s3BucketName"
+        ],
         "type": "object",
         "properties": {
           "fileGroupName": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
-            "description": "파일 그룹 명",
+            "description": "파일그룹명",
             "example": "파일 그룹"
           },
           "groupClassCode": {
@@ -5433,79 +5802,21 @@
             "description": "업무분류코드",
             "example": "업무분류코드"
           },
-          "s3BucketAddress": {
+          "s3BucketName": {
+            "maxLength": 64,
+            "minLength": 0,
             "type": "string",
-            "description": "S3버킷주소",
+            "description": "S3버킷명",
             "example": "hmgnlp-dev-static-resource"
           },
           "s3BucketLocation": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
-            "description": "S3버킷경로",
-            "example": "upload/contents"
+            "description": "S3경로 상위 1-2Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board",
+            "example": "upload/community/board"
           },
-          "languageCode": { "type": "string", "description": "언어코드", "example": "ko-KR" }
-        }
-      },
-      "com.ever.edu.pms.file.dto.res.FileGroupInfoResDto": {
-        "title": "파일 그룹 응답 데이터 정의",
-        "type": "object",
-        "properties": {
-          "fileGroupId": {
-            "type": "integer",
-            "description": "파일 그룹 아이디",
-            "format": "int64",
-            "example": 1
-          },
-          "fileGroupName": {
-            "type": "string",
-            "description": "파일 그룹 명",
-            "example": "파일 그룹"
-          },
-          "groupClassCode": {
-            "type": "string",
-            "description": "그룹분류코드",
-            "example": "ATTATCH",
-            "enum": ["ATTATCH", "CONTENTS", "SCORM"]
-          },
-          "serviceClassCode": {
-            "type": "string",
-            "description": "서비스분류코드",
-            "example": "LXP",
-            "enum": ["GEC", "GDA", "HMGP", "GES", "LXP"]
-          },
-          "businessClassCode": {
-            "type": "string",
-            "description": "업무분류코드",
-            "example": "업무분류코드"
-          },
-          "s3BucketAddress": {
-            "type": "string",
-            "description": "S3버킷주소",
-            "example": "hmgnlp-dev-static-resource"
-          },
-          "s3BucketLocation": {
-            "type": "string",
-            "description": "S3버킷경로",
-            "example": "upload/contents"
-          },
-          "languageCode": {
-            "type": "string",
-            "description": "언어코드",
-            "example": "ko-KR",
-            "enum": ["KOR", "ENG"]
-          },
-          "isDeleted": {
-            "type": "string",
-            "description": "삭제여부",
-            "example": "FALSE",
-            "enum": ["TRUE", "FALSE"]
-          },
-          "isUsed": {
-            "type": "string",
-            "description": "사용여부",
-            "example": "TRUE",
-            "enum": ["TRUE", "FALSE"]
-          }
+          "languageCode": { "type": "string", "description": "언어코드", "example": "KOR" }
         }
       },
       "com.ever.edu.pms.notification.dto.req.EmailSendReqDto": {
@@ -5719,10 +6030,10 @@
               "$ref": "#/components/schemas/org.springdoc.core.converters.models.SortObject"
             }
           },
-          "unpaged": { "type": "boolean" },
-          "paged": { "type": "boolean" },
           "pageNumber": { "type": "integer", "format": "int32" },
-          "pageSize": { "type": "integer", "format": "int32" }
+          "pageSize": { "type": "integer", "format": "int32" },
+          "unpaged": { "type": "boolean" },
+          "paged": { "type": "boolean" }
         }
       },
       "com.ever.edu.global.dto.ResponseDtoOrg.springframework.data.domain.PageCom.ever.edu.pms.user.dto.res.UserResDto$ListOnAdminDto": {
@@ -5776,8 +6087,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.user.dto.res.UserResDto$ListOnAdminDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -5894,8 +6205,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.terms.dto.res.TermsResDto$ListOnAdmin": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -5920,8 +6231,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.tenant.dto.TenantResponse": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -5952,8 +6263,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.SmsTemplateResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -5994,8 +6305,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.SmsRecordResDto$RecodeRes": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6030,8 +6341,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.role.dto.res.RoleResDto$ListOnAdminDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6105,8 +6416,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.MessageHistoryResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6159,8 +6470,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.MessageQueueResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6203,8 +6514,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.MessageQueueEntryResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6279,21 +6590,15 @@
             "enum": ["COMMON_CODE", "MENU", "LABEL", "CATEGORY", "ERROR", "MESSAGE"]
           },
           "code": { "type": "string", "description": "다국어 코드", "example": "mn100000001" },
-          "locale": { "type": "string", "description": "지역", "example": "ko_KR" },
-          "isUsed": { "type": "boolean", "description": "사용여부", "example": true },
-          "parentId": {
-            "type": "integer",
-            "description": "상위 ID",
-            "format": "int64",
-            "example": 1
-          }
+          "translation": { "type": "string", "description": "기준 언어" },
+          "isUsed": { "type": "boolean", "description": "사용여부", "example": true }
         }
       },
       "org.springframework.data.domain.PageCom.ever.edu.pms.locale.dto.res.MessageResDto$ListOnAdmin": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6369,8 +6674,38 @@
           "optionalFormName": { "type": "string" }
         }
       },
+      "com.ever.edu.pms.file.dto.res.EncodingFileInfoResDto": {
+        "title": "인코딩 파일 정보 요청 응답 데이터",
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "integer",
+            "description": "파일 아이디",
+            "format": "int64",
+            "example": 1
+          },
+          "fileName": { "type": "string", "description": "원본파일이름", "example": "file.ppt" },
+          "saveFileName": {
+            "type": "string",
+            "description": "서버파일이름(S3에 저장된 파일의 이름)",
+            "example": "file.ppt"
+          },
+          "filePath": {
+            "type": "string",
+            "description": "S3경로 중 1~3Depth까지의 경로, 경로구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board/2025/01/02",
+            "example": "upload/community/board/2025/01/02"
+          },
+          "fileSize": {
+            "type": "integer",
+            "description": "파일크기",
+            "format": "int64",
+            "example": 1024
+          },
+          "extType": { "type": "string", "description": "파일확장자", "example": "ppt" }
+        }
+      },
       "com.ever.edu.pms.file.dto.res.PreSignedUrlResDto": {
-        "title": "S3 멀티파트 Presigned URL 요청에 대한 응답 데이터 정의",
+        "title": "S3 멀티파트 Presigned URL 요청 응답 데이터",
         "type": "object",
         "properties": {
           "method": { "type": "string", "description": "upload method", "example": "put" },
@@ -6381,16 +6716,158 @@
           }
         }
       },
-      "com.ever.edu.pms.file.dto.res.GroupFileInfoListResDto": {
-        "title": "그룹 파일정보 목록 조회 응답 데이터 정의",
+      "com.ever.edu.pms.file.dto.res.ListUploadPartsResDto": {
+        "title": "S3 멀티파트 업로드 Part 목록 응답 데이터 정의",
         "type": "object",
         "properties": {
-          "fileGroup": {
+          "Bucket": {
+            "type": "string",
+            "description": "S3 Bucket",
+            "example": "hmgnlp-dev-static-resource"
+          },
+          "Key": {
+            "type": "string",
+            "description": "S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt",
+            "example": "upload/community/board/2025/01/02/file.ppt"
+          },
+          "UploadId": { "type": "string", "description": "S3 업로드Id", "example": "업로드Id" },
+          "Parts": {
+            "type": "array",
+            "description": "업로드 Part 목록",
+            "items": { "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.S3PartResDto" }
+          }
+        }
+      },
+      "com.ever.edu.pms.file.dto.res.S3PartResDto": {
+        "title": "S3 멀티파트 업로드 Part 데이터 정의",
+        "type": "object",
+        "properties": {
+          "PartNumber": {
+            "type": "integer",
+            "description": "S3 멀티파트 업로드 파트 번호(1 ~ 1000)",
+            "format": "int32",
+            "example": 1
+          },
+          "LastModified": { "type": "string", "description": "업로드 일자", "format": "date-time" },
+          "Size": {
+            "type": "integer",
+            "description": "Part 사이즈 ",
+            "format": "int64",
+            "example": 1024
+          },
+          "ETag": {
+            "type": "string",
+            "description": "업로드 Part ETag 값",
+            "example": "\"75b967a8dcd7d038d7e8ba4d8221c647\""
+          }
+        },
+        "description": "업로드 Part 목록"
+      },
+      "com.ever.edu.pms.file.dto.res.S3ObjectListResDto": {
+        "title": "파일 정보 요청 응답 데이터",
+        "type": "object",
+        "properties": {
+          "bucketName": { "type": "string" },
+          "key": { "type": "string" },
+          "lastModified": { "type": "string", "format": "date-time" },
+          "etag": { "type": "string" },
+          "size": { "type": "integer", "format": "int64" }
+        }
+      },
+      "com.ever.edu.pms.file.dto.res.FileGroupInfoListResDto": {
+        "title": "파일그룹 목록 데이터",
+        "type": "object",
+        "properties": {
+          "groups": {
+            "type": "array",
+            "description": "파일그룹 목록",
+            "items": {
+              "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileGroupInfoResDto"
+            }
+          }
+        }
+      },
+      "com.ever.edu.pms.file.dto.res.FileInfoResDto": {
+        "title": "파일 정보 요청 응답 데이터",
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "description": "파일 그룹 아이디",
+            "format": "int64",
+            "example": 1
+          },
+          "fileId": {
+            "type": "integer",
+            "description": "파일 아이디",
+            "format": "int64",
+            "example": 1
+          },
+          "originalFileName": {
+            "type": "string",
+            "description": "원본파일이름",
+            "example": "file.ppt"
+          },
+          "serverFileName": {
+            "type": "string",
+            "description": "서버파일이름(S3에 저장된 파일의 이름)",
+            "example": "file.ppt"
+          },
+          "fileSize": {
+            "type": "integer",
+            "description": "파일크기",
+            "format": "int64",
+            "example": 1024
+          },
+          "fileDetailLocation": {
+            "type": "string",
+            "description": "파일세부경로, S3경로에서 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02",
+            "example": "/2025/01/02"
+          },
+          "fileExtension": { "type": "string", "description": "파일확장자", "example": "ppt" },
+          "fileTypeCode": {
+            "type": "string",
+            "description": "파일유형코드",
+            "example": "WEB",
+            "enum": ["IMAGE", "VIDEO", "WEB", "SCORM"]
+          },
+          "uploadStatus": {
+            "type": "string",
+            "description": "업로드 상태",
+            "example": "ONGOING",
+            "enum": ["COMPLETE", "ONGOING"]
+          },
+          "isSecurityFile": {
+            "type": "string",
+            "description": "보안파일여부",
+            "example": "FALSE",
+            "enum": ["TRUE", "FALSE"]
+          },
+          "isDeleted": {
+            "type": "string",
+            "description": "삭제여부",
+            "example": "FALSE",
+            "enum": ["TRUE", "FALSE"]
+          },
+          "isUsed": {
+            "type": "string",
+            "description": "사용여부",
+            "example": "TRUE",
+            "enum": ["TRUE", "FALSE"]
+          }
+        },
+        "description": "파일목록"
+      },
+      "com.ever.edu.pms.file.dto.res.GroupFileInfoListResDto": {
+        "title": "그룹 파일정보 목록 조회 응답 데이터",
+        "type": "object",
+        "properties": {
+          "group": {
             "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileGroupInfoResDto"
           },
-          "fileList": {
+          "files": {
             "type": "array",
-            "description": "파일 정보 목록",
+            "description": "파일목록",
             "items": { "$ref": "#/components/schemas/com.ever.edu.pms.file.dto.res.FileInfoResDto" }
           }
         }
@@ -6403,8 +6880,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.EmailTemplateResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6452,8 +6929,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.EmailRecordResDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6504,8 +6981,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.notification.dto.res.PeriodicEmailResDto$ListOnAdmin": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6590,8 +7067,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.common_code.dto.res.CommonCodeResDto$ListOnAdmin": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6658,8 +7135,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.authorization.dto.res.AuthorizationResDto$ListOnAdminDto": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6714,8 +7191,8 @@
       "org.springframework.data.domain.PageCom.ever.edu.pms.api.dto.res.ApiResDto$ListOnAdmin": {
         "type": "object",
         "properties": {
-          "totalPages": { "type": "integer", "format": "int32" },
           "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
           "size": { "type": "integer", "format": "int32" },
           "content": {
             "type": "array",
@@ -6738,7 +7215,7 @@
         }
       },
       "com.ever.edu.pms.file.dto.res.AbortUploadResDto": {
-        "title": "S3 업로드 Abort 요청에 대한 응답 데이터 정의",
+        "title": "S3 업로드 Abort 요청 응답 데이터",
         "type": "object",
         "properties": {
           "UploadId": { "type": "string", "description": "S3 업로드Id", "example": "업로드Id" }
