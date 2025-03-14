@@ -31,6 +31,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
     },
     ref,
   ) => {
+    console.log('InputModalSelectorFormFieldComponent', value);
     const { open: openModal } = useModal();
 
     const handleClick = async () => {

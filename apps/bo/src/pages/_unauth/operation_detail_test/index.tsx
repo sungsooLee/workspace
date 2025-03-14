@@ -62,7 +62,7 @@ function RouteComponent() {
         <MainContents>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'channel'}>
+              <DynamicFormField name={'channelName'}>
                 <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelListModal />,
@@ -115,11 +115,10 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
                 <ChipListModalSelectorFormField
-                  modalConfig={{ content: <TeacherListModal /> }}
+                  modalConfig={{ content: <TeacherListModal provider={provider} /> }}
                   chipList={{
                     labelField: 'name',
                     valueField: 'id',
-                    visibleCount: 1,
                   }}
                 />
               </DynamicFormField>
@@ -172,7 +171,11 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'channel',
+      name: 'channelId',
+      type: 'hidden',
+    },
+    {
+      name: 'channelName',
       type: 'custom',
       label: '채널',
       value: '',

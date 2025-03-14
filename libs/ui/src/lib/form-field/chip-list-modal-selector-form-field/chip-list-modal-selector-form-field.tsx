@@ -7,6 +7,7 @@ import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 import { IcoSearch } from '@learnway/icons';
 import styles from './chip-list-modal-selector-form-field.module.css';
+import { UseFormReturn } from 'react-hook-form';
 
 export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
@@ -14,6 +15,7 @@ export interface ChipListModalSelectorFormFieldProps {
   onChange?: (value: any) => void;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
+  control?: UseFormReturn['control'];
 }
 
 /**
@@ -35,7 +37,9 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       chipList: chipListProps = {
         labelField: 'label',
         valueField: 'value',
+        visibleCount: 2,
       },
+      control,
     },
     ref,
   ) => {
@@ -53,6 +57,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     };
 
     const handleChipListClick = async () => {
+      console.log(control);
       const data = await openModal(modalConfig);
       data && appendSelectedChipOptions(data);
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
@@ -68,9 +73,9 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
         className={cn('nlp--chip-list-modal-selector-form-field', 'border-1 w-full border-solid')}>
         <div className={'flex flex-row'}>
           <ChipList
+            visibleCount={2}
             {...chipListProps}
             size={'sm'}
-            // hideBorder={false}
             options={selectedChipOptions}
             onChange={handleChipListChange}
             // onChipListClick={handleChipListClick}
