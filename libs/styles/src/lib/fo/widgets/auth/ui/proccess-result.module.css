@@ -22,6 +22,9 @@
   .noti {
     @apply body_bo_2_r mt-[8px] leading-[1.6] text-[var(--gray7)];
   }
+  .noti_box {
+    @apply mt-[24px];
+  }
 }
 
 /* .start {

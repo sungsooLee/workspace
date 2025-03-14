@@ -24,6 +24,7 @@ import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
 import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
 import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
+import { Route as AuthPasswordSetImport } from './pages/_auth/password-set'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
@@ -142,6 +143,12 @@ const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
 const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
   id: '/progress-status-cert',
   path: '/progress-status-cert',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthPasswordSetRoute = AuthPasswordSetImport.update({
+  id: '/password-set',
+  path: '/password-set',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -476,6 +483,13 @@ declare module '@tanstack/react-router' {
       path: '/password-modify'
       fullPath: '/password-modify'
       preLoaderRoute: typeof AuthPasswordModifyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/password-set': {
+      id: '/_auth/password-set'
+      path: '/password-set'
+      fullPath: '/password-set'
+      preLoaderRoute: typeof AuthPasswordSetImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-cert': {
@@ -813,6 +827,7 @@ interface AuthRouteChildren {
   AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
+  AuthPasswordSetRoute: typeof AuthPasswordSetRoute
   AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
   AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
@@ -832,6 +847,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthMpassCertRoute: AuthMpassCertRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
+  AuthPasswordSetRoute: AuthPasswordSetRoute,
   AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
   AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
@@ -946,6 +962,7 @@ export interface FileRoutesByFullPath {
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
+  '/password-set': typeof AuthPasswordSetRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1003,6 +1020,7 @@ export interface FileRoutesByTo {
   '/mpass-cert': typeof AuthMpassCertRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
+  '/password-set': typeof AuthPasswordSetRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1063,6 +1081,7 @@ export interface FileRoutesById {
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
+  '/_auth/password-set': typeof AuthPasswordSetRoute
   '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/_auth/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1122,6 +1141,7 @@ export interface FileRouteTypes {
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
+    | '/password-set'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1178,6 +1198,7 @@ export interface FileRouteTypes {
     | '/mpass-cert'
     | '/password-input'
     | '/password-modify'
+    | '/password-set'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1236,6 +1257,7 @@ export interface FileRouteTypes {
     | '/_auth/mpass-cert'
     | '/_auth/password-input'
     | '/_auth/password-modify'
+    | '/_auth/password-set'
     | '/_auth/progress-status-cert'
     | '/_auth/progress-status-email'
     | '/_auth/progress-status-result'
@@ -1322,6 +1344,7 @@ export const routeTree = rootRoute
         "/_auth/mpass-cert",
         "/_auth/password-input",
         "/_auth/password-modify",
+        "/_auth/password-set",
         "/_auth/progress-status-cert",
         "/_auth/progress-status-email",
         "/_auth/progress-status-result",
@@ -1406,6 +1429,10 @@ export const routeTree = rootRoute
     },
     "/_auth/password-modify": {
       "filePath": "_auth/password-modify.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/password-set": {
+      "filePath": "_auth/password-set.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-cert": {
