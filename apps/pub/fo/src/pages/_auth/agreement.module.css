@@ -1,4 +1,25 @@
 .start {
+  .success_info {
+    @apply mb-[48px];
+  }
+  .agreement_check_box {
+    @apply rounded-[8px] border-[1px] border-solid border-[#E3E9EF] p-[24px] text-left;
+    .check_list {
+      .list {
+        @apply mt-[16px];
+        .tit {
+          @apply body_3_b block pb-[6px] text-[#4C515E];
+        }
+      }
+      .details {
+        @apply body_3_r scrollbar mt-[16px] h-[108px] overflow-y-auto rounded-[8px] border border-solid border-[#D6DAE1] px-[16px] py-[12px] leading-[1.6] text-[#4C515E];
+      }
+    }
+  }
+
+  .check_all {
+    @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
+  }
   .btn_wrap {
     @apply mt-[48px];
   }
