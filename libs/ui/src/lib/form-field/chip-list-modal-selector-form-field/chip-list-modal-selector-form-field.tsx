@@ -1,10 +1,13 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 
-import { ButtonComponentProps } from '../../button/button';
+import { Button, ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
 import { BaseFormFieldProps, FormFieldProps } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { IcoSearch } from '@learnway/icons';
+import styles from './chip-list-modal-selector-form-field.module.css';
 
 export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
@@ -53,7 +56,7 @@ const ChipListModalSelectorFormFieldComponent: FormFieldProps<
 
     const handleChipListClick = async () => {
       const data = await openModal(modalConfig);
-      appendSelectedChipOptions(data);
+      data && appendSelectedChipOptions(data);
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
 
@@ -62,22 +65,23 @@ const ChipListModalSelectorFormFieldComponent: FormFieldProps<
     };
 
     return (
-      <ChipList
-        {...chipListProps}
-        // value={value}
-        options={selectedChipOptions}
-        onChange={handleChipListChange}
-        onChipListClick={handleChipListClick}
-      />
-      // <div ref={ref} className={'border-1 h-[50px] w-full bg-amber-500'}>
-      //   {/*<Button {...buttonProps} onClick={handleButtonOnClick} />*/}
-      //   <ChipList
-      //     {...chipListProps}
-      //     onChipListClick={handleChipListClick}
-      //     options={selectedChipOptions}
-      //     onChange={handleChipListChange}
-      //   />
-      // </div>
+      <div
+        ref={ref}
+        className={cn('nlp--chip-list-modal-selector-form-field', 'border-1 w-full border-solid')}>
+        <div className={'flex flex-row'}>
+          <ChipList
+            {...chipListProps}
+            size={'sm'}
+            // hideBorder={false}
+            options={selectedChipOptions}
+            onChange={handleChipListChange}
+            // onChipListClick={handleChipListClick}
+          />
+          <Button type="button" className={cn(styles.clear)} onlyIcon onClick={handleChipListClick}>
+            <IcoSearch width={20} height={20} stroke={'#131C30'} />
+          </Button>
+        </div>
+      </div>
     );
   },
 );

@@ -13,7 +13,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
   description,
   content,
   onClose,
-  width = 'md',
+  width = 'auto',
   height = 'auto',
   hideCloseButton = false,
 }) => {

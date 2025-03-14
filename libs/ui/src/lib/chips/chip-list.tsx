@@ -2,8 +2,6 @@ import React, { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useState } fr
 import { isEqual } from 'lodash';
 
 import { cn } from '@learnway/shared';
-
-import { useModal } from '../modal/modal.hook';
 import { Chip, ChipComponentProps } from './chip';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
@@ -47,7 +45,6 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     onChipListClick,
     ...props
   }) => {
-    const { alert: openAlert } = useModal();
     const [selectedOptions, setSelectedOptions] = useState<any[]>(options); // 선택된 options
     const [displayOptions, setDisplayOptions] = useState<any[]>(); // 선택된 내용중 보여질 options
     const [overCount, setOverCount] = useState<number>(0); // 선택된 내용중 보여질 options
@@ -91,6 +88,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     };
 
     const handleChipListClick = () => {
+      console.log(111);
       onChipListClick?.();
     };
 
@@ -126,12 +124,11 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
 
         {/* TODO: orientation(vertical, horizontal) style 처리 필요 */}
         {/* chips wrapper */}
-        <div
-          className={cn(styles.chips_wapper, orientation && styles[orientation])}
-          onClick={handleChipListClick}>
+        <div className={cn(styles.chips_wapper, orientation && styles[orientation])}>
           {displayOptions?.map((option) => (
             <Chip
               {...props}
+              size={size}
               key={option[valueField]}
               option={option}
               labelField={labelField}

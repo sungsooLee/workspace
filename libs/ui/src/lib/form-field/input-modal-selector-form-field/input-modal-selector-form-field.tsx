@@ -4,18 +4,22 @@ import styles from './input-modal-selector-form-field.module.css';
 import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
+import { FormFieldProps, ProxyFormBaseType } from '@learnway/hooks';
 
 interface InputModalSelectorFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
   modalConfig: ModalConfig;
-  value?: any;
-  onChange?: (value: any) => void;
   input?: InputProps;
+  onClick?: (value?: any) => void;
   onFormChange?: (value?: any) => void;
 }
 
-const InputModalSelectorFormFieldComponent = forwardRef<
+const InputModalSelectorFormFieldComponent: FormFieldProps<
+  InputModalSelectorFormFieldComponentProps,
   HTMLInputElement,
-  InputModalSelectorFormFieldComponentProps
+  string
+> = forwardRef<
+  HTMLInputElement,
+  ProxyFormBaseType<string> & InputModalSelectorFormFieldComponentProps
 >(
   (
     {
@@ -39,7 +43,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 
     return (
       <div
-        className={cn(styles.start, styles.search_wrap, 'nlp--input-button-form-field')}
+        className={cn(styles.start, styles.search_wrap, 'nlp--input-modal-selector-form-field')}
         onClick={() => handleClick()}>
         <Input {...inputProps} ref={ref} value={value} readOnly={true} showSearchIcon />
       </div>

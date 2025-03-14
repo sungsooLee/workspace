@@ -1,12 +1,11 @@
 import {
-  ComponentType,
   FormEventHandler,
   ForwardRefExoticComponent,
   ReactNode,
   RefAttributes,
   RefObject,
 } from 'react';
-import { ZodObject, ZodTypeAny } from 'zod';
+import { ZodTypeAny } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 
 export interface SelectOption {
@@ -187,12 +186,12 @@ export type ErrorState = {
 
 // 공통으로 넘겨줄 props 정의
 export interface BaseFormFieldProps<T = any> {
-  control: UseFormReturn['control'] & {
+  control?: UseFormReturn['control'] & {
     isFieldRequired: (fieldName: string) => boolean;
   };
   value?: T;
-  name: string; // name은 필수로 넘겨줘야 함
-  onChange: (value: T) => void;
+  name?: string; // name은 필수로 넘겨줘야 함
+  onChange?: (value: T) => void;
   disabled?: boolean;
 }
 
