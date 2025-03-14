@@ -1,20 +1,20 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import useSearchBox from '../../../../shared/ui/search-box/use-search-box';
 import { useCallback, useEffect } from 'react';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { Button, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../../shared/ui/search-box';
 import { t } from 'i18next';
 import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
-import TestForm from '../../../../widgets/test/ui/test-form';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
 import { RegistrantPopup } from '../../../../features/learning/ui/resource/registrant-popup';
+import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
+import { SearchBox } from '../../../../widgets/search-box/search-box';
+import { SearchBoxConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,

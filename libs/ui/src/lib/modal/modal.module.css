@@ -23,9 +23,6 @@
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
-  &.notitle {
-    @apply relative;
-  }
 }
 
 .content {

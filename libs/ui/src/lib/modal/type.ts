@@ -1,15 +1,8 @@
 import { ReactNode } from 'react';
 import { AlertComponentProps } from '../alert/alert';
-//import { ConfirmComponentProps } from '../confirm/confirm';
 
 export type ModalSize = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'm_full'; // sm : 600px , md : 800px, lg : 1024px, xl : 1400px, m_full : 모바일 full
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
-
-export interface BaseModalProps {
-  setModalData: (data: any) => void;
-  onClose?: (data?: any) => void;
-  children: React.ReactNode;
-}
 
 export interface ModalConfig<T = any> {
   content: ReactNode;
@@ -21,20 +14,13 @@ export interface ModalConfig<T = any> {
   hideCloseButton?: boolean;
   onClose?: (data?: ModalClose<T>) => void;
   children?: React.ReactNode;
-  footer?: React.ReactNode; // true 설정시 default footer 사용
 }
 
 export interface ModalClose<T = any> {
   data?: T;
 }
 
-export interface ModalContainerProps {
-  index: number;
-  config: ModalConfig;
-}
-
-// TODO: rename : ModalControl > useModalReturnValue
-export interface ModalControl {
+export interface useModalReturnValue {
   modals: ModalConfig[];
   open: (props: ModalConfig) => Promise<any>;
   close: (data?: any) => void;

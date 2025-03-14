@@ -14,7 +14,7 @@ import { GoogleCertGuidePopup } from '../../features/auth';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 // import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 
 import {

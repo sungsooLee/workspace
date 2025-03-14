@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Button, OptionCard } from '@learnway/ui';
+import { useModal, Button, OptionCard, ModalBody, ModalContainer, ModalFooter } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
 import eBookstyles from './eBook.module.css';
 import {
-  IcoMybook,
   IcoBlog,
   IcoEntrust,
-  IcoInfoCircle,
+  IcoEtc,
+  IcoHtml,
   IcoImage01,
+  IcoInfoCircle,
+  IcoMybook,
   IcoVideo01,
   IcoVideo02,
-  IcoHtml,
-  IcoEtc,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
@@ -23,19 +23,6 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const CustomFooter = () => {
-    const { close: closeModal } = useModal();
-    return (
-      <Button
-        variant="gray"
-        size="lg"
-        onClick={() => {
-          closeModal();
-        }}>
-        {'취소'}
-      </Button>
-    );
-  };
 
   const data = [
     {
@@ -90,46 +77,40 @@ function RouteComponent() {
     { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
 
-  const EbookFooter = () => {
+  // 퍼블수정 20240314 : Modal 수정
+  const EbookContent = () => {
     const { close: closeModal } = useModal();
     return (
-      <Button
-        variant="primary"
-        size="lg"
-        onClick={() => {
-          closeModal();
-        }}>
-        {'확인'}
-      </Button>
-    );
-  };
-
-  const EbookContent = () => {
-    return (
-      <div className={eBookstyles.wrap}>
-        <h2 className={eBookstyles.title}>
-          이북 등록은
-          <br />
-          TOAST 프로그램에서 진행합니다.
-        </h2>
-        <div className={eBookstyles.contents}>
-          <p className={eBookstyles.text}>
-            TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
-          </p>
-        </div>
-        <div className={eBookstyles.btn_box}>
-          <Button variant="gray" size="sm">
-            {'TOAST 프로그램 설치 파일'}
-          </Button>
-          <Button variant="gray" size="sm">
-            {'TOAST 이북 제작 가이드'}
-          </Button>
-        </div>
-      </div>
+      <ModalContainer>
+        <ModalBody>
+          <h2 className={eBookstyles.title}>
+            이북 등록은
+            <br />
+            TOAST 프로그램에서 진행합니다.
+          </h2>
+          <div className={eBookstyles.contents}>
+            <p className={eBookstyles.text}>
+              TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
+            </p>
+          </div>
+          <div className={eBookstyles.btn_box}>
+            <Button variant="gray" size="sm">
+              {'TOAST 프로그램 설치 파일'}
+            </Button>
+            <Button variant="gray" size="sm">
+              {'TOAST 이북 제작 가이드'}
+            </Button>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
 
   const TypeSelectContent = () => {
+    const { close: closeModal } = useModal();
     return (
       <div className={styles.wrap}>
         <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
@@ -159,7 +140,6 @@ function RouteComponent() {
   useEffect(() => {
     if (!hasRun.current) {
       openModal({
-        title: '',
         width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <TypeSelectContent />,
         footer: <CustomFooter />,

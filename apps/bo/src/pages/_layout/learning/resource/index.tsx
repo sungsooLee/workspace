@@ -27,7 +27,6 @@ function RouteComponent() {
     const typeResult = (await openAsync({
       content: <LearningTypeChoicePopup />,
       width: 'lg',
-      footer: true,
     })) as LEARNING_TYPE;
     switch (typeResult) {
       case LEARNING_TYPE.VIDEO: {
@@ -38,7 +37,6 @@ function RouteComponent() {
             </UploadProvider>
           ),
           width: 'lg',
-          footer: true,
         });
         break;
         console.log('videoUploadResult => ', videoUploadResult);

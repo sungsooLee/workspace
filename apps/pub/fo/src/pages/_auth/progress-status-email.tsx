@@ -6,7 +6,7 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css'; // 영역
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';

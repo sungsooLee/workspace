@@ -11,7 +11,7 @@ import type { SelectOption } from '../select/type';
 import styles from './phone-number.module.css';
 
 export interface PhoneNumberComponentProps extends InputProps {
-  options: SelectOption[];
+  options?: SelectOption[];
   value?: any;
   className?: string;
   size?: any;
