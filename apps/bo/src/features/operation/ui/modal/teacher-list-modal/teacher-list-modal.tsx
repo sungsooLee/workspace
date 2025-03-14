@@ -13,8 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export interface TeacherListModalProps {
   dummy?: boolean;
-  channelId?: string;
-  provider?: any;
+  channelId?: string; // parameter test
 }
 
 /**
@@ -25,9 +24,7 @@ export interface TeacherListModalProps {
  * @constructor
  */
 const TeacherListModalComponent = forwardRef<HTMLDivElement, TeacherListModalProps>(
-  ({ provider, channelId, ...props }, ref) => {
-    console.log('provider', provider);
-    console.log('channelId', channelId);
+  ({ channelId, ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data: gridData }: any = getMockData();

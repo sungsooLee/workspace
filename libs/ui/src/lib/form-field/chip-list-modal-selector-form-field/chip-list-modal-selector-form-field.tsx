@@ -7,15 +7,12 @@ import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 import { IcoSearch } from '@learnway/icons';
 import styles from './chip-list-modal-selector-form-field.module.css';
-import { UseFormReturn } from 'react-hook-form';
+import { BaseFormFieldProps } from '@learnway/hooks';
 
-export interface ChipListModalSelectorFormFieldProps {
+export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<any> {
   modalConfig: ModalConfig;
-  value?: any;
-  onChange?: (value: any) => void;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
-  control?: UseFormReturn['control'];
 }
 
 /**

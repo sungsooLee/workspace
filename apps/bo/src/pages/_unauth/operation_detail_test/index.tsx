@@ -23,7 +23,7 @@ export const Route = createFileRoute('/_unauth/operation_detail_test/')({
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, control } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -115,7 +115,7 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
                 <ChipListModalSelectorFormField
-                  modalConfig={{ content: <TeacherListModal provider={provider} /> }}
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
                   chipList={{
                     labelField: 'name',
                     valueField: 'id',
