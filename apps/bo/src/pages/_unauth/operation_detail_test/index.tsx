@@ -5,6 +5,7 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  DynamicFormField,
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
@@ -12,20 +13,17 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ChannelListModal, ManagerListModal } from '../../../features/operation';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { FormRow } from '../../../widgets/form/form-row';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '../../../features/operation';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, reset, control } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -117,11 +115,11 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
                 <ChipListModalSelectorFormField
-                  modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
+                  modalConfig={{ content: <TeacherListModal /> }}
                   chipList={{
                     labelField: 'name',
-                    valueField: 'value',
-                    hideBorder: true,
+                    valueField: 'id',
+                    visibleCount: 1,
                   }}
                 />
               </DynamicFormField>
@@ -145,7 +143,6 @@ function RouteComponent() {
               <DynamicFormField name={'운영자'}>
                 <InputModalSelectorFormField
                   modalConfig={{
-                    title: t('운영자 목록'),
                     content: <ManagerListModal />,
                   }}
                 />

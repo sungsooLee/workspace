@@ -1,7 +1,21 @@
 import { forwardRef } from 'react';
-import { ActionMeta, MultiValue, SingleValue } from 'react-select';
+import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
 import { AutoCompleteProps, DropdownOption } from './type';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
+import { Button } from '../button/button';
+import './auto-complete.css';
+
+// clear 버튼
+const clearIndicator = (props: any) => {
+  return (
+    <components.ClearIndicator {...props}>
+      <Button onlyIcon className="btn_clear">
+        <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+      </Button>
+    </components.ClearIndicator>
+  );
+};
 
 const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
   (
@@ -57,6 +71,9 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
           defaultOptions={defaultOptions}
           cacheOptions={cacheOptions}
           formatCreateLabel={(inputValue) => `"${inputValue}"`}
+          components={{
+            ClearIndicator: clearIndicator,
+          }}
           noOptionsMessage={() => '결과가 없습니다'}
           loadingMessage={() => '검색 중...'}
           {...customProps}
@@ -111,6 +128,7 @@ const FormAutoCompleteComponent = forwardRef<any, any>(
         isSearchable={true}
         defaultOptions={defaultOptions}
         cacheOptions={cacheOptions}
+        popupIcon={<IcoArrowDown width={16} height={16} stroke="#131C30" className="icon_arrow" />}
         {...props}
       />
     );

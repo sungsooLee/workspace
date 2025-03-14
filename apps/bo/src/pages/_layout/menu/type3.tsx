@@ -11,10 +11,10 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FC, useRef } from 'react';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
-import { FormRow } from '../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import useDynamicForm2 from '@/libs/hooks/src/lib/form-builder/use-dynamic-form2';
 
 export const Route = createFileRoute('/_layout/menu/type3')({
@@ -180,14 +180,11 @@ const detailConfig: DynamicFormConfig = {
       placeholder: '최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명',
       description: '기본 메세지',
       validation: {
-        type: 'string',
+        type: 'email',
         required: true,
         message: '텍스트1 값을 선택해주세요.',
-        dependsOn: {
-          condition: (value: Record<string, any>) => value.channel2 !== '10',
-          message: 'channel2 에 값을 입력해주세요.',
-          path: 'channel2',
-        },
+        refine: (value: string) => value.length > 0,
+        superRefine: (value: string) => value.length > 0,
       },
     },
   ],

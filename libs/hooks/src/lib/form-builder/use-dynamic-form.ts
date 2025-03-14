@@ -11,7 +11,7 @@ import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
  * @param config - 동적 폼 설정 객체 (DynamicFormConfig)
  * @returns 동적 폼 생성 및 관리에 필요한 메서드와 provider 객체
  */
-const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
+export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
   // 초기값 생성: 각 빌더의 기본 값을 설정
   const defaultValues = useMemo<Record<string, any>>(
     () =>
@@ -203,7 +203,6 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
     },
     fetchData,
     onSubmit: formSubmit,
-    reset,
     setFormError,
     getValues,
     clearFormError: clearErrors,
@@ -212,5 +211,3 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
     control: extendedControl,
   };
 };
-
-export default useDynamicForm;

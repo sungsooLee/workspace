@@ -10,6 +10,7 @@ interface InputModalSelectorFormFieldComponentProps extends InputHTMLAttributes<
   value?: any;
   onChange?: (value: any) => void;
   input?: InputProps;
+  onClick?: (value?: any) => void;
   onFormChange?: (value?: any) => void;
 }
 
@@ -39,7 +40,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 
     return (
       <div
-        className={cn(styles.start, styles.search_wrap, 'nlp--input-button-form-field')}
+        className={cn(styles.start, styles.search_wrap, 'nlp--input-modal-selector-form-field')}
         onClick={() => handleClick()}>
         <Input {...inputProps} ref={ref} value={value} readOnly={true} showSearchIcon />
       </div>
