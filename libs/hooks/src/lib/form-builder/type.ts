@@ -1,4 +1,3 @@
-import { SelectOption } from '@learnway/ui';
 import {
   ComponentType,
   FormEventHandler,
@@ -9,6 +8,16 @@ import {
 } from 'react';
 import { ZodObject, ZodTypeAny } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
+
+export interface SelectOption {
+  label: string;
+  value: string;
+  disabled?: boolean;
+  subLabel?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  extra?: any;
+}
+
 /*===================================
     useDynamicForm Type 정의
   ===================================*/

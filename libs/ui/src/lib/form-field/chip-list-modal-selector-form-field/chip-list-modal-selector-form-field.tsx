@@ -5,6 +5,7 @@ import { ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
+import { ProxyFormBaseType } from '@learnway/hooks';
 
 export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
