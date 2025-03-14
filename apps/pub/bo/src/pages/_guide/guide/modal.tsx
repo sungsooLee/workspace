@@ -1,20 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalDescription,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 
 const ContentModal = () => {
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
-      <ModalTitle>{'Modal Title'}</ModalTitle>
-      <ModalDescription>{'Modal Description'}</ModalDescription>
+      <ModalTitle>{'타이틀'}</ModalTitle>
       <ModalBody>
         <p>컨텐츠 영역</p>
       </ModalBody>

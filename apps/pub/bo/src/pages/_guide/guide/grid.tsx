@@ -257,13 +257,6 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         </div>
         <div className="group">
           <h3 className="guide_tit3">Grid Example</h3>
-          <div className="title_item">
-            <strong className="title">{`타이틀`}</strong>
-            <span className="count">
-              {10}
-              <span className="unit">건</span>
-            </span>
-          </div>
         </div>
         <Grid
           data={data}
@@ -275,6 +268,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
           }}
+          title="타이틀"
         />
       </div>
     </div>
