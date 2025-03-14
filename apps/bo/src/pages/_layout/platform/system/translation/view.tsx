@@ -11,11 +11,11 @@ import { FormTranslationBox } from '../../../../../features/platform/ui/platform
 import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 import { useEffect } from 'react';
 import { LOCALES } from '@learnway/config';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { useDynamicForm } from '@learnway/hooks';
 import { TranslationPopup } from '../../../../../features/form/ui/translation';
 import { FormI18n } from '../../../../../features/form/ui';
-import { FormRow } from '../../../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { FormRow } from '../../../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({

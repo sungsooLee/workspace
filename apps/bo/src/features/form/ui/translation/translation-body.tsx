@@ -1,7 +1,7 @@
 import { Children, cloneElement, FC, isValidElement, ReactElement, ReactNode } from 'react';
 import { FieldArrayWithId, useFieldArray } from 'react-hook-form';
 import { TranslationBodyProps, TranslationField } from './type';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormField } from '@learnway/ui';
 
 /**
  * TranslationBodyComponent 컴포넌트 정의

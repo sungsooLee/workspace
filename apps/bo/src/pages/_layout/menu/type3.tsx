@@ -11,10 +11,10 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FC, useRef } from 'react';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
-import { FormRow } from '../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import useDynamicForm2 from '@/libs/hooks/src/lib/form-builder/use-dynamic-form2';
 
 export const Route = createFileRoute('/_layout/menu/type3')({

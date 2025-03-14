@@ -14,9 +14,9 @@ import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-conte
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 import { ManagerListModal, TeacherListModal } from '../../../features/operation';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/learning/')({
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_layout/learning/')({
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, reset, control } = useDynamicForm(formConfig);
+  const { provider, onSubmit } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);

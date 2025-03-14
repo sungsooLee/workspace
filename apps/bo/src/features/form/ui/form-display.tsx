@@ -1,7 +1,7 @@
 import { FC, isValidElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { FormDisplayProps } from './type';
 import { useWatch } from 'react-hook-form';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormField } from '@learnway/ui';
 
 /**
  * 특정 Value 에 의존해 특정 내용들에 대한 Display 을 처리 하는 컴포넌트.

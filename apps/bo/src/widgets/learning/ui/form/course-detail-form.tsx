@@ -1,14 +1,12 @@
 import React, { forwardRef, useEffect } from 'react';
 import { ContentsRow } from '../../../layout/ui/container/parts/contents-row';
 import { t } from 'i18next';
-import { Button } from '@learnway/ui';
+import { Button, DynamicFormField } from '@learnway/ui';
 import { z } from 'zod';
 import { LectureTypeSiteUrl } from '../../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 import { FormTeacherChipList } from '../../../../features/operation/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../../form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { FormRow } from '../../../../shared/ui/form';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 // TODO : form 공통 영역으로 이동
 export interface FormProps {
@@ -25,7 +23,7 @@ export interface FormProps {
  */
 const CourseDetailForm = forwardRef<HTMLDivElement, FormProps>(({ setForm, ...props }, ref) => {
   const customForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, reset, control } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);

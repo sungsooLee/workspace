@@ -6,9 +6,9 @@ import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-
 import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { z } from '@learnway/shared';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/partners/tenant/')({
