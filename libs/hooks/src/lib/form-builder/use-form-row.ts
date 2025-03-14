@@ -143,8 +143,11 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
     }
 
     if (child.props?.children) {
+      // 재귀 호출 시 props.children 사용 → children 참조 방지
       return cloneElement(child as ReactElement, {
-        children: Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
+        children: Children.map(child.props.children, (nestedChild) =>
+          renderFormRowContent(nestedChild, formFieldConfig),
+        ),
       });
     }
 

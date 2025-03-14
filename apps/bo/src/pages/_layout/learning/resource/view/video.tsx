@@ -65,9 +65,6 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormDropdown />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider}>
               {/* 채널 */}
               <DynamicFormField name={'channelName'}>
@@ -226,6 +223,9 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
+      validation: {
+        type: 'string',
+      },
     },
     {
       label: t('학습자원 설명'),
@@ -354,7 +354,8 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    manager: z.string().required(),
+    channelName: z.string().required(),
+    expirationDate: z.boolean().required(),
   },
 };
 

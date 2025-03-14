@@ -55,9 +55,9 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           authorization({ location, context });
         } catch (e) {
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
-            //throw redirect({ to: '/' });
+            throw redirect({ to: '/' });
           } else {
-            //throw redirect({ to: '/login', search: { redirect: location.pathname } });
+            throw redirect({ to: '/login', search: { redirect: location.pathname } });
           }
         }
       }

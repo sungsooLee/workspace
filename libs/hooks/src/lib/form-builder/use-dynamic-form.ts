@@ -82,6 +82,7 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
           onValid(objectParams);
         },
         (errors) => {
+          console.log('Validation Errors:', errors);
           // 첫 번째 에러 필드의 키를 추출
           const firstErrorKey = Object.keys(errors)[0];
           if (firstErrorKey) {
@@ -107,7 +108,7 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
    * @returns 필드가 필수라면 true, 그렇지 않으면 false 반환
    */
   const isFieldRequired = (fieldName: string): boolean => {
-    if (!config.validator) return false;
+    if (!config.validator || !fieldName) return false;
 
     const parts = fieldName.split('.');
     let schema: ZodTypeAny | undefined = (config.validator as Record<string, ZodTypeAny>)[parts[0]];
