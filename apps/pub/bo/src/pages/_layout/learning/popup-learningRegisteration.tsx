@@ -1,15 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  useModal,
-  Button,
-  OptionCard,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-} from '@learnway/ui';
+import { useModal, Button, OptionCard, ModalBody, ModalContainer, ModalFooter } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
 import eBookstyles from './eBook.module.css';
@@ -31,19 +23,6 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const CustomFooter = () => {
-    const { close: closeModal } = useModal();
-    return (
-      <Button
-        variant="gray"
-        size="lg"
-        onClick={() => {
-          closeModal();
-        }}>
-        {'취소'}
-      </Button>
-    );
-  };
 
   const data = [
     {
@@ -135,27 +114,27 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-          <p className={styles.text}>{'서브텍스트입니다.'}</p>
-          <OptionCard
-            cols={5}
-            size="lg"
-            className={styles.select_wrap}
-            options={data}
-            onOptionSelect={(option) => {
-              console.log('selected', option);
-              option?.label === '이북' &&
-                openModal({
-                  hideCloseButton: true,
-                  width: 'auto',
-                  content: <EbookContent />,
-                });
-            }}
-          />
+          <div className={styles.wrap}>
+            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            <OptionCard
+              cols={5}
+              size="lg"
+              className={styles.select_wrap}
+              options={data}
+              onOptionSelect={(option) => {
+                console.log('selected', option);
+                option?.label === '이북' &&
+                  openModal({
+                    hideCloseButton: true,
+                    width: 'auto',
+                    content: <EbookContent />,
+                  });
+              }}
+            />
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );

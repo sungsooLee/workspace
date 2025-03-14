@@ -39,7 +39,7 @@ import {
   IcoRefresh02,
   IcoCloseCircle,
 } from '@learnway/icons';
-import { useModal } from '@learnway/ui';
+import { useModal, ModalBody, ModalContainer, ModalFooter } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 
@@ -51,191 +51,226 @@ export const Route = createFileRoute('/_layout/learning/mediaRegister')({
 });
 
 function RouteComponent() {
+  // 퍼블수정 20240314 : 수정된 Modal 컴포넌트로 수정
   // Modal : 채널 검색
-  const { open: openModal } = useModal();
+  const { close: closeModal } = useModal();
   const ModalChannelContent = () => {
     return (
-      <div className={searchContStyles.contents}>
-        <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
-        {/* 퍼블수정 20240313 : search 영역 수정 */}
-        <div className={cn(searchStyles.start, searchStyles.wrap)}>
-          <div className={searchStyles.contents}>
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name-select1" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>테넌트</span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.select_option}
-                    options={[
-                      { value: 'type1', label: '전체' },
-                      { value: 'type2', label: '항목' },
-                    ]}
-                  />
-                </div>
+      <ModalContainer>
+        <ModalBody>
+          <div className={searchContStyles.contents}>
+            <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
+            {/* 퍼블수정 20240313 : search 영역 수정 */}
+            <div className={cn(searchStyles.start, searchStyles.wrap)}>
+              <div className={searchStyles.contents}>
+                <ContentsRow>
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-select1" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>테넌트</span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Select
+                        className={formStyles.select_option}
+                        options={[
+                          { value: 'type1', label: '전체' },
+                          { value: 'type2', label: '항목' },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-channel" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>채널</span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Select
+                        className={formStyles.select_option}
+                        options={[
+                          { value: 'type1', label: '전체' },
+                          { value: 'type2', label: '항목' },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-owner" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>담당자</span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+                    </div>
+                  </div>
+                </ContentsRow>
               </div>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name-channel" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>채널</span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.select_option}
-                    options={[
-                      { value: 'type1', label: '전체' },
-                      { value: 'type2', label: '항목' },
-                    ]}
-                  />
-                </div>
+              <div className={searchStyles.btn_box}>
+                <Button
+                  type="button"
+                  className={searchStyles.btn_refresh}
+                  variant="search"
+                  size="sm"
+                  onlyIcon>
+                  <IcoRefresh02 className={searchStyles.icon_refresh} />
+                </Button>
+                <Button
+                  type="button"
+                  variant="search"
+                  size="sm"
+                  className={searchStyles.btn_search}>
+                  <IcoSearch className={searchStyles.icon_sm_search} />
+                  조회
+                </Button>
               </div>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name-owner" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>담당자</span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
-                </div>
-              </div>
-            </ContentsRow>
+            </div>
+            {/* 채널 리스트 */}
+            <div className={searchContStyles.channel_wrap}>
+              <List
+                options={[
+                  { value: 'type1', label: '경영지원시스템 채널 01' },
+                  { value: 'type2', label: '경영지원시스템 채널 02' },
+                  { value: 'type3', label: '경영지원시스템 채널 03' },
+                  { value: 'type4', label: '경영지원시스템 채널 04' },
+                  { value: 'type5', label: '경영지원시스템 채널 05' },
+                  { value: 'type6', label: '경영지원시스템 채널 06' },
+                  { value: 'type7', label: '경영지원시스템 채널 07' },
+                  { value: 'type8', label: '경영지원시스템 채널 08' },
+                  { value: 'type9', label: '경영지원시스템 채널 09' },
+                  { value: 'type10', label: '경영지원시스템 채널 10' },
+                ]}
+                onOptionsSelect={(options) => console.log(options)}
+              />
+            </div>
           </div>
-          <div className={searchStyles.btn_box}>
-            <Button
-              type="button"
-              className={searchStyles.btn_refresh}
-              variant="search"
-              size="sm"
-              onlyIcon>
-              <IcoRefresh02 className={searchStyles.icon_refresh} />
-            </Button>
-            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-              <IcoSearch className={searchStyles.icon_sm_search} />
-              조회
-            </Button>
-          </div>
-        </div>
-        {/* 채널 리스트 */}
-        <div className={searchContStyles.channel_wrap}>
-          <List
-            options={[
-              { value: 'type1', label: '경영지원시스템 채널 01' },
-              { value: 'type2', label: '경영지원시스템 채널 02' },
-              { value: 'type3', label: '경영지원시스템 채널 03' },
-              { value: 'type4', label: '경영지원시스템 채널 04' },
-              { value: 'type5', label: '경영지원시스템 채널 05' },
-              { value: 'type6', label: '경영지원시스템 채널 06' },
-              { value: 'type7', label: '경영지원시스템 채널 07' },
-              { value: 'type8', label: '경영지원시스템 채널 08' },
-              { value: 'type9', label: '경영지원시스템 채널 09' },
-              { value: 'type10', label: '경영지원시스템 채널 10' },
-            ]}
-            onOptionsSelect={(options) => console.log(options)}
-          />
-        </div>
-      </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
 
   // Modal : 담당자 검색
   const ModalManagerContent = () => {
     return (
-      <div className={searchContStyles.contents}>
-        <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
-        {/* 퍼블수정 20240313 : search 영역 수정 */}
-        <div className={cn(searchStyles.start, searchStyles.wrap)}>
-          <div className={searchStyles.contents}>
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name-channelName" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>채널</span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Select
-                    className={formStyles.select_option}
-                    options={[
-                      { value: 'type1', label: '선택' },
-                      { value: 'type2', label: '선택2' },
-                    ]}
-                  />
-                </div>
+      <ModalContainer>
+        <ModalBody>
+          <div className={searchContStyles.contents}>
+            <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
+            <div className={cn(searchStyles.start, searchStyles.wrap)}>
+              <div className={searchStyles.contents}>
+                <ContentsRow>
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-channelName" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>채널</span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Select
+                        className={formStyles.select_option}
+                        options={[
+                          { value: 'type1', label: '선택' },
+                          { value: 'type2', label: '선택2' },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-managerName" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>담당자명</span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Input
+                        id="name-managerName"
+                        type="text"
+                        placeholder="담당자명으로 조회하세요."
+                        value=""
+                        className={formStyles.input}
+                      />
+                    </div>
+                  </div>
+                </ContentsRow>
               </div>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name-managerName" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>담당자명</span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Input
-                    id="name-managerName"
-                    type="text"
-                    placeholder="담당자명으로 조회하세요."
-                    value=""
-                    className={formStyles.input}
-                  />
-                </div>
+              <div className={searchStyles.btn_box}>
+                <Button
+                  type="button"
+                  className={searchStyles.btn_refresh}
+                  variant="search"
+                  size="sm"
+                  onlyIcon>
+                  <IcoRefresh02 className={searchStyles.icon_refresh} />
+                </Button>
+                <Button
+                  type="button"
+                  variant="search"
+                  size="sm"
+                  className={searchStyles.btn_search}>
+                  <IcoSearch className={searchStyles.icon_sm_search} />
+                  조회
+                </Button>
               </div>
-            </ContentsRow>
+            </div>
+            {/* 채널 리스트 */}
+            <div className={searchContStyles.channel_wrap}>
+              <List
+                options={[
+                  { value: 'type1', label: '선택한 채널의 소속 채널 소유자명 (사번 또는 이메일)' },
+                  { value: 'type2', label: '선택한 채널의 소속 채널 소유자명2 (사번 또는 이메일)' },
+                  { value: 'type3', label: '선택한 채널의 소속 채널 소유자명3 (사번 또는 이메일)' },
+                  { value: 'type4', label: '선택한 채널의 소속 채널 소유자명4 (사번 또는 이메일)' },
+                  { value: 'type5', label: '선택한 채널의 소속 채널 소유자명5 (사번 또는 이메일)' },
+                  { value: 'type6', label: '선택한 채널의 소속 채널 소유자명6 (사번 또는 이메일)' },
+                  { value: 'type7', label: '선택한 채널의 소속 채널 소유자명7 (사번 또는 이메일)' },
+                  { value: 'type8', label: '선택한 채널의 소속 채널 소유자명8 (사번 또는 이메일)' },
+                  { value: 'type9', label: '선택한 채널의 소속 채널 소유자명9 (사번 또는 이메일)' },
+                  {
+                    value: 'type10',
+                    label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)',
+                  },
+                ]}
+                onOptionsSelect={(options) => console.log(options)}
+              />
+            </div>
           </div>
-          <div className={searchStyles.btn_box}>
-            <Button
-              type="button"
-              className={searchStyles.btn_refresh}
-              variant="search"
-              size="sm"
-              onlyIcon>
-              <IcoRefresh02 className={searchStyles.icon_refresh} />
-            </Button>
-            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-              <IcoSearch className={searchStyles.icon_sm_search} />
-              조회
-            </Button>
-          </div>
-        </div>
-        {/* 채널 리스트 */}
-        <div className={searchContStyles.channel_wrap}>
-          <List
-            options={[
-              { value: 'type1', label: '선택한 채널의 소속 채널 소유자명 (사번 또는 이메일)' },
-              { value: 'type2', label: '선택한 채널의 소속 채널 소유자명2 (사번 또는 이메일)' },
-              { value: 'type3', label: '선택한 채널의 소속 채널 소유자명3 (사번 또는 이메일)' },
-              { value: 'type4', label: '선택한 채널의 소속 채널 소유자명4 (사번 또는 이메일)' },
-              { value: 'type5', label: '선택한 채널의 소속 채널 소유자명5 (사번 또는 이메일)' },
-              { value: 'type6', label: '선택한 채널의 소속 채널 소유자명6 (사번 또는 이메일)' },
-              { value: 'type7', label: '선택한 채널의 소속 채널 소유자명7 (사번 또는 이메일)' },
-              { value: 'type8', label: '선택한 채널의 소속 채널 소유자명8 (사번 또는 이메일)' },
-              { value: 'type9', label: '선택한 채널의 소속 채널 소유자명9 (사번 또는 이메일)' },
-              { value: 'type10', label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)' },
-            ]}
-            onOptionsSelect={(options) => console.log(options)}
-          />
-        </div>
-      </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
 
   // 출처
   const ModalSourceContent = () => {
     return (
-      <div className={searchContStyles.contents}>
-        <strong className={searchContStyles.title}>{'출처를 선택하세요.'}</strong>
-        {/* 출처 리스트 */}
-        <div className={searchContStyles.channel_wrap}>
-          <List
-            options={[
-              { value: 'type1', label: '경영지원시스템 채널 01' },
-              { value: 'type2', label: '경영지원시스템 채널 02' },
-              { value: 'type3', label: '경영지원시스템 채널 03' },
-              { value: 'type4', label: '경영지원시스템 채널 04' },
-              { value: 'type5', label: '경영지원시스템 채널 05' },
-              { value: 'type6', label: '경영지원시스템 채널 06' },
-              { value: 'type7', label: '경영지원시스템 채널 07' },
-              { value: 'type8', label: '경영지원시스템 채널 08' },
-              { value: 'type9', label: '경영지원시스템 채널 09' },
-              { value: 'type10', label: '경영지원시스템 채널 10' },
-            ]}
-            onOptionSelect={(option) => console.log(option)}
-          />
-        </div>
-      </div>
+      <ModalContainer>
+        <ModalBody>
+          <div className={searchContStyles.contents}>
+            <strong className={searchContStyles.title}>{'출처를 선택하세요.'}</strong>
+            {/* 출처 리스트 */}
+            <div className={searchContStyles.channel_wrap}>
+              <List
+                options={[
+                  { value: 'type1', label: '경영지원시스템 채널 01' },
+                  { value: 'type2', label: '경영지원시스템 채널 02' },
+                  { value: 'type3', label: '경영지원시스템 채널 03' },
+                  { value: 'type4', label: '경영지원시스템 채널 04' },
+                  { value: 'type5', label: '경영지원시스템 채널 05' },
+                  { value: 'type6', label: '경영지원시스템 채널 06' },
+                  { value: 'type7', label: '경영지원시스템 채널 07' },
+                  { value: 'type8', label: '경영지원시스템 채널 08' },
+                  { value: 'type9', label: '경영지원시스템 채널 09' },
+                  { value: 'type10', label: '경영지원시스템 채널 10' },
+                ]}
+                onOptionSelect={(option) => console.log(option)}
+              />
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
 
@@ -326,27 +361,16 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* file upload case */}
+              {/* 퍼블수정 20240314 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalButtonFormField
                   modalConfig={{
-                    title: '',
                     width: 'md',
                     content: <ModalChannelContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
+              {/* 퍼블수정 20240314 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
@@ -406,26 +430,16 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
+              {/* 퍼블수정 20240314 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalButtonFormField
                   modalConfig={{
-                    title: '',
                     width: 'md',
                     content: <ModalManagerContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
+              {/* 퍼블수정 20240314 : Modal 수정 E  */}
             </div>
             <div className={formStyles.form_item}>
               <label htmlFor="name-managerNum" className={formStyles.form_label}>
@@ -671,26 +685,16 @@ function RouteComponent() {
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
               </label>
+              {/* 퍼블수정 20240314 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalButtonFormField
                   modalConfig={{
-                    title: '',
                     width: 'md',
                     content: <ModalSourceContent />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'gray'} size={'lg'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'lg'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </div>
+              {/* 퍼블수정 20240314 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalButtonFormField 로 수정 E  */}
