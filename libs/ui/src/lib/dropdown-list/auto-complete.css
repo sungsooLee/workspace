@@ -1,1 +1,28 @@
 /* auto-complete.module.css */
+.nlp-select__dropdown-indicator {
+  @apply !hidden;
+}
+.nlp-select__indicators {
+  @apply flex items-center justify-center;
+}
+.nlp-select__option {
+  @apply !body_bo_2_r flex !h-[32px] !min-h-[32px] !cursor-pointer items-center !bg-[var(--white)] !px-[8px] !text-[#4C515E];
+}
+.nlp-select__clear-indicator {
+  @apply !mr-0;
+}
+.nlp-select__menu {
+  @apply overflow-hidden;
+}
+.nlp-select__control.nlp-select__control--menu-is-open {
+  @apply border-[#747D91];
+}
+.border_none .nlp-select__control {
+  @apply !border-0;
+}
+.border_none .nlp-select__control.nlp-select__control--menu-is-open {
+  @apply !border-0;
+}
+.nlp-select__placeholder {
+  @apply !text-[#A9AFB8];
+}

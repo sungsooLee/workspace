@@ -2,7 +2,8 @@ import { forwardRef } from 'react';
 import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
 import { AutoCompleteProps, DropdownOption } from './type';
 import AsyncCreatableSelect from 'react-select/async-creatable';
-import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
+import { IcoDelete03 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import { Button } from '../button/button';
 import './auto-complete.css';
 
@@ -43,7 +44,9 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
   ) => {
     const uuid =
       typeof window !== 'undefined' ? `dropdown-${Math.random().toString(36).substring(2, 9)}` : '';
-    const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
+    const dropdownClass = cn(
+      `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
+    );
     const customProps = {
       'data-variant': variant,
       ...props,
@@ -74,7 +77,7 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
           components={{
             ClearIndicator: clearIndicator,
           }}
-          noOptionsMessage={() => '결과가 없습니다'}
+          noOptionsMessage={() => '검색결과가 없습니다'}
           loadingMessage={() => '검색 중...'}
           {...customProps}
         />
@@ -128,7 +131,6 @@ const FormAutoCompleteComponent = forwardRef<any, any>(
         isSearchable={true}
         defaultOptions={defaultOptions}
         cacheOptions={cacheOptions}
-        popupIcon={<IcoArrowDown width={16} height={16} stroke="#131C30" className="icon_arrow" />}
         {...props}
       />
     );
