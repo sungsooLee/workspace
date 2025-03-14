@@ -180,14 +180,11 @@ const detailConfig: DynamicFormConfig = {
       placeholder: '최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명',
       description: '기본 메세지',
       validation: {
-        type: 'string',
+        type: 'email',
         required: true,
         message: '텍스트1 값을 선택해주세요.',
-        dependsOn: {
-          condition: (value: Record<string, any>) => value.channel2 !== '10',
-          message: 'channel2 에 값을 입력해주세요.',
-          path: 'channel2',
-        },
+        refine: (value: string) => value.length > 0,
+        superRefine: (value: string) => value.length > 0,
       },
     },
   ],

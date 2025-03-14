@@ -149,8 +149,6 @@ export type UseDynamicFormResult = {
   fetchData: (data: Record<string, any>) => void;
   /** 제출 이벤트 핸들러 */
   onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
-  /** 필드 값 초기화 */
-  reset: (values?: Record<string, any>) => void;
   /** 필드에 에러 메시지 설정 */
   setFormError: (fieldName: string, message: string) => void;
   /** 필드 에러 제거 */
