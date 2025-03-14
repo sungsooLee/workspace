@@ -35,10 +35,13 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModal } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal  } from '@learnway/ui';
 
 // 실행 함수
-const { open: openModal } = useModal();`}
+openModal({
+  width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+  content: <ContentModal />,
+})`}
           </code>
         </pre>
       </div>
