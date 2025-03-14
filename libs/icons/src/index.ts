@@ -4,7 +4,8 @@ export { ReactComponent as IcoArrowUp } from './lib/ic_arrow_up.svg'; // 16*16 A
 export { ReactComponent as IcoAlarmFill } from './lib/ic_alarm_fill.svg'; // 32*32 Alarm
 export { ReactComponent as IcoCheck } from './lib/ic_check.svg'; // 20*20 Check
 export { ReactComponent as IcoCheck02 } from './lib/ic_check02.svg';
-export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star
+export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star fill
+export { ReactComponent as IcoStar02 } from './lib/ic_star02.svg'; // Star line
 export { ReactComponent as IcoGridFilter } from './lib/ic_arrow_up_double.svg'; // 16*16 grid filter
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
 export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid download
@@ -38,7 +39,8 @@ export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert ca
 export { ReactComponent as IcoCaution02 } from './lib/ic_caution02.svg'; // alert caution icon 24*25
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
-export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // alert complete icon 48*48
+export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // complete icon 48*48
+export { ReactComponent as IcoAlertComplete } from './lib/ic_alert_complete.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
