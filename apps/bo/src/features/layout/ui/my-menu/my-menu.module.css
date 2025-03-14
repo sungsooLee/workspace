@@ -13,7 +13,7 @@
   &.mymenu_wrap {
     @apply scrollbar h-auto max-h-[772px] w-[513px] overflow-y-auto overflow-x-hidden rounded-[8px] bg-[var(--white)] p-[24px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .tit {
-      @apply title_bo_4_b mb-[16px] block text-[var(--gray9)];
+      @apply title_bo_4_b mb-[8px] block text-[var(--gray9)];
     }
     .word_contents {
       .word_wrap {
@@ -29,7 +29,7 @@
         @apply mb-[8px] inline-block;
       }
       .text {
-        @apply title_bo_4_b text-[var(--gray6)];
+        @apply title_bo_4_r text-[var(--gray6)];
       }
     }
   }

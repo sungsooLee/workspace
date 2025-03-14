@@ -1,4 +1,5 @@
 export const PAGE_TITLE_BY_PATH: Record<string, string> = {
+  '/pb-fo/agreement': '약관동의',
   '/pb-fo/signup-step1': '회원가입',
   '/pb-fo/signup-step2': '회원가입',
   '/pb-fo/signup-step3': '회원가입',

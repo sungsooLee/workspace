@@ -30,6 +30,7 @@ import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
+import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
@@ -177,6 +178,12 @@ const AuthGoogleCertRoute = AuthGoogleCertImport.update({
 const AuthDormantAccountRoute = AuthDormantAccountImport.update({
   id: '/dormant-account',
   path: '/dormant-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAgreementRoute = AuthAgreementImport.update({
+  id: '/agreement',
+  path: '/agreement',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -421,6 +428,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/agreement': {
+      id: '/_auth/agreement'
+      path: '/agreement'
+      fullPath: '/agreement'
+      preLoaderRoute: typeof AuthAgreementImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/dormant-account': {
       id: '/_auth/dormant-account'
@@ -792,6 +806,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthAgreementRoute: typeof AuthAgreementRoute
   AuthDormantAccountRoute: typeof AuthDormantAccountRoute
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -810,6 +825,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthAgreementRoute: AuthAgreementRoute,
   AuthDormantAccountRoute: AuthDormantAccountRoute,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
@@ -923,6 +939,7 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/agreement': typeof AuthAgreementRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -979,6 +996,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/agreement': typeof AuthAgreementRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -1038,6 +1056,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/agreement': typeof AuthAgreementRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
@@ -1096,6 +1115,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/agreement'
     | '/dormant-account'
     | '/google-cert'
     | '/login'
@@ -1151,6 +1171,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/agreement'
     | '/dormant-account'
     | '/google-cert'
     | '/login'
@@ -1208,6 +1229,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/agreement'
     | '/_auth/dormant-account'
     | '/_auth/google-cert'
     | '/_auth/login'
@@ -1293,6 +1315,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/agreement",
         "/_auth/dormant-account",
         "/_auth/google-cert",
         "/_auth/login",
@@ -1356,6 +1379,10 @@ export const routeTree = rootRoute
         "/_layout/integrated-search/integrated-search",
         "/_layout/menu3/"
       ]
+    },
+    "/_auth/agreement": {
+      "filePath": "_auth/agreement.tsx",
+      "parent": "/_auth"
     },
     "/_auth/dormant-account": {
       "filePath": "_auth/dormant-account.tsx",
