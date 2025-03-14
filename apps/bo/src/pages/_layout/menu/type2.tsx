@@ -15,6 +15,7 @@ import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
+import { SelectFormField } from '../../../features/form/ui';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -204,7 +205,9 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'lowerGubun'}>삭제</DynamicFormField>
+                <DynamicFormField name={'lowerGubun'}>
+                  <SelectFormField />
+                </DynamicFormField>
               </FormRow>
             </ContentsRow>
             <ContentsRow>
