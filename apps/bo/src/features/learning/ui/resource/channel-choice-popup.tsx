@@ -2,9 +2,8 @@ import { Button, ContentsRow, Input, List, Select, useModal } from '@learnway/ui
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
 import { useState } from 'react';
-import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
 import { SearchBox } from '../../../../widgets/search-box/search-box';
-import { SearchBoxConfig } from '@learnway/hooks';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
   const { config: sConfig } = useSearchBox(searchConfig);

@@ -8,8 +8,7 @@ import { MainContents } from '../../../widgets/layout/ui/container/slot/main-con
 import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { CourseTypeOptionCardModal } from '../../../features/operation';
-import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
-import { SearchBoxConfig } from '@learnway/hooks';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../widgets/search-box/search-box';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({

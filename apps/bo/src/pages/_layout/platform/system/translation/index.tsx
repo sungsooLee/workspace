@@ -9,8 +9,7 @@ import { MainContents } from '../../../../../widgets/layout/ui/container/slot/ma
 import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { SearchBox } from '../../../../../widgets/search-box/search-box';
-import { SearchBoxConfig } from '@learnway/hooks';
-import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/')({
   component: RouteComponent,

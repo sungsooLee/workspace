@@ -241,6 +241,16 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '- 가입신청완료와 동일',
   },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '약관동의',
+    pageId: '',
+    screenId: 'NLP_FO_LOG_1022', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 3월5일 추가',
+  },
 
   {
     layoutType: '반응형 (PC)',

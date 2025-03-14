@@ -5,8 +5,8 @@ import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/conte
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/menu/translation-detail')({

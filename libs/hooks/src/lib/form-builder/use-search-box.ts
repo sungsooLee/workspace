@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
  * @param config - SearchBoxConfig 객체
  * @returns 검색 폼 관련 설정 및 메서드를 포함한 객체
  */
-const useSearchBox = (config: SearchBoxConfig): UseSearchBoxReturn => {
+export const useSearchBox = (config: SearchBoxConfig): UseSearchBoxReturn => {
   // 초기값 생성: 각 빌더의 기본 값을 설정합니다.
   const defaultValues = config.builders.reduce<Record<string, any>>((acc, prop) => {
     switch (prop.type) {
@@ -106,5 +106,3 @@ const useSearchBox = (config: SearchBoxConfig): UseSearchBoxReturn => {
     getData: getValues,
   };
 };
-
-export default useSearchBox;

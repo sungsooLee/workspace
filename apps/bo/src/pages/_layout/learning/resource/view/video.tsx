@@ -3,13 +3,7 @@ import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import {
-  Button,
-  ContentsRow,
-  FormDropdown,
-  InputModalSelectorFormField,
-  selectStyles,
-} from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, selectStyles } from '@learnway/ui';
 import { z } from '@learnway/shared';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -23,13 +17,11 @@ import {
 } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
-import { FormRow } from '../../../../../widgets/form/form-row';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { FormGroup } from '../../../../../shared/ui/form';
-
+import { SelectFormField } from '../../../../../features/form/ui';
+import { FormRow } from '../../../../../shared/ui/form';
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
@@ -68,12 +60,7 @@ function RouteComponent() {
             <FormRow provider={provider}>
               {/* 채널 */}
               <DynamicFormField name={'channelName'}>
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    content: <ChannelChoicePopup />,
-                    width: 'md',
-                  }}
-                />
+                <SelectFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -92,14 +79,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               {/*담당자*/}
-              <DynamicFormField name={'managerName'}>
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    content: <ManagerChoicePopup />,
-                    width: 'md',
-                  }}
-                />
-              </DynamicFormField>
+              <DynamicFormField name={'managerName'}>123</DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'contact'}>
@@ -136,12 +116,7 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <InputModalSelectorFormField
-                    modalConfig={{
-                      content: <ManagerChoicePopup />,
-                      width: 'md',
-                    }}
-                  />
+                  <span>123123</span>
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>

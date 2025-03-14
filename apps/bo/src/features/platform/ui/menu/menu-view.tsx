@@ -2,9 +2,9 @@ import { z } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
 import React, { FC, useEffect, useState } from 'react';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
 /**

@@ -1,7 +1,7 @@
 import { Children, cloneElement, FC, isValidElement, ReactElement, ReactNode } from 'react';
 import { useWatch } from 'react-hook-form';
 import { FormI18nProps, TranslationField } from './type';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormField } from '@learnway/ui';
 
 const FormI18nComponent: FC<FormI18nProps> = ({ control, name, children, defaultLang }) => {
   const fields = useWatch({ control, name: 'translations' });

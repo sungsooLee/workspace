@@ -12,9 +12,9 @@ import { useSetLanguage } from '../../features/platform';
 
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../widgets/form/form-row';
+import { DynamicFormField } from '@learnway/ui';
+import { useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../shared/ui/form';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,

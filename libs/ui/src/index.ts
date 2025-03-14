@@ -153,3 +153,6 @@ export * from './lib/type';
 
 // phone number
 export * from './lib/phone-number/phone-number';
+
+export * from './lib/dynamic-form-field/dynamic-form-field';
+export * from './lib/dynamic-form-field/type';

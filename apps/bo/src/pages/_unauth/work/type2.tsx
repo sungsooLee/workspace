@@ -1,6 +1,6 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button, DynamicFormField } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { z } from '@learnway/shared';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -11,10 +11,8 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FC } from 'react';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { FormRow } from '../../../widgets/form/form-row';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { DynamicFormConfig, FormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../../shared/ui/form';
 
 export const Route = createFileRoute('/_unauth/work/type2')({
   component: RouteComponent,
@@ -22,7 +20,7 @@ export const Route = createFileRoute('/_unauth/work/type2')({
 
 function RouteComponent() {
   /* react hook form custom */
-  const { provider, onSubmit, reset, control } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, control, onFormChange } = useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',
@@ -36,10 +34,10 @@ function RouteComponent() {
   };
 
   const handleOnReset = () => {
-    reset();
+    onFormChange();
   };
   const handleOnChange = () => {
-    reset({ contentName: '1234' });
+    onFormChange({ contentName: '1234' });
   };
 
   return (

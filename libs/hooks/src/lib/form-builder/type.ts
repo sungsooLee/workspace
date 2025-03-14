@@ -1,11 +1,12 @@
 import {
+  ComponentType,
   FormEventHandler,
   ForwardRefExoticComponent,
   ReactNode,
   RefAttributes,
   RefObject,
 } from 'react';
-import { ZodTypeAny } from 'zod';
+import { ZodObject, ZodTypeAny } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 
 export interface SelectOption {
@@ -148,8 +149,6 @@ export type UseDynamicFormResult = {
   fetchData: (data: Record<string, any>) => void;
   /** 제출 이벤트 핸들러 */
   onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
-  /** 필드 값 초기화 */
-  reset: (values?: Record<string, any>) => void;
   /** 필드에 에러 메시지 설정 */
   setFormError: (fieldName: string, message: string) => void;
   /** 필드 에러 제거 */
@@ -186,13 +185,13 @@ export type ErrorState = {
 
 // 공통으로 넘겨줄 props 정의
 export interface BaseFormFieldProps<T = any> {
-  control?: UseFormReturn['control'] & {
-    isFieldRequired: (fieldName: string) => boolean;
-  };
+  control?: UseFormReturn['control'];
   value?: T;
   name?: string; // name은 필수로 넘겨줘야 함
   onChange?: (value: T) => void;
   disabled?: boolean;
+  onChangeGuideText?: (guidText: string) => void;
+  onFormChange?: (values?: Record<string, any>) => void;
 }
 
 // 컴포넌트에서 추가적으로 사용할 props 정의

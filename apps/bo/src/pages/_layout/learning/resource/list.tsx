@@ -12,9 +12,8 @@ import { MappingCoursePopup } from '../../../../features/learning/ui/resource/ma
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
 import { RegistrantPopup } from '../../../../features/learning/ui/resource/registrant-popup';
-import useSearchBox from '@/libs/hooks/src/lib/form-builder/use-search-box';
 import { SearchBox } from '../../../../widgets/search-box/search-box';
-import { SearchBoxConfig } from '@learnway/hooks';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
