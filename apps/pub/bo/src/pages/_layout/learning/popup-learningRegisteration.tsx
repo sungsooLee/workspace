@@ -113,7 +113,9 @@ function RouteComponent() {
       <ModalContainer>
         <ModalBody>
           <div className={styles.wrap}>
-            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            <div className={styles.title_wrap}>
+              <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            </div>
             <OptionCard
               cols={5}
               size="lg"

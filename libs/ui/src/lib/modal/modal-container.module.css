@@ -9,7 +9,7 @@
 }
 
 .title {
-  @apply sticky left-0 top-0 flex min-h-[49px] w-full items-center justify-start px-[24px] py-[12px] text-[16px] font-bold text-[var(--primary2)];
+  @apply sticky left-0 top-0 z-[1] flex min-h-[49px] w-full items-center justify-start px-[24px] py-[12px] text-[16px] font-bold text-[var(--primary2)];
   border-bottom: 1px solid var(--gray2);
   &:empty {
     @apply hidden;
@@ -22,7 +22,7 @@
 }
 
 .contents {
-  @apply scrollbar max-h-[580px] overflow-y-auto overflow-x-hidden p-[32px] pb-[16px];
+  @apply scrollbar max-h-[640px] overflow-y-auto overflow-x-hidden p-[32px] pb-[16px];
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
