@@ -1,2 +1,14 @@
 .start {
+  &.chilps_modal_wrap {
+    @apply flex min-h-[32px] flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px];
+    .btn_search {
+      @apply flex flex-auto items-center justify-end pr-[12px];
+    }
+    span {
+      @apply !h-[23px] !min-h-[23px];
+      button {
+        @apply !input_bo_2_r !min-h-[23px];
+      }
+    }
+  }
 }

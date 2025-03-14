@@ -1,11 +1,6 @@
 /*  */
 .start {
   &.shorts {
-    .tit_box {
-      strong {
-        @apply title_5_b text-[var(--gray9)];
-      }
-    }
     .shorts_box {
       @apply mt-[16px] h-[50px] w-full bg-black;
     }

@@ -4,9 +4,6 @@ import styles from '@learnway/styles/fo/features/integrated-search/integrated-se
 const IntegratedSearchRunningComponent = () => {
   return (
     <div className={`${styles.start} ${styles.running}`}>
-      <div className={styles.tit_box}>
-        <strong>러닝랩</strong>
-      </div>
       <div className={styles.running_box}></div>
     </div>
   );
