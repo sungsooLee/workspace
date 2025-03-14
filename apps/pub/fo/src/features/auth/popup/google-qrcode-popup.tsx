@@ -5,7 +5,7 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 import { IcoCaution } from '@learnway/icons';
 import imgQrcode from '../../../assets/images/temp/img_qrcode.png';
 import { Button, useModal } from '@learnway/ui';
-import { GoogleKeyPopup, GoogleInputPopup } from '../../../features/auth';
+import { GoogleInputPopup, GoogleKeyPopup } from '../../../features/auth';
 
 const CustomFooter = () => {
   const { close: closeModal } = useModal();
@@ -25,7 +25,6 @@ const CustomFooter = () => {
               title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleInputPopup />,
-              footer: true,
             });
           });
         }}>
@@ -54,7 +53,6 @@ const GoogleQrcodePopupCompoment = () => {
                 title: '구글 OTP 인증키 생성',
                 width: 'sm',
                 content: <GoogleKeyPopup />,
-                footer: <CustomFooter />,
               });
             });
           }}>

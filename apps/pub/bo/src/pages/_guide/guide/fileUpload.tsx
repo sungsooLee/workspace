@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Progress, Button, Badge } from '@learnway/ui';
-import { IcoTrash03, IcoPause, IcoFileMp4, IcoComplete02, IcoRefresh } from '@learnway/icons';
+import { Badge, Button, Progress, useModal } from '@learnway/ui';
+import { IcoComplete02, IcoFileMp4, IcoPause, IcoRefresh, IcoTrash03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from '../../../assets/styles/modules/fileUpload.module.css';
 
@@ -215,7 +215,6 @@ function RouteComponent() {
         title: '',
         width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <FileUploadContent />,
-        footer: true,
       });
       hasRun.current = true;
     }

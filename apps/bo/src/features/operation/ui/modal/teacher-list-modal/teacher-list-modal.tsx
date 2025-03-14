@@ -8,28 +8,27 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
-import styles from './channel-list-modal.module.css';
+import styles from './teacher-list-modal.module.css';
 import { useTranslation } from 'react-i18next';
 
-export interface ChannelListModalProps {
+export interface TeacherListModalProps {
   dummy?: boolean;
-  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
- * 채널 리스트
+ * 강사 리스트
  * @param value
  * @param onChange
  * @param props
  * @constructor
  */
-const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalProps>(
-  ({ setModalData, ...props }, ref) => {
+const TeacherListModalComponent = forwardRef<HTMLDivElement, TeacherListModalProps>(
+  ({ ...props }, ref) => {
     const { t } = useTranslation();
-    const { data: gridData }: any = getMockData();
     const { close: closeModal } = useModal();
+    const { data: gridData }: any = getMockData();
     const [selectedRow, setSelectedRow] = useState();
-    const columns = [{ header: t('채널명'), accessorKey: 'name' }];
+    const columns = [{ header: t('강사명'), accessorKey: 'name' }];
 
     const handleRowSelect = (row: any) => {
       setSelectedRow(row);
@@ -37,11 +36,11 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
 
     return (
       <ModalContainer>
-        <ModalTitle>{t('채널 리스트')}</ModalTitle>
+        <ModalTitle>{t('강사 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <h2>Grid</h2>
             <Grid
+              title={'목록'}
               data={gridData}
               columns={columns}
               hideColumnSettings
@@ -50,31 +49,24 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'point'} size={'sm'} onClick={() => closeModal()} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button
             label={t('확인')}
             variant={'primary'}
-            size={'sm'}
+            size={'lg'}
             onClick={() => closeModal(selectedRow)}
           />
         </ModalFooter>
       </ModalContainer>
     );
-
-    return (
-      <div className="p-4">
-        <h2>Grid</h2>
-        <Grid data={gridData} columns={columns} hideColumnSettings onRowSelect={handleRowSelect} />
-      </div>
-    );
   },
 );
-export const ChannelListModal = ChannelListModalComponent;
+export const TeacherListModal = TeacherListModalComponent;
 
 const getMockData = () => {
   return {
     data: Array(5)
       .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `channel${i}` })),
+      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
   };
 };

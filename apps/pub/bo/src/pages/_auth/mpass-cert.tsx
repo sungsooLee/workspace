@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { IcoCaution, IcoFaceId01, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import modalStyles from './mpass-modal.module.css';
-import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import imgGuide1 from '../../assets/images/modal/img_mpass_guide1.png';
 import imgGuide2 from '../../assets/images/modal/img_mpass_guide2.png';
 
@@ -145,7 +145,6 @@ function RouteComponent() {
                   title: 'FIDO 인증',
                   width: 'sm',
                   content: <MpassModalContent />,
-                  footer: true,
                 })
               }>
               MPASS 인증

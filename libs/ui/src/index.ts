@@ -66,7 +66,7 @@ export * from './lib/file-upload/form-thumbnail-image-upload';
 export * from './lib/file-upload/uppy-file-upload';
 
 // form-field
-export * from './lib/form-field/input-modal-button-form-field/input-modal-button-form-field';
+export * from './lib/form-field/input-modal-selector-form-field/input-modal-selector-form-field';
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
 
 // modal

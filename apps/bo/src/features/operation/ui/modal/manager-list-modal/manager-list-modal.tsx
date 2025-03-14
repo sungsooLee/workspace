@@ -40,8 +40,8 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
         <ModalTitle>{t('운영자 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <h2>Grid</h2>
             <Grid
+              title={'목록'}
               data={gridData}
               columns={columns}
               hideColumnSettings
@@ -50,11 +50,11 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'point'} size={'sm'} onClick={() => closeModal()} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button
             label={t('확인')}
             variant={'primary'}
-            size={'sm'}
+            size={'lg'}
             onClick={() => closeModal(selectedRow)}
           />
         </ModalFooter>

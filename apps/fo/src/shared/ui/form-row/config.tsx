@@ -4,7 +4,7 @@ import {
   FormTextarea,
   FormThumbnailImageUpload,
   Input,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
   Switch,
   Textarea,
 } from '@learnway/ui';
@@ -20,7 +20,7 @@ export const dialogConfig = {
   dropdown: FormSelect,
   switch: Switch,
   textarea: Textarea,
-  'text-popup-button': InputModalButtonFormField,
+  'text-popup-button': InputModalSelectorFormField,
   'text-area': FormTextarea,
   'chip-list': FormChipList,
   'thumbnail-image-upload': FormThumbnailImageUpload,

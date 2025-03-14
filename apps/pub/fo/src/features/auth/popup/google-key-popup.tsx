@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styles from './google-key-popup.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
-import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
+import { GoogleInputPopup, GoogleQrcodePopup } from '../../../features/auth';
 import { Button, useModal } from '@learnway/ui';
 
 const CustomFooter = () => {
@@ -23,7 +23,6 @@ const CustomFooter = () => {
               title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleInputPopup />,
-              footer: true,
             });
           });
         }}>
@@ -52,7 +51,7 @@ const GoogleKeyPopupCompoment = () => {
               title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleQrcodePopup />,
-              footer: <CustomFooter />,
+              // footer: <CustomFooter />,
             });
           }}>
           QR코드 스캔

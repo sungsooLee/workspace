@@ -1,10 +1,8 @@
-import { memo, useState, useRef, useEffect } from 'react';
-import { Link } from '@tanstack/react-router';
+import { memo, useEffect, useRef } from 'react';
 import styles from './recent-visits.module.css';
-import { IcoXclose, IcoArrowForward } from '@learnway/icons';
-import { Button } from '@learnway/ui';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
-import { Chips, SelectOption } from '@learnway/ui';
+import { IcoArrowForward } from '@learnway/icons';
+import { Chip, SelectOption } from '@learnway/ui';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Navigation } from 'swiper/modules';
 
@@ -53,7 +51,7 @@ const RecentVisitsCompoment = () => {
         <div className={styles.lists}>
           {items.map((item, index) => (
             <SwiperSlide key={index} className={styles.slide}>
-              <Chips className={styles.item} option={{ label: item.label, value: item.value }} />
+              <Chip className={styles.item} option={{ label: item.label, value: item.value }} />
             </SwiperSlide>
           ))}
         </div>
