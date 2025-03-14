@@ -1,0 +1,5 @@
+.start {
+  .btn_wrap {
+    @apply mt-[48px];
+  }
+}

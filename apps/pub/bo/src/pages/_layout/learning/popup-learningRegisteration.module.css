@@ -2,7 +2,7 @@
 .wrap {
   @apply relative;
   .title {
-    @apply title_bo_3_b text-center;
+    @apply title_bo_3_b pt-[16px] text-center;
   }
   .text {
     @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];

@@ -1,9 +1,9 @@
 .grid_table {
   @apply scrollbar overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
   .thead_th {
-    @apply box-border items-center justify-start border-b border-solid border-[var(--gray4)] bg-[var(--gray1)] pl-[8px] text-[14px] font-bold text-[#5C636E];
+    @apply box-border items-center justify-start border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] pl-[8px] text-[14px] font-bold text-[#5C636E];
     &:not(:first-child) {
-      @apply border-l border-solid border-[var(--gray3)];
+      @apply border-l border-t-0 border-solid;
     }
     .th_wrap {
       @apply w-full pr-[13px];
@@ -16,7 +16,7 @@
     tr {
       @apply min-h-[40px] border-b border-solid border-[var(--gray4)];
       td {
-        @apply body_bo_2_r box-border items-center border-l border-solid border-[var(--gray4)] px-[8px] text-center text-[var(--gray7)];
+        @apply body_bo_2_r box-border items-center border-l border-solid !border-[var(--gray4)] px-[8px] text-center text-[var(--gray7)];
         &:first-child {
           @apply border-l-0;
         }

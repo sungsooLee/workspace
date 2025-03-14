@@ -27,7 +27,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
         >
           {/* content */}
-          <div className={cn(styles.content_body, !title && styles.notitle)}>{content}</div>
+          <div className={cn(styles.content_body)}>{content}</div>
           {/*<div className={cn(styles.content_body, !title && styles.notitle)}>*/}
           {/*  <ContentComponent content={content} title={title} description={description} />*/}
           {/*</div>*/}
