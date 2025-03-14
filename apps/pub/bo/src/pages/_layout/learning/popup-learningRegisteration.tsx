@@ -77,7 +77,7 @@ function RouteComponent() {
     { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
 
-  // 퍼블수정 20240314 : Modal 수정
+  // 퍼블수정 20240314 : Modal 수정 S
   const EbookContent = () => {
     return (
       <ModalContainer>
@@ -135,11 +135,12 @@ function RouteComponent() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );
   };
+  // 퍼블수정 20240314 : Modal 수정 E
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {
