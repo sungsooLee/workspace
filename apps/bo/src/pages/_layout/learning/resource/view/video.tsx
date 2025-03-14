@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import {
   Button,
   ContentsRow,
+  DynamicFormField,
   FormDropdown,
   InputModalButtonFormField,
   selectStyles,
@@ -23,12 +24,11 @@ import {
 } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
-import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
-import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
-import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../../../widgets/form/form-row';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { FormGroup } from '../../../../../shared/ui/form';
+import { SelectFormField } from '../../../../../features/form/ui';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
@@ -68,13 +68,14 @@ function RouteComponent() {
             <FormRow provider={provider}>
               {/* 채널 */}
               <DynamicFormField name={'channelName'}>
-                <InputModalButtonFormField
+                <SelectFormField />
+                {/*<InputModalButtonFormField
                   modalConfig={{
                     content: <ChannelChoicePopup />,
                     footer: true,
                     width: 'md',
                   }}
-                />
+                />*/}
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
