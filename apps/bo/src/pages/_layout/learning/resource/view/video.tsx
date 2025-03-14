@@ -7,16 +7,14 @@ import {
   Button,
   ContentsRow,
   FormDropdown,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
   selectStyles,
-  ThumbnailImageUpload,
 } from '@learnway/ui';
 import { z } from '@learnway/shared';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
 import {
   ChannelChoicePopup,
@@ -25,7 +23,6 @@ import {
 } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
-import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
 import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
@@ -74,10 +71,9 @@ function RouteComponent() {
             <FormRow provider={provider}>
               {/* 채널 */}
               <DynamicFormField name={'channelName'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelChoicePopup />,
-                    footer: true,
                     width: 'md',
                   }}
                 />
@@ -100,10 +96,9 @@ function RouteComponent() {
             <FormRow provider={provider}>
               {/*담당자*/}
               <DynamicFormField name={'managerName'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ManagerChoicePopup />,
-                    footer: true,
                     width: 'md',
                   }}
                 />
@@ -144,10 +139,9 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <InputModalButtonFormField
+                  <InputModalSelectorFormField
                     modalConfig={{
                       content: <ManagerChoicePopup />,
-                      footer: true,
                       width: 'md',
                     }}
                   />
