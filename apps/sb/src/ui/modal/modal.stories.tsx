@@ -42,11 +42,11 @@ const ContentModal = () => {
         />
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'point'} size={'sm'} onClick={() => closeModal()} />
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button
           label={'확인'}
           variant={'primary'}
-          size={'sm'}
+          size={'lg'}
           onClick={() => closeModal(selectedRow)}
         />
       </ModalFooter>

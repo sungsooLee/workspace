@@ -1,35 +1,50 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
-import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, DateRangePicker, InputModalButtonFormField } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  FormDropdown,
+  InputModalSelectorFormField,
+  selectStyles,
+} from '@learnway/ui';
 import { z } from '@learnway/shared';
-import { selectStyles } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { FormDisplay, FormGroup, FormRow } from '../../../../../shared/ui/form-row';
-import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
-import { DynamicFormConfig, DynamicFormField } from '../../../../../shared/ui/dynamic-form-field';
-import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
-import { ChannelChoicePopup, FormSubtitles } from '../../../../../features/learning';
+import {
+  ChannelChoicePopup,
+  FormSubtitles,
+  ThumbnailUploaderFormField,
+} from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
+import { FormRow } from '../../../../../widgets/form/form-row';
+import { FormDisplay } from '../../../../../features/form/ui/form-display';
+import { FormGroup } from '../../../../../shared/ui/form';
+
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { state } = useLocation();
   const router = useRouter();
-  const { provider, onSubmit } = useDynamicForm(formConfig);
+  const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
 
+  const openModal = () => {
+    // 모달 다으면 oncofmr(value)
+  };
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -52,11 +67,11 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               {/* 채널 */}
-              <DynamicFormField name={'channel'}>
-                <InputModalButtonFormField
+              <DynamicFormField name={'channelName'}>
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelChoicePopup />,
-                    footer: true,
+                    width: 'md',
                   }}
                 />
               </DynamicFormField>
@@ -76,9 +91,14 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'manager'}>
-                {/*담당자*/}
-                <TempSearchPopup />
+              {/*담당자*/}
+              <DynamicFormField name={'managerName'}>
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    content: <ManagerChoicePopup />,
+                    width: 'md',
+                  }}
+                />
               </DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
@@ -106,6 +126,39 @@ function RouteComponent() {
           {/*외주개발업체 정보*/}
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
+              <DynamicFormField name={'isExternalDevelopmentCompany'} />
+            </FormRow>
+          </ContentsRow>
+          {/*외주개발업체 상세*/}
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompany'}>
+                  <InputModalSelectorFormField
+                    modalConfig={{
+                      content: <ManagerChoicePopup />,
+                      width: 'md',
+                    }}
+                  />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
+              </FormRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'externalDevelopmentCompanyContact'}>
+                  <TempContact />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+          </FormDisplay>
+
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
           </ContentsRow>
@@ -118,6 +171,11 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <ThumbnailUploaderFormField name="thumbnails" />
+            </FormRow>
+          </ContentsRow>
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
               <FormRow provider={provider}>
@@ -148,8 +206,13 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
+      name: 'channelId',
+      type: 'hidden',
+      value: '',
+    },
+    {
       label: t('채널'),
-      name: 'channel',
+      name: 'channelName',
       type: 'custom',
       value: '',
     },
@@ -160,6 +223,9 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
+      validation: {
+        type: 'string',
+      },
     },
     {
       label: t('학습자원 설명'),
@@ -170,9 +236,14 @@ const formConfig: DynamicFormConfig = {
       maxLength: 2000,
     },
     {
-      label: t('담당자'),
-      name: 'manager',
+      name: 'managerId',
       type: 'text',
+      value: '',
+    },
+    {
+      label: t('담당자'),
+      name: 'managerName',
+      type: 'custom',
       value: '',
     },
     {
@@ -185,7 +256,7 @@ const formConfig: DynamicFormConfig = {
       label: t('사용기한'),
       name: 'expirationDate',
       type: 'switch',
-      value: '',
+      value: false,
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
     {
@@ -202,19 +273,13 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('외주개발업체정보'),
       name: 'isExternalDevelopmentCompany',
-      type: 'checkbox',
+      type: 'switch',
       value: false,
-    },
-    {
-      label: t('개발업체'),
-      name: 'externalDevelopmentCompany',
-      type: 'text',
-      value: '',
     },
     {
       label: t('외주개발업체'),
       name: 'externalDevelopmentCompany',
-      type: 'text',
+      type: 'custom',
       value: '',
     },
     {
@@ -226,7 +291,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('외주개발업체 연락처'),
       name: 'externalDevelopmentCompanyContact',
-      type: 'text',
+      type: 'custom',
       value: '',
     },
     {
@@ -241,10 +306,16 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       value: '',
     },
-    {
+    /*{
       label: t('오히부학습시작 파라미터'),
       name: 'externalDevelopmentCompanyResourceParams',
       type: 'text',
+      value: '',
+    },*/
+    {
+      label: t('썸네일'),
+      name: 'thumbnails',
+      type: 'custom',
       value: [],
     },
     {
@@ -283,26 +354,9 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    /*channel: z.string().required(),*/
-    learningResourceName: z.string().required(),
-    manager: z.string().required(),
-    contact: z.string().required(),
-    expirationDate: z.string().required(),
-    isInspectionConfirmed: z.boolean().refine((value) => !value, {
-      message: '‘{{label}}’ 체크하세요..',
-    }),
-    isCopyrightConfirmed: z.boolean().refine((value) => !value, {}),
-    isSecurityConfirmed: z.boolean().refine((value) => !value, {}),
+    channelName: z.string().required(),
+    expirationDate: z.boolean().required(),
   },
-  /*globalValidator: (({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Passwords don't match",
-        path: ['confirmPassword'],
-      });
-    }
-  });*/
 };
 
 const VideoThumbnailExtractor: React.FC = () => {

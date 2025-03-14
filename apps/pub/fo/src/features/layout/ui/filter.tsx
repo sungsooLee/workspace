@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, useModal, ChipList } from '@learnway/ui';
+import { Button, ChipList, useModal } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
 import { OptionCard } from '@/libs/ui/src';
@@ -67,7 +67,6 @@ const FilterComponent = () => {
               title: '필터',
               width: 'md',
               content: <FilterPopup />,
-              footer: true,
             })
           }>
           <IcoFilter

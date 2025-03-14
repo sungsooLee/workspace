@@ -1,11 +1,10 @@
 import { createElement, useCallback } from 'react';
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
-import { ModalConfig, ModalControl } from './type';
+import { ModalConfig, useModalReturnValue } from './type';
 import { getRandomId } from '@learnway/shared';
 
-// TODO: rename : useModal > useModal
-const useModal = (): ModalControl => {
+const useModal = (): useModalReturnValue => {
   const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
 
   const open = useCallback(

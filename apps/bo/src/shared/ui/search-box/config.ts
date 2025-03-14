@@ -1,7 +1,7 @@
 import { Input } from '@learnway/ui';
-import { FormSelect } from '../form-row/dialogs/form-select';
+import { SelectFormField } from '../../../features/form/ui';
 
 export const searchDialogConfig = {
   text: Input,
-  dropdown: FormSelect,
+  dropdown: SelectFormField,
 };

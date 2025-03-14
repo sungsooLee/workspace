@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Button } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { IcoUploadCloud } from '@learnway/icons';
 import styles from './popup-learningRegisteration.module.css';
 
@@ -48,7 +48,7 @@ function RouteComponent() {
         title: '',
         width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <FileUploadContent />,
-        footer: <CustomFooter />,
+        // footer: <CustomFooter />,
       });
       hasRun.current = true;
     }

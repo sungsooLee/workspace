@@ -5,10 +5,11 @@ import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/co
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import useDynamicForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
-import { FormRow } from '../../../../shared/ui/form-row';
 import { z } from '@learnway/shared';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { FormRow } from '../../../../widgets/form/form-row';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/partners/tenant/')({
   component: RouteComponent,

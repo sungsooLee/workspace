@@ -6,15 +6,15 @@ import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
 import eBookstyles from './eBook.module.css';
 import {
-  IcoMybook,
   IcoBlog,
   IcoEntrust,
-  IcoInfoCircle,
+  IcoEtc,
+  IcoHtml,
   IcoImage01,
+  IcoInfoCircle,
+  IcoMybook,
   IcoVideo01,
   IcoVideo02,
-  IcoHtml,
-  IcoEtc,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
@@ -112,31 +112,27 @@ function RouteComponent() {
   const TypeSelectContent = () => {
     const { close: closeModal } = useModal();
     return (
-      <ModalContainer>
-        <ModalBody>
-          <div className={styles.wrap}>
-            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-            <OptionCard
-              cols={5}
-              size="lg"
-              className={styles.select_wrap}
-              options={data}
-              onOptionSelect={(option) => {
-                console.log('selected', option);
-                option?.label === '이북' &&
-                  openModal({
-                    hideCloseButton: true,
-                    width: 'auto',
-                    content: <EbookContent />,
-                  });
-              }}
-            />
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        </ModalFooter>
-      </ModalContainer>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+        <p className={styles.text}>{'서브텍스트입니다.'}</p>
+        <OptionCard
+          cols={5}
+          size="lg"
+          className={styles.select_wrap}
+          options={data}
+          onOptionSelect={(option) => {
+            console.log('selected', option);
+            option?.label === '이북' &&
+              openModal({
+                title: '',
+                hideCloseButton: true,
+                width: 'auto',
+                content: <EbookContent />,
+                footer: <EbookFooter />,
+              });
+          }}
+        />
+      </div>
     );
   };
   // 한번만 실행
@@ -146,6 +142,7 @@ function RouteComponent() {
       openModal({
         width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <TypeSelectContent />,
+        footer: <CustomFooter />,
       });
       hasRun.current = true;
     }

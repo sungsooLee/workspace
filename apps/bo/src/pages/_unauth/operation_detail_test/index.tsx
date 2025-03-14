@@ -3,21 +3,22 @@ import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
-  ChipListModalButtonFormField,
+  ChipListModalSelectorFormField,
+  ContentsRow,
   Input,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { FormRow } from '../../../shared/ui/form-row';
 import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 import { ChannelListModal, ManagerListModal } from '../../../features/operation';
+import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
+import { FormRow } from '../../../widgets/form/form-row';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
@@ -64,7 +65,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'channel'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelListModal />,
                   }}
@@ -115,7 +116,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
-                <ChipListModalButtonFormField
+                <ChipListModalSelectorFormField
                   modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
                   chipList={{
                     labelField: 'name',
@@ -142,21 +143,10 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
                     title: t('운영자 목록'),
                     content: <ManagerListModal />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'sm'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </DynamicFormField>
