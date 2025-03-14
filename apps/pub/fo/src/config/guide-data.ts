@@ -119,7 +119,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- mpass-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -139,7 +139,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -149,7 +149,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -159,7 +159,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -169,7 +169,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -244,10 +244,10 @@ export const guideData = [
   {
     layoutType: '반응형 (PC)',
     screenName: '약관동의',
-    pageId: '',
+    pageId: 'agreement',
     screenId: 'NLP_FO_LOG_1022', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-14', // 완료일
     lastUpdateDate: '',
     remarks: '- 3월5일 추가',
   },
