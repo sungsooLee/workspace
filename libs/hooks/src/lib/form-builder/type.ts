@@ -185,18 +185,19 @@ export type ErrorState = {
 
 // 공통으로 넘겨줄 props 정의
 export interface BaseFormFieldProps<T = any> {
-  control?: UseFormReturn['control'];
-  value?: T;
-  name?: string; // name은 필수로 넘겨줘야 함
-  onChange?: (value: T) => void;
-  disabled?: boolean;
-  onChangeGuideText?: (guidText: string) => void;
-  onFormChange?: (values?: Record<string, any>) => void;
+  control: UseFormReturn['control'];
+  value: T;
+  name: string; // name은 필수로 넘겨줘야 함
+  onChange: (value: T) => void;
+  disabled: boolean;
+  onChangeGuideText: (guidText: string) => void;
+  onFormChange: (values?: Record<string, any>) => void;
+  [key: string]: any;
 }
 
-// 컴포넌트에서 추가적으로 사용할 props 정의
-export type FormFieldProps<P = {}, R = HTMLDivElement, T = any> = ForwardRefExoticComponent<
-  BaseFormFieldProps<T> & P & RefAttributes<R>
+// ✅ 컴포넌트별 추가 props 정의 (자유롭게 정의 가능)
+type FormFieldProps<Props = {}> = ForwardRefExoticComponent<
+  BaseFormFieldProps<any> & Props & RefAttributes<any>
 >;
 
 export type FormFieldConfig = Record<string, FormFieldProps<any>>;
