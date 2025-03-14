@@ -22,7 +22,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { open: openModal, close: closeModal } = useModal();
 
   const data = [
     {
@@ -79,7 +79,6 @@ function RouteComponent() {
 
   // 퍼블수정 20240314 : Modal 수정
   const EbookContent = () => {
-    const { close: closeModal } = useModal();
     return (
       <ModalContainer>
         <ModalBody>
@@ -110,29 +109,33 @@ function RouteComponent() {
   };
 
   const TypeSelectContent = () => {
-    const { close: closeModal } = useModal();
     return (
-      <div className={styles.wrap}>
-        <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-        <p className={styles.text}>{'서브텍스트입니다.'}</p>
-        <OptionCard
-          cols={5}
-          size="lg"
-          className={styles.select_wrap}
-          options={data}
-          onOptionSelect={(option) => {
-            console.log('selected', option);
-            option?.label === '이북' &&
-              openModal({
-                title: '',
-                hideCloseButton: true,
-                width: 'auto',
-                content: <EbookContent />,
-                footer: <EbookFooter />,
-              });
-          }}
-        />
-      </div>
+      <ModalContainer>
+        <ModalBody>
+          <div className={styles.wrap}>
+            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            <OptionCard
+              cols={5}
+              size="lg"
+              className={styles.select_wrap}
+              options={data}
+              onOptionSelect={(option) => {
+                console.log('selected', option);
+                option?.label === '이북' &&
+                  openModal({
+                    title: '',
+                    hideCloseButton: true,
+                    width: 'auto',
+                    content: <EbookContent />,
+                  });
+              }}
+            />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
   // 한번만 실행
@@ -142,7 +145,6 @@ function RouteComponent() {
       openModal({
         width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <TypeSelectContent />,
-        footer: <CustomFooter />,
       });
       hasRun.current = true;
     }
