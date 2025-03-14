@@ -4,22 +4,19 @@ import styles from './input-modal-selector-form-field.module.css';
 import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
-import { FormFieldProps, ProxyFormBaseType } from '@learnway/hooks';
 
 interface InputModalSelectorFormFieldComponentProps extends InputHTMLAttributes<HTMLInputElement> {
   modalConfig: ModalConfig;
+  value?: any;
+  onChange?: (value: any) => void;
   input?: InputProps;
   onClick?: (value?: any) => void;
   onFormChange?: (value?: any) => void;
 }
 
-const InputModalSelectorFormFieldComponent: FormFieldProps<
-  InputModalSelectorFormFieldComponentProps,
+const InputModalSelectorFormFieldComponent = forwardRef<
   HTMLInputElement,
-  string
-> = forwardRef<
-  HTMLInputElement,
-  ProxyFormBaseType<string> & InputModalSelectorFormFieldComponentProps
+  InputModalSelectorFormFieldComponentProps
 >(
   (
     {

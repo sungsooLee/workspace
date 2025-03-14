@@ -4,15 +4,14 @@ import { Button, ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
-import { BaseFormFieldProps, FormFieldProps } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { IcoSearch } from '@learnway/icons';
 import styles from './chip-list-modal-selector-form-field.module.css';
 
 export interface ChipListModalSelectorFormFieldProps {
   modalConfig: ModalConfig;
-  // value?: any;
-  // onChange?: (value: any) => void;
+  value?: any;
+  onChange?: (value: any) => void;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
 }
@@ -24,11 +23,10 @@ export interface ChipListModalSelectorFormFieldProps {
  * @param props
  * @constructor
  */
-const ChipListModalSelectorFormFieldComponent: FormFieldProps<
-  ChipListModalSelectorFormFieldProps,
+const ChipListModalSelectorFormFieldComponent = forwardRef<
   HTMLDivElement,
-  any[]
-> = forwardRef<HTMLDivElement, BaseFormFieldProps<any[]> & ChipListModalSelectorFormFieldProps>(
+  ChipListModalSelectorFormFieldProps
+>(
   (
     {
       modalConfig,

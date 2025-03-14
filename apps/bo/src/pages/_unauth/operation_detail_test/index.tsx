@@ -14,7 +14,7 @@ import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/conte
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ChannelListModal, ManagerListModal } from '../../../features/operation';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '../../../features/operation';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
