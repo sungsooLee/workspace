@@ -103,7 +103,7 @@
 }
 
 .btn_close {
-  @apply absolute right-[16px] top-[12px] flex items-center justify-center;
+  @apply absolute right-[16px] top-[12px] z-[3] flex items-center justify-center;
 }
 
 .Fieldset {
