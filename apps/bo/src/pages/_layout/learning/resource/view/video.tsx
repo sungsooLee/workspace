@@ -9,14 +9,12 @@ import {
   FormDropdown,
   InputModalButtonFormField,
   selectStyles,
-  ThumbnailImageUpload,
 } from '@learnway/ui';
 import { z } from '@learnway/shared';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { TempSearchPopup } from '../../../../../features/learning/ui/resource/temp';
 import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
 import {
   ChannelChoicePopup,
@@ -25,7 +23,6 @@ import {
 } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
-import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 import useDynamicForm from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
 import { DynamicFormField } from '@/libs/ui/src/lib/dynamic-form-field';
 import { DynamicFormConfig, DynamicFormValues } from '@learnway/hooks';
@@ -67,9 +64,6 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
         <MainContents>
-          <ContentsRow>
-            <FormDropdown />
-          </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
               {/* 채널 */}
@@ -232,6 +226,9 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
+      validation: {
+        type: 'string',
+      },
     },
     {
       label: t('학습자원 설명'),
@@ -360,7 +357,8 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    manager: z.string().required(),
+    channelName: z.string().required(),
+    expirationDate: z.boolean().required(),
   },
 };
 

@@ -22,7 +22,7 @@ const SelectFormFieldComponent: FormFieldProps<
 >(({ control, value, onChange, options, optionsConfig }, ref) => {
   const watchedValue = useWatch({
     control,
-    name: optionsConfig.target,
+    name: optionsConfig?.target || [],
   });
   const [currentOptions, setCurrentOptions] = useState<SelectOption[]>(
     options.map((option: any) =>

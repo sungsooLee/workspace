@@ -82,6 +82,7 @@ const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormR
           onValid(objectParams);
         },
         (errors) => {
+          console.log('Validation Errors:', errors);
           // 첫 번째 에러 필드의 키를 추출
           const firstErrorKey = Object.keys(errors)[0];
           if (firstErrorKey) {
