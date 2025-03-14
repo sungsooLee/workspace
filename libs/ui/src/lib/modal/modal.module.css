@@ -19,10 +19,7 @@
 }
 
 .content_body {
-  @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden;
-  &.scrolled {
-    border-bottom: 1px solid var(--gray3);
-  }
+  @apply overflow-hidden;
 }
 
 .content {
@@ -106,7 +103,7 @@
 }
 
 .btn_close {
-  @apply absolute right-[16px] top-[12px] flex items-center justify-center;
+  @apply absolute right-[16px] top-[12px] z-[3] flex items-center justify-center;
 }
 
 .Fieldset {

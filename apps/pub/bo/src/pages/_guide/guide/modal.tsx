@@ -8,6 +8,49 @@ const ContentModal = () => {
       <ModalTitle>{'타이틀'}</ModalTitle>
       <ModalBody>
         <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
+        <p>컨텐츠 영역</p>
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -35,7 +78,21 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal  } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui';
+// Modal open, close
+const { open: openModal,  close: closeModal } = useModal();
+
+<ModalContainer>
+  <ModalTitle>{'타이틀'}</ModalTitle>
+  <ModalDescription>{'텍스트'}</ModalDescription>
+  <ModalBody>
+    <p>컨텐츠 영역</p>
+  </ModalBody>
+  <ModalFooter>
+    <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+    <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+  </ModalFooter>
+</ModalContainer>
 
 // 실행 함수
 openModal({

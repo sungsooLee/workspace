@@ -11,6 +11,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/search-account': '아이디 / 비밀번호 찾기',
   '/pb-fo/dormant-account': '휴면 계정 해제',
   '/pb-fo/password-input': '비밀번호 입력', // 휴먼 계정 해제와 동일
+  '/pb-fo/password-set': '비밀번호 설정',
   '/pb-fo/password-modify': '비밀번호 변경',
   '/pb-fo/search-id-success': '아이디찾기',
   '/pb-fo/mpass-cert': 'MPASS 인증',

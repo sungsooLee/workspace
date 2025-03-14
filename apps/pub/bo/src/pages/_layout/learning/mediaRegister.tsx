@@ -774,6 +774,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
+                {/* 퍼블수정 20240314 : disabled 속성 추가 */}
                 <ThumbnailImageUpload
                   options={[
                     /* 동영상 추출 전 */
@@ -786,6 +787,7 @@ function RouteComponent() {
                     { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '6', path: defaultImg } /* default 추천 썸네일 */,
                   ]}
+                  disabled={true}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
                     console.log('onCheckedChange', options)

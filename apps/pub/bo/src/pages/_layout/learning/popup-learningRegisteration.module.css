@@ -1,14 +1,17 @@
 /* popup-learningRegisteration.module.css */
 .wrap {
   @apply relative;
-  .title {
-    @apply title_bo_3_b pt-[16px] text-center;
-  }
-  .text {
-    @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
+  .title_wrap {
+    @apply sticky top-0 z-[1] w-full bg-[var(--white)] pb-[24px];
+    .title {
+      @apply title_bo_3_b pt-[16px] text-center;
+    }
+    .text {
+      @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
+    }
   }
   .select_wrap {
-    @apply mt-[50px];
+    @apply mt-[24px];
     button {
       span {
         &:nth-last-child(1) {
