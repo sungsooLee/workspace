@@ -13,7 +13,7 @@ export const Route = createFileRoute('/_layout/learning/resource/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { openAsync } = useModal();
+  const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
 
@@ -23,7 +23,7 @@ function RouteComponent() {
   const handleRegister = async () => {
     setDisplayContent(false);
     //router.navigate({ to: '/learning/resource/education/view' });
-    const typeResult = (await openAsync({
+    const typeResult = (await openModal({
       content: <LearningTypeChoicePopup />,
       width: 'lg',
     })) as LEARNING_TYPE;
@@ -38,6 +38,7 @@ function RouteComponent() {
           width: 'lg',
         });*/
         break;
+
       }
     }
     router.navigate({ to: '/learning/resource/view/video' });

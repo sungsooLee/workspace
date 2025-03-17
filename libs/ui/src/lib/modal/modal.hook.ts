@@ -13,6 +13,7 @@ const useModal = (): useModalReturnValue => {
         const newConfig: ModalConfig = {
           ...config,
           id: getRandomId(),
+          width: config.width || 'md', // modal 은 기본 width 'md'
           onClose: (data?: any) => {
             config?.onClose?.(data);
             resolve(data);
@@ -20,14 +21,6 @@ const useModal = (): useModalReturnValue => {
         };
         openModal(newConfig);
       });
-    },
-    [openModal],
-  );
-
-  // open 만 사용 예정
-  const openAsync = useCallback(
-    (config: ModalConfig): Promise<any> => {
-      return open(config);
     },
     [openModal],
   );
@@ -49,7 +42,10 @@ const useModal = (): useModalReturnValue => {
                 ...props,
               };
         const config: ModalConfig = {
-          content: createElement(Alert, defaultProps),
+          id: getRandomId(),
+          content: createElement(Alert, {
+            ...defaultProps,
+          }),
           hideCloseButton: true,
           onClose: (value: any) => {
             defaultProps?.onClose?.(value);
@@ -77,6 +73,7 @@ const useModal = (): useModalReturnValue => {
                 isConfirm: true,
               };
         const config = {
+          id: getRandomId(),
           content: createElement(Alert, defaultProps),
           hideCloseButton: true,
           onClose: (value: any) => {
@@ -94,7 +91,6 @@ const useModal = (): useModalReturnValue => {
     open,
     close,
     closeAll,
-    openAsync, // 언제 사용?
     alert,
     confirm,
     modals,

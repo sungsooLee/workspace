@@ -1,8 +1,19 @@
 import { memo } from 'react';
-import { OptionCard } from '@/libs/ui/src';
+import { OptionCard } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import { cn } from '@learnway/shared';
-import { ChipList } from '@learnway/ui';
+// 퍼블수정 20250314 import modal추가
+import {
+  ChipList,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  useModal,
+  Button,
+} from '@learnway/ui';
+
+import { IcoRefresh02 } from '@learnway/icons';
 
 import styles from './filter-popup.module.css';
 
@@ -50,52 +61,91 @@ const options: any[] = [
   { label: '시험', value: 'F' },
 ];
 
+// 퍼블수정 20250314 modal 컴포넌트 수정으로 전체적 수정
 const FilterPopupComponent = () => {
+  const { close: closeModal } = useModal();
   return (
-    <div className={styles.start}>
-      <ul className={styles.filter_wrap}>
-        <li>
-          <strong className={styles.tit}>강의유형</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>수강신청</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter2} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>학습시간</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter3} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>교육기간</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter4} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>난이도</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter5} multiple />
-          </div>
-        </li>
-        <li>
-          <strong className={styles.tit}>언어</strong>
-          <div className={styles.filter_box}>
-            <OptionCard cols={4} options={filter5} multiple />
-          </div>
-        </li>
-      </ul>
+    <ModalContainer>
+      <ModalTitle>{'필터'}</ModalTitle>
+      <ModalBody>
+        <div className={styles.start}>
+          <ul className={styles.filter_wrap}>
+            <li>
+              <strong className={styles.tit}>강의유형</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>수강신청</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter2} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>학습시간</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter3} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>교육기간</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter4} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>난이도</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
 
-      <div className={styles.look}>
-        <ChipList options={options} className={styles.chip_list} hideBorder type="line" size="sm" />
-      </div>
-    </div>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+          </ul>
+
+          <div className={styles.look}>
+            <ChipList
+              options={options}
+              className={styles.chip_list}
+              hideBorder
+              type="line"
+              size="sm"
+            />
+          </div>
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
+          <IcoRefresh02 width={20} height={20} stroke="#4c515e" fill="none"></IcoRefresh02>
+          초기화
+        </Button>
+        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+      </ModalFooter>
+    </ModalContainer>
   );
 };
 

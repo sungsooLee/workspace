@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './my-menu.module.css';
 import { ChipList, Popover, SelectOption } from '@learnway/ui';
-import { IcoStar, IcoClock01 } from '@learnway/icons';
+import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 // import { useFetchAuthUser } from '../../../entities/user';
@@ -26,7 +26,7 @@ const PopoverContent = () => {
   };
   return (
     <div className={cn(styles.start, styles.mymenu_wrap)}>
-      <strong className={styles.tit}>{'최근 메뉴'}</strong>
+      <strong className={styles.tit}>{'최근 본 메뉴'}</strong>
       <div className={styles.word_contents}>
         {/* 최근 자주 사용한 메뉴 없는 경우 */}
         {options.length === 0 ? (
@@ -40,13 +40,13 @@ const PopoverContent = () => {
           </div>
         ) : (
           <div className={styles.word_wrap}>
-            <ChipList options={options} onChange={handleChange} size="sm" />
+            <ChipList options={options} onChange={handleChange} size="sm" hideBorder />
           </div>
         )}
       </div>
       <strong className={styles.tit}>{'즐겨찾기'}</strong>
       <div className={styles.empty}>
-        <IcoStar className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
+        <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
         <p className={styles.text}>
           업무 화면에서 별아이콘을 클릭하면
           <br />

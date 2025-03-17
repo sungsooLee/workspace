@@ -1,3 +1,3 @@
 import { BaseFormFieldProps } from './type';
 
-export type ProxyFormBaseType = BaseFormFieldProps;
+export type ProxyFormBaseType<T> = BaseFormFieldProps<T>;

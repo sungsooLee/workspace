@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, Input, useModal } from '@learnway/ui';
+import { Button, DynamicFormField, useModal } from '@learnway/ui';
 import { z } from '@learnway/shared';
 
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
@@ -11,12 +11,10 @@ import { FormTranslationBox } from '../../../../../features/platform/ui/platform
 import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 import { useEffect } from 'react';
 import { LOCALES } from '@learnway/config';
-import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { TranslationPopup } from '../../../../../features/form/ui/translation';
 import { FormI18n } from '../../../../../features/form/ui';
 import { FormRow } from '../../../../../shared/ui/form';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
@@ -52,7 +50,7 @@ function RouteComponent() {
       ),
       width: 'xl',
       height: 'lg',
-      title: '다국어 번역',
+      // title: '다국어 번역',
       onClose: (data: any) => {
         onFormChange({ translations: data.translations });
       },
@@ -69,7 +67,6 @@ function RouteComponent() {
     if (processType === 'REGISTER') {
       openConfirm({
         description: <>다국어를 저장 하시겠습니까?</>,
-        isConfirm: true,
         iconVisible: false,
         onClose: (result: boolean) => {
           if (result) {
@@ -80,7 +77,6 @@ function RouteComponent() {
     } else {
       openConfirm({
         description: <>다국어를 수정 하시겠습니까?</>,
-        isConfirm: true,
         iconVisible: false,
         onClose: (result: boolean) => {
           if (result) {
@@ -92,7 +88,6 @@ function RouteComponent() {
 
     /*openConfirm({
       description: <>다국어를 저장하시겠습니까?</>,
-      isConfirm: true,
       iconVisible: false,
       onClose: (result: boolean) => {
         // console.log(result);

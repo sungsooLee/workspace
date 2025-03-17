@@ -10,14 +10,19 @@ export interface ModalContainerProps<T = any> extends CommonReactElementProps {
   children?: React.ReactNode;
 }
 
-const ModalContainerComponent: React.FC<ModalContainerProps> = ({ title, children, ...props }) => {
+const ModalContainerComponent: React.FC<ModalContainerProps> = ({
+  title,
+  children,
+  className,
+  ...props
+}) => {
   const TitleSlot = getSlot(children, ModalTitle);
   const DescSlot = getSlot(children, ModalDescription);
   const BodySlot = getSlot(children, ModalBody);
   const FooterSlot = getSlot(children, ModalFooter);
 
   return (
-    <div className={cn(styles.start, 'nlp--modal-content')}>
+    <div className={cn(styles.start, className, 'nlp--modal-content')}>
       {/* title */}
       <Primitive.Title className={styles.title}>{TitleSlot}</Primitive.Title>
       {/* description */}
@@ -25,7 +30,7 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({ title, childre
         <Primitive.Description className={styles.description}>{DescSlot}</Primitive.Description>
       )}
       {/* body */}
-      <div className={cn(styles.content_body, !title && styles.notitle)}>{BodySlot}</div>
+      <div className={cn(styles.contents, 'modal-content')}>{BodySlot}</div>
       {/* footer */}
       {FooterSlot && <div className={styles.footer}>{FooterSlot}</div>}
     </div>

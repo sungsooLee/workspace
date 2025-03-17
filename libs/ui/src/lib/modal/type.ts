@@ -7,13 +7,10 @@ export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
 export interface ModalConfig<T = any> {
   content: ReactNode;
   id?: string; // modal.hook 에서 open시 자동생성
-  title?: string;
-  description?: string;
   width?: ModalSize;
   height?: ModalHeight;
   hideCloseButton?: boolean;
   onClose?: (data?: ModalClose<T>) => void;
-  children?: React.ReactNode;
 }
 
 export interface ModalClose<T = any> {
@@ -27,5 +24,4 @@ export interface useModalReturnValue {
   closeAll: () => void;
   alert: (props: AlertComponentProps | string) => void;
   confirm: (props: AlertComponentProps | string) => void;
-  openAsync: <T = any>(props: ModalConfig) => Promise<any>;
 }

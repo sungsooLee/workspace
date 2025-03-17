@@ -1,0 +1,6 @@
+/* wrap-box.module.css */
+.start {
+  &.inner {
+    @apply -mx-[32px] mt-[32px] border-t border-solid border-[#d6dae1] p-[32px];
+  }
+}

@@ -69,9 +69,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          onClick={() =>
-            open({ content: <MappingCoursePopup />, width: 'md', height: 'md', title: '맵핑과정' })
-          }>
+          onClick={() => open({ content: <MappingCoursePopup />, width: 'md' })}>
           매핑과정팝업
         </Button>
 
@@ -79,9 +77,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          onClick={() =>
-            open({ content: <SharedHistoryPopup />, width: 'sm', height: 'md', title: '공유이력' })
-          }>
+          onClick={() => open({ content: <SharedHistoryPopup />, width: 'sm' })}>
           공유이력팝업
         </Button>
         <Button
@@ -93,7 +89,7 @@ function RouteComponent() {
               content: <ProgramGuideDownloadPopup />,
               width: 'sm',
               height: 'sm',
-              title: '프로그램/가이드 다운로드',
+              // title: '프로그램/가이드 다운로드',
             })
           }>
           프로그램가이드다운로드 팝업
@@ -113,8 +109,7 @@ function RouteComponent() {
                 />
               ),
               width: 'sm',
-              height: 'sm',
-              title: '등록자',
+              // title: '등록자',
             })
           }>
           등록자 팝업 (연락처있음)
@@ -129,8 +124,7 @@ function RouteComponent() {
                 <RegistrantPopup name={'김현대'} employeeNumber={'8883721'} email={'hd@hd.com'} />
               ),
               width: 'sm',
-              height: 'sm',
-              title: '등록자 정보',
+              // title: '등록자 정보',
             })
           }>
           등록자 팝업 (연락처없음)

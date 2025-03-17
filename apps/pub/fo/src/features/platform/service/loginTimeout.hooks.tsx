@@ -57,7 +57,6 @@ export function useLoginTimeout() {
       openAlert({
         title: '자동 로그아웃',
         description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',
-        isConfirm: false,
         iconVisible: true,
         alertType: 'caution',
         onClose: () => {
@@ -87,7 +86,6 @@ export function useLoginTimeout() {
         openAlert({
           title: '로그인 시간 연장',
           description: <ExtensionModal initialTime={5} onTimeout={handleLogout} />,
-          isConfirm: true,
           iconVisible: false,
           okButtonLabel: '로그인연장',
           onClose: (result?: boolean) => {

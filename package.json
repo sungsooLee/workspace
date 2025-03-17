@@ -5,6 +5,7 @@
   "scripts": {
     "dev:fo": "npx nx serve fo --configuration=local",
     "dev:bo": "npx nx serve bo --configuration=local",
+    "dev:sb": "nx run sb:storybook -p 6066",
     "dev:pb-bo": "npx nx serve pb-bo",
     "dev:pb-fo": "npx nx serve pb-fo",
     "build:fo": "npx nx build fo",
@@ -15,7 +16,6 @@
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
-    "dev:sb": "nx run sb:storybook -p 6066",
     "test:editor": "nx test editor --coverage --watch"
   },
   "private": true,

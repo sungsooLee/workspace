@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
 
 export interface ManagerListModalProps {
   dummy?: boolean;
-  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
 }
 
 /**
@@ -24,7 +23,7 @@ export interface ManagerListModalProps {
  * @constructor
  */
 const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalProps>(
-  ({ setModalData, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data: gridData }: any = getMockData();

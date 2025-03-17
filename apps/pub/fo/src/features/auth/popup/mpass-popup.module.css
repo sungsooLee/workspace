@@ -3,7 +3,7 @@
   &.mpass_popup {
     @apply text-center;
     .title_box {
-      @apply py-[24px] text-center;
+      @apply pb-[24px] text-center;
       .tit {
         @apply title_5_b text-[var[--gray9]];
       }

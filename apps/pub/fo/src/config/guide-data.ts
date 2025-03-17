@@ -119,7 +119,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- mpass-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -139,7 +139,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -149,7 +149,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -159,7 +159,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -169,27 +169,27 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
-    screenName: '이용약관_FOOTER',
-    pageId: '',
+    screenName: '이용약관 FOOTER',
+    pageId: 'agreement',
     screenId: 'NLP_FO_LOG_1016', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-17', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 기획 보류',
   },
   {
     layoutType: '반응형 (PC)',
-    screenName: '개인정보처리방침_FOOTER',
-    pageId: '',
+    screenName: '개인정보처리방침 FOOTER',
+    pageId: 'privacy',
     screenId: 'NLP_FO_LOG_1017', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 기획 보류',
   },
   {
     layoutType: '반응형 (PC)',
@@ -199,7 +199,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 기획 보류\n- contact-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -240,6 +240,26 @@ export const guideData = [
     completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
     remarks: '- 가입신청완료와 동일',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '약관동의',
+    pageId: 'agreement',
+    screenId: 'NLP_FO_LOG_1022', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-14', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 3월5일 신규 추가',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '신규 비밀번호 설정',
+    pageId: 'password-set',
+    screenId: 'NLP_FO_LOG_1023', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-14', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 3월5일 신규 추가',
   },
 
   {
@@ -284,6 +304,16 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_결과_EN',
+    pageId: 'progress-status-result-en',
+    screenId: 'NLP_FO_CPS_1101', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 영문',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_유형선택',
     pageId: 'signup-step1',
     screenId: 'NLP_FO_MER_1000', //스크린아이디
@@ -320,17 +350,17 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '기획(피그마) 미정',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입_약관상세(공통)',
     pageId: '',
     screenId: 'NLP_FO_MER_1004', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
+    pageType: 'Pop-up',
+    completionDate: '2025-03-14', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 하단 footer 이용약관 버튼클릭\n- agreement-pop.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -348,9 +378,9 @@ export const guideData = [
     pageId: '',
     screenId: 'NLP_FO_MER_1007', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-14', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 하단 footer 이용약관 버튼클릭\n- privacy-pop.tsx',
   },
   {
     layoutType: '적응형 (PC)',
@@ -358,9 +388,21 @@ export const guideData = [
     pageId: 'category/detail',
     screenId: 'NLP_FO_CAT_1001', //스크린아이디
     pageType: 'Page',
-    completionDate: '2025-03-10', // 완료일
+    completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
+    remarks:
+      'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
+  },
+  {
+    layoutType: '적응형 (PC)',
+    screenName: '통합검색결과_전체 TAB',
+    pageId: 'integrated-search/integrated-search',
+    screenId: 'NLP_FO_USE_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks:
+      'NLP_FO_USE_1010 (최근/추천/인기 검색어 팝업) 포함\nNLP_FO_USE_1011 (자동완성 팝업) 포함\n디자인 컨펌x로 작업 불가능',
   },
 ];
 

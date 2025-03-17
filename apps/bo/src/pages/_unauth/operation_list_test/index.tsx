@@ -61,7 +61,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        {/*<SearchBox config={sConfig} onSearch={handleOnSearch} />*/}
         <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>

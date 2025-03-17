@@ -4,9 +4,6 @@ import styles from '@learnway/styles/fo/features/integrated-search/integrated-se
 const IntegratedSearchChannelComponent = () => {
   return (
     <div className={`${styles.start} ${styles.channel}`}>
-      <div className={styles.tit_box}>
-        <strong>채널</strong>
-      </div>
       <div className={styles.channel_box}></div>
     </div>
   );

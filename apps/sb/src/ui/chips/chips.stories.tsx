@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { Chip, ChipList } from '@learnway/ui';
+import { Button, Chip, ChipList } from '@learnway/ui';
 
 export default {
   title: 'Components/Chips',
@@ -52,28 +52,31 @@ TemplateList.storyName = 'Chips List (한줄)';
 
 // Handle Delete
 export const TemplateListWordwrap: any = (args: any) => {
-  const options: any[] = [
+  const [options, setOptions] = useState([
     { label: '현대자동차 A', value: 'A' },
     { label: '현대자동차 B', value: 'B' },
-    { label: '현대자동차 C', value: 'C' },
-    { label: '현대자동차 D', value: 'E' },
-    { label: '현대자동차 F', value: 'F' },
-    { label: '현대자동차 F', value: 'F' },
-  ];
+  ]);
   const handleChipClick = (event: any) => {
     console.log('handleChipClick', event);
   };
   const handleChange = (event: any[]) => {
     console.log('handleChange', event);
   };
+  const handleAddInputEnterKeyDown = (text: string) => {
+    console.log('handleAddInputEnterKeyDown', text);
+  };
   return (
-    <ChipList
-      options={options}
-      showInput
-      wordwrap
-      onChipClick={handleChipClick}
-      onChange={handleChange}
-    />
+    <>
+      <Button label={'SET'} onClick={() => setOptions([{ label: '현대자동차 C', value: 'C' }])} />
+      <ChipList
+        options={options}
+        showInput
+        wordwrap
+        onChipClick={handleChipClick}
+        onChange={handleChange}
+        onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
+      />
+    </>
   );
 };
 TemplateListWordwrap.storyName = 'Chips List (여러줄)';

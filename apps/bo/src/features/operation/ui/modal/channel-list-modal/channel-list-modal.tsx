@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export interface ChannelListModalProps {
   dummy?: boolean;
-  setModalData?: (data?: any) => void; // modal content 로 사용시 사용
+  channelId?: string;
 }
 
 /**
@@ -24,12 +24,13 @@ export interface ChannelListModalProps {
  * @constructor
  */
 const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalProps>(
-  ({ setModalData, ...props }, ref) => {
+  ({ channelId, ...props }, ref) => {
+    console.log('channelId', channelId);
     const { t } = useTranslation();
     const { data: gridData }: any = getMockData();
     const { close: closeModal } = useModal();
     const [selectedRow, setSelectedRow] = useState();
-    const columns = [{ header: t('채널명'), accessorKey: 'name' }];
+    const columns = [{ header: t('채널명'), accessorKey: 'channelName' }];
 
     const handleRowSelect = (row: any) => {
       setSelectedRow(row);
@@ -60,13 +61,6 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
         </ModalFooter>
       </ModalContainer>
     );
-
-    return (
-      <div className="p-4">
-        <h2>Grid</h2>
-        <Grid data={gridData} columns={columns} hideColumnSettings onRowSelect={handleRowSelect} />
-      </div>
-    );
   },
 );
 export const ChannelListModal = ChannelListModalComponent;
@@ -75,6 +69,6 @@ const getMockData = () => {
   return {
     data: Array(5)
       .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `channel${i}` })),
+      .map((d, i) => ({ channelId: `channel_id${i}`, channelName: `channel_name${i}` })),
   };
 };

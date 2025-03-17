@@ -47,8 +47,9 @@ function RouteComponent() {
                 {
                   value: 'type2',
                   label: (
+                    /* 퍼블수정 20250317 : ico2 추가 */
                     <div>
-                      <IcoOverseasDealer width={48} height={48} />
+                      <IcoOverseasDealer width={48} height={48} className="ico2" />
                       <span>HTA/HTACV 이용자</span>
                     </div>
                   ),

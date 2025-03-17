@@ -14,6 +14,7 @@ export interface ThumbnailImageUploadComponentProps {
   className?: string;
   options: Array<ImageOption>;
   description?: string;
+  disabled?: boolean;
   onItemClick?: (option: ImageOption) => void;
   onChange?: (options: ImageOption[]) => void;
   onCheckedChange?: (options: ImageOption[]) => void;
@@ -24,6 +25,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
     className,
     options: ownerOptions = [],
     description,
+    disabled,
     onItemClick,
     onChange,
     onCheckedChange,
@@ -62,7 +64,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
           {/* <div className={styles.it}></div> */}
           <div className={styles.file_upload}>
             <Button
-              className={styles.btn_file}
+              className={cn(styles.btn_file, disabled && styles.disabled)}
               icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
               onClick={handleButtonClick}>
               <span className={styles.text}>썸네일 업로드</span>
@@ -70,6 +72,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
             <Input
               type="file"
               ref={fileInputRef}
+              disabled={disabled}
               className={styles.input_file}
               onChange={handleFileChange}
             />

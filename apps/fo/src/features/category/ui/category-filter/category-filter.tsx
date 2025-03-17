@@ -96,7 +96,7 @@ const FilterComponent = ({ onOptionChange }: any) => {
     const filtersByCategory = getFiltersByCategory();
 
     openModal({
-      title: '필터',
+      // title: '필터',
       width: 'md',
       content: <CategoryFilterPopup initialFilters={filtersByCategory} />,
       onClose: (data: any) => {

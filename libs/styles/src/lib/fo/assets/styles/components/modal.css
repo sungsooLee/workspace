@@ -3,3 +3,9 @@
     @apply border-[var(--gray5)];
   }
 }
+
+.nlp--modal-content {
+  .modal-content {
+    @apply !py-[24px];
+  }
+}

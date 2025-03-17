@@ -105,7 +105,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       createMultipartUpload: async (file) => {
         // 파일명에 폴더 경로 추가
         try {
-          const filename = `${folderPath}${file.name}`;
+          const filename = `${file.name}`;
 
           const response = await httpService.post(
             `${API_BASE_URL}/s3/multipart`,
@@ -191,8 +191,8 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
 
           // API 요청에 맞는 형태로 parts 변환
           const formattedParts = parts.map((part: any) => ({
-            partNumber: part.partNumber,
-            eTag: part.eTag,
+            PartNumber: part.PartNumber,
+            ETag: part.ETag,
           }));
           console.log(JSON.stringify({ parts: formattedParts }));
           const response = await httpService.post(

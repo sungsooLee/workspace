@@ -4,9 +4,6 @@ import styles from '@learnway/styles/fo/features/integrated-search/integrated-se
 const IntegratedSearchKnowledgeComponent = () => {
   return (
     <div className={`${styles.start} ${styles.knowledge}`}>
-      <div className={styles.tit_box}>
-        <strong>지식공유</strong>
-      </div>
       <div className={styles.knowledge_box}></div>
     </div>
   );

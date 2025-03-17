@@ -16,7 +16,6 @@ const CategoryLayerButton = () => {
       <Button
         onClick={() =>
           openModal({
-            title: '카테고리',
             width: 'm_full',
             content: <CategoryPopup />,
           })

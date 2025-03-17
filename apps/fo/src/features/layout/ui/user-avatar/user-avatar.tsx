@@ -8,6 +8,7 @@ import { useFetchAuthUser, useLogoutUser } from '@learnway/config';
 
 import styles from './user-avatar.module.css';
 import { IcLogOut01 } from '@learnway/icons';
+
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 
 interface ProfileMenu {
@@ -18,7 +19,7 @@ interface ProfileMenu {
 const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { alert: openAlert } = useModal();
+  const { confirm: openConfirm } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
   //const { startSession } = useLoginTimeout();
@@ -42,10 +43,9 @@ const PopoverContent = () => {
   );
 
   const logoutAlert = () => {
-    openAlert({
+    openConfirm({
       title: <></>,
       description: <>로그아웃 하시겠습니까?</>,
-      isConfirm: true,
       iconVisible: false,
       onClose: (result: boolean) => {
         // console.log(result);
@@ -55,7 +55,7 @@ const PopoverContent = () => {
   };
 
   const loginExtension = () => {
-    openAlert({
+    openConfirm({
       title: <>로그인 시간을 연장하시겠습니까?</>,
       description: (
         <>
@@ -67,7 +67,6 @@ const PopoverContent = () => {
           </div>
         </>
       ),
-      isConfirm: true,
       iconVisible: false,
       okButtonLabel: '로그인연장',
       onClose: (result: boolean) => {

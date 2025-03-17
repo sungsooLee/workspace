@@ -85,6 +85,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       isClearable = false,
       label,
       hideLabel = false,
+      hideArrow = false,
       size = 'sm',
       variant = 'default',
       className = '',
@@ -121,7 +122,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       setIsMenuOpen(true);
     };
     return (
-      <div className={dropdownClass.trim()}>
+      <div className={cn(dropdownClass.trim(), 'dropdown')}>
         <Select
           id={uuid}
           ref={ref}

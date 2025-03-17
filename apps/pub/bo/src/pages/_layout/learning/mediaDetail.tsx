@@ -23,7 +23,7 @@ import {
   IcoStatusFail,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import { ImageOption } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 import styles from './page-content.module.css';

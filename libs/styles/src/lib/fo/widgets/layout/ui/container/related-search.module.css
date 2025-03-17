@@ -10,6 +10,7 @@
     .swiper {
       @apply contents;
       .related_swiper {
+        @apply z-0;
         > div {
           > div {
             @apply !w-auto max-w-[130px];

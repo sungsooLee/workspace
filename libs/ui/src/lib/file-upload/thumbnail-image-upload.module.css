@@ -9,10 +9,25 @@
     @apply relative z-0 flex overflow-hidden;
     .file_upload {
       @apply relative mr-[12px] h-[84px];
-      .btn_file + div {
-        @apply absolute bottom-0 left-0 right-0 top-0 z-10 h-[84px] w-full;
-        .input_file {
-          @apply z-[2] flex h-full w-full cursor-pointer bg-transparent opacity-0;
+      .btn_file {
+        & + div {
+          @apply absolute bottom-0 left-0 right-0 top-0 z-10 h-[84px] w-full;
+          .input_file {
+            @apply z-[2] flex h-full w-full cursor-pointer bg-transparent opacity-0;
+          }
+        }
+        &.disabled {
+          svg {
+            @apply stroke-[#b5c2d7];
+          }
+          span {
+            @apply text-[#b5c2d7];
+          }
+          & + div {
+            .input_file {
+              @apply cursor-not-allowed;
+            }
+          }
         }
       }
     }
