@@ -132,9 +132,9 @@ function RouteComponent() {
             <div className={styles.box}>
               <Button onClick={list_ui}>
                 {listUi === 'type2' ? (
-                  <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
+                  <IcoArray width={16} height={16} stroke="#4c515e" fill="none" />
                 ) : (
-                  <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />
+                  <IcoDotpoints width={16} height={16} stroke="#4c515e" fill="none" />
                 )}
               </Button>
             </div>
