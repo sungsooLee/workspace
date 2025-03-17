@@ -21,7 +21,7 @@
   }
   &.nlp--dropdown-sm {
     .nlp-select__control {
-      @apply !min-h-[32px];
+      @apply !min-h-[32px] border-[var(--gray4)];
     }
   }
   &.nlp--dropdown-md {

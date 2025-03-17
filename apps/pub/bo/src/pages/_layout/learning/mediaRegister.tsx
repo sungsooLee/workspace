@@ -8,7 +8,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 /* 퍼블수정 20240312 : libs로 경로 수정 E  */
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
-import searchStyles from './search.module.css'; // search css
+import searchStyles from './search-box.module.css'; // search css
 import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
@@ -497,23 +497,27 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {checked[1] && (
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <div className={formStyles.input_box}>
-                  <DatePicker
-                    onChange={handleDate}
-                    value={date}
-                    className={formStyles.datepicker_item}
-                  />
-                  <span className={formStyles.dash}></span>
-                  <DatePicker
-                    onChange={handleDate2}
-                    value={date2}
-                    className={formStyles.datepicker_item}
-                  />
+            // 퍼블수정 20250317 : form_display 구조 수정 S
+            <div className={searchStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <div className={formStyles.input_box}>
+                    <DatePicker
+                      onChange={handleDate}
+                      value={date}
+                      className={formStyles.datepicker_item}
+                    />
+                    <span className={formStyles.dash}></span>
+                    <DatePicker
+                      onChange={handleDate2}
+                      value={date2}
+                      className={formStyles.datepicker_item}
+                    />
+                  </div>
                 </div>
-              </div>
-            </ContentsRow>
+              </ContentsRow>
+            </div>
+            // 퍼블수정 20250317 : form_display 구조 수정 E
           )}
           {/* 외주개발업체 정보 */}
           <ContentsRow type="horizontal" className={!checked[2] ? 'inactive' : ''}>
@@ -535,135 +539,126 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {checked[2] && (
-            <ContentsRow>
-              {/* form_item */}
-              <div className={formStyles.form_item}>
-                <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.multiple_row}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-company" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <InputModalSelectorFormField
-                            modalConfig={{
-                              title: '',
-                              width: 'md',
-                              content: <ModalChannelContent />,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-1-7-1" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주개발업체 담당자
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
-                        </div>
-                      </div>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-1-7-2" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주개발업체 연락처
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
-                          <PhoneNumber
-                            options={[
-                              { value: 'type1', label: '+82' },
-                              { value: 'type2', label: '+83' },
-                            ]}
-                          />
-                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-owner2" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주업체 과정코드
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input
-                            id="name-owner2"
-                            type="text"
-                            placeholder="개발코스를 입력하세요."
-                          />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-url" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외부학습시작 URL(비표준)
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로
-                          노출하거나 아이콘을 통해 노출)
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-parameter" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외부학습시작 파라미터
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input
-                            id="name-parameter"
-                            type="text"
-                            placeholder="Param Value 값을 입력하세요."
-                          />
-                          <Input type="text" placeholder="Param Value 값을 입력하세요." />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
+            // 퍼블수정 20250317 : form_display 구조 수정 S
+            <div className={searchStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-company" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <InputModalSelectorFormField
+                      modalConfig={{
+                        title: '',
+                        width: 'md',
+                        content: <ModalChannelContent />,
+                      }}
+                    />
                   </div>
                 </div>
-              </div>
-            </ContentsRow>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-1" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 담당자
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
+                  </div>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 연락처
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
+                    <PhoneNumber
+                      options={[
+                        { value: 'type1', label: '+82' },
+                        { value: 'type2', label: '+83' },
+                      ]}
+                    />
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-owner2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주업체 과정코드
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-owner2" type="text" placeholder="개발코스를 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-url" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 URL(비표준)
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로 노출하거나
+                    아이콘을 통해 노출)
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-parameter" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 파라미터
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input
+                      id="name-parameter"
+                      type="text"
+                      placeholder="Param Value 값을 입력하세요."
+                    />
+                    <Input type="text" placeholder="Param Value 값을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+            </div>
+            // 퍼블수정 20250317 : form_display 구조 수정 E
           )}
           {/* 2025-03-10 수정 */}
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
