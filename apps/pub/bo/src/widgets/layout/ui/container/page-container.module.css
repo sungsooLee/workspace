@@ -45,11 +45,11 @@
           }
         }
         & + button {
-          @apply mx-[8px];
+          @apply ml-[8px];
         }
       }
       &::after {
-        @apply flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
+        @apply ml-[8px] flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
   }
