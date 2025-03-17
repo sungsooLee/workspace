@@ -1,17 +1,19 @@
 /* popup-search.module.css */
-.contents {
-  .title {
-    @apply title_bo_3_b mb-[24px] block text-center text-[var(--gray9)];
-    & + div {
-      & > div {
-        @apply !pb-0;
-      }
-      label + div {
-        @apply !mt-0;
+.start {
+  &.contents {
+    .title {
+      @apply title_bo_3_b mb-[24px] block text-center text-[var(--gray9)];
+      & + div {
+        & > div {
+          @apply !pb-0;
+        }
+        label + div {
+          @apply !mt-0;
+        }
       }
     }
-  }
-  .channel_wrap {
-    @apply scrollbar mt-[24px] flex max-h-[400px] overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
+    .channel_wrap {
+      @apply scrollbar mt-[24px] flex max-h-[400px] overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
+    }
   }
 }

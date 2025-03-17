@@ -1,12 +1,11 @@
 /* search-box.module.css */
 .start {
   &.wrap {
-    @apply relative flex;
     .item label span {
       @apply text-[12px] text-[var(--gray8)];
     }
     .contents {
-      @apply flex-grow;
+      @apply flex justify-start;
       & > div > div {
         @apply pb-0;
       }
@@ -39,6 +38,33 @@
     }
     .btn_box {
       @apply flex w-auto shrink-0 items-end justify-end pl-[40px];
+    }
+    .item_wrap {
+      @apply grid gap-[40px];
+      .item {
+        @apply flex-1;
+        &.cols2 {
+          @apply grow-[2];
+        }
+        &.cols3 {
+          @apply grow-[3];
+        }
+        &.cols4 {
+          @apply grow-[4];
+        }
+        &.cols5 {
+          @apply grow-[5];
+        }
+        &.cols6 {
+          @apply grow-[6];
+        }
+        &.cols7 {
+          @apply grow-[7];
+        }
+        &.cols8 {
+          @apply grow-[8];
+        }
+      }
     }
   }
 }
@@ -79,3 +105,55 @@
     }
   }
 }
+
+/* .cols_1 {
+  .item_wrap {
+    @apply w-[calc(33%-40px)];
+    .item {
+      @apply w-full;
+    }
+  }
+}
+.cols_2 {
+  .item_wrap {
+    @apply w-[calc(66%-40px)];
+    .item {
+      @apply w-1/2;
+    }
+  }
+}
+.cols_3 {
+  .item_wrap {
+    @apply w-[calc(99%-80px)];
+    .item {
+      @apply w-[33%];
+    }
+  }
+}
+.cols_4 {
+  .item_wrap {
+    @apply w-full;
+    .item {
+      @apply flex-1;
+    }
+  }
+}
+.cols_half {
+  .item_wrap {
+    @apply w-full;
+    .item {
+      @apply flex-1;
+    }
+  }
+}
+.cols_half2 {
+  .item_wrap {
+    @apply w-full;
+    .item {
+      @apply !w-[50%];
+      &:not(:first-child) {
+        @apply !w-[calc(25%-20px)];
+      }
+    }
+  }
+} */

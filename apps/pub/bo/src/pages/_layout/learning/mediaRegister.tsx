@@ -3,12 +3,12 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import styles from './page-content.module.css';
 import movieInfoStyles from './movie-info.module.css';
-/* 퍼블수정 20240312 : libs로 경로 수정 S  */
+/* 퍼블수정 20240317 : libs로 경로 수정 S  */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-/* 퍼블수정 20240312 : libs로 경로 수정 E  */
-import searchContStyles from './searchContStyles.module.css'; // popup contents css
-import searchStyles from './search-box.module.css'; // search css
+import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+/* 퍼블수정 20240317 : libs로 경로 수정 E  */
 import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
@@ -61,8 +61,9 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'등록 채널을 선택하세요.'}</strong>
             {/* 퍼블수정 20240313 : search 영역 수정 */}
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
@@ -125,7 +126,7 @@ function RouteComponent() {
               </div>
             </div>
             {/* 채널 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '경영지원시스템 채널 01' },
@@ -143,6 +144,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -157,8 +159,9 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'담당자를 선택하세요.'}</strong>
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
                 <ContentsRow>
@@ -212,7 +215,7 @@ function RouteComponent() {
               </div>
             </div>
             {/* 채널 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '선택한 채널의 소속 채널 소유자명 (사번 또는 이메일)' },
@@ -233,6 +236,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -247,10 +251,11 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'출처를 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'출처를 선택하세요.'}</strong>
             {/* 출처 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '경영지원시스템 채널 01' },
@@ -268,6 +273,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
