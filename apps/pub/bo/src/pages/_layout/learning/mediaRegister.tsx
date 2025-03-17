@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import styles from './page-content.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import movieInfoStyles from './movie-info.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 S  */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -9,7 +9,8 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
-import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
+import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
+
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Button,
