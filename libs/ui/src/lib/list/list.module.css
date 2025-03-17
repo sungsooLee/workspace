@@ -1,6 +1,6 @@
 /* list.module.css */
 .list_wrap {
-  @apply w-full flex-col;
+  @apply w-full select-none flex-col;
   .item {
     @apply body_bo_2_r flex min-h-[40px] cursor-pointer items-center justify-start overflow-hidden rounded-[2px] px-[8px] text-[var(--gray8)];
     &.active {

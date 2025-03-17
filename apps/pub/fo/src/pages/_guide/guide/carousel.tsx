@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { memo, useState, useRef, useEffect } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { IcoArrowBackward, IcoArrowForward } from '@learnway/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Chips, SelectOption } from '@learnway/ui';
+import { Chip, SelectOption } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
 export const Route = createFileRoute('/_guide/guide/carousel')({
@@ -81,7 +81,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
     <div className="lists">
     {items.map((item, index) => (
         <SwiperSlide key={index} className="slide">
-        <Chips
+        <Chip
             className="item"
             option={{ label: item.label, value: item.value }}
         />
@@ -109,7 +109,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
                   <SwiperSlide
                     key={index}
                     className="slide flex w-auto items-center justify-start gap-[8px] overflow-hidden whitespace-nowrap">
-                    <Chips className="item" option={{ label: item.label, value: item.value }} />
+                    <Chip className="item" option={{ label: item.label, value: item.value }} />
                   </SwiperSlide>
                 ))}
               </div>
@@ -140,7 +140,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
     <div className="lists">
     {items.map((item, index) => (
         <SwiperSlide key={index} className="slide">
-        <Chips
+        <Chip
             className="item"
             option={{ label: item.label, value: item.value }}
         />

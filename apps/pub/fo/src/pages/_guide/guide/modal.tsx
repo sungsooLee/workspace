@@ -1,5 +1,21 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+
+const ContentModal = () => {
+  const { close: closeModal } = useModal();
+  return (
+    <ModalContainer>
+      <ModalTitle>{'타이틀'}</ModalTitle>
+      <ModalBody>
+        <p>컨텐츠 영역</p>
+      </ModalBody>
+      <ModalFooter>
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+      </ModalFooter>
+    </ModalContainer>
+  );
+};
 
 export const Route = createFileRoute('/_guide/guide/modal')({
   component: RouteComponent,
@@ -7,33 +23,6 @@ export const Route = createFileRoute('/_guide/guide/modal')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const BasicModalContent = () => {
-    return (
-      <div>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-        <p>11111</p>
-      </div>
-    );
-  };
-  const CustomFooter = () => {
-    const { close: closeModal } = useModal();
-    return (
-      <>
-        <Button variant="gray" size="lg" onClick={() => closeModal()}>
-          취소버튼입니다
-        </Button>
-        <Button variant="primary" size="lg" onClick={() => closeModal()}>
-          확인
-        </Button>
-      </>
-    );
-  };
-
   return (
     <div className="content">
       <h2 className="guide_tit2">Modal Component Guide</h2>
@@ -47,10 +36,27 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModal } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui';
+// Modal open, close
+const { open: openModal,  close: closeModal } = useModal();
+
+<ModalContainer>
+  <ModalTitle>{'타이틀'}</ModalTitle>
+  <ModalDescription>{'텍스트'}</ModalDescription>
+  <ModalBody>
+    <p>컨텐츠 영역</p>
+  </ModalBody>
+  <ModalFooter>
+    <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+    <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+  </ModalFooter>
+</ModalContainer>
 
 // 실행 함수
-const { open: openModal } = useModal();`}
+openModal({
+  width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+  content: <ContentModal />,
+})`}
           </code>
         </pre>
       </div>
@@ -62,10 +68,8 @@ const { open: openModal } = useModal();`}
             <Button
               onClick={() =>
                 openModal({
-                  title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                  content: <BasicModalContent />,
-                  footer: true,
+                  content: <ContentModal />,
                 })
               }>
               모달 팝업 열기
@@ -109,8 +113,7 @@ onClick={() =>
                 openModal({
                   title: '타이틀',
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                  content: <BasicModalContent />,
-                  footer: <CustomFooter />,
+                  content: <ContentModal />,
                 })
               }>
               모달 팝업 열기
@@ -140,7 +143,6 @@ onClick={() =>
       title: '타이틀',
       width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
       content: <BasicModalContent />,
-      footer: <CustomFooter />,
     })
   }>
   모달 팝업 열기
@@ -241,7 +243,6 @@ const { close: closeModal } = useModal();
         title: '구글 OTP 인증키 생성',
         width: 'sm',
         content: <GoogleCert2Popup />,
-        footer: true,
       });
     });
   }}>

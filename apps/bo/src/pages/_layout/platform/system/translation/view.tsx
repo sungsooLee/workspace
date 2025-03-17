@@ -2,22 +2,21 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, Input, useModal } from '@learnway/ui';
 import { z } from '@learnway/shared';
 
-import useDynamicForm from '../../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsRow } from '../../../../../widgets/layout/ui/container/parts/contents-row';
-import {
-  DynamicFormConfig,
-  DynamicFormField,
-  I18nContainer,
-} from '../../../../../shared/ui/dynamic-form-field';
-import { FormRow } from '../../../../../shared/ui/form-row';
+
 import { FormTranslationBox } from '../../../../../features/platform/ui/platform/system/translation/form-translation-box';
 import { useTranslation } from '../../../../../entities/translation/service/translation.hook';
 import { useEffect } from 'react';
-import { TranslationPopup } from '../../../../../shared/translation-popup/translation-popup';
 import { LOCALES } from '@learnway/config';
+import { useDynamicForm } from '@learnway/hooks';
+import { TranslationPopup } from '../../../../../features/form/ui/translation';
+import { FormI18n } from '../../../../../features/form/ui';
+import { FormRow } from '../../../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/view')({
   component: RouteComponent,
@@ -160,7 +159,7 @@ function RouteComponent() {
             </Button>
           </ContentsButtons>
           <MainContents>
-            <I18nContainer control={control} name={'translations'} defaultLang={DEFAULT_LANG}>
+            <FormI18n control={control} name={'translations'} defaultLang={DEFAULT_LANG}>
               <ContentsRow>
                 <h1 className={'title_3_b'}>기본정보</h1>
               </ContentsRow>
@@ -196,7 +195,7 @@ function RouteComponent() {
                   <DynamicFormField name={'isUsed'} />
                 </FormRow>
               </ContentsRow>
-            </I18nContainer>
+            </FormI18n>
           </MainContents>
         </PageContainer>
       </form>

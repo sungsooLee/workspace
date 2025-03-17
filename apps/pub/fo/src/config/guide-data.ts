@@ -119,7 +119,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- mpass-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -139,7 +139,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-05', // 완료일
     lastUpdateDate: '',
-    remarks: '- 버튼 클릭',
+    remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -149,7 +149,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -159,7 +159,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
+    remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -169,27 +169,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-07', // 완료일
     lastUpdateDate: '',
-    remarks: '- 페이지내 버튼 클릭',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '이용약관_FOOTER',
-    pageId: '',
-    screenId: 'NLP_FO_LOG_1016', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
-  },
-  {
-    layoutType: '반응형 (PC)',
-    screenName: '개인정보처리방침_FOOTER',
-    pageId: '',
-    screenId: 'NLP_FO_LOG_1017', //스크린아이디
-    pageType: 'Pop-up',
-    completionDate: '', // 완료일
-    lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -240,6 +220,26 @@ export const guideData = [
     completionDate: '2025-03-12', // 완료일
     lastUpdateDate: '',
     remarks: '- 가입신청완료와 동일',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '약관동의',
+    pageId: 'agreement',
+    screenId: 'NLP_FO_LOG_1022', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-14', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 3월5일 신규 추가',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '신규 비밀번호 설정',
+    pageId: 'password-set',
+    screenId: 'NLP_FO_LOG_1023', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-14', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 3월5일 신규 추가',
   },
 
   {
@@ -320,17 +320,17 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '기획(피그마) 미정',
   },
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입_약관상세(공통)',
     pageId: '',
     screenId: 'NLP_FO_MER_1004', //스크린아이디
-    pageType: 'Page',
-    completionDate: '', // 완료일
+    pageType: 'Pop-up',
+    completionDate: '2025-03-14', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 하단 footer 이용약관 버튼클릭\n- agreement-pop.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -348,9 +348,9 @@ export const guideData = [
     pageId: '',
     screenId: 'NLP_FO_MER_1007', //스크린아이디
     pageType: 'Page',
-    completionDate: '', // 완료일
+    completionDate: '2025-03-14', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 하단 footer 이용약관 버튼클릭\n- privacy-pop.tsx',
   },
   {
     layoutType: '적응형 (PC)',

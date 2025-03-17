@@ -3,28 +3,27 @@ import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
-  ChipListModalButtonFormField,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  DynamicFormField,
   Input,
-  InputModalButtonFormField,
+  InputModalSelectorFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { FormRow } from '../../../shared/ui/form-row';
-import { TeacherList } from '../../../features/operation/ui/dialog/form-teacher-chip-list/teacher-list';
 import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ChannelListModal, ManagerListModal } from '../../../features/operation';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '../../../features/operation';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, reset, control } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -63,8 +62,8 @@ function RouteComponent() {
         <MainContents>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'channel'}>
-                <InputModalButtonFormField
+              <DynamicFormField name={'channelName'}>
+                <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelListModal />,
                   }}
@@ -115,12 +114,11 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'강사'}>
-                <ChipListModalButtonFormField
-                  modalConfig={{ title: t('강사 목록'), content: <TeacherList /> }}
+                <ChipListModalSelectorFormField
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
                   chipList={{
                     labelField: 'name',
-                    valueField: 'value',
-                    hideBorder: true,
+                    valueField: 'id',
                   }}
                 />
               </DynamicFormField>
@@ -142,21 +140,9 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'운영자'}>
-                <InputModalButtonFormField
+                <InputModalSelectorFormField
                   modalConfig={{
-                    title: t('운영자 목록'),
                     content: <ManagerListModal />,
-                    footer: (
-                      <>
-                        <Button label={'취소'} variant={'point'} size={'sm'} actionKey={'cancel'} />
-                        <Button
-                          label={'확인'}
-                          variant={'primary'}
-                          size={'sm'}
-                          actionKey={'confirm'}
-                        />
-                      </>
-                    ),
                   }}
                 />
               </DynamicFormField>
@@ -185,7 +171,11 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'channel',
+      name: 'channelId',
+      type: 'hidden',
+    },
+    {
+      name: 'channelName',
       type: 'custom',
       label: '채널',
       value: '',

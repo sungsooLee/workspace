@@ -1,11 +1,6 @@
 /*  */
 .start {
   &.channel {
-    .tit_box {
-      strong {
-        @apply title_5_b text-[var(--gray9)];
-      }
-    }
     .channel_box {
       @apply mt-[16px] h-[50px] w-full bg-black;
     }

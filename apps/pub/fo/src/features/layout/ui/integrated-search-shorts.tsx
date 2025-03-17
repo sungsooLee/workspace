@@ -4,9 +4,6 @@ import styles from '@learnway/styles/fo/features/integrated-search/integrated-se
 const IntegratedSearchShortsComponent = () => {
   return (
     <div className={`${styles.start} ${styles.shorts}`}>
-      <div className={styles.tit_box}>
-        <strong>숏츠</strong>
-      </div>
       <div className={styles.shorts_box}></div>
     </div>
   );

@@ -14,7 +14,7 @@ import { GoogleCertGuidePopup } from '../../features/auth';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 // import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
-import authFormStyles from '@learnway/styles/fo/widgets/auth/ui/auth-form/auth-form.module.css';
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 
 import {
@@ -180,7 +180,7 @@ function RouteComponent() {
             </ContentsRow>
 
             {/* 유의사항 모듈 - 아이디 찾기일때 내용 */}
-            <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
+            <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
                   <IcoCaution width={16} height={16} stroke="#6F798B" />

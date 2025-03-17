@@ -1,5 +1,5 @@
 .btn_wrap {
-  @apply flex justify-center pb-[24px] pt-[16px];
+  @apply flex justify-center pt-[16px];
   .btn_cancel + .btn_confirm {
     @apply ml-[8px];
   }
@@ -8,13 +8,13 @@
   }
 }
 .icon {
-  @apply mb-[8px] flex items-center justify-center pt-[24px];
+  @apply mb-[8px] flex items-center justify-center;
   & + .title {
     @apply pt-[8px];
   }
 }
 .alert_wrap {
-  @apply -mx-[32px] -my-[16px] px-[20px];
+  @apply px-[20px] pb-[24px] pt-[32px];
 }
 .title {
   @apply flex max-h-[80px] items-center justify-center pt-[8px] text-center text-[1.8rem] font-bold text-[var(--gray9)];

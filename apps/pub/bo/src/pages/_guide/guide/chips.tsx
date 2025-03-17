@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Chips, ChipList, SelectOption } from '@learnway/ui';
+import { Chip, ChipList, SelectOption } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/chips')({
   component: RouteComponent,
@@ -43,10 +43,10 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Chips, ChipList, SelectOption } from '@learnway/ui';
+import { Chip, ChipList, SelectOption } from '@learnway/ui';
 
 // 적용방법(예시)
-<Chips
+<Chip
   option={{
     label: '현대자동차 H',
     value: 'H',
@@ -63,7 +63,7 @@ import { Chips, ChipList, SelectOption } from '@learnway/ui';
         </h3>
         <div className="flex_box">
           <div className="desc">
-            <Chips
+            <Chip
               option={{
                 label: '현대자동차 H',
                 value: 'H',
@@ -71,14 +71,14 @@ import { Chips, ChipList, SelectOption } from '@learnway/ui';
               prefixCharacter="#"
               onClick={handleClick}
             />
-            <Chips
+            <Chip
               option={{
                 label: '현대자동차 F',
                 value: 'F',
               }}
               prefixCharacter="#"
             />
-            <Chips
+            <Chip
               option={{
                 label: '현대자동차 G',
                 value: 'G',
@@ -90,7 +90,7 @@ import { Chips, ChipList, SelectOption } from '@learnway/ui';
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Chips
+            <code>{`<Chip
   option={{
     label: '현대자동차 H',
     value: 'H',
@@ -98,14 +98,14 @@ import { Chips, ChipList, SelectOption } from '@learnway/ui';
   prefixCharacter="#"
   onClick={handleClick}
 />
-<Chips
+<Chip
   option={{
     label: '현대자동차 F',
     value: 'F',
   }}
   prefixCharacter="#"
 />
-<Chips
+<Chip
   option={{
     label: '현대자동차 G',
     value: 'G',

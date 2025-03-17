@@ -19,6 +19,7 @@ export interface DropdownComponentProps {
   isClearable?: boolean;
   label?: string;
   hideLabel?: boolean;
+  hideArrow?: boolean;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'chip' | 'text';
   className?: string;

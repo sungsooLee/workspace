@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, useModal, ChipList } from '@learnway/ui';
+import { useCallback, useEffect, useState } from 'react';
+import { Button, ChipList, OptionCard, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { OptionCard } from '@learnway/ui';
 import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
@@ -100,7 +99,6 @@ const FilterComponent = ({ onOptionChange }: any) => {
       title: '필터',
       width: 'md',
       content: <CategoryFilterPopup initialFilters={filtersByCategory} />,
-      footer: true,
       onClose: (data: any) => {
         // 확인 버튼을 눌러 모달이 닫힐 때 데이터를 받음
         if (data && data.selectedChips) {

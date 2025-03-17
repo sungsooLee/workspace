@@ -1,10 +1,11 @@
-import useDynamicForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { DynamicFormConfig, DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
 import { z } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
-import { FormRow } from '../../../../shared/ui/form-row';
 import React, { FC, useEffect, useState } from 'react';
+import { useDynamicForm } from '@learnway/hooks';
+import { FormRow } from '../../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
+import { DynamicFormConfig } from '@learnway/hooks';
 
 /**
  * MenuViewComponent - GNB 메뉴 추가/수정을 위한 컴포넌트
@@ -165,7 +166,7 @@ const formConfig: DynamicFormConfig = {
       subText: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
       name: 'isPersonalInfo',
       type: 'switch',
-      value: '',
+      value: false,
     },
     {
       label: '메뉴 설명',

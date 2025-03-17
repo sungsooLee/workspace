@@ -1,10 +1,10 @@
-import useSearchBox from '../../../../shared/ui/search-box/use-search-box';
 import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
-import { SearchBox, SearchBoxConfig } from '../../../../shared/ui/search-box';
 import { t } from 'i18next';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
+import { SearchBox } from '../../../../widgets/search-box/search-box';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 const MappingCoursePopupComponent = () => {
   const { config: sConfig, getData } = useSearchBox(searchConfig);

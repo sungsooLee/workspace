@@ -1,7 +1,6 @@
-import { isMobile } from 'react-device-detect';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import styles from './password-input.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -77,7 +76,6 @@ function RouteComponent() {
                       title: 'FIDO 인증',
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
-                      footer: false,
                     })
                   }>
                   구글 OTP 인증 가이드

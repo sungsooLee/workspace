@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { cn } from '@learnway/shared';
 
 import { Button } from '../button/button';
-import { IcoCaution, IcoComplete, IcoError, IcoWarning } from '@learnway/icons'; // icon
+import { IcoCaution, IcoAlertComplete, IcoError, IcoWarning } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
 import { useModal } from '../modal/modal.hook';
 
@@ -79,11 +79,11 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       // isConfirm이 아닌 경우의 세부 조건
       switch (alertType) {
         case 'error':
-          return <IcoError width={48} height={48} stroke="#FFB902" />; // 에러 아이콘
+          return <IcoError width={48} height={48} stroke="#FF4646" />; // 에러 아이콘
         case 'caution':
           return <IcoWarning width={48} height={48} stroke="#FF4646" />; // 경고 아이콘
         case 'complete':
-          return <IcoComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
+          return <IcoAlertComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
         default:
           return null;
       }

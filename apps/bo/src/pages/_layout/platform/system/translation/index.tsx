@@ -1,16 +1,15 @@
 import { useCallback, useEffect } from 'react';
 import { Button } from '@learnway/ui';
-import { CODE_GROUP } from '@learnway/config';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import useSearchBox from '../../../../../shared/ui/search-box/use-search-box';
 import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../../../shared/ui/search-box';
 import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { SearchBox } from '../../../../../widgets/search-box/search-box';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/system/translation/')({
   component: RouteComponent,

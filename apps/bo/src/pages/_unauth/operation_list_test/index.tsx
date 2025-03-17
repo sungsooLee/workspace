@@ -5,11 +5,11 @@ import { Button, useModal } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox, SearchBoxConfig } from '../../../shared/ui/search-box';
 import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
-import useSearchBox from '../../../shared/ui/search-box/use-search-box';
 import { CourseTypeOptionCardModal } from '../../../features/operation';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../widgets/search-box/search-box';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
@@ -82,9 +82,9 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
     {
-      name: '테넌',
+      name: '테넌트',
       type: 'dropdown',
-      label: t('테넌'),
+      label: t('테넌트'),
       value: '',
       options: [
         { value: '', label: '전체' },

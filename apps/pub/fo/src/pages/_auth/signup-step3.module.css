@@ -9,7 +9,7 @@
 
   &.signup_step {
     .signup_check {
-      @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+      @apply rounded-[8px] border-[1px] border-solid border-[#D6DAE1] p-[24px] text-left;
       ul {
         > li {
           @apply mt-[16px] flex items-center justify-between;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, useModal, ChipList } from '@learnway/ui';
+import { Button, ChipList, useModal } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
 import { OptionCard } from '@learnway/ui';
@@ -63,11 +63,10 @@ const FilterComponent = () => {
         <Button
           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
           onClick={() =>
+            // 퍼블수정 20250314 : title 삭제
             openModal({
-              title: '필터',
               width: 'md',
               content: <FilterPopup />,
-              footer: true,
             })
           }>
           <IcoFilter

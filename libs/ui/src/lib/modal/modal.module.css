@@ -19,13 +19,7 @@
 }
 
 .content_body {
-  @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[16px];
-  &.scrolled {
-    border-bottom: 1px solid var(--gray3);
-  }
-  &.notitle {
-    @apply pt-[48px];
-  }
+  @apply overflow-hidden;
 }
 
 .content {
@@ -97,7 +91,10 @@
 
 .footer {
   @apply flex items-center justify-center pb-[24px] pt-[16px];
-  .btn + .btn {
+  button {
+    @apply !min-w-[80px];
+  }
+  button + button {
     @apply ml-[8px];
   }
 }
@@ -106,7 +103,7 @@
 }
 
 .btn_close {
-  @apply absolute right-[16px] top-[12px] flex items-center justify-center;
+  @apply absolute right-[16px] top-[12px] z-[3] flex items-center justify-center;
 }
 
 .Fieldset {

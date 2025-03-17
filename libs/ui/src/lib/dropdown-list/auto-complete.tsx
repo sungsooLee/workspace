@@ -1,7 +1,22 @@
 import { forwardRef } from 'react';
-import { ActionMeta, MultiValue, SingleValue } from 'react-select';
+import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
 import { AutoCompleteProps, DropdownOption } from './type';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { IcoDelete03 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '../button/button';
+import './auto-complete.css';
+
+// clear 버튼
+const clearIndicator = (props: any) => {
+  return (
+    <components.ClearIndicator {...props}>
+      <Button onlyIcon className="btn_clear">
+        <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+      </Button>
+    </components.ClearIndicator>
+  );
+};
 
 const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
   (
@@ -18,6 +33,7 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
       hideLabel = false,
       size = 'sm',
       variant = 'default',
+      hideArrow = true,
       className = '',
       name,
       onBlur,
@@ -29,7 +45,10 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
   ) => {
     const uuid =
       typeof window !== 'undefined' ? `dropdown-${Math.random().toString(36).substring(2, 9)}` : '';
-    const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
+    const dropdownClass = cn(
+      `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
+      hideArrow && 'hide_arrow',
+    );
     const customProps = {
       'data-variant': variant,
       ...props,
@@ -57,7 +76,10 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
           defaultOptions={defaultOptions}
           cacheOptions={cacheOptions}
           formatCreateLabel={(inputValue) => `"${inputValue}"`}
-          noOptionsMessage={() => '결과가 없습니다'}
+          components={{
+            ClearIndicator: clearIndicator,
+          }}
+          noOptionsMessage={() => '검색결과가 없습니다'}
           loadingMessage={() => '검색 중...'}
           {...customProps}
         />

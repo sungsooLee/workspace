@@ -3,19 +3,19 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { z } from '@learnway/shared';
-import useDynamicForm from '../../../shared/ui/dynamic-form-field/use-dynamic-fom';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { DynamicFormConfig, DynamicFormField } from '../../../shared/ui/dynamic-form-field';
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
-import { FormRow } from '../../../shared/ui/form-row';
 import { FC, useRef } from 'react';
-import { ELearningCategory } from '../../../shared/ui/form-row/dialogs/e-learning-category';
-import { LowerGubun } from '../../../shared/ui/form-row/dialogs/lower-gubun';
+import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
+import { FormRow } from '../../../shared/ui/form';
+import { DynamicFormField } from '@learnway/ui';
+import { SelectFormField } from '../../../features/form/ui';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -195,9 +195,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'eLeaning'}>
-                  <ELearningCategory />
-                </DynamicFormField>
+                <DynamicFormField name={'eLeaning'}>삭제</DynamicFormField>
               </FormRow>
             </ContentsRow>
             <ContentsRow>
@@ -208,7 +206,7 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'lowerGubun'}>
-                  <LowerGubun testName={'kim'} />
+                  <SelectFormField />
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
@@ -569,14 +567,6 @@ const detailConfig: DynamicFormConfig = {
     channel2: z.string().required(),
     b: z.string().required('B 를 입력해주세요'),
     d: z.string().required('A 를 입력해주세요'),
-    /*eLeaning: z.string().label('이러닝').required(),
-    lowerGubun: z.object({
-      // 'gubun' 필드는 문자열로, 필수이며 빈 값이 아닌 경우 검증
-      gubun: z.string().required(),
-      // 'select' 필드는 체크박스 그룹이므로 문자열 배열로 처리 (선택 사항이라면 optional)
-      select: z.array(z.string()).optional(),
-      url: z.string().required(),
-    }),*/
   },
 };
 const TestComponent: FC<any> = ({ provider }) => {
