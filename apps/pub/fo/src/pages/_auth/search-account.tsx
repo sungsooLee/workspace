@@ -397,6 +397,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
+          {/* 영문 시 : 이름,이메일,인증폼만 노출 */}
         </div>
       </div>
     </form>

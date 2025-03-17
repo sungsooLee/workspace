@@ -304,6 +304,16 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_결과_EN',
+    pageId: 'progress-status-result-en',
+    screenId: 'NLP_FO_CPS_1101', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 영문',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_유형선택',
     pageId: 'signup-step1',
     screenId: 'NLP_FO_MER_1000', //스크린아이디

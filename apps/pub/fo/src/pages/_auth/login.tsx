@@ -78,6 +78,7 @@ function RouteComponent() {
                 <img src={snskakaoImage} alt="kakao" />
               </Button>
             </li>
+            {/* 영문 시 : 구글로그인만 출력 */}
             <li>
               <Button>
                 <img src={snsGoogleImage} alt="google" />
