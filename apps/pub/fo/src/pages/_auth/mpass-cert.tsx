@@ -101,12 +101,12 @@ function RouteComponent() {
               취소
             </Button>
 
+            {/* 퍼블수정 20250314 : 공통 모달 콤포넌트 수정 */}
             <Button
               size="xl"
               variant="primary"
               onClick={() =>
                 openModal({
-                  title: 'FIDO 인증',
                   width: 'sm',
                   content: <MpassPopup />,
                 })

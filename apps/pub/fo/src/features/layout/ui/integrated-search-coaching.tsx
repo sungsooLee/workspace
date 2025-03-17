@@ -4,9 +4,6 @@ import styles from '@learnway/styles/fo/features/integrated-search/integrated-se
 const IntegratedSearchCoachingComponent = () => {
   return (
     <div className={`${styles.start} ${styles.coaching}`}>
-      <div className={styles.tit_box}>
-        <strong>코칭</strong>
-      </div>
       <div className={styles.coaching_box}></div>
     </div>
   );

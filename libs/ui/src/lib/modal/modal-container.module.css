@@ -22,7 +22,7 @@
 }
 
 .contents {
-  @apply scrollbar max-h-[640px] overflow-y-auto overflow-x-hidden p-[32px] pb-[16px];
+  @apply scrollbar max-h-[590px] overflow-y-auto overflow-x-hidden p-[32px] pb-[16px];
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }

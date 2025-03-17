@@ -67,20 +67,26 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     return (
       <div
         ref={ref}
-        className={cn('nlp--chip-list-modal-selector-form-field', 'border-1 w-full border-solid')}>
-        <div className={'flex flex-row'}>
-          <ChipList
-            visibleCount={2}
-            {...chipListProps}
-            size={'sm'}
-            options={selectedChipOptions}
-            onChange={handleChipListChange}
-            // onChipListClick={handleChipListClick}
-          />
-          <Button type="button" className={cn(styles.clear)} onlyIcon onClick={handleChipListClick}>
-            <IcoSearch width={20} height={20} stroke={'#131C30'} />
-          </Button>
-        </div>
+        className={cn(
+          styles.start,
+          styles.chilps_modal_wrap,
+          'nlp--chip-list-modal-selector-form-field',
+        )}>
+        <ChipList
+          {...chipListProps}
+          size={'xs'}
+          // hideBorder={false}
+          options={selectedChipOptions}
+          onChange={handleChipListChange}
+          // onChipListClick={handleChipListClick}
+        />
+        <Button
+          type="button"
+          className={cn(styles.btn_search)}
+          onlyIcon
+          onClick={handleChipListClick}>
+          <IcoSearch width={20} height={20} stroke={'#131C30'} />
+        </Button>
       </div>
     );
   },
