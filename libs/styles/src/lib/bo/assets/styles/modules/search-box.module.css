@@ -42,15 +42,15 @@
     .item_wrap {
       @apply flex w-full;
       .inner {
-        @apply flex gap-[40px];
+        @apply flex w-full gap-[40px];
         .item {
           @apply w-full;
         }
         &.item_cols1 {
-          @apply !w-[calc(25%+40px)];
+          @apply !w-[calc(25%+25px)];
         }
-        &.item_cols2 {
-          @apply !w-[calc((25%+60px)*2)];
+        & + .inner {
+          @apply ml-[40px];
         }
       }
       /* .item {
@@ -107,6 +107,9 @@
       @apply !mr-0 h-[16px] w-[16px] stroke-[var(--gray9)];
     }
   }
+}
+.form_display {
+  @apply flex w-full flex-wrap;
 }
 
 /* .cols_1 {
