@@ -64,7 +64,7 @@ const FilterComponent = () => {
           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
           onClick={() =>
             openModal({
-              title: '필터',
+              // title: '필터',
               width: 'md',
               content: <FilterPopup />,
             })

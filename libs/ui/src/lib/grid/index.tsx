@@ -331,7 +331,7 @@ const Grid = forwardRef(
             options={filterOptions}
           />
         ),
-        title: `${column.columnDef.header as string} 필터`,
+        // title: `${column.columnDef.header as string} 필터`,
         width: 'sm',
       });
     };

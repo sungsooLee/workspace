@@ -44,7 +44,6 @@ const FormTeacherChipListComponent = forwardRef<HTMLDivElement, FormTeacherChipL
       // const newChip = buttonOnClick?.(event);
       // 모달 오픈 - 강사 목록
       openModal({
-        title: '강사 목록',
         content: <TeacherList />,
         onClose: (newOption) => {
           newOption && appendSelectedChipOptions(newOption);

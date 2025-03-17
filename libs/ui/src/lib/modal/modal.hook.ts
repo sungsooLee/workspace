@@ -25,14 +25,6 @@ const useModal = (): useModalReturnValue => {
     [openModal],
   );
 
-  // open 만 사용 예정
-  const openAsync = useCallback(
-    (config: ModalConfig): Promise<any> => {
-      return open(config);
-    },
-    [openModal],
-  );
-
   const close = useCallback((data?: any) => closeModal(data), [closeModal]);
 
   const closeAll = useCallback(() => closeAllModal(), [closeAllModal]);
@@ -95,7 +87,6 @@ const useModal = (): useModalReturnValue => {
     open,
     close,
     closeAll,
-    openAsync, // 언제 사용?
     alert,
     confirm,
     modals,

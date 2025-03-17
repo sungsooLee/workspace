@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useModal, Button, OptionCard, ModalBody, ModalContainer, ModalFooter } from '@learnway/ui';
+import { Button, ModalBody, ModalContainer, ModalFooter, OptionCard, useModal } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from './popup-learningRegisteration.module.css';
 import eBookstyles from './eBook.module.css';
@@ -125,7 +125,7 @@ function RouteComponent() {
                 console.log('selected', option);
                 option?.label === '이북' &&
                   openModal({
-                    title: '',
+                    // title: '',
                     hideCloseButton: true,
                     width: 'auto',
                     content: <EbookContent />,

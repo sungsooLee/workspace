@@ -22,7 +22,7 @@ const CustomFooter = () => {
           closeModal(); // 모달 닫기 함수 호출
           setTimeout(() => {
             openModal({
-              title: '구글 OTP 인증키 생성',
+              // title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleInputPopup />,
             });
@@ -50,7 +50,7 @@ const GoogleQrcodePopupCompoment = () => {
             closeModal(); // 모달 닫기 함수 호출
             setTimeout(() => {
               openModal({
-                title: '구글 OTP 인증키 생성',
+                // title: '구글 OTP 인증키 생성',
                 width: 'sm',
                 content: <GoogleKeyPopup />,
               });
