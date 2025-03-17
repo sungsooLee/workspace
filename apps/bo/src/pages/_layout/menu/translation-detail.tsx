@@ -30,7 +30,7 @@ function RouteComponent() {
     openAlert({
       title: <></>,
       description: <>다국어를 저장하시겠습니까?</>,
-      iconVisible: false,
+
       onClose: (result: boolean) => {
         // console.log(result);
         if (result) {

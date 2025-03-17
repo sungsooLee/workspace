@@ -14,7 +14,7 @@ function RouteComponent() {
           컨펌 타이틀 입니다. <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
           <br /> 줄바꿈 적용
@@ -34,12 +34,11 @@ function RouteComponent() {
           컨펌 (아이콘 케이스) <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
     });
   };
   const handleClickAlert3 = () => {
@@ -49,7 +48,7 @@ function RouteComponent() {
           알럿 타이틀 입니다. <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
@@ -63,13 +62,12 @@ function RouteComponent() {
           알럿 (아이콘 케이스 : error) <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'error',
+      type: 'error',
     });
   };
   const handleClickAlert5 = () => {
@@ -79,13 +77,12 @@ function RouteComponent() {
           알럿 (아이콘 케이스 : caution) <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'caution',
+      type: 'caution',
     });
   };
   const handleClickAlert6 = () => {
@@ -95,13 +92,12 @@ function RouteComponent() {
           알럿 (아이콘 케이스 : complete) <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'complete',
+      type: 'complete',
     });
   };
   return (
@@ -146,7 +142,7 @@ const handleClickAlert = () => {
           컨펌 타이틀 입니다. <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
           <br /> 줄바꿈 적용
@@ -189,12 +185,12 @@ const { alert: openAlert } = useModal();
         컨펌 (아이콘 케이스) <br /> 줄바꿈 적용
       </>
     ),
-    description: (
+    content: (
       <>
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    iconVisible: true,
+    true,
   });
 };
 
@@ -228,7 +224,7 @@ const { alert: openAlert } = useModal();
           알럿 타이틀 입니다. <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
@@ -265,13 +261,13 @@ const handleClickAlert4 = () => {
         알럿 (아이콘 케이스 : error) <br /> 줄바꿈 적용
       </>
     ),
-    description: (
+    content: (
       <>
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    iconVisible: true,
-    alertType: 'error',
+    true,
+    type: 'error',
   });
 };
 
@@ -304,13 +300,12 @@ const handleClickAlert5 = () => {
         알럿 (아이콘 케이스 : caution) <br /> 줄바꿈 적용
       </>
     ),
-    description: (
+    content: (
       <>
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    iconVisible: true,
-    alertType: 'caution',
+    type: 'caution',
   });
 };
 
@@ -343,13 +338,12 @@ const handleClickAlert6 = () => {
           알럿 (아이콘 케이스 : complete) <br /> 줄바꿈 적용
         </>
       ),
-      description: (
+      content: (
         <>
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      iconVisible: true,
-      alertType: 'complete',
+      type: 'complete',
     });
   };
 

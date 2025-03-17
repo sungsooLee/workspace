@@ -4,7 +4,6 @@ import { t } from 'i18next';
 import { Button, DynamicFormField } from '@learnway/ui';
 import { z } from 'zod';
 import { LectureTypeSiteUrl } from '../../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { FormTeacherChipList } from '../../../../features/operation/ui/dialog/form-teacher-chip-list/form-teacher-chip-list';
 import { FormRow } from '../../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
@@ -87,9 +86,7 @@ const CourseDetailForm = forwardRef<HTMLDivElement, FormProps>(({ setForm, ...pr
       {/* 강사 */}
       <ContentsRow>
         <FormRow provider={provider}>
-          <DynamicFormField name={'강사'}>
-            <FormTeacherChipList />
-          </DynamicFormField>
+          <DynamicFormField name={'강사'}>{/*<FormTeacherChipList />*/}</DynamicFormField>
         </FormRow>
       </ContentsRow>
       {/* 난이도 */}
