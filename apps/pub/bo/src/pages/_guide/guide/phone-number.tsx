@@ -32,6 +32,7 @@ function RouteComponent() {
                 { value: 'type3', label: '017' },
               ]}
               size={'lg'}
+              disabled
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 .start {
+  @apply max-h-[calc(100vh-80px)];
   .swiper {
     .category_carousel {
       > div > div {
@@ -13,7 +14,7 @@
   .category_wrap {
     @apply -mx-[32px] flex pt-[24px];
     .menu_list_wrap {
-      @apply h-[calc(100vh-126px)] w-[140px] overflow-y-scroll bg-[#1e4098];
+      @apply h-[calc(100vh-134px)] w-[140px] overflow-y-scroll bg-[#1e4098];
       .menu_list {
         li {
           button {
@@ -56,7 +57,7 @@
       }
     }
     .category_inner {
-      @apply h-[calc(100vh-126px)] flex-1 overflow-y-scroll pb-[20px] pl-[16px] pr-[20px];
+      @apply h-[calc(100vh-134px)] flex-1 overflow-y-scroll pb-[20px] pl-[16px] pr-[20px];
       .tit_head {
         @apply h-[52px] border-b-[1px] border-solid border-[var(--primary2)];
         h2 {

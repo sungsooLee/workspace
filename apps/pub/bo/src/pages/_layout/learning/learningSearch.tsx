@@ -20,15 +20,9 @@ import {
 } from '@learnway/ui';
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from './page-content.module.css';
-<<<<<<< HEAD
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form css
-import searchStyles from './search.module.css'; // search css
-import { cn } from '@learnway/shared';
-=======
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import wrapStyles from './wrap-box.module.css'; // box style
 import { cn } from '@/libs/shared/src';
->>>>>>> feature/pub/dev
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,
@@ -254,6 +248,7 @@ function RouteComponent() {
               </Button>
             </div>
           </div>
+          <div className={cn(searchStyles.start, wrapStyles.inner)}></div>
         </div>
       </PageContainer>
     </form>
