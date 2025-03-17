@@ -1,13 +1,13 @@
 import {
-  ComponentType,
   FormEventHandler,
   ForwardRefExoticComponent,
   ReactNode,
   RefAttributes,
   RefObject,
 } from 'react';
-import { ZodObject, ZodTypeAny } from 'zod';
+import { ZodTypeAny } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
+import { CODE_GROUP } from '@learnway/config';
 
 export interface SelectOption {
   label: string;
@@ -45,6 +45,11 @@ export type BaseFormFieldConfigProps<T = string> = {
   [key: string]: any;
 };
 
+export type ApiType = (param?: any) => {
+  queryKey: any;
+  queryFn: () => Promise<any>;
+  [key: string]: any;
+};
 /**
  * 동적 폼에서 사용되는 개별 필드의 속성을 정의합니다.
  * 필드 타입에 따라 추가 속성이 달라집니다.
@@ -57,10 +62,17 @@ export type FormConfig =
       maxLength?: number;
     })
   | (BaseFormFieldConfigProps<boolean> & {
-      /** 필드 타입이 스위치 또는 체크박스인 경우 */
-      type: 'switch' | 'checkbox';
-      dpOptions?: {
-        label?: string;
+      /** 필드 타입이 스위치인 경우 */
+      type: 'switch';
+      switchConfig?: {
+        label: string | ((value: boolean, getValues: UseFormReturn['getValues']) => string);
+      };
+    })
+  | (BaseFormFieldConfigProps<boolean> & {
+      /** 필드 타입이 체크박스인 경우 */
+      type: 'checkbox';
+      checkConfig?: {
+        reverse?: boolean;
       };
     })
   | (BaseFormFieldConfigProps<string> & {
@@ -77,11 +89,7 @@ export type FormConfig =
         /** 코드 그룹 (서버에서 받아온 코드 그룹) */
         codeGroup?: string;
         /** 옵션 API (서버에서 값을 받아오는 경우) */
-        api?: (param?: any) => {
-          queryKey: any;
-          queryFn: () => Promise<any>;
-          [key: string]: any;
-        };
+        api?: ApiType;
         /* 초기값 */
         options?: SelectOption[];
         /** 응답 후 데이터 변환 콜백 */
@@ -131,10 +139,10 @@ export type DynamicFormProvider = {
   formState: UseFormReturn['formState'];
   /** 필드 값 변경 핸들러 */
   onFormChange: (values?: Record<string, any>) => void;
+  /** focus 변경 */
+  onFormFocus: (fieldName: string) => void;
   /** 필드 값 가져오기 */
   getValues: UseFormReturn['getValues'];
-  /** 필드에 포커스를 설정하는 함수 */
-  onFocus: (fieldName: string) => void;
   /** 초기 필드 값 */
   originalValues: Record<string, any>;
 };
@@ -153,6 +161,8 @@ export type UseDynamicFormResult = {
   setFormError: (fieldName: string, message: string) => void;
   /** 필드 에러 제거 */
   clearFormError: (field: string) => void;
+  /** focus 변경 */
+  onFormFocus: (fieldName: string) => void;
   /** 현재 폼 상태 */
   formState: UseFormReturn['formState'];
   /** 현재 폼 데이터 가져오기 */
@@ -191,7 +201,8 @@ export interface BaseFormFieldProps<T = any> {
   onChange: (value: T) => void;
   disabled: boolean;
   onChangeGuideText: (guidText: string) => void;
-  onFormChange: (values?: Record<string, any>) => void;
+  onFormChange: (values: Record<string, any>) => void;
+  getValues: UseFormReturn['getValues'];
   [key: string]: any;
 }
 
@@ -218,6 +229,20 @@ export interface FormRowProps {
  */
 export type OnValidCallback = (params: Record<string, any>) => void;
 
+export type ApiCallback<T> = (response: any) => SelectOption[];
+/**
+ * 동적으로 옵션을 생성할 때 사용하는 설정.
+ * @template T - API 응답 데이터의 타입.
+ */
+export interface OptionsConfig<T = any> {
+  type?: 'self' | 'target'; // 옵션 생성 방식: 'self'는 자체 옵션, 'target'은 타 필드에 의존. 기본값 self
+  codeGroup?: CODE_GROUP; // 옵션을 가져오기 위한 코드 그룹.
+  target?: string; // 타 필드의 이름. optionsConfig가 다른 필드에 의존할 경우 사용.
+  api?: any; // 옵션을 가져오기 위한 API 함수.
+  callback?: ApiCallback<T>; // API 응답 데이터를 SelectOption 배열로 변환하는 콜백 함수.
+  options?: SelectOption[]; // 미리 정의된 정적 옵션
+}
+
 /**
  * SearchBoxBuilder
  * 각 검색 필드의 구성을 정의합니다.
@@ -232,7 +257,7 @@ export interface SearchBoxBuilder {
    */
   value?: any;
   options?: { value: string; label: string }[];
-  optionsConfig?: Record<string, any>; // 실제 옵션 설정에 맞게 수정 가능
+  optionsConfig?: OptionsConfig; // 실제 옵션 설정에 맞게 수정 가능
   placeholder?: string;
 }
 

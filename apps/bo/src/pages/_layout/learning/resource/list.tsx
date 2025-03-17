@@ -6,14 +6,13 @@ import { Button, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
 import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
-import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
 import { RegistrantPopup } from '../../../../features/learning/ui/resource/registrant-popup';
-import { SearchBox } from '../../../../widgets/search-box/search-box';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../../shared/ui/search-box';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,

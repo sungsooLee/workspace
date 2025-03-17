@@ -2,7 +2,7 @@ import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } 
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 
-import styles from './page-container.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import { ContentsButtons } from './slot/contents-buttons';
 import { PageContents } from './page-contents';
 

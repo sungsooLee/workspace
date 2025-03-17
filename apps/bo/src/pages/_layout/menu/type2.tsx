@@ -15,7 +15,7 @@ import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
-import { SelectFormField } from '../../../features/form/ui';
+import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
@@ -206,7 +206,7 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'lowerGubun'}>
-                  <SelectFormField />
+                  <DropdownFormField />
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
@@ -388,6 +388,7 @@ const detailConfig: DynamicFormConfig = {
         type: 'self',
         api: codeQueryOptions.getTestCodes,
         callback: (response: any) => {
+          console.log('response', response);
           return response.data.map((res: any) => ({
             ...res,
             value: res.code,

@@ -3,8 +3,8 @@ import { t } from 'i18next';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { SearchBox } from '../../../../widgets/search-box/search-box';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../../shared/ui/search-box';
 
 const MappingCoursePopupComponent = () => {
   const { config: sConfig, getData } = useSearchBox(searchConfig);

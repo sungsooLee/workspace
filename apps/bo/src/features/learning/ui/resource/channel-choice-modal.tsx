@@ -1,12 +1,26 @@
-import { Button, ContentsRow, Input, List, Select, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  Grid,
+  Input,
+  List,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  Select,
+  useModal,
+} from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
-import { useState } from 'react';
-import { SearchBox } from '../../../../widgets/search-box/search-box';
+import React, { useState } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../../shared/ui/search-box';
+import { cn } from '@learnway/shared';
 const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
   const { config: sConfig } = useSearchBox(searchConfig);
+  const [option, setOption] = useState<{ value: string; label: string }>();
   const [options, setOptions] = useState([
     { value: 'type1', label: '경영지원시스템 채널 01' },
     { value: 'type2', label: '경영지원시스템 채널 02' },
@@ -46,23 +60,31 @@ const ChannelChoicePopupComponent = () => {
     });
   };
   const handleOnConfirm = () => {
-    close({ channelId: 'type21', channelName: '경영지원시스템 채널 21' });
+    if (!option) return;
+    close({ channelId: option.value, channelName: option.label });
   };
 
   return (
-    <div className={styles.contents}>
-      <strong className={styles.title}>{'등록 채널을 선택하세요.'}</strong>
-      {/* form */}
-      {options.length > 20 && (
-        <ContentsRow>
-          <SearchBox config={sConfig} onSearch={handleOnSearch} />
-        </ContentsRow>
-      )}
-      {/* 채널 리스트 */}
-      <div className={styles.channel_wrap}>
-        <List options={options} onOptionsSelect={(options) => console.log(options)} />
-      </div>
-      <div className={'flex gap-10'}>
+    <ModalContainer>
+      <ModalBody>
+        <div className={styles.contents}>
+          <strong className={styles.title}>{'등록 채널을 선택하세요.'}</strong>
+          <div className={cn(styles.start, styles.wrap)}>
+            <div className={styles.contents}>
+              {/* form */}
+              {options.length > 20 && (
+                <ContentsRow>
+                  <SearchBox config={sConfig} onSearch={handleOnSearch} />
+                </ContentsRow>
+              )}
+              <div className={styles.channel_wrap}>
+                <List options={options} onOptionsSelect={(options) => setOption(options[0])} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ModalBody>
+      <ModalFooter>
         <Button
           label={'취소'}
           variant={'gray'}
@@ -78,12 +100,12 @@ const ChannelChoicePopupComponent = () => {
           actionKey={'confirm'}
           onClick={handleOnConfirm}
         />
-      </div>
-    </div>
+      </ModalFooter>
+    </ModalContainer>
   );
 };
 
-export const ChannelChoicePopup = ChannelChoicePopupComponent;
+export const ChannelChoiceModal = ChannelChoicePopupComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

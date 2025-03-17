@@ -1,27 +1,33 @@
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useDropzone } from 'react-dropzone';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, DynamicFormField, selectStyles } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  InputModalSelectorFormField,
+  selectStyles,
+} from '@learnway/ui';
 import { z } from '@learnway/shared';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { TempContact } from '../../../../../features/learning/ui/resource/temp/form/temp_contact';
 import {
-  ChannelChoicePopup,
-  FormSubtitles,
+  ChannelChoiceModal,
+  ManagerChoiceModal,
+  MovieInfo,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
-import { ManagerChoicePopup } from '../../../../../features/learning/ui/resource/manager-choice-popup';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { FormGroup } from '../../../../../shared/ui/form';
-import { SelectFormField } from '../../../../../features/form/ui';
-import { FormRow } from '../../../../../shared/ui/form';
+import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
+import { SubTitlesFormField } from '../../../../../features/form/ui';
+import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
 });
@@ -41,26 +47,39 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm" className={selectStyles.select_item}>
-            등록
+          <LinkBox>
+            <Link to={'/'}>상시 학습 개설</Link>
+            <Link to={'/'}>이러닝 개설</Link>
+            <Link to={'/'}>라이브개설</Link>
+            <Button variant="point" size="sm">
+              목록
+            </Button>
+          </LinkBox>
+          <Button variant="point" size="sm">
+            매핑과정 보기
           </Button>
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            onClick={() => router.navigate({ to: '/learning/resource' })}>
-            목록
+          <Button variant="point" size="sm">
+            공유이력 보기
           </Button>
-          <Button type={'button'} variant={'point'}>
-            테스트 변경
+          <Button variant="point" size="sm">
+            삭제
+          </Button>
+          <Button variant="primary" size="sm">
+            수정
           </Button>
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
+            {/*채널*/}
             <FormRow provider={provider}>
-              {/* 채널 */}
               <DynamicFormField name={'channelName'}>
-                <SelectFormField />
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    title: '',
+                    width: 'md',
+                    content: <ChannelChoiceModal />,
+                  }}
+                />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -79,13 +98,18 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               {/*담당자*/}
-              <DynamicFormField name={'managerName'}>123</DynamicFormField>
+              <DynamicFormField name={'managerName'}>
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    title: '',
+                    width: 'md',
+                    content: <ManagerChoiceModal />,
+                  }}
+                />
+              </DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'contact'}>
-                {/*연락처*/}
-                <TempContact />
-              </DynamicFormField>
+              <DynamicFormField name={'contact'}>{/*연락처*/}</DynamicFormField>
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -114,43 +138,84 @@ function RouteComponent() {
             provider={provider}
             dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
             <ContentsRow>
+              {/*외부개발업체*/}
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <span>123123</span>
+                  <InputModalSelectorFormField
+                    modalConfig={{
+                      title: '',
+                      width: 'md',
+                      content: <ManagerChoiceModal />,
+                    }}
+                  />
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
             <ContentsRow>
+              {/*외주개발업체 담당자*/}
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompanyManager'} />
               </FormRow>
+              {/*외주개발업체 연락처*/}
               <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'}>
-                  <TempContact />
-                </DynamicFormField>
+                <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
               </FormRow>
             </ContentsRow>
           </FormDisplay>
 
+          <ContentsRow>
+            {/*썸네일*/}
+            <FormRow provider={provider}>
+              <ThumbnailUploaderFormField name="thumbnails" />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*태그*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name="tags" />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*학습자원개요*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name="learningResourceOverview" />
+            </FormRow>
+          </ContentsRow>
+
+          <ContentsRow>
+            {/* 키워드 */}
+            <FormRow provider={provider}>
+              <DynamicFormField name="keywords" />
+            </FormRow>
+          </ContentsRow>
           <ContentsRow type={'horizontal'} className={'inactive'}>
+            {/* 교육지원활용 여부 */}
+            <FormRow provider={provider}>
+              <DynamicFormField name="isTrainingSupport" />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            {/* 보안컨텐츠 여부 */}
+            <FormRow provider={provider}>
+              <DynamicFormField name="isSecurityContent" />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            {/* 자막 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name={'isSubtitles'} />
             </FormRow>
           </ContentsRow>
           <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
             <ContentsRow>
+              {/*자막 목록*/}
               <FormRow provider={provider}>
                 <DynamicFormField name={'subtitles'}>
-                  <FormSubtitles />
+                  <SubTitlesFormField />
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
           </FormDisplay>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
-            </FormRow>
-          </ContentsRow>
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
               <FormRow provider={provider}>
@@ -168,11 +233,13 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormGroup>
-          <ContentsRow>
-            <VideoThumbnailExtractor />
-          </ContentsRow>
+          <ContentsHistoryInfoFormField />
         </MainContents>
-        <SubContents>123123</SubContents>
+        <SubContents>
+          <MovieInfo status={'loading'} />
+          <MovieInfo status={'fail'} />
+          <MovieInfo status={'success'} />
+        </SubContents>
       </PageContainer>
     </form>
   );
@@ -224,7 +291,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('연락처'),
       name: 'contact',
-      type: 'custom',
+      type: 'phone-number',
       value: '',
     },
     {
@@ -266,27 +333,9 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('외주개발업체 연락처'),
       name: 'externalDevelopmentCompanyContact',
-      type: 'custom',
+      type: 'phone-number',
       value: '',
     },
-    {
-      label: t('외주개발업체 과정코드'),
-      name: 'externalDevelopmentCompanyResourceCode',
-      type: 'text',
-      value: '',
-    },
-    {
-      label: t('외주학습시작 URL(비표준)'),
-      name: 'externalDevelopmentCompanyResourceUrl',
-      type: 'text',
-      value: '',
-    },
-    /*{
-      label: t('오히부학습시작 파라미터'),
-      name: 'externalDevelopmentCompanyResourceParams',
-      type: 'text',
-      value: '',
-    },*/
     {
       label: t('썸네일'),
       name: 'thumbnails',
@@ -294,9 +343,61 @@ const formConfig: DynamicFormConfig = {
       value: [],
     },
     {
+      label: t('태그'),
+      name: 'tags',
+      type: 'chip-list',
+      placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
+      limitPlaceholder: '여러개의 태그는 쉼표로 구분',
+      tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
+      value: [],
+    },
+    {
+      label: t('학습자원개요 (AI 자동 추출)'),
+      name: 'learningResourceOverview',
+      type: 'textarea',
+      readOnly: true,
+      placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
+      maxLength: 2000,
+      value: '',
+    },
+    {
+      label: t('키워드 (AI 자동 추출)'),
+      name: 'keywords',
+      type: 'textarea',
+      readOnly: true,
+      placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
+      maxLength: 2000,
+      value: '',
+    },
+    {
+      label: t('교육지원활용 여부'),
+      name: 'isTrainingSupport',
+      type: 'switch',
+      switchConfig: {
+        label: (value: boolean) => (value ? '활용가능' : '활용불가'),
+      },
+      guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
+      value: true,
+    },
+    {
+      label: t('보안컨텐츠여부'),
+      name: 'isSecurityContent',
+      type: 'switch',
+      switchConfig: {
+        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
+      },
+      guideText:
+        '동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 없습니다.',
+      value: true,
+    },
+    {
       label: t('자막여부'),
       name: 'isSubtitles',
       type: 'switch',
+      switchConfig: {
+        label: (value: boolean, getValues) =>
+          value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
+      },
       value: true,
     },
     {
@@ -309,6 +410,9 @@ const formConfig: DynamicFormConfig = {
       name: 'isInspectionConfirmed',
       type: 'checkbox',
       guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
+      checkConfig: {
+        reverse: true,
+      },
       value: false,
     },
     {
@@ -317,6 +421,9 @@ const formConfig: DynamicFormConfig = {
       guideText:
         '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
       type: 'checkbox',
+      checkConfig: {
+        reverse: true,
+      },
       value: false,
     },
     {
@@ -325,168 +432,14 @@ const formConfig: DynamicFormConfig = {
       guideText:
         '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
       type: 'checkbox',
+      checkConfig: {
+        reverse: true,
+      },
       value: false,
     },
   ],
   validator: {
-    channelName: z.string().required(),
-    expirationDate: z.boolean().required(),
+    /*channelName: z.string().required(),
+    expirationDate: z.boolean().required(),*/
   },
-};
-
-const VideoThumbnailExtractor: React.FC = () => {
-  const [thumbnails, setThumbnails] = useState<string[]>([]);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      if (videoRef.current) {
-        videoRef.current.src = url;
-      }
-    }
-  };
-
-  // 메타데이터가 로드되면 동영상의 duration을 활용해 5개의 시간 포인트를 계산하고 썸네일을 추출합니다.
-  const handleLoadedMetadata = async () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (video && canvas) {
-      const duration = video.duration;
-      const numThumbs = 5;
-      // 동영상 전체 길이를 numThumbs+1로 나누어 중간값을 선택 (첫 프레임이나 마지막 프레임은 피하는 경우)
-      const times = Array.from(
-        { length: numThumbs },
-        (_, i) => (duration / (numThumbs + 1)) * (i + 1),
-      );
-      const thumbs: string[] = [];
-
-      // 순차적으로 각 시간 포인트의 썸네일을 추출
-      for (const time of times) {
-        await new Promise<void>((resolve) => {
-          const onSeeked = () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              const imageUrl = canvas.toDataURL('image/png');
-              thumbs.push(imageUrl);
-            }
-            resolve();
-          };
-
-          // 현재 시간 설정 후 seeked 이벤트 발생 시 onSeeked 실행
-          video.currentTime = time;
-          video.onseeked = onSeeked;
-        });
-      }
-      setThumbnails(thumbs);
-    }
-  };
-
-  return (
-    <div>
-      <h2>동영상 썸네일 추출 (5개)</h2>
-      <input type="file" accept="video/*" onChange={handleFileChange} />
-      {/* 화면에 보이지 않는 video & canvas 요소 */}
-      <video ref={videoRef} style={{ display: 'none' }} onLoadedMetadata={handleLoadedMetadata} />
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
-      {thumbnails.length > 0 && (
-        <div>
-          <h3>추출된 썸네일:</h3>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            {thumbnails.map((thumb, index) => (
-              <img
-                key={index}
-                src={thumb}
-                alt={`Thumbnail ${index + 1}`}
-                style={{ maxWidth: '150px' }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const VideoPlayerWithUpload: React.FC = () => {
-  const [videoUrl, setVideoUrl] = useState<string>('');
-  const [thumbnail, setThumbnail] = useState<string>('');
-  const playerRef = useRef<ReactPlayer>(null);
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      const url = URL.createObjectURL(file);
-      setVideoUrl(url);
-    }
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'video/*': ['video/mp4', 'video/webm', 'video/ogg'],
-    },
-    multiple: false,
-  });
-
-  const captureThumbnail = () => {
-    // ReactPlayer의 내부 플레이어(HTMLVideoElement)에 접근
-    const internalPlayer = playerRef.current?.getInternalPlayer();
-    if (internalPlayer instanceof HTMLVideoElement) {
-      const canvas = document.createElement('canvas');
-      canvas.width = internalPlayer.videoWidth;
-      canvas.height = internalPlayer.videoHeight;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        // 현재 프레임을 캔버스에 그립니다.
-        ctx.drawImage(internalPlayer, 0, 0, canvas.width, canvas.height);
-        // 캔버스 내용을 데이터 URL(이미지)로 변환
-        const dataURL = canvas.toDataURL('image/png');
-        setThumbnail(dataURL);
-      }
-    } else {
-      console.error('내부 플레이어가 HTMLVideoElement가 아닙니다.');
-    }
-  };
-
-  return (
-    <div>
-      <div
-        {...getRootProps()}
-        style={{
-          border: '2px dashed #ccc',
-          padding: '20px',
-          textAlign: 'center',
-          borderRadius: '8px',
-          marginBottom: '20px',
-        }}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>여기에 동영상 파일을 드롭하세요...</p>
-        ) : (
-          <p>동영상 파일을 드래그 앤 드롭하거나 클릭하여 선택하세요.</p>
-        )}
-      </div>
-
-      {videoUrl && (
-        <div>
-          <h3>업로드한 동영상 재생</h3>
-          <ReactPlayer ref={playerRef} url={videoUrl} controls width="100%" />
-
-          <Button onClick={captureThumbnail}>현재 프레임 캡쳐</Button>
-
-          {thumbnail && (
-            <div>
-              <h3>캡쳐된 썸네일:</h3>
-              <img src={thumbnail} alt="Thumbnail" style={{ maxWidth: '100%' }} />
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
 };

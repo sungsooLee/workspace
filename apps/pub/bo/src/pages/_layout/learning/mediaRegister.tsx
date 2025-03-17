@@ -9,7 +9,8 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 /* 퍼블수정 20240312 : libs로 경로 수정 E  */
 import searchContStyles from './searchContStyles.module.css'; // popup contents css
 import searchStyles from './search.module.css'; // search css
-import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
+import contentsHistoryInfoStyle from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
+
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Button,
@@ -1136,16 +1137,16 @@ function RouteComponent() {
               </ContentsRow>
             </div>
           </div>
-          <div className={cn(editInfoStyles.start, editInfoStyles.wrap)}>
+          <div className={cn(contentsHistoryInfoStyle.start, contentsHistoryInfoStyle.wrap)}>
             <p>
-              {'최초 등록'} <span className={editInfoStyles.info}>{'홍길동'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
+              {'최초 등록'} <span className={contentsHistoryInfoStyle.info}>{'홍길동'}</span>
+              <span className={contentsHistoryInfoStyle.info}>{'2025-02-18 15:00:22'}</span>
             </p>
             <p>
-              {'최종 수정'} <span className={editInfoStyles.info}>{'김현대'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
+              {'최종 수정'} <span className={contentsHistoryInfoStyle.info}>{'김현대'}</span>
+              <span className={contentsHistoryInfoStyle.info}>{'2025-02-18 15:00:22'}</span>
             </p>
-            <Button size="xs" variant="gray2" className={editInfoStyles.btn_info}>
+            <Button size="xs" variant="gray2" className={contentsHistoryInfoStyle.btn_info}>
               {'이력정보'}
             </Button>
           </div>
