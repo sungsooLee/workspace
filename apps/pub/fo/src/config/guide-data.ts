@@ -173,13 +173,33 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '이용약관 FOOTER',
+    pageId: 'agreement',
+    screenId: 'NLP_FO_LOG_1016', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 기획 보류',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '개인정보처리방침 FOOTER',
+    pageId: 'privacy',
+    screenId: 'NLP_FO_LOG_1017', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 기획 보류',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '문의하기',
     pageId: '',
     screenId: 'NLP_FO_LOG_1018', //스크린아이디
     pageType: 'Pop-up',
     completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 기획 보류\n- contact-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
