@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { OptionCard } from '@/libs/ui/src';
+import { OptionCard } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import { cn } from '@learnway/shared';
 // 퍼블수정 20250314 import modal추가

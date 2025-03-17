@@ -1,4 +1,4 @@
-import { OptionCard } from '@/libs/ui/src';
+import { OptionCard } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { getRandomId } from '@learnway/shared';
 
