@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { cn } from '@learnway/shared';
-
 import { Button } from '../button/button';
-import { IcoCaution, IcoAlertComplete, IcoError, IcoWarning } from '@learnway/icons'; // icon
+import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
 import { useModal } from '../modal/modal.hook';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 export interface AlertComponentProps {
   className?: string;
@@ -118,30 +118,48 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       </div>
     );
 
+    console.log(content);
+
     return (
-      <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
-        {/* icon */}
-        {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
-
-        {/* title */}
-        <div className={styles.title}>{title}</div>
-
-        {/* description */}
-        {description && (
-          <div
-            ref={descriptionRef}
-            className={`${styles.description} ${isScrolled ? styles.scroll : ''}`}>
-            {description}
-          </div>
+      <ModalContainer className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
+        <ModalTitle>
+          <div className={styles.title}>{title}</div>
+        </ModalTitle>
+        {content && (
+          <ModalBody>
+            <div className={styles.content}>{content}</div>
+          </ModalBody>
         )}
-
-        {/* content */}
-        <div className={styles.content}>{content}</div>
-
-        {/* footer */}
-        <div className={styles.footer}>{footer ?? defaultFooter}</div>
-      </div>
+        <ModalFooter>
+          <div className={styles.footer}>{footer ?? defaultFooter}</div>
+        </ModalFooter>
+      </ModalContainer>
     );
+
+    // return (
+    //   <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
+    //     {/* icon */}
+    //     {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
+    //
+    //     {/* title */}
+    //     <div className={styles.title}>{title}</div>
+    //
+    //     {/* description */}
+    //     {description && (
+    //       <div
+    //         ref={descriptionRef}
+    //         className={`${styles.description} ${isScrolled ? styles.scroll : ''}`}>
+    //         {description}
+    //       </div>
+    //     )}
+    //
+    //     {/* content */}
+    //     <div className={styles.content}>{content}</div>
+    //
+    //     {/* footer */}
+    //     <div className={styles.footer}>{footer ?? defaultFooter}</div>
+    //   </div>
+    // );
   },
 );
 

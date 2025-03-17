@@ -21,7 +21,6 @@ function RouteComponent() {
       ),
       okButtonLabel: '확인 버튼명',
       cancelButtonLabel: '취소 버튼명',
-      isConfirm: true,
     });
   };
   const handleClickAlert2 = () => {
@@ -36,7 +35,6 @@ function RouteComponent() {
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      isConfirm: true,
       iconVisible: true,
     });
   };
@@ -155,7 +153,6 @@ const handleClickAlert = () => {
       ),
       okButtonLabel: '확인 버튼명',
       cancelButtonLabel: '취소 버튼명',
-      isConfirm: true,
     });
   };
 
@@ -193,7 +190,6 @@ const { alert: openAlert } = useModal();
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    isConfirm: true,
     iconVisible: true,
   });
 };

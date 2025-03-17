@@ -1,10 +1,7 @@
 import { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { IcLogOut01 } from '@learnway/icons';
-
-import { Avatar, Popover } from '@learnway/ui';
 import styles from './user-avatar.module.css';
 
 const PopoverContent = () => {
@@ -15,7 +12,6 @@ const PopoverContent = () => {
     openAlert({
       title: <></>,
       description: <>로그아웃 하시겠습니까?</>,
-      isConfirm: true,
       iconVisible: false,
     });
   };
@@ -33,7 +29,6 @@ const PopoverContent = () => {
           </div>
         </>
       ),
-      isConfirm: true,
       iconVisible: false,
       okButtonLabel: '로그인연장',
     });

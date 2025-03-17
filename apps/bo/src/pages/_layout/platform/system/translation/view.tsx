@@ -67,7 +67,6 @@ function RouteComponent() {
     if (processType === 'REGISTER') {
       openConfirm({
         description: <>다국어를 저장 하시겠습니까?</>,
-        isConfirm: true,
         iconVisible: false,
         onClose: (result: boolean) => {
           if (result) {
@@ -78,7 +77,6 @@ function RouteComponent() {
     } else {
       openConfirm({
         description: <>다국어를 수정 하시겠습니까?</>,
-        isConfirm: true,
         iconVisible: false,
         onClose: (result: boolean) => {
           if (result) {
@@ -90,7 +88,6 @@ function RouteComponent() {
 
     /*openConfirm({
       description: <>다국어를 저장하시겠습니까?</>,
-      isConfirm: true,
       iconVisible: false,
       onClose: (result: boolean) => {
         // console.log(result);

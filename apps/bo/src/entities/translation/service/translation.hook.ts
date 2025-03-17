@@ -1,9 +1,7 @@
 import { useRouter } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { MutateOptions } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions, translationQueryOptions } from './translation.queries';
-import { Tenant } from '../../../types';
 import { useModal } from '@learnway/ui';
 
 const useTranslationHook = () => {
@@ -17,7 +15,6 @@ const useTranslationHook = () => {
     onSuccess: async (data: any, variables, context) => {
       openAlert({
         description: '정상적으로 저장되었습니다.',
-        isConfirm: false,
         iconVisible: true,
         alertType: 'complete',
         onClose: () => {
@@ -32,7 +29,6 @@ const useTranslationHook = () => {
     onSuccess: async (data: any, variables, context) => {
       openAlert({
         description: '정상적으로 수정되었습니다.',
-        isConfirm: false,
         iconVisible: true,
         alertType: 'complete',
         onClose: () => {

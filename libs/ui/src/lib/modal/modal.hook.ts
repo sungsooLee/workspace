@@ -42,7 +42,10 @@ const useModal = (): useModalReturnValue => {
                 ...props,
               };
         const config: ModalConfig = {
-          content: createElement(Alert, defaultProps),
+          id: getRandomId(),
+          content: createElement(Alert, {
+            ...defaultProps,
+          }),
           hideCloseButton: true,
           onClose: (value: any) => {
             defaultProps?.onClose?.(value);
@@ -70,6 +73,7 @@ const useModal = (): useModalReturnValue => {
                 isConfirm: true,
               };
         const config = {
+          id: getRandomId(),
           content: createElement(Alert, defaultProps),
           hideCloseButton: true,
           onClose: (value: any) => {

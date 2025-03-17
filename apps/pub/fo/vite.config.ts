@@ -13,7 +13,7 @@ export default defineConfig({
   root: __dirname,
   cacheDir: '../../../node_modules/.vite/apps/pub/fo',
   server: {
-    port: 4200,
+    port: 4400,
     host: 'localhost',
     proxy: {
       '/pms-module': {
