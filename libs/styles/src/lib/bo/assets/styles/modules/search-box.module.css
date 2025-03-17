@@ -40,9 +40,9 @@
       @apply flex w-auto shrink-0 items-end justify-end pl-[40px];
     }
     .item_wrap {
-      @apply flex w-full;
+      @apply flex w-full flex-wrap;
       .inner {
-        @apply flex w-full gap-[40px];
+        @apply flex flex-1 gap-[40px];
         .item {
           @apply w-full;
         }
@@ -110,6 +110,15 @@
 }
 .form_display {
   @apply flex w-full flex-wrap;
+  .box {
+    @apply flex;
+    .dash {
+      @apply flex w-[40px] items-center justify-center;
+      &::after {
+        @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
+      }
+    }
+  }
 }
 
 /* .cols_1 {

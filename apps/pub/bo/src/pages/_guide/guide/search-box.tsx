@@ -665,29 +665,29 @@ function RouteComponent() {
                 </div>
               </div>
             )}
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={cn(searchStyles.btn_expand, isExpanded ? searchStyles.active : '')}
-                variant="search"
-                size="sm"
-                onlyIcon
-                onClick={() => setIsExpanded(!isExpanded)}>
-                <IcoArrowDownDouble className={searchStyles.ico_expand} />
-              </Button>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
+          </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={cn(searchStyles.btn_expand, isExpanded ? searchStyles.active : '')}
+              variant="search"
+              size="sm"
+              onlyIcon
+              onClick={() => setIsExpanded(!isExpanded)}>
+              <IcoArrowDownDouble className={searchStyles.ico_expand} />
+            </Button>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
           </div>
         </div>
       </div>
