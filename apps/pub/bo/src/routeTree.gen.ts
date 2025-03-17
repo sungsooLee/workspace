@@ -50,6 +50,7 @@ import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
+import { Route as GuideGuideSearchBoxImport } from './pages/_guide/guide/search-box'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
@@ -312,6 +313,12 @@ const GuideGuideSpinnerRoute = GuideGuideSpinnerImport.update({
 const GuideGuideSelectRoute = GuideGuideSelectImport.update({
   id: '/guide/select',
   path: '/guide/select',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideSearchBoxRoute = GuideGuideSearchBoxImport.update({
+  id: '/guide/search-box',
+  path: '/guide/search-box',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -817,6 +824,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideRespondImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/search-box': {
+      id: '/_guide/guide/search-box'
+      path: '/guide/search-box'
+      fullPath: '/guide/search-box'
+      preLoaderRoute: typeof GuideGuideSearchBoxImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/select': {
       id: '/_guide/guide/select'
       path: '/guide/select'
@@ -1014,6 +1028,7 @@ interface GuideRouteChildren {
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
+  GuideGuideSearchBoxRoute: typeof GuideGuideSearchBoxRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
@@ -1053,6 +1068,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
+  GuideGuideSearchBoxRoute: GuideGuideSearchBoxRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
@@ -1147,6 +1163,7 @@ export interface FileRoutesByFullPath {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/search-box': typeof GuideGuideSearchBoxRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1214,6 +1231,7 @@ export interface FileRoutesByTo {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/search-box': typeof GuideGuideSearchBoxRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1284,6 +1302,7 @@ export interface FileRoutesById {
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
+  '/_guide/guide/search-box': typeof GuideGuideSearchBoxRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
@@ -1353,6 +1372,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/search-box'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1419,6 +1439,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/search-box'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1487,6 +1508,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
+    | '/_guide/guide/search-box'
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
@@ -1585,6 +1607,7 @@ export const routeTree = rootRoute
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
+        "/_guide/guide/search-box",
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
@@ -1791,6 +1814,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/respond": {
       "filePath": "_guide/guide/respond.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/search-box": {
+      "filePath": "_guide/guide/search-box.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/select": {

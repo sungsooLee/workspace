@@ -378,9 +378,21 @@ export const guideData = [
     pageId: 'category/detail',
     screenId: 'NLP_FO_CAT_1001', //스크린아이디
     pageType: 'Page',
-    completionDate: '2025-03-10', // 완료일
+    completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
+    remarks:
+      'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
+  },
+  {
+    layoutType: '적응형 (PC)',
+    screenName: '통합검색결과_전체 TAB',
+    pageId: 'integrated-search/integrated-search',
+    screenId: 'NLP_FO_USE_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks:
+      'NLP_FO_USE_1010 (최근/추천/인기 검색어 팝업) 포함\nNLP_FO_USE_1011 (자동완성 팝업) 포함\n디자인 컨펌x로 작업 불가능',
   },
 ];
 
