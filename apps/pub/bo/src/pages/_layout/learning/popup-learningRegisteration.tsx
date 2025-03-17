@@ -77,7 +77,7 @@ function RouteComponent() {
     { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
 
-  // 퍼블수정 20240314 : Modal 수정 S
+  // 퍼블수정 20240317 : Modal 수정 S
   const EbookContent = () => {
     return (
       <ModalContainer>
@@ -140,7 +140,7 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 퍼블수정 20240314 : Modal 수정 E
+  // 퍼블수정 20240317 : Modal 수정 E
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {

@@ -143,6 +143,9 @@
   button {
     @apply whitespace-nowrap;
   }
+  .textarea {
+    @apply rounded-[8px] border-[#D6DAE1];
+  }
 }
 .form_label {
   @apply block overflow-hidden;

@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -14,15 +15,20 @@ import {
   // SelectOption,
   ContentsRow,
   Input,
-  // List,
-  // Checkbox,
-  // RadioGroup,
+  DropdownList,
+  DropdownOption,
 } from '@learnway/ui';
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from './page-content.module.css';
+<<<<<<< HEAD
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form css
 import searchStyles from './search.module.css'; // search css
 import { cn } from '@learnway/shared';
+=======
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import wrapStyles from './wrap-box.module.css'; // box style
+import { cn } from '@/libs/shared/src';
+>>>>>>> feature/pub/dev
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,
@@ -45,21 +51,45 @@ function RouteComponent() {
   const handleDate2 = (value: any) => {
     setDate2(value);
   };
+
+  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const options = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
   return (
     <form className="form_row">
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
+          {/* search */}
           <div className={cn(searchStyles.start, searchStyles.wrap)}>
             <div className={searchStyles.contents}>
               <ContentsRow>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-select1" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>테넌트</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-label" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>타이틀</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-select1" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>테넌트</span>
+                  </label>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -67,13 +97,13 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-channel" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>채널</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-channel" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>채널</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -81,13 +111,13 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-type" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>유형</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-type" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>유형</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -95,23 +125,23 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-owner" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>담당자</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-owner" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>담당자</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
                   </div>
                 </div>
               </ContentsRow>
               <ContentsRow>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-select2" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>외주여부</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-select2" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>외주여부</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -119,13 +149,13 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-useable" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>사용가능</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-useable" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>사용가능</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -133,13 +163,13 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-usage" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>교육활용</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-usage" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>교육활용</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Select
-                      className={formStyles.select_option}
+                      className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
@@ -147,11 +177,11 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
-                <div className={formStyles.form_item}>
-                  <label htmlFor="name-resources" className={formStyles.form_label}>
-                    <span className={formStyles.form_text}>학습자원명</span>
+                <div className={searchStyles.form_item}>
+                  <label htmlFor="name-resources" className={searchStyles.form_label}>
+                    <span className={searchStyles.form_text}>학습자원명</span>
                   </label>
-                  <div className={formStyles.input_box}>
+                  <div className={searchStyles.input_box}>
                     <Input
                       id="name-resources"
                       type="text"
@@ -162,36 +192,42 @@ function RouteComponent() {
               </ContentsRow>
               {/* 확장영역 */}
               {isExpanded && (
-                <ContentsRow>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-term" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>공유기간</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <DatePicker
-                        onChange={handleDate}
-                        value={date}
-                        className={formStyles.datepicker_item}
-                      />
-                      <span className={formStyles.dash}></span>
-                      <DatePicker
-                        onChange={handleDate2}
-                        value={date2}
-                        className={formStyles.datepicker_item}
-                      />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-owner2" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>담당자</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <div className={searchStyles.half}>
-                        <Input id="name-owner2" type="text" placeholder="담당자명을 입력하세요." />
+                <div className={searchStyles.form_display}>
+                  <ContentsRow>
+                    <div className={searchStyles.form_item}>
+                      <label htmlFor="name-term" className={searchStyles.form_label}>
+                        <span className={searchStyles.form_text}>공유기간</span>
+                      </label>
+                      <div className={searchStyles.input_box}>
+                        <DatePicker
+                          onChange={handleDate}
+                          value={date}
+                          className={searchStyles.datepicker_item}
+                        />
+                        <span className={searchStyles.dash}></span>
+                        <DatePicker
+                          onChange={handleDate2}
+                          value={date2}
+                          className={searchStyles.datepicker_item}
+                        />
                       </div>
                     </div>
-                  </div>
-                </ContentsRow>
+                    <div className={searchStyles.form_item}>
+                      <label htmlFor="name-owner2" className={searchStyles.form_label}>
+                        <span className={searchStyles.form_text}>담당자</span>
+                      </label>
+                      <div className={searchStyles.input_box}>
+                        <div className={searchStyles.half}>
+                          <Input
+                            id="name-owner2"
+                            type="text"
+                            placeholder="담당자명을 입력하세요."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </ContentsRow>
+                </div>
               )}
             </div>
             <div className={searchStyles.btn_box}>

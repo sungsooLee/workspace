@@ -92,7 +92,7 @@ function RouteComponent() {
 
       <div className={styles.login_guide}>
         <span>
-          <Link to="/progress-status">회원 가입 현황</Link>
+          <Link to="/progress-status-cert">회원 가입 현황</Link>
           <Link to="/signup-step1">회원가입</Link>
         </span>
       </div>

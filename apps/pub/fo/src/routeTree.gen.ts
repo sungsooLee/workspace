@@ -24,6 +24,7 @@ import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
 import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
 import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
+import { Route as AuthPrivacyImport } from './pages/_auth/privacy'
 import { Route as AuthPasswordSetImport } from './pages/_auth/password-set'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
@@ -31,6 +32,7 @@ import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
+import { Route as AuthAgreementcheckImport } from './pages/_auth/agreement_check'
 import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -146,6 +148,12 @@ const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthPrivacyRoute = AuthPrivacyImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthPasswordSetRoute = AuthPasswordSetImport.update({
   id: '/password-set',
   path: '/password-set',
@@ -185,6 +193,12 @@ const AuthGoogleCertRoute = AuthGoogleCertImport.update({
 const AuthDormantAccountRoute = AuthDormantAccountImport.update({
   id: '/dormant-account',
   path: '/dormant-account',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAgreementcheckRoute = AuthAgreementcheckImport.update({
+  id: '/agreement_check',
+  path: '/agreement_check',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -443,6 +457,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAgreementImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/agreement_check': {
+      id: '/_auth/agreement_check'
+      path: '/agreement_check'
+      fullPath: '/agreement_check'
+      preLoaderRoute: typeof AuthAgreementcheckImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/dormant-account': {
       id: '/_auth/dormant-account'
       path: '/dormant-account'
@@ -490,6 +511,13 @@ declare module '@tanstack/react-router' {
       path: '/password-set'
       fullPath: '/password-set'
       preLoaderRoute: typeof AuthPasswordSetImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/privacy': {
+      id: '/_auth/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof AuthPrivacyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-cert': {
@@ -821,6 +849,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthAgreementRoute: typeof AuthAgreementRoute
+  AuthAgreementcheckRoute: typeof AuthAgreementcheckRoute
   AuthDormantAccountRoute: typeof AuthDormantAccountRoute
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -828,6 +857,7 @@ interface AuthRouteChildren {
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthPasswordSetRoute: typeof AuthPasswordSetRoute
+  AuthPrivacyRoute: typeof AuthPrivacyRoute
   AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
   AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
@@ -841,6 +871,7 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthAgreementRoute: AuthAgreementRoute,
+  AuthAgreementcheckRoute: AuthAgreementcheckRoute,
   AuthDormantAccountRoute: AuthDormantAccountRoute,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
@@ -848,6 +879,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthPasswordSetRoute: AuthPasswordSetRoute,
+  AuthPrivacyRoute: AuthPrivacyRoute,
   AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
   AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
@@ -956,6 +988,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/agreement': typeof AuthAgreementRoute
+  '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -963,6 +996,7 @@ export interface FileRoutesByFullPath {
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/password-set': typeof AuthPasswordSetRoute
+  '/privacy': typeof AuthPrivacyRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1014,6 +1048,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/agreement': typeof AuthAgreementRoute
+  '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -1021,6 +1056,7 @@ export interface FileRoutesByTo {
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/password-set': typeof AuthPasswordSetRoute
+  '/privacy': typeof AuthPrivacyRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1075,6 +1111,7 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/agreement': typeof AuthAgreementRoute
+  '/_auth/agreement_check': typeof AuthAgreementcheckRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
@@ -1082,6 +1119,7 @@ export interface FileRoutesById {
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/password-set': typeof AuthPasswordSetRoute
+  '/_auth/privacy': typeof AuthPrivacyRoute
   '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/_auth/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1135,6 +1173,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/agreement'
+    | '/agreement_check'
     | '/dormant-account'
     | '/google-cert'
     | '/login'
@@ -1142,6 +1181,7 @@ export interface FileRouteTypes {
     | '/password-input'
     | '/password-modify'
     | '/password-set'
+    | '/privacy'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1192,6 +1232,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/agreement'
+    | '/agreement_check'
     | '/dormant-account'
     | '/google-cert'
     | '/login'
@@ -1199,6 +1240,7 @@ export interface FileRouteTypes {
     | '/password-input'
     | '/password-modify'
     | '/password-set'
+    | '/privacy'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1251,6 +1293,7 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/agreement'
+    | '/_auth/agreement_check'
     | '/_auth/dormant-account'
     | '/_auth/google-cert'
     | '/_auth/login'
@@ -1258,6 +1301,7 @@ export interface FileRouteTypes {
     | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/password-set'
+    | '/_auth/privacy'
     | '/_auth/progress-status-cert'
     | '/_auth/progress-status-email'
     | '/_auth/progress-status-result'
@@ -1338,6 +1382,7 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/agreement",
+        "/_auth/agreement_check",
         "/_auth/dormant-account",
         "/_auth/google-cert",
         "/_auth/login",
@@ -1345,6 +1390,7 @@ export const routeTree = rootRoute
         "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/password-set",
+        "/_auth/privacy",
         "/_auth/progress-status-cert",
         "/_auth/progress-status-email",
         "/_auth/progress-status-result",
@@ -1407,6 +1453,10 @@ export const routeTree = rootRoute
       "filePath": "_auth/agreement.tsx",
       "parent": "/_auth"
     },
+    "/_auth/agreement_check": {
+      "filePath": "_auth/agreement_check.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/dormant-account": {
       "filePath": "_auth/dormant-account.tsx",
       "parent": "/_auth"
@@ -1433,6 +1483,10 @@ export const routeTree = rootRoute
     },
     "/_auth/password-set": {
       "filePath": "_auth/password-set.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/privacy": {
+      "filePath": "_auth/privacy.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-cert": {

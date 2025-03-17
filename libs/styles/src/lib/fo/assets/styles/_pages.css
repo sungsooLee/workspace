@@ -14,18 +14,12 @@ h4.auth--title {
     @apply flex items-center justify-center gap-[16px] text-center;
 
     button {
-      @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+      @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[#D6DAE1] text-center text-[#A9AFB8];
       span {
-        @apply mt-[8px] block text-[var(--gray6)];
+        @apply mt-[8px] block text-[#A9AFB8];
       }
       svg {
-        @apply opacity-30;
-      }
-      .ico1 {
-        @apply !stroke-[#0F3492];
-      }
-      .ico2 {
-        @apply !stroke-[#0F3492];
+        @apply !stroke-[#A9AFB8];
       }
       &[aria-checked='true'] {
         @apply !border-[#0F3492] !text-[#0F3492] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
@@ -33,7 +27,7 @@ h4.auth--title {
           @apply !text-[#0F3492];
         }
         svg {
-          @apply opacity-100;
+          @apply !stroke-[#0F3492];
         }
       }
     }

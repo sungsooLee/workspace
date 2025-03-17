@@ -1,6 +1,6 @@
 .start {
   &.search_popover {
-    @apply table w-[800px] table-fixed rounded-[16px] bg-white p-[32px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    @apply table w-[800px] table-fixed rounded-[8px] bg-white p-[32px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
     & > div {
       @apply table-cell w-1/2;
       &:nth-child(1) {
