@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 import { CheckedState } from '@radix-ui/react-checkbox';
@@ -14,31 +14,25 @@ export interface ThumbnailListComponentProps
   options: ImageOption[];
   showCheckbox?: boolean;
   onChecked?: (options: ImageOption[]) => void;
+  /** 썸네일 체크 변경 */
+  onChangeChecked?: (option: ImageOption) => void;
 }
 
 const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentProps>(
-  ({ className, options = [], showCheckbox, onChecked, ...props }) => {
-    const [selectedImages, setSelectedImages] = useState<ImageOption[]>([]);
-
-    useEffect(() => {
-      onChecked?.(selectedImages);
-    }, [selectedImages]);
-
+  ({ className, options = [], showCheckbox, onChecked, onChangeChecked, ...props }) => {
     const handlerCheckChange = (checked: CheckedState, currentOption: ImageOption) => {
-      const appendedImages = [...selectedImages, currentOption];
-      const deletedImages = selectedImages?.filter((d: ImageOption) => d.id !== currentOption.id);
-      const newSelectedImages = checked ? appendedImages : deletedImages;
-      setSelectedImages(newSelectedImages);
+      const newOption = { ...currentOption, checked: !!checked };
+      onChangeChecked?.(newOption);
     };
 
     const items = options?.map((d: ImageOption, index: number) => (
       <Thumbnail
         path={d.path}
         key={d.id}
-        showCheckbox={showCheckbox}
         onCheckedChange={(checked: CheckedState) => handlerCheckChange(checked, d)}
-        showDeleteBtn={index === 0}
-        selected={index === 0}
+        showCheckbox={!d.readonly}
+        showDeleteBtn={!d.readonly}
+        selected={d.checked}
       />
     ));
 

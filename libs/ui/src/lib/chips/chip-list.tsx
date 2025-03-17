@@ -21,9 +21,10 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   visibleCount?: number;
   /** chips wordwrap 여부 */
   wordwrap?: boolean;
+  /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
-  /** options(chips 목록)이 변경될 때 호출 */
-  onChange?: (options: Array<any>) => void;
+  /** chip 삭제 버튼 클릭시 호출 */
+  onChipDeleteClick?: (option: any) => void;
   /** 추가할 chip input 에서 엔터 눌렀을때 호출 */
   onAddInputEnterKeyDown?: (text: string) => void;
   /** ... */
@@ -33,9 +34,6 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
 const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
   ({
     className,
-    onDelete,
-    onChange,
-    onAddInputEnterKeyDown,
     showInput,
     options = [],
     placeholder = t('태그를 입력해주세요.'),
@@ -48,7 +46,9 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     labelField = 'label',
     valueField = 'value',
     onChipClick,
+    onChipDeleteClick,
     onChipListClick,
+    onAddInputEnterKeyDown,
     ...props
   }) => {
     const [inputValue, setInputValue] = useState<string>('');
@@ -68,13 +68,12 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       }
     };
 
-    const handleChipClick = (event: any) => {
-      onChipClick?.(event);
+    const handleChipClick = (option: any) => {
+      onChipClick?.(option);
     };
 
-    const handleChipDelete = (event: any) => {
-      const newOptions = options?.filter((option) => option[valueField] !== event[valueField]);
-      onChange?.(newOptions);
+    const handleChipDelete = (option: any) => {
+      onChipDeleteClick?.(option);
     };
 
     return (
