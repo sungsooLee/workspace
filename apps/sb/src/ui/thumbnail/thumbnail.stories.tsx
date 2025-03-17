@@ -35,7 +35,6 @@ export const TemplateList: any = (args: any) => {
   );
 };
 TemplateList.storyName = 'Thumbnail List';
-TemplateList.args = {};
 
 // Thumbnail List
 export const TemplateCheckList: any = (args: any) => {
@@ -56,4 +55,3 @@ export const TemplateCheckList: any = (args: any) => {
   );
 };
 TemplateCheckList.storyName = 'Thumbnail List (Checkbox)';
-TemplateCheckList.args = {};

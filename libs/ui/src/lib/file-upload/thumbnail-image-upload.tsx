@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
 import { cn, getRandomId } from '@learnway/shared';
 
@@ -8,7 +8,7 @@ import { Button } from '../button/button';
 import { Input } from '../input/input';
 
 import styles from './thumbnail-image-upload.module.css';
-import { IcoUploadCloud, IcoLoading } from '@learnway/icons';
+import { IcoLoading, IcoUploadCloud } from '@learnway/icons';
 
 export interface ThumbnailImageUploadComponentProps {
   className?: string;
@@ -18,42 +18,58 @@ export interface ThumbnailImageUploadComponentProps {
   onItemClick?: (option: ImageOption) => void;
   onChange?: (options: ImageOption[]) => void;
   onCheckedChange?: (options: ImageOption[]) => void;
+  /** onImageSelect */
+  onImageSelect?: (options: ImageOption) => void;
 }
 
 const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUploadComponentProps>(
   ({
     className,
-    options: ownerOptions = [],
+    options,
     description,
     disabled,
     onItemClick,
     onChange,
     onCheckedChange,
+    onImageSelect,
     ...props
   }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [options, setOptions] = useState<ImageOption[]>(ownerOptions);
-
-    useEffect(() => {
-      onChange?.(options);
-    }, [options]);
 
     const handleButtonClick = () => {
       fileInputRef?.current && fileInputRef.current.click();
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]; // 첫 번째 파일 가져오기
+      const file = event.target.files?.[0];
+      console.log(event);
+      console.log(event.target?.files);
       if (file) {
-        const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
-        // setImageSrc(imageUrl); // 상태 업데이트
-        setOptions([{ id: getRandomId(), path: imageUrl }, ...options]);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          // setPreview(reader.result as string);
+          console.log('reader.result', reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const handleFileChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const path = event.target.value; // 첫 번째 파일 가져오기
+      if (path) {
+        const newOption = {
+          id: getRandomId(),
+          path: path,
+        };
+        onImageSelect?.(newOption);
       }
     };
 
     const handleCheckedThumbnailList = (newOptions: ImageOption[]) => {
       onCheckedChange?.(newOptions);
     };
+
+    console.log('----- ', options);
 
     return (
       <div {...props} className={cn(styles.start, className, 'nlp--image-upload')}>
