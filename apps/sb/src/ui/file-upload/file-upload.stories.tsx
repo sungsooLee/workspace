@@ -29,7 +29,7 @@ export const TemplateThumbnailImage: any = (args: any) => {
         description={'교육자원을 연결하면 추천 썸네일이 표시됩니다.'}
         // onChange={(options: ImageOption[]) => console.log('onChange', options)}
         onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
-        onImageSelect={(newOption) => setOptions([...options, newOption])}
+        onImageSelect={(newOption) => setOptions([newOption, ...options])}
       />
     </div>
   );

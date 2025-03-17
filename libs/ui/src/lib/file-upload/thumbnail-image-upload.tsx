@@ -40,26 +40,12 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
       fileInputRef?.current && fileInputRef.current.click();
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      console.log(event);
-      console.log(event.target?.files);
+    const handleFileChange = (event: any) => {
+      const file = fileInputRef.current?.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          // setPreview(reader.result as string);
-          console.log('reader.result', reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
-    const handleFileChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const path = event.target.value; // 첫 번째 파일 가져오기
-      if (path) {
         const newOption = {
           id: getRandomId(),
-          path: path,
+          path: URL.createObjectURL(file),
         };
         onImageSelect?.(newOption);
       }
@@ -68,8 +54,6 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
     const handleCheckedThumbnailList = (newOptions: ImageOption[]) => {
       onCheckedChange?.(newOptions);
     };
-
-    console.log('----- ', options);
 
     return (
       <div {...props} className={cn(styles.start, className, 'nlp--image-upload')}>
