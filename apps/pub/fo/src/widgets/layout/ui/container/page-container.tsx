@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './page-container.module.css';
 
@@ -9,9 +9,15 @@ interface PageContainerComponentProps {
 function PageContainerComponent({ children }: PageContainerComponentProps) {
   const { t } = useTranslation();
 
+  // 퍼블 확인용
+  const [inCategoryPage, setIsCategoryPage] = useState(false);
+  useEffect(() => {
+    setIsCategoryPage(window.location.pathname.includes('/category/'));
+  }, []);
+
   return (
     <div className={`${styles.start} ${styles.page_container}`}>
-      <div className={styles.title}>{'title'}</div>
+      {inCategoryPage && <div className={styles.title}>{'title'}</div>}
       {children}
     </div>
   );

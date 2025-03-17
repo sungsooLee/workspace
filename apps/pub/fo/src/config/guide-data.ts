@@ -362,6 +362,16 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
+  {
+    layoutType: '적응형 (PC)',
+    screenName: '통합검색결과_전체 TAB',
+    pageId: 'integrated-search/integrated-search',
+    screenId: 'NLP_FO_USE_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
 ];
 
 export default guideData;
