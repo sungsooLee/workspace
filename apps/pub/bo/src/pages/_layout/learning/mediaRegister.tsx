@@ -54,7 +54,7 @@ export const Route = createFileRoute('/_layout/learning/mediaRegister')({
 });
 
 function RouteComponent() {
-  // 퍼블수정 20240314 : 수정된 Modal 컴포넌트로 수정
+  // 퍼블수정 20240317 : 수정된 Modal 컴포넌트로 수정
   // Modal : 채널 검색
   const { close: closeModal } = useModal();
   const ModalChannelContent = () => {
@@ -370,7 +370,7 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -379,7 +379,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
@@ -439,7 +439,7 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -448,7 +448,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
             <div className={formStyles.form_item}>
               <label htmlFor="name-managerNum" className={formStyles.form_label}>
@@ -504,7 +504,7 @@ function RouteComponent() {
           </ContentsRow>
           {checked[1] && (
             // 퍼블수정 20250317 : form_display 구조 수정 S
-            <div className={searchStyles.form_display}>
+            <div className={dynamicFormStyles.form_display}>
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <div className={formStyles.input_box}>
@@ -546,7 +546,7 @@ function RouteComponent() {
           </ContentsRow>
           {checked[2] && (
             // 퍼블수정 20250317 : form_display 구조 수정 S
-            <div className={searchStyles.form_display}>
+            <div className={dynamicFormStyles.form_display}>
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label htmlFor="name-company" className={formStyles.form_label}>
@@ -673,7 +673,7 @@ function RouteComponent() {
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -682,7 +682,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
@@ -775,7 +775,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                {/* 퍼블수정 20240314 : disabled 속성 추가 */}
+                {/* 퍼블수정 20240317 : disabled 속성 추가 */}
                 <ThumbnailImageUpload
                   options={[
                     /* 동영상 추출 전 */
@@ -955,108 +955,100 @@ function RouteComponent() {
                     <ContentsRow>
                       <div className={formStyles.form_item}>
                         <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            id="name-1-14"
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            value="영어자막.smi"
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                          {/* 퍼블수정 20240317 : 수정 S */}
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            value="영어자막2.smi"
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                            <Input
+                              id="name-1-14"
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                              value="영어자막.smi"
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '언어선택' },
-                              { value: 'language2', label: '한국어' },
-                              { value: 'language3', label: '영어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 추가
-                          </Button>
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                              value="영어자막2.smi"
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
+                            />
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '언어선택' },
+                                { value: 'language2', label: '한국어' },
+                                { value: 'language3', label: '영어' },
+                              ]}
+                            />
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 추가
+                            </Button>
+                          </div>
+                          {/* 퍼블수정 20240317 : 수정 E */}
                         </div>
                       </div>
                     </ContentsRow>

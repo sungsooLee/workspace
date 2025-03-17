@@ -40,31 +40,34 @@
       @apply flex w-auto shrink-0 items-end justify-end pl-[40px];
     }
     .item_wrap {
-      @apply grid gap-[40px];
-      .item {
-        @apply flex-1;
-        &.cols2 {
-          @apply grow-[2];
+      @apply flex w-full;
+      .inner {
+        @apply flex gap-[40px];
+        .item {
+          @apply w-full;
         }
-        &.cols3 {
-          @apply grow-[3];
+        &.item_cols1 {
+          @apply !w-[calc(25%+40px)];
         }
-        &.cols4 {
-          @apply grow-[4];
-        }
-        &.cols5 {
-          @apply grow-[5];
-        }
-        &.cols6 {
-          @apply grow-[6];
-        }
-        &.cols7 {
-          @apply grow-[7];
-        }
-        &.cols8 {
-          @apply grow-[8];
+        &.item_cols2 {
+          @apply !w-[calc((25%+60px)*2)];
         }
       }
+      /* .item {
+        @apply flex-1;
+        &.cols1 {
+          @apply !grow-[1];
+        }
+        &.cols2 {
+          @apply !grow-[2];
+        }
+        &.cols3 {
+          @apply !grow-[3];
+        }
+        &.cols4 {
+          @apply !grow-[4];
+        }
+      } */
     }
   }
 }
