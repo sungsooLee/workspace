@@ -13,6 +13,8 @@ import {
   Button,
 } from '@learnway/ui';
 
+import { IcoRefresh02 } from '@learnway/icons';
+
 import styles from './filter-popup.module.css';
 
 const filter = [
@@ -104,6 +106,25 @@ const FilterPopupComponent = () => {
                 <OptionCard cols={4} options={filter5} multiple />
               </div>
             </li>
+
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>언어</strong>
+              <div className={styles.filter_box}>
+                <OptionCard cols={4} options={filter5} multiple />
+              </div>
+            </li>
           </ul>
 
           <div className={styles.look}>
@@ -118,7 +139,10 @@ const FilterPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
+          <IcoRefresh02 width={20} height={20} stroke="#4c515e" fill="none"></IcoRefresh02>
+          초기화
+        </Button>
         <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>

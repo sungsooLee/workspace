@@ -21,7 +21,7 @@
   }
 
   .look {
-    @apply sticky -bottom-[16px] left-0 -mx-[32px] -mb-[16px] mt-[32px] w-[calc(100%+64px)] border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
+    @apply sticky -bottom-[24px] left-0 -mx-[32px] -mb-[24px] mt-[32px] w-[calc(100%+64px)] border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
     .chip_list {
       & > div {
         @apply !mt-0;
