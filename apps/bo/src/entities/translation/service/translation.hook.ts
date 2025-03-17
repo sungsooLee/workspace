@@ -15,8 +15,7 @@ const useTranslationHook = () => {
     onSuccess: async (data: any, variables, context) => {
       openAlert({
         description: '정상적으로 저장되었습니다.',
-        iconVisible: true,
-        alertType: 'complete',
+        type: 'complete',
         onClose: () => {
           router.navigate({ to: '/platform/system/translation' });
         },
@@ -29,8 +28,7 @@ const useTranslationHook = () => {
     onSuccess: async (data: any, variables, context) => {
       openAlert({
         description: '정상적으로 수정되었습니다.',
-        iconVisible: true,
-        alertType: 'complete',
+        type: 'complete',
         onClose: () => {
           router.navigate({ to: '/platform/system/translation' });
         },

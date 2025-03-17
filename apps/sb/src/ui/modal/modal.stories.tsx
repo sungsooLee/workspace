@@ -156,7 +156,7 @@ export const TemplateConfirm: any = (args: any) => {
   const handleClickConfirm = () => {
     openConfirm({
       title: 'confirm title',
-      description: 'confirm description',
+      content: 'confirm content',
       onClose: (value: boolean) => console.log(value),
     });
   };

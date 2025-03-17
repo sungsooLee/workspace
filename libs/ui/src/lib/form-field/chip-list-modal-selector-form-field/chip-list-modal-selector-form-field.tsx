@@ -53,15 +53,17 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       !isDuplicated && setSelectedChipOptions([...selectedChipOptions, newOption]);
     };
 
-    const handleChipListClick = async () => {
+    const handleSearchClick = async () => {
       console.log(control);
       const data = await openModal(modalConfig);
       data && appendSelectedChipOptions(data);
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
 
-    const handleChipListChange = (newOptions: any[]) => {
+    const handlerChipDelete = (option: any) => {
+      const newOptions = selectedChipOptions?.filter((d) => d.value !== option.value);
       setSelectedChipOptions(newOptions);
+      console.log('handlerChipDelete', newOptions);
     };
 
     return (
@@ -77,14 +79,13 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
           size={'xs'}
           // hideBorder={false}
           options={selectedChipOptions}
-          onChange={handleChipListChange}
-          // onChipListClick={handleChipListClick}
+          onChipDeleteClick={handlerChipDelete}
         />
         <Button
           type="button"
           className={cn(styles.btn_search)}
           onlyIcon
-          onClick={handleChipListClick}>
+          onClick={handleSearchClick}>
           <IcoSearch width={20} height={20} stroke={'#131C30'} />
         </Button>
       </div>

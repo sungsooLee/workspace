@@ -45,8 +45,8 @@ const PopoverContent = () => {
   const logoutAlert = () => {
     openConfirm({
       title: <></>,
-      description: <>로그아웃 하시겠습니까?</>,
-      iconVisible: false,
+      content: <>로그아웃 하시겠습니까?</>,
+
       onClose: (result: boolean) => {
         // console.log(result);
         if (result) logout();
@@ -57,7 +57,7 @@ const PopoverContent = () => {
   const loginExtension = () => {
     openConfirm({
       title: <>로그인 시간을 연장하시겠습니까?</>,
-      description: (
+      content: (
         <>
           로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
           <br />
@@ -67,7 +67,7 @@ const PopoverContent = () => {
           </div>
         </>
       ),
-      iconVisible: false,
+
       okButtonLabel: '로그인연장',
       onClose: (result: boolean) => {
         console.log(result);
