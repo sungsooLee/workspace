@@ -124,6 +124,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     return (
       <div className={cn(dropdownClass.trim(), 'dropdown')}>
         <Select
+          menuIsOpen
           id={uuid}
           ref={ref}
           options={options}
