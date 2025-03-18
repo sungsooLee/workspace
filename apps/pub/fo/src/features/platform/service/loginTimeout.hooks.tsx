@@ -57,7 +57,7 @@ export function useLoginTimeout() {
       openAlert({
         title: '자동 로그아웃',
         description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',
-        type: 'caution',
+        type: 'warning',
         onClose: () => {
           logout();
         },

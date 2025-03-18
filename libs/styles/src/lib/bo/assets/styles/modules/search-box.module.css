@@ -35,7 +35,8 @@
     .btn_box {
       @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
     }
-    .item_wrap {
+    .item_wrap,
+    .multi {
       @apply flex w-full flex-wrap;
       .inner {
         @apply flex flex-1 gap-[40px];

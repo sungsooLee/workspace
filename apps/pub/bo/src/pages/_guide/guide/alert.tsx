@@ -35,6 +35,7 @@ function RouteComponent() {
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
+      type: 'caution',
     });
   };
   const handleClickAlert3 = () => {
@@ -70,7 +71,7 @@ function RouteComponent() {
     openAlert({
       title: (
         <>
-          알럿 (아이콘 케이스 : caution) <br /> 줄바꿈 적용
+          알럿 (아이콘 케이스 : warning) <br /> 줄바꿈 적용
         </>
       ),
       content: (
@@ -78,7 +79,7 @@ function RouteComponent() {
           이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
         </>
       ),
-      type: 'caution',
+      type: 'warning',
     });
   };
   const handleClickAlert6 = () => {
@@ -186,7 +187,7 @@ const { alert: openAlert } = useModal();
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    true,
+    type: 'caution',
   });
 };
 
@@ -276,7 +277,7 @@ const handleClickAlert4 = () => {
         <div className="flex_box">
           <div className="desc">
             <Button variant="text" onClick={() => handleClickAlert5()}>
-              Alert창 열기(아이콘 caution)
+              Alert창 열기(아이콘 warning)
             </Button>
           </div>
         </div>
@@ -292,7 +293,7 @@ const handleClickAlert5 = () => {
   openAlert({
     title: (
       <>
-        알럿 (아이콘 케이스 : caution) <br /> 줄바꿈 적용
+        알럿 (아이콘 케이스 : warning) <br /> 줄바꿈 적용
       </>
     ),
     content: (
@@ -300,13 +301,13 @@ const handleClickAlert5 = () => {
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    type: 'caution',
+    type: 'warning',
   });
 };
 
     
   // 사용 코드
-  <Button variant="text" onClick={() => handleClickAlert5()}>Alert창 열기(아이콘 caution)</Button>`}
+  <Button variant="text" onClick={() => handleClickAlert5()}>Alert창 열기(아이콘 warning)</Button>`}
             </code>
           </pre>
         </div>

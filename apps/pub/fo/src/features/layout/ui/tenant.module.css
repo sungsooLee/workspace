@@ -15,19 +15,49 @@
   }
 }
 .tenant_content {
-  @apply rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[8px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+  @apply -mx-[16px] -my-[8px];
   .tenant_wrap {
     .tenant_list {
-      @apply flex max-w-[345px] flex-wrap;
+      @apply flex w-full flex-wrap;
       li {
-        @apply body_3_r w-[calc(100%/2)] min-w-[148px];
+        @apply body_3_r w-[calc(100%/2)];
         .btn {
-          @apply box-border block h-full w-full rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
-          &.active,
-          a:hover {
+          @apply box-border flex h-full w-full items-center rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
+          .label {
+            @apply button_5_r mr-[16px] box-border flex items-center rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] leading-[16px] text-[var(--gray8)];
+            i {
+              @apply mr-[2px] inline-block;
+              svg {
+                @apply transform-none;
+              }
+            }
+          }
+          .txt {
+            @apply body_3_r inline-block flex-1 text-[var(--gray9)];
+          }
+          &:hover {
             @apply bg-[var(--secondary5)];
           }
+          &.active {
+            .label {
+              @apply button_5_b border-[var(--secondary1)] bg-[var(--secondary1)] leading-[16px] text-white;
+              i {
+                svg {
+                  @apply !stroke-white;
+                }
+              }
+            }
+          }
         }
+      }
+    }
+    .notice {
+      @apply body_4_r bg-white pb-[40px] pl-[22px] pr-[12px] pt-[16px] leading-[19px] text-[var(--gray7)];
+      &::before {
+        @apply absolute -bottom-[1px] left-0 h-px w-full bg-white content-[''];
+      }
+      &::after {
+        @apply absolute left-[12px] top-[24px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
       }
     }
   }
