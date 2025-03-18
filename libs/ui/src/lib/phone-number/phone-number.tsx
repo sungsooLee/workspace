@@ -77,6 +77,7 @@ const PhoneNumberComponent = function ({
         size={size}
         readOnly={readOnly}
         disabled={disabled}
+        value={editionValue?.nationCode ?? getBrowserNation()}
       />
       <Input
         value={editionValue?.number}
