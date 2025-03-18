@@ -22,14 +22,8 @@ import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 export const Route = createFileRoute('/_auth/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
-    validateState: () => {
-      return z.object({
-        name: z.string().required(),
-        birthday: z.string().required(),
-      });
-    },
     meta: {
-      title: 'LABEL.PASSWORD_CHANGE',
+      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
     },
   }),
 });
@@ -56,7 +50,7 @@ function RouteComponent() {
       {
         username: data.username,
         oldPassword: data.oldPassword,
-        newPassword: data.newPassword,
+        newPassword: data.password,
       },
       {
         onSuccess: handleSuccess,
@@ -67,7 +61,7 @@ function RouteComponent() {
   const handleSuccess = async () => {
     await alert({
       title: '비밀번호가 변경되었습니다.',
-      description: '변경된 비밀번호로 다시 로그인해 주세요.',
+      content: '변경된 비밀번호로 다시 로그인해 주세요.',
     });
     logout();
   };
@@ -75,7 +69,7 @@ function RouteComponent() {
   const handleCancel = async () => {
     const callback = await confirm({
       title: '취소하시겠습니까?',
-      description:
+      content:
         '비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.',
     });
     if (callback) {

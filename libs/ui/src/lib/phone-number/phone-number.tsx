@@ -12,15 +12,15 @@ import { Select } from '../select/select';
 import type { SelectOption } from '../select/type';
 import styles from './phone-number.module.css';
 
-export interface PhoneNumber {
+export interface PhoneNumberValue {
   nationCode: string;
   number: string;
 }
 
 export interface PhoneNumberComponentProps extends Omit<InputProps, 'value' | 'onChange'> {
   options?: SelectOption[];
-  value?: PhoneNumber;
-  onChange?: (value: PhoneNumber) => void;
+  value?: PhoneNumberValue;
+  onChange?: (value: PhoneNumberValue) => void;
   className?: string;
   size?: any;
 }
@@ -36,11 +36,11 @@ const PhoneNumberComponent = function ({
   ...props
 }: PhoneNumberComponentProps) {
   const { t } = useTranslation();
-  const [editionValue, setEditionValue] = useState<PhoneNumber>(
+  const [editionValue, setEditionValue] = useState<PhoneNumberValue>(
     value ??
       ({
         nationCode: getBrowserNation(),
-      } as PhoneNumber),
+      } as PhoneNumberValue),
   );
 
   const nationOptions = useCreation(() => {

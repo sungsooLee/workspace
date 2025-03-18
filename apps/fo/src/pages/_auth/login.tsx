@@ -121,10 +121,8 @@ function RouteComponent() {
 
         <div className={signupStyles.login_guide}>
           <span>
-            <Link to="/progress-status">회원 가입 현황</Link>
-            <Link to="/search-account/result" state={{ email: 'test' }}>
-              회원가입
-            </Link>
+            <Link to="/signup-progress">회원 가입 현황</Link>
+            <Link to="/signup">회원가입</Link>
           </span>
         </div>
       </div>

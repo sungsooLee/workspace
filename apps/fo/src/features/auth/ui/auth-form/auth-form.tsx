@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { startTransition, useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
 import { isFunction, isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
+import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
 
@@ -30,8 +31,7 @@ export interface AuthResultData {
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: string;
-  phoneNumberLocale: string;
+  phoneNumber: PhoneNumberValue;
   email: string;
 }
 
@@ -40,8 +40,7 @@ export interface AuthFormData {
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: string;
-  phoneNumberLocale: string;
+  phoneNumber: PhoneNumberValue;
   email: string;
   verificationCode: string;
 }
@@ -61,7 +60,7 @@ function AuthFormComponent({
 }: AuthFormComponentProps) {
   const { t } = useTranslation();
 
-  const { provider, onSubmit, onFormChange, control, getValues, setFormError } =
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError, clearFormError } =
     useDynamicForm(detailConfig);
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
@@ -84,8 +83,10 @@ function AuthFormComponent({
   }, [defaultValues]);
 
   useEffect(() => {
-    console.log('2', authToolType);
-    handleReset(undefined, authToolType);
+    onFormChange();
+    onFormChange({
+      authToolType,
+    });
   }, [authToolType]);
 
   const handleSendVerify = () => {
@@ -108,7 +109,11 @@ function AuthFormComponent({
 
     if (data.authToolType === AUTH_TOOL_TYPE.PHONE) {
       sendVerifyPhone(
-        { ...payload, phoneNumber: data.phoneNumber },
+        {
+          ...payload,
+          phoneNumber: data.phoneNumber.number,
+          phoneNumberLocale: data.phoneNumber.nationCode,
+        },
         {
           onSuccess: handleSendVerifySuccess,
         },
@@ -124,7 +129,6 @@ function AuthFormComponent({
   };
 
   const handleOnSubmit = async (data: any) => {
-    console.log('ddd');
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -206,7 +210,10 @@ function AuthFormComponent({
       userId: includeUserId ? z.string().required() : z.string(),
       name: z.string().required(),
       birthday: z.number().required(),
-      phoneNumber: data.authToolType === AUTH_TOOL_TYPE.PHONE ? z.string().required() : z.string(),
+      phoneNumber: z.object({
+        nationCode: z.string(),
+        number: z.string(),
+      }),
       email:
         data.authToolType === AUTH_TOOL_TYPE.EMAIL
           ? z.string().email().required()
@@ -217,9 +224,9 @@ function AuthFormComponent({
     const r = authSchema.safeParse(data);
     if (!r.success) {
       r.error.issues.forEach((error: any) => {
-        //setFormError(error.path[0], error.message);
+        setFormError(error.path[0], error.message);
       });
-      throw 'invalid';
+      throw r.error.issues;
     }
   };
 
@@ -270,11 +277,7 @@ function AuthFormComponent({
           </ContentsRow>
         )}
       </div>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'customText'} />
-        </FormRow>
-      </ContentsRow>
+
       {sendedVerifyNumber && (
         <ContentsRow>
           <FormRow provider={provider}>
@@ -309,12 +312,6 @@ function AuthFormComponent({
             {t('LABEL.CHECK_AUTH_REQUEST')}
           </Button>
         )}
-        <Button
-          type={'button'}
-          variant={'primary'}
-          onClick={() => onFormChange({ customText: '새로운 텍스트로 변경합니다.' })}>
-          테스트
-        </Button>
       </div>
     </form>
   );
@@ -376,13 +373,6 @@ const detailConfig = {
       name: 'verificationCode',
       type: 'custom',
       label: '인증번호',
-      value: '',
-      placeholder: '인증번호 입력',
-    },
-    {
-      name: 'customText',
-      type: 'text',
-      label: '커스텀 텍스트',
       value: '',
       placeholder: '인증번호 입력',
     },

@@ -4,7 +4,8 @@ import { cn } from '@learnway/shared';
 import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import otpToolFormField from './otp-tool-form-field.module.css';
-import styles from './mpass-cert.module.css';
+//import styles from './mpass-cert.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/signup-progress.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
 
