@@ -1,7 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
+import styles from '../../../../../../bo/src/widgets/layout/ui/container/page-contents.module.css';
 import movieInfoStyles from './movie-info.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 S  */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';

@@ -106,7 +106,7 @@ export const guideData = [
     screenId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-06',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-03-17',
     remarks: '완료(아이콘 추후 적용 예정)', // 비고
   },
   {
@@ -114,9 +114,9 @@ export const guideData = [
     pageId: 'learning/popup-upload',
     screenId: '',
     pageType: 'Pop-up',
-    completionDate: '2025-03-06',
+    completionDate: '',
     lastUpdateDate: '',
-    remarks: '완료(아이콘 추후 적용 예정)', // 비고
+    remarks: '진행중(디자인 적용중)', // 비고
   },
   {
     screenName: 'CMS/학습자원등록 동영상 등록',
@@ -124,8 +124,17 @@ export const guideData = [
     screenId: '',
     pageType: 'Page',
     completionDate: '2025-03-06',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-03-18',
     remarks: '완료', // 비고
+  },
+  {
+    screenName: 'CMS/학습자원조회',
+    pageId: 'learning/learningSearch',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중(레이아웃)', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
@@ -136,15 +145,6 @@ export const guideData = [
   //   lastUpdateDate: '',
   //   remarks: '진행중', // 비고
   // },
-  {
-    screenName: 'CMS/학습자원조회',
-    pageId: 'learning/learningSearch',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행중', // 비고
-  },
 ];
 
 export default guideData;

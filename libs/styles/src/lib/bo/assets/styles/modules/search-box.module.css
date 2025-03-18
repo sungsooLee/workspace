@@ -6,9 +6,6 @@
     }
     .contents {
       @apply flex justify-start;
-      & > div > div {
-        @apply pb-0;
-      }
       & > div + div {
         @apply border-t-0;
       }
@@ -17,7 +14,6 @@
           @apply text-[12px] text-[var(--gray8)];
         }
         & + div {
-          @apply !mt-[4px];
           .half {
             @apply flex;
             & > div {
@@ -37,7 +33,7 @@
       }
     }
     .btn_box {
-      @apply flex w-auto shrink-0 items-end justify-end pl-[40px];
+      @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
     }
     .item_wrap {
       @apply flex w-full flex-wrap;
@@ -46,8 +42,11 @@
         .item {
           @apply w-full;
         }
+        .box {
+          @apply pb-[16px];
+        }
         &.item_cols1 {
-          @apply !w-[calc(25%+25px)];
+          @apply !max-w-[calc(25%+25px)];
         }
         & + .inner {
           @apply ml-[40px];

@@ -4,22 +4,31 @@ import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { Language } from '../../../../../features/platform';
+import { Language, Notification, Tenants } from '../../../../../features/platform';
 
-import styles from './header.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
+import { Logo } from '../../../../../features/layout';
+import { useFetchAuthUser } from '../../../../../../../../libs/config/src';
+import { useFetchTenantByUser } from '../../../../../entities/tenant';
 
 function HeaderComponent() {
   const { t } = useTranslation();
 
+  const { data: authUser } = useFetchAuthUser();
+  const { data: tenants } = useFetchTenantByUser(authUser?.userTsid);
+
   return (
     <div className={styles.start}>
-      Mobile Header
-      <p>
-        <Link to={'/menu4/menu5'}>Menu5</Link>
-      </p>
-      <p>
-        <Link to="/menu3">Menu3</Link>
-      </p>
+      <header className={styles.header}>
+        <h1>
+          <Logo />
+          <Tenants />
+        </h1>
+
+        <div className={styles.util}>
+          <Notification />
+        </div>
+      </header>
     </div>
   );
 }

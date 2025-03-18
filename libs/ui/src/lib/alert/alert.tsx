@@ -129,7 +129,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
           </ModalBody>
         )}
         <ModalFooter>
-          <div className={styles.footer}>{footer ?? defaultFooter}</div>
+          <div className={styles.alert_footer}>{footer ?? defaultFooter}</div>
         </ModalFooter>
       </ModalContainer>
     );

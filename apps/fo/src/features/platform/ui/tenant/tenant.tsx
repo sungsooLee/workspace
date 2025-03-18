@@ -6,9 +6,9 @@ import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 import styles from './tenant.module.css';
 
 interface TenantsComponentProps {
-  tenants: Tenant[];
-  activeTenant: Tenant | null;
-  onTenantSwitch: (tenant: Tenant) => void;
+  tenants?: Tenant[];
+  activeTenant?: Tenant | null;
+  onTenantSwitch?: (tenant: Tenant) => void;
 }
 
 const PopoverContent = ({

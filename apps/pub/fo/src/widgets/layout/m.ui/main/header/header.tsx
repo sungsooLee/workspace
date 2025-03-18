@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 
 import { Logo, Tenant, Notification } from '../../../../../features/layout';
 
-import styles from './header.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 
 function HeaderComponent() {
   const { t } = useTranslation();
