@@ -30,6 +30,11 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -44,22 +49,9 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -80,22 +72,9 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -116,22 +95,9 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -152,6 +118,11 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -168,6 +139,80 @@ function RouteComponent() {
       download: (
         <Button className="download" onlyIcon>
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -188,22 +233,9 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -224,130 +256,9 @@ function RouteComponent() {
           <IcoDownload width={16} height={16} stroke={'#747D91'} />
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
         </Button>
       ),
     },
@@ -416,11 +327,23 @@ function RouteComponent() {
     columnHelper.accessor('preview', {
       cell: (info) => info.getValue(),
       header: '미리보기',
+      size: 100,
       enableGrouping: false,
     }),
     columnHelper.accessor('download', {
       cell: (info) => info.getValue(),
-      header: 'download',
+      header: '다운로드',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('procedure', {
+      cell: (info) => info.getValue(),
+      header: '과정개설',
+      size: 100,
       enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
