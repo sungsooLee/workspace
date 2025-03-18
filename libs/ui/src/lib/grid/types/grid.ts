@@ -17,11 +17,11 @@ declare module '@tanstack/react-table' {
   }
 }
 
-export interface GridProps<T extends object> {
+export interface GridProps<T> {
   // 그리드 데이터
   data: T[];
   // 그리드 컬럼
-  columns: ColumnDef<T>[];
+  columns: any[];
   // 로딩 여부
   isLoading?: boolean;
   // 로우 클릭에 대한 콜백 처리

@@ -35,6 +35,11 @@
   .btn_filter {
     @apply ml-auto;
   }
+  [class^='icon_'] {
+    & + .btn_filter {
+      @apply ml-[6px];
+    }
+  }
 }
 /* Paging */
 .paging_wrap {
