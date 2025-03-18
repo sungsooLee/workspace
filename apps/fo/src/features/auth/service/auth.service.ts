@@ -28,6 +28,8 @@ export function useAuthSignin() {
 
       if (payload.saveId) {
         cookieService.set('SAVED_USER_ID', payload.username);
+      } else {
+        cookieService.remove('SAVED_USER_ID');
       }
       return updateMenu(menus);
     },

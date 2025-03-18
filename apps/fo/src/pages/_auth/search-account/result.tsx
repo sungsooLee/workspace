@@ -20,6 +20,9 @@ export const Route = createFileRoute('/_auth/search-account/result')({
       }
       return;
     },
+    meta: {
+      title: 'LABEL.ACCOUNT_SEARCH',
+    },
   }),
 });
 
@@ -38,13 +41,16 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state.email ? (
-          <ProccessResult title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')} className="">
+          <ProccessResult
+            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')}
+            className={styles.success_info}>
             <div className={styles.result_message}>{state.email}</div>
           </ProccessResult>
         ) : (
           <ProccessResult
             isSuccess={false}
-            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT_NOT_FOUND')}></ProccessResult>
+            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT_NOT_FOUND')}
+            className={styles.success_info}></ProccessResult>
         )}
 
         <div className={styles.btn_txt}>
