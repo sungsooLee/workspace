@@ -44,25 +44,25 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
-  indeterminate?: boolean;
-}
+// interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
+//   indeterminate?: boolean;
+// }
 
-/// 체크 박스
-export const IndeterminateCheckbox = ({
-  indeterminate,
-  value,
-  onChange,
-  ...rest
-}: IndeterminateCheckboxProps) => {
-  const handleChange = (checked: CheckedState) => {
-    onChange?.(checked === true);
-  };
+// /// 체크 박스
+// export const IndeterminateCheckbox = ({
+//   indeterminate,
+//   value,
+//   onChange,
+//   ...rest
+// }: IndeterminateCheckboxProps) => {
+//   const handleChange = (checked: CheckedState) => {
+//     onChange?.(checked === true);
+//   };
 
-  const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
+//   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
 
-  return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
-};
+//   return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
+// };
 ///////
 
 // const Grid = <T extends object>({
@@ -137,17 +137,37 @@ const Grid = forwardRef(
                 maxSize: 50,
                 minSize: 50,
                 enablePinning: true, // 핀 기능 활성화
+                meta: {
+                  align: 'center',
+                  headerAlign: 'center',
+                  cellAlign: 'center',
+                },
                 header: ({ table }: { table: Table<T> }) => (
-                  <Checkbox
-                    checked={table.getIsAllRowsSelected()}
-                    onCheckedChange={(checked) => {
-                      table.toggleAllRowsSelected(!!checked);
-                    }}
-                  />
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Checkbox
+                      checked={table.getIsAllRowsSelected()}
+                      onCheckedChange={(checked) => {
+                        table.toggleAllRowsSelected(!!checked);
+                      }}
+                    />
+                  </div>
                 ),
                 // 바디 체크 박스
                 cell: ({ row }: { row: Row<T> }) => (
-                  <div className="inline-flex items-center justify-center text-center">
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    {' '}
                     <Checkbox
                       checked={row.getIsSelected()}
                       onCheckedChange={(checked) => {
@@ -498,6 +518,7 @@ const Grid = forwardRef(
                         // width: paginationGrid ? undefined : header.getSize(),
                         // display: paginationGrid ? 'table-cell' : 'flex',
                         // 정렬 속성 추가
+
                         textAlign:
                           header.column.columnDef.meta?.headerAlign ||
                           header.column.columnDef.meta?.align ||

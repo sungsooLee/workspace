@@ -102,12 +102,11 @@ const TenantModal = () => {
                 </li>
               ))}
             </ul>
-            <p className={styles.notice}>메인 테넌트를 변경하려면 좌측 대표 버튼을 선택하세요.</p>
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
-        <a></a>
+        <p className={styles.notice}>메인 테넌트를 변경하려면 좌측 대표 버튼을 선택하세요.</p>
       </ModalFooter>
     </ModalContainer>
   );

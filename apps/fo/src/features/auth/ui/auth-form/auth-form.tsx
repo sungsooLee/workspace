@@ -270,7 +270,11 @@ function AuthFormComponent({
           </ContentsRow>
         )}
       </div>
-
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'customText'} />
+        </FormRow>
+      </ContentsRow>
       {sendedVerifyNumber && (
         <ContentsRow>
           <FormRow provider={provider}>
@@ -305,6 +309,12 @@ function AuthFormComponent({
             {t('LABEL.CHECK_AUTH_REQUEST')}
           </Button>
         )}
+        <Button
+          type={'button'}
+          variant={'primary'}
+          onClick={() => onFormChange({ customText: '새로운 텍스트로 변경합니다.' })}>
+          테스트
+        </Button>
       </div>
     </form>
   );
@@ -366,6 +376,13 @@ const detailConfig = {
       name: 'verificationCode',
       type: 'custom',
       label: '인증번호',
+      value: '',
+      placeholder: '인증번호 입력',
+    },
+    {
+      name: 'customText',
+      type: 'text',
+      label: '커스텀 텍스트',
       value: '',
       placeholder: '인증번호 입력',
     },
