@@ -52,8 +52,17 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // react-hook-form 메서드 및 속성 추출
-  const { control, handleSubmit, setFocus, getValues, reset, formState, setError, clearErrors } =
-    methods;
+  const {
+    control,
+    handleSubmit,
+    setFocus,
+    getValues,
+    reset,
+    formState,
+    setError,
+    clearErrors,
+    setValue,
+  } = methods;
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -160,14 +169,9 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    */
   const onFormChange = (values?: Record<string, any>) => {
     if (values) {
-      reset(
-        values, // 업데이트하려는 필드와 값만 제공
-        {
-          keepDirty: true, // dirty 상태 유지
-          keepDirtyValues: true, // dirty 필드 값 유지
-          keepTouched: true, // 사용자 상호작용 유지
-        },
-      );
+      Object.entries(values).forEach(([key, value]) => {
+        setValue(key, value);
+      });
     } else {
       reset(originalValues);
     }
@@ -220,6 +224,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     formState,
     onFormChange,
     onFormFocus: handleFocus,
+    setValue,
     control: extendedControl,
   };
 };
