@@ -166,8 +166,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
           keepDirty: true, // dirty 상태 유지
           keepDirtyValues: true, // dirty 필드 값 유지
           keepTouched: true, // 사용자 상호작용 유지
-          keepErrors: true, // 기존 유효성 검사 에러 유지
-          keepValues: true, // 다른 필드 값 유지
         },
       );
     } else {

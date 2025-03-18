@@ -385,10 +385,9 @@ const Grid = forwardRef(
                   <td
                     key={cell.id}
                     style={{
-                      display: 'inline-block',
-                      verticalAlign: 'middle',
+                      display: 'flex',
                       width: cell.column.getSize(),
-                      textAlign:
+                      justifyContent:
                         cell.column.columnDef.meta?.cellAlign ||
                         cell.column.columnDef.meta?.align ||
                         'left',
@@ -445,7 +444,7 @@ const Grid = forwardRef(
                         width: cell.column.getSize(),
                         display: 'flex',
                         alignItems: 'center',
-                        textAlign:
+                        justifyContent:
                           cell.column.columnDef.meta?.cellAlign ||
                           cell.column.columnDef.meta?.align ||
                           'left',

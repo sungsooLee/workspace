@@ -1,5 +1,5 @@
 .grid_table {
-  @apply scrollbar overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
+  @apply scrollbar relative z-0 overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
   .thead_th {
     @apply box-border items-center justify-start border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] pl-[8px] text-[14px] font-bold text-[#5C636E];
     &:not(:first-child) {
@@ -8,15 +8,18 @@
     .th_wrap {
       @apply w-full pr-[13px];
       .th_cell {
-        @apply body_bo_4_b relative flex min-h-[40px] items-center justify-between;
+        @apply body_bo_4_b relative flex min-h-[40px] items-center;
       }
+    }
+    .nlp--checkbox {
+      @apply !mx-auto !min-w-[20px];
     }
   }
   tbody {
     tr {
       @apply min-h-[40px] border-b border-solid border-[var(--gray4)];
       td {
-        @apply body_bo_2_r box-border items-center border-l border-solid !border-[var(--gray4)] px-[8px] pt-[10px] text-center text-[var(--gray7)];
+        @apply body_bo_2_r box-border items-center border-l border-solid !border-[var(--gray4)] px-[8px] text-center text-[var(--gray7)];
         &:first-child {
           @apply border-l-0;
         }
@@ -24,7 +27,13 @@
     }
   }
   .icon_up {
-    @apply rotate-180;
+    @apply ml-auto rotate-180;
+  }
+  .icon_down {
+    @apply ml-auto;
+  }
+  .btn_filter {
+    @apply ml-auto;
   }
 }
 /* Paging */
@@ -86,4 +95,8 @@
 
 .link {
   @apply text-[1.4rem] font-normal text-[#00afd5] underline;
+}
+
+.btn_table {
+  @apply !h-[20px] !min-h-[20px] !rounded-[3px] !px-[3px] !text-[1rem] !font-normal !text-[var(--gray8)];
 }

@@ -246,6 +246,11 @@ module.exports = {
           fontSize: '1.2rem',
           fontWeight: '400',
         },
+        '.button_5_b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '700',
+        },
         '.label_1_b': {
           ...baseTitle,
           fontSize: '1.6rem',

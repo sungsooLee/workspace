@@ -37,19 +37,31 @@ const PopoverContent = () => {
     <div className={`${styles.start} ${styles.avata_area}`}>
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
+          {/* 퍼블수정 20250318 : 아바타 사진 수정 */}
           {hasAvataImage ? (
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <div className={styles.avata_box}>
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            </div>
           ) : (
             // 아바타 이미지 없는 경우 CASE
-            <span className={styles.name}>
-              <em className={styles.text}>{'김'}</em>
-            </span>
+            <div className={styles.avata_box}>
+              <span className={styles.name}>
+                <em className={styles.text}>{'김'}</em>
+              </span>
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            </div>
           )}
         </div>
         <div className={styles.profile}>
           <span className={styles.name}>김현대</span>
           <span className={styles.tenant}>현대오토에버</span>
           <span className={styles.team}>팀명</span>
+          {/* 퍼블수정 20250317 : 최근접속 추가 */}
+          <span className={styles.time}>
+            <span>최근접속</span>
+            <span>2026-01-01 18:28</span>
+          </span>
         </div>
       </div>
       <ul className={styles.info_list}>
@@ -60,7 +72,7 @@ const PopoverContent = () => {
           <Link to={''}>프로필 작성</Link>
         </li>
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
+      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert1()}>
         <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
       </Button>
     </div>
