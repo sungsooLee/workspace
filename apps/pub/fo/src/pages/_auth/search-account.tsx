@@ -366,7 +366,6 @@ function RouteComponent() {
                     className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                     onClick={() =>
                       openModal({
-                        title: 'FIDO 인증',
                         width: 'md',
                         content: <GoogleCertGuidePopup />,
                       })

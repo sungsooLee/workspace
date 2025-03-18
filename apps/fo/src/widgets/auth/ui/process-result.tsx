@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { IcoComplete, IcoCaution02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
+import { HighlightMessageBox } from '../../../shared/ui';
+
 import styles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
 
 interface ProccessResultComponentProps {
@@ -22,7 +24,7 @@ function ProccessResultComponent({
   const { t } = useTranslation();
 
   return (
-    <div className={cn(styles.success_info, className)}>
+    <div className={cn(styles.start, className)}>
       <i className={styles.ico}>
         {isSuccess ? (
           <IcoComplete className={styles.ico1} />
@@ -31,7 +33,7 @@ function ProccessResultComponent({
         )}
       </i>
       <h3 className={styles.title}>{title}</h3>
-      <div className={cn(styles.noti_box)}>{children}</div>
+      <HighlightMessageBox className={styles.noti_box}>{children}</HighlightMessageBox>
     </div>
   );
 }

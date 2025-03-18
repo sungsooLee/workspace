@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import { useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import {
   Button,
   ColumnFactory,
@@ -20,6 +20,8 @@ import {
   ModalWrapper,
   useModal,
 } from '@learnway/ui';
+import { Link } from '@tanstack/react-router';
+import { IcoDownload } from '@learnway/icons';
 
 export default {
   title: 'Components/Grid',
@@ -37,6 +39,8 @@ interface Person {
   status: string;
   progress: number;
   imageUrl?: string;
+  preview?: ReactNode;
+  download?: ReactNode;
 }
 
 interface UseTableDataProps<T> {
@@ -73,6 +77,12 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 100,
         status: 'Active',
         progress: 50,
+        preview: <Button className="link">미리보기</Button>,
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -81,6 +91,12 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: <Button className="link">미리보기</Button>,
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -89,6 +105,12 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: <Button className="link">미리보기</Button>,
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -97,6 +119,12 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: <Button className="link">미리보기</Button>,
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
     ],
   };
@@ -167,7 +195,21 @@ const columns = [
     },
     enableGrouping: false,
   }),
-] as ColumnDef<Person, unknown>[];
+  columnHelper.accessor('preview', {
+    cell: (info) => info.getValue(),
+    header: '미리보기',
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('download', {
+    cell: (info) => info.getValue(),
+    header: 'download',
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
+  }),
+];
 
 const BaseTable = () => {
   const [tableState, setTableState] = useState({
@@ -353,6 +395,12 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
     visits: Math.floor(Math.random() * 100),
     status: Math.random() > 0.5 ? 'Active' : 'Inactive',
     progress: Math.floor(Math.random() * 100),
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   }));
 
   return data;
@@ -437,6 +485,12 @@ const fetchPaginatedData = async ({
     visits: Math.floor(Math.random() * 100),
     status: Math.random() > 0.5 ? 'Active' : 'Inactive',
     progress: Math.floor(Math.random() * 100),
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   }));
 
   return {
@@ -637,6 +691,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 50,
     imageUrl: 'https://picsum.photos/seed/1/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Jane',
@@ -646,6 +706,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 75,
     imageUrl: 'https://picsum.photos/seed/2/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Bob',
@@ -655,6 +721,12 @@ const mockData: Person[] = [
     status: 'Inactive',
     progress: 30,
     imageUrl: 'https://picsum.photos/seed/3/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Alice',
@@ -664,6 +736,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 85,
     imageUrl: 'https://picsum.photos/seed/4/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
 ];
 
@@ -694,7 +772,7 @@ const CustomCellTable = () => {
                   </div>
                 </div>
               ),
-              title: '사용자 정보',
+              // title: '사용자 정보',
               width: 'sm',
             });
           }}

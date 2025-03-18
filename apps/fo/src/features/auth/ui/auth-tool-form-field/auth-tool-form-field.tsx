@@ -10,11 +10,15 @@ import { RadioCard } from '@learnway/ui';
 //import styles from './auth-tool-form-field.module.css';
 import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
 
-export type AuthTool = 'phone' | 'email';
+export const AUTH_TOOL_TYPE = {
+  PHONE: 'PHONE',
+  EMAIL: 'EMAIL',
+};
+export type AUTH_TOOL_TYPE = (typeof AUTH_TOOL_TYPE)[keyof typeof AUTH_TOOL_TYPE];
 
 interface AuthToolFormFieldComponentProps {
-  value?: AuthTool;
-  onChange?: (value: AuthTool) => void;
+  value?: AUTH_TOOL_TYPE;
+  onChange?: (value: AUTH_TOOL_TYPE) => void;
   className?: string;
 }
 
@@ -31,7 +35,7 @@ function AuthToolFormFieldComponent({
         value={value}
         options={[
           {
-            value: 'phone',
+            value: AUTH_TOOL_TYPE.PHONE,
             label: (
               <div>
                 <IcoPhone02 width={48} height={48} className="ico1" />
@@ -40,7 +44,7 @@ function AuthToolFormFieldComponent({
             ),
           },
           {
-            value: 'email',
+            value: AUTH_TOOL_TYPE.EMAIL,
             label: (
               <div>
                 <IcoMail width={48} height={48} className="ico2" />
@@ -49,7 +53,7 @@ function AuthToolFormFieldComponent({
             ),
           },
         ]}
-        onValueChange={(value: string) => isFunction(onChange) && onChange(value as AuthTool)}
+        onValueChange={(value: string) => isFunction(onChange) && onChange(value as AUTH_TOOL_TYPE)}
       />
     </div>
   );

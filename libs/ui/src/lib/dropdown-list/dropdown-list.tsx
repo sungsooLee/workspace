@@ -77,6 +77,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     {
       options,
       value,
+      defaultValue,
       onChange,
       placeholder = '선택하세요',
       isDisabled = false,
@@ -97,7 +98,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
   ) => {
     const uuid = getRandomId();
     // const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
-    const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className}`;
+    const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className} `;
     const customProps = {
       'data-variant': variant,
       ...props,
@@ -121,6 +122,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     const handleMenuOpen = () => {
       setIsMenuOpen(true);
     };
+
     return (
       <div className={cn(dropdownClass.trim(), 'dropdown')}>
         <Select
@@ -128,6 +130,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           ref={ref}
           options={options}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           placeholder={placeholder}
           isDisabled={isDisabled}

@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { startTransition, useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
 import { isFunction, isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Tabs, ContentsRow, InputTimer, PhoneNumber } from '@learnway/ui';
+import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
+import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
+import { useDynamicForm } from '@learnway/hooks';
 
 import {
   useVerifyEmail,
@@ -13,35 +15,32 @@ import {
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
 } from '../../../../entities/user';
-import { GoogleOtpGuideButton } from '../../../../features/auth';
-import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { FormRow } from '../../../../shared/ui/form-row/form-row';
-import { DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
-import { AuthToolFormField, AuthTool, VerifyUserIdFormField } from '../../../../features/auth';
-
-import { NoticeBox } from '../../../../shared/ui';
+import { FormRow, NoticeBox } from '../../../../shared/ui';
+import {
+  AuthToolFormField,
+  AUTH_TOOL_TYPE,
+  VerifyUserIdFormField,
+} from '../../../../features/auth';
 
 import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 
 const TIME_LIMIT_VERIFY = 180;
 
 export interface AuthResultData {
-  authToolType: 'phone' | 'email';
+  authToolType: AUTH_TOOL_TYPE;
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: string;
-  phoneNumberLocale: string;
+  phoneNumber: PhoneNumberValue;
   email: string;
 }
 
 export interface AuthFormData {
-  authToolType: 'phone' | 'email';
+  authToolType: AUTH_TOOL_TYPE;
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: string;
-  phoneNumberLocale: string;
+  phoneNumber: PhoneNumberValue;
   email: string;
   verificationCode: string;
 }
@@ -61,8 +60,8 @@ function AuthFormComponent({
 }: AuthFormComponentProps) {
   const { t } = useTranslation();
 
-  const { provider, onSubmit, onFormChange, control, getValues, setFormError } =
-    useCustomForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError, clearFormError } =
+    useDynamicForm(detailConfig);
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
 
@@ -79,44 +78,51 @@ function AuthFormComponent({
     if (!defaultValues) {
       return;
     }
+    console.log('1');
     handleReset(defaultValues);
   }, [defaultValues]);
 
   useEffect(() => {
-    handleReset(undefined, authToolType);
+    onFormChange();
+    onFormChange({
+      authToolType,
+    });
   }, [authToolType]);
 
   const handleSendVerify = () => {
     onFormChange({
       verificationCode: '',
     });
-
     const data = getValues();
 
-    validator(data);
+    try {
+      validator(data as any);
+    } catch (e) {
+      console.log(e);
+      return;
+    }
 
     const payload = {
       name: data.name,
       birthday: data.birthday,
     };
-    if (data.authToolType === 'phone') {
+
+    if (data.authToolType === AUTH_TOOL_TYPE.PHONE) {
       sendVerifyPhone(
-        { ...payload, phoneNumber: data.phoneNumber },
         {
-          onSuccess: (data, variables, context) => {
-            setSendedVerifyNumber(true);
-            verifyTimerCounter.inc();
-          },
+          ...payload,
+          phoneNumber: data.phoneNumber.number,
+          phoneNumberLocale: data.phoneNumber.nationCode,
+        },
+        {
+          onSuccess: handleSendVerifySuccess,
         },
       );
     } else {
       sendVerifyEmail(
         { ...payload, email: data.email },
         {
-          onSuccess: (data, variables, context) => {
-            setSendedVerifyNumber(true);
-            verifyTimerCounter.inc();
-          },
+          onSuccess: handleSendVerifySuccess,
         },
       );
     }
@@ -129,41 +135,48 @@ function AuthFormComponent({
       verificationCode: data.verificationCode,
     };
 
-    if (data.authToolType === 'phone') {
+    if (data.authToolType === AUTH_TOOL_TYPE.PHONE) {
       verifyPhone(
-        { ...payload, phoneNumber: data.phoneNumber },
+        {
+          ...payload,
+          phoneNumber: data.phoneNumber.number,
+          phoneNumberLocale: data.phoneNumber.nationCode,
+        },
         {
           onSuccess: async (d, variables, context) => {
             verifyTimerCounter.set(0);
             if (isFunction(onSuccess)) {
               const { verificationCode, ...data } = variables;
-              onSuccess(data);
+              onSuccess({ authToolType: AUTH_TOOL_TYPE.PHONE, ...data });
             }
           },
-          onError: (error: any) => {
-            console.log('verifyPhone error', error);
-            setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
-          },
+          onError: handleVerifyError,
         },
       );
     } else {
       verifyEmail(
         { ...payload, email: data.email },
         {
-          onSuccess: (data, variables, context) => {
+          onSuccess: (d, variables, context) => {
             verifyTimerCounter.set(0);
             if (isFunction(onSuccess)) {
               const { verificationCode, ...data } = variables;
-              onSuccess(data);
+              onSuccess({ authToolType: AUTH_TOOL_TYPE.EMAIL, ...data });
             }
           },
-          onError: (error: any) => {
-            console.log('verifyEmail error', error);
-            setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
-          },
+          onError: handleVerifyError,
         },
       );
     }
+  };
+
+  const handleSendVerifySuccess = () => {
+    setSendedVerifyNumber(true);
+    verifyTimerCounter.inc();
+  };
+
+  const handleVerifyError = () => {
+    setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
   };
 
   const handleCancel = () => {
@@ -179,12 +192,11 @@ function AuthFormComponent({
   const handleReset = (defaultValue?: any, authToolType?: string) => {
     onFormChange(
       defaultValue ?? {
-        authToolType: authToolType ?? 'phone',
+        authToolType: authToolType ?? AUTH_TOOL_TYPE.PHONE,
         userId: '',
         name: '',
         birthday: '',
-        phoneNumber: '',
-        phoneNumberLocale: '',
+        phoneNumber: {},
         email: '',
         verificationCode: '',
       },
@@ -194,12 +206,18 @@ function AuthFormComponent({
 
   const validator = (data: AuthFormData) => {
     const authSchema = z.object({
-      authToolType: z.enum(['phone', 'email']),
+      authToolType: z.enum([AUTH_TOOL_TYPE.PHONE, AUTH_TOOL_TYPE.EMAIL]),
       userId: includeUserId ? z.string().required() : z.string(),
       name: z.string().required(),
-      birthday: z.string().required(),
-      phoneNumber: data.authToolType === 'phone' ? z.string().required() : z.string(),
-      email: data.authToolType === 'email' ? z.string().required() : z.string(),
+      birthday: z.number().required(),
+      phoneNumber: z.object({
+        nationCode: z.string(),
+        number: z.string(),
+      }),
+      email:
+        data.authToolType === AUTH_TOOL_TYPE.EMAIL
+          ? z.string().email().required()
+          : z.string().email(),
       verificationCode: z.string().required(),
     });
 
@@ -208,6 +226,7 @@ function AuthFormComponent({
       r.error.issues.forEach((error: any) => {
         setFormError(error.path[0], error.message);
       });
+      throw r.error.issues;
     }
   };
 
@@ -242,7 +261,7 @@ function AuthFormComponent({
             <DynamicFormField name={'birthday'} />
           </FormRow>
         </ContentsRow>
-        {authToolType === 'phone' ? (
+        {authToolType === AUTH_TOOL_TYPE.PHONE ? (
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'phoneNumber'}>
@@ -278,11 +297,6 @@ function AuthFormComponent({
 
       <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
         <dd>{t('MESSAGE.SEARCH_ACCOUNT_NOTICE')}</dd>
-        {/*
-        <dd>
-          법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-          있습니다. <GoogleOtpGuideButton />
-        </dd>*/}
       </NoticeBox>
 
       <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
@@ -311,7 +325,7 @@ const detailConfig = {
       name: 'authToolType',
       type: 'custom',
       label: '',
-      value: 'phone',
+      value: AUTH_TOOL_TYPE.PHONE,
       placeholder: '',
       description: '',
     },

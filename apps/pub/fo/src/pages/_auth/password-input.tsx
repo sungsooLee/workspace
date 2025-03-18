@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
-import styles from './password-input.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
@@ -73,7 +73,6 @@ function RouteComponent() {
                   className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
-                      title: 'FIDO 인증',
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })

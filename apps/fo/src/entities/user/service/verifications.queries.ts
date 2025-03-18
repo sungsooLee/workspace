@@ -31,4 +31,13 @@ export const mutateOptions = {
   fetchEmail: () => ({
     mutationFn: (payload: any) => VerificationsService.fetchEmail(payload),
   }),
+  updatePasswordByPhoneNumber: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePasswordByPhoneNumber(payload),
+  }),
+  updatePasswordByEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePasswordByEmail(payload),
+  }),
+  updatePassword: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePassword(payload),
+  }),
 };

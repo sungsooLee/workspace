@@ -48,436 +48,333 @@ function RouteComponent() {
       {/* 1개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={cn(`${searchStyles.inner} ${searchStyles[`item_cols${'1'}`]}`)}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정, full 아닌 경우 item_auto 클래스 추가 */}
+          <div className={cn(searchStyles.item_row, searchStyles.item_auto)}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
           </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* 2개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={cn(`${searchStyles.inner} ${searchStyles[`item_cols${'1'}`]}`)}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정, full 아닌 경우 item_auto 클래스 추가 */}
+          <div className={cn(searchStyles.item_row, searchStyles.item_auto)}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={cn(`${searchStyles.inner} ${searchStyles[`item_cols${'1'}`]}`)}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label2-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label2-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
             </div>
           </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* 3개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label3-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label3-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label3-3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label3-3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
             </div>
           </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* 3개인데 다른 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label_3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label_3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label_3-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label_3-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label_3-3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label_3-3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label_3-4" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label_3-4" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
             </div>
           </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* 4개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label4" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label4" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label4-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label4-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label4-3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label4-3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label4-4" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* half CASE */}
-      <div className={cn(searchStyles.start, searchStyles.wrap)}>
-        <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label5" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label5-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.btn_box}>
-              <Button
-                type="button"
-                className={searchStyles.btn_refresh}
-                variant="search"
-                size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
-              </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* half CASE */}
-      <div className={cn(searchStyles.start, searchStyles.wrap)}>
-        <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6-3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label4-4" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -496,56 +393,190 @@ function RouteComponent() {
               조회
             </Button>
           </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
+        </div>
+      </div>
+
+      {/* half CASE */}
+      <div className={cn(searchStyles.start, searchStyles.wrap)}>
+        <div className={searchStyles.contents}>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label5" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label5-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
+        </div>
+      </div>
+
+      {/* half CASE */}
+      <div className={cn(searchStyles.start, searchStyles.wrap)}>
+        <div className={searchStyles.contents}>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6-3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* half CASE2 */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6-2" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-label6-3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>타이틀</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label6-3" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -564,74 +595,138 @@ function RouteComponent() {
               조회
             </Button>
           </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
 
       {/* open type */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-select1" className={searchStyles.label}>
-                  <span className={searchStyles.text}>테넌트</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
+          <div className={searchStyles.item_row}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-select1" className={searchStyles.label}>
+                    <span className={searchStyles.text}>테넌트</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-channel" className={searchStyles.label}>
+                    <span className={searchStyles.text}>채널</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Select
+                      className={searchStyles.select_option}
+                      options={[
+                        { value: 'type1', label: '전체' },
+                        { value: 'type2', label: '항목' },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-type" className={searchStyles.label}>
+                    <span className={searchStyles.text}>유형</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-owner" className={searchStyles.label}>
+                    <span className={searchStyles.text}>담당자</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-channel" className={searchStyles.label}>
-                  <span className={searchStyles.text}>채널</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <Select
-                    className={searchStyles.select_option}
-                    options={[
-                      { value: 'type1', label: '전체' },
-                      { value: 'type2', label: '항목' },
-                    ]}
-                  />
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-select2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>테넌트</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-type" className={searchStyles.label}>
-                  <span className={searchStyles.text}>유형</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <DropdownList
-                    options={options}
-                    value={selectedOptions}
-                    onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
-                    variant="default"
-                    size={'sm'}
-                  />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-channel2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>채널</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Select
+                      className={searchStyles.select_option}
+                      options={[
+                        { value: 'type1', label: '전체' },
+                        { value: 'type2', label: '항목' },
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
-                <label htmlFor="name-owner" className={searchStyles.label}>
-                  <span className={searchStyles.text}>담당자</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-type2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>유형</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-owner2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>담당자</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Input id="name-owner2" type="text" placeholder="담당자명으로 조회하세요." />
+                  </div>
                 </div>
               </div>
             </div>
             {/* 확장영역 */}
             {isExpanded && (
-              <div className={searchStyles.form_display}>
+              <div className={cn(searchStyles.form_display, searchStyles.item_wrap)}>
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
                     <label htmlFor="name-term" className={searchStyles.label}>
@@ -690,6 +785,7 @@ function RouteComponent() {
               조회
             </Button>
           </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
     </>

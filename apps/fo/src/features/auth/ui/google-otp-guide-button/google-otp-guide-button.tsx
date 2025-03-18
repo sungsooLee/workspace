@@ -16,12 +16,11 @@ function GoogleOtpGuideButtonComponent() {
       className={cn(styles.link, 'auth--otp-guide-link')}
       onClick={() =>
         openModal({
-          // title: 'FIDO 인증',
           width: 'sm',
           content: <GoogleOtpGuideModal />,
         })
       }>
-      구글 OTP 인증 가이드
+      {t('LABEL.GOOGLE_AUTH_GUIDE')}
     </Button>
   );
 }

@@ -35,7 +35,25 @@
     .btn_box {
       @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
     }
-    .item_wrap {
+    .item_row {
+      @apply flex w-full flex-col flex-wrap;
+      .item_wrap {
+        @apply w-full flex-1;
+        .inner + .inner {
+          @apply ml-[40px];
+        }
+      }
+      &.item_auto {
+        @apply !w-auto;
+        .item_wrap {
+          .inner {
+            @apply !w-[35vh];
+          }
+        }
+      }
+    }
+    .item_wrap,
+    .multi {
       @apply flex w-full flex-wrap;
       .inner {
         @apply flex flex-1 gap-[40px];
@@ -44,12 +62,6 @@
         }
         .box {
           @apply pb-[16px];
-        }
-        &.item_cols1 {
-          @apply !max-w-[calc(25%+25px)];
-        }
-        & + .inner {
-          @apply ml-[40px];
         }
       }
       /* .item {
