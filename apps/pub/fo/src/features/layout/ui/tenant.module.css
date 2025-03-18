@@ -15,7 +15,7 @@
   }
 }
 .tenant_content {
-  @apply -mx-[16px] -my-[8px];
+  @apply -mx-[8px] -my-[8px];
   .tenant_wrap {
     .tenant_list {
       @apply flex w-full flex-wrap;
