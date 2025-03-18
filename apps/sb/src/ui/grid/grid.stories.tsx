@@ -77,11 +77,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 100,
         status: 'Active',
         progress: 50,
-        preview: (
-          <Link to={'/'} className="link">
-            미리보기
-          </Link>
-        ),
+        preview: <Button className="link">미리보기</Button>,
         download: (
           <Button className="download" onlyIcon>
             <IcoDownload width={16} height={16} stroke={'#747D91'} />
@@ -109,11 +105,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
-        preview: (
-          <Link to={'/'} className="link">
-            미리보기
-          </Link>
-        ),
+        preview: <Button className="link">미리보기</Button>,
         download: (
           <Button className="download" onlyIcon>
             <IcoDownload width={16} height={16} stroke={'#747D91'} />
@@ -127,11 +119,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
-        preview: (
-          <Link to={'/'} className="link">
-            미리보기
-          </Link>
-        ),
+        preview: <Button className="link">미리보기</Button>,
         download: (
           <Button className="download" onlyIcon>
             <IcoDownload width={16} height={16} stroke={'#747D91'} />
@@ -221,7 +209,7 @@ const columns = [
       cellAlign: 'center', // 셀은 오른쪽 정렬
     },
   }),
-] as ColumnDef<Person, unknown>[];
+];
 
 const BaseTable = () => {
   const [tableState, setTableState] = useState({
@@ -407,6 +395,12 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
     visits: Math.floor(Math.random() * 100),
     status: Math.random() > 0.5 ? 'Active' : 'Inactive',
     progress: Math.floor(Math.random() * 100),
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   }));
 
   return data;
@@ -491,6 +485,12 @@ const fetchPaginatedData = async ({
     visits: Math.floor(Math.random() * 100),
     status: Math.random() > 0.5 ? 'Active' : 'Inactive',
     progress: Math.floor(Math.random() * 100),
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   }));
 
   return {
@@ -691,6 +691,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 50,
     imageUrl: 'https://picsum.photos/seed/1/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Jane',
@@ -700,6 +706,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 75,
     imageUrl: 'https://picsum.photos/seed/2/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Bob',
@@ -709,6 +721,12 @@ const mockData: Person[] = [
     status: 'Inactive',
     progress: 30,
     imageUrl: 'https://picsum.photos/seed/3/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
   {
     firstName: 'Alice',
@@ -718,6 +736,12 @@ const mockData: Person[] = [
     status: 'Active',
     progress: 85,
     imageUrl: 'https://picsum.photos/seed/4/200/200',
+    preview: <Button className="link">미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
   },
 ];
 
@@ -748,7 +772,7 @@ const CustomCellTable = () => {
                   </div>
                 </div>
               ),
-              title: '사용자 정보',
+              // title: '사용자 정보',
               width: 'sm',
             });
           }}
