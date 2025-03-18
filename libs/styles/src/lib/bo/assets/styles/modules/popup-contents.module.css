@@ -1,10 +1,10 @@
 /* popup-learningRegisteration.module.css */
 .wrap {
-  @apply relative;
+  @apply relative pt-[68px];
   .title_wrap {
-    @apply sticky top-0 z-[1] w-full bg-[var(--white)] pb-[24px];
+    @apply fixed left-0 right-0 top-0 z-[1] w-full overflow-hidden rounded-tl-[16px] rounded-tr-[16px] bg-white pb-[24px];
     .title {
-      @apply title_bo_3_b pt-[16px] text-center;
+      @apply title_bo_3_b pt-[48px] text-center;
     }
     .text {
       @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
