@@ -989,108 +989,88 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.input_box}>
-                  <div className={cn(dynamicFormStyles.multiple_row, dynamicFormStyles.type2)}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          {/* 퍼블수정 20240317 : 수정 S */}
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              id="name-1-14"
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                              value="영어자막.smi"
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                              value="영어자막2.smi"
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '언어선택' },
-                                { value: 'language2', label: '한국어' },
-                                { value: 'language3', label: '영어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 추가
-                            </Button>
-                          </div>
-                          {/* 퍼블수정 20240317 : 수정 E */}
-                        </div>
-                      </div>
+                  {/* 퍼블수정 20240319 : 수정 S */}
+                  <div className={dynamicFormStyles.multiple_row}>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        id="name-1-14"
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막2.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막3.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '언어선택' },
+                          { value: 'language2', label: '한국어' },
+                          { value: 'language3', label: '영어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 추가
+                      </Button>
                     </ContentsRow>
                   </div>
+                  {/* 퍼블수정 20240319 : 수정 E */}
                 </div>
               </div>
             </ContentsRow>
