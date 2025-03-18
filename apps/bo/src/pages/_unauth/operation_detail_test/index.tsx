@@ -8,6 +8,7 @@ import {
   DynamicFormField,
   Input,
   InputModalSelectorFormField,
+  ListModalSelectorFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -139,11 +140,15 @@ function RouteComponent() {
           {/* 운영자 & 연락처 */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'운영자'}>
+              <DynamicFormField name={'managerName'}>
                 <InputModalSelectorFormField
                   modalConfig={{
                     content: <ManagerListModal />,
                   }}
+                  transformModalData={(modalData: any) => ({
+                    managerId: modalData?.id,
+                    managerName: modalData?.name,
+                  })}
                 />
               </DynamicFormField>
               {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
@@ -153,6 +158,29 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'테넌트'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 공개범위 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'공개범위'}>
+                <ListModalSelectorFormField
+                  modalConfig={{
+                    content: <ManagerListModal />,
+                  }}
+                  transformModalData={(modalData: any) => ({
+                    targetId: modalData?.id,
+                    targetName: modalData?.name,
+                  })}
+                  button={{
+                    label: t('공개범위 설정'),
+                  }}
+                  list={{
+                    labelField: 'targetName',
+                    valueField: 'targetId',
+                  }}
+                />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
         </MainContents>
@@ -272,7 +300,11 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: '운영자',
+      name: 'managerId',
+      type: 'hidden',
+    },
+    {
+      name: 'managerName',
       type: 'custom',
       label: t('운영자 - 인풋 + 다이얼로그 버튼'),
       value: '',
@@ -298,6 +330,14 @@ const formConfig: DynamicFormConfig = {
         { value: 'tenant1', label: 'Tenant A' },
         { value: 'tenant2', label: 'Tenant B' },
       ],
+    },
+    {
+      name: '공개범위',
+      type: 'custom',
+      label: t('공개범위 - list-modal-selector-form-field'),
+      value: [{ targetId: 'target1', targetName: 'targetname1' }],
+      placeholder: '',
+      description: '',
     },
   ],
   validator: {

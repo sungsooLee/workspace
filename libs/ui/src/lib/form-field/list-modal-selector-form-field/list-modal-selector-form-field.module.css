@@ -1,5 +1,5 @@
 .start {
-  &.chips_modal_wrap {
+  &.chilps_modal_wrap {
     @apply flex min-h-[32px] flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px];
     .btn_search {
       @apply flex flex-auto items-center justify-end pr-[12px];
