@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import { useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import {
   Button,
   ColumnFactory,
@@ -20,6 +20,8 @@ import {
   ModalWrapper,
   useModal,
 } from '@learnway/ui';
+import { Link } from '@tanstack/react-router';
+import { IcoDownload } from '@learnway/icons';
 
 export default {
   title: 'Components/Grid',
@@ -37,6 +39,8 @@ interface Person {
   status: string;
   progress: number;
   imageUrl?: string;
+  preview?: ReactNode;
+  download?: ReactNode;
 }
 
 interface UseTableDataProps<T> {
@@ -73,6 +77,16 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 100,
         status: 'Active',
         progress: 50,
+        preview: (
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+        ),
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -81,6 +95,12 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: <Button className="link">미리보기</Button>,
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -89,6 +109,16 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: (
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+        ),
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
       {
         firstName: 'tandy',
@@ -97,6 +127,16 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
         visits: 40,
         status: 'Inactive',
         progress: 80,
+        preview: (
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+        ),
+        download: (
+          <Button className="download" onlyIcon>
+            <IcoDownload width={16} height={16} stroke={'#747D91'} />
+          </Button>
+        ),
       },
     ],
   };
@@ -166,6 +206,20 @@ const columns = [
       filterType: 'range',
     },
     enableGrouping: false,
+  }),
+  columnHelper.accessor('preview', {
+    cell: (info) => info.getValue(),
+    header: '미리보기',
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('download', {
+    cell: (info) => info.getValue(),
+    header: 'download',
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
   }),
 ] as ColumnDef<Person, unknown>[];
 
