@@ -143,12 +143,16 @@ const NotificationComponent = () => {
   // const { data } = useFetchAuthUser();
 
   return (
-    <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
-      <span className={styles.alarm_info}>
-        <IcoBell02 width={20} height={20} stroke="#131C30" />
-        <em className={styles.noti}></em>
-      </span>
-    </Popover>
+    // 퍼블수정 20250318 알림 문구 추가
+    <div className={styles.alarm_info}>
+      <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
+        <span className={styles.alarm_info22}>
+          <IcoBell02 width={20} height={20} stroke="#131C30" />
+          <em className={styles.noti}></em>
+        </span>
+      </Popover>
+      <p className={styles.text}>새로운 알림이 왔어요.</p>
+    </div>
   );
 };
 

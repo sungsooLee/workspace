@@ -50,6 +50,16 @@
   }
 }
 
+.row_box {
+  @apply flex w-full flex-col;
+  .row_inner {
+    @apply flex w-full;
+    .short {
+      @apply !min-w-[224px];
+    }
+  }
+}
+
 .btn_switch {
   @apply translate-y-1/2;
 }
