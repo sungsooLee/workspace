@@ -229,7 +229,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: '강사',
       type: 'custom',
-      label: t('강사 - 다이얼로그 버튼 + 칩 리스트 (가로)'),
+      label: t('강사 - chip-list-modal-selector-form-field'),
       value: [],
       placeholder: '',
       description: '',

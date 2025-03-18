@@ -54,7 +54,6 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     };
 
     const handleSearchClick = async () => {
-      console.log(control);
       const data = await openModal(modalConfig);
       data && appendSelectedChipOptions(data);
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
@@ -77,7 +76,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
         <ChipList
           {...chipListProps}
           size={'xs'}
-          // hideBorder={false}
+          hideBorder
           options={selectedChipOptions}
           onChipDeleteClick={handlerChipDelete}
         />
