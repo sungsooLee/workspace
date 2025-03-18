@@ -99,12 +99,12 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           {/* 강의유형 */}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의유형'} />
-            </FormRow>
-          </ContentsRow>
-          {/* 태그 */}
+          {/*<ContentsRow>*/}
+          {/*  <FormRow provider={provider}>*/}
+          {/*    <DynamicFormField name={'강의유형'} />*/}
+          {/*  </FormRow>*/}
+          {/*</ContentsRow>*/}
+          {/*/!* 태그 *!/*/}
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'태그'} />
@@ -221,11 +221,7 @@ const formConfig: DynamicFormConfig = {
       name: '태그',
       type: 'chip-list',
       label: t('태그 - 인풋 칩 리스트'),
-      value: [
-        { label: '현대자동차 A', value: 'A' },
-        { label: '현대자동차 B', value: 'B' },
-        { label: '현대자동차 C', value: 'C' },
-      ],
+      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
       // placeholder: '',
       description: '',
       showInput: true,

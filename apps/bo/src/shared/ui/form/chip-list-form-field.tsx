@@ -1,6 +1,5 @@
-import { forwardRef, useEffect, useState } from 'react';
-import { Button, ChipList, Select, SelectOption } from '@learnway/ui';
-import { t } from 'i18next';
+import { forwardRef } from 'react';
+import { ChipList } from '@learnway/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 
@@ -17,21 +16,32 @@ export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
  */
 const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldProps>(
   ({ value = [], onChange, placeHolder, limitPlaceholder }, ref) => {
-    const handleOnChange = (chips: any) => {
-      const labels = chips.map((chip: SelectOption) => chip.label);
-      onChange(labels);
+    // const handleOnChange = (chips: any) => {
+    //   const labels = chips.map((chip: SelectOption) => chip.label);
+    //   onChange(labels);
+    // };
+    const handleAddInputEnterKeyDown = (text: string) => {
+      const newValue = [...value, text];
+      onChange(newValue);
+    };
+    const handlerChipDelete = (option: any) => {
+      const newValue = value?.filter((d) => d !== option.label); // option[labelField]
+      onChange(newValue);
+      console.log('handlerChipDelete', option);
     };
 
     return (
       <div ref={ref} className={formStyles.tag_wrap}>
         <ChipList
-          onChange={handleOnChange}
           className={formStyles.chips_wrap}
           options={value.map((val) => ({ value: val, label: val }))}
           placeholder={placeHolder}
           showInput
           prefixCharacter="#"
           hideBorder
+          // onChange={handleOnChange}
+          onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
+          onChipDeleteClick={handlerChipDelete}
         />
         {limitPlaceholder && (
           <p className={formStyles.text_limit}>
