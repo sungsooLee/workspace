@@ -2,43 +2,38 @@ import { useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
+import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow } from '@learnway/ui';
-import { IcoAlertCircleGray } from '@learnway/icons';
+import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
-import { cn, cookieService } from '@learnway/shared';
+import { useDynamicForm } from '@learnway/hooks';
 
-import { useAuthSignin, getSavedUserid } from '../../features/auth';
+import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
-import { DynamicFormField } from '../../shared/ui/dynamic-form-field';
-import useCustomForm from '../../shared/ui/dynamic-form-field/use-dynamic-fom';
 
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
-import { useExtendRouter } from '../../entities/platform';
-
 import signupStyles from './signup.module.css';
-import styles from './login.module.css';
-import authStyles from './auth.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
 import './siginup.css';
 
-import { FormRow } from '../../shared/ui/form-row';
+import { FormRow } from '../../shared/ui';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+    },
+  }),
 });
 
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { state } = Route.useRouteContext();
 
-  console.log('state', state);
-
-  const { provider, onSubmit, onFormChange, control } = useCustomForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
   const { data: authData } = useFetchAuthUser();
 
@@ -55,6 +50,7 @@ function RouteComponent() {
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
+      saveId: !isEmpty(getSavedUserid()),
     });
   }, []);
 

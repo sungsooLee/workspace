@@ -7,17 +7,33 @@
     "INVALID_INPUT_INFORMATION_DESCRIPTION": "입력 정보가 등록되어 있지 않습니다.\n 정확한 정보를 다시 입력해 주세요.",
     "SEARCH_ACCOUNT_RESULT_NOT_FOUND": "입력하신 정보로 가입된 아이디를 \n찾을 수 없습니다.",
     "CAN_CHECK_ACCOUNT_AFTER_VERIFYING": "본인인증 후 아이디를 확인 할 수 있습니다.",
-    "CAN_UPDATE_PASSWORD_AFTER_VERIFYING": "본인인증 후 비밀번호를 재설정 할 수 있습니다."
+    "CAN_UPDATE_PASSWORD_AFTER_VERIFYING": "본인인증 후 비밀번호를 재설정 할 수 있습니다.",
+    "CAUTION_PASSWORD_INPUT_01": "영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 조합하여 8-20자리로 입력해 주세요.",
+    "CAUTION_PASSWORD_INPUT_02": "직전에 사용한 비밀번호는 사용하실 수 없습니다.",
+    "CAUTION_PASSWORD_INPUT_03": "아이디와 동일한 비밀번호는 사용하실 수 없습니다.",
+    "CAUTION_PASSWORD_INPUT_04": "생년월일, 전화번호와 동일하거나 일부를 포함한 비밀번호는 사용하실 수 없습니다.",
+    "CAUTION_PASSWORD_INPUT_05": "3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는 입력하실 수 없습니다.",
+    "CAUTION_PASSWORD_INPUT_06": "법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수 있습니다."
   },
   "LABEL": {
     "LOGIN": "로그인",
     "CAUTION": "유의사항",
     "RESEND": "재전송",
     "CANCEL": "취소",
+    "OK": "확인",
     "CHECK_AUTH_NUMBER": "인증번호 확인",
     "CHECK_AUTH_REQUEST": "인증번호 요청",
     "SEARCH_ACCOUNT": "아이디 찾기",
-    "SEARCH_PASSWORD": "비밀번호 찾기"
+    "SEARCH_PASSWORD": "비밀번호 찾기",
+    "NEW_PASSWORD": "새로운 비밀번호",
+    "NEW_PASSWORD_CHECK": "새로운 비밀번호 확인",
+    "GOOGLE_AUTH_GUIDE": "구글 OTP 인증 가이드",
+    "PASSWORD_INPUT": "비밀번호 입력",
+    "ACCOUNT_PASSWORD_SEARCH": "아이디/비밀번호 찾기",
+    "ACCOUNT_SEARCH": "아이디 찾기",
+    "PROGRESS_STATUS": "진행현황",
+    "LOGIN_WELCOME_MESSAGE": "Welcome\n Learning-Way",
+    "LOGIN WELCOME MESSAGE": "Welcome\n Learning-Way"
   },
   "CODE": {
     "LANGUAGE_CODE": {

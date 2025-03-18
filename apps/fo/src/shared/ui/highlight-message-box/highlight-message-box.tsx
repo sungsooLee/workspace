@@ -6,7 +6,6 @@ import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 
 interface HighlightMessageBoxComponentProps {
-  title: string;
   className?: string;
   children: ReactNode[] | ReactNode;
 }
@@ -16,7 +15,7 @@ function HighlightMessageBoxComponent({ children, className }: HighlightMessageB
 
   return (
     <div className={cn(styles.start, className)}>
-      <dl className={cn(styles.check_point)}>{children}</dl>
+      <div>{children}</div>
     </div>
   );
 }

@@ -19,7 +19,10 @@ export interface InputTimerProps extends InputProps {
 }
 
 const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
-  ({ startTimer, initialTime, onTimerEnd, resetLabel = 'RESET', onReset, ...props }, ref) => {
+  (
+    { startTimer, initialTime, onTimerEnd, resetLabel = 'RESET', onReset, value, ...props },
+    ref,
+  ) => {
     const [seconds, setSeconds] = useState(initialTime);
     const [timer, timerCounter] = useCounter(0);
 
@@ -54,6 +57,9 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
       timerCounter.inc();
     }, [startTimer]);
 
+    useEffect(() => {
+      console.log(value);
+    }, [value]);
     const handleReset = () => {
       timerCounter.inc();
       onReset && onReset();

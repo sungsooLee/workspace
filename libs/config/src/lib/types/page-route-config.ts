@@ -1,6 +1,11 @@
+import { ZodSchema } from 'zod';
+
 export interface PageRouteConfig<T> {
   validate?: (r: RouteValidateParams) => void;
-  authorization?: boolean;
+  validateState?: ZodSchema | ((state: any) => ZodSchema);
+  validateParam?: ZodSchema; //| (param: any) => boolean;
+  validateSearch?: ZodSchema; // | (search: any) => boolean;
+  authorization?: boolean | string;
   meta?: T;
 }
 

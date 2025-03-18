@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs, useModal } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 
-import { AuthForm, AuthFormData } from '../../../features/auth';
+import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../../features/auth';
 import { useAsyncFetchEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
@@ -14,6 +14,12 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
   validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
+  ...pageRouteConfig({
+    validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
+    meta: {
+      title: 'LABEL.ACCOUNT_PASSWORD_SEARCH',
+    },
+  }),
 });
 
 function RouteComponent() {
@@ -29,7 +35,7 @@ function RouteComponent() {
 
   const handleActiveTab = (value: string) => {
     setDefaultAuthValues({
-      authToolType: 'phone',
+      authToolType: AUTH_TOOL_TYPE.PHONE,
       userId: '',
       name: '',
       birthday: '',
@@ -60,7 +66,7 @@ function RouteComponent() {
 
   const handleSuccess = (data: any) => {
     if (selectedTabKey === 'password') {
-      router.navigate({ to: '/change-password' });
+      router.navigate({ to: '/change-password', state: { ...data } });
       return;
     }
 
@@ -68,7 +74,9 @@ function RouteComponent() {
       {
         name: data.name,
         birthday: data.birthday,
-        phoneNumber: data.phoneNumber,
+        ...(data.authToolType === AUTH_TOOL_TYPE.PHONE
+          ? { phoneNumber: data.phoneNumber }
+          : { email: data.email }),
       },
       {
         onSuccess: (data, variables, context) => {
@@ -103,7 +111,19 @@ function RouteComponent() {
           onActiveTab={handleActiveTab}
         />
 
-        <div className={styles.search_info}>
+        <div
+          className={styles.search_info}
+          onClick={() =>
+            router.navigate({
+              to: '/change-password',
+              state: {
+                authToolType: 'PHONE',
+                name: '아무개',
+                birthday: '19781223',
+                phoneNumber: '01093432161',
+              },
+            })
+          }>
           {t(
             selectedTabKey === 'account'
               ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
