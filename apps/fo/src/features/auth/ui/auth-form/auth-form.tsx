@@ -15,7 +15,7 @@ import {
 } from '../../../../entities/user';
 import { GoogleOtpGuideButton } from '../../../../features/auth';
 import useCustomForm from '../../../../shared/ui/dynamic-form-field/use-dynamic-fom';
-import { FormRow } from '../../../../shared/ui/form-row';
+import { FormRow } from '../../../../shared/ui/form-row/form-row';
 import { DynamicFormField } from '../../../../shared/ui/dynamic-form-field';
 import { AuthToolFormField, AuthTool, VerifyUserIdFormField } from '../../../../features/auth';
 
