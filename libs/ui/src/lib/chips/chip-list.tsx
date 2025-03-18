@@ -1,5 +1,4 @@
-import React, { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useState } from 'react';
-import { isEqual } from 'lodash';
+import React, { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 import { Chip, ChipComponentProps } from './chip';
@@ -18,18 +17,23 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   placeholder?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   hideBorder?: boolean;
-  visibleCount?: number; // 최대 표시 개수 (한번에 보여줄 chip 개수)
-  wordwrap?: boolean; // wordwrap 여부
-  onChipListClick?: () => void;
+  /** 최대 표시 개수 (한번에 보여줄 chip 개수) */
+  visibleCount?: number;
+  /** chips wordwrap 여부 */
+  wordwrap?: boolean;
+  /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
-  onChange?: (options: Array<any>) => void;
+  /** chip 삭제 버튼 클릭시 호출 */
+  onChipDeleteClick?: (option: any) => void;
+  /** 추가할 chip input 에서 엔터 눌렀을때 호출 */
+  onAddInputEnterKeyDown?: (text: string) => void;
+  /** ... */
+  onChipListClick?: () => void;
 }
 
 const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
   ({
     className,
-    onDelete,
-    onChange,
     showInput,
     options = [],
     placeholder = t('태그를 입력해주세요.'),
@@ -42,35 +46,15 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     labelField = 'label',
     valueField = 'value',
     onChipClick,
+    onChipDeleteClick,
     onChipListClick,
+    onAddInputEnterKeyDown,
     ...props
   }) => {
-    const [selectedOptions, setSelectedOptions] = useState<any[]>(options); // 선택된 options
-    const [displayOptions, setDisplayOptions] = useState<any[]>(); // 선택된 내용중 보여질 options
-    const [overCount, setOverCount] = useState<number>(0); // 선택된 내용중 보여질 options
     const [inputValue, setInputValue] = useState<string>('');
-
-    useEffect(() => {
-      setSelectedOptions(options);
-    }, [options]);
-
-    useEffect(() => {
-      // 내용이 변경 되었을때만
-      if (!isEqual(options, selectedOptions)) {
-        onChange?.(selectedOptions);
-      }
-      initDisplayOptions();
-    }, [selectedOptions]);
-
-    const initDisplayOptions = () => {
-      const overCount = selectedOptions?.length - visibleCount;
-      const isOver = overCount > 0;
-      const newDisplayOptions = isOver
-        ? selectedOptions?.slice(0, visibleCount)
-        : [...selectedOptions];
-      setDisplayOptions(newDisplayOptions);
-      setOverCount(overCount);
-    };
+    const overCount = options?.length - visibleCount;
+    const isOverCount = overCount > 0;
+    const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...options];
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
@@ -78,29 +62,18 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       const value = (event.target as HTMLInputElement).value?.trim();
-      const newOption = { [labelField]: value, [valueField]: value };
-      const isDuplicated = !!selectedOptions?.find((option) => option[valueField] === value); // 새로 등록하는 chips 중복 여부
-
-      if (event.key === 'Enter' && value && !isDuplicated) {
-        setSelectedOptions([...selectedOptions, newOption]);
+      if (event.key === 'Enter' && value) {
         setInputValue('');
+        onAddInputEnterKeyDown?.(value);
       }
     };
 
-    const handleChipListClick = () => {
-      console.log(111);
-      onChipListClick?.();
+    const handleChipClick = (option: any) => {
+      onChipClick?.(option);
     };
 
-    const handleChipClick = (event: any) => {
-      onChipClick?.(event);
-    };
-
-    const handleChipDelete = (event: any) => {
-      const newOptions = selectedOptions?.filter(
-        (option) => option[valueField] !== event[valueField],
-      );
-      setSelectedOptions(newOptions);
+    const handleChipDelete = (option: any) => {
+      onChipDeleteClick?.(option);
     };
 
     return (
@@ -139,11 +112,11 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
             />
           ))}
           {/* 최대 표시 개수 초과 했을때 */}
-          {overCount > 0 && (
+          {isOverCount && (
             <Popover
               popoverContent={
                 <ChipListMoreContent
-                  options={selectedOptions}
+                  options={options}
                   labelField={labelField}
                   valueField={valueField}
                 />

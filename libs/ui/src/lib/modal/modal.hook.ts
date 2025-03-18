@@ -25,14 +25,6 @@ const useModal = (): useModalReturnValue => {
     [openModal],
   );
 
-  // open 만 사용 예정
-  const openAsync = useCallback(
-    (config: ModalConfig): Promise<any> => {
-      return open(config);
-    },
-    [openModal],
-  );
-
   const close = useCallback((data?: any) => closeModal(data), [closeModal]);
 
   const closeAll = useCallback(() => closeAllModal(), [closeAllModal]);
@@ -50,7 +42,10 @@ const useModal = (): useModalReturnValue => {
                 ...props,
               };
         const config: ModalConfig = {
-          content: createElement(Alert, defaultProps),
+          id: getRandomId(),
+          content: createElement(Alert, {
+            ...defaultProps,
+          }),
           hideCloseButton: true,
           onClose: (value: any) => {
             defaultProps?.onClose?.(value);
@@ -78,6 +73,7 @@ const useModal = (): useModalReturnValue => {
                 isConfirm: true,
               };
         const config = {
+          id: getRandomId(),
           content: createElement(Alert, defaultProps),
           hideCloseButton: true,
           onClose: (value: any) => {
@@ -95,7 +91,6 @@ const useModal = (): useModalReturnValue => {
     open,
     close,
     closeAll,
-    openAsync, // 언제 사용?
     alert,
     confirm,
     modals,

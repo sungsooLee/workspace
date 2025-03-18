@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
 import { Button } from '@learnway/ui';
-import { searchDialogConfig } from '../../shared/ui/search-box/config';
 import { SearchBoxProps } from './type';
+import { searchDialogConfig } from '../../shared/ui/search-box/search-field-config';
 
 /**
  * 퍼블 완료 되면 주석 및 코드 리팩터링 추가 예정

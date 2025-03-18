@@ -48,7 +48,7 @@ export function useLoginTimeout() {
   const endTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timer | null>(null);
   const isCancelAlert = useRef<boolean | null>(false);
-  const { alert: openAlert, closeAll: closeAllModal } = useModal();
+  const { alert: openAlert, confirm: openConfirm, closeAll: closeAllModal } = useModal();
   const { logout } = useLogoutUser();
 
   const handleLogout = useCallback(() => {
@@ -57,9 +57,7 @@ export function useLoginTimeout() {
       openAlert({
         title: '자동 로그아웃',
         description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',
-        isConfirm: false,
-        iconVisible: true,
-        alertType: 'caution',
+        type: 'caution',
         onClose: () => {
           logout();
         },
@@ -84,11 +82,10 @@ export function useLoginTimeout() {
       // 남은 시간이 10초 이하
       // 연장 창을 한번도 안껐을 경우
       if (timeRemain <= 5 && !isCancelAlert.current) {
-        openAlert({
+        openConfirm({
           title: '로그인 시간 연장',
-          description: <ExtensionModal initialTime={5} onTimeout={handleLogout} />,
-          isConfirm: true,
-          iconVisible: false,
+          content: <ExtensionModal initialTime={5} onTimeout={handleLogout} />,
+
           okButtonLabel: '로그인연장',
           onClose: (result?: boolean) => {
             // 로그인 연장

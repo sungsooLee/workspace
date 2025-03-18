@@ -173,13 +173,33 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '이용약관 FOOTER',
+    pageId: 'agreement',
+    screenId: 'NLP_FO_LOG_1016', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 기획 보류',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '개인정보처리방침 FOOTER',
+    pageId: 'privacy',
+    screenId: 'NLP_FO_LOG_1017', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 기획 보류',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '문의하기',
     pageId: '',
     screenId: 'NLP_FO_LOG_1018', //스크린아이디
     pageType: 'Pop-up',
     completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 기획 보류\n- contact-popup.tsx',
   },
   {
     layoutType: '반응형 (PC)',
@@ -284,6 +304,16 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '회원가입진행현황_결과_EN',
+    pageId: 'progress-status-result-en',
+    screenId: 'NLP_FO_CPS_1101', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-17', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 영문',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_유형선택',
     pageId: 'signup-step1',
     screenId: 'NLP_FO_MER_1000', //스크린아이디
@@ -358,9 +388,21 @@ export const guideData = [
     pageId: 'category/detail',
     screenId: 'NLP_FO_CAT_1001', //스크린아이디
     pageType: 'Page',
-    completionDate: '2025-03-10', // 완료일
+    completionDate: '', // 완료일
     lastUpdateDate: '',
-    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
+    remarks:
+      'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
+  },
+  {
+    layoutType: '적응형 (PC)',
+    screenName: '통합검색결과_전체 TAB',
+    pageId: 'integrated-search/integrated-search',
+    screenId: 'NLP_FO_USE_1001', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks:
+      'NLP_FO_USE_1010 (최근/추천/인기 검색어 팝업) 포함\nNLP_FO_USE_1011 (자동완성 팝업) 포함\n디자인 컨펌x로 작업 불가능',
   },
 ];
 

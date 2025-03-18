@@ -252,7 +252,7 @@ const useDynamicForm2 = <T extends DynamicFormConfig>(config: T): UseDynamicForm
       formState,
       onFormChange,
       getValues,
-      onFocus: handleFocus,
+      onFormFocus: handleFocus,
       originalValues,
     },
     fetchData,
@@ -262,6 +262,7 @@ const useDynamicForm2 = <T extends DynamicFormConfig>(config: T): UseDynamicForm
     clearFormError: clearErrors,
     formState,
     onFormChange,
+    onFormFocus: handleFocus,
     control: extendedControl,
   };
 };

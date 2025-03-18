@@ -142,7 +142,7 @@ function RouteComponent() {
               variant="primary"
               onClick={() =>
                 openModal({
-                  title: 'FIDO 인증',
+                  // title: 'FIDO 인증',
                   width: 'sm',
                   content: <MpassModalContent />,
                 })

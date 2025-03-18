@@ -5,8 +5,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { LearningTypeChoicePopup, VideoUploadPopup } from '../../../../features/learning';
-import { UploadProvider } from '../../../../features/learning/ui/resource/uploader/tus-provider';
+import { LearningTypeChoicePopup } from '../../../../features/learning';
 
 export const Route = createFileRoute('/_layout/learning/resource/')({
   component: RouteComponent,
@@ -14,7 +13,7 @@ export const Route = createFileRoute('/_layout/learning/resource/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { openAsync } = useModal();
+  const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
 
@@ -24,22 +23,22 @@ function RouteComponent() {
   const handleRegister = async () => {
     setDisplayContent(false);
     //router.navigate({ to: '/learning/resource/education/view' });
-    const typeResult = (await openAsync({
+    const typeResult = (await openModal({
       content: <LearningTypeChoicePopup />,
       width: 'lg',
     })) as LEARNING_TYPE;
     switch (typeResult) {
       case LEARNING_TYPE.VIDEO: {
-        const videoUploadResult = await openAsync({
+        /*const videoUploadResult = await openAsync({
           content: (
             <UploadProvider>
               <VideoUploadPopup />
             </UploadProvider>
           ),
           width: 'lg',
-        });
+        });*/
         break;
-        console.log('videoUploadResult => ', videoUploadResult);
+
       }
     }
     router.navigate({ to: '/learning/resource/view/video' });

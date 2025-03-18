@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Settings } from 'lucide-react';
 import {
   closestCenter,
   DndContext,
@@ -224,9 +223,7 @@ function ColumnSettings<T extends object>({
 
     open({
       content: <ColumnSettingsContent<T> onApply={handleApply} table={table} />,
-      title: '컬럼 설정',
       width: 'md',
-      height: 'auto',
     });
   };
 

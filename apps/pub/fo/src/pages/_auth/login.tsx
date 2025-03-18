@@ -78,6 +78,7 @@ function RouteComponent() {
                 <img src={snskakaoImage} alt="kakao" />
               </Button>
             </li>
+            {/* 영문 시 : 구글로그인만 출력 */}
             <li>
               <Button>
                 <img src={snsGoogleImage} alt="google" />
@@ -92,7 +93,7 @@ function RouteComponent() {
 
       <div className={styles.login_guide}>
         <span>
-          <Link to="/progress-status">회원 가입 현황</Link>
+          <Link to="/progress-status-cert">회원 가입 현황</Link>
           <Link to="/signup-step1">회원가입</Link>
         </span>
       </div>

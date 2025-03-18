@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, RadioCard, Input, Select, useModal, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status-certify')({
   component: RouteComponent,
@@ -21,7 +21,7 @@ function RouteComponent() {
   const handleClickAlert = () => {
     openAlert({
       title: <>입력 정보를 확인해 주세요.</>,
-      description: (
+      content: (
         <>
           입력하신 정보가 등록되어 있지 않습니다. <br />
           정확한 정보를 다시 입력해 주세요.

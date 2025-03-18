@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { cn } from '@learnway/shared';
-
 import { Button } from '../button/button';
-import { IcoCaution, IcoAlertComplete, IcoError, IcoWarning } from '@learnway/icons'; // icon
+import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
 import { useModal } from '../modal/modal.hook';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 export interface AlertComponentProps {
   className?: string;
@@ -17,9 +17,8 @@ export interface AlertComponentProps {
   onClose?: (data?: any) => void;
   okButtonLabel?: string;
   cancelButtonLabel?: string;
-  iconVisible?: boolean;
   isConfirm?: boolean;
-  alertType?: 'error' | 'caution' | 'complete'; // icon type
+  type?: 'error' | 'caution' | 'complete' | 'warning'; // icon type
 }
 
 const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
@@ -33,9 +32,8 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       footer,
       okButtonLabel = '확인',
       cancelButtonLabel = '취소',
-      iconVisible = false, // icon case
       isConfirm = false,
-      alertType,
+      type,
       onClose,
       ...otherProps
     },
@@ -69,21 +67,16 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     }, []);
     // description scroll check End
 
-    const iconCase = () => {
-      if (!iconVisible) return null; // 아이콘이 숨겨져 있으면 null 반환
-
-      if (isConfirm) {
-        return <IcoCaution width={48} height={48} stroke="#8C97AE" />; // 컨펌창 주의 아이콘
-      }
-
-      // isConfirm이 아닌 경우의 세부 조건
-      switch (alertType) {
+    const Icon = () => {
+      switch (type) {
         case 'error':
           return <IcoError width={48} height={48} stroke="#FF4646" />; // 에러 아이콘
-        case 'caution':
+        case 'warning':
           return <IcoWarning width={48} height={48} stroke="#FF4646" />; // 경고 아이콘
         case 'complete':
           return <IcoAlertComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
+        case 'caution':
+          return <IcoCaution width={48} height={48} stroke="#8C97AE" />; // 주의 아이콘
         default:
           return null;
       }
@@ -118,30 +111,53 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       </div>
     );
 
+    console.log(content);
+
     return (
-      <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
-        {/* icon */}
-        {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
-
-        {/* title */}
-        <div className={styles.title}>{title}</div>
-
-        {/* description */}
-        {description && (
-          <div
-            ref={descriptionRef}
-            className={`${styles.description} ${isScrolled ? styles.scroll : ''}`}>
-            {description}
-          </div>
+      <ModalContainer className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
+        <ModalTitle>
+          <>
+            <div className={styles.icon}>
+              <Icon />
+            </div>
+            <div className={styles.title}>{title}</div>
+          </>
+        </ModalTitle>
+        {content && (
+          <ModalBody>
+            <div className={styles.content}>{content}</div>
+          </ModalBody>
         )}
-
-        {/* content */}
-        <div className={styles.content}>{content}</div>
-
-        {/* footer */}
-        <div className={styles.footer}>{footer ?? defaultFooter}</div>
-      </div>
+        <ModalFooter>
+          <div className={styles.footer}>{footer ?? defaultFooter}</div>
+        </ModalFooter>
+      </ModalContainer>
     );
+
+    // return (
+    //   <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
+    //     {/* icon */}
+    //     {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
+    //
+    //     {/* title */}
+    //     <div className={styles.title}>{title}</div>
+    //
+    //     {/* description */}
+    //     {description && (
+    //       <div
+    //         ref={descriptionRef}
+    //         className={`${styles.description} ${isScrolled ? styles.scroll : ''}`}>
+    //         {description}
+    //       </div>
+    //     )}
+    //
+    //     {/* content */}
+    //     <div className={styles.content}>{content}</div>
+    //
+    //     {/* footer */}
+    //     <div className={styles.footer}>{footer ?? defaultFooter}</div>
+    //   </div>
+    // );
   },
 );
 

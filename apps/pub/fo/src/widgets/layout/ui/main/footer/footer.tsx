@@ -31,10 +31,10 @@ function FooterComponent() {
             <div className={styles.info_menu}>
               <ul>
                 <li>
-                  <Link to={''}>이용약관</Link>
+                  <Link to="/agreement">이용약관</Link>
                 </li>
                 <li>
-                  <Link to={''}>
+                  <Link to="/privacy">
                     <span>개인정보 처리방침</span>
                   </Link>
                 </li>

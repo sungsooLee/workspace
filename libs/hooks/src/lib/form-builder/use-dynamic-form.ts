@@ -159,7 +159,20 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    * @param values - 새로운 초기값 (선택 사항)
    */
   const onFormChange = (values?: Record<string, any>) => {
-    reset(values ?? originalValues);
+    if (values) {
+      reset(
+        values, // 업데이트하려는 필드와 값만 제공
+        {
+          keepDirty: true, // dirty 상태 유지
+          keepDirtyValues: true, // dirty 필드 값 유지
+          keepTouched: true, // 사용자 상호작용 유지
+          keepErrors: true, // 기존 유효성 검사 에러 유지
+          keepValues: true, // 다른 필드 값 유지
+        },
+      );
+    } else {
+      reset(originalValues);
+    }
   };
 
   /**
@@ -179,8 +192,8 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    * @param data - 서버에서 받아온 데이터
    */
   const fetchData = (data: Record<string, any>) => {
-    setOriginalValues(data);
     reset(data);
+    setOriginalValues(data);
   };
 
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
@@ -198,7 +211,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       formState,
       onFormChange,
       getValues,
-      onFocus: handleFocus,
+      onFormFocus: handleFocus,
       originalValues,
     },
     fetchData,
@@ -208,6 +221,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     clearFormError: clearErrors,
     formState,
     onFormChange,
+    onFormFocus: handleFocus,
     control: extendedControl,
   };
 };

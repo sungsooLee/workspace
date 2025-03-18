@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { Button } from '@learnway/ui';
-import styles from './page-container.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import { IcoStar } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
 import { IcoAnnouncement03 } from '@learnway/icons';

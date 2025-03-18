@@ -17,7 +17,7 @@ const FormThumbnailImageUploadComponent: FC<any> = ({
   const handleChange = (options: ImageOption[]) => {
     ownerOnChange(options);
   };
-
+  console.log(value);
   return <ThumbnailImageUpload {...props} options={value} onChange={handleChange} />;
 };
 export const FormThumbnailImageUpload = FormThumbnailImageUploadComponent;

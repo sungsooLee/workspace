@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import styles from './page-content.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import movieInfoStyles from './movie-info.module.css';
-/* 퍼블수정 20240312 : libs로 경로 수정 S  */
+/* 퍼블수정 20240317 : libs로 경로 수정 S  */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-/* 퍼블수정 20240312 : libs로 경로 수정 E  */
-import searchContStyles from './searchContStyles.module.css'; // popup contents css
-import searchStyles from './search.module.css'; // search css
-import editInfoStyles from './editInfoStyles.module.css'; // 하단 박스
+import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+/* 퍼블수정 20240317 : libs로 경로 수정 E  */
+import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
+
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Button,
@@ -54,15 +55,16 @@ export const Route = createFileRoute('/_layout/learning/mediaRegister')({
 });
 
 function RouteComponent() {
-  // 퍼블수정 20240314 : 수정된 Modal 컴포넌트로 수정
+  // 퍼블수정 20240317 : 수정된 Modal 컴포넌트로 수정
   // Modal : 채널 검색
   const { close: closeModal } = useModal();
   const ModalChannelContent = () => {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'등록 채널을 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'등록 채널을 선택하세요.'}</strong>
             {/* 퍼블수정 20240313 : search 영역 수정 */}
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
@@ -125,7 +127,7 @@ function RouteComponent() {
               </div>
             </div>
             {/* 채널 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '경영지원시스템 채널 01' },
@@ -143,6 +145,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -157,8 +160,9 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'담당자를 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'담당자를 선택하세요.'}</strong>
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
                 <ContentsRow>
@@ -212,7 +216,7 @@ function RouteComponent() {
               </div>
             </div>
             {/* 채널 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '선택한 채널의 소속 채널 소유자명 (사번 또는 이메일)' },
@@ -233,6 +237,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -247,10 +252,11 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={searchContStyles.contents}>
-            <strong className={searchContStyles.title}>{'출처를 선택하세요.'}</strong>
+          {/* 퍼블수정 20240317 : 수정 S */}
+          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
+            <strong className={popSearchStyles.title}>{'출처를 선택하세요.'}</strong>
             {/* 출처 리스트 */}
-            <div className={searchContStyles.channel_wrap}>
+            <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
                   { value: 'type1', label: '경영지원시스템 채널 01' },
@@ -268,6 +274,7 @@ function RouteComponent() {
               />
             </div>
           </div>
+          {/* 퍼블수정 20240317 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -364,7 +371,7 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -373,7 +380,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
@@ -433,7 +440,7 @@ function RouteComponent() {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -442,7 +449,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
             <div className={formStyles.form_item}>
               <label htmlFor="name-managerNum" className={formStyles.form_label}>
@@ -497,23 +504,27 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {checked[1] && (
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <div className={formStyles.input_box}>
-                  <DatePicker
-                    onChange={handleDate}
-                    value={date}
-                    className={formStyles.datepicker_item}
-                  />
-                  <span className={formStyles.dash}></span>
-                  <DatePicker
-                    onChange={handleDate2}
-                    value={date2}
-                    className={formStyles.datepicker_item}
-                  />
+            // 퍼블수정 20250317 : form_display 구조 수정 S
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <div className={formStyles.input_box}>
+                    <DatePicker
+                      onChange={handleDate}
+                      value={date}
+                      className={formStyles.datepicker_item}
+                    />
+                    <span className={formStyles.dash}></span>
+                    <DatePicker
+                      onChange={handleDate2}
+                      value={date2}
+                      className={formStyles.datepicker_item}
+                    />
+                  </div>
                 </div>
-              </div>
-            </ContentsRow>
+              </ContentsRow>
+            </div>
+            // 퍼블수정 20250317 : form_display 구조 수정 E
           )}
           {/* 외주개발업체 정보 */}
           <ContentsRow type="horizontal" className={!checked[2] ? 'inactive' : ''}>
@@ -535,135 +546,126 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {checked[2] && (
-            <ContentsRow>
-              {/* form_item */}
-              <div className={formStyles.form_item}>
-                <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.multiple_row}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-company" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <InputModalSelectorFormField
-                            modalConfig={{
-                              title: '',
-                              width: 'md',
-                              content: <ModalChannelContent />,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-1-7-1" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주개발업체 담당자
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
-                        </div>
-                      </div>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-1-7-2" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주개발업체 연락처
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
-                          <PhoneNumber
-                            options={[
-                              { value: 'type1', label: '+82' },
-                              { value: 'type2', label: '+83' },
-                            ]}
-                          />
-                          {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-owner2" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외주업체 과정코드
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input
-                            id="name-owner2"
-                            type="text"
-                            placeholder="개발코스를 입력하세요."
-                          />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-url" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외부학습시작 URL(비표준)
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로
-                          노출하거나 아이콘을 통해 노출)
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-parameter" className={formStyles.form_label}>
-                          <span className={cn(formStyles.form_text, formStyles.sm)}>
-                            외부학습시작 파라미터
-                          </span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Input
-                            id="name-parameter"
-                            type="text"
-                            placeholder="Param Value 값을 입력하세요."
-                          />
-                          <Input type="text" placeholder="Param Value 값을 입력하세요." />
-                        </div>
-                        <p className={formStyles.guide_text}>
-                          개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
+            // 퍼블수정 20250317 : form_display 구조 수정 S
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-company" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <InputModalSelectorFormField
+                      modalConfig={{
+                        title: '',
+                        width: 'md',
+                        content: <ModalChannelContent />,
+                      }}
+                    />
                   </div>
                 </div>
-              </div>
-            </ContentsRow>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-1" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 담당자
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
+                  </div>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 연락처
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
+                    <PhoneNumber
+                      options={[
+                        { value: 'type1', label: '+82' },
+                        { value: 'type2', label: '+83' },
+                      ]}
+                    />
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-owner2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주업체 과정코드
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-owner2" type="text" placeholder="개발코스를 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-url" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 URL(비표준)
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로 노출하거나
+                    아이콘을 통해 노출)
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-parameter" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 파라미터
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input
+                      id="name-parameter"
+                      type="text"
+                      placeholder="Param Value 값을 입력하세요."
+                    />
+                    <Input type="text" placeholder="Param Value 값을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+            </div>
+            // 퍼블수정 20250317 : form_display 구조 수정 E
           )}
           {/* 2025-03-10 수정 */}
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
@@ -672,7 +674,7 @@ function RouteComponent() {
               <label htmlFor="name-source" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>출처</span>
               </label>
-              {/* 퍼블수정 20240314 : Modal 수정 S  */}
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -681,7 +683,7 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240314 : Modal 수정 E  */}
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
@@ -774,7 +776,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                {/* 퍼블수정 20240314 : disabled 속성 추가 */}
+                {/* 퍼블수정 20240317 : disabled 속성 추가 */}
                 <ThumbnailImageUpload
                   options={[
                     /* 동영상 추출 전 */
@@ -954,108 +956,100 @@ function RouteComponent() {
                     <ContentsRow>
                       <div className={formStyles.form_item}>
                         <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            id="name-1-14"
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            value="영어자막.smi"
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                          {/* 퍼블수정 20240317 : 수정 S */}
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            value="영어자막2.smi"
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                            <Input
+                              id="name-1-14"
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                              value="영어자막.smi"
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '영어' },
-                              { value: 'language2', label: '한국어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 변경
-                          </Button>
-                          <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                            <IcoCloseCircle
-                              width={24}
-                              height={24}
-                              fill="#D6DAE1"
-                              stroke="#ffffff"
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
                             />
-                          </Button>
-                        </div>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <Select
-                            className={dynamicFormStyles.short}
-                            options={[
-                              { value: 'language1', label: '언어선택' },
-                              { value: 'language2', label: '한국어' },
-                              { value: 'language3', label: '영어' },
-                            ]}
-                          />
-                          <Input
-                            type="text"
-                            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                          />
-                          <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                            자막 추가
-                          </Button>
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                              value="영어자막2.smi"
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '영어' },
+                                { value: 'language2', label: '한국어' },
+                              ]}
+                            />
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 변경
+                            </Button>
+                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                              <IcoCloseCircle
+                                width={24}
+                                height={24}
+                                fill="#D6DAE1"
+                                stroke="#ffffff"
+                              />
+                            </Button>
+                          </div>
+                          <div className={dynamicFormStyles.row_inner}>
+                            <Select
+                              className={dynamicFormStyles.short}
+                              options={[
+                                { value: 'language1', label: '언어선택' },
+                                { value: 'language2', label: '한국어' },
+                                { value: 'language3', label: '영어' },
+                              ]}
+                            />
+                            <Input
+                              type="text"
+                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                            />
+                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                              자막 추가
+                            </Button>
+                          </div>
+                          {/* 퍼블수정 20240317 : 수정 E */}
                         </div>
                       </div>
                     </ContentsRow>

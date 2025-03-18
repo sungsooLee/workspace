@@ -9,7 +9,7 @@ import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { CourseTypeOptionCardModal } from '../../../features/operation';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../widgets/search-box/search-box';
+import { SearchBox } from '../../../shared/ui/search-box';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
@@ -61,7 +61,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        {/*<SearchBox config={sConfig} onSearch={handleOnSearch} />*/}
         <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>

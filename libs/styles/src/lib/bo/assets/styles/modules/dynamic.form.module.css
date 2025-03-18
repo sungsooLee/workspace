@@ -53,3 +53,7 @@
 .btn_switch {
   @apply translate-y-1/2;
 }
+
+.form_display {
+  @apply relative;
+}

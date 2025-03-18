@@ -1,9 +1,20 @@
-import { Button, ContentsRow, Input, List, Select, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  Input,
+  List,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  Select,
+  useModal,
+} from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
-import { useState } from 'react';
-import { SearchBox } from '../../../../widgets/search-box/search-box';
+import React, { useState } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { SearchBox } from '../../../../shared/ui/search-box';
 
 const ManagerChoicePopupComponent = () => {
   const { close } = useModal();
@@ -56,44 +67,46 @@ const ManagerChoicePopupComponent = () => {
 
   return (
     <div className={styles.contents}>
-      <strong className={styles.title}>{'담당자를 선택하세요.'}</strong>
-      {/* form */}
-      {options.length > 20 && (
-        <ContentsRow>
-          <SearchBox config={sConfig} onSearch={handleOnSearch} />
-        </ContentsRow>
-      )}
-      {/* 채널 리스트 */}
-      <div className={styles.channel_wrap}>
-        <List
-          options={options}
-          onOptionsSelect={(option: any[]) => {
-            setOption(option[0]);
-          }}
-        />
-      </div>
-      <div className={'flex gap-10'}>
-        <Button
-          label={'취소'}
-          variant={'gray'}
-          size={'lg'}
-          actionKey={'cancel'}
-          onClick={handleOnClose}
-        />
-        <Button
-          type={'button'}
-          label={'확인'}
-          variant={'primary'}
-          size={'lg'}
-          actionKey={'confirm'}
-          onClick={handleOnConfirm}
-        />
-      </div>
+      <ModalContainer>
+        <ModalBody>
+          <strong className={styles.title}>{'담당자를 선택하세요.'}</strong>
+          <div className={cn(styles.start, styles.wrap)}>
+            <div className={styles.contents}>
+              {/* form */}
+              {options.length > 20 && (
+                <ContentsRow>
+                  <SearchBox config={sConfig} onSearch={handleOnSearch} />
+                </ContentsRow>
+              )}
+              <div className={styles.channel_wrap}>
+                <List options={options} onOptionsSelect={(options) => setOption(options[0])} />
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            label={'취소'}
+            variant={'gray'}
+            size={'lg'}
+            actionKey={'cancel'}
+            onClick={handleOnClose}
+          />
+          <Button
+            type={'button'}
+            label={'확인'}
+            variant={'primary'}
+            size={'lg'}
+            actionKey={'confirm'}
+            onClick={handleOnConfirm}
+          />
+        </ModalFooter>
+      </ModalContainer>
     </div>
   );
 };
 
-export const ManagerChoicePopup = ManagerChoicePopupComponent;
+export const ManagerChoiceModal = ManagerChoicePopupComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

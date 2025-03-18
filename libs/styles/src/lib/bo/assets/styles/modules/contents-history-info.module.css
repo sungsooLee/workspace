@@ -1,0 +1,21 @@
+/* editInfoStyles.module.css */
+.start {
+  &.wrap {
+    @apply flex items-center rounded-[8px] bg-[#f6f8fd] p-[16px];
+    p {
+      @apply body_4_r flex items-center text-[var(--gray9)];
+      span {
+        @apply ml-[8px] inline-flex text-[var(--gray7)];
+      }
+      & + p {
+        @apply ml-[12px];
+        &::before {
+          @apply mr-[12px] inline-flex h-[12px] w-[1px] bg-[var(--gray3)] content-[''];
+        }
+      }
+    }
+    .btn_info {
+      @apply ml-auto !font-normal;
+    }
+  }
+}

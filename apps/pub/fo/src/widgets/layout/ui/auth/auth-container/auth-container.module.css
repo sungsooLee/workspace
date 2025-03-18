@@ -1,14 +1,14 @@
 /* auth_container.module.css */
 .start {
   &.auth_container {
-    @apply relative bg-[var(--gray1)] pb-[40px] pt-[40px];
+    @apply relative bg-[var(--gray1)] pt-[40px];
     &.login {
       @apply bg-cover bg-center;
       background-image: url(../../../../../assets/images/common/bg_login.png);
     }
 
     .auth_area {
-      @apply m-auto w-[680px];
+      @apply m-auto mb-[40px] w-[680px];
       & > h2 {
         @apply title_3_b flex items-center justify-center whitespace-pre px-[31px] pb-[32px] text-center;
 
@@ -20,10 +20,17 @@
           @apply block;
         }
       }
+
       .auth_inner {
         @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
         &.login {
           @apply rounded-tl-none rounded-tr-none;
+        }
+      }
+      &.none {
+        @apply w-[1180px] text-left;
+        .auth_inner {
+          @apply rounded-none border-0 bg-transparent;
         }
       }
     }

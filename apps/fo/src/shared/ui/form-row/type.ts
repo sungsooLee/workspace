@@ -14,7 +14,7 @@ export interface FormRowProvider {
   watch: (name?: string | string[]) => any;
   onFormChange: (value?: any) => void;
   getValues: UseFormGetValues<any>;
-  onFocus: (fieldName: string) => void;
+  onFormFocus: (fieldName: string) => void;
   formState: FormState<any>;
   originalValues: { [key: string]: any };
 }

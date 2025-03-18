@@ -23,34 +23,3 @@ export default class TranslationService {
     return httpService.delete<Tenant>(`/pms-module/admin/api/v1/i18n`, { id });
   }
 }
-
-const localeCodes = [
-  'kr',
-  'ar',
-  'zh',
-  'zh-TW',
-  'hr',
-  'de',
-  'en',
-  'en-AU',
-  'et',
-  'fr',
-  'he',
-  'hi',
-  'id',
-  'it',
-  'ja',
-  'ms',
-  'ne',
-  'fa',
-  'pt',
-  'pt-BR',
-  'ro',
-  'ru',
-  'sk',
-  'es',
-  'es-LA',
-  'th',
-  'tr',
-  'vi',
-];

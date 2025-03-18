@@ -6,14 +6,13 @@ import { Button, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
 import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
-import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { MappingCoursePopup } from '../../../../features/learning/ui/resource/mapping-course-popup';
 import { SharedHistoryPopup } from '../../../../features/learning/ui/resource/shared-history-popup';
 import { ProgramGuideDownloadPopup } from '../../../../features/learning/ui/resource/program-guide-download-popup';
 import { RegistrantPopup } from '../../../../features/learning/ui/resource/registrant-popup';
-import { SearchBox } from '../../../../widgets/search-box/search-box';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../../shared/ui/search-box';
 
 export const Route = createFileRoute('/_layout/learning/resource/list')({
   component: RouteComponent,
@@ -70,9 +69,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          onClick={() =>
-            open({ content: <MappingCoursePopup />, width: 'md', height: 'md', title: '맵핑과정' })
-          }>
+          onClick={() => open({ content: <MappingCoursePopup />, width: 'md' })}>
           매핑과정팝업
         </Button>
 
@@ -80,9 +77,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          onClick={() =>
-            open({ content: <SharedHistoryPopup />, width: 'sm', height: 'md', title: '공유이력' })
-          }>
+          onClick={() => open({ content: <SharedHistoryPopup />, width: 'sm' })}>
           공유이력팝업
         </Button>
         <Button
@@ -94,7 +89,7 @@ function RouteComponent() {
               content: <ProgramGuideDownloadPopup />,
               width: 'sm',
               height: 'sm',
-              title: '프로그램/가이드 다운로드',
+              // title: '프로그램/가이드 다운로드',
             })
           }>
           프로그램가이드다운로드 팝업
@@ -114,8 +109,7 @@ function RouteComponent() {
                 />
               ),
               width: 'sm',
-              height: 'sm',
-              title: '등록자',
+              // title: '등록자',
             })
           }>
           등록자 팝업 (연락처있음)
@@ -130,8 +124,7 @@ function RouteComponent() {
                 <RegistrantPopup name={'김현대'} employeeNumber={'8883721'} email={'hd@hd.com'} />
               ),
               width: 'sm',
-              height: 'sm',
-              title: '등록자 정보',
+              // title: '등록자 정보',
             })
           }>
           등록자 팝업 (연락처없음)

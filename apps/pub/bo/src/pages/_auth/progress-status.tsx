@@ -4,7 +4,7 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '../../assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
-import { Button, Input, useModal, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
   const handleClickAlert = () => {
     openAlert({
       title: <>진행현황이 없습니다.</>,
-      description: (
+      content: (
         <>
           입력하신 아이디의 진행현황이 없습니다.
           <br />

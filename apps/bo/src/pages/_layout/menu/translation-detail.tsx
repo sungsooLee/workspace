@@ -1,13 +1,11 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { z } from '@learnway/shared';
-import { Button, useModal } from '@learnway/ui';
+import { Button, DynamicFormField, useModal } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { useDynamicForm } from '@learnway/hooks';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/menu/translation-detail')({
   component: RouteComponent,
@@ -32,8 +30,7 @@ function RouteComponent() {
     openAlert({
       title: <></>,
       description: <>다국어를 저장하시겠습니까?</>,
-      isConfirm: true,
-      iconVisible: false,
+
       onClose: (result: boolean) => {
         // console.log(result);
         if (result) {

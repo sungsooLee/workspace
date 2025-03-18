@@ -1,10 +1,7 @@
 import { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { IcLogOut01 } from '@learnway/icons';
-
-import { Avatar, Popover } from '@learnway/ui';
 import styles from './user-avatar.module.css';
 
 const PopoverContent = () => {
@@ -15,15 +12,13 @@ const PopoverContent = () => {
     openAlert({
       title: <></>,
       description: <>로그아웃 하시겠습니까?</>,
-      isConfirm: true,
-      iconVisible: false,
     });
   };
 
   const handleClickAlert2 = () => {
     openAlert({
       title: <>로그인 시간을 연장하시겠습니까?</>,
-      description: (
+      content: (
         <>
           로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
           <br />
@@ -33,8 +28,7 @@ const PopoverContent = () => {
           </div>
         </>
       ),
-      isConfirm: true,
-      iconVisible: false,
+
       okButtonLabel: '로그인연장',
     });
   };

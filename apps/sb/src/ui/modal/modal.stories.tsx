@@ -21,6 +21,12 @@ export default {
   argTypes: {},
 } as Meta;
 
+/**
+ *
+ * Modal
+ *
+ */
+
 const ContentModal = () => {
   const { close: closeModal } = useModal();
   const [selectedRow, setSelectedRow] = useState();
@@ -61,12 +67,11 @@ const ContentModal = () => {
  */
 export const Template: any = (args: any) => {
   const { open: openModal } = useModal();
-  const handleOpenModal = () => {
-    openModal({
-      width: 'sm',
+  const handleOpenModal = async () => {
+    const data = await openModal({
       content: <ContentModal />,
-      onClose: (data) => console.log('onClose data', data),
     });
+    console.log(data);
   };
   return (
     <div>
@@ -78,30 +83,6 @@ export const Template: any = (args: any) => {
 Template.storyName = 'Modal';
 
 /**
- * Description
- * @param args
- * @constructor
- */
-export const TemplateAsync: any = (args: any) => {
-  const { open: openModal } = useModal();
-  const handleOpenModal = async () => {
-    const result = await openModal({
-      title: 'modal title',
-      description: 'modal description',
-      content: <ContentModal />,
-    });
-    console.log(result);
-  };
-  return (
-    <div>
-      <Button onClick={() => handleOpenModal()}>Open Modal</Button>
-      <ModalWrapper {...args} />
-    </div>
-  );
-};
-TemplateAsync.storyName = 'Modal - Async';
-
-/**
  * Multi Modal
  * @param args
  * @constructor
@@ -110,7 +91,6 @@ export const TemplateMultiModal: any = (args: any) => {
   const { open: openModal } = useModal();
   const handleOpenModal = () => {
     openModal({
-      title: 'first modal',
       content: (
         <div>
           <h1>second modal content</h1>
@@ -126,7 +106,6 @@ export const TemplateMultiModal: any = (args: any) => {
   };
   const handleOpenSecondModal = () => {
     openModal({
-      title: 'second modal',
       content: <h1>second modal content</h1>,
     });
   };
@@ -138,3 +117,56 @@ export const TemplateMultiModal: any = (args: any) => {
   );
 };
 TemplateMultiModal.storyName = 'Multi Modal';
+
+/**
+ *
+ * Alert
+ *
+ */
+export const TemplateAlert: any = (args: any) => {
+  const { alert: openAlert } = useModal();
+  const handleClickAlert = () => {
+    // parameter string 버전
+    openAlert('title');
+
+    // parameter AlertComponentProps 버전
+    // openAlert({
+    //   title: 'alert title',
+    //   description: 'alert description',
+    // });
+  };
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5">
+        <Button onClick={() => handleClickAlert()}>Open Alert</Button>
+      </div>
+      <ModalWrapper {...args} />
+    </div>
+  );
+};
+TemplateAlert.storyName = 'Alert';
+
+/**
+ *
+ * Confirm
+ *
+ */
+export const TemplateConfirm: any = (args: any) => {
+  const { confirm: openConfirm } = useModal();
+  const handleClickConfirm = () => {
+    openConfirm({
+      title: 'confirm title',
+      content: 'confirm content',
+      onClose: (value: boolean) => console.log(value),
+    });
+  };
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5">
+        <Button onClick={() => handleClickConfirm()}>Open Confirm</Button>
+      </div>
+      <ModalWrapper {...args} />
+    </div>
+  );
+};
+TemplateConfirm.storyName = 'Confirm';

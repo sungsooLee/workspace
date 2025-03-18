@@ -22,6 +22,8 @@ const PhoneNumberComponent = function ({
   options,
   value,
   size,
+  readOnly,
+  disabled,
   onChange,
   ...props
 }: PhoneNumberComponentProps) {
@@ -39,14 +41,30 @@ const PhoneNumberComponent = function ({
   };
 
   return (
-    <div className={cn(styles.start, styles.wrap, size && styles[size])}>
+    <div
+      className={cn(
+        styles.start,
+        styles.wrap,
+        size && styles[size],
+        readOnly && styles.readonly,
+        disabled && styles.disabled,
+      )}>
       <Select
         options={options ?? nationOptions}
         onChange={(option: SelectOption) => handleSelect(option)}
         className={styles.select_area}
         size={size}
+        readOnly={readOnly}
+        disabled={disabled}
       />
-      <Input value={value} onChange={onChange} {...props} className={styles.input_area} />
+      <Input
+        value={value}
+        onChange={onChange}
+        {...props}
+        className={styles.input_area}
+        readOnly={readOnly}
+        disabled={disabled}
+      />
     </div>
   );
 };
