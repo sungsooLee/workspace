@@ -36,10 +36,10 @@ export const useSearchBox = (config: SearchBoxConfig): UseSearchBoxReturn => {
 
   // react-hook-form 초기화
   const methods: UseFormReturn<any> = useForm({
-    defaultValues,
+    defaultValues: { tenant: '' },
     resolver: zodResolver(schema),
   });
-  const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
+  const { control, handleSubmit, setFocus, getValues, reset } = methods;
 
   /**
    * formSubmit
