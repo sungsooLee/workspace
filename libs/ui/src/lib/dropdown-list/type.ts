@@ -2,12 +2,13 @@ import { ActionMeta, MultiValue, SingleValue } from 'react-select';
 
 export interface DropdownOption {
   value: string;
-  label: string;
+  label?: string;
 }
 
 export interface DropdownComponentProps {
   options: DropdownOption[];
   value?: DropdownOption | readonly DropdownOption[] | null;
+  defaultValue?: SingleValue<DropdownOption> | MultiValue<DropdownOption>;
   onChange?: (
     newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
     actionMeta: ActionMeta<DropdownOption>,

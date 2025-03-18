@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { Button, ContentsRow, DatePicker, Input, Select } from '@learnway/ui';
+import { Button, ContentsRow, DatePicker, DropdownList, Input, Select } from '@learnway/ui';
 import { searchDialogConfig } from './search-field-config';
 import { SearchBoxProps } from './type';
 import { cn } from '@learnway/shared';
@@ -36,12 +36,14 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
                     <span className={formStyles.form_text}>테넌트</span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <DropdownList
                       className={formStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
                         { value: 'type2', label: '항목' },
                       ]}
+                      defaultValue={{ value: 'type1', label: '전체' }}
+                      // value={{ value: 'type1' }}
                     />
                   </div>
                 </div>
