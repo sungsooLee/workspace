@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -26,7 +27,7 @@ import { cn } from '@learnway/shared';
 import { ImageOption } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
-import styles from './page-content.module.css';
+import styles from '../../../../../../bo/src/widgets/layout/ui/container/page-contents.module.css';
 import movieInfoStyles from './movie-info.module.css';
 import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
 

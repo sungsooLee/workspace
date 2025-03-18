@@ -23,6 +23,7 @@ function RouteComponent() {
     {
       title: 'Component',
       subItems: [
+        { label: 'BO_searchBox', path: '/guide/search-box' },
         { label: 'Buttons', path: '/guide/buttons' },
         { label: 'Alert, Confirm', path: '/guide/alert' },
         { label: 'Modal', path: '/guide/modal' },

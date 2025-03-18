@@ -14,11 +14,22 @@
   }
 }
 .alert_wrap {
-  @apply px-[20px] pb-[24px] pt-[32px];
+  @apply px-[20px] pt-[24px];
+  & > h2 {
+    @apply !h-auto flex-col !justify-center border-b-0 !py-0;
+    & + div {
+      @apply body_3_r pt-[12px] text-center text-[#747D91];
+    }
+  }
 }
 .title {
   @apply flex max-h-[80px] items-center justify-center pt-[8px] text-center text-[1.8rem] font-bold text-[var(--gray9)];
 }
 .description {
   @apply scrollbar block max-h-[160px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-center text-[1.4rem] font-normal text-[var(--gray7)];
+}
+.alert_footer {
+  .btn_wrap {
+    @apply pt-0;
+  }
 }

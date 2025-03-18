@@ -44,6 +44,7 @@ function RouteComponent() {
   ];
   return (
     <>
+      <h3 className="guide_tit3">Search-box Case</h3>
       {/* 1개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
