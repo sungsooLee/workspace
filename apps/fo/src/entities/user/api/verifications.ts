@@ -42,4 +42,18 @@ export default class VerificationsService {
   static fetchEmail(payload: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/users/verifications/find-my-id`, payload);
   }
+
+  static updatePasswordByPhoneNumber(payload: any) {
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/users/verifications/change-password-by-phone-number`,
+      payload,
+    );
+  }
+
+  static updatePasswordByEmail(payload: any) {
+    return httpService.get<any>(
+      `${PMSApiPrefix()}/users/verifications/change-password-by-email`,
+      payload,
+    );
+  }
 }

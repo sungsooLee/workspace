@@ -9,6 +9,7 @@ interface VerifyPhoneNumber {
   name: string;
   birthday: string;
   phoneNumber: string;
+  phoneNumberLocale?: string;
   verificationCode?: string;
 }
 
@@ -102,6 +103,39 @@ export function useAsyncFetchEmail(mutationOptions = {}) {
 
   return {
     asyncFetch: (payload: any, callback?: MutateCallback<any[]>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
+export function useUpdatePasswordByPhoneNumber(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.updatePasswordByPhoneNumber(),
+    ...mutationOptions,
+  });
+
+  return {
+    update: (payload: any, callback?: MutateOptions<unknown, unknown, VerifyEmail>) => {
+      mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
+export function useUpdatePasswordByEmail(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.updatePasswordByEmail(),
+    ...mutationOptions,
+  });
+
+  return {
+    update: (payload: any, callback?: MutateCallback<any[]>) => {
       return mutateAsync(payload, callback);
     },
     isSuccess,

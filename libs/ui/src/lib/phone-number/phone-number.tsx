@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { cn, toArray } from '@learnway/shared';
-import React, { ReactNode, useEffect, useState } from 'react';
+import { cn } from '@learnway/shared';
+import { useState, useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { isFunction } from 'lodash';
+
+import { getBrowserNation } from '@learnway/shared';
 
 import NationNumbers from './nation-number.json';
 import { Input, InputProps } from '../input/input';
@@ -10,9 +12,15 @@ import { Select } from '../select/select';
 import type { SelectOption } from '../select/type';
 import styles from './phone-number.module.css';
 
-export interface PhoneNumberComponentProps extends InputProps {
+export interface PhoneNumber {
+  nationCode: string;
+  number: string;
+}
+
+export interface PhoneNumberComponentProps extends Omit<InputProps, 'value' | 'onChange'> {
   options?: SelectOption[];
-  value?: any;
+  value?: PhoneNumber;
+  onChange?: (value: PhoneNumber) => void;
   className?: string;
   size?: any;
 }
@@ -28,16 +36,29 @@ const PhoneNumberComponent = function ({
   ...props
 }: PhoneNumberComponentProps) {
   const { t } = useTranslation();
-  const [editionValue, setEditionValue] = useState();
+  const [editionValue, setEditionValue] = useState<PhoneNumber>(
+    value ??
+      ({
+        nationCode: getBrowserNation(),
+      } as PhoneNumber),
+  );
 
   const nationOptions = useCreation(() => {
     return NationNumbers;
   }, []);
 
-  const handleSelect = (option: SelectOption) => {
-    if (isFunction(onChange)) {
-      onChange(value);
+  useEffect(() => {
+    if (value !== editionValue) {
+      onChange?.(editionValue);
     }
+  }, [editionValue]);
+
+  const handleSelect = (option: SelectOption) => {
+    setEditionValue({ ...editionValue, nationCode: option.value });
+  };
+
+  const handleChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditionValue({ ...editionValue, number: e.target.value });
   };
 
   return (
@@ -58,8 +79,8 @@ const PhoneNumberComponent = function ({
         disabled={disabled}
       />
       <Input
-        value={value}
-        onChange={onChange}
+        value={editionValue?.number}
+        onChange={(e) => handleChangeNumber(e)}
         {...props}
         className={styles.input_area}
         readOnly={readOnly}

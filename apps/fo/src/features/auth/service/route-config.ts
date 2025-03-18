@@ -2,7 +2,8 @@
 import { createElement } from 'react';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
-import { isFunction } from 'lodash';
+import { isFunction, isEmpty } from 'lodash';
+import { ZodSchema } from 'zod';
 
 import { authUserQueryKeys, ERROR } from '@learnway/config';
 import type { AuthUser, PageRouteConfig } from '@learnway/config';
@@ -37,19 +38,7 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
-    beforeLoad: ({ location, context, params, search }: any) => {
-      if (routeConfig?.meta) {
-        context.setPageMeta({ ...defaultPageRouteConfig.meta, ...routeConfig.meta });
-      } else {
-        context.setPageMeta(defaultPageRouteConfig.meta);
-      }
-      if (routeConfig?.validate) {
-        try {
-          routeConfig.validate({ params, search, state: location?.state });
-        } catch (e) {
-          throw new Error(String(e));
-        }
-      }
+    beforeLoad: ({ location, context, params, search, preload }: any) => {
       if (routeConfig?.authorization) {
         try {
           authorization({ location, context });
@@ -62,6 +51,43 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         }
       }
       return { ...context, state: location?.state };
+    },
+    loader: ({ location, context, params, search, preload }: any) => {
+      if (preload || isEmpty(location.state)) {
+        console.log('loader return state is empty');
+        return;
+      }
+      if (routeConfig?.meta) {
+        context.setPageMeta({ ...defaultPageRouteConfig.meta, ...routeConfig.meta });
+      } else {
+        context.setPageMeta(defaultPageRouteConfig.meta);
+      }
+      if (routeConfig?.validateState) {
+        console.log(
+          'routeConfig?.validateState location?.state',
+          location?.state,
+          routeConfig?.validateState,
+        );
+        let schema: ZodSchema;
+        if (isFunction(routeConfig?.validateState)) {
+          schema = routeConfig?.validateState(location?.state);
+        } else {
+          schema = routeConfig?.validateState;
+        }
+        try {
+          schema.parse(location?.state);
+        } catch (e) {
+          console.log('routeConfig.validateState', location?.state);
+          throw new Error(String(e));
+        }
+      }
+      if (routeConfig?.validate) {
+        try {
+          routeConfig.validate({ params, search, state: location?.state });
+        } catch (e) {
+          throw new Error(String(e));
+        }
+      }
     },
     errorComponent: ({ error }: any) => {
       console.log('errorComponent', error);
