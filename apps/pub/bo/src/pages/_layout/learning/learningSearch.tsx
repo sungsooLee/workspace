@@ -18,7 +18,7 @@ import {
   DropdownOption,
 } from '@learnway/ui';
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import styles from './page-content.module.css';
+import styles from '../../../../../../bo/src/widgets/layout/ui/container/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import wrapStyles from './wrap-box.module.css'; // 하단 layout style - line
 import { cn } from '@/libs/shared/src';
