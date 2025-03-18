@@ -1,5 +1,6 @@
 export * from './service/route-config';
 export * from './service/auth.service';
+export * from './service/validator.service';
 
 export * from './ui/auth-tool-form-field/auth-tool-form-field';
 export * from './ui/verify-user-id-form-field/verify-user-id-form-field';

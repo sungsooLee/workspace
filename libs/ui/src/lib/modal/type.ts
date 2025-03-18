@@ -22,6 +22,6 @@ export interface useModalReturnValue {
   open: (props: ModalConfig) => Promise<any>;
   close: (data?: any) => void;
   closeAll: () => void;
-  alert: (props: AlertComponentProps | string) => void;
-  confirm: (props: AlertComponentProps | string) => void;
+  alert: (props: AlertComponentProps | string) => Promise<boolean>;
+  confirm: (props: AlertComponentProps | string) => Promise<boolean>;
 }

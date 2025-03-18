@@ -44,16 +44,20 @@ export default class VerificationsService {
   }
 
   static updatePasswordByPhoneNumber(payload: any) {
-    return httpService.post<any>(
+    return httpService.put<any>(
       `${PMSApiPrefix()}/users/verifications/change-password-by-phone-number`,
       payload,
     );
   }
 
   static updatePasswordByEmail(payload: any) {
-    return httpService.get<any>(
+    return httpService.put<any>(
       `${PMSApiPrefix()}/users/verifications/change-password-by-email`,
       payload,
     );
+  }
+
+  static updatePassword(payload: any) {
+    return httpService.put<any>(`${PMSApiPrefix()}/users/verifications/change-password`, payload);
   }
 }

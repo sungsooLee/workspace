@@ -142,3 +142,19 @@ export function useUpdatePasswordByEmail(mutationOptions = {}) {
     isError,
   };
 }
+
+export function useUpdatePassword(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.updatePassword(),
+    ...mutationOptions,
+  });
+
+  return {
+    update: (payload: any, callback?: MutateCallback<any[]>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}

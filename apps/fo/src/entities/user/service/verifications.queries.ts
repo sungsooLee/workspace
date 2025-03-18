@@ -37,4 +37,7 @@ export const mutateOptions = {
   updatePasswordByEmail: () => ({
     mutationFn: (payload: any) => VerificationsService.updatePasswordByEmail(payload),
   }),
+  updatePassword: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePassword(payload),
+  }),
 };
