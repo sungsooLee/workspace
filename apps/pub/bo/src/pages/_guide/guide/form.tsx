@@ -318,7 +318,6 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 placeholder="한글, 영문, 숫자 포함 9자 이하"
                 showInput
                 prefixCharacter="#"
-                onChange={handleChange}
               />
             </div>
             <p className={formStyles.text_limit}>

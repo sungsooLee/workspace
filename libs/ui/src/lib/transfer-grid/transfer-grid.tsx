@@ -32,6 +32,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
         size: 100,
+        meta: {
+          headerAlign: 'center', // 헤더만 가운데 정렬
+          cellAlign: 'center', // 셀은 오른쪽 정렬
+        },
         cell: ({ row }) => (
           <div className={styles.btn_select}>
             <Button
@@ -60,6 +64,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
         size: 100,
+        meta: {
+          headerAlign: 'center', // 헤더만 가운데 정렬
+          cellAlign: 'center', // 셀은 오른쪽 정렬
+        },
         cell: ({ row }) => (
           <div className={styles.btn_select}>
             <Button

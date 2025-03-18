@@ -147,7 +147,7 @@ const Grid = forwardRef(
                 ),
                 // 바디 체크 박스
                 cell: ({ row }: { row: Row<T> }) => (
-                  <div className="inline-flex items-center justify-center">
+                  <div className="inline-flex items-center justify-center text-center">
                     <Checkbox
                       checked={row.getIsSelected()}
                       onCheckedChange={(checked) => {
@@ -367,7 +367,7 @@ const Grid = forwardRef(
                     style={{
                       display: 'flex',
                       width: cell.column.getSize(),
-                      textAlign:
+                      justifyContent:
                         cell.column.columnDef.meta?.cellAlign ||
                         cell.column.columnDef.meta?.align ||
                         'left',
@@ -424,7 +424,7 @@ const Grid = forwardRef(
                         width: cell.column.getSize(),
                         display: 'flex',
                         alignItems: 'center',
-                        textAlign:
+                        justifyContent:
                           cell.column.columnDef.meta?.cellAlign ||
                           cell.column.columnDef.meta?.align ||
                           'left',

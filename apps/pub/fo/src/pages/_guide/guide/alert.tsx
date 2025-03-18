@@ -190,7 +190,7 @@ const { alert: openAlert } = useModal();
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    true,
+    type: 'caution',
   });
 };
 
@@ -266,7 +266,6 @@ const handleClickAlert4 = () => {
         이것은 description 입니다. <br /> 줄바꿈 적용 <br /> 줄바꿈 적용
       </>
     ),
-    true,
     type: 'error',
   });
 };

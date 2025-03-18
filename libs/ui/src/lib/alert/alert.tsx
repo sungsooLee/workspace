@@ -18,7 +18,7 @@ export interface AlertComponentProps {
   okButtonLabel?: string;
   cancelButtonLabel?: string;
   isConfirm?: boolean;
-  type?: 'error' | 'caution' | 'complete' | 'warning'; // icon type
+  type?: 'error' | 'warning' | 'complete' | 'caution'; // icon type
 }
 
 const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
