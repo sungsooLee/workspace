@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { IcoUploadCloud } from '@learnway/icons';
-import styles from './popup-learningRegisteration.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
 
 export const Route = createFileRoute('/_layout/learning/popup-upload')({
   component: RouteComponent,
@@ -10,19 +10,6 @@ export const Route = createFileRoute('/_layout/learning/popup-upload')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const CustomFooter = () => {
-    const { close: closeModal } = useModal();
-    return (
-      <Button
-        variant="gray"
-        size="lg"
-        onClick={() => {
-          closeModal();
-        }}>
-        {'취소'}
-      </Button>
-    );
-  };
   const FileUploadContent = () => {
     return (
       <div className={styles.wrap}>

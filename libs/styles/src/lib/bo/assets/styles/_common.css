@@ -76,12 +76,6 @@ body[data-scroll-locked][data-scroll-locked] {
       .title_wrap {
         @apply border-b-[1px] border-solid border-[var(--gray4)];
       }
-      .content_wrap {
-        @apply !min-h-[calc(100vh-186px)] pb-[32px];
-        & > div {
-          @apply !min-h-[calc(100vh-252px)];
-        }
-      }
     }
   }
 }
