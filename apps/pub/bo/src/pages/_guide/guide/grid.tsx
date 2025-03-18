@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Grid } from '@learnway/ui';
+import { Button, Grid, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
@@ -35,6 +35,14 @@ function RouteComponent() {
           {'과정개설'}
         </Button>
       ),
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          {'과정명'}
+        </Tooltip>
+      ),
     },
     {
       firstName: 'tandy',
@@ -54,28 +62,13 @@ function RouteComponent() {
           {'과정개설'}
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          {'과정명'}
+        </Tooltip>
       ),
     },
     {
@@ -100,28 +93,13 @@ function RouteComponent() {
           {'과정개설'}
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          {'과정명'}
+        </Tooltip>
       ),
     },
     {
@@ -146,28 +124,13 @@ function RouteComponent() {
           {'과정개설'}
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          {'과정명'}
+        </Tooltip>
       ),
     },
     {
@@ -192,74 +155,13 @@ function RouteComponent() {
           {'과정개설'}
         </Button>
       ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'active',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
-      ),
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Inactive',
-      progress: 80,
-      preview: (
-        <Link to={'/'} className="link">
-          미리보기
-        </Link>
-      ),
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-      procedure: (
-        <Button size={'xs'} className="btn_table" variant={'gray2'}>
-          {'과정개설'}
-        </Button>
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          {'과정명'}
+        </Tooltip>
       ),
     },
   ];
@@ -349,6 +251,11 @@ function RouteComponent() {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'center', // 셀은 오른쪽 정렬
       },
+    }),
+    columnHelper.accessor('course', {
+      cell: (info) => info.getValue(),
+      header: '과정명',
+      size: 220,
     }),
   ] as ColumnDef<any, unknown>[];
 

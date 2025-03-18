@@ -629,6 +629,68 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
+            {/* 퍼블수정 20240318 : 멀티줄인 경우 추가 S */}
+            <div className={searchStyles.multi}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-select2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>테넌트</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-channel2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>채널</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Select
+                      className={searchStyles.select_option}
+                      options={[
+                        { value: 'type1', label: '전체' },
+                        { value: 'type2', label: '항목' },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-type2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>유형</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <DropdownList
+                      options={options}
+                      value={selectedOptions}
+                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-owner2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>담당자</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Input id="name-owner2" type="text" placeholder="담당자명으로 조회하세요." />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* 퍼블수정 20240318 : 멀티줄인 경우 추가 E */}
             {/* 확장영역 */}
             {isExpanded && (
               <div className={searchStyles.form_display}>
