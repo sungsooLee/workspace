@@ -12,6 +12,14 @@
   }
   .pop_contents {
     @apply mt-[24px];
+    .sub_text {
+      @apply body_2_r mt-[8px] text-[1.4rem] text-[var(--gray8)];
+      &.dot {
+        &::before {
+          @apply mr-[4px] inline-block h-[4px] w-[4px] rounded-[2px] bg-[var(--gray8)] align-middle content-[''];
+        }
+      }
+    }
   }
   .select_wrap {
     @apply mt-[24px];

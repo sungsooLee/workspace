@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, useModal, ModalBody, ModalContainer, ModalFooter, UppyUpload } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
 export const Route = createFileRoute('/_layout/learning/popup-upload')({
@@ -22,7 +23,7 @@ function RouteComponent() {
             </div>
             <div className={popupStyles.pop_contents}>
               <UppyUpload />
-              <p className={popupStyles.sub_text}>
+              <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
                 {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
               </p>
             </div>

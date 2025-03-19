@@ -71,18 +71,32 @@
 .table_info_wrap {
   @apply flex w-full flex-col;
   .table_info_item {
-    @apply mb-[12px] flex min-h-[32px] items-center;
+    @apply mb-[12px] flex min-h-[32px] w-full items-center;
     .title {
       @apply title_bo_4_b text-[var(--gray9)];
     }
     .sub_info {
-      @apply title_bo_4_b relative ml-[12px] pl-[12px] text-[var(--gray9)];
+      @apply title_bo_4_b relative ml-[12px] mr-auto pl-[12px] text-[var(--gray9)];
       .num {
         @apply title_bo_4_b ml-[2px] inline-flex text-[var(--secondary1)];
       }
       &::before {
         @apply absolute left-0 top-1/2 flex h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
       }
+    }
+    button {
+      svg {
+        @apply mr-[2px];
+      }
+    }
+    button + button {
+      @apply !ml-0;
+      &::before {
+        @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+    .btn_excel {
+      @apply button_bo_2_r !font-normal text-[var(--gray9)];
     }
     .btn_setting {
       @apply button_bo_2_r text-[var(--gray9)];
