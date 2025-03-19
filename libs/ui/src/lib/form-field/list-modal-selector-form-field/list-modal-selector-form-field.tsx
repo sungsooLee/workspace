@@ -65,9 +65,26 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     };
 
     return (
-      <div ref={ref} className={cn(styles.start, 'nlp--list-modal-selector-form-field')}>
-        <Button {...buttonProps} variant={'gray'} size={'md'} onClick={handleButtonClick} />
-        <List {...listProps} options={value} onOptionDeleteClick={handleOptionDeleteClick} />
+      <div
+        ref={ref}
+        className={cn(
+          styles.start,
+          styles.modal_select_wrap,
+          'nlp--list-modal-selector-form-field',
+        )}>
+        <Button
+          className={styles.btn}
+          {...buttonProps}
+          variant={'gray'}
+          size={'md'}
+          onClick={handleButtonClick}
+        />
+        <List
+          className={styles.list}
+          {...listProps}
+          options={value}
+          onOptionDeleteClick={handleOptionDeleteClick}
+        />
       </div>
     );
   },
