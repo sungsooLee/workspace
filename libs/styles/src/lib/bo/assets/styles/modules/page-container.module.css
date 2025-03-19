@@ -2,7 +2,7 @@
 .start {
   &.contents {
     .inner {
-      @apply scrollbar box-border h-[calc(100vh-140px)] overflow-hidden overflow-y-auto bg-[#f2f4f9] px-[40px] pb-[40px];
+      @apply scrollbar box-border h-auto overflow-hidden overflow-y-auto bg-[#f2f4f9] px-[40px] pb-[40px];
     }
   }
 

@@ -205,7 +205,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'channelName',
       type: 'custom',
-      label: '채널',
+      label: '채널 - InputModalSelectorFormField',
       value: '',
     },
     {
@@ -257,7 +257,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: '강사',
       type: 'custom',
-      label: t('강사 - chip-list-modal-selector-form-field'),
+      label: t('강사 - ChipListModalSelectorFormField'),
       value: [],
       placeholder: '',
       description: '',
@@ -306,7 +306,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'managerName',
       type: 'custom',
-      label: t('운영자 - 인풋 + 다이얼로그 버튼'),
+      label: t('운영자 - InputModalSelectorFormField'),
       value: '',
       placeholder: '',
       description: '',
@@ -334,7 +334,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: '공개범위',
       type: 'custom',
-      label: t('공개범위 - list-modal-selector-form-field'),
+      label: t('공개범위 - ListModalSelectorFormField'),
       value: [{ targetId: 'target1', targetName: 'targetname1' }],
       placeholder: '',
       description: '',

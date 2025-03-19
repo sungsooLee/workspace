@@ -10,10 +10,13 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 
 export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[]> {
+  /** Modal component props */
   modalConfig: ModalConfig;
+  /** Button component props */
   button?: ButtonComponentProps;
+  /** List component props */
   list?: Partial<ListComponentProps>;
-  /** onFormChange(modalData) 수행시 modalData 조작을 위한 함수  */
+  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
   transformModalData?: (modalData?: any) => void;
 }
 
@@ -65,9 +68,26 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     };
 
     return (
-      <div ref={ref} className={cn(styles.start, 'nlp--list-modal-selector-form-field')}>
-        <Button {...buttonProps} variant={'gray'} size={'md'} onClick={handleButtonClick} />
-        <List {...listProps} options={value} onOptionDeleteClick={handleOptionDeleteClick} />
+      <div
+        ref={ref}
+        className={cn(
+          styles.start,
+          styles.modal_select_wrap,
+          'nlp--list-modal-selector-form-field',
+        )}>
+        <Button
+          className={styles.btn}
+          {...buttonProps}
+          variant={'gray'}
+          size={'md'}
+          onClick={handleButtonClick}
+        />
+        <List
+          className={styles.list}
+          {...listProps}
+          options={value}
+          onOptionDeleteClick={handleOptionDeleteClick}
+        />
       </div>
     );
   },

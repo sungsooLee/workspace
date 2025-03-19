@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Uppy, { type Meta, type Body, type UIPluginOptions, type State } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
-import { httpService } from '@learnway/shared';
+import { httpService, cn } from '@learnway/shared';
+import { IcoDownload, IcoRefresh, IcoTrash03 } from '@learnway/icons';
+import { Button } from '../button/button';
 
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import styles from './uppy-file-upload.module.css';
 
 // 파일 아이템 인터페이스 확장 - 파트 정보 추가
 interface FileItem {
@@ -46,30 +49,34 @@ interface SimpleUploadProps {
   folderPath?: string;
   maxRetries?: number;
   retryDelay?: number;
+  wrapSize?: 'sm' | 'md';
+  className?: string;
 }
 
 export const UppyUpload: React.FC<SimpleUploadProps> = ({
   allowedFileTypes = [
-    '.mp4',
-    '.wmv',
-    '.ts',
-    '.avi',
-    '.mkv',
-    '.mts',
-    '.mov',
-    '.mxf',
-    '.mpeg',
-    '.mpg',
-    '.webm',
-    '.asf',
-    '.skm',
-    '.k3g',
-    '.png',
+    'mp4',
+    'wmv',
+    'ts',
+    'avi',
+    'mkv',
+    'mts',
+    'mov',
+    'mxf',
+    'mpeg',
+    'mpg',
+    'webm',
+    'asf',
+    'skm',
+    'k3g',
+    'png',
   ],
   maxFileSize = 1024 * 1024 * 1024, // 1GB
   folderPath = 'uploads/',
   maxRetries = 3, // 최대 재시도 횟수
   retryDelay = 2000, // 재시도 간격 (ms)
+  wrapSize = 'md',
+  className,
 }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -598,13 +605,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl p-4">
-      <div
-        className="rounded-lg border-2 border-dashed border-gray-300 p-6"
-        onDrop={handleDrop}
-        onDragOver={(e) => e.preventDefault()}>
+    <div className={cn(styles.start, styles.upload_wrap, wrapSize && styles[wrapSize], className)}>
+      <div className={styles.contents} onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
         {files.length === 0 ? (
-          <div className="py-10 text-center">
+          <div className={styles.upload_area}>
             <input
               ref={fileInputRef}
               type="file"
@@ -613,16 +617,27 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
               multiple
               accept={allowedFileTypes?.join(',')}
             />
-            <div onClick={() => fileInputRef.current?.click()} className="cursor-pointer">
-              <p className="mb-2 text-lg">영역을 클릭하거나 파일을 마우스로 끌어놓으세요</p>
-              <p className="text-sm text-gray-500">최대 파일 크기: {formatFileSize(maxFileSize)}</p>
-              <p className="text-sm text-gray-500">지원 파일 형식: {allowedFileTypes.join(', ')}</p>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              role="button"
+              className={styles.btn_file}>
+              <IcoDownload
+                width={40}
+                height={40}
+                stroke="#131c30"
+                className={styles.icon_download}
+              />
+              <p className={styles.title}>영역을 클릭하거나 파일을 마우스로 끌어놓으세요</p>
+              {/* <p className={styles.text}>최대 파일 크기: {formatFileSize(maxFileSize)}</p> */}
+              <p className={styles.text}>
+                {/*지원 파일 형식:*/} {allowedFileTypes.join(', ')}
+              </p>
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className={styles.status_wrap}>
             {/* 진행 중인 업로드가 있을 때 모두 취소 버튼 표시 */}
-            {Object.keys(activeUploads).length > 0 && (
+            {/* {Object.keys(activeUploads).length > 0 && (
               <div className="mb-4 flex justify-end">
                 <button
                   onClick={cancelAllUploads}
@@ -630,13 +645,13 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
                   모든 업로드 취소
                 </button>
               </div>
-            )}
+            )} */}
 
             {files.map((file) => (
-              <div key={file.id} className="rounded-lg bg-gray-50 p-3">
-                <div className="flex items-center justify-between">
-                  <span className="truncate font-medium">{file.name}</span>
-                  <span className="text-gray-500">{formatFileSize(file.size)}</span>
+              <div key={file.id} className={styles.file_item}>
+                <div className={styles.file_info}>
+                  <span className={styles.file_info}>{file.name}</span>
+                  <span className={styles.file_size}>{formatFileSize(file.size)}</span>
                 </div>
 
                 {/* 진행 상태 표시 */}
@@ -697,11 +712,12 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
                   )}
 
                   {/* 삭제 버튼 */}
-                  <button
-                    className="rounded bg-red-100 px-2 py-1 text-sm text-red-700 hover:bg-red-200"
-                    onClick={() => removeFile(file.id)}>
-                    삭제
-                  </button>
+                  <Button
+                    className={styles.btn_delete}
+                    onClick={() => removeFile(file.id)}
+                    onlyIcon>
+                    <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                  </Button>
                 </div>
               </div>
             ))}

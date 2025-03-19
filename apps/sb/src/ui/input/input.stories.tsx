@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button, Input, InputTimer } from '@learnway/ui';
 
@@ -15,16 +15,18 @@ type Story = StoryObj<typeof Input>;
 
 // Text
 export const Template: any = (args: any) => {
-  const handleChange = (value: any) => {
-    console.log(value);
+  const [value, setValue] = useState('');
+  const handleChange = (event: any) => {
+    // console.log(values);
+    setValue(event.target.value);
   };
   return (
     <div className={'flex flex-col gap-3'}>
-      <Input {...args} maxLength={20} onChange={handleChange} />
-      <Input {...args} unitText={'명'} onChange={handleChange} />
-      <Input {...args} showCounter onChange={handleChange} />
-      <Input {...args} unitText={'명'} showCounter onChange={handleChange} />
-      <Input {...args} showSearchIcon onEnterKeyDown={() => console.log('enter')} />
+      <Input {...args} maxLength={20} value={value} onChange={handleChange} />
+      <Input {...args} unitText={'명'} value={value} onChange={handleChange} />
+      <Input {...args} showCounter value={value} onChange={handleChange} />
+      <Input {...args} unitText={'명'} value={value} showCounter onChange={handleChange} />
+      <Input {...args} showSearchIcon value={value} onEnterKeyDown={() => console.log('enter')} />
     </div>
   );
 };
@@ -33,8 +35,9 @@ Template.storyName = 'Text';
 // Value Control
 export const TemplateValueControl: any = (args: any) => {
   const [value, setValue] = React.useState('');
-  const handleChange = (value: any) => {
-    console.log(value);
+  const handleChange = (event: any) => {
+    // console.log(values);
+    setValue(event.target.value);
   };
   return (
     <div className={'flex flex-col gap-3'}>
@@ -47,26 +50,42 @@ TemplateValueControl.storyName = 'Value Control';
 
 // Number
 export const TemplateNumber: any = (args: any) => {
-  const handleChange = (value: any) => {
+  const [value, setValue] = React.useState('');
+
+  const handleChange = (event: any) => {
     console.log(value);
+    setValue(event.target.value);
   };
-  return <Input {...args} type="number" onChange={handleChange} />;
+  return <Input {...args} type="number" value={value} onChange={handleChange} />;
 };
 TemplateNumber.storyName = 'Number';
 
 // Mask
 export const TemplateMask: any = (args: any) => {
-  const handleChange = (value: any) => {
-    console.log(value);
+  const [value, setValue] = React.useState('');
+
+  const handleChange = (event: any) => {
+    setValue(event.target.value);
   };
   return (
-    <Input {...args} type="mask" mask={'_'} format={'###-####-####'} onChange={handleChange} />
+    <Input
+      {...args}
+      type="mask"
+      mask={'_'}
+      format={'###-####-####'}
+      value={value}
+      onChange={handleChange}
+    />
   );
 };
 TemplateMask.storyName = 'Mask';
 
 // Timer
 export const TemplateTimer: any = (args: any) => {
+  const [value, setValue] = React.useState('');
+  const handleChange = (event: any) => {
+    setValue(event.target.value);
+  };
   const [startTimer, setStartTimer] = React.useState(0);
   return (
     <>
@@ -86,9 +105,11 @@ export const TemplateTimer: any = (args: any) => {
       </div>
       <InputTimer
         {...args}
+        value={value}
         startTimer={startTimer}
         initialTime={300}
         onTimerEnd={() => alert('End Timer')}
+        onChange={handleChange}
       />
     </>
   );
