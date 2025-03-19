@@ -9,7 +9,6 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import styles from '@learnway/styles/fo/features/course-registration/course-registration-all.module.css';
-
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
   component: RouteComponent,
 });
@@ -156,7 +155,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>사전 레벨테스트 가능일</span>
                 </div>
                 <div className={formStyles.input_box}>
-                  <DatePicker onChange={handleDate} value={date} className="lg" />
+                  <DatePicker onChange={handleDate} value={date} size="lg" />
                 </div>
               </div>
             </ContentsRow>
@@ -329,6 +328,12 @@ function RouteComponent() {
           </dt>
           <dd>강사배정은 상황에 따라 변동될 수 있습니다.</dd>
           <dd>동일과정을 연속 신청하실 경우 레벨테스트가 없습니다.</dd>
+          <dd>
+            교재 배송은 강의시작 1주일 전까지 수강 신청 내역에서 변경 할 수 있습니다.
+            <Button>수강 신청 내역</Button>
+          </dd>
+          <dd>강의 시작 전 주소지가 변경 된 경우, 교육담당자에게 문의해주세요.</dd>
+          <dd>결재자가 부재이거나, 없는경우 결재자변경을 통해 결재자를 지정해주세요.</dd>
         </dl>
       </div>
 

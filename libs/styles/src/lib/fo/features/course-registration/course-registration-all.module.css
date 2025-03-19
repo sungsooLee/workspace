@@ -93,6 +93,11 @@
     }
     .notice {
       @apply mt-[32px];
+      dd {
+        button {
+          @apply label_12_500 text-[var(--secondary3)] underline;
+        }
+      }
     }
   }
 }
