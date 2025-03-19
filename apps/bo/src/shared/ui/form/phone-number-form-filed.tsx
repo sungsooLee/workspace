@@ -1,23 +1,32 @@
 import { PhoneNumber } from '@learnway/ui';
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-interface PhoneNumberFormFieldProps {
-  fields: {};
-}
+import { useWatch } from 'react-hook-form';
 
 /**
  * 전화 번호 form-field
  * @constructor
  */
 const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
-  ({ value, onChange, getValues, onFormChange }, ref) => {
+  ({ value, name, control, onFormChange }, _) => {
+    const nationCode = useWatch({ control, name: 'nationCode' });
     /**
      * phone number 변경 이벤트
-     * @param event
+     * @param changeValue
      */
-    const handleOnChange = (event?: ChangeEvent<HTMLInputElement>) => {};
+    const handleOnChange = (changeValue: PhoneNumber) => {
+      onFormChange({ nationCode: changeValue.nationCode, [name]: changeValue.number });
+    };
 
-    return null;
+    return (
+      <PhoneNumber
+        value={{
+          nationCode,
+          number: value,
+        }}
+        onChange={handleOnChange}
+      />
+    );
   },
 );
 

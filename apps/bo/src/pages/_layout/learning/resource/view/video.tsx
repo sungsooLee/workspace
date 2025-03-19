@@ -55,7 +55,7 @@ function RouteComponent() {
           <Button variant="point" size="sm">
             삭제
           </Button>
-          <Button variant="primary" size="sm">
+          <Button type={'submit'} variant="primary" size="sm">
             수정
           </Button>
         </ContentsButtons>
@@ -100,7 +100,8 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'contact'}>{/*연락처*/}</DynamicFormField>
+              {/*연락처*/}
+              <DynamicFormField name={'contact'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -280,6 +281,12 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      label: t('nationCode'),
+      name: 'nationCode',
+      type: 'hidden',
+      value: 'KR',
+    },
+    {
       label: t('연락처'),
       name: 'contact',
       type: 'phone-number',
@@ -290,6 +297,7 @@ const formConfig: DynamicFormConfig = {
       name: 'expirationDate',
       type: 'switch',
       value: false,
+      format: 'boolean',
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
     {
@@ -307,6 +315,7 @@ const formConfig: DynamicFormConfig = {
       label: t('외주개발업체정보'),
       name: 'isExternalDevelopmentCompany',
       type: 'switch',
+      format: 'boolean',
       value: false,
     },
     {
@@ -331,11 +340,13 @@ const formConfig: DynamicFormConfig = {
       label: t('썸네일'),
       name: 'thumbnails',
       type: 'custom',
+      format: 'array',
       value: [],
     },
     {
       label: t('태그'),
       name: 'tags',
+      format: 'array',
       type: 'chip-list',
       placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
       limitPlaceholder: '여러개의 태그는 쉼표로 구분',
@@ -364,6 +375,7 @@ const formConfig: DynamicFormConfig = {
       label: t('교육지원활용 여부'),
       name: 'isTrainingSupport',
       type: 'switch',
+      format: 'boolean',
       switchConfig: {
         label: (value: boolean) => (value ? '활용가능' : '활용불가'),
       },
@@ -374,6 +386,7 @@ const formConfig: DynamicFormConfig = {
       label: t('보안컨텐츠여부'),
       name: 'isSecurityContent',
       type: 'switch',
+      format: 'boolean',
       switchConfig: {
         label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
       },
@@ -385,6 +398,7 @@ const formConfig: DynamicFormConfig = {
       label: t('자막여부'),
       name: 'isSubtitles',
       type: 'switch',
+      format: 'boolean',
       switchConfig: {
         label: (value: boolean, getValues) =>
           value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
@@ -394,12 +408,14 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'subtitles',
       type: 'custom',
+      format: 'array',
       value: [],
     },
     {
       label: t('검수확인'),
       name: 'isInspectionConfirmed',
       type: 'checkbox',
+      format: 'boolean',
       guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
       checkConfig: {
         reverse: true,
@@ -409,6 +425,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('저작권확인'),
       name: 'isCopyrightConfirmed',
+      format: 'boolean',
       guideText:
         '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
       type: 'checkbox',
@@ -420,6 +437,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('보안확인'),
       name: 'isSecurityConfirmed',
+      format: 'boolean',
       guideText:
         '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
       type: 'checkbox',
@@ -430,7 +448,7 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channelId: {
+    channelName: {
       format: 'string', // 데이터 타입
       required: true, // 필수 여부 // 기본값 false
       conditions: [
