@@ -1,4 +1,4 @@
-import { PhoneNumber } from '@learnway/ui';
+import { PhoneNumber, PhoneNumberValue } from '@learnway/ui';
 import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { useWatch } from 'react-hook-form';
@@ -14,7 +14,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldPr
      * phone number 변경 이벤트
      * @param changeValue
      */
-    const handleOnChange = (changeValue: PhoneNumber) => {
+    const handleOnChange = (changeValue: PhoneNumberValue) => {
       onFormChange({ nationCode: changeValue.nationCode, [name]: changeValue.number });
     };
 
