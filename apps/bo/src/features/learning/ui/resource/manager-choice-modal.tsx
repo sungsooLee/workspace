@@ -18,7 +18,7 @@ import { SearchBox } from '../../../../shared/ui/search-box';
 
 const ManagerChoicePopupComponent = () => {
   const { close } = useModal();
-  const { config: sConfig } = useSearchBox(searchConfig);
+  const { provider: sProvider } = useSearchBox(searchConfig);
   const [option, setOption] = useState<{ value: string; label: string }>();
   const [options, setOptions] = useState([
     { value: 'type1', label: '선택한 채널의 소속 채널 소유자명1 (사번 또는 이메일)' },
@@ -75,7 +75,7 @@ const ManagerChoicePopupComponent = () => {
               {/* form */}
               {options.length > 20 && (
                 <ContentsRow>
-                  <SearchBox config={sConfig} onSearch={handleOnSearch} />
+                  <SearchBox provider={sProvider} onSearch={handleOnSearch} />
                 </ContentsRow>
               )}
               <div className={styles.channel_wrap}>
@@ -110,35 +110,37 @@ export const ManagerChoiceModal = ManagerChoicePopupComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [
-    {
-      name: 'keyType',
-      type: 'dropdown',
-      label: t('다국어 분류'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('공통코드') },
-        { value: 'LABEL', label: t('라벨') },
-        { value: 'CATEGORY', label: t('카테고리') },
-        { value: 'ERROR', label: t('에러') },
-        { value: 'MESSAGE', label: t('메세지') },
-      ],
-    },
-    {
-      name: 'translationCode',
-      type: 'text',
-      label: t('다국어 코드'),
-    },
-    {
-      name: 'useYn',
-      type: 'dropdown',
-      label: '사용여부',
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'Y', label: '사용' },
-        { value: 'N', label: '미사용' },
-      ],
-    },
+    [
+      {
+        name: 'keyType',
+        type: 'dropdown',
+        label: t('다국어 분류'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('공통코드') },
+          { value: 'LABEL', label: t('라벨') },
+          { value: 'CATEGORY', label: t('카테고리') },
+          { value: 'ERROR', label: t('에러') },
+          { value: 'MESSAGE', label: t('메세지') },
+        ],
+      },
+      {
+        name: 'translationCode',
+        type: 'text',
+        label: t('다국어 코드'),
+      },
+      {
+        name: 'useYn',
+        type: 'dropdown',
+        label: '사용여부',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'Y', label: '사용' },
+          { value: 'N', label: '미사용' },
+        ],
+      },
+    ],
   ],
 };

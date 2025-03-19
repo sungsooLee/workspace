@@ -431,16 +431,13 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     channelId: {
-      type: 'string', // 데이터 타입
+      format: 'string', // 데이터 타입
       required: true, // 필수 여부 // 기본값 false
-      regx: '', // 정규식 // 필 수 아님
-      path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
       conditions: [
         {
           fn: (values: Record<string, any>) => values.age > 10,
           path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
         },
-        (values: Record<string, any>) => values.name !== '홍길동',
       ],
     },
   },

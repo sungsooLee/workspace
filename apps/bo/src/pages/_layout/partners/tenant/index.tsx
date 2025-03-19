@@ -31,8 +31,8 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel: z.string().required(),
-    channel2: z.string().required(),
+    /*channel: z.string().required(),
+    channel2: z.string().required(),*/
   },
 };
 

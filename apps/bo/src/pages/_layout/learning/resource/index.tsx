@@ -52,9 +52,7 @@ function RouteComponent() {
           등록
         </Button>
       </ContentsButtons>
-      <MainContents>
-        <SearchBox config={searchConfig} />
-      </MainContents>
+      <MainContents>Search</MainContents>
     </PageContainer>
   );
 }

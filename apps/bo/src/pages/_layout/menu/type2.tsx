@@ -30,9 +30,7 @@ const formConfigA: DynamicFormConfig = {
       value: '',
     },
   ],
-  validator: {
-    channel: z.string().required(),
-  },
+  validator: {},
 };
 const formConfigB: DynamicFormConfig = {
   builders: [
@@ -43,9 +41,7 @@ const formConfigB: DynamicFormConfig = {
       value: '',
     },
   ],
-  validator: {
-    channel: z.string().required(),
-  },
+  validator: {},
 };
 
 function RouteComponent() {
@@ -565,9 +561,9 @@ const detailConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel2: z.string().required(),
+    /*channel2: z.string().required(),
     b: z.string().required('B 를 입력해주세요'),
-    d: z.string().required('A 를 입력해주세요'),
+    d: z.string().required('A 를 입력해주세요'),*/
   },
 };
 const TestComponent: FC<any> = ({ provider }) => {

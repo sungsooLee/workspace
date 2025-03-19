@@ -175,11 +175,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
   ],
-  validator: {
-    code: z.string().required(),
-    title: z.string().required(),
-    url: z.string().required(),
-  },
+  validator: {},
 };
 
 const Title: FC<any> = ({ title, children }) => {

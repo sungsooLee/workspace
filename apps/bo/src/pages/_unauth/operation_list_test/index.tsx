@@ -19,11 +19,11 @@ function RouteComponent() {
   const router = useRouter();
   const { open: openModal } = useModal();
 
-  const { config: sConfig, getData } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getData);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   useEffect(() => {
-    gridFetch(getData(), { page: 0, size: 10 });
+    gridFetch(getValues(), { page: 0, size: 10 });
   }, []);
 
   const handleOnSubmit = (data: any) => {
@@ -61,7 +61,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>
@@ -71,71 +71,75 @@ function RouteComponent() {
 
 const searchConfig: SearchBoxConfig = {
   builders: [
-    {
-      name: '채널',
-      type: 'dropdown',
-      label: t('채널'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('채널') },
-      ],
-    },
-    {
-      name: '테넌트',
-      type: 'dropdown',
-      label: t('테넌트'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('테넌트') },
-      ],
-    },
-    {
-      name: '유형',
-      type: 'dropdown',
-      label: t('유형'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('유형') },
-      ],
-    },
-    {
-      name: '운영자',
-      type: 'text',
-      label: t('운영자'),
-    },
-    {
-      name: '개설년도',
-      type: 'dropdown',
-      label: t('개설년도'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('개설년도') },
-      ],
-    },
-    {
-      name: '사용여부',
-      type: 'dropdown',
-      label: t('사용여부'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('사용여부') },
-      ],
-    },
-    {
-      name: '과정코드',
-      type: 'text',
-      label: t('과정코드'),
-    },
-    {
-      name: '과정명',
-      type: 'text',
-      label: t('과정명'),
-    },
+    [
+      {
+        name: '채널',
+        type: 'dropdown',
+        label: t('채널'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('채널') },
+        ],
+      },
+      {
+        name: '테넌트',
+        type: 'dropdown',
+        label: t('테넌트'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('테넌트') },
+        ],
+      },
+      {
+        name: '유형',
+        type: 'dropdown',
+        label: t('유형'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('유형') },
+        ],
+      },
+      {
+        name: '운영자',
+        type: 'text',
+        label: t('운영자'),
+      },
+    ],
+    [
+      {
+        name: '개설년도',
+        type: 'dropdown',
+        label: t('개설년도'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('개설년도') },
+        ],
+      },
+      {
+        name: '사용여부',
+        type: 'dropdown',
+        label: t('사용여부'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('사용여부') },
+        ],
+      },
+      {
+        name: '과정코드',
+        type: 'text',
+        label: t('과정코드'),
+      },
+      {
+        name: '과정명',
+        type: 'text',
+        label: t('과정명'),
+      },
+    ],
   ],
 };
 
