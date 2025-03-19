@@ -25,6 +25,7 @@ export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   selectsStart?: boolean;
   selectsEnd?: boolean;
   showTimePicker?: boolean;
+  size?: 'md' | 'lg';
   className?: string;
   readOnly?: boolean;
   disabled?: boolean;
@@ -46,6 +47,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
       showTimePicker = false,
       timeFormat = '24',
       minuteStep = 15,
+      size,
       className,
       readOnly,
       disabled,
@@ -82,7 +84,8 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerComponentProps>
       setSelectedDate(value);
     }, [value]);
     return (
-      <div className="nlp--datepicker">
+      // <div className="nlp--datepicker">
+      <div className={cn('nlp--datepicker', size)}>
         <Primitive
           showIcon
           dateFormat={dateFormat}
