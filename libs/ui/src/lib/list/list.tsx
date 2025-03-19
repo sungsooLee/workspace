@@ -14,9 +14,13 @@ export interface ListComponentProps {
   className?: string;
   labelField?: string;
   valueField?: string;
-  selectable?: boolean;
+  /** option 선택시 active 표시 여부 */
+  disabledActive?: boolean;
+  /** 멀티 선택 가능 여부 */
   multiple?: boolean;
+  /** 삭제 가능 여부 */
   deletable?: boolean;
+  /** 보더 표시 여부 */
   hideBorder?: boolean;
   /** chip 삭제 버튼 클릭시 호출 */
   onOptionDeleteClick?: (option: any) => void;
@@ -32,7 +36,7 @@ const ListComponent = function ({
   value,
   labelField = 'label',
   valueField = 'value',
-  selectable = true,
+  disabledActive = false,
   multiple,
   deletable,
   hideBorder,
@@ -46,18 +50,16 @@ const ListComponent = function ({
   // changed value from parent component
   useEffect(() => {
     const newSelectedOptions = getOptionsFromValue(options, value, valueField);
-    if (!isEqual(selectedOptions, newSelectedOptions) && selectable) {
+    if (!isEqual(selectedOptions, newSelectedOptions)) {
       setSelectedOptions(newSelectedOptions);
     }
   }, [value]);
 
   // callback function
   useEffect(() => {
-    if (selectable) {
-      onOptionSelect?.(selectedOptions?.[0]);
-      onOptionsSelect?.(selectedOptions);
-    }
-  }, [selectedOptions, selectable]);
+    onOptionSelect?.(selectedOptions?.[0]);
+    onOptionsSelect?.(selectedOptions);
+  }, [selectedOptions]);
 
   const handleOptionClickForSingle = (option: any) => {
     setSelectedOptions([option]);
@@ -81,14 +83,14 @@ const ListComponent = function ({
           role="button"
           className={cn(
             styles.item,
-            selectedOptions?.find((x: any) => x[valueField] === d[valueField]) && styles.active, // selected row style
+            selectedOptions?.find((x: any) => x[valueField] === d[valueField]) &&
+              !disabledActive &&
+              styles.active, // selected row style
           )}
           key={d[valueField]}
-          onClick={() => {
-            if (selectable) {
-              multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d);
-            }
-          }}>
+          onClick={() =>
+            multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
+          }>
           {/* 라벨 */}
           {d[labelField]}
           {/* 삭제 버튼 */}

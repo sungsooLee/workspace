@@ -10,7 +10,7 @@ interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<s
   modalConfig: ModalConfig;
   input?: InputProps;
   onClick?: (value?: any) => void;
-  /** onFormChange(modalData) 수행시 modalData 조작을 위한 함수  */
+  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
   transformModalData?: (modalData?: any) => void;
 }
 

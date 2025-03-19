@@ -27,7 +27,7 @@ export const Template: any = (args: any) => {
 };
 Template.storyName = 'List';
 
-// Multiple List
+// Multiple Selection
 export const TemplateMultiple: any = (args: any) => {
   return (
     <List
@@ -38,7 +38,7 @@ export const TemplateMultiple: any = (args: any) => {
     />
   );
 };
-TemplateMultiple.storyName = 'Multiple List';
+TemplateMultiple.storyName = 'Multiple Selection';
 
 // Value Control
 export const TemplateValueControl: any = (args: any) => {
@@ -59,8 +59,8 @@ export const TemplateValueControl: any = (args: any) => {
       <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
       <List
         {...args}
-        selectable={false}
-        deletable={true}
+        disabledActive
+        deletable
         options={options}
         value={value}
         onOptionSelect={(option) => console.log('onOptionSelect', option)}
@@ -70,3 +70,23 @@ export const TemplateValueControl: any = (args: any) => {
   );
 };
 TemplateValueControl.storyName = 'Value Control';
+
+// Delete Option
+export const TemplateDelete: any = (args: any) => {
+  const [options, setOptions] = useState(dummyOptions);
+  const handleOptionDeleteClick = (option: any) => {
+    const newOptions = addOrRemoveItemByKey(options, option, 'value');
+    setOptions(newOptions);
+  };
+  return (
+    <List
+      {...args}
+      disabledActive
+      deletable
+      options={options}
+      onOptionSelect={(option) => console.log('onOptionSelect', option)}
+      onOptionDeleteClick={handleOptionDeleteClick}
+    />
+  );
+};
+TemplateDelete.storyName = 'Delete Option';
