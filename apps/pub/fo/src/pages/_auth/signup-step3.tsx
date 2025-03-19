@@ -13,6 +13,7 @@ import {
   Select,
   ContentsRow,
   PhoneNumber,
+  InputTimer,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step3')({
@@ -94,9 +95,31 @@ function RouteComponent() {
                     placeholder="아이디(hyundai.kim@hyundail.com)"
                     value=""
                   />
-                  <Button variant="gray" size="lg">
+                  {/* 퍼블수정 20250319 : 버튼 수정 */}
+
+                  <Button variant="gray" size="lg" className="min-w-min">
                     확인
                   </Button>
+                </div>
+              </div>
+            </ContentsRow>
+
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>인증번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={300}
+                    placeholder="인증번호 입력"
+                    resetLabel="인증번호 재전송"
+                  />
                 </div>
               </div>
             </ContentsRow>

@@ -1,0 +1,11 @@
+.start {
+  &.modal_select_wrap {
+    @apply flex w-full flex-col;
+    button {
+      @apply max-w-[100px];
+      & + ul {
+        @apply mt-[8px] w-full;
+      }
+    }
+  }
+}

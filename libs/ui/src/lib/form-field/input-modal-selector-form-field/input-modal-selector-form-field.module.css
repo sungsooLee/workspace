@@ -1,5 +1,8 @@
 .start {
   &.search_wrap {
-    @apply relative flex h-[32px] w-full items-center justify-start;
+    @apply relative flex h-[32px] w-full cursor-pointer items-center justify-start;
+    input {
+      @apply cursor-pointer;
+    }
   }
 }

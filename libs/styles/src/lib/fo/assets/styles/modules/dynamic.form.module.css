@@ -1,0 +1,52 @@
+/* dynamic.form.module.css */
+
+.multiple_row {
+  @apply flex w-full flex-col;
+  & > div {
+    @apply relative !gap-[8px] pr-[40px];
+    & + div {
+      @apply !border-0 !pt-0;
+    }
+  }
+  .short {
+    @apply !min-w-[224px] shrink-0;
+  }
+  .btn_edit {
+    @apply !min-w-[68px] shrink-0;
+  }
+  .btn_delete {
+    @apply absolute right-0 top-1/2 -translate-y-1/2;
+  }
+}
+
+.form_auto {
+  @apply flex;
+  & > div {
+    @apply w-[154px];
+  }
+  div + div {
+    @apply ml-[16px];
+  }
+  .btn_info {
+    @apply !font-normal;
+  }
+}
+
+.btn_switch {
+  @apply translate-y-1/2;
+}
+
+.form_display {
+  @apply relative;
+}
+
+.flex_plus {
+  @apply flex w-full items-center justify-between gap-[8px];
+
+  .btn_ico {
+    @apply h-[40px] w-[40px] items-center rounded-[8px] border border-solid border-[#A9AFB8];
+    svg {
+      @apply m-auto stroke-[#4C515E];
+    }
+  }
+}

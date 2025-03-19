@@ -16,7 +16,7 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
-
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import {
   Button,
   RadioCard,
@@ -40,9 +40,10 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={`${authFormStyles.search_info} ${styles.search_info} ${styles.dormant}`}>
+          {/* 퍼블수정 20250319 : embededAlert */}
+          <div className={`${embededAlert.start} ${styles.search_info} ${styles.dormant}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={authFormStyles.txt}>본인인증 후 아이디를 확인 할 수 있습니다.</p>
+            <p className={embededAlert.txt}>본인인증 후 아이디를 확인 할 수 있습니다.</p>
           </div>
 
           <ContentsRow>

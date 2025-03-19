@@ -2,15 +2,15 @@
 .start {
   &.contents {
     .inner {
-      @apply scrollbar box-border h-[calc(100vh-140px)] overflow-hidden overflow-y-auto bg-[#f2f4f9] px-[40px] pb-[40px];
+      @apply scrollbar box-border h-auto overflow-hidden overflow-y-auto bg-[#f2f4f9] px-[40px] pb-[40px];
     }
   }
 
   /* content_wrap */
   .content_wrap {
-    @apply box-border min-h-[calc(100vh-236px)] w-full rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pt-[32px];
+    @apply box-border w-full overflow-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pt-[32px];
     .content {
-      @apply relative flex min-h-[calc(100vh-302px)] items-stretch px-[32px];
+      @apply relative flex items-stretch px-[32px] pb-[40px];
     }
   }
 

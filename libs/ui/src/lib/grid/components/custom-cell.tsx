@@ -20,6 +20,7 @@ const CustomCell = <T extends object>({ row, value, imageUrl, onAction }: Custom
       <span className="flex-1">{value}</span>
       <Button
         size="sm"
+        className="link"
         onClick={(e) => {
           e.stopPropagation();
           handleAction();

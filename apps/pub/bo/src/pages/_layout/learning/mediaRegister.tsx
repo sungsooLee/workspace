@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
 import styles from '../../../../../../bo/src/widgets/layout/ui/container/page-contents.module.css';
-import movieInfoStyles from './movie-info.module.css';
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 S  */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
 import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
 
@@ -35,6 +36,8 @@ import {
   ModalBody,
   ModalContainer,
   ModalFooter,
+  DropdownList,
+  DropdownOption,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -60,71 +63,89 @@ function RouteComponent() {
   // Modal : 채널 검색
   const { close: closeModal } = useModal();
   const ModalChannelContent = () => {
+    const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+    const options = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+    ];
     return (
       <ModalContainer>
         <ModalBody>
-          {/* 퍼블수정 20240317 : 수정 S */}
-          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
-            <strong className={popSearchStyles.title}>{'등록 채널을 선택하세요.'}</strong>
-            {/* 퍼블수정 20240313 : search 영역 수정 */}
+          {/* 퍼블수정 20240318 : 수정 S */}
+          <div className={popupStyles.wrap}>
+            <div className={popupStyles.title_wrap}>
+              <h2 className={popupStyles.title}>{'등록 채널을 선택하세요.'}</h2>
+            </div>
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
-                <ContentsRow>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-select1" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>테넌트</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '전체' },
-                          { value: 'type2', label: '항목' },
-                        ]}
-                      />
+                <div className={searchStyles.item_row}>
+                  <div className={searchStyles.item_wrap}>
+                    <div className={searchStyles.inner}>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-select1" className={searchStyles.label}>
+                          <span className={searchStyles.text}>테넌트</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <DropdownList
+                            options={options}
+                            value={selectedOptions}
+                            onChange={(selected) =>
+                              setSelectedOptions(selected as DropdownOption[])
+                            }
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-channel" className={searchStyles.label}>
+                          <span className={searchStyles.text}>채널</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <DropdownList
+                            options={options}
+                            value={selectedOptions}
+                            onChange={(selected) =>
+                              setSelectedOptions(selected as DropdownOption[])
+                            }
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-owner" className={searchStyles.label}>
+                          <span className={searchStyles.text}>담당자</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Input
+                            id="name-owner"
+                            type="text"
+                            placeholder="담당자명으로 조회하세요."
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-channel" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>채널</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '전체' },
-                          { value: 'type2', label: '항목' },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-owner" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>담당자</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input id="name-owner" type="text" placeholder="담당자명으로 조회하세요." />
-                    </div>
-                  </div>
-                </ContentsRow>
-              </div>
-              <div className={searchStyles.btn_box}>
-                <Button
-                  type="button"
-                  className={searchStyles.btn_refresh}
-                  variant="search"
-                  size="sm"
-                  onlyIcon>
-                  <IcoRefresh02 className={searchStyles.icon_refresh} />
-                </Button>
-                <Button
-                  type="button"
-                  variant="search"
-                  size="sm"
-                  className={searchStyles.btn_search}>
-                  <IcoSearch className={searchStyles.icon_sm_search} />
-                  조회
-                </Button>
+                </div>
+                <div className={searchStyles.btn_box}>
+                  <Button
+                    type="button"
+                    className={searchStyles.btn_refresh}
+                    variant="search"
+                    size="sm"
+                    onlyIcon>
+                    <IcoRefresh02 className={searchStyles.icon_refresh} />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="search"
+                    size="sm"
+                    className={searchStyles.btn_search}>
+                    <IcoSearch className={searchStyles.icon_sm_search} />
+                    조회
+                  </Button>
+                </div>
               </div>
             </div>
             {/* 채널 리스트 */}
@@ -146,7 +167,7 @@ function RouteComponent() {
               />
             </div>
           </div>
-          {/* 퍼블수정 20240317 : 수정 E */}
+          {/* 퍼블수정 20240318 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -158,62 +179,76 @@ function RouteComponent() {
 
   // Modal : 담당자 검색
   const ModalManagerContent = () => {
+    const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+    const options = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+      { value: 'type3', label: '항목3' },
+    ];
     return (
       <ModalContainer>
         <ModalBody>
-          {/* 퍼블수정 20240317 : 수정 S */}
-          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
-            <strong className={popSearchStyles.title}>{'담당자를 선택하세요.'}</strong>
+          {/* 퍼블수정 20240318 : 수정 S */}
+          <div className={popupStyles.wrap}>
+            <div className={popupStyles.title_wrap}>
+              <h2 className={popupStyles.title}>{'담당자를 선택하세요.'}</h2>
+            </div>
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
-                <ContentsRow>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-channelName" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>채널</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Select
-                        className={formStyles.select_option}
-                        options={[
-                          { value: 'type1', label: '선택' },
-                          { value: 'type2', label: '선택2' },
-                        ]}
-                      />
+                <div className={searchStyles.item_row}>
+                  <div className={searchStyles.item_wrap}>
+                    <div className={searchStyles.inner}>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-channelName" className={searchStyles.label}>
+                          <span className={searchStyles.text}>채널</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <DropdownList
+                            options={options}
+                            value={selectedOptions}
+                            onChange={(selected) =>
+                              setSelectedOptions(selected as DropdownOption[])
+                            }
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-managerName" className={searchStyles.label}>
+                          <span className={searchStyles.text}>담당자명</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Input
+                            id="name-managerName"
+                            type="text"
+                            placeholder="담당자명으로 조회하세요."
+                            value=""
+                            className={searchStyles.input}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-managerName" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>담당자명</span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Input
-                        id="name-managerName"
-                        type="text"
-                        placeholder="담당자명으로 조회하세요."
-                        value=""
-                        className={formStyles.input}
-                      />
-                    </div>
-                  </div>
-                </ContentsRow>
-              </div>
-              <div className={searchStyles.btn_box}>
-                <Button
-                  type="button"
-                  className={searchStyles.btn_refresh}
-                  variant="search"
-                  size="sm"
-                  onlyIcon>
-                  <IcoRefresh02 className={searchStyles.icon_refresh} />
-                </Button>
-                <Button
-                  type="button"
-                  variant="search"
-                  size="sm"
-                  className={searchStyles.btn_search}>
-                  <IcoSearch className={searchStyles.icon_sm_search} />
-                  조회
-                </Button>
+                </div>
+                <div className={searchStyles.btn_box}>
+                  <Button
+                    type="button"
+                    className={searchStyles.btn_refresh}
+                    variant="search"
+                    size="sm"
+                    onlyIcon>
+                    <IcoRefresh02 className={searchStyles.icon_refresh} />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="search"
+                    size="sm"
+                    className={searchStyles.btn_search}>
+                    <IcoSearch className={searchStyles.icon_sm_search} />
+                    조회
+                  </Button>
+                </div>
               </div>
             </div>
             {/* 채널 리스트 */}
@@ -238,7 +273,7 @@ function RouteComponent() {
               />
             </div>
           </div>
-          {/* 퍼블수정 20240317 : 수정 E */}
+          {/* 퍼블수정 20240318 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -253,10 +288,11 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          {/* 퍼블수정 20240317 : 수정 S */}
-          <div className={cn(popSearchStyles.start, popSearchStyles.contents)}>
-            <strong className={popSearchStyles.title}>{'출처를 선택하세요.'}</strong>
-            {/* 출처 리스트 */}
+          {/* 퍼블수정 20240318 : 수정 S */}
+          <div className={popupStyles.wrap}>
+            <div className={popupStyles.title_wrap}>
+              <h2 className={popupStyles.title}>{'출처를 선택하세요.'}</h2>
+            </div>
             <div className={popSearchStyles.channel_wrap}>
               <List
                 options={[
@@ -275,7 +311,7 @@ function RouteComponent() {
               />
             </div>
           </div>
-          {/* 퍼블수정 20240317 : 수정 E */}
+          {/* 퍼블수정 20240318 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -953,108 +989,88 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.input_box}>
-                  <div className={cn(dynamicFormStyles.multiple_row, dynamicFormStyles.type2)}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          {/* 퍼블수정 20240317 : 수정 S */}
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              id="name-1-14"
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                              value="영어자막.smi"
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                              value="영어자막2.smi"
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '영어' },
-                                { value: 'language2', label: '한국어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 변경
-                            </Button>
-                            <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                              <IcoCloseCircle
-                                width={24}
-                                height={24}
-                                fill="#D6DAE1"
-                                stroke="#ffffff"
-                              />
-                            </Button>
-                          </div>
-                          <div className={dynamicFormStyles.row_inner}>
-                            <Select
-                              className={dynamicFormStyles.short}
-                              options={[
-                                { value: 'language1', label: '언어선택' },
-                                { value: 'language2', label: '한국어' },
-                                { value: 'language3', label: '영어' },
-                              ]}
-                            />
-                            <Input
-                              type="text"
-                              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                            />
-                            <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
-                              자막 추가
-                            </Button>
-                          </div>
-                          {/* 퍼블수정 20240317 : 수정 E */}
-                        </div>
-                      </div>
+                  {/* 퍼블수정 20240319 : 수정 S */}
+                  <div className={dynamicFormStyles.multiple_row}>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        id="name-1-14"
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막2.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '영어' },
+                          { value: 'language2', label: '한국어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                        value="영어자막3.smi"
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 변경
+                      </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                      </Button>
+                    </ContentsRow>
+                    <ContentsRow className={dynamicFormStyles.row_inner}>
+                      <Select
+                        className={dynamicFormStyles.short}
+                        options={[
+                          { value: 'language1', label: '언어선택' },
+                          { value: 'language2', label: '한국어' },
+                          { value: 'language3', label: '영어' },
+                        ]}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                      />
+                      <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
+                        자막 추가
+                      </Button>
                     </ContentsRow>
                   </div>
+                  {/* 퍼블수정 20240319 : 수정 E */}
                 </div>
               </div>
             </ContentsRow>

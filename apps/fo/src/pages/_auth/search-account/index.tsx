@@ -4,10 +4,12 @@ import { useCreation } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
+import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 
 import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../../features/auth';
 import { useAsyncFetchEmail } from '../../../entities/user';
+import { EmbededAlert } from '../../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
@@ -26,7 +28,7 @@ function RouteComponent() {
   const { t } = useTranslation();
   const { tabKey } = Route.useSearch();
   const router = useRouter();
-  const { alert: openAlert } = useModal();
+  const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(tabKey);
@@ -39,8 +41,7 @@ function RouteComponent() {
       userId: '',
       name: '',
       birthday: '',
-      phoneNumber: '',
-      phoneNumberLocale: '',
+      phoneNumber: {} as PhoneNumberValue,
       email: '',
       verificationCode: '',
     });
@@ -66,7 +67,7 @@ function RouteComponent() {
 
   const handleSuccess = (data: any) => {
     if (selectedTabKey === 'password') {
-      router.navigate({ to: '/change-password', state: { ...data } });
+      router.navigate({ to: '/search-account/change-password', state: { ...data } });
       return;
     }
 
@@ -87,7 +88,7 @@ function RouteComponent() {
         },
         onError: (error: any) => {
           // 인증 성공 후 사용자 정보 조회 실패
-          openAlert({
+          alert({
             title: 'MESSAGE.INVALID_INPUT_INFORMATION',
             description: 'MESSAGE.INVALID_INPUT_INFORMATION_DESCRIPTION',
           });
@@ -111,11 +112,19 @@ function RouteComponent() {
           onActiveTab={handleActiveTab}
         />
 
+        <EmbededAlert className={styles.search_info}>
+          {t(
+            selectedTabKey === 'account'
+              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
+              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
+          )}
+        </EmbededAlert>
+
         <div
           className={styles.search_info}
           onClick={() =>
             router.navigate({
-              to: '/change-password',
+              to: '/signup-progress/result',
               state: {
                 authToolType: 'PHONE',
                 name: '아무개',

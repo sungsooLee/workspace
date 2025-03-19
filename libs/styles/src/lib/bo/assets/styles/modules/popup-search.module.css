@@ -12,8 +12,8 @@
         }
       }
     }
-    .channel_wrap {
-      @apply scrollbar mt-[24px] flex max-h-[400px] overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
-    }
   }
+}
+.channel_wrap {
+  @apply scrollbar mt-[24px] flex max-h-[350px] overflow-y-auto overflow-x-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
 }

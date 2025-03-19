@@ -41,5 +41,8 @@ h4.auth--title {
     &.max {
       @apply m-auto max-w-[294px];
     }
+    &.min {
+      @apply m-auto max-w-[200px];
+    }
   }
 }

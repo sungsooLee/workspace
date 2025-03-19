@@ -4,6 +4,8 @@ import '../grid.css';
 import { debounce } from 'lodash'; // grid CSS
 import { Button } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../../modal/modal-container';
+import { useTranslation } from 'react-i18next';
 
 interface FilterContentProps {
   column: string;
@@ -26,6 +28,7 @@ export const FilterContent = ({
   options = [],
 }: FilterContentProps) => {
   const { close: closeModal } = useModal();
+  const { t } = useTranslation();
 
   const getInitialValue = () => {
     if (type === 'range') {
@@ -51,42 +54,44 @@ export const FilterContent = ({
     closeModal();
   };
   return (
-    <div className="space-y-4">
-      {type === 'range' && (
-        <div className="space-y-3">
-          <div className="flex flex-col">
-            <label className="text-[1.4rem] text-[#3e4550]">최소값</label>
-            <Input
-              type="number"
-              value={(value as [number, number])[0]}
-              onChange={(e) => setValue(([_, max]) => [Number(e.target.value), max as number])}
-              className="w-full"
-            />
+    <ModalContainer>
+      <ModalTitle>{t('필터')}</ModalTitle>
+      <ModalBody>
+        {type === 'range' && (
+          <div className="space-y-3">
+            <div className="flex flex-col">
+              <label className="text-[1.4rem] text-[#3e4550]">최소값</label>
+              <Input
+                type="number"
+                value={(value as [number, number])[0]}
+                onChange={(e) => setValue(([_, max]) => [Number(e.target.value), max as number])}
+                className="w-full"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-[1.4rem] text-[#3e4550]">최대값</label>
+              <Input
+                type="number"
+                value={(value as [number, number])[1]}
+                onChange={(e) => setValue(([min, _]) => [min as number, Number(e.target.value)])}
+                className="w-full"
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label className="text-[1.4rem] text-[#3e4550]">최대값</label>
-            <Input
-              type="number"
-              value={(value as [number, number])[1]}
-              onChange={(e) => setValue(([min, _]) => [min as number, Number(e.target.value)])}
-              className="w-full"
-            />
-          </div>
-        </div>
-      )}
+        )}
 
-      {type === 'text' && (
-        <Input
-          value={typeof value === 'string' ? value : ''}
-          onChange={debounce((value) => {
-            setValue(value as string);
-          }, 100)}
-          placeholder="Search..."
-          className="w-full"
-        />
-      )}
+        {type === 'text' && (
+          <Input
+            value={typeof value === 'string' ? value : ''}
+            onChange={debounce((value) => {
+              setValue(value as string);
+            }, 100)}
+            placeholder="Search..."
+            className="w-full"
+          />
+        )}
 
-      {/* {type === 'select' && (
+        {/* {type === 'select' && (
         <div className="min-h-[200px]">
           <MultiSelect
             options={options}
@@ -97,18 +102,20 @@ export const FilterContent = ({
           />
         </div>
       )} */}
-
-      <div className="modal_button">
-        <Button variant="gray" size="lg" onClick={handleReset}>
-          초기화
-        </Button>
-        <Button variant="gray" size="lg" onClick={() => closeModal()}>
-          취소
-        </Button>
-        <Button variant="primary" size="lg" onClick={handleApply}>
-          적용
-        </Button>
-      </div>
-    </div>
+      </ModalBody>
+      <ModalFooter>
+        <div className="modal_button">
+          <Button variant="gray" size="lg" onClick={handleReset}>
+            초기화
+          </Button>
+          <Button variant="gray" size="lg" onClick={() => closeModal()}>
+            취소
+          </Button>
+          <Button variant="primary" size="lg" onClick={handleApply}>
+            적용
+          </Button>
+        </div>
+      </ModalFooter>
+    </ModalContainer>
   );
 };

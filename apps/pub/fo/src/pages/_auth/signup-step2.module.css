@@ -1,11 +1,26 @@
 .start {
   .step_box {
-    @apply mb-[48px] pl-[140px] pr-[140px];
+    @apply mb-[32px] pl-[140px] pr-[140px];
+  }
+  h4 {
+    @apply pt-[16px];
   }
   .signup_noti {
     @apply mt-[48px];
   }
   .btn_wrap {
-    @apply mt-[48px];
+    @apply mt-[32px];
+  }
+  .select_txt {
+    @apply body_2_r border-t border-solid border-[#EDF0F7] pb-[48px] pt-[32px] text-[#131C30];
+  }
+  .signup_select {
+    @apply mb-[0] mt-[8px];
+    button {
+      @apply h-[40px] rounded-[8px];
+      span {
+        @apply mt-[0];
+      }
+    }
   }
 }

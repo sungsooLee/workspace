@@ -54,8 +54,8 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     };
 
     const handleSearchClick = async () => {
-      console.log(control);
       const data = await openModal(modalConfig);
+      console.log('modal data', data);
       data && appendSelectedChipOptions(data);
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
@@ -71,13 +71,13 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
         ref={ref}
         className={cn(
           styles.start,
-          styles.chilps_modal_wrap,
+          styles.chips_modal_wrap,
           'nlp--chip-list-modal-selector-form-field',
         )}>
         <ChipList
           {...chipListProps}
           size={'xs'}
-          // hideBorder={false}
+          hideBorder
           options={selectedChipOptions}
           onChipDeleteClick={handlerChipDelete}
         />

@@ -5,44 +5,25 @@ import { t } from 'i18next';
 import { ContentsRow, DynamicFormField, Button, useModal, Input } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
+import { useLogoutUser } from '@learnway/config';
 
-import { FormRow, NoticeBox } from '../../shared/ui';
+import { FormRow, NoticeBox, HighlightMessageBox } from '../../shared/ui';
 
-import { pageRouteConfig, GoogleOtpGuideButton, AUTH_TOOL_TYPE } from '../../features/auth';
-import { useUpdatePasswordByPhoneNumber, useUpdatePasswordByEmail } from '../../entities/user';
+import {
+  pageRouteConfig,
+  GoogleOtpGuideButton,
+  AUTH_TOOL_TYPE,
+  password_validator,
+} from '../../features/auth';
+import { useUpdatePassword } from '../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
-
-const password_validator = z
-  .string()
-  .regex(
-    /^((?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,})|((?=(.*[A-Za-z].*[\d])|(.+[A-Za-z].*[!@#$%^&*(),.?":{}|<>])|(.+[\d].*[!@#$%^&*(),.?":{}|<>])).{10,})$/,
-    '영문자, 숫자, 특수문자 3가지 조합 8자리 이상 또는 2가지 조합 10자리 이상으로 입력해 주세요.',
-  )
-  .regex(/^(?!.*(.)\1{4}).*$/, '동일 문자 또는 숫자를 5개 연속 사용할 수 없습니다.')
-  .regex(/^(?!.*\d{5,}).*$/, '숫자는 연속 5개 이상 사용할 수 없습니다.');
 
 export const Route = createFileRoute('/_auth/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
-    validateState: () => {
-      const partialSchema = z
-        .object({
-          phoneNumber: z.string(),
-          email: z.string(),
-        })
-        .partial();
-
-      return z
-        .object({
-          authToolType: z.enum([AUTH_TOOL_TYPE.PHONE, AUTH_TOOL_TYPE.EMAIL]),
-          name: z.string().required(),
-          birthday: z.string().required(),
-        })
-        .merge(partialSchema);
-    },
     meta: {
-      title: 'LABEL.PASSWORD_INPUT',
+      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
     },
   }),
 });
@@ -52,18 +33,12 @@ function RouteComponent() {
   const { state } = Route.useRouteContext();
 
   const { provider, onSubmit, setFormError } = useDynamicForm(detailConfig);
+  const { logout } = useLogoutUser();
 
-  const { alert: openAlert } = useModal();
-  const { update: updateByPhoneNumber } = useUpdatePasswordByPhoneNumber();
-  const { update: updateByEmail } = useUpdatePasswordByEmail();
+  const { alert, confirm } = useModal();
+  const { update } = useUpdatePassword();
 
   const handleOnSubmit = async (data: any) => {
-    const payload = {
-      name: state.name,
-      birthday: state.birthday,
-      newPassword: data.password,
-    };
-
     try {
       validator(data as any);
     } catch (e) {
@@ -71,33 +46,39 @@ function RouteComponent() {
       return;
     }
 
-    if (state.authToolType === AUTH_TOOL_TYPE.PHONE) {
-      updateByPhoneNumber(
-        { ...payload, phoneNumber: state.phoneNumber },
-        {
-          onSuccess: handleSuccess,
-        },
-      );
-    } else {
-      updateByEmail(
-        { ...payload, email: state.email },
-        {
-          onSuccess: handleSuccess,
-        },
-      );
+    update(
+      {
+        username: data.username,
+        oldPassword: data.oldPassword,
+        newPassword: data.password,
+      },
+      {
+        onSuccess: handleSuccess,
+      },
+    );
+  };
+
+  const handleSuccess = async () => {
+    await alert({
+      title: '비밀번호가 변경되었습니다.',
+      content: '변경된 비밀번호로 다시 로그인해 주세요.',
+    });
+    logout();
+  };
+
+  const handleCancel = async () => {
+    const callback = await confirm({
+      title: '취소하시겠습니까?',
+      content:
+        '비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.',
+    });
+    if (callback) {
+      logout();
     }
   };
 
-  const handleSuccess = () => {
-    openAlert({
-      title: '비밀번호가 변경되었습니다.',
-      description: '변경된 비밀번호로 다시 로그인해 주세요.',
-    });
-    router.navigate({ to: '/login' });
-  };
-
-  const handleCancel = () => {
-    router.navigate({ to: '/login' });
+  const handleLater = () => {
+    router.navigate({ to: '/' });
   };
 
   const validator = (data: any) => {
@@ -123,20 +104,23 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={styles.success_info}>
+            <HighlightMessageBox className={styles.noti_box}>
+              마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
+            </HighlightMessageBox>
+          </div>
+
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'oldPassword'} />
+              </FormRow>
+            </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'password'} />
               </FormRow>
             </ContentsRow>
-            {/*
-            <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'password_num'}>
-                  <Input type="number"></Input>
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow> */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'confirm_password'} />
@@ -155,6 +139,12 @@ function RouteComponent() {
             </dd>
           </NoticeBox>
 
+          <div className={styles.noti_info_txt}>
+            <Button className={styles.btn_txt} onClick={() => handleLater()}>
+              1개월 후 변경
+            </Button>
+          </div>
+
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               {t('LABEL.CANCEL')}
@@ -172,11 +162,20 @@ function RouteComponent() {
 const detailConfig = {
   builders: [
     {
+      name: 'oldPassword',
+      type: 'text',
+      label: 'LABEL.OLD_PASSWORD',
+      value: '',
+      placeholder: '${label}을 입력하세요',
+      description: '',
+      required: true,
+    },
+    {
       name: 'password',
       type: 'text',
       label: 'LABEL.NEW_PASSWORD',
       value: '',
-      placeholder: '아이디/이메일을 입력하세요',
+      placeholder: '${label}을 입력하세요',
       description: '',
       required: true,
     },
@@ -185,7 +184,7 @@ const detailConfig = {
       type: 'text',
       label: 'LABEL.NEW_PASSWORD_CHECK',
       value: '',
-      placeholder: '이름을 입력하세요',
+      placeholder: '${label}을 입력하세요',
       description: '',
     },
   ],

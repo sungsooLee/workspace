@@ -10,6 +10,8 @@ interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<s
   modalConfig: ModalConfig;
   input?: InputProps;
   onClick?: (value?: any) => void;
+  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
+  transformModalData?: (modalData?: any) => void;
 }
 
 const InputModalSelectorFormFieldComponent = forwardRef<
@@ -23,8 +25,9 @@ const InputModalSelectorFormFieldComponent = forwardRef<
       modalConfig,
       value,
       disabled = true,
-      onChange: ownerOnChange,
+      onChange,
       onFormChange,
+      transformModalData,
       ...props
     },
     ref,
@@ -33,12 +36,15 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 
     const handleClick = async () => {
       const data = await openModal(modalConfig);
-      onFormChange?.(data);
+      const transformData = transformModalData ? transformModalData(data) : data;
+      console.log('modal data', data, transformData);
+      onFormChange?.(transformData);
     };
 
     return (
       <div
         className={cn(styles.start, styles.search_wrap, 'nlp--input-modal-selector-form-field')}
+        role="button"
         onClick={() => handleClick()}>
         <Input {...inputProps} ref={ref} value={value} readOnly={true} showSearchIcon />
       </div>
@@ -47,3 +53,5 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 );
 
 export const InputModalSelectorFormField = InputModalSelectorFormFieldComponent;
+
+const convertF = (data: any) => {};
