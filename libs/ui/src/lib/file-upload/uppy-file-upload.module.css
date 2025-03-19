@@ -1,0 +1,29 @@
+/* uppy-file-upload.module.css */
+.start {
+  &.upload_wrap {
+    .contents {
+      .upload_area {
+        .btn_file {
+          @apply flex cursor-pointer flex-col items-center justify-center rounded-[8px] border border-solid border-[#c8d2e5] text-center;
+          .icon_download {
+            @apply rotate-180;
+          }
+          .title {
+            @apply mt-[12px] text-[1.6rem] font-bold leading-[1.6rem] text-[#5c636e];
+          }
+          .text {
+            @apply mt-[4px] text-[1.4rem] font-normal uppercase leading-[1.6rem] text-[#747d91];
+          }
+        }
+      }
+    }
+    &.md {
+      .upload_area .btn_file {
+        @apply h-[368px];
+      }
+    }
+  }
+  .file_item {
+    @apply flex items-center justify-start rounded-[8px] border border-solid border-[#c8d2e5] text-center;
+  }
+}

@@ -50,6 +50,9 @@
   &--is-focused {
     @apply !bg-[var(--gray1)];
   }
+  &:hover {
+    @apply !rounded-[4px] !bg-[var(--gray1)];
+  }
 }
 .nlp-select__menu {
   @apply border border-solid !border-[#6F798B] !shadow-none;
