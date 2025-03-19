@@ -22,6 +22,14 @@ import { Button } from '../../button/button';
 import { Checkbox } from '../../checkbox/checkbox';
 import { useModal } from '../../modal/modal.hook';
 import { IcoSetting } from '@learnway/icons';
+import {
+  ModalBody,
+  ModalContainer,
+  ModalDescription,
+  ModalFooter,
+  ModalTitle,
+} from '../../modal/modal-container';
+import { useTranslation } from 'react-i18next';
 
 export interface DragHandleProps {
   listeners?: import('@dnd-kit/core/dist/hooks/utilities').SyntheticListenerMap | undefined;
@@ -85,6 +93,7 @@ function ColumnSettingsContent<T extends object>({
 }) {
   const { close: closeModal } = useModal();
   const leafColumns = table.getAllLeafColumns().filter((col) => col.id !== 'select'); //체크박스 컬럼 제외
+  const { t } = useTranslation();
   console.log(leafColumns);
 
   // 컬럼 순서 상태 초기화
@@ -154,8 +163,12 @@ function ColumnSettingsContent<T extends object>({
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 border-b p-2">
+    <ModalContainer>
+      <ModalTitle>{t('Modal Title')}</ModalTitle>
+      <ModalDescription>{t('Modal Description')}</ModalDescription>
+      <ModalBody>
+        {/* <div className="space-y-4"> */}
+        {/* <div className="flex items-center gap-2 border-b p-2"> */}
         <label className="flex cursor-pointer items-center gap-2">
           <Checkbox
             id="select-all"
@@ -165,46 +178,49 @@ function ColumnSettingsContent<T extends object>({
           />
           <span className="text-[1.8rem] font-medium">전체 선택</span>
         </label>
-      </div>
+        {/* </div> */}
 
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={columnOrder} strategy={verticalListSortingStrategy}>
-          <div className="space-y-2">
-            {columnOrder.map((columnId) => {
-              const column = leafColumns.find((col) => col.id === columnId);
-              if (!column) return null;
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={columnOrder} strategy={verticalListSortingStrategy}>
+            <div className="space-y-2">
+              {columnOrder.map((columnId) => {
+                const column = leafColumns.find((col) => col.id === columnId);
+                if (!column) return null;
 
-              return (
-                <SortableItem key={columnId} id={columnId}>
-                  <div
-                    className="flex flex-1 items-center gap-2"
-                    onClick={(e) => e.stopPropagation()}>
-                    <Checkbox
-                      id={columnId}
-                      size="md"
-                      checked={columnVisibility[columnId]}
-                      onCheckedChange={(checked) => handleVisibilityChange(columnId, !!checked)}
-                    />
-                    <label htmlFor={columnId} className="flex-1 cursor-pointer">
-                      {column.id}
-                    </label>
-                  </div>
-                </SortableItem>
-              );
-            })}
-          </div>
-        </SortableContext>
-      </DndContext>
-
-      <div className="flex justify-center">
+                return (
+                  <SortableItem key={columnId} id={columnId}>
+                    <div
+                      className="flex flex-1 items-center gap-2"
+                      onClick={(e) => e.stopPropagation()}>
+                      <Checkbox
+                        id={columnId}
+                        size="md"
+                        checked={columnVisibility[columnId]}
+                        onCheckedChange={(checked) => handleVisibilityChange(columnId, !!checked)}
+                      />
+                      <label htmlFor={columnId} className="flex-1 cursor-pointer">
+                        {column.id}
+                      </label>
+                    </div>
+                  </SortableItem>
+                );
+              })}
+            </div>
+          </SortableContext>
+        </DndContext>
+      </ModalBody>
+      <ModalFooter>
+        {/* <div className="flex justify-center"> */}
         <Button variant="gray" size="lg" onClick={closeModal}>
           취소
         </Button>
         <Button variant="primary" size="lg" onClick={handleApply}>
           적용
         </Button>
-      </div>
-    </div>
+        {/* </div> */}
+        {/* </div> */}
+      </ModalFooter>
+    </ModalContainer>
   );
 }
 
