@@ -425,6 +425,16 @@ export const guideData = [
     remarks:
       'NLP_FO_USE_1010 (최근/추천/인기 검색어 팝업) 포함\nNLP_FO_USE_1011 (자동완성 팝업) 포함\n디자인 컨펌x로 작업 불가능',
   },
+  {
+    layoutType: '반응형',
+    screenName: '수강신청 (모든 정보를 다 받을 때)',
+    pageId: 'course-registration/course-registration-all',
+    screenId: 'NLP_FO_LEC_1007', //스크린아이디
+    pageType: 'Page',
+    completionDate: '', // 완료일
+    lastUpdateDate: '',
+    remarks: '',
+  },
 ];
 
 export default guideData;

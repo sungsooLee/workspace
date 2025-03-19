@@ -40,6 +40,7 @@ import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
+import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -247,6 +248,13 @@ const LayoutIntegratedSearchIntegratedSearchRoute =
   LayoutIntegratedSearchIntegratedSearchImport.update({
     id: '/integrated-search/integrated-search',
     path: '/integrated-search/integrated-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseRegistrationCourseRegistrationAllRoute =
+  LayoutCourseRegistrationCourseRegistrationAllImport.update({
+    id: '/course-registration/course-registration-all',
+    path: '/course-registration/course-registration-all',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -865,6 +873,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/course-registration/course-registration-all': {
+      id: '/_layout/course-registration/course-registration-all'
+      path: '/course-registration/course-registration-all'
+      fullPath: '/course-registration/course-registration-all'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/integrated-search/integrated-search': {
       id: '/_layout/integrated-search/integrated-search'
       path: '/integrated-search/integrated-search'
@@ -1019,6 +1034,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
@@ -1027,6 +1043,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutCourseRegistrationCourseRegistrationAllRoute:
+    LayoutCourseRegistrationCourseRegistrationAllRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
@@ -1093,6 +1111,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1156,6 +1175,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1222,6 +1242,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
@@ -1287,6 +1308,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
@@ -1349,6 +1371,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
@@ -1413,6 +1436,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/course-registration/course-registration-all'
     | '/_layout/integrated-search/integrated-search'
     | '/_guide/guide/'
     | '/_layout/menu3/'
@@ -1516,6 +1540,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/course-registration/course-registration-all",
         "/_layout/integrated-search/integrated-search",
         "/_layout/menu3/"
       ]
@@ -1742,6 +1767,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-registration/course-registration-all": {
+      "filePath": "_layout/course-registration/course-registration-all.tsx",
       "parent": "/_layout"
     },
     "/_layout/integrated-search/integrated-search": {
