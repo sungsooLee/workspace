@@ -322,6 +322,7 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '',
   },
+
   {
     layoutType: '반응형 (PC)',
     screenName: '회원가입_사업자정보조회',
@@ -334,6 +335,16 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
+    screenName: '회원가입_딜러/조직 선택_EN',
+    pageId: 'signup-step2-en',
+    screenId: 'NLP_FO_MER_1101', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-19', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 영문',
+  },
+  {
+    layoutType: '반응형 (PC)',
     screenName: '회원가입_정보입력',
     pageId: 'signup-step3',
     screenId: 'NLP_FO_MER_1002', //스크린아이디
@@ -341,6 +352,16 @@ export const guideData = [
     completionDate: '2025-02-24', // 완료일
     lastUpdateDate: '',
     remarks: '',
+  },
+  {
+    layoutType: '반응형 (PC)',
+    screenName: '회원가입_정보입력',
+    pageId: 'signup-step3-en',
+    screenId: 'NLP_FO_MER_1102', //스크린아이디
+    pageType: 'Page',
+    completionDate: '2025-03-19', // 완료일
+    lastUpdateDate: '',
+    remarks: '- 영문',
   },
   {
     layoutType: '반응형 (PC)',

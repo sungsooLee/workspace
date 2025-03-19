@@ -16,7 +16,9 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
+import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
+import { Route as AuthSignupStep2EnImport } from './pages/_auth/signup-step2-en'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
@@ -101,9 +103,21 @@ const AuthSuccessRoute = AuthSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthSignupStep3EnRoute = AuthSignupStep3EnImport.update({
+  id: '/signup-step3-en',
+  path: '/signup-step3-en',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthSignupStep3Route = AuthSignupStep3Import.update({
   id: '/signup-step3',
   path: '/signup-step3',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupStep2EnRoute = AuthSignupStep2EnImport.update({
+  id: '/signup-step2-en',
+  path: '/signup-step2-en',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -585,11 +599,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupStep2Import
       parentRoute: typeof AuthImport
     }
+    '/_auth/signup-step2-en': {
+      id: '/_auth/signup-step2-en'
+      path: '/signup-step2-en'
+      fullPath: '/signup-step2-en'
+      preLoaderRoute: typeof AuthSignupStep2EnImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/signup-step3': {
       id: '/_auth/signup-step3'
       path: '/signup-step3'
       fullPath: '/signup-step3'
       preLoaderRoute: typeof AuthSignupStep3Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup-step3-en': {
+      id: '/_auth/signup-step3-en'
+      path: '/signup-step3-en'
+      fullPath: '/signup-step3-en'
+      preLoaderRoute: typeof AuthSignupStep3EnImport
       parentRoute: typeof AuthImport
     }
     '/_auth/success': {
@@ -882,7 +910,9 @@ interface AuthRouteChildren {
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
   AuthSignupStep2Route: typeof AuthSignupStep2Route
+  AuthSignupStep2EnRoute: typeof AuthSignupStep2EnRoute
   AuthSignupStep3Route: typeof AuthSignupStep3Route
+  AuthSignupStep3EnRoute: typeof AuthSignupStep3EnRoute
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
@@ -905,7 +935,9 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
   AuthSignupStep2Route: AuthSignupStep2Route,
+  AuthSignupStep2EnRoute: AuthSignupStep2EnRoute,
   AuthSignupStep3Route: AuthSignupStep3Route,
+  AuthSignupStep3EnRoute: AuthSignupStep3EnRoute,
   AuthSuccessRoute: AuthSuccessRoute,
 }
 
@@ -1023,7 +1055,9 @@ export interface FileRoutesByFullPath {
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
+  '/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/signup-step3': typeof AuthSignupStep3Route
+  '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1084,7 +1118,9 @@ export interface FileRoutesByTo {
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
+  '/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/signup-step3': typeof AuthSignupStep3Route
+  '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1148,7 +1184,9 @@ export interface FileRoutesById {
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
   '/_auth/signup-step2': typeof AuthSignupStep2Route
+  '/_auth/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/_auth/signup-step3': typeof AuthSignupStep3Route
+  '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -1211,7 +1249,9 @@ export interface FileRouteTypes {
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
+    | '/signup-step2-en'
     | '/signup-step3'
+    | '/signup-step3-en'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -1271,7 +1311,9 @@ export interface FileRouteTypes {
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
+    | '/signup-step2-en'
     | '/signup-step3'
+    | '/signup-step3-en'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -1333,7 +1375,9 @@ export interface FileRouteTypes {
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
     | '/_auth/signup-step2'
+    | '/_auth/signup-step2-en'
     | '/_auth/signup-step3'
+    | '/_auth/signup-step3-en'
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -1423,7 +1467,9 @@ export const routeTree = rootRoute
         "/_auth/search-id-success",
         "/_auth/signup-step1",
         "/_auth/signup-step2",
+        "/_auth/signup-step2-en",
         "/_auth/signup-step3",
+        "/_auth/signup-step3-en",
         "/_auth/success"
       ]
     },
@@ -1546,8 +1592,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/signup-step2.tsx",
       "parent": "/_auth"
     },
+    "/_auth/signup-step2-en": {
+      "filePath": "_auth/signup-step2-en.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/signup-step3": {
       "filePath": "_auth/signup-step3.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup-step3-en": {
+      "filePath": "_auth/signup-step3-en.tsx",
       "parent": "/_auth"
     },
     "/_auth/success": {

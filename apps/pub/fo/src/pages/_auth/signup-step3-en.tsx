@@ -13,18 +13,17 @@ import {
   Select,
   ContentsRow,
   PhoneNumber,
-  InputTimer,
 } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/signup-step3')({
+export const Route = createFileRoute('/_auth/signup-step3-en')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const items = [
-    { label: '회원유형선택', subLabel: '', value: 'step1' },
-    { label: '사업자 정보 조회', subLabel: '', value: 'step2' },
-    { label: '회원정보입력', subLabel: '', value: 'step3' },
+    { label: 'Select\n Membership Type', subLabel: '', value: 'step1' },
+    { label: 'Dealer & Region\n Select', subLabel: '', value: 'step2' },
+    { label: 'Required\n Information', subLabel: '', value: 'step3' },
   ];
   const handleChange = (event: SelectOption) => {
     console.log(event);
@@ -39,50 +38,29 @@ function RouteComponent() {
             </div>
           </div>
 
-          <h4 className={cn(styles.title, 'auth--title')}>협력업체 회사 정보</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>Enter Required Information</h4>
 
           <div className="no_line col">
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>회사명</span>
+                  <span className={formStyles.form_text}>Name</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={14} height={14} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="현대오토애버" readOnly />
+                  <Input id="name" type="text" placeholder="First name" value="" />
+                  <Input id="name" type="text" placeholder="Last name" value="" />
                 </div>
-                <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
               </div>
             </ContentsRow>
 
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>사업자 등록 번호</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="123-45-67890" readOnly />
-                </div>
-              </div>
-            </ContentsRow>
-          </div>
-
-          <hr className={`${formStyles.divider} ${styles.divider}`} />
-
-          <h4 className={cn(styles.title, 'auth--title')}>개인정보 입력</h4>
-
-          <div className="no_line col">
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>이메일</span>
+                  <span className={formStyles.form_text}>Employee No.</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={14} height={14} />
@@ -92,14 +70,9 @@ function RouteComponent() {
                   <Input
                     id="name"
                     type="text"
-                    placeholder="아이디(hyundai.kim@hyundail.com)"
+                    placeholder="Employee No.(Optional Infromation)"
                     value=""
                   />
-                  {/* 퍼블수정 20250319 : 버튼 수정 */}
-
-                  <Button variant="gray" size="lg" className="min-w-min">
-                    확인
-                  </Button>
                 </div>
               </div>
             </ContentsRow>
@@ -107,19 +80,22 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>인증번호</span>
+                  <span className={formStyles.form_text}>Email</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={14} height={14} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <InputTimer
-                    startTimer={1}
-                    initialTime={300}
-                    placeholder="인증번호 입력"
-                    resetLabel="인증번호 재전송"
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Email(hyundai.kim@hyundail.com)"
+                    value=""
                   />
+                  <Button variant="gray" size="lg" className="min-w-auto">
+                    Authentication
+                  </Button>
                 </div>
               </div>
             </ContentsRow>

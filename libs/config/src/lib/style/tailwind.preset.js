@@ -414,6 +414,10 @@ module.exports = {
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
         },
+
+        '.min-w-auto': {
+          minWidth: 'auto !important',
+        },
       });
     },
   ],
