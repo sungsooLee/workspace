@@ -355,7 +355,7 @@ export const guideData = [
   },
   {
     layoutType: '반응형 (PC)',
-    screenName: '회원가입_정보입력',
+    screenName: '회원가입_정보입력_EN',
     pageId: 'signup-step3-en',
     screenId: 'NLP_FO_MER_1102', //스크린아이디
     pageType: 'Page',
