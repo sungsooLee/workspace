@@ -293,6 +293,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         <Grid
           data={data}
           columns={columns}
+          hideExcelDownload={false}
           pagination={{
             pageSize,
             pageIndex,

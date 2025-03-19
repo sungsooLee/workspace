@@ -228,11 +228,7 @@ function ColumnSettings<T extends object>({
   };
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      className="btn_setting ml-auto"
-      onClick={handleOpenSettings}>
+    <Button variant="outline" size="sm" className="btn_setting" onClick={handleOpenSettings}>
       <IcoSetting width={16} height={16} stroke="#131C30" />
       항목설정
     </Button>

@@ -59,6 +59,8 @@ export interface GridProps<T> {
   hideTotalCount?: boolean;
   // 선택 rows 개수 표시 여부
   hideSelectedCount?: boolean;
+  //엑셀다운로드 버튼 표시 여부
+  hideExcelDownload?: boolean;
 }
 
 export interface GridState {
