@@ -61,7 +61,6 @@ const QrPopupFooter = () => {
           closeModal(); // 모달 닫기 함수 호출
           setTimeout(() => {
             openModal({
-              title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleInputPopup />,
             });
@@ -137,7 +136,6 @@ function RouteComponent() {
                   className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
-                      title: 'FIDO 인증',
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })
@@ -154,7 +152,6 @@ function RouteComponent() {
               className={styles.btn_txt}
               onClick={() =>
                 openModal({
-                  title: '구글 OTP 인증키 생성',
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
                 })
@@ -173,7 +170,6 @@ function RouteComponent() {
               variant="primary"
               onClick={() =>
                 openModal({
-                  title: '구글 OTP 인증',
                   width: 'sm',
                   content: <MpassPopup />,
                 })
