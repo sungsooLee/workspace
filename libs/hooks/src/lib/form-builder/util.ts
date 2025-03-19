@@ -35,9 +35,9 @@ export const extractSearchBoxDefaultValues = (config: SearchBoxConfig): Record<s
   return defaultValues;
 };
 
-export const extractDynamicFormDefaultValues = (config: DynamicFormConfig) => {
+export const extractDynamicFormDefaultValues = (builders: FormConfig[]) => {
   const defaultValues: Record<string, any> = {};
-  config.builders.forEach((builder) => {
+  builders.forEach((builder) => {
     if (builder.name) {
       defaultValues[builder.name] = builder.value;
     }
