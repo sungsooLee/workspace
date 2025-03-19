@@ -1,10 +1,19 @@
 .alarm_info {
-  @apply relative top-[-2px] flex min-h-[40px] w-[44px] items-center;
+  @apply relative top-[-2px] mr-[20px] flex min-h-[40px] items-center;
+  button {
+    @apply min-h-[40px];
+  }
   .count_view {
     @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
   }
   .noti {
     @apply absolute right-[22px] top-[10px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
+  }
+  .text {
+    @apply body_3_r absolute -bottom-[40px] -left-[9px] z-[1] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
+    &::before {
+      @apply absolute left-[16px] top-0 h-[10px] w-[10px] -translate-y-1/2 rotate-[45deg] bg-[var(--primary1)] content-[''];
+    }
   }
 }
 .alarm_wrap {

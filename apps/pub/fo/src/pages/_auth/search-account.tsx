@@ -35,7 +35,8 @@ function RouteComponent() {
       key: 'a',
       content: (
         <>
-          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
+          {/* 퍼블수정 20250319 : auth--search-info */}
+          <div className={cn(styles.search_info, 'auth--search-info')}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 아이디를 확인 할 수 있습니다.
           </div>
@@ -196,7 +197,8 @@ function RouteComponent() {
       key: 'b',
       content: (
         <>
-          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
+          {/* 퍼블수정 20250319 : auth--search-info */}
+          <div className={cn(styles.search_info, 'auth--search-info')}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 비밀번호를 재설정 할 수 있습니다.
           </div>

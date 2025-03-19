@@ -39,3 +39,14 @@
 .form_display {
   @apply relative;
 }
+
+.flex_plus {
+  @apply flex w-full items-center justify-between gap-[8px];
+
+  .btn_ico {
+    @apply h-[40px] w-[40px] items-center rounded-[8px] border border-solid border-[#A9AFB8];
+    svg {
+      @apply m-auto stroke-[#4C515E];
+    }
+  }
+}

@@ -40,9 +40,10 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={`${authFormStyles.search_info} ${styles.search_info} ${styles.dormant}`}>
+          {/* 퍼블수정 20250319 : auth--search-info */}
+          <div className={cn(styles.search_info, styles.dormant, 'auth--search-info')}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={authFormStyles.txt}>본인인증 후 휴면계정 해제할 수 있습니다.</p>
+            <p className="txt">본인인증 후 휴면계정 해제할 수 있습니다.</p>
           </div>
 
           <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>

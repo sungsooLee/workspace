@@ -9,7 +9,7 @@ import {
   IcoVideo01,
   IcoVideo02,
 } from '@learnway/icons';
-import styles from './popup-learningRegisteration.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Button, useModal } from '@learnway/ui';
 import { ReactNode, useState } from 'react';
 import { LEARNING_TYPE } from '@learnway/config';

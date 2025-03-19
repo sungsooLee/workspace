@@ -1,43 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
-import { IcoUploadCloud } from '@learnway/icons';
-import styles from './popup-learningRegisteration.module.css';
+import { Button, useModal, ModalBody, ModalContainer, ModalFooter, UppyUpload } from '@learnway/ui';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
 export const Route = createFileRoute('/_layout/learning/popup-upload')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
-  const CustomFooter = () => {
-    const { close: closeModal } = useModal();
-    return (
-      <Button
-        variant="gray"
-        size="lg"
-        onClick={() => {
-          closeModal();
-        }}>
-        {'취소'}
-      </Button>
-    );
-  };
+  const { open: openModal, close: closeModal } = useModal();
   const FileUploadContent = () => {
     return (
-      <div className={styles.wrap}>
-        <h2 className={styles.title}>{'파일 업로드'}</h2>
-        <p className={styles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-        <div className={styles.upload_wrap}>
-          <IcoUploadCloud width={40} height={40} stroke="#131c30" className={styles.icon} />
-          <strong className={styles.tit_upload}>
-            영역을 클릭하거나 파일을 마우스로 끌어놓으세요
-          </strong>
-          <p className={styles.guide}>
-            MP4, WMV, TS, AVI, MKV, MTS, MOV, MXF, MPEG, MPG, WEBM, ASF, SKM, K3G{' '}
-          </p>
-        </div>
-      </div>
+      // 퍼블수정 20240319 : 파일업로드 */}
+      <ModalContainer>
+        <ModalBody>
+          <div className={popupStyles.wrap}>
+            <div className={popupStyles.title_wrap}>
+              <h2 className={popupStyles.title}>{'파일 업로드'}</h2>
+              <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
+            </div>
+            <div className={popupStyles.pop_contents}>
+              <UppyUpload />
+              <p className={popupStyles.sub_text}>
+                {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
+              </p>
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
     );
   };
   // 한번만 실행
