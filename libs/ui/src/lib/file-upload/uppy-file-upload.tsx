@@ -651,7 +651,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
             {files.map((file) => (
               <div key={file.id} className={styles.file_item}>
                 <div className={styles.file_info}>
-                  {file.name.split('.').pop() === 'png' && <IcoFileImg width={48} height={48} />}
+                  {(file.name.split('.').pop() === 'png' ||
+                    file.name.split('.').pop() === 'svg') && (
+                    <span className={styles.file_icon}>{/* <img src={''} alt="" /> */}</span>
+                  )}
                   <span className={styles.file_info}>{file.name}</span>
                   <span className={styles.file_size}>{formatFileSize(file.size)}</span>
                 </div>
