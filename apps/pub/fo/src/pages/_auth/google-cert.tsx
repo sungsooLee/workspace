@@ -20,60 +20,6 @@ export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
 });
 
-const GoogleInputFooter = () => {
-  const { close: closeModal } = useModal();
-  const { open: openModal } = useModal();
-  return (
-    <>
-      <Button variant="gray" size="lg" onClick={() => closeModal()}>
-        취소
-      </Button>
-      <Button
-        variant="primary"
-        size="lg"
-        onClick={() => {
-          closeModal(); // 모달 닫기 함수 호출
-          setTimeout(() => {
-            openModal({
-              // title: '구글 OTP 인증키 생성',
-              width: 'sm',
-              content: <GoogleInputPopup />,
-            });
-          });
-        }}>
-        구글 OTP 인증
-      </Button>
-    </>
-  );
-};
-
-const QrPopupFooter = () => {
-  const { close: closeModal } = useModal();
-  const { open: openModal } = useModal();
-  return (
-    <>
-      <Button variant="gray" size="lg" onClick={() => closeModal()}>
-        취소
-      </Button>
-      <Button
-        variant="primary"
-        size="lg"
-        onClick={() => {
-          closeModal(); // 모달 닫기 함수 호출
-          setTimeout(() => {
-            openModal({
-              //title: '구글 OTP 인증키 생성',
-              width: 'sm',
-              content: <GoogleInputPopup />,
-            });
-          });
-        }}>
-        다음
-      </Button>
-    </>
-  );
-};
-
 function RouteComponent() {
   const { open: openModal } = useModal();
 
@@ -81,11 +27,10 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          {/* 퍼블수정 20250319 : auth--search-info */}
-          <div className={cn(embededAlert.start, styles.search_info, 'auth--search-info')}>
-            {/* 퍼블수정 20250311 : 아이콘 추가, strong 제거 및 txt class 추가 */}
+          {/* 퍼블수정 20250319 : embededAlert */}
+          <div className={`${embededAlert.start} ${styles.search_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className="txt">안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
+            <p className={embededAlert.txt}>안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
           </div>
           <div className={cn(otpToolFormFieldStyles.signup_select, 'auth--signup-select')}>
             <RadioCard

@@ -23,8 +23,8 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          {/* 퍼블수정 20250319 : auth--search-info */}
-          <div className={cn(embededAlert.start, styles.search_info, 'auth--search-info')}>
+          {/* 퍼블수정 20250319 : embededAlert */}
+          <div className={`${embededAlert.start} ${styles.search_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className="txt">진행현황 확인을 위해 이메일을 입력해 주세요.</p>
           </div>
