@@ -165,7 +165,7 @@ function ColumnSettingsContent<T extends object>({
   return (
     <ModalContainer>
       <ModalTitle>{t('Modal Title')}</ModalTitle>
-      <ModalDescription>{t('Modal Description')}</ModalDescription>
+      {/* <ModalDescription>{t('Modal Description')}</ModalDescription> */}
       <ModalBody>
         {/* <div className="space-y-4"> */}
         {/* <div className="flex items-center gap-2 border-b p-2"> */}

@@ -84,7 +84,7 @@ const Grid = forwardRef(
       columnPinning = { columns: [] },
       hideColumnSettings,
       hideTotalCount,
-      hideExcelDownload,
+      hideExcelDownload = true,
       hideSelectedCount,
     }: GridProps<T>,
     ref: any,
