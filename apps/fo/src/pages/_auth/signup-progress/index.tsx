@@ -1,21 +1,22 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
 
-import { pageRouteConfig, password_validator } from '../../features/auth';
-import { FormRow, NoticeBox } from '../../shared/ui';
-import { useAsyncFetchEmail } from '../../entities/user';
+import { pageRouteConfig, password_validator } from '../../../features/auth';
+import { FormRow, NoticeBox } from '../../../shared/ui';
+import { useAsyncFetchEmail } from '../../../entities/user';
 
-import styles from '@learnway/styles/fo/pages/_auth/signup-progress.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 
-export const Route = createFileRoute('/_auth/signup-progress')({
+export const Route = createFileRoute('/_auth/signup-progress/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.PASSWORD_CHANGE',
+      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
     },
   }),
 });
@@ -31,7 +32,16 @@ function RouteComponent() {
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
   const handleOnSubmit = async (data: any) => {
+    router.navigate({
+      to: '/identity-verification',
+      state: {
+        email: data.email,
+        redirectUrl: '/signup-progress/result',
+        meta: { title: 'LABEL.SIGNUP_PROGRESS_STATUS' },
+      },
+    });
     /*
+    API 확인 필요
     update(
       {
         username: data.username,
@@ -102,6 +112,6 @@ const detailConfig = {
     },
   ],
   validator: {
-    email: password_validator,
+    email: z.string().email(),
   },
 };

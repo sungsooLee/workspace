@@ -115,7 +115,7 @@ function RouteComponent() {
           className={styles.search_info}
           onClick={() =>
             router.navigate({
-              to: '/change-password',
+              to: '/signup-progress/result',
               state: {
                 authToolType: 'PHONE',
                 name: '아무개',

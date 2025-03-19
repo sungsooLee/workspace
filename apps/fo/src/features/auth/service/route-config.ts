@@ -50,24 +50,22 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           }
         }
       }
-      return { ...context, state: location?.state };
-    },
-    loader: ({ location, context, params, search, preload }: any) => {
+
+      // preload 일 때 pageMeta 상태 변경 예외 처리
       if (preload || isEmpty(location.state)) {
         console.log('loader return state is empty');
         return;
       }
       if (routeConfig?.meta) {
-        context.setPageMeta({ ...defaultPageRouteConfig.meta, ...routeConfig.meta });
+        context.setPageMeta({
+          ...defaultPageRouteConfig.meta,
+          ...routeConfig.meta,
+          ...location?.state?.meta,
+        });
       } else {
-        context.setPageMeta(defaultPageRouteConfig.meta);
+        context.setPageMeta({ ...defaultPageRouteConfig.meta, ...location?.state?.meta });
       }
       if (routeConfig?.validateState) {
-        console.log(
-          'routeConfig?.validateState location?.state',
-          location?.state,
-          routeConfig?.validateState,
-        );
         let schema: ZodSchema;
         if (isFunction(routeConfig?.validateState)) {
           schema = routeConfig?.validateState(location?.state);
@@ -88,12 +86,16 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           throw new Error(String(e));
         }
       }
+      console.log('location', location);
+      return { ...context, state: location?.state };
     },
+    //loader: ({ location, context, params, search, preload }: any) => {},
     errorComponent: ({ error }: any) => {
       console.log('errorComponent', error);
       // Render an error message
       return createElement(ErrorComponent, { error });
     },
+    ...(routeConfig?.meta ? { staticData: { meta: routeConfig?.meta } } : {}),
     staleTime: 0,
   };
 }

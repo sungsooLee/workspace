@@ -1,14 +1,14 @@
 import * as ReactDOM from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 
 import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
+
+import type { PageMeta } from './types';
 
 import { usePageMetaState } from './entities/platform';
 
@@ -31,6 +31,9 @@ declare module '@tanstack/react-router' {
   interface HistoryState {
     [key: string]: any;
     //    params?: any;
+  }
+  interface StaticDataRouteOption {
+    meta?: PageMeta;
   }
 }
 
