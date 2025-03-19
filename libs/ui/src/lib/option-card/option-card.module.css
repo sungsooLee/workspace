@@ -22,7 +22,7 @@
         @apply min-h-[158px] px-[24px];
         &:hover,
         &.active {
-          @apply border-none;
+          @apply border-transparent;
           &::after {
             @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--secondary1)] content-[''];
           }
