@@ -7,6 +7,7 @@ import styles from './mpass-cert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 찾기폼
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
@@ -21,7 +22,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           {/* 퍼블수정 20250319 : auth--search-info */}
-          <div className={cn(styles.search_info, 'auth--search-info')}>
+          <div className={cn(embededAlert.start, styles.search_info, 'auth--search-info')}>
             {/* 퍼블수정 20250311 : 아이콘 추가, strong 제거 및 txt class 추가 */}
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className="txt">안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>

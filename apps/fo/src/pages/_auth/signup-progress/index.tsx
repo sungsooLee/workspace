@@ -5,9 +5,10 @@ import { useEffect } from 'react';
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
+import { IcoCaution } from '@learnway/icons';
 
 import { pageRouteConfig, password_validator } from '../../../features/auth';
-import { FormRow, NoticeBox } from '../../../shared/ui';
+import { FormRow, NoticeBox, EmbededAlert } from '../../../shared/ui';
 import { useAsyncFetchEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
@@ -73,6 +74,10 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
+          <EmbededAlert className={styles.search_info}>
+            {t('MESSAGE.SIGNUP_PROGRESS_GUIDE')}
+          </EmbededAlert>
+
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <FormRow provider={provider}>

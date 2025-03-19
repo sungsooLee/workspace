@@ -7,6 +7,7 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import otpToolFormFieldStyles from './otp-tool-form-field.module.css'; // 라디오 카드
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import {
   GoogleCertGuidePopup,
@@ -61,7 +62,7 @@ const QrPopupFooter = () => {
           closeModal(); // 모달 닫기 함수 호출
           setTimeout(() => {
             openModal({
-              title: '구글 OTP 인증키 생성',
+              //title: '구글 OTP 인증키 생성',
               width: 'sm',
               content: <GoogleInputPopup />,
             });
@@ -81,7 +82,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           {/* 퍼블수정 20250319 : auth--search-info */}
-          <div className={cn(styles.search_info, 'auth--search-info')}>
+          <div className={cn(embededAlert.start, styles.search_info, 'auth--search-info')}>
             {/* 퍼블수정 20250311 : 아이콘 추가, strong 제거 및 txt class 추가 */}
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className="txt">안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
@@ -137,7 +138,7 @@ function RouteComponent() {
                   className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
-                      title: 'FIDO 인증',
+                      //title: 'FIDO 인증',
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })
@@ -154,7 +155,7 @@ function RouteComponent() {
               className={styles.btn_txt}
               onClick={() =>
                 openModal({
-                  title: '구글 OTP 인증키 생성',
+                  //title: '구글 OTP 인증키 생성',
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
                 })
@@ -173,7 +174,7 @@ function RouteComponent() {
               variant="primary"
               onClick={() =>
                 openModal({
-                  title: '구글 OTP 인증',
+                  //title: '구글 OTP 인증',
                   width: 'sm',
                   content: <MpassPopup />,
                 })

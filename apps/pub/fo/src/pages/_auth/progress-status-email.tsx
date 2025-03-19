@@ -8,6 +8,7 @@ import otpToolFormField from './otp-tool-form-field.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
@@ -23,7 +24,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           {/* 퍼블수정 20250319 : auth--search-info */}
-          <div className={cn(styles.search_info, 'auth--search-info')}>
+          <div className={cn(embededAlert.start, styles.search_info, 'auth--search-info')}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className="txt">진행현황 확인을 위해 이메일을 입력해 주세요.</p>
           </div>

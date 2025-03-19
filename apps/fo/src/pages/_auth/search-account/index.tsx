@@ -9,6 +9,7 @@ import { cn, z } from '@learnway/shared';
 
 import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../../features/auth';
 import { useAsyncFetchEmail } from '../../../entities/user';
+import { EmbededAlert } from '../../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
@@ -110,6 +111,14 @@ function RouteComponent() {
           variant="primary"
           onActiveTab={handleActiveTab}
         />
+
+        <EmbededAlert className={styles.search_info}>
+          {t(
+            selectedTabKey === 'account'
+              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
+              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
+          )}
+        </EmbededAlert>
 
         <div
           className={styles.search_info}
