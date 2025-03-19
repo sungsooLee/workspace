@@ -16,6 +16,7 @@ interface FileItem {
   size: number;
   progress: number;
   status: 'waiting' | 'uploading' | 'complete' | 'error' | 'paused';
+  extension: 'svg' | 'png';
   errorMessage?: string;
   parts?: {
     partNumber: number;
