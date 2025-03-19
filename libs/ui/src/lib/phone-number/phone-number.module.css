@@ -9,7 +9,7 @@
     }
     &.lg {
       .select_area button {
-        @apply min-h-[40px] rounded-[8px] border-[#D6DAE1];
+        @apply min-h-[40px] !min-w-[auto] rounded-[8px] border-[#D6DAE1] !px-[12px];
         &[aria-expanded='true'] {
           @apply border-[#6F798B];
         }
