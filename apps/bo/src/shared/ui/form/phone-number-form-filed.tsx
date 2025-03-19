@@ -15,13 +15,9 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldPr
      * phone number 변경 이벤트
      * @param event
      */
-    const handleOnChange = (event?: ChangeEvent<HTMLInputElement>) => {
-      if (event) {
-        event.preventDefault();
-      }
-    };
+    const handleOnChange = (event?: ChangeEvent<HTMLInputElement>) => {};
 
-    return <PhoneNumber value={value} onChange={handleOnChange} />;
+    return null;
   },
 );
 

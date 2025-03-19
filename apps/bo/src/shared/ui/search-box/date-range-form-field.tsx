@@ -1,7 +1,7 @@
 import { DatePicker } from '@learnway/ui';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
-const DateRangeSearchFieldComponent = () => {
+const DateRangeFormFieldComponent = () => {
   return (
     <>
       {/*<DatePicker onChange={handleDate} value={date} className={searchStyles.datepicker_item} />
@@ -11,4 +11,4 @@ const DateRangeSearchFieldComponent = () => {
   );
 };
 
-export const DateRangeSearchField = DateRangeSearchFieldComponent;
+export const DateRangeFormField = DateRangeFormFieldComponent;

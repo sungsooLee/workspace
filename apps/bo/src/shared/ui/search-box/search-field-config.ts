@@ -1,9 +1,9 @@
 import { Input } from '@learnway/ui';
-import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
-import { DateRangeSearchField } from './date-rage-search-field';
+import { DateRangeFormField } from './date-range-form-field';
+import { DropdownFormField } from '../../../features/form/ui';
 
 export const searchFieldConfig = {
   text: Input,
   dropdown: DropdownFormField,
-  'date-range': DateRangeSearchField,
+  'date-range': DateRangeFormField,
 };

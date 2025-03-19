@@ -6,7 +6,7 @@ import { OnValidCallback, SearchBoxConfig } from '@learnway/hooks';
  * useSearchBox 훅에 전달하는 설정 객체의 타입.
  */
 export interface SearchBoxProps {
-  config: SearchBoxConfig & {
+  provider: SearchBoxConfig & {
     control: UseFormReturn<any>['control'] & {
       isFieldRequired: (fieldName: string) => boolean;
     };

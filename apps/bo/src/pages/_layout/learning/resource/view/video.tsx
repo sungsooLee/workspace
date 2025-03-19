@@ -1,16 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react';
-import ReactPlayer from 'react-player';
-import { useDropzone } from 'react-dropzone';
+import React from 'react';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import {
-  Button,
-  ContentsRow,
-  DynamicFormField,
-  InputModalSelectorFormField,
-  selectStyles,
-} from '@learnway/ui';
-import { z } from '@learnway/shared';
+import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';

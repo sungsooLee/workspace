@@ -10,8 +10,8 @@ import { searchDialogConfig } from '../../shared/ui/search-box/search-field-conf
  * @param onSearch
  * @constructor
  */
-const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
-  const { builders: initBuilders, control, formSubmit, reset } = config;
+const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
+  const { builders: initBuilders, control, formSubmit, reset } = provider;
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault();

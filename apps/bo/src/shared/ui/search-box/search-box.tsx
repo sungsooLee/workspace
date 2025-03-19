@@ -1,41 +1,56 @@
-import React, { cloneElement, FC, useState } from 'react';
-import { Controller } from 'react-hook-form';
-import {
-  Button,
-  ContentsRow,
-  DatePicker,
-  DropdownList,
-  DropdownOption,
-  DynamicFormField,
-  Input,
-  Select,
-} from '@learnway/ui';
+import React, { FC, FormEvent, useMemo, useState } from 'react';
+import { Button, DynamicFormField } from '@learnway/ui';
 import { searchFieldConfig } from './search-field-config';
 import { SearchBoxProps } from './type';
 import { cn } from '@learnway/shared';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import style from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import { DropdownFormField } from '../../../features/form/ui';
+
 /**
- * 퍼블 완료 되면 주석 및 코드 리팩터링 추가 예정
- * @param config
- * @param onSearch
- * @constructor
+ * 검색 박스 컴포넌트 ( config 에 의거해 자동 렌더링 됨 )
+ *
+ * @param provider - 상태 및 폼 제어 객체
+ * @param onSearch - 검색 실행 시 호출될 함수
  */
-const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
-  const { builders: initBuilders, formSubmit, control, ...props } = config;
-  // expand btn
+const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
+  const { builders: initBuilders, onSubmit, control, ...props } = provider;
+  // expand 버튼 상태 관리 (접기/펼치기)
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleFormSubmit = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('on form submit?');
-    onSearch && formSubmit(onSearch);
+  /**
+   * CSS 클래스명 생성 로직
+   * - 필드가 한 줄에 2개 이하일 경우 자동으로 크기 조정
+   */
+  const rowClassName = useMemo(
+    () =>
+      cn(
+        searchStyles.item_row,
+        provider.builders.length === 1 &&
+          (provider.builders[0] as unknown as any[]).length < 3 &&
+          searchStyles.item_auto,
+      ),
+    [provider.builders],
+  );
+
+  /**
+   * 폼 제출 핸들러
+   * - 폼 제출 시 실행
+   *
+   * @param event - 폼 이벤트 객체
+   */
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (onSearch) {
+      onSubmit(onSearch)(event); // ✅ 반환된 함수 직접 실행
+    }
   };
 
+  /**
+   * 필드 타입에 따른 렌더링 설정
+   * - searchFieldConfig에서 필드 타입에 따라 컴포넌트 선택
+   *
+   * @param column - 필드 설정 객체
+   * @returns - 필드에 대한 JSX 반환
+   */
   const renderSearchField = (column: any): any => {
     const FormComponent = searchFieldConfig[column.type as keyof typeof searchFieldConfig];
     // FormComponent가 유효하다면 JSX로 반환
@@ -44,6 +59,14 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
     }
     return null;
   };
+
+  /**
+   * 개별 필드 렌더링
+   * - 필드 이름, 라벨, 필드 컴포넌트 포함
+   *
+   * @param item - 필드 설정 객체
+   * @returns - 필드 JSX 반환
+   */
 
   const renderFormItem = (item: any) => (
     <div className={searchStyles.item} key={item.name}>
@@ -62,10 +85,18 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
     </div>
   );
 
+  /**
+   * 단일 필드 렌더링 (group 처리 포함)
+   *
+   * @param column - 필드 설정 객체
+   * @param index - 필드 인덱스
+   * @param totalColumns - 한 줄에 포함된 필드 수
+   * @returns - 필드 JSX 반환
+   */
   const renderColumn = (column: any, index: number, totalColumns: number) => {
     const className = cn(
       searchStyles.inner,
-      config.builders.length === 1 && totalColumns < 3 && searchStyles.item_cols1,
+      provider.builders.length === 1 && totalColumns < 3 && searchStyles.item_auto,
     );
 
     if (column.type === 'group') {
@@ -87,39 +118,54 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ config, onSearch }) => {
     <form onSubmit={handleFormSubmit}>
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          <div className={searchStyles.item_wrap}>
-            {config.builders
+          <div className={rowClassName}>
+            {provider.builders
               .filter((_, index) => index < 2)
-              .map((columns: any) =>
-                columns.map((column: any, columnIndex: number) =>
-                  renderColumn(column, columnIndex, columns.length),
-                ),
-              )}
-            {config.builders.length > 1 && isExpanded && (
-              <div className={searchStyles.form_display}>
-                {config.builders
-                  .filter((_, index) => index > 0)
-                  .map((columns: any) =>
-                    columns.map((column: any, columnIndex: number) =>
-                      renderColumn(column, columnIndex, columns.length),
-                    ),
+              .map((columns: any) => (
+                <div className={searchStyles.item_wrap}>
+                  {columns.map((column: any, columnIndex: number) =>
+                    renderColumn(column, columnIndex, columns.length),
                   )}
+                </div>
+              ))}
+            {provider.builders.length > 1 && isExpanded && (
+              <div className={searchStyles.form_display}>
+                {provider.builders
+                  .filter((_, index) => index > 0)
+                  .map((columns: any) => (
+                    <div className={searchStyles.item_wrap}>
+                      {columns.map((column: any, columnIndex: number) =>
+                        renderColumn(column, columnIndex, columns.length),
+                      )}
+                    </div>
+                  ))}
               </div>
             )}
-            <div className={searchStyles.btn_box}>
+          </div>
+          <div className={searchStyles.btn_box}>
+            {provider.builders.length > 1 && (
               <Button
                 type="button"
-                className={searchStyles.btn_refresh}
+                className={cn(searchStyles.btn_expand, isExpanded ? searchStyles.active : '')}
                 variant="search"
                 size="sm"
-                onlyIcon>
-                <IcoRefresh02 className={searchStyles.icon_refresh} />
+                onlyIcon
+                onClick={() => setIsExpanded(!isExpanded)}>
+                <IcoArrowDownDouble className={searchStyles.ico_expand} />
               </Button>
-              <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
-                <IcoSearch className={searchStyles.icon_sm_search} />
-                조회
-              </Button>
-            </div>
+            )}
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon>
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="submit" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
           </div>
         </div>
       </div>

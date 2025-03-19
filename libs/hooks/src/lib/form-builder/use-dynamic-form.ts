@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createZodSchema } from './create-jod-schema';
 import { DynamicFormProvider, UseDynamicFormResult, DynamicFormConfig } from './type';
 import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
+import { extractDynamicFormDefaultValues } from '@/libs/hooks/src/lib/form-builder/util';
 
 /**
  * 주어진 폼 설정(config)을 기반으로 react-hook-form을 초기화하는 커스텀 훅.
@@ -13,28 +14,7 @@ import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
  */
 export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
   // 초기값 생성: 각 빌더의 기본 값을 설정
-  const defaultValues = useMemo<Record<string, any>>(
-    () =>
-      config.builders.reduce((acc: Record<string, any>, prop) => {
-        // TODO 날짜 형식의 경우 변환해야 한다면 여기에 구현 가능
-        switch (prop.type) {
-          /*case 'date-range':
-            // date-range의 경우, from과 to 값을 '|' 구분자로 연결하여 저장
-            acc[prop.name] = `${prop.value?.from || ''}|${prop.value?.to || ''}`;
-            break;
-          case 'multi-dropdown':
-            // multi-dropdown은 배열 타입으로 초기화
-            acc[prop.name] = prop.value || [];
-            break;*/
-          default:
-            // 기본: prop.value가 있으면 사용, 없으면 빈 문자열 할당
-            acc[prop.name] = prop.value ?? '';
-            break;
-        }
-        return acc;
-      }, {}),
-    [config.builders],
-  );
+  const defaultValues = extractDynamicFormDefaultValues(config);
 
   // 원본 값 상태 설정
   const [originalValues, setOriginalValues] = useState(defaultValues);
@@ -79,13 +59,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
           config.builders.forEach((prop) => {
             const value = data[prop.name];
             // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
-            /* if (prop.type === 'date-range' && value) {
-              const [from, to] = value.split('|');
-              objectParams['startDate'] = from;
-              objectParams['endDate'] = to;
-            } else {
-
-            }*/
             objectParams[prop.name] = value ?? '';
           });
           onValid(objectParams);
@@ -224,7 +197,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     formState,
     onFormChange,
     onFormFocus: handleFocus,
-    setValue,
     control: extendedControl,
   };
 };
