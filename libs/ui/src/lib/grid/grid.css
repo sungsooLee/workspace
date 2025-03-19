@@ -85,6 +85,7 @@
       }
     }
     button {
+      @apply button_bo_2_r !font-normal;
       svg {
         @apply mr-[2px];
       }
@@ -95,11 +96,14 @@
         @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
+    .btn_upload svg {
+      @apply rotate-180;
+    }
     .btn_excel {
-      @apply button_bo_2_r !font-normal text-[var(--gray9)];
+      @apply text-[var(--gray9)];
     }
     .btn_setting {
-      @apply button_bo_2_r text-[var(--gray9)];
+      @apply text-[var(--gray9)];
     }
   }
 }
