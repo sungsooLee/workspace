@@ -19,7 +19,7 @@
         @apply border-[#06226a] font-bold text-[#06226a] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
       }
       &.lg {
-        @apply min-h-[158px] px-[24px];
+        @apply min-h-[158px] justify-start px-[24px] pt-[24px];
         &:hover,
         &.active {
           @apply border-transparent;
