@@ -1,10 +1,11 @@
 export const DATE_TIME_FORMAT = {
+  YEAR: 'dateFormatYear',
   MONTH: 'dateFormatMonth',
   DATE: 'dateFormatDay',
   DATETIME_HOUR: 'dateTimeFormatHour',
   DATETIME_MIN: 'dateTimeFormatHourMinute',
-  DATETIME_SEC: 'dateTimeFormatHourSecend',
-  DATETIME_MLS: 'dateTimeFormatHourMilliSecend', //MilliSec
+  DATETIME_SEC: 'dateTimeFormatHourSecond',
+  DATETIME_MLS: 'dateTimeFormatHourMilliSecond',
   HOUR_MIN: 'timeFormatHourMinute',
 };
 
