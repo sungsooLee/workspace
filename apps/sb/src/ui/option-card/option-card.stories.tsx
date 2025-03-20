@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { OptionCard } from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui';
 import { IcoBuilding01 } from '@learnway/icons';
 
 const dummy = Array(5)
@@ -35,13 +35,20 @@ export default {
   // },
 } as Meta;
 
-// OptionCard
+// Value Control
 export const Template: any = (args: any) => {
+  const [value, setValue] = useState();
+  console.log(value);
   return (
-    <OptionCard {...args} options={dummyOptions} onOptionSelect={(option) => console.log(option)} />
+    <OptionCard
+      {...args}
+      options={dummyOptions}
+      value={value}
+      onOptionSelect={(option: OptionCardItem) => setValue(option.value)}
+    />
   );
 };
-Template.storyName = 'OptionCard';
+Template.storyName = 'Option Card';
 
 // description
 export const TemplateDesc: any = (args: any) => {
@@ -61,27 +68,18 @@ TemplateOnlyLabel.storyName = 'only label';
 
 // Multiple
 export const TemplateMultiple: any = (args: any) => {
+  const [values, setValues] = useState<string[]>();
+  console.log(values);
   return (
     <OptionCard
       {...args}
+      value={values}
       options={dummyOptions}
       multiple
-      onOptionsSelect={(options) => console.log(options)}
+      onOptionsSelect={(options: OptionCardItem[]) =>
+        setValues(options.map((d: OptionCardItem) => d.value))
+      }
     />
   );
 };
 TemplateMultiple.storyName = 'Multiple';
-
-// Value Control
-export const TemplateValueControl: any = (args: any) => {
-  const [value, setValue] = useState('value2');
-  return (
-    <OptionCard
-      {...args}
-      options={dummyOptions}
-      value={value}
-      onOptionsSelect={(options) => console.log('list.stories.tsx', options)}
-    />
-  );
-};
-TemplateValueControl.storyName = 'Value Control';
