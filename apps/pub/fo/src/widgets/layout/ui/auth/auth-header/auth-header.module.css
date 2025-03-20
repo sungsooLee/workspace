@@ -20,9 +20,21 @@
 
 /* mobile */
 :global(body.mobile) {
-  .start {
-    &.auth-header {
-      @apply hidden;
+  @screen mobile {
+    .start {
+      &.auth-header {
+        @apply hidden min-w-[320px];
+
+        .header_area {
+          @apply h-[56px] pl-[20px] pr-[16px];
+
+          h1 {
+            img {
+              @apply h-[24px];
+            }
+          }
+        }
+      }
     }
   }
 }

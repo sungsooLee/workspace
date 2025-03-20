@@ -1,9 +1,15 @@
 import { FormEvent, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createZodSchema } from './create-jod-schema';
-import { DynamicFormProvider, UseDynamicFormResult, DynamicFormConfig } from './type';
-import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
+import {
+  DynamicFormConfig,
+  DynamicFormProvider,
+  FormValidatorConfig,
+  UseDynamicFormResult,
+} from './type';
+import { extractDynamicFormDefaultValues } from './util';
+import { buildJodObject } from '@learnway/shared';
+import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
 
 /**
  * 주어진 폼 설정(config)을 기반으로 react-hook-form을 초기화하는 커스텀 훅.
@@ -13,35 +19,48 @@ import { ZodArray, ZodNullable, ZodObject, ZodOptional, ZodTypeAny } from 'zod';
  */
 export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
   // 초기값 생성: 각 빌더의 기본 값을 설정
-  const defaultValues = useMemo<Record<string, any>>(
-    () =>
-      config.builders.reduce((acc: Record<string, any>, prop) => {
-        // TODO 날짜 형식의 경우 변환해야 한다면 여기에 구현 가능
-        switch (prop.type) {
-          /*case 'date-range':
-            // date-range의 경우, from과 to 값을 '|' 구분자로 연결하여 저장
-            acc[prop.name] = `${prop.value?.from || ''}|${prop.value?.to || ''}`;
-            break;
-          case 'multi-dropdown':
-            // multi-dropdown은 배열 타입으로 초기화
-            acc[prop.name] = prop.value || [];
-            break;*/
-          default:
-            // 기본: prop.value가 있으면 사용, 없으면 빈 문자열 할당
-            acc[prop.name] = prop.value ?? '';
-            break;
-        }
-        return acc;
-      }, {}),
-    [config.builders],
-  );
+  const defaultValues = extractDynamicFormDefaultValues(config.builders);
 
   // 원본 값 상태 설정
   const [originalValues, setOriginalValues] = useState(defaultValues);
 
-  // Zod 스키마 생성 (유효성 검증 스키마)
-  const schema = createZodSchema(config);
+  /**
+   * Dynamic Config 에서는 좀더 편하게 쓰기 위해 약간의 타입이 달라서 buildJodObject 에 맞게 수정 한다.
+   */
+  const validator = useMemo<ValidatorConfig>(() => {
+    const { builders, validator = {} } = config; // validator가 없으면 빈 객체로 설정
+    return builders.reduce((acc, builder) => {
+      const key = builder.name;
+      const format = builder.format || 'string';
 
+      const existingValidator = validator[key] as any;
+      acc[key] = {
+        format,
+      };
+      if (existingValidator) {
+        if (typeof existingValidator === 'boolean') {
+          acc[key] = {
+            ...acc[key],
+            required: { required: existingValidator },
+          };
+        } else if (typeof existingValidator.required === 'function') {
+          acc[key] = {
+            ...acc[key],
+            required: { required: true, fn: existingValidator.required },
+          };
+        } else if (typeof existingValidator === 'object') {
+          acc[key] = {
+            ...acc[key],
+            ...existingValidator,
+          };
+        }
+      }
+
+      return acc;
+    }, {} as ValidatorConfig);
+  }, []);
+  // Zod 스키마 생성 (유효성 검증 스키마)
+  const schema = buildJodObject(validator);
   // react-hook-form 훅 초기화
   const methods = useForm({
     defaultValues,
@@ -79,13 +98,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
           config.builders.forEach((prop) => {
             const value = data[prop.name];
             // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
-            /* if (prop.type === 'date-range' && value) {
-              const [from, to] = value.split('|');
-              objectParams['startDate'] = from;
-              objectParams['endDate'] = to;
-            } else {
-
-            }*/
             objectParams[prop.name] = value ?? '';
           });
           onValid(objectParams);
@@ -96,8 +108,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
           const firstErrorKey = Object.keys(errors)[0];
           if (firstErrorKey) {
             const errorFieldRef = fieldRefs.current[firstErrorKey] as HTMLDivElement | null;
-            // 에러 메시지 추출 (기본 메시지: 'Validation error')
-            const errorMessage = errors[firstErrorKey]?.message || 'Validation error';
             // 에러가 있는 필드로 스크롤 및 포커스 이동
             if (errorFieldRef) {
               errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -109,43 +119,16 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       )();
     };
   };
-
   /**
-   * 필드가 필수인지 확인하는 함수.
-   *
-   * @param fieldName - 필드 이름
-   * @returns 필드가 필수라면 true, 그렇지 않으면 false 반환
+   * 필수값 확인 함수
+   * @param fieldName
    */
   const isFieldRequired = (fieldName: string): boolean => {
-    if (!config.validator || !fieldName) return false;
-
-    const parts = fieldName.split('.');
-    let schema: ZodTypeAny | undefined = (config.validator as Record<string, ZodTypeAny>)[parts[0]];
-
-    for (let i = 1; i < parts.length; i++) {
-      if (!schema) return false;
-
-      if (schema instanceof ZodObject) {
-        schema = schema.shape[parts[i]];
-      } else if (schema instanceof ZodArray) {
-        if (!isNaN(Number(parts[i]))) continue;
-        if (schema._def.type instanceof ZodObject) {
-          schema = schema._def.type.shape[parts[i]];
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    }
-
-    if (!schema) return false;
-
-    if (schema instanceof ZodOptional || schema instanceof ZodNullable) {
-      return false;
-    }
-
-    return true;
+    const config = validator[fieldName];
+    if (!config || typeof config.required !== 'object' || config.required === null) return false;
+    const required = config.required || false;
+    const isFn = config.required.fn ? config.required.fn(getValues()) : true;
+    return required && isFn;
   };
 
   /**
@@ -224,7 +207,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     formState,
     onFormChange,
     onFormFocus: handleFocus,
-    setValue,
     control: extendedControl,
   };
 };

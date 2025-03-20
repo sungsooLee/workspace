@@ -1,4 +1,5 @@
 import {
+  FormEvent,
   FormEventHandler,
   ForwardRefExoticComponent,
   ReactNode,
@@ -42,6 +43,7 @@ export type BaseFormFieldConfigProps<T = string> = {
   /* 서브 텍스트 */
   subText?: string;
 
+  format?: 'string' | 'number' | 'date' | 'datetime' | 'email' | 'array' | 'object' | 'boolean';
   [key: string]: any;
 };
 
@@ -112,6 +114,70 @@ export type FormConfig =
       type: 'hidden' | string;
     });
 
+export type FormValidatorConfig = {
+  [key: string]:
+    | boolean // 단순히 필수 값일 경우 true/false로 설정
+    | {
+        /**
+         * 데이터 형식 지정 (옵션)
+         * - 'string' → 문자열
+         * - 'number' → 숫자
+         * - 'date' → 날짜
+         * - 'datetime' → 날짜 + 시간
+         * - 'email' → 이메일 형식
+         * - 'array' → 배열 형식
+         * - 'object' → 객체 형식
+         */
+        format?: 'string' | 'number' | 'date' | 'datetime' | 'email' | 'array' | 'object';
+        /**
+         * 필수 값 설정
+         * - true → 필수 값 설정
+         * - 함수 → 다른 값에 따라 동적으로 필수 여부 결정 가능
+         * - 객체 → 필수 값 조건 및 메시지 처리 가능
+         */
+        required?:
+          | boolean
+          | ((values: Record<string, any>) => boolean) // 값 기반 동적 필수 설정
+          | {
+              /**
+               * 필수 값 검증 함수
+               * - 값이 유효한 경우 true 반환
+               * - 값이 유효하지 않은 경우 false 반환
+               * @param values - 전체 값 객체
+               */
+              fn?: (values: Record<string, any>) => boolean;
+              // 필수 값 오류 발생 시 표시할 메시지 (옵션)
+              message?: string;
+              // 필수 값 오류 발생 위치
+              path?: string;
+            };
+        /**
+         * 값의 유효성 조건 설정 (다중 조건 가능)
+         * - 여러 개의 조건을 배열로 설정 가능
+         */
+        conditions?: {
+          /**
+           * 값 검증 함수
+           * - 값이 유효한 경우 true 반환
+           * - 값이 유효하지 않은 경우 false 반환
+           * @param values - 전체 값 객체
+           */
+          fn: (values: Record<string, any>) => boolean;
+
+          /**
+           * 오류 발생 시 표시할 메시지 (옵션)
+           */
+          message?: string;
+
+          /**
+           * 오류가 발생한 값의 위치 설정 (옵션)
+           * - 값이 속한 필드 이름 설정 가능
+           */
+          path?: string;
+        }[];
+      };
+};
+
 /**
  * 폼 설정 객체 타입 정의
  */
@@ -119,7 +185,7 @@ export type DynamicFormConfig = {
   /** 개별 필드 설정 배열 */
   builders: FormConfig[];
   /** 유효성 검사 스키마 (zod 기반) */
-  validator?: { [key: string]: ZodTypeAny };
+  validator?: FormValidatorConfig;
 };
 
 /**
@@ -243,41 +309,155 @@ export interface OptionsConfig<T = any> {
   options?: SelectOption[]; // 미리 정의된 정적 옵션
 }
 
-/**
- * SearchBoxBuilder
- * 각 검색 필드의 구성을 정의합니다.
- */
-export interface SearchBoxBuilder {
-  name: string;
-  type: 'date-range' | 'multi-dropdown' | 'dropdown' | 'text' | string;
-  label?: string;
-  /**
-   * 1depth 필드에서는 value가 필수.
-   * 단, 그룹(하위) 필드에서는 value를 생략할 수 있다.
-   */
-  value?: any;
-  options?: { value: string; label: string }[];
-  optionsConfig?: OptionsConfig; // 실제 옵션 설정에 맞게 수정 가능
-  placeholder?: string;
-}
+/*===================================
+    searchBox Type 정의
+  ===================================*/
+
+/* 그룹 타입 추가 */
+/* 그룹 타입 추가 (name을 선택 속성으로 설정) */
+export type GroupConfig = Omit<BaseFormFieldConfigProps, 'name'> & {
+  type: 'group';
+  builders: FormConfig[];
+};
 
 /**
- * SearchBoxConfig
- * useSearchBox 훅에 전달하는 설정 객체의 타입.
+ * 동적 폼 설정 객체 타입 정의
  */
-export interface SearchBoxConfig {
-  builders: SearchBoxBuilder[];
-  // validator 객체는 각 필드에 대한 유효성 스키마를 포함합니다.
-  validator?: Record<string, any>;
-}
+/**
+ * 검색 박스 설정 타입
+ * - 동적으로 생성되는 폼 필드 설정을 정의
+ * - 중첩된 구조를 지원하기 위해 재귀적인 타입 정의
+ */
+export type SearchBoxConfig = {
+  /** 빌더 설정 배열 (2차원 배열) */
+  builders: (FormConfig | GroupConfig)[][];
+  /** 유효성 검사 스키마 (zod 기반) */
+  validator?: { [key: string]: any };
+};
 
-export type UseSearchBoxReturn = {
-  config: SearchBoxConfig & {
-    control: UseFormReturn<any>['control'] & {
-      isFieldRequired: (fieldName: string) => boolean;
-    };
-    reset: (values?: Record<string, any>) => void;
-    formSubmit: (onValid: OnValidCallback) => void;
+/**
+ * 검색 박스에서 사용하는 상태 및 제어 객체 타입
+ * - react-hook-form과 연결된 상태와 메서드를 제공
+ */
+export type SearchBoxProvider = {
+  /** react-hook-form에서 제공하는 컨트롤 객체 */
+  control: UseFormReturn['control'] & {
+    /**
+     * 필드가 필수인지 확인하는 함수
+     *
+     * @param fieldName - 확인할 필드 이름
+     * @returns 필드가 필수일 경우 true 반환
+     */
+    isFieldRequired: (fieldName: string) => boolean;
   };
-  getData: () => Record<string, any>;
+
+  /** 빌더 설정 배열 */
+  builders: (FormConfig | GroupConfig)[][];
+
+  /** react-hook-form의 상태 정보 */
+  formState: UseFormReturn['formState'];
+
+  /**
+   * 필드 값 변경 함수
+   *
+   * @param values - 변경할 값 객체
+   * - key는 필드 이름, value는 해당 필드의 값
+   */
+  onFormChange: (values?: Record<string, any>) => void;
+
+  /**
+   * 폼의 현재 값 가져오기 함수
+   *
+   * @returns 현재 필드 값 객체 반환
+   */
+  getValues: UseFormReturn['getValues'];
+
+  /**
+   * 특정 필드에 포커스를 설정하는 함수
+   *
+   * @param fieldName - 포커스를 설정할 필드 이름
+   */
+  onFormFocus: (fieldName: string) => void;
+
+  /** 초기 필드 값 객체 (최초 값 상태) */
+  originalValues: Record<string, any>;
+
+  /**
+   * 폼 제출 함수
+   *
+   * @param onValid - 유효성 검사 통과 시 호출할 콜백 함수
+   * @returns 폼 제출 이벤트 핸들러 반환
+   */
+  onSubmit: (
+    onValid: (data: Record<string, any>) => void,
+  ) => (event: FormEvent<HTMLFormElement>) => void;
+};
+
+/* ================================
+ * 검색 박스 훅 반환 타입 정의
+ * ================================ */
+
+/**
+ * 검색 박스 훅 반환 타입
+ * - 검색 박스를 제어하는 메서드 및 상태 제공
+ */
+export type UseSearchBoxReturn = {
+  /** 검색 박스 상태 및 제어 객체 */
+  provider: SearchBoxProvider;
+
+  /**
+   * 서버에서 받아온 데이터를 설정하는 함수
+   *
+   * @param data - 서버에서 받아온 값 객체
+   * - key는 필드 이름, value는 해당 필드의 값
+   */
+  fetchData: (data: Record<string, any>) => void;
+
+  /**
+   * 특정 필드에 에러 메시지 설정 함수
+   *
+   * @param fieldName - 필드 이름
+   * @param message - 설정할 에러 메시지
+   */
+  setFormError: (fieldName: string, message: string) => void;
+
+  /**
+   * 폼의 현재 값 가져오기 함수
+   *
+   * @returns 현재 필드 값 객체 반환
+   */
+  getValues: UseFormReturn['getValues'];
+
+  /**
+   * 설정된 폼의 에러 메시지를 제거하는 함수
+   */
+  clearFormError: UseFormReturn['clearErrors'];
+
+  /** react-hook-form의 상태 정보 */
+  formState: UseFormReturn['formState'];
+
+  /**
+   * 필드 값 변경 함수
+   *
+   * @param values - 변경할 값 객체
+   * - key는 필드 이름, value는 해당 필드의 값
+   */
+  onFormChange: (values?: Record<string, any>) => void;
+
+  /**
+   * 특정 필드에 포커스를 설정하는 함수
+   *
+   * @param fieldName - 포커스를 설정할 필드 이름
+   */
+  onFormFocus: (fieldName: string) => void;
+
+  /** react-hook-form에서 제공하는 컨트롤 객체 */
+  control: UseFormReturn['control'] & {
+    /**
+     * 필드가 필수인지 확인하는 함수
+     * @param fieldName - 확인할 필드 이름
+     * @returns 필드가 필수일 경우 true 반환
+     */
+    isFieldRequired: (fieldName: string) => boolean;
+  };
 };

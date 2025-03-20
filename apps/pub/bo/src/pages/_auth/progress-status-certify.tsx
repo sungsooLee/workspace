@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';

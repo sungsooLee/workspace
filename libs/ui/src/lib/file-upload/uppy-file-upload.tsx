@@ -2,8 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import Uppy, { type Meta, type Body, type UIPluginOptions, type State } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import { httpService, cn } from '@learnway/shared';
-import { IcoDownload, IcoRefresh, IcoTrash03 } from '@learnway/icons';
+import {
+  IcoDownload,
+  IcoRefresh,
+  IcoTrash03,
+  IcoFileImg,
+  IcoPause,
+  IcoFileMp4,
+} from '@learnway/icons';
 import { Button } from '../button/button';
+import { Progress } from '../progress/progress';
 
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
@@ -16,7 +24,6 @@ interface FileItem {
   size: number;
   progress: number;
   status: 'waiting' | 'uploading' | 'complete' | 'error' | 'paused';
-  extension: 'svg' | 'png';
   errorMessage?: string;
   parts?: {
     partNumber: number;
@@ -651,7 +658,16 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
             {files.map((file) => (
               <div key={file.id} className={styles.file_item}>
                 <div className={styles.file_info}>
-                  <span className={styles.file_info}>{file.name}</span>
+                  <span className={styles.file_icon}>
+                    {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
+                  </span>
+                  {/* {(file.name.split('.').pop() === 'png' ||
+                    file.name.split('.').pop() === 'svg') && (
+                    <span className={styles.file_icon}>
+                      {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
+                    </span>
+                  )} */}
+                  <span className={styles.file_name}>{file.name}</span>
                   <span className={styles.file_size}>{formatFileSize(file.size)}</span>
                 </div>
 
@@ -668,6 +684,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
                         style={{ width: `${file.progress}%` }}
                       />
                     </div>
+                    <Progress value={file.progress} />
                   </div>
                 )}
 
@@ -693,23 +710,29 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
                 )}
 
                 {/* 파일 작업 버튼 */}
-                <div className="mt-2 flex justify-end space-x-2">
+                <div className={styles.btn_status}>
                   {/* 일시 중지/재개 버튼 */}
                   {(file.status === 'uploading' || file.status === 'paused') && (
-                    <button
-                      className="rounded px-2 py-1 text-sm hover:bg-gray-200"
+                    <Button
+                      className={styles.btn}
+                      onlyIcon
                       onClick={() => togglePauseResume(file.id)}>
-                      {file.status === 'uploading' ? '일시 중지' : '재개'}
-                    </button>
+                      {file.status === 'uploading' ? (
+                        <IcoPause width={20} height={20} fill="#A9AFB8" />
+                      ) : (
+                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                      )}
+                    </Button>
                   )}
 
                   {/* 재시도 버튼 */}
                   {file.status === 'error' && (
-                    <button
-                      className="rounded bg-blue-100 px-2 py-1 text-sm text-blue-700 hover:bg-blue-200"
+                    <Button
+                      className={styles.btn}
+                      onlyIcon
                       onClick={() => uppyRef.current?.retryUpload(file.id)}>
-                      재시도
-                    </button>
+                      <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                    </Button>
                   )}
 
                   {/* 삭제 버튼 */}
@@ -724,7 +747,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
             ))}
 
             {/* 파일 추가 버튼 */}
-            <div className="mt-4 flex justify-center space-x-3">
+            {/* <div className="mt-4 flex justify-center space-x-3">
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-400"
@@ -739,7 +762,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
                   업로드 중단
                 </button>
               )}
-            </div>
+            </div> */}
           </div>
         )}
 

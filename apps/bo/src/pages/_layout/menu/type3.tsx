@@ -15,7 +15,6 @@ import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
-import useDynamicForm2 from '@/libs/hooks/src/lib/form-builder/use-dynamic-form2';
 
 export const Route = createFileRoute('/_layout/menu/type3')({
   component: RouteComponent,
@@ -31,7 +30,7 @@ const formConfigA: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel: z.string().required(),
+    /*channel: z.string().required(),*/
   },
 };
 const formConfigB: DynamicFormConfig = {
@@ -44,14 +43,14 @@ const formConfigB: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel: z.string().required(),
+    /*channel: z.string().required(),*/
   },
 };
 
 function RouteComponent() {
   /* react hook form custom */
   const { provider, onSubmit, control, onFormChange, setFormError, clearFormError } =
-    useDynamicForm2(detailConfig);
+    useDynamicForm(detailConfig);
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'userInfos',

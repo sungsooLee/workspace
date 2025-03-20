@@ -96,3 +96,9 @@
 .react-datepicker__year-text--keyboard-selected:not([aria-disabled='true']):hover {
   @apply bg-transparent;
 }
+
+.nlp--datepicker.lg {
+  input[type='text'] {
+    @apply !h-[40px] rounded-[8px] border-[#d6dae1];
+  }
+}

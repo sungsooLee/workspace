@@ -1,7 +1,8 @@
-import { Children, FC, isValidElement, ReactNode, useState } from 'react';
-import styles from './page-contents.module.css';
+import { Children, FC, isValidElement, ReactNode } from 'react';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { MainContents } from './slot/main-contents';
 import { SubContents } from './slot/sub-contents';
+
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
  * @param children

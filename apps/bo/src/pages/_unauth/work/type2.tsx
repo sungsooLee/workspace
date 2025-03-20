@@ -443,7 +443,7 @@ const detailConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel2: z.string().required(),
+    /*channel2: z.string().required(),*/
   },
 };
 const TestComponent: FC<any> = ({ provider }) => {

@@ -1,108 +1,146 @@
-import { useForm, UseFormReturn } from 'react-hook-form';
-import { OnValidCallback, SearchBoxConfig, UseSearchBoxReturn } from './type';
-import { createZodSchema } from './create-jod-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  DynamicFormConfig,
+  DynamicFormProvider,
+  FormConfig,
+  GroupConfig,
+  SearchBoxConfig,
+  UseSearchBoxReturn,
+} from '@learnway/hooks';
+import { useForm } from 'react-hook-form';
+import { FormEvent, useState } from 'react';
+import { extractSearchBoxDefaultValues } from './util';
 
 /**
- * useSearchBox
- * - config를 기반으로 초기값과 유효성 검사 스키마를 생성하여 react-hook-form을 초기화합니다.
- * - 폼 제출 시 데이터를 가공하여 onValid 콜백으로 전달합니다.
+ * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
- * @param config - SearchBoxConfig 객체
- * @returns 검색 폼 관련 설정 및 메서드를 포함한 객체
+ * @param config - SearchConfig 객체
+ * @returns 동적 폼 상태 및 제어 함수 제공
  */
-export const useSearchBox = (config: SearchBoxConfig): UseSearchBoxReturn => {
-  // 초기값 생성: 각 빌더의 기본 값을 설정합니다.
-  const defaultValues = config.builders.reduce<Record<string, any>>((acc, prop) => {
-    switch (prop.type) {
-      case 'date-range':
-        // date-range: from과 to를 '|'로 구분하여 연결합니다.
-        acc[prop.name] = `${prop.value?.from || new Date()}|${prop.value?.to || new Date()}`;
-        break;
-      case 'multi-dropdown':
-        // multi-dropdown: 배열 값 또는 빈 배열로 초기화
-        acc[prop.name] = prop.value || [];
-        break;
-      default:
-        // 기본: prop.value가 있으면 사용, 없으면 빈 문자열
-        acc[prop.name] = prop.value ?? '';
-        break;
-    }
-    return acc;
-  }, {});
-
-  // Zod 스키마 생성 (createZodSchema 함수가 config를 기반으로 스키마를 생성)
-  const schema = createZodSchema(config);
-
-  // react-hook-form 초기화
-  const methods: UseFormReturn<any> = useForm({
+const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxReturn => {
+  // 기본값 추출
+  const defaultValues = extractSearchBoxDefaultValues(config);
+  // 원본값 상태 관리
+  const [originalValues, setOriginalValues] = useState(defaultValues);
+  const methods = useForm({
     defaultValues,
-    resolver: zodResolver(schema),
+    /*resolver: zodResolver(createZodSchema(config)),*/ //TODO 유효성이 확정되면 추가 한다.
   });
-  const { control, handleSubmit, setFocus, getValues, reset, watch } = methods;
+
+  const {
+    control,
+    handleSubmit,
+    setFocus,
+    getValues,
+    reset,
+    formState,
+    setError,
+    clearErrors,
+    setValue,
+  } = methods;
 
   /**
-   * formSubmit
-   * - 폼 데이터를 제출하고, 유효성 검사에 통과하면 가공한 데이터를 onValid 콜백으로 전달합니다.
-   * - 유효하지 않은 경우 첫 번째 에러 필드에 focus를 맞춥니다.
+   * 폼 제출 핸들러를 생성하는 함수.
    *
-   * @param onValid - 폼 데이터가 유효할 때 호출되는 콜백 함수
+   * @param onValid - 유효성 검사 통과 시 호출할 콜백 함수
+   * @returns 폼 제출 이벤트 핸들러
    */
-  const formSubmit = (onValid: OnValidCallback) => {
-    handleSubmit(
-      (data) => {
-        const objectParams: Record<string, any> = {};
-        // 각 빌더별로 데이터를 가공
-        config.builders.forEach((prop) => {
-          const value = data[prop.name];
-          if (prop.type === 'date-range') {
-            // date-range: '|'로 연결된 문자열을 분리하여 startDate와 endDate로 설정
-            objectParams['startDate'] = value.split('|')[0];
-            objectParams['endDate'] = value.split('|')[1];
-          } else {
-            objectParams[prop.name] = value;
+  const formSubmit = (onValid: (data: Record<string, any>) => void) => {
+    return (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      handleSubmit(
+        (data) => {
+          // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
+          /*const objectParams: Record<string, any> = {};
+          config.builders.forEach((prop) => {
+            const value = data[prop.name];
+            objectParams[prop.name] = value ?? '';
+          });*/
+          onValid(data);
+        },
+        (errors) => {
+          console.log('Validation Errors:', errors);
+          // 첫 번째 에러 필드의 키를 추출
+          const firstErrorKey = Object.keys(errors)[0];
+          if (firstErrorKey) {
+            setFocus(firstErrorKey);
           }
-        });
-        onValid(objectParams);
-      },
-      (errors) => {
-        console.error('Validation Errors:', errors);
-        // 첫 번째 에러 필드 키를 가져와 focus를 맞춤
-        const firstErrorKey = Object.keys(errors)[0];
-        if (firstErrorKey) {
-          setFocus(firstErrorKey);
-        }
-      },
-    )(); // 즉시 실행
-  };
-
-  // 확장된 control: 기존 control에 isFieldRequired 메서드를 추가합니다.
-  const extendedControl = {
-    ...control,
-    isFieldRequired: (fieldName: string) => !!(config.validator && config.validator[fieldName]),
+        },
+      )();
+    };
   };
 
   /**
-   * resetForm
-   * - 전달된 값 또는 defaultValues로 폼을 초기화합니다.
+   * 필드 포커스를 설정하는 함수.
    *
-   * @param values - (선택) 새로운 초기값 객체
+   * @param fieldName - 포커스를 설정할 필드 이름
    */
-  const resetForm = (values?: Record<string, any>) => {
+  const handleFocus = (fieldName: string) => {
+    setFocus(fieldName);
+  };
+
+  /**
+   * 필드 값 초기화
+   *
+   * @param values - 새로운 초기값 (선택 사항)
+   */
+  const onFormChange = (values?: Record<string, any>) => {
     if (values) {
-      reset(values);
+      Object.entries(values).forEach(([key, value]) => {
+        setValue(key, value);
+      });
     } else {
-      reset(defaultValues);
+      reset(originalValues);
     }
   };
 
+  /**
+   * 필드 오류 설정 함수
+   *
+   * @param fieldName - 필드 이름
+   * @param message - 오류 메시지
+   */
+  const setFormError = (fieldName: string, message: string) => {
+    setError(fieldName, { type: 'manual', message });
+    handleFocus(fieldName);
+  };
+
+  // control 확장: 기본 control에 isFieldRequired 메서드 추가
+  const extendedControl: DynamicFormProvider['control'] = {
+    ...control,
+    isFieldRequired: (fieldName: string) => false,
+  };
+
+  /**
+   * 서버에서 받아온 데이터를 설정하는 함수 원본데이터를 변경한다.
+   *
+   * @param data - 서버에서 받아온 데이터
+   */
+  const fetchData = (data: Record<string, any>) => {
+    reset(data);
+    setOriginalValues(data);
+  };
+
+  // provider 객체 반환
   return {
-    config: {
-      ...config,
+    provider: {
       control: extendedControl,
-      reset: resetForm,
-      formSubmit,
+      builders: config.builders,
+      formState,
+      onFormChange,
+      getValues,
+      onFormFocus: handleFocus,
+      originalValues,
+      onSubmit: formSubmit,
     },
-    getData: getValues,
+    fetchData,
+    setFormError,
+    getValues,
+    clearFormError: clearErrors,
+    formState,
+    onFormChange,
+    onFormFocus: handleFocus,
+    control: extendedControl,
   };
 };
+
+export const useSearchBox = useSearchBoxHook;

@@ -1,7 +1,8 @@
 import { Button } from '@learnway/ui';
-import styles from './movie-info.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import mediaImg from '../../assets/images/temp/img_temp_media.jpg';
-import { FC, forwardRef } from 'react';
+import { forwardRef } from 'react';
+
 const MovieInfoComponent = forwardRef<HTMLUListElement, any>(({ name, value, onChange }, ref) => {
   // media btn list
   const buttons = [

@@ -17,6 +17,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import { IcoDownload } from '@learnway/icons';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
@@ -30,6 +31,8 @@ import {
   IcoChevronRightDouble,
   IcoGridFilter,
   IcoGridOrder,
+  IcoPlus,
+  IcoMinus,
 } from '@learnway/icons';
 
 import { GridImperative, GridProps } from './types/grid';
@@ -83,6 +86,10 @@ const Grid = forwardRef(
       columnPinning = { columns: [] },
       hideColumnSettings,
       hideTotalCount,
+      hideExcelDownload = true,
+      hideUpload = true,
+      hideSelectAll = true,
+      hideDeleteAll = true,
       hideSelectedCount,
     }: GridProps<T>,
     ref: any,
@@ -385,9 +392,9 @@ const Grid = forwardRef(
                   <td
                     key={cell.id}
                     style={{
-                      display: 'flex',
+                      display: 'block',
                       width: cell.column.getSize(),
-                      justifyContent:
+                      textAlign:
                         cell.column.columnDef.meta?.cellAlign ||
                         cell.column.columnDef.meta?.align ||
                         'left',
@@ -645,7 +652,7 @@ const Grid = forwardRef(
                   onClick={() => onPageChange(i)}
                   className={cn(
                     'h-[32px] w-[32px] rounded-[4px]',
-                    pageIndex === i ? 'bg-[var(--gray7)] text-white' : 'hover:bg-gray-100',
+                    pageIndex === i ? 'bg-[#747d91] text-white' : 'hover:bg-gray-100',
                   )}>
                   {i + 1}
                 </Button>
@@ -684,6 +691,34 @@ const Grid = forwardRef(
             <div className="sub_info">
               {t('전체')} <strong className="num">{data?.length}</strong>
             </div>
+          )}
+          {/* 전체 선택 */}
+          {!hideSelectAll && (
+            <Button variant="text" size="xs" className="btn_all_select">
+              <IcoPlus width={16} height={16} stroke="#131C30" />
+              {'전체 선택'}
+            </Button>
+          )}
+          {/* 전체 삭제 */}
+          {!hideDeleteAll && (
+            <Button variant="text" size="xs" className="btn_all_delete">
+              <IcoMinus width={16} height={16} stroke="#131C30" />
+              {'전체 삭제'}
+            </Button>
+          )}
+          {/* 업로드 */}
+          {!hideUpload && (
+            <Button variant="text" size="xs" className="btn_upload">
+              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
+              {'CSV업로드'}
+            </Button>
+          )}
+          {/* 엑셀다운로드 */}
+          {!hideExcelDownload && (
+            <Button variant="text" size="xs" className="btn_excel">
+              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
+              {'엑셀다운로드'}
+            </Button>
           )}
           {/* 컬럼 설정 */}
           {!hideColumnSettings && (

@@ -88,7 +88,7 @@ function RouteComponent() {
 
     /*openConfirm({
       description: <>다국어를 저장하시겠습니까?</>,
-      
+
       onClose: (result: boolean) => {
         // console.log(result);
         if (result) {
@@ -287,7 +287,7 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    code: z.string().required(),
+    /*code: z.string().required(),*/
     /*isCodeChecked: z.boolean(),
     code: z
       .string()

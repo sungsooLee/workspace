@@ -5,6 +5,7 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 
 export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
   limitPlaceholder?: string;
+  prefixCharacter?: string;
 }
 
 /**
@@ -37,7 +38,6 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
           options={value.map((val) => ({ value: val, label: val }))}
           placeholder={placeHolder}
           showInput
-          prefixCharacter="#"
           hideBorder
           // onChange={handleOnChange}
           onAddInputEnterKeyDown={handleAddInputEnterKeyDown}

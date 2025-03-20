@@ -17,8 +17,8 @@ export const Route = createFileRoute('/_layout/platform/system/translation/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { config: sConfig, getData } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getData);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   /**
    * @param data
@@ -35,7 +35,7 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    gridFetch(getData(), { page: 0, size: 10 });
+    gridFetch(getValues(), { page: 0, size: 10 });
   }, []);
   return (
     <PageContainer>
@@ -45,7 +45,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>
@@ -55,36 +55,38 @@ function RouteComponent() {
 
 const searchConfig: SearchBoxConfig = {
   builders: [
-    {
-      name: 'keyType',
-      type: 'dropdown',
-      label: t('다국어 분류'),
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'COMMON_CODE', label: t('공통코드') },
-        { value: 'LABEL', label: t('라벨') },
-        { value: 'CATEGORY', label: t('카테고리') },
-        { value: 'ERROR', label: t('에러') },
-        { value: 'MESSAGE', label: t('메세지') },
-      ],
-    },
-    {
-      name: 'translationCode',
-      type: 'text',
-      label: t('다국어 코드'),
-    },
-    {
-      name: 'useYn',
-      type: 'dropdown',
-      label: '사용여부',
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'Y', label: '사용' },
-        { value: 'N', label: '미사용' },
-      ],
-    },
+    [
+      {
+        name: 'keyType',
+        type: 'dropdown',
+        label: t('다국어 분류'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'COMMON_CODE', label: t('공통코드') },
+          { value: 'LABEL', label: t('라벨') },
+          { value: 'CATEGORY', label: t('카테고리') },
+          { value: 'ERROR', label: t('에러') },
+          { value: 'MESSAGE', label: t('메세지') },
+        ],
+      },
+      {
+        name: 'translationCode',
+        type: 'text',
+        label: t('다국어 코드'),
+      },
+      {
+        name: 'useYn',
+        type: 'dropdown',
+        label: '사용여부',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'Y', label: '사용' },
+          { value: 'N', label: '미사용' },
+        ],
+      },
+    ],
   ],
 };
 

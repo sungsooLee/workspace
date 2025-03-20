@@ -8,7 +8,7 @@ import { SearchPopover } from './search-popover';
 import { AutoCompletePopover } from './auto-complete-popover';
 
 const SearchCompoment = () => {
-  const [searchPopover, setSearchPopover] = useState<boolean>(true);
+  const [searchPopover, setSearchPopover] = useState<boolean>(false);
   const [autoCompletePopover, setAutoCompletePopover] = useState<boolean>(false);
 
   return (

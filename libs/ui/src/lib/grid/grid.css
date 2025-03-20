@@ -19,7 +19,7 @@
     tr {
       @apply min-h-[40px] border-b border-solid border-[var(--gray4)];
       td {
-        @apply body_bo_2_r box-border items-center border-l border-solid !border-[var(--gray4)] px-[8px] text-center text-[var(--gray7)];
+        @apply body_bo_2_r box-border !overflow-hidden !text-ellipsis !whitespace-nowrap border-l border-solid !border-[var(--gray4)] px-[8px] pt-[10px] text-center text-[var(--gray7)];
         &:first-child {
           @apply border-l-0;
         }
@@ -45,7 +45,7 @@
 .paging_wrap {
   @apply relative my-[8px] flex justify-between;
   .select_item {
-    @apply w-[120px];
+    @apply min-w-[120px];
   }
   .btn_wrap {
     @apply mx-auto flex;
@@ -61,22 +61,21 @@
 }
 
 .count_wrap {
-  @apply flex w-[120px] items-center text-[14px] text-[var(--gray7)];
+  @apply flex w-[120px] items-center justify-end text-[14px] text-[var(--gray7)];
 }
-.title_wrap {
-}
-.title_item {
+.paging_wrap .select_item {
+  @apply !px-0;
 }
 
 .table_info_wrap {
   @apply flex w-full flex-col;
   .table_info_item {
-    @apply mb-[12px] flex min-h-[32px] items-center;
+    @apply mb-[12px] flex min-h-[32px] w-full items-center;
     .title {
       @apply title_bo_4_b text-[var(--gray9)];
     }
     .sub_info {
-      @apply title_bo_4_b relative ml-[12px] pl-[12px] text-[var(--gray9)];
+      @apply title_bo_4_b relative ml-[12px] mr-auto pl-[12px] text-[var(--gray9)];
       .num {
         @apply title_bo_4_b ml-[2px] inline-flex text-[var(--secondary1)];
       }
@@ -84,8 +83,26 @@
         @apply absolute left-0 top-1/2 flex h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
       }
     }
+    button {
+      @apply button_bo_2_r !font-normal;
+      svg {
+        @apply mr-[2px];
+      }
+    }
+    button + button {
+      @apply !ml-0;
+      &::before {
+        @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+    .btn_upload svg {
+      @apply rotate-180;
+    }
+    .btn_excel {
+      @apply text-[var(--gray9)];
+    }
     .btn_setting {
-      @apply button_bo_2_r text-[var(--gray9)];
+      @apply text-[var(--gray9)];
     }
   }
 }

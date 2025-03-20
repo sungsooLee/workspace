@@ -1,10 +1,8 @@
-import { useTranslation } from 'react-i18next';
-import { cn, toArray } from '@learnway/shared';
-import React, { ReactNode, useEffect, useState } from 'react';
+import { addOrRemoveItemByKey, cn, toArray } from '@learnway/shared';
+import React, { ReactNode } from 'react';
 
 import { Button } from '../button/button';
 import styles from './option-card.module.css';
-import { isEqual } from 'lodash';
 
 export interface OptionCardItem {
   label: string;
@@ -36,37 +34,15 @@ const OptionCardComponent = function ({
   onOptionSelect,
   onOptionsSelect,
 }: OptionCardComponentProps) {
-  const { t } = useTranslation();
-  const [selectedOptions, setSelectedOptions] = useState<OptionCardItem[]>(
-    getOptionsFromValue(options, value),
-  );
-
-  // changed value from parent component
-  useEffect(() => {
-    const newSelectedOptions = getOptionsFromValue(options, value);
-    if (!isEqual(selectedOptions, newSelectedOptions)) {
-      setSelectedOptions(newSelectedOptions);
-    }
-  }, [value]);
-
-  // callback function
-  useEffect(() => {
-    if (selectedOptions?.length) {
-      onOptionSelect?.(selectedOptions?.[0]);
-      onOptionsSelect?.(selectedOptions);
-    }
-  }, [selectedOptions]);
+  const selectedOptions = getOptionsFromValue(options, value);
 
   const handleOptionClickForSingle = (option: OptionCardItem) => {
-    setSelectedOptions([option]);
+    onOptionSelect?.(option);
   };
 
   const handleOptionClickForMultiple = (option: OptionCardItem) => {
-    const isDelete = selectedOptions.find((d: OptionCardItem) => d.value === option.value);
-    const appendedData = [...selectedOptions, option];
-    const deletedData = selectedOptions?.filter((d: OptionCardItem) => d.value !== option.value);
-
-    setSelectedOptions(isDelete ? deletedData : appendedData);
+    const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, 'value');
+    onOptionsSelect?.(newSelectedOptions);
   };
 
   return (

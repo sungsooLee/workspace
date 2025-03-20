@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button, ModalBody, ModalContainer, ModalFooter, OptionCard, useModal } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
-import eBookstyles from '@learnway/styles/bo/assets/styles/modules/eBook.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import eBookstyles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
 import {
   IcoBlog,
   IcoEntrust,
@@ -15,6 +15,11 @@ import {
   IcoMybook,
   IcoVideo01,
   IcoVideo02,
+  IcoSurvey,
+  IcoMultiScorm,
+  IcoHomework,
+  IcoFolder,
+  IcoExam,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
@@ -24,6 +29,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
 
+  // 퍼블수정 20240319 : 아이콘 수정 S
   const data = [
     {
       label: '동영상',
@@ -70,12 +76,18 @@ function RouteComponent() {
       icon: <IcoMybook />,
       description: '설명문구2줄설명',
     },
-    { label: '스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '멀티 스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '설문지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '시험지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '스콤', value: getRandomId(), icon: <IcoFolder />, description: '설명문구2줄설명' },
+    {
+      label: '멀티 스콤',
+      value: getRandomId(),
+      icon: <IcoMultiScorm />,
+      description: '설명문구2줄설명',
+    },
+    { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
+    { label: '시험지', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
+    { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
   ];
+  // 퍼블수정 20240319 : 아이콘 수정 E
 
   // 퍼블수정 20240317 : Modal 수정 S
   const EbookContent = () => {

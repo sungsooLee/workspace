@@ -41,18 +41,15 @@ h4.auth--title {
     &.max {
       @apply m-auto max-w-[294px];
     }
+    &.min {
+      @apply m-auto max-w-[200px];
+    }
   }
 }
 
-.auth--search-info {
-  @apply body_2_r m-auto flex-col justify-center text-center text-[#131C30];
-  svg {
-    @apply m-auto rotate-180;
-  }
-  .txt {
-    @apply mt-[12px];
-  }
-  strong {
-    @apply text-[var(--gray8)];
+/* mobile */
+body.mobile {
+  .auth--box {
+    @apply px-[20px] py-[20px];
   }
 }
