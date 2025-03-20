@@ -164,6 +164,7 @@ function RouteComponent() {
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
                 onOptionsSelect={(options) => console.log(options)}
+                hideBorder
               />
             </div>
           </div>
@@ -270,6 +271,7 @@ function RouteComponent() {
                   },
                 ]}
                 onOptionsSelect={(options) => console.log(options)}
+                hideBorder
               />
             </div>
           </div>
@@ -308,6 +310,7 @@ function RouteComponent() {
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
                 onOptionSelect={(option) => console.log(option)}
+                hideBorder
               />
             </div>
           </div>
