@@ -52,7 +52,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <h2 className="guide_tit2">퍼블 리스트 현황</h2>
+      <h2 className="guide_tit2">퍼블 리스트 현황 (리스트 재정리 예정)</h2>
       <div className="stats_box">
         <span className="total">
           총 : <strong>{stats.total}</strong>본

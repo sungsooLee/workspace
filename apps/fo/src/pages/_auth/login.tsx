@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash';
 import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
 import { useDynamicForm } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
@@ -15,8 +16,7 @@ import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
-import signupStyles from './signup.module.css';
-import './siginup.css';
+import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 
 import { FormRow } from '../../shared/ui';
 
@@ -63,8 +63,8 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className={'form_row'}>
-      <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
-        <div className={signupStyles.auth_box}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
           <div className="no_line col">
             <ContentsRow>
               <FormRow provider={provider}>
@@ -78,25 +78,25 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <ContentsRow className={signupStyles.login_info}>
+          <ContentsRow className={styles.login_info}>
             <FormRow provider={provider}>
               <DynamicFormField name={'saveId'} />
             </FormRow>
             {/*<Link to="/progress-status">진행 현황</Link>*/}
-            <div className={signupStyles.info}>
-              <Link to="/search-account">아이디/비밀번호찾기</Link>
+            <div className={styles.info}>
+              <Link to="/search-account">{t('LABEL.ACCOUNT_PASSWORD_SEARCH')}</Link>
             </div>
           </ContentsRow>
 
-          <div className={signupStyles.btn_box}>
-            <Button type="submit" size="xl" variant="primary" className={signupStyles.btn}>
-              로그인
+          <div className={styles.btn_box}>
+            <Button type="submit" size="xl" variant="primary" className={styles.btn}>
+              {t('LABEL.LOGIN')}
             </Button>
           </div>
 
-          <div className={signupStyles.sns_login}>
-            <h3 className={signupStyles.tit_sns}>소셜 로그인</h3>
-            <ul className={signupStyles.list}>
+          <div className={styles.sns_login}>
+            <h3 className={styles.tit_sns}>{t('LABEL.소셜 로그인')}</h3>
+            <ul className={styles.list}>
               <li>
                 <Button>
                   <img src={snsNaverImage} alt="naver" />
@@ -113,16 +113,14 @@ function RouteComponent() {
                 </Button>
               </li>
             </ul>
-            <div className={signupStyles.noti}>
-              회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
-            </div>
+            <div className={styles.noti}>{t('MESSAGE.LOGIN_GUIDE')}</div>
           </div>
         </div>
 
-        <div className={signupStyles.login_guide}>
+        <div className={styles.login_guide}>
           <span>
-            <Link to="/signup-progress">회원 가입 현황</Link>
-            <Link to="/signup">회원가입</Link>
+            <Link to="/signup-progress">{t('LABEL.회원 가입 현황')}</Link>
+            <Link to="/signup">{t('LABEL.회원가입')}</Link>
           </span>
         </div>
       </div>
@@ -138,7 +136,7 @@ const detailConfig = {
     {
       name: 'username',
       type: 'text',
-      label: '아이디/이메일',
+      label: 'LABEL.아이디(이메일)',
       value: '',
       placeholder: '아아디/이메일을 입력하세요',
       description: '기본 메세지',
@@ -146,7 +144,7 @@ const detailConfig = {
     {
       name: 'password',
       type: 'text',
-      label: '비밀번호',
+      label: 'LABEL.비밀번호',
       maxLength: 10,
       value: '',
       placeholder: '비밀번호를 입력하세요',
@@ -154,7 +152,7 @@ const detailConfig = {
     {
       name: 'saveId',
       type: 'checkbox',
-      checkLabel: '아이디 저장',
+      checkLabel: 'LABEL.아이디 저장',
       label: '',
       value: false,
     },

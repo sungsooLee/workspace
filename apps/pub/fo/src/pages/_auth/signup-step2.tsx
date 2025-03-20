@@ -4,7 +4,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
@@ -32,24 +31,33 @@ function RouteComponent() {
 
           <h4 className={cn(styles.title, 'auth--title')}>협력업체 사업자 정보 조회</h4>
 
-          <ContentsRow>
-            <div className={`${formStyles.form_item} ${formStyles.pd_none}`}>
-              <label htmlFor="name" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>사업자 등록 번호</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id="name" type="text" placeholder="숫자 10자리 입력(1234567890)" value="" />
-                <Button variant="gray" size="lg">
-                  조회
-                </Button>
+          {/* 퍼블수정 20250319 : no_line col div 추가 */}
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+            <ContentsRow>
+              {/* 퍼블수정 20250319 : pd_none 제거 */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>사업자 등록 번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="숫자 10자리 입력(1234567890)"
+                    value=""
+                  />
+                  <Button variant="gray" size="lg">
+                    조회
+                  </Button>
+                </div>
+                <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
               </div>
-              <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
-            </div>
-          </ContentsRow>
+            </ContentsRow>
+          </div>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">

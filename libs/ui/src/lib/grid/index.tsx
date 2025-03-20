@@ -17,6 +17,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import { IcoDownload } from '@learnway/icons';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
@@ -83,6 +84,8 @@ const Grid = forwardRef(
       columnPinning = { columns: [] },
       hideColumnSettings,
       hideTotalCount,
+      hideExcelDownload = true,
+      hideUpload = true,
       hideSelectedCount,
     }: GridProps<T>,
     ref: any,
@@ -684,6 +687,20 @@ const Grid = forwardRef(
             <div className="sub_info">
               {t('전체')} <strong className="num">{data?.length}</strong>
             </div>
+          )}
+          {/* 업로드 */}
+          {!hideUpload && (
+            <Button variant="text" size="xs" className="btn_upload">
+              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
+              {'CSV업로드'}
+            </Button>
+          )}
+          {/* 엑셀다운로드 */}
+          {!hideExcelDownload && (
+            <Button variant="text" size="xs" className="btn_excel">
+              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
+              {'엑셀다운로드'}
+            </Button>
           )}
           {/* 컬럼 설정 */}
           {!hideColumnSettings && (

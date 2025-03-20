@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
@@ -14,12 +14,28 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 
 export const Route = createFileRoute('/_auth/identity-verification')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    validateState: z.object({ email: z.string().email() }),
+    meta: {
+      title: '본인 인증',
+    },
+  }),
 });
 
 function RouteComponent() {
   const { t } = useTranslation();
 
   const router = useRouter();
+  const { state } = Route.useRouteContext();
+
+  const matches = useMatches();
+
+  useEffect(() => {
+    matches.map((match: any) => {
+      console.log('match', match.route?.id, match.staticData?.meta?.title, match);
+    });
+  }, []);
+
   const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
@@ -27,12 +43,12 @@ function RouteComponent() {
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
   const handleSuccess = (data: any) => {
-    router.navigate({ to: '/search-account/change-password', state: { ...data } });
+    router.navigate({ to: state.redirectUrl, state: { ...data } });
     return;
   };
 
   const handleCancel = () => {
-    router.navigate({ to: '/login' });
+    router.history.go(-1);
   };
 
   return (
@@ -42,7 +58,7 @@ function RouteComponent() {
           className={styles.search_info}
           onClick={() =>
             router.navigate({
-              to: '/change-password',
+              to: state.redirectUrl,
               state: {
                 authToolType: 'PHONE',
                 name: '아무개',

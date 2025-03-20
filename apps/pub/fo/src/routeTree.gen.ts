@@ -16,7 +16,9 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
+import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
+import { Route as AuthSignupStep2EnImport } from './pages/_auth/signup-step2-en'
 import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
 import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
@@ -38,6 +40,7 @@ import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
+import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -101,9 +104,21 @@ const AuthSuccessRoute = AuthSuccessImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthSignupStep3EnRoute = AuthSignupStep3EnImport.update({
+  id: '/signup-step3-en',
+  path: '/signup-step3-en',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthSignupStep3Route = AuthSignupStep3Import.update({
   id: '/signup-step3',
   path: '/signup-step3',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignupStep2EnRoute = AuthSignupStep2EnImport.update({
+  id: '/signup-step2-en',
+  path: '/signup-step2-en',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -233,6 +248,13 @@ const LayoutIntegratedSearchIntegratedSearchRoute =
   LayoutIntegratedSearchIntegratedSearchImport.update({
     id: '/integrated-search/integrated-search',
     path: '/integrated-search/integrated-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseRegistrationCourseRegistrationAllRoute =
+  LayoutCourseRegistrationCourseRegistrationAllImport.update({
+    id: '/course-registration/course-registration-all',
+    path: '/course-registration/course-registration-all',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -585,11 +607,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupStep2Import
       parentRoute: typeof AuthImport
     }
+    '/_auth/signup-step2-en': {
+      id: '/_auth/signup-step2-en'
+      path: '/signup-step2-en'
+      fullPath: '/signup-step2-en'
+      preLoaderRoute: typeof AuthSignupStep2EnImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/signup-step3': {
       id: '/_auth/signup-step3'
       path: '/signup-step3'
       fullPath: '/signup-step3'
       preLoaderRoute: typeof AuthSignupStep3Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/signup-step3-en': {
+      id: '/_auth/signup-step3-en'
+      path: '/signup-step3-en'
+      fullPath: '/signup-step3-en'
+      preLoaderRoute: typeof AuthSignupStep3EnImport
       parentRoute: typeof AuthImport
     }
     '/_auth/success': {
@@ -837,6 +873,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/course-registration/course-registration-all': {
+      id: '/_layout/course-registration/course-registration-all'
+      path: '/course-registration/course-registration-all'
+      fullPath: '/course-registration/course-registration-all'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/integrated-search/integrated-search': {
       id: '/_layout/integrated-search/integrated-search'
       path: '/integrated-search/integrated-search'
@@ -882,7 +925,9 @@ interface AuthRouteChildren {
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
   AuthSignupStep1Route: typeof AuthSignupStep1Route
   AuthSignupStep2Route: typeof AuthSignupStep2Route
+  AuthSignupStep2EnRoute: typeof AuthSignupStep2EnRoute
   AuthSignupStep3Route: typeof AuthSignupStep3Route
+  AuthSignupStep3EnRoute: typeof AuthSignupStep3EnRoute
   AuthSuccessRoute: typeof AuthSuccessRoute
 }
 
@@ -905,7 +950,9 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
   AuthSignupStep1Route: AuthSignupStep1Route,
   AuthSignupStep2Route: AuthSignupStep2Route,
+  AuthSignupStep2EnRoute: AuthSignupStep2EnRoute,
   AuthSignupStep3Route: AuthSignupStep3Route,
+  AuthSignupStep3EnRoute: AuthSignupStep3EnRoute,
   AuthSuccessRoute: AuthSuccessRoute,
 }
 
@@ -987,6 +1034,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
@@ -995,6 +1043,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutCourseRegistrationCourseRegistrationAllRoute:
+    LayoutCourseRegistrationCourseRegistrationAllRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
@@ -1023,7 +1073,9 @@ export interface FileRoutesByFullPath {
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
+  '/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/signup-step3': typeof AuthSignupStep3Route
+  '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1059,6 +1111,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1084,7 +1137,9 @@ export interface FileRoutesByTo {
   '/search-id-success': typeof AuthSearchIdSuccessRoute
   '/signup-step1': typeof AuthSignupStep1Route
   '/signup-step2': typeof AuthSignupStep2Route
+  '/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/signup-step3': typeof AuthSignupStep3Route
+  '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1120,6 +1175,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1148,7 +1204,9 @@ export interface FileRoutesById {
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
   '/_auth/signup-step1': typeof AuthSignupStep1Route
   '/_auth/signup-step2': typeof AuthSignupStep2Route
+  '/_auth/signup-step2-en': typeof AuthSignupStep2EnRoute
   '/_auth/signup-step3': typeof AuthSignupStep3Route
+  '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -1184,6 +1242,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
@@ -1211,7 +1270,9 @@ export interface FileRouteTypes {
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
+    | '/signup-step2-en'
     | '/signup-step3'
+    | '/signup-step3-en'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -1247,6 +1308,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
@@ -1271,7 +1333,9 @@ export interface FileRouteTypes {
     | '/search-id-success'
     | '/signup-step1'
     | '/signup-step2'
+    | '/signup-step2-en'
     | '/signup-step3'
+    | '/signup-step3-en'
     | '/success'
     | '/'
     | '/guide/alert'
@@ -1307,6 +1371,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
     | '/guide'
     | '/menu3'
@@ -1333,7 +1398,9 @@ export interface FileRouteTypes {
     | '/_auth/search-id-success'
     | '/_auth/signup-step1'
     | '/_auth/signup-step2'
+    | '/_auth/signup-step2-en'
     | '/_auth/signup-step3'
+    | '/_auth/signup-step3-en'
     | '/_auth/success'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -1369,6 +1436,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/course-registration/course-registration-all'
     | '/_layout/integrated-search/integrated-search'
     | '/_guide/guide/'
     | '/_layout/menu3/'
@@ -1423,7 +1491,9 @@ export const routeTree = rootRoute
         "/_auth/search-id-success",
         "/_auth/signup-step1",
         "/_auth/signup-step2",
+        "/_auth/signup-step2-en",
         "/_auth/signup-step3",
+        "/_auth/signup-step3-en",
         "/_auth/success"
       ]
     },
@@ -1470,6 +1540,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/course-registration/course-registration-all",
         "/_layout/integrated-search/integrated-search",
         "/_layout/menu3/"
       ]
@@ -1546,8 +1617,16 @@ export const routeTree = rootRoute
       "filePath": "_auth/signup-step2.tsx",
       "parent": "/_auth"
     },
+    "/_auth/signup-step2-en": {
+      "filePath": "_auth/signup-step2-en.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/signup-step3": {
       "filePath": "_auth/signup-step3.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/signup-step3-en": {
+      "filePath": "_auth/signup-step3-en.tsx",
       "parent": "/_auth"
     },
     "/_auth/success": {
@@ -1688,6 +1767,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-registration/course-registration-all": {
+      "filePath": "_layout/course-registration/course-registration-all.tsx",
       "parent": "/_layout"
     },
     "/_layout/integrated-search/integrated-search": {

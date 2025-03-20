@@ -1,21 +1,23 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
+import { IcoCaution } from '@learnway/icons';
 
-import { pageRouteConfig, password_validator } from '../../features/auth';
-import { FormRow, NoticeBox } from '../../shared/ui';
-import { useAsyncFetchEmail } from '../../entities/user';
+import { pageRouteConfig, password_validator } from '../../../features/auth';
+import { FormRow, NoticeBox, EmbededAlert } from '../../../shared/ui';
+import { useAsyncFetchEmail } from '../../../entities/user';
 
-import styles from '@learnway/styles/fo/pages/_auth/signup-progress.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 
-export const Route = createFileRoute('/_auth/signup-progress')({
+export const Route = createFileRoute('/_auth/signup-progress/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.PASSWORD_CHANGE',
+      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
     },
   }),
 });
@@ -31,7 +33,16 @@ function RouteComponent() {
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
   const handleOnSubmit = async (data: any) => {
+    router.navigate({
+      to: '/identity-verification',
+      state: {
+        email: data.email,
+        redirectUrl: '/signup-progress/result',
+        meta: { title: 'LABEL.SIGNUP_PROGRESS_STATUS' },
+      },
+    });
     /*
+    API 확인 필요
     update(
       {
         username: data.username,
@@ -63,6 +74,10 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
+          <EmbededAlert className={styles.search_info}>
+            {t('MESSAGE.SIGNUP_PROGRESS_GUIDE')}
+          </EmbededAlert>
+
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <FormRow provider={provider}>
@@ -102,6 +117,6 @@ const detailConfig = {
     },
   ],
   validator: {
-    email: password_validator,
+    email: z.string().email(),
   },
 };

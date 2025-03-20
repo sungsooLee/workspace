@@ -18,8 +18,8 @@ export const Route = createFileRoute('/_layout/menu/translation-management')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { config: sConfig, getData } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getData);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   /**
    * @param data
@@ -46,7 +46,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <SearchBox config={sConfig} onSearch={handleOnSearch} />
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>
@@ -56,33 +56,35 @@ function RouteComponent() {
 
 const searchConfig: SearchBoxConfig = {
   builders: [
-    {
-      name: 'languageCode',
-      type: 'dropdown',
-      label: t('다국어 분류'),
-      value: '',
-      options: [{ value: '', label: '전체' }],
-      optionsConfig: {
-        type: 'self',
-        codeGroup: CODE_GROUP.LANGUAGE_CODE,
+    [
+      {
+        name: 'languageCode',
+        type: 'dropdown',
+        label: t('다국어 분류'),
+        value: '',
+        options: [{ value: '', label: '전체' }],
+        optionsConfig: {
+          type: 'self',
+          codeGroup: CODE_GROUP.LANGUAGE_CODE,
+        },
       },
-    },
-    {
-      name: 'translationCode',
-      type: 'text',
-      label: t('다국어 코드'),
-    },
-    {
-      name: 'useYn',
-      type: 'dropdown',
-      label: '사용여부',
-      value: '',
-      options: [
-        { value: '', label: '전체' },
-        { value: 'Y', label: '사용' },
-        { value: 'N', label: '미사용' },
-      ],
-    },
+      {
+        name: 'translationCode',
+        type: 'text',
+        label: t('다국어 코드'),
+      },
+      {
+        name: 'useYn',
+        type: 'dropdown',
+        label: '사용여부',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'Y', label: '사용' },
+          { value: 'N', label: '미사용' },
+        ],
+      },
+    ],
   ],
 };
 

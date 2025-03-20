@@ -262,7 +262,7 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channel: z.string().nonempty(),
+    /*channel: z.string().nonempty(),*/
     /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
     category: z.string().nonempty(t('유효성 테스트')),
      language_code: z.string().nonempty(t('유효성 테스트')),

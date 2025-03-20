@@ -12,5 +12,6 @@ export * from './lib/date/date-format';
 export * from './lib/date/date-util';
 export * from './lib/date/time-util';
 export * from './lib/zod/zod';
+export * from './lib/zod/utils';
 
 export * from './lib/types';

@@ -212,11 +212,5 @@ const formConfig: DynamicFormConfig = {
     },
     ...translation.map((tr) => ({ ...tr, type: 'text', value: '' })),
   ],
-  validator: {
-    gnb: z.string().required(),
-    code: z.string().required('필수 값을 입력 해 주세요'),
-    en: z.string().required(),
-    kr: z.string().required(),
-    ne: z.string().email().optional(),
-  },
+  validator: {},
 };

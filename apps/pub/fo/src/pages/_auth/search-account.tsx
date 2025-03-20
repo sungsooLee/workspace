@@ -9,6 +9,8 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
 import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
+
 import { GoogleCertGuidePopup } from '../../features/auth';
 
 import {
@@ -35,7 +37,8 @@ function RouteComponent() {
       key: 'a',
       content: (
         <>
-          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
+          {/* 퍼블수정 20250319 : embededAlert */}
+          <div className={`${embededAlert.start} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 아이디를 확인 할 수 있습니다.
           </div>
@@ -196,7 +199,8 @@ function RouteComponent() {
       key: 'b',
       content: (
         <>
-          <div className={`${authFormStyles.search_info} ${styles.search_info}`}>
+          {/* 퍼블수정 20250319 : embededAlert */}
+          <div className={`${embededAlert.start} ${styles.search_info}`}>
             {/* 퍼블수정 20250312 : 내용 */}
             본인인증 후 비밀번호를 재설정 할 수 있습니다.
           </div>

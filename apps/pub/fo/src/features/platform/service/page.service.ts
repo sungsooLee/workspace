@@ -16,6 +16,8 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/search-id-success': '아이디찾기',
   '/pb-fo/mpass-cert': 'MPASS 인증',
   '/pb-fo/google-cert': '구글 OTP 인증',
+  '/pb-fo/signup-step2-en': 'Create An Account',
+  '/pb-fo/signup-step3-en': 'Create An Account',
 };
 
 export function isSigninPage(path: string): boolean {
