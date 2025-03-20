@@ -146,7 +146,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     const showSeconds = displayType === 'time-hm';
 
     return (
-      <div className="nlp--datepicker-time" ref={ref}>
+      <div className={cn('nlp--datepicker-wrap', 'nlp--datepicker-time')} ref={ref}>
         <PopoverTimeInput
           value={selectedDate || new Date()}
           onChange={handleChange}
