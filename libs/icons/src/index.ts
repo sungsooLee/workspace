@@ -98,6 +98,11 @@ export { ReactComponent as IcoNarrowRight } from './lib/ic_arrow_narrow_right.sv
 export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
 export { ReactComponent as IcoFileImg } from './lib/ic_file_img.svg'; // image
 export { ReactComponent as IcoFileVideo } from './lib/ic_file_video.svg'; // video
+export { ReactComponent as IcoExam } from './lib/ic_exam.svg'; // exam
+export { ReactComponent as IcoFolder } from './lib/ic_folder.svg'; // folder
+export { ReactComponent as IcoHomework } from './lib/ic_homework.svg'; // homework
+export { ReactComponent as IcoMultiScorm } from './lib/ic_multi_scorm.svg'; // multi scorm
+export { ReactComponent as IcoSurvey } from './lib/ic_survey.svg'; // survey
 
 //export Default as Information from './lib/information.svg?react';
 

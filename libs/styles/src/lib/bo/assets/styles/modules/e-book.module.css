@@ -1,12 +1,9 @@
 /* eBook.module.css */
-.wrap {
-  @apply text-center;
-  .title {
-    @apply title_bo_3_b mb-[8px] text-[var(--gray9)];
-  }
-  .text {
-    @apply body_3_r text-[var(--gray7)];
-  }
+.title {
+  @apply title_bo_3_b mb-[8px] text-center text-[var(--gray9)];
+}
+.text {
+  @apply body_3_r text-center text-[var(--gray7)];
 }
 .btn_box {
   @apply mt-[24px] flex flex-col;
