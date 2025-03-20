@@ -22,7 +22,7 @@ export const toArray = (value: any) => {
  * addOrRemoveItemByKey(users, { id: 2, name: "Bob" }, "id");
  * // 결과: [{ id: 1, name: "Alice" }]
  */
-export const addOrRemoveItemByKey = <T, K extends keyof T>(list: T[], item: T, key: K): T[] => {
+export const addOrRemoveItemByKey = <T, K extends keyof T>(list: T[], item: T, key?: K): T[] => {
   if (!list || !item || !key) {
     return list;
   }
