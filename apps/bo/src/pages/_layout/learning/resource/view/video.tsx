@@ -423,6 +423,7 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean, getValues) =>
           value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
+        labelTarget: 'subtitles',
       },
       value: true,
     },
