@@ -1,11 +1,4 @@
-import {
-  DynamicFormConfig,
-  DynamicFormProvider,
-  FormConfig,
-  GroupConfig,
-  SearchBoxConfig,
-  UseSearchBoxReturn,
-} from '@learnway/hooks';
+import { DynamicFormProvider, SearchBoxConfig, UseSearchBoxReturn } from './type';
 import { useForm } from 'react-hook-form';
 import { FormEvent, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
@@ -23,7 +16,6 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
   const [originalValues, setOriginalValues] = useState(defaultValues);
   const methods = useForm({
     defaultValues,
-    /*resolver: zodResolver(createZodSchema(config)),*/ //TODO 유효성이 확정되면 추가 한다.
   });
 
   const {

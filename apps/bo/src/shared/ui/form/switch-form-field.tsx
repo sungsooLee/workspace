@@ -2,11 +2,16 @@ import { Switch } from '@learnway/ui';
 import React, { ElementRef, forwardRef, useMemo } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import * as Primitive from '@radix-ui/react-switch';
+import { useWatch } from 'react-hook-form';
 
 const SwitchFormFieldComponent = forwardRef<
   ElementRef<typeof Primitive.Root>,
   BaseFormFieldProps<boolean>
->(({ value, onChange, getValues, switchConfig }, ref) => {
+>(({ value, control, onChange, getValues, switchConfig }, ref) => {
+  const watched = useWatch({
+    control,
+    name: switchConfig?.labelTarget || '',
+  });
   const fieldLabel = useMemo<string>(
     () =>
       switchConfig
@@ -14,7 +19,7 @@ const SwitchFormFieldComponent = forwardRef<
           ? switchConfig.label
           : switchConfig.label(value, getValues)
         : '',
-    [value],
+    [value, watched],
   );
 
   return <Switch ref={ref} checked={value} onCheckedChange={onChange} label={fieldLabel} />;

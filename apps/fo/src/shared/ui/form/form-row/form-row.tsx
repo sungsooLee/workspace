@@ -1,4 +1,4 @@
-import { Children, FC } from 'react';
+import { Children, FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
@@ -6,7 +6,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, Tooltip } from '@learnway/ui';
 import { FormRowProps, useFormRow } from '@learnway/hooks';
-import { formFieldConfig, FormGuideText } from '../';
+import { formFieldConfig } from '../../../../../../bo/src/shared/ui/form';
 
 /**
  * FormRowComponent
@@ -26,6 +26,10 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   const { formName, rootConfig, isRequired, error, guideText, fieldRefs, renderFormRowContent } =
     useFormRow(provider, children, name);
 
+  const DynamicComponent = useMemo(
+    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
+    [],
+  );
   return (
     <div
       className={cn(styles.form_item, className)}
@@ -62,9 +66,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>
-        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
-      </div>
+      <div className={styles.input_box}>{DynamicComponent}</div>
 
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
       {!error.isError && rootConfig?.guideText && (
