@@ -13,6 +13,11 @@
     }
     .util {
       @apply flex items-center;
+      & > div {
+        & + div {
+          @apply ml-[16px];
+        }
+      }
     }
   }
 }

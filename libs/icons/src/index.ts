@@ -103,6 +103,7 @@ export { ReactComponent as IcoFolder } from './lib/ic_folder.svg'; // folder
 export { ReactComponent as IcoHomework } from './lib/ic_homework.svg'; // homework
 export { ReactComponent as IcoMultiScorm } from './lib/ic_multi_scorm.svg'; // multi scorm
 export { ReactComponent as IcoSurvey } from './lib/ic_survey.svg'; // survey
+export { ReactComponent as IcoSetting01 } from './lib/ic_setting_01.svg'; // setting
 
 //export Default as Information from './lib/information.svg?react';
 
