@@ -1,20 +1,17 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
-import { CODE_GROUP } from '@learnway/config';
-import { z } from '@learnway/shared';
+import { Button, DynamicFormField } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
 import { FormRow } from '../../../shared/ui/form';
-import { DynamicFormField } from '@learnway/ui';
+import { CustomFormField } from '../../../shared/ui/form/custom-form-field';
 
 export const Route = createFileRoute('/_layout/menu/type3')({
   component: RouteComponent,
@@ -117,6 +114,7 @@ function RouteComponent() {
     console.log('clear error');
     clearFormError('channel2');
   };
+
   return (
     <div>
       <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -150,6 +148,14 @@ function RouteComponent() {
                 <DynamicFormField name={'channel2'} />
               </FormRow>
             </ContentsRow>
+
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'custom'}>
+                  <CustomFormField />
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
           </MainContents>
           <SubContents>
             <MovieInfo />
@@ -178,34 +184,15 @@ const detailConfig: DynamicFormConfig = {
       value: '',
       placeholder: '최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명',
       description: '기본 메세지',
-      validation: {
-        type: 'email',
-        required: true,
-        message: '텍스트1 값을 선택해주세요.',
-        refine: (value: string) => value.length > 0,
-        superRefine: (value: string) => value.length > 0,
-      },
+    },
+    {
+      name: 'custom',
+      type: 'custom',
+      label: '커스텀',
+      value: '',
     },
   ],
-  validator: {},
-};
-const TestComponent: FC<any> = ({ provider }) => {
-  return (
-    <FormRow provider={provider}>
-      <div>
-        <div className={'a'}>
-          <DynamicFormField name={'a'} />
-        </div>
-        <div className={'b'}>
-          <DynamicFormField name={'b'} />
-        </div>
-        <div className={'c'}>
-          <DynamicFormField name={'c'} />
-        </div>
-        <div className={'d'}>
-          <DynamicFormField name={'d'} />
-        </div>
-      </div>
-    </FormRow>
-  );
+  validator: {
+    custom: true,
+  },
 };
