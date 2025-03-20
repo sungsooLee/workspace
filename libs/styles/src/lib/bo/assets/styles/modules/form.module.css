@@ -203,18 +203,6 @@
       @apply ml-[4px] inline-flex;
     }
   }
-  .info_area {
-    @apply absolute right-0 top-0 flex items-center;
-    .info_text {
-      @apply body_bo_2_r text-[var(--gray6)];
-      em {
-        @apply ml-[5px] inline-flex;
-      }
-      & + button {
-        @apply ml-[16px];
-      }
-    }
-  }
 }
 .status {
   @apply ml-[2px] inline-flex align-text-top;
@@ -272,6 +260,19 @@ hr.divider {
     }
     svg {
       @apply !mr-0 h-[16px] w-[16px] stroke-[var(--gray9)];
+    }
+  }
+}
+
+.info_area {
+  @apply flex items-center justify-end pb-[16px];
+  .info_text {
+    @apply body_bo_2_r text-[var(--gray6)];
+    em {
+      @apply ml-[5px] inline-flex;
+    }
+    & + button {
+      @apply ml-[16px];
     }
   }
 }

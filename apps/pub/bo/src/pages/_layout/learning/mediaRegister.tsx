@@ -164,6 +164,7 @@ function RouteComponent() {
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
                 onOptionsSelect={(options) => console.log(options)}
+                hideBorder
               />
             </div>
           </div>
@@ -270,6 +271,7 @@ function RouteComponent() {
                   },
                 ]}
                 onOptionsSelect={(options) => console.log(options)}
+                hideBorder
               />
             </div>
           </div>
@@ -308,6 +310,7 @@ function RouteComponent() {
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
                 onOptionSelect={(option) => console.log(option)}
+                hideBorder
               />
             </div>
           </div>
@@ -1075,7 +1078,8 @@ function RouteComponent() {
               </div>
             </ContentsRow>
           )}
-          <ContentsRow>
+          {/* 퍼블수정 20240320 : 채널 선택 영역 수정 */}
+          <ContentsRow type="horizontal">
             <div className={formStyles.form_item}>
               <label htmlFor="name-share" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>공유채널 설정</span>
@@ -1088,6 +1092,8 @@ function RouteComponent() {
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
                 </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
                 <span className={formStyles.info_area}>
                   <span className={formStyles.info_text}>
                     채널<em>10</em>개
@@ -1096,7 +1102,7 @@ function RouteComponent() {
                     채널선택
                   </Button>
                 </span>
-              </label>
+              </div>
             </div>
           </ContentsRow>
           {/* 2025-03-07 수정 */}

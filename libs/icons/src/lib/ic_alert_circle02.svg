@@ -1,0 +1,9 @@
+<svg width="current" height="current" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="7.5" cy="7.5" r="7.5" transform="matrix(1 0 0 -1 2.5 17.5)" fill="#A9AFB8"/>
+<path d="M10 9.83398V13.1673" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+<mask id="path-3-inside-1_5976_24104" fill="white">
+<ellipse cx="10" cy="7.20884" rx="1" ry="0.999854"/>
+</mask>
+<ellipse cx="10" cy="7.20884" rx="1" ry="0.999854" fill="white"/>
+<path d="M10.0001 7.20884L10 7.20877V9.20862C11.1044 9.20862 11.9999 8.31342 11.9999 7.20884H10.0001ZM10 7.20877L9.99993 7.20884H8.00007C8.00007 8.31342 8.89561 9.20862 10 9.20862V7.20877ZM9.99993 7.20884L10 7.20891V5.20906C8.89561 5.20906 8.00007 6.10425 8.00007 7.20884H9.99993ZM10 7.20891L10.0001 7.20884H11.9999C11.9999 6.10425 11.1044 5.20906 10 5.20906V7.20891Z" fill="white" mask="url(#path-3-inside-1_5976_24104)"/>
+</svg>

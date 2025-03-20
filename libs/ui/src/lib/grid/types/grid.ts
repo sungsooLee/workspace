@@ -67,6 +67,8 @@ export interface GridProps<T> {
   hideSelectAll?: boolean;
   // 전체 삭제 버튼 표시 여부
   hideDeleteAll?: boolean;
+  // 외부 클래스 추가
+  className?: string;
 }
 
 export interface GridState {

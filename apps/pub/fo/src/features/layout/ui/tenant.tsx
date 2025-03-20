@@ -9,12 +9,14 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
 
 import styles from './tenant.module.css';
-import { IcoArrowDown, IcoCheck } from '@learnway/icons';
+import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';
 
 const TenantModal = () => {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState<number | null>(2);
+  const [tip, setTip] = useState<number | null>(null);
   const tenants = [
     '테넌트명1',
     '테넌트명2',
@@ -76,6 +78,7 @@ const TenantModal = () => {
   ];
   const handleClick = (idx: number): void => {
     setActiveIdx(idx);
+    setTip(idx);
   };
 
   return (
@@ -97,7 +100,26 @@ const TenantModal = () => {
                       </i>
                       대표
                     </span>
-                    <span className={styles.txt}>{tenants}</span>
+                    {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
+                    <span className={styles.txt}>
+                      {tenants}
+                      {isMobile ? (
+                        <i>
+                          <IcoArrowForward
+                            width={20}
+                            height={20}
+                            stroke="#6f798b"></IcoArrowForward>
+                        </i>
+                      ) : null}
+                    </span>
+                    {/* 퍼블수정 20250320 : 문구 추가 */}
+                    {tip === idx ? (
+                      <p className={`${styles.tip} ${styles.tip_show}`}>
+                        대표 테넌트로 설정되었습니다.
+                      </p>
+                    ) : (
+                      ''
+                    )}
                   </Button>
                 </li>
               ))}
@@ -114,13 +136,13 @@ const TenantModal = () => {
 
 const TenantComponent = () => {
   const { open: openModal } = useModal();
-
   return (
     <Button
       className={styles.btn_tenant}
       onClick={() =>
+        // 퍼블수정 20250320 : mobile, pc 분기 처리
         openModal({
-          width: 'm_full',
+          width: isMobile ? 'm_full' : 'sm',
           content: <TenantModal />,
         })
       }>
