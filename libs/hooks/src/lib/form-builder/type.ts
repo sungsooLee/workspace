@@ -145,7 +145,7 @@ export type FormValidatorConfig = {
                * - 값이 유효하지 않은 경우 false 반환
                * @param values - 전체 값 객체
                */
-              fn: (values: Record<string, any>) => boolean;
+              fn?: (values: Record<string, any>) => boolean;
               // 필수 값 오류 발생 시 표시할 메시지 (옵션)
               message?: string;
               // 필수 값 오류 발생 위치

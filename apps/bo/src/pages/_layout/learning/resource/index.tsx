@@ -5,9 +5,10 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { LearningTypeChoicePopup } from '../../../../features/learning';
+import { LearningTypeChoiceModal } from '../../../../features/learning';
 import { t } from 'i18next';
 import { SearchBox } from '../../../../shared/ui/search-box';
+import { useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/learning/resource/')({
   component: RouteComponent,
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/_layout/learning/resource/')({
 
 function RouteComponent() {
   const router = useRouter();
+  const { provider: searchProvider } = useSearchBox(searchConfig);
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
@@ -26,9 +28,10 @@ function RouteComponent() {
     setDisplayContent(false);
     //router.navigate({ to: '/learning/resource/education/view' });
     const typeResult = (await openModal({
-      content: <LearningTypeChoicePopup />,
+      content: <LearningTypeChoiceModal />,
       width: 'lg',
     })) as LEARNING_TYPE;
+    console.log('typeResult => ', typeResult);
     switch (typeResult) {
       case LEARNING_TYPE.VIDEO: {
         /*const videoUploadResult = await openAsync({
@@ -52,7 +55,9 @@ function RouteComponent() {
           등록
         </Button>
       </ContentsButtons>
-      <MainContents>Search</MainContents>
+      <MainContents>
+        <SearchBox provider={searchProvider} />
+      </MainContents>
     </PageContainer>
   );
 }

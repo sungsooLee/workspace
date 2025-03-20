@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFaceId01, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import modalStyles from './mpass-modal.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';

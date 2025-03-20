@@ -10,6 +10,8 @@ import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/conte
 import { FormDisplay } from '../../../features/form/ui/form-display';
 import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
 import { buildJodObject } from '@learnway/shared';
+import { SubTitlesFormField } from '../../../features/form/ui';
+import React from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
   component: RouteComponent,
@@ -30,9 +32,9 @@ function RouteComponent() {
     };
     try {
       const result = schema.parse(validData);
-      console.log('✅ 유효성 검사 통과:', result);
+      console.log('유효성 검사 통과:', result);
     } catch (e: any) {
-      console.error('❌ 유효성 검사 실패:', e.errors);
+      console.error('유효성 검사 실패:', e.errors);
     }
   };
 
@@ -81,6 +83,14 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'subtitles'}>
+                <SubTitlesFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
         </MainContents>
       </PageContainer>
     </form>
@@ -145,6 +155,13 @@ const formConfig: DynamicFormConfig = {
       format: 'string', // 기본 string
       value: '',
     },
+    {
+      label: '배열 데이터',
+      name: 'subtitles',
+      type: 'custom',
+      format: 'array', // 기본 string
+      value: [],
+    },
   ],
   validator: {
     channelId: true,
@@ -180,6 +197,11 @@ const formConfig: DynamicFormConfig = {
           message: '비밀번호 달라요',
         },
       ],
+    },
+    subtitles: {
+      required: {
+        message: '자막데이터는 하나이상 등록 해야 합니다.',
+      },
     },
   },
 };

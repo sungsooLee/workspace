@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 import styles from './signup.module.css';
 import { Button, Input, useModal, ContentsRow } from '@learnway/ui';

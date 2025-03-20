@@ -37,7 +37,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       acc[key] = {
         format,
       };
-      console.log(`key => [ ${key} ] `, existingValidator, typeof existingValidator);
       if (existingValidator) {
         if (typeof existingValidator === 'boolean') {
           acc[key] = {

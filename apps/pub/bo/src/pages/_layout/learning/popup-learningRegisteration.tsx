@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button, ModalBody, ModalContainer, ModalFooter, OptionCard, useModal } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
-import eBookstyles from '@learnway/styles/bo/assets/styles/modules/eBook.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import eBookstyles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
 import {
   IcoBlog,
   IcoEntrust,

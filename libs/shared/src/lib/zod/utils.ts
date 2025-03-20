@@ -114,7 +114,11 @@ export const buildJodObject = (validator: ValidatorConfig) => {
   return z.object(schemaShape).superRefine((data, ctx) => {
     if (requiredSuperRefine.length > 0) {
       requiredSuperRefine.forEach(({ key, config }) => {
-        if ((config.fn ? config.fn(data) : true) && !data[key]) {
+        let isData = !data[key];
+        if (Array.isArray(data[key])) {
+          isData = data[key].length === 0;
+        }
+        if ((config.fn ? config.fn(data) : true) && isData) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],

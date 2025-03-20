@@ -27,9 +27,9 @@ import { cn } from '@learnway/shared';
 import { ImageOption } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
-import styles from '../../../../../../bo/src/widgets/layout/ui/container/page-contents.module.css';
-import movieInfoStyles from './movie-info.module.css';
-import formStyles from '../../../assets/styles/modules/form.module.css'; // form css
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form css
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';

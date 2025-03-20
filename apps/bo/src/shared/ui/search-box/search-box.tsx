@@ -121,8 +121,8 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
           <div className={rowClassName}>
             {provider.builders
               .filter((_, index) => index < 2)
-              .map((columns: any) => (
-                <div className={searchStyles.item_wrap}>
+              .map((columns: any, columnIndex) => (
+                <div key={columnIndex} className={searchStyles.item_wrap}>
                   {columns.map((column: any, columnIndex: number) =>
                     renderColumn(column, columnIndex, columns.length),
                   )}
@@ -132,8 +132,8 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
               <div className={searchStyles.form_display}>
                 {provider.builders
                   .filter((_, index) => index > 0)
-                  .map((columns: any) => (
-                    <div className={searchStyles.item_wrap}>
+                  .map((columns: any, columnIndex) => (
+                    <div key={columnIndex} className={searchStyles.item_wrap}>
                       {columns.map((column: any, columnIndex: number) =>
                         renderColumn(column, columnIndex, columns.length),
                       )}

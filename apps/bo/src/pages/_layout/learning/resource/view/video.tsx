@@ -42,7 +42,10 @@ function RouteComponent() {
             <Link to={'/'}>상시 학습 개설</Link>
             <Link to={'/'}>이러닝 개설</Link>
             <Link to={'/'}>라이브개설</Link>
-            <Button variant="point" size="sm">
+            <Button
+              variant="point"
+              size="sm"
+              onClick={() => router.navigate({ to: '/learning/resource' })}>
               목록
             </Button>
           </LinkBox>
@@ -287,10 +290,19 @@ const formConfig: DynamicFormConfig = {
       value: 'KR',
     },
     {
+      name: 'nationCode',
+      type: 'hidden',
+      value: 'KR',
+    },
+    {
       label: t('연락처'),
       name: 'contact',
       type: 'phone-number',
       value: '',
+      fields: {
+        nationCode: 'nationCode',
+        number: 'contact',
+      },
     },
     {
       label: t('사용기한'),
@@ -331,10 +343,19 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      name: 'externalDevelopmentCompanyNationCode',
+      type: 'hidden',
+      value: 'KR',
+    },
+    {
       label: t('외주개발업체 연락처'),
       name: 'externalDevelopmentCompanyContact',
       type: 'phone-number',
       value: '',
+      fields: {
+        nationCode: 'externalDevelopmentCompanyNationCode',
+        number: 'externalDevelopmentCompanyContact',
+      },
     },
     {
       label: t('썸네일'),

@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button, DatePicker, Input, Select, Textarea } from '@learnway/ui';
 import { IcoCompanion, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import signupStyles from './signup.module.css';
 
 export const Route = createFileRoute('/_auth/progress-status-admin-fail')({
