@@ -19,7 +19,7 @@
     tr {
       @apply min-h-[40px] border-b border-solid border-[var(--gray4)];
       td {
-        @apply body_bo_2_r box-border items-center border-l border-solid !border-[var(--gray4)] px-[8px] text-center text-[var(--gray7)];
+        @apply body_bo_2_r box-border !overflow-hidden !text-ellipsis !whitespace-nowrap border-l border-solid !border-[var(--gray4)] px-[8px] pt-[10px] text-center text-[var(--gray7)];
         &:first-child {
           @apply border-l-0;
         }
