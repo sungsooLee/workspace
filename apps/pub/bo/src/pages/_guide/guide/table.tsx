@@ -17,10 +17,14 @@ function RouteComponent() {
     { value: 'type3', label: '항목3' },
   ];
   return (
-    <div>
+    <div className="content">
       <h2 className="guide_tit2">Table Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/table/table.tsx</p>
-      <p className="info">table 컴포넌트로 변경 예정</p>
+      <p className="info">table 컴포넌트로 변경 예정(컴포넌트에 정렬 클래스 적용 필요)</p>
+      <div className="group">
+        <h3 className="guide_tit3">Table</h3>
+      </div>
+      {/* table */}
       <div className={cn(styles.start, styles.table_wrap)}>
         <table className={styles.table}>
           <caption>{'테이블 정보'}</caption>
@@ -34,9 +38,13 @@ function RouteComponent() {
           </colgroup>
           <thead>
             <tr>
+              <th scope="col" className={styles.left}>
+                {'타이틀'}
+              </th>
               <th scope="col">{'타이틀'}</th>
-              <th scope="col">{'타이틀'}</th>
-              <th scope="col">{'타이틀'}</th>
+              <th scope="col" className={styles.right}>
+                {'타이틀'}
+              </th>
               <th scope="col">{'타이틀'}</th>
               <th scope="col">{'타이틀'}</th>
               <th scope="col">{'타이틀'}</th>
@@ -89,8 +97,8 @@ function RouteComponent() {
             </tr>
             <tr>
               <th scope="row">{'타이틀'}</th>
-              <td>{'데이터'}</td>
-              <td>{'데이터'}</td>
+              <td className={styles.left}>{'데이터'}</td>
+              <td className={styles.right}>{'데이터'}</td>
               <td>{'데이터'}</td>
               <td>{'데이터'}</td>
               <td>{'데이터'}</td>

@@ -13,13 +13,25 @@
         &:not(:first-child) {
           @apply border-l-[1px] border-[var(--gray4)];
         }
+        &.left {
+          @apply text-left;
+        }
+        &.right {
+          @apply text-right;
+        }
       }
       tbody {
         th {
-          @apply body_bo_2_b h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-left align-top;
+          @apply body_bo_2_b h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-left align-middle;
         }
         td {
-          @apply body_bo_2_r h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-center align-top;
+          @apply body_bo_2_r h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-center align-middle;
+          &.left {
+            @apply text-left;
+          }
+          &.right {
+            @apply text-right;
+          }
           & > div {
             @apply pb-0;
           }
