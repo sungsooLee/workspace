@@ -19,12 +19,15 @@ import {
   DropdownOption,
   Checkbox,
   Tooltip,
+  DatePicker,
+  Switch,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 /* CSS */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
@@ -37,6 +40,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningSetting')(
 
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
+  // grid
   const data: any[] = [
     {
       item: '담당자',
@@ -82,7 +86,6 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          {/* 퍼블수정 20240318 : 수정 S */}
           <div className={popupStyles.wrap}>
             <div className={popupStyles.title_wrap}>
               <h2 className={popupStyles.title}>{'담당자를 선택하세요.'}</h2>
@@ -168,7 +171,6 @@ function RouteComponent() {
               />
             </div>
           </div>
-          {/* 퍼블수정 20240318 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -178,6 +180,33 @@ function RouteComponent() {
     );
   };
   const SettingItemContent = () => {
+    // Date picker
+    const [date, setDate] = useState(new Date());
+    const [date2, setDate2] = useState(new Date());
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleDate = (value: any) => {
+      setDate(value);
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleDate2 = (value: any) => {
+      setDate2(value);
+    };
+
+    // switch : 사용기한
+    const [checked, setChecked] = useState<{ [key: number]: boolean }>({
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+    });
+
+    // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
+    const handleCheckedChange = (id: number) => (checked: boolean) => {
+      setChecked((prev) => ({ ...prev, [id]: checked }));
+    };
     return (
       <ModalContainer>
         <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
@@ -245,7 +274,109 @@ function RouteComponent() {
                     </div>
                   </div>
                 </ContentsRow>
-                <ContentsRow>
+                <ContentsRow type="horizontal">
+                  {/* form_item */}
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-term" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>사용기한</span>
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                      <Tooltip
+                        className={formStyles.tooltip}
+                        side="bottom"
+                        align="start"
+                        content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}>
+                        <Button onlyIcon>
+                          <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                        </Button>
+                      </Tooltip>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      {/* Switch 텍스트 : '무기한' : '기간 설정' */}
+                      <Switch
+                        id="switch01"
+                        className={formStyles.btn_switch}
+                        label={checked[1] ? '기간 설정' : '무기한'}
+                        checked={checked[1]}
+                        onCheckedChange={handleCheckedChange(1)}
+                      />
+                    </div>
+                  </div>
+                </ContentsRow>
+                {checked[1] && (
+                  <div className={dynamicFormStyles.form_display}>
+                    <ContentsRow>
+                      <div className={formStyles.form_item}>
+                        <div className={formStyles.input_box}>
+                          <DatePicker
+                            onChange={handleDate}
+                            value={date}
+                            className={formStyles.datepicker_item}
+                          />
+                          <span className={formStyles.dash}></span>
+                          <DatePicker
+                            onChange={handleDate2}
+                            value={date2}
+                            className={formStyles.datepicker_item}
+                          />
+                        </div>
+                      </div>
+                    </ContentsRow>
+                  </div>
+                )}
+                <ContentsRow type="horizontal">
+                  {/* Textarea type */}
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-conjugation" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>교육자원 활용여부</span>
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Switch
+                        id="name-use"
+                        className={dynamicFormStyles.btn_switch}
+                        label={checked[2] ? '활용 가능' : '활용 불가'}
+                        checked={checked[2]}
+                        onCheckedChange={handleCheckedChange(2)}
+                      />
+                    </div>
+                    <p className={formStyles.guide_text}>
+                      해당 학습자원으로 교육 과정을 개설할 수
+                      {checked[2] ? '있습니다.' : '없습니다.'}
+                    </p>
+                  </div>
+                </ContentsRow>
+                <ContentsRow type="horizontal">
+                  {/* Textarea type */}
+                  <div className={formStyles.form_item}>
+                    <label htmlFor="name-conjugation2" className={formStyles.form_label}>
+                      <span className={formStyles.form_text}>보안콘텐츠 여부</span>
+                      {/* 필수 케이스 */}
+                      <span className={cn(formStyles.status, formStyles.required)}>
+                        <IcoFormRequired width={12} height={12} />
+                      </span>
+                    </label>
+                    <div className={formStyles.input_box}>
+                      <Switch
+                        id="name-use2"
+                        className={dynamicFormStyles.btn_switch}
+                        label={checked[3] ? '보안 적용' : '보안 미적용'}
+                        checked={checked[3]}
+                        onCheckedChange={handleCheckedChange(3)}
+                      />
+                    </div>
+                    <p className={formStyles.guide_text}>
+                      동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어
+                      동영상 보안을 강화할수 {checked[3] ? '있습니다.' : '없습니다.'}
+                    </p>
+                  </div>
+                </ContentsRow>
+                <ContentsRow type="horizontal">
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-share" className={formStyles.form_label}>
                       <span className={formStyles.form_text}>공유채널 설정</span>
@@ -258,6 +389,8 @@ function RouteComponent() {
                           <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                         </Button>
                       </Tooltip>
+                    </label>
+                    <div className={formStyles.input_box}>
                       <span className={formStyles.info_area}>
                         <span className={formStyles.info_text}>
                           채널<em>10</em>개
@@ -266,7 +399,7 @@ function RouteComponent() {
                           채널선택
                         </Button>
                       </span>
-                    </label>
+                    </div>
                   </div>
                 </ContentsRow>
                 <div className={formStyles.form_contents_wrap}>
