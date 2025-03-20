@@ -31,6 +31,8 @@ import {
   IcoChevronRightDouble,
   IcoGridFilter,
   IcoGridOrder,
+  IcoPlus,
+  IcoMinus,
 } from '@learnway/icons';
 
 import { GridImperative, GridProps } from './types/grid';
@@ -86,6 +88,8 @@ const Grid = forwardRef(
       hideTotalCount,
       hideExcelDownload = true,
       hideUpload = true,
+      hideSelectAll = true,
+      hideDeleteAll = true,
       hideSelectedCount,
     }: GridProps<T>,
     ref: any,
@@ -687,6 +691,20 @@ const Grid = forwardRef(
             <div className="sub_info">
               {t('전체')} <strong className="num">{data?.length}</strong>
             </div>
+          )}
+          {/* 전체 선택 */}
+          {!hideSelectAll && (
+            <Button variant="text" size="xs" className="btn_all_select">
+              <IcoPlus width={16} height={16} stroke="#131C30" />
+              {'전체 선택'}
+            </Button>
+          )}
+          {/* 전체 삭제 */}
+          {!hideDeleteAll && (
+            <Button variant="text" size="xs" className="btn_all_delete">
+              <IcoMinus width={16} height={16} stroke="#131C30" />
+              {'전체 삭제'}
+            </Button>
           )}
           {/* 업로드 */}
           {!hideUpload && (

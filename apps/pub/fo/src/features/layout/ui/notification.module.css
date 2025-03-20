@@ -96,4 +96,9 @@
       @apply right-[18px];
     }
   }
+  .alarm_info {
+    .text {
+      @apply hidden;
+    }
+  }
 }

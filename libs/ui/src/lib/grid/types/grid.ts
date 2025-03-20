@@ -63,6 +63,10 @@ export interface GridProps<T> {
   hideExcelDownload?: boolean;
   //업로드 버튼 표시 여부
   hideUpload?: boolean;
+  //전체 선택 버튼 표시 여부
+  hideSelectAll?: boolean;
+  // 전체 삭제 버튼 표시 여부
+  hideDeleteAll?: boolean;
 }
 
 export interface GridState {

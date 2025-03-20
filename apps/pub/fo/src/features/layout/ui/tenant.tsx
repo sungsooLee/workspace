@@ -1,6 +1,5 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import {
   Button,
   Popover,
@@ -10,6 +9,7 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
+
 import styles from './tenant.module.css';
 import { IcoArrowDown, IcoCheck } from '@learnway/icons';
 
@@ -120,7 +120,7 @@ const TenantComponent = () => {
       className={styles.btn_tenant}
       onClick={() =>
         openModal({
-          width: 'sm',
+          width: 'm_full',
           content: <TenantModal />,
         })
       }>
