@@ -1,4 +1,4 @@
-import { Children, createContext, FC, memo, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Children, FC, memo, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
@@ -29,8 +29,12 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
     guideText,
     infoArea,
     fieldRefs,
-    DynamicComponent,
+    renderFormRowContent,
   } = useFormRow(provider, children, name);
+  const DynamicComponent = useMemo(
+    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
+    [],
+  );
 
   return (
     <div

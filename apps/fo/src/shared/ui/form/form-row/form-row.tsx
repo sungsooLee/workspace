@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { Children, FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
@@ -6,6 +6,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, Tooltip } from '@learnway/ui';
 import { FormRowProps, useFormRow } from '@learnway/hooks';
+import { formFieldConfig } from '../../../../../../bo/src/shared/ui/form';
 
 /**
  * FormRowComponent
@@ -22,16 +23,13 @@ import { FormRowProps, useFormRow } from '@learnway/hooks';
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
   const { t } = useTranslation();
-  const {
-    formName,
-    rootConfig,
-    isRequired,
-    error,
-    guideText,
-    DynamicComponent,
-    fieldRefs,
-    renderFormRowContent,
-  } = useFormRow(provider, children, name);
+  const { formName, rootConfig, isRequired, error, guideText, fieldRefs, renderFormRowContent } =
+    useFormRow(provider, children, name);
+
+  const DynamicComponent = useMemo(
+    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
+    [],
+  );
   return (
     <div
       className={cn(styles.form_item, className)}

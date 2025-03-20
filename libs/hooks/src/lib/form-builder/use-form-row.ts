@@ -9,7 +9,6 @@ import {
   ReactElement,
 } from 'react';
 import { DynamicFormProvider, ErrorState, FormConfig, FormFieldConfig } from './type';
-import { formFieldConfig } from '../../../../../apps/bo/src/shared/ui/form';
 
 /**
  * getBuilderConfig
@@ -155,11 +154,6 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
     return child;
   };
 
-  const DynamicComponent = useMemo(
-    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
-    [],
-  );
-
   useEffect(() => {
     // 필드별 에러 상태 파싱
     const errorList = names
@@ -193,6 +187,5 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
     guideText,
     infoArea,
     renderFormRowContent,
-    DynamicComponent,
   };
 };
