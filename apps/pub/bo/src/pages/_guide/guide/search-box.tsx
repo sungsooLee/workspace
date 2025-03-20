@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import {

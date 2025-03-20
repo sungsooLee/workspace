@@ -21,7 +21,7 @@ import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,
