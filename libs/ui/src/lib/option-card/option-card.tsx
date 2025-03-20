@@ -1,4 +1,4 @@
-import { addOrRemoveItemByKey, cn, toArray } from '@learnway/shared';
+import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
 import React, { ReactNode } from 'react';
 
 import { Button } from '../button/button';
@@ -34,7 +34,7 @@ const OptionCardComponent = function ({
   onOptionSelect,
   onOptionsSelect,
 }: OptionCardComponentProps) {
-  const selectedOptions = getOptionsFromValue(options, value);
+  const selectedOptions = getMatchingItemsByKey(options, value, 'value');
 
   const handleOptionClickForSingle = (option: OptionCardItem) => {
     onOptionSelect?.(option);
@@ -81,9 +81,3 @@ const OptionCardComponent = function ({
 };
 
 export const OptionCard = OptionCardComponent;
-
-// move to utils
-const getOptionsFromValue = (options: any, value: any, valueKey = 'value') => {
-  const values = toArray(value);
-  return options?.filter((d: any) => values.includes(d[valueKey]));
-};
