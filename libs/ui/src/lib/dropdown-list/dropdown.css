@@ -65,7 +65,7 @@
 }
 .nlp-select__single-value,
 .nlp-select__placeholder {
-  @apply input_bo_1_r mx-0 text-[var(--gray8)];
+  @apply input_bo_1_r mx-0 text-left text-[var(--gray8)];
 }
 .nlp-select__indicator-separator {
   @apply hidden;

@@ -91,6 +91,7 @@ const Grid = forwardRef(
       hideSelectAll = true,
       hideDeleteAll = true,
       hideSelectedCount,
+      className,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -153,9 +154,9 @@ const Grid = forwardRef(
                   <div
                     style={{
                       width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      display: 'block',
+                      textAlign: 'center',
+                      verticalAlign: 'center',
                     }}>
                     <Checkbox
                       checked={table.getIsAllRowsSelected()}
@@ -170,9 +171,9 @@ const Grid = forwardRef(
                   <div
                     style={{
                       width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      display: 'block',
+                      textAlign: 'center',
+                      paddingRight: '0',
                     }}>
                     {' '}
                     <Checkbox
@@ -423,7 +424,7 @@ const Grid = forwardRef(
                   key={row.id}
                   data-index={virtualRow.index}
                   ref={(node) => rowVirtualizer.measureElement(node)}
-                  className={cn(row.getIsSelected() && 'bg-blue-50 hover:bg-blue-100')}
+                  className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
                   style={{
                     position: 'absolute',
                     top: 0,
@@ -449,9 +450,9 @@ const Grid = forwardRef(
                               ? '#ff000042'
                               : '',
                         width: cell.column.getSize(),
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent:
+                        display: 'block',
+                        textAlign: 'left',
+                        verticalAlign:
                           cell.column.columnDef.meta?.cellAlign ||
                           cell.column.columnDef.meta?.align ||
                           'left',
@@ -490,7 +491,7 @@ const Grid = forwardRef(
       return (
         <div
           ref={tableContainerRef}
-          className={cn('grid_table')}
+          className={cn('grid_table', className)}
           style={{
             height: '300px',
             width: '100%',

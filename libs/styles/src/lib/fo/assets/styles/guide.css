@@ -442,4 +442,9 @@
     text-align: center;
     padding: 3px 8px;
   }
+
+  .btn_top {
+    @apply absolute bottom-[50px] right-[30px] block flex h-[30px] w-[30px] items-center justify-center rounded-full border border-solid border-[#222] bg-[#ffffff] text-center text-[12px];
+    filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.1));
+  }
 }

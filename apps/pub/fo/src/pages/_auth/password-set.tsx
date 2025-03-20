@@ -5,9 +5,8 @@ import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
 import styles from './password-input.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
-import { GoogleCertGuidePopup } from '../../features/auth';
+import { AgreementDetailPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/password-set')({
   component: RouteComponent,
@@ -90,22 +89,6 @@ function RouteComponent() {
                 3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는
                 입력하실 수 없습니다.
               </dd>
-              <dd>
-                법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-                있습니다.
-                <Button
-                  className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
-                  onClick={() =>
-                    openModal({
-                      title: 'FIDO 인증',
-                      width: 'md',
-                      content: <GoogleCertGuidePopup />,
-                      footer: false,
-                    })
-                  }>
-                  구글 OTP 인증 가이드
-                </Button>
-              </dd>
             </dl>
           </div>
 
@@ -113,7 +96,15 @@ function RouteComponent() {
             <Button variant="gray" size="xl">
               취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button
+              variant="primary"
+              size="xl"
+              onClick={() =>
+                openModal({
+                  width: 'sm',
+                  content: <AgreementDetailPopup />,
+                })
+              }>
               확인
             </Button>
           </div>

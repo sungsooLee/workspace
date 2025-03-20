@@ -1,0 +1,17 @@
+/* contents-layout.module */
+.start {
+  &.wrap {
+    .contents {
+      @apply flex;
+    }
+    .left_contents {
+      @apply w-[276px] shrink-0;
+    }
+    .main_contents {
+      @apply ml-[32px] flex-grow pl-[32px];
+    }
+  }
+  .title {
+    @apply mb-[20px] flex min-h-[40px] items-center border-b-[2px] border-solid border-[var(--gray9)];
+  }
+}
