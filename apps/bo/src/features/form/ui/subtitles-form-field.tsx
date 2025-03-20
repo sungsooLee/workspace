@@ -1,56 +1,128 @@
-import React, { forwardRef } from 'react';
-import * as Primitive from '@radix-ui/react-select';
+import React, { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { useFieldArray, useWatch } from 'react-hook-form';
-import { Button, DropdownList, Input } from '@learnway/ui';
+import { useFieldArray } from 'react-hook-form';
+import { Button, ContentsRow, DropdownList, DropdownOption, Input, Select } from '@learnway/ui';
 import { LOCALES } from '@learnway/config';
 import { t } from 'i18next';
 import { IcoCloseCircle } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { ActionMeta, MultiValue, SingleValue } from 'react-select';
+
 type Field = {
   locale: string;
   subtitles: string;
 };
-const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps>(
+const initBase: Field = {
+  locale: 'ko',
+  subtitles: '',
+};
+const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<Field[]>>(
   ({ control, name, value, onChange, options, optionsConfig }, ref) => {
-    const { fields } = useFieldArray({ control, name });
+    const fileRef = useRef<HTMLInputElement | null>(null);
+    const [base, setBase] = useState<Field>(initBase);
+
+    const { fields, append, update } = useFieldArray({ control, name });
     const localeOptions = Object.entries(LOCALES).map(([_, value]) => ({
       value: value,
       label: t(value),
     }));
+
+    const handleBaseLocalChange = (
+      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
+      _: ActionMeta<DropdownOption>,
+    ) => {
+      const singleValue = newValue as SingleValue<DropdownOption>;
+      if (singleValue) {
+        setBase({ ...base, locale: singleValue.value });
+      }
+    };
+
+    const handleFileChangeClick = () => {
+      if (!fileRef.current) return;
+      fileRef.current.onchange = handleFileChange;
+      fileRef.current.click();
+    };
+
+    const handleFileChange = () => {
+      const file = fileRef.current?.files?.[0];
+      if (file) {
+        append({ locale: base.locale, subtitles: file.name });
+        setBase(initBase);
+        if (fileRef.current) {
+          fileRef.current.value = '';
+        }
+      }
+    };
+
+    const handleFieldLocaleChange = (
+      index: number,
+      field: Record<string, any>,
+      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
+    ) => {
+      const singleValue = newValue as SingleValue<DropdownOption>;
+      if (singleValue) {
+        update(index, { ...field, locale: singleValue.value });
+      }
+    };
+
+    const handleFieldSubtitleChange = () => {
+      if (!fileRef.current) return;
+      fileRef.current.onchange = handleFileChange;
+    };
+
     return (
-      <div ref={ref}>
-        {fields.map((field: Record<'id', string>, index) => (
-          <div className={'flex gap-10'} key={field.id}>
-            <DropdownList options={localeOptions} value={{ value: '', label: '' }} />
+      <div className={dynamicFormStyles.multiple_row}>
+        <div ref={ref}>
+          {fields.map((field: Record<string, any>, index: number) => (
+            <ContentsRow className={dynamicFormStyles.row_inner} key={field.id}>
+              <DropdownList
+                className={dynamicFormStyles.short}
+                options={localeOptions}
+                value={{ value: field.locale, label: field.locale }}
+                onChange={(newValue) => handleFieldLocaleChange(index, field, newValue)}
+              />
+              <Input
+                id="name-1-14"
+                type="text"
+                placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
+                value={field.subtitles}
+              />
+              <Button
+                variant="gray"
+                size="sm"
+                className={dynamicFormStyles.btn_edit}
+                /*onClick={() => handleFieldSubtitleChange(index, field)}*/
+              >
+                자막 변경
+              </Button>
+              <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+              </Button>
+            </ContentsRow>
+          ))}
+          <ContentsRow className={dynamicFormStyles.row_inner}>
+            <DropdownList
+              className={dynamicFormStyles.short}
+              options={localeOptions}
+              value={{ value: base.locale, label: base.locale }}
+              onChange={handleBaseLocalChange}
+            />
             <Input
               id="name-1-14"
               type="text"
               placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-              value="영어자막.smi"
+              value={base.subtitles}
             />
-            <Button variant="gray" size="sm" className={style.btn_edit}>
-              자막 변경
+            <Button
+              variant="gray"
+              size="sm"
+              className={dynamicFormStyles.btn_edit}
+              onClick={handleFileChangeClick}>
+              자막 추가
             </Button>
-            <Button onlyIcon className={style.btn_delete}>
-              <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-            </Button>
-          </div>
-        ))}
-        <div className={'flex gap-10'}>
-          <DropdownList options={localeOptions} value={{ value: '', label: '언어선택' }} />
-          <Input
-            id="name-1-14"
-            type="text"
-            placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-            value="영어자막.smi"
-          />
-          <Button variant="gray" size="sm" className={style.btn_edit}>
-            자막 추가
-          </Button>
-          <Button onlyIcon className={style.btn_delete}>
-            <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-          </Button>
+            <input type="file" className={'hidden'} ref={fileRef} />
+          </ContentsRow>
         </div>
       </div>
     );
