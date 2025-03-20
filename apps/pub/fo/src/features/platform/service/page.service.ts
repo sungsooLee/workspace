@@ -18,6 +18,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/google-cert': '구글 OTP 인증',
   '/pb-fo/signup-step2-en': 'Create An Account',
   '/pb-fo/signup-step3-en': 'Create An Account',
+  '/pb-fo/agreement-privacy': '이용약관 및 개인정보 처리방침',
 };
 
 export function isSigninPage(path: string): boolean {
