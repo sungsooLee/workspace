@@ -65,6 +65,9 @@
   .form_item {
     @apply pb-0;
   }
+  label + .input_box {
+    @apply mt-[12px];
+  }
   &.pd_none {
     @apply pb-[0];
   }
@@ -92,7 +95,7 @@
   }
 }
 .input_box {
-  @apply mt-[12px] flex w-full items-center space-x-[8px];
+  @apply flex w-full items-center space-x-[8px];
   input {
     @apply flex-auto !border-[var(--gray4)];
   }

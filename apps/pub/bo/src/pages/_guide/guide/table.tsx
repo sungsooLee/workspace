@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input, DropdownList, DropdownOption } from '@learnway/ui';
+import { Input, DropdownList, DropdownOption, Button, RadioGroup } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import styles from './table.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from './table.module.css'; // table css
 
 export const Route = createFileRoute('/_guide/guide/table')({
   component: RouteComponent,
@@ -24,8 +25,8 @@ function RouteComponent() {
         <table className={styles.table}>
           <caption>{'테이블 정보'}</caption>
           <colgroup>
-            <col style={{ width: '16.6%' }} />
-            <col style={{ width: '16.6%' }} />
+            <col style={{ width: '15%' }} />
+            <col style={{ width: '20%' }} />
             <col style={{ width: '16.6%' }} />
             <col style={{ width: '16.6%' }} />
             <col style={{ width: '16.6%' }} />
@@ -44,9 +45,21 @@ function RouteComponent() {
           <tbody>
             <tr>
               <th scope="row">{'타이틀'}</th>
-              <td>{'데이터'}</td>
               <td>
-                <Input placeholder="입력" value={'텍스트'} />
+                <RadioGroup
+                  options={[
+                    { value: 'type1', label: 'option1' },
+                    { value: 'type1-2', label: 'option2' },
+                    { value: 'type1-3', label: 'option3' },
+                  ]}
+                />
+              </td>
+              <td>
+                <div className={formStyles.form_item}>
+                  <div className={formStyles.input_box}>
+                    <Input placeholder="입력" value={'텍스트'} />
+                  </div>
+                </div>
               </td>
               <td>
                 <DropdownList
@@ -58,9 +71,21 @@ function RouteComponent() {
                 />
               </td>
               <td>
-                <Input showSearchIcon placeholder="입력" />
+                <div className={formStyles.form_item}>
+                  <div className={formStyles.input_box}>
+                    <Input showSearchIcon placeholder="입력" />
+                    <Button variant={'gray'} size={'sm'}>
+                      선택
+                    </Button>
+                  </div>
+                  <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+                </div>
               </td>
-              <td>{'데이터'}</td>
+              <td>
+                <Button variant={'gray'} size={'sm'}>
+                  버튼
+                </Button>
+              </td>
             </tr>
             <tr>
               <th scope="row">{'타이틀'}</th>
