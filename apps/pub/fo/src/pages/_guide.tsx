@@ -97,14 +97,15 @@ function RouteComponent() {
                   {title}
                   <span className="arrow">▼</span>
                 </span>
-
-                <ul>
-                  {subItems.map(({ label, path }) => (
-                    <li key={path} className={currentPath === path ? 'active' : ''}>
-                      <Link to={path}>{label}</Link>
-                    </li>
-                  ))}
-                </ul>
+                {subItems && !visibleList[title] && (
+                  <ul>
+                    {subItems.map(({ label, path }) => (
+                      <li key={path} className={currentPath === path ? 'active' : ''}>
+                        <Link to={path}>{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
