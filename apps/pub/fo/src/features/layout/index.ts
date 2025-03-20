@@ -23,3 +23,4 @@ export * from './ui/integrated-search-running';
 export * from './ui/integrated-search-knowledge';
 export * from './ui/integrated-search-coaching';
 export * from './ui/integrated-search-button';
+export * from './ui/mobile-navigation';
