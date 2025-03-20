@@ -1,0 +1,30 @@
+/* table.module.css */
+.start {
+  &.table_wrap {
+    @apply border-t-[1px] border-solid border-[#131C30];
+    .table {
+      display: table;
+      @apply w-full table-fixed border-collapse;
+      caption {
+        @apply sr-only;
+      }
+      thead th {
+        @apply body_bo_2_b h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] text-center align-middle text-[#3E4550];
+        &:not(:first-child) {
+          @apply border-l-[1px] border-[var(--gray4)];
+        }
+      }
+      tbody {
+        th {
+          @apply body_bo_2_b h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-left align-middle;
+        }
+        td {
+          @apply body_bo_2_r h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-center align-middle;
+          &:not(:first-child) {
+            @apply border-l-[1px] border-[var(--gray4)];
+          }
+        }
+      }
+    }
+  }
+}

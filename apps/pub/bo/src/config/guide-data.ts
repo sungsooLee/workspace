@@ -132,7 +132,7 @@ export const guideData = [
     pageId: 'learning/learningSearch',
     screenId: '',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '완료(레이아웃)', // 비고
   },
@@ -141,7 +141,7 @@ export const guideData = [
     pageId: 'learning/popup-learningSetting',
     screenId: '',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '완료', // 비고
   },
