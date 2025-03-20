@@ -107,6 +107,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             hideColumnSettings
             multiSelectable
             enableRowSelectionToggle={false}
+            hideSelectAll={false}
           />
         </div>
         <div className={styles.icon_arrow}>
@@ -121,6 +122,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             hideColumnSettings
             multiSelectable
             enableRowSelectionToggle={false}
+            hideDeleteAll={false}
           />
         </div>
       </div>

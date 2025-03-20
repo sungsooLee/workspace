@@ -295,6 +295,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
           columns={columns}
           hideExcelDownload={false}
           hideUpload={false}
+          hideSelectAll={false}
+          hideDeleteAll={false}
           pagination={{
             pageSize,
             pageIndex,
