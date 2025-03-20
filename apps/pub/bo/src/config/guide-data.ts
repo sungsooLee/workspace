@@ -134,7 +134,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중(레이아웃)', // 비고
+    remarks: '완료(레이아웃)', // 비고
   },
   {
     screenName: 'CMS/학습자원 일괄설정',
@@ -143,7 +143,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

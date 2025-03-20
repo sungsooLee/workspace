@@ -393,7 +393,8 @@ function RouteComponent() {
                     <div className={formStyles.input_box}>
                       <span className={formStyles.info_area}>
                         <span className={formStyles.info_text}>
-                          채널<em>10</em>개
+                          {/* 채널<em>10</em>개 */}
+                          채널 없음
                         </span>
                         <Button variant="search" size="sm">
                           채널선택
