@@ -1,4 +1,4 @@
-import { Children, FC } from 'react';
+import { Children, createContext, FC, memo, ReactNode, useEffect, useMemo, useState } from 'react';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
@@ -21,8 +21,16 @@ import { FormGuideText } from './form-guide-text';
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
-  const { formName, rootConfig, isRequired, error, guideText, fieldRefs, renderFormRowContent } =
-    useFormRow(provider, children, name);
+  const {
+    formName,
+    rootConfig,
+    isRequired,
+    error,
+    guideText,
+    infoArea,
+    fieldRefs,
+    DynamicComponent,
+  } = useFormRow(provider, children, name);
 
   return (
     <div
@@ -56,13 +64,12 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
               </Button>
             </Tooltip>
           )}
+          {infoArea && <span className={styles.info_area}>{infoArea}</span>}
           {rootConfig.subText && <span className={styles.sub_text}>{rootConfig.subText}</span>}
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>
-        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
-      </div>
+      <div className={styles.input_box}>{DynamicComponent}</div>
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
       {!error.isError &&
         (guideText ? (
@@ -79,4 +86,8 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   );
 };
 
-export const FormRow = FormRowComponent;
+export const FormRow = memo(FormRowComponent);
+
+const RowRender: FC<any> = memo(({ children }) => {
+  return <>{children}</>;
+});
