@@ -136,6 +136,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '진행중(레이아웃)', // 비고
   },
+  {
+    screenName: 'CMS/학습자원 일괄설정',
+    pageId: 'learning/popup-learningSetting',
+    screenId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
+  },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',
