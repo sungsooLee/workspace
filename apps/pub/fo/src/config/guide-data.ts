@@ -49,7 +49,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- tenant.tsx\n- header 공통 (아직 공통에서 main, page 분기처리 안함)',
   },
   {
     screenId: 'NLP_FO_GNB_M_1002',
@@ -59,7 +59,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- navigation_m.tsx\n- header 공통 (아직 공통에서 main, page 분기처리 안함)',
   },
   {
     screenId: 'NLP_FO_GNB_M_1003',
@@ -600,7 +600,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
     lastUpdateDate: '',
-    remarks: '- 내용안에 포함',
+    remarks: '- category.tsx\n- 내용안에 포함',
   },
   {
     screenId: 'NLP_FO_CAT_1001',
@@ -631,7 +631,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
     lastUpdateDate: '',
-    remarks: '- 내용안에 포함',
+    remarks: '- filter.tsx\n- 내용안에 포함',
   },
   {
     screenId: 'NLP_FO_CAT_M_1000',
@@ -941,7 +941,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- datepicker 시간 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_LEC_1016',
