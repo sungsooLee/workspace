@@ -152,7 +152,16 @@
   }
   .react-datepicker__day--today,
   .react-datepicker__day--today:hover {
-    @apply body_3_b overflow-hidden rounded-full border border-solid border-[var(--secondary1)] !bg-transparent text-[#00AFD5];
+    .date_text {
+      @apply body_3_b flex h-[32px] w-[32px] items-center justify-center rounded-full border border-solid border-[var(--secondary1)] !bg-[var(--white)] !text-[#00AFD5];
+    }
+  }
+
+  .react-datepicker__day--range-start.react-datepicker__day--range-end {
+    &::before,
+    &::after {
+      @apply !hidden;
+    }
   }
 
   .react-datepicker__day--in-selecting-range:not(
@@ -247,7 +256,7 @@
     @apply bg-[#00AFD5];
   }
   &::after {
-    @apply absolute right-0 top-0 z-0 h-full w-1/2 bg-[#EAF1FA] content-[''];
+    @apply absolute right-0 top-0 z-0 h-[32px] w-1/2 bg-[#EAF1FA] content-[''];
   }
 }
 .react-datepicker__day--range-end {
@@ -255,7 +264,7 @@
     @apply bg-[#00AFD5];
   }
   &::after {
-    @apply absolute left-0 top-0 z-0 h-full w-1/2 bg-[#EAF1FA] content-[''];
+    @apply absolute left-0 top-0 z-0 h-[32px] w-1/2 bg-[#EAF1FA] content-[''];
   }
 }
 
