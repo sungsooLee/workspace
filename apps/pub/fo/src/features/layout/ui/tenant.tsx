@@ -9,7 +9,7 @@ import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';
 const TenantModal = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(2);
   const [tip, setTip] = useState<number | null>(null);
-  const { alert: openAlert } = useModal(); // 퍼블수정 2025-03-21 추가
+  const { confirm: openConfirm } = useModal(); // 퍼블수정 2025-03-21 추가
   const tenants = [
     '테넌트명1',
     '테넌트명2',
@@ -76,12 +76,12 @@ const TenantModal = () => {
 
   // 퍼블수정 2025-03-21 : 테넌트 변경 confirm 추가
   const TenantConfirm = (idx: number): void => {
-    openAlert({
-      title: <>테넌트로 변경하시겠습니까?</>,
-      okButtonLabel: '확인 버튼명',
-      cancelButtonLabel: '취소 버튼명',
+    openConfirm({
+      content: <>선택한 테넌트로 변경하시겠습니까?</>,
+      cancelButtonLabel: '취소',
+      okButtonLabel: '확인',
     });
-    setTip(idx);
+    setTip(idx); // 테넌트 툴팁 메시지
   };
 
   return (

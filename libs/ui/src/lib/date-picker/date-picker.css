@@ -4,9 +4,6 @@
   .datepicker_wrap {
     @apply flex w-full items-center;
   }
-  .react-datepicker {
-    @apply border-[var(--gray7)];
-  }
   .datepicker_wrap .react-datepicker__input-container .react-datepicker__calendar-icon {
     @apply right-[8px] top-1/2 -translate-y-1/2 p-0;
   }
@@ -18,20 +15,40 @@
   }
 }
 
+.react-datepicker {
+  @apply border border-solid !border-[var(--gray7)];
+}
+
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__quarter-text--keyboard-selected,
 .react-datepicker__year-text--keyboard-selected {
   @apply rounded-full bg-transparent;
   &:hover {
-    @apply bg-transparent;
+    @apply bg-[#00AFD5];
   }
 }
+
 .react-datepicker__day--keyboard-selected:not([aria-disabled='true']):hover,
 .react-datepicker__month-text--keyboard-selected:not([aria-disabled='true']):hover,
 .react-datepicker__quarter-text--keyboard-selected:not([aria-disabled='true']):hover,
 .react-datepicker__year-text--keyboard-selected:not([aria-disabled='true']):hover {
-  @apply bg-transparent;
+  @apply bg-[#00AFD5];
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  @apply bg-[#EAF1FA];
 }
 
 .react-datepicker-wrapper {
@@ -45,7 +62,7 @@
 }
 
 .datepicker_input {
-  @apply input_3_r text-[var(--gray8)];
+  @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray7)] text-[var(--gray8)];
 }
 
 .react-datepicker__view-calendar-icon input {
@@ -53,7 +70,7 @@
 }
 
 .react-datepicker__input-container {
-  @apply overflow-hidden rounded-[4px] border border-solid border-[var(--gray7)];
+  @apply overflow-hidden;
 }
 
 .react-datepicker__close-icon {
@@ -93,6 +110,47 @@
   .react-datepicker__navigation--next {
     @apply right-[16px] top-[16px];
   }
+
+  /* year */
+  .react-datepicker__year--container {
+    @apply h-[184px] w-[260px] rounded-[4px] bg-[var(--white)] p-[16px];
+    .react-datepicker__header {
+      @apply body_3_b mb-[8px] flex h-[32px] items-center justify-center border-0 bg-[var(--white)] text-[var(--gray8)];
+    }
+    .react-datepicker__year {
+      @apply m-0 w-full;
+      .react-datepicker__year-wrapper {
+        @apply grid max-w-full grid-cols-4 gap-x-[12px] gap-y-[8px];
+        & > div {
+          @apply body_3_r m-0 flex h-[32px] w-full items-center justify-center overflow-hidden rounded-[16px] text-[var(--gray9)];
+        }
+        .react-datepicker__year-text--selected {
+          @apply bg-[#00AFD5] text-[var(--white)];
+        }
+      }
+    }
+  }
+
+  /* month */
+  .react-datepicker__month-container {
+    @apply box-border h-[184px] w-[260px] p-[16px];
+    .react-datepicker__header {
+      @apply body_3_b mb-[8px] flex h-[32px] items-center justify-center border-0 bg-[var(--white)] text-[var(--gray8)];
+    }
+    .react-datepicker__month {
+      @apply m-0 w-full;
+      .react-datepicker__month-wrapper {
+        @apply grid max-w-full grid-cols-3 gap-x-[12px] gap-y-[8px];
+        & > div {
+          @apply body_3_r m-0 flex h-[32px] w-full items-center justify-center overflow-hidden rounded-[16px] text-[var(--gray9)];
+        }
+        .react-datepicker__month-text--selected {
+          @apply bg-[#00AFD5] text-[var(--white)];
+        }
+      }
+    }
+  }
+
   .react-datepicker__day:hover {
     @apply overflow-hidden rounded-full;
   }
@@ -104,6 +162,9 @@
   .react-datepicker__day-names,
   .react-datepicker__week {
     @apply mb-0 flex px-[16px];
+    & + .react-datepicker__week {
+      @apply mt-[4px];
+    }
   }
   .react-datepicker__day-name,
   .react-datepicker__day {
@@ -115,18 +176,152 @@
   }
   .react-datepicker__day--today,
   .react-datepicker__day--today:hover {
-    @apply overflow-hidden rounded-full border border-solid border-[var(--secondary1)];
+    @apply body_3_b overflow-hidden rounded-full border border-solid border-[var(--secondary1)] !bg-transparent text-[#00AFD5];
+  }
+
+  .react-datepicker__day--in-selecting-range:not(
+      .react-datepicker__day--in-range,
+      .react-datepicker__month-text--in-range,
+      .react-datepicker__quarter-text--in-range,
+      .react-datepicker__year-text--in-range
+    ),
+  .react-datepicker__month-text--in-selecting-range:not(
+      .react-datepicker__day--in-range,
+      .react-datepicker__month-text--in-range,
+      .react-datepicker__quarter-text--in-range,
+      .react-datepicker__year-text--in-range
+    ),
+  .react-datepicker__quarter-text--in-selecting-range:not(
+      .react-datepicker__day--in-range,
+      .react-datepicker__month-text--in-range,
+      .react-datepicker__quarter-text--in-range,
+      .react-datepicker__year-text--in-range
+    ),
+  .react-datepicker__year-text--in-selecting-range:not(
+      .react-datepicker__day--in-range,
+      .react-datepicker__month-text--in-range,
+      .react-datepicker__quarter-text--in-range,
+      .react-datepicker__year-text--in-range
+    ) {
+    @apply bg-[#EAF1FA];
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range,
+  .react-datepicker__day--in-range,
+  .react-datepicker__month-text--selected,
+  .react-datepicker__month-text--in-selecting-range,
+  .react-datepicker__month-text--in-range,
+  .react-datepicker__quarter-text--selected,
+  .react-datepicker__quarter-text--in-selecting-range,
+  .react-datepicker__quarter-text--in-range,
+  .react-datepicker__year-text--selected,
+  .react-datepicker__year-text--in-selecting-range,
+  .react-datepicker__year-text--in-range {
+    @apply body_3_b;
   }
 }
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  @apply rounded-none;
+}
+
+.react-datepicker__day--in-range {
+  &:hover {
+    @apply !rounded-none !bg-[#EAF1FA];
+  }
+}
+
+.react-datepicker__day--selecting-range-start,
+.react-datepicker__day--range-start,
+.react-datepicker__day--selecting-range-end,
+.react-datepicker__day--range-end {
+  @apply body_3_b relative rounded-[16px] !bg-[#00AFD5] !text-[var(--white)];
+  &:hover {
+    @apply !rounded-[16px] !bg-[#00AFD5];
+  }
+}
+
+.react-datepicker__day--range-start {
+  &:hover {
+    @apply bg-[#00AFD5];
+  }
+}
+
 .react-datepicker__tab-loop {
   @apply mx-0;
 }
-.react-datepicker__month-container {
-  @apply box-border w-[260px] p-0 py-[16px];
-  .react-datepicker__header {
-    @apply relative border-b-0 bg-[var(--white)] p-0;
-    .react-datepicker__current-month {
-      @apply body_3_b flex h-[32px] items-center justify-center text-[var(--gray8)];
+
+.nlp--datepicker-time-wrap {
+  @apply flex !gap-0;
+  & > div {
+    @apply flex-1;
+    & + div {
+      @apply ml-[4px];
     }
   }
+}
+
+.nlp--datepicker-time {
+  @apply w-full gap-0;
+  & > div {
+    @apply flex-1;
+    & + div {
+      @apply ml-[4px];
+    }
+  }
+}
+
+.nlp--datepicker-calendar .react-datepicker__input-container {
+  input {
+    @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray7)] text-[var(--gray8)];
+  }
+}
+.column_options {
+  @apply scrollbar h-[214px] overflow-y-auto;
+  & > div {
+    @apply body_2_r flex min-h-[32px] items-center justify-center text-[var(--gray8)];
+  }
+}
+
+.time_wrap {
+  @apply relative;
+}
+
+.time_select_wrap {
+  @apply absolute left-0 top-[36px] z-[100] h-[327px] w-full rounded-[4px] border border-solid border-[var(--gray7)] bg-[var(--white)] px-[8px] py-[16px];
+  .vertical_time_selector {
+    @apply flex flex-col;
+    .time_select {
+      @apply flex;
+      .time_text {
+        @apply body_3_b flex min-h-[32px] items-center justify-center text-[var(--gray8)];
+      }
+      & > div {
+        @apply flex-1 text-center;
+      }
+    }
+  }
+}
+
+.btn_wrap {
+  @apply mt-[16px] flex items-center justify-center;
+  button {
+    @apply !min-w-[62px];
+  }
+}
+
+.input_time {
+  @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray7)] bg-transparent bg-[url('../../assets/images/icon/ic_clock_01.png')] bg-[16px_auto] bg-[position:right_8px_center] bg-no-repeat px-[12px] text-[var(--gray8)];
 }

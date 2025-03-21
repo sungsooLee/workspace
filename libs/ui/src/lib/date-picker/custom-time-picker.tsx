@@ -83,17 +83,18 @@ export const PopoverTimeInput = ({
   }, []);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="time_wrap">
       <input
         type="text"
         value={isOpen ? formatTime(tempSelectedTime) : formatTime(confirmedTime)}
         placeholder={placeholder}
         readOnly
         onClick={() => setIsOpen(!isOpen)}
+        className="input_time"
       />
 
       {isOpen && (
-        <div ref={popoverRef}>
+        <div ref={popoverRef} className="time_select_wrap">
           <StandaloneTimeInput
             date={tempSelectedTime}
             onTempChange={handleTemporaryTimeChange} // 임시 변경 처리 (실시간 업데이트)
@@ -198,27 +199,20 @@ const StandaloneTimeInput = ({
   };
 
   return (
-    <div
-      className="vertical-time-selector"
-      style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div className="vertical_time_selector">
       {/* 시간 선택 영역 */}
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div className="time_select">
         {/* Hours column */}
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          <div>시</div>
-          <div
-            className="column-options"
-            style={{
-              height: '200px',
-              overflowY: 'auto',
-            }}>
+        <div className="hours_area">
+          <div className="time_text">시</div>
+          <div className="column_options">
             {hourOptions.map((h) => (
               <div
                 key={`hour-${h}`}
                 className={`${h === hours ? 'selected' : ''}`}
                 onClick={() => handleHourClick(h)}
                 style={{
-                  backgroundColor: h === hours ? '#e6f7ff' : 'transparent',
+                  backgroundColor: h === hours ? '#EDFCFF' : 'transparent',
                 }}>
                 {formatNumber(h)}
               </div>
@@ -227,21 +221,16 @@ const StandaloneTimeInput = ({
         </div>
 
         {/* Minutes column */}
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          <div>분</div>
-          <div
-            className="column-options"
-            style={{
-              height: '200px',
-              overflowY: 'auto',
-            }}>
+        <div className="minutes_area">
+          <div className="time_text">분</div>
+          <div className="column_options">
             {minuteOptions.map((m) => (
               <div
                 key={`minute-${m}`}
                 className={` ${m === minutes ? 'selected' : ''}`}
                 onClick={() => handleMinuteClick(m)}
                 style={{
-                  backgroundColor: m === minutes ? '#e6f7ff' : 'transparent',
+                  backgroundColor: m === minutes ? '#EDFCFF' : 'transparent',
                 }}>
                 {formatNumber(m)}
               </div>
@@ -250,20 +239,16 @@ const StandaloneTimeInput = ({
         </div>
 
         {showSeconds && (
-          <div style={{ flex: 1, textAlign: 'center' }}>
-            <div>초</div>
-            <div
-              style={{
-                height: '200px',
-                overflowY: 'auto',
-              }}>
+          <div className="seconds_area">
+            <div className="time_text">초</div>
+            <div className="column_options">
               {secondOptions.map((s) => (
                 <div
                   key={`second-${s}`}
                   className={` ${s === seconds ? 'selected' : ''}`}
                   onClick={() => handleSecondClick(s)}
                   style={{
-                    backgroundColor: s === seconds ? '#e6f7ff' : 'transparent',
+                    backgroundColor: s === seconds ? '#EDFCFF' : 'transparent',
                   }}>
                   {formatNumber(s)}
                 </div>
@@ -273,9 +258,13 @@ const StandaloneTimeInput = ({
         )}
       </div>
 
-      <div>
-        <Button onClick={handleCancel}>취소</Button>
-        <Button onClick={handleConfirm}>선택</Button>
+      <div className="btn_wrap">
+        <Button size={'xs'} variant={'gray'} onClick={handleCancel}>
+          취소
+        </Button>
+        <Button size={'xs'} variant={'gray'} onClick={handleConfirm}>
+          선택
+        </Button>
       </div>
     </div>
   );
