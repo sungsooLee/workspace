@@ -51,7 +51,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
                   : ''
               }
               size={'xs'}
-              onClick={() => handleLeftRowSelect(row.original)}
+              onClick={() => {
+                row.toggleSelected();
+                handleLeftRowSelect(row.original);
+              }}
             />
           </div>
         ),
@@ -74,7 +77,9 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
               label={'선택'}
               variant={'gray2'}
               size={'xs'}
-              onClick={() => handleRightRowSelect(row.original)}
+              onClick={() => {
+                handleRightRowSelect(row.original);
+              }}
             />
           </div>
         ),
@@ -105,6 +110,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             data={leftGridData}
             columns={leftGridColumns}
             hideColumnSettings
+            hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
             hideSelectAll={false}
@@ -120,6 +126,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             data={rightGridData}
             columns={rightGridColumns}
             hideColumnSettings
+            hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
             hideDeleteAll={false}

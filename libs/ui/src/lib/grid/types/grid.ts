@@ -1,10 +1,4 @@
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  RowData,
-  SortingState,
-  VisibilityState,
-} from '@tanstack/react-table';
+import { ColumnFiltersState, RowData, SortingState, VisibilityState } from '@tanstack/react-table';
 
 declare module '@tanstack/react-table' {
   // 컬럼 커스텀 타입 메타 설정
@@ -36,6 +30,8 @@ export interface GridProps<T> {
   multiSelectable?: boolean;
   // row onClick 시 row 선택 작동 여부
   enableRowSelectionToggle?: boolean;
+  // 다중선택 모드에서 checkbox column 표시 여부
+  hideRowSelectionCheckBox?: boolean;
   // 페이지네이션 관련 Props
   pagination?: {
     pageSize: number;

@@ -17,23 +17,21 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { IcoDownload } from '@learnway/icons';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { CheckedState } from '@radix-ui/react-checkbox';
-import { cn } from '@learnway/shared';
-import { t } from 'i18next';
-
 // paging Icons
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
+  IcoDownload,
   IcoGridFilter,
   IcoGridOrder,
-  IcoPlus,
   IcoMinus,
+  IcoPlus,
 } from '@learnway/icons';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { cn } from '@learnway/shared';
+import { t } from 'i18next';
 
 import { GridImperative, GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
@@ -41,7 +39,6 @@ import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
-import { CheckFieldProps } from '../checkbox/type';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
@@ -79,6 +76,7 @@ const Grid = forwardRef(
       onRowsSelect,
       multiSelectable = false,
       enableRowSelectionToggle = true,
+      hideRowSelectionCheckBox,
       pagination,
       title,
       isLoading,
@@ -137,7 +135,7 @@ const Grid = forwardRef(
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
     const columnsWithCheckbox = useMemo(
       () =>
-        multiSelectable && enableRowSelectionToggle
+        multiSelectable && !hideRowSelectionCheckBox
           ? [
               {
                 id: 'select',
