@@ -52,17 +52,17 @@ export interface GridProps<T> {
   // 항목설정 버튼 표시 여부
   hideColumnSettings?: boolean;
   // 전체 rows 개수 표시 여부
-  hideTotalCount?: boolean;
+  showTotalCount?: boolean;
   // 선택 rows 개수 표시 여부
-  hideSelectedCount?: boolean;
+  showSelectedCount?: boolean;
   //엑셀다운로드 버튼 표시 여부
-  hideExcelDownload?: boolean;
+  showExcelDownload?: boolean;
   //업로드 버튼 표시 여부
-  hideUpload?: boolean;
+  showUpload?: boolean;
   //전체 선택 버튼 표시 여부
-  hideSelectAll?: boolean;
+  showSelectAll?: boolean;
   // 전체 삭제 버튼 표시 여부
-  hideDeleteAll?: boolean;
+  showDeleteAll?: boolean;
   // 외부 클래스 추가
   className?: string;
 }

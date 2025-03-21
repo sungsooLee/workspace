@@ -113,7 +113,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
-            hideSelectAll={false}
+            showSelectAll
           />
         </div>
         <div className={styles.icon_arrow}>
@@ -129,7 +129,6 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
-            hideDeleteAll={false}
           />
         </div>
       </div>
