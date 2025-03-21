@@ -13,7 +13,7 @@ import { useSetLanguage } from '../../features/platform';
 import styles from './login.module.css';
 import authStyles from './auth.module.css';
 import { DynamicFormField } from '@learnway/ui';
-import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../shared/ui/form';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -97,7 +97,7 @@ function RouteComponent() {
 /**
  * 필수값 : name, type
  */
-const detailConfig = {
+const detailConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'username',
@@ -120,15 +120,12 @@ const detailConfig = {
       type: 'checkbox',
       checkLabel: '아이디 저장',
       label: '',
+      format: 'boolean',
       value: false,
     },
   ],
   validator: {
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-    category: z.string().nonempty(t('유효성 테스트')),
-     language_code: z.string().nonempty(t('유효성 테스트')),
-     subdivision: z.string().nonempty(t('유효성 테스트')),
-     check: z.boolean(),
-     tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    username: true,
+    password: true,
   },
 };
