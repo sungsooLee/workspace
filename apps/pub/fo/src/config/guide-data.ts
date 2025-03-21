@@ -46,8 +46,8 @@ export const guideData = [
     screenName: 'M_테넌트설정',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -56,8 +56,8 @@ export const guideData = [
     screenName: 'M_전체메뉴',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -596,9 +596,9 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_1000',
     screenName: '카테고리_레이어창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
+    pageId: 'Pop-up',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-03-10',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -627,9 +627,9 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_1002',
     screenName: '카테고리_필터레이어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
+    pageId: 'Pop-up',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-03-10',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -641,7 +641,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '공통 스와이퍼 버튼 대기중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1001',
@@ -651,7 +651,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '썸네일 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',
@@ -661,7 +661,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '공통 바텀 팝업 대기중',
   },
   {
     screenId: 'NLP_FO_LEC_1000',
