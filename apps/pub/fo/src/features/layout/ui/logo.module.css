@@ -3,3 +3,12 @@
   .logo {
   }
 }
+
+:global(body.mobile) {
+  .logo {
+    @apply h-auto w-[75px];
+    img {
+      @apply !h-auto !w-full;
+    }
+  }
+}

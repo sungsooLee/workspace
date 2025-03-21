@@ -86,6 +86,7 @@ const PopoverContent = () => {
         {/* alarm_header */}
         <div className={styles.alarm_header}>
           <strong className={styles.tit}>{'알림'}</strong>
+          {/* 퍼블수정 : 20250320 mobile, pc 분기처리 */}
           {isMobile ? (
             <div className={styles.setting}>
               {notifications.length !== 0 ? (
