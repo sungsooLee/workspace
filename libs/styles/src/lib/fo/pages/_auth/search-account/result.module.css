@@ -7,6 +7,10 @@
     @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
   }
 
+  .noti_box {
+    @apply mt-[24px];
+  }
+
   .btn_wrap {
     @apply mt-[48px];
     button {
