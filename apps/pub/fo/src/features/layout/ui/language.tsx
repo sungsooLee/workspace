@@ -1,4 +1,6 @@
 import { memo, useState } from 'react';
+import { Link } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Popover } from '@learnway/ui';
@@ -51,15 +53,25 @@ interface LanguageComponentProp {
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
-    <Popover
-      popoverContent={<PopoverContent />}
-      className={`${styles.btn_language} ${className}`}
-      side="bottom"
-      align="end"
-      sideOffset={5}>
-      <span className={styles.select}>{'KR'}</span>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" />
-    </Popover>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {isMobile ? (
+        <Link to="/setting/setting-language_m" className={`${styles.btn_language} ${className}`}>
+          <span className={styles.select}>{'KR'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Link>
+      ) : (
+        <Popover
+          popoverContent={<PopoverContent />}
+          className={`${styles.btn_language} ${className}`}
+          side="bottom"
+          align="end"
+          sideOffset={5}>
+          <span className={styles.select}>{'KR'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Popover>
+      )}
+    </>
   );
 };
 
