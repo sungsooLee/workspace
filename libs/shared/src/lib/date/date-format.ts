@@ -31,6 +31,8 @@ export function changeTimeLocale(lang: string) {
 
 export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
   switch (dateTimeFormat) {
+    case DATE_TIME_FORMAT.YEAR:
+      return timeFormatYear();
     case DATE_TIME_FORMAT.MONTH:
       return timeFormatMonth();
     case DATE_TIME_FORMAT.DATETIME_HOUR:
@@ -46,6 +48,19 @@ export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
     case DATE_TIME_FORMAT.DATE:
     default:
       return timeFormatDate();
+  }
+}
+
+export function timeFormatYear() {
+  const locale = getDefaultLang();
+  switch (locale) {
+    case 'en':
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY';
   }
 }
 

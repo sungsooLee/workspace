@@ -38,6 +38,7 @@ import { Route as LayoutPmsMenuManageImport } from './pages/_layout/pms/menuMana
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
+import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
@@ -47,6 +48,7 @@ import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typogr
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
+import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
@@ -242,6 +244,13 @@ const LayoutLearningPopupUploadRoute = LayoutLearningPopupUploadImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLearningPopupLearningSettingRoute =
+  LayoutLearningPopupLearningSettingImport.update({
+    id: '/learning/popup-learningSetting',
+    path: '/learning/popup-learningSetting',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutLearningPopupLearningRegisterationRoute =
   LayoutLearningPopupLearningRegisterationImport.update({
     id: '/learning/popup-learningRegisteration',
@@ -296,6 +305,12 @@ const GuideGuideTestRoute = GuideGuideTestImport.update({
 const GuideGuideTabsRoute = GuideGuideTabsImport.update({
   id: '/guide/tabs',
   path: '/guide/tabs',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTableRoute = GuideGuideTableImport.update({
+  id: '/guide/table',
+  path: '/guide/table',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -866,6 +881,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideSwitchImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/table': {
+      id: '/_guide/guide/table'
+      path: '/guide/table'
+      fullPath: '/guide/table'
+      preLoaderRoute: typeof GuideGuideTableImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tabs': {
       id: '/_guide/guide/tabs'
       path: '/guide/tabs'
@@ -927,6 +949,13 @@ declare module '@tanstack/react-router' {
       path: '/learning/popup-learningRegisteration'
       fullPath: '/learning/popup-learningRegisteration'
       preLoaderRoute: typeof LayoutLearningPopupLearningRegisterationImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/popup-learningSetting': {
+      id: '/_layout/learning/popup-learningSetting'
+      path: '/learning/popup-learningSetting'
+      fullPath: '/learning/popup-learningSetting'
+      preLoaderRoute: typeof LayoutLearningPopupLearningSettingImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/learning/popup-upload': {
@@ -1047,6 +1076,7 @@ interface GuideRouteChildren {
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTestRoute: typeof GuideGuideTestRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
@@ -1087,6 +1117,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTestRoute: GuideGuideTestRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
@@ -1105,6 +1136,7 @@ interface LayoutRouteChildren {
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
+  LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
@@ -1122,6 +1154,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
+  LayoutLearningPopupLearningSettingRoute:
+    LayoutLearningPopupLearningSettingRoute,
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
@@ -1184,6 +1218,7 @@ export interface FileRoutesByFullPath {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1193,6 +1228,7 @@ export interface FileRoutesByFullPath {
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -1253,6 +1289,7 @@ export interface FileRoutesByTo {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1262,6 +1299,7 @@ export interface FileRoutesByTo {
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -1325,6 +1363,7 @@ export interface FileRoutesById {
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
+  '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1334,6 +1373,7 @@ export interface FileRoutesById {
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
+  '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -1396,6 +1436,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/test'
     | '/guide/tooltip'
@@ -1405,6 +1446,7 @@ export interface FileRouteTypes {
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
+    | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -1464,6 +1506,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/test'
     | '/guide/tooltip'
@@ -1473,6 +1516,7 @@ export interface FileRouteTypes {
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
     | '/learning/popup-learningRegisteration'
+    | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -1534,6 +1578,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
+    | '/_guide/guide/table'
     | '/_guide/guide/tabs'
     | '/_guide/guide/test'
     | '/_guide/guide/tooltip'
@@ -1543,6 +1588,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
     | '/_layout/learning/popup-learningRegisteration'
+    | '/_layout/learning/popup-learningSetting'
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -1634,6 +1680,7 @@ export const routeTree = rootRoute
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
+        "/_guide/guide/table",
         "/_guide/guide/tabs",
         "/_guide/guide/test",
         "/_guide/guide/tooltip",
@@ -1652,6 +1699,7 @@ export const routeTree = rootRoute
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
         "/_layout/learning/popup-learningRegisteration",
+        "/_layout/learning/popup-learningSetting",
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
@@ -1859,6 +1907,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/switch.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/table": {
+      "filePath": "_guide/guide/table.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/tabs": {
       "filePath": "_guide/guide/tabs.tsx",
       "parent": "/_guide"
@@ -1893,6 +1945,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/popup-learningRegisteration": {
       "filePath": "_layout/learning/popup-learningRegisteration.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/popup-learningSetting": {
+      "filePath": "_layout/learning/popup-learningSetting.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/popup-upload": {

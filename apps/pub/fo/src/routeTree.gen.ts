@@ -36,6 +36,7 @@ import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
 import { Route as AuthAgreementcheckImport } from './pages/_auth/agreement_check'
+import { Route as AuthAgreementPrivacyImport } from './pages/_auth/agreement-privacy'
 import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
@@ -223,6 +224,12 @@ const AuthDormantAccountRoute = AuthDormantAccountImport.update({
 const AuthAgreementcheckRoute = AuthAgreementcheckImport.update({
   id: '/agreement_check',
   path: '/agreement_check',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAgreementPrivacyRoute = AuthAgreementPrivacyImport.update({
+  id: '/agreement-privacy',
+  path: '/agreement-privacy',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -486,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/agreement'
       fullPath: '/agreement'
       preLoaderRoute: typeof AuthAgreementImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/agreement-privacy': {
+      id: '/_auth/agreement-privacy'
+      path: '/agreement-privacy'
+      fullPath: '/agreement-privacy'
+      preLoaderRoute: typeof AuthAgreementPrivacyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/agreement_check': {
@@ -908,6 +922,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthAgreementRoute: typeof AuthAgreementRoute
+  AuthAgreementPrivacyRoute: typeof AuthAgreementPrivacyRoute
   AuthAgreementcheckRoute: typeof AuthAgreementcheckRoute
   AuthDormantAccountRoute: typeof AuthDormantAccountRoute
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
@@ -933,6 +948,7 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthAgreementRoute: AuthAgreementRoute,
+  AuthAgreementPrivacyRoute: AuthAgreementPrivacyRoute,
   AuthAgreementcheckRoute: AuthAgreementcheckRoute,
   AuthDormantAccountRoute: AuthDormantAccountRoute,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
@@ -1056,6 +1072,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/agreement': typeof AuthAgreementRoute
+  '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
@@ -1120,6 +1137,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/agreement': typeof AuthAgreementRoute
+  '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
@@ -1187,6 +1205,7 @@ export interface FileRoutesById {
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/agreement': typeof AuthAgreementRoute
+  '/_auth/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/_auth/agreement_check': typeof AuthAgreementcheckRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
@@ -1253,6 +1272,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/agreement'
+    | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
     | '/google-cert'
@@ -1316,6 +1336,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/agreement'
+    | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
     | '/google-cert'
@@ -1381,6 +1402,7 @@ export interface FileRouteTypes {
     | '/_guide'
     | '/_layout'
     | '/_auth/agreement'
+    | '/_auth/agreement-privacy'
     | '/_auth/agreement_check'
     | '/_auth/dormant-account'
     | '/_auth/google-cert'
@@ -1474,6 +1496,7 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/agreement",
+        "/_auth/agreement-privacy",
         "/_auth/agreement_check",
         "/_auth/dormant-account",
         "/_auth/google-cert",
@@ -1547,6 +1570,10 @@ export const routeTree = rootRoute
     },
     "/_auth/agreement": {
       "filePath": "_auth/agreement.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/agreement-privacy": {
+      "filePath": "_auth/agreement-privacy.tsx",
       "parent": "/_auth"
     },
     "/_auth/agreement_check": {

@@ -6,7 +6,7 @@
       @apply border-l border-t-0 border-solid;
     }
     .th_wrap {
-      @apply w-full pr-[13px];
+      @apply w-full;
       .th_cell {
         @apply body_bo_4_b relative flex min-h-[40px] items-center;
       }

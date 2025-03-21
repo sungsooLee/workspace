@@ -70,7 +70,7 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
         endDate={endDate}
         minDate={startDate}
         numberOfMonths={2}
-        onChange={(date) => handleEndChange(date)}
+        onChange={(date: any) => handleEndChange(date)}
       />
     );
   },

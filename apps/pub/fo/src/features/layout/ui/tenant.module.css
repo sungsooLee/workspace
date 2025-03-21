@@ -22,7 +22,7 @@
       li {
         @apply body_3_r w-[calc(100%/2)];
         .btn {
-          @apply box-border flex h-full w-full items-center rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
+          @apply relative box-border flex h-full w-full items-center rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
           .label {
             @apply button_5_r mr-[16px] box-border flex items-center rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] leading-[16px] text-[var(--gray8)];
             i {
@@ -34,6 +34,12 @@
           }
           .txt {
             @apply body_3_r inline-block flex-1 text-[var(--gray9)];
+          }
+          .tip {
+            @apply body_3_r absolute left-[33px] top-[40px] z-[1] rounded-[6px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
+            &::before {
+              @apply absolute -top-[10px] left-[12px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+            }
           }
           &:hover {
             @apply bg-[var(--secondary5)];
@@ -71,5 +77,24 @@
   }
   .tenant_content {
     @apply w-auto max-w-[350px];
+    .tenant_wrap {
+      .tenant_list {
+        @apply -mx-[20px] w-[calc(100%+40px)];
+        li {
+          @apply w-full;
+          .btn {
+            @apply relative px-[20px];
+            .txt {
+              i {
+                @apply absolute right-[20px] top-1/2 h-[20px] w-[20px] -translate-y-1/2;
+              }
+            }
+          }
+          & + li {
+            @apply border-t-[1px] border-solid border-[var(--gray3)];
+          }
+        }
+      }
+    }
   }
 }
