@@ -6,16 +6,16 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { ScormInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/video')({
+export const Route = createFileRoute('/_layout/learning/resource/view/scorm')({
   component: RouteComponent,
 });
 
@@ -27,15 +27,12 @@ function RouteComponent() {
     console.log(data);
   };
 
-  const openModal = () => {
-    // 모달 다으면 oncofmr(value)
-  };
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
-            <Link to={'/'}>상시 학습 개설</Link>
+            <Link to={'/'}>상시 학습 개설 스콤</Link>
             <Link to={'/'}>이러닝 개설</Link>
             <Link to={'/'}>라이브개설</Link>
             <Button
@@ -172,7 +169,6 @@ function RouteComponent() {
               <DynamicFormField name="learningResourceOverview" />
             </FormRow>
           </ContentsRow>
-
           <ContentsRow>
             {/* 키워드 */}
             <FormRow provider={provider}>
@@ -189,12 +185,6 @@ function RouteComponent() {
             {/* 보안컨텐츠 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name="isSecurityContent" />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 자막 여부 */}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isSubtitles'} />
             </FormRow>
           </ContentsRow>
           <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
@@ -227,9 +217,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <MovieInfo status={'loading'} />
-          <MovieInfo status={'fail'} />
-          <MovieInfo status={'success'} />
+          <ScormInfo />
         </SubContents>
       </PageContainer>
     </form>
@@ -412,25 +400,13 @@ const formConfig: DynamicFormConfig = {
       value: true,
     },
     {
-      label: t('자막여부'),
-      name: 'isSubtitles',
-      type: 'switch',
-      format: 'boolean',
-      switchConfig: {
-        label: (value: boolean, getValues) =>
-          value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
-        labelTarget: 'subtitles',
-      },
-      value: true,
-    },
-    {
       name: 'subtitles',
       type: 'custom',
       format: 'array',
       value: [],
     },
     {
-      label: t('검수확인'),
+      label: t('검수 확인'),
       name: 'isInspectionConfirmed',
       type: 'checkbox',
       format: 'boolean',
@@ -441,7 +417,7 @@ const formConfig: DynamicFormConfig = {
       value: false,
     },
     {
-      label: t('저작권확인'),
+      label: t('저작권 확인'),
       name: 'isCopyrightConfirmed',
       format: 'boolean',
       guideText:
@@ -453,7 +429,7 @@ const formConfig: DynamicFormConfig = {
       value: false,
     },
     {
-      label: t('보안확인'),
+      label: t('보안 확인'),
       name: 'isSecurityConfirmed',
       format: 'boolean',
       guideText:

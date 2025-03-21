@@ -1,12 +1,10 @@
 import {
   Button,
   ContentsRow,
-  Input,
   List,
   ModalBody,
   ModalContainer,
   ModalFooter,
-  Select,
   useModal,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
@@ -79,7 +77,11 @@ const ManagerChoicePopupComponent = () => {
                 </ContentsRow>
               )}
               <div className={styles.channel_wrap}>
-                <List options={options} onOptionsSelect={(options) => setOption(options[0])} />
+                <List
+                  value={option}
+                  options={options}
+                  onOptionSelect={(option) => setOption(option)}
+                />
               </div>
             </div>
           </div>
