@@ -22,13 +22,15 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
     //   onChange(labels);
     // };
     const handleAddInputEnterKeyDown = (text: string) => {
-      const newValue = [...value, text];
-      onChange(newValue);
+      // 중복 아닌 경우
+      if (!value?.includes(text)) {
+        const newValue = [...value, text];
+        onChange(newValue);
+      }
     };
     const handlerChipDelete = (option: any) => {
       const newValue = value?.filter((d) => d !== option.label); // option[labelField]
       onChange(newValue);
-      console.log('handlerChipDelete', option);
     };
 
     return (

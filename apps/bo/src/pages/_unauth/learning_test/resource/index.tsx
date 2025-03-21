@@ -10,7 +10,7 @@ import { t } from 'i18next';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
 
-export const Route = createFileRoute('/_layout/learning/resource/')({
+export const Route = createFileRoute('/_unauth/learning_test/resource/')({
   component: RouteComponent,
 });
 
