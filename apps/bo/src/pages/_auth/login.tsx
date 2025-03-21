@@ -120,7 +120,6 @@ const detailConfig: DynamicFormConfig = {
       type: 'checkbox',
       checkLabel: '아이디 저장',
       label: '',
-      format: 'boolean',
       value: false,
     },
   ],
