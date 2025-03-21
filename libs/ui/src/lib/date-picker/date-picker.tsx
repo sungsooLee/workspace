@@ -10,6 +10,7 @@ import { useCreation } from 'ahooks';
 
 import { convertDateFormatToFns } from './date-picker.service';
 import { PopoverTimeInput } from './custom-time-picker';
+import { ReactNode } from '@tanstack/react-router';
 
 export type DatePickerType =
   | 'day'
@@ -48,6 +49,7 @@ export interface DatePickerComponentProps
   onChangeEnd?: (date: Date | undefined) => void;
   placeholderStart?: string;
   placeholderEnd?: string;
+  renderDayContents?: ReactNode;
 }
 
 // DatePicker 컴포넌트 정의
@@ -251,9 +253,9 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     const showSeconds = displayType === 'day-time-hms';
 
     return (
-      <div className="nlp--datepicker-time" ref={ref} style={{ display: 'flex', gap: '10px' }}>
+      <div className="nlp--datepicker-time-wrap" ref={ref}>
         {/* Date component */}
-        <div>
+        <div className="nlp--datepicker-calendar">
           <Primitive
             showIcon
             dateFormat="yyyy-MM-dd"
