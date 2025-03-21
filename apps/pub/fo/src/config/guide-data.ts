@@ -2078,7 +2078,7 @@ export const guideData = [
     screenName: '신규 비밀번호 설정',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'password-set',
-    pageType: '',
+    pageType: 'Page',
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '- 영문(다국어처리)',

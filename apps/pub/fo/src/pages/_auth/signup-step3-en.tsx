@@ -209,30 +209,28 @@ function RouteComponent() {
                     <Button onlyIcon className={dynamicFormStyles.btn_ico}>
                       <IcoPlus width={20} height={20} />
                     </Button>
-                  </div>
-                </div>
 
-                <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.flex_plus}>
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type1', label: 'Select Job Domin' }]}
-                      className="flex-1"
-                    />
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type2', label: 'Select Role' }]}
-                      className="flex-1"
-                    />
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type2', label: 'Select Role' }]}
-                      className="flex-1"
-                    />
+                    <div className={dynamicFormStyles.flex_plus}>
+                      <Select
+                        size="lg"
+                        options={[{ value: 'type1', label: 'Select Job Domin' }]}
+                        className="flex-1"
+                      />
+                      <Select
+                        size="lg"
+                        options={[{ value: 'type2', label: 'Select Role' }]}
+                        className="flex-1"
+                      />
+                      <Select
+                        size="lg"
+                        options={[{ value: 'type2', label: 'Select Role' }]}
+                        className="flex-1"
+                      />
 
-                    <Button onlyIcon className={dynamicFormStyles.btn_ico}>
-                      <IcoClose02 width={20} height={20} />
-                    </Button>
+                      <Button onlyIcon className={dynamicFormStyles.btn_ico}>
+                        <IcoClose02 width={20} height={20} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
