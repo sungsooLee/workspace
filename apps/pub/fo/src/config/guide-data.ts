@@ -596,17 +596,17 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_1000',
     screenName: '카테고리_레이어창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'Pop-up',
-    pageType: '',
+    pageId: 'category/detail',
+    pageType: 'Pop-up',
     completionDate: '2025-03-10',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 내용안에 포함',
   },
   {
     screenId: 'NLP_FO_CAT_1001',
     screenName: '카테고리_상세화면',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
+    pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
@@ -627,11 +627,11 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_1002',
     screenName: '카테고리_필터레이어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'Pop-up',
-    pageType: '',
+    pageId: 'category/detail',
+    pageType: 'Pop-up',
     completionDate: '2025-03-10',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 내용안에 포함',
   },
   {
     screenId: 'NLP_FO_CAT_M_1000',
