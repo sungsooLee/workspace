@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/setting/setting-license_m.module.css';
 
@@ -10,7 +11,15 @@ function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.license_wrap}`}>
       <ul>
-        <li>{/* <Button></Button> */}</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
+        <li>오픈소스</li>
       </ul>
     </div>
   );
