@@ -1,14 +1,6 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Popover,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 
 import styles from './tenant.module.css';
@@ -17,6 +9,7 @@ import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';
 const TenantModal = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(2);
   const [tip, setTip] = useState<number | null>(null);
+  const { alert: openAlert } = useModal(); // 퍼블수정 2025-03-21 추가
   const tenants = [
     '테넌트명1',
     '테넌트명2',
@@ -78,6 +71,16 @@ const TenantModal = () => {
   ];
   const handleClick = (idx: number): void => {
     setActiveIdx(idx);
+    TenantConfirm(idx); // 퍼블수정 2025-03-21 추가
+  };
+
+  // 퍼블수정 2025-03-21 : 테넌트 변경 confirm 추가
+  const TenantConfirm = (idx: number): void => {
+    openAlert({
+      title: <>테넌트로 변경하시겠습니까?</>,
+      okButtonLabel: '확인 버튼명',
+      cancelButtonLabel: '취소 버튼명',
+    });
     setTip(idx);
   };
 

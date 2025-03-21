@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, useState, useEffect } from 'react';
 import { useActiveMenuDepthState } from '../../../../../features/platform';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
@@ -31,6 +31,12 @@ function ContainerHeaderComponent() {
     }
   };
 
+  // 퍼블 확인용
+  const [inCategoryPage, setIsCategoryPage] = useState(false);
+  useEffect(() => {
+    setIsCategoryPage(window.location.pathname.includes('/category/'));
+  }, []);
+
   return (
     <div className={styles.start}>
       <div className={styles.left}>
@@ -39,7 +45,7 @@ function ContainerHeaderComponent() {
         </Button>
         <h1>{title}</h1>
       </div>
-      <CategoryButton></CategoryButton>
+      {inCategoryPage && <CategoryButton></CategoryButton>}
     </div>
   );
 }

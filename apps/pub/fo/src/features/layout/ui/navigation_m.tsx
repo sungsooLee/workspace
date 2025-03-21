@@ -1,11 +1,11 @@
 import { memo } from 'react';
 import { Button, useModal } from '@learnway/ui';
 import { IcoArray } from '@learnway/icons';
-import { MobileNavigationPopup } from '../../layout';
+import { NavigationPopupM } from '../../layout';
 
-import styles from '@learnway/styles/fo/features/layout/ui/mobile-navigation.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/navigation_m.module.css';
 
-const MobileNavigationComponent = () => {
+const NavigationMComponent = () => {
   // modal
   const { open: openModal } = useModal();
 
@@ -15,7 +15,7 @@ const MobileNavigationComponent = () => {
         onClick={() =>
           openModal({
             width: 'm_full',
-            content: <MobileNavigationPopup />,
+            content: <NavigationPopupM />,
           })
         }>
         <IcoArray width={24} height={24} stroke="#131c30" fill="none" />
@@ -24,4 +24,4 @@ const MobileNavigationComponent = () => {
   );
 };
 
-export const MobileNavigation = memo(MobileNavigationComponent);
+export const NavigationM = memo(NavigationMComponent);

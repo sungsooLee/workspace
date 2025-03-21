@@ -5,9 +5,9 @@ import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar } from '@learnw
 
 import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/features/layout/popup/mobile-navigation-popup.module.css';
+import styles from '@learnway/styles/fo/features/layout/popup/navigation-popover_m.module.css';
 
-const MobileNavigationPopupComponent = () => {
+const NavigationPopupMComponent = () => {
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
@@ -101,4 +101,4 @@ const MobileNavigationPopupComponent = () => {
   );
 };
 
-export const MobileNavigationPopup = memo(MobileNavigationPopupComponent);
+export const NavigationPopupM = memo(NavigationPopupMComponent);
