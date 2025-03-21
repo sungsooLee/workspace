@@ -55,6 +55,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
+      {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (
         <Link to="/setting/setting-language_m" className={`${styles.btn_language} ${className}`}>
           <span className={styles.select}>{'KR'}</span>
