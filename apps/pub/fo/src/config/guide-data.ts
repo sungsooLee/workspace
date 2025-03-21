@@ -66,7 +66,7 @@ export const guideData = [
     screenName: 'M_설정(WEB)',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-web_m',
-    pageType: '',
+    pageType: 'Page',
     completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: 'setting-web_m.tsx',
@@ -86,7 +86,7 @@ export const guideData = [
     screenName: 'M_언어설정',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-language_m',
-    pageType: '',
+    pageType: 'Page',
     completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: 'setting-language_m.tsx',
@@ -96,7 +96,7 @@ export const guideData = [
     screenName: 'M_SNS 로그인 설정',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-sns_m',
-    pageType: '',
+    pageType: 'Page',
     completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: 'setting-sns_m.tsx',
@@ -106,7 +106,7 @@ export const guideData = [
     screenName: 'M_오픈소스 라이선스',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-license_m',
-    pageType: '',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: 'setting-license_m.tsx',
