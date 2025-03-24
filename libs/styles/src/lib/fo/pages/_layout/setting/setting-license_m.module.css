@@ -1,5 +1,12 @@
 .start {
   &.license_wrap {
-    /*  */
+    ul {
+      li {
+        @apply body_3_r px-[20px] py-[17px] text-[var(--gray9)];
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
+      }
+    }
   }
 }

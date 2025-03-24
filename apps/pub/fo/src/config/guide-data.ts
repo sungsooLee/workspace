@@ -107,7 +107,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-license_m',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: 'setting-license_m.tsx',
   },
@@ -1557,11 +1557,11 @@ export const guideData = [
     screenId: 'NLP_FO_ARM_1000',
     screenName: '알림',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-20',
+    lastUpdateDate: '2025-03-20',
+    remarks: 'notification.tsx',
   },
   {
     screenId: 'NLP_FO_LOG_1000',

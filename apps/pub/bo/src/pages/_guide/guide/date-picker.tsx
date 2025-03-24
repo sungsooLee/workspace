@@ -18,7 +18,7 @@ function RouteComponent() {
       <DatePicker displayType={'month'} />
       <br />
       <h2>from-to</h2>
-      <DatePicker displayType={'from-to'} />
+      <DatePicker displayType={'from-to'} numberOfMonths={2} />
       <br />
       <h2>time</h2>
       <DatePicker displayType={'time'} />
