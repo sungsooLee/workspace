@@ -6,7 +6,7 @@ interface ContainerFooterComponentProps {
 }
 
 function ContainerFooterComponent({ children }: ContainerFooterComponentProps) {
-  return <div className={styles.start}>{children}</div>;
+  return <div className={`${styles.start} ${styles.btn_wrap}`}>{children}</div>;
 }
 
 export const MobileContainerFooter = memo(ContainerFooterComponent);

@@ -50,6 +50,6 @@ h4.auth--title {
 /* mobile */
 body.mobile {
   .auth--box {
-    @apply px-[20px] py-[20px];
+    @apply px-[20px] pb-[20px] pt-[16px];
   }
 }
