@@ -146,6 +146,15 @@ export const guideData = [
     remarks: '작업완료', // 비고
   },
   {
+    screenName: '로그인/구글 OTP 인증',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
+  },
+  {
     screenName: 'CMS/학습유형선택',
     pageId: 'learning/popup-learningRegisteration',
     screenId: '',
