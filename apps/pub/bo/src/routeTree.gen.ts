@@ -27,6 +27,7 @@ import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
 import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
 import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
 import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
+import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
 import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
@@ -177,6 +178,12 @@ const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
 const AuthProgressStatusCertifyRoute = AuthProgressStatusCertifyImport.update({
   id: '/progress-status-certify',
   path: '/progress-status-certify',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+  id: '/progress-status-cert',
+  path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -599,6 +606,13 @@ declare module '@tanstack/react-router' {
       path: '/progress-status-admin-fail'
       fullPath: '/progress-status-admin-fail'
       preLoaderRoute: typeof AuthProgressStatusAdminFailImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-certify': {
@@ -1055,6 +1069,7 @@ interface AuthRouteChildren {
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
   AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
   AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
   AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
@@ -1075,6 +1090,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
   AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
   AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
   AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
@@ -1223,6 +1239,7 @@ export interface FileRoutesByFullPath {
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
@@ -1297,6 +1314,7 @@ export interface FileRoutesByTo {
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
@@ -1374,6 +1392,7 @@ export interface FileRoutesById {
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/_auth/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/_auth/progress-status-cp': typeof AuthProgressStatusCpRoute
   '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
@@ -1450,6 +1469,7 @@ export interface FileRouteTypes {
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
+    | '/progress-status-cert'
     | '/progress-status-certify'
     | '/progress-status-cp'
     | '/progress-status-email'
@@ -1523,6 +1543,7 @@ export interface FileRouteTypes {
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
+    | '/progress-status-cert'
     | '/progress-status-certify'
     | '/progress-status-cp'
     | '/progress-status-email'
@@ -1598,6 +1619,7 @@ export interface FileRouteTypes {
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
     | '/_auth/progress-status-admin-fail'
+    | '/_auth/progress-status-cert'
     | '/_auth/progress-status-certify'
     | '/_auth/progress-status-cp'
     | '/_auth/progress-status-email'
@@ -1701,6 +1723,7 @@ export const routeTree = rootRoute
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
         "/_auth/progress-status-admin-fail",
+        "/_auth/progress-status-cert",
         "/_auth/progress-status-certify",
         "/_auth/progress-status-cp",
         "/_auth/progress-status-email",
@@ -1802,6 +1825,10 @@ export const routeTree = rootRoute
     },
     "/_auth/progress-status-admin-fail": {
       "filePath": "_auth/progress-status-admin-fail.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-cert": {
+      "filePath": "_auth/progress-status-cert.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-certify": {

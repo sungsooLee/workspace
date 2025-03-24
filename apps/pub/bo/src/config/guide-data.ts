@@ -66,11 +66,11 @@ export const guideData = [
   },
   {
     screenName: '로그인/본인인증(휴대폰/이메일 인증)',
-    pageId: 'progress-status-certify',
-    screenId: 'NLP_BO_LOG_1014',
+    pageId: 'progress-status-cert',
+    screenId: 'NLP_BO_LOG_1001_01',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {

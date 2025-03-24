@@ -3,7 +3,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-bo/login': 'Welcome\nLearning-Way',
   '/pb-bo/success': '',
   '/pb-bo/progress-status-email': '진행현황',
-  '/pb-bo/progress-status-certify': '진행현황',
+  '/pb-bo/progress-status-cert': '진행현황',
   '/pb-bo/progress-status-admin': '관리자 권한 신청 진행현황',
   '/pb-bo/progress-status-admin-fail': '관리자 권한 신청 진행현황', // 반려
   '/pb-bo/progress-status-cp': 'CP 회원가입 신청 진행현황',
