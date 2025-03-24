@@ -28,6 +28,15 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '로그인/비밀번호 찾기/비밀번호 변경',
+    pageId: 'password-input',
+    screenId: 'NLP_BO_LOG_1017',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
     screenName: '로그인/아이디 찾기',
     pageId: 'search-account',
     screenId: 'NLP_BO_LOG_1008',
@@ -78,8 +87,17 @@ export const guideData = [
     pageId: 'progress-status-admin',
     screenId: 'NLP_BO_LOG_1001_02',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청 결과(반려)',
+    pageId: 'progress-status-admin-fail',
+    screenId: 'NLP_BO_LOG_1001_02',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -87,8 +105,8 @@ export const guideData = [
     pageId: 'progress-status-cp',
     screenId: 'NLP_BO_LOG_1001_03',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {

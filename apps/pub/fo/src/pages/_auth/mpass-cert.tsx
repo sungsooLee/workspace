@@ -9,9 +9,13 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
+<<<<<<< HEAD
 import { MpassPopup } from '../../features/auth';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+=======
+import { MpassPopup } from '../../features/auth/';
+>>>>>>> c2489d42c97ff1bfb46b3cd9fdf9a0362793fec8
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,

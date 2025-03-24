@@ -1,7 +1,7 @@
 .start {
   @apply flex h-[56px] items-center justify-between px-[16px];
   .left {
-    @apply flex items-center;
+    @apply flex flex-1 items-center;
     h1 {
       @apply body_2_b;
     }

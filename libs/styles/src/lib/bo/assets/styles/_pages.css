@@ -8,6 +8,12 @@
   div + .auth--signup-select {
     @apply mt-[48px];
   }
+  label + div {
+    @apply !mt-[8px];
+  }
+  .no_line + .no_line {
+    @apply mt-[24px] !border-t-[1px] !border-solid !border-[#edf0f7] pt-[32px];
+  }
 }
 
 h4.auth--title {

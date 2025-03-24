@@ -546,21 +546,21 @@ export const guideData = [
     screenId: 'NLP_FO_USE_MA_1010',
     screenName: 'M_통합검색_최근/추천/인기 검색어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'integrated-search/integrated-search_m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- search-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
   {
     screenId: 'NLP_FO_USE_MA_1011',
     screenName: 'M_통합검색_자동완성 팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'integrated-search/integrated-search_m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- auto-complete-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
   {
     screenId: 'NLP_FO_USE_M_1000',
@@ -576,11 +576,11 @@ export const guideData = [
     screenId: 'NLP_FO_USE_M_1001',
     screenName: 'M_통합검색결과_전체 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'integrated-search/integrated-search_m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- integrated-search_m\n- 썸네일 공통검포넌트 미작업으로 작업 불가능',
   },
   {
     screenId: 'NLP_FO_USE_M_1002',
