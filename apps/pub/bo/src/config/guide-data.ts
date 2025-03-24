@@ -46,22 +46,22 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: '로그인/비밀번호 찾기',
+    screenName: '비밀번호 찾기',
     pageId: 'search-account-pw',
     screenId: 'NLP_BO_LOG_1013',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
 
   {
     screenName: '로그인/진행 현황 확인',
-    pageId: 'progress-status',
+    pageId: 'progress-status-email',
     screenId: 'NLP_BO_LOG_1001',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
