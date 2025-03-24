@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFaceId01, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
@@ -16,6 +17,11 @@ export const Route = createFileRoute('/_auth/mpass-cert')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
+  const [selectedValue, setSelectedValue] = useState<string>('type1');
+
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+  };
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
@@ -50,33 +56,35 @@ function RouteComponent() {
                   ),
                 },
               ]}
+              defaultValue={'type1'}
+              onValueChange={handleValueChange}
             />
           </div>
           {/* 인증선택 모듈 */}
 
-          {/* FIDO 일때 문구출력 */}
-          <div className={styles.select_txt}>
-            생체인증(지문/안면인식) 인증 옵션을 선택하셨습니다. <br />
-            MPASS 인증 버튼 클릭 후 모바일 앱으로 인증을 진행해 주세요.
-          </div>
-
-          {/* OTP 인증폼 */}
-          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>OTP 번호</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={12} height={12} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="password" placeholder="OTP 번호 입력" value="" />
+          {selectedValue === 'type1' ? (
+            <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>OTP 번호</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name" type="password" placeholder="OTP 번호 입력" value="" />
+                  </div>
                 </div>
-              </div>
-            </ContentsRow>
-          </div>
+              </ContentsRow>
+            </div>
+          ) : (
+            <div className={styles.select_txt}>
+              생체인증(지문/안면인식) 인증 옵션을 선택하셨습니다. <br />
+              MPASS 인증 버튼 클릭 후 모바일 앱으로 인증을 진행해 주세요.
+            </div>
+          )}
 
           {/* 유의사항 모듈 */}
           <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
