@@ -37,6 +37,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       const existingValidator = validator[key] as any;
       acc[key] = {
         format,
+        required: { required: false },
       };
       if (existingValidator) {
         if (typeof existingValidator === 'boolean') {
@@ -52,11 +53,24 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
         } else if (typeof existingValidator === 'object') {
           acc[key] = {
             ...acc[key],
-            ...existingValidator,
+            required: {
+              required: existingValidator['required'] ?? false,
+              ...(existingValidator['required']['fn'] && {
+                fn: existingValidator['required']['fn'],
+              }),
+              ...(existingValidator['required']['message'] && {
+                fn: existingValidator['required']['message'],
+              }),
+              ...(existingValidator['required']['path'] && {
+                fn: existingValidator['required']['path'],
+              }),
+            },
+            ...(existingValidator['conditions'] && {
+              conditions: existingValidator['conditions'],
+            }),
           };
         }
       }
-
       return acc;
     }, {} as ValidatorConfig);
   }, []);
@@ -127,9 +141,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   const isFieldRequired = (fieldName: string): boolean => {
     const config = validator[fieldName];
     if (!config || typeof config.required !== 'object' || config.required === null) return false;
-    const required = config.required || false;
-    const isFn = config.required.fn ? config.required.fn(getValues()) : true;
-    return required && isFn;
+    return config.required.required || false;
   };
 
   /**
