@@ -12,7 +12,7 @@
   .text {
     @apply body_3_r absolute -bottom-[40px] -left-[9px] z-[1] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
     &::before {
-      @apply absolute left-[16px] top-0 h-[10px] w-[10px] -translate-y-1/2 rotate-[45deg] bg-[var(--primary1)] content-[''];
+      @apply absolute -top-[10px] left-[12px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
     }
   }
 }
@@ -94,6 +94,14 @@
     }
     .noti {
       @apply right-[18px];
+    }
+  }
+  .alarm_info {
+    .text {
+      @apply -right-[10px] left-[inherit];
+      &::before {
+        @apply left-[inherit] right-[12px];
+      }
     }
   }
 }

@@ -41,20 +41,35 @@
 :global(body.mobile) {
   .start {
     &.auth_container {
-      @apply pt-0;
+      @apply pt-[0];
+      &.login {
+        @apply bg-cover bg-center;
+        background: none;
+      }
+
       .auth_area {
         @apply w-full;
+        & > h2 {
+          @apply px-[31px] pb-[32px];
+
+          &.title_login {
+            @apply title_6_b mt-[0] h-auto rounded-none py-[26px];
+            background-image: url(../../../../../assets/images/common/bg_login_tit.png);
+          }
+          .tit {
+            @apply block;
+          }
+        }
+
+        .auth_inner {
+          &.login {
+          }
+        }
+        &.none {
+          .auth_inner {
+          }
+        }
       }
     }
   }
 }
-
-/* .start {
-  &.auth_container {
-    &.login {
-      .auth_area {
-        @apply flex;
-      }
-    }
-  }
-} */

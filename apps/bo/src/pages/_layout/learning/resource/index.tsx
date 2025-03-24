@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentsRow, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { LEARNING_TYPE } from '@learnway/config';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -42,10 +42,14 @@ function RouteComponent() {
           ),
           width: 'lg',
         });*/
+        router.navigate({ to: '/learning/resource/view/video' });
+        break;
+      }
+      case LEARNING_TYPE.SCORM: {
+        router.navigate({ to: '/learning_test/resource/view/scorm' });
         break;
       }
     }
-    router.navigate({ to: '/learning/resource/view/video' });
   };
 
   return (

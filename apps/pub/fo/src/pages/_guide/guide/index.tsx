@@ -12,10 +12,10 @@ export const Route = createFileRoute('/_guide/guide/')({
 function RouteComponent() {
   // 데이터 아이템의 타입 정의
   interface ListItem {
-    layoutType: string;
+    layoutType?: string;
     screenName: string;
     pageId: string;
-    screenId: string;
+    screenId?: string;
     completionDate: string;
     lastUpdateDate: string;
     remarks: string;
@@ -29,12 +29,20 @@ function RouteComponent() {
   }
 
   const [data, setData] = useState<ListItem[]>(guideData); // 데이터를 상태로 저장
+  const [isSorted, setIsSorted] = useState<boolean>(false);
 
   const [stats, setStats] = useState<Stats>({
     total: 0,
     completed: 0,
     remaining: 0,
   });
+
+  const getLayoutType = (screenId: string): string => {
+    if (screenId.includes('_MR_')) return '반응형(모바일)';
+    if (screenId.includes('_MA_')) return '적응형(모바일)';
+    if (screenId.includes('_M_')) return '모바일';
+    return 'PC';
+  };
 
   // guideData 변경 시 data 업데이트
   useEffect(() => {
@@ -50,15 +58,42 @@ function RouteComponent() {
     setStats({ total, completed, remaining });
   }, [data]);
 
+  // 레이아웃 타입 자동계산
+  useEffect(() => {
+    // layoutType을 추가한 새로운 데이터 생성
+    const updatedData = guideData.map((item) => ({
+      ...item,
+      layoutType: getLayoutType(item.screenId),
+    }));
+
+    setData(updatedData);
+  }, []);
+
+  // 버튼 클릭 시 정렬 토글
+  const handleSort = () => {
+    setIsSorted(!isSorted); // 정렬 상태 반전
+  };
+
+  // 데이터 정렬 함수
+  const sortedData = isSorted
+    ? [...guideData].sort((a, b) => {
+        const statusA = a.completionDate ? '완료' : '진행예정';
+        const statusB = b.completionDate ? '완료' : '진행예정';
+
+        if (statusA === statusB) return 0;
+        return statusA < statusB ? -1 : 1;
+      })
+    : guideData; // 정렬하지 않으면 원본 그대로 사용
+
   return (
     <div>
-      <h2 className="guide_tit2">퍼블 리스트 현황 (리스트 재정리 예정)</h2>
+      <h2 className="guide_tit2">퍼블 리스트 현황 (학습자)</h2>
       <div className="stats_box">
         <span className="total">
           총 : <strong>{stats.total}</strong>본
         </span>
         <span className="completed">
-          완료 : <strong>{stats.completed}</strong>본
+          완료 : <strong>{stats.completed}</strong>본 <button onClick={handleSort}> [보기]</button>
         </span>
         <span className="remaining">
           남은본수 : <strong>{stats.remaining}</strong>본
@@ -101,10 +136,10 @@ function RouteComponent() {
           </tr>
         </thead>
         <tbody>
-          {guideData.map((item, index) => (
+          {sortedData.map((item, index) => (
             <tr key={index + 1}>
               <td>{index + 1}</td>
-              <td>{item.layoutType}</td>
+              <td>{getLayoutType(item.screenId)}</td>
               <td className="text-left">{item.screenName}</td>
               <td className="pages">
                 <a href={item.pageId} target="_blank" rel="noopener noreferrer">

@@ -45,7 +45,7 @@ export { ReactComponent as IcoAlertComplete } from './lib/ic_alert_complete.svg'
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
-export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle.svg'; // tootip icon 12*13
+export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // tootip icon
 export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray.svg';
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
@@ -98,6 +98,11 @@ export { ReactComponent as IcoNarrowRight } from './lib/ic_arrow_narrow_right.sv
 export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
 export { ReactComponent as IcoFileImg } from './lib/ic_file_img.svg'; // image
 export { ReactComponent as IcoFileVideo } from './lib/ic_file_video.svg'; // video
+export { ReactComponent as IcoExam } from './lib/ic_exam.svg'; // exam
+export { ReactComponent as IcoFolder } from './lib/ic_folder.svg'; // folder
+export { ReactComponent as IcoHomework } from './lib/ic_homework.svg'; // homework
+export { ReactComponent as IcoMultiScorm } from './lib/ic_multi_scorm.svg'; // multi scorm
+export { ReactComponent as IcoSurvey } from './lib/ic_survey.svg'; // survey
 
 //export Default as Information from './lib/information.svg?react';
 

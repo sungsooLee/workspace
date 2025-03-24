@@ -31,7 +31,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
       {
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
-        size: 100,
+        size: 60,
         meta: {
           headerAlign: 'center', // 헤더만 가운데 정렬
           cellAlign: 'center', // 셀은 오른쪽 정렬
@@ -51,7 +51,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
                   : ''
               }
               size={'xs'}
-              onClick={() => handleLeftRowSelect(row.original)}
+              onClick={() => {
+                row.toggleSelected();
+                handleLeftRowSelect(row.original);
+              }}
             />
           </div>
         ),
@@ -63,7 +66,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
       {
         accessorKey: 'select-col',
         header: ({ table }) => '선택',
-        size: 100,
+        size: 60,
         meta: {
           headerAlign: 'center', // 헤더만 가운데 정렬
           cellAlign: 'center', // 셀은 오른쪽 정렬
@@ -74,7 +77,9 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
               label={'선택'}
               variant={'gray2'}
               size={'xs'}
-              onClick={() => handleRightRowSelect(row.original)}
+              onClick={() => {
+                handleRightRowSelect(row.original);
+              }}
             />
           </div>
         ),
@@ -105,8 +110,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             data={leftGridData}
             columns={leftGridColumns}
             hideColumnSettings
+            hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
+            showSelectAll
           />
         </div>
         <div className={styles.icon_arrow}>
@@ -119,6 +126,7 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
             data={rightGridData}
             columns={rightGridColumns}
             hideColumnSettings
+            hideRowSelectionCheckBox
             multiSelectable
             enableRowSelectionToggle={false}
           />

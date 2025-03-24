@@ -5,6 +5,7 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 
 export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
   limitPlaceholder?: string;
+  prefixCharacter?: string;
 }
 
 /**
@@ -21,13 +22,15 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
     //   onChange(labels);
     // };
     const handleAddInputEnterKeyDown = (text: string) => {
-      const newValue = [...value, text];
-      onChange(newValue);
+      // 중복 아닌 경우
+      if (!value?.includes(text)) {
+        const newValue = [...value, text];
+        onChange(newValue);
+      }
     };
     const handlerChipDelete = (option: any) => {
       const newValue = value?.filter((d) => d !== option.label); // option[labelField]
       onChange(newValue);
-      console.log('handlerChipDelete', option);
     };
 
     return (
@@ -37,7 +40,6 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
           options={value.map((val) => ({ value: val, label: val }))}
           placeholder={placeHolder}
           showInput
-          prefixCharacter="#"
           hideBorder
           // onChange={handleOnChange}
           onAddInputEnterKeyDown={handleAddInputEnterKeyDown}

@@ -132,9 +132,18 @@ export const guideData = [
     pageId: 'learning/learningSearch',
     screenId: '',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-20',
     lastUpdateDate: '',
-    remarks: '진행중(레이아웃)', // 비고
+    remarks: '완료(레이아웃)', // 비고
+  },
+  {
+    screenName: 'CMS/학습자원 일괄설정',
+    pageId: 'learning/popup-learningSetting',
+    screenId: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-20',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

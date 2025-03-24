@@ -6,12 +6,8 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import {
-  ChannelChoiceModal,
-  ManagerChoiceModal,
-  MovieInfo,
-  ThumbnailUploaderFormField,
-} from '../../../../../features/learning';
+import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';

@@ -9,7 +9,7 @@
 :global(body.mobile) {
   .start {
     &.layout_wrap {
-      @apply min-w-[320px];
+      @apply w-full min-w-[320px];
     }
   }
 }

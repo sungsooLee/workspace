@@ -1,10 +1,8 @@
-import { useTranslation } from 'react-i18next';
-import { addOrRemoveItemByKey, cn, toArray } from '@learnway/shared';
+import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
 
 import { SelectOption } from '../select/type';
 import styles from './list.module.css';
-import React, { useEffect, useState } from 'react';
-import { isEqual } from 'lodash';
+import React from 'react';
 import { IcoDelete03 } from '@learnway/icons';
 import { Button } from '../button/button';
 
@@ -44,30 +42,15 @@ const ListComponent = function ({
   onOptionSelect,
   onOptionsSelect,
 }: ListComponentProps) {
-  const { t } = useTranslation();
-  const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-
-  // changed value from parent component
-  useEffect(() => {
-    const newSelectedOptions = getOptionsFromValue(options, value, valueField);
-    if (!isEqual(selectedOptions, newSelectedOptions)) {
-      setSelectedOptions(newSelectedOptions);
-    }
-  }, [value]);
-
-  // callback function
-  useEffect(() => {
-    onOptionSelect?.(selectedOptions?.[0]);
-    onOptionsSelect?.(selectedOptions);
-  }, [selectedOptions]);
+  const selectedOptions = getMatchingItemsByKey(options, value, 'value');
 
   const handleOptionClickForSingle = (option: any) => {
-    setSelectedOptions([option]);
+    onOptionSelect?.(option);
   };
 
   const handleOptionClickForMultiple = (option: any) => {
     const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
-    setSelectedOptions(newSelectedOptions);
+    onOptionsSelect?.(newSelectedOptions);
   };
 
   const handleDeleteClick = (event: React.MouseEvent, option: any) => {
@@ -110,9 +93,3 @@ const ListComponent = function ({
 };
 
 export const List = ListComponent;
-
-// move to utils
-const getOptionsFromValue = (options: any, value: any, valueKey = 'value') => {
-  const values = toArray(value);
-  return options?.filter((d: any) => values.includes(d[valueKey]));
-};

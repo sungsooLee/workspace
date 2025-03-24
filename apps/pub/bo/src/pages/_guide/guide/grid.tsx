@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Grid, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
 import { IcoDownload } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
@@ -293,8 +292,6 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         <Grid
           data={data}
           columns={columns}
-          hideExcelDownload={false}
-          hideUpload={false}
           pagination={{
             pageSize,
             pageIndex,
