@@ -24,12 +24,15 @@ import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
 import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
 import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account-pw'
 import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
 import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
 import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
+import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
 import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
-import { Route as AuthPasswordChangeImport } from './pages/_auth/password-change'
+import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
+import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -71,6 +74,7 @@ import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/fileUpload'
 import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
+import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
@@ -159,6 +163,12 @@ const AuthSearchAccountRoute = AuthSearchAccountImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
+  id: '/progress-status-email',
+  path: '/progress-status-email',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
   id: '/progress-status-cp',
   path: '/progress-status-cp',
@@ -168,6 +178,12 @@ const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
 const AuthProgressStatusCertifyRoute = AuthProgressStatusCertifyImport.update({
   id: '/progress-status-certify',
   path: '/progress-status-certify',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+  id: '/progress-status-cert',
+  path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -190,9 +206,15 @@ const AuthProgressStatusRoute = AuthProgressStatusImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthPasswordChangeRoute = AuthPasswordChangeImport.update({
-  id: '/password-change',
-  path: '/password-change',
+const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
+  id: '/password-modify',
+  path: '/password-modify',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthPasswordInputRoute = AuthPasswordInputImport.update({
+  id: '/password-input',
+  path: '/password-input',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -446,6 +468,12 @@ const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideDatePickerRoute = GuideGuideDatePickerImport.update({
+  id: '/guide/date-picker',
+  path: '/guide/date-picker',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideCssRoute = GuideGuideCssImport.update({
   id: '/guide/css',
   path: '/guide/css',
@@ -545,11 +573,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthMpassCertImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/password-change': {
-      id: '/_auth/password-change'
-      path: '/password-change'
-      fullPath: '/password-change'
-      preLoaderRoute: typeof AuthPasswordChangeImport
+    '/_auth/password-input': {
+      id: '/_auth/password-input'
+      path: '/password-input'
+      fullPath: '/password-input'
+      preLoaderRoute: typeof AuthPasswordInputImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/password-modify': {
+      id: '/_auth/password-modify'
+      path: '/password-modify'
+      fullPath: '/password-modify'
+      preLoaderRoute: typeof AuthPasswordModifyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status': {
@@ -573,6 +608,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthProgressStatusAdminFailImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/progress-status-certify': {
       id: '/_auth/progress-status-certify'
       path: '/progress-status-certify'
@@ -585,6 +627,13 @@ declare module '@tanstack/react-router' {
       path: '/progress-status-cp'
       fullPath: '/progress-status-cp'
       preLoaderRoute: typeof AuthProgressStatusCpImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/progress-status-email': {
+      id: '/_auth/progress-status-email'
+      path: '/progress-status-email'
+      fullPath: '/progress-status-email'
+      preLoaderRoute: typeof AuthProgressStatusEmailImport
       parentRoute: typeof AuthImport
     }
     '/_auth/search-account': {
@@ -725,6 +774,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/css'
       fullPath: '/guide/css'
       preLoaderRoute: typeof GuideGuideCssImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/date-picker': {
+      id: '/_guide/guide/date-picker'
+      path: '/guide/date-picker'
+      fullPath: '/guide/date-picker'
+      preLoaderRoute: typeof GuideGuideDatePickerImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/drop-down': {
@@ -1008,12 +1064,15 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
-  AuthPasswordChangeRoute: typeof AuthPasswordChangeRoute
+  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
+  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
   AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
   AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
+  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
   AuthSearchAccountRoute: typeof AuthSearchAccountRoute
   AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
   AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
@@ -1026,12 +1085,15 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
-  AuthPasswordChangeRoute: AuthPasswordChangeRoute,
+  AuthPasswordInputRoute: AuthPasswordInputRoute,
+  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
   AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
   AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
+  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
   AuthSearchAccountRoute: AuthSearchAccountRoute,
   AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
   AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
@@ -1054,6 +1116,7 @@ interface GuideRouteChildren {
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
   GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
   GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
   GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
   GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
@@ -1095,6 +1158,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
   GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
   GuideGuideDropDownRoute: GuideGuideDropDownRoute,
   GuideGuideEmptyRoute: GuideGuideEmptyRoute,
   GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
@@ -1170,12 +1234,15 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
-  '/password-change': typeof AuthPasswordChangeRoute
+  '/password-input': typeof AuthPasswordInputRoute
+  '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
+  '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -1196,6 +1263,7 @@ export interface FileRoutesByFullPath {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/fileUpload': typeof GuideGuideFileUploadRoute
@@ -1241,12 +1309,15 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
-  '/password-change': typeof AuthPasswordChangeRoute
+  '/password-input': typeof AuthPasswordInputRoute
+  '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/progress-status-cp': typeof AuthProgressStatusCpRoute
+  '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/search-account': typeof AuthSearchAccountRoute
   '/search-account-pw': typeof AuthSearchAccountPwRoute
   '/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -1267,6 +1338,7 @@ export interface FileRoutesByTo {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/fileUpload': typeof GuideGuideFileUploadRoute
@@ -1315,12 +1387,15 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
-  '/_auth/password-change': typeof AuthPasswordChangeRoute
+  '/_auth/password-input': typeof AuthPasswordInputRoute
+  '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/_auth/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
+  '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-certify': typeof AuthProgressStatusCertifyRoute
   '/_auth/progress-status-cp': typeof AuthProgressStatusCpRoute
+  '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/_auth/search-account': typeof AuthSearchAccountRoute
   '/_auth/search-account-pw': typeof AuthSearchAccountPwRoute
   '/_auth/search-id-success': typeof AuthSearchIdSuccessRoute
@@ -1341,6 +1416,7 @@ export interface FileRoutesById {
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/css': typeof GuideGuideCssRoute
+  '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
   '/_guide/guide/empty': typeof GuideGuideEmptyRoute
   '/_guide/guide/fileUpload': typeof GuideGuideFileUploadRoute
@@ -1388,12 +1464,15 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
-    | '/password-change'
+    | '/password-input'
+    | '/password-modify'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
+    | '/progress-status-cert'
     | '/progress-status-certify'
     | '/progress-status-cp'
+    | '/progress-status-email'
     | '/search-account'
     | '/search-account-pw'
     | '/search-id-success'
@@ -1414,6 +1493,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/empty'
     | '/guide/fileUpload'
@@ -1458,12 +1538,15 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
-    | '/password-change'
+    | '/password-input'
+    | '/password-modify'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
+    | '/progress-status-cert'
     | '/progress-status-certify'
     | '/progress-status-cp'
+    | '/progress-status-email'
     | '/search-account'
     | '/search-account-pw'
     | '/search-id-success'
@@ -1484,6 +1567,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/empty'
     | '/guide/fileUpload'
@@ -1530,12 +1614,15 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_auth/login'
     | '/_auth/mpass-cert'
-    | '/_auth/password-change'
+    | '/_auth/password-input'
+    | '/_auth/password-modify'
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
     | '/_auth/progress-status-admin-fail'
+    | '/_auth/progress-status-cert'
     | '/_auth/progress-status-certify'
     | '/_auth/progress-status-cp'
+    | '/_auth/progress-status-email'
     | '/_auth/search-account'
     | '/_auth/search-account-pw'
     | '/_auth/search-id-success'
@@ -1556,6 +1643,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
     | '/_guide/guide/css'
+    | '/_guide/guide/date-picker'
     | '/_guide/guide/drop-down'
     | '/_guide/guide/empty'
     | '/_guide/guide/fileUpload'
@@ -1630,12 +1718,15 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/login",
         "/_auth/mpass-cert",
-        "/_auth/password-change",
+        "/_auth/password-input",
+        "/_auth/password-modify",
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
         "/_auth/progress-status-admin-fail",
+        "/_auth/progress-status-cert",
         "/_auth/progress-status-certify",
         "/_auth/progress-status-cp",
+        "/_auth/progress-status-email",
         "/_auth/search-account",
         "/_auth/search-account-pw",
         "/_auth/search-id-success",
@@ -1658,6 +1749,7 @@ export const routeTree = rootRoute
         "/_guide/guide/chips",
         "/_guide/guide/color",
         "/_guide/guide/css",
+        "/_guide/guide/date-picker",
         "/_guide/guide/drop-down",
         "/_guide/guide/empty",
         "/_guide/guide/fileUpload",
@@ -1715,8 +1807,12 @@ export const routeTree = rootRoute
       "filePath": "_auth/mpass-cert.tsx",
       "parent": "/_auth"
     },
-    "/_auth/password-change": {
-      "filePath": "_auth/password-change.tsx",
+    "/_auth/password-input": {
+      "filePath": "_auth/password-input.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/password-modify": {
+      "filePath": "_auth/password-modify.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status": {
@@ -1731,12 +1827,20 @@ export const routeTree = rootRoute
       "filePath": "_auth/progress-status-admin-fail.tsx",
       "parent": "/_auth"
     },
+    "/_auth/progress-status-cert": {
+      "filePath": "_auth/progress-status-cert.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/progress-status-certify": {
       "filePath": "_auth/progress-status-certify.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-cp": {
       "filePath": "_auth/progress-status-cp.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/progress-status-email": {
+      "filePath": "_auth/progress-status-email.tsx",
       "parent": "/_auth"
     },
     "/_auth/search-account": {
@@ -1817,6 +1921,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/css": {
       "filePath": "_guide/guide/css.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/date-picker": {
+      "filePath": "_guide/guide/date-picker.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/drop-down": {

@@ -1,0 +1,34 @@
+/* search-account.module.css */
+.start {
+  .search_info {
+    @apply mt-[48px] pb-[48px];
+    &.dormant {
+      @apply my-0;
+    }
+    svg {
+      @apply m-auto rotate-180;
+    }
+    .txt {
+      @apply mt-[12px];
+    }
+    strong {
+      @apply text-[var(--gray8)];
+    }
+    + .noti_box {
+      @apply mb-[36px];
+    }
+  }
+  .auth_form {
+    @apply mt-[32px];
+  }
+  .signup_select_box {
+    @apply mt-[48px];
+  }
+  .signup_noti {
+    @apply mt-[8px];
+  }
+}
+
+.btn_wrap {
+  @apply mt-[48px];
+}

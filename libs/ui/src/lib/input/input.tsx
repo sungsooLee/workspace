@@ -58,22 +58,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-    // const [inputValue, setInputValue] = useState(value);
-
-    // useEffect(() => {
-    //   setInputValue(value);
-    // }, [value]);
-
-    // useEffect(() => {
-    //   if (value !== inputValue) {
-    //     const event = {
-    //       target: {
-    //         value: inputValue,
-    //       },
-    //     } as React.ChangeEvent<HTMLInputElement>;
-    //     onChange?.(event);
-    //   }
-    // }, [inputValue]);
 
     const handleInputChange = (value: any) => {
       const changeEvent = {
@@ -95,6 +79,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
     const handleClearClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      console.log(event);
       // 내부 상태 변경 대신 onChange 이벤트를 통해 상위 컴포넌트에 알림
       const clearEvent = {
         target: {

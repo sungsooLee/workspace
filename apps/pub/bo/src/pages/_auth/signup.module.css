@@ -191,9 +191,12 @@
         }
       }
       .info {
-        @apply body_3_r flex gap-[24px] text-[var(--gray7)];
+        @apply flex;
         a {
-          @apply underline;
+          @apply body_3_r text-[#6f798b] underline;
+          & + a {
+            @apply ml-[16px];
+          }
         }
       }
     }
@@ -231,7 +234,7 @@
         @apply text-[var(--secondary3)];
       }
       a {
-        @apply text-[var(--gray7)] underline;
+        @apply body_3_r text-[#6f798b] underline;
         + a {
           @apply ml-[16px];
         }

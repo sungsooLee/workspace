@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useLocation } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';

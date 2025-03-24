@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
-import formStyles from '../../assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
@@ -31,12 +32,12 @@ function RouteComponent() {
   };
   return (
     <form className="form_row">
-      <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.search_info}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={`${embededAlert.start} ${styles.search_info}`}>
             <strong>본인인증</strong> 후<br /> 아이디를 확인 할 수 있습니다.
           </div>
-          <div className={signupStyles.signup_select} role="radiogroup">
+          <div className={cn(styles.signup_select, 'auth--signup-select')} role="radiogroup">
             <RadioCard
               className={styles.radio_card}
               options={[
@@ -65,7 +66,7 @@ function RouteComponent() {
           </div>
 
           {/* 인증폼 */}
-          <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -146,9 +147,8 @@ function RouteComponent() {
               </ContentsRow>
             )}
           </div>
-
-          <div className={signupStyles.signup_noti}>
-            <dl className={styles.check_point}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -156,7 +156,7 @@ function RouteComponent() {
               <dd>관리자 계정의 정보를 정확하게 입력해야 본인인증을 할 수 있습니다. </dd>
             </dl>
           </div>
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>

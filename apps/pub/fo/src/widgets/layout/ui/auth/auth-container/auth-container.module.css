@@ -39,34 +39,39 @@
 
 /* mobile */
 :global(body.mobile) {
-  .start {
-    &.auth_container {
-      @apply pt-[0];
-      &.login {
-        @apply bg-cover bg-center;
-        background: none;
-      }
-
-      .auth_area {
-        @apply w-full;
-        & > h2 {
-          @apply px-[31px] pb-[32px];
-
-          &.title_login {
-            @apply title_6_b mt-[0] h-auto rounded-none py-[26px];
-            background-image: url(../../../../../assets/images/common/bg_login_tit.png);
-          }
-          .tit {
-            @apply block;
+  @screen mobile {
+    .start {
+      &.auth_container {
+        @apply bg-[#ffffff] pt-[0];
+        &.login {
+          @apply bg-cover bg-center;
+          background-image: none;
+          .auth_area {
+            @apply mb-[16px] pb-0;
           }
         }
 
-        .auth_inner {
-          &.login {
+        .auth_area {
+          @apply mb-0 w-full pb-[100px];
+          & > h2 {
+            @apply hidden;
+
+            &.title_login {
+              @apply title_6_b mt-[0] block h-auto rounded-none px-[31px] pb-[32px] pt-[26px];
+            }
+            .tit {
+              @apply block;
+            }
           }
-        }
-        &.none {
+
           .auth_inner {
+            @apply rounded-none border-none;
+            &.login {
+            }
+          }
+          &.none {
+            .auth_inner {
+            }
           }
         }
       }

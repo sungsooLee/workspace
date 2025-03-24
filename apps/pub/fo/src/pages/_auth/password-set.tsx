@@ -6,14 +6,12 @@ import styles from './password-input.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
-import { AgreementDetailPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/password-set')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_set}`}>
@@ -96,15 +94,7 @@ function RouteComponent() {
             <Button variant="gray" size="xl">
               취소
             </Button>
-            <Button
-              variant="primary"
-              size="xl"
-              onClick={() =>
-                openModal({
-                  width: 'sm',
-                  content: <AgreementDetailPopup />,
-                })
-              }>
+            <Button variant="primary" size="xl">
               확인
             </Button>
           </div>

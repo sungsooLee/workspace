@@ -15,7 +15,7 @@ function RouteComponent() {
     layoutType?: string;
     screenName: string;
     pageId: string;
-    screenId?: string;
+    screenId: string;
     completionDate: string;
     lastUpdateDate: string;
     remarks: string;
@@ -85,12 +85,32 @@ function RouteComponent() {
       })
     : guideData; // 정렬하지 않으면 원본 그대로 사용
 
+  const [mobileCount, setMobileCount] = useState(0);
+  const [pcCount, setPcCount] = useState(0);
+
+  useEffect(() => {
+    let mobile = 0;
+    let pc = 0;
+
+    data.forEach((item) => {
+      const layout = getLayoutType(item.screenId);
+      if (layout === '모바일' || layout === '반응형(모바일)' || layout === '적응형(모바일)') {
+        mobile++;
+      } else if (layout === 'PC') {
+        pc++;
+      }
+    });
+
+    setMobileCount(mobile);
+    setPcCount(pc);
+  }, [data]);
+
   return (
     <div>
       <h2 className="guide_tit2">퍼블 리스트 현황 (학습자)</h2>
       <div className="stats_box">
         <span className="total">
-          총 : <strong>{stats.total}</strong>본
+          총 : <strong>{stats.total}</strong>본 (PC:{pcCount} / Mobile:{mobileCount})
         </span>
         <span className="completed">
           완료 : <strong>{stats.completed}</strong>본 <button onClick={handleSort}> [보기]</button>

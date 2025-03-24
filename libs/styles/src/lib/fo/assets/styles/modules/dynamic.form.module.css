@@ -50,3 +50,10 @@
     }
   }
 }
+
+.item_col_full {
+  @apply w-full;
+  > div {
+    @apply mb-[16px];
+  }
+}

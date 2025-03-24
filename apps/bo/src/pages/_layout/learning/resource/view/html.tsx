@@ -130,34 +130,44 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           {/*외주개발업체 상세*/}
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
-            <ContentsRow>
-              {/*외부개발업체*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <InputModalSelectorFormField
-                    modalConfig={{
-                      title: '',
-                      width: 'md',
-                      content: <ManagerChoiceModal />,
-                    }}
-                  />
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-            <ContentsRow>
-              {/*외주개발업체 담당자*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
-              </FormRow>
-              {/*외주개발업체 연락처*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-          </FormDisplay>
+          {/*<FormDisplay*/}
+          {/*  provider={provider}*/}
+          {/*  dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>*/}
+          {/*  <ContentsRow>*/}
+          {/*    외부개발업체*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompany'}>*/}
+          {/*        <InputModalSelectorFormField*/}
+          {/*          modalConfig={{*/}
+          {/*            title: '',*/}
+          {/*            width: 'md',*/}
+          {/*            content: <ManagerChoiceModal />,*/}
+          {/*          }}*/}
+          {/*        />*/}
+          {/*      </DynamicFormField>*/}
+          {/*    </FormRow>*/}
+          {/*  </ContentsRow>*/}
+          {/*  <ContentsRow>*/}
+          {/*    외주개발업체 담당자*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompanyManager'} />*/}
+          {/*    </FormRow>*/}
+          {/*    외주개발업체 연락처*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>*/}
+          {/*    </FormRow>*/}
+          {/*  </ContentsRow>*/}
+          {/*</FormDisplay>*/}
+          <ContentsRow>
+            {/*외주개발업체 담당자*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'externalDevelopmentCompanyManager'} />
+            </FormRow>
+            {/*외주개발업체 연락처*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'videoDuration'}>
@@ -512,5 +522,6 @@ const formConfig: DynamicFormConfig = {
         fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
       },
     },
+    learningResourceName: true,
   },
 };

@@ -6,9 +6,9 @@ export const Route = createFileRoute('/_guide/guide/alert')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModal();
+  const { alert: openAlert, confirm: openConfirm } = useModal();
   const handleClickAlert = () => {
-    openAlert({
+    openConfirm({
       title: (
         <>
           컨펌 타이틀 입니다. <br /> 줄바꿈 적용
@@ -28,7 +28,7 @@ function RouteComponent() {
     });
   };
   const handleClickAlert2 = () => {
-    openAlert({
+    openConfirm({
       title: (
         <>
           컨펌 (아이콘 케이스) <br /> 줄바꿈 적용

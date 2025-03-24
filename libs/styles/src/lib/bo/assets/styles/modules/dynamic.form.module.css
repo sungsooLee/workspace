@@ -17,6 +17,31 @@
   .btn_delete {
     @apply absolute right-0 top-1/2 -translate-y-1/2;
   }
+  .btn_text {
+    @apply !min-w-[43px];
+  }
+}
+
+.col_wrap {
+  @apply flex w-full flex-col;
+}
+.type_row {
+  @apply flex;
+  .theme_input {
+    @apply w-[224px] shrink-0;
+  }
+  .data_input {
+    @apply ml-[8px] flex-grow;
+  }
+  .btn_text {
+    @apply ml-[8px] shrink-0;
+  }
+  .btn_delete {
+    @apply ml-[16px] w-[24px] shrink-0;
+  }
+  & + .type_row {
+    @apply mt-[8px];
+  }
 }
 
 .form_auto {

@@ -22,11 +22,11 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      &.auth-header {
-        @apply hidden min-w-[320px];
+      &.auth_header {
+        @apply w-full min-w-[320px];
 
         .header_area {
-          @apply h-[56px] pl-[20px] pr-[16px];
+          @apply h-[56px] !pl-[20px] pr-[16px];
 
           h1 {
             img {

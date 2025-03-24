@@ -1,8 +1,11 @@
 import { memo } from 'react';
 import styles from './mpass-popup.module.css';
+import { cn } from '@learnway/shared';
 import imgGuide1 from '../../../assets/images/popup/img_mpass_guide1.png';
 import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, Button, useModal } from '@learnway/ui';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 const MpassPopupCompoment = () => {
   const { close: closeModal } = useModal();
@@ -55,8 +58,21 @@ const MpassPopupCompoment = () => {
       </ModalBody>
 
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+        <BrowserView>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+            <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <MobileContainerFooter>
+            <Button variant="primary" size="xl">
+              확인
+            </Button>
+          </MobileContainerFooter>
+        </MobileView>
       </ModalFooter>
     </ModalContainer>
   );

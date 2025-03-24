@@ -61,7 +61,7 @@
             @apply mt-[48px];
           }
           .tit_box {
-            @apply flex w-full items-center justify-between;
+            @apply mb-[16px] flex w-full items-center justify-between;
             strong {
               @apply title_5_b text-[var(--gray9)];
             }
