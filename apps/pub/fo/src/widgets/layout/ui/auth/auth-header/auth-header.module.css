@@ -20,7 +20,7 @@
 
 /* mobile */
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
       &.auth_header {
         @apply w-full min-w-[320px];

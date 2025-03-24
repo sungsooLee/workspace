@@ -3,9 +3,6 @@ const plugin = require('tailwindcss/plugin');
 module.exports = {
   theme: {
     extend: {
-      screens: {
-        mobile: { max: '767px' },
-      },
       colors: {
         primary: {
           DEFAULT: 'hsl(var(--primary))',

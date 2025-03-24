@@ -24,7 +24,7 @@
 }
 
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
       &.footer_auth {
         @apply bg-[#F6F8FD] py-[16px];

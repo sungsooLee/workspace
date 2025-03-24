@@ -68,7 +68,7 @@
 
 /* mobile */
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
       &.login {
         &.auth_wrap {

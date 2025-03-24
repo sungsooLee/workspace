@@ -64,7 +64,7 @@ import signupStyles from './signup.module.css'
 ex) test.module.css
 
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
       @apply hidden;
     }

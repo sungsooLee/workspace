@@ -12,8 +12,9 @@
 }
 
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
+      @color;
     }
   }
 }
