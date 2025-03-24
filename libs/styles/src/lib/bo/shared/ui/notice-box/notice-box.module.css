@@ -1,15 +1,15 @@
 .start {
   @apply rounded-[8px] bg-[var(--gray1)] p-[16px];
   .check_point {
-    @apply body_4_r text-left text-[var(--gray7)];
+    @apply text-left;
     dt {
-      @apply body_4_b flex items-center justify-start;
+      @apply body_4_b flex items-center justify-start !text-[#6f798b];
       svg {
         @apply mr-[4px];
       }
     }
     dd {
-      @apply relative mt-[8px] pl-[10px];
+      @apply body_4_r relative mt-[8px] pl-[10px] !text-[#6f798b];
       + dd {
         @apply mt-[4px];
       }

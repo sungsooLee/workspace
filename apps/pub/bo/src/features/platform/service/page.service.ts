@@ -9,7 +9,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-bo/progress-status-cp': 'CP 회원가입 신청 진행현황',
   '/pb-bo/search-account': '아이디 찾기',
   '/pb-bo/search-account-pw': '비밀번호 찾기',
-  '/pb-bo/password-change': '비밀번호 변경',
+  '/pb-bo/password-modify': '비밀번호 변경',
   '/pb-bo/signup-step1': '관리자 회원가입',
   '/pb-bo/mpass-cert': 'MPASS 인증',
 };
