@@ -1,0 +1,34 @@
+.start {
+  &.popular {
+    .tit_box {
+      @apply flex items-center justify-between;
+      strong {
+        @apply body_3_b text-[var(--gray9)];
+      }
+    }
+    .popular_box {
+      @apply mt-[12px];
+      ul {
+        @apply inline-block w-1/2 align-top;
+        li {
+          @apply w-full;
+          & + li {
+            @apply mt-[12px];
+          }
+          button {
+            @apply flex max-w-full items-center overflow-hidden text-ellipsis whitespace-nowrap;
+            span {
+              @apply body_3_r inline-block overflow-hidden text-ellipsis whitespace-nowrap text-[var(--gray8)];
+            }
+            em {
+              @apply body_3_b mr-[8px] inline-block text-[var(--secondary3)];
+            }
+          }
+        }
+        & + ul {
+          @apply pl-[12px];
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ export const guideData = [
   },
   {
     screenName: '로그인/비밀번호 변경',
-    pageId: 'password-change',
+    pageId: 'password-modify',
     screenId: 'NLP_BO_LOG_1000_02',
     pageType: 'Page',
     completionDate: '2025-02-26',

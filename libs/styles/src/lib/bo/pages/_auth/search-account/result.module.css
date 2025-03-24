@@ -1,0 +1,20 @@
+/* 아이디 비번찾기 결과 */
+.start {
+  .result_message {
+    @apply title_5_b px-[16px] py-[16px] text-center;
+  }
+  .btn_txt {
+    @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
+  }
+
+  .noti_box {
+    @apply mt-[24px];
+  }
+
+  .btn_wrap {
+    @apply mt-[48px];
+    button {
+      @apply m-auto max-w-[294px];
+    }
+  }
+}

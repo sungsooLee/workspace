@@ -44,6 +44,7 @@ export interface DatePickerComponentProps
   className?: string;
   readOnly?: boolean;
   disabled?: boolean;
+  size?: 'md' | 'lg';
   onChange?: (date: Date | [Date | null, Date | null] | undefined) => void;
   onChangeStart?: (date: Date | undefined) => void;
   onChangeEnd?: (date: Date | undefined) => void;
@@ -74,6 +75,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     className,
     readOnly,
     disabled,
+    size,
     onChangeStart,
     onChangeEnd,
   },
@@ -148,7 +150,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     const showSeconds = displayType === 'time-hm';
 
     return (
-      <div className={cn('nlp--datepicker-wrap', 'nlp--datepicker-time-hm')} ref={ref}>
+      <div className={cn('nlp--datepicker-wrap', 'nlp--datepicker-time-hm', size)} ref={ref}>
         <PopoverTimeInput
           value={selectedDate || new Date()}
           onChange={handleChange}
@@ -164,7 +166,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   // 2. Date range picker
   if (displayType === 'from-to') {
     return (
-      <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to')} ref={ref}>
+      <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
         <Primitive
           showIcon
           selectsRange
@@ -195,7 +197,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   // 3. Year picker
   if (displayType === 'year') {
     return (
-      <div className={cn('nlp--datepicker', 'nlp--datepicker-year')} ref={ref}>
+      <div className={cn('nlp--datepicker', 'nlp--datepicker-year', size)} ref={ref}>
         <Primitive
           showIcon
           dateFormat={dateFormat}
@@ -223,7 +225,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   // 4. Month picker
   if (displayType === 'month') {
     return (
-      <div className={cn('nlp--datepicker', 'nlp--datepicker-month')} ref={ref}>
+      <div className={cn('nlp--datepicker', 'nlp--datepicker-month', size)} ref={ref}>
         <Primitive
           showIcon
           dateFormat={dateFormat}
@@ -256,7 +258,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     const showSeconds = displayType === 'day-time-hms';
 
     return (
-      <div className="nlp--datepicker-time-wrap" ref={ref}>
+      <div className={cn('nlp--datepicker-time-wrap', size)} ref={ref}>
         {/* Date component */}
         <div className="nlp--datepicker-calendar">
           <Primitive
@@ -295,7 +297,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
 
   // 6. Default day picker
   return (
-    <div className="nlp--datepicker-time" ref={ref}>
+    <div className={cn('nlp--datepicker-time', size)} ref={ref}>
       <Primitive
         showIcon
         dateFormat={dateFormat}

@@ -1,12 +1,13 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import hightlightMessageBoxStyles from '@learnway/styles/bo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import { Button, Input, useModal, ContentsRow } from '@learnway/ui';
 
-export const Route = createFileRoute('/_auth/password-change')({
+export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
 });
 
@@ -20,16 +21,15 @@ function RouteComponent() {
   };
   return (
     <form className="form_row">
-      <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.search_account}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.auth_info}>
-            <p>
-              마지막 변경일 :
-              <strong className={signupStyles.date}>{'2025-01-01(목) 12:50:52'}</strong>
-            </p>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={styles.success_info}>
+            <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
+              마지막 변경일 : <strong>{'2025-01-01(목) 12:50:52'}</strong>
+            </div>
           </div>
           {/* 인증폼 */}
-          <div className={`${formStyles.no_line} ${formStyles.col} ${signupStyles.auth_form}`}>
+          <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="pw-now" className={formStyles.form_label}>
@@ -84,11 +84,11 @@ function RouteComponent() {
             </ContentsRow>
           </div>
           {/* 180일 경과 */}
-          <div className={signupStyles.btn_txt}>
-            <Link to="/progress-status">{'1개월 후에 변경'}</Link>
+          <div className={styles.noti_info_txt}>
+            <Button className={styles.btn_txt}>{'1개월 후에 변경'}</Button>
           </div>
-          <div className={signupStyles.signup_noti}>
-            <dl className={styles.check_point}>
+          <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
+            <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
                 유의사항
@@ -107,7 +107,7 @@ function RouteComponent() {
               </dd>
             </dl>
           </div>
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
