@@ -404,6 +404,9 @@
     &:focus {
       @apply border-[#747D91];
     }
+    &:disabled {
+      @apply bg;
+    }
   }
   .react-datepicker {
     @apply rounded-[8px];
