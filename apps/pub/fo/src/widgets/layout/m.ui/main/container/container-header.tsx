@@ -5,7 +5,7 @@ import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { IcoArrowBackward } from '@learnway/icons';
-import { CategoryButton } from '../../../../../features/layout';
+import { CategoryButton, Search } from '../../../../../features/layout';
 
 import styles from './container-header.module.css';
 
@@ -32,20 +32,36 @@ function ContainerHeaderComponent() {
   };
 
   // 퍼블 확인용
-  const [inCategoryPage, setIsCategoryPage] = useState(false);
+  const [categoryPage, setCategoryPage] = useState(false);
+  const [integrated, setIntegrated] = useState(false);
   useEffect(() => {
-    setIsCategoryPage(window.location.pathname.includes('/category/'));
+    setCategoryPage(window.location.pathname.includes('/category/'));
+    setIntegrated(window.location.pathname.includes('/integrated-search/'));
   }, []);
 
   return (
     <div className={styles.start}>
-      <div className={styles.left}>
-        <Button onClick={handleBack}>
-          <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
-        </Button>
-        <h1>{title}</h1>
-      </div>
-      {inCategoryPage && <CategoryButton></CategoryButton>}
+      {!integrated && (
+        <>
+          <div className={styles.left}>
+            <Button onClick={handleBack}>
+              <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
+            </Button>
+            <h1>{title}</h1>
+          </div>
+          {categoryPage && <CategoryButton></CategoryButton>}
+        </>
+      )}
+
+      {/* 통합검색 header */}
+      {integrated && (
+        <div className={styles.left}>
+          <Button onClick={handleBack}>
+            <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
+          </Button>
+          <Search />
+        </div>
+      )}
     </div>
   );
 }
