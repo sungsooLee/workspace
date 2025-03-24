@@ -172,7 +172,7 @@ const NotificationComponent = () => {
           <em className={styles.noti}></em>
         </span>
       </Popover>
-      <p className={styles.text}>새로운 알림이 왔어요.</p>
+      {/* <p className={styles.text}>새로운 알림이 왔어요.</p> */}
     </div>
   );
 };

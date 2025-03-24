@@ -44,6 +44,7 @@ import { Route as LayoutSettingSettingWebmImport } from './pages/_layout/setting
 import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting/setting-sns_m'
 import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
 import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
+import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
@@ -278,6 +279,13 @@ const LayoutSettingSettingLanguagemRoute =
   LayoutSettingSettingLanguagemImport.update({
     id: '/setting/setting-language_m',
     path: '/setting/setting-language_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutIntegratedSearchIntegratedSearchmRoute =
+  LayoutIntegratedSearchIntegratedSearchmImport.update({
+    id: '/integrated-search/integrated-search_m',
+    path: '/integrated-search/integrated-search_m',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -931,6 +939,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/integrated-search/integrated-search_m': {
+      id: '/_layout/integrated-search/integrated-search_m'
+      path: '/integrated-search/integrated-search_m'
+      fullPath: '/integrated-search/integrated-search_m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchmImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/setting/setting-language_m': {
       id: '/_layout/setting/setting-language_m'
       path: '/setting/setting-language_m'
@@ -1110,6 +1125,7 @@ interface LayoutRouteChildren {
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
+  LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
   LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
   LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
   LayoutSettingSettingSnsmRoute: typeof LayoutSettingSettingSnsmRoute
@@ -1125,6 +1141,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutCourseRegistrationCourseRegistrationAllRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
+  LayoutIntegratedSearchIntegratedSearchmRoute:
+    LayoutIntegratedSearchIntegratedSearchmRoute,
   LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
   LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
   LayoutSettingSettingSnsmRoute: LayoutSettingSettingSnsmRoute,
@@ -1196,6 +1214,7 @@ export interface FileRoutesByFullPath {
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1265,6 +1284,7 @@ export interface FileRoutesByTo {
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1337,6 +1357,7 @@ export interface FileRoutesById {
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1408,6 +1429,7 @@ export interface FileRouteTypes {
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
+    | '/integrated-search/integrated-search_m'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1476,6 +1498,7 @@ export interface FileRouteTypes {
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
+    | '/integrated-search/integrated-search_m'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1546,6 +1569,7 @@ export interface FileRouteTypes {
     | '/_layout/category/detail_m'
     | '/_layout/course-registration/course-registration-all'
     | '/_layout/integrated-search/integrated-search'
+    | '/_layout/integrated-search/integrated-search_m'
     | '/_layout/setting/setting-language_m'
     | '/_layout/setting/setting-license_m'
     | '/_layout/setting/setting-sns_m'
@@ -1655,6 +1679,7 @@ export const routeTree = rootRoute
         "/_layout/category/detail_m",
         "/_layout/course-registration/course-registration-all",
         "/_layout/integrated-search/integrated-search",
+        "/_layout/integrated-search/integrated-search_m",
         "/_layout/setting/setting-language_m",
         "/_layout/setting/setting-license_m",
         "/_layout/setting/setting-sns_m",
@@ -1896,6 +1921,10 @@ export const routeTree = rootRoute
     },
     "/_layout/integrated-search/integrated-search": {
       "filePath": "_layout/integrated-search/integrated-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/integrated-search/integrated-search_m": {
+      "filePath": "_layout/integrated-search/integrated-search_m.tsx",
       "parent": "/_layout"
     },
     "/_layout/setting/setting-language_m": {

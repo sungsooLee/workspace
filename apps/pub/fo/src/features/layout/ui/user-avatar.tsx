@@ -5,18 +5,19 @@ import { IcLogOut01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 
 const PopoverContent = () => {
-  const { alert: openAlert } = useModal();
+  // 퍼블수정 20250324 : alert -> confirm 으로 변경
+  const { confirm: openConfirm } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
 
   const handleClickAlert1 = () => {
-    openAlert({
+    openConfirm({
       title: <></>,
       description: <>로그아웃 하시겠습니까?</>,
     });
   };
 
   const handleClickAlert2 = () => {
-    openAlert({
+    openConfirm({
       title: <>로그인 시간을 연장하시겠습니까?</>,
       content: (
         <>
@@ -28,8 +29,8 @@ const PopoverContent = () => {
           </div>
         </>
       ),
-
       okButtonLabel: '로그인연장',
+      cancelButtonLabel: '취소',
     });
   };
 
@@ -72,7 +73,7 @@ const PopoverContent = () => {
           <Link to={''}>프로필 작성</Link>
         </li>
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert1()}>
+      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
         <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
       </Button>
     </div>
