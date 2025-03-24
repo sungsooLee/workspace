@@ -57,7 +57,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
   for (const key in validator) {
     const config = validator[key];
 
-    let schema;
+    let schema: any;
 
     // 타입 변환 처리
     switch (config.format) {
@@ -89,8 +89,12 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         });
         break;
       }
+
       default:
         throw new Error(`Unsupported type: ${config.format}`);
+    }
+    if ('default' in config) {
+      schema = schema.optional().default(config.default);
     }
     // 필수 값 처리 함수
     if (config.required) {
@@ -110,7 +114,11 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         if (Array.isArray(data[key])) {
           isData = data[key].length === 0;
         }
-        if (config.required && (config.fn ? config.fn(data) : true) && isData) {
+        if (
+          config.required &&
+          (config.fn && typeof config.fn === 'function' ? config.fn(data) : true) &&
+          isData
+        ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],

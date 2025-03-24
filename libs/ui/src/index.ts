@@ -56,6 +56,7 @@ export * from './lib/grid/configs/column-factory';
 // input
 export * from './lib/input/input';
 export * from './lib/input/input-timer';
+export * from './lib/input/search-input';
 
 // list
 export * from './lib/list/list';
