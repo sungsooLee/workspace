@@ -10,6 +10,8 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,
@@ -98,24 +100,43 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
 
-            {/* 퍼블수정 20250314 : 공통 모달 콤포넌트 수정 */}
-            <Button
-              size="xl"
-              variant="primary"
-              onClick={() =>
-                openModal({
-                  width: 'sm',
-                  content: <MpassPopup />,
-                })
-              }>
-              MPASS 인증
-            </Button>
-          </div>
+              {/* 퍼블수정 20250314 : 공통 모달 콤포넌트 수정 */}
+              <Button
+                size="xl"
+                variant="primary"
+                onClick={() =>
+                  openModal({
+                    width: 'sm',
+                    content: <MpassPopup />,
+                  })
+                }>
+                MPASS 인증
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button
+                size="xl"
+                variant="primary"
+                onClick={() =>
+                  openModal({
+                    width: 'm_full',
+                    content: <MpassPopup />,
+                  })
+                }>
+                MPASS 인증
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

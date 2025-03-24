@@ -24,3 +24,27 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .auth_box {
+        .search_info {
+          @apply body_3_r mb-[32px];
+          svg {
+          }
+          .txt {
+          }
+          strong {
+          }
+        }
+        .select_txt {
+        }
+        .auth_form {
+        }
+        .btn_wrap {
+        }
+      }
+    }
+  }
+}
