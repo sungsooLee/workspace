@@ -18,3 +18,23 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .result_message {
+        @apply title_6_b px-[0] py-[0];
+      }
+      .btn_txt {
+      }
+
+      .noti_box {
+      }
+
+      .btn_wrap {
+        button {
+        }
+      }
+    }
+  }
+}

@@ -39,37 +39,39 @@
 
 /* mobile */
 :global(body.mobile) {
-  .start {
-    &.auth_container {
-      @apply bg-[#ffffff] pt-[0];
-      &.login {
-        @apply bg-cover bg-center;
-        background-image: none;
+  @screen mobile {
+    .start {
+      &.auth_container {
+        @apply bg-[#ffffff] pt-[0];
+        &.login {
+          @apply bg-cover bg-center;
+          background-image: none;
+          .auth_area {
+            @apply mb-[16px] pb-0;
+          }
+        }
+
         .auth_area {
-          @apply mb-[16px] pb-0;
-        }
-      }
+          @apply mb-0 w-full pb-[100px];
+          & > h2 {
+            @apply hidden;
 
-      .auth_area {
-        @apply w-full pb-[100px];
-        & > h2 {
-          @apply hidden;
+            &.title_login {
+              @apply title_6_b mt-[0] block h-auto rounded-none px-[31px] pb-[32px] pt-[26px];
+            }
+            .tit {
+              @apply block;
+            }
+          }
 
-          &.title_login {
-            @apply title_6_b mt-[0] block h-auto rounded-none px-[31px] pb-[32px] pt-[26px];
-          }
-          .tit {
-            @apply block;
-          }
-        }
-
-        .auth_inner {
-          @apply rounded-none border-none;
-          &.login {
-          }
-        }
-        &.none {
           .auth_inner {
+            @apply rounded-none border-none;
+            &.login {
+            }
+          }
+          &.none {
+            .auth_inner {
+            }
           }
         }
       }

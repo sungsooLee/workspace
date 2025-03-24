@@ -32,3 +32,29 @@
 .btn_wrap {
   @apply mt-[48px];
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .search_info {
+        @apply mt-[32px] pb-[32px];
+        &.dormant {
+        }
+        svg {
+        }
+        .txt {
+        }
+        strong {
+        }
+        + .noti_box {
+        }
+      }
+      .auth_form {
+      }
+      .signup_select_box {
+      }
+      .signup_noti {
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
+import { MobileView, BrowserView } from 'react-device-detect';
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 //import styles from './password-modify.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
@@ -9,6 +10,7 @@ import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/goo
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { GoogleCertGuidePopup } from '../../features/auth';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
@@ -119,14 +121,25 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
-            <Button variant="primary" size="xl">
-              확인
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
+              <Button variant="primary" size="xl">
+                확인
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                확인
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

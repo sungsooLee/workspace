@@ -12,7 +12,7 @@
 }
 
 :global(body.mobile) {
-  @screen md {
+  @screen mobile {
     .start {
     }
   }
