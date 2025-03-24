@@ -29,7 +29,7 @@ import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress
 import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
-import { Route as AuthPasswordChangeImport } from './pages/_auth/password-change'
+import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -191,9 +191,9 @@ const AuthProgressStatusRoute = AuthProgressStatusImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthPasswordChangeRoute = AuthPasswordChangeImport.update({
-  id: '/password-change',
-  path: '/password-change',
+const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
+  id: '/password-modify',
+  path: '/password-modify',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -552,11 +552,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthMpassCertImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/password-change': {
-      id: '/_auth/password-change'
-      path: '/password-change'
-      fullPath: '/password-change'
-      preLoaderRoute: typeof AuthPasswordChangeImport
+    '/_auth/password-modify': {
+      id: '/_auth/password-modify'
+      path: '/password-modify'
+      fullPath: '/password-modify'
+      preLoaderRoute: typeof AuthPasswordModifyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status': {
@@ -1022,7 +1022,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
-  AuthPasswordChangeRoute: typeof AuthPasswordChangeRoute
+  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
   AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
@@ -1040,7 +1040,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
-  AuthPasswordChangeRoute: AuthPasswordChangeRoute,
+  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
   AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
@@ -1186,7 +1186,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
-  '/password-change': typeof AuthPasswordChangeRoute
+  '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -1258,7 +1258,7 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
-  '/password-change': typeof AuthPasswordChangeRoute
+  '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -1333,7 +1333,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
-  '/_auth/password-change': typeof AuthPasswordChangeRoute
+  '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/_auth/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -1407,7 +1407,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
-    | '/password-change'
+    | '/password-modify'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
@@ -1478,7 +1478,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
-    | '/password-change'
+    | '/password-modify'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
@@ -1551,7 +1551,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_auth/login'
     | '/_auth/mpass-cert'
-    | '/_auth/password-change'
+    | '/_auth/password-modify'
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
     | '/_auth/progress-status-admin-fail'
@@ -1652,7 +1652,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/login",
         "/_auth/mpass-cert",
-        "/_auth/password-change",
+        "/_auth/password-modify",
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
         "/_auth/progress-status-admin-fail",
@@ -1738,8 +1738,8 @@ export const routeTree = rootRoute
       "filePath": "_auth/mpass-cert.tsx",
       "parent": "/_auth"
     },
-    "/_auth/password-change": {
-      "filePath": "_auth/password-change.tsx",
+    "/_auth/password-modify": {
+      "filePath": "_auth/password-modify.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status": {
