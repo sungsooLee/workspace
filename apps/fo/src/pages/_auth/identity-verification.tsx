@@ -4,10 +4,9 @@ import { useCreation } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
-import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 
-import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../features/auth';
+import { AuthForm, AuthFormData, pageRouteConfig } from '../../features/auth';
 import { useAsyncFetchEmail } from '../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';

@@ -33,7 +33,9 @@ function ProccessResultComponent({
         )}
       </i>
       <h3 className={styles.title}>{title}</h3>
-      <HighlightMessageBox className={styles.noti_box}>{children}</HighlightMessageBox>
+      {children && (
+        <HighlightMessageBox className={styles.noti_box}>{children}</HighlightMessageBox>
+      )}
     </div>
   );
 }

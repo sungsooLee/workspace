@@ -16,11 +16,8 @@ import {
   useSendVerifyPhoneNumber,
 } from '../../../../entities/user';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
-import {
-  AuthToolFormField,
-  AUTH_TOOL_TYPE,
-  VerifyUserIdFormField,
-} from '../../../../features/auth';
+import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
+import { AUTH_TOOL_TYPE } from '../../../../types';
 
 import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 
@@ -107,7 +104,7 @@ function AuthFormComponent({
       birthday: data.birthday,
     };
 
-    if (data.authToolType === AUTH_TOOL_TYPE.PHONE) {
+    if (data.authToolType === 'PHONE') {
       sendVerifyPhone(
         {
           ...payload,
@@ -135,7 +132,7 @@ function AuthFormComponent({
       verificationCode: data.verificationCode,
     };
 
-    if (data.authToolType === AUTH_TOOL_TYPE.PHONE) {
+    if (data.authToolType === 'PHONE') {
       verifyPhone(
         {
           ...payload,
@@ -147,7 +144,7 @@ function AuthFormComponent({
             verifyTimerCounter.set(0);
             if (isFunction(onSuccess)) {
               const { verificationCode, ...data } = variables;
-              onSuccess({ authToolType: AUTH_TOOL_TYPE.PHONE, ...data });
+              onSuccess({ authToolType: 'PHONE', ...data });
             }
           },
           onError: handleVerifyError,
@@ -161,7 +158,7 @@ function AuthFormComponent({
             verifyTimerCounter.set(0);
             if (isFunction(onSuccess)) {
               const { verificationCode, ...data } = variables;
-              onSuccess({ authToolType: AUTH_TOOL_TYPE.EMAIL, ...data });
+              onSuccess({ authToolType: 'EMAIL', ...data });
             }
           },
           onError: handleVerifyError,
@@ -192,7 +189,7 @@ function AuthFormComponent({
   const handleReset = (defaultValue?: any, authToolType?: string) => {
     onFormChange(
       defaultValue ?? {
-        authToolType: authToolType ?? AUTH_TOOL_TYPE.PHONE,
+        authToolType: authToolType ?? 'PHONE',
         userId: '',
         name: '',
         birthday: '',
@@ -206,7 +203,7 @@ function AuthFormComponent({
 
   const validator = (data: AuthFormData) => {
     const authSchema = z.object({
-      authToolType: z.enum([AUTH_TOOL_TYPE.PHONE, AUTH_TOOL_TYPE.EMAIL]),
+      authToolType: z.enum(['PHONE', 'EMAIL']),
       userId: includeUserId ? z.string().required() : z.string(),
       name: z.string().required(),
       birthday: z.number().required(),
@@ -214,10 +211,7 @@ function AuthFormComponent({
         nationCode: z.string(),
         number: z.string(),
       }),
-      email:
-        data.authToolType === AUTH_TOOL_TYPE.EMAIL
-          ? z.string().email().required()
-          : z.string().email(),
+      email: data.authToolType === 'EMAIL' ? z.string().email().required() : z.string().email(),
       verificationCode: z.string().required(),
     });
 
@@ -261,7 +255,7 @@ function AuthFormComponent({
             <DynamicFormField name={'birthday'} />
           </FormRow>
         </ContentsRow>
-        {authToolType === AUTH_TOOL_TYPE.PHONE ? (
+        {authToolType === 'PHONE' ? (
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'phoneNumber'}>
@@ -325,7 +319,7 @@ const detailConfig = {
       name: 'authToolType',
       type: 'custom',
       label: '',
-      value: AUTH_TOOL_TYPE.PHONE,
+      value: 'PHONE',
       placeholder: '',
       description: '',
     },

@@ -8,12 +8,7 @@ import { useDynamicForm } from '@learnway/hooks';
 
 import { FormRow, NoticeBox } from '../../../shared/ui';
 
-import {
-  pageRouteConfig,
-  GoogleOtpGuideButton,
-  AUTH_TOOL_TYPE,
-  password_validator,
-} from '../../../features/auth';
+import { pageRouteConfig, GoogleOtpGuideButton, password_validator } from '../../../features/auth';
 import { useUpdatePasswordByPhoneNumber, useUpdatePasswordByEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
@@ -31,7 +26,7 @@ export const Route = createFileRoute('/_auth/search-account/change-password')({
 
       return z
         .object({
-          authToolType: z.enum([AUTH_TOOL_TYPE.PHONE, AUTH_TOOL_TYPE.EMAIL]),
+          authToolType: z.enum(['PHONE', 'EMAIL']),
           name: z.string().required(),
           birthday: z.string().required(),
         })
@@ -67,7 +62,7 @@ function RouteComponent() {
       return;
     }
 
-    if (state.authToolType === AUTH_TOOL_TYPE.PHONE) {
+    if (state.authToolType === 'PHONE') {
       updateByPhoneNumber(
         { ...payload, phoneNumber: state.phoneNumber },
         {

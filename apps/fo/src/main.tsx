@@ -10,7 +10,7 @@ import { routeTree } from './routeTree.gen';
 
 import type { PageMeta } from './types';
 
-import { usePageMetaState } from './entities/platform';
+import { usePageRouteState } from './entities/platform';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -19,7 +19,7 @@ const router = createRouter({
   defaultPreload: 'intent',
   basepath: import.meta.env.VITE_FO_BASE_PATH,
   context: {
-    setPageMeta: undefined,
+    setPageRouteState: undefined,
     queryClient: undefined,
   },
 });
@@ -40,14 +40,14 @@ declare module '@tanstack/react-router' {
 appConfig.init({});
 
 function App() {
-  const [, setPageMeta] = usePageMetaState();
+  const [, setPageRouteState] = usePageRouteState();
   // Inject the returned value from the hook into the router context
   return (
     <QueryClientProvider client={queryConfig.getQueryClient()}>
       <AppConfigProvider>
         <RouterProvider
           router={router}
-          context={{ queryClient: queryConfig.getQueryClient(), setPageMeta }}
+          context={{ queryClient: queryConfig.getQueryClient(), setPageRouteState }}
         />
       </AppConfigProvider>
     </QueryClientProvider>

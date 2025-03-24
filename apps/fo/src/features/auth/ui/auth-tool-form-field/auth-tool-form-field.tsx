@@ -1,20 +1,13 @@
-import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from '@tanstack/react-router';
 import { isFunction } from 'lodash';
 
 import { IcoPhone02, IcoMail } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { RadioCard } from '@learnway/ui';
 
-//import styles from './auth-tool-form-field.module.css';
-import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
+import type { AUTH_TOOL_TYPE } from '../../../../types';
 
-export const AUTH_TOOL_TYPE = {
-  PHONE: 'PHONE',
-  EMAIL: 'EMAIL',
-};
-export type AUTH_TOOL_TYPE = (typeof AUTH_TOOL_TYPE)[keyof typeof AUTH_TOOL_TYPE];
+import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
 
 interface AuthToolFormFieldComponentProps {
   value?: AUTH_TOOL_TYPE;
@@ -35,7 +28,7 @@ function AuthToolFormFieldComponent({
         value={value}
         options={[
           {
-            value: AUTH_TOOL_TYPE.PHONE,
+            value: 'PHONE',
             label: (
               <div>
                 <IcoPhone02 width={48} height={48} className="ico1" />
@@ -44,7 +37,7 @@ function AuthToolFormFieldComponent({
             ),
           },
           {
-            value: AUTH_TOOL_TYPE.EMAIL,
+            value: 'EMAIL',
             label: (
               <div>
                 <IcoMail width={48} height={48} className="ico2" />

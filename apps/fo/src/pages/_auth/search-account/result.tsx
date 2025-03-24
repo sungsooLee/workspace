@@ -8,6 +8,8 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 
 import { ProccessResult } from '../../../widgets/auth';
+import { useCurrentRoute } from '../../../features/platform';
+
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
 
 export const Route = createFileRoute('/_auth/search-account/result')({
@@ -30,8 +32,7 @@ function RouteComponent() {
   const { t } = useTranslation();
 
   const router = useRouter();
-
-  const { state } = Route.useRouteContext();
+  const { state } = useCurrentRoute();
 
   const handleGoLogin = () => {
     router.navigate({ to: '/login' });
@@ -40,7 +41,7 @@ function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_auth}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
-        {state.email ? (
+        {state?.email ? (
           <ProccessResult
             title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')}
             className={styles.success_info}>
@@ -54,7 +55,7 @@ function RouteComponent() {
         )}
 
         <div className={styles.btn_txt}>
-          {isEmpty(state.email) ? (
+          {isEmpty(state?.email) ? (
             <Link to="/search-account">{t('LABEL.SEARCH_ACCOUNT')}</Link>
           ) : (
             <Link to="/search-account" search={{ tabKey: 'password' }}>
