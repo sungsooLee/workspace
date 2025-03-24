@@ -7,6 +7,7 @@ import { ZodSchema } from 'zod';
 
 import { authUserQueryKeys, ERROR } from '@learnway/config';
 import type { AuthUser, PageRouteConfig } from '@learnway/config';
+import { buildJodObject } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
 
@@ -57,12 +58,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         return;
       }
       if (routeConfig?.validateState) {
-        let schema: ZodSchema;
-        if (isFunction(routeConfig?.validateState)) {
-          schema = routeConfig?.validateState(location?.state);
-        } else {
-          schema = routeConfig?.validateState;
-        }
+        const schema: ZodSchema = buildJodObject(routeConfig?.validateState);
         try {
           schema.parse(location?.state);
         } catch (e) {
@@ -100,5 +96,10 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         return state?.pathname === match.pathname ? undefined : state;
       });
     },
+    ...(routeConfig?.validateSearch
+      ? {
+          validateSearch: buildJodObject(routeConfig?.validateSearch),
+        }
+      : {}),
   };
 }

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
 import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import {
   useVerifyEmail,
@@ -80,25 +80,28 @@ function AuthFormComponent({
   }, [defaultValues]);
 
   useEffect(() => {
+    console.log('2');
     onFormChange();
+    console.log('3');
+    /*
     onFormChange({
       authToolType,
-    });
+    });*/
   }, [authToolType]);
 
-  const handleSendVerify = () => {
+  const handleSendVerify = (d?: any) => {
+    const data = d ?? getValues();
     onFormChange({
       verificationCode: '',
     });
-    const data = getValues();
-
+    /*
     try {
       validator(data as any);
     } catch (e) {
       console.log(e);
       return;
     }
-
+*/
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -126,6 +129,10 @@ function AuthFormComponent({
   };
 
   const handleOnSubmit = async (data: any) => {
+    if (!sendedVerifyNumber) {
+      handleSendVerify(data);
+      return;
+    }
     const payload = {
       name: data.name,
       birthday: data.birthday,
@@ -201,29 +208,6 @@ function AuthFormComponent({
     setSendedVerifyNumber(false);
   };
 
-  const validator = (data: AuthFormData) => {
-    const authSchema = z.object({
-      authToolType: z.enum(['PHONE', 'EMAIL']),
-      userId: includeUserId ? z.string().required() : z.string(),
-      name: z.string().required(),
-      birthday: z.number().required(),
-      phoneNumber: z.object({
-        nationCode: z.string(),
-        number: z.string(),
-      }),
-      email: data.authToolType === 'EMAIL' ? z.string().email().required() : z.string().email(),
-      verificationCode: z.string().required(),
-    });
-
-    const r = authSchema.safeParse(data);
-    if (!r.success) {
-      r.error.issues.forEach((error: any) => {
-        setFormError(error.path[0], error.message);
-      });
-      throw r.error.issues;
-    }
-  };
-
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <ContentsRow>
@@ -258,9 +242,7 @@ function AuthFormComponent({
         {authToolType === 'PHONE' ? (
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'phoneNumber'}>
-                <PhoneNumber />
-              </DynamicFormField>
+              <DynamicFormField name={'phoneNumber'}></DynamicFormField>
             </FormRow>
           </ContentsRow>
         ) : (
@@ -302,7 +284,7 @@ function AuthFormComponent({
             {t('LABEL.CHECK_AUTH_NUMBER')}
           </Button>
         ) : (
-          <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
+          <Button type="submit" variant="primary" size="xl">
             {t('LABEL.CHECK_AUTH_REQUEST')}
           </Button>
         )}
@@ -313,7 +295,7 @@ function AuthFormComponent({
 
 export const AuthForm = AuthFormComponent;
 
-const detailConfig = {
+const detailConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'authToolType',
@@ -330,7 +312,6 @@ const detailConfig = {
       value: '',
       placeholder: '아이디/이메일을 입력하세요',
       description: '',
-      required: true,
     },
     {
       name: 'name',
@@ -350,7 +331,7 @@ const detailConfig = {
     },
     {
       name: 'phoneNumber',
-      type: 'custom',
+      type: 'phone-number',
       label: '휴대폰 번호',
       value: '',
       placeholder: '-없이 휴대폰 번호입력(0102345678)',
@@ -361,7 +342,6 @@ const detailConfig = {
       label: '이메일',
       value: '',
       placeholder: '이메일(hyunidai.kim@hyundai.com)',
-      //required: true,
     },
     {
       name: 'verificationCode',
@@ -372,13 +352,33 @@ const detailConfig = {
     },
   ],
   validator: {
-    name: z.string().required(),
-    birthday: z.string().required(),
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-      category: z.string().nonempty(t('유효성 테스트')),
-       language_code: z.string().nonempty(t('유효성 테스트')),
-       subdivision: z.string().nonempty(t('유효성 테스트')),
-       check: z.boolean(),
-       tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    userId: {
+      format: 'string',
+      required: true,
+    },
+    name: {
+      format: 'string',
+      required: true,
+    },
+    birthday: {
+      format: 'number',
+      required: true,
+    },
+    phoneNumber: {
+      format: 'object',
+      required: {
+        fn: (data) => data.authToolType === 'PHONE',
+      },
+    },
+    email: {
+      format: 'email',
+      required: {
+        fn: (data) => data.authToolType === 'EMAIL',
+      },
+    },
+    verificationCode: {
+      format: 'number',
+      required: true,
+    },
   },
 };

@@ -15,12 +15,11 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module
 export const Route = createFileRoute('/_auth/search-account/result')({
   component: RouteComponent,
   ...pageRouteConfig({
-    // error 인 경우 throw message
-    validate: ({ params, search, state }) => {
-      if (!state?.email) {
-        //throw '잘못된 접근';
-      }
-      return;
+    validateState: {
+      email: {
+        format: 'email',
+        required: true,
+      },
     },
     meta: {
       title: 'LABEL.ACCOUNT_SEARCH',

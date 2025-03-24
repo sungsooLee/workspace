@@ -5,6 +5,7 @@ import {
   Input,
   InputModalSelectorFormField,
   Textarea,
+  PhoneNumberFormField,
 } from '@learnway/ui';
 import { FormCheckboxGroup } from '@/libs/ui/src/lib/checkbox/form-checkbox-group';
 import { SwitchFormField } from './switch-form-field';
@@ -19,4 +20,5 @@ export const formFieldConfig: FormFieldConfig = {
   textarea: Textarea,
   'text-popup-button': InputModalSelectorFormField,
   'text-area': FormTextarea,
+  'phone-number': PhoneNumberFormField,
 };

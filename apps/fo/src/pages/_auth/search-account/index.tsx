@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
 import type { PhoneNumberValue } from '@learnway/ui';
-import { cn, z } from '@learnway/shared';
+import { cn, buildJodObject } from '@learnway/shared';
 
 import { AuthForm, AuthFormData, pageRouteConfig } from '../../../features/auth';
 import { useCurrentRoute } from '../../../features/platform';
@@ -16,9 +16,25 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
-  validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
   ...pageRouteConfig({
-    validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
+    /*
+    validateSearch: {
+      tabKey: {
+        format: 'string',
+        conditions: [
+          {
+            fn: (values: any) => {
+              console.log(
+                'conditions',
+                !values?.tabKey ||
+                  (values.tabKey && values.tabKey.include(['account', 'password'])),
+              );
+              return true;
+            },
+          },
+        ],
+      },
+    },*/
     meta: {
       title: 'LABEL.ACCOUNT_PASSWORD_SEARCH',
     },
@@ -27,16 +43,19 @@ export const Route = createFileRoute('/_auth/search-account/')({
 
 function RouteComponent() {
   const { t } = useTranslation();
-  const { tabKey } = Route.useSearch();
+
+  const { search } = useCurrentRoute();
   const router = useRouter();
   const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(tabKey);
+  const [selectedTabKey, setSelectedTabKey] = useState<'account' | 'password'>(
+    search?.tabKey ?? 'account',
+  );
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
-  const handleActiveTab = (value: string) => {
+  const handleActiveTab = (value: any) => {
     setDefaultAuthValues({
       authToolType: 'PHONE',
       userId: '',

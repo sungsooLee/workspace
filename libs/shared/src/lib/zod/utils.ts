@@ -1,4 +1,5 @@
 import { z } from './zod';
+import { ZodSchema } from 'zod';
 import { ValidatorConfig } from '../types/zod';
 
 // 필수 값 처리 함수 (분리)
@@ -48,7 +49,7 @@ const handleConditions = (
 };
 
 // 동적으로 Zod 스키마 생성 함수
-export const buildJodObject = (validator: ValidatorConfig) => {
+export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
   if (validator === undefined) return z.object({});
   const schemaShape: Record<string, any> = {};
   const requiredSuperRefine: any[] = [];

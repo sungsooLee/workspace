@@ -1,10 +1,10 @@
-import { ZodSchema } from 'zod';
+import { ValidatorConfig } from '@learnway/shared';
 
 export interface PageRouteConfig<T> {
   validate?: (r: RouteValidateParams) => void;
-  validateState?: ZodSchema | ((state: any) => ZodSchema);
-  validateParam?: ZodSchema; //| (param: any) => boolean;
-  validateSearch?: ZodSchema; // | (search: any) => boolean;
+  validateState?: ValidatorConfig;
+  validateParam?: ValidatorConfig; //| (param: any) => boolean;
+  validateSearch?: ValidatorConfig; // | (search: any) => boolean;
   authorization?: boolean | string;
   meta?: T;
 }
