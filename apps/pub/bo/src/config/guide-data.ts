@@ -123,8 +123,26 @@ export const guideData = [
     pageId: 'mpass-cert',
     screenId: 'NLP_BO_LOG_1018',
     pageType: 'Page',
-    completionDate: '2025-03-06',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '로그인/MPASS 인증-FIDO',
+    pageId: 'mpass-cert-fido',
+    screenId: 'NLP_BO_LOG_1018',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '로그인/MPASS 인증-OTP',
+    pageId: 'mpass-cert-otp',
+    screenId: 'NLP_BO_LOG_1018',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업완료', // 비고
   },
   {

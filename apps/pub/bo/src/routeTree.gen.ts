@@ -33,6 +33,8 @@ import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-s
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
+import { Route as AuthMpassCertOtpImport } from './pages/_auth/mpass-cert-otp'
+import { Route as AuthMpassCertFidoImport } from './pages/_auth/mpass-cert-fido'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -215,6 +217,18 @@ const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
 const AuthPasswordInputRoute = AuthPasswordInputImport.update({
   id: '/password-input',
   path: '/password-input',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthMpassCertOtpRoute = AuthMpassCertOtpImport.update({
+  id: '/mpass-cert-otp',
+  path: '/mpass-cert-otp',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthMpassCertFidoRoute = AuthMpassCertFidoImport.update({
+  id: '/mpass-cert-fido',
+  path: '/mpass-cert-fido',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -571,6 +585,20 @@ declare module '@tanstack/react-router' {
       path: '/mpass-cert'
       fullPath: '/mpass-cert'
       preLoaderRoute: typeof AuthMpassCertImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/mpass-cert-fido': {
+      id: '/_auth/mpass-cert-fido'
+      path: '/mpass-cert-fido'
+      fullPath: '/mpass-cert-fido'
+      preLoaderRoute: typeof AuthMpassCertFidoImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/mpass-cert-otp': {
+      id: '/_auth/mpass-cert-otp'
+      path: '/mpass-cert-otp'
+      fullPath: '/mpass-cert-otp'
+      preLoaderRoute: typeof AuthMpassCertOtpImport
       parentRoute: typeof AuthImport
     }
     '/_auth/password-input': {
@@ -1064,6 +1092,8 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
+  AuthMpassCertFidoRoute: typeof AuthMpassCertFidoRoute
+  AuthMpassCertOtpRoute: typeof AuthMpassCertOtpRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
@@ -1085,6 +1115,8 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
+  AuthMpassCertFidoRoute: AuthMpassCertFidoRoute,
+  AuthMpassCertOtpRoute: AuthMpassCertOtpRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
@@ -1234,6 +1266,8 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
+  '/mpass-cert-fido': typeof AuthMpassCertFidoRoute
+  '/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -1309,6 +1343,8 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
+  '/mpass-cert-fido': typeof AuthMpassCertFidoRoute
+  '/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/progress-status': typeof AuthProgressStatusRoute
@@ -1387,6 +1423,8 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
+  '/_auth/mpass-cert-fido': typeof AuthMpassCertFidoRoute
+  '/_auth/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
@@ -1464,6 +1502,8 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
+    | '/mpass-cert-fido'
+    | '/mpass-cert-otp'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -1538,6 +1578,8 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/mpass-cert'
+    | '/mpass-cert-fido'
+    | '/mpass-cert-otp'
     | '/password-input'
     | '/password-modify'
     | '/progress-status'
@@ -1614,6 +1656,8 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_auth/login'
     | '/_auth/mpass-cert'
+    | '/_auth/mpass-cert-fido'
+    | '/_auth/mpass-cert-otp'
     | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/progress-status'
@@ -1718,6 +1762,8 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/login",
         "/_auth/mpass-cert",
+        "/_auth/mpass-cert-fido",
+        "/_auth/mpass-cert-otp",
         "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/progress-status",
@@ -1805,6 +1851,14 @@ export const routeTree = rootRoute
     },
     "/_auth/mpass-cert": {
       "filePath": "_auth/mpass-cert.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/mpass-cert-fido": {
+      "filePath": "_auth/mpass-cert-fido.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/mpass-cert-otp": {
+      "filePath": "_auth/mpass-cert-otp.tsx",
       "parent": "/_auth"
     },
     "/_auth/password-input": {
