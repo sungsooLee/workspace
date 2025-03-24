@@ -14,7 +14,7 @@
 
 /* mobile */
 :global(body.mobile) {
-  @screen md {
+  @screen mobile {
     .start {
       &.container {
         @apply min-w-[320px];

@@ -56,7 +56,7 @@
 }
 
 :global(body.mobile) {
-  @screen md {
+  @screen mobile {
     .start {
       &.footer {
         @apply px-[20px] py-[24px];

@@ -14,7 +14,6 @@
 :global(body.mobile) {
   @screen md {
     .start {
-      @color;
     }
   }
 }

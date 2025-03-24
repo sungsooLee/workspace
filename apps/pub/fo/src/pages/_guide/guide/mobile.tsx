@@ -36,7 +36,7 @@ import { isMobile } from 'react-device-detect';
 ex) test.module.css
 
 :global(body.mobile) {
-  @screen md {
+  @screen mobile {
     .start {
       @apply hidden;
     }
