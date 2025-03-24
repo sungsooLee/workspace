@@ -5,6 +5,9 @@
   .nlp--input input {
     @apply !min-h-[40px] !rounded-[8px];
   }
+  div + .auth--signup-select {
+    @apply mt-[48px];
+  }
 }
 
 h4.auth--title {
@@ -40,12 +43,15 @@ h4.auth--title {
 .auth--btn_wrap {
   @apply flex items-center justify-between;
   button {
-    @apply w-full;
+    @apply w-full rounded-[8px];
     &.max {
       @apply m-auto max-w-[294px];
     }
     &.min {
       @apply m-auto max-w-[200px];
+    }
+    &:first-child {
+      @apply !font-normal;
     }
   }
 }
