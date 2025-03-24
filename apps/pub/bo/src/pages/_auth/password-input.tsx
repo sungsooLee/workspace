@@ -4,7 +4,7 @@ import { Button, ContentsRow, Input } from '@learnway/ui';
 import styles from '@learnway/styles/bo/pages/_auth/search-account/change-password.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution } from '@learnway/icons';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 
 export const Route = createFileRoute('/_auth/password-input')({
   component: RouteComponent,
@@ -19,7 +19,25 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>현재 비밀번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name" type="text" placeholder="비밀번호" value="" />
+                </div>
+              </div>
+            </ContentsRow>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>새로운 비밀번호</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
                 </label>
                 <div className={formStyles.input_box}>
                   <Input
@@ -36,6 +54,10 @@ function RouteComponent() {
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>새로운 비밀번호 확인</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
                 </label>
                 <div className={formStyles.input_box}>
                   <Input id="name" type="text" placeholder="새로운 비밀번호 재입력" value="" />
@@ -62,10 +84,6 @@ function RouteComponent() {
               <dd>
                 3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는
                 입력하실 수 없습니다.
-              </dd>
-              <dd>
-                법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수
-                있습니다.
               </dd>
             </dl>
           </div>

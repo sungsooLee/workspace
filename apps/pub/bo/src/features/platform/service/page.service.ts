@@ -11,6 +11,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-bo/search-id-success': '아이디 찾기',
   '/pb-bo/search-account-pw': '비밀번호 찾기',
   '/pb-bo/password-modify': '비밀번호 변경',
+  '/pb-bo/password-input': '비밀번호 입력',
   '/pb-bo/signup-step1': '관리자 회원가입',
   '/pb-bo/mpass-cert': 'MPASS 인증',
 };
