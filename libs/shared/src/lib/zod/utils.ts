@@ -7,20 +7,11 @@ const handleRequired = (
   key: string,
   requiredSuperRefine: any[],
 ) => {
-  if (typeof config.required === 'boolean') {
+  if (typeof config.required === 'object') {
     requiredSuperRefine.push({
       key,
       config: {
-        required: config.required,
-        fn: () => true,
-        path: key,
-      },
-    });
-  } else if (typeof config.required === 'object') {
-    requiredSuperRefine.push({
-      key,
-      config: {
-        required: config.required || false,
+        required: config.required.required || false,
         fn: config.required.fn,
         path: config.required.path || key,
         message: config.required.message,
@@ -65,7 +56,7 @@ export const buildJodObject = (validator: ValidatorConfig) => {
   for (const key in validator) {
     const config = validator[key];
 
-    let schema;
+    let schema: any;
 
     // 타입 변환 처리
     switch (config.format) {
@@ -97,8 +88,12 @@ export const buildJodObject = (validator: ValidatorConfig) => {
         });
         break;
       }
+
       default:
         throw new Error(`Unsupported type: ${config.format}`);
+    }
+    if ('default' in config) {
+      schema = schema.optional().default(config.default);
     }
     // 필수 값 처리 함수
     if (config.required) {
@@ -118,7 +113,11 @@ export const buildJodObject = (validator: ValidatorConfig) => {
         if (Array.isArray(data[key])) {
           isData = data[key].length === 0;
         }
-        if ((config.fn ? config.fn(data) : true) && isData) {
+        if (
+          config.required &&
+          (config.fn && typeof config.fn === 'function' ? config.fn(data) : true) &&
+          isData
+        ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],

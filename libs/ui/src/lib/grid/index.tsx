@@ -17,23 +17,21 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { IcoDownload } from '@learnway/icons';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { CheckedState } from '@radix-ui/react-checkbox';
-import { cn } from '@learnway/shared';
-import { t } from 'i18next';
-
 // paging Icons
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
+  IcoDownload,
   IcoGridFilter,
   IcoGridOrder,
-  IcoPlus,
   IcoMinus,
+  IcoPlus,
 } from '@learnway/icons';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { cn } from '@learnway/shared';
+import { t } from 'i18next';
 
 import { GridImperative, GridProps } from './types/grid';
 import ColumnSettings, { ColumnSetting } from './components/column-setting';
@@ -41,7 +39,6 @@ import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
-import { CheckFieldProps } from '../checkbox/type';
 import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
@@ -79,18 +76,19 @@ const Grid = forwardRef(
       onRowsSelect,
       multiSelectable = false,
       enableRowSelectionToggle = true,
+      hideRowSelectionCheckBox,
       pagination,
       title,
       isLoading,
       columnGrouping,
       columnPinning = { columns: [] },
       hideColumnSettings,
-      hideTotalCount,
-      hideExcelDownload = true,
-      hideUpload = true,
-      hideSelectAll = true,
-      hideDeleteAll = true,
-      hideSelectedCount,
+      showTotalCount = true,
+      showExcelDownload = false,
+      showUpload = false,
+      showSelectAll = false,
+      showDeleteAll = false,
+      showSelectedCount,
       className,
     }: GridProps<T>,
     ref: any,
@@ -137,7 +135,7 @@ const Grid = forwardRef(
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
     const columnsWithCheckbox = useMemo(
       () =>
-        multiSelectable && enableRowSelectionToggle
+        multiSelectable && !hideRowSelectionCheckBox
           ? [
               {
                 id: 'select',
@@ -688,34 +686,34 @@ const Grid = forwardRef(
           {/* 제목 */}
           {title && <div className="title">{title}</div>}
           {/* 전체 개수  */}
-          {!hideTotalCount && (
+          {showTotalCount && (
             <div className="sub_info">
               {t('전체')} <strong className="num">{data?.length}</strong>
             </div>
           )}
           {/* 전체 선택 */}
-          {!hideSelectAll && (
+          {showSelectAll && (
             <Button variant="text" size="xs" className="btn_all_select">
               <IcoPlus width={16} height={16} stroke="#131C30" />
               {'전체 선택'}
             </Button>
           )}
           {/* 전체 삭제 */}
-          {!hideDeleteAll && (
+          {showDeleteAll && (
             <Button variant="text" size="xs" className="btn_all_delete">
               <IcoMinus width={16} height={16} stroke="#131C30" />
               {'전체 삭제'}
             </Button>
           )}
           {/* 업로드 */}
-          {!hideUpload && (
+          {showUpload && (
             <Button variant="text" size="xs" className="btn_upload">
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'CSV업로드'}
             </Button>
           )}
           {/* 엑셀다운로드 */}
-          {!hideExcelDownload && (
+          {showExcelDownload && (
             <Button variant="text" size="xs" className="btn_excel">
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'엑셀다운로드'}

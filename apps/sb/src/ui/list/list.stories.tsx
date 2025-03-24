@@ -23,53 +23,44 @@ export default {
 
 // List
 export const Template: any = (args: any) => {
-  return <List {...args} options={dummyOptions} onOptionSelect={(option) => console.log(option)} />;
+  const [value, setValue] = useState<string>('value0');
+  return (
+    <div>
+      <Button
+        label={'set value0'}
+        variant={'point'}
+        size={'sm'}
+        onClick={() => setValue('value0')}
+      />
+      <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
+      <List
+        {...args}
+        options={dummyOptions}
+        value={value}
+        onOptionSelect={(option) => setValue(option.value)}
+      />
+    </div>
+  );
 };
 Template.storyName = 'List';
 
 // Multiple Selection
 export const TemplateMultiple: any = (args: any) => {
-  return (
-    <List
-      {...args}
-      options={dummyOptions}
-      onOptionsSelect={(options) => console.log(options)}
-      multiple
-    />
-  );
-};
-TemplateMultiple.storyName = 'Multiple Selection';
-
-// Value Control
-export const TemplateValueControl: any = (args: any) => {
-  const [value, setValue] = useState('value2');
-  const [options, setOptions] = useState(dummyOptions);
-  const handleOptionDeleteClick = (option: any) => {
-    const newOptions = addOrRemoveItemByKey(options, option, 'value');
-    setOptions(newOptions);
-  };
+  const [value, setValue] = useState<string[]>([]);
   return (
     <div>
-      <Button
-        label={'set value4'}
-        variant={'point'}
-        size={'sm'}
-        onClick={() => setValue('value4')}
-      />
-      <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
+      <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue([])} />
       <List
         {...args}
-        disabledActive
-        deletable
-        options={options}
+        multiple
+        options={dummyOptions}
         value={value}
-        onOptionSelect={(option) => console.log('onOptionSelect', option)}
-        onOptionDeleteClick={handleOptionDeleteClick}
+        onOptionsSelect={(options) => setValue(options.map((d) => d.value))}
       />
     </div>
   );
 };
-TemplateValueControl.storyName = 'Value Control';
+TemplateMultiple.storyName = 'Multiple Selection';
 
 // Delete Option
 export const TemplateDelete: any = (args: any) => {

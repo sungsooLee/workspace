@@ -1,21 +1,26 @@
-import React from 'react';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
-import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
-import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
+import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
+import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
+import {
+  ChannelChoiceModal,
+  ManagerChoiceModal,
+  MovieInfo,
+  ThumbnailUploaderFormField,
+} from '../../../../../features/learning';
+import { FormDisplay } from '../../../../../features/form/ui/form-display';
+import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { SubTitlesFormField } from '../../../../../features/form/ui';
+import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
+import React from 'react';
+import { t } from 'i18next';
+import { VideoDurationFormField } from '../../../../../features/learning/ui/resource/video-duration-form-field';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/video')({
+export const Route = createFileRoute('/_layout/learning/resource/view/html')({
   component: RouteComponent,
 });
 
@@ -125,35 +130,51 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           {/*외주개발업체 상세*/}
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
-            <ContentsRow>
-              {/*외부개발업체*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <InputModalSelectorFormField
-                    modalConfig={{
-                      title: '',
-                      width: 'md',
-                      content: <ManagerChoiceModal />,
-                    }}
-                  />
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-            <ContentsRow>
-              {/*외주개발업체 담당자*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
-              </FormRow>
-              {/*외주개발업체 연락처*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-          </FormDisplay>
-
+          {/*<FormDisplay*/}
+          {/*  provider={provider}*/}
+          {/*  dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>*/}
+          {/*  <ContentsRow>*/}
+          {/*    외부개발업체*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompany'}>*/}
+          {/*        <InputModalSelectorFormField*/}
+          {/*          modalConfig={{*/}
+          {/*            title: '',*/}
+          {/*            width: 'md',*/}
+          {/*            content: <ManagerChoiceModal />,*/}
+          {/*          }}*/}
+          {/*        />*/}
+          {/*      </DynamicFormField>*/}
+          {/*    </FormRow>*/}
+          {/*  </ContentsRow>*/}
+          {/*  <ContentsRow>*/}
+          {/*    외주개발업체 담당자*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompanyManager'} />*/}
+          {/*    </FormRow>*/}
+          {/*    외주개발업체 연락처*/}
+          {/*    <FormRow provider={provider}>*/}
+          {/*      <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>*/}
+          {/*    </FormRow>*/}
+          {/*  </ContentsRow>*/}
+          {/*</FormDisplay>*/}
+          <ContentsRow>
+            {/*외주개발업체 담당자*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'externalDevelopmentCompanyManager'} />
+            </FormRow>
+            {/*외주개발업체 연락처*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'videoDuration'}>
+                <VideoDurationFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
           <ContentsRow>
             {/*썸네일*/}
             <FormRow provider={provider}>
@@ -354,6 +375,17 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
+      label: t('동영상 재생 시간'),
+      name: 'videoDuration',
+      type: 'custom',
+      format: 'object',
+      value: {
+        hour: 0,
+        minute: 0,
+        second: 0,
+      },
+    },
+    {
       label: t('썸네일'),
       name: 'thumbnails',
       type: 'custom',
@@ -476,5 +508,20 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
+    videoDuration: {
+      required: (values: Record<string, any>) => {
+        return (
+          values.videoDuration.hour === 0 &&
+          values.videoDuration.minute === 0 &&
+          values.videoDuration.second === 0
+        );
+      },
+    },
+    externalDevelopmentCompanyManager: {
+      required: {
+        fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
+      },
+    },
+    learningResourceName: true,
   },
 };

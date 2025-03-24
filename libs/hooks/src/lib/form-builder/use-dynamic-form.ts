@@ -9,7 +9,7 @@ import {
 } from './type';
 import { extractDynamicFormDefaultValues } from './util';
 import { buildJodObject } from '@learnway/shared';
-import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
+import { ValidatorConfig, ValidatorFormat } from '@/libs/shared/src/lib/types/zod';
 
 /**
  * 주어진 폼 설정(config)을 기반으로 react-hook-form을 초기화하는 커스텀 훅.
@@ -31,11 +31,13 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     const { builders, validator = {} } = config; // validator가 없으면 빈 객체로 설정
     return builders.reduce((acc, builder) => {
       const key = builder.name;
-      const format = builder.format || 'string';
+      const analogyFormat = typeof builder.value as ValidatorFormat;
+      const format = builder.format || analogyFormat;
 
       const existingValidator = validator[key] as any;
       acc[key] = {
         format,
+        required: { required: false },
       };
       if (existingValidator) {
         if (typeof existingValidator === 'boolean') {
@@ -51,11 +53,24 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
         } else if (typeof existingValidator === 'object') {
           acc[key] = {
             ...acc[key],
-            ...existingValidator,
+            required: {
+              required: existingValidator['required'] ?? false,
+              ...(existingValidator['required']['fn'] && {
+                fn: existingValidator['required']['fn'],
+              }),
+              ...(existingValidator['required']['message'] && {
+                fn: existingValidator['required']['message'],
+              }),
+              ...(existingValidator['required']['path'] && {
+                fn: existingValidator['required']['path'],
+              }),
+            },
+            ...(existingValidator['conditions'] && {
+              conditions: existingValidator['conditions'],
+            }),
           };
         }
       }
-
       return acc;
     }, {} as ValidatorConfig);
   }, []);
@@ -126,9 +141,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   const isFieldRequired = (fieldName: string): boolean => {
     const config = validator[fieldName];
     if (!config || typeof config.required !== 'object' || config.required === null) return false;
-    const required = config.required || false;
-    const isFn = config.required.fn ? config.required.fn(getValues()) : true;
-    return required && isFn;
+    return config.required.required || false;
   };
 
   /**

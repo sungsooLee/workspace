@@ -1,16 +1,4 @@
-import {
-  Button,
-  ContentsRow,
-  Grid,
-  Input,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Select,
-  useModal,
-} from '@learnway/ui';
+import { Button, List, ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
 import React, { useState } from 'react';
@@ -18,6 +6,7 @@ import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+
 const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
   const { provider: sProvider } = useSearchBox(searchConfig);
@@ -90,7 +79,11 @@ const ChannelChoicePopupComponent = () => {
               {/* form */}
               {options.length > 20 && <SearchBox provider={sProvider} onSearch={handleOnSearch} />}
               <div className={styles.channel_wrap}>
-                <List options={options} onOptionsSelect={(options) => setOption(options[0])} />
+                <List
+                  value={option}
+                  options={options}
+                  onOptionSelect={(option) => setOption(option)}
+                />
               </div>
             </div>
           </div>

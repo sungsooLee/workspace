@@ -25,11 +25,8 @@ function RouteComponent() {
   };
 
   const handleObjectValid = () => {
-    const schema = buildJodObject(objectValid);
-    const validData = {
-      name: '이름',
-      age: '',
-    };
+    const schema = buildJodObject(objectValid2);
+    const validData = {};
     try {
       const result = schema.parse(validData);
       console.log('유효성 검사 통과:', result);
@@ -96,9 +93,20 @@ function RouteComponent() {
     </form>
   );
 }
-
+const objectValid2: ValidatorConfig = {
+  tabKey: {
+    default: undefined,
+    format: 'string',
+    conditions: [
+      {
+        fn: (values: Record<string, any>) => values.tabKey === '1',
+      },
+    ],
+  },
+};
 const objectValid: ValidatorConfig = {
   name: {
+    default: undefined,
     format: 'string',
     required: true,
   },

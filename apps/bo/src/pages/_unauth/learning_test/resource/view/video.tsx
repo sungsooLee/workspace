@@ -8,6 +8,7 @@ import { MainContents } from '../../../../../widgets/layout/ui/container/slot/ma
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
@@ -15,7 +16,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/video')({
+export const Route = createFileRoute('/_unauth/learning_test/resource/view/video')({
   component: RouteComponent,
 });
 
@@ -35,7 +36,7 @@ function RouteComponent() {
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
-            <Link to={'/'}>상시 학습 개설</Link>
+            <Link to={'/'}>상시 학습 개설2</Link>
             <Link to={'/'}>이러닝 개설</Link>
             <Link to={'/'}>라이브개설</Link>
             <Button

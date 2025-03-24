@@ -267,6 +267,7 @@ export interface BaseFormFieldProps<T = any> {
   onChange: (value: T) => void;
   disabled: boolean;
   onChangeGuideText: (guidText: string) => void;
+  onChangeInfoArea: (children: ReactNode) => void;
   onFormChange: (values: Record<string, any>) => void;
   getValues: UseFormReturn['getValues'];
   [key: string]: any;

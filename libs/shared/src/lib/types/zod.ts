@@ -1,6 +1,16 @@
+export type ValidatorFormat =
+  | 'string'
+  | 'number'
+  | 'date'
+  | 'datetime'
+  | 'email'
+  | 'array'
+  | 'object'
+  | 'boolean';
 export type ValidatorConfig = {
   [key: string]: {
     format: 'string' | 'number' | 'date' | 'datetime' | 'email' | 'array' | 'object' | 'boolean';
+    default?: any;
     required?:
       | boolean
       | {

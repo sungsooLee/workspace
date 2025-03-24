@@ -107,9 +107,8 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
 
   // 상태값 설정
   const [error, setError] = useState<ErrorState>({ isError: false });
-  const [guideText, setGuideText] = useState<string>('');
-
-  const onChangeGuideText = (text: string) => setGuideText(text);
+  const [guideText, onChangeGuideText] = useState<string>('');
+  const [infoArea, onChangeInfoArea] = useState<ReactNode | null>(null);
 
   const renderFormRowContent = (child: ReactNode, formFieldConfig: FormFieldConfig): ReactNode => {
     if (!isValidElement(child)) return child;
@@ -118,11 +117,14 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
       const formConfig = getBuilderConfig(provider.builders, child.props.name);
 
       const FormComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
+
       // 단일 필드로 감싸는 방식: cloneElement를 사용해 추가 props를 병합.
       return cloneElement(child, {
+        key: child.props.name,
         ...formConfig, // 빌더 설정값 (예: label, description 등)
         ...providerProps, // provider에서 전달받은 추가 props들
         onChangeGuideText,
+        onChangeInfoArea,
         control, // react-hook-form control
         name: child.props.name, // 기존의 name prop 유지
         component:
@@ -176,7 +178,6 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
       message: errorMessage,
     });
   }, [formState.errors, names, rootConfig.label]);
-
   return {
     fieldRefs,
     formName,
@@ -184,6 +185,7 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
     isRequired,
     error,
     guideText,
+    infoArea,
     renderFormRowContent,
   };
 };

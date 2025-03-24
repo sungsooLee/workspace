@@ -1,15 +1,6 @@
 import { isArray } from 'lodash';
 
 /**
- * value 에 배열이 넘어오면 그대로 반환하고, 배열이 아닌 경우 하나의 값을 배열로 감싸서 반환한다. 값이 없는 경우는 빈 배열을 반환
- * @param value value
- * @return Array<any> | any
- */
-export const toArray = (value: any) => {
-  return isArray(value) ? value : value ? [value] : [];
-};
-
-/**
  * 특정 키 값을 기준으로 객체를 리스트에 추가하거나 제거하는 함수
  *
  * @param list 기존 리스트
@@ -28,6 +19,90 @@ export const addOrRemoveItemByKey = <T, K extends keyof T>(list: T[], item: T, k
   }
   const appendedList = [...list, item];
   const removedList = list.filter((d) => d[key] !== item[key]);
-  const isRemove = list.find((d) => d[key] === item?.[key]);
+  const isRemove = list.find((d) => d[key] === item[key]);
   return isRemove ? removedList : appendedList;
+};
+
+/**
+ * 리스트에서 특정 키의 값이 `item`과 일치하는 항목을 필터링하는 함수
+ *
+ * @template T - 리스트의 요소 타입
+ * @param list - 검색할 객체 배열 (null 또는 undefined 허용)
+ * @param item - 비교할 값 (string, array, object 가능)
+ * @param key - 비교할 키 (필수)
+ * @returns 필터링된 배열 (일치하는 항목만 포함)
+ *
+ * @example
+ * const users = [
+ *   { id: 1, name: "Alice", age: 25 },
+ *   { id: 2, name: "Bob", age: 30 },
+ *   { id: 3, name: "Charlie", age: 25 },
+ * ];
+ *
+ * // ✅ 문자열 비교: name이 "Alice"인 객체 찾기
+ * getMatchingItemsByKey(users, "Alice", "name");
+ * // [{ id: 1, name: "Alice", age: 25 }]
+ *
+ * // ✅ 배열 비교: age가 25 또는 30인 객체 찾기
+ * getMatchingItemsByKey(users, [25, 30], "age");
+ * // [{ id: 1, name: "Alice", age: 25 }, { id: 2, name: "Bob", age: 30 }, { id: 3, name: "Charlie", age: 25 }]
+ *
+ * // ✅ 객체 비교: name이 "Alice"인 객체 찾기 (객체를 넣었을 때)
+ * getMatchingItemsByKey(users, { name: "Alice" }, "name");
+ * // [{ id: 1, name: "Alice", age: 25 }]
+ *
+ * // ✅ 숫자 비교: age가 25인 객체 찾기
+ * getMatchingItemsByKey(users, 25, "age");
+ * // [{ id: 1, name: "Alice", age: 25 }, { id: 3, name: "Charlie", age: 25 }]
+ */
+export const getMatchingItemsByKey = <T>(
+  list: T[] | null | undefined,
+  item: any,
+  key?: string,
+): T[] => {
+  if (!list || !item || !key) return [];
+
+  // item is string
+  if (checkType(item) === 'string') {
+    return list?.filter((d: any) => d[key] === item);
+  }
+
+  // item is array
+  if (checkType(item) === 'array') {
+    return list?.filter((d: any) => item.includes(d[key]));
+  }
+
+  // item is object
+  if (checkType(item) === 'object') {
+    return list?.filter((d: any) => d[key] === item[key]);
+  }
+
+  return [];
+};
+
+/**
+ * 주어진 값의 타입을 확인하는 함수
+ * @param value - 확인할 값
+ * @returns "array" | "string" | "object" | "other"
+ */
+export const checkType = (value: unknown): 'array' | 'string' | 'object' | 'other' => {
+  if (Array.isArray(value)) {
+    return 'array'; // 배열인 경우
+  }
+  if (typeof value === 'string') {
+    return 'string'; // 문자열인 경우
+  }
+  if (typeof value === 'object' && value !== null) {
+    return 'object'; // 객체인 경우 (null 제외)
+  }
+  return 'other'; // 위 조건에 해당하지 않는 경우 (null, number, boolean 등)
+};
+
+/**
+ * value 에 배열이 넘어오면 그대로 반환하고, 배열이 아닌 경우 하나의 값을 배열로 감싸서 반환한다. 값이 없는 경우는 빈 배열을 반환
+ * @param value value
+ * @return Array<any> | any
+ */
+export const toArray = (value: any) => {
+  return isArray(value) ? value : value ? [value] : [];
 };
