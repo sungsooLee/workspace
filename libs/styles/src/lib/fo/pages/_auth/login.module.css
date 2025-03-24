@@ -113,7 +113,7 @@
         }
 
         .login_guide {
-          @apply body_3_r flex h-auto border-t-[0] pb-[32px] pt-[12px];
+          @apply body_3_r flex h-auto border-t-[0] pb-[16px] pt-[12px];
           .btn_join {
           }
           a {

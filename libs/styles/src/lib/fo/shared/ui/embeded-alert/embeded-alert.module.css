@@ -10,3 +10,10 @@
     @apply text-[var(--gray8)];
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+    }
+  }
+}

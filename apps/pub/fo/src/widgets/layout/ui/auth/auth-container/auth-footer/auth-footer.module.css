@@ -27,7 +27,7 @@
   @screen mobile {
     .start {
       &.footer_auth {
-        @apply pb-[16px];
+        @apply bg-[#F6F8FD] py-[16px];
         .footer_area {
           @apply text-[1.2rem];
           .menu_list {
