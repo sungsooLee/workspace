@@ -9,7 +9,7 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
-import { MpassPopup } from '../../features/auth';
+import { MpassPopup } from '../../features/auth/';
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,
