@@ -132,15 +132,15 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input
-                    id="name"
-                    type="password"
-                    placeholder="Password(a combination of letters, numbers & special characters, 8 to 16 characters long)"
-                    value=""
-                  />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="password" placeholder="Confirm New Password" value="" />
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <Input
+                      id="name"
+                      type="password"
+                      placeholder="Password(a combination of letters, numbers & special characters, 8 to 16 characters long)"
+                      value=""
+                    />
+                    <Input id="name" type="password" placeholder="Confirm New Password" value="" />
+                  </div>
                 </div>
               </div>
             </ContentsRow>
@@ -189,27 +189,7 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.flex_plus}>
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type1', label: 'Select Job Domin' }]}
-                      className="flex-1"
-                    />
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type2', label: 'Select Role' }]}
-                      className="flex-1"
-                    />
-                    <Select
-                      size="lg"
-                      options={[{ value: 'type2', label: 'Select Role' }]}
-                      className="flex-1"
-                    />
-
-                    <Button onlyIcon className={dynamicFormStyles.btn_ico}>
-                      <IcoPlus width={20} height={20} />
-                    </Button>
-
+                  <div className={dynamicFormStyles.item_col_full}>
                     <div className={dynamicFormStyles.flex_plus}>
                       <Select
                         size="lg"
@@ -228,8 +208,31 @@ function RouteComponent() {
                       />
 
                       <Button onlyIcon className={dynamicFormStyles.btn_ico}>
-                        <IcoClose02 width={20} height={20} />
+                        <IcoPlus width={20} height={20} />
                       </Button>
+                    </div>
+                    <div className={dynamicFormStyles.item_col_full}>
+                      <div className={dynamicFormStyles.flex_plus}>
+                        <Select
+                          size="lg"
+                          options={[{ value: 'type1', label: 'Select Job Domin' }]}
+                          className="flex-1"
+                        />
+                        <Select
+                          size="lg"
+                          options={[{ value: 'type2', label: 'Select Role' }]}
+                          className="flex-1"
+                        />
+                        <Select
+                          size="lg"
+                          options={[{ value: 'type2', label: 'Select Role' }]}
+                          className="flex-1"
+                        />
+
+                        <Button onlyIcon className={dynamicFormStyles.btn_ico}>
+                          <IcoClose02 width={20} height={20} />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

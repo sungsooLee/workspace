@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { MobileView, BrowserView } from 'react-device-detect';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
@@ -11,6 +12,8 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+//import { pageRouteConfig } from '../../features/auth';
 import { GoogleCertGuidePopup } from '../../features/auth';
 
 import {
@@ -26,6 +29,7 @@ import {
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
+  //...pageRouteConfig({ meta: { mobile: { showFooter: true } } }),
 });
 
 function RouteComponent() {
@@ -381,15 +385,25 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
-              <Button variant="gray" size="xl">
-                취소
-              </Button>
-              <Button variant="primary" size="xl">
-                {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-                인증번호 요청
-              </Button>
-            </div>
+            <BrowserView>
+              <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
+                <Button variant="gray" size="xl">
+                  취소
+                </Button>
+                <Button variant="primary" size="xl">
+                  {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+                  인증번호 요청
+                </Button>
+              </div>
+            </BrowserView>
+
+            <MobileView>
+              <MobileContainerFooter>
+                <Button variant="primary" size="xl">
+                  인증번호 요청
+                </Button>
+              </MobileContainerFooter>
+            </MobileView>
           </div>
         </>
       ),
