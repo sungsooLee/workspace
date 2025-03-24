@@ -9,12 +9,7 @@ import { useLogoutUser } from '@learnway/config';
 
 import { FormRow, NoticeBox, HighlightMessageBox } from '../../shared/ui';
 
-import {
-  pageRouteConfig,
-  GoogleOtpGuideButton,
-  AUTH_TOOL_TYPE,
-  password_validator,
-} from '../../features/auth';
+import { pageRouteConfig, GoogleOtpGuideButton, password_validator } from '../../features/auth';
 import { useUpdatePassword } from '../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
@@ -23,7 +18,7 @@ export const Route = createFileRoute('/_auth/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
+      title: 'LABEL.PASSWORD_CHANGE',
     },
   }),
 });

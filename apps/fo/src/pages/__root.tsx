@@ -3,7 +3,7 @@ import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tans
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { ModalWrapper } from '@learnway/ui';
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
-import { useGlobalRouterEvent } from '../entities/platform';
+import { useGlobalRouterEvent } from '../features/platform';
 const NotFound = () => {
   return (
     <div>
@@ -14,7 +14,7 @@ const NotFound = () => {
 };
 
 interface RouterContext {
-  setPageMeta?: any;
+  setPageRouteState?: any;
   queryClient?: any;
 }
 

@@ -3,7 +3,6 @@ export const getBrowserLang = () => {
     return undefined;
   }
 
-  console.log('window.navigator.languages', window.navigator.languages);
   /*
   let browserLang: any = window.navigator.languages ? window.navigator.languages[0] : null;
   browserLang =

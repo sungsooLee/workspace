@@ -7,7 +7,8 @@ import { Tabs, useModal } from '@learnway/ui';
 import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 
-import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../../features/auth';
+import { AuthForm, AuthFormData, pageRouteConfig } from '../../../features/auth';
+import { useCurrentRoute } from '../../../features/platform';
 import { useAsyncFetchEmail } from '../../../entities/user';
 import { EmbededAlert } from '../../../shared/ui';
 
@@ -37,7 +38,7 @@ function RouteComponent() {
 
   const handleActiveTab = (value: string) => {
     setDefaultAuthValues({
-      authToolType: AUTH_TOOL_TYPE.PHONE,
+      authToolType: 'PHONE',
       userId: '',
       name: '',
       birthday: '',
@@ -75,7 +76,7 @@ function RouteComponent() {
       {
         name: data.name,
         birthday: data.birthday,
-        ...(data.authToolType === AUTH_TOOL_TYPE.PHONE
+        ...(data.authToolType === 'PHONE'
           ? { phoneNumber: data.phoneNumber }
           : { email: data.email }),
       },
@@ -112,33 +113,13 @@ function RouteComponent() {
           onActiveTab={handleActiveTab}
         />
 
-        <EmbededAlert className={styles.search_info}>
+        <EmbededAlert className={styles.search_info} hiddenIcon>
           {t(
             selectedTabKey === 'account'
               ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
               : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
           )}
         </EmbededAlert>
-
-        <div
-          className={styles.search_info}
-          onClick={() =>
-            router.navigate({
-              to: '/signup-progress/result',
-              state: {
-                authToolType: 'PHONE',
-                name: '아무개',
-                birthday: '19781223',
-                phoneNumber: '01093432161',
-              },
-            })
-          }>
-          {t(
-            selectedTabKey === 'account'
-              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
-              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
-          )}
-        </div>
 
         <AuthForm
           defaultValues={defaultAuthValues}
