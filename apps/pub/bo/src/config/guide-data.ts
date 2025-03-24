@@ -14,8 +14,8 @@ export const guideData = [
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -23,8 +23,8 @@ export const guideData = [
     pageId: 'password-modify',
     screenId: 'NLP_BO_LOG_1000_02',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -32,8 +32,17 @@ export const guideData = [
     pageId: 'search-account',
     screenId: 'NLP_BO_LOG_1008',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '아이디 확인 결과',
+    pageId: 'search-id-success',
+    screenId: 'NLP_BO_LOG_1012',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {

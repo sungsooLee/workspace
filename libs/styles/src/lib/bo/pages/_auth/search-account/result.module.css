@@ -1,7 +1,7 @@
 /* 아이디 비번찾기 결과 */
 .start {
   .result_message {
-    @apply title_5_b px-[16px] py-[16px] text-center;
+    @apply title_5_b px-[16px] py-[16px] text-center !text-[#009abc];
   }
   .btn_txt {
     @apply body_3_r mt-[24px] text-[var(--gray8)] underline;

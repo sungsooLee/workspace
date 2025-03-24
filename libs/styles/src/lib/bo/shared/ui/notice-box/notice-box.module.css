@@ -1,5 +1,5 @@
 .start {
-  @apply rounded-[8px] bg-[var(--gray1)] p-[16px];
+  @apply rounded-[8px] bg-[#f6f8fd] p-[16px];
   .check_point {
     @apply text-left;
     dt {

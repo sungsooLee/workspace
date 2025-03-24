@@ -1,0 +1,8 @@
+.start {
+  .signup_noti {
+    @apply mt-[8px];
+  }
+  .test {
+    @apply border-[#000];
+  }
+}
