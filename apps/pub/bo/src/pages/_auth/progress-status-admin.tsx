@@ -63,7 +63,7 @@ function RouteComponent() {
             {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
             <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
               <p>
-                신청 : <strong>YYYY-MM-DD</strong>
+                신청일시 : <strong>YYYY-MM-DD</strong>
               </p>
               <p>
                 승인일시 : <strong>YYYY-MM-DD</strong>
@@ -404,6 +404,7 @@ function RouteComponent() {
                   onChange={handleDate4}
                   value={date4}
                   disabled
+                  size={'lg'}
                   className={formStyles.datepicker_item}
                 />
               </div>

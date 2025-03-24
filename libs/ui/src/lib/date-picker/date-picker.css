@@ -405,7 +405,7 @@
       @apply border-[#747D91];
     }
     &:disabled {
-      @apply bg-[#f6f8fd];
+      @apply bg-[#f6f8fd] text-[#a9afb8];
     }
   }
   .react-datepicker {

@@ -16,9 +16,9 @@
     }
   }
   &.readonly {
-    @apply pointer-events-none bg-[var(--gray1)];
+    @apply pointer-events-none border-[#f6f7fd] !bg-[#f6f7fd];
     .textarea {
-      @apply !bg-[var(--gray1)] text-[var(--gray8)];
+      @apply !bg-[#f6f7fd] text-[#4c515e];
     }
   }
   &.disabled {
