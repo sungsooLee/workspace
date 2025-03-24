@@ -6,7 +6,7 @@
 }
 
 .title {
-  @apply flex min-h-[49px] items-center justify-start px-[24px] py-[12px] text-[16px] font-bold text-[var(--primary2)];
+  @apply flex min-h-[49px] items-center justify-start py-[12px] text-[16px] font-bold text-[var(--primary2)];
   border-bottom: 1px solid var(--gray2);
   &:empty {
     @apply hidden;
