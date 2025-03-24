@@ -445,11 +445,11 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1030',
     screenName: 'My_로그아웃_남은시간연장',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-24',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- user-avatar.tsx (안에 포함)',
   },
   {
     screenId: 'NLP_FO_LOG_1100',
