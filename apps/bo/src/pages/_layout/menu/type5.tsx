@@ -27,7 +27,7 @@ function RouteComponent() {
   const handleObjectValid = () => {
     const schema = buildJodObject(objectValid);
     const validData = {
-      name: '이름',
+      name: '',
       age: '',
     };
     try {
