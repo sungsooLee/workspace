@@ -17,24 +17,17 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
   ...pageRouteConfig({
-    /*
     validateSearch: {
       tabKey: {
         format: 'string',
+        default: 'account',
         conditions: [
           {
-            fn: (values: any) => {
-              console.log(
-                'conditions',
-                !values?.tabKey ||
-                  (values.tabKey && values.tabKey.include(['account', 'password'])),
-              );
-              return true;
-            },
+            fn: (values: any) => !['account', 'password'].includes(values.tabKey),
           },
         ],
       },
-    },*/
+    },
     meta: {
       title: 'LABEL.ACCOUNT_PASSWORD_SEARCH',
     },
