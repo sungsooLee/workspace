@@ -25,14 +25,14 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     console.log('useEffect pageMeta', pageMeta);
   }, [pageMeta]);
   return (
-    <>
-      <MobileContainerHeader />
-      {/* <MobileHeader /> */}
+    <div className={styles.start}>
+      {/* <MobileContainerHeader /> */}
+      <MobileHeader />
       <main>{children}</main>
       <Footer /> {/* 하단 반응형 footer */}
       {/* {pageMeta?.mobile?.showFooter && <MobileFooter />} */}
       <MobileFooter />
-    </>
+    </div>
   );
 }
 
