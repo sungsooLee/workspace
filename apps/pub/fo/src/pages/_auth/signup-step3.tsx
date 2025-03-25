@@ -53,7 +53,7 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="현대오토애버" readOnly />
+                  <Input id="name" type="text" placeholder="" value="현대오토에버" readOnly />
                 </div>
                 <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
               </div>
