@@ -37,6 +37,7 @@ import { Route as AuthMpassCertOtpImport } from './pages/_auth/mpass-cert-otp'
 import { Route as AuthMpassCertFidoImport } from './pages/_auth/mpass-cert-fido'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
+import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutPmsMenuManageImport } from './pages/_layout/pms/menuManage'
@@ -241,6 +242,12 @@ const AuthMpassCertRoute = AuthMpassCertImport.update({
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthGoogleCertRoute = AuthGoogleCertImport.update({
+  id: '/google-cert',
+  path: '/google-cert',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -572,6 +579,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/google-cert': {
+      id: '/_auth/google-cert'
+      path: '/google-cert'
+      fullPath: '/google-cert'
+      preLoaderRoute: typeof AuthGoogleCertImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/login': {
       id: '/_auth/login'
@@ -1090,6 +1104,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
   AuthMpassCertFidoRoute: typeof AuthMpassCertFidoRoute
@@ -1113,6 +1128,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
   AuthMpassCertFidoRoute: AuthMpassCertFidoRoute,
@@ -1264,6 +1280,7 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
   '/mpass-cert-fido': typeof AuthMpassCertFidoRoute
@@ -1341,6 +1358,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
   '/mpass-cert-fido': typeof AuthMpassCertFidoRoute
@@ -1421,6 +1439,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
   '/_auth/mpass-cert-fido': typeof AuthMpassCertFidoRoute
@@ -1500,6 +1519,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/google-cert'
     | '/login'
     | '/mpass-cert'
     | '/mpass-cert-fido'
@@ -1576,6 +1596,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/google-cert'
     | '/login'
     | '/mpass-cert'
     | '/mpass-cert-fido'
@@ -1654,6 +1675,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/google-cert'
     | '/_auth/login'
     | '/_auth/mpass-cert'
     | '/_auth/mpass-cert-fido'
@@ -1760,6 +1782,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/google-cert",
         "/_auth/login",
         "/_auth/mpass-cert",
         "/_auth/mpass-cert-fido",
@@ -1844,6 +1867,10 @@ export const routeTree = rootRoute
         "/_layout/pms/menuManage",
         "/_layout/menu3/"
       ]
+    },
+    "/_auth/google-cert": {
+      "filePath": "_auth/google-cert.tsx",
+      "parent": "/_auth"
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",

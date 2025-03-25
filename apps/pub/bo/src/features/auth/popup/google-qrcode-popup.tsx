@@ -48,7 +48,13 @@ const GoogleQrcodePopupCompoment = () => {
       </ModalBody>
 
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button
+          label={'취소'}
+          variant={'gray'}
+          size={'lg'}
+          onClick={() => closeModal()}
+          className="font-normal"
+        />
         <Button
           label={'다음'}
           variant={'primary'}

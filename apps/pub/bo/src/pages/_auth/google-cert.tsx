@@ -16,7 +16,7 @@ import {
   MpassPopup,
 } from '../../features/auth';
 
-export const Route = createFileRoute('/_auth/mpass-cert-fido')({
+export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
 });
 
@@ -27,7 +27,6 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          {/* 퍼블수정 20250319 : embededAlert */}
           <div className={`${embededAlert.start} ${styles.search_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
             <p className={embededAlert.txt}>안전한 로그인을 위해 2차 인증을 진행해 주세요.</p>
@@ -83,7 +82,6 @@ function RouteComponent() {
                   className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
-                      //title: 'FIDO 인증',
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })
@@ -100,7 +98,6 @@ function RouteComponent() {
               className={styles.btn_txt}
               onClick={() =>
                 openModal({
-                  //title: '구글 OTP 인증키 생성',
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
                 })
@@ -119,7 +116,6 @@ function RouteComponent() {
               variant="primary"
               onClick={() =>
                 openModal({
-                  //title: '구글 OTP 인증',
                   width: 'sm',
                   content: <MpassPopup />,
                 })
