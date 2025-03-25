@@ -1,0 +1,28 @@
+.start {
+  &.information_change {
+    @apply mx-[auto] w-[780px];
+    h2 {
+      @apply title_4_b mt-[24px] text-[var(--gray9)];
+    }
+    .box {
+      @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] px-[24px] pb-[24px] pt-[30px];
+      .avata_img {
+        @apply relative;
+        .avata_box {
+          @apply text-center;
+          .info_avata {
+            @apply h-[128px] w-[128px];
+          }
+        }
+      }
+      .information {
+        & > div {
+          @apply border-none pt-0;
+        }
+      }
+    }
+    .notice {
+      @apply mt-[32px];
+    }
+  }
+}

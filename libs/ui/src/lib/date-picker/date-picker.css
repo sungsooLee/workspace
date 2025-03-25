@@ -358,6 +358,14 @@
   @apply scrollbar h-[214px] overflow-y-auto;
   & > div {
     @apply body_2_r flex min-h-[32px] items-center justify-center text-[var(--gray8)];
+    &:hover {
+      @apply cursor-pointer rounded-[4px] !bg-[var(--gray1)];
+    }
+    &.selected {
+      &:hover {
+        @apply cursor-pointer rounded-[4px] !bg-[#edfcff];
+      }
+    }
   }
 }
 

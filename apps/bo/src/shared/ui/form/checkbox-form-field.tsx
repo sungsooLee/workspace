@@ -7,6 +7,7 @@ import clsx from 'clsx';
 interface CheckboxFormFieldProps extends BaseFormFieldProps<boolean> {
   checkConfig?: {
     reverse?: boolean;
+    label?: string;
   };
 }
 
@@ -23,6 +24,7 @@ const CheckBoxFormFieldComponent = forwardRef<HTMLDivElement, CheckboxFormFieldP
         )}
         checked={value}
         onCheckedChange={handleOnCheckChange}
+        label={checkConfig?.label}
       />
     );
   },

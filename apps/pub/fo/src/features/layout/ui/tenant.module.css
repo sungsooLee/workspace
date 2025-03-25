@@ -20,11 +20,14 @@
     .tenant_list {
       @apply flex w-full flex-wrap;
       li {
-        @apply body_3_r w-[calc(100%/2)];
+        @apply body_3_r flex w-[calc(100%/2)] items-center px-[12px] py-[12px];
+        &:hover {
+          @apply bg-[var(--secondary5)];
+        }
         .btn {
-          @apply relative box-border flex h-full w-full items-center rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
+          @apply relative box-border flex h-full items-center rounded-[4px] text-left text-[var(--gray9)];
           .label {
-            @apply button_5_r mr-[16px] box-border flex items-center rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] leading-[16px] text-[var(--gray8)];
+            @apply button_5_r box-border flex items-center rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] leading-[16px] text-[var(--gray8)];
             i {
               @apply mr-[2px] inline-block;
               svg {
@@ -36,13 +39,10 @@
             @apply body_3_r inline-block flex-1 text-[var(--gray9)];
           }
           .tip {
-            @apply body_3_r absolute left-[33px] top-[40px] z-[1] rounded-[6px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
+            @apply body_3_r absolute left-[16px] top-[28px] z-[1] whitespace-nowrap rounded-[6px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
             &::before {
               @apply absolute -top-[10px] left-[12px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
             }
-          }
-          &:hover {
-            @apply bg-[var(--secondary5)];
           }
           &.active {
             .label {
@@ -53,6 +53,12 @@
                 }
               }
             }
+          }
+        }
+        .btn_refresh {
+          @apply ml-[16px] flex-1;
+          span {
+            @apply leading-[26px];
           }
         }
       }

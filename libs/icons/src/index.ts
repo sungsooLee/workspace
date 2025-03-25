@@ -105,6 +105,7 @@ export { ReactComponent as IcoMultiScorm } from './lib/ic_multi_scorm.svg'; // m
 export { ReactComponent as IcoSurvey } from './lib/ic_survey.svg'; // survey
 export { ReactComponent as IcoSetting01 } from './lib/ic_setting_01.svg'; // setting
 export { ReactComponent as IcoReview } from './lib/ic_review.svg'; // review
+export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // success_02
 
 //export Default as Information from './lib/information.svg?react';
 

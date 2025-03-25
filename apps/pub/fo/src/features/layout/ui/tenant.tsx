@@ -70,19 +70,19 @@ const TenantModal = () => {
     '테넌트명7',
     '테넌트명8',
   ];
-  const handleClick = (idx: number): void => {
-    setActiveIdx(idx);
-    TenantConfirm(idx); // 퍼블수정 2025-03-21 추가
+
+  // 퍼블수정 2025-03-25 대표 테넌트, 리프레쉬 테넌트 나눔
+  const RepresentativeConfirm = (idx: number): void => {
+    setTip(idx); // 테넌트 툴팁 메시지
+    setActiveIdx(idx); // 대표 테넌트 active
   };
 
-  // 퍼블수정 2025-03-21 : 테넌트 변경 confirm 추가
   const TenantConfirm = (idx: number): void => {
     openConfirm({
       content: <>선택한 테넌트로 변경하시겠습니까?</>,
       cancelButtonLabel: '취소',
       okButtonLabel: '확인',
     });
-    setTip(idx); // 테넌트 툴팁 메시지
   };
 
   return (
@@ -93,17 +93,32 @@ const TenantModal = () => {
           <div className={styles.tenant_wrap}>
             <ul className={styles.tenant_list}>
               {tenants.map((tenants, idx) => (
+                // 퍼블수정 20250325 : 버튼 마크업 수정
                 <li>
                   <Button
                     key={idx}
                     className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                    onClick={() => handleClick(idx)}>
+                    onClick={() => RepresentativeConfirm(idx)}>
                     <span className={styles.label}>
                       <i>
                         <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
                       </i>
                       대표
                     </span>
+
+                    {/* 퍼블수정 20250320 : 문구 추가 */}
+                    {tip === idx ? (
+                      <p className={`${styles.tip} ${styles.tip_show}`}>
+                        대표 테넌트로 설정되었습니다.
+                      </p>
+                    ) : (
+                      ''
+                    )}
+                  </Button>
+                  <Button
+                    key={idx}
+                    className={styles.btn_refresh}
+                    onClick={() => TenantConfirm(idx)}>
                     {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
                     <span className={styles.txt}>
                       {tenants}
@@ -116,14 +131,6 @@ const TenantModal = () => {
                         </i>
                       ) : null}
                     </span>
-                    {/* 퍼블수정 20250320 : 문구 추가 */}
-                    {tip === idx ? (
-                      <p className={`${styles.tip} ${styles.tip_show}`}>
-                        대표 테넌트로 설정되었습니다.
-                      </p>
-                    ) : (
-                      ''
-                    )}
                   </Button>
                 </li>
               ))}
