@@ -27,7 +27,7 @@ export interface SelectOption {
  */
 export type BaseFormFieldConfigProps<T = string> = {
   /** 필드의 값 (제네릭으로 정의) */
-  value?: T;
+  value: T;
   /** 필드의 이름 (고유 값) */
   name: string;
   /** 필드의 레이블 (화면에 표시될 이름) */
