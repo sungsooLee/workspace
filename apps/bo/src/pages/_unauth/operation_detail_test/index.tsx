@@ -201,6 +201,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'channelId',
       type: 'hidden',
+      value: '',
     },
     {
       name: 'channelName',
@@ -302,6 +303,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'managerId',
       type: 'hidden',
+      value: '',
     },
     {
       name: 'managerName',
@@ -340,13 +342,4 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
   ],
-  validator: {
-    // channel: z.string().nonempty(),
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-    category: z.string().nonempty(t('유효성 테스트')),
-     language_code: z.string().nonempty(t('유효성 테스트')),
-     subdivision: z.string().nonempty(t('유효성 테스트')),
-     check: z.boolean(),
-     tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
-  },
 };
