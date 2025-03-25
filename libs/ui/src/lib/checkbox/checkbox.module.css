@@ -52,5 +52,8 @@
   }
   .label {
     @apply button_3_r ml-[6px] text-[1.2rem] leading-[1rem] text-[var(--gray8)];
+    &:empty {
+      @apply !hidden;
+    }
   }
 }
