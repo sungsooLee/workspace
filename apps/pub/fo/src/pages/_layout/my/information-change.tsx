@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber } from '@learnway/ui';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import { IcoCaution } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my/information-change.module.css';
@@ -136,12 +138,34 @@ function RouteComponent() {
                   placeholder="-없이 휴대폰 번호입력(01023459876)"
                 />
                 <Button variant="gray" size="lg">
-                  비밀번호 변경
+                  휴대폰 번호 변경
                 </Button>
               </div>
             </div>
           </ContentsRow>
         </div>
+      </div>
+
+      {/* 안내사항 */}
+      <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
+        <dl className={noticeBoxStyles.check_point}>
+          <dt>
+            <IcoCaution width={16} height={16} stroke="#6F798B" />
+            안내사항
+          </dt>
+          <dd>개인정보가 다를 경우 HSW에서 변경해주세요. 변경된 정보는 다음날 적용됩니다.</dd>
+        </dl>
+      </div>
+
+      {/* 안내사항 */}
+      <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
+        <dl className={noticeBoxStyles.check_point}>
+          <dt>
+            <IcoCaution width={16} height={16} stroke="#6F798B" />
+            안내사항
+          </dt>
+          <dd>개인정보가 다를 경우 DDMS에서 변경해주세요.</dd>
+        </dl>
       </div>
     </div>
   );
