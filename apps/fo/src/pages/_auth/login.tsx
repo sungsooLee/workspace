@@ -158,7 +158,6 @@ const detailConfig = {
       checkConfig: {
         label: 'LABEL.아이디 저장',
       },
-      label: 'dd',
       value: false,
     },
   ],
