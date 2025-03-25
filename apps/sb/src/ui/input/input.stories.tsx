@@ -2,7 +2,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Input, InputTimer, SearchInput } from '@learnway/ui';
+import { Button, Input, InputTimer } from '@learnway/ui';
 
 export default {
   title: 'Components/Input',
@@ -121,94 +121,3 @@ export const TemplateTimer: any = (args: any) => {
   );
 };
 TemplateTimer.storyName = 'Timer';
-
-const ExampleSearchPopup = ({
-  isOpen,
-  onClose,
-  onSelect,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  onSelect: (item: any) => void;
-}) => {
-  const sampleItems: any[] = [
-    { id: '1', name: '항목 1' },
-    { id: '2', name: '항목 2' },
-    { id: '3', name: '항목 3' },
-    { id: '4', name: '항목 4' },
-  ];
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="popup-overlay">
-      <div className="popup-content">
-        <div className="popup-header">
-          <h3>검색 항목 선택</h3>
-          <button onClick={onClose}>닫기</button>
-        </div>
-        <div className="popup-body">
-          <ul>
-            {sampleItems.map((item) => (
-              <li
-                key={item.id}
-                onClick={() => onSelect(item)}
-                className="cursor-pointer p-2 hover:bg-gray-100">
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const TemplateSearchField: any = (args: any) => {
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const handleSearch = () => {
-    setIsPopupOpen(true);
-  };
-
-  const handleSelect = (item: any) => {
-    setSelectedItem(item);
-    setSearchValue(item.name);
-    setIsPopupOpen(false);
-  };
-
-  const handleClear = () => {
-    setSelectedItem(null);
-  };
-
-  return (
-    <div className="p-4">
-      <h2 className="mb-4 text-xl">SearchInput 컴포넌트 예시</h2>
-
-      <SearchInput
-        placeholder="항목을 검색하세요"
-        value={searchValue}
-        onChange={setSearchValue}
-        onSearch={handleSearch}
-        onClear={handleClear}
-      />
-
-      {selectedItem && (
-        <div className="mt-4">
-          <p>
-            선택된 항목: {selectedItem.name} (ID: {selectedItem.id})
-          </p>
-        </div>
-      )}
-
-      <ExampleSearchPopup
-        isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-        onSelect={handleSelect}
-      />
-    </div>
-  );
-};
-TemplateValueControl.storyName = 'SearchField';

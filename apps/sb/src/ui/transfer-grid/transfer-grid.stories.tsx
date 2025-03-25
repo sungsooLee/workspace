@@ -32,6 +32,10 @@ export const Template: any = (args: any) => {
     columnHelper.accessor('name', {
       header: 'Last Name',
       cell: (info) => info.getValue(),
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
     }),
   ] as ColumnDef<any, unknown>[];
   return (

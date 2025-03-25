@@ -397,6 +397,7 @@ const Grid = forwardRef(
                         cell.column.columnDef.meta?.cellAlign ||
                         cell.column.columnDef.meta?.align ||
                         'left',
+                      verticalAlign: 'center',
                     }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -439,6 +440,7 @@ const Grid = forwardRef(
                     <td
                       key={cell.id}
                       className="grid_td h-[100%]"
+                      title={'asdjkhaskjdhaskjdhaskjhsakjdhaskjdh'}
                       style={{
                         background: cell.getIsGrouped()
                           ? '#0aff0082'
@@ -449,11 +451,11 @@ const Grid = forwardRef(
                               : '',
                         width: cell.column.getSize(),
                         display: 'block',
-                        textAlign: 'left',
-                        verticalAlign:
+                        textAlign:
                           cell.column.columnDef.meta?.cellAlign ||
                           cell.column.columnDef.meta?.align ||
                           'left',
+                        verticalAlign: 'center',
                       }}>
                       {cell.getIsGrouped() ? (
                         <button
