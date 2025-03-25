@@ -1,9 +1,14 @@
-import { Children, FC, memo, useMemo } from 'react';
+import React, { Children, FC, memo, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, Tooltip } from '@learnway/ui';
-import { FormRowProps, useFormRow } from '@learnway/hooks';
+import {
+  DynamicFormContextProvider,
+  FormRowProps,
+  useDynamicFormContext,
+  useFormRow,
+} from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
 import { FormGuideText } from './form-guide-text';
 
@@ -21,19 +26,30 @@ import { FormGuideText } from './form-guide-text';
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
-  const {
-    formName,
-    rootConfig,
-    isRequired,
-    error,
-    guideText,
-    infoArea,
-    fieldRefs,
-    renderFormRowContent,
-  } = useFormRow(provider, children, name);
+  return (
+    <DynamicFormContextProvider>
+      <DynamicFormContainer
+        className={className}
+        provider={provider}
+        children={children}
+        name={name}
+      />
+    </DynamicFormContextProvider>
+  );
+};
+
+export const FormRow = memo(FormRowComponent);
+
+const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children, name }) => {
+  const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
+    provider,
+    children,
+    name,
+  );
+  const { guideText, infoArea } = useDynamicFormContext();
   const DynamicComponent = useMemo(
     () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
-    [],
+    [provider],
   );
 
   return (
@@ -89,9 +105,3 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
     </div>
   );
 };
-
-export const FormRow = memo(FormRowComponent);
-
-const RowRender: FC<any> = memo(({ children }) => {
-  return <>{children}</>;
-});

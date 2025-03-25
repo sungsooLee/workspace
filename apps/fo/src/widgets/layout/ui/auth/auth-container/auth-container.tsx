@@ -7,7 +7,8 @@ import { isSigninPage, useCurrentRoute } from '../../../../../features/platform'
 import { AuthFooter } from './auth-footer/auth-footer';
 import { MobileAuthContainerHeader } from '../../../m.ui/auth/container/container-header';
 
-import styles from './auth-container.module.css';
+//import styles from './auth-container.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-container/auth-container.module.css';
 
 interface AuthContainerComponentProps {
   children: ReactNode;

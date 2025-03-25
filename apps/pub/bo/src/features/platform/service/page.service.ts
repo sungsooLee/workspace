@@ -14,6 +14,9 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-bo/password-input': '비밀번호 입력',
   '/pb-bo/signup-step1': '관리자 회원가입',
   '/pb-bo/mpass-cert': 'MPASS 인증',
+  '/pb-bo/mpass-cert-fido': 'MPASS 인증',
+  '/pb-bo/mpass-cert-otp': 'MPASS 인증',
+  '/pb-bo/google-cert': '구글 OTP 인증',
 };
 
 export function isSigninPage(path: string): boolean {

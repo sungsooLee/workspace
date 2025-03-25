@@ -18,3 +18,26 @@
     @apply mt-[48px];
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .search_info {
+        @apply mb-[32px];
+      }
+      .auth_form {
+        @apply mt-[32px];
+      }
+
+      .noti_info_txt {
+        @apply mt-[24px];
+        button,
+        a {
+        }
+      }
+
+      .btn_wrap {
+      }
+    }
+  }
+}

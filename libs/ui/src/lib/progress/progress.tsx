@@ -18,12 +18,11 @@ const ProgressComponent = forwardRef<
   ProgressComponentProps
 >(({ className, value, label, isFailed = false, ...props }, ref) => {
   const [progress, setProgress] = React.useState(value);
-
   const progressClass =
     progress >= 100 ? 'completed' : progress >= 90 ? 'nearly' : progress === 0 ? 'waiting' : '';
 
   useEffect(() => {
-    const timer = setTimeout(() => setProgress(value), 500);
+    const timer = setTimeout(() => setProgress(value), 50);
     return () => clearTimeout(timer);
   }, [value]);
 

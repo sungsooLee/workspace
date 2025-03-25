@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_layout/menu/type5')({
 });
 
 function RouteComponent() {
-  const { provider, onSubmit } = useDynamicForm(formConfig);
+  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const onHandleSubmit = (data: any) => {
     console.log('search config1 data => ', data);
@@ -45,6 +45,9 @@ function RouteComponent() {
 
           <Button type="button" variant="point" size="sm" onClick={handleObjectValid}>
             유효성 체크
+          </Button>
+          <Button type="button" variant="point" size="sm" onClick={() => onFormChange()}>
+            리셋
           </Button>
         </ContentsButtons>
         <MainContents>
