@@ -1,4 +1,4 @@
-import { Children, FC, memo, useMemo } from 'react';
+import { Children, createContext, FC, memo, ReactNode, useContext, useMemo, useState } from 'react';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
@@ -6,6 +6,48 @@ import { Button, Tooltip } from '@learnway/ui';
 import { FormRowProps, useFormRow } from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
 import { FormGuideText } from './form-guide-text';
+
+type Props = {
+  children: ReactNode;
+};
+/**
+ * 검색 박스 상태를 Context에 주입하는 Provider 컴포넌트
+ *
+ * @param value - 검색 박스 상태 및 메서드 값
+ * @param children - 자식 컴포넌트
+ */
+const SearchBoxProvider = ({ children }: Props) => {
+  const [guideText, onChangeGuideText] = useState<string>('');
+  const [infoArea, onChangeInfoArea] = useState<ReactNode | null>(null);
+  return (
+    <SearchBoxContext.Provider value={{ guideText, infoArea, onChangeGuideText, onChangeInfoArea }}>
+      {children}
+    </SearchBoxContext.Provider>
+  );
+};
+
+type ContextType = {
+  guideText: string;
+  infoArea: ReactNode | null;
+  onChangeGuideText: (text: string) => void;
+  onChangeInfoArea: (text: ReactNode | null) => void;
+};
+// 기본값 설정
+const SearchBoxContext = createContext<ContextType | null>(null);
+
+/**
+ * Context에서 값을 추출하는 커스텀 훅
+ * - 값이 없으면 에러 발생
+ *
+ * @returns SearchBoxProvider 값 반환
+ */
+export const useSearchBoxContext = (): ContextType => {
+  const context = useContext(SearchBoxContext);
+  if (!context) {
+    throw new Error('useSearchBoxContext는 SearchBoxProvider 내에서 사용해야 합니다.');
+  }
+  return context;
+};
 
 /**
  * FormRowComponent
@@ -21,19 +63,31 @@ import { FormGuideText } from './form-guide-text';
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
-  const {
-    formName,
-    rootConfig,
-    isRequired,
-    error,
-    guideText,
-    infoArea,
-    fieldRefs,
-    renderFormRowContent,
-  } = useFormRow(provider, children, name);
+  return (
+    <SearchBoxProvider>
+      <SearchBoxContainer
+        className={className}
+        provider={provider}
+        children={children}
+        name={name}
+      />
+    </SearchBoxProvider>
+  );
+};
+
+export const FormRow = memo(FormRowComponent);
+
+const SearchBoxContainer: FC<FormRowProps> = (props) => {
+  const { className, provider, children, name } = props;
+  const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
+    provider,
+    children,
+    name,
+  );
+  const { guideText, infoArea } = useSearchBoxContext();
   const DynamicComponent = useMemo(
     () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
-    [],
+    [provider],
   );
 
   return (
@@ -89,9 +143,3 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
     </div>
   );
 };
-
-export const FormRow = memo(FormRowComponent);
-
-const RowRender: FC<any> = memo(({ children }) => {
-  return <>{children}</>;
-});

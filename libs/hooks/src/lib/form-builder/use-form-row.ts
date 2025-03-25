@@ -107,8 +107,6 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
 
   // 상태값 설정
   const [error, setError] = useState<ErrorState>({ isError: false });
-  const [guideText, onChangeGuideText] = useState<string>('');
-  const [infoArea, onChangeInfoArea] = useState<ReactNode | null>(null);
 
   const renderFormRowContent = (child: ReactNode, formFieldConfig: FormFieldConfig): ReactNode => {
     if (!isValidElement(child)) return child;
@@ -123,8 +121,6 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
         key: child.props.name,
         ...formConfig, // 빌더 설정값 (예: label, description 등)
         ...providerProps, // provider에서 전달받은 추가 props들
-        onChangeGuideText,
-        onChangeInfoArea,
         control, // react-hook-form control
         name: child.props.name, // 기존의 name prop 유지
         component:
@@ -184,8 +180,6 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
     rootConfig,
     isRequired,
     error,
-    guideText,
-    infoArea,
     renderFormRowContent,
   };
 };
