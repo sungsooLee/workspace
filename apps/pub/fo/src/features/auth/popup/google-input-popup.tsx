@@ -15,6 +15,9 @@ import {
   useModal,
 } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+
 const GoogleInputPopupCompoment = () => {
   const { close: closeModal } = useModal();
   return (
@@ -38,7 +41,7 @@ const GoogleInputPopupCompoment = () => {
               </div>
             </ContentsRow>
           </div>
-          <div className={styles.txt_info}>구글 OTP 앱을 설치하고 QR 코드를 스캔해 주세요.</div>
+          <div className={styles.txt_info}>구글 OTP 앱의 인증번호를 입력해 주세요.</div>
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
@@ -53,13 +56,29 @@ const GoogleInputPopupCompoment = () => {
       </ModalBody>
 
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button
-          label={'구글 OTP 인증'}
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => closeModal()}
-        />
+        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+        <BrowserView>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+            <Button
+              label={'구글 OTP 인증'}
+              variant={'primary'}
+              size={'lg'}
+              onClick={() => closeModal()}
+            />
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <MobileContainerFooter>
+            <Button
+              label={'구글 OTP 인증'}
+              variant={'primary'}
+              size={'lg'}
+              onClick={() => closeModal()}
+            />
+          </MobileContainerFooter>
+        </MobileView>
       </ModalFooter>
     </ModalContainer>
   );

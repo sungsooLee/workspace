@@ -23,3 +23,27 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.google_qrcode_popup {
+        .qrcode {
+          @apply pt-[0];
+          img {
+            @apply h-[120px] w-[120px];
+          }
+        }
+        .txt_info {
+        }
+        .noti_info_txt {
+          button,
+          a {
+          }
+        }
+        .signup_noti {
+        }
+      }
+    }
+  }
+}
