@@ -1,10 +1,12 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
 
 import { Tenant } from '../../../../entities/tenant';
 import logoImage from '../../../../assets/images/logo.png';
+import mIogoImage from '../../../../assets/images/m_logo.png';
 
-import styles from './logo.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/logo.module.css';
 
 interface LogoComponentProps {
   activeTenant?: Tenant | null;
@@ -15,7 +17,7 @@ const LogoComponent = ({ activeTenant }: LogoComponentProps) => {
     return (
       <div className={`${styles.start} ${styles.logo}`}>
         <Link to={'/'}>
-          <img src={logoImage} alt="Logo" />
+          {isMobile ? <img src={mIogoImage} alt="Logo" /> : <img src={logoImage} alt="Logo" />}
         </Link>
       </div>
     );
@@ -25,7 +27,7 @@ const LogoComponent = ({ activeTenant }: LogoComponentProps) => {
     <div className={`${styles.start} ${styles.logo}`}>
       <Link to={'/'}>
         {(activeTenant?.logoImageUrl && (
-          <img src={activeTenant?.logoImageUrl} title={activeTenant.name} className="h-16" />
+          <img src={activeTenant?.logoImageUrl} title={activeTenant.name} />
         )) ??
           activeTenant?.name}
         {/* {activeTenant.} */}

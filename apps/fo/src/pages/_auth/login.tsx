@@ -24,6 +24,9 @@ export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
+      mobile: {
+        showHeader: true,
+      },
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
     },
   }),

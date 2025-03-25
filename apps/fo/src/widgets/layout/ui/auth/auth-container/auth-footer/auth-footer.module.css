@@ -1,14 +1,15 @@
 /* footer-auth.module.css */
 .start {
   &.footer_auth {
-    @apply mt-[40px];
+    @apply pb-[40px];
     .footer_area {
       @apply text-[14px] leading-[1.2];
       .menu_list {
         @apply flex items-center justify-center gap-[24px];
         > li {
-          a {
-            @apply text-[var(--gray7)];
+          a,
+          button {
+            @apply text-[#6F798B];
             &:hover {
               @apply underline;
             }
@@ -17,6 +18,25 @@
       }
       .copyright {
         @apply mt-[16px] text-[var(--gray7)];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.footer_auth {
+        @apply bg-[#F6F8FD] py-[16px];
+        .footer_area {
+          @apply text-[1.2rem];
+          .menu_list {
+            @apply gap-[14px];
+          }
+          .copyright {
+            @apply m-auto mt-[8px] max-w-[200px];
+          }
+        }
       }
     }
   }

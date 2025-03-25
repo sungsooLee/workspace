@@ -1,6 +1,7 @@
 import * as ReactDOM from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { isMobile } from 'react-device-detect';
 
 import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
@@ -54,5 +55,9 @@ function App() {
   );
 }
 
+if (isMobile) {
+  const body = document.getElementsByTagName('body')[0] as HTMLBodyElement;
+  body.classList.add('mobile');
+}
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);

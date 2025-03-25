@@ -1,16 +1,11 @@
 import { ReactNode, useEffect } from 'react';
-import {
-  useLocation,
-  useMatches,
-  RouteMatch,
-  useRouter,
-  useRouterState,
-} from '@tanstack/react-router';
+import { useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { last } from 'lodash';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 import { isSigninPage, useCurrentRoute } from '../../../../../features/platform';
 import { AuthFooter } from './auth-footer/auth-footer';
+import { MobileAuthContainerHeader } from '../../../m.ui/auth/container/container-header';
 
 import styles from './auth-container.module.css';
 
@@ -21,22 +16,35 @@ interface AuthContainerComponentProps {
 function AuthContainerComponent({ children }: AuthContainerComponentProps) {
   const { t } = useTranslation();
 
-  const { meta } = useCurrentRoute(); //{ meta: { title: '!' } }; //
+  const { meta } = useCurrentRoute();
 
   const location = useLocation();
 
   return (
     <div
       className={`${styles.start} ${styles.auth_container} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
-      <div className={styles.auth_area}>
-        <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
-          {t(meta?.title ?? '')}
-        </h2>
+      <div className={`${styles.auth_area} ${isSigninPage(location.pathname) ? styles.none : ''}`}>
+        <BrowserView>
+          <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
+            {t(meta?.title ?? '')}
+          </h2>
+        </BrowserView>
+        <MobileView>
+          {isSigninPage(location.pathname) ? (
+            <h2 className={styles.title_login}>{t(meta?.title ?? '')}</h2>
+          ) : (
+            <MobileAuthContainerHeader />
+          )}
+        </MobileView>
+
         <div
           className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
           {children}
         </div>
-        <AuthFooter />
+        <BrowserView>
+          <AuthFooter />
+        </BrowserView>
+        <MobileView>{isSigninPage(location.pathname) && <AuthFooter />}</MobileView>
       </div>
     </div>
   );
