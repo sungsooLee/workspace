@@ -26,10 +26,12 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
   const { formName, rootConfig, isRequired, error, guideText, fieldRefs, renderFormRowContent } =
     useFormRow(provider, children, name);
 
+  /*
+  // TODO.. 불필요한 리렌더링 해결 해야함
   const DynamicComponent = useMemo(
     () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
     [],
-  );
+  );*/
   return (
     <div
       className={cn(styles.form_item, className)}
@@ -66,7 +68,9 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>{DynamicComponent}</div>
+      <div className={styles.input_box}>
+        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
+      </div>
 
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
       {!error.isError && rootConfig?.guideText && (
