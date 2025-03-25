@@ -58,16 +58,19 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
                 fn: existingValidator['required']['fn'],
               }),
               ...(existingValidator['required']['message'] && {
-                fn: existingValidator['required']['message'],
+                message: existingValidator['required']['message'],
               }),
               ...(existingValidator['required']['path'] && {
-                fn: existingValidator['required']['path'],
+                path: existingValidator['required']['path'],
               }),
             },
             ...(existingValidator['conditions'] && {
               conditions: existingValidator['conditions'],
             }),
           };
+          if (key === 'externalCompanyManagerName') {
+            console.log('externalCompanyManagerName', acc[key]);
+          }
         }
       }
       return acc;
