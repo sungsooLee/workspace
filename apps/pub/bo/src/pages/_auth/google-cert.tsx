@@ -9,12 +9,7 @@ import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box
 import googleOtpGuideButtonStyles from '@learnway/styles/bo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
 import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
-import {
-  GoogleCertGuidePopup,
-  GoogleInputPopup,
-  GoogleQrcodePopup,
-  MpassPopup,
-} from '../../features/auth';
+import { GoogleCertGuidePopup, GoogleQrcodePopup, MpassPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,

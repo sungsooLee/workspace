@@ -95,7 +95,7 @@
 }
 
 /* mobile */
-:global(body.mobile) {
+/* :global(body.mobile) {
   .btn_alarm {
     svg {
       @apply h-[24px] w-[24px];
@@ -139,4 +139,4 @@
       @apply body_3_r !m-0 block w-[104px] px-[12px] py-[8px] text-left;
     }
   }
-}
+} */

@@ -69,5 +69,8 @@
   @apply w-full;
   > div {
     @apply mb-[8px];
+    &:nth-last-child(1) {
+      @apply mb-0;
+    }
   }
 }
