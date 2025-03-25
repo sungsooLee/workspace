@@ -19,6 +19,12 @@
   }
 }
 
+.nlp--contents-row {
+  & > div:nth-last-child(1) {
+    @apply pb-0;
+  }
+}
+
 h4.auth--title {
   @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
 }

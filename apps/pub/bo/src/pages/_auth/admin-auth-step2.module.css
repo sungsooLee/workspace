@@ -1,7 +1,7 @@
 /* admin-auth-step2.module.css */
 .start {
   .step_box {
-    @apply mb-[48px] pl-[140px] pr-[140px];
+    @apply mb-[48px] px-[10%];
   }
   .signup_noti {
     @apply mt-[48px];

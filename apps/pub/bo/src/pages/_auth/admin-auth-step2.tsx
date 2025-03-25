@@ -27,6 +27,7 @@ function RouteComponent() {
           </div>
         </div>
         <div className={cn(styles.auth_form, 'no_line', 'col')}>
+          <h4 className={cn(styles.title, 'auth--title')}>{'아이디 확인'}</h4>
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="email" className={formStyles.form_label}>
