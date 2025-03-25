@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -15,6 +16,8 @@ import {
   GoogleQrcodePopup,
   MpassPopup,
 } from '../../features/auth';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,
@@ -79,12 +82,13 @@ function RouteComponent() {
               </dd>
               <dd>
                 구글 OTP 인증 가이드를 보고 이용 방법을 확인해 보세요.
+                {/* 퍼블수정 20250324 : 모바일 분기처리 */}
                 <Button
                   className={`${googleOtpGuideButtonStyles.start} ${noticeBoxStyles.link}`}
                   onClick={() =>
                     openModal({
                       //title: 'FIDO 인증',
-                      width: 'md',
+                      width: isMobile ? 'm_full' : 'md',
                       content: <GoogleCertGuidePopup />,
                     })
                   }>
@@ -96,12 +100,12 @@ function RouteComponent() {
           {/* 유의사항 모듈 */}
 
           <div className={styles.noti_info_txt}>
+            {/* 퍼블수정 20250324 : 모바일 분기처리 */}
             <Button
               className={styles.btn_txt}
               onClick={() =>
                 openModal({
-                  //title: '구글 OTP 인증키 생성',
-                  width: 'sm',
+                  width: isMobile ? 'm_full' : 'sm',
                   content: <GoogleQrcodePopup />,
                 })
               }>
@@ -109,24 +113,44 @@ function RouteComponent() {
             </Button>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
 
-            <Button
-              size="xl"
-              variant="primary"
-              onClick={() =>
-                openModal({
-                  //title: '구글 OTP 인증',
-                  width: 'sm',
-                  content: <MpassPopup />,
-                })
-              }>
-              구글 OTP 인증
-            </Button>
-          </div>
+              <Button
+                size="xl"
+                variant="primary"
+                onClick={() =>
+                  openModal({
+                    //title: '구글 OTP 인증',
+                    width: 'sm',
+                    content: <MpassPopup />,
+                  })
+                }>
+                구글 OTP 인증
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button
+                size="xl"
+                variant="primary"
+                onClick={() =>
+                  openModal({
+                    //title: '구글 OTP 인증',
+                    width: 'm_full',
+                    content: <MpassPopup />,
+                  })
+                }>
+                구글 OTP 인증
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

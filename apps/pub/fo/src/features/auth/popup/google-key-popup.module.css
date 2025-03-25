@@ -27,3 +27,30 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.google_key_popup {
+        .otp_key {
+          .txt {
+            @apply body_3_r;
+          }
+          .key {
+            @apply title_6_b;
+          }
+        }
+        .txt_info {
+        }
+
+        .noti_info_txt {
+          button,
+          a {
+          }
+        }
+        .signup_noti {
+        }
+      }
+    }
+  }
+}
