@@ -7,15 +7,9 @@ import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 
 import { TenantModal } from './tenant-modal';
 
-import styles from '@learnway/styles/fo/features/layout/ui/tenant.module.css';
+import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
-interface TenantsComponentProps {
-  tenants?: Tenant[];
-  activeTenant?: Tenant | null;
-  onTenantSwitch?: (tenant: Tenant) => void;
-}
-
-const TenantComponent = ({ tenants, activeTenant, onTenantSwitch }: TenantsComponentProps) => {
+const TenantComponent = () => {
   const { open: openModal } = useModal();
   return (
     <Button
@@ -33,4 +27,4 @@ const TenantComponent = ({ tenants, activeTenant, onTenantSwitch }: TenantsCompo
   );
 };
 
-export const Tenants = memo(TenantComponent);
+export const TenantButton = memo(TenantComponent);

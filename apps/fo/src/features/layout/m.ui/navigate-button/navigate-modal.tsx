@@ -6,9 +6,9 @@ import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } 
 import { IcoCheck, IcoArrowForward } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateUser } from '@learnway/config';
 
-import styles from '@learnway/styles/fo/features/layout/ui/tenant.module.css';
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 
-const TenantModalComponent = () => {
+const NavigateModalComponent = () => {
   const { t } = useTranslation();
   const [tip, setTip] = useState<number | null>(null);
 
@@ -81,4 +81,4 @@ const TenantModalComponent = () => {
   );
 };
 
-export const TenantModal = memo(TenantModalComponent);
+export const MobileNavigateModal = memo(NavigateModalComponent);

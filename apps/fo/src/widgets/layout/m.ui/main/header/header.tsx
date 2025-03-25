@@ -4,9 +4,8 @@ import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { Language, Notification, Tenants } from '../../../../../features/platform';
-
-import { Logo } from '../../../../../features/layout';
+import { Language, Notification, TenantButton } from '../../../../../features/platform';
+import { Logo, MobileNavigateButton } from '../../../../../features/layout';
 import { useFetchAuthUser } from '../../../../../../../../libs/config/src';
 import { useFetchTenantByUser } from '../../../../../entities/tenant';
 
@@ -23,11 +22,12 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <Tenants />
+          <TenantButton />
         </h1>
 
         <div className={styles.util}>
           <Notification />
+          <MobileNavigateButton />
         </div>
       </header>
     </div>

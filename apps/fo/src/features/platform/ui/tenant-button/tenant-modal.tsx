@@ -1,0 +1,84 @@
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'react-i18next';
+
+import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+import { IcoCheck, IcoArrowForward } from '@learnway/icons';
+import { useFetchAuthUser, useUpdateUser } from '@learnway/config';
+
+import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
+
+const TenantModalComponent = () => {
+  const { t } = useTranslation();
+  const [tip, setTip] = useState<number | null>(null);
+
+  const { confirm } = useModal();
+  const { data } = useFetchAuthUser();
+  const { updateActiveTenant, updateMainTenant } = useUpdateUser();
+
+  const handleChangeMainTenant = async (tenantId: number) => {
+    updateMainTenant(tenantId);
+    setTip(tenantId);
+  };
+
+  const handleChangeTenant = async (tenantId: number) => {
+    const result = await confirm(t('MESSAGE.선택한 테넌트로 변경하시겠습니까?'));
+    if (result) {
+      updateActiveTenant(tenantId);
+      window.location.reload();
+    }
+  };
+
+  return (
+    <ModalContainer>
+      <ModalTitle>{'테넌트 선택'}</ModalTitle>
+      <ModalBody>
+        <div className={`${styles.start} ${styles.tenant_content}`}>
+          <div className={styles.tenant_wrap}>
+            <ul className={styles.tenant_list}>
+              {(data?.tenants ?? []).map((tenant, idx) => (
+                <li>
+                  <Button
+                    key={idx}
+                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantId ? styles.active : ''}`}
+                    onClick={() => handleChangeTenant(tenant.tenantId)}>
+                    <span className={styles.label}>
+                      <i>
+                        <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
+                      </i>
+                      대표
+                    </span>
+                    {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
+                    <span className={styles.txt}>
+                      {tenant.tenantName}
+                      {isMobile ? (
+                        <i>
+                          <IcoArrowForward
+                            width={20}
+                            height={20}
+                            stroke="#6f798b"></IcoArrowForward>
+                        </i>
+                      ) : null}
+                    </span>
+                    {tip === tenant.tenantId ? (
+                      <p className={`${styles.tip} ${styles.tip_show}`}>
+                        대표 테넌트로 설정되었습니다.
+                      </p>
+                    ) : (
+                      ''
+                    )}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <p className={styles.notice}>메인 테넌트를 변경하려면 좌측 대표 버튼을 선택하세요.</p>
+      </ModalFooter>
+    </ModalContainer>
+  );
+};
+
+export const TenantModal = memo(TenantModalComponent);

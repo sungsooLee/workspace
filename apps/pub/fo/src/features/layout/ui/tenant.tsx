@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect';
 
 //import styles from './tenant.module.css';
 import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';
-import styles from '@learnway/styles/fo/features/layout/ui/tenant.module.css';
+import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
 const TenantModal = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(2);
