@@ -22,12 +22,20 @@
 }
 
 .contents {
-  @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden p-[32px] pb-[16px];
+  @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden p-[24px] pb-[8px];
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
   &.notitle {
     @apply pt-[48px];
+  }
+}
+.md,
+.lg,
+.xl,
+.full {
+  .contents {
+    @apply p-[32px] pb-[16px];
   }
 }
 .btn_wrap {

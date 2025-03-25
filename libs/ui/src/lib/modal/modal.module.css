@@ -34,6 +34,9 @@
       @apply !overflow-hidden;
     }
   }
+  &.s {
+    @apply w-[400px];
+  }
   &.sm {
     @apply w-[600px];
   }

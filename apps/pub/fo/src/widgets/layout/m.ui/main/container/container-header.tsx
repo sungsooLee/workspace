@@ -4,7 +4,7 @@ import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoArrowBackward } from '@learnway/icons';
+import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
 import { CategoryButton, Search } from '../../../../../features/layout';
 
 import styles from './container-header.module.css';
@@ -41,13 +41,13 @@ function ContainerHeaderComponent() {
 
   return (
     <div className={styles.start}>
-      {!integrated && (
+      {!categoryPage && (
         <>
           <div className={styles.left}>
             <Button onClick={handleBack}>
               <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
             </Button>
-            <h1>{title}</h1>
+            <h2>{title}</h2>
           </div>
           {categoryPage && <CategoryButton></CategoryButton>}
         </>
@@ -62,6 +62,18 @@ function ContainerHeaderComponent() {
           <Search />
         </div>
       )}
+
+      {/* 로그인/회원가입관련 서브 header */}
+      {/* <div className={styles.left}>
+        <Button>
+          <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
+        </Button>
+        <h2>타이틀</h2>
+      </div>
+
+      <Button>
+        <IcoXclose width={24} height={24} stroke="#131C30"></IcoXclose>
+      </Button> */}
     </div>
   );
 }

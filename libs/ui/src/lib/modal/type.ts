@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { AlertComponentProps } from '../alert/alert';
 
-export type ModalSize = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'm_full'; // sm : 600px , md : 800px, lg : 1024px, xl : 1400px, m_full : 모바일 full
+export type ModalSize = 'auto' | 's' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'm_full'; // s : 400px , sm : 600px , md : 800px, lg : 1024px, xl : 1400px, m_full : 모바일 full
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
 
 export interface ModalConfig<T = any> {

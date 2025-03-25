@@ -20,10 +20,34 @@ function RouteComponent() {
 
       <div className="code_example">
         <pre className="code_block">
-          <code>{`// 분기처리 import
+          <code>{`// 분기처리 import (방법1)
 import { isMobile } from 'react-device-detect';
 
-{isMobile ? 'mobile 내용' : 'PC 내용'}`}</code>
+{isMobile ? 'mobile 내용' : 'PC 내용'}
+
+// 분기처리 import (방법2)
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
+<BrowserView>
+  <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+    <Button variant="gray" size="xl">
+      취소
+    </Button>
+    <Button variant="primary" size="xl">
+      확인
+    </Button>
+  </div>
+</BrowserView>
+
+<MobileView>
+  <MobileContainerFooter>
+    <Button variant="primary" size="xl">
+      확인
+    </Button>
+  </MobileContainerFooter>
+</MobileView>
+`}</code>
         </pre>
       </div>
 

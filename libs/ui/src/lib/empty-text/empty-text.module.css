@@ -3,9 +3,12 @@
     @apply flex flex-col items-center justify-center;
     .title {
       @apply title_bo_1_b mt-[16px] block text-[#3E4550];
+      & + .text {
+        @apply button_bo_2_r mt-[4px] text-[#747D91];
+      }
     }
     .text {
-      @apply button_bo_2_r mt-[4px] text-[#747D91];
+      @apply body_3_r mt-[24px] text-[#6f798b];
     }
     .footer {
       @apply mt-[32px];

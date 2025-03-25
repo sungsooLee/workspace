@@ -19,3 +19,12 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.google_key_popup {
+      }
+    }
+  }
+}

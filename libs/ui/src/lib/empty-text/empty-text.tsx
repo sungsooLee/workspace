@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './empty-text.module.css';
 import { IcoCaution } from '@learnway/icons';
 import { useTranslation } from 'react-i18next';
+import { isMobile } from 'react-device-detect';
 
 export interface EmptyTextComponentProps {
   type?: 'empty' | 'info' | 'error';
@@ -11,6 +12,7 @@ export interface EmptyTextComponentProps {
   text?: string;
   description?: string;
   footer?: React.ReactNode;
+  hideTitle?: boolean;
   // onOptionSelect?: (option: any) => void;
 }
 
@@ -20,14 +22,24 @@ const EmptyTextComponent = function ({
   text,
   description,
   footer,
+  hideTitle,
 }: EmptyTextComponentProps) {
   const { t } = useTranslation();
   return (
-    <div className={cn(styles.start, styles.empty_wrap, className, 'nlp--empty-text')}>
+    <div
+      className={cn(
+        styles.start,
+        styles.empty_wrap,
+        type && styles[type],
+        className,
+        'nlp--empty-text',
+      )}>
       {/* icon  */}
-      <IcoCaution width={48} height={48} stroke={'#A9AFB8'} className={styles.icon} />
+      {!isMobile && (
+        <IcoCaution width={48} height={48} stroke={'#A9AFB8'} className={styles.icon} />
+      )}
       {/* text */}
-      <strong className={styles.title}>{text || t('Default Text')}</strong>
+      {!hideTitle && <strong className={styles.title}>{text || t('Default Text')}</strong>}
       {/* description */}
       <p className={styles.text}>{description}</p>
       {/* footer */}
