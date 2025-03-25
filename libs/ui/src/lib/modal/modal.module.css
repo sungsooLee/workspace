@@ -189,7 +189,7 @@
 /* mobile */
 :global(body.mobile) {
   .content {
-    @apply !animate-none;
+    @apply !animate-none border-0;
   }
 }
 

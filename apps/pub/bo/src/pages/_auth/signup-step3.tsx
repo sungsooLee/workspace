@@ -94,7 +94,7 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-            {/* 검색 Case */}
+            {/* 검색 Case : 업무 담당 회사 정보 팝업 - TenantSearchPopup */}
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="tenant-name2" className={formStyles.form_label}>
