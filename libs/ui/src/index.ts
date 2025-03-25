@@ -26,6 +26,7 @@ export * from './lib/carousel/carousel';
 // checkbox
 export * from './lib/checkbox/checkbox';
 export * from './lib/checkbox/form-checkbox';
+export * from './lib/checkbox/form-checkbox-group';
 
 // chips
 export * from './lib/chips/chip';

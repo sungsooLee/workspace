@@ -155,8 +155,10 @@ const detailConfig = {
     {
       name: 'saveId',
       type: 'checkbox',
-      checkLabel: 'LABEL.아이디 저장',
-      label: '',
+      checkConfig: {
+        label: 'LABEL.아이디 저장',
+      },
+      label: 'dd',
       value: false,
     },
   ],

@@ -77,18 +77,14 @@ function AuthFormComponent({
     if (!defaultValues) {
       return;
     }
-    console.log('1');
     handleReset(defaultValues);
   }, [defaultValues]);
 
   useEffect(() => {
-    console.log('2');
     onFormChange();
-    console.log('3');
-    /*
     onFormChange({
       authToolType,
-    });*/
+    });
   }, [authToolType]);
 
   const handleSendVerify = (d?: any) => {
@@ -96,14 +92,7 @@ function AuthFormComponent({
     onFormChange({
       verificationCode: '',
     });
-    /*
-    try {
-      validator(data as any);
-    } catch (e) {
-      console.log(e);
-      return;
-    }
-*/
+
     const payload = {
       name: data.name,
       birthday: data.birthday,
