@@ -41,14 +41,23 @@ const TenantModalComponent = () => {
                   <Button
                     key={idx}
                     className={`${styles.btn} ${data?.mainTenantId === tenant.tenantId ? styles.active : ''}`}
-                    onClick={() => handleChangeTenant(tenant.tenantId)}>
+                    onClick={() => handleChangeMainTenant(tenant.tenantId)}>
                     <span className={styles.label}>
                       <i>
                         <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
                       </i>
                       대표
                     </span>
-                    {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
+                    {tip === tenant.tenantId && (
+                      <p className={`${styles.tip} ${styles.tip_show}`}>
+                        대표 테넌트로 설정되었습니다.
+                      </p>
+                    )}
+                  </Button>
+                  <Button
+                    key={idx}
+                    className={styles.btn_refresh}
+                    onClick={() => handleChangeTenant(tenant.tenantId)}>
                     <span className={styles.txt}>
                       {tenant.tenantName}
                       {isMobile ? (
@@ -60,13 +69,6 @@ const TenantModalComponent = () => {
                         </i>
                       ) : null}
                     </span>
-                    {tip === tenant.tenantId ? (
-                      <p className={`${styles.tip} ${styles.tip_show}`}>
-                        대표 테넌트로 설정되었습니다.
-                      </p>
-                    ) : (
-                      ''
-                    )}
                   </Button>
                 </li>
               ))}
