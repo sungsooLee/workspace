@@ -40,8 +40,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
 
 export const FormRow = memo(FormRowComponent);
 
-const DynamicFormContainer: FC<FormRowProps> = (props) => {
-  const { className, provider, children, name } = props;
+const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children, name }) => {
   const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
     provider,
     children,
