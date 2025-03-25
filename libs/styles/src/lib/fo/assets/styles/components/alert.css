@@ -2,4 +2,7 @@
   .time {
     @apply mt-[15px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary1)];
   }
+  .error {
+    @apply mt-[16px] rounded-[8px] bg-[var(--secondary8)] p-[16px] text-[var(--status1)];
+  }
 }

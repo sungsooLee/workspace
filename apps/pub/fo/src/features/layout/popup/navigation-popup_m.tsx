@@ -1,13 +1,15 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { PasswordVerifyPopup } from '../../layout';
 import { cn } from '@learnway/shared';
-import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar, Button } from '@learnway/ui';
 
 import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/layout/popup/navigation-popover_m.module.css';
 
 const NavigationPopupMComponent = () => {
+  const { open: openModal } = useModal();
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
@@ -28,9 +30,16 @@ const NavigationPopupMComponent = () => {
               <span className={styles.name}>김현대</span>
               <span className={styles.tenant}>현대오토에버</span>
               <span className={styles.team}>팀명</span>
-              <Link to={''} className={styles.link}>
+              <Button
+                className={styles.link}
+                onClick={() =>
+                  openModal({
+                    width: 'm_full',
+                    content: <PasswordVerifyPopup />,
+                  })
+                }>
                 개인정보변경
-              </Link>
+              </Button>
             </div>
             <div className={styles.avata_img}>
               <span className={styles.info_avata}>
