@@ -1,12 +1,11 @@
 import { forwardRef, useEffect } from 'react';
-import { BaseFormFieldProps } from '@learnway/hooks';
+import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Button, Input } from '@learnway/ui';
-import { useSearchBoxContext } from './form-row';
 
 const CustomFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
   ({ onChange, value }, ref) => {
-    const { onChangeInfoArea } = useSearchBoxContext();
+    const { onChangeInfoArea } = useDynamicFormContext();
     const renderInfoArea = () => {
       onChangeInfoArea(
         <>
