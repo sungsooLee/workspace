@@ -6,12 +6,15 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { ScormInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import {
+  ScormInfo,
+  SharedChannelGridFormField,
+  ThumbnailUploaderFormField,
+} from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
@@ -26,15 +29,12 @@ function RouteComponent() {
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
-
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
-            <Link to={'/'}>상시 학습 개설 스콤</Link>
-            <Link to={'/'}>이러닝 개설</Link>
-            <Link to={'/'}>라이브개설</Link>
+            <Link to={'/'}>과정개설</Link>
             <Button
               variant="point"
               size="sm"
@@ -43,21 +43,18 @@ function RouteComponent() {
             </Button>
           </LinkBox>
           <Button variant="point" size="sm">
-            매핑과정 보기
-          </Button>
-          <Button variant="point" size="sm">
-            공유이력 보기
+            수정
           </Button>
           <Button variant="point" size="sm">
             삭제
           </Button>
           <Button type={'submit'} variant="primary" size="sm">
-            수정
+            저장
           </Button>
         </ContentsButtons>
         <MainContents>
+          {/*채널*/}
           <ContentsRow>
-            {/*채널*/}
             <FormRow provider={provider}>
               <DynamicFormField name={'channelName'}>
                 <InputModalSelectorFormField
@@ -70,21 +67,22 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/*학습자원명*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              {/*학습자원명*/}
               <DynamicFormField name={'learningResourceName'} />
             </FormRow>
           </ContentsRow>
+          {/*학습자원 설명*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              {/*학습자원 설명*/}
               <DynamicFormField name={'learningResourceDescription'} />
             </FormRow>
           </ContentsRow>
+          {/*담당자, 연락처*/}
           <ContentsRow>
+            {/*담당자*/}
             <FormRow provider={provider}>
-              {/*담당자*/}
               <DynamicFormField name={'managerName'}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -95,14 +93,14 @@ function RouteComponent() {
                 />
               </DynamicFormField>
             </FormRow>
+            {/*연락처*/}
             <FormRow provider={provider}>
-              {/*연락처*/}
               <DynamicFormField name={'contact'} />
             </FormRow>
           </ContentsRow>
+          {/*사용기한*/}
           <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
-              {/*사용기한*/}
               <DynamicFormField name={'expirationDate'} />
             </FormRow>
           </ContentsRow>
@@ -121,12 +119,12 @@ function RouteComponent() {
               <DynamicFormField name={'isExternalDevelopmentCompany'} />
             </FormRow>
           </ContentsRow>
-          {/*외주개발업체 상세*/}
+          {/*외주개발업체정보 상세*/}
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
+            {/*외부개발업체*/}
             <ContentsRow>
-              {/*외부개발업체*/}
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompany'}>
                   <InputModalSelectorFormField
@@ -139,75 +137,78 @@ function RouteComponent() {
                 </DynamicFormField>
               </FormRow>
             </ContentsRow>
+            {/*외주개발업체 담당자*/}
             <ContentsRow>
-              {/*외주개발업체 담당자*/}
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalDevelopmentCompanyManager'} />
               </FormRow>
               {/*외주개발업체 연락처*/}
               <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
+                <DynamicFormField name={'externalDevelopmentCompanyContact'} />
               </FormRow>
             </ContentsRow>
           </FormDisplay>
-
+          {/*썸네일*/}
           <ContentsRow>
-            {/*썸네일*/}
             <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
+              <DynamicFormField name="thumbnails">
+                <ThumbnailUploaderFormField />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/*태그*/}
           <ContentsRow>
-            {/*태그*/}
             <FormRow provider={provider}>
               <DynamicFormField name="tags" />
             </FormRow>
           </ContentsRow>
+          {/*학습자원개요*/}
           <ContentsRow>
-            {/*학습자원개요*/}
             <FormRow provider={provider}>
               <DynamicFormField name="learningResourceOverview" />
             </FormRow>
           </ContentsRow>
+          {/* 키워드 */}
           <ContentsRow>
-            {/* 키워드 */}
             <FormRow provider={provider}>
               <DynamicFormField name="keywords" />
             </FormRow>
           </ContentsRow>
+          {/* 교육지원활용 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 교육지원활용 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name="isTrainingSupport" />
             </FormRow>
           </ContentsRow>
+          {/* 보안컨텐츠 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 보안컨텐츠 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name="isSecurityContent" />
             </FormRow>
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
-            <ContentsRow>
-              {/*자막 목록*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'subtitles'}>
-                  <SubTitlesFormField />
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-          </FormDisplay>
+          {/* 공유채널 설정 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name="sharedChannels">
+                <SharedChannelGridFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          {/* 최종확인 */}
           <FormGroup title={'최종확인'} required={true}>
+            {/* 검수 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isInspectionConfirmed'} />
               </FormRow>
             </ContentsRow>
+            {/* 저작권 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isCopyrightConfirmed'} />
               </FormRow>
             </ContentsRow>
+            {/* 보안 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isSecurityConfirmed'} />
@@ -400,10 +401,20 @@ const formConfig: DynamicFormConfig = {
       value: true,
     },
     {
-      name: 'subtitles',
+      label: t('공유채널 설정'),
+      name: 'sharedChannels',
       type: 'custom',
       format: 'array',
-      value: [],
+      value: [
+        {
+          tenantId: 'tenantId1',
+          tenantName: 'tenantName1',
+          channelId: 'Channel Id1',
+          channelName: 'Channel Name1',
+          checked: true,
+        },
+      ],
+      guideText: '공유채널 설정',
     },
     {
       label: t('검수 확인'),
@@ -442,15 +453,15 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channelName: {
-      format: 'string', // 데이터 타입
-      required: true, // 필수 여부 // 기본값 false
-      conditions: [
-        {
-          fn: (values: Record<string, any>) => values.age > 10,
-          path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
-        },
-      ],
-    },
+    // channelName: {
+    //   format: 'string', // 데이터 타입
+    //   required: true, // 필수 여부 // 기본값 false
+    //   conditions: [
+    //     {
+    //       fn: (values: Record<string, any>) => values.age > 10,
+    //       path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
+    //     },
+    //   ],
+    // },
   },
 };
