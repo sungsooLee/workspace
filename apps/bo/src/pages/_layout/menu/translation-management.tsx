@@ -2,8 +2,7 @@ import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP } from '@learnway/config';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
-import { useGridBox } from '../../../shared/ui/grid-box';
-import { GridBox } from '../../../shared/ui/grid-box';
+import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
@@ -72,6 +71,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'translationCode',
         type: 'text',
         label: t('다국어 코드'),
+        value: '',
       },
       {
         name: 'useYn',
