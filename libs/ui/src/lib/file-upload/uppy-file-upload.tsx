@@ -16,6 +16,7 @@ import { Progress } from '../progress/progress';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import styles from './uppy-file-upload.module.css';
+import { Input } from '../input/input';
 
 // 파일 아이템 인터페이스 확장 - 파트 정보 추가
 export interface FileItem {
@@ -36,24 +37,26 @@ export interface FileItem {
   response?: any;
 }
 
-const DEFAULT_STATUS_LABELS = {
-  waiting: '유효성 검토 중',
-  uploading: '진행중',
-  complete: '완료',
-  error: '업로드 불가',
-  paused: '대기중',
-};
+// const DEFAULT_STATUS_LABELS = {
+//   waiting: '유효성 검토 중',
+//   uploading: '진행중',
+//   complete: '완료',
+//   error: '업로드 불가',
+//   paused: '대기중',
+// };
 
-const DEFAULT_STATUS_COLORS = {
-  waiting: 'text-gray-500',
-  uploading: 'text-blue-500',
-  complete: 'text-green-500',
-  error: 'text-red-500',
-  paused: 'text-gray-500',
-};
+// const DEFAULT_STATUS_COLORS = {
+//   waiting: 'text-gray-500',
+//   uploading: 'text-blue-500',
+//   complete: 'text-green-500',
+//   error: 'text-red-500',
+//   paused: 'text-gray-500',
+// };
 
 export interface UppyUploadProps {
+  uploadType?: 'List' | 'Thumbnail' | 'Table' | 'Single';
   apiBaseUrl?: string;
+  depthUrl?: string; // 파일 저장을 위한 Depth 지정
   allowedFileTypes?: string[];
   maxFileSize?: number;
   folderPath?: string;
@@ -67,6 +70,7 @@ export interface UppyUploadProps {
   showProgressBar?: boolean;
   showFileList?: boolean;
   hideUploadButton?: boolean;
+  label?: string;
 
   onUploadStart?: (files: FileItem[]) => void;
   onUploadProgress?: (fileId: string, progress: number) => void;
@@ -79,7 +83,8 @@ export interface UppyUploadProps {
 }
 
 export const UppyUpload: React.FC<UppyUploadProps> = ({
-  apiBaseUrl = 'http://localhost:8072/pms-module/admin/api/v1/file',
+  uploadType = 'List',
+  apiBaseUrl = 'http://localhost:8072/pms-module/admin/api/v1/file', // 현재는 로컬 테스트, 추후 서버 주소로 변경 필요
   allowedFileTypes = [
     'mp4',
     'wmv',
@@ -112,7 +117,7 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
   showProgressBar = true,
   showFileList = true,
   hideUploadButton = false,
-
+  label,
   // Callbacks
   onUploadStart,
   onUploadProgress,
@@ -292,31 +297,9 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
       // 일반 업로드 (10MB 미만)
       getUploadParameters: async (file) => {
         try {
-          // const folderPathClean = folderPath.endsWith('/') ? folderPath : `${folderPath}/`;
-          // const encodedFilename = encodeURIComponent(file.name!);
-          // const encodedKey = `${folderPathClean}${encodeURIComponent(file.name!)}`;
-
-          // const response = await httpService.get(
-          //   `${API_BASE_URL}/s3/uploader?key=${encodedFilename}`,
-          //   null,
-          //   {
-          //     headers: {
-          //       'Content-Type': 'application/json',
-          //     },
-          //   },
-          // );
-
-          // const data: any = response;
-
-          // return {
-          //   method: 'PUT',
-          //   url: data.url,
-          //   headers: {
-          //     'Content-Type': file.type,
-          //   },
-          // };
+          // (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
           const filename = `${file.name}`;
-          const encodedFilename = encodeURIComponent(filename);
+          const encodedFilename = `upload/` + encodeURIComponent(filename);
 
           const response = await httpService.get(
             `${API_BASE_URL}/s3/uploader?key=${encodedFilename}`,
@@ -328,11 +311,6 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
             },
           );
 
-          // if (!response.ok) {
-          //   const errorData = await response.json();
-          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-          //   throw new Error(errorMessage);
-          // }
           const data: any = response;
 
           return {
@@ -532,21 +510,28 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
     const fileList = event.target.files;
 
     if (fileList && fileList.length > 0) {
+      // Single 타입일 경우 기존 파일 모두 제거
+      if (uploadType === 'Single' && files.length > 0) {
+        files.forEach((file) => {
+          uppyRef.current?.removeFile(file.id);
+        });
+        setFiles([]);
+      }
+
       Array.from(fileList).forEach((file) => {
         try {
           const fileSizeMB = file.size / (1024 * 1024);
           console.log(`파일 정보: ${file.name}, 크기: ${fileSizeMB.toFixed(2)}MB`);
 
+          // Single 타입인 경우 첫 번째 파일만 업로드
+          if (uploadType === 'Single' && fileList.length > 1 && files.length > 0) {
+            return;
+          }
           uppyRef.current?.addFile({
             name: file.name,
             type: file.type,
             data: file,
           });
-          if (file.size > 10 * 1024 * 1024) {
-            console.log(`${file.name} - 멀티파트 업로드 대상 (${fileSizeMB.toFixed(2)}MB > 10MB)`);
-          } else {
-            console.log(`${file.name} - 일반 업로드 대상 (${fileSizeMB.toFixed(2)}MB <= 10MB)`);
-          }
         } catch (error: any) {
           console.error('파일 추가 중 오류:', error);
           setError(`파일 추가 오류: ${error.message}`);
@@ -554,6 +539,11 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
       });
     } else {
       console.log('선택된 파일이 없음');
+    }
+
+    // 파일 선택 후 input 값 초기화 (같은 파일 재선택 가능하도록)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -652,128 +642,168 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
     );
   };
 
-  const startUpload = () => {
-    uppyRef.current?.upload();
-  };
-
   return (
     <div className={cn(styles.start, styles.upload_wrap, wrapSize && styles[wrapSize], className)}>
-      <div className={styles.contents} onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
-        {files.length === 0 ? (
-          <div className={styles.upload_area}>
+      {uploadType === 'List' && (
+        <div className={styles.contents} onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
+          {files.length === 0 ? (
+            <div className={styles.upload_area}>
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileSelect}
+                className="hidden"
+                multiple
+                accept={allowedFileTypes?.map((type) => `.${type}`).join(',')}
+              />
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                role="button"
+                className={styles.btn_file}>
+                <IcoDownload
+                  width={40}
+                  height={40}
+                  stroke="#131c30"
+                  className={styles.icon_download}
+                />
+                <p className={styles.title}>영역을 클릭하거나 파일을 마우스로 끌어놓으세요</p>
+                {/* <p className={styles.text}>최대 파일 크기: {formatFileSize(maxFileSize)}</p> */}
+                <p className={styles.text}>
+                  {/*지원 파일 형식:*/} {allowedFileTypes.join(', ')}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.status_wrap}>
+              {showFileList &&
+                files.map((file) => (
+                  <div key={file.id} className={styles.file_item}>
+                    <div className={styles.file_info}>
+                      <span className={styles.file_icon}>
+                        {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
+                      </span>
+                      <span className={styles.file_name}>{file.name}</span>
+                      <span className={styles.file_size}>{formatFileSize(file.size)}</span>
+                    </div>
+
+                    <div className="mt-2">
+                      <div className="flex items-center justify-between"></div>
+                      <Progress value={file.progress} />
+                    </div>
+
+                    {(file.status === 'paused' ||
+                      file.status === 'complete' ||
+                      file.status === 'error') && (
+                      <div className="mt-2 flex items-center justify-between">
+                        <span className="text-sm">
+                          {file.status === 'paused'
+                            ? '일시 중지됨'
+                            : file.status === 'complete'
+                              ? '업로드 완료'
+                              : '업로드 실패'}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Error message */}
+                    {file.errorMessage && (
+                      <div className="mt-1 text-sm text-red-500">{file.errorMessage}</div>
+                    )}
+
+                    {/* File action buttons */}
+                    <div className={styles.btn_status}>
+                      {/* Pause/Resume button */}
+                      {(file.status === 'uploading' || file.status === 'paused') && (
+                        <Button
+                          className={styles.btn}
+                          onlyIcon
+                          onClick={() => togglePauseResume(file.id)}>
+                          {file.status === 'uploading' ? (
+                            <IcoPause width={20} height={20} fill="#A9AFB8" />
+                          ) : (
+                            <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                          )}
+                        </Button>
+                      )}
+
+                      {/* Retry button */}
+                      {file.status === 'error' && (
+                        <Button
+                          className={styles.btn}
+                          onlyIcon
+                          onClick={() => uppyRef.current?.retryUpload(file.id)}>
+                          <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                        </Button>
+                      )}
+
+                      {/* Delete button */}
+                      <Button
+                        className={styles.btn_delete}
+                        onClick={() => removeFile(file.id)}
+                        onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {error && (
+            <div className="mt-4 rounded-md bg-red-50 p-3 text-red-600">
+              <p className="font-medium">업로드 오류</p>
+              <p className="text-sm">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="mt-2 text-sm text-red-700 hover:underline">
+                닫기
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+      {uploadType === 'Single' && (
+        <div className="single-uploader">
+          <span className="mb-1 block text-sm">{label}</span>
+          <div className="flex items-center">
+            <div className="relative mr-2 flex-grow">
+              <input
+                value={files.length > 0 ? files[0].name : ''}
+                readOnly
+                placeholder="파일을 선택해주세요"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full cursor-pointer"
+              />
+              {files.length > 0 && (
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 transform"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Input 클릭 이벤트가 발생하지 않도록 방지
+                    removeFile(files[0].id);
+                  }}>
+                  <IcoTrash03 width={16} height={16} stroke="#9CA3AF" />
+                </button>
+              )}
+            </div>
+            <Button onClick={() => fileInputRef.current?.click()} type="button">
+              파일 첨부
+            </Button>
             <input
               ref={fileInputRef}
               type="file"
               onChange={handleFileSelect}
               className="hidden"
-              multiple
               accept={allowedFileTypes?.map((type) => `.${type}`).join(',')}
             />
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              role="button"
-              className={styles.btn_file}>
-              <IcoDownload
-                width={40}
-                height={40}
-                stroke="#131c30"
-                className={styles.icon_download}
-              />
-              <p className={styles.title}>영역을 클릭하거나 파일을 마우스로 끌어놓으세요</p>
-              {/* <p className={styles.text}>최대 파일 크기: {formatFileSize(maxFileSize)}</p> */}
-              <p className={styles.text}>
-                {/*지원 파일 형식:*/} {allowedFileTypes.join(', ')}
-              </p>
+          </div>
+
+          {files.length > 0 && files[0].status === 'error' && (
+            <div className="mt-1 text-sm text-red-500">
+              {files[0].errorMessage || '업로드 중 오류가 발생했습니다.'}
             </div>
-          </div>
-        ) : (
-          <div className={styles.status_wrap}>
-            {showFileList &&
-              files.map((file) => (
-                <div key={file.id} className={styles.file_item}>
-                  <div className={styles.file_info}>
-                    <span className={styles.file_icon}>
-                      {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
-                    </span>
-                    <span className={styles.file_name}>{file.name}</span>
-                    <span className={styles.file_size}>{formatFileSize(file.size)}</span>
-                  </div>
-
-                  <div className="mt-2">
-                    <div className="flex items-center justify-between"></div>
-                    <Progress value={file.progress} />
-                  </div>
-
-                  {(file.status === 'paused' ||
-                    file.status === 'complete' ||
-                    file.status === 'error') && (
-                    <div className="mt-2 flex items-center justify-between">
-                      <span className="text-sm">
-                        {file.status === 'paused'
-                          ? '일시 중지됨'
-                          : file.status === 'complete'
-                            ? '업로드 완료'
-                            : '업로드 실패'}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Error message */}
-                  {file.errorMessage && (
-                    <div className="mt-1 text-sm text-red-500">{file.errorMessage}</div>
-                  )}
-
-                  {/* File action buttons */}
-                  <div className={styles.btn_status}>
-                    {/* Pause/Resume button */}
-                    {(file.status === 'uploading' || file.status === 'paused') && (
-                      <Button
-                        className={styles.btn}
-                        onlyIcon
-                        onClick={() => togglePauseResume(file.id)}>
-                        {file.status === 'uploading' ? (
-                          <IcoPause width={20} height={20} fill="#A9AFB8" />
-                        ) : (
-                          <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                        )}
-                      </Button>
-                    )}
-
-                    {/* Retry button */}
-                    {file.status === 'error' && (
-                      <Button
-                        className={styles.btn}
-                        onlyIcon
-                        onClick={() => uppyRef.current?.retryUpload(file.id)}>
-                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                      </Button>
-                    )}
-
-                    {/* Delete button */}
-                    <Button
-                      className={styles.btn_delete}
-                      onClick={() => removeFile(file.id)}
-                      onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-          </div>
-        )}
-
-        {error && (
-          <div className="mt-4 rounded-md bg-red-50 p-3 text-red-600">
-            <p className="font-medium">업로드 오류</p>
-            <p className="text-sm">{error}</p>
-            <button
-              onClick={() => setError(null)}
-              className="mt-2 text-sm text-red-700 hover:underline">
-              닫기
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Upload summary */}
       {files.length > 0 && (

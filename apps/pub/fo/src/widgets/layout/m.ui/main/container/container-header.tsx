@@ -42,7 +42,7 @@ function ContainerHeaderComponent() {
 
   return (
     <div className={styles.start}>
-      {!categoryPage && (
+      {categoryPage && (
         <>
           <div className={styles.left}>
             <Button onClick={handleBack}>

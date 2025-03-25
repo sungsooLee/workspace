@@ -157,6 +157,11 @@ export const Template: any = (args: any) => {
         />
       </div>
 
+      <div className="mb-10">
+        <h2 className="mb-4 text-xl font-semibold">싱글 업로드</h2>
+        <UppyUpload uploadType="Single" allowedFileTypes={['mp4', 'ts', 'jpeg', 'png']} />
+      </div>
+
       {/* 업로드된 파일 목록 표시 */}
       {uploadedFiles.length > 0 && (
         <div className="mt-8">
@@ -165,15 +170,6 @@ export const Template: any = (args: any) => {
             {uploadedFiles.map((file, index) => (
               <li key={index} className="flex items-center justify-between p-4">
                 <span>{file.name || `파일 ${index + 1}`}</span>
-                {/* {file.url && (
-                  <a
-                    href={file.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline">
-                    다운로드
-                  </a>
-                )} */}
               </li>
             ))}
           </ul>
