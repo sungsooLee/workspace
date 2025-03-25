@@ -1,7 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { isMobile } from 'react-device-detect';
 import { PasswordVerifyPopup } from '../../layout';
 import { IcLogOut01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
@@ -72,9 +71,8 @@ const PopoverContent = () => {
         <li>
           <Button
             onClick={() =>
-              // 퍼블수정 20250320 : mobile, pc 분기 처리
               openModal({
-                width: isMobile ? 'm_full' : 's',
+                width: 's',
                 content: <PasswordVerifyPopup />,
               })
             }>

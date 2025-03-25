@@ -212,3 +212,24 @@
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .content {
+      &.m_full {
+        .content_body {
+          & > div {
+            @apply flex;
+            flex-direction: column;
+          }
+        }
+        [class*='footer'] {
+          flex: 0;
+          button {
+            @apply !h-[48px] flex-1;
+          }
+        }
+      }
+    }
+  }
+}
