@@ -6,5 +6,6 @@ export interface PageMeta {
     };
     showHeader?: boolean;
     showFooter?: boolean;
+    showMainFooter?: boolean;
   };
 }

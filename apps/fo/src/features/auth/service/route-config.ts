@@ -14,7 +14,12 @@ import type { PageMeta } from '../../../types';
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   authorization: true,
   meta: {
-    mobile: { container: { showHeader: false }, showHeader: false, showFooter: false },
+    mobile: {
+      container: { showHeader: false },
+      showHeader: false,
+      showFooter: false,
+      showMainFooter: false,
+    },
   },
 };
 

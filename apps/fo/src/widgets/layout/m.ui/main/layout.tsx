@@ -7,6 +7,7 @@ import { useCurrentRoute } from '../../../../features/platform';
 
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
+import { Footer } from '../../ui/main/footer/footer';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/layout.module.css';
 
@@ -23,6 +24,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     <>
       {meta?.mobile?.showHeader && <MobileHeader />}
       <main>{children}</main>
+      {meta?.mobile?.showMainFooter && <Footer />}
       {meta?.mobile?.showFooter && <MobileFooter />}
     </>
   );
