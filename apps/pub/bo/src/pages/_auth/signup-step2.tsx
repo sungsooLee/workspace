@@ -1,9 +1,8 @@
 import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
-import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import styles from './signup-step2.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
@@ -21,15 +20,15 @@ function RouteComponent() {
   };
   return (
     <form className="form_row">
-      <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.signup_info}>
-            <div className={signupStyles.step_box}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={styles.signup_info}>
+            <div className={styles.step_box}>
               <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step2" />
             </div>
           </div>
 
-          <h4 className={signupStyles.title}>협력업체 사업자 정보 조회</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>{'협력업체 사업자 정보 조회'}</h4>
           <ContentsRow>
             <div className={`${formStyles.form_item} ${formStyles.pd_none}`}>
               <label htmlFor="name" className={formStyles.form_label}>
@@ -49,11 +48,11 @@ function RouteComponent() {
             </div>
           </ContentsRow>
 
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
-              이전
+              취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button variant="primary" size="xl" disabled>
               다음
             </Button>
           </div>
