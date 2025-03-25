@@ -1,11 +1,13 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { useLocation } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-
+//import { useCurrentRoute } from '../../../../features/platform';
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
 import styles from './auth-layout.module.css';
+
+import { isSigninPage, PAGE_TITLE_BY_PATH, isSigninPageNone } from '../../../../features/platform';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;
@@ -13,10 +15,17 @@ interface AuthLayoutComponentProps {
 
 function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
+  //const { meta } = useCurrentRoute();
+
+  const location = useLocation();
+  const pageTitle = PAGE_TITLE_BY_PATH[location.pathname];
 
   return (
     <>
-      <AuthHeader />
+      {/* {meta.mobile.showHeader && <AuthHeader />} */}
+      {/* 퍼블확인용 */}
+      {isSigninPage(location.pathname) ? <AuthHeader /> : ''}
+
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
           <main>

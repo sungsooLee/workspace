@@ -3,7 +3,7 @@
   .left {
     @apply flex flex-1 items-center;
     h2 {
-      @apply body_2_b;
+      @apply !body_2_b !p-0;
     }
     & > button {
       @apply mr-[8px];

@@ -1,14 +1,17 @@
 .grid_table {
   @apply scrollbar relative z-0 overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
+  thead {
+    @apply border-b-[1px] border-solid border-[var(--gray4)];
+  }
   .thead_th {
-    @apply box-border items-center justify-start border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] pl-[8px] text-[14px] font-bold text-[#5C636E];
+    @apply box-border items-center justify-start border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[8px] text-[14px] font-bold text-[#5C636E];
     &:not(:first-child) {
       @apply border-l border-t-0 border-solid;
     }
     .th_wrap {
-      @apply w-full;
+      @apply inline-flex h-full;
       .th_cell {
-        @apply body_bo_4_b relative flex min-h-[40px] items-center;
+        @apply body_bo_4_b relative flex h-full min-h-[40px] items-center;
       }
     }
     .nlp--checkbox {
@@ -40,6 +43,12 @@
       @apply ml-[6px];
     }
   }
+  .nlp--radio {
+    @apply inline-flex;
+  }
+  & + .paging_wrap {
+    @apply mt-[24px];
+  }
 }
 /* Paging */
 .paging_wrap {
@@ -48,9 +57,9 @@
     @apply min-w-[120px];
   }
   .btn_wrap {
-    @apply mx-auto flex;
+    @apply mx-auto mt-0 flex;
     button {
-      @apply inline-flex !justify-center;
+      @apply inline-flex !w-[32px] !min-w-[32px] !justify-center;
       &:disabled {
         svg {
           @apply fill-[var(--gray5)];

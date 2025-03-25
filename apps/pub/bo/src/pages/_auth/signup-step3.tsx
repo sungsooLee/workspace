@@ -13,7 +13,10 @@ import {
   ContentsRow,
   PhoneNumber,
   InputTimer,
+  InputModalSelectorFormField,
 } from '@learnway/ui';
+
+import { TenantSearchPopup } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,
@@ -91,6 +94,26 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+            {/* 검색 Case : 업무 담당 회사 정보 팝업 - TenantSearchPopup */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="tenant-name2" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>테넌트명</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <InputModalSelectorFormField
+                    modalConfig={{
+                      width: 'lg',
+                      content: <TenantSearchPopup />,
+                    }}
+                  />
+                </div>
+              </div>
+            </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="company-name" className={formStyles.form_label}>
@@ -149,7 +172,20 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="id-email" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>아이디(이메일)</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name" type="text" placeholder="" value="914815@hyundai.com" readOnly />
+                </div>
+              </div>
+            </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -291,7 +327,7 @@ function RouteComponent() {
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
-              이전
+              취소
             </Button>
             <Button variant="primary" size="xl">
               확인
