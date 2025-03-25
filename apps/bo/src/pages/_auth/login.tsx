@@ -118,7 +118,9 @@ const detailConfig = {
     {
       name: 'saveId',
       type: 'checkbox',
-      checkLabel: '아이디 저장',
+      checkConfig: {
+        label: '',
+      },
       label: '',
       value: false,
     },

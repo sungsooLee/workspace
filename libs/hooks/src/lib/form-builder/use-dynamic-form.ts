@@ -98,6 +98,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     setError,
     clearErrors,
     setValue,
+    trigger,
   } = methods;
 
   /**
@@ -214,6 +215,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       onFormFocus: handleFocus,
       originalValues,
     },
+    trigger,
     fetchData,
     onSubmit: formSubmit,
     setFormError,
