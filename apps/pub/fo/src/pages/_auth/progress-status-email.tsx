@@ -26,7 +26,7 @@ function RouteComponent() {
           {/* 퍼블수정 20250319 : embededAlert */}
           <div className={`${embededAlert.start} ${styles.search_info}`}>
             <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className="txt">진행현황 확인을 위해 이메일을 입력해 주세요.</p>
+            <p className={embededAlert.txt}>진행현황 확인을 위해 이메일을 입력해 주세요.</p>
           </div>
 
           {/* OTP 인증폼 */}

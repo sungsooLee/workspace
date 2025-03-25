@@ -17,6 +17,7 @@ import {
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 
 export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,
@@ -61,11 +62,13 @@ function RouteComponent() {
         <li>전체 폼은 form_row 감싼다.</li>
 
         <li>폼영역은 row 로 감싼다. (다만, 한줄씩 떨어질때는 form_row에 col을 같이 사용한다.</li>
+        <li>폼안에 연속 input 이 올경우 dynamicFormStyles 을 활용한다. (.item_col_full)</li>
       </ul>
       <div className="code_example">
         <pre className="code_block">
           <code>{`// module css import
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 
 // 예시
 <div className='form_row'>
@@ -82,6 +85,29 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
   <ContentsRow>
     row
   </ContentsRow>
+
+  <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>New Password</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <Input
+                      id="name"
+                      type="password"
+                      placeholder="Password(a combination of letters, numbers & special characters, 8 to 16 characters long)"
+                      value=""
+                    />
+                    <Input id="name" type="password" placeholder="Confirm New Password" value="" />
+                  </div>
+                </div>
+              </div>
+            </ContentsRow>
 </div>`}</code>
         </pre>
       </div>
@@ -711,6 +737,29 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
               <InputTimer startTimer={1} initialTime={300} />
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+          </div>
+        </ContentsRow>
+
+        <ContentsRow>
+          <div className={formStyles.form_item}>
+            <label htmlFor="name" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>New Password</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={14} height={14} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.item_col_full}>
+                <Input
+                  id="name"
+                  type="password"
+                  placeholder="Password(a combination of letters, numbers & special characters, 8 to 16 characters long)"
+                  value=""
+                />
+                <Input id="name" type="password" placeholder="Confirm New Password" value="" />
+              </div>
+            </div>
           </div>
         </ContentsRow>
       </form>

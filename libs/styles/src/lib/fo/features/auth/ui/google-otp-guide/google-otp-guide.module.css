@@ -15,7 +15,7 @@
         @apply mt-[32px];
       }
       h3 {
-        @apply title_6_b text-[var(--gray9)];
+        @apply title_6_b text-[#131C30];
       }
       .info_list {
         @apply mt-[8px];
@@ -38,6 +38,46 @@
       @apply flex justify-center;
       img {
         @apply h-[231px];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.google_cert_guide_popup {
+      }
+      .btn_box {
+        @apply mt-[16px];
+        .btn_download {
+        }
+      }
+
+      .guide_list {
+        .list_box {
+          &:not(:first-child) {
+          }
+          h3 {
+            @apply title_6_b;
+          }
+          .info_list {
+            li {
+              &:not(:first-child) {
+              }
+              &::before {
+              }
+            }
+          }
+        }
+      }
+
+      .guide_img_box {
+        figure {
+          img {
+            @apply h-[231px];
+          }
+        }
       }
     }
   }

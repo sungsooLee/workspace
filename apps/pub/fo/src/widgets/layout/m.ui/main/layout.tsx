@@ -8,6 +8,7 @@ import { usePageMetaState } from '../../../../entities/platform';
 import { MobileContainerHeader } from './container/container-header';
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
+import { Footer } from '../../ui/main/footer/footer';
 
 import styles from './layout.module.css';
 
@@ -28,6 +29,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       <MobileContainerHeader />
       {/* <MobileHeader /> */}
       <main>{children}</main>
+      <Footer /> {/* 하단 반응형 footer */}
       {pageMeta?.mobile?.showFooter && <MobileFooter />}
     </>
   );

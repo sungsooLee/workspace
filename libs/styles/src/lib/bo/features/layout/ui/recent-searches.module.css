@@ -1,0 +1,36 @@
+.start {
+  &.recent {
+    .tit_box {
+      @apply flex items-center justify-between;
+      strong {
+        @apply body_3_b text-[var(--gray9)];
+      }
+      button {
+        @apply text-[12px] text-[var(--gray8)] underline underline-offset-[4px];
+      }
+    }
+    .recent_box {
+      @apply mt-[12px];
+      ul {
+        li {
+          @apply flex items-center justify-between;
+          & + li {
+            @apply mt-[8px];
+          }
+          button {
+            @apply body_3_r flex items-center py-[5px] text-[var(--gray8)];
+            i {
+              @apply mr-[8px] inline-block;
+            }
+          }
+        }
+      }
+      .empty {
+        @apply mb-[110px] mt-[157px];
+        strong {
+          @apply body_3_b mt-[8px] text-[var(--gray6)];
+        }
+      }
+    }
+  }
+}

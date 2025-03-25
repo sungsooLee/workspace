@@ -1,5 +1,5 @@
 .nlp--alert {
   .time {
-    @apply mt-[15px] text-[var(--secondary1)];
+    @apply mt-[15px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary1)];
   }
 }

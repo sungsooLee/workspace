@@ -20,12 +20,4 @@ module.exports = {
       addComponents({});
     },
   ],
-
-  theme: {
-    extend: {
-      screens: {
-        mobile: { max: '767px' },
-      },
-    },
-  },
 };

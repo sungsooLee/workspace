@@ -32,15 +32,17 @@ const IntegratedSearchButtonComponent = ({
 
   return (
     <div className={cn(styles.start, styles.integrated_button, className)}>
-      {tabButton.items.map((item, index) => (
-        <Button
-          key={index}
-          className={activeButton === index ? styles.active : ''}
-          onClick={() => handleButtonClick(index)}>
-          {item.title}
-          <span>{item.count}</span>
-        </Button>
-      ))}
+      <div className={styles.btn_box}>
+        {tabButton.items.map((item, index) => (
+          <Button
+            key={index}
+            className={activeButton === index ? styles.active : ''}
+            onClick={() => handleButtonClick(index)}>
+            {item.title}
+            <span>{item.count}</span>
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };

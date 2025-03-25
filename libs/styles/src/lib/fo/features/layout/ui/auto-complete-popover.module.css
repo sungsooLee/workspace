@@ -13,3 +13,13 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.auto_complete_popover {
+        @apply fixed bottom-[inherit] left-0 top-[56px] block h-[calc(100%-56px)] w-[100dvw] translate-y-0 overflow-y-scroll rounded-none px-[20px] py-[16px] shadow-none;
+      }
+    }
+  }
+}
