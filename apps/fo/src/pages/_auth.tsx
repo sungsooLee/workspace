@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { MobileView, BrowserView } from 'react-device-detect';
 
-import { AuthLayout, MobileAuthLayout } from '../widgets/layout';
+import { AuthLayout } from '../widgets/layout';
 
 import { pageRouteConfig } from '../features/auth';
 

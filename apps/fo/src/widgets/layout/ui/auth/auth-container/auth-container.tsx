@@ -5,7 +5,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 
 import { isSigninPage, useCurrentRoute } from '../../../../../features/platform';
 import { AuthFooter } from './auth-footer/auth-footer';
-import { MobileAuthContainerHeader } from '../../../m.ui/auth/container/container-header';
+import { MobileAuthContainerHeader } from '../../../m.ui/auth/auth-container/auth-container-header';
 
 //import styles from './auth-container.module.css';
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-container/auth-container.module.css';
@@ -24,7 +24,7 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
   return (
     <div
       className={`${styles.start} ${styles.auth_container} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
-      <div className={`${styles.auth_area} ${isSigninPage(location.pathname) ? styles.none : ''}`}>
+      <div className={`${styles.auth_area}`}>
         <BrowserView>
           <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
             {t(meta?.title ?? '')}
@@ -42,11 +42,11 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
           className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
           {children}
         </div>
-        <BrowserView>
-          <AuthFooter />
-        </BrowserView>
-        <MobileView>{isSigninPage(location.pathname) && <AuthFooter />}</MobileView>
       </div>
+      <BrowserView>
+        <AuthFooter />
+      </BrowserView>
+      <MobileView>{isSigninPage(location.pathname) && <AuthFooter />}</MobileView>
     </div>
   );
 }
