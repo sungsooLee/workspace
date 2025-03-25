@@ -1,5 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 import { CODE_GROUP, getDefaultLang } from '@learnway/config';
@@ -67,15 +69,25 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
 
   return (
-    <Popover
-      className={cn(styles.btn_language, className)}
-      side="bottom"
-      align="center"
-      sideOffset={5}
-      popoverContent={<PopoverContent data={languageCodes} />}>
-      <span className={styles.select}>{getDefaultLang()}</span>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" />
-    </Popover>
+    <>
+      <MobileView>
+        <Link to="/" className={`${styles.btn_language} ${className}`}>
+          <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Link>
+      </MobileView>
+      <BrowserView>
+        <Popover
+          className={cn(styles.btn_language, className)}
+          side="bottom"
+          align="center"
+          sideOffset={5}
+          popoverContent={<PopoverContent data={languageCodes} />}>
+          <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Popover>
+      </BrowserView>
+    </>
   );
 };
 
