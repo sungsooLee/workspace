@@ -215,7 +215,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       onFormFocus: handleFocus,
       originalValues,
     },
-    trigger,
+    onFormValid: trigger,
     fetchData,
     onSubmit: formSubmit,
     setFormError,
