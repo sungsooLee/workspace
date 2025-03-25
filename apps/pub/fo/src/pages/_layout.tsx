@@ -5,7 +5,8 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 
 import { Layout, MobileLayout } from '../widgets/layout';
-import styles from './_layout.module.css';
+//import styles from './_layout.module.css';
+import styles from '@learnway/styles/fo/pages/_layout.module.css';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,

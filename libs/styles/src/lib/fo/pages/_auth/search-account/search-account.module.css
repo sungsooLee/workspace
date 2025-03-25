@@ -37,7 +37,7 @@
   @screen mobile {
     .start {
       .search_info {
-        @apply mt-[32px] pb-[32px];
+        @apply mt-[16px] pb-[32px];
         &.dormant {
         }
         svg {
@@ -50,6 +50,7 @@
         }
       }
       .auth_form {
+        @apply mt-0;
       }
       .signup_select_box {
       }

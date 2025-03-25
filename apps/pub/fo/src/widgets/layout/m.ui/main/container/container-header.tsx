@@ -7,7 +7,8 @@ import { Button } from '@learnway/ui';
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
 import { CategoryButton, Search } from '../../../../../features/layout';
 
-import styles from './container-header.module.css';
+//import styles from './container-header.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/auth/auth-container/auth-container-header.module.css';
 
 //interface ContainerHeaderComponentProps {}
 
@@ -41,7 +42,7 @@ function ContainerHeaderComponent() {
 
   return (
     <div className={styles.start}>
-      {!categoryPage && (
+      {categoryPage && (
         <>
           <div className={styles.left}>
             <Button onClick={handleBack}>

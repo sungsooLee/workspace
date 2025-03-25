@@ -46,7 +46,7 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: '아이디 확인 결과',
+    screenName: '로그인/아이디 확인 결과',
     pageId: 'search-id-success',
     screenId: 'NLP_BO_LOG_1012',
     pageType: 'Page',
@@ -55,7 +55,7 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: '비밀번호 찾기',
+    screenName: '로그인/비밀번호 찾기',
     pageId: 'search-account-pw',
     screenId: 'NLP_BO_LOG_1013',
     pageType: 'Page',
@@ -107,15 +107,6 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-24',
     lastUpdateDate: '2025-03-24',
-    remarks: '작업 완료', // 비고
-  },
-  {
-    screenName: '로그인/회원유형선택(관리자 회원가입)',
-    pageId: 'signup-step1',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '2025-03-05',
-    lastUpdateDate: '',
     remarks: '작업 완료', // 비고
   },
   {
@@ -189,6 +180,69 @@ export const guideData = [
     completionDate: '2025-03-24',
     lastUpdateDate: '2025-03-24',
     remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
+  },
+  {
+    screenName: '로그인/회원유형선택',
+    pageId: 'signup-step1',
+    screenId: 'NLP_BO_LOG_1001_04',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/회원유형선택(사업자 등록번호 조회)',
+    pageId: 'signup-step2',
+    screenId: 'NLP_BO_LOG_1001_05',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/회원정보 입력(협력사 테넌트 있는 경우)',
+    pageId: 'signup-step3',
+    screenId: 'NLP_BO_LOG_1001_06',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료(업무 담당 회사 정보 팝업 포함)', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청 ',
+    pageId: 'admin-auth-step2',
+    screenId: 'NLP_BO_LOG_1007_01',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청(본인인증) ',
+    pageId: 'admin-auth-step3',
+    screenId: 'NLP_BO_LOG_1007_02',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한정보입력 ',
+    pageId: 'admin-auth-step4',
+    screenId: 'NLP_BO_LOG_1007_03',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '로그인/회원가입 완료 ',
+    pageId: 'success',
+    screenId: 'NLP_BO_LOG_1006_01',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'CMS/학습유형선택',

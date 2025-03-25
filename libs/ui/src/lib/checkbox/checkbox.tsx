@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-checkbox';
 import { IcoCheckboxChecked } from '@learnway/icons';
+import { useTranslation } from 'react-i18next';
 
 import { cn, getRandomId } from '@learnway/shared';
 
@@ -17,6 +18,7 @@ const CheckboxComponent = forwardRef<
   React.ElementRef<typeof Primitive.Root>,
   CheckboxComponentProps
 >(({ value, onChange, disabled, className, label, hideLabel, size, variant, ...props }, ref) => {
+  const { t } = useTranslation();
   const uuid = getRandomId();
   return (
     <div className={cn(styles.start, 'nlp--checkbox', className)}>
@@ -33,7 +35,7 @@ const CheckboxComponent = forwardRef<
       </Primitive.Root>
       {!hideLabel && (
         <label className={styles.label} htmlFor={uuid}>
-          {label}
+          {t(label ?? '')}
         </label>
       )}
     </div>

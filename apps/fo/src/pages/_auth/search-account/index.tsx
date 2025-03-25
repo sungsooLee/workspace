@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
 import type { PhoneNumberValue } from '@learnway/ui';
-import { cn, z } from '@learnway/shared';
+import { cn, buildJodObject } from '@learnway/shared';
 
-import { AuthForm, AuthFormData, AUTH_TOOL_TYPE, pageRouteConfig } from '../../../features/auth';
+import { AuthForm, AuthFormData, pageRouteConfig } from '../../../features/auth';
+import { useCurrentRoute } from '../../../features/platform';
 import { useAsyncFetchEmail } from '../../../entities/user';
 import { EmbededAlert } from '../../../shared/ui';
 
@@ -15,9 +16,18 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,
-  validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
   ...pageRouteConfig({
-    validateSearch: z.object({ tabKey: z.enum(['account', 'password']).default('account') }),
+    validateSearch: {
+      tabKey: {
+        format: 'string',
+        default: 'account',
+        conditions: [
+          {
+            fn: (values: any) => !['account', 'password'].includes(values.tabKey),
+          },
+        ],
+      },
+    },
     meta: {
       title: 'LABEL.ACCOUNT_PASSWORD_SEARCH',
     },
@@ -26,18 +36,21 @@ export const Route = createFileRoute('/_auth/search-account/')({
 
 function RouteComponent() {
   const { t } = useTranslation();
-  const { tabKey } = Route.useSearch();
+
+  const { search } = useCurrentRoute();
   const router = useRouter();
   const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(tabKey);
+  const [selectedTabKey, setSelectedTabKey] = useState<'account' | 'password'>(
+    search?.tabKey ?? 'account',
+  );
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
-  const handleActiveTab = (value: string) => {
+  const handleActiveTab = (value: any) => {
     setDefaultAuthValues({
-      authToolType: AUTH_TOOL_TYPE.PHONE,
+      authToolType: 'PHONE',
       userId: '',
       name: '',
       birthday: '',
@@ -75,7 +88,7 @@ function RouteComponent() {
       {
         name: data.name,
         birthday: data.birthday,
-        ...(data.authToolType === AUTH_TOOL_TYPE.PHONE
+        ...(data.authToolType === 'PHONE'
           ? { phoneNumber: data.phoneNumber }
           : { email: data.email }),
       },
@@ -112,33 +125,13 @@ function RouteComponent() {
           onActiveTab={handleActiveTab}
         />
 
-        <EmbededAlert className={styles.search_info}>
+        <EmbededAlert className={styles.search_info} hiddenIcon>
           {t(
             selectedTabKey === 'account'
               ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
               : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
           )}
         </EmbededAlert>
-
-        <div
-          className={styles.search_info}
-          onClick={() =>
-            router.navigate({
-              to: '/signup-progress/result',
-              state: {
-                authToolType: 'PHONE',
-                name: '아무개',
-                birthday: '19781223',
-                phoneNumber: '01093432161',
-              },
-            })
-          }>
-          {t(
-            selectedTabKey === 'account'
-              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
-              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
-          )}
-        </div>
 
         <AuthForm
           defaultValues={defaultAuthValues}

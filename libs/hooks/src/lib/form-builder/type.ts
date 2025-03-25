@@ -27,7 +27,7 @@ export interface SelectOption {
  */
 export type BaseFormFieldConfigProps<T = string> = {
   /** 필드의 값 (제네릭으로 정의) */
-  value?: T;
+  value: T;
   /** 필드의 이름 (고유 값) */
   name: string;
   /** 필드의 레이블 (화면에 표시될 이름) */
@@ -233,6 +233,8 @@ export type UseDynamicFormResult = {
   formState: UseFormReturn['formState'];
   /** 현재 폼 데이터 가져오기 */
   getValues: UseFormReturn['getValues'];
+  /** 현재 폼 유효성 강제 체크 하기 */
+  onFormValid: UseFormReturn['trigger'];
   /** 필드 값 변경 핸들러 */
   onFormChange: (values?: Record<string, any>) => void;
 

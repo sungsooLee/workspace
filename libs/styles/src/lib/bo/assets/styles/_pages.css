@@ -14,6 +14,15 @@
   .no_line + .no_line {
     @apply mt-[24px] !border-t-[1px] !border-solid !border-[#edf0f7] pt-[32px];
   }
+  .nlp--input + .nlp--button {
+    @apply !rounded-[8px] border-[#a9afb8] font-normal;
+  }
+}
+
+.nlp--contents-row {
+  & > div:nth-last-child(1) {
+    @apply pb-0;
+  }
 }
 
 h4.auth--title {

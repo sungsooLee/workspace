@@ -9,14 +9,19 @@ import styles from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.mo
 interface EmbededAlertComponentProps {
   className?: string;
   children: ReactNode[] | ReactNode;
+  hiddenIcon?: boolean;
 }
 
-function EmbededAlertComponent({ children, className }: EmbededAlertComponentProps) {
+function EmbededAlertComponent({
+  children,
+  className,
+  hiddenIcon = false,
+}: EmbededAlertComponentProps) {
   const { t } = useTranslation();
 
   return (
     <div className={cn(styles.start, className)}>
-      <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
+      {!hiddenIcon && <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />}
       <p className="txt">{children}</p>
     </div>
   );

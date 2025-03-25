@@ -195,11 +195,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1003',
     screenName: '비밀번호 확인(공통)',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- password-verify-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1006',
@@ -325,11 +325,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_MR_1003',
     screenName: 'M_My_비밀번호 확인_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- password-verify-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1000',

@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 import { AuthLayout } from '../widgets/layout';
 
@@ -14,6 +15,18 @@ export const Route = createFileRoute('/_auth')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.layout_wrap}`}>
+      {/*
+<BrowserView>
+        <AuthLayout>
+          <Outlet />
+        </AuthLayout>
+      </BrowserView>
+      <MobileView>
+        <MobileAuthLayout>
+          <Outlet />
+        </MobileAuthLayout>
+      </MobileView>      
+       */}
       <AuthLayout>
         <Outlet />
       </AuthLayout>

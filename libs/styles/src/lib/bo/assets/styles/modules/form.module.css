@@ -229,10 +229,6 @@
   @apply mb-[12px] block;
 }
 
-hr.divider {
-  @apply h-[1px] w-full bg-[#EDF0F7];
-}
-
 .btn_box {
   @apply flex items-center justify-center;
   .btn_expand {
@@ -353,6 +349,10 @@ hr.divider {
 
 .no_line {
   @apply !border-t-0 !pt-0;
+}
+
+hr.divider {
+  @apply h-[1px] w-full border-0 bg-[#EDF0F7];
 }
 
 /* 태그 */

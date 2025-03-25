@@ -223,12 +223,6 @@ function RouteComponent() {
                     <Input id="addr3" type="text" placeholder="상세주소를 입력해주세요" value="" />
                   </div>
                 </div>
-                {/* <div className={formStyles.input_box}>
-                  <Input id="addr2" type="text" placeholder="상세주소를 입력해주세요" value="" />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input id="addr3" type="text" placeholder="상세주소를 입력해주세요" value="" />
-                </div> */}
               </div>
             </ContentsRow>
           </div>

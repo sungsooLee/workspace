@@ -1,12 +1,18 @@
-import { Children, FC, useMemo } from 'react';
+import { Children, FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, Tooltip } from '@learnway/ui';
-import { FormRowProps, useFormRow } from '@learnway/hooks';
-import { formFieldConfig } from '../../../../../../bo/src/shared/ui/form';
+import {
+  DynamicFormContextProvider,
+  FormRowProps,
+  useFormRow,
+  useDynamicFormContext,
+} from '@learnway/hooks';
+import { formFieldConfig } from '../form-field-config';
+import { FormGuideText } from '../form-guide-text';
 
 /**
  * FormRowComponent
@@ -22,14 +28,34 @@ import { formFieldConfig } from '../../../../../../bo/src/shared/ui/form';
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
 const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
-  const { t } = useTranslation();
-  const { formName, rootConfig, isRequired, error, guideText, fieldRefs, renderFormRowContent } =
-    useFormRow(provider, children, name);
+  return (
+    <DynamicFormContextProvider>
+      <DynamicFormContainer
+        className={className}
+        provider={provider}
+        children={children}
+        name={name}
+      />
+    </DynamicFormContextProvider>
+  );
+};
 
+export const FormRow = memo(FormRowComponent);
+
+const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children, name }) => {
+  const { t } = useTranslation();
+  const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
+    provider,
+    children,
+    name,
+  );
+  const { guideText, infoArea } = useDynamicFormContext();
+  /*
+  // TODO.. 불필요한 리렌더링 해결 해야함
   const DynamicComponent = useMemo(
     () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
     [],
-  );
+  );*/
   return (
     <div
       className={cn(styles.form_item, className)}
@@ -66,14 +92,17 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>{DynamicComponent}</div>
+      <div className={styles.input_box}>
+        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
+      </div>
 
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {!error.isError && rootConfig?.guideText && (
-        <p className={cn(styles.guide_text, 'dynamic-form-field-guide-text')}>
-          {rootConfig.description}
-        </p>
-      )}
+      {!error.isError &&
+        (guideText ? (
+          <FormGuideText>{guideText}</FormGuideText>
+        ) : (
+          rootConfig.guideText && <FormGuideText>{rootConfig.guideText}</FormGuideText>
+        ))}
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
           {error.message}
@@ -82,5 +111,3 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
     </div>
   );
 };
-
-export const FormRow = FormRowComponent;

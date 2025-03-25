@@ -98,6 +98,24 @@ export function useUpdateUser(mutationOptions = {}) {
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },
+    updateActiveTenant: (tenantId: number): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      const updateUser = { ...user, activeTenantId: tenantId };
+      queryClient.setQueryData(queryKeys.authUser, updateUser);
+      return updateUser as AuthUser;
+    },
+    updateMainTenant: (tenantId: number): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      const updateUser = { ...user, mainTenantId: tenantId };
+      queryClient.setQueryData(queryKeys.authUser, updateUser);
+      return updateUser as AuthUser;
+    },
   };
 }
 /*

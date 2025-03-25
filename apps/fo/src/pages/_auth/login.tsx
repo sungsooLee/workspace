@@ -24,6 +24,9 @@ export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
+      mobile: {
+        showHeader: true,
+      },
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
     },
   }),
@@ -152,8 +155,9 @@ const detailConfig = {
     {
       name: 'saveId',
       type: 'checkbox',
-      checkLabel: 'LABEL.아이디 저장',
-      label: '',
+      checkConfig: {
+        label: 'LABEL.아이디 저장',
+      },
       value: false,
     },
   ],
