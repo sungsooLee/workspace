@@ -7,7 +7,7 @@ import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import {
-  ScormInfo,
+  EbookInfo,
   SharedChannelGridFormField,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
@@ -18,7 +18,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/scorm')({
+export const Route = createFileRoute('/_layout/learning/resource/view/ebook')({
   component: RouteComponent,
 });
 
@@ -29,6 +29,7 @@ function RouteComponent() {
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
+
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -218,7 +219,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <ScormInfo />
+          <EbookInfo />
         </SubContents>
       </PageContainer>
     </form>

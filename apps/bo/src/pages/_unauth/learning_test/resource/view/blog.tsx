@@ -7,7 +7,6 @@ import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import {
-  ScormInfo,
   SharedChannelGridFormField,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
@@ -17,8 +16,9 @@ import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { BlogInfo } from '../../../../../features/learning/ui/resource/blog-info';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/scorm')({
+export const Route = createFileRoute('/_unauth/learning_test/resource/view/blog')({
   component: RouteComponent,
 });
 
@@ -29,6 +29,7 @@ function RouteComponent() {
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
+
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -148,6 +149,12 @@ function RouteComponent() {
               </FormRow>
             </ContentsRow>
           </FormDisplay>
+          {/* 블로그 내용 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name="blogContent" />
+            </FormRow>
+          </ContentsRow>
           {/*썸네일*/}
           <ContentsRow>
             <FormRow provider={provider}>
@@ -218,7 +225,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <ScormInfo />
+          <BlogInfo />
         </SubContents>
       </PageContainer>
     </form>
@@ -341,6 +348,12 @@ const formConfig: DynamicFormConfig = {
         nationCode: 'externalDevelopmentCompanyNationCode',
         number: 'externalDevelopmentCompanyContact',
       },
+    },
+    {
+      label: t('블로그 내용'),
+      name: 'blogContent',
+      type: 'textarea',
+      value: '',
     },
     {
       label: t('썸네일'),

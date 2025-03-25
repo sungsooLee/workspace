@@ -45,6 +45,14 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/view/video' });
         break;
       }
+      case LEARNING_TYPE.BLOG: {
+        router.navigate({ to: '/learning_test/resource/view/blog' });
+        break;
+      }
+      case LEARNING_TYPE.E_BOOK: {
+        router.navigate({ to: '/learning_test/resource/view/ebook' });
+        break;
+      }
       case LEARNING_TYPE.SCORM: {
         router.navigate({ to: '/learning_test/resource/view/scorm' });
         break;
