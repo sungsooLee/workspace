@@ -30,11 +30,17 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
         <BrowserView>
           <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
             {/*t(meta?.title ?? '')*/}
+            {/* 퍼블확인용 */}
+            {pageTitle}
           </h2>
         </BrowserView>
         <MobileView>
           {isSigninPage(location.pathname) ? (
-            <h2 className={styles.title_login}>{/*t(meta?.title ?? '')*/}서브타이틀</h2>
+            <h2 className={styles.title_login}>
+              {/*t(meta?.title ?? '')*/}
+              {/* 퍼블확인용 */}
+              {pageTitle}
+            </h2>
           ) : (
             <MobileAuthContainerHeader />
           )}

@@ -1,4 +1,5 @@
 import { memo, ReactNode } from 'react';
+import { useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
@@ -7,7 +8,11 @@ import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 
-import { isSigninPage } from '../../../../../features/platform';
+import {
+  isSigninPage,
+  PAGE_TITLE_BY_PATH,
+  isSigninPageNone,
+} from '../../../../../features/platform';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/auth/auth-container/auth-container-header.module.css';
 
@@ -40,13 +45,19 @@ function ContainerHeaderComponent() {
     router.navigate({ to: '/login' });
   };
 
+  const location = useLocation();
+  const pageTitle = PAGE_TITLE_BY_PATH[location.pathname];
+
   return (
     <div className={styles.start}>
       <div className={styles.left}>
         <Button onClick={handleBack}>
           <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
         </Button>
-        <h2>{/*t(meta?.title)*/} 서브타이틀</h2>
+        <h2>
+          {/*t(meta?.title)*/} {/* 퍼블확인용 */}
+          {pageTitle}
+        </h2>
       </div>
 
       <Button onClick={handleClose}>

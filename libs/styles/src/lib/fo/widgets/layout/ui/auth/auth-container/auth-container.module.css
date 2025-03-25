@@ -53,9 +53,9 @@
 
         .auth_area {
           @apply mb-0 w-full pb-[100px];
-          & > h2 {
+          h2 {
             &.title_login {
-              @apply title_6_b mt-[0] block h-auto rounded-none px-[31px] pb-[32px] pt-[26px];
+              @apply title_6_b mt-[0] block flex h-[96px] items-center justify-center rounded-none p-[0] px-[31px];
             }
             .tit {
               @apply block;
@@ -71,14 +71,6 @@
             .auth_inner {
             }
           }
-        }
-      }
-      & > h2 {
-        &.title_login {
-          @apply title_6_b mt-[0] block h-auto rounded-none px-[31px] pb-[32px] pt-[26px];
-        }
-        .tit {
-          @apply block;
         }
       }
     }
