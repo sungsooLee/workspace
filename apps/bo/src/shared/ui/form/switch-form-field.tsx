@@ -1,5 +1,5 @@
 import { Switch } from '@learnway/ui';
-import React, { ElementRef, forwardRef, useMemo } from 'react';
+import React, { ElementRef, forwardRef, useEffect, useMemo } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import * as Primitive from '@radix-ui/react-switch';
 import { useWatch } from 'react-hook-form';
@@ -21,7 +21,6 @@ const SwitchFormFieldComponent = forwardRef<
         : '',
     [value, watched],
   );
-
   return <Switch ref={ref} checked={value} onCheckedChange={onChange} label={fieldLabel} />;
 });
 
