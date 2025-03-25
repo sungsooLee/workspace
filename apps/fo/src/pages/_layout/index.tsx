@@ -9,7 +9,7 @@ import { pageRouteConfig } from '../../features/auth';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
-  ...pageRouteConfig({ meta: { mobile: { showFooter: true } } }),
+  ...pageRouteConfig({ meta: { mobile: { showHeader: true, showFooter: true } } }),
 });
 
 function HomeComponent() {

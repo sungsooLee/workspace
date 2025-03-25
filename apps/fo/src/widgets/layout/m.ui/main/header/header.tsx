@@ -6,10 +6,11 @@ import { cn } from '@learnway/shared';
 
 import { Language, Notification, Tenants } from '../../../../../features/platform';
 
-import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 import { Logo } from '../../../../../features/layout';
 import { useFetchAuthUser } from '../../../../../../../../libs/config/src';
 import { useFetchTenantByUser } from '../../../../../entities/tenant';
+
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 
 function HeaderComponent() {
   const { t } = useTranslation();
