@@ -3,6 +3,7 @@ import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
 import { isFunction, isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
 import type { PhoneNumberValue } from '@learnway/ui';
@@ -17,6 +18,7 @@ import {
 } from '../../../../entities/user';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
+import { MobileContainerFooter } from '../../../../shared/m.ui/container-footer/container-footer';
 import { AUTH_TOOL_TYPE } from '../../../../types';
 
 import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
@@ -293,20 +295,30 @@ function AuthFormComponent({
         <dd>{t('MESSAGE.SEARCH_ACCOUNT_NOTICE')}</dd>
       </NoticeBox>
 
-      <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-        <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-          {t('LABEL.CANCEL')}
-        </Button>
-        {sendedVerifyNumber ? (
-          <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
-            {t('LABEL.CHECK_AUTH_NUMBER')}
+      <BrowserView>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="gray" size="xl" onClick={() => handleCancel()}>
+            {t('LABEL.CANCEL')}
           </Button>
-        ) : (
+          {sendedVerifyNumber ? (
+            <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
+              {t('LABEL.CHECK_AUTH_NUMBER')}
+            </Button>
+          ) : (
+            <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
+              {t('LABEL.CHECK_AUTH_REQUEST')}
+            </Button>
+          )}
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <MobileContainerFooter>
           <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
             {t('LABEL.CHECK_AUTH_REQUEST')}
           </Button>
-        )}
-      </div>
+        </MobileContainerFooter>
+      </MobileView>
     </form>
   );
 }

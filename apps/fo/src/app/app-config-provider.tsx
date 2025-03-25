@@ -1,5 +1,6 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
+import { isMobile } from 'react-device-detect';
 
 import {
   initI18N,

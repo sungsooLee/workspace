@@ -22,6 +22,7 @@ function AuthFooterComponent() {
         <div className={styles.copyright}>
           copyright © 2023 Hyundai-Autoever. All rights reserved.{' '}
         </div>
+        {/**
         <ul className={styles.menu_list}>
           <li>
             <Link to={'/search-account'}>아이디/비밀번호찾기</Link>
@@ -94,6 +95,7 @@ function AuthFooterComponent() {
             </Link>
           </li>
         </ul>
+         */}
       </div>
     </div>
   );
