@@ -22,3 +22,39 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.search_popover {
+        @apply fixed bottom-[inherit] left-0 top-[56px] block h-[calc(100%-56px)] w-[100dvw] translate-y-0 overflow-y-scroll rounded-none px-[20px] py-[16px] shadow-none;
+        & > div {
+          @apply block w-full;
+          & + div {
+            @apply relative mt-[24px] pt-[36px];
+            &::before {
+              @apply absolute -left-[20px] top-0 h-[12px] w-[100dvw] bg-[var(--gray1)] content-[''];
+            }
+          }
+        }
+        .area_left {
+          @apply pr-0;
+        }
+        .area_right {
+          @apply pl-0;
+          &::before {
+            @apply hidden;
+          }
+          .area_box {
+            & + .area_box {
+              @apply relative mt-[24px] pt-[36px];
+            }
+            &::before {
+              @apply absolute -left-[20px] top-0 h-[12px] w-[100dvw] bg-[var(--gray1)] content-[''];
+            }
+          }
+        }
+      }
+    }
+  }
+}

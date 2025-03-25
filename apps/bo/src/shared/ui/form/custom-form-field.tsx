@@ -1,10 +1,11 @@
 import { forwardRef, useEffect } from 'react';
-import { BaseFormFieldProps } from '@learnway/hooks';
+import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Button, Input } from '@learnway/ui';
 
 const CustomFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
-  ({ onChangeInfoArea, onChange, value }, ref) => {
+  ({ onChange, value }, ref) => {
+    const { onChangeInfoArea } = useDynamicFormContext();
     const renderInfoArea = () => {
       onChangeInfoArea(
         <>

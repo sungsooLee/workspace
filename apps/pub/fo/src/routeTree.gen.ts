@@ -40,6 +40,11 @@ import { Route as AuthAgreementPrivacyImport } from './pages/_auth/agreement-pri
 import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutSettingSettingWebmImport } from './pages/_layout/setting/setting-web_m'
+import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting/setting-sns_m'
+import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
+import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
+import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
@@ -250,6 +255,39 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   path: '/guide/',
   getParentRoute: () => GuideRoute,
 } as any)
+
+const LayoutSettingSettingWebmRoute = LayoutSettingSettingWebmImport.update({
+  id: '/setting/setting-web_m',
+  path: '/setting/setting-web_m',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutSettingSettingSnsmRoute = LayoutSettingSettingSnsmImport.update({
+  id: '/setting/setting-sns_m',
+  path: '/setting/setting-sns_m',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutSettingSettingLicensemRoute =
+  LayoutSettingSettingLicensemImport.update({
+    id: '/setting/setting-license_m',
+    path: '/setting/setting-license_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutSettingSettingLanguagemRoute =
+  LayoutSettingSettingLanguagemImport.update({
+    id: '/setting/setting-language_m',
+    path: '/setting/setting-language_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutIntegratedSearchIntegratedSearchmRoute =
+  LayoutIntegratedSearchIntegratedSearchmImport.update({
+    id: '/integrated-search/integrated-search_m',
+    path: '/integrated-search/integrated-search_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutIntegratedSearchIntegratedSearchRoute =
   LayoutIntegratedSearchIntegratedSearchImport.update({
@@ -901,6 +939,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/integrated-search/integrated-search_m': {
+      id: '/_layout/integrated-search/integrated-search_m'
+      path: '/integrated-search/integrated-search_m'
+      fullPath: '/integrated-search/integrated-search_m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchmImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/setting/setting-language_m': {
+      id: '/_layout/setting/setting-language_m'
+      path: '/setting/setting-language_m'
+      fullPath: '/setting/setting-language_m'
+      preLoaderRoute: typeof LayoutSettingSettingLanguagemImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/setting/setting-license_m': {
+      id: '/_layout/setting/setting-license_m'
+      path: '/setting/setting-license_m'
+      fullPath: '/setting/setting-license_m'
+      preLoaderRoute: typeof LayoutSettingSettingLicensemImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/setting/setting-sns_m': {
+      id: '/_layout/setting/setting-sns_m'
+      path: '/setting/setting-sns_m'
+      fullPath: '/setting/setting-sns_m'
+      preLoaderRoute: typeof LayoutSettingSettingSnsmImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/setting/setting-web_m': {
+      id: '/_layout/setting/setting-web_m'
+      path: '/setting/setting-web_m'
+      fullPath: '/setting/setting-web_m'
+      preLoaderRoute: typeof LayoutSettingSettingWebmImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -1052,6 +1125,11 @@ interface LayoutRouteChildren {
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
+  LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
+  LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
+  LayoutSettingSettingSnsmRoute: typeof LayoutSettingSettingSnsmRoute
+  LayoutSettingSettingWebmRoute: typeof LayoutSettingSettingWebmRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1063,6 +1141,12 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutCourseRegistrationCourseRegistrationAllRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
+  LayoutIntegratedSearchIntegratedSearchmRoute:
+    LayoutIntegratedSearchIntegratedSearchmRoute,
+  LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
+  LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
+  LayoutSettingSettingSnsmRoute: LayoutSettingSettingSnsmRoute,
+  LayoutSettingSettingWebmRoute: LayoutSettingSettingWebmRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1130,6 +1214,11 @@ export interface FileRoutesByFullPath {
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
+  '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
+  '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
+  '/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1195,6 +1284,11 @@ export interface FileRoutesByTo {
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
+  '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
+  '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
+  '/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1263,6 +1357,11 @@ export interface FileRoutesById {
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
+  '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
+  '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
+  '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
+  '/_layout/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1330,6 +1429,11 @@ export interface FileRouteTypes {
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
+    | '/integrated-search/integrated-search_m'
+    | '/setting/setting-language_m'
+    | '/setting/setting-license_m'
+    | '/setting/setting-sns_m'
+    | '/setting/setting-web_m'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1394,6 +1498,11 @@ export interface FileRouteTypes {
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
     | '/integrated-search/integrated-search'
+    | '/integrated-search/integrated-search_m'
+    | '/setting/setting-language_m'
+    | '/setting/setting-license_m'
+    | '/setting/setting-sns_m'
+    | '/setting/setting-web_m'
     | '/guide'
     | '/menu3'
   id:
@@ -1460,6 +1569,11 @@ export interface FileRouteTypes {
     | '/_layout/category/detail_m'
     | '/_layout/course-registration/course-registration-all'
     | '/_layout/integrated-search/integrated-search'
+    | '/_layout/integrated-search/integrated-search_m'
+    | '/_layout/setting/setting-language_m'
+    | '/_layout/setting/setting-license_m'
+    | '/_layout/setting/setting-sns_m'
+    | '/_layout/setting/setting-web_m'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1565,6 +1679,11 @@ export const routeTree = rootRoute
         "/_layout/category/detail_m",
         "/_layout/course-registration/course-registration-all",
         "/_layout/integrated-search/integrated-search",
+        "/_layout/integrated-search/integrated-search_m",
+        "/_layout/setting/setting-language_m",
+        "/_layout/setting/setting-license_m",
+        "/_layout/setting/setting-sns_m",
+        "/_layout/setting/setting-web_m",
         "/_layout/menu3/"
       ]
     },
@@ -1802,6 +1921,26 @@ export const routeTree = rootRoute
     },
     "/_layout/integrated-search/integrated-search": {
       "filePath": "_layout/integrated-search/integrated-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/integrated-search/integrated-search_m": {
+      "filePath": "_layout/integrated-search/integrated-search_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/setting/setting-language_m": {
+      "filePath": "_layout/setting/setting-language_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/setting/setting-license_m": {
+      "filePath": "_layout/setting/setting-license_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/setting/setting-sns_m": {
+      "filePath": "_layout/setting/setting-sns_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/setting/setting-web_m": {
+      "filePath": "_layout/setting/setting-web_m.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

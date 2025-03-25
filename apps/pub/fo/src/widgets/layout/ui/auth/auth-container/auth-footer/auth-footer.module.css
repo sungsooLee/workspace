@@ -9,7 +9,7 @@
         > li {
           a,
           button {
-            @apply text-[var(--gray7)];
+            @apply text-[#6F798B];
             &:hover {
               @apply underline;
             }
@@ -18,6 +18,25 @@
       }
       .copyright {
         @apply mt-[16px] text-[var(--gray7)];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.footer_auth {
+        @apply bg-[#F6F8FD] py-[16px];
+        .footer_area {
+          @apply text-[1.2rem];
+          .menu_list {
+            @apply gap-[14px];
+          }
+          .copyright {
+            @apply m-auto mt-[8px] max-w-[200px];
+          }
+        }
       }
     }
   }

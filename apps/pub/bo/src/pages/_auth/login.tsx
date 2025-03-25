@@ -2,8 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import signupStyles from './signup.module.css';
-import formStyles from '../../assets/styles/modules/form.module.css';
+import styles from './signup.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -12,8 +12,8 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   return (
     <form className="form_row">
-      <div className={`${signupStyles.start} ${signupStyles.auth_wrap} ${signupStyles.login}`}>
-        <div className={signupStyles.auth_box}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
+        <div className={styles.auth_box}>
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name5" className={formStyles.form_label}>
@@ -49,22 +49,22 @@ function RouteComponent() {
             </div>
           </ContentsRow>
 
-          <div className={signupStyles.login_info}>
-            <Checkbox label="아이디 저장" className={signupStyles.id_save} />
-            <div className={signupStyles.info}>
+          <div className={styles.login_info}>
+            <Checkbox label="아이디 저장" className={styles.id_save} />
+            <div className={styles.info}>
               <Link to="/search-account">아이디 찾기</Link>
               <Link to="/search-account-pw">비밀번호 찾기</Link>
             </div>
           </div>
 
-          <div className={signupStyles.btn_box}>
-            <Button size="xl" variant="primary" className={signupStyles.btn}>
+          <div className={styles.btn_box}>
+            <Button size="xl" variant="primary" className={styles.btn}>
               로그인
             </Button>
           </div>
         </div>
 
-        <div className={signupStyles.login_guide}>
+        <div className={styles.login_guide}>
           <span>
             <Link to="/progress-status">회원 가입 현황</Link>
             <Link to="/signup-step1">관리자 회원가입</Link>

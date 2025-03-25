@@ -769,6 +769,68 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {/* 2025-03-06 추가 E */}
+          {/* 2025-03-21 추가 S */}
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-parameter" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>외부학습시작 파라미터</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.col_wrap}>
+                  {/* type_row */}
+                  <div className={dynamicFormStyles.type_row}>
+                    <div className={dynamicFormStyles.theme_input}>
+                      <Input type="text" readOnly />
+                    </div>
+                    <div className={dynamicFormStyles.data_input}>
+                      <Input
+                        type="text"
+                        value={'개발업체 선택시 불러오는 Param'}
+                        placeholder={'자막추가 버튼을 클릭하여 자막 파일을 등록하세요.'}
+                      />
+                    </div>
+                  </div>
+                  {/* type_row */}
+                  <div className={dynamicFormStyles.type_row}>
+                    <div className={dynamicFormStyles.theme_input}>
+                      <Input type="text" readOnly />
+                    </div>
+                    <div className={dynamicFormStyles.data_input}>
+                      <Input
+                        type="text"
+                        value={'개발업체 선택시 불러오는 Param'}
+                        placeholder={'자막추가 버튼을 클릭하여 자막 파일을 등록하세요.'}
+                      />
+                    </div>
+                    <Button onlyIcon className={dynamicFormStyles.btn_delete}>
+                      <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
+                    </Button>
+                  </div>
+                  {/* type_row */}
+                  <div className={dynamicFormStyles.type_row}>
+                    <div className={dynamicFormStyles.theme_input}>
+                      <Input type="text" readOnly />
+                    </div>
+                    <div className={dynamicFormStyles.data_input}>
+                      <Input
+                        type="text"
+                        value={'개발업체 선택시 불러오는 Param'}
+                        placeholder={'자막추가 버튼을 클릭하여 자막 파일을 등록하세요.'}
+                      />
+                    </div>
+                    <Button className={dynamicFormStyles.btn_text} variant="gray" size="sm">
+                      {'추가'}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 2025-03-21 추가 E */}
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-time" className={formStyles.form_label}>

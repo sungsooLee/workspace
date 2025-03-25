@@ -6,6 +6,7 @@ import styles from './progress-status-result.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 import { Button, Input, Select, ContentsRow, PhoneNumber } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status-result-en')({
@@ -52,19 +53,17 @@ function RouteComponent() {
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="North America" readOnly />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder=""
-                    value="United State States of America(the)_Hyundai Motor America"
-                    readOnly
-                  />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="Dealer " readOnly />
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <Input id="name" type="text" placeholder="" value="North America" readOnly />
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder=""
+                      value="United State States of America(the)_Hyundai Motor America"
+                      readOnly
+                    />
+                    <Input id="name" type="text" placeholder="" value="Dealer " readOnly />
+                  </div>
                 </div>
               </div>
             </ContentsRow>
@@ -131,14 +130,18 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Job Domin</span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
-                  <Input id="name" type="text" placeholder="" value="Manager" readOnly />
-                  <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
-                  <Input id="name" type="text" placeholder="" value="Manager" readOnly />
-                  <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <div className={dynamicFormStyles.flex_plus}>
+                      <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
+                      <Input id="name" type="text" placeholder="" value="Manager" readOnly />
+                    </div>
+
+                    <div className={dynamicFormStyles.flex_plus}>
+                      <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
+                      <Input id="name" type="text" placeholder="" value="Manager" readOnly />
+                      <Input id="name" type="text" placeholder="" value="CV Sales" readOnly />
+                    </div>
+                  </div>
                 </div>
               </div>
             </ContentsRow>

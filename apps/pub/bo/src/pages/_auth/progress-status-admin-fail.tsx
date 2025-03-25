@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, DatePicker, Input, Select, Textarea } from '@learnway/ui';
-import { IcoCompanion, IcoFormRequired } from '@learnway/icons';
+import { IcoCheck02, IcoFormRequired, IcoComplete, IcoSucess, IcoCaution02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/signup-progress/result.module.css';
+import hightlightMessageBoxStyles from '@learnway/styles/bo/shared/ui/highlight-message-box/highlight-message-box.module.css';
+import proccessResultStyles from '@learnway/styles/bo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
+import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-form.module.css';
 
 export const Route = createFileRoute('/_auth/progress-status-admin-fail')({
   component: RouteComponent,
@@ -35,24 +38,26 @@ function RouteComponent() {
   };
   return (
     <form className="form_row">
-      <div className={`${signupStyles.start} ${signupStyles.auth_wrap}`}>
-        <div className={signupStyles.auth_box}>
-          <div className={signupStyles.success_info}>
-            <i className={cn(signupStyles.ico, signupStyles.fail)}>
-              <IcoCompanion width={56} height={56} />
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
+        <div className={cn(styles.auth_box, 'auth--box')}>
+          <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
+            <i className={proccessResultStyles.ico}>
+              <IcoCaution02 width={56} height={56} stroke="#FFB902" />
             </i>
-            <h3 className={signupStyles.title}>관리자 권한 신청이 반려되었습니다.</h3>
-            <p className={signupStyles.text}>회원가입 결과는 입력하신 메일로 발송되었습니다.</p>
-          </div>
-          <div className={signupStyles.auth_info}>
-            <p>
-              신청 :<strong className={signupStyles.date}>{'YYYY-MM-DD'}</strong>
+            <h3 className={proccessResultStyles.title}>관리자 권한 신청이 반려되었습니다.</h3>
+            <p className={proccessResultStyles.noti}>
+              회원가입 결과는 입력하신 메일로 발송되었습니다.
             </p>
-            <p>
-              승인일시 :<strong className={signupStyles.date}>{'YYYY-MM-DD'}</strong>
-            </p>
+            <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
+              <p>
+                승인일시 :<strong>{'YYYY-MM-DD'}</strong>
+              </p>
+              <p>
+                승인일시 :<strong>{'YYYY-MM-DD'}</strong>
+              </p>
+            </div>
           </div>
-          <div className={`${formStyles.col} ${signupStyles.auth_form}`}>
+          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <strong className={formStyles.form_title}>관리자 권한 신청 정보</strong>
@@ -210,6 +215,7 @@ function RouteComponent() {
                   onChange={handleDate}
                   value={date}
                   disabled
+                  size={'lg'}
                   className={formStyles.datepicker_item}
                 />
                 <span className={formStyles.dash}></span>
@@ -217,6 +223,7 @@ function RouteComponent() {
                   onChange={handleDate2}
                   value={date2}
                   disabled
+                  size={'lg'}
                   className={formStyles.datepicker_item}
                 />
               </div>
@@ -235,6 +242,7 @@ function RouteComponent() {
                   onChange={handleDate3}
                   value={date3}
                   disabled
+                  size={'lg'}
                   className={formStyles.datepicker_item}
                 />
               </div>
@@ -279,11 +287,12 @@ function RouteComponent() {
                   size="sm"
                   className={formStyles.textarea}
                   readOnly
+                  maxLength={100}
                 />
               </div>
             </div>
           </div>
-          <div className={`${formStyles.col} ${signupStyles.auth_form}`}>
+          <div className={cn(authFormStyles.auth_form, 'col')}>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <strong className={formStyles.form_title}>관리자 권한 승인 정보</strong>
@@ -359,6 +368,7 @@ function RouteComponent() {
                   onChange={handleDate4}
                   value={date4}
                   disabled
+                  size={'lg'}
                   className={formStyles.datepicker_item}
                 />
               </div>
@@ -383,11 +393,12 @@ function RouteComponent() {
                   size="sm"
                   className={formStyles.textarea}
                   readOnly
+                  maxLength={100}
                 />
               </div>
             </div>
           </div>
-          <div className={signupStyles.btn_wrap}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" className="font-normal">
               확인
             </Button>

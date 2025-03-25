@@ -14,17 +14,26 @@ export const guideData = [
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인/비밀번호 변경',
-    pageId: 'password-change',
+    pageId: 'password-modify',
     screenId: 'NLP_BO_LOG_1000_02',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/비밀번호 찾기/비밀번호 변경',
+    pageId: 'password-input',
+    screenId: 'NLP_BO_LOG_1017',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -32,36 +41,45 @@ export const guideData = [
     pageId: 'search-account',
     screenId: 'NLP_BO_LOG_1008',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: '로그인/비밀번호 찾기',
+    screenName: '아이디 확인 결과',
+    pageId: 'search-id-success',
+    screenId: 'NLP_BO_LOG_1012',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '비밀번호 찾기',
     pageId: 'search-account-pw',
     screenId: 'NLP_BO_LOG_1013',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
 
   {
     screenName: '로그인/진행 현황 확인',
-    pageId: 'progress-status',
+    pageId: 'progress-status-email',
     screenId: 'NLP_BO_LOG_1001',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인/본인인증(휴대폰/이메일 인증)',
-    pageId: 'progress-status-certify',
-    screenId: 'NLP_BO_LOG_1014',
+    pageId: 'progress-status-cert',
+    screenId: 'NLP_BO_LOG_1001_01',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -69,8 +87,17 @@ export const guideData = [
     pageId: 'progress-status-admin',
     screenId: 'NLP_BO_LOG_1001_02',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청 결과(반려)',
+    pageId: 'progress-status-admin-fail',
+    screenId: 'NLP_BO_LOG_1001_02',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -78,8 +105,8 @@ export const guideData = [
     pageId: 'progress-status-cp',
     screenId: 'NLP_BO_LOG_1001_03',
     pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업 완료', // 비고
   },
   {
@@ -96,9 +123,72 @@ export const guideData = [
     pageId: 'mpass-cert',
     screenId: 'NLP_BO_LOG_1018',
     pageType: 'Page',
-    completionDate: '2025-03-06',
-    lastUpdateDate: '',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
     remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '로그인/MPASS 인증-FIDO',
+    pageId: 'mpass-cert-fido',
+    screenId: 'NLP_BO_LOG_1018',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '로그인/MPASS 인증-OTP',
+    pageId: 'mpass-cert-otp',
+    screenId: 'NLP_BO_LOG_1018',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '로그인/구글 OTP 인증',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: '구글 OTP인증키 생성_QR 인증키생성팝업',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019_01',
+    pageType: 'Pop-up ',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
+  },
+  {
+    screenName: '구글 OTP인증키 생성_ 인증키생성팝업',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019_02',
+    pageType: 'Pop-up ',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
+  },
+  {
+    screenName: '구글 OTP인증_OTP번호입력팝업',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019_03',
+    pageType: 'Pop-up ',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
+  },
+  {
+    screenName: '구글 OTP인증 가이드 팝업',
+    pageId: 'google-cert',
+    screenId: 'NLP_BO_LOG_1019_04',
+    pageType: 'Pop-up ',
+    completionDate: '2025-03-24',
+    lastUpdateDate: '2025-03-24',
+    remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
   },
   {
     screenName: 'CMS/학습유형선택',

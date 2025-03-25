@@ -12,7 +12,7 @@ const handleRequired = (
     requiredSuperRefine.push({
       key,
       config: {
-        required: config.required.required || false,
+        required: config.required.required,
         fn: config.required.fn,
         path: config.required.path || key,
         message: config.required.message,

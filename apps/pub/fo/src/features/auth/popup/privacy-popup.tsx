@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { cn } from '@learnway/shared';
 import styles from './privacy-popup.module.css';
 import {
   ModalBody,
@@ -9,6 +10,8 @@ import {
   useModal,
   Select,
 } from '@learnway/ui';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 const PrivacyPopupCompoment = () => {
   const { close: closeModal } = useModal();
@@ -30,7 +33,18 @@ const PrivacyPopupCompoment = () => {
       </ModalBody>
 
       <ModalFooter>
-        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+        <BrowserView>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <MobileContainerFooter>
+            <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          </MobileContainerFooter>
+        </MobileView>
       </ModalFooter>
     </ModalContainer>
   );

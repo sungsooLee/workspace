@@ -10,3 +10,19 @@
     @apply text-[var(--gray8)];
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      svg {
+        @apply h-[32px] w-[32px];
+      }
+      .txt {
+        @apply body_3_r;
+      }
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { forwardRef, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-popover';
+import styles from './popover.module.css';
 
 interface PopoverComponentProps extends Primitive.PopoverContentProps {
   children: ReactNode;
@@ -22,7 +23,9 @@ const PopoverComponent = forwardRef<
         {children}
       </Primitive.PopoverTrigger>
       <Primitive.Portal>
-        <Primitive.Content className={cn('nlp--popover-content', className)} {...props}>
+        <Primitive.Content
+          className={cn(styles.popover_content, 'nlp--popover-content', className)}
+          {...props}>
           {popoverContent}
         </Primitive.Content>
       </Primitive.Portal>

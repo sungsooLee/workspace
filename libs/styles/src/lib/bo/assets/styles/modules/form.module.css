@@ -351,6 +351,10 @@ hr.divider {
   }
 }
 
+.no_line {
+  @apply !border-t-0 !pt-0;
+}
+
 /* 태그 */
 .tag_wrap {
   @apply w-full rounded-[4px] border border-solid border-[var(--gray4)] p-[12px];

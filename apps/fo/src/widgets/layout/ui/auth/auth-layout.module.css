@@ -11,3 +11,14 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.container {
+        @apply h-auto min-w-[320px];
+      }
+    }
+  }
+}

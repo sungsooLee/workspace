@@ -18,7 +18,7 @@ import '@uppy/dashboard/dist/style.css';
 import styles from './uppy-file-upload.module.css';
 
 // 파일 아이템 인터페이스 확장 - 파트 정보 추가
-interface FileItem {
+export interface FileItem {
   id: string;
   name: string;
   size: number;
@@ -33,9 +33,10 @@ interface FileItem {
   retryCount?: number;
   uploadId?: string;
   key?: string;
+  response?: any;
 }
 
-const StatusLabel = {
+const DEFAULT_STATUS_LABELS = {
   waiting: '유효성 검토 중',
   uploading: '진행중',
   complete: '완료',
@@ -43,7 +44,7 @@ const StatusLabel = {
   paused: '대기중',
 };
 
-const StatusColors = {
+const DEFAULT_STATUS_COLORS = {
   waiting: 'text-gray-500',
   uploading: 'text-blue-500',
   complete: 'text-green-500',
@@ -51,17 +52,34 @@ const StatusColors = {
   paused: 'text-gray-500',
 };
 
-interface SimpleUploadProps {
+export interface UppyUploadProps {
+  apiBaseUrl?: string;
   allowedFileTypes?: string[];
   maxFileSize?: number;
   folderPath?: string;
+  maxFiles?: number;
   maxRetries?: number;
   retryDelay?: number;
-  wrapSize?: 'sm' | 'md';
+  chunkSize?: number;
+
+  wrapSize?: 'sm' | 'md' | 'lg';
   className?: string;
+  showProgressBar?: boolean;
+  showFileList?: boolean;
+  hideUploadButton?: boolean;
+
+  onUploadStart?: (files: FileItem[]) => void;
+  onUploadProgress?: (fileId: string, progress: number) => void;
+  onUploadSuccess?: (fileId: string, response: any) => void;
+  onUploadError?: (fileId: string, error: Error | string) => void;
+  onUploadComplete?: (successfulFiles: FileItem[], failedFiles: FileItem[]) => void;
+  onFileAdded?: (file: FileItem) => void;
+  onFileRemoved?: (fileId: string) => void;
+  onAllComplete?: (result: { successful: FileItem[]; failed: FileItem[] }) => void;
 }
 
-export const UppyUpload: React.FC<SimpleUploadProps> = ({
+export const UppyUpload: React.FC<UppyUploadProps> = ({
+  apiBaseUrl = 'http://localhost:8072/pms-module/admin/api/v1/file',
   allowedFileTypes = [
     'mp4',
     'wmv',
@@ -81,27 +99,45 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
   ],
   maxFileSize = 1024 * 1024 * 1024, // 1GB
   folderPath = 'uploads/',
-  maxRetries = 3, // 최대 재시도 횟수
-  retryDelay = 2000, // 재시도 간격 (ms)
+  maxFiles = 10,
+
+  // Upload behavior
+  maxRetries = 3,
+  retryDelay = 2000,
+  chunkSize = 5 * 1024 * 1024, // 5MB
+
+  // UI customization
   wrapSize = 'md',
   className,
+  showProgressBar = true,
+  showFileList = true,
+  hideUploadButton = false,
+
+  // Callbacks
+  onUploadStart,
+  onUploadProgress,
+  onUploadSuccess,
+  onUploadError,
+  onUploadComplete,
+  onFileAdded,
+  onFileRemoved,
+  onAllComplete,
 }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [files, setFiles] = useState<FileItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const uppyRef = useRef<Uppy | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // const retryTimersRef = useRef<Record<string, NodeJS.Timeout>>({});
 
   // 진행중인 업로드 파일 ID를 추적
   const [activeUploads, setActiveUploads] = useState<Record<string, boolean>>({});
 
   // API 엔드포인트 기본 URL
-  const API_BASE_URL =
-    'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/file';
+  const API_BASE_URL = apiBaseUrl;
+  // 'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/file';
 
-  // 파트 사이즈 계산 (5MB)
-  const PART_SIZE = 5 * 1024 * 1024;
+  // 청크 사이즈
+  const PART_SIZE = chunkSize;
 
   useEffect(() => {
     const uppy = new Uppy({
@@ -110,7 +146,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       allowMultipleUploadBatches: true,
       restrictions: {
         maxFileSize: maxFileSize,
-        // allowedFileTypes: allowedFileTypes,
       },
     }).use(AwsS3, {
       // 파일 크기가 10MB 이상인 경우 멀티파트 업로드 사용
@@ -119,9 +154,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       // 1. 멀티파트 업로드 초기화
       createMultipartUpload: async (file) => {
         // 파일명에 폴더 경로 추가
+        console.log(file);
         try {
           const filename = `${file.name}`;
-
+          console.log(filename);
           const response = await httpService.post(
             `${API_BASE_URL}/s3/multipart`,
             JSON.stringify({
@@ -133,11 +169,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
               },
             },
           );
-          // if (!response.ok) {
-          //   const errorData = await response.json();
-          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-          //   throw new Error(errorMessage);
-          // }
+
           const data: any = response;
           // 파일 정보 업데이트 - uploadId와 key 저장
           setFiles((prevFiles) =>
@@ -164,6 +196,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           };
         } catch (error: any) {
           updateFileError(file.id, `멀티파트 업로드 초기화 실패: ${error.message}`);
+          if (onUploadError) onUploadError(file.id, error);
           throw error;
         }
       },
@@ -175,12 +208,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           const response = await httpService.get(
             `${API_BASE_URL}/s3/multipart/${uploadId}/${partNumber}?key=${encodedKey}`,
           );
-
-          // if (!response.ok) {
-          //   const errorData = await response.json();
-          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-          //   throw new Error(errorMessage);
-          // }
 
           const data: any = await response;
 
@@ -195,6 +222,8 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           };
         } catch (error: any) {
           updatePartStatus(file.id, partNumber, 'error');
+          if (onUploadError)
+            onUploadError(file.id, `Part ${partNumber} 업로드 실패: ${error.message}`);
           throw error;
         }
       },
@@ -209,7 +238,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
             PartNumber: part.PartNumber,
             ETag: part.ETag,
           }));
-          console.log(JSON.stringify({ parts: formattedParts }));
+
           const response = await httpService.post(
             `${API_BASE_URL}/s3/multipart/${uploadId}/complete?key=${encodedKey}`,
             JSON.stringify({ parts: formattedParts }),
@@ -219,12 +248,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
               },
             },
           );
-
-          // if (!response.ok) {
-          //   const errorData = await response.json();
-          //   const errorMessage = errorData.error || `서버 오류: ${response.status}`;
-          //   throw new Error(errorMessage);
-          // }
 
           const data: any = response;
 
@@ -238,6 +261,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           return data;
         } catch (error: any) {
           updateFileError(file.id, `멀티파트 업로드 완료 실패: ${error.message}`);
+          if (onUploadError) onUploadError(file.id, error);
           throw error;
         }
       },
@@ -254,9 +278,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           const response = await httpService.delete(
             `${API_BASE_URL}/s3/multipart/${uploadId}?key=${encodedKey}`,
           );
-          // if (!response.ok) {
-          //   console.warn(`멀티파트 업로드 중단 실패: ${response.status}`);
-          // }
           // 업로드 취소된 파일에서 activeUploads 제거
           setActiveUploads((prev) => {
             const updated = { ...prev };
@@ -271,7 +292,30 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       // 일반 업로드 (10MB 미만)
       getUploadParameters: async (file) => {
         try {
-          const filename = `${folderPath}${file.name}`;
+          // const folderPathClean = folderPath.endsWith('/') ? folderPath : `${folderPath}/`;
+          // const encodedFilename = encodeURIComponent(file.name!);
+          // const encodedKey = `${folderPathClean}${encodeURIComponent(file.name!)}`;
+
+          // const response = await httpService.get(
+          //   `${API_BASE_URL}/s3/uploader?key=${encodedFilename}`,
+          //   null,
+          //   {
+          //     headers: {
+          //       'Content-Type': 'application/json',
+          //     },
+          //   },
+          // );
+
+          // const data: any = response;
+
+          // return {
+          //   method: 'PUT',
+          //   url: data.url,
+          //   headers: {
+          //     'Content-Type': file.type,
+          //   },
+          // };
+          const filename = `${file.name}`;
           const encodedFilename = encodeURIComponent(filename);
 
           const response = await httpService.get(
@@ -300,27 +344,49 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           };
         } catch (error: any) {
           updateFileError(file.id, `업로드 파라미터 획득 실패: ${error.message}`);
+          if (onUploadError) onUploadError(file.id, error);
           throw error;
         }
       },
     });
 
     uppy.on('upload', (data: any) => {
+      console.log('업로드 시작 데이터 타입:', typeof data, data);
       setIsUploading(true);
       setError(null);
 
       // 업로드 시작 시 activeUploads에 추가
       const newActiveUploads = { ...activeUploads };
-      const tmpData = [...data];
-      tmpData.forEach((id: any) => {
-        newActiveUploads[id] = true;
-      });
-      setActiveUploads(newActiveUploads);
+
+      // 예전 방식으로 처리 (배열로 가정)
+      try {
+        const tmpData = Array.isArray(data) ? [...data] : typeof data === 'string' ? [data] : [];
+        console.log('처리된 파일 ID 목록:', tmpData);
+
+        tmpData.forEach((id) => {
+          newActiveUploads[id] = true;
+        });
+        setActiveUploads(newActiveUploads);
+      } catch (e) {
+        console.error('업로드 데이터 처리 중 오류:', e);
+      }
     });
 
     uppy.on('complete', (result) => {
       console.log('Upload complete:', result.successful);
       setIsUploading(false);
+
+      const successfulFiles: any = result.successful ? [...result.successful] : [];
+
+      const failedFiles: any = result.failed ? [...result.failed] : [];
+
+      if (onUploadComplete) {
+        onUploadComplete(successfulFiles, failedFiles);
+      }
+
+      if (onAllComplete) {
+        onAllComplete({ successful: successfulFiles, failed: failedFiles });
+      }
     });
 
     uppy.on('error', (error) => {
@@ -330,16 +396,19 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
 
     uppy.on('file-added', (file) => {
       console.log(file);
-      setFiles((prev: any) => [
-        ...prev,
-        {
-          id: file.id,
-          name: file.name,
-          size: file.size,
-          progress: 0,
-          status: 'waiting',
-        },
-      ]);
+      const newFile = {
+        id: file.id,
+        name: file.name,
+        size: file.size,
+        progress: 0,
+        status: 'waiting' as const,
+      } as FileItem;
+
+      setFiles((prev: any) => [...prev, newFile]);
+
+      if (onFileAdded) {
+        onFileAdded(newFile);
+      }
     });
 
     uppy.on('upload-progress', (file: any, progress) => {
@@ -351,11 +420,17 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           f.id === file.id ? { ...f, progress: progressPercentage, status: 'uploading' } : f,
         ),
       );
+
+      if (onUploadProgress) {
+        onUploadProgress(file.id, progressPercentage);
+      }
     });
 
-    uppy.on('upload-success', (file: any) => {
+    uppy.on('upload-success', (file: any, response) => {
       setFiles((prev) =>
-        prev.map((f) => (f.id === file.id ? { ...f, status: 'complete', progress: 100 } : f)),
+        prev.map((f) =>
+          f.id === file.id ? { ...f, status: 'complete', progress: 100, response: response } : f,
+        ),
       );
 
       // 완료된 파일 activeUploads에서 제거
@@ -365,14 +440,12 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
         return updated;
       });
 
-      // 만약 이 파일에 대한 재시도 타이머가 있으면 제거
-      // if (retryTimersRef.current[file.id]) {
-      //   clearTimeout(retryTimersRef.current[file.id]);
-      //   delete retryTimersRef.current[file.id];
-      // }
+      if (onUploadSuccess) {
+        onUploadSuccess(file.id, response);
+      }
     });
 
-    uppy.on('upload-error', (file: any) => {
+    uppy.on('upload-error', (file: any, error) => {
       // 파일 상태 업데이트
       setFiles((prev) =>
         prev.map((f) => {
@@ -380,28 +453,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
 
           const retryCount = f.retryCount || 0;
           const errorMsg = error || '알 수 없는 오류';
-
-          // 최대 재시도 횟수보다 적게 시도했으면 자동 재시도
-          // if (retryCount < maxRetries) {
-          //   // 재시도 타이머 설정
-          //   if (retryTimersRef.current[file.id]) {
-          //     clearTimeout(retryTimersRef.current[file.id]);
-          //   }
-
-          //   retryTimersRef.current[file.id] = setTimeout(() => {
-          //     console.log(
-          //       `Auto-retrying upload for ${file.name}, attempt ${retryCount + 1}/${maxRetries}`,
-          //     );
-          //     uppyRef.current?.retryUpload(file.id);
-          //   }, retryDelay);
-
-          //   return {
-          //     ...f,
-          //     status: 'error',
-          //     errorMessage: `오류: ${errorMsg} (자동 재시도 ${retryCount + 1}/${maxRetries} 예정)`,
-          //     retryCount: retryCount + 1,
-          //   };
-          // }
 
           // 최대 재시도 횟수에 도달하면 에러 상태로 표시
           return {
@@ -411,6 +462,9 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           };
         }),
       );
+      if (onUploadError) {
+        onUploadError(file.id, error);
+      }
     });
 
     // 파일 제한 조건 실패 이벤트 추가
@@ -433,44 +487,33 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       console.log(`Total progress: ${progress}%`);
     });
 
-    uppy.on('upload-retry', (fileId) => {
-      // 재시도 시 파일 상태 업데이트
-      // setFiles((prev) =>
-      //   prev.map((f) =>
-      //     f.id === fileId ? { ...f, status: 'uploading', errorMessage: undefined } : f,
-      //   ),
-      // );
-    });
-
-    // uppy.on('cancel-all', () => {
-    //   console.log('All uploads cancelled');
-    //   setIsUploading(false);
-
-    //   // 진행 중이던 타이머 모두 취소
-    //   Object.keys(retryTimersRef.current).forEach((id) => {
-    //     clearTimeout(retryTimersRef.current[id]);
-    //   });
-    //   retryTimersRef.current = {};
-
-    //   setActiveUploads({});
-    // });
-
     uppyRef.current = uppy;
 
     // 컴포넌트 언마운트 시 정리
     return () => {
-      // 모든 타이머 정리
-      // Object.keys(retryTimersRef.current).forEach((id) => {
-      //   clearTimeout(retryTimersRef.current[id]);
-      // });
-
       // 진행 중인 모든 업로드 취소
       if (uppy) {
         uppy.cancelAll();
         uppy.destroy();
       }
     };
-  }, [allowedFileTypes, maxFileSize, folderPath, maxRetries, retryDelay]);
+  }, [
+    allowedFileTypes,
+    maxFileSize,
+    folderPath,
+    maxRetries,
+    retryDelay,
+    maxFiles,
+    chunkSize,
+    onUploadStart,
+    onUploadProgress,
+    onUploadSuccess,
+    onUploadError,
+    onUploadComplete,
+    onFileAdded,
+    onFileRemoved,
+    onAllComplete,
+  ]);
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -487,19 +530,23 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
   // 파일 선택 처리 - 디버깅 로그 추가
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = event.target.files;
-    console.log('파일 선택됨:', fileList);
 
     if (fileList && fileList.length > 0) {
       Array.from(fileList).forEach((file) => {
-        console.log('파일 추가 시도:', file.name, file.type, file.size);
-
         try {
+          const fileSizeMB = file.size / (1024 * 1024);
+          console.log(`파일 정보: ${file.name}, 크기: ${fileSizeMB.toFixed(2)}MB`);
+
           uppyRef.current?.addFile({
             name: file.name,
             type: file.type,
             data: file,
           });
-          console.log('파일 추가 시도 완료:', file.name);
+          if (file.size > 10 * 1024 * 1024) {
+            console.log(`${file.name} - 멀티파트 업로드 대상 (${fileSizeMB.toFixed(2)}MB > 10MB)`);
+          } else {
+            console.log(`${file.name} - 일반 업로드 대상 (${fileSizeMB.toFixed(2)}MB <= 10MB)`);
+          }
         } catch (error: any) {
           console.error('파일 추가 중 오류:', error);
           setError(`파일 추가 오류: ${error.message}`);
@@ -557,12 +604,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
       uppyRef.current?.removeFile(fileId);
     }
 
-    // 재시도 타이머가 있으면 정리
-    // if (retryTimersRef.current[fileId]) {
-    //   clearTimeout(retryTimersRef.current[fileId]);
-    //   delete retryTimersRef.current[fileId];
-    // }
-
     // 활성 업로드 목록에서 제거
     setActiveUploads((prev) => {
       const updated = { ...prev };
@@ -572,6 +613,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
 
     // 파일 목록에서 제거
     setFiles((prev) => prev.filter((f) => f.id !== fileId));
+
+    if (onFileRemoved) {
+      onFileRemoved(fileId);
+    }
   };
 
   // 파일 오류 상태 업데이트
@@ -585,11 +630,6 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
   const calculateParts = (fileSize: number) => {
     const partCount = Math.ceil(fileSize / PART_SIZE);
     return Array.from({ length: partCount }, (_, i) => i + 1);
-  };
-
-  // 모든 업로드 취소
-  const cancelAllUploads = () => {
-    uppyRef.current?.cancelAll();
   };
 
   // 파트 상태 업데이트
@@ -612,6 +652,10 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
     );
   };
 
+  const startUpload = () => {
+    uppyRef.current?.upload();
+  };
+
   return (
     <div className={cn(styles.start, styles.upload_wrap, wrapSize && styles[wrapSize], className)}>
       <div className={styles.contents} onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
@@ -623,7 +667,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
               onChange={handleFileSelect}
               className="hidden"
               multiple
-              accept={allowedFileTypes?.join(',')}
+              accept={allowedFileTypes?.map((type) => `.${type}`).join(',')}
             />
             <div
               onClick={() => fileInputRef.current?.click()}
@@ -644,125 +688,77 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
           </div>
         ) : (
           <div className={styles.status_wrap}>
-            {/* 진행 중인 업로드가 있을 때 모두 취소 버튼 표시 */}
-            {/* {Object.keys(activeUploads).length > 0 && (
-              <div className="mb-4 flex justify-end">
-                <button
-                  onClick={cancelAllUploads}
-                  className="rounded-md bg-red-500 px-3 py-1 text-sm text-white transition hover:bg-red-600">
-                  모든 업로드 취소
-                </button>
-              </div>
-            )} */}
-
-            {files.map((file) => (
-              <div key={file.id} className={styles.file_item}>
-                <div className={styles.file_info}>
-                  <span className={styles.file_icon}>
-                    {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
-                  </span>
-                  {/* {(file.name.split('.').pop() === 'png' ||
-                    file.name.split('.').pop() === 'svg') && (
+            {showFileList &&
+              files.map((file) => (
+                <div key={file.id} className={styles.file_item}>
+                  <div className={styles.file_info}>
                     <span className={styles.file_icon}>
                       {<IcoFileMp4 width={24} height={24} className={styles.icon_file} />}
                     </span>
-                  )} */}
-                  <span className={styles.file_name}>{file.name}</span>
-                  <span className={styles.file_size}>{formatFileSize(file.size)}</span>
-                </div>
+                    <span className={styles.file_name}>{file.name}</span>
+                    <span className={styles.file_size}>{formatFileSize(file.size)}</span>
+                  </div>
 
-                {/* 진행 상태 표시 */}
-                {file.status === 'uploading' && (
                   <div className="mt-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">{file.progress.toFixed(1)}%</span>
-                      <span className={StatusColors[file.status]}>{StatusLabel[file.status]}</span>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-gray-200">
-                      <div
-                        className="h-2 rounded-full bg-blue-500 transition-all duration-300"
-                        style={{ width: `${file.progress}%` }}
-                      />
-                    </div>
+                    <div className="flex items-center justify-between"></div>
                     <Progress value={file.progress} />
                   </div>
-                )}
 
-                {/* 파일이 일시 중지 또는 완료 또는 에러 상태인 경우 */}
-                {(file.status === 'paused' ||
-                  file.status === 'complete' ||
-                  file.status === 'error') && (
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm">
-                      {file.status === 'paused'
-                        ? '일시 중지됨'
-                        : file.status === 'complete'
-                          ? '업로드 완료'
-                          : '업로드 실패'}
-                    </span>
-                    <span className={StatusColors[file.status]}>{StatusLabel[file.status]}</span>
-                  </div>
-                )}
+                  {(file.status === 'paused' ||
+                    file.status === 'complete' ||
+                    file.status === 'error') && (
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-sm">
+                        {file.status === 'paused'
+                          ? '일시 중지됨'
+                          : file.status === 'complete'
+                            ? '업로드 완료'
+                            : '업로드 실패'}
+                      </span>
+                    </div>
+                  )}
 
-                {/* 에러 메시지 표시 */}
-                {file.errorMessage && (
-                  <div className="mt-1 text-sm text-red-500">{file.errorMessage}</div>
-                )}
+                  {/* Error message */}
+                  {file.errorMessage && (
+                    <div className="mt-1 text-sm text-red-500">{file.errorMessage}</div>
+                  )}
 
-                {/* 파일 작업 버튼 */}
-                <div className={styles.btn_status}>
-                  {/* 일시 중지/재개 버튼 */}
-                  {(file.status === 'uploading' || file.status === 'paused') && (
-                    <Button
-                      className={styles.btn}
-                      onlyIcon
-                      onClick={() => togglePauseResume(file.id)}>
-                      {file.status === 'uploading' ? (
-                        <IcoPause width={20} height={20} fill="#A9AFB8" />
-                      ) : (
+                  {/* File action buttons */}
+                  <div className={styles.btn_status}>
+                    {/* Pause/Resume button */}
+                    {(file.status === 'uploading' || file.status === 'paused') && (
+                      <Button
+                        className={styles.btn}
+                        onlyIcon
+                        onClick={() => togglePauseResume(file.id)}>
+                        {file.status === 'uploading' ? (
+                          <IcoPause width={20} height={20} fill="#A9AFB8" />
+                        ) : (
+                          <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                        )}
+                      </Button>
+                    )}
+
+                    {/* Retry button */}
+                    {file.status === 'error' && (
+                      <Button
+                        className={styles.btn}
+                        onlyIcon
+                        onClick={() => uppyRef.current?.retryUpload(file.id)}>
                         <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                      )}
-                    </Button>
-                  )}
+                      </Button>
+                    )}
 
-                  {/* 재시도 버튼 */}
-                  {file.status === 'error' && (
+                    {/* Delete button */}
                     <Button
-                      className={styles.btn}
-                      onlyIcon
-                      onClick={() => uppyRef.current?.retryUpload(file.id)}>
-                      <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                      className={styles.btn_delete}
+                      onClick={() => removeFile(file.id)}
+                      onlyIcon>
+                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
-                  )}
-
-                  {/* 삭제 버튼 */}
-                  <Button
-                    className={styles.btn_delete}
-                    onClick={() => removeFile(file.id)}
-                    onlyIcon>
-                    <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                  </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-
-            {/* 파일 추가 버튼 */}
-            {/* <div className="mt-4 flex justify-center space-x-3">
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-400"
-                disabled={isUploading && Object.keys(activeUploads).length > 3}>
-                파일 추가
-              </button>
-
-              {isUploading && (
-                <button
-                  onClick={cancelAllUploads}
-                  className="rounded-md border border-red-500 px-4 py-2 text-red-500 transition hover:bg-red-50">
-                  업로드 중단
-                </button>
-              )}
-            </div> */}
+              ))}
           </div>
         )}
 
@@ -779,7 +775,7 @@ export const UppyUpload: React.FC<SimpleUploadProps> = ({
         )}
       </div>
 
-      {/* 업로드 상태 요약 */}
+      {/* Upload summary */}
       {files.length > 0 && (
         <div className="mt-4 rounded-lg bg-gray-50 p-3">
           <h3 className="font-medium">업로드 요약</h3>

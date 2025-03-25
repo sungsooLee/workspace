@@ -9,7 +9,8 @@ import {
 import { AuthFooter } from './auth-footer/auth-footer';
 import { Footer } from '../../../../../widgets/layout/ui/main/footer/footer';
 
-import styles from './auth-container.module.css';
+//import styles from './auth-container.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-container/auth-container.module.css';
 
 interface AuthContainerComponentProps {
   children: ReactNode;

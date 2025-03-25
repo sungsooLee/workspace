@@ -68,7 +68,7 @@
 
 /* mobile */
 :global(body.mobile) {
-  @screen mobile {
+  @screen md {
     .start {
       &.login {
         &.auth_wrap {
@@ -78,11 +78,11 @@
         .login_info {
           .id_save {
             label {
-              @apply text-[1.4rem] text-[var(--gray8)];
+              @apply text-[1.4rem];
             }
           }
           .info {
-            @apply body_3_r flex gap-[24px] text-[var(--gray7)];
+            @apply body_3_r;
           }
         }
         .btn_box {
@@ -94,7 +94,7 @@
         .sns_login {
           @apply mt-[40px];
           .list {
-            @apply mt-[24px]gap-[24px];
+            @apply mt-[24px] gap-[24px];
             > li {
               @apply h-[48px] w-[48px];
             }
@@ -104,16 +104,16 @@
             z-index: 0;
           }
           .tit_sns {
-            @apply body_2_r h-[26px] w-[180px];
+            @apply body_3_r h-[22px] w-[140px];
             z-index: 2;
           }
           .noti {
-            @apply body_bo_2_r mt-[24px];
+            @apply body_bo_2_r m-auto mt-[24px] max-w-[250px];
           }
         }
 
         .login_guide {
-          @apply body_3_r flex h-[56px];
+          @apply body_3_r flex h-auto border-t-[0] pb-[32px] pt-[12px];
           .btn_join {
           }
           a {

@@ -17,7 +17,7 @@
   @screen mobile {
     .start {
       &.container {
-        @apply min-w-[320px];
+        @apply h-auto min-w-[320px];
       }
     }
   }

@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired, IcoArrowForward } from '@learnway/icons';
 import styles from './signup-step3.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 import {
   Button,
   Stepper,
@@ -134,15 +135,15 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input
-                    id="name"
-                    type="password"
-                    placeholder="비밀번호 (영문 대소문자, 숫자, 특수문자를 조합하여 8~16자리)"
-                    value=""
-                  />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="password" placeholder="비밀번호 확인" value="" />
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <Input
+                      id="name"
+                      type="password"
+                      placeholder="비밀번호 (영문 대소문자, 숫자, 특수문자를 조합하여 8~16자리)"
+                      value=""
+                    />
+                    <Input id="name" type="password" placeholder="비밀번호 확인" value="" />
+                  </div>
                 </div>
               </div>
             </ContentsRow>

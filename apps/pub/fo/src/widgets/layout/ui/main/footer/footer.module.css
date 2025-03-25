@@ -54,3 +54,34 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.footer {
+        @apply px-[20px] py-[24px];
+        .footer_area {
+          @apply w-full;
+          .footer_info {
+            @apply pb-[54px];
+            .info_menu {
+              ul {
+                @apply gap-[16px];
+              }
+            }
+            .info_box {
+              @apply mt-[16px];
+              .info,
+              .address {
+                @apply hidden;
+              }
+            }
+            .family_site_info {
+              @apply hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}

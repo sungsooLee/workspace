@@ -1,0 +1,14 @@
+.start {
+  &.language_wrap {
+    ul {
+      li {
+        button {
+          @apply body_3_r flex w-full items-center justify-between px-[20px] py-[17px] leading-[24px] text-[var(--gray9)];
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
+      }
+    }
+  }
+}

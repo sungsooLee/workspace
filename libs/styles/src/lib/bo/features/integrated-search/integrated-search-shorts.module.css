@@ -1,0 +1,8 @@
+/*  */
+.start {
+  &.shorts {
+    .shorts_box {
+      @apply mt-[16px] h-[50px] w-full bg-black;
+    }
+  }
+}

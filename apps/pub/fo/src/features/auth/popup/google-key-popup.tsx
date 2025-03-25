@@ -1,9 +1,14 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import styles from './google-key-popup.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+
+import { cn } from '@learnway/shared';
 
 const GoogleKeyPopupCompoment = () => {
   const { close: closeModal } = useModal();
@@ -24,7 +29,7 @@ const GoogleKeyPopupCompoment = () => {
               onClick={() => {
                 closeModal(); // 모달 닫기 함수 호출
                 openModal({
-                  width: 'sm',
+                  width: isMobile ? 'm_full' : 'sm',
                   content: <GoogleQrcodePopup />,
                 });
               }}>
@@ -45,19 +50,41 @@ const GoogleKeyPopupCompoment = () => {
       </ModalBody>
 
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button
-          label={'다음'}
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => {
-            closeModal(); // 모달 닫기 함수 호출
-            openModal({
-              width: 'sm',
-              content: <GoogleInputPopup />,
-            });
-          }}
-        />
+        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+        <BrowserView>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+            <Button
+              label={'확인'}
+              variant={'primary'}
+              size={'lg'}
+              onClick={() => {
+                closeModal(); // 모달 닫기 함수 호출
+                openModal({
+                  width: 'sm',
+                  content: <GoogleInputPopup />,
+                });
+              }}
+            />
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <MobileContainerFooter>
+            <Button
+              label={'확인'}
+              variant={'primary'}
+              size={'lg'}
+              onClick={() => {
+                closeModal(); // 모달 닫기 함수 호출
+                openModal({
+                  width: 'm_full',
+                  content: <GoogleInputPopup />,
+                });
+              }}
+            />
+          </MobileContainerFooter>
+        </MobileView>
       </ModalFooter>
     </ModalContainer>
   );
