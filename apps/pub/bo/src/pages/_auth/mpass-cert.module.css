@@ -16,6 +16,9 @@
     }
     .select_txt {
       @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
+      & + div {
+        @apply mt-[48px];
+      }
     }
     .auth_form {
       @apply mt-[48px];

@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styles from './mpass-popup.module.css';
 import imgGuide1 from '../../../assets/images/popup/img_mpass_guide1.png';
 import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, Button, useModal } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, useModal } from '@learnway/ui';
 
 const MpassPopupCompoment = () => {
   const { close: closeModal } = useModal();
