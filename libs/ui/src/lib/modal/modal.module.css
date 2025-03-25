@@ -186,6 +186,13 @@
   }
 }
 
+/* mobile */
+:global(body.mobile) {
+  .content {
+    @apply !animate-none;
+  }
+}
+
 @keyframes overlayShow {
   from {
     opacity: 0;

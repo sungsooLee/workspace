@@ -75,7 +75,7 @@
       .guide_img_box {
         figure {
           img {
-            @apply h-[231px];
+            @apply h-auto w-full;
           }
         }
       }

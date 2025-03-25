@@ -1,0 +1,28 @@
+/* member-tool-form-field.module.css */
+.start {
+  &.signup_select {
+    button {
+      @apply m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+      span {
+        @apply body_3_r mt-[8px] block text-[var(--gray7)];
+      }
+      svg {
+        @apply stroke-[var(--primary1)] opacity-30;
+      }
+      &[aria-checked='true'] {
+        @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+        span {
+          @apply body_3_b text-[var(--primary1)];
+        }
+        svg {
+          @apply opacity-100;
+        }
+      }
+      &:nth-child(2) {
+        svg {
+          @apply !opacity-30;
+        }
+      }
+    }
+  }
+}

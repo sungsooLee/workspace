@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoBuilding01, IcoUser01 } from '@learnway/icons';
-import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
+import { cn } from '@learnway/shared';
 import { Button, RadioCard, Stepper } from '@learnway/ui';
+import styles from './signup-step1.module.css';
+import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
 
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
@@ -33,14 +34,20 @@ function RouteComponent() {
   const itemsToShow = selectedValue === 'type1' ? items : items2;
 
   return (
-    <div className={`${styles.start} ${signupStyles.auth_wrap} ${signupStyles.signup_step}`}>
-      <div className={signupStyles.auth_box}>
-        <div className={signupStyles.signup_info}>
-          <div className={signupStyles.step_box}>
+    <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
+      <div className={cn(styles.auth_box, 'auth--box')}>
+        <div className={styles.signup_info}>
+          <div className={styles.step_box}>
             <Stepper items={itemsToShow} variant="check" selectedStep="step1" />
           </div>
 
-          <div className={signupStyles.signup_select} role="radiogroup">
+          <div
+            className={cn(
+              memberToolFormField.start,
+              memberToolFormField.signup_select,
+              'auth--signup-select',
+            )}
+            role="radiogroup">
             <RadioCard
               className={styles.radio_card}
               options={[
@@ -68,7 +75,7 @@ function RouteComponent() {
             />
           </div>
         </div>
-        <div className={signupStyles.btn_wrap}>
+        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="gray" size="xl">
             취소
           </Button>
