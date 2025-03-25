@@ -213,9 +213,9 @@ export const guideData = [
     pageId: 'admin-auth-step2',
     screenId: 'NLP_BO_LOG_1007_01',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인/관리자 권한 신청(본인인증) ',
