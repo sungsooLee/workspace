@@ -64,7 +64,7 @@ function ContainerHeaderComponent() {
       )}
 
       {/* 로그인/회원가입관련 서브 header */}
-      <div className={styles.left}>
+      {/* <div className={styles.left}>
         <Button>
           <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
         </Button>
@@ -73,7 +73,7 @@ function ContainerHeaderComponent() {
 
       <Button>
         <IcoXclose width={24} height={24} stroke="#131C30"></IcoXclose>
-      </Button>
+      </Button> */}
     </div>
   );
 }
