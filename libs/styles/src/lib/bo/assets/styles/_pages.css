@@ -3,11 +3,7 @@
 .auth--box {
   @apply px-[40px] py-[48px];
   .nlp--input input {
-    @apply !min-h-[40px] !rounded-[8px];
-    &:read-only,
-    &:disabled {
-      @apply px-[16px];
-    }
+    @apply !min-h-[40px] !rounded-[8px] px-[16px];
   }
   div + .auth--signup-select {
     @apply mt-[48px];

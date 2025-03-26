@@ -19,11 +19,7 @@
       @apply border-[var(--status1)];
     }
     &.lg {
-      @apply min-h-[40px];
-      &:read-only,
-      &:disabled {
-        @apply px-[16px];
-      }
+      @apply min-h-[40px] px-[16px];
     }
     &.bd_none {
       @apply h-auto border-0 bg-transparent;

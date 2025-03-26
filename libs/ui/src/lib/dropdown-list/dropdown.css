@@ -19,7 +19,7 @@
   }
   .readonly {
     .nlp-select__control {
-      @apply pointer-events-none border-[#f6f8fd] bg-[#f6f8fd] pr-[18px];
+      @apply pointer-events-none border-[#f6f8fd] bg-[#f6f8fd];
       .nlp-select__single-value {
         @apply pl-[8px] text-[#4c515e];
       }
@@ -40,7 +40,10 @@
   }
   &.nlp--dropdown-lg {
     .nlp-select__control {
-      @apply !min-h-[40px] rounded-[8px];
+      @apply !min-h-[40px] rounded-[8px] pr-[16px];
+      .nlp-select__single-value {
+        @apply pl-[8px];
+      }
     }
   }
 }
