@@ -13,7 +13,7 @@ import {
   InputModalSelectorFormField,
 } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
-import styles from './admin-auth-step3.module.css';
+import styles from './admin-auth-step4.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
