@@ -2,7 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import styles from './signup.module.css';
+//import styles from './signup.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
