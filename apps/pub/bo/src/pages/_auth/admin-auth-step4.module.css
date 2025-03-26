@@ -5,7 +5,7 @@
       @apply px-[80px];
     }
     .auth_form {
-      @apply mt-[48px];
+      @apply mt-0;
     }
     .divider {
       @apply mt-[24px];
