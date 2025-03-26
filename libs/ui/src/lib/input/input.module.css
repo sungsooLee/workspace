@@ -6,7 +6,7 @@
       @apply border-[var(--gray7)];
     }
     &:read-only {
-      @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray8)];
+      @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[#4c515e];
       &:focus {
         @apply border-[var(--gray1)];
       }
@@ -20,6 +20,10 @@
     }
     &.lg {
       @apply min-h-[40px];
+      &:read-only,
+      &:disabled {
+        @apply px-[16px];
+      }
     }
     &.bd_none {
       @apply h-auto border-0 bg-transparent;
