@@ -132,7 +132,6 @@ function RouteComponent() {
   );
 }
 
-
 const loginFormConfig: DynamicFormConfig = {
   builders: [
     {
@@ -142,6 +141,7 @@ const loginFormConfig: DynamicFormConfig = {
       value: '',
       placeholder: '아아디/이메일을 입력하세요',
       description: '기본 메세지',
+      format: 'email',
     },
     {
       name: 'password',
