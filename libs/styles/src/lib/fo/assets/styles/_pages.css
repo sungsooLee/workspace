@@ -2,6 +2,13 @@
 /* 회원가입 */
 .auth--box {
   @apply px-[40px] py-[48px];
+  .nlp--input input {
+    @apply !min-h-[40px] !rounded-[8px];
+    &:read-only,
+    &:disabled {
+      @apply px-[16px];
+    }
+  }
 }
 
 h4.auth--title {
