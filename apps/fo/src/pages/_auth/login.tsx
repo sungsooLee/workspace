@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
-import { useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
@@ -36,7 +36,7 @@ function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control } = useDynamicForm(loginFormConfig);
 
   const { data: authData } = useFetchAuthUser();
 
@@ -123,7 +123,8 @@ function RouteComponent() {
         <div className={styles.login_guide}>
           <span>
             <Link to="/signup-progress">{t('LABEL.회원 가입 현황')}</Link>
-            <Link to="/signup">{t('LABEL.회원가입')}</Link>
+            {/*<Link to="/signup">{t('LABEL.회원가입')}</Link>*/}
+            <Link to="/login">{t('LABEL.회원가입')}</Link>
           </span>
         </div>
       </div>
@@ -131,10 +132,8 @@ function RouteComponent() {
   );
 }
 
-/**
- * 필수값 : name, type
- */
-const detailConfig = {
+
+const loginFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'username',
@@ -162,11 +161,13 @@ const detailConfig = {
     },
   ],
   validator: {
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-    category: z.string().nonempty(t('유효성 테스트')),
-     language_code: z.string().nonempty(t('유효성 테스트')),
-     subdivision: z.string().nonempty(t('유효성 테스트')),
-     check: z.boolean(),
-     tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    username: {
+      format: 'email',
+      required: true,
+    },
+    password: {
+      format: 'string',
+      required: true,
+    },
   },
 };
