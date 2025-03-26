@@ -32,9 +32,12 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     return builders.reduce((acc, builder) => {
       const key = builder.name;
       const analogyFormat = typeof builder.value as ValidatorFormat;
-      const format = builder.format || analogyFormat;
+      let format = builder.format || analogyFormat;
 
       const existingValidator = validator[key] as any;
+      if (existingValidator && existingValidator.format) {
+        format = existingValidator.format;
+      }
       acc[key] = {
         format,
         required: { required: false },
