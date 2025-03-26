@@ -8,7 +8,7 @@
 :global(body.mobile) {
   @screen mobile {
     .auth_form {
-      @apply mt-0;
+      @apply mt-[16px];
     }
   }
 }

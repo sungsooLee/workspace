@@ -13,6 +13,9 @@ import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-al
 import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
 import { MpassPopup } from '../../features/auth';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/progress-status-email')({
   component: RouteComponent,
 });
@@ -64,15 +67,26 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
 
-            <Button size="xl" variant="primary">
-              진행현황 확인
-            </Button>
-          </div>
+              <Button size="xl" variant="primary">
+                진행현황 확인
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button size="xl" variant="primary">
+                진행현황 확인
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

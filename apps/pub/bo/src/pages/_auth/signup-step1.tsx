@@ -4,7 +4,6 @@ import { IcoBuilding01, IcoUser01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Button, RadioCard, Stepper } from '@learnway/ui';
 import styles from './signup-step1.module.css';
-import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
 
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
@@ -41,13 +40,7 @@ function RouteComponent() {
             <Stepper items={itemsToShow} variant="check" selectedStep="step1" />
           </div>
 
-          <div
-            className={cn(
-              memberToolFormField.start,
-              memberToolFormField.signup_select,
-              'auth--signup-select',
-            )}
-            role="radiogroup">
+          <div className={cn(styles.signup_select, 'auth--signup-select')} role="radiogroup">
             <RadioCard
               className={styles.radio_card}
               options={[

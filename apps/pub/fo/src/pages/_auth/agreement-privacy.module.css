@@ -15,11 +15,36 @@
     @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
     .all {
       label {
-        @apply body_bo_2_b;
+        @apply body_bo_2_r;
       }
     }
   }
   .btn_wrap {
     @apply mt-[48px];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .signup_check {
+        @apply mt-[32px];
+        ul {
+          > li {
+            .btn_view {
+            }
+          }
+        }
+      }
+
+      .check_all {
+        .all {
+          label {
+          }
+        }
+      }
+      .btn_wrap {
+      }
+    }
   }
 }

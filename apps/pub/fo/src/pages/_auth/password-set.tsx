@@ -7,6 +7,9 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/password-set')({
   component: RouteComponent,
 });
@@ -90,14 +93,25 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              취소
-            </Button>
-            <Button variant="primary" size="xl">
-              확인
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
+              <Button variant="primary" size="xl">
+                확인
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                확인
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

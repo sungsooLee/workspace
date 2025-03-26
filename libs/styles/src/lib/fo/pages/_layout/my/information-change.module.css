@@ -9,9 +9,12 @@
       .avata_img {
         @apply relative;
         .avata_box {
-          @apply text-center;
+          @apply flex justify-center;
           .info_avata {
-            @apply h-[128px] w-[128px];
+            @apply h-[128px] w-[128px] rounded-[50%];
+          }
+          span.info_avata {
+            @apply title_1_b inline-flex items-center justify-center bg-[#00afd5] text-center text-white;
           }
         }
       }
@@ -23,6 +26,23 @@
     }
     .notice {
       @apply mt-[32px];
+      a {
+        @apply body_4_r ml-[20px] text-[var(--gray7)];
+      }
+    }
+    .bullet_notice {
+      @apply mt-[32px];
+      dl {
+        dt {
+          @apply body_4_b mb-[8px] text-[var(--gray7)];
+        }
+        dd {
+          @apply body_4_r relative pl-[10px] leading-[19px] text-[var(--gray7)];
+          &::before {
+            @apply absolute left-0 top-[8px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
+          }
+        }
+      }
     }
   }
 }

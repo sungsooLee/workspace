@@ -37,8 +37,9 @@
   @screen mobile {
     .start {
       .search_info {
-        @apply mt-[16px] pb-[32px];
+        @apply mt-[32px] pb-[32px];
         &.dormant {
+          @apply mt-[0];
         }
         svg {
         }
@@ -47,6 +48,7 @@
         strong {
         }
         + .noti_box {
+          @apply mb-[32px];
         }
       }
       .auth_form {
