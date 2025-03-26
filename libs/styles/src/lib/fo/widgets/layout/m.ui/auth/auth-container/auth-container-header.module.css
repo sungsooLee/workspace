@@ -1,5 +1,5 @@
 .start {
-  @apply fixed left-0 right-0 top-0 z-[100] flex h-[56px] items-center justify-between bg-white px-[16px];
+  @apply flex h-[56px] items-center justify-between px-[16px];
   .left {
     @apply flex flex-1 items-center;
     h2 {
