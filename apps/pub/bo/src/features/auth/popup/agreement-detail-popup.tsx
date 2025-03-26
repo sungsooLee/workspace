@@ -14,9 +14,18 @@ const AgreementDetailPopupCompoment = () => {
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
-      <ModalTitle>{'약관상세 팝업'}</ModalTitle>
+      <ModalTitle>{'약관 명'}</ModalTitle>
       <ModalBody>
-        <div className={`${styles.start} ${styles.agreement_detail_popup}`}>
+        <div className={`${styles.start} ${styles.agreement_popup}`}>
+          <Select
+            size="lg"
+            options={[
+              { value: 'type1', label: '약관 명 YYYY-MM-DD' },
+              { value: 'type2', label: '약관 명2 YYYY-MM-DD' },
+            ]}
+            placeholder="이전 약관 보기"
+          />
+
           <div className={styles.details}>약관 내용</div>
         </div>
       </ModalBody>

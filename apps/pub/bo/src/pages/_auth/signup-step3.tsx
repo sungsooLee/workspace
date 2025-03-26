@@ -14,9 +14,10 @@ import {
   PhoneNumber,
   InputTimer,
   InputModalSelectorFormField,
+  useModal,
 } from '@learnway/ui';
 
-import { TenantSearchPopup } from '../../features/auth'; // 테넌트명 조회 팝업
+import { TenantSearchPopup, AgreementDetailPopup } from '../../features/auth'; // 테넌트명 조회 팝업
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,
@@ -31,6 +32,7 @@ function RouteComponent() {
   const handleChange = (event: SelectOption) => {
     console.log(event);
   };
+  const { open: openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
@@ -294,31 +296,66 @@ function RouteComponent() {
             <ul className={styles.check_list}>
               <li>
                 <Checkbox label="러닝웨이 이용약관(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="개인정보 이용동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="고유식별 정보 처리 동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="회원가입 및 이용 개인정보 제3자 제공동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="민감정보 수집 및 이용(선택)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>

@@ -1,6 +1,9 @@
 .auth_form {
   @apply mt-[32px];
 }
+h4 + .auth_form {
+  @apply mt-0;
+}
 .btn_wrap {
   @apply mt-[48px];
 }
