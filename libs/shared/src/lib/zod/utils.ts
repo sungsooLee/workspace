@@ -1,6 +1,7 @@
 import { z } from './zod';
 import { ZodSchema } from 'zod';
 import { ValidatorConfig } from '../types/zod';
+import { password_validator } from './validator';
 
 // 필수 값 처리 함수 (분리)
 const handleRequired = (
@@ -76,6 +77,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
       case 'object':
         schema = z.object({});
         break;
+      /*
       case 'email': {
         schema = z.string();
         const emailRegx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -88,8 +90,13 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
           },
         });
         break;
-      }
-
+      }*/
+      case 'email':
+        schema = z.string().email();
+        break;
+      case 'password':
+        schema = password_validator;
+        break;
       default:
         throw new Error(`Unsupported type: ${config.format}`);
     }

@@ -140,7 +140,7 @@ const FilterComponent = ({ onOptionChange }: any) => {
           hideBorder
           type="line"
           size="lg"
-          onChange={handleChipOptionsChange}
+          //onChange={handleChipOptionsChange}
         />
       </div>
 
