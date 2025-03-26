@@ -10,3 +10,12 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply fixed left-0 right-0 top-0 z-[100] w-full min-w-[320px] bg-[#ffffff];
+    }
+  }
+}

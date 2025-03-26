@@ -38,6 +38,7 @@ import { Route as AuthMpassCertFidoImport } from './pages/_auth/mpass-cert-fido'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
+import { Route as AuthAdminAuthStep4Import } from './pages/_auth/admin-auth-step4'
 import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step3'
 import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
@@ -250,6 +251,12 @@ const AuthLoginRoute = AuthLoginImport.update({
 const AuthGoogleCertRoute = AuthGoogleCertImport.update({
   id: '/google-cert',
   path: '/google-cert',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAdminAuthStep4Route = AuthAdminAuthStep4Import.update({
+  id: '/admin-auth-step4',
+  path: '/admin-auth-step4',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -606,6 +613,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-auth-step3'
       fullPath: '/admin-auth-step3'
       preLoaderRoute: typeof AuthAdminAuthStep3Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin-auth-step4': {
+      id: '/_auth/admin-auth-step4'
+      path: '/admin-auth-step4'
+      fullPath: '/admin-auth-step4'
+      preLoaderRoute: typeof AuthAdminAuthStep4Import
       parentRoute: typeof AuthImport
     }
     '/_auth/google-cert': {
@@ -1134,6 +1148,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthAdminAuthStep2Route: typeof AuthAdminAuthStep2Route
   AuthAdminAuthStep3Route: typeof AuthAdminAuthStep3Route
+  AuthAdminAuthStep4Route: typeof AuthAdminAuthStep4Route
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
@@ -1160,6 +1175,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthAdminAuthStep2Route: AuthAdminAuthStep2Route,
   AuthAdminAuthStep3Route: AuthAdminAuthStep3Route,
+  AuthAdminAuthStep4Route: AuthAdminAuthStep4Route,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
@@ -1314,6 +1330,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/admin-auth-step2': typeof AuthAdminAuthStep2Route
   '/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -1394,6 +1411,7 @@ export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
   '/admin-auth-step2': typeof AuthAdminAuthStep2Route
   '/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -1477,6 +1495,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_auth/admin-auth-step2': typeof AuthAdminAuthStep2Route
   '/_auth/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/_auth/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
@@ -1559,6 +1578,7 @@ export interface FileRouteTypes {
     | ''
     | '/admin-auth-step2'
     | '/admin-auth-step3'
+    | '/admin-auth-step4'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1638,6 +1658,7 @@ export interface FileRouteTypes {
     | ''
     | '/admin-auth-step2'
     | '/admin-auth-step3'
+    | '/admin-auth-step4'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1719,6 +1740,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_auth/admin-auth-step2'
     | '/_auth/admin-auth-step3'
+    | '/_auth/admin-auth-step4'
     | '/_auth/google-cert'
     | '/_auth/login'
     | '/_auth/mpass-cert'
@@ -1828,6 +1850,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/admin-auth-step2",
         "/_auth/admin-auth-step3",
+        "/_auth/admin-auth-step4",
         "/_auth/google-cert",
         "/_auth/login",
         "/_auth/mpass-cert",
@@ -1920,6 +1943,10 @@ export const routeTree = rootRoute
     },
     "/_auth/admin-auth-step3": {
       "filePath": "_auth/admin-auth-step3.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/admin-auth-step4": {
+      "filePath": "_auth/admin-auth-step4.tsx",
       "parent": "/_auth"
     },
     "/_auth/google-cert": {

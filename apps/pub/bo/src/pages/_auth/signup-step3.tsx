@@ -16,7 +16,7 @@ import {
   InputModalSelectorFormField,
 } from '@learnway/ui';
 
-import { TenantSearchPopup } from '../../features/auth';
+import { TenantSearchPopup } from '../../features/auth'; // 테넌트명 조회 팝업
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,

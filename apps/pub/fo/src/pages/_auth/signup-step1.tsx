@@ -8,6 +8,9 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
 import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,
 });
@@ -70,14 +73,26 @@ function RouteComponent() {
             </dl>
           </div>
         </div>
-        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="gray" size="xl">
-            취소
-          </Button>
-          <Button variant="primary" size="xl" disabled>
-            다음
-          </Button>
-        </div>
+
+        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+        <BrowserView>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button variant="gray" size="xl">
+              취소
+            </Button>
+            <Button variant="primary" size="xl" disabled>
+              다음
+            </Button>
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <MobileContainerFooter>
+            <Button variant="primary" size="xl" disabled>
+              다음
+            </Button>
+          </MobileContainerFooter>
+        </MobileView>
       </div>
     </div>
   );

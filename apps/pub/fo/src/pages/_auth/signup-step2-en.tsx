@@ -6,15 +6,20 @@ import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow, RadioCard, Select } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
+
 export const Route = createFileRoute('/_auth/signup-step2-en')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const items = [
-    { label: 'Select Membership Type', subLabel: '', value: 'step1' },
-    { label: 'Dealer & Region Select', subLabel: '', value: 'step2' },
-    { label: 'Required Information', subLabel: '', value: 'step3' },
+    { label: 'Select\n Membership Type', subLabel: '', value: 'step1' },
+    { label: 'Dealer & Region\n Select', subLabel: '', value: 'step2' },
+    { label: 'Required\n Information', subLabel: '', value: 'step3' },
   ];
   const handleChange = (event: SelectOption) => {
     console.log(event);
@@ -79,38 +84,47 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Select
-                    size="lg"
-                    options={[{ value: 'type1', label: 'Select Region' }]}
-                    className={formStyles.select_option}
-                  />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Select
-                    size="lg"
-                    options={[{ value: 'type1', label: 'Select Distributor' }]}
-                    className={formStyles.select_option}
-                  />
-                </div>
-                <div className={formStyles.input_box}>
-                  <Select
-                    size="lg"
-                    options={[{ value: 'type1', label: 'Select Dealer' }]}
-                    className={formStyles.select_option}
-                  />
+                  <div className={dynamicFormStyles.item_col_full}>
+                    <Select
+                      size="lg"
+                      options={[{ value: 'type1', label: 'Select Region' }]}
+                      className={formStyles.select_option}
+                    />
+                    <Select
+                      size="lg"
+                      options={[{ value: 'type1', label: 'Select Distributor' }]}
+                      className={formStyles.select_option}
+                    />
+                    <Select
+                      size="lg"
+                      options={[{ value: 'type1', label: 'Select Dealer' }]}
+                      className={formStyles.select_option}
+                    />
+                  </div>
                 </div>
               </div>
             </ContentsRow>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              이전
-            </Button>
-            <Button variant="primary" size="xl">
-              다음
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                이전
+              </Button>
+              <Button variant="primary" size="xl">
+                다음
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                다음
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

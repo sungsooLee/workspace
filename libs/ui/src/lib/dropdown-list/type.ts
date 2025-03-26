@@ -15,6 +15,7 @@ export interface DropdownComponentProps {
   ) => void;
   placeholder?: string;
   isDisabled?: boolean;
+  isReadonly?: boolean;
   isMulti?: boolean;
   isSearchable?: boolean;
   isClearable?: boolean;

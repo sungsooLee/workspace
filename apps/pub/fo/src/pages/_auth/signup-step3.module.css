@@ -1,6 +1,6 @@
 .start {
   .step_box {
-    @apply mb-[48px] pl-[140px] pr-[140px];
+    @apply mb-[48px] px-[140px];
   }
 
   .btn_wrap {
@@ -36,5 +36,18 @@
   }
   .divider {
     @apply mt-[16px];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .step_box {
+        @apply mb-[32px] px-0;
+      }
+      .signup_noti {
+        @apply mt-[24px];
+      }
+    }
   }
 }

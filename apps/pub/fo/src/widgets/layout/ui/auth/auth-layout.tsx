@@ -8,6 +8,7 @@ import { AuthContainer } from './auth-container/auth-container';
 import styles from './auth-layout.module.css';
 
 import { isSigninPage, PAGE_TITLE_BY_PATH, isSigninPageNone } from '../../../../features/platform';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;
@@ -24,7 +25,10 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
     <>
       {/* {meta.mobile.showHeader && <AuthHeader />} */}
       {/* 퍼블확인용 */}
-      {isSigninPage(location.pathname) ? <AuthHeader /> : ''}
+      <BrowserView>
+        <AuthHeader />
+      </BrowserView>
+      <MobileView>{isSigninPage(location.pathname) ? <AuthHeader /> : ''}</MobileView>
 
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
