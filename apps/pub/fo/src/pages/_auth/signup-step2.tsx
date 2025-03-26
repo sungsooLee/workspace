@@ -6,6 +6,9 @@ import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/signup-step2')({
   component: RouteComponent,
 });
@@ -59,14 +62,25 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              이전
-            </Button>
-            <Button variant="primary" size="xl">
-              다음
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                이전
+              </Button>
+              <Button variant="primary" size="xl">
+                다음
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                다음
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>

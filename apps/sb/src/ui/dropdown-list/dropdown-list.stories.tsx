@@ -39,6 +39,11 @@ export default {
       description: '비활성화 여부',
       defaultValue: false,
     },
+    isReadonly: {
+      control: 'boolean',
+      description: '비활성화 여부',
+      defaultValue: false,
+    },
     label: {
       control: 'text',
       description: '드롭다운 라벨',

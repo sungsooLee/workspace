@@ -7,9 +7,10 @@ import { Navigation } from 'swiper/modules';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
+// 퍼블수정 20250326 : 이미지 경로
 // 예시 이미지
-import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
-import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
+import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';
+import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category_02.png';
 
 export const Route = createFileRoute('/_layout/category/detail')({
   component: RouteComponent,

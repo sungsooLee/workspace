@@ -67,7 +67,7 @@ function RouteComponent() {
 
         <div className={styles.login_guide}>
           <span>
-            <Link to="/progress-status">회원 가입 현황</Link>
+            <Link to="/progress-status-email">회원 가입 현황</Link>
             <Link to="/signup-step1">관리자 회원가입</Link>
           </span>
         </div>

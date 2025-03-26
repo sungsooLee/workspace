@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import styles from './mpass-popup.module.css';
 import { cn } from '@learnway/shared';
-import imgGuide1 from '../../../assets/images/popup/img_mpass_guide1.png';
-import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
+import imgGuide1 from '@learnway/styles/fo/assets/images/popup/img_mpass_guide1.png';
+import imgGuide2 from '@learnway/styles/fo/assets/images/popup/img_mpass_guide2.png';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, Button, useModal } from '@learnway/ui';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
