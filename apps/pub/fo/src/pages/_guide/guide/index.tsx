@@ -108,6 +108,9 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">퍼블 리스트 현황 (학습자)</h2>
+      <div className="info">
+        모바일 : 브라우저 개발자 도구(디바이스 툴바)에서 모바일로 변경 후 확인가능합니다.
+      </div>
       <div className="stats_box">
         <span className="total">
           총 : <strong>{stats.total}</strong>본 (PC:{pcCount} / Mobile:{mobileCount})
@@ -125,6 +128,7 @@ function RouteComponent() {
           </strong>
         </span>
       </div>
+
       <div className="stats_graph">
         <div
           className="graph_bar completed"
@@ -141,6 +145,7 @@ function RouteComponent() {
           남은본수 : {stats.remaining}본
         </div>
       </div>
+
       <table className="pub_table">
         <thead>
           <tr>
