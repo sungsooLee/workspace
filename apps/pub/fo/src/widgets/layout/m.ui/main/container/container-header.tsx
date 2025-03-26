@@ -42,7 +42,8 @@ function ContainerHeaderComponent() {
 
   return (
     <div className={styles.start}>
-      {categoryPage && (
+      {/* 기본 */}
+      {!integrated && (
         <>
           <div className={styles.left}>
             <Button onClick={handleBack}>
