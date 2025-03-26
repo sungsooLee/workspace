@@ -123,7 +123,8 @@ function RouteComponent() {
         <div className={styles.login_guide}>
           <span>
             <Link to="/signup-progress">{t('LABEL.회원 가입 현황')}</Link>
-            <Link to="/signup">{t('LABEL.회원가입')}</Link>
+            {/*<Link to="/signup">{t('LABEL.회원가입')}</Link>*/}
+            <Link to="/login">{t('LABEL.회원가입')}</Link>
           </span>
         </div>
       </div>

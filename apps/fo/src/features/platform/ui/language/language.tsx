@@ -13,6 +13,9 @@ import { useSetLanguage } from '../../service/i18n.hook';
 import { useCodesByCodeGroup, type Code } from '../../../../entities/platform';
 
 import styles from './language.module.css';
+import { useCreation } from 'ahooks';
+
+const DEFAULT_LANGUAGE_CODES = ['ko', 'en'];
 
 const PopoverContent = ({ data }: { data?: Code[] }) => {
   const { t } = useTranslation();
@@ -68,6 +71,16 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   const { data } = useFetchAuthUser();
   const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
 
+  const languages = useCreation(() => {
+    if (!languageCodes) {
+      return [];
+    }
+    if (!data) {
+      return languageCodes.filter((code: Code) => DEFAULT_LANGUAGE_CODES.includes(code.code));
+    }
+    return languageCodes;
+  }, [data]);
+
   return (
     <>
       <MobileView>
@@ -82,7 +95,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
           side="bottom"
           align="center"
           sideOffset={5}
-          popoverContent={<PopoverContent data={languageCodes} />}>
+          popoverContent={<PopoverContent data={languages} />}>
           <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>

@@ -54,7 +54,8 @@ function RouteComponent() {
       userId: '',
       name: '',
       birthday: '',
-      phoneNumber: {} as PhoneNumberValue,
+      phoneNumber: '',
+      nationCode: 'KR',
       email: '',
       verificationCode: '',
     });
