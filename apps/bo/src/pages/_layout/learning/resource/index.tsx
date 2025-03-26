@@ -45,16 +45,20 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/view/video' });
         break;
       }
+      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
+        router.navigate({ to: '/learning/resource/view/consignment' });
+        break;
+      }
       case LEARNING_TYPE.BLOG: {
-        router.navigate({ to: '/learning_test/resource/view/blog' });
+        router.navigate({ to: '/learning/resource/view/blog' });
         break;
       }
       case LEARNING_TYPE.E_BOOK: {
-        router.navigate({ to: '/learning_test/resource/view/ebook' });
+        router.navigate({ to: '/learning/resource/view/ebook' });
         break;
       }
       case LEARNING_TYPE.SCORM: {
-        router.navigate({ to: '/learning_test/resource/view/scorm' });
+        router.navigate({ to: '/learning/resource/view/scorm' });
         break;
       }
     }

@@ -7,8 +7,8 @@ import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import {
+  ConsignmentParametersFormField,
   EbookInfo,
-  OutsourcingParametersFormField,
   SharedChannelGridFormField,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
@@ -19,7 +19,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
-export const Route = createFileRoute('/_unauth/learning_test/resource/view/outsourcing')({
+export const Route = createFileRoute('/_unauth/learning_test/resource/view/consignment')({
   component: RouteComponent,
 });
 
@@ -166,7 +166,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'parameters'}>
-                <OutsourcingParametersFormField />
+                <ConsignmentParametersFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>

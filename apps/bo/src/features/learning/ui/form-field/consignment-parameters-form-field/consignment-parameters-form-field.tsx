@@ -3,23 +3,23 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 import { Button, Input } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import styles from './outsourcing-parameters-form-field.module.css';
+import styles from './consignment-parameters-form-field.module.css';
 import { useTranslation } from 'react-i18next';
 
-interface OutsourcingParameterProp {
+interface ConsignmentParameterProp {
   name: string;
   value: string;
   fixed?: boolean;
 }
 
-interface OutsourcingParametersFormFieldPros
-  extends BaseFormFieldProps<OutsourcingParameterProp[]> {
+interface ConsignmentParametersFormFieldPros
+  extends BaseFormFieldProps<ConsignmentParameterProp[]> {
   dummy?: string;
 }
 
-const OutsourcingParametersFormFieldComponent = forwardRef<
+const ConsignmentParametersFormFieldComponent = forwardRef<
   HTMLDivElement,
-  OutsourcingParametersFormFieldPros
+  ConsignmentParametersFormFieldPros
 >(({ value, onChange }, ref) => {
   const { t } = useTranslation();
   const parameters = mergeValueIntoFixedParameters(value, fixedParameters);
@@ -29,7 +29,7 @@ const OutsourcingParametersFormFieldComponent = forwardRef<
     onChange(newValue);
   };
 
-  const handleInputChange = (index: number, key: keyof OutsourcingParameterProp, text: string) => {
+  const handleInputChange = (index: number, key: keyof ConsignmentParameterProp, text: string) => {
     const newValue = [...parameters];
     newValue[index] = { ...newValue[index], [key]: text };
     onChange(newValue);
@@ -38,7 +38,7 @@ const OutsourcingParametersFormFieldComponent = forwardRef<
   return (
     <div ref={ref} className={cn(styles.start)}>
       {/* 고정 parameters */}
-      {parameters.map((d: OutsourcingParameterProp, index: number) => (
+      {parameters.map((d: ConsignmentParameterProp, index: number) => (
         <div key={index} className={'flex w-full flex-row gap-2'}>
           <Input
             value={d.name}
@@ -62,21 +62,21 @@ const OutsourcingParametersFormFieldComponent = forwardRef<
   );
 });
 
-export const OutsourcingParametersFormField = OutsourcingParametersFormFieldComponent;
+export const ConsignmentParametersFormField = ConsignmentParametersFormFieldComponent;
 
 const mergeValueIntoFixedParameters = (
-  value: OutsourcingParameterProp[],
-  fixedParameters: OutsourcingParameterProp[],
+  value: ConsignmentParameterProp[],
+  fixedParameters: ConsignmentParameterProp[],
 ) => {
-  const parameters = fixedParameters.map((d: OutsourcingParameterProp) => {
-    const valueItem = value?.find((v: OutsourcingParameterProp) => v.name === d.name);
+  const parameters = fixedParameters.map((d: ConsignmentParameterProp) => {
+    const valueItem = value?.find((v: ConsignmentParameterProp) => v.name === d.name);
     const newItem = valueItem || d;
     return {
       ...newItem,
       fixed: true,
     };
   });
-  const userParameters = value?.filter((d: OutsourcingParameterProp) => !d.fixed);
+  const userParameters = value?.filter((d: ConsignmentParameterProp) => !d.fixed);
   return [...parameters, ...userParameters];
 };
 
