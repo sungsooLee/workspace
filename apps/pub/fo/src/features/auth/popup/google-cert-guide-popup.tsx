@@ -5,15 +5,15 @@ import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnw
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 
 import imgGuide2 from '@learnway/styles/fo/assets/images/popup/google_guide_img2.png';
-import imgGuide3 from '../../../assets/images/popup/google_guide_img3.png';
-import imgGuide4 from '../../../assets/images/popup/google_guide_img4.png';
-import imgGuide5 from '../../../assets/images/popup/google_guide_img5.png';
-import imgGuide6 from '../../../assets/images/popup/google_guide_img6.png';
-import imgGuideM2 from '../../../assets/images/popup/google_guide_img2_m.png';
-import imgGuideM3 from '../../../assets/images/popup/google_guide_img3_m.png';
-import imgGuideM4 from '../../../assets/images/popup/google_guide_img4_m.png';
-import imgGuideM5 from '../../../assets/images/popup/google_guide_img5_m.png';
-import imgGuideM6 from '../../../assets/images/popup/google_guide_img6_m.png';
+import imgGuide3 from '@learnway/styles/fo/assets/images/popup/google_guide_img3.png';
+import imgGuide4 from '@learnway/styles/fo/assets/images/popup/google_guide_img4.png';
+import imgGuide5 from '@learnway/styles/fo/assets/images/popup/google_guide_img5.png';
+import imgGuide6 from '@learnway/styles/fo/assets/images/popup/google_guide_img6.png';
+import imgGuideM2 from '@learnway/styles/fo/assets/images/popup/google_guide_img2_m.png';
+import imgGuideM3 from '@learnway/styles/fo/assets/images/popup/google_guide_img3_m.png';
+import imgGuideM4 from '@learnway/styles/fo/assets/images/popup/google_guide_img4_m.png';
+import imgGuideM5 from '@learnway/styles/fo/assets/images/popup/google_guide_img5_m.png';
+import imgGuideM6 from '@learnway/styles/fo/assets/images/popup/google_guide_img6_m.png';
 
 const GoogleCertGuidePopupCompoment = () => {
   //const { close: closeModal } = useModal();

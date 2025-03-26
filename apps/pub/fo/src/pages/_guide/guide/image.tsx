@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import snsGoogleImage from '../../../assets/images/common/logo_sns_google.png';
+import snsGoogleImage from '@learnway/styles/fo/assets/images/common/logo_sns_google.png';
 
 export const Route = createFileRoute('/_guide/guide/image')({
   component: RouteComponent,
