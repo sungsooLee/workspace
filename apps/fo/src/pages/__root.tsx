@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+
 import { ModalWrapper } from '@learnway/ui';
+import { useGlobalRouterEvent } from '@learnway/config';
+
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
-import { useGlobalRouterEvent } from '../features/platform';
+
 const NotFound = () => {
   return (
     <div>

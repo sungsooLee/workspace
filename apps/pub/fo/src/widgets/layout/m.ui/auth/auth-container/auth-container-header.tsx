@@ -23,7 +23,6 @@ function ContainerHeaderComponent() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
 
-  //const { meta } = 'useCurrentRoute()';
   /*
   const [activeMenuDepth] = useActiveMenuDepthState();
 

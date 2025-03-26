@@ -2,6 +2,7 @@ import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import { ModalWrapper, ToastWrapper } from '@learnway/ui';
+import { useGlobalRouterEvent } from '@learnway/config';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 
@@ -11,6 +12,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   useRenewalMenuStateFromRouting();
+  useGlobalRouterEvent();
 
   return (
     <>

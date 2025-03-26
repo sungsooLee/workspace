@@ -7,7 +7,7 @@ import { Button, ContentsRow } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
 import { cn } from '@learnway/shared';
 
-import { useAuthSignin, getSavedUserid } from '../../features/auth';
+import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
@@ -20,6 +20,11 @@ import { FormRow } from '../../shared/ui/form';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+    },
+  }),
 });
 
 function RouteComponent() {

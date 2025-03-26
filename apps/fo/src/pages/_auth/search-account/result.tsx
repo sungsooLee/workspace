@@ -6,9 +6,9 @@ import { pageRouteConfig } from '../../../features/auth';
 
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
+import { useCurrentRoute } from '@learnway/config';
 
 import { ProccessResult } from '../../../widgets/auth';
-import { useCurrentRoute } from '../../../features/platform';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css';
 

@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { usePageMetaState } from '../../../../entities/platform';
-
 import { MobileContainerHeader } from './container/container-header';
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
@@ -20,11 +18,6 @@ interface LayoutComponentProps {
 function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
-  const [pageMeta] = usePageMetaState();
-
-  useEffect(() => {
-    console.log('useEffect pageMeta', pageMeta);
-  }, [pageMeta]);
   return (
     <div className={styles.start}>
       <MobileContainerHeader />
