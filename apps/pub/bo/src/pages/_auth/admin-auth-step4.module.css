@@ -7,8 +7,11 @@
     .auth_form {
       @apply mt-[48px];
     }
+    .divider {
+      @apply mt-[24px];
+    }
     .btn_wrap {
-      @apply mt-[48px];
+      @apply mt-[32px];
     }
   }
 }

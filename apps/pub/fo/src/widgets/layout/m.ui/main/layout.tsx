@@ -27,8 +27,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   }, [pageMeta]);
   return (
     <div className={styles.start}>
-      {/* <MobileContainerHeader /> */}
-      <MobileHeader />
+      <MobileContainerHeader />
+      {/* <MobileHeader /> */}
       <main>{children}</main>
       <Footer /> {/* 하단 반응형 footer */}
       {/* {pageMeta?.mobile?.showFooter && <MobileFooter />} */}
