@@ -6,3 +6,13 @@
     @apply border-[#000];
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.contact_popup {
+        @apply pb-[102px];
+      }
+    }
+  }
+}
