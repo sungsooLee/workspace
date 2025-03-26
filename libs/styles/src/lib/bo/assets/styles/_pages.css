@@ -22,6 +22,9 @@
   .nlp--input + .nlp--button {
     @apply !rounded-[8px] border-[#a9afb8] font-normal;
   }
+  .textarea_wrap {
+    @apply rounded-[8px];
+  }
 }
 
 h4.auth--title {

@@ -124,7 +124,7 @@
   .box {
     @apply flex;
     .dash {
-      @apply flex w-[40px] items-center justify-center;
+      @apply -mt-[8px] flex w-[40px] items-center justify-center;
       &::after {
         @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
       }

@@ -5,6 +5,9 @@
   .nlp--input input {
     @apply !min-h-[40px] !rounded-[8px] px-[16px];
   }
+  .textarea_wrap {
+    @apply rounded-[8px];
+  }
 }
 
 h4.auth--title {

@@ -10,11 +10,14 @@ import {
   DropdownOption,
   DatePicker,
   Textarea,
+  InputModalSelectorFormField,
 } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './admin-auth-step3.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+
+import { TenantSearchPopup } from '../../features/auth'; // 테넌트명 조회 팝업
 
 export const Route = createFileRoute('/_auth/admin-auth-step4')({
   component: RouteComponent,
@@ -178,7 +181,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={dynamicFormStyles.datepicker_wrap}>
+                <div className={dynamicFormStyles.box}>
                   <DatePicker
                     onChange={handleDate}
                     value={date}
@@ -221,7 +224,55 @@ function RouteComponent() {
         </div>
         <hr className={`${formStyles.divider} ${styles.divider}`} />
         <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 승인 정보'}</h4>
-        <div className={cn(styles.auth_form, 'no_line', 'col')}></div>
+        <div className={cn('no_line col')}>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="tenant-name2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>테넌트명</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={14} height={14} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    width: 'lg',
+                    content: <TenantSearchPopup />,
+                  }}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="company-name2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>회사명</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={14} height={14} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input id="name" type="text" placeholder="" value="현대" disabled />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="tenant-admin2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>테넌트 관리자</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={14} height={14} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input id="name" type="text" placeholder="" value="김현대" disabled />
+              </div>
+            </div>
+          </ContentsRow>
+        </div>
         <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="gray" size="xl">
             취소
