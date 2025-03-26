@@ -7,7 +7,7 @@ import { Logo } from '../../../../../features/layout';
 import { Language } from '../../../../../features/platform';
 import { isSigninPage } from '../../../../../features/platform';
 
-import styles from './auth-header.module.css';
+import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-header/auth-header.module.css';
 
 function AuthHeaderComponent() {
   const location = useLocation();
