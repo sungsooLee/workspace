@@ -11,6 +11,7 @@ import {
 } from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
 import { FormGuideText } from './form-guide-text';
+import { useTranslation } from 'react-i18next';
 
 /**
  * FormRowComponent
@@ -41,6 +42,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
 export const FormRow = memo(FormRowComponent);
 
 const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children, name }) => {
+  const { t } = useTranslation();
   const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
     provider,
     children,
@@ -63,7 +65,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
       {/* 레이블 렌더링 */}
       {rootConfig.label && (
         <label htmlFor={formName} className={cn(styles.form_label, 'dynamic-form-field-label')}>
-          <span className={styles.form_text}>{rootConfig.label}</span>
+          <span className={styles.form_text}> {t(rootConfig.label as any)}</span>
           {isRequired && (
             <span
               className={cn(styles.status, {
@@ -78,14 +80,14 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
               className={styles.tooltip}
               side="right"
               align="start"
-              content={rootConfig.tooltip}>
+              content={t(rootConfig.tooltip as any)}>
               <Button onlyIcon>
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Button>
             </Tooltip>
           )}
           {infoArea && <span className={styles.info_area}>{infoArea}</span>}
-          {rootConfig.subText && <span className={styles.sub_text}>{rootConfig.subText}</span>}
+          {rootConfig.subText && <span className={styles.sub_text}>{t(rootConfig.subText as any)}</span>}
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
@@ -97,11 +99,11 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
         (guideText ? (
           <FormGuideText>{guideText}</FormGuideText>
         ) : (
-          rootConfig.guideText && <FormGuideText>{rootConfig.guideText}</FormGuideText>
+          rootConfig.guideText && <FormGuideText>{t(rootConfig.guideText as any)}</FormGuideText>
         ))}
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
-          {error.message}
+          {t(error.message as any)}
         </p>
       )}
     </div>

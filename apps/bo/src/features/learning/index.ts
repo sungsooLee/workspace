@@ -7,3 +7,4 @@ export * from './ui/resource/thumbnail-uploader-form-field';
 export * from './ui/resource/ebook-info';
 export * from './ui/resource/movie-info';
 export * from './ui/resource/scorm-info';
+export * from './ui/resource/video-upload-modal';
