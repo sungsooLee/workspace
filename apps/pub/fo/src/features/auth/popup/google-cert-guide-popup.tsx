@@ -3,7 +3,8 @@ import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
-import imgGuide2 from '../../../assets/images/popup/google_guide_img2.png';
+
+import imgGuide2 from '@learnway/styles/fo/assets/images/popup/google_guide_img2.png';
 import imgGuide3 from '../../../assets/images/popup/google_guide_img3.png';
 import imgGuide4 from '../../../assets/images/popup/google_guide_img4.png';
 import imgGuide5 from '../../../assets/images/popup/google_guide_img5.png';

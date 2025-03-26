@@ -1,6 +1,6 @@
 .start {
   &.btn {
-    @apply box-border inline-flex items-center justify-start whitespace-nowrap leading-[1rem];
+    @apply box-border inline-flex items-center justify-start leading-[1rem];
     /* Size ( 28 | 32 | 36 | 40 | 48 ) */
     &.xs {
       @apply button_bo_3_r h-[28px] min-w-[50px] justify-center px-[6px] font-bold;
@@ -12,7 +12,7 @@
       @apply button_3_r h-[36px] min-w-[50px] justify-center px-[12px] font-bold;
     }
     &.lg {
-      @apply button_3_r h-[40px] min-w-[50px] justify-center !px-[12px] font-bold;
+      @apply button_3_r h-[40px] min-w-[50px] justify-center whitespace-nowrap !px-[12px] font-bold;
     }
     &.xl {
       @apply button_2_r h-[48px] min-w-[80px] justify-center px-[12px] font-bold;
