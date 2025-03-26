@@ -87,13 +87,13 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
             </Tooltip>
           )}
           {infoArea && <span className={styles.info_area}>{infoArea}</span>}
-          {rootConfig.subText && <span className={styles.sub_text}>{t(rootConfig.subText as any)}</span>}
+          {rootConfig.subText && (
+            <span className={styles.sub_text}>{t(rootConfig.subText as any)}</span>
+          )}
         </label>
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>
-        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
-      </div>
+      <div className={styles.input_box}>{DynamicComponent}</div>
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
       {!error.isError &&
         (guideText ? (
