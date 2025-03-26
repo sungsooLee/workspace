@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
+import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber, useModal } from '@learnway/ui';
+import { PasswordChangePopup } from '../../../features/layout';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution, IcoImage01 } from '@learnway/icons';
+import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my/information-change.module.css';
@@ -11,6 +14,8 @@ export const Route = createFileRoute('/_layout/my/information-change')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+
   return (
     <div className={`${styles.start} ${styles.information_change}`}>
       <h2>개인정보변경</h2>
@@ -27,9 +32,9 @@ function RouteComponent() {
             </div>
           </div>
           {/* 이름 성 */}
-          <div className={styles.avata_box}>
-            <span className={styles.info_avata}>김</span>
-          </div>
+          {/* <div className={styles.avata_box}> */}
+          {/* <span className={styles.info_avata}>김</span> */}
+          {/* </div> */}
           {/* 첨부 보류 */}
           <div className={styles.change}></div>
         </div>
@@ -70,7 +75,15 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <Input id="password" type="password" value="12345" readOnly />
-                <Button variant="gray" size="lg">
+                <Button
+                  variant="gray"
+                  size="lg"
+                  onClick={() =>
+                    openModal({
+                      width: isMobile ? 'm_full' : 'sm',
+                      content: <PasswordChangePopup />,
+                    })
+                  }>
                   비밀번호 변경
                 </Button>
               </div>
@@ -138,8 +151,11 @@ function RouteComponent() {
             <div className={formStyles.form_item}>
               <div className={formStyles.form_label}>
                 <span className={formStyles.form_text}>휴대폰 번호</span>
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={10} height={10} />
+                </span>
               </div>
-              <div className={formStyles.input_box}>
+              <div className={`${formStyles.input_box} ${styles.phone_box}`}>
                 <PhoneNumber
                   options={[
                     { value: 'type1', label: '010' },
