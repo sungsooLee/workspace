@@ -9,119 +9,99 @@ import {
   Button,
   ContentsRow,
   Input,
+  InputTimer,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoCaution } from '@learnway/icons';
+import { IcoFormRequired, IcoSucess02 } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/password-change-popup.module.css';
+import styles from '@learnway/styles/fo/features/layout/popup/id-change-popup.module.css';
 
 const IdChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
 
-  // 비밀번호 변경 alert
-  const passwordChangeAlert = () => {
+  // 이메일 아이디 변경 alert
+  const idChangeAlert = () => {
     openAlert({
-      content: <>비밀번호가 변경되었습니다.</>,
+      content: <>이메일 아이디가 변경되었습니다.</>,
     });
   };
 
   return (
     <ModalContainer>
-      <ModalTitle>{'비밀번호 변경'}</ModalTitle>
+      <ModalTitle>{'이메일 아이디 변경'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.id_change}`}>
+          <div className={styles.confirm}>
+            <IcoSucess02 width={32} height={32} stroke="#a9afb8"></IcoSucess02>
+            <p>
+              개인정보를 변경 하시려면
+              <br />
+              비밀번호를 확인해주세요.
+            </p>
+          </div>
           <div className={styles.input_box}>
-            {/* 현재 비밀번호 */}
+            {/* 현재 이메일 */}
             <ContentsRow>
               <div className={formStyles.form_item}>
-                <label htmlFor="password" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>현재 비밀번호</span>
+                <label htmlFor="email" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>현재 이메일</span>
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={10} height={10} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="password" type="password" placeholder="비밀번호" />
+                  <Input id="email" type="text" placeholder="현재 이메일" />
                 </div>
               </div>
             </ContentsRow>
 
-            {/* 새로운 비밀번호 */}
+            {/* 새로운 이메일 */}
             <ContentsRow>
               <div className={formStyles.form_item}>
-                <label htmlFor="password2" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>새로운 비밀번호</span>
+                <label htmlFor="email2" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>새로운 이메일</span>
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={10} height={10} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input
-                    id="password2"
-                    type="password"
-                    placeholder="비밀번호(영문자, 숫자, 특수문자 3가지 조합 8자리 이상)"
-                  />
+                  <Input id="email2" type="text" placeholder="새로운 이메일" />
                 </div>
               </div>
             </ContentsRow>
 
-            {/* 새로운 비밀번호 확인 */}
+            {/* 이메일 인증번호 */}
             <ContentsRow>
               <div className={formStyles.form_item}>
-                <label htmlFor="password3" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>새로운 비밀번호 확인</span>
+                <label htmlFor="email3" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>이메일 인증번호</span>
                   <span className={cn(formStyles.status, formStyles.required)}>
                     <IcoFormRequired width={10} height={10} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input
-                    id="password3"
-                    type="password"
-                    placeholder="새로운 비밀번호 재입력"
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={180}
+                    placeholder={'이메일 인증번호'}
+                    resetLabel={'재전송'}
                     error
                   />
                 </div>
                 {/* error 문구 */}
                 <p className={cn(formStyles.guide_text, formStyles.error)}>
-                  새로운 비밀번호를 다시 확인해 주세요.
+                  인증번호가 일치하지 않습니다.
+                  <br />
+                  인증번호를 다시 확인해 주세요.
                 </p>
               </div>
             </ContentsRow>
-          </div>
-
-          {/* 유의사항 */}
-          <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
-            <dl className={noticeBoxStyles.check_point}>
-              <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
-                유의사항
-              </dt>
-              <dd>
-                영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 조합하여 8-20자리로 입력해 주세요.
-              </dd>
-              <dd>직전에 사용한 비밀번호는 사용하실 수 없습니다.</dd>
-              <dd>아이디와 동일한 비밀번호는 사용하실 수 없습니다.</dd>
-              <dd>
-                생년월일, 전화번호와 동일하거나 일부를 포함한 비밀번호는 사용하실 수 없습니다.
-              </dd>
-              <dd>
-                3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는
-                입력하실 수 없습니다.
-              </dd>
-            </dl>
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button
-          label={'변경'}
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => passwordChangeAlert()}
-        />
+        <Button label={'변경'} variant={'primary'} size={'lg'} onClick={() => idChangeAlert()} />
       </ModalFooter>
     </ModalContainer>
   );
