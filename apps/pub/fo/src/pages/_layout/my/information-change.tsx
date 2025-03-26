@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber } from '@learnway/ui';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
@@ -16,8 +16,13 @@ function RouteComponent() {
       <h2>개인정보변경</h2>
       <div className={styles.box}>
         <div className={styles.avata_img}>
+          {/* 사진 */}
           <div className={styles.avata_box}>
             <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+          </div>
+          {/* 이름 성 */}
+          <div className={styles.avata_box}>
+            <span className={styles.info_avata}>김</span>
           </div>
           {/* 첨부 보류 */}
           <div className={styles.change}></div>
@@ -164,7 +169,21 @@ function RouteComponent() {
             <IcoCaution width={16} height={16} stroke="#6F798B" />
             안내사항
           </dt>
-          <dd>개인정보가 다를 경우 DDMS에서 변경해주세요.</dd>
+          <dd>
+            개인정보가 다를 경우 DDMS에서 변경해주세요.<Link to={''}>DDMD 바로 가기 &#62;</Link>
+          </dd>
+        </dl>
+      </div>
+
+      {/* 회원탈퇴 */}
+      <div className={styles.bullet_notice}>
+        <dl>
+          <dt>회원탈퇴</dt>
+          <dd>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</dd>
+          <dd>탈퇴 후에도 게시판형 서비스에 등록한 게시물은 그대로 남아 있습니다.</dd>
+          <dd>
+            삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
+          </dd>
         </dl>
       </div>
     </div>

@@ -1,7 +1,8 @@
 /* m.header.module.css */
 .start {
+  @apply fixed left-0 right-0 top-0 z-[100];
   .header {
-    @apply flex h-[56px] items-center justify-between pl-[20px] pr-[16px];
+    @apply flex h-[56px] items-center justify-between bg-white pl-[20px] pr-[16px];
     h1 {
       @apply flex items-center;
       a {
