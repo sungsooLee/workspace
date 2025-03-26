@@ -17,6 +17,9 @@ import {
   InputTimer,
 } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/signup-step3-en')({
   component: RouteComponent,
 });
@@ -201,6 +204,7 @@ function RouteComponent() {
                         options={[{ value: 'type2', label: 'Select Role' }]}
                         className="flex-1"
                       />
+
                       <Select
                         size="lg"
                         options={[{ value: 'type2', label: 'Select Role' }]}
@@ -216,11 +220,6 @@ function RouteComponent() {
                         <Select
                           size="lg"
                           options={[{ value: 'type1', label: 'Select Job Domin' }]}
-                          className="flex-1"
-                        />
-                        <Select
-                          size="lg"
-                          options={[{ value: 'type2', label: 'Select Role' }]}
                           className="flex-1"
                         />
                         <Select
@@ -267,14 +266,25 @@ function RouteComponent() {
             </ul>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
-              Previous
-            </Button>
-            <Button variant="primary" size="xl">
-              OK
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                Previous
+              </Button>
+              <Button variant="primary" size="xl">
+                OK
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                OK
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </div>
