@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input, DropdownList, DropdownOption, Button, RadioGroup } from '@learnway/ui';
+import { Button, DropdownList, DropdownOption, Input, RadioGroup } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import styles from './table.module.css'; // table css
@@ -25,7 +25,7 @@ function RouteComponent() {
         <h3 className="guide_tit3">Table</h3>
       </div>
       {/* table */}
-      <div className={cn(styles.start, styles.table_wrap)}>
+      <div className={cn(styles.start, 'table')}>
         <table className={styles.table}>
           <caption>{'테이블 정보'}</caption>
           <colgroup>
@@ -38,7 +38,7 @@ function RouteComponent() {
           </colgroup>
           <thead>
             <tr>
-              <th scope="col" className={styles.left}>
+              <th scope="col" className={'left'}>
                 {'타이틀'}
               </th>
               <th scope="col">{'타이틀'}</th>

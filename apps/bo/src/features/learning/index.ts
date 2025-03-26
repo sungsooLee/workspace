@@ -1,4 +1,5 @@
 // form-field
+export * from './ui/form-field/consignment-parameters-form-field/consignment-parameters-form-field';
 export * from './ui/form-field/shared-channel-grid-form-field/shared-channel-grid-form-field';
 
 // resource
