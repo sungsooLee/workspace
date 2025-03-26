@@ -61,7 +61,7 @@ function AuthFormComponent({
   const { t } = useTranslation();
 
   const { provider, onSubmit, onFormChange, control, getValues, setFormError, onFormValid } =
-    useDynamicForm(detailConfig);
+    useDynamicForm(authFormConfig);
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
 
@@ -315,7 +315,7 @@ function AuthFormComponent({
 
 export const AuthForm = AuthFormComponent;
 
-const detailConfig: DynamicFormConfig = {
+const authFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'includeUserId',

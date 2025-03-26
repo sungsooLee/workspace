@@ -14,6 +14,7 @@ import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/video')({
   component: RouteComponent,
@@ -21,6 +22,7 @@ export const Route = createFileRoute('/_layout/learning/resource/view/video')({
 
 function RouteComponent() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
@@ -244,13 +246,13 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      label: t('채널'),
+      label: 'ORG',
       name: 'channelName',
       type: 'custom',
       value: '',
     },
     {
-      label: t('학습자원명'),
+      label: t('USER_ID'),
       name: 'learningResourceName',
       type: 'text',
       value: '',
@@ -261,7 +263,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      label: t('학습자원 설명'),
+      label: t('CODE.LANGUAGE_CODE.de'),
       name: 'learningResourceDescription',
       type: 'textarea',
       value: '',
