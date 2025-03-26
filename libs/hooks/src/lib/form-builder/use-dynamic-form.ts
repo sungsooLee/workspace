@@ -35,7 +35,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       let format = builder.format || analogyFormat;
 
       const existingValidator = validator[key] as any;
-      if (existingValidator.format) {
+      if (existingValidator && existingValidator.format) {
         format = existingValidator.format;
       }
       acc[key] = {
