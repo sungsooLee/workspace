@@ -3,14 +3,16 @@ import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@learnway/ui';
-import { IcoAlertCircleGray } from '@learnway/icons';
+import { Button, ContentsRow } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
+import { cn } from '@learnway/shared';
 
 import { useAuthSignin } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 
-import styles from './login.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+
 import authStyles from './auth.module.css';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -53,24 +55,28 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
-      <div className={`${styles.start} ${styles.auth_wrap}`}>
+      <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
         <div className={authStyles.auth_box}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'username'} />
-          </FormRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'username'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow className={formStyles.no_line}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'password'} />
+            </FormRow>
+          </ContentsRow>
 
-          <FormRow provider={provider}>
-            <DynamicFormField name={'password'} />
-          </FormRow>
-
-          <FormRow provider={provider}>
-            <DynamicFormField name={'saveId'} />
-
+          <ContentsRow className={cn(formStyles.no_line, styles.login_info)}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'saveId'} />
+            </FormRow>
             <div className={styles.info}>
-              <Link to="/progress-status">진행 현황</Link>
-              <Link to="/search-account">아이디/비밀번호찾기</Link>
+              <Link to="/search-account">아이디 찾기</Link>
+              <Link to="/search-account">비밀번호 찾기</Link>
             </div>
-          </FormRow>
+          </ContentsRow>
 
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>
@@ -80,13 +86,9 @@ function RouteComponent() {
         </div>
 
         <div className={styles.login_guide}>
-          <IcoAlertCircleGray width={24} height={24} />
           <span>
-            아직 회원이 아니시라면{' '}
-            <Link to="/signup" className={styles.btn_join}>
-              회원가입
-            </Link>
-            하세요.
+            <Link to="/progress-status">회원 가입 현황</Link>
+            <Link to="/progress-status">관리자 회원가입</Link>
           </span>
         </div>
       </div>
@@ -106,6 +108,7 @@ const detailConfig: DynamicFormConfig = {
       value: '',
       placeholder: '아아디/이메일을 입력하세요',
       description: '기본 메세지',
+      format: 'email',
     },
     {
       name: 'password',
@@ -119,14 +122,19 @@ const detailConfig: DynamicFormConfig = {
       name: 'saveId',
       type: 'checkbox',
       checkConfig: {
-        label: '',
+        label: 'LABEL.아이디 저장',
       },
-      label: '',
       value: false,
     },
   ],
   validator: {
-    username: true,
-    password: true,
+    username: {
+      format: 'email',
+      required: true,
+    },
+    password: {
+      format: 'string',
+      required: true,
+    },
   },
 };

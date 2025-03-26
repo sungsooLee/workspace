@@ -4,7 +4,8 @@ import { useLocation } from '@tanstack/react-router';
 import { PAGE_TITLE_BY_PATH, isSigninPage } from '../../../../../features/platform';
 // import { AuthFooter } from './auth-footer/auth-footer';
 
-import styles from './auth-container.module.css';
+//import styles from './auth-container.module.css';
+import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-container/auth-container.module.css';
 
 interface AuthContainerComponentProps {
   children: ReactNode;
