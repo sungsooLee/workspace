@@ -26,9 +26,9 @@ export const Route = createFileRoute('/_auth/signup-step3-en')({
 
 function RouteComponent() {
   const items = [
-    { label: 'Select\n Membership Type', subLabel: '', value: 'step1' },
-    { label: 'Dealer & Region\n Select', subLabel: '', value: 'step2' },
-    { label: 'Required\n Information', subLabel: '', value: 'step3' },
+    { label: 'Select Membership Type', subLabel: '', value: 'step1' },
+    { label: 'Dealer & Region Select', subLabel: '', value: 'step2' },
+    { label: 'Required Information', subLabel: '', value: 'step3' },
   ];
   const handleChange = (event: SelectOption) => {
     console.log(event);
@@ -222,6 +222,12 @@ function RouteComponent() {
                           options={[{ value: 'type1', label: 'Select Job Domin' }]}
                           className="flex-1"
                         />
+                        <Select
+                          size="lg"
+                          options={[{ value: 'type2', label: 'Select Role' }]}
+                          className="flex-1"
+                        />
+
                         <Select
                           size="lg"
                           options={[{ value: 'type2', label: 'Select Role' }]}

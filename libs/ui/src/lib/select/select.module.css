@@ -1,5 +1,5 @@
 .select_trigger {
-  @apply relative box-border flex min-h-[32px] w-full items-center justify-between whitespace-normal rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[1.4rem] font-normal text-[var(--gray8)];
+  @apply relative box-border flex min-h-[32px] w-full items-center justify-between !whitespace-normal rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[1.4rem] font-normal text-[var(--gray8)];
   & > span {
     &:first-child {
       @apply line-clamp-1 w-full break-words text-left;
