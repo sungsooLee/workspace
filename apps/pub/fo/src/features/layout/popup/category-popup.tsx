@@ -6,8 +6,8 @@ import { Navigation } from 'swiper/modules';
 
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 
-import bnrImage1 from '../../../assets/images/banner/banner_cate1.png';
-import bnrImage2 from '../../../assets/images/banner/banner_cate2.png';
+import bnrImage1 from '@learnway/styles/fo/assets/images/banner/banner_cate1.png';
+import bnrImage2 from '@learnway/styles/fo/assets/images/banner/banner_cate2.png';
 
 import styles from './category-popup.module.css';
 
