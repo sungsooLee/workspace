@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import logoImage from '../../../../../assets/images/logo_footer.png';
+import logoImage from '@learnway/styles/fo/assets/images/logo_footer.png';
 import { Select } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 function FooterComponent() {

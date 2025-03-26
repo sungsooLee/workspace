@@ -3,7 +3,7 @@
 .auth--box {
   @apply px-[40px] py-[48px];
   .nlp--input input {
-    @apply !min-h-[40px] !rounded-[8px];
+    @apply !min-h-[40px] !rounded-[8px] px-[16px];
   }
   div + .auth--signup-select {
     @apply mt-[48px];
@@ -14,14 +14,16 @@
   .no_line + .no_line {
     @apply mt-[24px] !border-t-[1px] !border-solid !border-[#edf0f7] pt-[32px];
   }
+  .no_line {
+    .nlp--contents-row {
+      @apply border-0 pt-0;
+    }
+  }
   .nlp--input + .nlp--button {
     @apply !rounded-[8px] border-[#a9afb8] font-normal;
   }
-}
-
-.nlp--contents-row {
-  & > div:nth-last-child(1) {
-    @apply pb-0;
+  .textarea_wrap {
+    @apply rounded-[8px];
   }
 }
 
@@ -49,6 +51,16 @@ h4.auth--title {
         }
         svg {
           @apply !stroke-[#0F3492];
+        }
+      }
+    }
+    & > div:nth-last-child(1) {
+      button {
+        &[aria-checked='true'] svg {
+          @apply opacity-100;
+        }
+        svg {
+          @apply opacity-30;
         }
       }
     }

@@ -1,5 +1,6 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MobileView, BrowserView } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
 
@@ -20,7 +21,10 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
 
   return (
     <>
-      {meta.mobile.showHeader && <AuthHeader />}
+      <MobileView>{meta.mobile.showHeader && <AuthHeader />}</MobileView>
+      <BrowserView>
+        <AuthHeader />
+      </BrowserView>
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
           <main>

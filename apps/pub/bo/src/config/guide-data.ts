@@ -222,18 +222,18 @@ export const guideData = [
     pageId: 'admin-auth-step3',
     screenId: 'NLP_BO_LOG_1007_02',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인/관리자 권한정보입력 ',
     pageId: 'admin-auth-step4',
     screenId: 'NLP_BO_LOG_1007_03',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
+    completionDate: '2025-03-26',
+    lastUpdateDate: '2025-03-26',
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인/회원가입 완료 ',

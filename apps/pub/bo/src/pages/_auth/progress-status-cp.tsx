@@ -36,8 +36,8 @@ function RouteComponent() {
               </p>
             </div>
           </div>
+          <h4 className={cn(styles.title, 'auth--title')}>{'협력업체 회사 정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
-            <h4 className={cn(styles.title, 'auth--title')}>{'협력업체 회사 정보'}</h4>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-company" className={formStyles.form_label}>
@@ -79,8 +79,9 @@ function RouteComponent() {
               </div>
             </div>
           </div>
+          <hr className={`${styles.divider} ${styles.divider}`} />
+          <h4 className={cn(styles.title, 'auth--title')}>{'업무 담당 회사 정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
-            <h4 className={cn(styles.title, 'auth--title')}>{'업무 담당 회사 정보'}</h4>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-tenant" className={formStyles.form_label}>
@@ -142,8 +143,9 @@ function RouteComponent() {
               </div>
             </div>
           </div>
+          <hr className={`${styles.divider} ${styles.divider}`} />
+          <h4 className={cn(styles.title, 'auth--title')}>{'개인정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
-            <h4 className={cn(styles.title, 'auth--title')}>{'개인정보'}</h4>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-email" className={formStyles.form_label}>

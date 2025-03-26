@@ -1,7 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber } from '@learnway/ui';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
+import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber, useModal } from '@learnway/ui';
+import { PasswordChangePopup } from '../../../features/layout';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution } from '@learnway/icons';
+import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my/information-change.module.css';
@@ -11,14 +14,27 @@ export const Route = createFileRoute('/_layout/my/information-change')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+
   return (
     <div className={`${styles.start} ${styles.information_change}`}>
       <h2>개인정보변경</h2>
       <div className={styles.box}>
         <div className={styles.avata_img}>
+          {/* 사진 */}
           <div className={styles.avata_box}>
             <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <div className={styles.file}>
+              <label htmlFor="file">
+                <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
+              </label>
+              <input type="file" id="file" />
+            </div>
           </div>
+          {/* 이름 성 */}
+          {/* <div className={styles.avata_box}> */}
+          {/* <span className={styles.info_avata}>김</span> */}
+          {/* </div> */}
           {/* 첨부 보류 */}
           <div className={styles.change}></div>
         </div>
@@ -59,7 +75,15 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <Input id="password" type="password" value="12345" readOnly />
-                <Button variant="gray" size="lg">
+                <Button
+                  variant="gray"
+                  size="lg"
+                  onClick={() =>
+                    openModal({
+                      width: isMobile ? 'm_full' : 'sm',
+                      content: <PasswordChangePopup />,
+                    })
+                  }>
                   비밀번호 변경
                 </Button>
               </div>
@@ -127,8 +151,11 @@ function RouteComponent() {
             <div className={formStyles.form_item}>
               <div className={formStyles.form_label}>
                 <span className={formStyles.form_text}>휴대폰 번호</span>
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={10} height={10} />
+                </span>
               </div>
-              <div className={formStyles.input_box}>
+              <div className={`${formStyles.input_box} ${styles.phone_box}`}>
                 <PhoneNumber
                   options={[
                     { value: 'type1', label: '010' },
@@ -164,7 +191,24 @@ function RouteComponent() {
             <IcoCaution width={16} height={16} stroke="#6F798B" />
             안내사항
           </dt>
-          <dd>개인정보가 다를 경우 DDMS에서 변경해주세요.</dd>
+          <dd>
+            개인정보가 다를 경우 DDMS에서 변경해주세요.<Link to={''}>DDMD 바로 가기 &#62;</Link>
+          </dd>
+        </dl>
+      </div>
+
+      {/* 회원탈퇴 */}
+      <div className={styles.bullet_notice}>
+        <dl>
+          <dt>회원탈퇴</dt>
+          <dd>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</dd>
+          <dd>탈퇴 후에도 게시판형 서비스에 등록한 게시물은 그대로 남아 있습니다.</dd>
+          <dd>
+            삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
+            <Button variant="gray" size="sm">
+              회원탈퇴
+            </Button>
+          </dd>
         </dl>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { LearningTypeChoiceModal } from '../../../../features/learning';
+import { LearningTypeChoiceModal, VideoUploadModal } from '../../../../features/learning';
 import { t } from 'i18next';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
@@ -34,14 +34,10 @@ function RouteComponent() {
     console.log('typeResult => ', typeResult);
     switch (typeResult) {
       case LEARNING_TYPE.VIDEO: {
-        /*const videoUploadResult = await openAsync({
-          content: (
-            <UploadProvider>
-              <VideoUploadPopup />
-            </UploadProvider>
-          ),
+        const videoUploadResult = await openModal({
+          content: <VideoUploadModal />,
           width: 'lg',
-        });*/
+        });
         router.navigate({ to: '/learning/resource/view/video' });
         break;
       }
@@ -62,6 +58,7 @@ function RouteComponent() {
         break;
       }
     }
+    setDisplayContent(true);
   };
 
   return (

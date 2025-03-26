@@ -39,6 +39,7 @@
           }
         }
         .select_txt {
+          @apply pb-[16px];
         }
         .auth_form {
         }

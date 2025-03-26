@@ -8,4 +8,9 @@
   .modal-content {
     @apply !py-[24px];
   }
+  .auth--btn_wrap {
+    button {
+      @apply w-auto;
+    }
+  }
 }
