@@ -8,9 +8,9 @@
 
   /* content_wrap */
   .content_wrap {
-    @apply box-border w-full overflow-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pt-[32px];
+    @apply relative box-border w-full rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)];
     .content {
-      @apply relative flex items-stretch px-[32px] pb-[40px];
+      @apply flex items-stretch px-[32px] pb-[40px] pt-[32px];
     }
   }
 
