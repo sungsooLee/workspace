@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber } from '@learnway/ui';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution } from '@learnway/icons';
+import { IcoCaution, IcoImage01 } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my/information-change.module.css';
@@ -19,6 +19,12 @@ function RouteComponent() {
           {/* 사진 */}
           <div className={styles.avata_box}>
             <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <div className={styles.file}>
+              <label htmlFor="file">
+                <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
+              </label>
+              <input type="file" id="file" />
+            </div>
           </div>
           {/* 이름 성 */}
           <div className={styles.avata_box}>
@@ -183,6 +189,9 @@ function RouteComponent() {
           <dd>탈퇴 후에도 게시판형 서비스에 등록한 게시물은 그대로 남아 있습니다.</dd>
           <dd>
             삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
+            <Button variant="gray" size="sm">
+              회원탈퇴
+            </Button>
           </dd>
         </dl>
       </div>
