@@ -120,3 +120,15 @@
 .complete {
   background: #3eb838;
 } */
+
+:global(body.mobile) {
+  @screen mobile {
+    .stepper {
+      .step_item {
+        .title {
+          @apply max-w-[90px];
+        }
+      }
+    }
+  }
+}

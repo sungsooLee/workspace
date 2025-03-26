@@ -8,6 +8,8 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import { Button, Input, Select, ContentsRow, PhoneNumber } from '@learnway/ui';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/progress-status-result')({
   component: RouteComponent,
@@ -146,11 +148,25 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="primary" size="xl">
-              로그인
-            </Button>
-          </div>
+          {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+          <BrowserView>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+              <Button variant="gray" size="xl">
+                취소
+              </Button>
+              <Button variant="primary" size="xl">
+                로그인
+              </Button>
+            </div>
+          </BrowserView>
+
+          <MobileView>
+            <MobileContainerFooter>
+              <Button variant="primary" size="xl">
+                로그인
+              </Button>
+            </MobileContainerFooter>
+          </MobileView>
         </div>
       </div>
     </form>
