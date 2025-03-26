@@ -131,6 +131,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'translationCode',
         type: 'text',
         label: t('다국어 코드'),
+        value: '',
       },
       {
         name: 'useYn',

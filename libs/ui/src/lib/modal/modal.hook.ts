@@ -1,4 +1,6 @@
 import { createElement, useCallback } from 'react';
+import { isMobile } from 'react-device-detect';
+
 import { useModalStore } from '../stores/useModalStore';
 import { Alert, AlertComponentProps } from '../alert/alert';
 import { ModalConfig, useModalReturnValue } from './type';
@@ -13,7 +15,7 @@ const useModal = (): useModalReturnValue => {
         const newConfig: ModalConfig = {
           ...config,
           id: getRandomId(),
-          width: config.width || 'md', // modal 은 기본 width 'md'
+          width: isMobile ? 'm_full' : config.width || 'md', // modal 은 기본 width 'md'
           onClose: (data?: any) => {
             config?.onClose?.(data);
             resolve(data);

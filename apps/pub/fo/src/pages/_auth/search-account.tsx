@@ -223,11 +223,11 @@ function RouteComponent() {
           {/* 인증선택 모듈 */}
           <ContentsRow>
             <div className={formStyles.form_item}>
+              {/* 인증선택 모듈 */}
               <div
                 className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
                 role="radiogroup">
                 <RadioCard
-                  className="radio_card"
                   options={[
                     {
                       value: 'type1',
@@ -250,12 +250,13 @@ function RouteComponent() {
                   ]}
                 />
               </div>
+              {/* 인증선택 모듈 */}
             </div>
           </ContentsRow>
           {/* 인증선택 모듈 */}
 
           {/* 인증폼 */}
-          <div className={cn(styles.auth_form, 'no_line', 'col')}>
+          <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>

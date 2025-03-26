@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 
-import styles from './tenant.module.css';
+//import styles from './tenant.module.css';
 import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';
+import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
 const TenantModal = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(2);

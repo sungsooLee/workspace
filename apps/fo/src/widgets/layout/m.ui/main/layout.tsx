@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { usePageMetaState } from '../../../../entities/platform';
+import { useCurrentRoute } from '../../../../features/platform';
 
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
+import { Footer } from '../../ui/main/footer/footer';
 
-import styles from './layout.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/layout.module.css';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -17,19 +18,14 @@ interface LayoutComponentProps {
 function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
-  const [pageMeta] = usePageMetaState();
+  const { meta } = useCurrentRoute();
 
-  useEffect(() => {
-    console.log('useEffect pageMeta', pageMeta);
-  }, [pageMeta]);
   return (
     <>
-      <MobileHeader />
-      <main>
-        <p>Mobile layout </p>
-        {children}
-      </main>
-      {pageMeta?.mobile?.showFooter && <MobileFooter />}
+      {meta?.mobile?.showHeader && <MobileHeader />}
+      <main>{children}</main>
+      {meta?.mobile?.showMainFooter && <Footer />}
+      {meta?.mobile?.showFooter && <MobileFooter />}
     </>
   );
 }

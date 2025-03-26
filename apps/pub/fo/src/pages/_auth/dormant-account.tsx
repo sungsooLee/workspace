@@ -29,6 +29,9 @@ import {
   PhoneNumber,
 } from '@learnway/ui';
 
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+
 export const Route = createFileRoute('/_auth/dormant-account')({
   component: RouteComponent,
 });
@@ -192,15 +195,27 @@ function RouteComponent() {
             </div>
             {/* 유의사항 모듈 */}
 
-            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-              <Button variant="gray" size="xl">
-                취소
-              </Button>
-              <Button variant="primary" size="xl">
-                {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
-                인증번호 요청
-              </Button>
-            </div>
+            {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
+            <BrowserView>
+              <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+                <Button variant="gray" size="xl">
+                  취소
+                </Button>
+                <Button variant="primary" size="xl">
+                  {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+                  인증번호 요청
+                </Button>
+              </div>
+            </BrowserView>
+
+            <MobileView>
+              <MobileContainerFooter>
+                <Button variant="primary" size="xl">
+                  {/* 인증완료후 "인증번호 확인"으로 텍스트변경*/}
+                  인증번호 요청
+                </Button>
+              </MobileContainerFooter>
+            </MobileView>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/config';
 
 import { Search, Logo, UserAvatar } from '../../../../../features/layout';
-import { Language, Notification, Tenants, AdminLink } from '../../../../../features/platform';
+import { Language, Notification, TenantButton, AdminLink } from '../../../../../features/platform';
 import { Tenant, useFetchTenantByUser } from '../../../../../entities/tenant';
 
 import { NavigateHover } from './navigate/navigate-hover';
@@ -71,11 +71,7 @@ function HeaderComponent() {
               <Logo activeTenant={activeTenant} />
             </h1>
 
-            <Tenants
-              tenants={tenants || []}
-              activeTenant={activeTenant}
-              onTenantSwitch={handleTenantSwitch}
-            />
+            <TenantButton />
           </div>
 
           <div className={styles.search_form}>
