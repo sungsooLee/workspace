@@ -289,6 +289,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '완료', // 비고
   },
+  {
+    screenName: 'PMS/레이아웃(상단 Tab)',
+    pageId: 'pms/layout',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업중', // 비고
+  },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',

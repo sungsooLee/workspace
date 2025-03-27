@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import { Logo, Tenant, Notification, NavigationM } from '../../../../../features/layout';
+import { Logo, Tenant, NotificationM, NavigationM } from '../../../../../features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 
@@ -20,7 +20,7 @@ function HeaderComponent() {
         </h1>
 
         <div className={styles.util}>
-          <Notification />
+          <NotificationM />
           <NavigationM />
         </div>
       </header>
