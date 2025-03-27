@@ -654,7 +654,7 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
                 onChange={handleFileSelect}
                 className="hidden"
                 multiple
-                accept={allowedFileTypes?.map((type) => `.${type}`).join(',')}
+                /*accept={allowedFileTypes?.map((type) => `.${type}`).join(',')}*/
               />
               <div
                 onClick={() => fileInputRef.current?.click()}
