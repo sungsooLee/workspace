@@ -9,6 +9,7 @@
 // completionDate: 완료일
 // lastUpdateDate: 수정일
 // remarks: 비고
+// native: true, (네이티브일경우 true)
 
 export const guideData = [
   {
@@ -77,9 +78,10 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '2025-00-00',
+    completionDate: '',
     lastUpdateDate: '',
-    remarks: 'Native 화면 (퍼블x)',
+    native: true,
+    remarks: '',
   },
   {
     screenId: 'NLP_FO_GNB_M_1006',
