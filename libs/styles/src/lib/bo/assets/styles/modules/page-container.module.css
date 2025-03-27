@@ -2,21 +2,21 @@
 .start {
   &.contents {
     .inner {
-      @apply scrollbar box-border h-auto overflow-hidden overflow-y-auto bg-[#f2f4f9] px-[40px] pb-[40px];
+      @apply scrollbar box-border h-auto overflow-y-auto bg-[#f2f4f9] pb-[40px];
     }
   }
 
   /* content_wrap */
   .content_wrap {
-    @apply relative box-border w-full rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)];
+    @apply relative w-full px-[40px];
     .content {
-      @apply flex items-stretch px-[32px] pb-[40px] pt-[32px];
+      @apply box-border flex w-full items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[32px];
     }
   }
 
   /* title_wrap */
   .title_wrap {
-    @apply sticky left-0 top-0 z-[1] flex h-[64px] w-full justify-between overflow-hidden bg-[#F2F4F9] py-[16px];
+    @apply sticky left-0 top-0 z-[1] flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
     .title {
       @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
       .btn_favorites {
