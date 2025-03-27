@@ -315,11 +315,11 @@ export const guideData = [
     screenId: 'NLP_FO_ARM_MR_1000',
     screenName: 'M_알림',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notification-m\n- notification-popup-m',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1003',
