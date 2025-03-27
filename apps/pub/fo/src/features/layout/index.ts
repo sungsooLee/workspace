@@ -28,3 +28,5 @@ export * from './popup/navigation-popup_m';
 export * from './popup/password-verify-popup';
 export * from './popup/password-change-popup';
 export * from './popup/id-change-popup';
+export * from './popup/notification-popup-m';
+export * from './ui/notification-m';

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Select, Button } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
+import { Select, Button, EmptyText } from '@learnway/ui';
 import { IcoArray, IcoDotpoints, IcoArrowForward } from '@learnway/icons';
 import {
   Arrays,
@@ -101,6 +102,16 @@ function RouteComponent() {
               <Link to="">'파이썬' 검색결과 보기</Link>
             </div>
           </div>
+        </div>
+
+        {/* 전체 검색결과 없음 */}
+        <div className={styles.empty}>
+          <EmptyText
+            hideTitle
+            size="lg"
+            description={'검색 결과를 찾을 수 없습니다.'}
+            footer={isMobile ? <Button variant={'primary'} size={'lg'} label={'교육요청'} /> : ''}
+          />
         </div>
 
         {/* result content */}

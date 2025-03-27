@@ -1,7 +1,10 @@
 .start {
   &.procedure {
+    .empty {
+      @apply mt-[54px];
+    }
     .procedure_box {
-      @apply w-full;
+      @apply h-[50px] w-full bg-black;
     }
   }
 }

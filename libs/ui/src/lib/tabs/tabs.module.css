@@ -61,7 +61,7 @@
       }
       &.sm {
         .trigger {
-          @apply min-h-[48px];
+          @apply min-h-[42px];
         }
       }
       &.gray {
