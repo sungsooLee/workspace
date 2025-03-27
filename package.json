@@ -16,9 +16,7 @@
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
-    "test:editor": "nx test editor --coverage --watch",
-    "i18n:extract:fo": "node $'\b'i18n-automation.js extract --app=fo",
-    "i18n:extract:bo": "node $'\b'i18n-automation.js extract --app=bo"
+    "test:editor": "nx test editor --coverage --watch"
   },
   "private": true,
   "dependencies": {
