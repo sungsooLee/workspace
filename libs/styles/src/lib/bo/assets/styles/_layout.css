@@ -1,0 +1,7 @@
+/* layout */
+.content_wrap.case_tabs {
+  @apply mt-[60px];
+  .page_tabs > [role='tablist'] {
+    @apply absolute -top-[60px] left-0;
+  }
+}
