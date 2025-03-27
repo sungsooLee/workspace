@@ -36,8 +36,8 @@ export const guideData = [
     screenName: 'M_TOP/Bottom 프래임',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -77,9 +77,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-00-00',
     lastUpdateDate: '',
-    remarks: 'Native 화면',
+    remarks: 'Native 화면 (퍼블x)',
   },
   {
     screenId: 'NLP_FO_GNB_M_1006',
@@ -116,20 +116,20 @@ export const guideData = [
     screenName: 'M_아용약관',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 푸터 팝업과 동일\n- agreement-pop.tsx',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1010',
     screenName: 'M_개인정보처리방침',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 푸터 팝업과 동일\n- privacy-pop.tsx',
   },
   {
     screenId: 'NLP_FO_CHB_1000',
@@ -156,8 +156,8 @@ export const guideData = [
     screenName: 'FOOTER_표준템플릿',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -455,11 +455,11 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1100',
     screenName: '로그인',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'login',
+    pageType: 'Page',
+    completionDate: '2025-03-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 국문과 동일(영문)',
   },
   {
     screenId: 'NLP_FO_CLA_1008_1',
