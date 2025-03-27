@@ -1,0 +1,17 @@
+.start {
+  &.alarm_info {
+    @apply relative flex items-center;
+    & > button {
+      @apply align-top;
+    }
+    .noti {
+      @apply absolute -right-[2px] top-0 flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
+    }
+    .text {
+      @apply body_3_r absolute -bottom-[47px] -right-[16px] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
+      &::before {
+        @apply absolute -top-[10px] right-[16px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+      }
+    }
+  }
+}

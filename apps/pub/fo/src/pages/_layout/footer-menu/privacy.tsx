@@ -2,10 +2,9 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Checkbox, Select } from '@learnway/ui';
-import styles from './agreement.module.css'; // 페이지 모듈
 import legalContentStyles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
 
-export const Route = createFileRoute('/_auth/privacy')({
+export const Route = createFileRoute('/_layout/footer-menu/privacy')({
   component: RouteComponent,
 });
 

@@ -1,11 +1,12 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Button, useModal } from '@learnway/ui';
 
 import styles from './auth-footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../../features/auth';
-import { isSigninPage, isSigninPageNone } from '../../../../../../features/platform';
+import { isSigninPage } from '../../../../../../features/platform';
 
 function AuthFooterComponent() {
   const { open: openModal } = useModal();
@@ -18,7 +19,7 @@ function AuthFooterComponent() {
             <Button
               onClick={() =>
                 openModal({
-                  width: 'sm',
+                  width: isMobile ? 'm_full' : 'sm',
                   content: <AgreementPopup />,
                 })
               }>
@@ -29,7 +30,7 @@ function AuthFooterComponent() {
             <Button
               onClick={() =>
                 openModal({
-                  width: 'sm',
+                  width: isMobile ? 'm_full' : 'sm',
                   content: <PrivacyPopup />,
                 })
               }>
@@ -40,7 +41,7 @@ function AuthFooterComponent() {
             <Button
               onClick={() =>
                 openModal({
-                  width: 'lg',
+                  width: isMobile ? 'm_full' : 'lg',
                   content: <ContactPopup />,
                 })
               }>

@@ -35,7 +35,7 @@
     @apply pb-[0];
   }
   .guide_text {
-    @apply mt-[8px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray6)];
+    @apply mt-[8px] text-[1.2rem] font-normal leading-[16px] text-[var(--gray6)];
     &:empty {
       @apply hidden;
     }
