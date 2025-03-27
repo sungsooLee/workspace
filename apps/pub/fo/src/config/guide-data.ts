@@ -239,7 +239,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'my/membership-secession',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- membership-secession.tsx',
   },
@@ -309,7 +309,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'my/membership-secession',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
   },
@@ -379,7 +379,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'my/membership-secession',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- membership-secession.tsx',
   },
@@ -439,7 +439,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'my/membership-secession',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
   },
