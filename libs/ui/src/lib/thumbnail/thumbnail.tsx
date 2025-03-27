@@ -13,6 +13,8 @@ export interface ThumbnailComponentProps {
   variant?: 'primary' | 'secondary';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;
+  width?: number;
+  height?: number;
   path: string;
   showCheckbox?: boolean;
   showDeleteBtn?: boolean; // delete button
@@ -26,6 +28,8 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     className,
     variant,
     size,
+    width,
+    height,
     path,
     showCheckbox,
     showDeleteBtn,
@@ -38,6 +42,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     return (
       <div
         {...props}
+        style={{ width: width ? width + 'px' : '', height: height ? height + 'px' : '' }}
         className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
           [styles.active]: isHovered,
           [styles.selected]: selected,
