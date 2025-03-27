@@ -292,6 +292,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         <Grid
           data={data}
           columns={columns}
+          multiSelectable
           showSelectedCount={true}
           pagination={{
             pageSize,

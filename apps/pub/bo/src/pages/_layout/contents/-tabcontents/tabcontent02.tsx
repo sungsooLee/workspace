@@ -17,6 +17,7 @@ import {
   DropdownList,
   DropdownOption,
   Input,
+  TransferGrid,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
@@ -29,9 +30,9 @@ const TabContents02Component: FC<{}> = ({}) => {
   ];
   return (
     <div className={cn(styles.start)}>
+      {/* search box */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
-          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
           <div className={searchStyles.item_row}>
             <div className={searchStyles.item_wrap}>
               <div className={searchStyles.inner}>
@@ -108,10 +109,11 @@ const TabContents02Component: FC<{}> = ({}) => {
               조회
             </Button>
           </div>
-          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
-      <div className={cn(boxStyles.start, boxStyles.inner)}></div>
+      <div className={cn(boxStyles.start, boxStyles.inner)}>
+        {/* <TransferGrid columns={[]} gridData={undefined} rowKey={''} /> */}
+      </div>
     </div>
   );
 };
