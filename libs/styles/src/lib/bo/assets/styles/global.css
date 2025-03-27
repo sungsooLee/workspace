@@ -3,4 +3,5 @@
 @import './_common.css';
 @import './_module.css';
 @import './_pages.css';
+@import './_layout.css';
 @import './components/index.css';

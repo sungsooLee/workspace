@@ -82,10 +82,3 @@ h4.auth--title {
     }
   }
 }
-
-.content_wrap.case_tabs {
-  @apply mt-[80px];
-  .page_tabs > [role='tablist'] {
-    @apply absolute -top-[64px] left-0;
-  }
-}

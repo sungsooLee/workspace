@@ -1,4 +1,5 @@
 .start {
+  @apply pt-[24px];
   .title_box {
     @apply flex items-center justify-between;
     h2 {
