@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useRef } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
+import { httpService } from '@learnway/shared';
 
 const API_BASE_URL = apiBaseUrl; // API 기본 URL
 const PART_SIZE = chunkSize; // 청크 사이즈
@@ -129,7 +130,22 @@ const FileUploadComponent = () => {
           console.error(`Part ${partNumber} signing failed for file ${file.id}:`, error);
         }
       },
+      listParts: async () => {
+        // 백엔드에서 parts 목록 API를 제공하지 않아 빈 배열 반환
+        return [];
+      },
 
+      // 업로드 실패 시 중단
+      abortMultipartUpload: async (file, { uploadId, key }) => {
+        try {
+          const encodedKey = encodeURIComponent(key);
+          const response = await httpService.delete(
+            `${API_BASE_URL}/s3/multipart/${uploadId}?key=${encodedKey}`,
+          );
+        } catch (error: any) {
+          console.error('멀티파트 업로드 중단 실패:', error);
+        }
+      },
       // 멀티파트 업로드 완료
       completeMultipartUpload: async (file, { uploadId, key, parts }) => {
         try {
