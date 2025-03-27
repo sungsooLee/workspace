@@ -1,8 +1,8 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { Button, List } from '@learnway/ui';
-import { addOrRemoveItemByKey } from '@learnway/shared';
+import { Button, List, ListOption, Thumbnail } from '@learnway/ui';
+import { addOrRemoveItemByKey, getRandomId } from '@learnway/shared';
 
 const dummyOptions = Array(5)
   .fill(null)
@@ -32,7 +32,7 @@ export const Template: any = (args: any) => {
         size={'sm'}
         onClick={() => setValue('value0')}
       />
-      <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
+      <Button label={'선택 초기화'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
       <List
         {...args}
         options={dummyOptions}
@@ -42,14 +42,14 @@ export const Template: any = (args: any) => {
     </div>
   );
 };
-Template.storyName = 'List';
+Template.storyName = 'List (Single)';
 
 // Multiple Selection
 export const TemplateMultiple: any = (args: any) => {
   const [value, setValue] = useState<string[]>([]);
   return (
     <div>
-      <Button label={'reset'} variant={'point'} size={'sm'} onClick={() => setValue([])} />
+      <Button label={'선택 초기화'} variant={'point'} size={'sm'} onClick={() => setValue([])} />
       <List
         {...args}
         multiple
@@ -60,10 +60,10 @@ export const TemplateMultiple: any = (args: any) => {
     </div>
   );
 };
-TemplateMultiple.storyName = 'Multiple Selection';
+TemplateMultiple.storyName = 'List (Multiple)';
 
 // Delete Option
-export const TemplateDelete: any = (args: any) => {
+export const TemplateOptionDelete: any = (args: any) => {
   const [options, setOptions] = useState(dummyOptions);
   const handleOptionDeleteClick = (option: any) => {
     const newOptions = addOrRemoveItemByKey(options, option, 'value');
@@ -80,4 +80,52 @@ export const TemplateDelete: any = (args: any) => {
     />
   );
 };
-TemplateDelete.storyName = 'Delete Option';
+TemplateOptionDelete.storyName = 'Delete Option';
+
+// Image
+export const TemplateImage: any = (args: any) => {
+  const [value, setValue] = useState<ListOption>();
+  return (
+    <div>
+      <Button
+        label={'select second option'}
+        variant={'point'}
+        size={'sm'}
+        onClick={() => setValue(imageOptions[1])}
+      />
+      <Button
+        label={'선택 초기화'}
+        variant={'point'}
+        size={'sm'}
+        onClick={() => setValue(undefined)}
+      />
+      <List
+        deletable
+        options={imageOptions}
+        value={value}
+        onOptionSelect={(option) => setValue(option)}
+      />
+    </div>
+  );
+};
+TemplateImage.storyName = 'Image';
+
+const imageResponse = Array(5)
+  .fill(null)
+  .map((d, i) => ({
+    id: getRandomId(),
+    name: `name${i}`,
+    size: 1024,
+    path: 'https://lodash.com/assets/img/lodash.svg',
+  }));
+
+const imageOptions = imageResponse.map((d, i) => ({
+  value: d.id,
+  label: d.id,
+  child: (props: any) => (
+    <div className={'flex flex-row items-center'}>
+      <Thumbnail width={20} path={d.path} />
+      <span>{d.name}</span>
+    </div>
+  ),
+}));

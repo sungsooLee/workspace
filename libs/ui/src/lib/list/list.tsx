@@ -1,13 +1,13 @@
 import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
 
-import { SelectOption } from '../select/type';
 import styles from './list.module.css';
-import React from 'react';
+import React, { isValidElement } from 'react';
 import { IcoDelete03 } from '@learnway/icons';
 import { Button } from '../button/button';
+import { ListOption } from './type';
 
 export interface ListComponentProps {
-  options: Array<SelectOption>;
+  options: Array<ListOption>;
   value?: any;
   className?: string;
   labelField?: string;
@@ -69,13 +69,14 @@ const ListComponent = function ({
             selectedOptions?.find((x: any) => x[valueField] === d[valueField]) &&
               !disabledActive &&
               styles.active, // selected row style
+            'border',
           )}
           key={d[valueField]}
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
-          {/* 라벨 */}
-          {d[labelField]}
+          {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
+          {getNodeElement(d) ?? d[labelField]}
           {/* 삭제 버튼 */}
           {deletable && (
             <Button
@@ -93,3 +94,10 @@ const ListComponent = function ({
 };
 
 export const List = ListComponent;
+
+const getNodeElement = (d: ListOption) => {
+  if (isValidElement(d.child && d.child(d))) {
+    return d.child?.(d);
+  }
+  return null;
+};
