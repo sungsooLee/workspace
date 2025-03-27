@@ -54,6 +54,10 @@
       .classify_wrap {
       }
 
+      .empty {
+        @apply mt-[80px];
+      }
+
       .result_wrap {
         @apply mt-[24px];
         & > div {

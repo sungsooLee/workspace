@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
-import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
+import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
 import { cn } from '@learnway/shared';
 
-import { useAuthSignin } from '../../features/auth';
+import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
@@ -20,6 +20,11 @@ import { FormRow } from '../../shared/ui/form';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+    },
+  }),
 });
 
 function RouteComponent() {
@@ -41,8 +46,9 @@ function RouteComponent() {
 
   useEffect(() => {
     onFormChange({
-      username: '@ict-companion.com',
+      username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
+      saveId: !isEmpty(getSavedUserid()),
     });
   }, []);
 

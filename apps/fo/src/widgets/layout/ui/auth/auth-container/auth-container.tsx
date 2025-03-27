@@ -3,7 +3,9 @@ import { useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
-import { isSigninPage, useCurrentRoute } from '../../../../../features/platform';
+import { useCurrentRoute } from '@learnway/config';
+
+import { isSigninPage } from '../../../../../features/platform';
 import { AuthFooter } from './auth-footer/auth-footer';
 import { MobileAuthContainerHeader } from '../../../m.ui/auth/auth-container/auth-container-header';
 

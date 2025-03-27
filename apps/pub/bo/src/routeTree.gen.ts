@@ -44,6 +44,7 @@ import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutPmsMenuManageImport } from './pages/_layout/pms/menuManage'
+import { Route as LayoutPmsLayoutImport } from './pages/_layout/pms/layout'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
@@ -287,6 +288,12 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
 const LayoutPmsMenuManageRoute = LayoutPmsMenuManageImport.update({
   id: '/pms/menuManage',
   path: '/pms/menuManage',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsLayoutRoute = LayoutPmsLayoutImport.update({
+  id: '/pms/layout',
+  path: '/pms/layout',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1119,6 +1126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu8Menu9Import
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/layout': {
+      id: '/_layout/pms/layout'
+      path: '/pms/layout'
+      fullPath: '/pms/layout'
+      preLoaderRoute: typeof LayoutPmsLayoutImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menuManage': {
       id: '/_layout/pms/menuManage'
       path: '/pms/menuManage'
@@ -1300,6 +1314,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
+  LayoutPmsLayoutRoute: typeof LayoutPmsLayoutRoute
   LayoutPmsMenuManageRoute: typeof LayoutPmsMenuManageRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
@@ -1319,6 +1334,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
+  LayoutPmsLayoutRoute: LayoutPmsLayoutRoute,
   LayoutPmsMenuManageRoute: LayoutPmsMenuManageRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
@@ -1402,6 +1418,7 @@ export interface FileRoutesByFullPath {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/pms/layout': typeof LayoutPmsLayoutRoute
   '/pms/menuManage': typeof LayoutPmsMenuManageRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1483,6 +1500,7 @@ export interface FileRoutesByTo {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/pms/layout': typeof LayoutPmsLayoutRoute
   '/pms/menuManage': typeof LayoutPmsMenuManageRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
@@ -1567,6 +1585,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
+  '/_layout/pms/layout': typeof LayoutPmsLayoutRoute
   '/_layout/pms/menuManage': typeof LayoutPmsMenuManageRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
@@ -1650,6 +1669,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
+    | '/pms/layout'
     | '/pms/menuManage'
     | '/guide'
     | '/menu3'
@@ -1730,6 +1750,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
+    | '/pms/layout'
     | '/pms/menuManage'
     | '/guide'
     | '/menu3'
@@ -1812,6 +1833,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
+    | '/_layout/pms/layout'
     | '/_layout/pms/menuManage'
     | '/_guide/guide/'
     | '/_layout/menu3/'
@@ -1933,6 +1955,7 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
+        "/_layout/pms/layout",
         "/_layout/pms/menuManage",
         "/_layout/menu3/"
       ]
@@ -2231,6 +2254,10 @@ export const routeTree = rootRoute
     },
     "/_layout/menu8/menu9": {
       "filePath": "_layout/menu8/menu9.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/layout": {
+      "filePath": "_layout/pms/layout.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menuManage": {

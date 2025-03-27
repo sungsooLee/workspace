@@ -9,5 +9,3 @@ export * from './state/tenant.state';
 
 export * from './service/i18n.hook';
 export * from './service/page.service';
-
-export * from './service/extend-router.service';

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
-import { useCreation } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
-import { Tabs, useModal } from '@learnway/ui';
-import { cn, z } from '@learnway/shared';
+import { useModal } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 import { AuthForm, AuthFormData, pageRouteConfig } from '../../features/auth';
 import { useAsyncFetchEmail } from '../../entities/user';
@@ -14,7 +13,6 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 export const Route = createFileRoute('/_auth/identity-verification')({
   component: RouteComponent,
   ...pageRouteConfig({
-    validateState: z.object({ email: z.string().email() }),
     meta: {
       title: '본인 인증',
     },

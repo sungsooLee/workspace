@@ -2,8 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-
-import { useCurrentRoute } from '../../../../features/platform';
+import { useCurrentRoute } from '@learnway/config';
 
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';

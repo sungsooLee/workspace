@@ -3,23 +3,7 @@ import { useRouter, useLocation, useMatches } from '@tanstack/react-router';
 import { has, last } from 'lodash';
 import { useCreation } from 'ahooks';
 
-import { usePageRouteState } from '../../../entities/platform';
-
-export function useExtendRouter() {
-  const router = useRouter();
-  const [, setPageRouteState] = usePageRouteState();
-
-  return {
-    ...router,
-    navigate: (options: any) => {
-      const { state, ...rest } = options;
-      if (options?.state) {
-        setPageRouteState({ to: rest.to, state });
-      }
-      router.navigate(options);
-    },
-  };
-}
+import { usePageRouteState } from './page-route.state';
 
 export function useGlobalRouterEvent() {
   const router = useRouter();
@@ -62,7 +46,7 @@ export function useCurrentRoute() {
     }
     const params = route.params;
     const search = route.search;
-    const meta = route.staticData?.meta;
+    const meta = (route.staticData as any)?.meta;
 
     return {
       state: location.state,

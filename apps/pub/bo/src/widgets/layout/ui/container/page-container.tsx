@@ -12,12 +12,14 @@ interface PageContainerComponentProps {
   children: ReactNode;
   showFavoriteButton?: boolean;
   notice?: boolean;
+  tabs?: boolean;
 }
 
 function PageContainerComponent({
   children,
   showFavoriteButton = true,
   notice = false,
+  tabs = false,
 }: PageContainerComponentProps) {
   // const { t } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(true);
@@ -125,7 +127,7 @@ function PageContainerComponent({
 
         {/* 2025-03-11 : notice 추가 E */}
         {/* content_wrap */}
-        <div className={cn(styles.content_wrap, 'content_wrap')}>
+        <div className={cn(styles.content_wrap, tabs && 'case_tabs', 'content_wrap')}>
           {/* contents */}
           <div className={styles.content}>{children}</div>
         </div>

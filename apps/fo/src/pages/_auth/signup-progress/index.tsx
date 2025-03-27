@@ -1,13 +1,11 @@
-import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
 
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
-import { IcoCaution } from '@learnway/icons';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
-import { pageRouteConfig, password_validator } from '../../../features/auth';
+import { pageRouteConfig } from '../../../features/auth';
 import { FormRow, NoticeBox, EmbededAlert } from '../../../shared/ui';
 import { useAsyncFetchEmail } from '../../../entities/user';
 
@@ -28,7 +26,7 @@ function RouteComponent() {
   const { state } = Route.useRouteContext();
   const { alert } = useModal();
 
-  const { provider, onSubmit, setFormError } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, setFormError } = useDynamicForm(emailFormConfig);
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
@@ -104,7 +102,7 @@ function RouteComponent() {
   );
 }
 
-const detailConfig = {
+const emailFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'email',
@@ -117,6 +115,9 @@ const detailConfig = {
     },
   ],
   validator: {
-    email: z.string().email(),
+    email: {
+      format: 'email',
+      required: true,
+    },
   },
 };

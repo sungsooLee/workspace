@@ -2,12 +2,12 @@ import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-//import { useCurrentRoute } from '../../../../features/platform';
+
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
 import styles from './auth-layout.module.css';
 
-import { isSigninPage, PAGE_TITLE_BY_PATH, isSigninPageNone } from '../../../../features/platform';
+import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
 import { MobileView, BrowserView } from 'react-device-detect';
 
 interface AuthLayoutComponentProps {
@@ -16,7 +16,6 @@ interface AuthLayoutComponentProps {
 
 function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
-  //const { meta } = useCurrentRoute();
 
   const location = useLocation();
   const pageTitle = PAGE_TITLE_BY_PATH[location.pathname];
