@@ -5,7 +5,8 @@ import { Tabs } from '@learnway/ui';
 /* tab contents */
 import { TabContents01 } from './-tabcontents/tabcontent01';
 import { TabContents02 } from './-tabcontents/tabcontent02';
-export const Route = createFileRoute('/_layout/pms/layout')({
+
+export const Route = createFileRoute('/_layout/contents/layout')({
   component: RouteComponent,
 });
 

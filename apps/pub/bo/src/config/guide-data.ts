@@ -290,8 +290,8 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'PMS/레이아웃(상단 Tab)',
-    pageId: 'pms/layout',
+    screenName: '컨텐츠 레이아웃(상단 Tab)',
+    pageId: 'contents/layout',
     screenId: '',
     pageType: 'Page',
     completionDate: '',

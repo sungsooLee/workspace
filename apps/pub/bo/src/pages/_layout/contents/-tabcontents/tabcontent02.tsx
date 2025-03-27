@@ -109,11 +109,10 @@ const TabContents02Component: FC<{}> = ({}) => {
               조회
             </Button>
           </div>
-          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
         </div>
       </div>
       <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <TransferGrid columns={[]} gridData={undefined} rowKey={''} />
+        {/* <TransferGrid columns={[]} gridData={undefined} rowKey={''} /> */}
       </div>
     </div>
   );
