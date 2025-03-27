@@ -14,7 +14,7 @@ const AgreementPopupCompoment = () => {
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
-      <ModalTitle>{'약관 명'}</ModalTitle>
+      <ModalTitle>{'이용약관'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.agreement_popup}`}>
           <Select

@@ -24,7 +24,3 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
 export function isSigninPage(path: string): boolean {
   return path === '/pb-fo/login';
 }
-
-export function isSigninPageNone(path: string): boolean {
-  return path === '/pb-fo/agreement' || path === '/pb-fo/privacy';
-}

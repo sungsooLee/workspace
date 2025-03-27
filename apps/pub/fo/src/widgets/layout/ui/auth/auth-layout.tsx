@@ -7,7 +7,7 @@ import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
 import styles from './auth-layout.module.css';
 
-import { isSigninPage, PAGE_TITLE_BY_PATH, isSigninPageNone } from '../../../../features/platform';
+import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
 import { MobileView, BrowserView } from 'react-device-detect';
 
 interface AuthLayoutComponentProps {
