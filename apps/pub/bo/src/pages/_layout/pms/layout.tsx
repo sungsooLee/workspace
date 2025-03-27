@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-
 import { Tabs } from '@learnway/ui';
+
+/* tab contents */
+import { TabContents01 } from './-tabcontents/tabcontent01';
+import { TabContents02 } from './-tabcontents/tabcontent02';
 export const Route = createFileRoute('/_layout/pms/layout')({
   component: RouteComponent,
 });
@@ -14,22 +16,12 @@ function RouteComponent() {
     {
       title: 'Tab A',
       key: 'a',
-      content: (
-        <h2>
-          Tab A content
-          <br />
-          11111
-          <br />
-          11111
-          <br />
-          11111
-        </h2>
-      ),
+      content: <TabContents01 />,
     },
     {
       title: 'Tab B',
       key: 'b',
-      content: <h2>Tab B content</h2>,
+      content: <TabContents02 />,
     },
     {
       title: 'Tab C',
