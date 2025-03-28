@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { Button, List, ListOption, Thumbnail } from '@learnway/ui';
+import { Button, List, Thumbnail } from '@learnway/ui';
 import { addOrRemoveItemByKey, getRandomId } from '@learnway/shared';
 
 const dummyOptions = Array(5)
@@ -84,7 +84,7 @@ TemplateOptionDelete.storyName = 'Delete Option';
 
 // Image
 export const TemplateImage: any = (args: any) => {
-  const [value, setValue] = useState<ListOption>();
+  const [value, setValue] = useState<any>();
   return (
     <div>
       <Button
@@ -104,6 +104,12 @@ export const TemplateImage: any = (args: any) => {
         draggable
         options={imageOptions}
         value={value}
+        itemRenderer={(option: any) => (
+          <div className={'m-2 flex flex-row items-center gap-3'}>
+            <Thumbnail width={84} height={55} path={option.path} />
+            <span>{option.name}</span>
+          </div>
+        )}
         onOptionSelect={(option) => setValue(option)}
       />
     </div>
@@ -111,22 +117,11 @@ export const TemplateImage: any = (args: any) => {
 };
 TemplateImage.storyName = 'Image';
 
-const imageResponse = Array(5)
+const imageOptions = Array(5)
   .fill(null)
   .map((d, i) => ({
     id: getRandomId(),
     name: `name${i}`,
     size: 1024,
-    path: 'https://lodash.com/assets/img/lodash.svg',
+    path: 'https://picsum.photos/200',
   }));
-
-const imageOptions = imageResponse.map((d, i) => ({
-  value: d.id,
-  label: d.id,
-  child: (props: any) => (
-    <div className={'flex flex-row items-center'}>
-      <Thumbnail width={20} path={d.path} />
-      <span>{d.name}</span>
-    </div>
-  ),
-}));

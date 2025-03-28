@@ -7,7 +7,7 @@ import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } fr
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import {
-  ImageInfo,
+  ResourceImageListFormField,
   SharedChannelGridFormField,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
@@ -17,6 +17,7 @@ import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub
 import React from 'react';
 import { t } from 'i18next';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { getRandomId } from '@learnway/shared';
 
 export const Route = createFileRoute('/_unauth/learning_test/resource/view/image')({
   component: RouteComponent,
@@ -204,7 +205,12 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <ImageInfo />
+          {/*<ImageInfo />*/}
+          <FormRow provider={provider}>
+            <DynamicFormField name={'imageList'}>
+              <ResourceImageListFormField />
+            </DynamicFormField>
+          </FormRow>
         </SubContents>
       </PageContainer>
     </form>
@@ -436,6 +442,20 @@ const formConfig: DynamicFormConfig = {
         reverse: true,
       },
       value: false,
+    },
+    {
+      label: t('이미지'),
+      name: 'imageList',
+      type: 'custom',
+      format: 'array',
+      value: Array(10)
+        .fill(null)
+        .map((d, i) => ({
+          id: getRandomId(),
+          name: `name${i}`,
+          size: 1024,
+          path: 'https://picsum.photos/200',
+        })),
     },
   ],
   validator: {

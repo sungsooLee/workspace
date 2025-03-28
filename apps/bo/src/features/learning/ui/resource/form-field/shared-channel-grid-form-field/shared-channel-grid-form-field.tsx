@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Button, Grid, useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
-import { ChannelChoiceModal } from '../../../../shared';
+import { ChannelChoiceModal } from '../../../../../shared';
 
 interface SharedChannelGridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   onClick?: (value?: any) => void;

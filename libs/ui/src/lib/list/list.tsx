@@ -1,16 +1,19 @@
 import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
 
 import styles from './list.module.css';
-import React, { isValidElement } from 'react';
+import React, { isValidElement, ReactElement } from 'react';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { Button } from '../button/button';
-import { ListOption } from './type';
+import { CommonReactElementProps } from '@/libs/ui/src';
 
-export interface ListComponentProps {
-  options: Array<ListOption>;
+export interface ListComponentProps extends CommonReactElementProps {
+  /** options */
+  options: Array<any>;
+  /** value */
   value?: any;
-  className?: string;
+  /** option 에서 label 로 사용할 key */
   labelField?: string;
+  /** option 에서 value 로 사용할 key */
   valueField?: string;
   /** option 선택시 active 표시 여부 */
   disabledActive?: boolean;
@@ -22,6 +25,8 @@ export interface ListComponentProps {
   hideBorder?: boolean;
   /** 컨텐츠 영역 보더 표시 여부 */
   hideItemBorder?: boolean;
+  /** 리스트의 개별 아이템을 렌더링 하는 함수 */
+  itemRenderer?: (option: any) => ReactElement;
   /** draggable 가능 여부 */
   draggable?: boolean;
   /** chip 삭제 버튼 클릭시 호출 */
@@ -43,12 +48,13 @@ const ListComponent = function ({
   deletable,
   hideBorder,
   hideItemBorder = true,
+  itemRenderer,
   draggable,
   onOptionDeleteClick,
   onOptionSelect,
   onOptionsSelect,
 }: ListComponentProps) {
-  const selectedOptions = getMatchingItemsByKey(options, value, 'value');
+  const selectedOptions = getMatchingItemsByKey(options, value, valueField);
 
   const handleOptionClickForSingle = (option: any) => {
     onOptionSelect?.(option);
@@ -84,7 +90,8 @@ const ListComponent = function ({
           {/*컨텐츠 영역*/}
           <div className={cn(!hideItemBorder && 'border')}>
             {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
-            {getNodeElement(d) ?? d[labelField]}
+            {/*{getNodeElement(d) ?? d[labelField]}*/}
+            {isValidElement(itemRenderer?.(d)) ? itemRenderer(d) : d[labelField]}
           </div>
           {/* 삭제 버튼 */}
           {deletable && (
@@ -109,10 +116,3 @@ const ListComponent = function ({
 };
 
 export const List = ListComponent;
-
-const getNodeElement = (d: ListOption) => {
-  if (isValidElement(d.child && d.child(d))) {
-    return d.child?.(d);
-  }
-  return null;
-};
