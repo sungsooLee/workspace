@@ -1,5 +1,7 @@
 /* carousel */
 .swiper {
+  .swiper-wrapper {
+  }
   [class^='swiper-button'] {
     @apply h-[48px] w-[48px] rounded-[24px] bg-[var(--white)] shadow-[0px_2px_4px_rgba(0,0,0,0.08)];
     &::after {
