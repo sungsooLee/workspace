@@ -19,7 +19,7 @@ function RouteComponent() {
     completionDate: string;
     lastUpdateDate: string;
     remarks: string;
-    native: boolean;
+    native?: boolean;
   }
 
   // 통계 상태의 타입 정의
@@ -40,7 +40,7 @@ function RouteComponent() {
     native: 0,
   });
 
-  const getLayoutType = (screenId: string): string => {
+  const getLayoutType = (screenId: string, native?: boolean): string => {
     if (screenId.includes('_MR_')) return '반응형(모바일)';
     if (screenId.includes('_MA_')) return '적응형(모바일)';
     if (screenId.includes('_M_')) return '모바일';
@@ -100,7 +100,7 @@ function RouteComponent() {
     let native = 0;
 
     data.forEach((item) => {
-      const layout = getLayoutType(item.screenId);
+      const layout = getLayoutType(item.screenId, item.native);
       if (layout === '모바일' || layout === '반응형(모바일)' || layout === '적응형(모바일)') {
         mobile++;
       } else if (layout === 'PC') {
@@ -126,7 +126,8 @@ function RouteComponent() {
           {stats.native})
         </span>
         <span className="completed">
-          완료 : <strong>{stats.completed}</strong>본 <button onClick={handleSort}> [보기]</button>
+          완료 : <strong>{stats.completed}</strong>본{' '}
+          <button onClick={handleSort}> [리스트 정렬]</button>
         </span>
 
         <span className="native">
@@ -185,7 +186,7 @@ function RouteComponent() {
               <td>{getLayoutType(item.screenId)}</td>
               <td className="text-left">{item.screenName}</td>
               <td className="pages">
-                <a href={item.pageId} target="_blank" rel="noopener noreferrer">
+                <a href={item.pageId} target="_blank" rel="noreferrer">
                   {item.pageId}
                 </a>
                 <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
