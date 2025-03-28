@@ -1,6 +1,7 @@
 import { z } from './zod';
 import { ZodSchema } from 'zod';
 import { ValidatorConfig } from '../types/zod';
+import { getValidateConfigPassword } from './validator';
 
 // 필수 값 처리 함수 (분리)
 const handleRequired = (
@@ -53,7 +54,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
   if (validator === undefined) return z.object({});
   const schemaShape: Record<string, any> = {};
   const requiredSuperRefine: any[] = [];
-  const conditionsSuperRefine: any[] = [];
+  let conditionsSuperRefine: any[] = [];
   for (const key in validator) {
     const config = validator[key];
 
@@ -89,7 +90,11 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         });
         break;
       }
-
+      case 'password': {
+        schema = z.string();
+        conditionsSuperRefine = [...conditionsSuperRefine, ...getValidateConfigPassword(key)];
+        break;
+      }
       default:
         throw new Error(`Unsupported type: ${config.format}`);
     }

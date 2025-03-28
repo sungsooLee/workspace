@@ -4,11 +4,10 @@ import { useCreation } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
-import type { PhoneNumberValue } from '@learnway/ui';
-import { cn, buildJodObject } from '@learnway/shared';
+import { cn } from '@learnway/shared';
+import { useCurrentRoute } from '@learnway/config';
 
 import { AuthForm, AuthFormData, pageRouteConfig } from '../../../features/auth';
-import { useCurrentRoute } from '../../../features/platform';
 import { useAsyncFetchEmail } from '../../../entities/user';
 import { EmbededAlert } from '../../../shared/ui';
 
@@ -54,7 +53,8 @@ function RouteComponent() {
       userId: '',
       name: '',
       birthday: '',
-      phoneNumber: {} as PhoneNumberValue,
+      phoneNumber: '',
+      nationCode: 'KR',
       email: '',
       verificationCode: '',
     });

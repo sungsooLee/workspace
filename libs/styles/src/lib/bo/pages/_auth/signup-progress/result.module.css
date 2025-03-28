@@ -31,6 +31,6 @@
     @apply mt-[32px];
   }
   .divider {
-    @apply mt-[16px];
+    @apply mt-[16px] border-[#e5e7eb];
   }
 }

@@ -3,10 +3,19 @@
   .left {
     @apply flex flex-1 items-center;
     h2 {
-      @apply body_2_b;
+      @apply !body_2_b !p-0;
     }
     & > button {
       @apply mr-[8px];
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply fixed left-0 right-0 top-0 z-[100] w-full min-w-[320px] bg-[#ffffff];
     }
   }
 }

@@ -15,6 +15,7 @@ export interface AuthUser {
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
   activeTenantId?: number;
+  mainTenantId?: number;
   menus?: any;
 }
 

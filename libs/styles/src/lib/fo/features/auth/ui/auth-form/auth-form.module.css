@@ -4,3 +4,11 @@
 .btn_wrap {
   @apply mt-[48px];
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .auth_form {
+      @apply mt-[16px];
+    }
+  }
+}

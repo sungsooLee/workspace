@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
-import styles from './auth-layout.module.css';
+import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-layout.module.css';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;

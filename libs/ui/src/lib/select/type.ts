@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { BaseFieldProps } from '../type';
 
 export interface SelectOption {
@@ -13,4 +12,3 @@ export interface SelectOption {
 export interface SelectFieldProps extends BaseFieldProps {
   options: SelectOption[];
 }
-

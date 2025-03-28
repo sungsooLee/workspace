@@ -397,6 +397,7 @@ const Grid = forwardRef(
                         cell.column.columnDef.meta?.cellAlign ||
                         cell.column.columnDef.meta?.align ||
                         'left',
+                      verticalAlign: 'center',
                     }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -449,11 +450,11 @@ const Grid = forwardRef(
                               : '',
                         width: cell.column.getSize(),
                         display: 'block',
-                        textAlign: 'left',
-                        verticalAlign:
+                        textAlign:
                           cell.column.columnDef.meta?.cellAlign ||
                           cell.column.columnDef.meta?.align ||
                           'left',
+                        verticalAlign: 'center',
                       }}>
                       {cell.getIsGrouped() ? (
                         <button
@@ -489,7 +490,11 @@ const Grid = forwardRef(
       return (
         <div
           ref={tableContainerRef}
-          className={cn('grid_table', className)}
+          className={cn(
+            'grid_table',
+            className,
+            multiSelectable && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+          )}
           style={{
             height: '300px',
             width: '100%',

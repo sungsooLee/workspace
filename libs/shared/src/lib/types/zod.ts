@@ -6,10 +6,20 @@ export type ValidatorFormat =
   | 'email'
   | 'array'
   | 'object'
-  | 'boolean';
+  | 'boolean'
+  | 'password';
 export type ValidatorConfig = {
   [key: string]: {
-    format: 'string' | 'number' | 'date' | 'datetime' | 'email' | 'array' | 'object' | 'boolean';
+    format:
+      | 'string'
+      | 'number'
+      | 'date'
+      | 'datetime'
+      | 'email'
+      | 'array'
+      | 'object'
+      | 'boolean'
+      | 'password';
     default?: any;
     required?:
       | boolean

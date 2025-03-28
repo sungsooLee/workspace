@@ -3,7 +3,7 @@ import { Button, useModal } from '@learnway/ui';
 import { IcoArray } from '@learnway/icons';
 import { NavigationPopupM } from '../../layout';
 
-import styles from '@learnway/styles/fo/features/layout/ui/navigation_m.module.css';
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 
 const NavigationMComponent = () => {
   // modal

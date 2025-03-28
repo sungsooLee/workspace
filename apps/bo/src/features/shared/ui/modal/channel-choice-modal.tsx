@@ -90,19 +90,12 @@ const ChannelChoicePopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button
-          label={'취소'}
-          variant={'gray'}
-          size={'lg'}
-          actionKey={'cancel'}
-          onClick={handleOnClose}
-        />
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={handleOnClose} />
         <Button
           type={'button'}
           label={'확인'}
           variant={'primary'}
           size={'lg'}
-          actionKey={'confirm'}
           onClick={handleOnConfirm}
         />
       </ModalFooter>

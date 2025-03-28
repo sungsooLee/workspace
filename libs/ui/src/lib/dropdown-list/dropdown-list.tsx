@@ -81,6 +81,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       onChange,
       placeholder = '선택하세요',
       isDisabled = false,
+      isReadonly = false,
       isMulti = false,
       isSearchable = false,
       isClearable = false,
@@ -142,7 +143,11 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
-          className={cn('select', isFocused || isMenuOpen ? 'focused' : '')}
+          className={cn(
+            'select',
+            isFocused || isMenuOpen ? 'focused' : '',
+            isReadonly ? 'readonly' : '',
+          )}
           classNamePrefix="nlp-select"
           components={{
             Option,
@@ -213,4 +218,4 @@ DropdownComponent.displayName = 'Dropdown';
 FormDropdownComponent.displayName = 'FormDropdown';
 
 export const DropdownList = DropdownComponent;
-export const FormDropdown = FormDropdownComponent;
+export const Dropdown = FormDropdownComponent;

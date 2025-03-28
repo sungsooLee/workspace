@@ -11,6 +11,8 @@ import { useFetchAuthUser } from '@learnway/config';
 import { useFetchTenant } from '../entities/tenant';
 import { pageRouteConfig } from '../features/auth';
 
+import styles from '@learnway/styles/fo/pages/_layout.module.css';
+
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
   ...pageRouteConfig({ authorization: true }),
@@ -30,7 +32,7 @@ function LayoutComponent() {
   }, [tenant]);
 
   return (
-    <>
+    <div className={`${styles.start} ${styles.layout_wrap}`}>
       <BrowserView>
         <Layout>
           <Outlet />
@@ -41,6 +43,6 @@ function LayoutComponent() {
           <Outlet />
         </MobileLayout>
       </MobileView>
-    </>
+    </div>
   );
 }

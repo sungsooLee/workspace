@@ -161,8 +161,8 @@ import { MpassPopup } from '../../features/auth'; // 팝업 불러오기
 // 모달(팝업) 코드 샘플  (mpass-popup.jsx)
 import { memo } from 'react';
 import styles from './mpass-popup.module.css';
-import imgGuide1 from '../../../assets/images/popup/img_mpass_guide1.png';
-import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
+import imgGuide1 from '@learnway/styles/fo/assets/images/popup/img_mpass_guide1.png';
+import imgGuide2 from '@learnway/styles/fo/assets/images/popup/img_mpass_guide2.png';
 
 const MpassPopupCompoment = () => {
   return (

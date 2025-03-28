@@ -13,7 +13,11 @@ import {
   ContentsRow,
   PhoneNumber,
   InputTimer,
+  InputModalSelectorFormField,
+  useModal,
 } from '@learnway/ui';
+
+import { TenantSearchPopup, AgreementDetailPopup } from '../../features/auth'; // 테넌트명 조회 팝업
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,
@@ -28,6 +32,7 @@ function RouteComponent() {
   const handleChange = (event: SelectOption) => {
     console.log(event);
   };
+  const { open: openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
@@ -91,6 +96,26 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+            {/* 검색 Case : 업무 담당 회사 정보 팝업 - TenantSearchPopup */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="tenant-name2" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>테넌트명</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <InputModalSelectorFormField
+                    modalConfig={{
+                      width: 'lg',
+                      content: <TenantSearchPopup />,
+                    }}
+                  />
+                </div>
+              </div>
+            </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="company-name" className={formStyles.form_label}>
@@ -149,7 +174,20 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="id-email" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>아이디(이메일)</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="name" type="text" placeholder="" value="914815@hyundai.com" readOnly />
+                </div>
+              </div>
+            </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label htmlFor="name" className={formStyles.form_label}>
@@ -258,31 +296,66 @@ function RouteComponent() {
             <ul className={styles.check_list}>
               <li>
                 <Checkbox label="러닝웨이 이용약관(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="개인정보 이용동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="고유식별 정보 처리 동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="회원가입 및 이용 개인정보 제3자 제공동의(필수)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="민감정보 수집 및 이용(선택)" />
-                <Button className={styles.btn_view}>
+                <Button
+                  className={styles.btn_view}
+                  onClick={() =>
+                    openModal({
+                      width: 'sm',
+                      content: <AgreementDetailPopup />,
+                    })
+                  }>
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
@@ -291,7 +364,7 @@ function RouteComponent() {
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
-              이전
+              취소
             </Button>
             <Button variant="primary" size="xl">
               확인

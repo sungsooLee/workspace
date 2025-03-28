@@ -4,12 +4,12 @@ import { t } from 'i18next';
 
 import { ContentsRow, DynamicFormField, Button, useModal, Input } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { useLogoutUser } from '@learnway/config';
 
 import { FormRow, NoticeBox, HighlightMessageBox } from '../../shared/ui';
 
-import { pageRouteConfig, GoogleOtpGuideButton, password_validator } from '../../features/auth';
+import { pageRouteConfig, GoogleOtpGuideButton } from '../../features/auth';
 import { useUpdatePassword } from '../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
@@ -27,20 +27,13 @@ function RouteComponent() {
   const router = useRouter();
   const { state } = Route.useRouteContext();
 
-  const { provider, onSubmit, setFormError } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, setFormError } = useDynamicForm(passwordFormConfig);
   const { logout } = useLogoutUser();
 
   const { alert, confirm } = useModal();
   const { update } = useUpdatePassword();
 
   const handleOnSubmit = async (data: any) => {
-    try {
-      validator(data as any);
-    } catch (e) {
-      console.log(e);
-      return;
-    }
-
     update(
       {
         username: data.username,
@@ -74,25 +67,6 @@ function RouteComponent() {
 
   const handleLater = () => {
     router.navigate({ to: '/' });
-  };
-
-  const validator = (data: any) => {
-    const passwordSchema = z
-      .object({
-        password: password_validator,
-        confirm_password: password_validator,
-      })
-      .refine((data) => data.password === data.confirm_password, {
-        message: '새로운 비밀번호를 다시 확인해 주세요.',
-        path: ['confirm_password'],
-      });
-
-    const r = passwordSchema.safeParse(data);
-    if (!r.success) {
-      r.error.issues.forEach((error: any) => {
-        setFormError(error.path[0], error.message);
-      });
-    }
   };
 
   return (
@@ -154,7 +128,7 @@ function RouteComponent() {
   );
 }
 
-const detailConfig = {
+const passwordFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'oldPassword',
@@ -184,13 +158,24 @@ const detailConfig = {
     },
   ],
   validator: {
-    password: password_validator,
-    confirm_password: password_validator,
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-        category: z.string().nonempty(t('유효성 테스트')),
-         language_code: z.string().nonempty(t('유효성 테스트')),
-         subdivision: z.string().nonempty(t('유효성 테스트')),
-         check: z.boolean(),
-         tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    oldPassword: {
+      format: 'password',
+      required: true,
+    },
+    password: {
+      format: 'password',
+      required: true,
+    },
+    confirm_password: {
+      format: 'password',
+      required: true,
+      conditions: [
+        {
+          fn: (values: Record<string, any>) => values.password === values.confirm_password,
+          message: '새로운 비밀번호를 다시 확인해 주세요.',
+          path: 'confirm_password',
+        },
+      ],
+    },
   },
 };

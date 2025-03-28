@@ -65,9 +65,22 @@
   @apply relative mb-[16px] border-b border-solid border-[var(--gray2)];
 }
 
+.box {
+  @apply flex w-full;
+  .dash {
+    @apply -mt-[8px] flex w-[23px] shrink-0 items-center justify-center;
+    &::after {
+      @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
+    }
+  }
+}
+
 .item_col_full {
   @apply w-full;
   > div {
     @apply mb-[8px];
+    &:nth-last-child(1) {
+      @apply mb-0;
+    }
   }
 }

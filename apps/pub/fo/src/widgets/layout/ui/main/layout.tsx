@@ -9,7 +9,8 @@ import { Breadcrumbs } from '../container/breadcrumbs/breadcrumbs';
 import { RelatedSearch } from '../container/related-search/related-search';
 
 import { PageContainer } from '../container/page-container';
-import styles from './layout.module.css';
+//import styles from './layout.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/main/layout.module.css';
 interface LayoutComponentProps {
   children: ReactNode;
 }

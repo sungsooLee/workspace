@@ -38,6 +38,7 @@ export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
 export { ReactComponent as IcoCaution02 } from './lib/ic_caution02.svg'; // alert caution icon 24*25
+export { ReactComponent as IcoCaution03 } from './lib/ic_caution03.svg';
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
 export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // complete icon 48*48
@@ -105,6 +106,7 @@ export { ReactComponent as IcoMultiScorm } from './lib/ic_multi_scorm.svg'; // m
 export { ReactComponent as IcoSurvey } from './lib/ic_survey.svg'; // survey
 export { ReactComponent as IcoSetting01 } from './lib/ic_setting_01.svg'; // setting
 export { ReactComponent as IcoReview } from './lib/ic_review.svg'; // review
+export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // success_02
 
 //export Default as Information from './lib/information.svg?react';
 

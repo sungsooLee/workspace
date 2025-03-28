@@ -27,7 +27,6 @@ import { Route as AuthProgressStatusResultEnImport } from './pages/_auth/progres
 import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
 import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
 import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
-import { Route as AuthPrivacyImport } from './pages/_auth/privacy'
 import { Route as AuthPasswordSetImport } from './pages/_auth/password-set'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
@@ -37,15 +36,19 @@ import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
 import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
 import { Route as AuthAgreementcheckImport } from './pages/_auth/agreement_check'
 import { Route as AuthAgreementPrivacyImport } from './pages/_auth/agreement-privacy'
-import { Route as AuthAgreementImport } from './pages/_auth/agreement'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutSettingSettingWebmImport } from './pages/_layout/setting/setting-web_m'
 import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting/setting-sns_m'
 import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
 import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
+import { Route as LayoutMySettingSnsImport } from './pages/_layout/my/setting-sns'
+import { Route as LayoutMyMembershipSecessionImport } from './pages/_layout/my/membership-secession'
+import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/information-change'
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
+import { Route as LayoutFooterMenuPrivacyImport } from './pages/_layout/footer-menu/privacy'
+import { Route as LayoutFooterMenuAgreementImport } from './pages/_layout/footer-menu/agreement'
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
@@ -178,12 +181,6 @@ const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthPrivacyRoute = AuthPrivacyImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => AuthRoute,
-} as any)
-
 const AuthPasswordSetRoute = AuthPasswordSetImport.update({
   id: '/password-set',
   path: '/password-set',
@@ -238,12 +235,6 @@ const AuthAgreementPrivacyRoute = AuthAgreementPrivacyImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthAgreementRoute = AuthAgreementImport.update({
-  id: '/agreement',
-  path: '/agreement',
-  getParentRoute: () => AuthRoute,
-} as any)
-
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
@@ -282,6 +273,25 @@ const LayoutSettingSettingLanguagemRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutMySettingSnsRoute = LayoutMySettingSnsImport.update({
+  id: '/my/setting-sns',
+  path: '/my/setting-sns',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMyMembershipSecessionRoute =
+  LayoutMyMembershipSecessionImport.update({
+    id: '/my/membership-secession',
+    path: '/my/membership-secession',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutMyInformationChangeRoute = LayoutMyInformationChangeImport.update({
+  id: '/my/information-change',
+  path: '/my/information-change',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutIntegratedSearchIntegratedSearchmRoute =
   LayoutIntegratedSearchIntegratedSearchmImport.update({
     id: '/integrated-search/integrated-search_m',
@@ -295,6 +305,18 @@ const LayoutIntegratedSearchIntegratedSearchRoute =
     path: '/integrated-search/integrated-search',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutFooterMenuPrivacyRoute = LayoutFooterMenuPrivacyImport.update({
+  id: '/footer-menu/privacy',
+  path: '/footer-menu/privacy',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutFooterMenuAgreementRoute = LayoutFooterMenuAgreementImport.update({
+  id: '/footer-menu/agreement',
+  path: '/footer-menu/agreement',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutCourseRegistrationCourseRegistrationAllRoute =
   LayoutCourseRegistrationCourseRegistrationAllImport.update({
@@ -526,13 +548,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/agreement': {
-      id: '/_auth/agreement'
-      path: '/agreement'
-      fullPath: '/agreement'
-      preLoaderRoute: typeof AuthAgreementImport
-      parentRoute: typeof AuthImport
-    }
     '/_auth/agreement-privacy': {
       id: '/_auth/agreement-privacy'
       path: '/agreement-privacy'
@@ -594,13 +609,6 @@ declare module '@tanstack/react-router' {
       path: '/password-set'
       fullPath: '/password-set'
       preLoaderRoute: typeof AuthPasswordSetImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/privacy': {
-      id: '/_auth/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof AuthPrivacyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status-cert': {
@@ -932,6 +940,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/footer-menu/agreement': {
+      id: '/_layout/footer-menu/agreement'
+      path: '/footer-menu/agreement'
+      fullPath: '/footer-menu/agreement'
+      preLoaderRoute: typeof LayoutFooterMenuAgreementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/footer-menu/privacy': {
+      id: '/_layout/footer-menu/privacy'
+      path: '/footer-menu/privacy'
+      fullPath: '/footer-menu/privacy'
+      preLoaderRoute: typeof LayoutFooterMenuPrivacyImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/integrated-search/integrated-search': {
       id: '/_layout/integrated-search/integrated-search'
       path: '/integrated-search/integrated-search'
@@ -944,6 +966,27 @@ declare module '@tanstack/react-router' {
       path: '/integrated-search/integrated-search_m'
       fullPath: '/integrated-search/integrated-search_m'
       preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchmImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/my/information-change': {
+      id: '/_layout/my/information-change'
+      path: '/my/information-change'
+      fullPath: '/my/information-change'
+      preLoaderRoute: typeof LayoutMyInformationChangeImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/my/membership-secession': {
+      id: '/_layout/my/membership-secession'
+      path: '/my/membership-secession'
+      fullPath: '/my/membership-secession'
+      preLoaderRoute: typeof LayoutMyMembershipSecessionImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/my/setting-sns': {
+      id: '/_layout/my/setting-sns'
+      path: '/my/setting-sns'
+      fullPath: '/my/setting-sns'
+      preLoaderRoute: typeof LayoutMySettingSnsImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/setting/setting-language_m': {
@@ -994,7 +1037,6 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
-  AuthAgreementRoute: typeof AuthAgreementRoute
   AuthAgreementPrivacyRoute: typeof AuthAgreementPrivacyRoute
   AuthAgreementcheckRoute: typeof AuthAgreementcheckRoute
   AuthDormantAccountRoute: typeof AuthDormantAccountRoute
@@ -1004,7 +1046,6 @@ interface AuthRouteChildren {
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
   AuthPasswordSetRoute: typeof AuthPasswordSetRoute
-  AuthPrivacyRoute: typeof AuthPrivacyRoute
   AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
   AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
   AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
@@ -1020,7 +1061,6 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthAgreementRoute: AuthAgreementRoute,
   AuthAgreementPrivacyRoute: AuthAgreementPrivacyRoute,
   AuthAgreementcheckRoute: AuthAgreementcheckRoute,
   AuthDormantAccountRoute: AuthDormantAccountRoute,
@@ -1030,7 +1070,6 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
   AuthPasswordSetRoute: AuthPasswordSetRoute,
-  AuthPrivacyRoute: AuthPrivacyRoute,
   AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
   AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
   AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
@@ -1124,8 +1163,13 @@ interface LayoutRouteChildren {
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
+  LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
+  LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
+  LayoutMySettingSnsRoute: typeof LayoutMySettingSnsRoute
   LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
   LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
   LayoutSettingSettingSnsmRoute: typeof LayoutSettingSettingSnsmRoute
@@ -1139,10 +1183,15 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
   LayoutCourseRegistrationCourseRegistrationAllRoute:
     LayoutCourseRegistrationCourseRegistrationAllRoute,
+  LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
+  LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
   LayoutIntegratedSearchIntegratedSearchmRoute:
     LayoutIntegratedSearchIntegratedSearchmRoute,
+  LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
+  LayoutMyMembershipSecessionRoute: LayoutMyMembershipSecessionRoute,
+  LayoutMySettingSnsRoute: LayoutMySettingSnsRoute,
   LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
   LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
   LayoutSettingSettingSnsmRoute: LayoutSettingSettingSnsmRoute,
@@ -1155,7 +1204,6 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
-  '/agreement': typeof AuthAgreementRoute
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1165,7 +1213,6 @@ export interface FileRoutesByFullPath {
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/password-set': typeof AuthPasswordSetRoute
-  '/privacy': typeof AuthPrivacyRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1213,8 +1260,13 @@ export interface FileRoutesByFullPath {
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/my/information-change': typeof LayoutMyInformationChangeRoute
+  '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1225,7 +1277,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
-  '/agreement': typeof AuthAgreementRoute
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1235,7 +1286,6 @@ export interface FileRoutesByTo {
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
   '/password-set': typeof AuthPasswordSetRoute
-  '/privacy': typeof AuthPrivacyRoute
   '/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1283,8 +1333,13 @@ export interface FileRoutesByTo {
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/my/information-change': typeof LayoutMyInformationChangeRoute
+  '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1298,7 +1353,6 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
-  '/_auth/agreement': typeof AuthAgreementRoute
   '/_auth/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/_auth/agreement_check': typeof AuthAgreementcheckRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
@@ -1308,7 +1362,6 @@ export interface FileRoutesById {
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
   '/_auth/password-set': typeof AuthPasswordSetRoute
-  '/_auth/privacy': typeof AuthPrivacyRoute
   '/_auth/progress-status-cert': typeof AuthProgressStatusCertRoute
   '/_auth/progress-status-email': typeof AuthProgressStatusEmailRoute
   '/_auth/progress-status-result': typeof AuthProgressStatusResultRoute
@@ -1356,8 +1409,13 @@ export interface FileRoutesById {
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/_layout/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/_layout/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/_layout/my/information-change': typeof LayoutMyInformationChangeRoute
+  '/_layout/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/_layout/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1370,7 +1428,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/agreement'
     | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
@@ -1380,7 +1437,6 @@ export interface FileRouteTypes {
     | '/password-input'
     | '/password-modify'
     | '/password-set'
-    | '/privacy'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1428,8 +1484,13 @@ export interface FileRouteTypes {
     | '/category/detail'
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
+    | '/footer-menu/agreement'
+    | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
+    | '/my/information-change'
+    | '/my/membership-secession'
+    | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1439,7 +1500,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
-    | '/agreement'
     | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
@@ -1449,7 +1509,6 @@ export interface FileRouteTypes {
     | '/password-input'
     | '/password-modify'
     | '/password-set'
-    | '/privacy'
     | '/progress-status-cert'
     | '/progress-status-email'
     | '/progress-status-result'
@@ -1497,8 +1556,13 @@ export interface FileRouteTypes {
     | '/category/detail'
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
+    | '/footer-menu/agreement'
+    | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
+    | '/my/information-change'
+    | '/my/membership-secession'
+    | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1510,7 +1574,6 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
-    | '/_auth/agreement'
     | '/_auth/agreement-privacy'
     | '/_auth/agreement_check'
     | '/_auth/dormant-account'
@@ -1520,7 +1583,6 @@ export interface FileRouteTypes {
     | '/_auth/password-input'
     | '/_auth/password-modify'
     | '/_auth/password-set'
-    | '/_auth/privacy'
     | '/_auth/progress-status-cert'
     | '/_auth/progress-status-email'
     | '/_auth/progress-status-result'
@@ -1568,8 +1630,13 @@ export interface FileRouteTypes {
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
     | '/_layout/course-registration/course-registration-all'
+    | '/_layout/footer-menu/agreement'
+    | '/_layout/footer-menu/privacy'
     | '/_layout/integrated-search/integrated-search'
     | '/_layout/integrated-search/integrated-search_m'
+    | '/_layout/my/information-change'
+    | '/_layout/my/membership-secession'
+    | '/_layout/my/setting-sns'
     | '/_layout/setting/setting-language_m'
     | '/_layout/setting/setting-license_m'
     | '/_layout/setting/setting-sns_m'
@@ -1609,7 +1676,6 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/agreement",
         "/_auth/agreement-privacy",
         "/_auth/agreement_check",
         "/_auth/dormant-account",
@@ -1619,7 +1685,6 @@ export const routeTree = rootRoute
         "/_auth/password-input",
         "/_auth/password-modify",
         "/_auth/password-set",
-        "/_auth/privacy",
         "/_auth/progress-status-cert",
         "/_auth/progress-status-email",
         "/_auth/progress-status-result",
@@ -1678,18 +1743,19 @@ export const routeTree = rootRoute
         "/_layout/category/detail",
         "/_layout/category/detail_m",
         "/_layout/course-registration/course-registration-all",
+        "/_layout/footer-menu/agreement",
+        "/_layout/footer-menu/privacy",
         "/_layout/integrated-search/integrated-search",
         "/_layout/integrated-search/integrated-search_m",
+        "/_layout/my/information-change",
+        "/_layout/my/membership-secession",
+        "/_layout/my/setting-sns",
         "/_layout/setting/setting-language_m",
         "/_layout/setting/setting-license_m",
         "/_layout/setting/setting-sns_m",
         "/_layout/setting/setting-web_m",
         "/_layout/menu3/"
       ]
-    },
-    "/_auth/agreement": {
-      "filePath": "_auth/agreement.tsx",
-      "parent": "/_auth"
     },
     "/_auth/agreement-privacy": {
       "filePath": "_auth/agreement-privacy.tsx",
@@ -1725,10 +1791,6 @@ export const routeTree = rootRoute
     },
     "/_auth/password-set": {
       "filePath": "_auth/password-set.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/privacy": {
-      "filePath": "_auth/privacy.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status-cert": {
@@ -1919,12 +1981,32 @@ export const routeTree = rootRoute
       "filePath": "_layout/course-registration/course-registration-all.tsx",
       "parent": "/_layout"
     },
+    "/_layout/footer-menu/agreement": {
+      "filePath": "_layout/footer-menu/agreement.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/footer-menu/privacy": {
+      "filePath": "_layout/footer-menu/privacy.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/integrated-search/integrated-search": {
       "filePath": "_layout/integrated-search/integrated-search.tsx",
       "parent": "/_layout"
     },
     "/_layout/integrated-search/integrated-search_m": {
       "filePath": "_layout/integrated-search/integrated-search_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/my/information-change": {
+      "filePath": "_layout/my/information-change.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/my/membership-secession": {
+      "filePath": "_layout/my/membership-secession.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/my/setting-sns": {
+      "filePath": "_layout/my/setting-sns.tsx",
       "parent": "/_layout"
     },
     "/_layout/setting/setting-language_m": {

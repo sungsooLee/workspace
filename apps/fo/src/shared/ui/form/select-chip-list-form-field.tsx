@@ -49,7 +49,7 @@ const FormSelectChipListComponent = forwardRef<HTMLDivElement, FormSelectChipLis
           <Select {...props} options={selectOptions} onChange={handleSelectChange} />
           <Button onClick={handleButtonClick}>{t('선택')}</Button>
         </div>
-        <ChipList options={selectedChipOptions} onChange={handleChipListChange} />
+        <ChipList options={selectedChipOptions} />
       </div>
     );
   },

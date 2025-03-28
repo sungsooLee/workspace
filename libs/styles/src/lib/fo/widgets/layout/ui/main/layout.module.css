@@ -1,0 +1,15 @@
+/* layout.module.css */
+.start {
+  &.container {
+    @apply border-[1px] border-solid border-[var(--gray4)];
+    .inner {
+      @apply relative m-auto w-[1180px];
+    }
+    .breadcrums {
+      @apply flex h-[46px] items-center bg-[var(--gray1)];
+    }
+    .related {
+      @apply flex h-[82px] items-center bg-[var(--gray1)];
+    }
+  }
+}

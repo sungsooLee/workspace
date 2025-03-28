@@ -1,12 +1,11 @@
 import { startTransition, useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
-import { isFunction, isArray } from 'lodash';
+import { isFunction, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
 import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
-import type { PhoneNumberValue } from '@learnway/ui';
 import { cn, z } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
@@ -30,7 +29,8 @@ export interface AuthResultData {
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: PhoneNumberValue;
+  nationCode: string;
+  phoneNumber: string;
   email: string;
 }
 
@@ -39,7 +39,8 @@ export interface AuthFormData {
   userId: string;
   name: string;
   birthday: string;
-  phoneNumber: PhoneNumberValue;
+  nationCode: string;
+  phoneNumber: string;
   email: string;
   verificationCode: string;
 }
@@ -53,14 +54,14 @@ interface AuthFormComponentProps {
 
 function AuthFormComponent({
   defaultValues,
-  includeUserId,
+  includeUserId = false,
   onSuccess,
   onCancel,
 }: AuthFormComponentProps) {
   const { t } = useTranslation();
 
-  const { provider, onSubmit, onFormChange, control, getValues, setFormError, clearFormError } =
-    useDynamicForm(detailConfig);
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError, onFormValid } =
+    useDynamicForm(authFormConfig);
 
   const authToolType = useWatch({ control: control, name: 'authToolType' });
 
@@ -87,11 +88,22 @@ function AuthFormComponent({
     });
   }, [authToolType]);
 
-  const handleSendVerify = (d?: any) => {
+  const handleSendVerify = async (d?: any) => {
     const data = d ?? getValues();
+
     onFormChange({
       verificationCode: '',
     });
+
+    const result = await onFormValid([
+      'userId',
+      'name',
+      'birthday',
+      data.authToolType === 'PHONE' ? 'phoneNumber' : 'email',
+    ]);
+    if (!result) {
+      return;
+    }
 
     const payload = {
       name: data.name,
@@ -102,8 +114,8 @@ function AuthFormComponent({
       sendVerifyPhone(
         {
           ...payload,
-          phoneNumber: data.phoneNumber.number,
-          phoneNumberLocale: data.phoneNumber.nationCode,
+          phoneNumber: data.phoneNumber,
+          phoneNumberLocale: data.nationCode,
         },
         {
           onSuccess: handleSendVerifySuccess,
@@ -134,8 +146,8 @@ function AuthFormComponent({
       verifyPhone(
         {
           ...payload,
-          phoneNumber: data.phoneNumber.number,
-          phoneNumberLocale: data.phoneNumber.nationCode,
+          phoneNumber: data.phoneNumber,
+          phoneNumberLocale: data.nationCode,
         },
         {
           onSuccess: async (d, variables, context) => {
@@ -185,17 +197,20 @@ function AuthFormComponent({
   };
 
   const handleReset = (defaultValue?: any, authToolType?: string) => {
-    onFormChange(
-      defaultValue ?? {
+    onFormChange();
+    onFormChange({
+      ...(defaultValue ?? {
         authToolType: authToolType ?? 'PHONE',
         userId: '',
         name: '',
         birthday: '',
-        phoneNumber: {},
+        phoneNumber: '',
+        nationCode: '',
         email: '',
         verificationCode: '',
-      },
-    );
+      }),
+      includeUserId,
+    });
     setSendedVerifyNumber(false);
   };
 
@@ -276,7 +291,11 @@ function AuthFormComponent({
               {t('LABEL.CHECK_AUTH_NUMBER')}
             </Button>
           ) : (
-            <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
+            <Button
+              variant="primary"
+              size="xl"
+              onClick={() => handleSendVerify()}
+              disabled={includeUserId}>
               {t('LABEL.CHECK_AUTH_REQUEST')}
             </Button>
           )}
@@ -296,8 +315,13 @@ function AuthFormComponent({
 
 export const AuthForm = AuthFormComponent;
 
-const detailConfig: DynamicFormConfig = {
+const authFormConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: 'includeUserId',
+      type: 'hidden',
+      value: false,
+    },
     {
       name: 'authToolType',
       type: 'custom',
@@ -336,6 +360,15 @@ const detailConfig: DynamicFormConfig = {
       label: '휴대폰 번호',
       value: '',
       placeholder: '-없이 휴대폰 번호입력(0102345678)',
+      fields: {
+        nationCode: 'nationCode',
+        number: 'phoneNumber',
+      },
+    },
+    {
+      name: 'nationCode',
+      type: 'hidden',
+      value: 'KR',
     },
     {
       name: 'email',
@@ -355,7 +388,12 @@ const detailConfig: DynamicFormConfig = {
   validator: {
     userId: {
       format: 'string',
-      required: true,
+      required: {
+        fn: (data) => {
+          console.log('userId', data);
+          return data.includeUserId;
+        },
+      },
     },
     name: {
       format: 'string',
@@ -368,7 +406,9 @@ const detailConfig: DynamicFormConfig = {
     phoneNumber: {
       format: 'object',
       required: {
-        fn: (data) => data.authToolType === 'PHONE',
+        fn: (data) => {
+          return isEmpty(data.phoneNumber) && data.authToolType === 'PHONE';
+        },
       },
     },
     email: {

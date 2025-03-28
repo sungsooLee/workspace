@@ -106,6 +106,7 @@ const searchConfig: SearchBoxConfig = {
         name: '운영자',
         type: 'text',
         label: t('운영자'),
+        value: '',
       },
     ],
     [
@@ -133,11 +134,13 @@ const searchConfig: SearchBoxConfig = {
         name: '과정코드',
         type: 'text',
         label: t('과정코드'),
+        value: '',
       },
       {
         name: '과정명',
         type: 'text',
         label: t('과정명'),
+        value: '',
       },
     ],
   ],

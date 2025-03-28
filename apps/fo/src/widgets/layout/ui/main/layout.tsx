@@ -18,7 +18,7 @@ import { PageContainer } from '../container/page-container';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 
-import styles from './layout.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/main/layout.module.css';
 
 interface LayoutComponentProps {
   children: ReactNode;

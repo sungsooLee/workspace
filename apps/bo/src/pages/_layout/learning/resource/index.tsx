@@ -5,7 +5,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { LearningTypeChoiceModal } from '../../../../features/learning';
+import { LearningTypeChoiceModal, VideoUploadModal } from '../../../../features/learning';
 import { t } from 'i18next';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
@@ -33,23 +33,57 @@ function RouteComponent() {
     })) as LEARNING_TYPE;
     console.log('typeResult => ', typeResult);
     switch (typeResult) {
+      // 동영상
       case LEARNING_TYPE.VIDEO: {
-        /*const videoUploadResult = await openAsync({
-          content: (
-            <UploadProvider>
-              <VideoUploadPopup />
-            </UploadProvider>
-          ),
+        const videoUploadResult = await openModal({
+          content: <VideoUploadModal />,
           width: 'lg',
-        });*/
+        });
         router.navigate({ to: '/learning/resource/view/video' });
         break;
       }
+      // HTML 동영상
+      case LEARNING_TYPE.HTML_VIDEO: {
+        router.navigate({ to: '/learning_test/resource/view/html-video' });
+        break;
+      }
+      // 이미지
+      case LEARNING_TYPE.IMAGE: {
+        router.navigate({ to: '/learning/resource/view/image' });
+        break;
+      }
+      // 기타
+      case LEARNING_TYPE.ETC: {
+        router.navigate({ to: '/learning/resource/view/etc' });
+        break;
+      }
+      // 외부링크
+      case LEARNING_TYPE.EXTERNAL_LINK: {
+        router.navigate({ to: '/learning/resource/view/link' });
+        break;
+      }
+      // 외부위탁
+      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
+        router.navigate({ to: '/learning/resource/view/consignment' });
+        break;
+      }
+      // 블로그
+      case LEARNING_TYPE.BLOG: {
+        router.navigate({ to: '/learning/resource/view/blog' });
+        break;
+      }
+      // 이북
+      case LEARNING_TYPE.E_BOOK: {
+        router.navigate({ to: '/learning/resource/view/ebook' });
+        break;
+      }
+      // 스콤
       case LEARNING_TYPE.SCORM: {
-        router.navigate({ to: '/learning_test/resource/view/scorm' });
+        router.navigate({ to: '/learning/resource/view/scorm' });
         break;
       }
     }
+    setDisplayContent(true);
   };
 
   return (

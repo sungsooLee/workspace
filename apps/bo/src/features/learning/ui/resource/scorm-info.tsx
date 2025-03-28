@@ -30,7 +30,7 @@ const ScormInfoComponent: FC<any> = () => {
 
   return (
     <>
-      <strong className={style.title}>업로드 파일</strong>
+      <strong className={style.title}>{t('업로드 파일')}</strong>
       <ul className={style.btn_list}>
         <li>
           <Button

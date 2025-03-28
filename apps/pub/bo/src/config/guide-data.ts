@@ -10,6 +10,24 @@
 // remarks: 비고
 export const guideData = [
   {
+    screenName: '컨텐츠 레이아웃(상단 Tab)',
+    pageId: 'contents/layout',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업중', // 비고
+  },
+  {
+    screenName: '컨텐츠 레이아웃(상단 공지_notice)',
+    pageId: 'contents/layout',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업중', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -204,9 +222,45 @@ export const guideData = [
     pageId: 'signup-step3',
     screenId: 'NLP_BO_LOG_1001_06',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료(업무 담당 회사 정보 팝업 포함)', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청 ',
+    pageId: 'admin-auth-step2',
+    screenId: 'NLP_BO_LOG_1007_01',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한 신청(본인인증) ',
+    pageId: 'admin-auth-step3',
+    screenId: 'NLP_BO_LOG_1007_02',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/관리자 권한정보입력 ',
+    pageId: 'admin-auth-step4',
+    screenId: 'NLP_BO_LOG_1007_03',
+    pageType: 'Page',
+    completionDate: '2025-03-26',
+    lastUpdateDate: '2025-03-26',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '로그인/회원가입 완료 ',
+    pageId: 'success',
+    screenId: 'NLP_BO_LOG_1006_01',
+    pageType: 'Page',
+    completionDate: '2025-03-25',
+    lastUpdateDate: '2025-03-25',
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'CMS/학습유형선택',
@@ -252,6 +306,15 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '완료', // 비고
+  },
+  {
+    screenName: 'PMS/메뉴관리',
+    pageId: 'pms/menu-management',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

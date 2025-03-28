@@ -38,9 +38,12 @@ import { Route as AuthMpassCertFidoImport } from './pages/_auth/mpass-cert-fido'
 import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
 import { Route as AuthLoginImport } from './pages/_auth/login'
 import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
+import { Route as AuthAdminAuthStep4Import } from './pages/_auth/admin-auth-step4'
+import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step3'
+import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutPmsMenuManageImport } from './pages/_layout/pms/menuManage'
+import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
@@ -50,6 +53,8 @@ import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/lear
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
+import { Route as LayoutContentsLayout02Import } from './pages/_layout/contents/layout02'
+import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
@@ -251,6 +256,24 @@ const AuthGoogleCertRoute = AuthGoogleCertImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthAdminAuthStep4Route = AuthAdminAuthStep4Import.update({
+  id: '/admin-auth-step4',
+  path: '/admin-auth-step4',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAdminAuthStep3Route = AuthAdminAuthStep3Import.update({
+  id: '/admin-auth-step3',
+  path: '/admin-auth-step3',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAdminAuthStep2Route = AuthAdminAuthStep2Import.update({
+  id: '/admin-auth-step2',
+  path: '/admin-auth-step2',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
   id: '/menu3/',
   path: '/menu3/',
@@ -263,9 +286,9 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
-const LayoutPmsMenuManageRoute = LayoutPmsMenuManageImport.update({
-  id: '/pms/menuManage',
-  path: '/pms/menuManage',
+const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
+  id: '/pms/menu-management',
+  path: '/pms/menu-management',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -324,6 +347,18 @@ const LayoutLearningLearningSearchRoute =
 const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
   id: '/learning/file-upload',
   path: '/learning/file-upload',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutContentsLayout02Route = LayoutContentsLayout02Import.update({
+  id: '/contents/layout02',
+  path: '/contents/layout02',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
+  id: '/contents/layout',
+  path: '/contents/layout',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -579,6 +614,27 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/admin-auth-step2': {
+      id: '/_auth/admin-auth-step2'
+      path: '/admin-auth-step2'
+      fullPath: '/admin-auth-step2'
+      preLoaderRoute: typeof AuthAdminAuthStep2Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin-auth-step3': {
+      id: '/_auth/admin-auth-step3'
+      path: '/admin-auth-step3'
+      fullPath: '/admin-auth-step3'
+      preLoaderRoute: typeof AuthAdminAuthStep3Import
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin-auth-step4': {
+      id: '/_auth/admin-auth-step4'
+      path: '/admin-auth-step4'
+      fullPath: '/admin-auth-step4'
+      preLoaderRoute: typeof AuthAdminAuthStep4Import
+      parentRoute: typeof AuthImport
     }
     '/_auth/google-cert': {
       id: '/_auth/google-cert'
@@ -1014,6 +1070,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/contents/layout': {
+      id: '/_layout/contents/layout'
+      path: '/contents/layout'
+      fullPath: '/contents/layout'
+      preLoaderRoute: typeof LayoutContentsLayoutImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/contents/layout02': {
+      id: '/_layout/contents/layout02'
+      path: '/contents/layout02'
+      fullPath: '/contents/layout02'
+      preLoaderRoute: typeof LayoutContentsLayout02Import
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/file-upload': {
       id: '/_layout/learning/file-upload'
       path: '/learning/file-upload'
@@ -1077,11 +1147,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu8Menu9Import
       parentRoute: typeof LayoutImport
     }
-    '/_layout/pms/menuManage': {
-      id: '/_layout/pms/menuManage'
-      path: '/pms/menuManage'
-      fullPath: '/pms/menuManage'
-      preLoaderRoute: typeof LayoutPmsMenuManageImport
+    '/_layout/pms/menu-management': {
+      id: '/_layout/pms/menu-management'
+      path: '/pms/menu-management'
+      fullPath: '/pms/menu-management'
+      preLoaderRoute: typeof LayoutPmsMenuManagementImport
       parentRoute: typeof LayoutImport
     }
     '/_guide/guide/': {
@@ -1104,6 +1174,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthAdminAuthStep2Route: typeof AuthAdminAuthStep2Route
+  AuthAdminAuthStep3Route: typeof AuthAdminAuthStep3Route
+  AuthAdminAuthStep4Route: typeof AuthAdminAuthStep4Route
   AuthGoogleCertRoute: typeof AuthGoogleCertRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthMpassCertRoute: typeof AuthMpassCertRoute
@@ -1128,6 +1201,9 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthAdminAuthStep2Route: AuthAdminAuthStep2Route,
+  AuthAdminAuthStep3Route: AuthAdminAuthStep3Route,
+  AuthAdminAuthStep4Route: AuthAdminAuthStep4Route,
   AuthGoogleCertRoute: AuthGoogleCertRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthMpassCertRoute: AuthMpassCertRoute,
@@ -1243,6 +1319,8 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
+  LayoutContentsLayout02Route: typeof LayoutContentsLayout02Route
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
@@ -1252,7 +1330,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
-  LayoutPmsMenuManageRoute: typeof LayoutPmsMenuManageRoute
+  LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1260,6 +1338,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
+  LayoutContentsLayout02Route: LayoutContentsLayout02Route,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
@@ -1271,7 +1351,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
-  LayoutPmsMenuManageRoute: LayoutPmsMenuManageRoute,
+  LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1280,6 +1360,9 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/admin-auth-step2': typeof AuthAdminAuthStep2Route
+  '/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -1342,6 +1425,8 @@ export interface FileRoutesByFullPath {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/contents/layout02': typeof LayoutContentsLayout02Route
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1351,13 +1436,16 @@ export interface FileRoutesByFullPath {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof GuideRouteWithChildren
+  '/admin-auth-step2': typeof AuthAdminAuthStep2Route
+  '/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
   '/mpass-cert': typeof AuthMpassCertRoute
@@ -1420,6 +1508,8 @@ export interface FileRoutesByTo {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/contents/layout02': typeof LayoutContentsLayout02Route
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1429,7 +1519,7 @@ export interface FileRoutesByTo {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1439,6 +1529,9 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_auth/admin-auth-step2': typeof AuthAdminAuthStep2Route
+  '/_auth/admin-auth-step3': typeof AuthAdminAuthStep3Route
+  '/_auth/admin-auth-step4': typeof AuthAdminAuthStep4Route
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/mpass-cert': typeof AuthMpassCertRoute
@@ -1501,6 +1594,8 @@ export interface FileRoutesById {
   '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
+  '/_layout/contents/layout02': typeof LayoutContentsLayout02Route
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1510,7 +1605,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/_layout/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1519,6 +1614,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/admin-auth-step2'
+    | '/admin-auth-step3'
+    | '/admin-auth-step4'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1581,6 +1679,8 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/contents/layout'
+    | '/contents/layout02'
     | '/learning/file-upload'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -1590,12 +1690,15 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
-    | '/pms/menuManage'
+    | '/pms/menu-management'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/admin-auth-step2'
+    | '/admin-auth-step3'
+    | '/admin-auth-step4'
     | '/google-cert'
     | '/login'
     | '/mpass-cert'
@@ -1658,6 +1761,8 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/contents/layout'
+    | '/contents/layout02'
     | '/learning/file-upload'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -1667,7 +1772,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
-    | '/pms/menuManage'
+    | '/pms/menu-management'
     | '/guide'
     | '/menu3'
   id:
@@ -1675,6 +1780,9 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_auth/admin-auth-step2'
+    | '/_auth/admin-auth-step3'
+    | '/_auth/admin-auth-step4'
     | '/_auth/google-cert'
     | '/_auth/login'
     | '/_auth/mpass-cert'
@@ -1737,6 +1845,8 @@ export interface FileRouteTypes {
     | '/_guide/guide/test'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
+    | '/_layout/contents/layout'
+    | '/_layout/contents/layout02'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
@@ -1746,7 +1856,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
-    | '/_layout/pms/menuManage'
+    | '/_layout/pms/menu-management'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1782,6 +1892,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/admin-auth-step2",
+        "/_auth/admin-auth-step3",
+        "/_auth/admin-auth-step4",
         "/_auth/google-cert",
         "/_auth/login",
         "/_auth/mpass-cert",
@@ -1855,6 +1968,8 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/contents/layout",
+        "/_layout/contents/layout02",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
@@ -1864,9 +1979,21 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
-        "/_layout/pms/menuManage",
+        "/_layout/pms/menu-management",
         "/_layout/menu3/"
       ]
+    },
+    "/_auth/admin-auth-step2": {
+      "filePath": "_auth/admin-auth-step2.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/admin-auth-step3": {
+      "filePath": "_auth/admin-auth-step3.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/admin-auth-step4": {
+      "filePath": "_auth/admin-auth-step4.tsx",
+      "parent": "/_auth"
     },
     "/_auth/google-cert": {
       "filePath": "_auth/google-cert.tsx",
@@ -2116,6 +2243,14 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
     },
+    "/_layout/contents/layout": {
+      "filePath": "_layout/contents/layout.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/contents/layout02": {
+      "filePath": "_layout/contents/layout02.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/file-upload": {
       "filePath": "_layout/learning/file-upload.tsx",
       "parent": "/_layout"
@@ -2152,8 +2287,8 @@ export const routeTree = rootRoute
       "filePath": "_layout/menu8/menu9.tsx",
       "parent": "/_layout"
     },
-    "/_layout/pms/menuManage": {
-      "filePath": "_layout/pms/menuManage.tsx",
+    "/_layout/pms/menu-management": {
+      "filePath": "_layout/pms/menu-management.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

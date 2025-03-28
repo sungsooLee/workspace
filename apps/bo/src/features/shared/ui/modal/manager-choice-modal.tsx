@@ -87,19 +87,12 @@ const ManagerChoicePopupComponent = () => {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button
-            label={'취소'}
-            variant={'gray'}
-            size={'lg'}
-            actionKey={'cancel'}
-            onClick={handleOnClose}
-          />
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={handleOnClose} />
           <Button
             type={'button'}
             label={'확인'}
             variant={'primary'}
             size={'lg'}
-            actionKey={'confirm'}
             onClick={handleOnConfirm}
           />
         </ModalFooter>
@@ -131,6 +124,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'translationCode',
         type: 'text',
         label: t('다국어 코드'),
+        value: '',
       },
       {
         name: 'useYn',
