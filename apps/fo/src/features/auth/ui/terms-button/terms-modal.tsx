@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalTitle,
   Button,
-  Select,
+  Dropdown,
   useModal,
   HtmlContent,
 } from '@learnway/ui';
@@ -36,7 +36,7 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
       return [];
     }
     return versions.map((version) => ({
-      value: String(version.termsId),
+      value: version.termsId,
       label: version.termsVersion,
     }));
   }, [versions]);
@@ -46,12 +46,12 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
       <ModalTitle>{t(`CODE.TERMS_TYPE.${termsType}`)}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.agreement_popup}`}>
-          <Select
+          <Dropdown
+            value={termsId}
             size="lg"
             options={options}
-            onChange={(option) => {
-              console.log('onChange', option);
-              option?.value && setTermsId(Number(option?.value));
+            onChange={(value: number) => {
+              setTermsId(value);
             }}
             placeholder={t('LABEL.PREVIOUS_TERMS', { type: t(`CODE.TERMS_TYPE.${termsType}`) })}
           />

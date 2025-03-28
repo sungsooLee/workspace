@@ -13,7 +13,6 @@ export interface HtmlContentComponentProps {
 const HtmlContentComponent = function ({ children, className }: HtmlContentComponentProps) {
   const { t } = useTranslation();
 
-  console.log('children', children);
   return (
     <div
       className={cn(styles.start, className)}

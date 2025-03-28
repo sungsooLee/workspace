@@ -2,7 +2,8 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Checkbox, Select } from '@learnway/ui';
-import legalContentStyles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
+//import legalContentStyles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
+import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
 export const Route = createFileRoute('/_layout/footer-menu/privacy')({
   component: RouteComponent,
@@ -10,8 +11,8 @@ export const Route = createFileRoute('/_layout/footer-menu/privacy')({
 
 function RouteComponent() {
   return (
-    <div className={legalContentStyles.start}>
-      <div className={legalContentStyles.title_box}>
+    <div className={styles.start}>
+      <div className={styles.title_box}>
         <h2>개인정보처리방침</h2>
         <Select
           size="lg"
@@ -22,7 +23,7 @@ function RouteComponent() {
         />
       </div>
 
-      <div className={legalContentStyles.details}>
+      <div className={styles.details}>
         현대자동차 주식회사 (이하 ‘회사’)는 개인정보 보호법 등 관련 법령상의 개인정보 보호 규정을
         준수하여 정보주체의 개인정보 및 권익을 보호하고 개인정보와 관련한 정보주체의 고충을 원활하게
         처리할 수 있도록 다음과 같은 개인정보 처리방침을 두고 있습니다.
