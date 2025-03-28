@@ -19,6 +19,15 @@ export const guideData = [
     remarks: '작업중', // 비고
   },
   {
+    screenName: '컨텐츠 레이아웃(상단 공지_notice)',
+    pageId: 'contents/layout',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업중', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -297,6 +306,15 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '완료', // 비고
+  },
+  {
+    screenName: 'PMS/메뉴관리',
+    pageId: 'pms/menu-management',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

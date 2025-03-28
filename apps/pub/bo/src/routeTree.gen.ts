@@ -43,7 +43,7 @@ import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step
 import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutPmsMenuManageImport } from './pages/_layout/pms/menuManage'
+import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
@@ -286,9 +286,9 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
-const LayoutPmsMenuManageRoute = LayoutPmsMenuManageImport.update({
-  id: '/pms/menuManage',
-  path: '/pms/menuManage',
+const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
+  id: '/pms/menu-management',
+  path: '/pms/menu-management',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1147,11 +1147,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenu8Menu9Import
       parentRoute: typeof LayoutImport
     }
-    '/_layout/pms/menuManage': {
-      id: '/_layout/pms/menuManage'
-      path: '/pms/menuManage'
-      fullPath: '/pms/menuManage'
-      preLoaderRoute: typeof LayoutPmsMenuManageImport
+    '/_layout/pms/menu-management': {
+      id: '/_layout/pms/menu-management'
+      path: '/pms/menu-management'
+      fullPath: '/pms/menu-management'
+      preLoaderRoute: typeof LayoutPmsMenuManagementImport
       parentRoute: typeof LayoutImport
     }
     '/_guide/guide/': {
@@ -1330,7 +1330,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
-  LayoutPmsMenuManageRoute: typeof LayoutPmsMenuManageRoute
+  LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1351,7 +1351,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
-  LayoutPmsMenuManageRoute: LayoutPmsMenuManageRoute,
+  LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1436,7 +1436,7 @@ export interface FileRoutesByFullPath {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1519,7 +1519,7 @@ export interface FileRoutesByTo {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1605,7 +1605,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
-  '/_layout/pms/menuManage': typeof LayoutPmsMenuManageRoute
+  '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1690,7 +1690,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
-    | '/pms/menuManage'
+    | '/pms/menu-management'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1772,7 +1772,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
-    | '/pms/menuManage'
+    | '/pms/menu-management'
     | '/guide'
     | '/menu3'
   id:
@@ -1856,7 +1856,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
-    | '/_layout/pms/menuManage'
+    | '/_layout/pms/menu-management'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1979,7 +1979,7 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
-        "/_layout/pms/menuManage",
+        "/_layout/pms/menu-management",
         "/_layout/menu3/"
       ]
     },
@@ -2287,8 +2287,8 @@ export const routeTree = rootRoute
       "filePath": "_layout/menu8/menu9.tsx",
       "parent": "/_layout"
     },
-    "/_layout/pms/menuManage": {
-      "filePath": "_layout/pms/menuManage.tsx",
+    "/_layout/pms/menu-management": {
+      "filePath": "_layout/pms/menu-management.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

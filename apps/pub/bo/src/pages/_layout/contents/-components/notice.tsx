@@ -13,7 +13,7 @@ import {} from // Button,
 // Input,
 '@learnway/ui';
 
-import { IcoAnnouncement03, IcoMenu01 } from '@learnway/icons';
+import { IcoAnnouncement03 } from '@learnway/icons';
 
 interface NoticeComponentProps {
   title?: string;
@@ -43,7 +43,6 @@ function NoticeComponentProps({
             {list.map((item, index) => (
               <li key={index} className={styles.list}>
                 {item}
-                {/* <IcoMenu01 width={24} height={24} stroke="#8c97ae" /> */}
               </li>
             ))}
           </ul>
