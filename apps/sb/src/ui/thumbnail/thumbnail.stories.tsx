@@ -14,7 +14,9 @@ export default {
 
 // Thumbnail
 export const Template: any = (args: any) => {
-  return <Thumbnail {...args} path={'https://github.com/shadcn.png'} />;
+  return (
+    <Thumbnail {...args} path={'https://picsum.photos/200'} indexNumber={1} sizeText={'100MB'} />
+  );
 };
 Template.storyName = 'Thumbnail';
 Template.args = {};
@@ -26,10 +28,10 @@ export const TemplateList: any = (args: any) => {
       <ThumbnailList
         {...args}
         options={[
-          { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-          { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-          { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-          { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+          { id: '1', path: 'https://picsum.photos/200' },
+          { id: '2', path: 'https://picsum.photos/200' },
+          { id: '3', path: 'https://picsum.photos/200' },
+          { id: '4', path: 'https://picsum.photos/200' },
         ]}
       />
     </div>
@@ -40,9 +42,9 @@ TemplateList.storyName = 'Thumbnail List';
 // Thumbnail List
 export const TemplateCheckList: any = (args: any) => {
   const [options, setOptions] = useState<ImageOption[]>([
-    { id: '1', path: 'https://lodash.com/assets/img/lodash.svg', checked: true },
-    { id: '2', path: 'https://lodash.com/assets/img/lodash.svg', checked: true },
-    { id: '3', path: 'https://lodash.com/assets/img/lodash.svg', checked: true },
+    { id: '1', path: 'https://picsum.photos/200', checked: true },
+    { id: '2', path: 'https://picsum.photos/200', checked: true },
+    { id: '3', path: 'https://picsum.photos/200', checked: true },
   ]);
 
   const [selectedOptions, setSelectedOptions] = useState<ImageOption[]>([]);

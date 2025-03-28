@@ -86,33 +86,19 @@ TemplateOptionDelete.storyName = 'Delete Option';
 export const TemplateImage: any = (args: any) => {
   const [value, setValue] = useState<any>();
   return (
-    <div>
-      <Button
-        label={'select second option'}
-        variant={'point'}
-        size={'sm'}
-        onClick={() => setValue(imageOptions[1])}
-      />
-      <Button
-        label={'선택 초기화'}
-        variant={'point'}
-        size={'sm'}
-        onClick={() => setValue(undefined)}
-      />
-      <List
-        deletable
-        draggable
-        options={imageOptions}
-        value={value}
-        itemRenderer={(option: any) => (
-          <div className={'m-2 flex flex-row items-center gap-3'}>
-            <Thumbnail width={84} height={55} path={option.path} />
-            <span>{option.name}</span>
-          </div>
-        )}
-        onOptionSelect={(option) => setValue(option)}
-      />
-    </div>
+    <List
+      deletable
+      draggable
+      options={imageOptions}
+      value={value}
+      itemRenderer={(option: any) => (
+        <div className={'m-2 flex flex-row items-center gap-3'}>
+          <Thumbnail width={84} height={55} path={option.path} />
+          <span>{option.name}</span>
+        </div>
+      )}
+      onOptionSelect={(option) => setValue(option)}
+    />
   );
 };
 TemplateImage.storyName = 'Image';

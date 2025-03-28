@@ -10,17 +10,30 @@ import { IcoTrash03 } from '@learnway/icons';
 import styles from './thumbnail.module.css';
 
 export interface ThumbnailComponentProps {
+  /** variant */
   variant?: 'primary' | 'secondary';
+  /** size */
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  /** className */
   className?: string;
+  /** 가로 사이즈 */
   width?: number;
+  /** 세로 사이즈 */
   height?: number;
+  /** 이미지 경로 */
   path: string;
+  /** index 번호 (list type 에서 index 번호 확인시 사용) */
+  indexNumber?: boolean;
+  /** 파일 사이즈*/
+  sizeText?: string;
+  /** 체크박스 표시 여부 */
   showCheckbox?: boolean;
+  /** 삭제버튼 표시 여부 */
   showDeleteBtn?: boolean; // delete button
+  /** 선택 여부 (check style 에 사용) */
   selected?: boolean;
+  /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => any;
-  // checked?: boolean;
 }
 
 const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
@@ -31,6 +44,8 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     width,
     height,
     path,
+    indexNumber,
+    sizeText,
     showCheckbox,
     showDeleteBtn,
     selected,
@@ -49,7 +64,9 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
         })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
         onMouseLeave={() => handleHover(false)}>
-        {/* checkbox */}
+        {/* index number */}
+        {indexNumber && <span className={styles.indexNumber}>{indexNumber}</span>}
+        {/* 체크박스 */}
         {showCheckbox && (
           <Checkbox
             className={cn(styles.checkbox)}
@@ -58,6 +75,8 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
             onCheckedChange={onCheckedChange}
           />
         )}
+        {/* 파일 사이즈 텍스트 */}
+        {sizeText && <span className={styles.sizeText}>{sizeText}</span>}
         {/* 마우스 오버시 노출 */}
         {showDeleteBtn && isHovered && (
           <Button className={styles.btn_delete}>
