@@ -85,9 +85,14 @@
               }
             }
           }
-        }
-        & + .input_area {
-          @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray3)] pt-[32px];
+          .item_col_full {
+            & > div {
+              @apply mb-0;
+              & + div {
+                @apply mt-[10px];
+              }
+            }
+          }
         }
       }
     }

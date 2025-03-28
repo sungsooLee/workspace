@@ -930,41 +930,43 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1015',
     screenName: '과정상세_수강신청_모든케이스',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1007',
     screenName: '과정상세_수강신청_사전레벨테스트',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'course-registration/course-registration-all',
+    pageId: 'course-registration/course-registration-level',
     pageType: 'Page',
-    completionDate: '2025-03-19',
+    completionDate: '',
     lastUpdateDate: '',
-    remarks: '- datepicker 시간 공통 컴포넌트 대기중',
+    remarks:
+      '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1016',
     screenName: '과정상세_수강신청_교재 배송지',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-textbook.tsx\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1017',
     screenName: '과정상세_수강신청_교재 배송지_주소 찾기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- address-popup.tsx\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1018',
