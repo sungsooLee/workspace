@@ -1,5 +1,14 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import {
+  CSSProperties,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Cell,
   Column,
   ColumnFiltersState,
   ColumnPinningState,
@@ -29,8 +38,8 @@ import {
   IcoMinus,
   IcoPlus,
 } from '@learnway/icons';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { cn } from '@learnway/shared';
+import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
+import { cn, isFirefox } from '@learnway/shared';
 import { t } from 'i18next';
 
 import { GridImperative, GridProps } from './types/grid';
@@ -286,10 +295,9 @@ const Grid = forwardRef(
       count: rows.length,
       estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
       getScrollElement: () => tableContainerRef.current,
-      measureElement:
-        typeof window !== 'undefined' && navigator.userAgent.indexOf('Firefox') === -1
-          ? (element) => element?.getBoundingClientRect().height
-          : undefined,
+      measureElement: !isFirefox()
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
       overscan: 5,
     });
 
@@ -365,127 +373,82 @@ const Grid = forwardRef(
 
     //// 테이블 내용 렌더링
     const renderTableContent = () => {
-      const paginationGrid = pagination ? true : false;
+      const renderContent = () => {
+        return rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
+          const row = rows[item.index] as Row<T>;
+          return renderRow(row, item);
+        });
+      };
 
-      const renderRows = () => {
-        if (paginationGrid) {
-          return rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
-            const row = rows[virtualRow.index] as Row<T>;
-            return (
-              <tr
-                data-index={virtualRow.index}
-                ref={(node) => rowVirtualizer.measureElement(node)}
-                key={row.id}
-                className={cn(
-                  'cursor-pointer hover:bg-[#F4F8FF]',
-                  row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
-                )}
-                style={{
-                  display: 'flex',
-                  position: 'absolute',
-                  transform: `translateY(${virtualRow.start}px)`,
-                  width: '100%',
-                }}
-                onClick={() => enableRowSelectionToggle && row.toggleSelected()}>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    style={{
-                      display: 'block',
-                      width: cell.column.getSize(),
-                      textAlign:
-                        cell.column.columnDef.meta?.cellAlign ||
-                        cell.column.columnDef.meta?.align ||
-                        'left',
-                      verticalAlign: 'center',
-                    }}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            );
-          });
-        }
-        const virtualRows = rowVirtualizer.getVirtualItems();
-        const paddingTop = virtualRows.length > 0 ? virtualRows[0].start : 0;
-        const paddingBottom =
-          virtualRows.length > 0
-            ? rowVirtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1].end || 0)
-            : 0;
-
+      const renderRow = (row: Row<T>, item: VirtualItem) => {
+        const { index, size, start } = item;
+        const rowStyle = {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: `${size}px`,
+          transform: `translateY(${start}px)`,
+          display: 'flex',
+        } as CSSProperties;
         return (
-          <>
-            {paddingTop > 0 && <tr style={{ height: `${paddingTop}px`, width: '100%' }} />}
-            {virtualRows.map((virtualRow) => {
-              const row = rows[virtualRow.index] as Row<T>;
-              return (
-                <tr
-                  key={row.id}
-                  data-index={virtualRow.index}
-                  ref={(node) => rowVirtualizer.measureElement(node)}
-                  className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: `${virtualRow.size}px`,
-                    transform: `translateY(${virtualRow.start}px)`,
-                    display: 'flex',
-                  }}
-                  onClick={() =>
-                    !row.getIsGrouped() && enableRowSelectionToggle && row.toggleSelected()
-                  }>
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className="grid_td h-[100%]"
-                      style={{
-                        background: cell.getIsGrouped()
-                          ? '#0aff0082'
-                          : cell.getIsAggregated()
-                            ? '#ffa50078'
-                            : cell.getIsPlaceholder()
-                              ? '#ff000042'
-                              : '',
-                        width: cell.column.getSize(),
-                        display: 'block',
-                        textAlign:
-                          cell.column.columnDef.meta?.cellAlign ||
-                          cell.column.columnDef.meta?.align ||
-                          'left',
-                        verticalAlign: 'center',
-                      }}>
-                      {cell.getIsGrouped() ? (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            row.toggleExpanded();
-                          }}
-                          style={{
-                            cursor: row.getIsGrouped() ? 'default' : 'pointer',
-                          }}>
-                          {row.getIsExpanded() ? '👇' : '👉'}{' '}
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())} (
-                          {row.subRows.length})
-                        </button>
-                      ) : cell.getIsAggregated() ? (
-                        flexRender(
-                          cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )
-                      ) : cell.getIsPlaceholder() ? null : (
-                        flexRender(cell.column.columnDef.cell, cell.getContext())
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-            {paddingBottom > 0 && <tr style={{ height: `${paddingBottom}px`, width: '100%' }} />}
-          </>
+          <tr
+            key={row.id}
+            data-index={index}
+            ref={(node) => rowVirtualizer.measureElement(node)}
+            className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
+            style={rowStyle}
+            onClick={() => !row.getIsGrouped() && enableRowSelectionToggle && row.toggleSelected()}>
+            {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
+          </tr>
         );
       };
+
+      const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
+        const cellStyle = {
+          background: cell.getIsGrouped()
+            ? '#0aff0082'
+            : cell.getIsAggregated()
+              ? '#ffa50078'
+              : cell.getIsPlaceholder()
+                ? '#ff000042'
+                : '',
+          width: cell.column.getSize(),
+          display: 'block',
+          textAlign:
+            cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
+          verticalAlign: 'center',
+        } as CSSProperties;
+        return (
+          <td key={cell.id} className="grid_td h-[100%]" style={cellStyle}>
+            {cell.getIsGrouped() ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  row.toggleExpanded();
+                }}
+                style={{
+                  cursor: row.getIsGrouped() ? 'default' : 'pointer',
+                }}>
+                {row.getIsExpanded() ? '👇' : '👉'}{' '}
+                {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+              </button>
+            ) : cell.getIsAggregated() ? (
+              flexRender(
+                cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+                cell.getContext(),
+              )
+            ) : cell.getIsPlaceholder() ? null : (
+              flexRender(cell.column.columnDef.cell, cell.getContext())
+            )}
+          </td>
+        );
+      };
+
+      const list = table.getHeaderGroups()[0]?.headers?.map((d) => {
+        console.log(d);
+        console.log(d.getSize());
+      });
 
       return (
         <div
@@ -529,7 +492,6 @@ const Grid = forwardRef(
                         // width: paginationGrid ? undefined : header.getSize(),
                         // display: paginationGrid ? 'table-cell' : 'flex',
                         // 정렬 속성 추가
-
                         textAlign:
                           header.column.columnDef.meta?.headerAlign ||
                           header.column.columnDef.meta?.align ||
@@ -593,7 +555,7 @@ const Grid = forwardRef(
                 // height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
                 height: `${rowVirtualizer.getTotalSize()}px`,
               }}>
-              {isLoading ? <p>Loading...</p> : renderRows()}
+              {isLoading ? <p>Loading...</p> : renderContent()}
             </tbody>
           </table>
         </div>

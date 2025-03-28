@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   Button,
   ColumnFactory,
@@ -20,7 +20,6 @@ import {
   ModalWrapper,
   useModal,
 } from '@learnway/ui';
-import { Link } from '@tanstack/react-router';
 import { IcoDownload } from '@learnway/icons';
 
 export default {
@@ -1024,3 +1023,24 @@ export const WithCustomFactoryCell: Story = {
   ],
   render: () => <ColumnFactoryTable />,
 };
+
+// Delete Option
+export const TemplateEditGrid: any = (args: any) => {
+  const data = Array(1)
+    .fill(null)
+    .map((_, i) => ({ id: `id_${i}`, text: '', number: '' }));
+  const columns = [
+    { header: 'text', accessorKey: 'text', size: 'auto' },
+    { header: 'number', accessorKey: 'number', size: 'auto' },
+  ];
+  return (
+    <Grid
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideColumnSettings
+      hideRowSelectionCheckBox
+    />
+  );
+};
+TemplateEditGrid.storyName = 'Edit Grid';
