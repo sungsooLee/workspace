@@ -101,6 +101,7 @@ export const TemplateImage: any = (args: any) => {
       />
       <List
         deletable
+        draggable
         options={imageOptions}
         value={value}
         onOptionSelect={(option) => setValue(option)}

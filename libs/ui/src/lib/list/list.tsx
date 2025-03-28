@@ -2,7 +2,7 @@ import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/share
 
 import styles from './list.module.css';
 import React, { isValidElement } from 'react';
-import { IcoDelete03 } from '@learnway/icons';
+import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { Button } from '../button/button';
 import { ListOption } from './type';
 
@@ -85,25 +85,21 @@ const ListComponent = function ({
           <div className={cn(!hideItemBorder && 'border')}>
             {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
             {getNodeElement(d) ?? d[labelField]}
-            {/* 삭제 버튼 */}
-            {deletable && (
-              <Button
-                type="button"
-                className={cn(styles.clear)}
-                onlyIcon
-                onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
-                <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            )}
           </div>
-          {/* draggable 버튼 */}
-          {draggable && (
+          {/* 삭제 버튼 */}
+          {deletable && (
             <Button
               type="button"
               className={cn(styles.clear)}
               onlyIcon
               onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+            </Button>
+          )}
+          {/* draggable 버튼 */}
+          {draggable && (
+            <Button type="button" className={cn(styles.clear)} onlyIcon>
+              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#131C30" />
             </Button>
           )}
         </li>
