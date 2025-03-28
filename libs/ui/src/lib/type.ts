@@ -107,3 +107,11 @@ export interface CommonReactElementProps {
   className?: string;
   style?: React.CSSProperties;
 }
+
+/**
+ * Image
+ */
+export interface Image {
+  src: string;
+  size: number; // byte
+}

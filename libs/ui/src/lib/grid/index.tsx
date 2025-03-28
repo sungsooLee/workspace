@@ -440,7 +440,6 @@ const Grid = forwardRef(
                     <td
                       key={cell.id}
                       className="grid_td h-[100%]"
-                      title={'asdjkhaskjdhaskjdhaskjhsakjdhaskjdh'}
                       style={{
                         background: cell.getIsGrouped()
                           ? '#0aff0082'
@@ -491,7 +490,11 @@ const Grid = forwardRef(
       return (
         <div
           ref={tableContainerRef}
-          className={cn('grid_table', className)}
+          className={cn(
+            'grid_table',
+            className,
+            multiSelectable && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+          )}
           style={{
             height: '300px',
             width: '100%',

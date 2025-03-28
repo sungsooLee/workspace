@@ -1,6 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Checkbox } from '@learnway/ui';
-import { IcoSucess02 } from '@learnway/icons';
+import { IcoCaution03 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { isMobile } from 'react-device-detect';
 
 import styles from '@learnway/styles/fo/pages/_layout/my/membership-secession.module.css';
 
@@ -14,29 +18,49 @@ function RouteComponent() {
       <h2>회원탈퇴</h2>
       <div className={styles.box}>
         <div className={styles.confirm}>
-          <IcoSucess02 width={32} height={32} stroke="#a9afb8"></IcoSucess02>
+          <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
           <p>
-            개인정보를 변경 하시려면
+            회원탈퇴를 신청하기 전에
             <br />
-            비밀번호를 확인해주세요.
+            안내 사항을 꼭 확인해주세요.
           </p>
         </div>
 
         <div className={styles.bullet_notice}>
-          <dl>
-            <dt>회원탈퇴</dt>
-            <dd>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</dd>
-            <dd>탈퇴 후에도 게시판형 서비스에 등록한 게시물은 그대로 남아 있습니다.</dd>
-            <dd>
+          <ul>
+            <li>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</li>
+            <li>탈퇴 후에도 게시판형 서비스에 등록한 게시물은 그대로 남아 있습니다.</li>
+            <li>
               삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
-              <Button variant="gray" size="sm">
-                회원탈퇴
-              </Button>
-            </dd>
-          </dl>
-          <Checkbox size="lg" label="default" />
+            </li>
+          </ul>
+          <Checkbox size="lg" label="안내 사항을 모두 확인하였으며, 이에 동의 합니다." />
         </div>
       </div>
+
+      <BrowserView>
+        <div className={styles.btn_wrap}>
+          <Button variant="gray" size="xl">
+            취소
+          </Button>
+          <Button variant="primary" size="xl">
+            회원탈퇴
+          </Button>
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <MobileContainerFooter>
+          <div className={styles.btn_wrap}>
+            <Button variant="gray" size="xl">
+              취소
+            </Button>
+            <Button variant="primary" size="xl">
+              회원탈퇴
+            </Button>
+          </div>
+        </MobileContainerFooter>
+      </MobileView>
     </div>
   );
 }

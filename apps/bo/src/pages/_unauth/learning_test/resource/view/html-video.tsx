@@ -6,17 +6,20 @@ import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-bo
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import {
+  MovieInfo,
+  SharedChannelGridFormField,
+  ThumbnailUploaderFormField,
+} from '../../../../../features/learning';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
-import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import React from 'react';
 import { t } from 'i18next';
 import { VideoDurationFormField } from '../../../../../features/learning/ui/resource/video-duration-form-field';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/html')({
+export const Route = createFileRoute('/_unauth/learning_test/resource/view/html-video')({
   component: RouteComponent,
 });
 
@@ -36,9 +39,7 @@ function RouteComponent() {
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
-            <Link to={'/'}>상시 학습 개설</Link>
-            <Link to={'/'}>이러닝 개설</Link>
-            <Link to={'/'}>라이브개설</Link>
+            <Link to={'/'}>과정개설</Link>
             <Button
               variant="point"
               size="sm"
@@ -47,21 +48,18 @@ function RouteComponent() {
             </Button>
           </LinkBox>
           <Button variant="point" size="sm">
-            매핑과정 보기
-          </Button>
-          <Button variant="point" size="sm">
-            공유이력 보기
+            수정
           </Button>
           <Button variant="point" size="sm">
             삭제
           </Button>
           <Button type={'submit'} variant="primary" size="sm">
-            수정
+            저장
           </Button>
         </ContentsButtons>
         <MainContents>
+          {/*채널*/}
           <ContentsRow>
-            {/*채널*/}
             <FormRow provider={provider}>
               <DynamicFormField name={'channelName'}>
                 <InputModalSelectorFormField
@@ -74,21 +72,22 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/*학습자원명*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              {/*학습자원명*/}
               <DynamicFormField name={'learningResourceName'} />
             </FormRow>
           </ContentsRow>
+          {/*학습자원 설명*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              {/*학습자원 설명*/}
               <DynamicFormField name={'learningResourceDescription'} />
             </FormRow>
           </ContentsRow>
+          {/*담당자, 연락처*/}
           <ContentsRow>
+            {/*담당자*/}
             <FormRow provider={provider}>
-              {/*담당자*/}
               <DynamicFormField name={'managerName'}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -99,8 +98,8 @@ function RouteComponent() {
                 />
               </DynamicFormField>
             </FormRow>
+            {/*연락처*/}
             <FormRow provider={provider}>
-              {/*연락처*/}
               <DynamicFormField name={'contact'} />
             </FormRow>
           </ContentsRow>
@@ -125,35 +124,7 @@ function RouteComponent() {
               <DynamicFormField name={'isExternalDevelopmentCompany'} />
             </FormRow>
           </ContentsRow>
-          {/*외주개발업체 상세*/}
-          {/*<FormDisplay*/}
-          {/*  provider={provider}*/}
-          {/*  dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>*/}
-          {/*  <ContentsRow>*/}
-          {/*    외부개발업체*/}
-          {/*    <FormRow provider={provider}>*/}
-          {/*      <DynamicFormField name={'externalDevelopmentCompany'}>*/}
-          {/*        <InputModalSelectorFormField*/}
-          {/*          modalConfig={{*/}
-          {/*            title: '',*/}
-          {/*            width: 'md',*/}
-          {/*            content: <ManagerChoiceModal />,*/}
-          {/*          }}*/}
-          {/*        />*/}
-          {/*      </DynamicFormField>*/}
-          {/*    </FormRow>*/}
-          {/*  </ContentsRow>*/}
-          {/*  <ContentsRow>*/}
-          {/*    외주개발업체 담당자*/}
-          {/*    <FormRow provider={provider}>*/}
-          {/*      <DynamicFormField name={'externalDevelopmentCompanyManager'} />*/}
-          {/*    </FormRow>*/}
-          {/*    외주개발업체 연락처*/}
-          {/*    <FormRow provider={provider}>*/}
-          {/*      <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>*/}
-          {/*    </FormRow>*/}
-          {/*  </ContentsRow>*/}
-          {/*</FormDisplay>*/}
+          {/*외주개발업체 담당자, 연락처 */}
           <ContentsRow>
             {/*외주개발업체 담당자*/}
             <FormRow provider={provider}>
@@ -164,6 +135,7 @@ function RouteComponent() {
               <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/*동영상 재생 시간*/}
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'videoDuration'}>
@@ -171,70 +143,65 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/*썸네일*/}
           <ContentsRow>
-            {/*썸네일*/}
             <FormRow provider={provider}>
               <ThumbnailUploaderFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
+          {/*태그*/}
           <ContentsRow>
-            {/*태그*/}
             <FormRow provider={provider}>
               <DynamicFormField name="tags" />
             </FormRow>
           </ContentsRow>
+          {/*학습자원개요*/}
           <ContentsRow>
-            {/*학습자원개요*/}
             <FormRow provider={provider}>
               <DynamicFormField name="learningResourceOverview" />
             </FormRow>
           </ContentsRow>
-
+          {/* 키워드 */}
           <ContentsRow>
-            {/* 키워드 */}
             <FormRow provider={provider}>
               <DynamicFormField name="keywords" />
             </FormRow>
           </ContentsRow>
+          {/* 교육지원활용 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 교육지원활용 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name="isTrainingSupport" />
             </FormRow>
           </ContentsRow>
+          {/* 보안컨텐츠 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 보안컨텐츠 여부 */}
             <FormRow provider={provider}>
               <DynamicFormField name="isSecurityContent" />
             </FormRow>
           </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 자막 여부 */}
+          {/* 공유채널 설정 */}
+          <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isSubtitles'} />
+              <DynamicFormField name="sharedChannels">
+                <SharedChannelGridFormField />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
-            <ContentsRow>
-              {/*자막 목록*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'subtitles'}>
-                  <SubTitlesFormField />
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-          </FormDisplay>
+          {/* 최종확인 */}
           <FormGroup title={'최종확인'} required={true}>
+            {/* 검수 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isInspectionConfirmed'} />
               </FormRow>
             </ContentsRow>
+            {/* 저작권 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isCopyrightConfirmed'} />
               </FormRow>
             </ContentsRow>
+            {/* 보안 확인 */}
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'isSecurityConfirmed'} />
@@ -244,8 +211,6 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <MovieInfo status={'loading'} />
-          <MovieInfo status={'fail'} />
           <MovieInfo status={'success'} />
         </SubContents>
       </PageContainer>
@@ -440,22 +405,20 @@ const formConfig: DynamicFormConfig = {
       value: true,
     },
     {
-      label: t('자막여부'),
-      name: 'isSubtitles',
-      type: 'switch',
-      format: 'boolean',
-      switchConfig: {
-        label: (value: boolean, getValues) =>
-          value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
-        labelTarget: 'subtitles',
-      },
-      value: true,
-    },
-    {
-      name: 'subtitles',
+      label: t('공유채널 설정'),
+      name: 'sharedChannels',
       type: 'custom',
       format: 'array',
-      value: [],
+      value: [
+        {
+          tenantId: 'tenantId1',
+          tenantName: 'tenantName1',
+          channelId: 'Channel Id1',
+          channelName: 'Channel Name1',
+          checked: true,
+        },
+      ],
+      guideText: '공유채널 설정',
     },
     {
       label: t('검수확인'),
