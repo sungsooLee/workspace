@@ -395,6 +395,11 @@
       padding: 0 20px 20px;
       font-size: 2rem;
     }
+    tr.native {
+      td {
+        @apply bg-[#f4f4f4] opacity-40;
+      }
+    }
     th {
       background-color: #f4f4f4;
       font-weight: 600;
@@ -409,6 +414,9 @@
       }
       &.status {
         color: var(--status2);
+      }
+      &.native {
+        color: var(--gray10);
       }
     }
     td {
