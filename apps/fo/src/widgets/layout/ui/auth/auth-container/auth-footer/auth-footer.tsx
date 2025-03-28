@@ -2,6 +2,8 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
+import { TermsButton } from '../../../../../../features/auth';
+
 import styles from './auth-footer.module.css';
 
 function AuthFooterComponent() {
@@ -10,10 +12,10 @@ function AuthFooterComponent() {
       <div className={styles.footer_area}>
         <ul className={styles.menu_list}>
           <li>
-            <Link to={''}>이용약관</Link>
+            <TermsButton termsType="TERMS_OF_SERVICE" />
           </li>
           <li>
-            <Link to={''}>개인정보처리 방침</Link>
+            <TermsButton termsType="PRIVACY_POLICY" />
           </li>
           <li>
             <Link to={''}>고객지원</Link>

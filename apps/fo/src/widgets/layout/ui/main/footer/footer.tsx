@@ -1,10 +1,13 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-// import { FamilySite } from '../../../../features/layout';
-import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
+
 import logoImage from '../../../../../assets/images/logo_footer.png';
 import { Select } from '@learnway/ui';
+
+import { TermsButton } from '../../../../../features/auth';
+
+import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 
 function FooterComponent() {
   return (
@@ -31,12 +34,10 @@ function FooterComponent() {
             <div className={styles.info_menu}>
               <ul>
                 <li>
-                  <Link to={'/'}>이용약관</Link>
+                  <TermsButton termsType="TERMS_OF_SERVICE" />
                 </li>
                 <li>
-                  <Link to={'/'}>
-                    <span>개인정보 처리방침</span>
-                  </Link>
+                  <TermsButton termsType="PRIVACY_POLICY" />
                 </li>
               </ul>
             </div>

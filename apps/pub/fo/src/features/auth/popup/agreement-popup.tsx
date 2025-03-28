@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import styles from './agreement-popup.module.css';
+//import styles from './agreement-popup.module.css';
+import styles from '@learnway/styles/fo/features/auth/ui/terms-button/terms-modal.module.css';
 import {
   ModalBody,
   ModalContainer,
