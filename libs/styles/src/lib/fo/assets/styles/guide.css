@@ -144,15 +144,40 @@
           margin-top: 40px;
         }
         .flex_box {
-          @apply flex items-center;
+          @apply relative flex items-center;
+          padding: 20px 20px 20px;
+          border: 1px dashed #ccc;
+          &:has(.desc)::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            content: 'Preview';
+            padding: 0 5px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 15px;
+            height: 15px;
+          }
+          &.col {
+            @apply flex-col items-start justify-start;
+          }
           .desc {
             @apply flex items-center gap-[20px];
             &.col {
               @apply flex-wrap justify-start;
             }
           }
-          padding: 20px;
-          border: 1px dashed #ccc;
+
+          + .code_example {
+            margin-bottom: 50px;
+            code {
+              margin-top: 10px;
+            }
+          }
+
           + .code_example {
             margin-bottom: 50px;
             code {
@@ -187,6 +212,9 @@
         border: 1px solid #ddd;
         background: url('../images/guide/ic_info.svg') no-repeat 20px 23px/20px 20px;
         border-radius: 10px;
+        a {
+          @apply text-[#000] underline;
+        }
       }
       .info_ul {
         display: block;
