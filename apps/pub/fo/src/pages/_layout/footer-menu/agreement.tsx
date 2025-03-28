@@ -3,7 +3,8 @@ import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Checkbox, Select, DropdownList, DropdownOption } from '@learnway/ui';
-import legalContentStyles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
+// import styles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
+import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
 export const Route = createFileRoute('/_layout/footer-menu/agreement')({
   component: RouteComponent,
@@ -24,8 +25,8 @@ function RouteComponent() {
     { value: 'option10', label: '옵션 10' },
   ];
   return (
-    <div className={legalContentStyles.start}>
-      <div className={legalContentStyles.title_box}>
+    <div className={styles.start}>
+      <div className={styles.title_box}>
         <h2>이용약관</h2>
         <DropdownList
           options={options}
@@ -36,7 +37,7 @@ function RouteComponent() {
           variant="default"
           isMulti={false}
           size={'lg'}
-          className={legalContentStyles.select}
+          className={styles.select}
         />
         {/* <Select
           size="lg"
@@ -47,7 +48,7 @@ function RouteComponent() {
         /> */}
       </div>
 
-      <div className={legalContentStyles.details}>이용약관 내용</div>
+      <div className={styles.details}>이용약관 내용</div>
     </div>
   );
 }

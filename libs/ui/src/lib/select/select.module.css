@@ -20,7 +20,7 @@
     }
   }
   &.readonly {
-    @apply pointer-events-none !border-[var(--gray1)] !bg-[var(--gray1)];
+    @apply pointer-events-none !border-[var(--gray4)] !bg-[var(--gray1)];
   }
   &.disabled {
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
