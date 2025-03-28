@@ -218,4 +218,4 @@ DropdownComponent.displayName = 'Dropdown';
 FormDropdownComponent.displayName = 'FormDropdown';
 
 export const DropdownList = DropdownComponent;
-export const FormDropdown = FormDropdownComponent;
+export const Dropdown = FormDropdownComponent;

@@ -42,6 +42,7 @@ import { Route as LayoutSettingSettingWebmImport } from './pages/_layout/setting
 import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting/setting-sns_m'
 import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
 import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
+import { Route as LayoutMySettingSnsImport } from './pages/_layout/my/setting-sns'
 import { Route as LayoutMyMembershipSecessionImport } from './pages/_layout/my/membership-secession'
 import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/information-change'
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
@@ -271,6 +272,12 @@ const LayoutSettingSettingLanguagemRoute =
     path: '/setting/setting-language_m',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutMySettingSnsRoute = LayoutMySettingSnsImport.update({
+  id: '/my/setting-sns',
+  path: '/my/setting-sns',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutMyMembershipSecessionRoute =
   LayoutMyMembershipSecessionImport.update({
@@ -975,6 +982,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMyMembershipSecessionImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/my/setting-sns': {
+      id: '/_layout/my/setting-sns'
+      path: '/my/setting-sns'
+      fullPath: '/my/setting-sns'
+      preLoaderRoute: typeof LayoutMySettingSnsImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/setting/setting-language_m': {
       id: '/_layout/setting/setting-language_m'
       path: '/setting/setting-language_m'
@@ -1155,6 +1169,7 @@ interface LayoutRouteChildren {
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
   LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
   LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
+  LayoutMySettingSnsRoute: typeof LayoutMySettingSnsRoute
   LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
   LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
   LayoutSettingSettingSnsmRoute: typeof LayoutSettingSettingSnsmRoute
@@ -1176,6 +1191,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutIntegratedSearchIntegratedSearchmRoute,
   LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
   LayoutMyMembershipSecessionRoute: LayoutMyMembershipSecessionRoute,
+  LayoutMySettingSnsRoute: LayoutMySettingSnsRoute,
   LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
   LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
   LayoutSettingSettingSnsmRoute: LayoutSettingSettingSnsmRoute,
@@ -1250,6 +1266,7 @@ export interface FileRoutesByFullPath {
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1322,6 +1339,7 @@ export interface FileRoutesByTo {
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1397,6 +1415,7 @@ export interface FileRoutesById {
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/_layout/my/information-change': typeof LayoutMyInformationChangeRoute
   '/_layout/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/_layout/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
   '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
@@ -1471,6 +1490,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
+    | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1542,6 +1562,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
+    | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
     | '/setting/setting-sns_m'
@@ -1615,6 +1636,7 @@ export interface FileRouteTypes {
     | '/_layout/integrated-search/integrated-search_m'
     | '/_layout/my/information-change'
     | '/_layout/my/membership-secession'
+    | '/_layout/my/setting-sns'
     | '/_layout/setting/setting-language_m'
     | '/_layout/setting/setting-license_m'
     | '/_layout/setting/setting-sns_m'
@@ -1727,6 +1749,7 @@ export const routeTree = rootRoute
         "/_layout/integrated-search/integrated-search_m",
         "/_layout/my/information-change",
         "/_layout/my/membership-secession",
+        "/_layout/my/setting-sns",
         "/_layout/setting/setting-language_m",
         "/_layout/setting/setting-license_m",
         "/_layout/setting/setting-sns_m",
@@ -1980,6 +2003,10 @@ export const routeTree = rootRoute
     },
     "/_layout/my/membership-secession": {
       "filePath": "_layout/my/membership-secession.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/my/setting-sns": {
+      "filePath": "_layout/my/setting-sns.tsx",
       "parent": "/_layout"
     },
     "/_layout/setting/setting-language_m": {
