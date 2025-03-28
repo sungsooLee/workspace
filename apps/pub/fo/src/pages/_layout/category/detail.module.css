@@ -5,7 +5,7 @@
   }
 
   .swiper {
-    @apply z-0;
+    @apply z-0 mb-[40px];
     .recent_swiper {
       .slide {
         @apply flex w-auto items-center justify-start overflow-hidden;
@@ -27,7 +27,7 @@
   }
 
   .gray_box {
-    @apply mt-[40px] overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px] pb-[12px];
+    @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px] pb-[12px];
   }
 
   .divisio_box {

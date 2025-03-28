@@ -30,3 +30,4 @@ export * from './popup/password-change-popup';
 export * from './popup/id-change-popup';
 export * from './popup/notification-popup-m';
 export * from './ui/notification-m';
+export * from './popup/phone-change-popup';

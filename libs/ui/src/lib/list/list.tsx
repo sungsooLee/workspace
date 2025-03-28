@@ -1,13 +1,13 @@
 import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
 
-import { SelectOption } from '../select/type';
 import styles from './list.module.css';
-import React from 'react';
-import { IcoDelete03 } from '@learnway/icons';
+import React, { isValidElement } from 'react';
+import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { Button } from '../button/button';
+import { ListOption } from './type';
 
 export interface ListComponentProps {
-  options: Array<SelectOption>;
+  options: Array<ListOption>;
   value?: any;
   className?: string;
   labelField?: string;
@@ -20,6 +20,10 @@ export interface ListComponentProps {
   deletable?: boolean;
   /** 보더 표시 여부 */
   hideBorder?: boolean;
+  /** 컨텐츠 영역 보더 표시 여부 */
+  hideItemBorder?: boolean;
+  /** draggable 가능 여부 */
+  draggable?: boolean;
   /** chip 삭제 버튼 클릭시 호출 */
   onOptionDeleteClick?: (option: any) => void;
   /** option 선택시 호출 (싱글 모드) */
@@ -38,6 +42,8 @@ const ListComponent = function ({
   multiple,
   deletable,
   hideBorder,
+  hideItemBorder = true,
+  draggable,
   onOptionDeleteClick,
   onOptionSelect,
   onOptionsSelect,
@@ -69,13 +75,17 @@ const ListComponent = function ({
             selectedOptions?.find((x: any) => x[valueField] === d[valueField]) &&
               !disabledActive &&
               styles.active, // selected row style
+            'border',
           )}
           key={d[valueField]}
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
-          {/* 라벨 */}
-          {d[labelField]}
+          {/*컨텐츠 영역*/}
+          <div className={cn(!hideItemBorder && 'border')}>
+            {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
+            {getNodeElement(d) ?? d[labelField]}
+          </div>
           {/* 삭제 버튼 */}
           {deletable && (
             <Button
@@ -86,6 +96,12 @@ const ListComponent = function ({
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
           )}
+          {/* draggable 버튼 */}
+          {draggable && (
+            <Button type="button" className={cn(styles.clear)} onlyIcon>
+              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#131C30" />
+            </Button>
+          )}
         </li>
       ))}
     </ul>
@@ -93,3 +109,10 @@ const ListComponent = function ({
 };
 
 export const List = ListComponent;
+
+const getNodeElement = (d: ListOption) => {
+  if (isValidElement(d.child && d.child(d))) {
+    return d.child?.(d);
+  }
+  return null;
+};

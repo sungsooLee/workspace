@@ -57,12 +57,16 @@ function FooterComponent() {
                           content: <PrivacyPopup />,
                         })
                       }>
-                      개인정보처리 방침
+                      <strong>개인정보 처리방침</strong>
                     </Button>
                   ) : (
-                    <Link to="/footer-menu/privacy">개인정보 처리방침</Link>
+                    <Link to="/footer-menu/privacy">
+                      <strong>개인정보 처리방침</strong>
+                    </Link>
                   )}
                 </li>
+                <li>{isMobile ? '' : '오픈소스 라이선스'}</li>
+                <li>{isMobile ? '' : '사이트맵'}</li>
               </ul>
             </div>
 
