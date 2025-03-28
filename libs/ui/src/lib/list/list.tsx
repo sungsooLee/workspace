@@ -20,6 +20,10 @@ export interface ListComponentProps {
   deletable?: boolean;
   /** 보더 표시 여부 */
   hideBorder?: boolean;
+  /** 컨텐츠 영역 보더 표시 여부 */
+  hideItemBorder?: boolean;
+  /** draggable 가능 여부 */
+  draggable?: boolean;
   /** chip 삭제 버튼 클릭시 호출 */
   onOptionDeleteClick?: (option: any) => void;
   /** option 선택시 호출 (싱글 모드) */
@@ -38,6 +42,8 @@ const ListComponent = function ({
   multiple,
   deletable,
   hideBorder,
+  hideItemBorder = true,
+  draggable,
   onOptionDeleteClick,
   onOptionSelect,
   onOptionsSelect,
@@ -75,10 +81,23 @@ const ListComponent = function ({
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
-          {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
-          {getNodeElement(d) ?? d[labelField]}
-          {/* 삭제 버튼 */}
-          {deletable && (
+          {/*컨텐츠 영역*/}
+          <div className={cn(!hideItemBorder && 'border')}>
+            {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
+            {getNodeElement(d) ?? d[labelField]}
+            {/* 삭제 버튼 */}
+            {deletable && (
+              <Button
+                type="button"
+                className={cn(styles.clear)}
+                onlyIcon
+                onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
+                <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+              </Button>
+            )}
+          </div>
+          {/* draggable 버튼 */}
+          {draggable && (
             <Button
               type="button"
               className={cn(styles.clear)}
