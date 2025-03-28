@@ -4,6 +4,9 @@
   @apply px-[40px] py-[48px];
   .nlp--input input {
     @apply !min-h-[40px] !rounded-[8px] px-[16px];
+    &:read-only {
+      @apply !border-[var(--gray1)];
+    }
   }
   div + .auth--signup-select {
     @apply mt-[48px];
