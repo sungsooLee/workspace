@@ -25,6 +25,8 @@ function RouteComponent() {
       subItems: [
         { label: 'BO_searchBox', path: '/guide/search-box' },
         { label: 'Buttons', path: '/guide/buttons' },
+        { label: 'Input', path: '/guide/input' },
+        { label: 'Textarea', path: '/guide/textarea' },
         { label: 'Table', path: '/guide/table' },
         { label: 'Alert, Confirm', path: '/guide/alert' },
         { label: 'Modal', path: '/guide/modal' },

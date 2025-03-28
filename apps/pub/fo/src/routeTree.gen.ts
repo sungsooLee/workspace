@@ -54,6 +54,7 @@ import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/d
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
@@ -70,6 +71,7 @@ import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
+import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
@@ -349,6 +351,12 @@ const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideTextareaRoute = GuideGuideTextareaImport.update({
+  id: '/guide/textarea',
+  path: '/guide/textarea',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideTabsRoute = GuideGuideTabsImport.update({
   id: '/guide/tabs',
   path: '/guide/tabs',
@@ -442,6 +450,12 @@ const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
 const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
   id: '/guide/input-timer',
   path: '/guide/input-timer',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideInputRoute = GuideGuideInputImport.update({
+  id: '/guide/input',
+  path: '/guide/input',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -793,6 +807,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideInfoImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/input': {
+      id: '/_guide/guide/input'
+      path: '/guide/input'
+      fullPath: '/guide/input'
+      preLoaderRoute: typeof GuideGuideInputImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/input-timer': {
       id: '/_guide/guide/input-timer'
       path: '/guide/input-timer'
@@ -903,6 +924,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/tabs'
       fullPath: '/guide/tabs'
       preLoaderRoute: typeof GuideGuideTabsImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/textarea': {
+      id: '/_guide/guide/textarea'
+      path: '/guide/textarea'
+      fullPath: '/guide/textarea'
+      preLoaderRoute: typeof GuideGuideTextareaImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/tooltip': {
@@ -1100,6 +1128,7 @@ interface GuideRouteChildren {
   GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputRoute: typeof GuideGuideInputRoute
   GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideMobileRoute: typeof GuideGuideMobileRoute
@@ -1116,6 +1145,7 @@ interface GuideRouteChildren {
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
+  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -1135,6 +1165,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputRoute: GuideGuideInputRoute,
   GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideMobileRoute: GuideGuideMobileRoute,
@@ -1151,6 +1182,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
+  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -1239,6 +1271,7 @@ export interface FileRoutesByFullPath {
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
@@ -1255,6 +1288,7 @@ export interface FileRoutesByFullPath {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
@@ -1312,6 +1346,7 @@ export interface FileRoutesByTo {
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
@@ -1328,6 +1363,7 @@ export interface FileRoutesByTo {
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
+  '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
@@ -1388,6 +1424,7 @@ export interface FileRoutesById {
   '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
+  '/_guide/guide/input': typeof GuideGuideInputRoute
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/mobile': typeof GuideGuideMobileRoute
@@ -1404,6 +1441,7 @@ export interface FileRoutesById {
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
+  '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
@@ -1463,6 +1501,7 @@ export interface FileRouteTypes {
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
+    | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/mobile'
@@ -1479,6 +1518,7 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/textarea'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
@@ -1535,6 +1575,7 @@ export interface FileRouteTypes {
     | '/guide/icon'
     | '/guide/image'
     | '/guide/info'
+    | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/mobile'
@@ -1551,6 +1592,7 @@ export interface FileRouteTypes {
     | '/guide/stepper'
     | '/guide/switch'
     | '/guide/tabs'
+    | '/guide/textarea'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
@@ -1609,6 +1651,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/icon'
     | '/_guide/guide/image'
     | '/_guide/guide/info'
+    | '/_guide/guide/input'
     | '/_guide/guide/input-timer'
     | '/_guide/guide/layout'
     | '/_guide/guide/mobile'
@@ -1625,6 +1668,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
     | '/_guide/guide/tabs'
+    | '/_guide/guide/textarea'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
@@ -1715,6 +1759,7 @@ export const routeTree = rootRoute
         "/_guide/guide/icon",
         "/_guide/guide/image",
         "/_guide/guide/info",
+        "/_guide/guide/input",
         "/_guide/guide/input-timer",
         "/_guide/guide/layout",
         "/_guide/guide/mobile",
@@ -1731,6 +1776,7 @@ export const routeTree = rootRoute
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
         "/_guide/guide/tabs",
+        "/_guide/guide/textarea",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -1897,6 +1943,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/info.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/input": {
+      "filePath": "_guide/guide/input.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/input-timer": {
       "filePath": "_guide/guide/input-timer.tsx",
       "parent": "/_guide"
@@ -1959,6 +2009,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/tabs": {
       "filePath": "_guide/guide/tabs.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/textarea": {
+      "filePath": "_guide/guide/textarea.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tooltip": {
