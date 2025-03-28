@@ -247,11 +247,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1009',
     screenName: 'My_SNS 로그인 설정_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/setting-sns',
+    pageType: 'Page',
+    completionDate: '2025-03-28',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- setting-sns.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1011',

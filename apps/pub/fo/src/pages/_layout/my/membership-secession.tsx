@@ -18,12 +18,7 @@ function RouteComponent() {
       <h2>회원탈퇴</h2>
       <div className={styles.box}>
         <div className={styles.confirm}>
-          {isMobile ? (
-            <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
-          ) : (
-            <IcoCaution03 width={56} height={56} stroke="#ff4646"></IcoCaution03>
-          )}
-
+          <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
           <p>
             회원탈퇴를 신청하기 전에
             <br />
