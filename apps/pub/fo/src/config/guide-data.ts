@@ -2010,7 +2010,7 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1111',
     screenName: '이용약관_FOOTER',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'agreement',
+    pageId: 'footer-menu/agreement',
     pageType: 'Page',
     completionDate: '2025-03-17',
     lastUpdateDate: '',
@@ -2020,7 +2020,7 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1112',
     screenName: '개인정보처리방침_FOOTER',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'privacy',
+    pageId: 'footer-menu/privacy',
     pageType: 'Page',
     completionDate: '2025-03-17',
     lastUpdateDate: '',
