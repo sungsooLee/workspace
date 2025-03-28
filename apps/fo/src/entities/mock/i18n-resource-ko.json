@@ -58,7 +58,8 @@
     "회원 가입 현황": "회원 가입 현황",
     "회원가입": "회원가입",
     "HTA/HTACV 이용자": "HTA/HTACV 이용자",
-    "일반 회원": "일반 회원"
+    "일반 회원": "일반 회원",
+    "PREVIOUS_TERMS": "이전 {{type}} 보기"
   },
   "CODE": {
     "LANGUAGE_CODE": {
@@ -67,6 +68,10 @@
       "jp": "일본어",
       "en": "영어",
       "zh": "중국어"
+    },
+    "TERMS_TYPE": {
+      "TERMS_OF_SERVICE": "이용약관",
+      "PRIVACY_POLICY": "개인정보처리방침"
     }
   }
 }

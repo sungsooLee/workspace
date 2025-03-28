@@ -161,3 +161,5 @@ export * from './lib/phone-number/phone-number-form-filed';
 
 export * from './lib/dynamic-form-field/dynamic-form-field';
 export * from './lib/dynamic-form-field/type';
+
+export * from './lib/html-content/html-content';
