@@ -25,6 +25,14 @@
     @apply absolute right-[6px] top-[6px] z-[3];
   }
 
+  .indexNumber {
+    @apply absolute left-[10px] top-[6px] z-[4] text-white;
+  }
+
+  .sizeText {
+    @apply absolute right-[6px] bottom-[6px] z-[5] text-white;
+  }
+
   .thumbnail_image {
     @apply h-[84px] w-[128px] brightness-[80%] filter;
     &.default_image {
