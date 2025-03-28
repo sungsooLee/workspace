@@ -8,7 +8,7 @@
     button {
       @apply w-[300px];
     }
-    .select1 {
+    .select {
       @apply w-[300px];
     }
   }

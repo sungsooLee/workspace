@@ -3,8 +3,8 @@ import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Checkbox, Select, DropdownList, DropdownOption } from '@learnway/ui';
-import styles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
-//import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
+// import styles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
+import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
 export const Route = createFileRoute('/_layout/footer-menu/privacy')({
   component: RouteComponent,
