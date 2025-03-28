@@ -81,6 +81,9 @@
     .btn_delete {
       @apply ml-[16px];
     }
+    .complete {
+      @apply ml-[16px] w-[20px] shrink-0;
+    }
   }
   .upload_status_type2 {
     @apply flex flex-wrap p-[32px];
@@ -97,6 +100,36 @@
       }
       & + .file_box {
         @apply ml-[32px];
+      }
+    }
+  }
+  .upload_single {
+    @apply flex w-full;
+    .view_file {
+      @apply flex max-w-[calc(100%-167px)] flex-grow-[1] flex-wrap items-center;
+      .attach_area {
+        @apply flex min-h-[32px] w-full flex-wrap items-center justify-between rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray2)] px-[12px];
+        .text {
+          @apply input_bo_1_r text-[var(--gray6)];
+        }
+        .attach_view {
+          @apply ellipsis flex max-w-[calc(100%-30px)] items-center;
+          .icon_type {
+            @apply mr-[10px] w-[20px] shrink-0;
+          }
+          .attached_name {
+            @apply input_bo_1_r ellipsis block max-w-[calc(100%-60px)] break-words text-[var(--gray8)] underline;
+          }
+          .btn_clear {
+            @apply w-[20px] shrink-0;
+          }
+        }
+      }
+    }
+    .btn_attach {
+      @apply relative ml-[12px] !w-[152px] shrink-0;
+      .input_file {
+        @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
       }
     }
   }
