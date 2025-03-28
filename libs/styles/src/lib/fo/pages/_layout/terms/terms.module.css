@@ -8,6 +8,9 @@
     button {
       @apply w-[300px];
     }
+    .select {
+      @apply w-[300px];
+    }
   }
   .details {
     @apply body_3_r mt-[32px] leading-[1.6] text-[#4C515E];
@@ -34,6 +37,9 @@
         }
         button {
           @apply mt-0 w-full;
+        }
+        .select {
+          @apply w-full;
         }
       }
       .details {

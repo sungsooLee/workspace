@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter, useLocation, useMatches } from '@tanstack/react-router';
+import { useRouter, useLocation, useMatches, useRouterState } from '@tanstack/react-router';
 import { has, last } from 'lodash';
 import { useCreation } from 'ahooks';
 
@@ -13,11 +13,12 @@ export function useGlobalRouterEvent() {
     const unsubscribe = router.subscribe(
       'onBeforeLoad',
       ({ fromLocation, toLocation, ...p }: any) => {
-        if (toLocation?.state?.meta) {
-          // 라우팅 시 static meta정보를 동적으로 변경하고자 하는 경우 state에 meta를 함께 전달
-          setPageRouteState({ pathname: toLocation.pathname, meta: toLocation?.state?.meta });
-        }
-
+        console.log('onBeforeLoad');
+        setPageRouteState({
+          pathname: toLocation.pathname,
+          meta: toLocation?.state?.meta,
+          route: undefined,
+        });
         return;
       },
     );
@@ -30,29 +31,25 @@ export function useGlobalRouterEvent() {
 
 export function useCurrentRoute() {
   const [pageRouteState] = usePageRouteState();
-  const matches = useMatches();
-
   const location = useLocation();
 
-  return useCreation(() => {
-    const route = last(matches);
-    if (!route) {
-      return {
-        state: undefined,
-        params: undefined,
-        search: undefined,
-        meta: undefined,
-      };
-    }
-    const params = route.params;
-    const search = route.search;
-    const meta = (route.staticData as any)?.meta;
+  const route = pageRouteState?.route; //last(matches);
+  const params = route.useParams();
+  const search = route.useSearch();
 
+  if (!route) {
     return {
-      state: location.state,
-      params,
-      search,
-      meta: { ...meta, ...pageRouteState?.meta },
+      state: undefined,
+      params: undefined,
+      search: undefined,
+      meta: undefined,
     };
-  }, [matches, pageRouteState?.meta]);
+  }
+
+  return {
+    state: location.state,
+    params,
+    search,
+    meta: { ...route.options.staticData?.meta, ...pageRouteState?.meta },
+  };
 }

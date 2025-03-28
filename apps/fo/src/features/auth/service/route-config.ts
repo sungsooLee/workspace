@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-catch */
 import { createElement } from 'react';
-import { ErrorComponent, redirect, RouteMatch } from '@tanstack/react-router';
+import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
-import { isFunction, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
 
 import { authUserQueryKeys, ERROR } from '@learnway/config';
@@ -62,15 +62,45 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
       if (preload || isEmpty(location.state)) {
         return;
       }
+
+      // currentMatch route instance 추출
+      context.setPageRouteState((state: any) => {
+        if (!state) {
+          //console.log('loader setPageRouteState init', state);
+          return {
+            pathname: location.pathname,
+            meta: defaultPageRouteConfig.meta,
+            route: route,
+          };
+        }
+        //console.log('loader setPageRouteState', state);
+        if (state?.pathname === location.pathname && route) {
+          console.log('matched', location.pathname, 'update route');
+          state.route = route;
+        }
+        return state;
+      });
+
       if (routeConfig?.validateState) {
         const schema: ZodSchema = buildJodObject(routeConfig?.validateState);
         try {
           schema.parse(location?.state);
         } catch (e) {
-          console.log('routeConfig.validateState', location?.state);
+          console.log('Error routeConfig.validateState', location?.state);
           throw new Error(String(e));
         }
       }
+
+      if (routeConfig?.validateParam) {
+        const schema: ZodSchema = buildJodObject(routeConfig?.validateParam);
+        try {
+          schema.parse(params);
+        } catch (e) {
+          console.log('Error routeConfig.validateParam', params);
+          throw new Error(String(e));
+        }
+      }
+
       if (routeConfig?.validate) {
         try {
           routeConfig.validate({ params, search, state: location?.state });
