@@ -418,6 +418,9 @@
       &.native {
         color: var(--gray10);
       }
+      button {
+        color: var(--status3);
+      }
     }
     td {
       @apply text-[13px];
