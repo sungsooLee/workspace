@@ -10,6 +10,15 @@
 // remarks: 비고
 export const guideData = [
   {
+    screenName: '컨텐츠 레이아웃(상단 Tab)',
+    pageId: 'contents/layout',
+    screenId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업중', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',

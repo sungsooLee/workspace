@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { Avatar, ContentsRow, Input, Button, Textarea, PhoneNumber, useModal } from '@learnway/ui';
-import { PasswordChangePopup } from '../../../features/layout';
+import { PasswordChangePopup, IdChangePopup, PhoneChangePopup } from '../../../features/layout';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
@@ -48,7 +48,15 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <Input id="id" type="text" value="0000@000.co.kr" readOnly />
-                <Button variant="gray" size="lg">
+                <Button
+                  variant="gray"
+                  size="lg"
+                  onClick={() =>
+                    openModal({
+                      width: isMobile ? 'm_full' : 'sm',
+                      content: <IdChangePopup />,
+                    })
+                  }>
                   아이디 변경
                 </Button>
               </div>
@@ -164,7 +172,15 @@ function RouteComponent() {
                   size="lg"
                   placeholder="-없이 휴대폰 번호입력(01023459876)"
                 />
-                <Button variant="gray" size="lg">
+                <Button
+                  variant="gray"
+                  size="lg"
+                  onClick={() =>
+                    openModal({
+                      width: isMobile ? 'm_full' : 'sm',
+                      content: <PhoneChangePopup />,
+                    })
+                  }>
                   휴대폰 번호 변경
                 </Button>
               </div>

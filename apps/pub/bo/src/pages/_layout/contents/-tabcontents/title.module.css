@@ -1,0 +1,7 @@
+/* title.module.css */
+.line_title {
+  @apply title_bo_4_b mb-[24px] block border-b-[2px] border-solid border-[var(--gray9)] pb-[14px] text-[var(--gray9)];
+}
+div + .line_title {
+  @apply mt-[24px];
+}

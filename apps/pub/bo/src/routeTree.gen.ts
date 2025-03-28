@@ -53,6 +53,7 @@ import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/lear
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
+import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
@@ -345,6 +346,12 @@ const LayoutLearningLearningSearchRoute =
 const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
   id: '/learning/file-upload',
   path: '/learning/file-upload',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
+  id: '/contents/layout',
+  path: '/contents/layout',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1056,6 +1063,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/contents/layout': {
+      id: '/_layout/contents/layout'
+      path: '/contents/layout'
+      fullPath: '/contents/layout'
+      preLoaderRoute: typeof LayoutContentsLayoutImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/file-upload': {
       id: '/_layout/learning/file-upload'
       path: '/learning/file-upload'
@@ -1291,6 +1305,7 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
@@ -1308,6 +1323,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
@@ -1393,6 +1409,7 @@ export interface FileRoutesByFullPath {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1474,6 +1491,7 @@ export interface FileRoutesByTo {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1558,6 +1576,7 @@ export interface FileRoutesById {
   '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -1641,6 +1660,7 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -1721,6 +1741,7 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/tooltip'
     | '/guide/typography'
+    | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -1803,6 +1824,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/test'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
+    | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
@@ -1924,6 +1946,7 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
@@ -2196,6 +2219,10 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/contents/layout": {
+      "filePath": "_layout/contents/layout.tsx",
+      "parent": "/_layout"
     },
     "/_layout/learning/file-upload": {
       "filePath": "_layout/learning/file-upload.tsx",
