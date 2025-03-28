@@ -551,7 +551,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'integrated-search/integrated-search_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '- search-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
@@ -561,7 +561,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'integrated-search/integrated-search_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '- auto-complete-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
@@ -571,7 +571,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '',
   },
