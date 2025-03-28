@@ -19,7 +19,7 @@
   }
   .readonly {
     .nlp-select__control {
-      @apply pointer-events-none border-[#f6f8fd] bg-[#f6f8fd];
+      @apply pointer-events-none !border-[var(--gray4)] bg-[#f6f8fd];
       .nlp-select__single-value {
         @apply pl-[8px] text-[#4c515e];
       }
