@@ -4,14 +4,65 @@
 // layoutType: 반응형/적응형 구분 자동구분,작성 x
 // screenName: 스크린 명
 // pageId: 화면 경로(파일명) .tsx 생략
-// screenId: 스크린아이디
+// cancel: false,
 // pageType: 페이지 타입 Page,Pop-up
 // completionDate: 완료일
 // lastUpdateDate: 수정일
 // remarks: 비고
 // native: true, (네이티브일경우 true)
+// cancel: false, (삭제된경우 true)
 
 export const guideData = [
+  {
+    screenId: 'NLP_FO_WID_1000',
+    screenName: '메인위젯_My_학습현황',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1001',
+    screenName: '메인위젯_채널 최신 과정',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1002',
+    screenName: '메인위젯_추천 과정',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1003',
+    screenName: '메인위젯_인기있는과정,뜨고있는채널',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1004',
+    screenName: '메인위젯_테넌트/채널 공지사항',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
   {
     screenId: 'NLP_FO_GNB_1000',
     screenName: 'GNB_타입A 템플릿',
@@ -1197,6 +1248,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1011',
@@ -1247,6 +1299,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1021',
@@ -1357,6 +1410,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1009',
@@ -1397,6 +1451,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1013',
@@ -1407,6 +1462,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1014',
@@ -1467,6 +1523,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1043',
@@ -1548,6 +1605,84 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '',
   },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1025',
+    screenName: 'M_강의실_학습창_동영상',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1026',
+    screenName: 'M_강의실_학습창_이북',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1027',
+    screenName: 'M_강의실_학습창_웹_갤러리',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1028',
+    screenName: 'M_강의실_학습창_웹_블로그',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1029',
+    screenName: 'M_강의실_학습창_웹_HTML',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1030',
+    screenName: 'M_강의실_학습창_웹_위키',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1031',
+    screenName: 'M_강의실_학습창_웹_라이브',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
   {
     screenId: 'NLP_FO_CHL_1002',
     screenName: '채널_홈 TAB',
