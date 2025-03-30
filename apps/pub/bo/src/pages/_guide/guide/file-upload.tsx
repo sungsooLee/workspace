@@ -1,9 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Checkbox, Progress } from '@learnway/ui';
-import { IcoPaperClip, IcoUploadCloud, IcoPpt, IcoTrash03, IcoCloseCircle } from '@learnway/icons';
+import { Button, Checkbox, Progress, Badge } from '@learnway/ui';
+import {
+  IcoPaperClip,
+  IcoUploadCloud,
+  IcoPpt,
+  IcoTrash03,
+  IcoCloseCircle,
+  IcoFormRequired,
+  IcoRefresh,
+  IcoComplete02,
+} from '@learnway/icons';
 
 import styles from './file-upload.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 export const Route = createFileRoute('/_guide/guide/file-upload')({
   component: RouteComponent,
 });
@@ -70,9 +80,9 @@ function RouteComponent() {
                 <em className={styles.now_status}>100</em> /
                 <em className={styles.file_size}>100MB</em>
               </span>
-              <Progress className={styles.progress} value={40} />
+              <Progress className={styles.progress} value={100} label={'완료'} />
             </div>
-
+            <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />
             <Button className={styles.btn_delete} onlyIcon>
               <IcoTrash03 width={20} height={20} stroke="#131C30" />
             </Button>
@@ -91,7 +101,39 @@ function RouteComponent() {
               </span>
               <Progress className={styles.progress} value={40} />
             </div>
-
+            <Badge
+              className={styles.file_status}
+              option={{ label: '', value: '' }}
+              variant="dot"
+              status="ing"
+            />
+            <Button className={styles.btn_delete} onlyIcon>
+              <IcoTrash03 width={20} height={20} stroke="#131C30" />
+            </Button>
+          </div>
+          {/* file_item */}
+          <div className={styles.file_item}>
+            <Checkbox className={styles.check} />
+            <div className={styles.file_name}>
+              <IcoPpt width={'24'} height={'25'} className={styles.icon_type} />
+              <em className={styles.name}>{'file.pdf'}</em>
+            </div>
+            <div className={styles.progress_area}>
+              <span className={styles.status_view}>
+                <em className={styles.now_status}>100</em> /
+                <em className={styles.file_size}>100MB</em>
+              </span>
+              <Progress className={styles.progress} value={40} label={'실패'} isFailed />
+            </div>
+            <Badge
+              className={styles.file_status}
+              option={{ label: '', value: '' }}
+              variant="dot"
+              status="error"
+            />
+            <Button className={styles.btn_status} onlyIcon>
+              <IcoRefresh width={20} height={20} fill="#00AFD5" />
+            </Button>
             <Button className={styles.btn_delete} onlyIcon>
               <IcoTrash03 width={20} height={20} stroke="#131C30" />
             </Button>
@@ -118,6 +160,60 @@ function RouteComponent() {
               <IcoCloseCircle width={24} height={24} fill="#6F798B" stroke="#ffffff" />
             </Button>
             <p className={styles.file_name}>{'file.pdf'}</p>
+          </div>
+        </div>
+      </div>
+      {/* 단일로 사용하는 경우 : 첨부 전 케이스 */}
+      <div className={styles.upload_single}>
+        <div className={styles.view_file}>
+          <div className={styles.attach_area}>
+            <p className={styles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+          </div>
+        </div>
+        <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
+          <input type="file" className={styles.input_file} />
+          {'파일첨부'}
+        </Button>
+      </div>
+      {/* 단일로 사용하는 경우 : 첨부 후 케이스 */}
+      <div className={styles.upload_single}>
+        <div className={styles.view_file}>
+          <div className={styles.attach_area}>
+            <p className={styles.attach_view}>
+              <IcoPpt width={'20'} height={'21'} className={styles.icon_type} />
+              <span className={styles.attached_name}>{'파일명.png'}</span>
+            </p>
+            <Button className={styles.btn_clear} onlyIcon>
+              <IcoTrash03 width={20} height={20} stroke="#131C30" />
+            </Button>
+          </div>
+        </div>
+        <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
+          <input type="file" className={styles.input_file} />
+          {'파일첨부'}
+        </Button>
+      </div>
+      {/* form_item에서 사용하는 경우 */}
+      {/* form_item */}
+      <div className={formStyles.form_item}>
+        <label htmlFor="name-channel" className={formStyles.form_label}>
+          <span className={formStyles.form_text}>채널</span>
+          {/* 필수 케이스 */}
+          <span className={cn(formStyles.status, formStyles.required)}>
+            <IcoFormRequired width={12} height={12} />
+          </span>
+        </label>
+        <div className={formStyles.input_box}>
+          <div className={styles.upload_single}>
+            <div className={styles.view_file}>
+              <div className={styles.attach_area}>
+                <p className={styles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+              </div>
+            </div>
+            <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
+              <input type="file" className={styles.input_file} />
+              {'파일첨부'}
+            </Button>
           </div>
         </div>
       </div>
