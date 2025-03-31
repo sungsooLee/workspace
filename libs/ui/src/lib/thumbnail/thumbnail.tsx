@@ -23,7 +23,7 @@ export interface ThumbnailComponentProps {
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
-  indexNumber?: boolean;
+  indexNumber?: number;
   /** 파일 사이즈*/
   sizeText?: string;
   /** 체크박스 표시 여부 */
@@ -51,7 +51,6 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     showCheckbox,
     showDeleteBtn,
     selected,
-    count,
     onCheckedChange,
     ...props
   }) => {
@@ -61,16 +60,10 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
       <div
         {...props}
         style={{ width: width ? width + 'px' : '', height: height ? height + 'px' : '' }}
-        className={cn(
-          styles.start,
-          styles.thumbnail,
-          count ? styles.type_count : '',
-          'nlp--thumbnail',
-          {
-            [styles.active]: isHovered,
-            [styles.selected]: selected,
-          },
-        )}
+        className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
+          [styles.active]: isHovered,
+          [styles.selected]: selected,
+        })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
         onMouseLeave={() => handleHover(false)}>
         {/* index number */}
