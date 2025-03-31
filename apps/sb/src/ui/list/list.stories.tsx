@@ -85,19 +85,21 @@ TemplateOptionDelete.storyName = 'Delete Option';
 // Image
 export const TemplateImage: any = (args: any) => {
   const [value, setValue] = useState<any>();
+  console.log(value);
   return (
     <List
       deletable
       draggable
       options={imageOptions}
       value={value}
+      valueField={'id'}
       itemRenderer={(option: any) => (
         <div className={'m-2 flex flex-row items-center gap-3'}>
           <Thumbnail width={84} height={55} path={option.path} />
           <span>{option.name}</span>
         </div>
       )}
-      onOptionSelect={(option) => setValue(option)}
+      onOptionSelect={(option) => setValue(option.id)}
     />
   );
 };

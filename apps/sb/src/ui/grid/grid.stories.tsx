@@ -65,7 +65,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
     필터: params.filters,
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     data: [
@@ -1024,7 +1024,7 @@ export const WithCustomFactoryCell: Story = {
   render: () => <ColumnFactoryTable />,
 };
 
-// Delete Option
+// Edit Grid
 export const TemplateEditGrid: any = (args: any) => {
   const data = Array(1)
     .fill(null)
@@ -1044,3 +1044,26 @@ export const TemplateEditGrid: any = (args: any) => {
   );
 };
 TemplateEditGrid.storyName = 'Edit Grid';
+
+// 컬럼 사이즈
+export const TemplateColumnSize: any = (args: any) => {
+  const data = [
+    { name: '현대', code: 'H' },
+    { name: '현대', code: 'H' },
+    { name: '현대', code: 'H' },
+  ];
+  const columns = [
+    { accessorKey: 'name', size: 200 },
+    { accessorKey: 'code', size: 200 },
+  ];
+  return (
+    <Grid
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideColumnSettings
+      hideRowSelectionCheckBox
+    />
+  );
+};
+TemplateColumnSize.storyName = '컬럼 사이즈';

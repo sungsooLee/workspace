@@ -79,7 +79,7 @@ const Grid = forwardRef(
   <T extends object>(
     {
       data,
-      columns,
+      columns: defaultColumns,
       onStateChange,
       onRowSelect,
       onRowsSelect,
@@ -118,7 +118,7 @@ const Grid = forwardRef(
       right: [],
     });
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
-      columns.reduce((acc, col) => {
+      defaultColumns.reduce((acc, col) => {
         acc[col.id as string] = true;
         return acc;
       }, {} as VisibilityState),
@@ -126,7 +126,7 @@ const Grid = forwardRef(
 
     // columnOrder 초기화
     const [columnOrder, setColumnOrder] = useState<string[]>(() =>
-      columns.map((col) => col.id as string),
+      defaultColumns.map((col) => col.id as string),
     );
 
     /**
@@ -142,81 +142,86 @@ const Grid = forwardRef(
     );
 
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
-    const columnsWithCheckbox = useMemo(
-      () =>
-        multiSelectable && !hideRowSelectionCheckBox
-          ? [
-              {
-                id: 'select',
-                size: 50,
-                maxSize: 50,
-                minSize: 50,
-                enablePinning: true, // 핀 기능 활성화
-                meta: {
-                  align: 'center',
-                  headerAlign: 'center',
-                  cellAlign: 'center',
-                },
-                header: ({ table }: { table: Table<T> }) => (
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      textAlign: 'center',
-                      verticalAlign: 'center',
-                    }}>
-                    <Checkbox
-                      checked={table.getIsAllRowsSelected()}
-                      onCheckedChange={(checked) => {
-                        table.toggleAllRowsSelected(!!checked);
-                      }}
-                    />
-                  </div>
-                ),
-                // 바디 체크 박스
-                cell: ({ row }: { row: Row<T> }) => (
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      textAlign: 'center',
-                      paddingRight: '0',
-                    }}>
-                    {' '}
-                    <Checkbox
-                      checked={row.getIsSelected()}
-                      onCheckedChange={(checked) => {
-                        // 그룹핑된 행은 체크박스 비활성화
-                        if (row.getIsGrouped()) {
-                          return;
-                        }
-                        // row.toggleSelected(!!checked);
-                        row.getToggleSelectedHandler();
-                      }}
-                      disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
-                    />
-                  </div>
-                ),
-              },
-              ...columns,
-            ]
-          : columns,
-      [columns, multiSelectable],
-    );
+    const columns = useMemo(() => {
+      // 다중 선택을 위한 체크박스 컬럼 정의
+      const multipleCheckColumn = {
+        id: 'select',
+        size: 50,
+        maxSize: 50,
+        minSize: 50,
+        enablePinning: true, // 컬럼 고정 가능
+        meta: {
+          align: 'center',
+          headerAlign: 'center',
+          cellAlign: 'center',
+        },
+        // 헤더 체크박스: 전체 선택 / 해제
+        header: ({ table }: { table: Table<T> }) => (
+          <div
+            style={{
+              width: '100%',
+              display: 'block',
+              textAlign: 'center',
+              verticalAlign: 'center',
+            }}>
+            <Checkbox
+              checked={table.getIsAllRowsSelected()}
+              onCheckedChange={(checked) => {
+                table.toggleAllRowsSelected(!!checked);
+              }}
+            />
+          </div>
+        ),
+        // 개별 행 체크박스
+        cell: ({ row }: { row: Row<T> }) => (
+          <div
+            style={{
+              width: '100%',
+              display: 'block',
+              textAlign: 'center',
+              paddingRight: '0',
+            }}>
+            {' '}
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
+              onCheckedChange={(checked) => {
+                // 그룹 컬럼이 아닌 경우만 실행
+                if (!row.getIsGrouped()) {
+                  row.getToggleSelectedHandler();
+                }
+              }}
+            />
+          </div>
+        ),
+      };
 
-    // Row Select handle 이벤트 - 단일/다중 분기 처리
+      // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
+      return multiSelectable && !hideRowSelectionCheckBox
+        ? [multipleCheckColumn, ...defaultColumns]
+        : defaultColumns;
+    }, [defaultColumns, multiSelectable, hideRowSelectionCheckBox]);
+
+    /**
+     * Row Select handle - 단일 선택 모드
+     * @param updaterOrValue
+     */
     const handleRowSelectionChangeForSingleMode: OnChangeFn<RowSelectionState> = (
       updaterOrValue,
     ) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
 
-      // 단일 선택 모드: 마지막 선택만 유지
+      // 마지막 선택만 유지
       const selectedRowIds = Object.keys(newSelection);
       const newSelectionState = selectedRowIds.length > 0 ? { [selectedRowIds[0]]: true } : {};
       setRowSelection(newSelectionState);
     };
 
+    /**
+     * Row Select handle - 멀티 선택 모드
+     * @param updaterOrValue
+     */
     const handleRowSelectionChangeForMultiMode: OnChangeFn<RowSelectionState> = (
       updaterOrValue,
     ) => {
@@ -227,7 +232,7 @@ const Grid = forwardRef(
 
     const table = useReactTable({
       data,
-      columns: columnsWithCheckbox,
+      columns,
       state: {
         columnOrder,
         columnVisibility,
