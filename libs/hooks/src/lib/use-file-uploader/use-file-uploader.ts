@@ -1,13 +1,15 @@
-import { ChangeEvent, useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { getUniqueId, httpService } from '@learnway/shared';
-import Uppy from '@uppy/core';
+import Uppy, { UppyFile } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import { uppyFileReducer } from './uppy-reducer';
-import { UseFileUploaderProps } from './types';
+import { FileBody, FileMeta, FileProgressStarted, UseFileUploaderProps } from './types';
 import { completedMultiPartUpload, initMultiPartUpload, issuePresigendUrlByPart } from './api/s3';
+
 const isDebug = process.env.NODE_ENV !== 'production';
 const API_BASE_URL = 'http://localhost:8072/pms-module/admin/api/v1/file';
 const IS_MULTIPART_SIZE = 10 * 1024 * 1024; // 1MB
+
 /**
  * 파일 업로드 공통 hook
  */
@@ -123,30 +125,44 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
     uppy.on('file-added', (file: any) => {
       dispatch({ type: 'ADD_FILE', file });
     });
-    uppy.on('upload-progress', (file: any, progress) => {
-      const percentage = (progress.bytesUploaded / (progress.bytesTotal || 0)) * 100;
-      dispatch({
-        type: 'UPDATE_FILE',
-        fileId: file.id,
-        updates: {
-          progress: percentage,
-        },
-      });
-    });
-    uppy.on('upload-success', (file: any) =>
+    uppy.on(
+      'upload-progress',
+      (file?: UppyFile<FileMeta, FileBody>, progress?: FileProgressStarted) => {
+        if (!file || !progress) return;
+        const percentage = (progress.bytesUploaded / (progress.bytesTotal || 0)) * 100;
+        dispatch({
+          type: 'UPDATE_FILE',
+          fileId: file.id,
+          updates: {
+            progress: percentage,
+          },
+        });
+      },
+    );
+    uppy.on('upload-success', (file?: UppyFile<FileMeta, FileBody>) => {
+      if (!file) return;
       dispatch({
         type: 'UPDATE_FILE',
         fileId: file.id,
         updates: {
           progress: 100,
         },
-      }),
-    );
-    uppy.on('upload-error', (file: any, error) => {
+      });
+    });
+    uppy.on('upload-error', (file?: UppyFile<FileMeta, FileBody>, error?: Error) => {
+      if (!file || !error) return;
       dispatch({
         type: 'UPDATE_FILE',
         fileId: file.id,
         updates: { status: 'error', errorMessage: error.message },
+      });
+    });
+
+    uppy.on('file-removed', (file?: UppyFile<FileMeta, FileBody>) => {
+      if (!file) return;
+      dispatch({
+        type: 'REMOVE_FILE',
+        fileId: file.id,
       });
     });
 
@@ -157,7 +173,28 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
       uppy.clear();
     };
   }, []);
-  return { ref: uppyRef };
+  /**
+   *
+   * @param files
+   */
+  const addFiles = (files: File[]) => {
+    if (!uppyRef || !uppyRef.current) return;
+    uppyRef.current.addFiles(
+      files.map((file) => ({
+        id: getUniqueId(),
+        name: file.name,
+        type: file.type,
+        data: file,
+      })),
+    );
+  };
+
+  const removeFile = (fileId: string) => {
+    if (!uppyRef || !uppyRef.current) return;
+    uppyRef.current.removeFile(fileId);
+  };
+
+  return { files, addFiles, removeFile };
 };
 
 export const useFileUploader = useFileUploaderHook;

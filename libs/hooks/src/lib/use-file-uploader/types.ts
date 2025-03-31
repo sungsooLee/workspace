@@ -173,3 +173,54 @@ export interface UseFileUploaderProps {
   maxFileSize?: number; // 최대 파일 사이즈
   s3Path: string; // 업로드 할 S3 버킷 디렉토리 경로 upload 를 제외한 경로만 입력
 }
+
+export interface FileMeta {
+  name?: string;
+  label?: string;
+  folderId?: string;
+  [key: string]: any; // ✅ 이것만 추가하면 끝!
+}
+
+export type FileBody = Record<string, unknown>;
+
+/*
+ *
+ * UppyFile Upload Progress 타입 옮겨옴
+ * */
+
+export interface DeterminateFileProcessing {
+  mode: 'determinate';
+  message: string;
+  value: number;
+}
+export interface IndeterminateFileProcessing {
+  mode: 'indeterminate';
+  message?: string;
+  value?: 0;
+}
+export type FileProcessingInfo = IndeterminateFileProcessing | DeterminateFileProcessing;
+
+// TODO explore whether all of these properties need to be optional
+export interface FileProgressBase {
+  uploadComplete?: boolean;
+  percentage?: number; // undefined if we don't know the percentage (e.g. for files with `bytesTotal` null)
+  // note that Companion will send `bytesTotal` 0 if unknown size (not `null`).
+  // this is not perfect because some files can actually have a size of 0,
+  // and then we might think those files have an unknown size
+  // todo we should change this in companion
+  bytesTotal: number | null;
+  preprocess?: FileProcessingInfo;
+  postprocess?: FileProcessingInfo;
+}
+
+// FileProgress is either started or not started. We want to make sure TS doesn't
+// let us mix the two cases, and for that effect, we have one type for each case:
+export type FileProgressStarted = FileProgressBase & {
+  uploadStarted: number;
+  bytesUploaded: number;
+};
+export type FileProgressNotStarted = FileProgressBase & {
+  uploadStarted: null;
+  bytesUploaded: false;
+};
+export type FileProgress = FileProgressStarted | FileProgressNotStarted;
