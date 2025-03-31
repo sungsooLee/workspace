@@ -1,8 +1,8 @@
 import { z } from '@learnway/shared';
-import { Button, TreeNode } from '@learnway/ui';
+import { Button, Input, TreeNode } from '@learnway/ui';
 import { ContentsRow } from '@learnway/ui';
-import React, { FC, useEffect, useState } from 'react';
-import { useDynamicForm } from '@learnway/hooks';
+import React, { FC, forwardRef, useEffect, useState } from 'react';
+import { BaseFormFieldProps, useDynamicForm, useDynamicFormContext } from '@learnway/hooks';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
@@ -27,7 +27,8 @@ const MenuViewComponent: FC<any> = ({
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
-  const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError } =
+    useDynamicForm(formConfig);
   // const { create, isSuccess } = useCreateMenu({});
   const { checkExistsMenu } = useCheckExistsMenu({
     onSuccess: (data: any) => {
@@ -80,6 +81,7 @@ const MenuViewComponent: FC<any> = ({
 
   const handleOnSubmit = (node: any) => {
     console.log(node);
+    console.log(getValues());
     // console.log(node);
     const tmpData = {
       menuCode: node.code,
@@ -101,7 +103,7 @@ const MenuViewComponent: FC<any> = ({
         },
       ],
     };
-    onSave(tmpData);
+    // onSave(tmpData);
     // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
@@ -150,8 +152,10 @@ const MenuViewComponent: FC<any> = ({
         {/* 폼 필드 - code */}
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'code'} />
-            <Button
+            <DynamicFormField name={'code'}>
+              <DuplicateCodeGuideText clearFormError={clearFormError} />
+            </DynamicFormField>
+            {/* <Button
               variant="gray"
               size="sm"
               onClick={() => {
@@ -164,7 +168,7 @@ const MenuViewComponent: FC<any> = ({
                 checkExistsMenu(data);
               }}>
               중복
-            </Button>
+            </Button> */}
           </FormRow>
         </ContentsRow>
 
@@ -202,6 +206,34 @@ const MenuViewComponent: FC<any> = ({
 
 export default MenuViewComponent;
 
+const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
+  ({ name, value, onChange, provider, onFormChange, getValues, clearFormError }, ref) => {
+    const { onChangeGuideText } = useDynamicFormContext();
+
+    return (
+      <div className="flex w-full gap-x-2" ref={ref}>
+        <Input value={value} onChange={(e: any) => onChange(e.target.value)} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            const { code, parentKey } = getValues();
+            const data = {
+              menuCode: code,
+              parentId: parentKey,
+            };
+            clearFormError(name);
+            onFormChange?.({ isDuplicateMenuCode: true });
+            console.log(data);
+          }}>
+          중복
+        </Button>
+      </div>
+    );
+  },
+);
+
 const formConfig: DynamicFormConfig = {
   builders: [
     {
@@ -236,7 +268,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: '메뉴 코드',
       name: 'code',
-      type: 'text',
+      type: 'custom',
       value: '',
     },
     {
@@ -269,16 +301,23 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       value: '',
     },
+    {
+      name: 'isDuplicateMenuCode',
+      type: 'hidden',
+      format: 'boolean',
+      value: false,
+    },
   ],
   validator: {
+    isDuplicateMenuCode: {
+      required: {
+        fn: (values) => !values.isDuplicateMenuCode,
+        message: '메뉴 코드의 중복 여부를 확인해주세요.',
+        path: 'code',
+      },
+    },
     code: {
       required: true,
-      conditions: [
-        {
-          fn: (values: Record<string, any>) => !values.isDuplicateMenuCode,
-          message: '메뉴 코드의 중복 여부를 확인해주세요.',
-        },
-      ],
     },
     title: {
       required: true,
