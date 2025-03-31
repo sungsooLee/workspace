@@ -11,9 +11,8 @@ import {
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
-import { isMobile } from 'react-device-detect';
 import { MobileView, BrowserView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { isMobile } from 'react-device-detect';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -232,11 +231,10 @@ function RouteComponent() {
                 <label htmlFor="addr" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>주소</span>
                 </label>
-
-                {/* pc */}
                 <div className={formStyles.input_box}>
-                  <BrowserView>
-                    <div className={`${dynamicFormStyles.item_col_full} ${styles.item_col_full}`}>
+                  <div className={`${dynamicFormStyles.item_col_full} ${styles.item_col_full}`}>
+                    {/* pc */}
+                    <BrowserView>
                       <div className={dynamicFormStyles.flex_plus}>
                         <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
                         <Button variant="gray" size="lg">
@@ -255,17 +253,17 @@ function RouteComponent() {
                         placeholder="상세주소를 입력해주세요"
                         value=""
                       />
-                    </div>
-                  </BrowserView>
+                    </BrowserView>
 
-                  {/* mo */}
-                  <MobileView>
-                    <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
-                    <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
-                    <Button variant="gray" size="lg">
-                      주소 찾기
-                    </Button>
-                  </MobileView>
+                    {/* mo */}
+                    <MobileView>
+                      <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Button variant="gray" size="lg">
+                        주소 찾기
+                      </Button>
+                    </MobileView>
+                  </div>
                 </div>
               </div>
             </ContentsRow>
@@ -395,29 +393,14 @@ function RouteComponent() {
       </div>
 
       {/* button */}
-      <BrowserView>
-        <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="gray" size="xl" className="min">
-            취소
-          </Button>
-          <Button variant="primary" size="xl">
-            신청
-          </Button>
-        </div>
-      </BrowserView>
-
-      <MobileView>
-        <MobileContainerFooter>
-          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl" className="min">
-              취소
-            </Button>
-            <Button variant="primary" size="xl">
-              신청
-            </Button>
-          </div>
-        </MobileContainerFooter>
-      </MobileView>
+      <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
+        <Button variant="gray" size="xl" className="min">
+          취소
+        </Button>
+        <Button variant="primary" size="xl">
+          신청
+        </Button>
+      </div>
     </div>
   );
 }

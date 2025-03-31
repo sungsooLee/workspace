@@ -81,9 +81,6 @@
 }
 .input_box {
   @apply flex w-full items-center space-x-[8px];
-  > div {
-    @apply w-full;
-  }
   .input {
     @apply flex-auto;
   }
