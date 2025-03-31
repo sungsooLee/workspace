@@ -1087,7 +1087,8 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
+    remarks:
+      '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1015',
@@ -1097,7 +1098,8 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
+    remarks:
+      '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1016',
@@ -1173,11 +1175,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MR_1023',
     screenName: '과정상세_수강신청_신청완료',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-complete',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-complete\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_CLA_1000',

@@ -8,11 +8,13 @@ import {
   OptionCard,
   OptionCardItem,
   DatePicker,
+  useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { isMobile } from 'react-device-detect';
+import { AddressPopup } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -24,7 +26,8 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 });
 
 function RouteComponent() {
-  const [values, setValues] = useState<string[]>();
+  const { open: openModal } = useModal();
+
   const gender = [
     { label: '상관없음', value: 'value1' },
     { label: '남자', value: 'value2' },
@@ -237,7 +240,15 @@ function RouteComponent() {
                     <BrowserView>
                       <div className={dynamicFormStyles.flex_plus}>
                         <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
-                        <Button variant="gray" size="lg">
+                        <Button
+                          variant="gray"
+                          size="lg"
+                          onClick={() =>
+                            openModal({
+                              width: 's',
+                              content: <AddressPopup />,
+                            })
+                          }>
                           주소 찾기
                         </Button>
                       </div>
@@ -254,12 +265,19 @@ function RouteComponent() {
                         value=""
                       />
                     </BrowserView>
-
                     {/* mo */}
                     <MobileView>
                       <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
                       <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
-                      <Button variant="gray" size="lg">
+                      <Button
+                        variant="gray"
+                        size="lg"
+                        onClick={() =>
+                          openModal({
+                            width: 'm_full',
+                            content: <AddressPopup />,
+                          })
+                        }>
                         주소 찾기
                       </Button>
                     </MobileView>
