@@ -3,7 +3,7 @@ import { getUniqueId, httpService } from '@learnway/shared';
 import Uppy, { UppyFile } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import { uppyFileReducer } from './uppy-reducer';
-import { FileBody, FileMeta, FileProgressStarted, UseFileUploaderProps } from './types';
+import { FileBody, FileMeta, FileProgressStarted, FileUploaderConfig } from './types';
 import { completedMultiPartUpload, initMultiPartUpload, issuePresigendUrlByPart } from './api/s3';
 
 const isDebug = process.env.NODE_ENV !== 'production';
@@ -13,7 +13,7 @@ const IS_MULTIPART_SIZE = 10 * 1024 * 1024; // 1MB
 /**
  * 파일 업로드 공통 hook
  */
-const useFileUploaderHook = (config: UseFileUploaderProps) => {
+const useFileUploaderHook = (config: FileUploaderConfig) => {
   const uppyRef = useRef<Uppy>();
   // useReducer로 파일 상태 관리
   const [files, dispatch] = useReducer(uppyFileReducer, []);
