@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Badge,
   Button,
@@ -26,6 +26,16 @@ const LearningResourceFileUploadModalComponent = () => {
   const { close } = useModal();
   const { files, addFiles, removeFile } = useFileUploader(uploadConfig);
   const ref = useRef(null);
+
+  const handleFileChange = (e: any) => {
+    console.log(e);
+  };
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.onChange = handleFileChange;
+      /*ref.current.addEventListener('change', handleFileChange);*/
+    }
+  }, []);
   return (
     <ModalContainer>
       <ModalBody>
@@ -33,15 +43,17 @@ const LearningResourceFileUploadModalComponent = () => {
           <div className={popupStyles.title_wrap}>
             <h2 className={popupStyles.title}>{'파일 업로드'}</h2>
             <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-            {/*<p className={cn(statusStyles.start, statusStyles.file_status_view)}>
-              <span className={statusStyles.file_completed}>
+            <p className={styles.file_status_view}>
+              <span className={styles.file_completed}>
                 {'완료'} <em className={styles.num}>{'4'}</em>
               </span>
-              <span className={statusStyles.file_failed}>
+              <span className={styles.file_failed}>
                 {'실패'} <em className={styles.num}>{'2'}</em>
               </span>
-            </p>*/}
-
+              <span className={styles.file_ing}>
+                파일 올리는중 <em className={styles.ing}>1/1</em>
+              </span>
+            </p>
             <div className={cn(styles.start, styles.wrap)}>
               <div className={cn(styles.file_wrap)}>
                 {/* 파일 첨부 하기 전 */}
@@ -54,7 +66,7 @@ const LearningResourceFileUploadModalComponent = () => {
                     <span className={styles.file_guide}>
                       {'PNG, JPG, GIF, PDF / Max file size : 50MB'}
                     </span>
-                    <input type="file" className={styles.input_file} />
+                    <input ref={ref} type="file" className={styles.input_file} />
                   </Button>
                 </div>
                 {/* 파일 업로드 */}
