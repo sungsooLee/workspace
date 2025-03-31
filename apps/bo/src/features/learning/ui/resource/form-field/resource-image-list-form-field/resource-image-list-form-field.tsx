@@ -60,10 +60,12 @@ const ResourceImageListFormFieldComponent = forwardRef<
         options={value}
         deletable
         draggable
+        hideBorder
+        hideItemBorder={false}
         itemRenderer={(option: any) => (
-          <div className={'m-2 flex flex-row items-center gap-3'}>
-            <Thumbnail width={84} height={55} path={option.path} />
-            <span>{option.name}</span>
+          <div className={style.thumb_wrap}>
+            <Thumbnail width={84} height={55} path={option.path} className={style.image} />
+            <span className={style.thumb_name}>{option.name}</span>
           </div>
         )}
         onOptionDeleteClick={handleOptionDeleteClick}

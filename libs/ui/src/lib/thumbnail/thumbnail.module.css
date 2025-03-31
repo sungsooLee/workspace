@@ -20,6 +20,8 @@
       }
     }
   }
+  &.count {
+  }
 
   .checkbox {
     @apply absolute right-[6px] top-[6px] z-[3];
@@ -30,7 +32,7 @@
   }
 
   .sizeText {
-    @apply absolute right-[6px] bottom-[6px] z-[5] text-white;
+    @apply absolute bottom-[6px] right-[6px] z-[5] text-white;
   }
 
   .thumbnail_image {

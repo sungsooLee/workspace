@@ -20,8 +20,7 @@ import {
 } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import statusStyles from './status.module.css'; // 완료 실패 영역
-import boxStyles from './box-data.module.css'; // 상단 박스 선택된 영역
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/box-data.module.css'; // 상단 박스 선택된 영역
 import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles
 
 export const Route = createFileRoute('/_layout/learning/popup-fileupload')({
@@ -38,14 +37,19 @@ function RouteComponent() {
             <div className={PopupStyles.title_wrap}>
               <h2 className={PopupStyles.title}>{'파일 업로드'}</h2>
               <p className={PopupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-              <p className={cn(statusStyles.start, statusStyles.file_status_view)}>
-                <span className={statusStyles.file_completed}>
+              {/* 퍼블 수정 20250331 : 스타일 수정 S  */}
+              <p className={cn(styles.file_status_view)}>
+                <span className={styles.file_completed}>
                   {'완료'} <em className={styles.num}>{'4'}</em>
                 </span>
-                <span className={statusStyles.file_failed}>
+                <span className={styles.file_failed}>
                   {'실패'} <em className={styles.num}>{'2'}</em>
                 </span>
+                <span className={styles.file_ing}>
+                  파일 올리는중 <em className={styles.ing}>1/1</em>
+                </span>
               </p>
+              {/* 퍼블 수정 20250331 : 스타일 수정 E  */}
             </div>
             <div className={cn(boxStyles.start)}>
               <p className={boxStyles.text}>{'선택한 관리채널명채널명채널명'}</p>
