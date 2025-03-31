@@ -128,13 +128,12 @@ function RouteComponent() {
       </div>
       <div className="stats_box">
         <span className="total">
-          총 : <strong>{stats.total - stats.cancel}</strong>본 (PC:{pcCount - stats.cancel} /
-          Mobile:
-          {mobileCount - stats.native - stats.cancel} / Native:
-          {stats.native})
+          총 : <strong>{stats.total - stats.cancel}</strong>본 (PC:{pcCount} / Mobile:
+          {mobileCount - stats.native} / Native:
+          {stats.native} / 취소 {stats.cancel})
         </span>
         <span className="completed">
-          완료 : <strong>{stats.completed}</strong>본{' '}
+          완료 : <strong>{stats.completed}</strong>본
           <button onClick={handleSort}> [리스트 정렬]</button>
         </span>
 
@@ -164,14 +163,14 @@ function RouteComponent() {
         <div
           className="graph_bar completed"
           style={{
-            width: `${stats.total > 0 ? ((stats.completed + stats.native + stats.cancel) / stats.total) * 100 : 0}%`,
+            width: `${stats.total > 0 ? ((stats.completed + stats.native) / stats.total) * 100 : 0}%`,
           }}>
           완료 : {stats.completed}본
         </div>
         <div
           className="graph_bar remaining"
           style={{
-            width: `${stats.total > 0 ? ((stats.remaining - stats.cancel) / stats.total) * 100 : 0}%`,
+            width: `${stats.total > 0 ? ((stats.remaining + stats.cancel) / stats.total) * 100 : 0}%`,
           }}>
           남은본수 : {stats.remaining - stats.cancel}본(취소:{stats.cancel}본)
         </div>
