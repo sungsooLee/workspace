@@ -38,7 +38,7 @@
     }
   }
   .file_wrap {
-    @apply scrollbar relative h-[270px] overflow-y-auto rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    @apply scrollbar relative max-h-[270px] items-center overflow-y-auto rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
   }
   .attach_area {
     @apply relative;
