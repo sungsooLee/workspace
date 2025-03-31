@@ -75,38 +75,36 @@ const ListComponent = function ({
       {/* options */}
       {options?.map((d: any) => (
         <li
-          role="button"
           className={cn(
             styles.item,
             selectedOptions?.find((x: any) => x[valueField] === d[valueField]) &&
               !disabledActive &&
               styles.active, // selected row style
-            'border',
           )}
           key={d[valueField]}
           onClick={() =>
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
           {/*컨텐츠 영역*/}
-          <div className={cn(!hideItemBorder && 'border')}>
+          <div className={cn(!hideItemBorder && styles.line)}>
             {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
             {/*{getNodeElement(d) ?? d[labelField]}*/}
             {isValidElement(itemRenderer?.(d)) ? itemRenderer(d) : d[labelField]}
+            {/* 삭제 버튼 */}
+            {deletable && (
+              <Button
+                type="button"
+                className={cn(styles.clear)}
+                onlyIcon
+                onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
+                <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+              </Button>
+            )}
           </div>
-          {/* 삭제 버튼 */}
-          {deletable && (
-            <Button
-              type="button"
-              className={cn(styles.clear)}
-              onlyIcon
-              onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
-              <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-            </Button>
-          )}
           {/* draggable 버튼 */}
           {draggable && (
             <Button type="button" className={cn(styles.clear)} onlyIcon>
-              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#131C30" />
+              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
             </Button>
           )}
         </li>
