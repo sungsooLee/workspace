@@ -17,7 +17,7 @@
   }
 }
 .alarm_wrap {
-  @apply h-auto w-[513px] overflow-hidden rounded-[16px] bg-[var(--white)] shadow-[0px_2px_6px_rgba(0,0,0,0.08)];
+  @apply h-auto w-[513px] overflow-hidden rounded-[16px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
 }
 .alarm_header {
   @apply flex h-[48px] items-center justify-between border-b-[1px] border-solid border-[var(--gray5)] pl-[20px] pr-[16px];

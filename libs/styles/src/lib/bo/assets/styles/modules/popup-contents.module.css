@@ -1,8 +1,8 @@
 /* popup-learningRegisteration.module.css */
 .wrap {
-  @apply relative pt-[68px];
+  @apply relative;
   .title_wrap {
-    @apply fixed left-0 right-0 top-0 z-[1] mb-[24px] w-full overflow-hidden rounded-tl-[16px] rounded-tr-[16px] bg-white;
+    @apply w-full;
     .title {
       @apply title_bo_3_b pt-[48px] text-center;
     }

@@ -20,6 +20,7 @@ function RouteComponent() {
     lastUpdateDate: string;
     remarks: string;
     native?: boolean;
+    cancel?: boolean;
   }
 
   // 통계 상태의 타입 정의
@@ -28,6 +29,7 @@ function RouteComponent() {
     completed: number;
     remaining: number;
     native: number;
+    cancel: number;
   }
 
   const [data, setData] = useState<ListItem[]>(guideData); // 데이터를 상태로 저장
@@ -38,6 +40,7 @@ function RouteComponent() {
     completed: 0,
     remaining: 0,
     native: 0,
+    cancel: 0,
   });
 
   const getLayoutType = (screenId: string, native?: boolean): string => {
@@ -56,11 +59,12 @@ function RouteComponent() {
   useEffect(() => {
     const total = data.length;
     const native = data.filter((item) => item.native).length;
+    const cancel = data.filter((item) => item.cancel).length;
     const completed = data.filter((item) => item.completionDate).length;
 
-    const remaining = total - completed - native;
+    const remaining = total - completed - native - cancel;
 
-    setStats({ total, completed, remaining, native });
+    setStats({ total, completed, remaining, native, cancel });
   }, [data]);
 
   // 레이아웃 타입 자동계산
@@ -93,11 +97,13 @@ function RouteComponent() {
   const [mobileCount, setMobileCount] = useState(0);
   const [pcCount, setPcCount] = useState(0);
   const [nativeCount, setNativeCount] = useState(0);
+  const [cancelCount, setCancelCount] = useState(0);
 
   useEffect(() => {
     let mobile = 0;
     let pc = 0;
     let native = 0;
+    let cancel = 0;
 
     data.forEach((item) => {
       const layout = getLayoutType(item.screenId, item.native);
@@ -111,6 +117,7 @@ function RouteComponent() {
     setMobileCount(mobile);
     setPcCount(pc);
     setNativeCount(native);
+    setCancelCount(native);
   }, [data]);
 
   return (
@@ -121,27 +128,31 @@ function RouteComponent() {
       </div>
       <div className="stats_box">
         <span className="total">
-          총 : <strong>{stats.total}</strong>본 (PC:{pcCount} / Mobile:{mobileCount - stats.native}{' '}
-          / Native:
-          {stats.native})
+          총 : <strong>{stats.total - stats.cancel}</strong>본 (PC:{pcCount} / Mobile:
+          {mobileCount - stats.native} / Native:
+          {stats.native} / 취소 {stats.cancel})
         </span>
         <span className="completed">
-          완료 : <strong>{stats.completed}</strong>본{' '}
+          완료 : <strong>{stats.completed}</strong>본
           <button onClick={handleSort}> [리스트 정렬]</button>
         </span>
 
         <span className="native">
-          취소 : <strong>{stats.native}</strong>본
+          Native : <strong>{stats.native}</strong>본
+        </span>
+
+        <span className="cancel">
+          취소 : <strong>{stats.cancel}</strong>본
         </span>
 
         <span className="remaining">
-          남은본수 : <strong>{stats.remaining}</strong>본
+          남은본수 : <strong>{stats.remaining - stats.cancel}</strong>본
         </span>
         <span className="progress">
           완료율 :
           <strong>
             {stats.total > 0
-              ? (((stats.completed + stats.native) / stats.total) * 100).toFixed(1)
+              ? (((stats.completed + stats.native + stats.cancel) / stats.total) * 100).toFixed(1)
               : 0}
             %
           </strong>
@@ -159,9 +170,9 @@ function RouteComponent() {
         <div
           className="graph_bar remaining"
           style={{
-            width: `${stats.total > 0 ? (stats.remaining / stats.total) * 100 : 0}%`,
+            width: `${stats.total > 0 ? ((stats.remaining + stats.cancel) / stats.total) * 100 : 0}%`,
           }}>
-          남은본수 : {stats.remaining}본
+          남은본수 : {stats.remaining - stats.cancel}본(취소:{stats.cancel}본)
         </div>
       </div>
 
@@ -181,7 +192,9 @@ function RouteComponent() {
         </thead>
         <tbody>
           {sortedData.map((item, index) => (
-            <tr key={index + 1} className={`${item.native ? 'native' : ''}`}>
+            <tr
+              key={index + 1}
+              className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''}`}>
               <td>{index + 1}</td>
               <td>{getLayoutType(item.screenId)}</td>
               <td className="text-left">{item.screenName}</td>
@@ -194,10 +207,18 @@ function RouteComponent() {
               <td>{item.native ? 'Native' : item.pageType}</td>
               <td>{item.completionDate || '-'}</td>
               <td>{item.lastUpdateDate || '-'}</td>
-              <td className="remarks">{item.native ? '퍼블영역 아님' : item.remarks}</td>
+              <td className="remarks">
+                {item.cancel ? '삭제됨' : item.native ? '퍼블영역 아님' : item.remarks}
+              </td>
               <td
-                className={`${item.native ? 'native' : ''}${item.completionDate ? 'completed' : 'status'}`}>
-                {item.native ? '-' : item.completionDate ? '완료' : '진행예정'}
+                className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''} ${item.completionDate ? 'completed' : 'status'}`}>
+                {item.cancel
+                  ? '취소'
+                  : item.native
+                    ? '-'
+                    : item.completionDate
+                      ? '완료'
+                      : '진행예정'}
               </td>
             </tr>
           ))}

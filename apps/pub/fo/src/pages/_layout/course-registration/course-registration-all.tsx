@@ -9,7 +9,7 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import styles from '@learnway/styles/fo/features/course-registration/course-registration-all.module.css';
+import styles from '@learnway/styles/fo/pages/_layout/course-registration/course-registration-all.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
   component: RouteComponent,
 });
@@ -212,7 +212,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>주소</span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.item_col_full}>
+                  <div className={`${dynamicFormStyles.item_col_full} ${styles.item_col_full}`}>
                     <div className={dynamicFormStyles.flex_plus}>
                       <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
                       <Button variant="gray" size="lg">

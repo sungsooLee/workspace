@@ -1,0 +1,16 @@
+/* status.module.css */
+.start {
+  @apply body_bo_2_r mb-[24px] mt-[4px] text-center text-[var(--gray8)];
+  .file_completed {
+    @apply inline-block;
+    em {
+      @apply text-[var(--status3)];
+    }
+  }
+  .file_failed {
+    @apply ml-[8px] inline-block;
+    em {
+      @apply text-[var(--status1)];
+    }
+  }
+}

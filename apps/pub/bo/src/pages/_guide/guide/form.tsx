@@ -166,12 +166,11 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 rows={5}
                 cols={33}
                 resize="none"
-                placeholder="한글,영문,숫자 포함 2500자 이하"
+                placeholder="글자수 입력시 옵션 추가 maxLength={2500}"
+                maxLength={2500}
+                className={formStyles.textarea}
               />
             </div>
-            <p className={formStyles.text_limit}>
-              <em className={formStyles.num}>7</em>/2500
-            </p>
           </div>
         </ContentsRow>
         {/* row */}

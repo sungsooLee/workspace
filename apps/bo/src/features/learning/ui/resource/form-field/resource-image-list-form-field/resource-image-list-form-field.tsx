@@ -20,10 +20,6 @@ const ResourceImageListFormFieldComponent = forwardRef<
     console.log('원본 다운로드');
   };
 
-  const handleRenameClick = () => {
-    console.log('파일 변경');
-  };
-
   const handleChangeImageClick = () => {
     console.log('이미지 변경');
   };
@@ -47,9 +43,6 @@ const ResourceImageListFormFieldComponent = forwardRef<
             label={t('원본 다운로드')}
             onClick={handleDownloadClick}
           />
-        </li>
-        <li>
-          <Button className={style.btn_text} label={t('파일 변경')} onClick={handleRenameClick} />
         </li>
         <li>
           <Button

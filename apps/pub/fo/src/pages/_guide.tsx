@@ -27,6 +27,8 @@ function RouteComponent() {
       title: 'Component',
       subItems: [
         { label: 'Buttons', path: '/guide/buttons' },
+        { label: 'Input', path: '/guide/input' },
+        { label: 'Textarea', path: '/guide/textarea' },
         { label: 'Alert, Confirm', path: '/guide/alert' },
         { label: 'Modal', path: '/guide/modal' },
         { label: 'Grid, Table', path: '/guide/grid' },

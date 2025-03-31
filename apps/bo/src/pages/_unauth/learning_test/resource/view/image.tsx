@@ -237,9 +237,6 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
-      validation: {
-        type: 'string',
-      },
     },
     {
       label: t('학습자원 설명'),
@@ -462,18 +459,12 @@ const formConfig: DynamicFormConfig = {
     channelName: {
       format: 'string', // 데이터 타입
       required: true, // 필수 여부 // 기본값 false
-      conditions: [
-        {
-          fn: (values: Record<string, any>) => values.age > 10,
-          path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
-        },
-      ],
     },
+    learningResourceName: true, // 학습자원명
     externalDevelopmentCompanyManager: {
       required: {
         fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
       },
     },
-    learningResourceName: true,
   },
 };
