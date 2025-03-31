@@ -155,3 +155,25 @@
     @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
 }
+
+/* file status */
+.file_status_view {
+  @apply body_bo_2_r mb-[24px] mt-[4px] text-center text-[var(--gray8)];
+  .file_completed {
+    @apply inline-block;
+    em {
+      @apply text-[var(--status3)];
+    }
+  }
+  .file_failed {
+    @apply ml-[8px] inline-block;
+    em {
+      @apply text-[var(--status1)];
+    }
+  }
+  .file_ing {
+    em {
+      @apply text-[var(--secondary1)];
+    }
+  }
+}

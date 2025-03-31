@@ -1,0 +1,9 @@
+/* file-wrap.module.css */
+.start {
+  .file_info_wrap {
+    @apply mb-[16px] flex justify-between border-b-[1px] border-solid border-[#e3e9ef] pb-[16px];
+    .file_total {
+      @apply body_bo_3_r flex items-center justify-end text-[var(--primary1)];
+    }
+  }
+}

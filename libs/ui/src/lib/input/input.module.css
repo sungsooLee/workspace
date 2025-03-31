@@ -6,13 +6,13 @@
       @apply border-[var(--gray7)];
     }
     &:read-only {
-      @apply border-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)] text-[#4c515e];
+      @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[#4c515e];
       &:focus {
-        @apply border-[var(--gray4)];
+        @apply border-[var(--gray1)];
       }
     }
     &:disabled {
-      @apply border border-solid !border-[#d6dae1] bg-[var(--gray1)] text-[var(--gray5)];
+      @apply border border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
     }
     &.error {
       @apply border-[var(--status1)];

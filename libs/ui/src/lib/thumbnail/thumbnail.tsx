@@ -23,7 +23,7 @@ export interface ThumbnailComponentProps {
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
-  indexNumber?: boolean;
+  indexNumber?: number;
   /** 파일 사이즈*/
   sizeText?: string;
   /** 체크박스 표시 여부 */
@@ -32,6 +32,8 @@ export interface ThumbnailComponentProps {
   showDeleteBtn?: boolean; // delete button
   /** 선택 여부 (check style 에 사용) */
   selected?: boolean;
+  /** 카운트 체크 여부 */
+  count?: boolean;
   /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => any;
 }
