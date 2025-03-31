@@ -1,6 +1,6 @@
-import { OptionCard } from '@learnway/ui';
+import React, { useState } from 'react';
+import { OptionCard, OptionCardItem } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { getRandomId } from '@learnway/shared';
 
 import {
   IcoMybook,
@@ -20,63 +20,66 @@ export const Route = createFileRoute('/_guide/guide/optionCard')({
 
 function RouteComponent() {
   const dummyOptions = [
-    { label: '메뉴 A', value: getRandomId() },
-    { label: '메뉴 B', value: getRandomId() },
-    { label: '메뉴 c', value: getRandomId() },
-    { label: '메뉴 d', value: getRandomId() },
+    { label: '메뉴 A', value: 'a' },
+    { label: '메뉴 B', value: 'b' },
+    { label: '메뉴 c', value: 'c' },
+    { label: '메뉴 d', value: 'd' },
   ];
   const dummyOptions2 = [
     {
       label: '동영상',
-      value: getRandomId(),
+      value: 'e',
       icon: <IcoVideo01 />,
       description: '1개 동영상 업로드',
     },
     {
       label: '멀티 동영상',
-      value: getRandomId(),
+      value: 'f',
       icon: <IcoVideo02 />,
       description:
         '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
     },
     {
       label: 'HTML 동영상',
-      value: getRandomId(),
+      value: 'g',
       icon: <IcoHtml />,
       description: '설명 문구는 최대 2줄까지 노출됩니다. ',
     },
     {
       label: '이미지',
-      value: getRandomId(),
+      value: 'h',
       icon: <IcoImage01 />,
       description: '설명 문구는 최대 2줄까지 노출됩니다. ',
     },
-    { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '기타', value: 'i', icon: <IcoEtc />, description: '설명문구2줄설명' },
     {
       label: '외부 링크',
-      value: getRandomId(),
+      value: 'j',
       icon: <IcoInfoCircle />,
       description: '설명문구2줄설명',
     },
     {
       label: '외부 위탁',
-      value: getRandomId(),
+      value: 'k',
       icon: <IcoEntrust />,
       description: '설명문구2줄설명',
     },
-    { label: '블로그', value: getRandomId(), icon: <IcoBlog />, description: '설명문구2줄설명' },
+    { label: '블로그', value: 'l', icon: <IcoBlog />, description: '설명문구2줄설명' },
     {
       label: '이북',
-      value: getRandomId(),
+      value: 'm',
       icon: <IcoMybook />,
       description: '설명문구2줄설명',
     },
-    { label: '스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '멀티 스콤', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '설문지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '시험지', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
-    { label: '과제', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '스콤', value: 'n', icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '멀티 스콤', value: 'o', icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '설문지', value: 'p', icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '시험지', value: 'q', icon: <IcoEtc />, description: '설명문구2줄설명' },
+    { label: '과제', value: 'r', icon: <IcoEtc />, description: '설명문구2줄설명' },
   ];
+
+  const [values, setValues] = useState<string[]>();
+  const [values2, setValues2] = useState<string[]>();
   return (
     <div className="content">
       <h2 className="guide_tit2">OptionCard Component Guide</h2>
@@ -87,7 +90,9 @@ function RouteComponent() {
             {`// 초기 import
   import { OptionCard } from '@/libs/ui/src';
   
-  // 적용방법(예시) 단일선택인 경우 아닌 경우 props :  multiple
+  // 적용방법(예시)
+  const [values, setValues] = useState<string[]>(); 선언
+  단일선택인 경우 아닌 경우 props :  multiple
   multiple인 경우 onOptionsSelect 아닌경우 onOptionSelect
   한줄에 나열된 length 정의 props : cols 
   <Progress value={40} />`}
@@ -99,10 +104,13 @@ function RouteComponent() {
         <div className="flex_box">
           <div className="desc w-full">
             <OptionCard
+              value={values}
               cols={4}
               options={dummyOptions}
               multiple
-              onOptionsSelect={(options) => console.log('selected', options)} // multiple
+              onOptionsSelect={(options: OptionCardItem[]) =>
+                setValues(options.map((d: OptionCardItem) => d.value))
+              }
             />
           </div>
         </div>
@@ -110,10 +118,11 @@ function RouteComponent() {
         <div className="flex_box">
           <div className="desc">
             <OptionCard
+              value={values2}
               cols={5}
               size="lg"
               options={dummyOptions2}
-              onOptionSelect={(option) => console.log('selected', option)}
+              onOptionSelect={(option: OptionCardItem) => setValues2(option.value)}
             />
           </div>
         </div>
