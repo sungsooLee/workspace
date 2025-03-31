@@ -1,0 +1,7 @@
+/* box-data.module.css */
+.start {
+  @apply mb-[12px] flex h-[56px] items-center rounded-[8px] border border-solid border-[var(--gray4)] bg-[var(--gray1)];
+  .text {
+    @apply body_bo_2_r pl-[16px] text-[var(--gray8)];
+  }
+}

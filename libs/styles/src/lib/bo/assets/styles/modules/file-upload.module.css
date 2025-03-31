@@ -38,7 +38,7 @@
     }
   }
   .file_wrap {
-    @apply relative rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    @apply scrollbar relative h-[270px] overflow-y-auto rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
   }
   .attach_area {
     @apply relative;
@@ -64,7 +64,7 @@
       @apply w-[24px] shrink-0;
     }
     .file_name {
-      @apply ellipsis ml-[8px] flex flex-auto items-center overflow-hidden;
+      @apply ellipsis ml-[8px] flex min-w-[310px] flex-auto items-center overflow-hidden;
       .icon_type {
         @apply mr-[8px] shrink-0;
       }
@@ -72,17 +72,32 @@
         @apply body_bo_1_r ellipsis flex-grow-[1] text-[var(--gray8)];
       }
     }
+    .status_view {
+      @apply body_bo_2_r ml-[18px] mr-[12px] min-w-[80px] flex-grow-[1] text-[var(--gray6)];
+    }
     .progress_area {
       @apply ml-[16px] flex items-center;
-      .status_view {
-        @apply body_bo_2_r mr-[12px] min-w-[80px] flex-grow-[1] text-[var(--gray6)];
+      .progress_wrap {
+        @apply w-[210px];
+      }
+      & + .btn_status {
+        @apply -mr-[3px];
       }
     }
+    .btn_status {
+      @apply ml-[12px];
+    }
     .btn_delete {
-      @apply ml-[16px];
+      @apply w-[20px] shrink-0;
     }
     .complete {
-      @apply ml-[16px] w-[20px] shrink-0;
+      @apply ml-[8px] mr-[6px] w-[20px] shrink-0;
+    }
+    .file_status {
+      @apply ml-[20px] mr-[8px] h-[16px] w-[16px] shrink-0 rounded-full;
+    }
+    .file_status_text {
+      @apply body_bo_2_r text-[var(--gray6)];
     }
   }
   .upload_status_type2 {
@@ -132,5 +147,11 @@
         @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
       }
     }
+  }
+}
+.guide_text {
+  @apply body_bo_2_r relative mt-[8px] pl-[8px] text-[var(--gray8)];
+  &::before {
+    @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
 }

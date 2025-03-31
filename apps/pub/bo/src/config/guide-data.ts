@@ -263,6 +263,15 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: 'CMS/파일업로드',
+    pageId: 'learning/popup-fileupload',
+    screenId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '2025-03-31',
+    remarks: '진행중', // 비고
+  },
+  {
     screenName: 'CMS/학습유형선택',
     pageId: 'learning/popup-learningRegisteration',
     screenId: '',
