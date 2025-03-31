@@ -1,3 +1,10 @@
 .start {
   @apply w-full;
+  .thumb_wrap {
+    @apply flex;
+  }
+  .image {
+  }
+  .thumb_name {
+  }
 }

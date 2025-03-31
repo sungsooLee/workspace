@@ -71,7 +71,14 @@ const ListComponent = function ({
   };
 
   return (
-    <ul className={cn(className, 'nlp--list', styles.start, hideBorder && styles.border_none)}>
+    <ul
+      className={cn(
+        className,
+        'nlp--list',
+        styles.start,
+        hideBorder && styles.border_none,
+        !hideItemBorder && styles.type_full,
+      )}>
       {/* options */}
       {options?.map((d: any) => (
         <li
@@ -103,7 +110,7 @@ const ListComponent = function ({
           </div>
           {/* draggable 버튼 */}
           {draggable && (
-            <Button type="button" className={cn(styles.clear)} onlyIcon>
+            <Button type="button" className={cn(styles.btn_drag)} onlyIcon>
               <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
             </Button>
           )}

@@ -1355,11 +1355,17 @@ function RouteComponent() {
                 deletable
                 draggable
                 hideBorder
+                hideItemBorder={false}
                 options={imageOptions}
                 value={value}
                 itemRenderer={(option: any) => (
                   <div className={cn(fileInfoStyles.start, fileInfoStyles.thumb_wrap)}>
-                    <Thumbnail width={84} height={55} path={'https://picsum.photos/200'} />
+                    <Thumbnail
+                      width={84}
+                      height={55}
+                      path={'https://picsum.photos/200'}
+                      count={true}
+                    />
                     <span className={fileInfoStyles.name}>{option.name}</span>
                   </div>
                 )}
