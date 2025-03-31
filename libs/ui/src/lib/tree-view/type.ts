@@ -98,6 +98,7 @@ export type TreeEventPayload =
  */
 export interface TreeNode {
   key: string;
+  // menuId: string;
   title?: string;
   children?: TreeNode[];
   isExpanded?: boolean;
@@ -126,6 +127,9 @@ export interface TreeProps {
   type?: 'default' | 'advanced';
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   searchKeyword?: string;
+  initExpandedKeys?: string[]; // 초기 확장된 키 (내부 상태로만 사용)
+  expandedKeys?: string[]; // 외부에서 제어하는 확장된 키
+  onExpandedKeysChange?: (keys: string[]) => void; // 확장된 키 변경 콜백
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입

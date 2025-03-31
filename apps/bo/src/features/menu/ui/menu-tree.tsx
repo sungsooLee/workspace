@@ -3,14 +3,40 @@ import React, { FC, useEffect, useState } from 'react';
 import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
 
 // MenuTreeComponent 컴포넌트 정의
-const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDeleteNode }) => {
-  // 확장/축소 상태를 관리하는 상태값
-  const [expandAll, setExpandAll] = useState<boolean>(false);
+const MenuTreeComponent: FC<any> = ({
+  treeData,
+  onNodeClick,
+  onAddSubMenu,
+  onDeleteNode,
+  expandedKeys,
+  onExpandChange,
+}) => {
+  // expandAll 토글 시 모든 키 확장/축소 처리
+  const handleExpandAll = (expand: boolean) => {
+    if (expand) {
+      // 모든 노드 키 수집
+      const getAllKeys = (nodes: TreeNode[]): string[] => {
+        return nodes.reduce((keys: string[], node) => {
+          keys.push(node.key);
+          if (node.children?.length) {
+            keys.push(...getAllKeys(node.children));
+          }
+          return keys;
+        }, []);
+      };
+
+      const allKeys = getAllKeys(treeData);
+      onExpandChange(allKeys);
+    } else {
+      // 모두 축소
+      onExpandChange([]);
+    }
+  };
 
   const renderNodeButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
-        <Button
+        {/* <Button
           onClick={(e) => {
             e.stopPropagation();
             onDeleteNode(node);
@@ -19,7 +45,7 @@ const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDel
           size={'xs'}
           type={'button'}>
           삭제
-        </Button>
+        </Button> */}
         <Button
           onClick={(e) => {
             e.stopPropagation();
@@ -28,7 +54,7 @@ const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDel
           variant="gray2"
           size={'xs'}
           type={'button'}>
-          + 하위 메뉴 추가
+          {level == 0 ? '메뉴추가' : '하위메뉴추가'}
         </Button>
       </div>
     </div>
@@ -51,8 +77,7 @@ const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDel
           variant="text"
           size="sm"
           iconAlign="left"
-          onClick={() => setExpandAll(true)}>
-          <IcoPlus width={13} height={13} stroke="#3e4550" />
+          onClick={() => handleExpandAll(true)}>
           전체펼침
         </Button>
         <Button
@@ -60,8 +85,7 @@ const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDel
           variant="text"
           size="sm"
           iconAlign="left"
-          onClick={() => setExpandAll(false)}>
-          <IcoMinus width={13} height={13} stroke="#3e4550" />
+          onClick={() => handleExpandAll(false)}>
           전체닫기
         </Button>
       </Title>
@@ -70,7 +94,8 @@ const MenuTreeComponent: FC<any> = ({ treeData, onNodeClick, onAddSubMenu, onDel
       <TreeView
         data={treeData}
         treeId={'1'}
-        expandTrigger={expandAll}
+        expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키
+        onExpandedKeysChange={onExpandChange} // 확장된 키 변경 콜백
         nodeButtons={renderNodeButtons}
         onAction={handleTreeAction}
         type={'advanced'}

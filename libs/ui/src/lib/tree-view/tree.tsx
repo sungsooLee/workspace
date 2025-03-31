@@ -11,6 +11,7 @@ import {
 } from './type';
 import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from './tree.service';
 import { useTreeContext } from './tree.context';
+import { IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
 
 const FilteredTreeNode = ({ node, ...props }: TreeNodeComponentProps) => {
   const enhancedNode = node as EnhancedTreeNode;
@@ -41,6 +42,7 @@ const TreeNodeComponent = ({
   const enhanceNode = node as EnhancedTreeNode;
   // 드랍 위치(before, inside, after)
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const hasChildren = enhanceNode.children && enhanceNode.children.length > 0;
   const isExpanded = expandedKeys.includes(enhanceNode.key);
@@ -80,7 +82,7 @@ const TreeNodeComponent = ({
 
   const getNodeStyle = () => {
     const styles = [
-      `flex items-center py-1 rounded group min-h-[40px]
+      `flex items-center py-1 rounded  min-h-[40px]
         ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}`,
     ];
     if (selectedNode && selectedNode.key === enhanceNode.key) {
@@ -192,7 +194,9 @@ const TreeNodeComponent = ({
         onClick={(e) => {
           e.stopPropagation();
           handleClick();
-        }}>
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}>
         {dropPosition && <div className={dropIndicatorStyle[dropPosition]} />}
         <span
           className="flex h-6 w-6 cursor-pointer items-center justify-center"
@@ -207,19 +211,25 @@ const TreeNodeComponent = ({
         </span>
         <span className="mr-1 flex h-6 w-6 items-center justify-center">
           {level === 0 ? (
-            <Folder className="h-4 w-4 text-blue-500" />
+            // <Folder className="h-4 w-4 text-blue-500" />
+            <IcoHome03 stroke="#131C30" />
+          ) : isExpanded ? (
+            <IcoFolder stroke="#131C30" />
           ) : (
-            <File className="h-4 w-4 text-gray-500" />
+            <IcoFolder stroke="#131C30" />
           )}
         </span>
         <span className="flex-grow text-sm">
-          {highlightMatch(enhanceNode.title || '')} / key = {enhanceNode.key} / Depth : {level}
+          {highlightMatch(enhanceNode.title || '')}
+          {/* / key = {enhanceNode.key} / Depth : {level} */}
         </span>
 
         {treeType === 'advanced' && (
           <div className="relative flex items-center">
             {nodeButtons && (
-              <div className="mr-2 flex space-x-1" onClick={(e) => e.stopPropagation()}>
+              <div
+                className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered ? 'opacity-100' : 'invisible opacity-0'}`}
+                onClick={(e) => e.stopPropagation()}>
                 {nodeButtons(enhanceNode, level)}
               </div>
             )}
@@ -267,6 +277,9 @@ const TreeView = ({
   type,
   nodeButtons,
   searchKeyword,
+  initExpandedKeys = [], // 기본값 추가
+  expandedKeys: externalExpandedKeys, // 외부에서 제어할 확장된 키
+  onExpandedKeysChange, // 확장된 키 변경 콜백
 }: TreeProps) => {
   // 내부 상태 관리를 위한 초기 데이터 저장
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -275,7 +288,20 @@ const TreeView = ({
   // 현재 동작 중인 데이터
   const [treeData, setTreeData] = useState<EnhancedTreeNode[]>(JSON.parse(JSON.stringify(data)));
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
+  const expandedKeys = externalExpandedKeys || internalExpandedKeys;
+  const setExpandedKeys = useCallback(
+    (keys: string[] | ((prev: string[]) => string[])) => {
+      const newKeys = typeof keys === 'function' ? keys(expandedKeys) : keys;
+      setInternalExpandedKeys(newKeys);
+      if (onExpandedKeysChange) {
+        onExpandedKeysChange(newKeys);
+      }
+    },
+    [expandedKeys, onExpandedKeysChange],
+  );
+
   const [originalExpandedKeys, setOriginalExpandedKeys] = useState<string[]>([]); // 검색 전 확장 상태 저장
   const [isSearching, setIsSearching] = useState<boolean>(false); // 검색 중인지 상태 추가
 

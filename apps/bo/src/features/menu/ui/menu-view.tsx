@@ -1,29 +1,77 @@
 import { z } from '@learnway/shared';
 import { Button, TreeNode } from '@learnway/ui';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
+import { ContentsRow } from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
+import {
+  useCheckExistsMenu,
+  useCreateMenu,
+  useMenuManagerDetail,
+} from '../../../entities/menu/service/menu-manager.hook';
+import { findMenuPathById } from '../service/menu.service';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { useTranslation } from 'react-i18next';
 
-const MenuViewComponent: FC<any> = ({ selectedNode, mode, parentNode, onSave }) => {
-  // const {data} =
-
+const MenuViewComponent: FC<any> = ({
+  treeData,
+  selectedNode,
+  mode,
+  parentNode,
+  menuScope,
+  onSave,
+}) => {
+  const { data, isLoading } = useMenuManagerDetail(
+    mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
+  );
+  // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  // const { create, isSuccess } = useCreateMenu({});
+  const { checkExistsMenu } = useCheckExistsMenu({
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+  });
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (mode === 'view' || mode === 'edit') {
-      if (selectedNode) fetchData(selectedNode);
+    if (mode === 'view') {
+      const location = findMenuPathById(treeData, selectedNode.menuId);
+      if (data) {
+        const formData = {
+          key: data.menuId?.toString() || '',
+          parentKey: data.parentId?.toString() || '',
+          isUsed: data.useYn || false,
+          location: location || '', // 경로 생성 함수
+          code: data.menuCode || '',
+          title: data.menuName || t(`${data.menuCode}`),
+          url: data.path || '',
+          isPersonalInfo: data.personalDataContainYn || false,
+          description: data.menuDesc || '',
+          parentMenuName: data.parentName,
+        };
+        fetchData(formData);
+      }
     } else if (mode === 'add' && parentNode) {
+      const location = findMenuPathById(treeData, parentNode.menuId);
       const initialData = {
+        key: '', // 신규 메뉴는 키 없음
+        parentKey: parentNode.key || '',
+        parentMenuName: parentNode.title,
         isUsed: true,
-        parentNode: parentNode.key,
-        location: `${parentNode.title}`,
+        location: location,
+        code: '',
+        title: '',
+        url: '',
+        isPersonalInfo: false,
+        description: '',
+        isDuplicateMenuCode: false,
       };
       fetchData(initialData);
     }
-  }, [selectedNode, mode, parentNode]);
+  }, [data, selectedNode, mode, parentNode, isLoading]);
 
   // 폼 초기화를 처리하는 핸들러
   const handleReset = () => {
@@ -32,13 +80,34 @@ const MenuViewComponent: FC<any> = ({ selectedNode, mode, parentNode, onSave }) 
 
   const handleOnSubmit = (node: any) => {
     console.log(node);
+    // console.log(node);
+    const tmpData = {
+      menuCode: node.code,
+      parentId: node.parentKey,
+      deleteYn: false,
+      hiddenYn: false,
+      useYn: true,
+      visiblePcYn: true,
+      visibleMobileYn: true,
+      messageDesc: node.description,
+      personalDataContainYn: node.isPersonalInfo,
+      sortOrder: 1,
+      path: node.url,
+      menuScope: menuScope,
+      translations: [
+        {
+          locale: 'ko', //TODO: 현재 선택된 locale값 들어가게 변경해야됨.
+          translation: node.title,
+        },
+      ],
+    };
+    onSave(tmpData);
+    // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
   const getTitle = () => {
     if (mode === 'add') {
       return parentNode ? `${parentNode.title} 하위 메뉴 추가` : '메뉴 추가';
-    } else if (mode === 'edit') {
-      return `${selectedNode?.title} 메뉴 수정`;
     }
     return '메뉴 정보';
   };
@@ -56,6 +125,9 @@ const MenuViewComponent: FC<any> = ({ selectedNode, mode, parentNode, onSave }) 
                   초기화
                 </Button>
                 <Button type="submit" variant="point" size="sm">
+                  삭제
+                </Button>
+                <Button type="submit" variant="point" size="sm">
                   저장
                 </Button>
               </>
@@ -69,10 +141,30 @@ const MenuViewComponent: FC<any> = ({ selectedNode, mode, parentNode, onSave }) 
           </FormRow>
         </ContentsRow>
 
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'parentMenuName'} disabled={true} />
+          </FormRow>
+        </ContentsRow>
+
         {/* 폼 필드 - code */}
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'code'} />
+            <Button
+              variant="gray"
+              size="sm"
+              onClick={() => {
+                const { code, parentKey } = provider.getValues();
+                const data = {
+                  menuCode: code,
+                  parentId: parentKey,
+                };
+                console.log(data);
+                checkExistsMenu(data);
+              }}>
+              중복
+            </Button>
           </FormRow>
         </ContentsRow>
 
@@ -136,6 +228,12 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      label: '상위 메뉴명',
+      name: 'parentMenuName',
+      type: 'text',
+      value: '',
+    },
+    {
       label: '메뉴 코드',
       name: 'code',
       type: 'text',
@@ -154,12 +252,17 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      label: '개인정보 항목 포함 여부',
-      subText: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
+      label: '개인정보',
+      // required: true,
+      // subText: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
+      tooltip: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
       name: 'isPersonalInfo',
       type: 'switch',
       value: false,
     },
+    // {
+    //   label: ''
+    // },
     {
       label: '메뉴 설명',
       name: 'description',
@@ -167,19 +270,21 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
   ],
-  validator: {},
-};
-
-const Title: FC<any> = ({ title, children }) => {
-  return (
-    <div className="flex w-full flex-col">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="font-medium text-gray-800">{title}</span>
-        </div>
-        <div className="flex items-center space-x-2">{children}</div>
-      </div>
-      <hr className="mt-2 w-full border-t-2 border-gray-900" />
-    </div>
-  );
+  validator: {
+    code: {
+      required: true,
+      conditions: [
+        {
+          fn: (values: Record<string, any>) => !values.isDuplicateMenuCode,
+          message: '메뉴 코드의 중복 여부를 확인해주세요.',
+        },
+      ],
+    },
+    title: {
+      required: true,
+    },
+    url: {
+      required: true,
+    },
+  },
 };

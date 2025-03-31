@@ -108,6 +108,7 @@ export { ReactComponent as IcoSetting01 } from './lib/ic_setting_01.svg'; // set
 export { ReactComponent as IcoReview } from './lib/ic_review.svg'; // review
 export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // success_02
 
+export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
