@@ -12,6 +12,7 @@ const IS_MULTIPART_SIZE = 10 * 1024 * 1024; // 1MB
  * 파일 업로드 공통 hook
  */
 const useFileUploaderHook = (config: UseFileUploaderProps) => {
+  const uppyRef = useRef<Uppy>();
   // useReducer로 파일 상태 관리
   const [files, dispatch] = useReducer(uppyFileReducer, []);
   // uppy 객체
@@ -57,9 +58,8 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
           partNumber,
           filename: `${config.s3Path}/${file.name}`,
         });
-        if (data) {
-          return { url: data?.url || '', headers: { 'Content-Type': file.type } };
-        } else {
+
+        if (!data?.url) {
           dispatch({
             type: 'UPDATE_FILE',
             fileId: file.id,
@@ -67,9 +67,35 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
               errorMessage: 'fail to get presigned url',
             },
           });
+          throw new Error('Presigned URL is missing'); // ⛔ 반드시 throw 해야 타입 에러가 안 남
+        }
+
+        return {
+          url: data.url,
+          method: 'PUT',
+          headers: {
+            'Content-Type': file.type,
+          },
+        };
+      },
+      listParts: async () => {
+        // 백엔드에서 parts 목록 API를 제공하지 않아 빈 배열 반환
+        return [];
+      },
+      getUploadParameters: () => {
+        throw new Error('Non-multipart uploads are not supported');
+      },
+      // 업로드 실패 시 중단
+      abortMultipartUpload: async (file, { uploadId, key }) => {
+        try {
+          const encodedKey = encodeURIComponent(key);
+          const response = await httpService.delete(
+            `${API_BASE_URL}/s3/multipart/${uploadId}?key=${encodedKey}`,
+          );
+        } catch (error: any) {
+          console.error('멀티파트 업로드 중단 실패:', error);
         }
       },
-
       // 멀티파트 업로드 완료
       completeMultipartUpload: async (file, { uploadId, key, parts }) => {
         const data = await completedMultiPartUpload({ uploadId, parts });
@@ -93,9 +119,11 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
     });
 
     // Uppy 이벤트 설정
-    uppy.on('file-added', (file) => handleAddFile(file));
+    uppy.on('file-added', (file) => {
+      dispatch({ type: 'ADD_FILE' , file.id});
+    });
     uppy.on('upload-progress', (file, progress) => {
-      const percentage = (progress.bytesUploaded / progress.bytesTotal) * 100;
+      const percentage = (progress.bytesUploaded / (progress.bytesTotal || 0)) * 100;
       updateFileProgress(file.id, percentage, 'uploading');
     });
     uppy.on('upload-success', (file) => updateFileProgress(file.id, 100, 'complete'));
@@ -111,10 +139,10 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
 
     return () => {
       uppy.cancelAll();
-      uppy.close();
+      uppy.clear();
     };
   }, []);
-  return { ref: fileRef, status };
+  return { ref: uppyRef };
 };
 
 export const useFileUploader = useFileUploaderHook;
