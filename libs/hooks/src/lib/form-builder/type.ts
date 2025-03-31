@@ -476,6 +476,6 @@ export type UseSearchBoxReturn = {
 export type DynamicFormContextType = {
   guideText: string; // 가이드 택스트
   infoArea: ReactNode | null; // Info Araea
-  onChangeGuideText: (text: string) => void;
+  onChangeGuideText: (text: string | ReactNode) => void;
   onChangeInfoArea: (text: ReactNode | null) => void;
 };
