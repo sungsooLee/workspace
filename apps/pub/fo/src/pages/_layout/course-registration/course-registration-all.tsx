@@ -11,8 +11,9 @@ import {
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
-import { MobileView, BrowserView } from 'react-device-detect';
 import { isMobile } from 'react-device-detect';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -393,14 +394,29 @@ function RouteComponent() {
       </div>
 
       {/* button */}
-      <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
-        <Button variant="gray" size="xl" className="min">
-          취소
-        </Button>
-        <Button variant="primary" size="xl">
-          신청
-        </Button>
-      </div>
+      <BrowserView>
+        <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="gray" size="xl" className="min">
+            취소
+          </Button>
+          <Button variant="primary" size="xl">
+            신청
+          </Button>
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <MobileContainerFooter>
+          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button variant="gray" size="xl" className="min">
+              취소
+            </Button>
+            <Button variant="primary" size="xl">
+              신청
+            </Button>
+          </div>
+        </MobileContainerFooter>
+      </MobileView>
     </div>
   );
 }

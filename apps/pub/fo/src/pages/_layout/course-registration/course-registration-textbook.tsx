@@ -4,6 +4,8 @@ import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { IcoCaution } from '@learnway/icons';
 import { AddressPopup } from '../../../features/layout';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -107,22 +109,52 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <div className={`${dynamicFormStyles.item_col_full} ${styles.item_col_full}`}>
-                    <div className={dynamicFormStyles.flex_plus}>
-                      <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
+                    {/* pc */}
+                    <BrowserView>
+                      <div className={dynamicFormStyles.flex_plus}>
+                        <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
+                        <Button
+                          variant="gray"
+                          size="lg"
+                          onClick={() =>
+                            openModal({
+                              width: 's',
+                              content: <AddressPopup />,
+                            })
+                          }>
+                          주소 찾기
+                        </Button>
+                      </div>
+                      <Input
+                        id="addr2"
+                        type="text"
+                        placeholder="상세주소를 입력해주세요"
+                        value=""
+                      />
+                      <Input
+                        id="addr3"
+                        type="text"
+                        placeholder="상세주소를 입력해주세요"
+                        value=""
+                      />
+                    </BrowserView>
+
+                    {/* mo */}
+                    <MobileView>
+                      <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
                       <Button
                         variant="gray"
                         size="lg"
                         onClick={() =>
                           openModal({
-                            width: isMobile ? 'm_full' : 's',
+                            width: 'm_full',
                             content: <AddressPopup />,
                           })
                         }>
                         주소 찾기
                       </Button>
-                    </div>
-                    <Input id="addr2" type="text" placeholder="상세주소를 입력해주세요" value="" />
-                    <Input id="addr3" type="text" placeholder="상세주소를 입력해주세요" value="" />
+                    </MobileView>
                   </div>
                 </div>
               </div>
@@ -147,14 +179,29 @@ function RouteComponent() {
       </div>
 
       {/* button */}
-      <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
-        <Button variant="gray" size="xl" className="min">
-          취소
-        </Button>
-        <Button variant="primary" size="xl">
-          신청
-        </Button>
-      </div>
+      <BrowserView>
+        <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="gray" size="xl" className="min">
+            취소
+          </Button>
+          <Button variant="primary" size="xl">
+            신청
+          </Button>
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <MobileContainerFooter>
+          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button variant="gray" size="xl" className="min">
+              취소
+            </Button>
+            <Button variant="primary" size="xl">
+              신청
+            </Button>
+          </div>
+        </MobileContainerFooter>
+      </MobileView>
     </div>
   );
 }
