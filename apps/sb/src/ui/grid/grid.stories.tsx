@@ -1030,8 +1030,8 @@ export const TemplateEditGrid: any = (args: any) => {
     .fill(null)
     .map((_, i) => ({ id: `id_${i}`, text: '', number: '' }));
   const columns = [
-    { header: 'text', accessorKey: 'text', size: 'auto' },
-    { header: 'number', accessorKey: 'number', size: 'auto' },
+    { header: 'text', accessorKey: 'text' },
+    { header: 'number', accessorKey: 'number' },
   ];
   return (
     <Grid

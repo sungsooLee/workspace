@@ -369,17 +369,35 @@ const Grid = forwardRef(
         width: 'sm',
       });
     };
-    ////
 
-    //// 테이블 내용 렌더링
-    const renderTableContent = () => {
-      const renderContent = () => {
-        return rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
-          const row = rows[item.index] as Row<T>;
-          return renderRow(row, item);
-        });
+    /**
+     * 테이블 내용 로딩
+     */
+    const renderLoading = () => <p>Loading...</p>;
+
+    /**
+     * 테이블 내용 렌더링
+     */
+    const renderTable = () => {
+      // table tbody
+      const renderBody = () => {
+        const bodyStyle = {
+          // display: paginationGrid ? 'table-row-group' : 'grid',
+          display: 'grid',
+          position: 'relative',
+          height: `${rowVirtualizer.getTotalSize()}px`,
+        } as CSSProperties;
+        return (
+          <tbody style={bodyStyle}>
+            {rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
+              const row = rows[item.index] as Row<T>;
+              return renderRow(row, item);
+            })}
+          </tbody>
+        );
       };
 
+      // table tbody > tr
       const renderRow = (row: Row<T>, item: VirtualItem) => {
         const { index, size, start } = item;
         const rowStyle = {
@@ -404,6 +422,7 @@ const Grid = forwardRef(
         );
       };
 
+      // table tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
         const cellStyle = {
           background: cell.getIsGrouped()
@@ -444,11 +463,6 @@ const Grid = forwardRef(
           </td>
         );
       };
-
-      const list = table.getHeaderGroups()[0]?.headers?.map((d) => {
-        console.log(d);
-        console.log(d.getSize());
-      });
 
       return (
         <div
@@ -547,16 +561,8 @@ const Grid = forwardRef(
                 </tr>
               ))}
             </thead>
-            <tbody
-              style={{
-                // display: paginationGrid ? 'table-row-group' : 'grid',
-                display: 'grid',
-                position: 'relative',
-                // height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
-                height: `${rowVirtualizer.getTotalSize()}px`,
-              }}>
-              {isLoading ? <p>Loading...</p> : renderContent()}
-            </tbody>
+            {/*tbody*/}
+            {isLoading ? renderLoading() : renderBody()}
           </table>
         </div>
       );
@@ -691,7 +697,7 @@ const Grid = forwardRef(
             <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
           )}
         </div>
-        {renderTableContent()}
+        {renderTable()}
         {renderPagination()}
       </div>
     );
