@@ -325,6 +325,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '진행중', // 비고
   },
+  {
+    screenName: 'PMS/위젯관리',
+    pageId: 'pms/widget-management',
+    screenId: 'NLP_BO_PMS_1310',
+    pageType: 'Page',
+    completionDate: '2025-03-31',
+    lastUpdateDate: '2025-03-31',
+    remarks: '작업완료(그리드는 참고용입니다.)', // 비고
+  },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',
