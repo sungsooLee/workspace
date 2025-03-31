@@ -19,7 +19,7 @@ import {
   IcoPause,
 } from '@learnway/icons';
 
-import styles from './file-upload.module.css'; // 파일 업로드
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import statusStyles from './status.module.css'; // 완료 실패 영역
 import boxStyles from './box-data.module.css'; // 상단 박스 선택된 영역
 import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles

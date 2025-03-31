@@ -23,7 +23,7 @@ import {
   IcoPause,
 } from '@learnway/icons';
 
-import styles from './file-upload.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import statusStyles from './status.module.css';
 import boxStyles from './box-data.module.css';
 import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles
