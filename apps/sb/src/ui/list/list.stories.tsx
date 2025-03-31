@@ -90,6 +90,8 @@ export const TemplateImage: any = (args: any) => {
       deletable
       draggable
       options={imageOptions}
+      hideBorder
+      hideItemBorder={false}
       value={value}
       itemRenderer={(option: any) => (
         <div className={'m-2 flex flex-row items-center gap-3'}>

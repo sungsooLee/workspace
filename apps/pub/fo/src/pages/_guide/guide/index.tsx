@@ -202,7 +202,7 @@ function RouteComponent() {
                 <a href={item.pageId} target="_blank" rel="noreferrer">
                   {item.pageId}
                 </a>
-                <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
+                <div className="screen">{item.screenId ? `(${item.screenId})` : ''}</div>
               </td>
               <td>{item.native ? 'Native' : item.pageType}</td>
               <td>{item.completionDate || '-'}</td>

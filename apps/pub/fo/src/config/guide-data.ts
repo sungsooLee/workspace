@@ -684,8 +684,8 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
-    lastUpdateDate: '',
-    remarks: '- filter.tsx\n- 내용안에 포함',
+    lastUpdateDate: '2025-03-31',
+    remarks: '- filter.tsx\n- 내용안에 포함\n- filter.tsx, filter-popup.tsx 수정 (2025-03-31)',
   },
   {
     screenId: 'NLP_FO_CAT_M_1000',

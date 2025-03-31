@@ -144,7 +144,7 @@
           margin-top: 40px;
         }
         .flex_box {
-          @apply relative flex items-center;
+          @apply relative flex items-center overflow-x-auto;
           padding: 20px 20px 20px;
           border: 1px dashed #ccc;
           &:has(.desc)::after {
@@ -420,8 +420,9 @@
       }
     }
   }
+
   .pub_table {
-    width: 100%;
+    @apply w-full;
     caption {
       padding: 0 20px 20px;
       font-size: 2rem;
@@ -474,7 +475,7 @@
           @apply text-[#00AFD5];
         }
         .screen {
-          @apply ml-[5px] text-[12px] text-[#999];
+          @apply text-[12px] text-[#999];
         }
       }
       &.remarks {
