@@ -8,11 +8,7 @@ import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 
-import {
-  isSigninPage,
-  PAGE_TITLE_BY_PATH,
-  isSigninPageNone,
-} from '../../../../../features/platform';
+import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../../features/platform';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/auth/auth-container/auth-container-header.module.css';
 
@@ -23,7 +19,6 @@ function ContainerHeaderComponent() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
 
-  //const { meta } = 'useCurrentRoute()';
   /*
   const [activeMenuDepth] = useActiveMenuDepthState();
 

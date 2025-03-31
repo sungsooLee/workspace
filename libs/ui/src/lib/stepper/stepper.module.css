@@ -26,7 +26,7 @@
       }
     }
     .title {
-      @apply body_4_r whitespace-pre font-normal text-[var(--gray9)];
+      @apply body_4_r whitespace-pre-wrap font-normal text-[var(--gray9)];
     }
     .sub_title {
       @apply mt-[4px] text-[1.2rem] font-normal leading-[1rem] text-[var(--gray8)];
@@ -120,3 +120,15 @@
 .complete {
   background: #3eb838;
 } */
+
+:global(body.mobile) {
+  @screen mobile {
+    .stepper {
+      .step_item {
+        .title {
+          @apply max-w-[100px];
+        }
+      }
+    }
+  }
+}

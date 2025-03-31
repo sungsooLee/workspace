@@ -1,0 +1,50 @@
+/* layout */
+.lnb-open main {
+  /* lnb open */
+  @apply !max-w-[calc(100vw-263px)];
+}
+
+.scrolled {
+  .layout_wrap {
+    header {
+      @apply !h-[50px] !overflow-hidden;
+      h1,
+      .util {
+        @apply !hidden;
+      }
+      .nav_area {
+        @apply !pt-[4px];
+      }
+      .quick_menu {
+        @apply !bottom-[4px];
+      }
+    }
+    .container_inner {
+      @apply !min-h-[calc(100vh-50px)];
+      .scroll_inner {
+        @apply relative !min-h-[calc(100vh-90px)];
+        .title_wrap {
+          &::before {
+            @apply absolute -bottom-[1px] left-0 z-[0] h-[2px] w-full bg-[url('../../assets/images/common/bg_sticky_line.png')] bg-[auto_2px] bg-[position:left_center] bg-repeat-x content-[''];
+          }
+          &::after {
+            @apply absolute bottom-0 left-[40px] z-[1] h-[1px] w-[calc(100%-80px)] bg-[var(--gray4)] content-[''];
+          }
+        }
+      }
+    }
+  }
+}
+
+.layout_wrap {
+  .scroll_inner {
+    @apply !h-[calc(100vh-140px)];
+  }
+}
+
+.content_wrap.case_tabs {
+  @apply mt-[60px];
+  .page_tabs > [role='tablist'] {
+    @apply absolute -top-[60px] left-[40px] w-[calc(100%-80px)];
+  }
+}

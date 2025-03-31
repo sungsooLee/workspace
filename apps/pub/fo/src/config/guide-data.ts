@@ -4,13 +4,65 @@
 // layoutType: 반응형/적응형 구분 자동구분,작성 x
 // screenName: 스크린 명
 // pageId: 화면 경로(파일명) .tsx 생략
-// screenId: 스크린아이디
+// cancel: false,
 // pageType: 페이지 타입 Page,Pop-up
 // completionDate: 완료일
 // lastUpdateDate: 수정일
 // remarks: 비고
+// native: true, (네이티브일경우 true)
+// cancel: false, (삭제된경우 true)
 
 export const guideData = [
+  {
+    screenId: 'NLP_FO_WID_1000',
+    screenName: '메인위젯_My_학습현황',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1001',
+    screenName: '메인위젯_채널 최신 과정',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1002',
+    screenName: '메인위젯_추천 과정',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1003',
+    screenName: '메인위젯_인기있는과정,뜨고있는채널',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_WID_1004',
+    screenName: '메인위젯_테넌트/채널 공지사항',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
   {
     screenId: 'NLP_FO_GNB_1000',
     screenName: 'GNB_타입A 템플릿',
@@ -36,8 +88,8 @@ export const guideData = [
     screenName: 'M_TOP/Bottom 프래임',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-03-24',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -79,7 +131,8 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: 'Native 화면',
+    native: true,
+    remarks: '',
   },
   {
     screenId: 'NLP_FO_GNB_M_1006',
@@ -116,20 +169,20 @@ export const guideData = [
     screenName: 'M_아용약관',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 푸터 팝업과 동일\n- agreement-pop.tsx',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1010',
     screenName: 'M_개인정보처리방침',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 로그인 푸터 팝업과 동일\n- privacy-pop.tsx',
   },
   {
     screenId: 'NLP_FO_CHB_1000',
@@ -156,8 +209,8 @@ export const guideData = [
     screenName: 'FOOTER_표준템플릿',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -185,11 +238,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1000',
     screenName: 'My_개인정보변경_조회',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Page',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- information-change.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1003',
@@ -205,121 +258,121 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1006',
     screenName: 'My_비밀번호 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- password-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1007',
     screenName: 'My_아이디 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- id-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1015',
     screenName: 'My_휴대폰번호 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- phone-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1008',
     screenName: 'My_회원탈퇴_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/membership-secession',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- membership-secession.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1009',
     screenName: 'My_SNS 로그인 설정_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/setting-sns',
+    pageType: 'Page',
+    completionDate: '2025-03-28',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- setting-sns.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_1011',
     screenName: 'My_개인정보변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Page',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_1010',
     screenName: 'My_비밀번호 확인_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_1012',
     screenName: 'My_비밀번호 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_1013',
     screenName: 'My_아이디 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_1016',
     screenName: 'My_휴대폰번호 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_1014',
     screenName: 'My_회원탈퇴_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/membership-secession',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_ARM_MR_1000',
     screenName: 'M_알림',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notification-m\n- notification-popup-m',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1003',
@@ -335,111 +388,111 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_MR_1000',
     screenName: 'M_My_개인정보변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Page',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- information-change.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1006',
     screenName: 'M_My_비밀번호 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- password-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1007',
     screenName: 'M_My_메일 아이디 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- id-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1015',
     screenName: 'M_My_휴대폰번호 변경_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- phone-change-popup.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1008',
     screenName: 'M_My_회원탈퇴_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/membership-secession',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- membership-secession.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1010',
     screenName: 'M_My_비밀번호 확인_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1011',
     screenName: 'M_My_개인정보변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Page',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1012',
     screenName: 'M_My_비밀번호 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1013',
     screenName: 'M_My_메일 아이디 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1016',
     screenName: 'M_My_휴대폰번호 변경_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/information-change',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1014',
     screenName: 'M_My_회원탈퇴_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'my/membership-secession',
+    pageType: 'Page',
+    completionDate: '2025-03-27',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- EN',
   },
   {
     screenId: 'NLP_FO_LOG_1030',
@@ -455,11 +508,11 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1100',
     screenName: '로그인',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'login',
+    pageType: 'Page',
+    completionDate: '2025-03-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 국문과 동일(영문)',
   },
   {
     screenId: 'NLP_FO_CLA_1008_1',
@@ -495,21 +548,22 @@ export const guideData = [
     screenId: 'NLP_FO_USE_1010',
     screenName: '통합검색_최근/추천/인기 검색어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- 최근 : recent-searches.tsx\n- 추천 : recommended-searches.tsx\n- 인기 : popular-searches.tsx',
   },
   {
     screenId: 'NLP_FO_USE_1011',
     screenName: '통합검색_자동완성 팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-26',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- auto-complete-popover.tsx',
   },
   {
     screenId: 'NLP_FO_USE_1000',
@@ -548,7 +602,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'integrated-search/integrated-search_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '- search-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
@@ -558,7 +612,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'integrated-search/integrated-search_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '- auto-complete-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
   },
@@ -568,7 +622,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-03-19',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -608,7 +662,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'category/detail',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-03-14',
     lastUpdateDate: '',
     remarks:
       'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
@@ -617,11 +671,11 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_1003',
     screenName: '카테고리_상세화면(4,5,6Depth)',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'category/detail',
+    pageType: 'Page',
+    completionDate: '2025-03-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 썸네일 공통검포넌트 미작업으로 작업 불가능',
   },
   {
     screenId: 'NLP_FO_CAT_1002',
@@ -637,21 +691,21 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_M_1000',
     screenName: 'M_카테고리_레이어창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'category/detail_m',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-14',
     lastUpdateDate: '',
-    remarks: '공통 스와이퍼 버튼 대기중',
+    remarks: '- 공통 스와이퍼 버튼 대기중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1001',
     screenName: 'M_카테고리_상세화면',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'category/detail_m',
+    pageType: 'Page',
+    completionDate: '2025-03-14',
     lastUpdateDate: '',
-    remarks: '썸네일 공통 컴포넌트 대기중',
+    remarks: '- 썸네일 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',
@@ -661,7 +715,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '공통 바텀 팝업 대기중',
+    remarks: '- 공통 바텀 팝업 대기중(작업불가능)',
   },
   {
     screenId: 'NLP_FO_LEC_1000',
@@ -927,41 +981,43 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1015',
     screenName: '과정상세_수강신청_모든케이스',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1007',
     screenName: '과정상세_수강신청_사전레벨테스트',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'course-registration/course-registration-all',
+    pageId: 'course-registration/course-registration-level',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- datepicker 시간 공통 컴포넌트 대기중',
+    remarks:
+      '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1016',
     screenName: '과정상세_수강신청_교재 배송지',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-textbook.tsx\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1017',
     screenName: '과정상세_수강신청_교재 배송지_주소 찾기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- address-popup.tsx\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_1018',
@@ -1192,6 +1248,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1011',
@@ -1242,6 +1299,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1021',
@@ -1352,6 +1410,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1009',
@@ -1392,6 +1451,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1013',
@@ -1402,6 +1462,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1014',
@@ -1462,6 +1523,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1043',
@@ -1543,6 +1605,84 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '',
   },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1025',
+    screenName: 'M_강의실_학습창_동영상',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1026',
+    screenName: 'M_강의실_학습창_이북',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1027',
+    screenName: 'M_강의실_학습창_웹_갤러리',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1028',
+    screenName: 'M_강의실_학습창_웹_블로그',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1029',
+    screenName: 'M_강의실_학습창_웹_HTML',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1030',
+    screenName: 'M_강의실_학습창_웹_위키',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
+  {
+    screenId: 'NLP_FO_CLA_MA_1031',
+    screenName: 'M_강의실_학습창_웹_라이브',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+
   {
     screenId: 'NLP_FO_CHL_1002',
     screenName: '채널_홈 TAB',
@@ -2007,7 +2147,7 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1111',
     screenName: '이용약관_FOOTER',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'agreement',
+    pageId: 'footer-menu/agreement',
     pageType: 'Page',
     completionDate: '2025-03-17',
     lastUpdateDate: '',
@@ -2017,7 +2157,7 @@ export const guideData = [
     screenId: 'NLP_FO_LOG_1112',
     screenName: '개인정보처리방침_FOOTER',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'privacy',
+    pageId: 'footer-menu/privacy',
     pageType: 'Page',
     completionDate: '2025-03-17',
     lastUpdateDate: '',

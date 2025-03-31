@@ -57,8 +57,8 @@ function RouteComponent() {
               </p>
             </div>
           </div>
+          <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 신청 정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
-            <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 신청 정보'}</h4>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-company" className={formStyles.form_label}>
@@ -292,8 +292,9 @@ function RouteComponent() {
               </div>
             </div>
           </div>
+          <hr className={`${styles.divider} ${styles.divider}`} />
+          <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 승인 정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'col')}>
-            <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 승인 정보'}</h4>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-tenant" className={formStyles.form_label}>

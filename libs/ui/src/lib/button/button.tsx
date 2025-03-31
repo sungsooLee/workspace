@@ -36,7 +36,6 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
   dummy?: boolean;
   className?: string;
   label?: string;
-  actionKey?: 'confirm' | 'cancel' | 'reset'; // modal footer 버튼에서 사용
 }
 
 const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(

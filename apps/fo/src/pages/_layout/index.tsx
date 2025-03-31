@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '@learnway/ui';
 
-import { usePageMetaState } from '../../entities/platform';
-
 import { pageRouteConfig } from '../../features/auth';
 
 export const Route = createFileRoute('/_layout/')({

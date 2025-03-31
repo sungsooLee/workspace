@@ -128,7 +128,15 @@ export type FormValidatorConfig = {
          * - 'array' → 배열 형식
          * - 'object' → 객체 형식
          */
-        format?: 'string' | 'number' | 'date' | 'datetime' | 'email' | 'array' | 'object';
+        format?:
+          | 'string'
+          | 'number'
+          | 'date'
+          | 'datetime'
+          | 'email'
+          | 'array'
+          | 'object'
+          | 'password';
         /**
          * 필수 값 설정
          * - true → 필수 값 설정

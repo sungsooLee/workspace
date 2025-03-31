@@ -14,7 +14,7 @@ import { cn } from '@learnway/shared';
 import { Breadcrumbs } from '../container/breadcrumbs/breadcrumbs';
 import { useShowBreadcrumbs } from '../../service/breadcurmb.hooks';
 
-import { PageContainer } from '../container/page-container';
+import { PageContainer } from './container/page-container';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 

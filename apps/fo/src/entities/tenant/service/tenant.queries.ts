@@ -3,7 +3,7 @@ import { skipToken } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
 
 import TenantService from '../api/tenant';
-import { Tenant } from '../model/tenant';
+import { Tenant } from '../../../types';
 
 export const queryKeys = {
   all: ['tenants'] as const,

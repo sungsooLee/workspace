@@ -57,6 +57,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
           styles.textarea_wrap,
           disabled && styles.disabled,
           readOnly && styles.readonly,
+          'textarea_wrap',
           className,
         )}>
         {/* textarea */}

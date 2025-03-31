@@ -1,9 +1,0 @@
-/* page-container.module.css */
-.start {
-  &.page_container {
-    @apply relative pb-[110px] pt-[16px];
-  }
-  .title {
-    @apply title_4_b pb-[16px];
-  }
-}

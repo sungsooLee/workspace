@@ -1,4 +1,4 @@
-import { DropdownList, DropdownOption } from '@learnway/ui';
+import { Dropdown, DropdownList, DropdownOption } from '@learnway/ui';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { useState } from 'react';
 
@@ -35,6 +35,11 @@ export default {
       defaultValue: false,
     },
     isDisabled: {
+      control: 'boolean',
+      description: '비활성화 여부',
+      defaultValue: false,
+    },
+    isReadonly: {
       control: 'boolean',
       description: '비활성화 여부',
       defaultValue: false,
@@ -85,9 +90,38 @@ export const Searchable: Story = {
   },
 };
 
+const DropdownComponent: React.FC<any> = (args) => {
+  const [selectedValue, setSelectedValue] = useState<string>('option1');
+  const options = [
+    { value: 'option1', label: '옵션 1' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+    { value: 'option4', label: '옵션 4' },
+    { value: 'option5', label: '옵션 5' },
+    { value: 'option6', label: '옵션 6' },
+    { value: 'option7', label: '옵션 7' },
+    { value: 'option8', label: '옵션 8' },
+    { value: 'option9', label: '옵션 9' },
+    { value: 'option10', label: '옵션 10' },
+  ];
+  return (
+    <Dropdown
+      options={options}
+      value={selectedValue}
+      onChange={(value: string) => setSelectedValue(value)}
+      label="Dropdown 컴포넌트"
+    />
+  );
+};
+
+export const DropdownStory: Story = {
+  name: 'Dropdown 컴포넌트',
+  args: {},
+  render: (args) => <DropdownComponent {...args} />,
+};
+
 const MultiDropdown: React.FC<any> = (args) => {
   const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
-
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },

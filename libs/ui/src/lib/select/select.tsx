@@ -47,6 +47,7 @@ const SelectComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Sele
     // 외부에 의한 값을 처리하기 위한 effect
     useEffect(() => {
       setCurrentSelectedItem(value || '');
+      console.log('SelectComponent value', value);
     }, [value]);
 
     return (

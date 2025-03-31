@@ -1,11 +1,13 @@
 import { useLoginUser, useReissue, useUpdateUser } from '@learnway/config';
 import type { AuthUser } from '@learnway/config';
+import { cookieService } from '@learnway/shared';
 
 import { useAsycFetchMenus } from '../../../entities/menu';
 
 interface LoginParams {
   username: string;
   password: string;
+  saveId?: boolean;
 }
 
 export function useAuthSignin() {
@@ -22,6 +24,12 @@ export function useAuthSignin() {
         tenantId: user?.activeTenantId,
         //roleIds: authUser?.activeRoleId,
       });
+
+      if (payload.saveId) {
+        cookieService.set('SAVED_USER_ID', payload.username);
+      } else {
+        cookieService.remove('SAVED_USER_ID');
+      }
       return updateMenu(menus);
     },
     reissue: async (): Promise<AuthUser | undefined> => {
@@ -34,4 +42,8 @@ export function useAuthSignin() {
       return updateMenu(menus);
     },
   };
+}
+
+export function getSavedUserid(): string | undefined {
+  return cookieService.get('SAVED_USER_ID') ?? undefined;
 }

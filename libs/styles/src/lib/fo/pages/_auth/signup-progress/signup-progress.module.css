@@ -24,3 +24,18 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .auth_box {
+        .search_info {
+          @apply mb-[32px];
+        }
+      }
+      .auth_form {
+        @apply mt-[0];
+      }
+    }
+  }
+}

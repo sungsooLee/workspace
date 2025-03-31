@@ -8,6 +8,7 @@
 }
 
 .select_wrap {
+  @apply w-full;
   .focused {
     .icon_arrow {
       @apply rotate-180 transition-all duration-300 ease-in-out;
@@ -15,6 +16,14 @@
   }
   [aria-selected='true'] {
     @apply !bg-[#D8F8FF];
+  }
+  .readonly {
+    .nlp-select__control {
+      @apply pointer-events-none !border-[var(--gray4)] bg-[#f6f8fd];
+      .nlp-select__single-value {
+        @apply pl-[8px] text-[#4c515e];
+      }
+    }
   }
   .nlp-select__control--is-disabled {
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
@@ -31,7 +40,10 @@
   }
   &.nlp--dropdown-lg {
     .nlp-select__control {
-      @apply !min-h-[40px];
+      @apply !min-h-[40px] rounded-[8px] pr-[16px];
+      .nlp-select__single-value {
+        @apply pl-[8px];
+      }
     }
   }
 }
@@ -94,24 +106,3 @@
     @apply !ml-[4px];
   }
 }
-/* 
-.lg {
-  .nlp-select__control {
-    @apply !h-[40px] !min-h-[40px];
-  }
-}
-
-.sm {
-  .nlp-select__control {
-    @apply !h-[32px] !min-h-[32px];
-  }
-  .nlp-select__value-container {
-    @apply py-0;
-  }
-  .nlp-select__multi-value {
-    @apply inline-flex h-[24px] items-center py-0;
-  }
-  .nlp-select__multi-value__label {
-    @apply py-0;
-  }
-} */

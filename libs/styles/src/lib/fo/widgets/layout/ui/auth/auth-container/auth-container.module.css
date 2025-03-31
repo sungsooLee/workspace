@@ -1,5 +1,13 @@
 /* auth_container.module.css */
 .start {
+  /* 이용약관, 개인정보취급방침 레이아웃 */
+  &.container {
+    @apply bg-[#fff];
+    .inner {
+      @apply m-auto w-[1180px] pb-[80px] pt-[40px] text-left;
+    }
+  }
+  /* //이용약관, 개인정보취급방침 레이아웃 */
   &.auth_container {
     @apply relative bg-[var(--gray1)] pt-[40px];
     &.login {
@@ -41,6 +49,13 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
+      /* 이용약관, 개인정보취급방침 레이아웃 */
+      &.container {
+        .inner {
+          @apply w-full px-[20px] pb-[40px] pt-[72px];
+        }
+      }
+      /* //이용약관, 개인정보취급방침 레이아웃 */
       &.auth_container {
         @apply bg-[#ffffff] pt-[0];
         &.login {
@@ -52,7 +67,7 @@
         }
 
         .auth_area {
-          @apply mb-0 w-full pb-[100px];
+          @apply mb-0 w-full pb-[100px] pt-[56px];
           h2 {
             &.title_login {
               @apply title_6_b mt-[0] block flex h-[96px] items-center justify-center rounded-none p-[0] px-[31px];

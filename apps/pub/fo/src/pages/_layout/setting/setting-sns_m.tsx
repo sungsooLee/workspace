@@ -3,9 +3,9 @@ import { Switch } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/setting/setting-sns_m.module.css';
 
-import naver from '../../../assets/images/common/logo_sns_naver.png';
-import kakao from '../../../assets/images/common/logo_sns_kakao.png';
-import google from '../../../assets/images/common/logo_sns_google.png';
+import naver from '@learnway/styles/fo/assets/images/common/logo_sns_naver.png';
+import kakao from '@learnway/styles/fo/assets/images/common/logo_sns_kakao.png';
+import google from '@learnway/styles/fo/assets/images/common/logo_sns_google.png';
 
 export const Route = createFileRoute('/_layout/setting/setting-sns_m')({
   component: RouteComponent,

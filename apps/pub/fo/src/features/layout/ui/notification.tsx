@@ -1,10 +1,9 @@
 import { memo, useState } from 'react';
 
-import { Button, Popover, Badge } from '@learnway/ui';
-import { IcoBell03, IcoXclose, IcoBell02, IcoSetting01 } from '@learnway/icons';
+import { Button, Popover } from '@learnway/ui';
+import { IcoBell03, IcoXclose, IcoBell02 } from '@learnway/icons';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
 
 import styles from './notification.module.css';
 
@@ -86,33 +85,10 @@ const PopoverContent = () => {
         {/* alarm_header */}
         <div className={styles.alarm_header}>
           <strong className={styles.tit}>{'알림'}</strong>
-          {/* 퍼블수정 : 20250320 mobile, pc 분기처리 */}
-          {isMobile ? (
-            <div className={styles.setting}>
-              {notifications.length !== 0 ? (
-                <Popover
-                  popoverContent={<PopoverAlarmState />}
-                  side="bottom"
-                  align="center"
-                  sideOffset={5}>
-                  <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
-                </Popover>
-              ) : null}
-              <Button>
-                <IcoXclose width={24} height={24} stroke="#131c30"></IcoXclose>
-              </Button>
-            </div>
-          ) : (
-            <>
-              {/* 알림 없는 경우 미노출 */}
-              {notifications.length !== 0 && (
-                <div className={styles.btn_wrap}>
-                  <Button className={styles.btn}>전체읽음</Button>
-                  <Button className={styles.btn}>전체삭제</Button>
-                </div>
-              )}
-            </>
-          )}
+          <div className={styles.btn_wrap}>
+            <Button className={styles.btn}>전체읽음</Button>
+            <Button className={styles.btn}>전체삭제</Button>
+          </div>
         </div>
         <div className={styles.alarm_contents}>
           {/* 알림 없는 경우 */}
@@ -173,16 +149,6 @@ const NotificationComponent = () => {
         </span>
       </Popover>
       {/* <p className={styles.text}>새로운 알림이 왔어요.</p> */}
-    </div>
-  );
-};
-
-// 퍼블수정 20250320 : mobile popover 추가
-const PopoverAlarmState = () => {
-  return (
-    <div className={styles.alarm_state}>
-      <Button>전체읽음</Button>
-      <Button>전체삭제</Button>
     </div>
   );
 };

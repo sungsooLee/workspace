@@ -1,11 +1,14 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import logoImage from '../../../../../assets/images/logo_footer.png';
-import { Select } from '@learnway/ui';
+import logoImage from '@learnway/styles/fo/assets/images/logo_footer.png';
+import { Select, Button, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
+import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
 function FooterComponent() {
+  const { open: openModal } = useModal();
   return (
     <div className={`${styles.start} ${styles.footer}`}>
       <div className={styles.footer_area}>
@@ -26,17 +29,44 @@ function FooterComponent() {
             <img src={logoImage} alt="Logo" />
           </span>
 
+          {/* 퍼블수정 20250327 : pc,mobile 분기처리 */}
           <div className={styles.info_area}>
             <div className={styles.info_menu}>
               <ul>
                 <li>
-                  <Link to="/agreement">이용약관</Link>
+                  {isMobile ? (
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: 'm_full',
+                          content: <AgreementPopup />,
+                        })
+                      }>
+                      이용약관
+                    </Button>
+                  ) : (
+                    <Link to="/footer-menu/agreement">이용약관</Link>
+                  )}
                 </li>
                 <li>
-                  <Link to="/privacy">
-                    <span>개인정보 처리방침</span>
-                  </Link>
+                  {isMobile ? (
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: 'm_full',
+                          content: <PrivacyPopup />,
+                        })
+                      }>
+                      <strong>개인정보 처리방침</strong>
+                    </Button>
+                  ) : (
+                    <Link to="/footer-menu/privacy">
+                      <strong>개인정보 처리방침</strong>
+                    </Link>
+                  )}
                 </li>
+                <li>{isMobile ? '' : '오픈소스 라이선스'}</li>
+                <li>{isMobile ? '' : '사이트맵'}</li>
               </ul>
             </div>
 

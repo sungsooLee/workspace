@@ -56,4 +56,7 @@
   > div {
     @apply mb-[16px];
   }
+  button {
+    @apply flex-shrink-0;
+  }
 }

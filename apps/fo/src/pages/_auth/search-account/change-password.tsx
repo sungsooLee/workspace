@@ -1,14 +1,15 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useState } from 'react';
 import { t } from 'i18next';
+import { isEmpty } from 'lodash';
 
 import { ContentsRow, DynamicFormField, Button, useModal, Input } from '@learnway/ui';
 import { z, cn } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import { FormRow, NoticeBox } from '../../../shared/ui';
 
-import { pageRouteConfig, GoogleOtpGuideButton, password_validator } from '../../../features/auth';
+import { pageRouteConfig, GoogleOtpGuideButton } from '../../../features/auth';
 import { useUpdatePasswordByPhoneNumber, useUpdatePasswordByEmail } from '../../../entities/user';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
@@ -16,21 +17,30 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/change-passwo
 export const Route = createFileRoute('/_auth/search-account/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
-    validateState: () => {
-      const partialSchema = z
-        .object({
-          phoneNumber: z.string(),
-          email: z.string(),
-        })
-        .partial();
-
-      return z
-        .object({
-          authToolType: z.enum(['PHONE', 'EMAIL']),
-          name: z.string().required(),
-          birthday: z.string().required(),
-        })
-        .merge(partialSchema);
+    validateState: {
+      authToolType: {
+        format: 'string',
+        default: 'PHONE',
+        conditions: [
+          {
+            fn: (values: any) => !['PHONE', 'EMAIL'].includes(values.authToolType),
+          },
+        ],
+      },
+      phoneNumber: {
+        format: 'object',
+        required: {
+          fn: (data) => {
+            return isEmpty(data.phoneNumber) && data.authToolType === 'PHONE';
+          },
+        },
+      },
+      email: {
+        format: 'email',
+        required: {
+          fn: (data) => data.authToolType === 'EMAIL',
+        },
+      },
     },
     meta: {
       title: 'LABEL.PASSWORD_INPUT',
@@ -42,7 +52,7 @@ function RouteComponent() {
   const router = useRouter();
   const { state } = Route.useRouteContext();
 
-  const { provider, onSubmit, setFormError } = useDynamicForm(detailConfig);
+  const { provider, onSubmit, setFormError } = useDynamicForm(passwordFormConfig);
 
   const { alert: openAlert } = useModal();
   const { update: updateByPhoneNumber } = useUpdatePasswordByPhoneNumber();
@@ -54,13 +64,6 @@ function RouteComponent() {
       birthday: state.birthday,
       newPassword: data.password,
     };
-
-    try {
-      validator(data as any);
-    } catch (e) {
-      console.log(e);
-      return;
-    }
 
     if (state.authToolType === 'PHONE') {
       updateByPhoneNumber(
@@ -89,25 +92,6 @@ function RouteComponent() {
 
   const handleCancel = () => {
     router.navigate({ to: '/login' });
-  };
-
-  const validator = (data: any) => {
-    const passwordSchema = z
-      .object({
-        password: password_validator,
-        confirm_password: password_validator,
-      })
-      .refine((data) => data.password === data.confirm_password, {
-        message: '새로운 비밀번호를 다시 확인해 주세요.',
-        path: ['confirm_password'],
-      });
-
-    const r = passwordSchema.safeParse(data);
-    if (!r.success) {
-      r.error.issues.forEach((error: any) => {
-        setFormError(error.path[0], error.message);
-      });
-    }
   };
 
   return (
@@ -152,7 +136,7 @@ function RouteComponent() {
   );
 }
 
-const detailConfig = {
+const passwordFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'password',
@@ -173,13 +157,20 @@ const detailConfig = {
     },
   ],
   validator: {
-    password: password_validator,
-    confirm_password: password_validator,
-    /*channel: z.string().nonempty(t('채널을 선택해 주세요.')),
-        category: z.string().nonempty(t('유효성 테스트')),
-         language_code: z.string().nonempty(t('유효성 테스트')),
-         subdivision: z.string().nonempty(t('유효성 테스트')),
-         check: z.boolean(),
-         tenant: z.array(z.string()).nonempty(t('유효성 테스트')),*/
+    password: {
+      format: 'password',
+      required: true,
+    },
+    confirm_password: {
+      format: 'password',
+      required: true,
+      conditions: [
+        {
+          fn: (values: Record<string, any>) => values.password === values.confirm_password,
+          message: '새로운 비밀번호를 다시 확인해 주세요.',
+          path: 'confirm_password',
+        },
+      ],
+    },
   },
 };

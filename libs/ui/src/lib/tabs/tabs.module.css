@@ -56,12 +56,12 @@
           }
         }
         &::before {
-          @apply absolute bottom-0 left-0 h-[1px] w-full bg-[var(--gray7)] content-[''];
+          @apply absolute bottom-0 left-0 h-[1px] w-full bg-[var(--gray5)] content-[''];
         }
       }
       &.sm {
         .trigger {
-          @apply min-h-[48px];
+          @apply min-h-[42px];
         }
       }
       &.gray {

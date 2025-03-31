@@ -34,7 +34,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>
@@ -47,7 +47,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>
@@ -60,7 +60,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>
@@ -73,7 +73,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>
@@ -86,7 +86,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>
@@ -99,7 +99,7 @@ function RouteComponent() {
                 className={styles.btn_view}
                 onClick={() =>
                   openModal({
-                    width: isMobile ? 'm_full' : 'md',
+                    width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
                 }>

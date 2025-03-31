@@ -2,7 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button, ContentsRow } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import styles from './signup.module.css';
+//import styles from './signup.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -66,7 +67,7 @@ function RouteComponent() {
 
         <div className={styles.login_guide}>
           <span>
-            <Link to="/progress-status">회원 가입 현황</Link>
+            <Link to="/progress-status-email">회원 가입 현황</Link>
             <Link to="/signup-step1">관리자 회원가입</Link>
           </span>
         </div>

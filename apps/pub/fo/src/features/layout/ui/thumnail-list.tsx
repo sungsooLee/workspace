@@ -8,7 +8,7 @@ import styles from './thumnail-list.module.css';
 import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '@learnway/icons';
 
 // 예시이미지
-import listImage1 from '../../../assets/images/temp/category_product_01.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 interface ThumnailListProps {
   direction?: string; // vertical (세로형) | horizontal (가로형), {default 세로형}

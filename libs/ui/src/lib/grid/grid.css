@@ -26,6 +26,9 @@
         &:first-child {
           @apply border-l-0;
         }
+        .nlp--button {
+          @apply !h-[20px] !text-[1rem];
+        }
       }
     }
   }
@@ -48,6 +51,11 @@
   }
   & + .paging_wrap {
     @apply mt-[24px];
+  }
+  &.has_select_all_checkbox {
+    thead th:first-child {
+      @apply justify-center;
+    }
   }
 }
 /* Paging */

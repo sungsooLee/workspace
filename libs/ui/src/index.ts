@@ -61,6 +61,7 @@ export * from './lib/input/search-input';
 
 // list
 export * from './lib/list/list';
+export * from './lib/list/type';
 
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
@@ -103,7 +104,6 @@ export * from './lib/radio-group/form-radio-group';
 export * from './lib/radio-card/radio-card';
 
 // select
-
 export { selectStyles };
 export * from './lib/select/select';
 export * from './lib/select/type';
@@ -161,3 +161,5 @@ export * from './lib/phone-number/phone-number-form-filed';
 
 export * from './lib/dynamic-form-field/dynamic-form-field';
 export * from './lib/dynamic-form-field/type';
+
+export * from './lib/html-content/html-content';
