@@ -67,7 +67,7 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
               errorMessage: 'fail to get presigned url',
             },
           });
-          throw new Error('Presigned URL is missing'); // ⛔ 반드시 throw 해야 타입 에러가 안 남
+          throw new Error('Presigned URL is missing');
         }
 
         return {
@@ -98,7 +98,8 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
       },
       // 멀티파트 업로드 완료
       completeMultipartUpload: async (file, { uploadId, key, parts }) => {
-        const data = await completedMultiPartUpload({ uploadId, parts });
+        const uploadParts = parts as any;
+        const data = await completedMultiPartUpload({ uploadId, parts: uploadParts });
         if (data) {
           return data;
         }
@@ -119,15 +120,29 @@ const useFileUploaderHook = (config: UseFileUploaderProps) => {
     });
 
     // Uppy 이벤트 설정
-    uppy.on('file-added', (file) => {
-      dispatch({ type: 'ADD_FILE' , file.id});
+    uppy.on('file-added', (file: any) => {
+      dispatch({ type: 'ADD_FILE', file });
     });
-    uppy.on('upload-progress', (file, progress) => {
+    uppy.on('upload-progress', (file: any, progress) => {
       const percentage = (progress.bytesUploaded / (progress.bytesTotal || 0)) * 100;
-      updateFileProgress(file.id, percentage, 'uploading');
+      dispatch({
+        type: 'UPDATE_FILE',
+        fileId: file.id,
+        updates: {
+          progress: percentage,
+        },
+      });
     });
-    uppy.on('upload-success', (file) => updateFileProgress(file.id, 100, 'complete'));
-    uppy.on('upload-error', (file, error) => {
+    uppy.on('upload-success', (file: any) =>
+      dispatch({
+        type: 'UPDATE_FILE',
+        fileId: file.id,
+        updates: {
+          progress: 100,
+        },
+      }),
+    );
+    uppy.on('upload-error', (file: any, error) => {
       dispatch({
         type: 'UPDATE_FILE',
         fileId: file.id,

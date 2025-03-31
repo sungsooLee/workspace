@@ -171,5 +171,5 @@ export interface UseFileUploaderProps {
   isAuto: boolean; // 자동 업로드 여부
   maxFileCount?: number; // 최대 파일 업로드 개수
   maxFileSize?: number; // 최대 파일 사이즈
-  s3Path: string; // 업로드 할 S3 버킷 디렉토리 경로
+  s3Path: string; // 업로드 할 S3 버킷 디렉토리 경로 upload 를 제외한 경로만 입력
 }
