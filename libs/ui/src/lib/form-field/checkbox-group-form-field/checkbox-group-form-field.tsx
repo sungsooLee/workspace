@@ -1,8 +1,8 @@
-import { FC, forwardRef, Fragment } from 'react';
-import { Checkbox } from './checkbox';
-import styles from './form-checkbox-group.module.css';
+import { forwardRef, Fragment } from 'react';
+import { Checkbox } from '../../checkbox/checkbox';
+import styles from './checkbox-group-form-field.module.css';
 
-const FormCheckBoxGroupComponent = forwardRef<HTMLDivElement, any>(
+const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
   ({ value = [], onChange, checkLabel: label, options = [], name, ...props }, ref) => {
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
       let checkedValues = [...value];
@@ -32,4 +32,4 @@ const FormCheckBoxGroupComponent = forwardRef<HTMLDivElement, any>(
     );
   },
 );
-export const FormCheckboxGroup = FormCheckBoxGroupComponent;
+export const CheckboxGroupFormField = CheckboxGroupFormFieldComponent;

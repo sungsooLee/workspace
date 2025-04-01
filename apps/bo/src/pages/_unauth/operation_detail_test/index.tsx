@@ -237,6 +237,7 @@ const formConfig: DynamicFormConfig = {
       name: '대표이미지',
       type: 'thumbnail-image-upload',
       label: t('대표이미지'),
+      format: 'array',
       value: [
         { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
         { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
@@ -250,6 +251,7 @@ const formConfig: DynamicFormConfig = {
       name: '태그',
       type: 'chip-list',
       label: t('태그 - 인풋 칩 리스트'),
+      format: 'array',
       value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
       // placeholder: '',
       description: '',
@@ -259,6 +261,7 @@ const formConfig: DynamicFormConfig = {
       name: '강사',
       type: 'custom',
       label: t('강사 - ChipListModalSelectorFormField'),
+      format: 'array',
       value: [],
       placeholder: '',
       description: '',
@@ -267,6 +270,7 @@ const formConfig: DynamicFormConfig = {
       name: '난이도',
       type: 'radio-group',
       label: t('난이도'),
+      format: 'string',
       options: [
         {
           label: '없음',
@@ -293,6 +297,7 @@ const formConfig: DynamicFormConfig = {
       name: '강의실설정',
       type: 'checkbox-group',
       label: t('강의실 설정'),
+      format: 'array',
       options: Array(10)
         .fill(null)
         .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
@@ -309,6 +314,7 @@ const formConfig: DynamicFormConfig = {
       name: 'managerName',
       type: 'custom',
       label: t('운영자 - InputModalSelectorFormField'),
+      format: 'string',
       value: '',
       placeholder: '',
       description: '',
@@ -325,6 +331,7 @@ const formConfig: DynamicFormConfig = {
       name: '테넌트',
       type: 'chip-list',
       label: t('테넌트 - 우측 액션버튼 + chip list'),
+      format: 'array',
       value: [],
       placeholder: '',
       description: '',
@@ -337,6 +344,7 @@ const formConfig: DynamicFormConfig = {
       name: '공개범위',
       type: 'custom',
       label: t('공개범위 - ListModalSelectorFormField'),
+      format: 'array',
       value: [{ targetId: 'target1', targetName: 'targetname1' }],
       placeholder: '',
       description: '',
