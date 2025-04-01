@@ -1,23 +1,30 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './learning-menu.module.css'; // 화면 css
 import titleStyles from './title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
   Button,
   ContentsRow,
   Textarea,
-  // DatePicker,
-  // // Switch,
-  // Select,
-  // // ThumbnailImageUpload,
-  // // ChipList,
-  // // SelectOption,
+  CheckboxGroupFormField,
+  Switch,
+  Tooltip,
   Input,
 } from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
+import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
 const LearningMenuComponent: FC<{}> = ({}) => {
+  // switch : 보안콘텐츠 여부
+  const [checked, setChecked] = useState<{ [key: number]: boolean }>({
+    1: false,
+    2: false,
+  });
+  // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
+  const handleCheckedChange = (id: number) => (checked: boolean) => {
+    setChecked((prev) => ({ ...prev, [id]: checked }));
+  };
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div className={styles.inner}>
@@ -176,9 +183,83 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   value=""
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
+                  maxLength={50}
                   disabled
                 />
               </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={styles.switch_wrap}>
+              <p className={styles.title}>
+                {'Hidden메뉴'}
+
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="right"
+                  align="start"
+                  content={
+                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
+                  }>
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </p>
+              <Switch
+                id="name-use2"
+                className={dynamicFormStyles.btn_switch}
+                label={checked[1] ? '적용' : '미적용'}
+                checked={checked[1]}
+                onCheckedChange={handleCheckedChange(1)}
+              />
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-device" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>디바이스 노출 여부</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.check_wrap}>
+                  <CheckboxGroupFormField
+                    options={[
+                      { value: 'pc', label: 'PC' },
+                      { value: 'mobile', label: 'Mobile' },
+                    ]}
+                    value={['pc']}
+                  />
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            <div className={styles.switch_wrap}>
+              <p className={styles.title}>
+                {'개인정보'}
+
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="right"
+                  align="start"
+                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </p>
+              <Switch
+                id="name-use2"
+                className={dynamicFormStyles.btn_switch}
+                label={checked[2] ? '사용' : '미사용'}
+                checked={checked[2]}
+                onCheckedChange={handleCheckedChange(2)}
+              />
             </div>
           </ContentsRow>
         </div>

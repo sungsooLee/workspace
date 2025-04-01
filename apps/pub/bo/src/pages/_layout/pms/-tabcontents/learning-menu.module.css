@@ -1,11 +1,17 @@
 /* learning-menu.module.css */
 .start {
   &.wrap {
-    @apply flex w-full justify-between pt-[32px];
+    @apply flex h-full w-full justify-between pt-[32px];
     .inner {
-      @apply w-[calc(50%-32px)];
+      @apply relative h-full min-h-[calc(100vh-458px)] w-[calc(50%-32px)];
       .inner_contents {
-        @apply scrollbar max-h-[calc(100%-210px)] overflow-y-auto;
+        @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto pb-[32px];
+      }
+      &::before {
+        @apply absolute -left-[33px] top-0 flex h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];
+      }
+      &:first-child::before {
+        @apply hidden;
       }
     }
     .btn_wrap {
@@ -18,6 +24,15 @@
           }
         }
       }
+    }
+  }
+}
+.switch_wrap {
+  @apply flex w-full items-center justify-between pb-[16px];
+  .title {
+    @apply body_3_r flex items-center text-[var(--gray9)];
+    & + div {
+      @apply translate-y-0;
     }
   }
 }
