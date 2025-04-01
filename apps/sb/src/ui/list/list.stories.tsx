@@ -95,7 +95,7 @@ export const TemplateImage: any = (args: any) => {
       valueField={'id'}
       itemRenderer={(option: any) => (
         <div className={'m-2 flex flex-row items-center gap-3'}>
-          <Thumbnail width={84} height={55} path={option.path} />
+          <Thumbnail width={84} height={55} path={option.path} indexNumber={1} />
           <span>{option.name}</span>
         </div>
       )}

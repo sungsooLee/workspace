@@ -1,6 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
+  CellContext,
   ColumnDef,
   ColumnFiltersState,
   createColumnHelper,
@@ -14,6 +15,7 @@ import {
   Button,
   ColumnFactory,
   CustomCell,
+  DropdownList,
   Grid,
   GridState,
   Input,
@@ -1024,23 +1026,121 @@ export const WithCustomFactoryCell: Story = {
   render: () => <ColumnFactoryTable />,
 };
 
+const editGridData = Array(5)
+  .fill(null)
+  .map((_, i) => ({ id: `id_${i}`, text: 'text', number: 0, checkbox: true }));
+
 // Edit Grid
 export const TemplateEditGrid: any = (args: any) => {
-  const data = Array(1)
-    .fill(null)
-    .map((_, i) => ({ id: `id_${i}`, text: '', number: '' }));
+  const [data, setData] = useState<any[]>(editGridData);
   const columns = [
-    { header: 'text', accessorKey: 'text' },
-    { header: 'number', accessorKey: 'number' },
+    {
+      header: 'text',
+      accessorKey: 'text',
+      size: 200,
+      // meta: {
+      //   updateData: (rowIndex: any, columnId: any, value: any) => {
+      //     console.log({ rowIndex, columnId, value });
+      //   }, // updateData를 meta 속성에 설정
+      // },
+      //   cell: ({ table, row, cell }: CellContext<any, unknown>) => (
+      //     <input
+      //       type={'text'}
+      //       value={row.original.text}
+      //       onChange={(event: any) => {
+      //         console.log({ table, row, cell });
+      //         const columnId = cell.column.id;
+      //         const newData = data.map((d: any, index: number) => {
+      //           if (index === row.index) {
+      //             return {
+      //               ...d,
+      //               [columnId]: event.target.value,
+      //             };
+      //           }
+      //           return d;
+      //         });
+      //         setData(newData);
+      //         console.log(newData);
+      //       }}
+      //     />
+      //   ),
+    },
+  ];
+  const columns2 = [
+    {
+      header: 'text',
+      accessorKey: 'text',
+      size: 200,
+      cell: ({ cell, row }: CellContext<any, unknown>) => (
+        <Input type={'text'} value={row.original.text} />
+      ),
+    },
+    {
+      header: 'number',
+      accessorKey: 'number',
+      size: 200,
+      cell: ({ cell, row }: CellContext<any, unknown>) => (
+        <Input type={'number'} value={row.original.number} />
+      ),
+    },
+    {
+      header: 'dropdown',
+      accessorKey: 'dropdown',
+      size: 200,
+      cell: ({ cell, row }: CellContext<any, unknown>) => (
+        <DropdownList
+          options={[
+            { value: 'option1', label: '옵션 1' },
+            { value: 'option2', label: '옵션 2' },
+            { value: 'option3', label: '옵션 3' },
+          ]}
+          value={row.original.dropdown}
+        />
+      ),
+    },
+    {
+      header: 'checkbox',
+      accessorKey: 'checkbox',
+      maxSize: 100,
+      meta: {
+        cellAlign: 'center',
+      },
+      cell: ({ cell, row }: CellContext<any, unknown>) => (
+        <input
+          type="checkbox"
+          checked={row.original.checkbox}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   handleGridCellDownloadCheckChange(row.original, event.target.checked);
+          // }}
+        />
+      ),
+    },
+    {
+      header: 'Button',
+      accessorKey: 'delete',
+      maxSize: 100,
+      meta: {
+        cellAlign: 'center',
+      },
+      cell: ({ cell, row }: CellContext<any, unknown>) => (
+        <Button label={'삭제'} variant={'gray2'} size={'xs'} />
+      ),
+    },
   ];
   return (
-    <Grid
-      title={'Editable Grid'}
-      data={data}
-      columns={columns}
-      hideColumnSettings
-      hideRowSelectionCheckBox
-    />
+    <div className={'m-6'}>
+      <div>
+        <Button variant={'point'} size={'md'} label={'data'} onClick={() => console.log('data')} />
+      </div>
+      <Grid
+        title={'Editable Grid'}
+        data={data}
+        setData={setData}
+        columns={columns}
+        hideColumnSettings
+        hideRowSelectionCheckBox
+      />
+    </div>
   );
 };
 TemplateEditGrid.storyName = 'Edit Grid';
@@ -1048,13 +1148,14 @@ TemplateEditGrid.storyName = 'Edit Grid';
 // 컬럼 사이즈
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
-    { name: '현대', code: 'H' },
-    { name: '현대', code: 'H' },
-    { name: '현대', code: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
   ];
   const columns = [
     { accessorKey: 'name', size: 200 },
-    { accessorKey: 'code', size: 200 },
+    { accessorKey: 'code', size: 0, minSize: 100 },
+    { accessorKey: 'code2', size: 0, minSize: 100 },
   ];
   return (
     <Grid

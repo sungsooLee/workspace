@@ -1,4 +1,4 @@
-import {
+import React, {
   CSSProperties,
   forwardRef,
   useEffect,
@@ -53,33 +53,55 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-// interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
-//   indeterminate?: boolean;
-// }
+const EditInputCell = ({ table, row, cell, getValue }: any) => {
+  const initialValue: any = getValue();
+  // We need to keep and update the state of the cell normally
+  const [value, setValue] = useState<any>(initialValue);
 
-// /// 체크 박스
-// export const IndeterminateCheckbox = ({
-//   indeterminate,
-//   value,
-//   onChange,
-//   ...rest
-// }: IndeterminateCheckboxProps) => {
-//   const handleChange = (checked: CheckedState) => {
-//     onChange?.(checked === true);
-//   };
+  // When the input is blurred, we'll call our table meta's updateData function
+  const onBlur = () => {
+    table.options.meta?.updateData(row.index, cell.column.id, value);
+  };
 
-//   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
+  // If the initialValue is changed external, sync it up with our state
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
-//   return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
-// };
-///////
+  return (
+    <input value={value as string} onChange={(e) => setValue(e.target.value)} onBlur={onBlur} />
+  );
+};
 
-// const Grid = <T extends object>({
+const defaultColumn = {
+  cell: EditInputCell,
+  // cell: ({ table, row, cell, getValue }: any) => {
+  //   const initialValue: any = getValue();
+  //   // We need to keep and update the state of the cell normally
+  //   const [value, setValue] = useState<any>(initialValue);
+  //
+  //   // When the input is blurred, we'll call our table meta's updateData function
+  //   const onBlur = () => {
+  //     table.options.meta?.updateData(index, id, value);
+  //   };
+  //
+  //   // If the initialValue is changed external, sync it up with our state
+  //   useEffect(() => {
+  //     setValue(initialValue);
+  //   }, [initialValue]);
+  //
+  //   return (
+  //     <input value={value as string} onChange={(e) => setValue(e.target.value)} onBlur={onBlur} />
+  //   );
+  // },
+};
+
 const Grid = forwardRef(
   <T extends object>(
     {
       data,
-      columns: defaultColumns,
+      setData,
+      columns,
       onStateChange,
       onRowSelect,
       onRowsSelect,
@@ -118,7 +140,7 @@ const Grid = forwardRef(
       right: [],
     });
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
-      defaultColumns.reduce((acc, col) => {
+      columns.reduce((acc, col) => {
         acc[col.id as string] = true;
         return acc;
       }, {} as VisibilityState),
@@ -126,7 +148,7 @@ const Grid = forwardRef(
 
     // columnOrder 초기화
     const [columnOrder, setColumnOrder] = useState<string[]>(() =>
-      defaultColumns.map((col) => col.id as string),
+      columns.map((col) => col.id as string),
     );
 
     /**
@@ -142,7 +164,7 @@ const Grid = forwardRef(
     );
 
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
-    const columns = useMemo(() => {
+    const tableColumns = useMemo(() => {
       // 다중 선택을 위한 체크박스 컬럼 정의
       const multipleCheckColumn = {
         id: 'select',
@@ -198,9 +220,9 @@ const Grid = forwardRef(
 
       // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
       return multiSelectable && !hideRowSelectionCheckBox
-        ? [multipleCheckColumn, ...defaultColumns]
-        : defaultColumns;
-    }, [defaultColumns, multiSelectable, hideRowSelectionCheckBox]);
+        ? [multipleCheckColumn, ...columns]
+        : columns;
+    }, [columns, multiSelectable, hideRowSelectionCheckBox]);
 
     /**
      * Row Select handle - 단일 선택 모드
@@ -230,9 +252,25 @@ const Grid = forwardRef(
       setRowSelection(newSelection);
     };
 
+    const updateData = (rowIndex: any, columnId: any, value: any) => {
+      // Skip page index reset until after next rerender
+      // skipAutoResetPageIndex();
+      setData((old: any) =>
+        old.map((row: any, index: number) => {
+          if (index === rowIndex) {
+            return {
+              ...old[rowIndex]!,
+              [columnId]: value,
+            };
+          }
+          return row;
+        }),
+      );
+    };
+
     const table = useReactTable({
       data,
-      columns,
+      columns: tableColumns,
       state: {
         columnOrder,
         columnVisibility,
@@ -292,6 +330,12 @@ const Grid = forwardRef(
       getRowId: (row: T, index: number) => {
         return `${pagination?.pageIndex ?? 0}-${index}`;
       },
+      meta: {
+        updateData: (rowIndex: any, columnId: any, value: any) => {
+          console.log('table.meta.updateData', { rowIndex, columnId, value });
+        },
+      },
+      defaultColumn,
     });
 
     // 가상 스크롤 관련 설정
@@ -487,6 +531,7 @@ const Grid = forwardRef(
               display: 'grid',
               width: '100%',
             }}>
+            {/*thead*/}
             <thead
               style={{
                 // display: paginationGrid ? 'table-header-group' : 'grid',/

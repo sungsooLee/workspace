@@ -14,6 +14,7 @@ declare module '@tanstack/react-table' {
 export interface GridProps<T> {
   // 그리드 데이터
   data: T[];
+  setData?: any;
   // 그리드 컬럼
   columns: any[];
   // 로딩 여부

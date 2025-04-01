@@ -23,7 +23,7 @@ export interface ThumbnailComponentProps {
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
-  indexNumber?: boolean;
+  indexNumber?: number;
   /** 파일 사이즈*/
   sizeText?: string;
   /** 체크박스 표시 여부 */
