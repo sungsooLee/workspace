@@ -63,7 +63,6 @@ export * from './lib/list/type';
 
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
-export * from './lib/file-upload/form-thumbnail-image-upload';
 export * from './lib/file-upload/uppy-file-upload';
 
 // form-field
@@ -72,6 +71,7 @@ export * from './lib/form-field/input-modal-selector-form-field/input-modal-sele
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
 export * from './lib/form-field/list-modal-selector-form-field/list-modal-selector-form-field';
 export * from './lib/form-field/radio-group-form-field/radio-group-form-field';
+export * from './lib/form-field/textarea-form-field/textarea-form-field';
 
 // modal
 export * from './lib/modal/modal';
@@ -144,7 +144,6 @@ export * from './lib/tree-view/type';
 
 // textarea
 export * from './lib/textarea/textarea';
-export * from './lib/textarea/form-textarea';
 
 // toast
 export * from './lib/toast/toast';

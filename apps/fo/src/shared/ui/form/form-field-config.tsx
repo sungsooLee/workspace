@@ -1,11 +1,11 @@
 import {
   CheckboxGroupFormField,
-  FormTextarea,
   Input,
   InputModalSelectorFormField,
   PhoneNumberFormField,
   RadioGroupFormField,
   Textarea,
+  TextareaFormField,
 } from '@learnway/ui';
 import { FormFieldConfig } from '@learnway/hooks';
 
@@ -20,6 +20,6 @@ export const formFieldConfig: FormFieldConfig = {
   switch: SwitchFormField,
   textarea: Textarea,
   'text-popup-button': InputModalSelectorFormField,
-  'text-area': FormTextarea,
+  'text-area': TextareaFormField,
   'phone-number': PhoneNumberFormField,
 };
