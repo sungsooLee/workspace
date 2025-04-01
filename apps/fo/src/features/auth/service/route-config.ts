@@ -44,7 +44,7 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
-    beforeLoad: ({ location, context, params, search, preload }: any) => {
+    beforeLoad: ({ location, context, params, search, preload, route }: any) => {
       if (routeConfig?.authorization) {
         try {
           authorization({ location, context });
@@ -56,6 +56,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           }
         }
       }
+
       return { ...context, state: location?.state };
     },
     loader: ({ location, context, params, search, preload, route, ...props }: any) => {
@@ -64,23 +65,24 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
       }
 
       // currentMatch route instance 추출
+      /*
       context.setPageRouteState((state: any) => {
         if (!state) {
-          //console.log('loader setPageRouteState init', state);
+          console.log('beforeLoad setPageRouteState init', state);
           return {
             pathname: location.pathname,
-            meta: defaultPageRouteConfig.meta,
+            meta: route.options.staticData?.meta,
             route: route,
           };
         }
-        //console.log('loader setPageRouteState', state);
+        console.log('beforeLoad setPageRouteState', state);
         if (state?.pathname === location.pathname && route) {
           console.log('matched', location.pathname, 'update route');
           state.route = route;
         }
         return state;
       });
-
+*/
       if (routeConfig?.validateState) {
         const schema: ZodSchema = buildJodObject(routeConfig?.validateState);
         try {

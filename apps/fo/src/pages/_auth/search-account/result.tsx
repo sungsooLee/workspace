@@ -31,7 +31,7 @@ function RouteComponent() {
   const { t } = useTranslation();
 
   const router = useRouter();
-  const { state } = useCurrentRoute();
+  const { state } = useCurrentRoute(Route);
 
   const handleGoLogin = () => {
     router.navigate({ to: '/login' });

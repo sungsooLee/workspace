@@ -1,6 +1,6 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
 
@@ -17,14 +17,12 @@ interface AuthLayoutComponentProps {
 
 function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
-  const { meta } = useCurrentRoute();
 
+  const { meta } = useCurrentRoute();
+  console.log('AuthLayoutComponent', meta, meta.mobile.showHeader);
   return (
     <>
-      <MobileView>{meta.mobile.showHeader && <AuthHeader />}</MobileView>
-      <BrowserView>
-        <AuthHeader />
-      </BrowserView>
+      {isMobile ? meta.mobile.showHeader && <AuthHeader /> : <AuthHeader />}
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
           <main>

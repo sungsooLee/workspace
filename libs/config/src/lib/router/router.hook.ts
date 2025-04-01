@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter, useLocation, useMatches, useRouterState } from '@tanstack/react-router';
+import { useRouter, useLocation, useMatches, Route } from '@tanstack/react-router';
 import { has, last } from 'lodash';
 import { useCreation } from 'ahooks';
 
@@ -13,7 +13,7 @@ export function useGlobalRouterEvent() {
     const unsubscribe = router.subscribe(
       'onBeforeLoad',
       ({ fromLocation, toLocation, ...p }: any) => {
-        console.log('onBeforeLoad');
+        console.log('onBeforeLoad', toLocation.pathname);
         setPageRouteState({
           pathname: toLocation.pathname,
           meta: toLocation?.state?.meta,
@@ -29,27 +29,25 @@ export function useGlobalRouterEvent() {
   }, []);
 }
 
-export function useCurrentRoute() {
+export function useCurrentRoute(route?: any) {
   const [pageRouteState] = usePageRouteState();
   const location = useLocation();
-
-  const route = pageRouteState?.route; //last(matches);
-  const params = route.useParams();
-  const search = route.useSearch();
+  const matches = useMatches();
 
   if (!route) {
+    const r = last(matches);
     return {
-      state: undefined,
-      params: undefined,
-      search: undefined,
-      meta: undefined,
+      state: location.state,
+      params: r?.params,
+      search: r?.search,
+      meta: (r?.staticData as any).meta,
     };
   }
 
   return {
     state: location.state,
-    params,
-    search,
-    meta: { ...route.options.staticData?.meta, ...pageRouteState?.meta },
+    params: route.useParams(),
+    search: route.useSearch(),
+    meta: { ...pageRouteState?.meta },
   };
 }

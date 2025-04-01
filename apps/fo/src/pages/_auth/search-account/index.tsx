@@ -36,7 +36,7 @@ export const Route = createFileRoute('/_auth/search-account/')({
 function RouteComponent() {
   const { t } = useTranslation();
 
-  const { search } = useCurrentRoute();
+  const { search } = useCurrentRoute(Route);
   const router = useRouter();
   const { alert } = useModal();
 

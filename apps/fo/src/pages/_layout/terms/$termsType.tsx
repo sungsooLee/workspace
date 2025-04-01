@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_layout/terms/$termsType')({
 
 function RouteComponent() {
   const { t } = useTranslation();
-  const { params } = useCurrentRoute();
+  const { params } = useCurrentRoute(Route);
 
   const termsType = params.termsType;
 
