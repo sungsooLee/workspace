@@ -1,6 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
+  CellContext,
   ColumnDef,
   ColumnFiltersState,
   createColumnHelper,
@@ -9,18 +10,21 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   Button,
   ColumnFactory,
   CustomCell,
+  EditCheckboxCell,
+  EditDropdownCell,
+  EditInputCell,
+  EditRadioCell,
   Grid,
   GridState,
   Input,
   ModalWrapper,
   useModal,
 } from '@learnway/ui';
-import { Link } from '@tanstack/react-router';
 import { IcoDownload } from '@learnway/icons';
 
 export default {
@@ -66,7 +70,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
     필터: params.filters,
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     data: [
@@ -1024,3 +1028,123 @@ export const WithCustomFactoryCell: Story = {
   ],
   render: () => <ColumnFactoryTable />,
 };
+
+const editGridData = Array(5)
+  .fill(null)
+  .map((_, i) => ({
+    id: `id_${i}`,
+    text: 'text',
+    number: 0,
+    checkbox: true,
+    radio: '',
+    dropdown: '',
+  }));
+
+// Edit Grid
+export const TemplateEditGrid: any = (args: any) => {
+  const [data, setData] = useState<any[]>(editGridData);
+  const columns = [
+    {
+      header: 'dropdown',
+      accessorKey: 'dropdown',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
+    },
+    {
+      header: 'text',
+      accessorKey: 'text',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditInputCell info={info} input={{ type: 'text' }} />
+      ),
+    },
+    {
+      header: 'number',
+      accessorKey: 'number',
+      size: 200,
+      cell: (info: CellContext<any, number>) => (
+        <EditInputCell info={info} input={{ type: 'number' }} />
+      ),
+    },
+    {
+      header: 'check',
+      accessorKey: 'check',
+      size: 200,
+      cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
+    },
+    {
+      header: 'radio',
+      accessorKey: 'radio',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditRadioCell
+          info={info}
+          radio={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
+    },
+  ];
+
+  console.log('----- data', data);
+
+  return (
+    <div className={'m-6'}>
+      <div>
+        <Button
+          variant={'point'}
+          size={'md'}
+          label={'reset data'}
+          onClick={() => setData(editGridData)}
+        />
+      </div>
+      <Grid
+        title={'Editable Grid'}
+        data={data}
+        columns={columns}
+        hideColumnSettings
+        hideRowSelectionCheckBox
+        onChange={(newData: any) => setData(newData)}
+      />
+    </div>
+  );
+};
+TemplateEditGrid.storyName = 'Edit Grid';
+
+// 컬럼 사이즈
+export const TemplateColumnSize: any = (args: any) => {
+  const data = [
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+  ];
+  const columns = [
+    { accessorKey: 'name', size: 200 },
+    { accessorKey: 'code', size: 0, minSize: 100 },
+    { accessorKey: 'code2', size: 0, minSize: 100 },
+  ];
+  return (
+    <Grid
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideColumnSettings
+      hideRowSelectionCheckBox
+    />
+  );
+};
+TemplateColumnSize.storyName = '컬럼 사이즈';

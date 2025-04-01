@@ -50,6 +50,10 @@ export * from './lib/empty-text/empty-text';
 export * from './lib/grid';
 export * from './lib/grid/types';
 export * from './lib/grid/components/custom-cell';
+export * from './lib/grid/components/edit-check-cell';
+export * from './lib/grid/components/edit-dropdown-cell';
+export * from './lib/grid/components/edit-input-cell';
+export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/configs/column-factory';
 
 // input

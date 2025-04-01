@@ -16,13 +16,13 @@
     }
   }
   &.readonly {
-    @apply pointer-events-none border-[#f6f7fd] !bg-[#f6f7fd];
+    @apply pointer-events-none border-[var(--gray1)] !bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[#f6f7fd] text-[#4c515e];
+      @apply !bg-[var(--gray1)] text-[#4c515e];
     }
   }
   &.disabled {
-    @apply bg-[var(--gray1)];
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
     .textarea {
       @apply !bg-[var(--gray1)] !text-[#a9afb8];
     }

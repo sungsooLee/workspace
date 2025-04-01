@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import styles from '@learnway/styles/fo/features/integrated-search/integrated-search-button.module.css';
+import styles from './integrated-search-button.module.css';
 
 interface Item {
   title: string;

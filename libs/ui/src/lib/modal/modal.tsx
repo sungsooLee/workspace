@@ -9,6 +9,7 @@ import { Button } from '../button/button';
 
 const ModalComponent: React.FC<ModalConfig> = ({
   content,
+  headerActionNode,
   onClose,
   width = 'auto',
   hideCloseButton = false,
@@ -24,6 +25,11 @@ const ModalComponent: React.FC<ModalConfig> = ({
         >
           {/* content */}
           <div className={cn(styles.content_body, width && styles[width])}>{content}</div>
+
+          {/* 해더 버튼 영역 커스텀 하게 사용시 설정 */}
+          {headerActionNode && (
+            <div className={cn(styles.header_action_node)}>{headerActionNode}</div>
+          )}
 
           {/* close button */}
           {!hideCloseButton && (

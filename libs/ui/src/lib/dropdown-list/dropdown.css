@@ -67,7 +67,7 @@
   }
 }
 .nlp-select__menu {
-  @apply border border-solid !border-[#6F798B] !shadow-none;
+  @apply border border-solid !border-[#6F798B] !shadow-none z-auto;
 }
 .nlp-select__control--menu-is-open {
   @apply border-[#6F798B];

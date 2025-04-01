@@ -13,6 +13,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
+import { IcoMenu01 } from '@learnway/icons';
 
 export default {
   title: 'Components/Modal',
@@ -81,6 +82,37 @@ export const Template: any = (args: any) => {
   );
 };
 Template.storyName = 'Modal';
+
+/**
+ * Basic
+ * @param args
+ * @constructor
+ */
+export const TemplateCustomAction: any = (args: any) => {
+  const { open: openModal, close: closeModal } = useModal();
+  const handleOpenModal = async () => {
+    const data = await openModal({
+      content: <ContentModal />,
+      headerActionNode: (
+        <>
+          <Button onlyIcon onClick={() => closeModal()}>
+            <IcoMenu01 width={24} height={24} stroke="#131C30" />
+          </Button>
+          <Button onlyIcon onClick={() => closeModal()}>
+            <IcoMenu01 width={24} height={24} stroke="#131C30" />
+          </Button>
+        </>
+      ),
+    });
+  };
+  return (
+    <div>
+      <Button onClick={() => handleOpenModal()}>Open Modal</Button>
+      <ModalWrapper {...args} />
+    </div>
+  );
+};
+TemplateCustomAction.storyName = '헤더 사용자 버튼';
 
 /**
  * Multi Modal

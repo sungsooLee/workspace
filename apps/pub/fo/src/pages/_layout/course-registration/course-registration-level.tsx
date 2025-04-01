@@ -18,7 +18,7 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-registration/course-registration-level.module.css';
+import styles from './course-registration-level.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-level')({
   component: RouteComponent,
 });

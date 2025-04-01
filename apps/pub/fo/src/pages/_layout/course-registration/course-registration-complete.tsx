@@ -7,7 +7,7 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-registration/course-registration-complete.module.css';
+import styles from './course-registration-complete.module.css';
 
 import { IcoComplete, IcoCaution02 } from '@learnway/icons';
 

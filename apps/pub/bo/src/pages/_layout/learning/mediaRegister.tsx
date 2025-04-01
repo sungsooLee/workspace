@@ -1,7 +1,8 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { getRandomId } from '@learnway/shared';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ContentsHistoryInfoFormField } from '../../../../../../../apps/bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
@@ -12,7 +13,6 @@ import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-sea
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
-import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
 import fileStyles from './file-wrap.module.css'; // 오른쪽 파일 리스트
 import fileInfoStyles from './file-info.module.css';
 
@@ -1267,19 +1267,7 @@ function RouteComponent() {
               </ContentsRow>
             </div>
           </div>
-          <div className={cn(editInfoStyles.start, editInfoStyles.wrap)}>
-            <p>
-              {'최초 등록'} <span className={editInfoStyles.info}>{'홍길동'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <p>
-              {'최종 수정'} <span className={editInfoStyles.info}>{'김현대'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <Button size="xs" variant="gray2" className={editInfoStyles.btn_info}>
-              {'이력정보'}
-            </Button>
-          </div>
+          <ContentsHistoryInfoFormField />
         </div>
         <hr className={styles.vertical_line} />
         {/* sub_contents */}
