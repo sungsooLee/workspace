@@ -1,12 +1,11 @@
 import {
-  FormCheckbox,
-  FormRadioGroup,
+  CheckboxGroupFormField,
   FormTextarea,
   Input,
   InputModalSelectorFormField,
-  Textarea,
   PhoneNumberFormField,
-  FormCheckboxGroup,
+  RadioGroupFormField,
+  Textarea,
 } from '@learnway/ui';
 import { FormFieldConfig } from '@learnway/hooks';
 
@@ -15,9 +14,9 @@ import { CheckBoxFormField } from './checkbox-form-field';
 
 export const formFieldConfig: FormFieldConfig = {
   text: Input,
-  'radio-group': FormRadioGroup,
+  'radio-group': RadioGroupFormField,
   checkbox: CheckBoxFormField,
-  'checkbox-group': FormCheckboxGroup,
+  'checkbox-group': CheckboxGroupFormField,
   switch: SwitchFormField,
   textarea: Textarea,
   'text-popup-button': InputModalSelectorFormField,

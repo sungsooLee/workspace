@@ -334,6 +334,33 @@ export const guideData = [
     lastUpdateDate: '2025-03-31',
     remarks: '작업완료(그리드는 참고용입니다.)', // 비고
   },
+  {
+    screenName: 'PMS/위젯관리 미리보기',
+    pageId: 'pms/popup-widget-management',
+    screenId: 'NLP_BO_PMS_1313',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-31',
+    lastUpdateDate: '2025-03-31',
+    remarks: '작업완료', // 비고
+  },
+  {
+    screenName: 'PMS/위젯등록',
+    pageId: 'pms/widget-register',
+    screenId: 'NLP_BO_PMS_1311',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중(하단 테이블 작업 예정)', // 비고
+  },
+  {
+    screenName: 'PMS/위젯상세',
+    pageId: 'pms/widget-detail',
+    screenId: 'NLP_BO_PMS_1312',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중(하단 테이블 작업 예정)', // 비고
+  },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',

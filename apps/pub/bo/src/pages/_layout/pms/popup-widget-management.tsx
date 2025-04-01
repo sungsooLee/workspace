@@ -2,8 +2,20 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, ModalBody, ModalContainer, ModalFooter, useModal, ModalTitle } from '@learnway/ui';
+import {
+  Button,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  useModal,
+  ModalTitle,
+  Tabs,
+} from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
+
+/* tab contents */
+import { PcContents } from './-tabcontents/pc-contents'; // PC
+import { MobileContents } from './-tabcontents/mobile-contents'; // Mobile
 
 export const Route = createFileRoute('/_layout/pms/popup-widget-management')({
   component: RouteComponent,
@@ -11,12 +23,28 @@ export const Route = createFileRoute('/_layout/pms/popup-widget-management')({
 
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
+  const items = [
+    {
+      title: 'PC',
+      key: 'a',
+      content: <PcContents />,
+    },
+    {
+      title: 'Mobile',
+      key: 'b',
+      content: <MobileContents />,
+    },
+  ];
   const TabContents = () => {
     return (
       <ModalContainer>
         <ModalTitle>{'위젯 미리보기'}</ModalTitle>
         <ModalBody>
-          <div className={styles.wrap}></div>
+          <div className={cn(styles.start, styles.wrap)}>
+            <div className={styles.tab_wrap}>
+              <Tabs items={items} type="segment" size="md" />
+            </div>
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />

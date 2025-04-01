@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -16,6 +16,24 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 });
 
 function RouteComponent() {
+  const { alert: openAlert } = useModal();
+
+  // alert
+  const alert01 = () => {
+    openAlert({
+      title: <>수강신청 대기자 등록</>,
+      content: (
+        <>
+          본 과정의 수강신청 대기자로 등록되었습니다.
+          <br />
+          수강 취소 발생시 순차적으로 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
+
   return (
     <div className={`${styles.start} ${styles.complete}`}>
       <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
@@ -49,7 +67,7 @@ function RouteComponent() {
           <Button variant="gray" size="xl">
             홈
           </Button>
-          <Button variant="primary" size="xl">
+          <Button variant="primary" size="xl" onClick={() => alert01()}>
             결재함
           </Button>
         </div>
@@ -61,7 +79,7 @@ function RouteComponent() {
             <Button variant="gray" size="xl" className="min">
               홈
             </Button>
-            <Button variant="primary" size="xl">
+            <Button variant="primary" size="xl" onClick={() => alert01()}>
               결재함
             </Button>
           </div>
