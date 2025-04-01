@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import styles from '@learnway/styles/fo/pages/_layout/footer-menu/open-license.module.css';
+import styles from './open-license.module.css';
 
 export const Route = createFileRoute('/_layout/footer-menu/open-license')({
   component: RouteComponent,

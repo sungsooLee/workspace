@@ -7,7 +7,7 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/my/information-change.module.css';
+import styles from './information-change.module.css';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,

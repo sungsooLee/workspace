@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
 import { useModal, Button } from '@learnway/ui';
 
-import styles from '@learnway/styles/fo/pages/_layout/setting/setting-web_m.module.css';
+import styles from './setting-web_m.module.css';
 
 export const Route = createFileRoute('/_layout/setting/setting-web_m')({
   component: RouteComponent,

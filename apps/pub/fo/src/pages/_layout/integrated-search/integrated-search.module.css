@@ -1,0 +1,80 @@
+.start {
+  &.integrated {
+    .tab_wrap {
+      /* 검색 필터 및 결과 */
+      .result_txt_box {
+        .filter_box {
+          @apply mb-[40px] rounded-[8px] bg-[var(--gray1)] p-[20px];
+        }
+        .result_txt {
+          @apply flex items-center justify-between;
+          p {
+            @apply title_6_r text-[var(--gray9)];
+            strong {
+              @apply title_6_b;
+            }
+          }
+          .classify {
+            @apply flex items-center;
+            > div {
+              @apply relative flex items-center;
+              & + div {
+                @apply ml-[24px] pl-[24px];
+                &::before {
+                  @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+                }
+              }
+            }
+            .box {
+              & > div {
+                button {
+                  @apply border-0;
+                }
+              }
+            }
+          }
+        }
+        .proposal_txt {
+          @apply mt-[24px] flex items-center;
+          strong {
+            @apply title_6_b text-[var(--gray9)];
+          }
+          p {
+            @apply title_6_r relative ml-[12px] pl-[12px] text-[var(--gray9)];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[14px] w-px -translate-y-1/2 bg-[var(--gray6)] content-[''];
+            }
+          }
+          a {
+            @apply label_12_500 ml-[16px] text-[var(--gray8)] underline decoration-[var(--gray8)] underline-offset-[4px];
+          }
+        }
+      }
+
+      .classify_wrap {
+      }
+
+      .empty {
+        @apply mt-[80px];
+      }
+
+      .result_wrap {
+        @apply mt-[24px];
+        & > div {
+          & + div {
+            @apply mt-[48px];
+          }
+          .tit_box {
+            @apply mb-[16px] flex w-full items-center justify-between;
+            strong {
+              @apply title_5_b text-[var(--gray9)];
+            }
+            button {
+              @apply body_3_r flex items-center leading-[22px] text-[var(--gray8)];
+            }
+          }
+        }
+      }
+    }
+  }
+}

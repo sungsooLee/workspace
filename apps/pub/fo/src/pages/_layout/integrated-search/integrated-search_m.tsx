@@ -12,7 +12,7 @@ import {
   IntegratedSearchCoaching,
 } from '../../../features/layout';
 
-import styles from '@learnway/styles/fo/pages/_layout/integrated-search/integrated-search_m.module.css';
+import styles from './integrated-search_m.module.css';
 
 export const Route = createFileRoute('/_layout/integrated-search/integrated-search_m')({
   component: RouteComponent,
