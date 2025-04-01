@@ -43,12 +43,17 @@ import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step
 import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
+import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
+import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget-detail'
+import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
 import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
+import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/learning/popup-fileupload'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
@@ -288,6 +293,31 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const LayoutPmsWidgetRegisterRoute = LayoutPmsWidgetRegisterImport.update({
+  id: '/pms/widget-register',
+  path: '/pms/widget-register',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsWidgetManagementRoute = LayoutPmsWidgetManagementImport.update({
+  id: '/pms/widget-management',
+  path: '/pms/widget-management',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailImport.update({
+  id: '/pms/widget-detail',
+  path: '/pms/widget-detail',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsPopupWidgetManagementRoute =
+  LayoutPmsPopupWidgetManagementImport.update({
+    id: '/pms/popup-widget-management',
+    path: '/pms/popup-widget-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
   id: '/pms/menu-management',
   path: '/pms/menu-management',
@@ -323,6 +353,13 @@ const LayoutLearningPopupLearningRegisterationRoute =
   LayoutLearningPopupLearningRegisterationImport.update({
     id: '/learning/popup-learningRegisteration',
     path: '/learning/popup-learningRegisteration',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningPopupFileuploadRoute =
+  LayoutLearningPopupFileuploadImport.update({
+    id: '/learning/popup-fileupload',
+    path: '/learning/popup-fileupload',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1140,6 +1177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningMediaRegisterImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/popup-fileupload': {
+      id: '/_layout/learning/popup-fileupload'
+      path: '/learning/popup-fileupload'
+      fullPath: '/learning/popup-fileupload'
+      preLoaderRoute: typeof LayoutLearningPopupFileuploadImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/popup-learningRegisteration': {
       id: '/_layout/learning/popup-learningRegisteration'
       path: '/learning/popup-learningRegisteration'
@@ -1180,6 +1224,34 @@ declare module '@tanstack/react-router' {
       path: '/pms/menu-management'
       fullPath: '/pms/menu-management'
       preLoaderRoute: typeof LayoutPmsMenuManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/popup-widget-management': {
+      id: '/_layout/pms/popup-widget-management'
+      path: '/pms/popup-widget-management'
+      fullPath: '/pms/popup-widget-management'
+      preLoaderRoute: typeof LayoutPmsPopupWidgetManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-detail': {
+      id: '/_layout/pms/widget-detail'
+      path: '/pms/widget-detail'
+      fullPath: '/pms/widget-detail'
+      preLoaderRoute: typeof LayoutPmsWidgetDetailImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-management': {
+      id: '/_layout/pms/widget-management'
+      path: '/pms/widget-management'
+      fullPath: '/pms/widget-management'
+      preLoaderRoute: typeof LayoutPmsWidgetManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-register': {
+      id: '/_layout/pms/widget-register'
+      path: '/pms/widget-register'
+      fullPath: '/pms/widget-register'
+      preLoaderRoute: typeof LayoutPmsWidgetRegisterImport
       parentRoute: typeof LayoutImport
     }
     '/_guide/guide/': {
@@ -1357,12 +1429,17 @@ interface LayoutRouteChildren {
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
+  LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
+  LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
+  LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
+  LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
+  LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1376,6 +1453,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
+  LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
   LayoutLearningPopupLearningSettingRoute:
@@ -1384,6 +1462,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
+  LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
+  LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
+  LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
+  LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1465,12 +1547,17 @@ export interface FileRoutesByFullPath {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1550,12 +1637,17 @@ export interface FileRoutesByTo {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1638,12 +1730,17 @@ export interface FileRoutesById {
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/_layout/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/_layout/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1725,12 +1822,17 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/menu-management'
+    | '/pms/popup-widget-management'
+    | '/pms/widget-detail'
+    | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1809,12 +1911,17 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/menu-management'
+    | '/pms/popup-widget-management'
+    | '/pms/widget-detail'
+    | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   id:
@@ -1895,12 +2002,17 @@ export interface FileRouteTypes {
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
+    | '/_layout/learning/popup-fileupload'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/learning/popup-learningSetting'
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_layout/pms/menu-management'
+    | '/_layout/pms/popup-widget-management'
+    | '/_layout/pms/widget-detail'
+    | '/_layout/pms/widget-management'
+    | '/_layout/pms/widget-register'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -2020,12 +2132,17 @@ export const routeTree = rootRoute
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
+        "/_layout/learning/popup-fileupload",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/learning/popup-learningSetting",
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/pms/menu-management",
+        "/_layout/pms/popup-widget-management",
+        "/_layout/pms/widget-detail",
+        "/_layout/pms/widget-management",
+        "/_layout/pms/widget-register",
         "/_layout/menu3/"
       ]
     },
@@ -2321,6 +2438,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/learning/mediaRegister.tsx",
       "parent": "/_layout"
     },
+    "/_layout/learning/popup-fileupload": {
+      "filePath": "_layout/learning/popup-fileupload.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/popup-learningRegisteration": {
       "filePath": "_layout/learning/popup-learningRegisteration.tsx",
       "parent": "/_layout"
@@ -2343,6 +2464,22 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-management": {
       "filePath": "_layout/pms/menu-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/popup-widget-management": {
+      "filePath": "_layout/pms/popup-widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-detail": {
+      "filePath": "_layout/pms/widget-detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-management": {
+      "filePath": "_layout/pms/widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-register": {
+      "filePath": "_layout/pms/widget-register.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

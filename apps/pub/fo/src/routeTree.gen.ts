@@ -48,9 +48,11 @@ import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/inf
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutFooterMenuPrivacyImport } from './pages/_layout/footer-menu/privacy'
+import { Route as LayoutFooterMenuOpenLicenseImport } from './pages/_layout/footer-menu/open-license'
 import { Route as LayoutFooterMenuAgreementImport } from './pages/_layout/footer-menu/agreement'
 import { Route as LayoutCourseRegistrationCourseRegistrationTextbookImport } from './pages/_layout/course-registration/course-registration-textbook'
 import { Route as LayoutCourseRegistrationCourseRegistrationLevelImport } from './pages/_layout/course-registration/course-registration-level'
+import { Route as LayoutCourseRegistrationCourseRegistrationCompleteImport } from './pages/_layout/course-registration/course-registration-complete'
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
@@ -316,6 +318,13 @@ const LayoutFooterMenuPrivacyRoute = LayoutFooterMenuPrivacyImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutFooterMenuOpenLicenseRoute =
+  LayoutFooterMenuOpenLicenseImport.update({
+    id: '/footer-menu/open-license',
+    path: '/footer-menu/open-license',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutFooterMenuAgreementRoute = LayoutFooterMenuAgreementImport.update({
   id: '/footer-menu/agreement',
   path: '/footer-menu/agreement',
@@ -333,6 +342,13 @@ const LayoutCourseRegistrationCourseRegistrationLevelRoute =
   LayoutCourseRegistrationCourseRegistrationLevelImport.update({
     id: '/course-registration/course-registration-level',
     path: '/course-registration/course-registration-level',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseRegistrationCourseRegistrationCompleteRoute =
+  LayoutCourseRegistrationCourseRegistrationCompleteImport.update({
+    id: '/course-registration/course-registration-complete',
+    path: '/course-registration/course-registration-complete',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -984,6 +1000,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/course-registration/course-registration-complete': {
+      id: '/_layout/course-registration/course-registration-complete'
+      path: '/course-registration/course-registration-complete'
+      fullPath: '/course-registration/course-registration-complete'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/course-registration/course-registration-level': {
       id: '/_layout/course-registration/course-registration-level'
       path: '/course-registration/course-registration-level'
@@ -1003,6 +1026,13 @@ declare module '@tanstack/react-router' {
       path: '/footer-menu/agreement'
       fullPath: '/footer-menu/agreement'
       preLoaderRoute: typeof LayoutFooterMenuAgreementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/footer-menu/open-license': {
+      id: '/_layout/footer-menu/open-license'
+      path: '/footer-menu/open-license'
+      fullPath: '/footer-menu/open-license'
+      preLoaderRoute: typeof LayoutFooterMenuOpenLicenseImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/footer-menu/privacy': {
@@ -1225,9 +1255,11 @@ interface LayoutRouteChildren {
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   LayoutCourseRegistrationCourseRegistrationLevelRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   LayoutCourseRegistrationCourseRegistrationTextbookRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
+  LayoutFooterMenuOpenLicenseRoute: typeof LayoutFooterMenuOpenLicenseRoute
   LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1247,11 +1279,14 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
   LayoutCourseRegistrationCourseRegistrationAllRoute:
     LayoutCourseRegistrationCourseRegistrationAllRoute,
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute:
+    LayoutCourseRegistrationCourseRegistrationCompleteRoute,
   LayoutCourseRegistrationCourseRegistrationLevelRoute:
     LayoutCourseRegistrationCourseRegistrationLevelRoute,
   LayoutCourseRegistrationCourseRegistrationTextbookRoute:
     LayoutCourseRegistrationCourseRegistrationTextbookRoute,
   LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
+  LayoutFooterMenuOpenLicenseRoute: LayoutFooterMenuOpenLicenseRoute,
   LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
@@ -1330,9 +1365,11 @@ export interface FileRoutesByFullPath {
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1407,9 +1444,11 @@ export interface FileRoutesByTo {
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1487,9 +1526,11 @@ export interface FileRoutesById {
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/_layout/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/_layout/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/_layout/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/_layout/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/_layout/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/_layout/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1566,9 +1607,11 @@ export interface FileRouteTypes {
     | '/category/detail'
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
+    | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
     | '/footer-menu/agreement'
+    | '/footer-menu/open-license'
     | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
@@ -1642,9 +1685,11 @@ export interface FileRouteTypes {
     | '/category/detail'
     | '/category/detail_m'
     | '/course-registration/course-registration-all'
+    | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
     | '/footer-menu/agreement'
+    | '/footer-menu/open-license'
     | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
@@ -1720,9 +1765,11 @@ export interface FileRouteTypes {
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
     | '/_layout/course-registration/course-registration-all'
+    | '/_layout/course-registration/course-registration-complete'
     | '/_layout/course-registration/course-registration-level'
     | '/_layout/course-registration/course-registration-textbook'
     | '/_layout/footer-menu/agreement'
+    | '/_layout/footer-menu/open-license'
     | '/_layout/footer-menu/privacy'
     | '/_layout/integrated-search/integrated-search'
     | '/_layout/integrated-search/integrated-search_m'
@@ -1837,9 +1884,11 @@ export const routeTree = rootRoute
         "/_layout/category/detail",
         "/_layout/category/detail_m",
         "/_layout/course-registration/course-registration-all",
+        "/_layout/course-registration/course-registration-complete",
         "/_layout/course-registration/course-registration-level",
         "/_layout/course-registration/course-registration-textbook",
         "/_layout/footer-menu/agreement",
+        "/_layout/footer-menu/open-license",
         "/_layout/footer-menu/privacy",
         "/_layout/integrated-search/integrated-search",
         "/_layout/integrated-search/integrated-search_m",
@@ -2085,6 +2134,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/course-registration/course-registration-all.tsx",
       "parent": "/_layout"
     },
+    "/_layout/course-registration/course-registration-complete": {
+      "filePath": "_layout/course-registration/course-registration-complete.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/course-registration/course-registration-level": {
       "filePath": "_layout/course-registration/course-registration-level.tsx",
       "parent": "/_layout"
@@ -2095,6 +2148,10 @@ export const routeTree = rootRoute
     },
     "/_layout/footer-menu/agreement": {
       "filePath": "_layout/footer-menu/agreement.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/footer-menu/open-license": {
+      "filePath": "_layout/footer-menu/open-license.tsx",
       "parent": "/_layout"
     },
     "/_layout/footer-menu/privacy": {

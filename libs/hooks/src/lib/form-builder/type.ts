@@ -219,6 +219,8 @@ export type DynamicFormProvider = {
   getValues: UseFormReturn['getValues'];
   /** 초기 필드 값 */
   originalValues: Record<string, any>;
+  /** 필드 에러 제거 */
+  clearFormError: (field: string) => void;
 };
 
 /**
@@ -476,6 +478,6 @@ export type UseSearchBoxReturn = {
 export type DynamicFormContextType = {
   guideText: string; // 가이드 택스트
   infoArea: ReactNode | null; // Info Araea
-  onChangeGuideText: (text: string) => void;
+  onChangeGuideText: (text: string | ReactNode) => void;
   onChangeInfoArea: (text: ReactNode | null) => void;
 };

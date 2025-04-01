@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { OptionCard } from '@learnway/ui';
+import { memo, useState } from 'react';
+import { OptionCard, OptionCardItem } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import { cn } from '@learnway/shared';
 // 퍼블수정 20250314 import modal추가
@@ -18,39 +18,32 @@ import { IcoRefresh02 } from '@learnway/icons';
 import styles from './filter-popup.module.css';
 
 const filter = [
-  { label: '클래스', value: getRandomId() },
-  { label: '동영상', value: getRandomId() },
-  { label: '이북', value: getRandomId() },
-  { label: '웹', value: getRandomId() },
+  { label: '클래스', value: 'a' },
+  { label: '동영상', value: 'b' },
+  { label: '이북', value: 'c' },
+  { label: '웹', value: 'd' },
 ];
 const filter2 = [
-  { label: '수강신청 교육', value: getRandomId() },
-  { label: '수강신청 가능', value: getRandomId() },
-  { label: '수강신청 마감', value: getRandomId() },
+  { label: '수강신청 교육', value: 'a' },
+  { label: '수강신청 가능', value: 'b' },
+  { label: '수강신청 마감', value: 'c' },
 ];
 const filter3 = [
-  { label: '10분 이내', value: getRandomId() },
-  { label: '10분 ~1시간', value: getRandomId() },
-  { label: '1 ~ 4시간', value: getRandomId() },
-  { label: '12시간 이상', value: getRandomId() },
+  { label: '10분 이내', value: 'a' },
+  { label: '10분 ~1시간', value: 'b' },
+  { label: '1 ~ 4시간', value: 'c' },
+  { label: '12시간 이상', value: 'd' },
 ];
 const filter4 = [
-  { label: '1일 ~ 2일', value: getRandomId() },
-  { label: '3일 ~ 5일', value: getRandomId() },
-  { label: '6일 ~ 11일', value: getRandomId() },
-  { label: '1개월 이상', value: getRandomId() },
+  { label: '1일 ~ 2일', value: 'a' },
+  { label: '3일 ~ 5일', value: 'b' },
+  { label: '6일 ~ 11일', value: 'c' },
+  { label: '1개월 이상', value: 'd' },
 ];
 const filter5 = [
-  { label: '초급', value: getRandomId() },
-  { label: '중급', value: getRandomId() },
-  { label: '고급', value: getRandomId() },
-];
-const filter6 = [
-  { label: '한국어', value: getRandomId() },
-  { label: '영어', value: getRandomId() },
-  { label: '일본어', value: getRandomId() },
-  { label: '중국어', value: getRandomId() },
-  { label: '기타 언어', value: getRandomId() },
+  { label: '초급', value: 'a' },
+  { label: '중급', value: 'b' },
+  { label: '고급', value: 'c' },
 ];
 
 const options: any[] = [
@@ -64,6 +57,13 @@ const options: any[] = [
 // 퍼블수정 20250314 modal 컴포넌트 수정으로 전체적 수정
 const FilterPopupComponent = () => {
   const { close: closeModal } = useModal();
+
+  // 퍼블수정 20250331 : option card 컴포넌트 수정 value 값 추가
+  const [filterValue, setFilterValue] = useState<string[]>();
+  const [filterValue2, setFilterValue2] = useState<string[]>();
+  const [filterValue3, setFilterValue3] = useState<string[]>();
+  const [filterValue4, setFilterValue4] = useState<string[]>();
+  const [filterValue5, setFilterValue5] = useState<string[]>();
   return (
     <ModalContainer>
       <ModalTitle>{'필터'}</ModalTitle>
@@ -73,56 +73,133 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>강의유형</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter} multiple />
+                {/* 퍼블수정 20250331 : option 추가 */}
+                <OptionCard
+                  cols={4}
+                  options={filter}
+                  multiple
+                  value={filterValue}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>수강신청</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter2} multiple />
+                {/* 퍼블수정 20250331 : option 추가 */}
+                <OptionCard
+                  cols={4}
+                  options={filter2}
+                  multiple
+                  value={filterValue2}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue2(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>학습시간</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter3} multiple />
+                {/* 퍼블수정 20250331 : option 추가 */}
+                <OptionCard
+                  cols={4}
+                  options={filter3}
+                  multiple
+                  value={filterValue3}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue3(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>교육기간</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter4} multiple />
+                {/* 퍼블수정 20250331 : option 추가 */}
+                <OptionCard
+                  cols={4}
+                  options={filter4}
+                  multiple
+                  value={filterValue4}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue4(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>난이도</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter5} multiple />
+                {/* 퍼블수정 20250331 : option 추가 */}
+                <OptionCard
+                  cols={4}
+                  options={filter5}
+                  multiple
+                  value={filterValue5}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue5(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter5} multiple />
+                <OptionCard
+                  cols={4}
+                  options={filter5}
+                  multiple
+                  value={filterValue5}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue5(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
 
             <li>
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter5} multiple />
+                <OptionCard
+                  cols={4}
+                  options={filter5}
+                  multiple
+                  value={filterValue5}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue5(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter5} multiple />
+                <OptionCard
+                  cols={4}
+                  options={filter5}
+                  multiple
+                  value={filterValue5}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue5(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
             <li>
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
-                <OptionCard cols={4} options={filter5} multiple />
+                <OptionCard
+                  cols={4}
+                  options={filter5}
+                  multiple
+                  value={filterValue5}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setFilterValue5(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
               </div>
             </li>
           </ul>

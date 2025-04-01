@@ -1,0 +1,15 @@
+/* view-box.module.css */
+.start {
+  &.wrap {
+    @apply scrollbar mt-[24px] max-h-[480px] overflow-y-auto bg-[#f6f8fd] px-[12px] py-[24px];
+    .inner {
+      @apply mx-auto bg-white;
+      &.type_mobile {
+        @apply max-w-[360px];
+      }
+      &.type_pc {
+        @apply w-full;
+      }
+    }
+  }
+}
