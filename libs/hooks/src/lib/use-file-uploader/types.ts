@@ -93,7 +93,7 @@ export type InitMultiPartUploadRes = {
 export type PartPresigendReq = {
   uploadId: string; // 업로드 아이디
   partNumber: number; // 발급 받을 PartNumber
-  filename: string; // 파일명 경로 + 파일명
+  key: string; // 파일명 경로 + 파일명
 };
 /**
  * Presigend 요청에 대한 응답
@@ -117,6 +117,7 @@ export type CompletedMultiPartUploadRes = {
  */
 export type CompletedMultiPartUploadReq = {
   uploadId: string;
+  key: string;
   parts: {
     ETag: string;
     PartNumber: number;
@@ -148,9 +149,12 @@ export type MultiFilePartRes = {
 // 파일 아이템 정보 타입
 export type FileItem = {
   id: string;
-  name: string;
+  filename: string;
+  s3FileName: string;
+  extension: string;
   size: number;
   progress: number;
+  key: string;
   status: 'waiting' | 'uploading' | 'complete' | 'error' | 'paused';
   errorMessage?: string;
   parts?: {
@@ -160,7 +164,6 @@ export type FileItem = {
   }[];
   retryCount?: number;
   uploadId?: string;
-  key?: string;
   response?: any;
 };
 

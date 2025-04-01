@@ -8,7 +8,7 @@ import {
   PartPresigendReq,
   PresignedRes,
 } from '../types';
-const API_BASE_URL = `${PMSApiPrefix}/admin/api/v1/file/s3`;
+const API_BASE_URL = `${PMSApiPrefix()}/file/s3`;
 
 /*
  * [BO] S3 File 업로드/다운로드
@@ -39,11 +39,11 @@ export const initMultiPartUpload = async (
 export const completedMultiPartUpload = async (
   props: CompletedMultiPartUploadReq,
 ): Promise<CompletedMultiPartUploadRes | undefined> => {
-  const { uploadId, parts } = props;
+  const { uploadId, key, parts } = props;
   try {
     return await httpService.post<CompletedMultiPartUploadRes>(
-      `${API_BASE_URL}/multipart/${uploadId}/complete`,
-      parts,
+      `${API_BASE_URL}/multipart/${uploadId}/complete?key=${key}`,
+      { parts },
     );
   } catch (e) {
     console.error(e);
@@ -56,9 +56,20 @@ export const completedMultiPartUpload = async (
  * S3 멀티파트 업로드 Part 목록을 요청한다.
  * @param uploadId
  */
-export const getMultiFileParts = async (uploadId: string) => {
+export const getMultiFileParts = async (uploadId: string, key: string) => {
   try {
     return await httpService.get<MultiFilePartRes>(`${API_BASE_URL}/multipart/${uploadId}`);
+  } catch (e) {
+    console.error(e);
+    return Promise.resolve(undefined);
+  }
+};
+
+export const abortMultiPartUpload = async (uploadId: string, key: string) => {
+  try {
+    return await httpService.delete<MultiFilePartRes>(
+      `${API_BASE_URL}/multipart/${uploadId}?key=${key}`,
+    );
   } catch (e) {
     console.error(e);
     return Promise.resolve(undefined);
@@ -68,14 +79,12 @@ export const getMultiFileParts = async (uploadId: string) => {
 /**
  * S3 업로드 Presigned URL 요청
  * 싱글 프리사인 URL 을 발급 받는다.
- * @param filename
+ * @param key
  */
-export const issuePresigendUrlBySingle = async (
-  filename: string,
-): Promise<PresignedRes | undefined> => {
+export const issuePresigendUrlBySingle = async (key: string): Promise<PresignedRes | undefined> => {
   try {
     return await httpService.get<PresignedRes>(`${API_BASE_URL}/uploader`, {
-      filename,
+      key,
     });
   } catch (e) {
     console.error(e);
@@ -90,12 +99,12 @@ export const issuePresigendUrlBySingle = async (
 export const issuePresigendUrlByPart = async (
   props: PartPresigendReq,
 ): Promise<PresignedRes | undefined> => {
-  const { uploadId, partNumber, filename } = props;
+  const { uploadId, partNumber, key } = props;
   try {
     return await httpService.get<PresignedRes>(
       `${API_BASE_URL}/multipart/${uploadId}/${partNumber}`,
       {
-        filename,
+        key,
       },
     );
   } catch (e) {

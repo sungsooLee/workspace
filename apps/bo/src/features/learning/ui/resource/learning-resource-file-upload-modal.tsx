@@ -28,14 +28,11 @@ const LearningResourceFileUploadModalComponent = () => {
   const ref = useRef(null);
 
   const handleFileChange = (e: any) => {
-    console.log(e);
-  };
-  useEffect(() => {
+    addFiles(e.target.files);
     if (ref.current) {
-      ref.current.onChange = handleFileChange;
-      /*ref.current.addEventListener('change', handleFileChange);*/
+      ref.current.value = '';
     }
-  }, []);
+  };
   return (
     <ModalContainer>
       <ModalBody>
@@ -66,7 +63,13 @@ const LearningResourceFileUploadModalComponent = () => {
                     <span className={styles.file_guide}>
                       {'PNG, JPG, GIF, PDF / Max file size : 50MB'}
                     </span>
-                    <input ref={ref} type="file" className={styles.input_file} />
+                    <input
+                      ref={ref}
+                      type="file"
+                      className={styles.input_file}
+                      onChange={handleFileChange}
+                      multiple={true}
+                    />
                   </Button>
                 </div>
                 {/* 파일 업로드 */}
@@ -238,6 +241,6 @@ export const LearningResourceFileUploadModal = LearningResourceFileUploadModalCo
 const uploadConfig = {
   isAuto: true,
   maxFileCount: 1,
-  maxFileSize: 1024 * 1024 * 5,
+  maxFileSize: 1024 * 1024 * 500,
   s3Path: '/learning/resource/video',
 };
