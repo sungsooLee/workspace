@@ -1,3 +1,11 @@
 /* widget-management.module.css */
 .start {
+  &.wrap {
+    @apply relative;
+    .tab_wrap {
+      [role='tablist'] {
+        @apply px-[548px];
+      }
+    }
+  }
 }

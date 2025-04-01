@@ -43,6 +43,7 @@ import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step
 import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
 import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
@@ -289,6 +290,12 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
+} as any)
+
+const LayoutPmsWidgetRegisterRoute = LayoutPmsWidgetRegisterImport.update({
+  id: '/pms/widget-register',
+  path: '/pms/widget-register',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const LayoutPmsWidgetManagementRoute = LayoutPmsWidgetManagementImport.update({
@@ -1226,6 +1233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsWidgetManagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/widget-register': {
+      id: '/_layout/pms/widget-register'
+      path: '/pms/widget-register'
+      fullPath: '/pms/widget-register'
+      preLoaderRoute: typeof LayoutPmsWidgetRegisterImport
+      parentRoute: typeof LayoutImport
+    }
     '/_guide/guide/': {
       id: '/_guide/guide/'
       path: '/guide'
@@ -1410,6 +1424,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
   LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
+  LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1434,6 +1449,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
   LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
+  LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1524,6 +1540,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1612,6 +1629,7 @@ export interface FileRoutesByTo {
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1703,6 +1721,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1793,6 +1812,7 @@ export interface FileRouteTypes {
     | '/pms/menu-management'
     | '/pms/popup-widget-management'
     | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1880,6 +1900,7 @@ export interface FileRouteTypes {
     | '/pms/menu-management'
     | '/pms/popup-widget-management'
     | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   id:
@@ -1969,6 +1990,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-management'
     | '/_layout/pms/popup-widget-management'
     | '/_layout/pms/widget-management'
+    | '/_layout/pms/widget-register'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -2097,6 +2119,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-management",
         "/_layout/pms/popup-widget-management",
         "/_layout/pms/widget-management",
+        "/_layout/pms/widget-register",
         "/_layout/menu3/"
       ]
     },
@@ -2426,6 +2449,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/widget-management": {
       "filePath": "_layout/pms/widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-register": {
+      "filePath": "_layout/pms/widget-register.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {
