@@ -12,6 +12,7 @@ import {
   Switch,
   Tooltip,
   Input,
+  Grid,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
@@ -25,6 +26,7 @@ const LearningMenuComponent: FC<{}> = ({}) => {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
+
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div className={styles.inner}>
