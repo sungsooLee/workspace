@@ -1364,7 +1364,8 @@ function RouteComponent() {
                       width={84}
                       height={55}
                       path={'https://picsum.photos/200'}
-                      count={true}
+                      indexNumber={1}
+                      sizeText={'100MB'}
                     />
                     <span className={fileInfoStyles.name}>{option.name}</span>
                   </div>

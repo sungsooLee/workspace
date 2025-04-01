@@ -121,6 +121,7 @@ content: (
 <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
 <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
 <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
+<Tabs selectedTabKey={selectedTabKey} items={items} type="segment" />
 `}
           </code>
         </pre>
@@ -178,6 +179,18 @@ content: (
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items} type="progress" size="sm" />
+          </div>
+        </div>
+        <h3 className="guide_tit3">Tabs segment(size : sm) Case</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Tabs items={items} type="segment" size="sm" />
+          </div>
+        </div>
+        <h3 className="guide_tit3">Tabs segment Case</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Tabs items={items} type="segment" size="md" />
           </div>
         </div>
       </div>

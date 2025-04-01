@@ -89,8 +89,10 @@
           .item_col_full {
             & > div {
               @apply mb-0;
-              & + div {
-                @apply mt-[10px];
+              & > div {
+                & + div {
+                  @apply mt-[10px];
+                }
               }
             }
           }
@@ -115,7 +117,7 @@
   @screen mobile {
     .start {
       &.course {
-        @apply m-auto w-full px-[20px] pt-[16px];
+        @apply m-auto w-full px-[20px] pb-[80px] pt-[16px];
         & > h2 {
           @apply hidden;
         }
@@ -163,6 +165,9 @@
               @apply ml-0 mt-[4px];
             }
           }
+        }
+        .btn_wrap {
+          @apply mt-0;
         }
       }
     }

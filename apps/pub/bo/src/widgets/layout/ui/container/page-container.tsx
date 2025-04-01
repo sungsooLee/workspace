@@ -100,6 +100,9 @@ function PageContainerComponent({
             <Button variant="primary" size="sm">
               수정
             </Button>
+            <Button variant="primary" size="sm">
+              신규등록
+            </Button>
           </div>
         </div>
         {/* content_wrap */}

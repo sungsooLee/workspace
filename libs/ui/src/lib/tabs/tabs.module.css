@@ -174,6 +174,39 @@
         }
       }
     }
+    &.segment {
+      .list {
+        @apply flex;
+        button {
+          @apply button_bo_2_r relative h-[40px] flex-1 overflow-hidden border-b-[1px] border-l-[1px] border-r-0 border-t-[1px] border-solid border-[var(--gray4)] text-[var(--gray8)];
+          &:first-child {
+            @apply rounded-l-[4px];
+          }
+          &:nth-last-child(1) {
+            @apply rounded-r-[4px] border-r-[1px] border-[var(--gray4)];
+            &[data-state='active'] {
+              &::after {
+                @apply !hidden;
+              }
+            }
+          }
+          &[data-state='active'] {
+            @apply button_bo_2_b border-[1px] !border-[var(--primary1)];
+            & + button {
+              @apply border-l-0;
+            }
+          }
+        }
+      }
+      &.sm {
+        .list button {
+          @apply button_bo_3_r h-[32px];
+          &[data-state='active'] {
+            @apply button_bo_3_b;
+          }
+        }
+      }
+    }
     .count {
       @apply ml-[4px] text-[1.6rem] font-bold text-[var(--secondary4)];
     }

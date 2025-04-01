@@ -19,7 +19,7 @@ interface TabItemProps {
 interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   items: Array<TabItemProps>;
   className?: string;
-  type?: 'line' | 'fill' | 'round' | 'progress';
+  type?: 'line' | 'fill' | 'round' | 'progress' | 'segment';
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   size?: 'sm' | 'md';
   ariaLabel?: string;
