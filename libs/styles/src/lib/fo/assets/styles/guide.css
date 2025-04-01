@@ -167,7 +167,7 @@
           .desc {
             @apply flex items-center gap-[20px];
             &.col {
-              @apply flex-wrap justify-start;
+              @apply w-full flex-wrap justify-start;
             }
           }
 
@@ -214,6 +214,11 @@
         border-radius: 10px;
         a {
           @apply text-[#000] underline;
+        }
+        + .group {
+          .guide_tit3 {
+            @apply mt-[20px];
+          }
         }
       }
       .info_ul {
