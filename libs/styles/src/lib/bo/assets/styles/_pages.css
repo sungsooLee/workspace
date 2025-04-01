@@ -85,3 +85,7 @@ h4.auth--title {
     }
   }
 }
+
+.grid_wrap {
+  @apply w-full;
+}

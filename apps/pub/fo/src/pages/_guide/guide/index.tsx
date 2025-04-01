@@ -134,7 +134,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">퍼블 리스트 현황 (학습자)</h2>
       <div className="info">
-        모바일 : 브라우저 개발자 도구(디바이스 툴바)에서 모바일로 변경 후 확인가능합니다.
+        모바일 : 브라우저 개발자 도구(디바이스 툴바)에서 모바일로 변경 후 확인가능.
       </div>
       <div className="stats_box">
         <span className="total">

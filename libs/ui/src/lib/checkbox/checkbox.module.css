@@ -9,6 +9,9 @@
         @apply absolute left-0 top-0 flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
         border-color: var(--secondary1);
       }
+      & + .label {
+        @apply font-bold;
+      }
     }
     &.round {
       @apply rounded-full;
