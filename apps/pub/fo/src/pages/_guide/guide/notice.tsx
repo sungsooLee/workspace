@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 
@@ -11,6 +11,9 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">유의사항 Page Component</h2>
       <p className="loc css">@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css</p>
+      <p className="loc react">
+        <Link to="/password-set">예제링크</Link>
+      </p>
       <div className="info">
         위아래 여백은 각 모듈 css에서 정의 styles.signup_noti (이름변경 가능)
       </div>
@@ -18,7 +21,7 @@ function RouteComponent() {
         <h3 className="guide_tit3">유의사항 미리보기</h3>
         <div className="flex_box">
           <div className="desc">
-            <div className={`${noticeBoxStyles.start} \${styles.signup_noti}`}>
+            <div className={noticeBoxStyles.start}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
                   <IcoCaution width={16} height={16} stroke="#6F798B" />

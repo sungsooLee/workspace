@@ -203,6 +203,9 @@
         + .info_ul {
           @apply mt-[20px];
         }
+        a {
+          @apply text-[#33CCED] underline;
+        }
       }
       img {
         border-radius: 0;

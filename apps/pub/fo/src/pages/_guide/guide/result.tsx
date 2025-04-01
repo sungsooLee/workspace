@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 import { IcoComplete } from '@learnway/icons';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
@@ -12,6 +12,9 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">결과 Page Component</h2>
       <p className="loc css">@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css</p>
+      <p className="loc react">
+        <Link to="/search-id-success">예제링크</Link>
+      </p>
       <div className="info">
         위아래 여백은 각 모듈 css에서 정의 styles.success_info (이름변경 가능)
       </div>
