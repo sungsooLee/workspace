@@ -143,6 +143,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
+          menuPlacement="auto"
           className={cn(isFocused || isMenuOpen ? 'focused' : '', isReadonly ? 'readonly' : '')}
           classNamePrefix="nlp-select"
           components={{
