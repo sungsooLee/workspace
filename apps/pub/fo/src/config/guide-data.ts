@@ -604,7 +604,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- search-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
+    remarks: '- search-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
   },
   {
     screenId: 'NLP_FO_USE_MA_1011',
@@ -614,7 +614,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- auto-complete-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
+    remarks: '- auto-complete-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
   },
   {
     screenId: 'NLP_FO_USE_M_1000',

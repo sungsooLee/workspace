@@ -13,10 +13,13 @@ import {
   IcoPlus,
   IcoSetting,
   IcoClose,
+  IcoClose02,
+  IcoFillActive,
   IcoArrowForward,
   IcoHome02,
   IcoHome03,
   IcoBell02,
+  IcoBell03,
   IcoLinkblank,
   IcoChevronDown,
   IcoChevronLeft,
@@ -36,9 +39,11 @@ import {
   IcoXclose,
   IcoCaution,
   IcoCaution02,
+  IcoCaution03,
   IcoWarning,
   IcoError,
   IcoComplete,
+  IcoAlertComplete,
   IcoDelete03,
   IcoFormRequired,
   IcoCheckboxChecked,
@@ -49,6 +54,62 @@ import {
   IcLogOut01,
   IcoUploadCloud,
   IcoLoading,
+  IcoTrash03,
+  IcoCalendar01,
+  IcoBuilding01,
+  IcoOverseasDealer,
+  IcoMail,
+  IcoPhone02,
+  IcoDotpoints,
+  IcoGrid01,
+  IcoMybook,
+  IcoPlay02,
+  IcoMoreHorizontal,
+  IcoEye,
+  IcoAnnouncement03,
+  IcoClock01,
+  IcoRefresh,
+  IcoRefresh02,
+  IcoPause,
+  IcoComplete02,
+  IcoFileMp4,
+  IcoBlog,
+  IcoEntrust,
+  IcoInfoCircle,
+  IcoImage01,
+  IcoVideo01,
+  IcoVideo02,
+  IcoHtml,
+  IcoEtc,
+  IcoUser01,
+  IcoSpinner,
+  IcoSucess,
+  IcoArray,
+  IcoPlay,
+  IcoRating,
+  IcoHeart,
+  IcoMonitor01,
+  IcoStatusFail,
+  IcoShieldTick01,
+  IcoFaceId01,
+  IcoCompanion,
+  IcoProgress,
+  IcoFilter,
+  IcoArrowDownDouble,
+  IcoNarrowRight,
+  IcoGridOrder,
+  IcoFileImg,
+  IcoFileVideo,
+  IcoExam,
+  IcoFolder,
+  IcoHomework,
+  IcoMultiScorm,
+  IcoSurvey,
+  IcoSetting01,
+  IcoReview,
+  IcoSucess02,
+  IcoPaperClip,
+  IcoPpt,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -99,10 +160,13 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoPlus width={30} height={30} stroke="#4C515E" />
             <IcoSetting width={30} height={30} stroke="#4C515E" />
             <IcoClose width={30} height={30} stroke="#4C515E" />
+            <IcoClose02 width={30} height={30} stroke="#4C515E" />
+            <IcoFillActive width={30} height={30} stroke="#4C515E" />
             <IcoArrowForward width={30} height={30} stroke="#4C515E" />
             <IcoHome02 width={30} height={30} stroke="#4C515E" />
             <IcoHome03 width={30} height={30} stroke="#4C515E" />
             <IcoBell02 width={30} height={30} stroke="#4C515E" />
+            <IcoBell03 width={30} height={30} stroke="#4C515E" />
             <IcoLinkblank width={30} height={30} stroke="#4C515E" />
             <IcoChevronDown width={30} height={30} stroke="#4C515E" />
             <IcoChevronLeft width={30} height={30} stroke="#4C515E" />
@@ -114,17 +178,19 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoChevronRightDisabled width={30} height={30} stroke="#4C515E" />
             <IcoChevronRightDoubleDisabled width={30} height={30} stroke="#4C515E" />
             <IcoArrowBackward width={30} height={30} stroke="#4C515E" />
-            <IcoMenu01 width={30} height={30} stroke="#4C515E" />
-            <IcoConfirm width={30} height={30} stroke="#4C515E" />
+            <IcoMenu01 width={30} height={30} fill="#A9AFB8" stroke="#8c97ae" />
+            <IcoConfirm width={30} height={30} stroke="none" fill="#A9AFB8" />
             <IcoModify width={30} height={30} stroke="#4C515E" />
             <IcoTrash width={30} height={30} stroke="#4C515E" />
             <IcoSearch width={30} height={30} stroke="#4C515E" />
             <IcoXclose width={30} height={30} stroke="#4C515E" />
             <IcoCaution width={30} height={30} stroke="#4C515E" />
             <IcoCaution02 width={30} height={30} stroke="#4C515E" />
+            <IcoCaution03 width={30} height={30} stroke="#4C515E" />
             <IcoWarning width={30} height={30} stroke="#4C515E" />
             <IcoError width={30} height={30} stroke="#4C515E" />
             <IcoComplete width={30} height={30} stroke="#4C515E" />
+            <IcoAlertComplete width={30} height={30} stroke="#4C515E" />
             <IcoDelete03 width={30} height={30} stroke="#4C515E" />
             <IcoFormRequired width={30} height={30} stroke="#4C515E" />
             <IcoCheckboxChecked width={30} height={30} stroke="#4C515E" />
@@ -135,6 +201,60 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcLogOut01 width={30} height={30} stroke="#4C515E" />
             <IcoUploadCloud width={30} height={30} stroke="#4C515E" />
             <IcoLoading width={30} height={30} stroke="#4C515E" />
+            <IcoTrash03 width={30} height={30} stroke="#131C30" />
+            <IcoCalendar01 width={30} height={30} stroke="#131C30" />
+            <IcoBuilding01 width={30} height={30} stroke="#131C30" />
+            <IcoOverseasDealer width={30} height={30} stroke="#131C30" />
+            <IcoMail width={30} height={30} stroke="#131C30" />
+            <IcoPhone02 width={30} height={30} stroke="#131C30" />
+            <IcoDotpoints width={30} height={30} stroke="#4C515E" />
+            <IcoGrid01 width={30} height={30} stroke="#131C30" />
+            <IcoMybook width={30} height={30} stroke="#131C30" />
+            <IcoPlay02 width={30} height={30} stroke="#131C30" />
+            <IcoMoreHorizontal width={30} height={30} stroke="#131C30" />
+            <IcoEye width={30} height={30} stroke="#4C515E" />
+            <IcoAnnouncement03 width={30} height={30} stroke="#4C515E" />
+            <IcoClock01 width={30} height={30} stroke="#4C515E" />
+            <IcoRefresh width={30} height={30} fill="#4c515e" />
+            <IcoRefresh02 width={30} height={30} stroke="#4c515e" fill="none" />
+            <IcoPause width={30} height={30} stroke="#4C515E" fill="#4c515e" />
+            <IcoComplete02 width={30} height={30} stroke="#4C515E" fill="#4c515e" />
+            <IcoBlog width={30} height={30} stroke="#4C515E" />
+            <IcoEntrust width={30} height={30} stroke="#4C515E" />
+            <IcoInfoCircle width={30} height={30} stroke="#4C515E" />
+            <IcoImage01 width={30} height={30} stroke="#4C515E" />
+            <IcoVideo01 width={30} height={30} stroke="#4C515E" />
+            <IcoVideo02 width={30} height={30} stroke="#4C515E" />
+            <IcoHtml width={30} height={30} stroke="#4C515E" />
+            <IcoEtc width={30} height={30} stroke="#4C515E" />
+            <IcoUser01 width={30} height={30} stroke="#4C515E" />
+            <IcoSpinner width={30} height={30} stroke="#4C515E" />
+            <IcoSucess width={30} height={30} stroke="#4C515E" />
+            <IcoArray width={30} height={30} stroke="#4C515E" />
+            <IcoPlay width={30} height={30} stroke="#4C515E" />
+            <IcoRating width={30} height={30} stroke="#4C515E" />
+            <IcoHeart width={30} height={30} stroke="#4C515E" />
+            <IcoMonitor01 width={30} height={30} stroke="#4C515E" />
+            <IcoStatusFail width={30} height={30} stroke="#4C515E" />
+            <IcoShieldTick01 width={30} height={30} stroke="#4C515E" />
+            <IcoFaceId01 width={30} height={30} stroke="#4C515E" />
+            <IcoCompanion width={30} height={30} stroke="#4C515E" />
+            <IcoProgress width={30} height={30} stroke="#4C515E" />
+            <IcoFilter width={30} height={30} stroke="#4C515E" />
+            <IcoArrowDownDouble width={30} height={30} stroke="#4C515E" />
+            <IcoNarrowRight width={30} height={30} stroke="#4C515E" />
+            <IcoGridOrder width={30} height={30} stroke="#4C515E" />
+            <IcoFileImg width={48} height={48} stroke="#4C515E" />
+            <IcoExam width={30} height={30} stroke="#4C515E" />
+            <IcoFolder width={30} height={30} stroke="#4C515E" />
+            <IcoHomework width={30} height={30} stroke="#4C515E" />
+            <IcoMultiScorm width={30} height={30} stroke="#4C515E" />
+            <IcoSurvey width={30} height={30} stroke="#4C515E" />
+            <IcoSetting01 width={30} height={30} stroke="#4C515E" />
+            <IcoReview width={30} height={30} stroke="#4C515E" />
+            <IcoSucess02 width={30} height={30} stroke="#4C515E" />
+            <IcoPaperClip width={30} height={30} stroke="#4C515E" />
+            <IcoPpt width={30} height={30} stroke="#4C515E" />
           </div>
         </div>
 
