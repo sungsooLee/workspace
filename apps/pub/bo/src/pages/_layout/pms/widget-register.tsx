@@ -9,7 +9,16 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { IcoFormRequired } from '@learnway/icons';
 
-import { Button, Checkbox, ContentsRow, Input, RadioGroup, Switch, Textarea } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  ContentsRow,
+  Input,
+  RadioGroup,
+  Switch,
+  Textarea,
+  CheckboxGroupFormField,
+} from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/widget-register')({
   component: RouteComponent,
@@ -87,7 +96,16 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={dynamicFormStyles.check_wrap}></div>
+                <div className={dynamicFormStyles.check_wrap}>
+                  <CheckboxGroupFormField
+                    options={[
+                      { value: 'all', label: '전체' },
+                      { value: 'pc', label: 'PC' },
+                      { value: 'mobile', label: 'Mobile' },
+                    ]}
+                    value={['all']}
+                  />
+                </div>
               </div>
             </div>
             {/* form_item */}

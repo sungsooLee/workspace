@@ -1,5 +1,5 @@
 .nlp--select {
   button {
-    @apply !border-[var(--gray5)];
+    @apply h-[40px] rounded-[8px] !border-[var(--gray5)] !pl-[16px] !pr-[10px];
   }
 }

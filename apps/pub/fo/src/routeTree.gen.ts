@@ -64,6 +64,7 @@ import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
+import { Route as GuideGuideResultImport } from './pages/_guide/guide/result'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
@@ -71,6 +72,7 @@ import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
+import { Route as GuideGuideNoticeImport } from './pages/_guide/guide/notice'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
@@ -419,6 +421,12 @@ const GuideGuideSelectRoute = GuideGuideSelectImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideResultRoute = GuideGuideResultImport.update({
+  id: '/guide/result',
+  path: '/guide/result',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideRespondRoute = GuideGuideRespondImport.update({
   id: '/guide/respond',
   path: '/guide/respond',
@@ -458,6 +466,12 @@ const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
 const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
   id: '/guide/optionCard',
   path: '/guide/optionCard',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideNoticeRoute = GuideGuideNoticeImport.update({
+  id: '/guide/notice',
+  path: '/guide/notice',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -874,6 +888,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideModalImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/notice': {
+      id: '/_guide/guide/notice'
+      path: '/guide/notice'
+      fullPath: '/guide/notice'
+      preLoaderRoute: typeof GuideGuideNoticeImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/optionCard': {
       id: '/_guide/guide/optionCard'
       path: '/guide/optionCard'
@@ -921,6 +942,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/respond'
       fullPath: '/guide/respond'
       preLoaderRoute: typeof GuideGuideRespondImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/result': {
+      id: '/_guide/guide/result'
+      path: '/guide/result'
+      fullPath: '/guide/result'
+      preLoaderRoute: typeof GuideGuideResultImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/select': {
@@ -1193,6 +1221,7 @@ interface GuideRouteChildren {
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideMobileRoute: typeof GuideGuideMobileRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideNoticeRoute: typeof GuideGuideNoticeRoute
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
@@ -1200,6 +1229,7 @@ interface GuideRouteChildren {
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
+  GuideGuideResultRoute: typeof GuideGuideResultRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
@@ -1230,6 +1260,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideMobileRoute: GuideGuideMobileRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideNoticeRoute: GuideGuideNoticeRoute,
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
@@ -1237,6 +1268,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
+  GuideGuideResultRoute: GuideGuideResultRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
@@ -1347,6 +1379,7 @@ export interface FileRoutesByFullPath {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/notice': typeof GuideGuideNoticeRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
@@ -1354,6 +1387,7 @@ export interface FileRoutesByFullPath {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/result': typeof GuideGuideResultRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1426,6 +1460,7 @@ export interface FileRoutesByTo {
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/notice': typeof GuideGuideNoticeRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
@@ -1433,6 +1468,7 @@ export interface FileRoutesByTo {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/result': typeof GuideGuideResultRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1508,6 +1544,7 @@ export interface FileRoutesById {
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/mobile': typeof GuideGuideMobileRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
+  '/_guide/guide/notice': typeof GuideGuideNoticeRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
@@ -1515,6 +1552,7 @@ export interface FileRoutesById {
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
+  '/_guide/guide/result': typeof GuideGuideResultRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
@@ -1589,6 +1627,7 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/notice'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
@@ -1596,6 +1635,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/result'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1667,6 +1707,7 @@ export interface FileRouteTypes {
     | '/guide/layout'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/notice'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
@@ -1674,6 +1715,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/result'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1747,6 +1789,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/layout'
     | '/_guide/guide/mobile'
     | '/_guide/guide/modal'
+    | '/_guide/guide/notice'
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
@@ -1754,6 +1797,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
+    | '/_guide/guide/result'
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
@@ -1859,6 +1903,7 @@ export const routeTree = rootRoute
         "/_guide/guide/layout",
         "/_guide/guide/mobile",
         "/_guide/guide/modal",
+        "/_guide/guide/notice",
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
@@ -1866,6 +1911,7 @@ export const routeTree = rootRoute
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
+        "/_guide/guide/result",
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
@@ -2062,6 +2108,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/modal.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/notice": {
+      "filePath": "_guide/guide/notice.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/optionCard": {
       "filePath": "_guide/guide/optionCard.tsx",
       "parent": "/_guide"
@@ -2088,6 +2138,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/respond": {
       "filePath": "_guide/guide/respond.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/result": {
+      "filePath": "_guide/guide/result.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/select": {
