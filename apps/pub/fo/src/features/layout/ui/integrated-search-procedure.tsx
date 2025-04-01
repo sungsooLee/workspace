@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect';
 
 import { IcoArrowForward } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/features/integrated-search/integrated-search-procedure.module.css';
+import styles from './integrated-search-procedure.module.css';
 
 const IntegratedSearchProcedureComponent = () => {
   return (
