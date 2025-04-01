@@ -104,7 +104,6 @@ export const TemplateCustomAction: any = (args: any) => {
         </>
       ),
     });
-    console.log(data);
   };
   return (
     <div>
@@ -113,7 +112,7 @@ export const TemplateCustomAction: any = (args: any) => {
     </div>
   );
 };
-TemplateCustomAction.storyName = '상단 액션 버튼';
+TemplateCustomAction.storyName = '헤더 사용자 버튼';
 
 /**
  * Multi Modal
