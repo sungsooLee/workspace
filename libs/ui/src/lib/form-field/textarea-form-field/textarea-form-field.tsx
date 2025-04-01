@@ -1,7 +1,7 @@
 import { ChangeEvent, forwardRef } from 'react';
-import { Textarea } from './textarea';
+import { Textarea } from '../../textarea/textarea';
 
-export interface FormTextareaComponentProps {
+export interface TextareaFormFieldProps {
   value?: any[];
   onChange?: (value: any) => void;
 }
@@ -13,7 +13,7 @@ export interface FormTextareaComponentProps {
  * @param props
  * @constructor
  */
-const FormTextareaComponent = forwardRef<HTMLElement, FormTextareaComponentProps>(
+const TextareaFormFieldComponent = forwardRef<HTMLElement, TextareaFormFieldProps>(
   ({ value, onChange: ownerOnChange, ...props }) => {
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       ownerOnChange?.(event.target.value);
@@ -22,4 +22,4 @@ const FormTextareaComponent = forwardRef<HTMLElement, FormTextareaComponentProps
     return <Textarea {...props} onChange={handleChange} />;
   },
 );
-export const FormTextarea = FormTextareaComponent;
+export const TextareaFormField = TextareaFormFieldComponent;
