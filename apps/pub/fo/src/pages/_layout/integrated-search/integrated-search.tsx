@@ -15,7 +15,7 @@ import {
   IntegratedSearchButton,
 } from '../../../features/layout';
 
-import styles from '@learnway/styles/fo/pages/_layout/integrated-search/integrated-search.module.css';
+import styles from './integrated-search.module.css';
 
 export const Route = createFileRoute('/_layout/integrated-search/integrated-search')({
   component: RouteComponent,

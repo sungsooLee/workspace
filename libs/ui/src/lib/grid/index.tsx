@@ -492,7 +492,7 @@ const Grid = forwardRef(
             multiSelectable && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
           )}
           style={{
-            height: '300px',
+            height: '240px',
             width: '100%',
           }}>
           <table

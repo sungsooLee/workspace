@@ -31,6 +31,9 @@
             @apply absolute bottom-0 left-[40px] z-[1] h-[1px] w-[calc(100%-80px)] bg-[var(--gray4)] content-[''];
           }
         }
+        .content_wrap > div {
+          @apply min-h-[calc(100vh-194px)];
+        }
       }
     }
   }
@@ -39,6 +42,17 @@
 .layout_wrap {
   .scroll_inner {
     @apply !h-[calc(100vh-140px)];
+  }
+}
+
+.content_wrap > div {
+  @apply min-h-[calc(100vh-244px)];
+}
+
+.content_wrap.scroll_hidden {
+  @apply max-h-[calc(100vh-244px)] overflow-y-hidden;
+  & > div {
+    @apply max-h-[calc(100vh-308px)] overflow-y-hidden;
   }
 }
 

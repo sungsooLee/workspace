@@ -11,7 +11,7 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-registration/course-registration-textbook.module.css';
+import styles from './course-registration-textbook.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-textbook')({
   component: RouteComponent,
 });

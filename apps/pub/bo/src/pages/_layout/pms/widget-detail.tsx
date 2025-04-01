@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 
 /* css */
@@ -9,7 +10,16 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { IcoFormRequired } from '@learnway/icons';
 
-import { Button, Checkbox, ContentsRow, Input, RadioGroup, Switch, Textarea } from '@learnway/ui';
+import {
+  // Button,
+  ContentsRow,
+  Input,
+  RadioGroup,
+  Switch,
+  Textarea,
+  Grid,
+  CheckboxGroupFormField,
+} from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/widget-detail')({
   component: RouteComponent,
@@ -24,6 +34,49 @@ function RouteComponent() {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
+
+  // grid
+  const data: any[] = [
+    {
+      Number: 1,
+      TenantName: '테넌트명',
+      Visible: 'Y',
+      Reguired: 'Y',
+    },
+  ];
+
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('Number', {
+      cell: (info) => info.getValue(),
+      header: 'NO.',
+      size: 64,
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('TenantName', {
+      cell: (info) => info.getValue(),
+      header: '테넌트명',
+      size: 1048,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('Visible', {
+      cell: (info) => info.getValue(),
+      header: '노출여부',
+      size: 200,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('Reguired', {
+      cell: (info) => info.getValue(),
+      header: '필수여부',
+      size: 200,
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<any, unknown>[];
   return (
     <form className="form_row">
       <PageContainer>
@@ -87,7 +140,16 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <div className={dynamicFormStyles.check_wrap}></div>
+                <div className={dynamicFormStyles.check_wrap}>
+                  <CheckboxGroupFormField
+                    options={[
+                      { value: 'all', label: '전체' },
+                      { value: 'pc', label: 'PC' },
+                      { value: 'mobile', label: 'Mobile' },
+                    ]}
+                    value={['all']}
+                  />
+                </div>
               </div>
             </div>
             {/* form_item */}
@@ -137,25 +199,16 @@ function RouteComponent() {
               </p>
             </div>
           </ContentsRow>
-          {/* <div className={dynamicFormStyles.size_wrap}>
-                <Input
-                  id=""
-                  type="text"
-                  placeholder="입력"
-                  value="저장 후 자동 조회"
-                  className={dynamicFormStyles.input}
-                  disabled
-                />
-                <span className={dynamicFormStyles.unit}>{'X'}</span>
-                <Input
-                  id=""
-                  type="text"
-                  placeholder="입력"
-                  value="저장 후 자동 조회"
-                  className={dynamicFormStyles.input}
-                  disabled
-                />
-              </div> */}
+          <ContentsRow>
+            <div className="grid_wrap">
+              <Grid
+                data={data}
+                columns={columns}
+                title="테넌트 정보(해당 위젯을 사용하는 테넌트)"
+                hideColumnSettings
+              />
+            </div>
+          </ContentsRow>
         </div>
       </PageContainer>
     </form>

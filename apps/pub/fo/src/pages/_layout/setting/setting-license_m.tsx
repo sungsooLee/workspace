@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 
-import styles from '@learnway/styles/fo/pages/_layout/setting/setting-license_m.module.css';
+import styles from './setting-license_m.module.css';
 
 export const Route = createFileRoute('/_layout/setting/setting-license_m')({
   component: RouteComponent,
