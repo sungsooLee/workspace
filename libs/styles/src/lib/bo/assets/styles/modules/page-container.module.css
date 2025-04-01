@@ -10,7 +10,7 @@
   .content_wrap {
     @apply relative w-full px-[40px];
     .content {
-      @apply box-border flex w-full items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[32px];
+      @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[32px];
     }
   }
 

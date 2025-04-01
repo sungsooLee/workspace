@@ -103,6 +103,7 @@ function RouteComponent() {
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: 'Mobile' },
                     ]}
+                    value={['all']}
                   />
                 </div>
               </div>
