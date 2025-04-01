@@ -90,3 +90,9 @@
     @apply !min-w-[75px];
   }
 }
+.size_wrap {
+  @apply flex items-center;
+  .unit {
+    @apply body_bo_2_r flex w-[25px] shrink-0 items-center justify-center text-[var(--gray8)];
+  }
+}

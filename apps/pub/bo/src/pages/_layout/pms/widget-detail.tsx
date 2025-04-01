@@ -11,7 +11,7 @@ import { IcoFormRequired } from '@learnway/icons';
 
 import { Button, Checkbox, ContentsRow, Input, RadioGroup, Switch, Textarea } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/pms/widget-register')({
+export const Route = createFileRoute('/_layout/pms/widget-detail')({
   component: RouteComponent,
 });
 
@@ -44,7 +44,7 @@ function RouteComponent() {
                   id="name-widget"
                   type="text"
                   placeholder="입력"
-                  value=""
+                  value="공틍-My 학습현황"
                   className={formStyles.input}
                   maxLength={150}
                 />
@@ -67,7 +67,7 @@ function RouteComponent() {
                   rows={5}
                   cols={33}
                   resize="none"
-                  value=""
+                  value="개인별 학습현황을 보여주는 리스트입니다."
                   placeholder="입력"
                   maxLength={2000}
                   size={'sm'}
@@ -138,24 +138,24 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {/* <div className={dynamicFormStyles.size_wrap}>
-            <Input
-              id=""
-              type="text"
-              placeholder="입력"
-              value="저장 후 자동 조회"
-              className={dynamicFormStyles.input}
-              disabled
-            />
-            <span className={dynamicFormStyles.unit}>{'X'}</span>
-            <Input
-              id=""
-              type="text"
-              placeholder="입력"
-              value="저장 후 자동 조회"
-              className={dynamicFormStyles.input}
-              disabled
-            />
-          </div> */}
+                <Input
+                  id=""
+                  type="text"
+                  placeholder="입력"
+                  value="저장 후 자동 조회"
+                  className={dynamicFormStyles.input}
+                  disabled
+                />
+                <span className={dynamicFormStyles.unit}>{'X'}</span>
+                <Input
+                  id=""
+                  type="text"
+                  placeholder="입력"
+                  value="저장 후 자동 조회"
+                  className={dynamicFormStyles.input}
+                  disabled
+                />
+              </div> */}
         </div>
       </PageContainer>
     </form>
