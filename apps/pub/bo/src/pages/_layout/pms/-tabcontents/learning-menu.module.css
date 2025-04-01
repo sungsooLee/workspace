@@ -4,16 +4,17 @@
     @apply flex w-full justify-between pt-[32px];
     .inner {
       @apply w-[calc(50%-32px)];
+      .inner_contents {
+        @apply scrollbar max-h-[calc(100%-210px)] overflow-y-auto;
+      }
     }
     .btn_wrap {
       @apply inline-flex items-center;
-      &.type_text {
-        button {
-          @apply !font-normal;
-          & + button {
-            &::before {
-              @apply mr-[16px] inline-flex h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
-            }
+      button {
+        @apply !font-normal;
+        &.btn_text + .btn_text {
+          &::before {
+            @apply mr-[16px] inline-flex h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
           }
         }
       }

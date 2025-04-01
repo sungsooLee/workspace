@@ -10,8 +10,9 @@ import { cn } from '@learnway/shared';
 interface PageContainerComponentProps {
   children: ReactNode;
   showFavoriteButton?: boolean;
-  notice?: boolean;
-  tabs?: boolean;
+  notice?: boolean; // 화면내에 Notice 있는 경우
+  tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
+  scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
 }
 
 function PageContainerComponent({
@@ -19,6 +20,7 @@ function PageContainerComponent({
   showFavoriteButton = true,
   notice = false,
   tabs = false,
+  scrollHidden = false,
 }: PageContainerComponentProps) {
   // const { t } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(true);
@@ -111,6 +113,7 @@ function PageContainerComponent({
             styles.content_wrap,
             tabs && 'case_tabs',
             notice && 'case_notice',
+            scrollHidden && 'scroll_hidden',
             'content_wrap',
           )}>
           {/* contents */}

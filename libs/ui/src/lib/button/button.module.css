@@ -163,7 +163,7 @@
     @apply bg-[var(--gray8)];
   }
   &:disabled {
-    @apply bg-[var(--gray7)] text-[var(--gray5)];
+    @apply bg-[var(--gray3)] text-[var(--gray6)];
   }
 }
 .point {
@@ -190,7 +190,7 @@
     @apply bg-[var(--gray1)] text-[var(--gray9)];
   }
   &:disabled {
-    @apply bg-white text-[var(--gray5)];
+    @apply bg-white !font-normal text-[var(--gray5)];
     svg {
       @apply stroke-[var(--gray5)];
     }

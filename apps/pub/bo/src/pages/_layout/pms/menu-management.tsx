@@ -24,7 +24,7 @@ function RouteComponent() {
     },
   ];
   return (
-    <PageContainer>
+    <PageContainer scrollHidden={true}>
       {/* main_contents */}
       <div className={styles.main_contents}>
         <Tabs items={items} type="line" size={'sm'} />
