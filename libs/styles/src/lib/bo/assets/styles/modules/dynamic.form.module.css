@@ -84,3 +84,9 @@
     }
   }
 }
+
+.radio_wrap {
+  [role='radiogroup'] > div {
+    @apply !min-w-[75px];
+  }
+}

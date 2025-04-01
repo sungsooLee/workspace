@@ -17,6 +17,9 @@
     }
     &[aria-checked='true'] {
       border-color: var(--secondary1);
+      & ~ .label {
+        @apply font-bold;
+      }
     }
     &:disabled {
       @apply bg-[var(--gray5)];
