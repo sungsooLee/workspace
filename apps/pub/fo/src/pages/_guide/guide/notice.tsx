@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_guide/guide/notice')({
 function RouteComponent() {
   return (
     <div>
-      <h2 className="guide_tit2">유의사항 Component</h2>
+      <h2 className="guide_tit2">유의사항 Page Component</h2>
       <p className="loc css">@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css</p>
       <div className="info">
         위아래 여백은 각 모듈 css에서 정의 styles.signup_noti (이름변경 가능)

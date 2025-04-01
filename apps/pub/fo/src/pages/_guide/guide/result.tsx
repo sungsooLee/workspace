@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_guide/guide/result')({
 function RouteComponent() {
   return (
     <div>
-      <h2 className="guide_tit2">결과 Component</h2>
+      <h2 className="guide_tit2">결과 Page Component</h2>
       <p className="loc css">@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css</p>
       <div className="info">
         위아래 여백은 각 모듈 css에서 정의 styles.success_info (이름변경 가능)
