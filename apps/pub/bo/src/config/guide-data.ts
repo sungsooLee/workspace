@@ -326,6 +326,15 @@ export const guideData = [
     remarks: '진행중', // 비고
   },
   {
+    screenName: 'PMS/카테고리관리',
+    pageId: 'pms/category-menagement',
+    screenId: 'NLP_BO_PMS_1200',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
+  },
+  {
     screenName: 'PMS/위젯관리',
     pageId: 'pms/widget-management',
     screenId: 'NLP_BO_PMS_1310',
