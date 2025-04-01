@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
-import { RadioGroup } from './radio-group';
+import { RadioGroup } from '../../radio-group/radio-group';
 
-const FormRadioGroupComponent = forwardRef<HTMLDivElement, any>(
+const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
   ({ value, name, onChange, options, ...props }, ref) => {
     return (
       <RadioGroup
@@ -15,4 +15,4 @@ const FormRadioGroupComponent = forwardRef<HTMLDivElement, any>(
     );
   },
 );
-export const FormRadioGroup = FormRadioGroupComponent;
+export const RadioGroupFormField = RadioGroupFormFieldComponent;

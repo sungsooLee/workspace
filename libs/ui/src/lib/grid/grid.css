@@ -9,9 +9,9 @@
       @apply border-l border-t-0 border-solid;
     }
     .th_wrap {
-      @apply inline-flex h-full;
+      @apply inline-flex h-full w-full;
       .th_cell {
-        @apply body_bo_4_b relative flex h-full min-h-[40px] items-center;
+        @apply body_bo_4_b relative flex h-full min-h-[40px] w-full items-center;
       }
     }
     .nlp--checkbox {
@@ -51,6 +51,11 @@
   }
   & + .paging_wrap {
     @apply mt-[24px];
+  }
+  &.has_select_all_checkbox {
+    thead th:first-child {
+      @apply justify-center;
+    }
   }
 }
 /* Paging */

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, ChipList, useModal } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
-import { OptionCard } from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui';
 import styles from './filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
@@ -14,15 +14,18 @@ const FilterComponent = () => {
   // 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(true);
 
+  // 퍼블수정 20250331 : option card 컴포넌트 수정 value 값 추가
+  const [filterValue, setFilterValue] = useState<string[]>();
+
   const filter = [
-    { label: '클래스', value: getRandomId() },
-    { label: '동영상', value: getRandomId() },
-    { label: '이북', value: getRandomId() },
-    { label: '웹', value: getRandomId() },
-    { label: '링크', value: getRandomId() },
-    { label: '시험', value: getRandomId() },
-    { label: '라이브', value: getRandomId() },
-    { label: '패키지', value: getRandomId() },
+    { label: '클래스', value: 'a' },
+    { label: '동영상', value: 'b' },
+    { label: '이북', value: 'c' },
+    { label: '웹', value: 'd' },
+    { label: '링크', value: 'e' },
+    { label: '시험', value: 'f' },
+    { label: '라이브', value: 'g' },
+    { label: '패키지', value: 'h' },
   ];
 
   const options: any[] = [
@@ -78,7 +81,17 @@ const FilterComponent = () => {
       </div>
 
       <div className={styles.select_box}>
-        <OptionCard cols={8} options={filter} multiple className={styles.option_card} />
+        {/* 퍼블수정 20250331 : 옵션 추가 */}
+        <OptionCard
+          cols={8}
+          options={filter}
+          multiple
+          className={styles.option_card}
+          value={filterValue}
+          onOptionsSelect={(options: OptionCardItem[]) =>
+            setFilterValue(options.map((d: OptionCardItem) => d.value))
+          }
+        />
         <ChipList options={options} className={styles.chip_list} hideBorder type="line" size="lg" />
       </div>
 

@@ -19,16 +19,20 @@ import { Panel } from '@learnway/ui';
 
 // 적용방법(예시) 
 <Panel type="line" hideHeaderUnderline>
-            <p>content</p>
-          </Panel>`}
+  <p>content</p>
+</Panel>`}
           </code>
         </pre>
       </div>
-      <div className="flex_box">
-        <div className="desc">
-          <Panel type="line" hideHeaderUnderline>
-            <p>content</p>
-          </Panel>
+
+      <div className="group">
+        <h3 className="guide_tit3">박스형태 활용 예시</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Panel type="line" hideHeaderUnderline>
+              <p>content</p>
+            </Panel>
+          </div>
         </div>
       </div>
     </div>

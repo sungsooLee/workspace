@@ -73,6 +73,7 @@
             }
           }
           .option_card {
+            @apply gap-[8px];
             button {
               span {
                 @apply !text-[var(--gray8)];
@@ -86,9 +87,6 @@
             }
           }
         }
-        & + .input_area {
-          @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray3)] pt-[32px];
-        }
       }
     }
     .notice {
@@ -96,6 +94,55 @@
       dd {
         button {
           @apply label_12_500 ml-[8px] text-[var(--secondary3)] underline;
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.course {
+        @apply m-auto w-full px-[20px] pb-[80px] pt-[16px];
+        & > h2 {
+          @apply hidden;
+        }
+        .course_information {
+          @apply rounded-[8px] px-[16px] py-[16px];
+          .box {
+            &:last-child {
+              @apply hidden;
+            }
+            .date {
+              span {
+                @apply body_4_r;
+              }
+            }
+            .tit {
+              @apply body_2_b;
+            }
+          }
+        }
+        .input_wrap {
+          @apply mt-[32px] border-none px-0 py-0;
+          .input_area {
+            & + .input_area {
+              @apply mt-[24px] pt-[24px];
+            }
+          }
+        }
+        .notice {
+          @apply mt-[24px];
+          dd {
+            @apply grid;
+            button {
+              @apply ml-0 mt-[4px];
+            }
+          }
+        }
+        .btn_wrap {
+          @apply mt-0;
         }
       }
     }

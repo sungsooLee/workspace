@@ -87,27 +87,28 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
   </ContentsRow>
 
   <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>New Password</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <div className={dynamicFormStyles.item_col_full}>
-                    <Input
-                      id="name"
-                      type="password"
-                      placeholder="Password(a combination of letters, numbers & special characters, 8 to 16 characters long)"
-                      value=""
-                    />
-                    <Input id="name" type="password" placeholder="Confirm New Password" value="" />
-                  </div>
-                </div>
-              </div>
-            </ContentsRow>
+    <div className={formStyles.form_item}>
+      <label htmlFor="name" className={formStyles.form_label}>
+        <span className={formStyles.form_text}>New Password</span>
+        {/* 필수 케이스 */}
+        <span className={cn(formStyles.status, formStyles.required)}>
+          <IcoFormRequired width={14} height={14} />
+        </span>
+      </label>
+      <div className={formStyles.input_box}>
+        {/* flex 한줄 케이스 */}
+        <div className={dynamicFormStyles.item_col_full}>
+          <Input
+            id="name"
+            type="password"
+            placeholder="Password"
+            value=""
+          />
+          <Input id="name" type="password" placeholder="Confirm New Password" value="" />
+        </div>
+      </div>
+    </div>
+  </ContentsRow>
 </div>`}</code>
         </pre>
       </div>
@@ -132,7 +133,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 disabled
                 value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
               />
-              <Button variant="gray" size="sm">
+              <Button variant="gray" size="lg">
                 선택
               </Button>
             </div>
@@ -173,7 +174,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 disabled
                 placeholder="학습자원을 분류할 카테고리를 선택하세요."
               />
-              <Button variant="gray" size="sm">
+              <Button variant="gray" size="lg">
                 선택
               </Button>
             </div>
@@ -192,12 +193,11 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 rows={5}
                 cols={33}
                 resize="none"
-                placeholder="한글,영문,숫자 포함 2500자 이하"
+                placeholder="글자수 입력시 옵션 추가 maxLength={2500}"
+                maxLength={2500}
+                className={formStyles.textarea}
               />
             </div>
-            <p className={formStyles.text_limit}>
-              <em className={formStyles.num}>7</em>/2500
-            </p>
           </div>
         </ContentsRow>
         {/* row */}
@@ -213,7 +213,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
             </label>
             <div className={formStyles.input_box}>
               <Input id="name-1-5" type="text" disabled value="김현대" placeholder="" />
-              <Button variant="gray" size="sm">
+              <Button variant="gray" size="lg">
                 선택
               </Button>
             </div>
@@ -230,6 +230,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
             <div className={formStyles.input_box}>
               <Select
                 className={formStyles.select_option}
+                size="lg"
                 options={[
                   { value: 'type1', label: '+82' },
                   { value: 'type2', label: '+83' },
@@ -263,7 +264,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}>
               <div className={formStyles.input_box}>
                 <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
-                <Button variant="gray" size="sm">
+                <Button variant="gray" size="lg">
                   선택
                 </Button>
               </div>
@@ -280,7 +281,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   </label>
                   <div className={formStyles.input_box}>
                     <Input id="name-1-7-1" type="text" disabled value="김현대" placeholder="" />
-                    <Button variant="gray" size="sm">
+                    <Button variant="gray" size="lg">
                       선택
                     </Button>
                   </div>
@@ -296,6 +297,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   <div className={formStyles.input_box}>
                     <Select
                       className={formStyles.select_option}
+                      size="lg"
                       options={[
                         { value: 'type1', label: '+82' },
                         { value: 'type2', label: '+83' },
@@ -375,7 +377,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
                   resize="none"
-                  size="sm"
+                  size="lg"
                 />
               </div>
               <p className={formStyles.text_limit}>
@@ -407,7 +409,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                   resize="none"
-                  size="sm"
+                  size="lg"
                 />
               </div>
               <p className={formStyles.text_limit}>
@@ -477,6 +479,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               <div className={formStyles.input_box}>
                 <Select
                   className={cn(formStyles.select_option, formStyles.lg)}
+                  size="lg"
                   options={[
                     { value: 'language1', label: '영어' },
                     { value: 'language2', label: '한국어' },
@@ -489,7 +492,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                   value="영어자막.smi"
                 />
-                <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                   자막 변경
                 </Button>
                 <Button onlyIcon className={formStyles.btn_delete}>
@@ -499,6 +502,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               <div className={formStyles.input_box}>
                 <Select
                   className={cn(formStyles.select_option, formStyles.lg)}
+                  size="lg"
                   options={[
                     { value: 'language1', label: '영어' },
                     { value: 'language2', label: '한국어' },
@@ -510,7 +514,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                   value="영어자막2.smi"
                 />
-                <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                   자막 변경
                 </Button>
                 <Button onlyIcon className={formStyles.btn_delete}>
@@ -520,6 +524,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               <div className={formStyles.input_box}>
                 <Select
                   className={cn(formStyles.select_option, formStyles.lg)}
+                  size="lg"
                   options={[
                     { value: 'language1', label: '영어' },
                     { value: 'language2', label: '한국어' },
@@ -530,7 +535,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   readOnly
                   placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
                 />
-                <Button variant="gray" size="sm" className={formStyles.btn_edit}>
+                <Button variant="gray" size="lg" className={formStyles.btn_edit}>
                   자막 추가
                 </Button>
                 <Button onlyIcon className={formStyles.btn_delete}>
@@ -586,7 +591,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
             </label>
             <div className={cn(formStyles.input_box)}>
               <Input id="name-1-15" type="text" readOnly value="채널명" placeholder="" />
-              <Button variant="gray" size="sm">
+              <Button variant="gray" size="lg">
                 선택
               </Button>
             </div>

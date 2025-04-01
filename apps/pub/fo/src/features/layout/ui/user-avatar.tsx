@@ -83,6 +83,10 @@ const PopoverContent = () => {
         <li>
           <Link to={''}>프로필 작성</Link>
         </li>
+        {/* 퍼블수정 20250328 : 로그인 설정 추가 */}
+        <li>
+          <Link to="/my/setting-sns">SNS 로그인 설정</Link>
+        </li>
       </ul>
       <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
         <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>

@@ -560,7 +560,11 @@ const Grid = forwardRef(
                           header.column.columnDef.meta?.headerAlign ||
                           header.column.columnDef.meta?.align ||
                           'left',
-                        display: 'flex',
+                        // justifyContent:
+                        //   header.column.columnDef.meta?.headerAlign ||
+                        //   header.column.columnDef.meta?.align ||
+                        //   'justify-start',
+                        display: 'block',
                         width: header.getSize(),
                       }}
                       className="thead_th">
@@ -571,6 +575,13 @@ const Grid = forwardRef(
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
                             'font-bold uppercase text-[#5C636E]',
                           )}
+                          style={{
+                            justifyContent:
+                              header.column.columnDef.meta?.headerAlign ||
+                              header.column.columnDef.meta?.align ||
+                              'justify-start',
+                            width: header.getSize(),
+                          }}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
                             ? null

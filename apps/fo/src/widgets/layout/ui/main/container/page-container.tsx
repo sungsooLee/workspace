@@ -1,9 +1,10 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '../../../../features/platform';
+import { useActiveMenuDepthState } from '../../../../../features/platform';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
-import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import styles from './page-container.module.css';
+import { Breadcrumbs } from '../../container/breadcrumbs/breadcrumbs';
+
+import styles from '@learnway/styles/fo/widgets/layout/ui/main/container/page-container.module.css';
 
 interface PageContainerComponentProps {
   children: ReactNode;

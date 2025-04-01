@@ -28,45 +28,58 @@ import { RadioGroup } from '@learnway/ui';
     { value: 'type1-2', label: 'bbbbb' },
     { value: 'type1-3', label: 'ccccc' },
   ]}
-/>`}
+/>
+
+// 세로 orientation="vertical"
+<RadioGroup
+  options={[
+    { value: 'type1', label: 'aaaaa' },
+    { value: 'type1-2', label: 'bbbbb' },
+    { value: 'type1-3', label: 'ccccc' },
+  ]}
+  orientation="vertical"
+/>
+`}
           </code>
         </pre>
       </div>
-      <h3 className="guide_tit3">Basic</h3>
-      <div className="flex_box">
-        <div className="desc">
-          <RadioGroup
-            options={[
-              { value: 'type1', label: 'aaaaa' },
-              { value: 'type1-2', label: 'bbbbb' },
-              { value: 'type1-3', label: 'ccccc' },
-            ]}
-          />
+      <div className="group">
+        <h3 className="guide_tit3">Basic</h3>
+        <div className="flex_box col">
+          <div className="desc">
+            <RadioGroup
+              options={[
+                { value: 'type1', label: 'aaaaa' },
+                { value: 'type1-2', label: 'bbbbb' },
+                { value: 'type1-3', label: 'ccccc' },
+              ]}
+              orientation="vertical"
+            />
+          </div>
+          <div className="desc">
+            <RadioGroup
+              options={[
+                { value: 'type2-1', label: 'aaaaa' },
+                { value: 'type2-2', label: 'bbbbb' },
+                { value: 'type2-3', label: 'ccccc' },
+              ]}
+              size="md"
+            />
+          </div>
+          <div className="desc">
+            <RadioGroup
+              options={[
+                { value: 'type3-1', label: 'aaaaa' },
+                { value: 'type3-2', label: 'bbbbb' },
+                { value: 'type3-3', label: 'ccccc' },
+              ]}
+              size="sm"
+            />
+          </div>
         </div>
-        <div className="desc">
-          <RadioGroup
-            options={[
-              { value: 'type2-1', label: 'aaaaa' },
-              { value: 'type2-2', label: 'bbbbb' },
-              { value: 'type2-3', label: 'ccccc' },
-            ]}
-            size="md"
-          />
-        </div>
-        <div className="desc">
-          <RadioGroup
-            options={[
-              { value: 'type3-1', label: 'aaaaa' },
-              { value: 'type3-2', label: 'bbbbb' },
-              { value: 'type3-3', label: 'ccccc' },
-            ]}
-            size="sm"
-          />
-        </div>
-      </div>
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`<RadioGroup
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<RadioGroup
   options={[
     { value: 'type1', label: 'aaaaa' },
     { value: 'type1-2', label: 'bbbbb' },
@@ -91,24 +104,27 @@ import { RadioGroup } from '@learnway/ui';
   ]}
   size="sm"
 />`}</code>
-        </pre>
-      </div>
-      <h3 className="guide_tit3">disabled</h3>
-      <div className="flex_box">
-        <div className="desc">
-          <RadioGroup
-            options={[
-              { value: 'type4-1', label: 'ddd' },
-              { value: 'type4-2', label: 'eeee' },
-              { value: 'type4-3', label: 'ffff' },
-            ]}
-            disabled
-          />
+          </pre>
         </div>
       </div>
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`<RadioGroup
+
+      <div className="group">
+        <h3 className="guide_tit3">disabled</h3>
+        <div className="flex_box col">
+          <div className="desc">
+            <RadioGroup
+              options={[
+                { value: 'type4-1', label: 'ddd' },
+                { value: 'type4-2', label: 'eeee' },
+                { value: 'type4-3', label: 'ffff' },
+              ]}
+              disabled
+            />
+          </div>
+        </div>
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<RadioGroup
   options={[
     { value: 'type4-1', label: 'ddd' },
     { value: 'type4-2', label: 'eeee' },
@@ -116,7 +132,8 @@ import { RadioGroup } from '@learnway/ui';
   ]}
   disabled
 />`}</code>
-        </pre>
+          </pre>
+        </div>
       </div>
     </div>
   );

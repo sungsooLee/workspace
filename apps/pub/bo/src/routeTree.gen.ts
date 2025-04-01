@@ -43,12 +43,17 @@ import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step
 import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
 import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
 import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
+import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
+import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
+import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget-detail'
+import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
 import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
+import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/learning/popup-fileupload'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
@@ -57,6 +62,7 @@ import { Route as LayoutContentsLayout02Import } from './pages/_layout/contents/
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
@@ -75,11 +81,12 @@ import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/option
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
+import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
-import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/fileUpload'
+import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/file-upload'
 import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
 import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
@@ -286,6 +293,31 @@ const GuideGuideIndexRoute = GuideGuideIndexImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const LayoutPmsWidgetRegisterRoute = LayoutPmsWidgetRegisterImport.update({
+  id: '/pms/widget-register',
+  path: '/pms/widget-register',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsWidgetManagementRoute = LayoutPmsWidgetManagementImport.update({
+  id: '/pms/widget-management',
+  path: '/pms/widget-management',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailImport.update({
+  id: '/pms/widget-detail',
+  path: '/pms/widget-detail',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPmsPopupWidgetManagementRoute =
+  LayoutPmsPopupWidgetManagementImport.update({
+    id: '/pms/popup-widget-management',
+    path: '/pms/popup-widget-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
   id: '/pms/menu-management',
   path: '/pms/menu-management',
@@ -321,6 +353,13 @@ const LayoutLearningPopupLearningRegisterationRoute =
   LayoutLearningPopupLearningRegisterationImport.update({
     id: '/learning/popup-learningRegisteration',
     path: '/learning/popup-learningRegisteration',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningPopupFileuploadRoute =
+  LayoutLearningPopupFileuploadImport.update({
+    id: '/learning/popup-fileupload',
+    path: '/learning/popup-fileupload',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -371,6 +410,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTextareaRoute = GuideGuideTextareaImport.update({
+  id: '/guide/textarea',
+  path: '/guide/textarea',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -482,6 +527,12 @@ const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideInputRoute = GuideGuideInputImport.update({
+  id: '/guide/input',
+  path: '/guide/input',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   id: '/guide/info',
   path: '/guide/info',
@@ -507,8 +558,8 @@ const GuideGuideFormRoute = GuideGuideFormImport.update({
 } as any)
 
 const GuideGuideFileUploadRoute = GuideGuideFileUploadImport.update({
-  id: '/guide/fileUpload',
-  path: '/guide/fileUpload',
+  id: '/guide/file-upload',
+  path: '/guide/file-upload',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -895,10 +946,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideEmptyImport
       parentRoute: typeof GuideImport
     }
-    '/_guide/guide/fileUpload': {
-      id: '/_guide/guide/fileUpload'
-      path: '/guide/fileUpload'
-      fullPath: '/guide/fileUpload'
+    '/_guide/guide/file-upload': {
+      id: '/_guide/guide/file-upload'
+      path: '/guide/file-upload'
+      fullPath: '/guide/file-upload'
       preLoaderRoute: typeof GuideGuideFileUploadImport
       parentRoute: typeof GuideImport
     }
@@ -928,6 +979,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/info'
       fullPath: '/guide/info'
       preLoaderRoute: typeof GuideGuideInfoImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/input': {
+      id: '/_guide/guide/input'
+      path: '/guide/input'
+      fullPath: '/guide/input'
+      preLoaderRoute: typeof GuideGuideInputImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/input-timer': {
@@ -1056,6 +1114,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTestImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/textarea': {
+      id: '/_guide/guide/textarea'
+      path: '/guide/textarea'
+      fullPath: '/guide/textarea'
+      preLoaderRoute: typeof GuideGuideTextareaImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -1112,6 +1177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningMediaRegisterImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/popup-fileupload': {
+      id: '/_layout/learning/popup-fileupload'
+      path: '/learning/popup-fileupload'
+      fullPath: '/learning/popup-fileupload'
+      preLoaderRoute: typeof LayoutLearningPopupFileuploadImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/popup-learningRegisteration': {
       id: '/_layout/learning/popup-learningRegisteration'
       path: '/learning/popup-learningRegisteration'
@@ -1152,6 +1224,34 @@ declare module '@tanstack/react-router' {
       path: '/pms/menu-management'
       fullPath: '/pms/menu-management'
       preLoaderRoute: typeof LayoutPmsMenuManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/popup-widget-management': {
+      id: '/_layout/pms/popup-widget-management'
+      path: '/pms/popup-widget-management'
+      fullPath: '/pms/popup-widget-management'
+      preLoaderRoute: typeof LayoutPmsPopupWidgetManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-detail': {
+      id: '/_layout/pms/widget-detail'
+      path: '/pms/widget-detail'
+      fullPath: '/pms/widget-detail'
+      preLoaderRoute: typeof LayoutPmsWidgetDetailImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-management': {
+      id: '/_layout/pms/widget-management'
+      path: '/pms/widget-management'
+      fullPath: '/pms/widget-management'
+      preLoaderRoute: typeof LayoutPmsWidgetManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/widget-register': {
+      id: '/_layout/pms/widget-register'
+      path: '/pms/widget-register'
+      fullPath: '/pms/widget-register'
+      preLoaderRoute: typeof LayoutPmsWidgetRegisterImport
       parentRoute: typeof LayoutImport
     }
     '/_guide/guide/': {
@@ -1248,6 +1348,7 @@ interface GuideRouteChildren {
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputRoute: typeof GuideGuideInputRoute
   GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
@@ -1266,6 +1367,7 @@ interface GuideRouteChildren {
   GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTestRoute: typeof GuideGuideTestRoute
+  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -1290,6 +1392,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputRoute: GuideGuideInputRoute,
   GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
@@ -1308,6 +1411,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTestRoute: GuideGuideTestRoute,
+  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -1325,12 +1429,17 @@ interface LayoutRouteChildren {
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
+  LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
+  LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
+  LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
+  LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
+  LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
   LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
 }
 
@@ -1344,6 +1453,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
+  LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
   LayoutLearningPopupLearningSettingRoute:
@@ -1352,6 +1462,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
+  LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
+  LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
+  LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
+  LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
   LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
 }
 
@@ -1400,11 +1514,12 @@ export interface FileRoutesByFullPath {
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
-  '/guide/fileUpload': typeof GuideGuideFileUploadRoute
+  '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -1423,6 +1538,7 @@ export interface FileRoutesByFullPath {
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/test': typeof GuideGuideTestRoute
+  '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -1431,12 +1547,17 @@ export interface FileRoutesByFullPath {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1483,11 +1604,12 @@ export interface FileRoutesByTo {
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
-  '/guide/fileUpload': typeof GuideGuideFileUploadRoute
+  '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
   '/guide/info': typeof GuideGuideInfoRoute
+  '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
@@ -1506,6 +1628,7 @@ export interface FileRoutesByTo {
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/test': typeof GuideGuideTestRoute
+  '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -1514,12 +1637,17 @@ export interface FileRoutesByTo {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
@@ -1569,11 +1697,12 @@ export interface FileRoutesById {
   '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
   '/_guide/guide/empty': typeof GuideGuideEmptyRoute
-  '/_guide/guide/fileUpload': typeof GuideGuideFileUploadRoute
+  '/_guide/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
+  '/_guide/guide/input': typeof GuideGuideInputRoute
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
@@ -1592,6 +1721,7 @@ export interface FileRoutesById {
   '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/test': typeof GuideGuideTestRoute
+  '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
@@ -1600,12 +1730,17 @@ export interface FileRoutesById {
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/_layout/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/_layout/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
+  '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
+  '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
@@ -1654,11 +1789,12 @@ export interface FileRouteTypes {
     | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/empty'
-    | '/guide/fileUpload'
+    | '/guide/file-upload'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/info'
+    | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/modal'
@@ -1677,6 +1813,7 @@ export interface FileRouteTypes {
     | '/guide/table'
     | '/guide/tabs'
     | '/guide/test'
+    | '/guide/textarea'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/contents/layout'
@@ -1685,12 +1822,17 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/menu-management'
+    | '/pms/popup-widget-management'
+    | '/pms/widget-detail'
+    | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
@@ -1736,11 +1878,12 @@ export interface FileRouteTypes {
     | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/empty'
-    | '/guide/fileUpload'
+    | '/guide/file-upload'
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
     | '/guide/info'
+    | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
     | '/guide/modal'
@@ -1759,6 +1902,7 @@ export interface FileRouteTypes {
     | '/guide/table'
     | '/guide/tabs'
     | '/guide/test'
+    | '/guide/textarea'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/contents/layout'
@@ -1767,12 +1911,17 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/menu-management'
+    | '/pms/popup-widget-management'
+    | '/pms/widget-detail'
+    | '/pms/widget-management'
+    | '/pms/widget-register'
     | '/guide'
     | '/menu3'
   id:
@@ -1820,11 +1969,12 @@ export interface FileRouteTypes {
     | '/_guide/guide/date-picker'
     | '/_guide/guide/drop-down'
     | '/_guide/guide/empty'
-    | '/_guide/guide/fileUpload'
+    | '/_guide/guide/file-upload'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
     | '/_guide/guide/info'
+    | '/_guide/guide/input'
     | '/_guide/guide/input-timer'
     | '/_guide/guide/layout'
     | '/_guide/guide/modal'
@@ -1843,6 +1993,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/table'
     | '/_guide/guide/tabs'
     | '/_guide/guide/test'
+    | '/_guide/guide/textarea'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/contents/layout'
@@ -1851,12 +2002,17 @@ export interface FileRouteTypes {
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
+    | '/_layout/learning/popup-fileupload'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/learning/popup-learningSetting'
     | '/_layout/learning/popup-upload'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_layout/pms/menu-management'
+    | '/_layout/pms/popup-widget-management'
+    | '/_layout/pms/widget-detail'
+    | '/_layout/pms/widget-management'
+    | '/_layout/pms/widget-register'
     | '/_guide/guide/'
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
@@ -1934,11 +2090,12 @@ export const routeTree = rootRoute
         "/_guide/guide/date-picker",
         "/_guide/guide/drop-down",
         "/_guide/guide/empty",
-        "/_guide/guide/fileUpload",
+        "/_guide/guide/file-upload",
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
         "/_guide/guide/info",
+        "/_guide/guide/input",
         "/_guide/guide/input-timer",
         "/_guide/guide/layout",
         "/_guide/guide/modal",
@@ -1957,6 +2114,7 @@ export const routeTree = rootRoute
         "/_guide/guide/table",
         "/_guide/guide/tabs",
         "/_guide/guide/test",
+        "/_guide/guide/textarea",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -1974,12 +2132,17 @@ export const routeTree = rootRoute
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
+        "/_layout/learning/popup-fileupload",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/learning/popup-learningSetting",
         "/_layout/learning/popup-upload",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/pms/menu-management",
+        "/_layout/pms/popup-widget-management",
+        "/_layout/pms/widget-detail",
+        "/_layout/pms/widget-management",
+        "/_layout/pms/widget-register",
         "/_layout/menu3/"
       ]
     },
@@ -2143,8 +2306,8 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/empty.tsx",
       "parent": "/_guide"
     },
-    "/_guide/guide/fileUpload": {
-      "filePath": "_guide/guide/fileUpload.tsx",
+    "/_guide/guide/file-upload": {
+      "filePath": "_guide/guide/file-upload.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/form": {
@@ -2161,6 +2324,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/info": {
       "filePath": "_guide/guide/info.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/input": {
+      "filePath": "_guide/guide/input.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/input-timer": {
@@ -2235,6 +2402,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/test.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/textarea": {
+      "filePath": "_guide/guide/textarea.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/tooltip": {
       "filePath": "_guide/guide/tooltip.tsx",
       "parent": "/_guide"
@@ -2267,6 +2438,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/learning/mediaRegister.tsx",
       "parent": "/_layout"
     },
+    "/_layout/learning/popup-fileupload": {
+      "filePath": "_layout/learning/popup-fileupload.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/popup-learningRegisteration": {
       "filePath": "_layout/learning/popup-learningRegisteration.tsx",
       "parent": "/_layout"
@@ -2289,6 +2464,22 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-management": {
       "filePath": "_layout/pms/menu-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/popup-widget-management": {
+      "filePath": "_layout/pms/popup-widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-detail": {
+      "filePath": "_layout/pms/widget-detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-management": {
+      "filePath": "_layout/pms/widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/widget-register": {
+      "filePath": "_layout/pms/widget-register.tsx",
       "parent": "/_layout"
     },
     "/_guide/guide/": {

@@ -91,6 +91,8 @@ export const TemplateImage: any = (args: any) => {
       deletable
       draggable
       options={imageOptions}
+      hideBorder
+      hideItemBorder={false}
       value={value}
       valueField={'id'}
       itemRenderer={(option: any) => (

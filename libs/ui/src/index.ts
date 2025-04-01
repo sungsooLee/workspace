@@ -25,8 +25,6 @@ export * from './lib/carousel/carousel';
 
 // checkbox
 export * from './lib/checkbox/checkbox';
-export * from './lib/checkbox/form-checkbox';
-export * from './lib/checkbox/form-checkbox-group';
 
 // chips
 export * from './lib/chips/chip';
@@ -65,13 +63,15 @@ export * from './lib/list/type';
 
 // file-upload
 export * from './lib/file-upload/thumbnail-image-upload';
-export * from './lib/file-upload/form-thumbnail-image-upload';
 export * from './lib/file-upload/uppy-file-upload';
 
 // form-field
+export * from './lib/form-field/checkbox-group-form-field/checkbox-group-form-field';
 export * from './lib/form-field/input-modal-selector-form-field/input-modal-selector-form-field';
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
 export * from './lib/form-field/list-modal-selector-form-field/list-modal-selector-form-field';
+export * from './lib/form-field/radio-group-form-field/radio-group-form-field';
+export * from './lib/form-field/textarea-form-field/textarea-form-field';
 
 // modal
 export * from './lib/modal/modal';
@@ -100,7 +100,6 @@ export * from './lib/progress/progress';
 
 // radio
 export * from './lib/radio-group/radio-group';
-export * from './lib/radio-group/form-radio-group';
 export * from './lib/radio-card/radio-card';
 
 // select
@@ -145,7 +144,6 @@ export * from './lib/tree-view/type';
 
 // textarea
 export * from './lib/textarea/textarea';
-export * from './lib/textarea/form-textarea';
 
 // toast
 export * from './lib/toast/toast';
@@ -161,3 +159,5 @@ export * from './lib/phone-number/phone-number-form-filed';
 
 export * from './lib/dynamic-form-field/dynamic-form-field';
 export * from './lib/dynamic-form-field/type';
+
+export * from './lib/html-content/html-content';

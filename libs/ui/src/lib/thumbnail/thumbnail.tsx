@@ -32,6 +32,8 @@ export interface ThumbnailComponentProps {
   showDeleteBtn?: boolean; // delete button
   /** 선택 여부 (check style 에 사용) */
   selected?: boolean;
+  /** 카운트 체크 여부 */
+  count?: boolean;
   /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => any;
 }

@@ -1,6 +1,6 @@
 import { memo, ReactNode, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './page-container.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/main/container/page-container.module.css';
 
 interface PageContainerComponentProps {
   children: ReactNode;
