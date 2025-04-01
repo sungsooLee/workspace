@@ -5,9 +5,10 @@ import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { useFetchAuthUser, useLogoutUser } from '@learnway/config';
+import { cn } from '@learnway/shared';
+import { IcLogOut01 } from '@learnway/icons';
 
 import styles from './user-avatar.module.css';
-import { IcLogOut01 } from '@learnway/icons';
 
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 
@@ -127,13 +128,13 @@ const PopoverContent = () => {
   );
 };
 
-const AvatarCompoment = () => {
+const AvatarCompoment = ({ className }: any) => {
   const { data } = useFetchAuthUser();
 
   return (
     <Popover
       popoverContent={<PopoverContent />}
-      className={styles.btn_avatar}
+      className={cn(styles.btn_avatar, className)}
       side="bottom"
       align="end"
       sideOffset={10}>

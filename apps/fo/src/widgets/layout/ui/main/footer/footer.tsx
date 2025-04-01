@@ -39,6 +39,9 @@ function FooterComponent() {
                 <li>
                   <TermsButton termsType="PRIVACY_POLICY" />
                 </li>
+                <li>
+                  <Link to={'/license'}>오픈소스 라이선스</Link>
+                </li>
               </ul>
             </div>
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import { ModalWrapper } from '@learnway/ui';
+import { ModalWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/config';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
@@ -27,8 +27,14 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
+  const { closeAll } = useModalStore();
+
   useRenewalMenuStateFromRouting();
-  useGlobalRouterEvent();
+  useGlobalRouterEvent({
+    onBeforeLoad: () => {
+      closeAll();
+    },
+  });
 
   return (
     <>

@@ -9,7 +9,7 @@ import { useCurrentRoute } from '@learnway/config';
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
 
-import styles from './auth-layout.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-layout.module.css';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
 
   const { meta } = useCurrentRoute();
-  console.log('AuthLayoutComponent', meta, meta.mobile.showHeader);
+
   return (
     <>
       {isMobile ? meta.mobile.showHeader && <AuthHeader /> : <AuthHeader />}

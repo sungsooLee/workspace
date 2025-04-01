@@ -4,7 +4,9 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Button, useModal } from '@learnway/ui';
 
-import styles from './auth-footer.module.css';
+//import styles from './auth-footer.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-footer/auth-footer.module.css';
+
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../../features/auth';
 import { isSigninPage } from '../../../../../../features/platform';
 

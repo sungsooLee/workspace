@@ -1,18 +1,21 @@
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@tanstack/react-router';
 
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
-import { IcoCheck, IcoArrowForward } from '@learnway/icons';
+import { IcoReview, IcoMybook, IcoHome03, IcoSetting01 } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateUser } from '@learnway/config';
 
-import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
+import { UserAvatar } from '../../ui/user-avatar/user-avatar';
+
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-modal.module.css';
 
 const NavigateModalComponent = () => {
   const { t } = useTranslation();
   const [tip, setTip] = useState<number | null>(null);
 
-  const { confirm } = useModal();
+  const { open: openModal, confirm } = useModal();
   const { data } = useFetchAuthUser();
   const { updateActiveTenant, updateMainTenant } = useUpdateUser();
 
@@ -31,52 +34,100 @@ const NavigateModalComponent = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{'테넌트 선택'}</ModalTitle>
+      <ModalTitle>
+        {' '}
+        <div className={styles.header}>
+          <Link to={'/'}>
+            <IcoHome03 width={24} height={24} stroke="#131c30"></IcoHome03>
+          </Link>
+          <Link to={'/setting'}>
+            <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
+          </Link>
+        </div>
+      </ModalTitle>
       <ModalBody>
-        <div className={`${styles.start} ${styles.tenant_content}`}>
-          <div className={styles.tenant_wrap}>
-            <ul className={styles.tenant_list}>
-              {(data?.tenants ?? []).map((tenant, idx) => (
-                <li>
-                  <Button
-                    key={idx}
-                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantId ? styles.active : ''}`}
-                    onClick={() => handleChangeTenant(tenant.tenantId)}>
-                    <span className={styles.label}>
-                      <i>
-                        <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
-                      </i>
-                      대표
-                    </span>
-                    {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
-                    <span className={styles.txt}>
-                      {tenant.tenantName}
-                      {isMobile ? (
-                        <i>
-                          <IcoArrowForward
-                            width={20}
-                            height={20}
-                            stroke="#6f798b"></IcoArrowForward>
-                        </i>
-                      ) : null}
-                    </span>
-                    {tip === tenant.tenantId ? (
-                      <p className={`${styles.tip} ${styles.tip_show}`}>
-                        대표 테넌트로 설정되었습니다.
-                      </p>
-                    ) : (
-                      ''
-                    )}
-                  </Button>
-                </li>
-              ))}
-            </ul>
+        <div className={styles.start}>
+          <div className={styles.profile_info}>
+            <div className={styles.profile}>
+              <span className={styles.name}>김현대</span>
+              <span className={styles.tenant}>현대오토에버</span>
+              <span className={styles.team}>팀명</span>
+              <Button
+                className={styles.link}
+                onClick={() =>
+                  openModal({
+                    width: 'm_full',
+                    content: <div />, //PasswordVerifyPopup
+                  })
+                }>
+                개인정보변경
+              </Button>
+            </div>
+            <div className={styles.avata_img}>
+              <span className={styles.info_avata}>
+                <em className={styles.text}>{'김'}</em>
+              </span>
+              <UserAvatar className={styles.info_avata} />
+            </div>
           </div>
+          <ul className={styles.gnb}>
+            <li>
+              <ul className={styles.gnb_list}>
+                <li>
+                  <Link to={''}>
+                    <IcoReview width={20} height={20} stroke="#131c30"></IcoReview>
+                    H-Sence
+                  </Link>
+                </li>
+                <li>
+                  <Link to={''}>
+                    <IcoMybook width={20} height={20} stroke="#131c30"></IcoMybook>법정필수교육
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div className={styles.gnb_title}>
+                <strong>기술인증</strong>
+              </div>
+              <ul className={styles.gnb_list}>
+                <li>
+                  <Link to={''}>H-Sence</Link>
+                </li>
+                <li>
+                  <Link to={''}>법정필수교육</Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div className={styles.gnb_title}>
+                <strong>학습계획</strong>
+              </div>
+              <ul className={styles.gnb_list}>
+                <li>
+                  <Link to={''}>금융자격지원제도</Link>
+                </li>
+                <li>
+                  <Link to={''}>SPA 승진제도</Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div className={styles.gnb_title}>
+                <strong>HMCP</strong>
+              </div>
+              <ul className={styles.gnb_list}>
+                <li>
+                  <Link to={''}>안내</Link>
+                </li>
+                <li>
+                  <Link to={''}>시험일정</Link>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </ModalBody>
-      <ModalFooter>
-        <p className={styles.notice}>메인 테넌트를 변경하려면 좌측 대표 버튼을 선택하세요.</p>
-      </ModalFooter>
     </ModalContainer>
   );
 };

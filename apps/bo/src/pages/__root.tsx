@@ -1,18 +1,39 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { Outlet, createRootRouteWithContext, Link } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import { ModalWrapper, ToastWrapper } from '@learnway/ui';
+import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/config';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 
-export const Route = createRootRoute({
+const NotFound = () => {
+  return (
+    <div>
+      <h1>페이지를 찾을 수 없습니다</h1>
+      <Link to="/">홈으로 돌아가기</Link>
+    </div>
+  );
+};
+
+interface RouterContext {
+  setPageRouteState?: any;
+  queryClient?: any;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
+  notFoundComponent: NotFound,
 });
 
 function RootComponent() {
+  const { closeAll } = useModalStore();
+
   useRenewalMenuStateFromRouting();
-  useGlobalRouterEvent();
+  useGlobalRouterEvent({
+    onBeforeLoad: () => {
+      closeAll();
+    },
+  });
 
   return (
     <>

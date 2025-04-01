@@ -7,6 +7,7 @@ import { useCurrentRoute } from '@learnway/config';
 import { MobileHeader } from './header/header';
 import { MobileFooter } from './footer/footer';
 import { Footer } from '../../ui/main/footer/footer';
+import { MobileContainerHeader } from './container/container-header';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/layout.module.css';
 
@@ -20,12 +21,12 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   const { meta } = useCurrentRoute();
 
   return (
-    <>
-      {meta?.mobile?.showHeader && <MobileHeader />}
+    <div className={styles.start}>
+      {meta?.mobile?.showHeader ? <MobileHeader /> : <MobileContainerHeader />}
       <main>{children}</main>
       {meta?.mobile?.showMainFooter && <Footer />}
       {meta?.mobile?.showFooter && <MobileFooter />}
-    </>
+    </div>
   );
 }
 

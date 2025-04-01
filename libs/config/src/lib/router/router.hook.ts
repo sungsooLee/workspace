@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useRouter, useLocation, useMatches, Route } from '@tanstack/react-router';
-import { has, last } from 'lodash';
+import { isFunction, last } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { usePageRouteState } from './page-route.state';
 
-export function useGlobalRouterEvent() {
+export function useGlobalRouterEvent(callback?: { onBeforeLoad?: () => void }) {
   const router = useRouter();
   const [pageRouteState, setPageRouteState] = usePageRouteState();
 
@@ -14,6 +14,9 @@ export function useGlobalRouterEvent() {
       'onBeforeLoad',
       ({ fromLocation, toLocation, ...p }: any) => {
         console.log('onBeforeLoad', toLocation.pathname);
+
+        isFunction(callback?.onBeforeLoad) && callback?.onBeforeLoad();
+
         setPageRouteState({
           pathname: toLocation.pathname,
           meta: toLocation?.state?.meta,

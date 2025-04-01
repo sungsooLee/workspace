@@ -1,42 +1,25 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
+
 import { IcoArrowForward } from '@learnway/icons';
 import { useModal, Button } from '@learnway/ui';
+import { useLogoutUser } from '@learnway/config';
 
-//import styles from '@learnway/styles/fo/pages/_layout/setting/setting-web_m.module.css';
+import { pageRouteConfig } from '../../features/auth';
+
 import styles from '@learnway/styles/fo/pages/_layout/setting.module.css';
 
-export const Route = createFileRoute('/_layout/setting/setting-web_m')({
+export const Route = createFileRoute('/_layout/setting')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: '설정',
+      mobile: { showHeader: false, showFooter: false, showMainFooter: false },
+    },
+  }),
 });
 
 function RouteComponent() {
-  const { confirm: openConfirm } = useModal();
-
-  const logout = () => {
-    openConfirm({
-      content: <>로그아웃 하시겠습니까?</>,
-      cancelButtonLabel: '취소',
-      okButtonLabel: '로그아웃',
-    });
-  };
-
-  const loginTime = () => {
-    openConfirm({
-      title: <>로그인 시간을 연장하시겠습니까?</>,
-      content: (
-        <>
-          로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
-          <br />
-          로그인 시간을 연장하시겠습니까?
-          <div className="time">
-            남은시간 : <strong>4분 59초</strong>
-          </div>
-        </>
-      ),
-      cancelButtonLabel: '취소',
-      okButtonLabel: '로그인연장',
-    });
-  };
+  const { logout } = useLogoutUser();
 
   return (
     <div className={`${styles.start} ${styles.setting_wrap}`}>
