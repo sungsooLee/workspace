@@ -15,8 +15,6 @@ import {
   Button,
   ColumnFactory,
   CustomCell,
-  Dropdown,
-  DropdownList,
   EditCheckboxCell,
   EditDropdownCell,
   EditInputCell,
@@ -1101,67 +1099,6 @@ export const TemplateEditGrid: any = (args: any) => {
       ),
     },
   ];
-  const columns2 = [
-    {
-      header: 'text',
-      accessorKey: 'text',
-      size: 200,
-      cell: ({ cell, row }: CellContext<any, unknown>) => (
-        <Input type={'text'} value={row.original.text} />
-      ),
-    },
-    {
-      header: 'number',
-      accessorKey: 'number',
-      size: 200,
-      cell: ({ cell, row }: CellContext<any, unknown>) => (
-        <Input type={'number'} value={row.original.number} />
-      ),
-    },
-    {
-      header: 'dropdown',
-      accessorKey: 'dropdown',
-      size: 200,
-      cell: ({ cell, row }: CellContext<any, unknown>) => (
-        <DropdownList
-          options={[
-            { value: 'option1', label: '옵션 1' },
-            { value: 'option2', label: '옵션 2' },
-            { value: 'option3', label: '옵션 3' },
-          ]}
-          value={row.original.dropdown}
-        />
-      ),
-    },
-    {
-      header: 'checkbox',
-      accessorKey: 'checkbox',
-      maxSize: 100,
-      meta: {
-        cellAlign: 'center',
-      },
-      cell: ({ cell, row }: CellContext<any, unknown>) => (
-        <input
-          type="checkbox"
-          checked={row.original.checkbox}
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   handleGridCellDownloadCheckChange(row.original, event.target.checked);
-          // }}
-        />
-      ),
-    },
-    {
-      header: 'Button',
-      accessorKey: 'delete',
-      maxSize: 100,
-      meta: {
-        cellAlign: 'center',
-      },
-      cell: ({ cell, row }: CellContext<any, unknown>) => (
-        <Button label={'삭제'} variant={'gray2'} size={'xs'} />
-      ),
-    },
-  ];
 
   console.log('----- data', data);
 
@@ -1174,13 +1111,6 @@ export const TemplateEditGrid: any = (args: any) => {
           label={'reset data'}
           onClick={() => setData(editGridData)}
         />
-        <Dropdown
-          options={[
-            { value: `value1`, label: `label1` },
-            { value: `value2`, label: `label2` },
-          ]}
-        />
-        ;
       </div>
       <Grid
         title={'Editable Grid'}
