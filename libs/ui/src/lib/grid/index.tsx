@@ -20,6 +20,7 @@ import {
   OnChangeFn,
   PaginationState,
   Row,
+  RowData,
   RowSelectionState,
   SortingState,
   Table,
@@ -48,63 +49,23 @@ import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
-import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-const EditInputCell = ({ table, row, cell, getValue }: any) => {
-  const initialValue: any = getValue();
-  // We need to keep and update the state of the cell normally
-  const [value, setValue] = useState<any>(initialValue);
+import './grid.css'; // grid CSS
 
-  // When the input is blurred, we'll call our table meta's updateData function
-  const onBlur = () => {
-    table.options.meta?.updateData(row.index, cell.column.id, value);
-  };
-
-  // If the initialValue is changed external, sync it up with our state
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  return (
-    <input value={value as string} onChange={(e) => setValue(e.target.value)} onBlur={onBlur} />
-  );
-};
-
-const defaultColumn = {
-  cell: EditInputCell,
-  // cell: ({ table, row, cell, getValue }: any) => {
-  //   const initialValue: any = getValue();
-  //   // We need to keep and update the state of the cell normally
-  //   const [value, setValue] = useState<any>(initialValue);
-  //
-  //   // When the input is blurred, we'll call our table meta's updateData function
-  //   const onBlur = () => {
-  //     table.options.meta?.updateData(index, id, value);
-  //   };
-  //
-  //   // If the initialValue is changed external, sync it up with our state
-  //   useEffect(() => {
-  //     setValue(initialValue);
-  //   }, [initialValue]);
-  //
-  //   return (
-  //     <input value={value as string} onChange={(e) => setValue(e.target.value)} onBlur={onBlur} />
-  //   );
-  // },
-};
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData extends RowData> {
+    updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+  }
+}
 
 const Grid = forwardRef(
   <T extends object>(
     {
       data,
-      setData,
       columns,
-      onStateChange,
-      onRowSelect,
-      onRowsSelect,
       multiSelectable = false,
       enableRowSelectionToggle = true,
       hideRowSelectionCheckBox,
@@ -121,6 +82,10 @@ const Grid = forwardRef(
       showDeleteAll = false,
       showSelectedCount,
       className,
+      onStateChange,
+      onRowSelect,
+      onRowsSelect,
+      onChange,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -252,20 +217,27 @@ const Grid = forwardRef(
       setRowSelection(newSelection);
     };
 
+    /**
+     * 테이블 데이터의 특정 셀 값을 업데이트하고, 변경된 데이터를 부모 컴포넌트로 전달(onChange)하는 함수입니다.
+     *
+     * @param {any} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
+     * @param {any} columnId 업데이트할 셀의 컬럼 ID입니다.
+     * @param {any} value 업데이트할 셀의 새로운 값입니다.
+     */
     const updateData = (rowIndex: any, columnId: any, value: any) => {
-      // Skip page index reset until after next rerender
-      // skipAutoResetPageIndex();
-      setData((old: any) =>
-        old.map((row: any, index: number) => {
+      const newData = table
+        .getRowModel()
+        .rows.map((row) => row.original)
+        .map((row: any, index: number) => {
           if (index === rowIndex) {
             return {
-              ...old[rowIndex]!,
+              ...row,
               [columnId]: value,
             };
           }
           return row;
-        }),
-      );
+        });
+      onChange?.(newData);
     };
 
     const table = useReactTable({
@@ -331,11 +303,9 @@ const Grid = forwardRef(
         return `${pagination?.pageIndex ?? 0}-${index}`;
       },
       meta: {
-        updateData: (rowIndex: any, columnId: any, value: any) => {
-          console.log('table.meta.updateData', { rowIndex, columnId, value });
-        },
+        updateData,
       },
-      defaultColumn,
+      // defaultColumn,
     });
 
     // 가상 스크롤 관련 설정

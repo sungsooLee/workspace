@@ -14,17 +14,10 @@ declare module '@tanstack/react-table' {
 export interface GridProps<T> {
   // 그리드 데이터
   data: T[];
-  setData?: any;
   // 그리드 컬럼
   columns: any[];
   // 로딩 여부
   isLoading?: boolean;
-  // 로우 클릭에 대한 콜백 처리
-  onRowSelect?: (selectedRow: any) => void;
-  // 멀티 로우 클릭에 대한 콜백 처리
-  onRowsSelect?: (selectedRows: any[]) => void;
-  // 컬럼, 그리드 설정 변경에 따른 콜백 함수
-  onStateChange?: (state: GridState) => void;
   // 그리드 타이틀
   title?: string;
   // 다중선택을 위한 Props
@@ -66,6 +59,14 @@ export interface GridProps<T> {
   showDeleteAll?: boolean;
   // 외부 클래스 추가
   className?: string;
+  // 로우 클릭에 대한 콜백 처리
+  onRowSelect?: (selectedRow: any) => void;
+  // 멀티 로우 클릭에 대한 콜백 처리
+  onRowsSelect?: (selectedRows: any[]) => void;
+  // 컬럼, 그리드 설정 변경에 따른 콜백 함수
+  onStateChange?: (state: GridState) => void;
+  // 데이터 변경 콜백 함수
+  onChange?: (data: T[]) => void;
 }
 
 export interface GridState {

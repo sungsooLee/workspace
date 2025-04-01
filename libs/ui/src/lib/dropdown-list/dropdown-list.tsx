@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
-import Select, { components, MultiValue, SingleValue, ActionMeta } from 'react-select';
-import { getRandomId, cn } from '@learnway/shared';
+import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
+import { cn, getRandomId } from '@learnway/shared';
 import { Checkbox } from '../checkbox/checkbox';
 import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
 import { DropdownComponentProps, DropdownOption } from './type';
@@ -143,6 +143,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
+          menuIsOpen={true}
           className={cn(isFocused || isMenuOpen ? 'focused' : '', isReadonly ? 'readonly' : '')}
           classNamePrefix="nlp-select"
           components={{
@@ -154,6 +155,13 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           }}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
+          styles={{
+            menu: (base) => ({
+              ...base,
+              zIndex: 99999, // Bootstrap modal보다 높은 값
+              position: 'absolute',
+            }),
+          }}
           {...customProps}
         />
       </div>

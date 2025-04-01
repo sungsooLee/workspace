@@ -15,7 +15,12 @@ import {
   Button,
   ColumnFactory,
   CustomCell,
+  Dropdown,
   DropdownList,
+  EditCheckboxCell,
+  EditDropdownCell,
+  EditInputCell,
+  EditRadioCell,
   Grid,
   GridState,
   Input,
@@ -1028,42 +1033,72 @@ export const WithCustomFactoryCell: Story = {
 
 const editGridData = Array(5)
   .fill(null)
-  .map((_, i) => ({ id: `id_${i}`, text: 'text', number: 0, checkbox: true }));
+  .map((_, i) => ({
+    id: `id_${i}`,
+    text: 'text',
+    number: 0,
+    checkbox: true,
+    radio: '',
+    dropdown: '',
+  }));
 
 // Edit Grid
 export const TemplateEditGrid: any = (args: any) => {
   const [data, setData] = useState<any[]>(editGridData);
   const columns = [
     {
+      header: 'dropdown',
+      accessorKey: 'dropdown',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
+    },
+    {
       header: 'text',
       accessorKey: 'text',
       size: 200,
-      // meta: {
-      //   updateData: (rowIndex: any, columnId: any, value: any) => {
-      //     console.log({ rowIndex, columnId, value });
-      //   }, // updateData를 meta 속성에 설정
-      // },
-      //   cell: ({ table, row, cell }: CellContext<any, unknown>) => (
-      //     <input
-      //       type={'text'}
-      //       value={row.original.text}
-      //       onChange={(event: any) => {
-      //         console.log({ table, row, cell });
-      //         const columnId = cell.column.id;
-      //         const newData = data.map((d: any, index: number) => {
-      //           if (index === row.index) {
-      //             return {
-      //               ...d,
-      //               [columnId]: event.target.value,
-      //             };
-      //           }
-      //           return d;
-      //         });
-      //         setData(newData);
-      //         console.log(newData);
-      //       }}
-      //     />
-      //   ),
+      cell: (info: CellContext<any, string>) => (
+        <EditInputCell info={info} input={{ type: 'text' }} />
+      ),
+    },
+    {
+      header: 'number',
+      accessorKey: 'number',
+      size: 200,
+      cell: (info: CellContext<any, number>) => (
+        <EditInputCell info={info} input={{ type: 'number' }} />
+      ),
+    },
+    {
+      header: 'check',
+      accessorKey: 'check',
+      size: 200,
+      cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
+    },
+    {
+      header: 'radio',
+      accessorKey: 'radio',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditRadioCell
+          info={info}
+          radio={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
     },
   ];
   const columns2 = [
@@ -1127,18 +1162,33 @@ export const TemplateEditGrid: any = (args: any) => {
       ),
     },
   ];
+
+  console.log('----- data', data);
+
   return (
     <div className={'m-6'}>
       <div>
-        <Button variant={'point'} size={'md'} label={'data'} onClick={() => console.log('data')} />
+        <Button
+          variant={'point'}
+          size={'md'}
+          label={'reset data'}
+          onClick={() => setData(editGridData)}
+        />
+        <Dropdown
+          options={[
+            { value: `value1`, label: `label1` },
+            { value: `value2`, label: `label2` },
+          ]}
+        />
+        ;
       </div>
       <Grid
         title={'Editable Grid'}
         data={data}
-        setData={setData}
         columns={columns}
         hideColumnSettings
         hideRowSelectionCheckBox
+        onChange={(newData: any) => setData(newData)}
       />
     </div>
   );
