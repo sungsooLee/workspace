@@ -5,7 +5,7 @@
     .inner {
       @apply relative h-full min-h-[calc(100vh-458px)] w-[calc(50%-32px)];
       .inner_contents {
-        @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto pb-[32px];
+        @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto py-[32px];
       }
       &::before {
         @apply absolute -left-[33px] top-0 flex h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];

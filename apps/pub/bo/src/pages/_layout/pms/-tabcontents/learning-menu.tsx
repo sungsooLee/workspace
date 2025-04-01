@@ -13,8 +13,6 @@ import {
   Tooltip,
   Input,
   Grid,
-  DropdownList,
-  DropdownOption,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -30,70 +28,46 @@ const LearningMenuComponent: FC<{}> = ({}) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
-  const options = [
-    { value: 'option1', label: '옵션 1' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-    { value: 'option4', label: '옵션 4' },
-    { value: 'option5', label: '옵션 5' },
-    { value: 'option6', label: '옵션 6' },
-    { value: 'option7', label: '옵션 7' },
-    { value: 'option8', label: '옵션 8' },
-    { value: 'option9', label: '옵션 9' },
-    { value: 'option10', label: '옵션 10' },
-  ];
-
   const data: any[] = [
     {
-      Number: '1',
-      WidgetName: '학습현황',
-      Device: '전체',
-      status: '사용',
-      Register: '홍길동',
-      RegisterDate: 'YYYY-MM-DD HH:MM:SS',
+      Sort: 'Common API',
+      API: <Button className="link">API 1</Button>,
+      Delete: (
+        <Button size="xs" variant="gray2">
+          삭제
+        </Button>
+      ),
     },
   ];
 
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('Number', {
+    columnHelper.accessor('Sort', {
       cell: (info) => info.getValue(),
-      header: 'No.',
-      size: 64,
+      header: '분류',
+      size: 120,
       enableGrouping: false,
       meta: {
-        headerAlign: 'center', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'left', // 셀은 오른쪽 정렬
       },
     }),
-    columnHelper.accessor('WidgetName', {
+    columnHelper.accessor('API', {
       cell: (info) => info.getValue(),
-      header: '위젯명',
-      size: 195,
+      header: 'API',
+      size: 490,
       enableGrouping: false,
     }),
-    columnHelper.accessor('Device', {
+    columnHelper.accessor('Delete', {
       cell: (info) => info.getValue(),
-      header: '디바이스',
-      size: 195,
+      header: '삭제',
+      size: 100,
       enableGrouping: false,
-    }),
-    columnHelper.accessor('Status', {
-      cell: (info) => info.getValue(),
-      header: '상태',
-      size: 195,
-    }),
-    columnHelper.accessor('Register', {
-      cell: (info) => info.getValue(),
-      header: '등록자',
-      size: 195,
-    }),
-    columnHelper.accessor('RegisterDate', {
-      cell: (info) => info.getValue(),
-      header: '등록일시',
-      size: 195,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -338,9 +312,9 @@ const LearningMenuComponent: FC<{}> = ({}) => {
             <Grid
               data={data}
               columns={columns}
-              showSelectedCount={true}
+              showTotalCount={true}
               hideColumnSettings={true}
-              title="모듈타이틀"
+              title="API"
             />
           </ContentsRow>
         </div>
