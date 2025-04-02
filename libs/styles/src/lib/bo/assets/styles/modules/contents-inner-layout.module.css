@@ -1,7 +1,7 @@
 /* contents-layout.module.css */
 .start {
   &.wrap {
-    @apply flex h-full w-full justify-between pt-[32px];
+    @apply flex h-full w-full justify-between;
     .inner {
       @apply relative h-full min-h-[calc(100vh-458px)] w-[calc(50%-32px)];
       .inner_contents {
