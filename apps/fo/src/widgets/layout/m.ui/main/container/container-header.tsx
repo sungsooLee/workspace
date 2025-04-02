@@ -5,7 +5,7 @@ import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 
 import { IcoArrowBackward } from '@learnway/icons';
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui';
 
 import { useActiveMenuDepthState } from '../../../../../features/platform';

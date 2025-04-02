@@ -1,3 +1,3 @@
 export * from './code';
 export * from './auth';
-export * from './page-route-config';
+export * from '../../../../shared/src/lib/types/page-route-config';

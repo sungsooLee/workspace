@@ -3,7 +3,8 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { isMobile } from 'react-device-detect';
 
-import { appConfig, queryConfig, usePageRouteState } from '@learnway/config';
+import { usePageRouteState } from '@learnway/hooks';
+import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';

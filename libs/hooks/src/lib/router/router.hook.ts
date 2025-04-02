@@ -3,9 +3,11 @@ import { useRouter, useLocation, useMatches, Route } from '@tanstack/react-route
 import { isFunction, last } from 'lodash';
 import { useCreation } from 'ahooks';
 
+import { RouteEventCallback, CurrentRoute } from '@learnway/shared';
+
 import { usePageRouteState } from './page-route.state';
 
-export function useGlobalRouterEvent(callback?: { onBeforeLoad?: () => void }) {
+export function useGlobalRouterEvent(callback?: RouteEventCallback) {
   const router = useRouter();
   const [pageRouteState, setPageRouteState] = usePageRouteState();
 
@@ -32,7 +34,7 @@ export function useGlobalRouterEvent(callback?: { onBeforeLoad?: () => void }) {
   }, []);
 }
 
-export function useCurrentRoute(route?: any) {
+export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
   const [pageRouteState] = usePageRouteState();
   const location = useLocation();
   const matches = useMatches();

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { useCreation, useUnmount } from 'ahooks';
 
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 import { Dropdown, HtmlContent } from '@learnway/ui';
 
 import { pageRouteConfig } from '../../../features/auth';

@@ -4,7 +4,7 @@ import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
 
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';

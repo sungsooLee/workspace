@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { isSigninPage } from '../../../../../features/platform';
 
