@@ -503,30 +503,11 @@ const Grid = forwardRef(
             height: `${height}px`,
             width: '100%',
           }}>
-          <table
-            style={{
-              // display: paginationGrid ? 'table' : 'grid', // 가상 스크롤일 때 grid 사용
-              display: 'grid',
-              width: '100%',
-            }}>
+          <table>
             {/*thead*/}
-            <thead
-              style={{
-                // display: paginationGrid ? 'table-header-group' : 'grid',/
-                display: 'grid',
-                position: 'sticky',
-                top: 0,
-                zIndex: 1,
-                backgroundColor: '#F4F8FF',
-              }}>
+            <thead>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  key={headerGroup.id}
-                  style={{
-                    // display: paginationGrid ? 'table-row' : 'flex',
-                    display: 'flex',
-                    width: '100%',
-                  }}>
+                <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
