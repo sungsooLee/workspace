@@ -349,6 +349,9 @@
 
 .no_line {
   @apply !border-t-0 !pt-0;
+  &.space {
+    @apply !mt-[32px];
+  }
 }
 
 hr.divider {

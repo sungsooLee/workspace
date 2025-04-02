@@ -2,8 +2,7 @@
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import styles from './learning-menu.module.css'; // 화면 css
-import layoutStyles from './contents-layout.module.css'; // 화면 컨텐츠 레이아웃 css
+import layoutStyles from './contents-inner-layout.module.css'; // 화면 컨텐츠 레이아웃 css
 import titleStyles from './title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -80,10 +79,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'전체펼침'}
             </Button>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'전체닫기'}
             </Button>
           </div>
@@ -94,10 +93,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'삭제'}
             </Button>
             <Button variant="save" size="sm" disabled>
@@ -320,7 +319,7 @@ const LearningMenuComponent: FC<{}> = ({}) => {
               title="API"
             />
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.no_line)}>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
             <ContentsHistoryInfoFormField />
           </ContentsRow>
         </div>

@@ -1,8 +1,7 @@
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './hrd-menu.module.css'; // 화면 css
 import titleStyles from './title.module.css'; // 타이틀 css
-import layoutStyles from './contents-layout.module.css'; // 텝화면 내 컨텐츠 레이아웃 css
+import layoutStyles from './contents-inner-layout.module.css'; // 텝화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
@@ -78,10 +77,10 @@ const HrdMenuComponent: FC<{}> = ({}) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체펼침'}
             </Button>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체닫기'}
             </Button>
           </div>
@@ -92,13 +91,13 @@ const HrdMenuComponent: FC<{}> = ({}) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={styles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'삭제'}
             </Button>
-            <Button variant="save" size="sm" disabled>
+            <Button variant="save" size="sm">
               {'저장'}
             </Button>
           </div>
@@ -159,9 +158,8 @@ const HrdMenuComponent: FC<{}> = ({}) => {
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={20}
-                  disabled
                 />
-                <Button variant="gray" size="sm" disabled>
+                <Button variant="gray" size="sm">
                   {'중복'}
                 </Button>
               </div>
@@ -182,11 +180,10 @@ const HrdMenuComponent: FC<{}> = ({}) => {
                   id="name-menuName"
                   type="text"
                   placeholder="메뉴명를 입력하세요."
-                  value="러닝웨이"
+                  value="메뉴명"
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={20}
-                  disabled
                 />
               </div>
             </div>
@@ -206,11 +203,10 @@ const HrdMenuComponent: FC<{}> = ({}) => {
                   id="name-menuUrl"
                   type="text"
                   placeholder="메뉴명를 입력하세요."
-                  value="러닝웨이"
+                  value="api/menu/menu0001"
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={50}
-                  disabled
                 />
               </div>
             </div>
@@ -227,11 +223,10 @@ const HrdMenuComponent: FC<{}> = ({}) => {
                   rows={5}
                   cols={33}
                   resize="none"
-                  value=""
+                  value="메뉴 001"
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
                   maxLength={50}
-                  disabled
                 />
               </div>
             </div>
