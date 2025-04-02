@@ -2,11 +2,10 @@
   @apply scrollbar relative z-0 overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
   thead {
     @apply border-b-[1px] border-solid border-[var(--gray4)];
-    display: grid;
     position: sticky;
     top: 0;
     z-index: 1;
-    background: #F4F8FF;
+    background: #f4f8ff;
 
     tr {
       display: flex;

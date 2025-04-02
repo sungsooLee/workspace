@@ -51,7 +51,8 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-import './grid.css'; // grid CSS
+// import './grid.css'; // grid CSS
+import styles from './grid.module.css'; // grid module CSS
 
 const Grid = forwardRef(
   <T extends object>(
@@ -466,7 +467,7 @@ const Grid = forwardRef(
           verticalAlign: 'center',
         } as CSSProperties;
         return (
-          <td key={cell.id} className="grid_td h-[100%]" style={cellStyle}>
+          <td key={cell.id} className={styles.tbody_td} style={cellStyle}>
             {cell.getIsGrouped() ? (
               <button
                 onClick={(e) => {
@@ -495,9 +496,10 @@ const Grid = forwardRef(
         <div
           ref={tableContainerRef}
           className={cn(
-            tableMode ? 'table' : 'grid_table',
+            tableMode ? styles.table : styles.grid,
             className,
-            multiple && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            tableMode ? 'table' : 'grid',
           )}
           style={{
             height: `${height}px`,
@@ -526,13 +528,12 @@ const Grid = forwardRef(
                         display: 'block',
                         width: header.getSize(),
                       }}
-                      className="thead_th">
-                      <div className="th_wrap">
+                      className={styles.thead_th}>
+                      <div className={styles.th_wrap}>
                         <div
                           className={cn(
-                            'th_cell',
+                            styles.th_cell,
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                            'font-bold uppercase text-[#5C636E]',
                           )}
                           style={{
                             justifyContent:
@@ -614,38 +615,35 @@ const Grid = forwardRef(
       const totalPages = Math.ceil(totalRows / pageSize);
 
       return (
-        <div className="paging_wrap">
+        <div className={styles.paging_wrap}>
           <Select
             value={pageSize.toString()}
             onChange={handleChange}
             options={options}
-            className="select_item"
+            className={styles.select_item}
           />
-          <div className="btn_wrap">
+          <div className={styles.btn_wrap}>
             <Button
               onClick={() => onPageChange(0)}
               disabled={pageIndex === 0}
-              className="btn_first"
+              className={styles.btn_first}
               onlyIcon>
               {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(pageIndex - 1)}
               disabled={pageIndex === 0}
-              className="btn_prev">
+              className={styles.btn_prev}>
               {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
             </Button>
 
             {/* 페이지 번호들 */}
-            <div className="num_wrap">
+            <div className={styles.num_wrap}>
               {Array.from({ length: totalPages }, (_, i) => (
                 <Button
                   key={i}
                   onClick={() => onPageChange(i)}
-                  className={cn(
-                    'h-[32px] w-[32px] rounded-[4px]',
-                    pageIndex === i ? 'bg-[#747d91] text-white' : 'hover:bg-gray-100',
-                  )}>
+                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}>
                   {i + 1}
                 </Button>
               ))}
@@ -654,17 +652,17 @@ const Grid = forwardRef(
             <Button
               onClick={() => onPageChange(pageIndex + 1)}
               disabled={pageIndex >= totalPages - 1}
-              className="btn_next">
+              className={styles.btn_next}>
               {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(totalPages - 1)}
               disabled={pageIndex >= totalPages - 1}
-              className="btn_last">
+              className={styles.btn_last}>
               {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
             </Button>
           </div>
-          <span className="count_wrap">
+          <span className={styles.count_wrap}>
             {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
           {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
             {pageIndex * pageSize + 1}-{totalPages} Page
