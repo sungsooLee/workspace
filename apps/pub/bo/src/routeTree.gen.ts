@@ -46,7 +46,9 @@ import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
 import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
 import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget-detail'
+import { Route as LayoutPmsTenantMenuManagementImport } from './pages/_layout/pms/tenant-menu-management'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
+import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -312,12 +314,25 @@ const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutPmsTenantMenuManagementRoute =
+  LayoutPmsTenantMenuManagementImport.update({
+    id: '/pms/tenant-menu-management',
+    path: '/pms/tenant-menu-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsPopupWidgetManagementRoute =
   LayoutPmsPopupWidgetManagementImport.update({
     id: '/pms/popup-widget-management',
     path: '/pms/popup-widget-management',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutPmsMenuPlatformRoute = LayoutPmsMenuPlatformImport.update({
+  id: '/pms/menu-platform',
+  path: '/pms/menu-platform',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
   id: '/pms/menu-management',
@@ -1241,11 +1256,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuManagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-platform': {
+      id: '/_layout/pms/menu-platform'
+      path: '/pms/menu-platform'
+      fullPath: '/pms/menu-platform'
+      preLoaderRoute: typeof LayoutPmsMenuPlatformImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/popup-widget-management': {
       id: '/_layout/pms/popup-widget-management'
       path: '/pms/popup-widget-management'
       fullPath: '/pms/popup-widget-management'
       preLoaderRoute: typeof LayoutPmsPopupWidgetManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/tenant-menu-management': {
+      id: '/_layout/pms/tenant-menu-management'
+      path: '/pms/tenant-menu-management'
+      fullPath: '/pms/tenant-menu-management'
+      preLoaderRoute: typeof LayoutPmsTenantMenuManagementImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/widget-detail': {
@@ -1452,7 +1481,9 @@ interface LayoutRouteChildren {
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
+  LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
+  LayoutPmsTenantMenuManagementRoute: typeof LayoutPmsTenantMenuManagementRoute
   LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
   LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
   LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
@@ -1479,7 +1510,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
+  LayoutPmsMenuPlatformRoute: LayoutPmsMenuPlatformRoute,
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
+  LayoutPmsTenantMenuManagementRoute: LayoutPmsTenantMenuManagementRoute,
   LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
   LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
   LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
@@ -1572,7 +1605,9 @@ export interface FileRoutesByFullPath {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -1663,7 +1698,9 @@ export interface FileRoutesByTo {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -1757,7 +1794,9 @@ export interface FileRoutesById {
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
+  '/_layout/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
+  '/_layout/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
   '/_layout/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -1850,7 +1889,9 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/menu-management'
+    | '/pms/menu-platform'
     | '/pms/popup-widget-management'
+    | '/pms/tenant-menu-management'
     | '/pms/widget-detail'
     | '/pms/widget-management'
     | '/pms/widget-register'
@@ -1940,7 +1981,9 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/menu-management'
+    | '/pms/menu-platform'
     | '/pms/popup-widget-management'
+    | '/pms/tenant-menu-management'
     | '/pms/widget-detail'
     | '/pms/widget-management'
     | '/pms/widget-register'
@@ -2032,7 +2075,9 @@ export interface FileRouteTypes {
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/menu-management'
+    | '/_layout/pms/menu-platform'
     | '/_layout/pms/popup-widget-management'
+    | '/_layout/pms/tenant-menu-management'
     | '/_layout/pms/widget-detail'
     | '/_layout/pms/widget-management'
     | '/_layout/pms/widget-register'
@@ -2163,7 +2208,9 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
         "/_layout/pms/menu-management",
+        "/_layout/pms/menu-platform",
         "/_layout/pms/popup-widget-management",
+        "/_layout/pms/tenant-menu-management",
         "/_layout/pms/widget-detail",
         "/_layout/pms/widget-management",
         "/_layout/pms/widget-register",
@@ -2494,8 +2541,16 @@ export const routeTree = rootRoute
       "filePath": "_layout/pms/menu-management.tsx",
       "parent": "/_layout"
     },
+    "/_layout/pms/menu-platform": {
+      "filePath": "_layout/pms/menu-platform.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/pms/popup-widget-management": {
       "filePath": "_layout/pms/popup-widget-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/tenant-menu-management": {
+      "filePath": "_layout/pms/tenant-menu-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/widget-detail": {

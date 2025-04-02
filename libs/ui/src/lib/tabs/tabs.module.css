@@ -211,6 +211,7 @@
       @apply ml-[4px] text-[1.6rem] font-bold text-[var(--secondary4)];
     }
     [data-state='active'] {
+      @apply !outline-none;
       .count {
         @apply text-[var(--secondary1)];
       }

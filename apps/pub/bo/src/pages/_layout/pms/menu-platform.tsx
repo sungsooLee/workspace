@@ -4,10 +4,10 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { Tabs } from '@learnway/ui';
 
 /* tab contents */
-import { LearningMenu } from './-tabcontents/learning-menu'; // 학습자 메뉴
-import { HrdMenu } from './-tabcontents/hrd-menu'; // HRD 메뉴
+import { ApiLearningMenu } from './-tabcontents/api-learning-menu'; // 학습자 메뉴
+import { ApiHrdMenu } from './-tabcontents/api-hrd-menu'; // HRD 메뉴
 
-export const Route = createFileRoute('/_layout/pms/menu-management')({
+export const Route = createFileRoute('/_layout/pms/menu-platform')({
   component: RouteComponent,
 });
 
@@ -16,12 +16,12 @@ function RouteComponent() {
     {
       title: '학습자',
       key: 'tab01',
-      content: <LearningMenu />,
+      content: <ApiLearningMenu />,
     },
     {
       title: 'HRD센터',
       key: 'tab02',
-      content: <HrdMenu />,
+      content: <ApiHrdMenu />,
     },
   ];
   return (
