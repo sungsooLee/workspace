@@ -1,13 +1,11 @@
 /* page-contents.module.css */
 .start {
+  @apply flex items-start justify-between;
   .main_contents {
-    @apply box-border min-h-full flex-grow;
+    @apply flex-1;
   }
   .sub_contents {
-    @apply relative ml-[32px] box-border min-w-[448px] shrink-0 pl-[32px];
-    &::before {
-      @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
-    }
+    @apply relative ml-[40px] w-[360px];
   }
   .vertical_line {
     @apply hidden;

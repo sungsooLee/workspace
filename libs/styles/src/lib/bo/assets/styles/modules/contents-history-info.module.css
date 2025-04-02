@@ -1,7 +1,7 @@
 /* editInfoStyles.module.css */
 .start {
   &.wrap {
-    @apply flex items-center rounded-[8px] bg-[#f6f8fd] p-[16px];
+    @apply flex w-full items-center rounded-[8px] bg-[#f6f8fd] p-[16px];
     p {
       @apply body_4_r flex items-center text-[var(--gray9)];
       span {

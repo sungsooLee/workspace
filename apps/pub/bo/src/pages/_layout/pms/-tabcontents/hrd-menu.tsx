@@ -1,9 +1,7 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '../title.module.css'; // 타이틀 css
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
@@ -19,7 +17,7 @@ import {
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 // eslint-disable-next-line no-empty-pattern
-const LearningMenuComponent: FC<{}> = ({}) => {
+const HrdMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false, // Hidden메뉴
@@ -79,10 +77,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체펼침'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체닫기'}
             </Button>
           </div>
@@ -96,10 +94,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'삭제'}
             </Button>
-            <Button variant="save" size="sm" disabled>
+            <Button variant="save" size="sm">
               {'저장'}
             </Button>
           </div>
@@ -160,9 +158,8 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={20}
-                  disabled
                 />
-                <Button variant="gray" size="sm" disabled>
+                <Button variant="gray" size="sm">
                   {'중복'}
                 </Button>
               </div>
@@ -183,11 +180,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   id="name-menuName"
                   type="text"
                   placeholder="메뉴명를 입력하세요."
-                  value="러닝웨이"
+                  value="메뉴명"
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={20}
-                  disabled
                 />
               </div>
             </div>
@@ -207,11 +203,10 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   id="name-menuUrl"
                   type="text"
                   placeholder="메뉴명를 입력하세요."
-                  value="러닝웨이"
+                  value="api/menu/menu0001"
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={50}
-                  disabled
                 />
               </div>
             </div>
@@ -228,15 +223,15 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   rows={5}
                   cols={33}
                   resize="none"
-                  value=""
+                  value="메뉴 001"
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
                   maxLength={50}
-                  disabled
                 />
               </div>
             </div>
           </ContentsRow>
+          {/* Switch 영역 */}
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
@@ -292,7 +287,7 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                 {'개인정보'}
 
                 <Tooltip
-                  className={formStyles.tooltip}
+                  className={dynamicFormStyles.tooltip}
                   side="right"
                   align="start"
                   content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
@@ -319,14 +314,11 @@ const LearningMenuComponent: FC<{}> = ({}) => {
               title="API"
             />
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
-            <ContentsHistoryInfoFormField />
-          </ContentsRow>
         </div>
       </div>
     </div>
   );
 };
 
-LearningMenuComponent.displayName = 'LearningMenu';
-export const LearningMenu = LearningMenuComponent;
+HrdMenuComponent.displayName = 'HrdMenu';
+export const HrdMenu = HrdMenuComponent;

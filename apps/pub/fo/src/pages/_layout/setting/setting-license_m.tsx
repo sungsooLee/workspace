@@ -11,6 +11,7 @@ export const Route = createFileRoute('/_layout/setting/setting-license_m')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.license_wrap}`}>
+      <h2>오픈소스 라이선스</h2>
       <ul>
         <li>오픈소스</li>
         <li>오픈소스</li>
