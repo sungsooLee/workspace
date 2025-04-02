@@ -1,0 +1,29 @@
+/* contents-layout.module.css */
+.start {
+  &.wrap {
+    @apply flex h-full w-full justify-between pt-[32px];
+    .inner {
+      @apply relative h-full min-h-[calc(100vh-458px)] w-[calc(50%-32px)];
+      .inner_contents {
+        @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto py-[16px];
+      }
+      &::before {
+        @apply absolute -left-[33px] top-0 flex h-[calc(100%-16px)] w-[1px] bg-[var(--gray4)] content-[''];
+      }
+      &:first-child::before {
+        @apply hidden;
+      }
+    }
+  }
+}
+.btn_wrap {
+  @apply inline-flex items-center;
+  button {
+    @apply !font-normal;
+    &.btn_text + .btn_text {
+      &::before {
+        @apply mr-[16px] inline-flex h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
+}

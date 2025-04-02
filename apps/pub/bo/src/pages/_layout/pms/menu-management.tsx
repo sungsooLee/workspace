@@ -5,6 +5,7 @@ import { Tabs } from '@learnway/ui';
 
 /* tab contents */
 import { LearningMenu } from './-tabcontents/learning-menu'; // 학습자 메뉴
+import { HrdMenu } from './-tabcontents/hrd-menu'; // HRD 메뉴
 
 export const Route = createFileRoute('/_layout/pms/menu-management')({
   component: RouteComponent,
@@ -20,7 +21,7 @@ function RouteComponent() {
     {
       title: 'HRD센터 메뉴',
       key: 'b',
-      content: <h2>Tab B content</h2>,
+      content: <HrdMenu />,
     },
   ];
   return (

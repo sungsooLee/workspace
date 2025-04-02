@@ -1,10 +1,8 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import styles from './learning-menu.module.css'; // 화면 css
-import layoutStyles from './contents-layout.module.css'; // 화면 컨텐츠 레이아웃 css
+import styles from './hrd-menu.module.css'; // 화면 css
 import titleStyles from './title.module.css'; // 타이틀 css
+import layoutStyles from './contents-layout.module.css'; // 텝화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
@@ -20,7 +18,7 @@ import {
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 // eslint-disable-next-line no-empty-pattern
-const LearningMenuComponent: FC<{}> = ({}) => {
+const HrdMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false, // Hidden메뉴
@@ -238,6 +236,7 @@ const LearningMenuComponent: FC<{}> = ({}) => {
               </div>
             </div>
           </ContentsRow>
+          {/* Switch 영역 */}
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
@@ -293,7 +292,7 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                 {'개인정보'}
 
                 <Tooltip
-                  className={formStyles.tooltip}
+                  className={dynamicFormStyles.tooltip}
                   side="right"
                   align="start"
                   content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
@@ -320,14 +319,11 @@ const LearningMenuComponent: FC<{}> = ({}) => {
               title="API"
             />
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.no_line)}>
-            <ContentsHistoryInfoFormField />
-          </ContentsRow>
         </div>
       </div>
     </div>
   );
 };
 
-LearningMenuComponent.displayName = 'LearningMenu';
-export const LearningMenu = LearningMenuComponent;
+HrdMenuComponent.displayName = 'HrdMenu';
+export const HrdMenu = HrdMenuComponent;
