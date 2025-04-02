@@ -1,6 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
+import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+// style
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '../title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -34,6 +36,15 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     {
       Sort: 'Common API',
       API: <Button className="link">API 1</Button>,
+      Delete: (
+        <Button size="xs" variant="gray2">
+          삭제
+        </Button>
+      ),
+    },
+    {
+      Sort: 'Common API2',
+      API: <Button className="link">API 2</Button>,
       Delete: (
         <Button size="xs" variant="gray2">
           삭제
@@ -338,6 +349,9 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
               hideColumnSettings={true}
               title="API"
             />
+          </ContentsRow>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+            <ContentsHistoryInfoFormField />
           </ContentsRow>
         </div>
       </div>

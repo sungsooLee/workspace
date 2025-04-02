@@ -8,7 +8,7 @@
         @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto py-[16px];
       }
       &::before {
-        @apply absolute -left-[33px] top-0 flex h-full w-[1px] bg-[var(--gray4)] content-[''];
+        @apply absolute -left-[33px] top-0 flex h-[calc(100%-16px)] w-[1px] bg-[var(--gray4)] content-[''];
       }
       &:first-child::before {
         @apply hidden;
@@ -17,6 +17,9 @@
         @apply min-h-[calc(100vh-400px)];
         .inner_contents {
           @apply max-h-[calc(100vh-356px)];
+        }
+        &::before {
+          @apply h-full;
         }
       }
     }
