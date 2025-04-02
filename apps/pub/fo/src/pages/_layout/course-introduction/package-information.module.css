@@ -1,0 +1,51 @@
+.start {
+  &.information {
+    .tit {
+      @apply title_5_b block text-[var(--gray9)];
+    }
+    .count_box {
+      @apply mt-[8px] flex flex-wrap;
+      .box {
+        @apply relative mr-[8px] flex items-center pr-[8px];
+        &::before {
+          @apply absolute right-0 top-1/2 h-[14px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+        }
+        &:last-child {
+          &::before {
+            @apply hidden;
+          }
+        }
+        span {
+          @apply body_3_r ml-[4px] text-[var(--gray7)];
+        }
+      }
+    }
+    .subscribe_box {
+      @apply mt-[16px] flex items-center border-t-[1px] border-solid border-[var(--gray3)] py-[12px];
+      .channel {
+        @apply mr-[8px] h-[36px] w-[36px];
+        img {
+          @apply h-[36px] w-[36px];
+        }
+      }
+      .channel_name {
+        @apply body_3_r flex-1 text-[var(--gray7)];
+      }
+      button {
+        @apply ml-[8px];
+      }
+    }
+    .list_box {
+      @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+    }
+    .btn_box {
+      @apply mt-[24px] flex;
+      button {
+        @apply flex h-[48px] flex-1 justify-center border-[1px] border-solid border-[var(--gray5)];
+        & + button {
+          @apply ml-[8px];
+        }
+      }
+    }
+  }
+}

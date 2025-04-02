@@ -1,6 +1,6 @@
 .start {
   &.operator {
-    @apply flex items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
+    @apply flex w-full items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
     .avatar {
       @apply mr-[12px] h-[56px] w-[56px] overflow-hidden rounded-[50%];
       & > span {
@@ -27,20 +27,8 @@
           }
         }
       }
-      .information {
+      .definition_list {
         @apply w-1/2;
-        dl {
-          @apply table-row;
-          dt {
-            @apply body_3_r table-cell min-w-[56px] leading-[22px] text-[var(--gray7)];
-          }
-          dd {
-            @apply body_3_r relative pl-[8px] leading-[22px] text-[var(--gray7)];
-            &::before {
-              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-            }
-          }
-        }
       }
     }
   }
