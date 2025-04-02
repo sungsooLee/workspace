@@ -35,4 +35,10 @@ export const mutateOptions = {
   checkExistsMenu: () => ({
     mutationFn: (payload: any) => MenuMangerService.existsMenu(payload.menuCode, payload.parentId),
   }),
+  updateMenu: () => ({
+    mutationFn: (payload: any) => MenuMangerService.updateMenu(payload),
+  }),
+  deleteMenu: () => ({
+    mutationFn: (payload: any) => MenuMangerService.deleteMenu(payload),
+  }),
 };

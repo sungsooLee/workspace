@@ -1,4 +1,4 @@
-import { Button, Switch, TreeEventPayload, TreeNode, TreeView } from '@learnway/ui';
+import { Button, findNodeByKey, Switch, TreeEventPayload, TreeNode, TreeView } from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
 
@@ -10,6 +10,7 @@ const MenuTreeComponent: FC<any> = ({
   onDeleteNode,
   expandedKeys,
   onExpandChange,
+  selectedKey,
 }) => {
   // expandAll 토글 시 모든 키 확장/축소 처리
   const handleExpandAll = (expand: boolean) => {
@@ -60,6 +61,10 @@ const MenuTreeComponent: FC<any> = ({
     </div>
   );
 
+  const handleSelectedNodeChange = (node: TreeNode | null) => {
+    if (node) onNodeClick(node);
+  };
+
   const handleTreeAction = (event: TreeEventPayload) => {
     switch (event.type) {
       case 'NODE_SELECT':
@@ -68,6 +73,8 @@ const MenuTreeComponent: FC<any> = ({
     }
   };
 
+  const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
+  console.log(selectedNode);
   return (
     <div className={'flex-1 rounded-2xl bg-white p-5'}>
       {/* 상단 제목 및 버튼 */}
@@ -99,6 +106,8 @@ const MenuTreeComponent: FC<any> = ({
         nodeButtons={renderNodeButtons}
         onAction={handleTreeAction}
         type={'advanced'}
+        selectedNode={selectedNode}
+        onSelectedNodeChange={handleSelectedNodeChange}
       />
     </div>
   );

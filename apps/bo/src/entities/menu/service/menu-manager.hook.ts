@@ -48,6 +48,30 @@ export function useCreateMenu(options: any) {
   };
 }
 
+export function useUpdateMenu(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.updateMenu(),
+    onSuccess: async (data, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+      console.log(data);
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    updateMenu: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function useCheckExistsMenu(options: any) {
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.checkExistsMenu(),
@@ -65,5 +89,29 @@ export function useCheckExistsMenu(options: any) {
     },
     isSuccess,
     isError,
+  };
+}
+export function useDeleteMenu(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.deleteMenu(),
+    onSuccess: async (data, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions,
+  });
+
+  return {
+    deleteMenu: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
   };
 }

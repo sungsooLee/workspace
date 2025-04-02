@@ -277,9 +277,11 @@ const TreeView = ({
   type,
   nodeButtons,
   searchKeyword,
+  selectedNode: externalSelectedNode,
   initExpandedKeys = [], // 기본값 추가
   expandedKeys: externalExpandedKeys, // 외부에서 제어할 확장된 키
   onExpandedKeysChange, // 확장된 키 변경 콜백
+  onSelectedNodeChange,
 }: TreeProps) => {
   // 내부 상태 관리를 위한 초기 데이터 저장
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -287,7 +289,18 @@ const TreeView = ({
   );
   // 현재 동작 중인 데이터
   const [treeData, setTreeData] = useState<EnhancedTreeNode[]>(JSON.parse(JSON.stringify(data)));
-  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+
+  const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
+
+  useEffect(() => {
+    // 외부 selectedNode가 제공되었고 현재 내부 상태와 다르면 업데이트
+    if (externalSelectedNode !== undefined) {
+      setInternalSelectedNode(externalSelectedNode);
+    }
+  }, [externalSelectedNode]);
+
+  const selectedNode =
+    externalSelectedNode !== undefined ? externalSelectedNode : internalSelectedNode;
 
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
   const expandedKeys = externalExpandedKeys || internalExpandedKeys;
@@ -515,8 +528,18 @@ const TreeView = ({
   };
 
   const handleNodeClick = (node: TreeNode | null) => {
-    setSelectedNode(node);
-    if (onAction && node) onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
+    // 내부 상태 업데이트
+    setInternalSelectedNode(node);
+
+    // 외부 콜백을 통한 외부 상태 업데이트
+    if (onSelectedNodeChange && node) {
+      onSelectedNodeChange(node);
+    }
+
+    // 액션 핸들러 호출
+    if (onAction && node) {
+      onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
+    }
   };
 
   // 검색 결과가 있는지 체크
