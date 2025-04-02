@@ -4,25 +4,25 @@ import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   Button,
-  useModal,
+  Checkbox,
+  ContentsRow,
+  DatePicker,
+  DropdownList,
+  DropdownOption,
+  Grid,
+  Input,
+  InputModalSelectorFormField,
+  List,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Grid,
-  Input,
-  List,
-  InputModalSelectorFormField,
-  ContentsRow,
   PhoneNumber,
-  DropdownList,
-  DropdownOption,
-  Checkbox,
-  Tooltip,
-  DatePicker,
   Switch,
+  Tooltip,
+  useModal,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoAlertCircle } from '@learnway/icons';
+import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 /* CSS */
@@ -227,7 +227,7 @@ function RouteComponent() {
                     columns={columns}
                     title="일괄설정 항목선택"
                     hideColumnSettings={true}
-                    multiSelectable={true}
+                    multiple={true}
                     className={styles.grid}
                   />
                 </div>

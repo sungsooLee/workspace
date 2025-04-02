@@ -20,7 +20,6 @@ import {
   OnChangeFn,
   PaginationState,
   Row,
-  RowData,
   RowSelectionState,
   SortingState,
   Table,
@@ -55,19 +54,13 @@ import { SelectOption } from '../select/type';
 
 import './grid.css'; // grid CSS
 
-declare module '@tanstack/react-table' {
-  interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, columnId: string, value: unknown) => void;
-  }
-}
-
 const Grid = forwardRef(
   <T extends object>(
     {
       data,
       columns,
-      multiSelectable = false,
-      enableRowSelectionToggle = true,
+      multiple = false,
+      disabledSelectionToggle,
       hideRowSelectionCheckBox,
       pagination,
       title,
@@ -82,6 +75,7 @@ const Grid = forwardRef(
       showDeleteAll = false,
       showSelectedCount,
       className,
+      height = 240,
       onStateChange,
       onRowSelect,
       onRowsSelect,
@@ -101,7 +95,7 @@ const Grid = forwardRef(
       [columnGrouping?.columns],
     );
     const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
-      left: multiSelectable ? ['select', ...columnPinning.columns] : columnPinning.columns, // 체크박스가 있으면 'select'를 기본으로 고정
+      left: multiple ? ['select', ...columnPinning.columns] : columnPinning.columns, // 체크박스가 있으면 'select'를 기본으로 고정
       right: [],
     });
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
@@ -184,10 +178,8 @@ const Grid = forwardRef(
       };
 
       // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
-      return multiSelectable && !hideRowSelectionCheckBox
-        ? [multipleCheckColumn, ...columns]
-        : columns;
-    }, [columns, multiSelectable, hideRowSelectionCheckBox]);
+      return multiple && !hideRowSelectionCheckBox ? [multipleCheckColumn, ...columns] : columns;
+    }, [columns, multiple, hideRowSelectionCheckBox]);
 
     /**
      * Row Select handle - 단일 선택 모드
@@ -218,13 +210,14 @@ const Grid = forwardRef(
     };
 
     /**
-     * 테이블 데이터의 특정 셀 값을 업데이트하고, 변경된 데이터를 부모 컴포넌트로 전달(onChange)하는 함수입니다.
+     * 특정 셀의 데이터를 업데이트하는 함수입니다.
      *
-     * @param {any} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
-     * @param {any} columnId 업데이트할 셀의 컬럼 ID입니다.
-     * @param {any} value 업데이트할 셀의 새로운 값입니다.
+     * @param {number} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
+     * @param {string} columnId 업데이트할 셀의 컬럼 ID입니다.
+     * @param {unknown} value 업데이트할 셀의 새로운 값입니다.
+     * @returns {void}
      */
-    const updateData = (rowIndex: any, columnId: any, value: any) => {
+    const updateData = (rowIndex: number, columnId: string, value: unknown) => {
       const newData = table
         .getRowModel()
         .rows.map((row) => row.original)
@@ -237,6 +230,20 @@ const Grid = forwardRef(
           }
           return row;
         });
+      onChange?.(newData);
+    };
+
+    /**
+     * 특정 행을 삭제하는 함수입니다.
+     *
+     * @param {number} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
+     * @returns {void}
+     */
+    const removeData = (rowIndex: number) => {
+      const newData = table
+        .getRowModel()
+        .rows.map((row) => row.original)
+        .filter((row: any, index: number) => index !== rowIndex);
       onChange?.(newData);
     };
 
@@ -280,10 +287,10 @@ const Grid = forwardRef(
       getExpandedRowModel: getExpandedRowModel(),
       enableRowSelection: true,
       // onRowSelectionChange: setRowSelection,
-      onRowSelectionChange: multiSelectable
+      onRowSelectionChange: multiple
         ? handleRowSelectionChangeForMultiMode
         : handleRowSelectionChangeForSingleMode,
-      enableMultiRowSelection: multiSelectable,
+      enableMultiRowSelection: multiple,
       enableHiding: true,
       enableGrouping: true,
       enableExpanding: true,
@@ -304,6 +311,7 @@ const Grid = forwardRef(
       },
       meta: {
         updateData,
+        removeData,
       },
       // defaultColumn,
     });
@@ -435,7 +443,7 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
             style={rowStyle}
-            onClick={() => !row.getIsGrouped() && enableRowSelectionToggle && row.toggleSelected()}>
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
           </tr>
         );
@@ -489,10 +497,10 @@ const Grid = forwardRef(
           className={cn(
             'grid_table',
             className,
-            multiSelectable && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            multiple && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
           )}
           style={{
-            height: '240px',
+            height: `${height}px`,
             width: '100%',
           }}>
           <table
