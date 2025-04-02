@@ -1,26 +1,27 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import titleStyles from '../title.module.css'; // 타이틀 css
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '../title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
   Button,
   ContentsRow,
   Textarea,
-  CheckboxGroupFormField,
   Switch,
-  Tooltip,
   Input,
+  Tooltip,
+  CheckboxGroupFormField,
   Grid,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 // eslint-disable-next-line no-empty-pattern
-const ApiHrdMenuComponent: FC<{}> = ({}) => {
+const TenantLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false, // Hidden메뉴
+    1: false, // Hidden 메뉴
     2: false, // 개인정보
   });
   // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
@@ -76,12 +77,12 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'목록'}</h3>
+          <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'전체펼침'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'전체닫기'}
             </Button>
           </div>
@@ -95,10 +96,10 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'삭제'}
             </Button>
-            <Button variant="save" size="sm">
+            <Button variant="save" size="sm" disabled>
               {'저장'}
             </Button>
           </div>
@@ -127,6 +128,10 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-menu2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'상위 메뉴명'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
@@ -145,22 +150,19 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-code" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'메뉴 코드'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
                   id="name-menu2"
                   type="text"
-                  placeholder="메뉴코드를 입력하세요."
-                  value="러닝웨이"
+                  placeholder=""
+                  value="1932267687686"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={20}
+                  maxLength={10}
+                  disabled
                 />
-                <Button variant="gray" size="sm">
+                <Button variant="gray" size="sm" disabled>
                   {'중복'}
                 </Button>
               </div>
@@ -180,11 +182,31 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menuName"
                   type="text"
-                  placeholder="메뉴명를 입력하세요."
-                  value="메뉴명"
+                  placeholder="메뉴명을 입력하세요."
+                  value="러닝웨이"
+                  disabled
                   className={formStyles.input}
-                  hideInputLength={false}
-                  maxLength={20}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-menuName" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'메뉴 이름'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-menuName"
+                  type="text"
+                  placeholder="메뉴 이름을 입력하세요."
+                  value="입력 정보 출력"
+                  className={formStyles.input}
                 />
               </div>
             </div>
@@ -203,11 +225,12 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menuUrl"
                   type="text"
-                  placeholder="메뉴명를 입력하세요."
-                  value="api/menu/menu0001"
+                  placeholder="메뉴 URL을 입력하세요."
+                  value="URL"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={50}
+                  maxLength={10}
+                  disabled
                 />
               </div>
             </div>
@@ -215,19 +238,20 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
-              <label htmlFor="name-menuUrl" className={formStyles.form_label}>
+              <label htmlFor="name-menuContents" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'설명'}</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
-                  id="name-menuUrl"
+                  id="name-menuContents"
                   rows={5}
                   cols={33}
                   resize="none"
-                  value="메뉴 001"
+                  value=""
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
-                  maxLength={50}
+                  maxLength={100}
+                  disabled
                 />
               </div>
             </div>
@@ -276,7 +300,7 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: '모바일' },
                     ]}
-                    value={['pc']}
+                    disabled
                   />
                 </div>
               </div>
@@ -321,5 +345,5 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
   );
 };
 
-ApiHrdMenuComponent.displayName = 'ApiHrdMenu';
-export const ApiHrdMenu = ApiHrdMenuComponent;
+TenantLearningMenuComponent.displayName = 'TenantLearningMenu';
+export const TenantLearningMenu = TenantLearningMenuComponent;

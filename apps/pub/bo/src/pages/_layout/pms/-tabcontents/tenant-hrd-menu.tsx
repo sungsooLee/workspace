@@ -17,7 +17,7 @@ import {
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 // eslint-disable-next-line no-empty-pattern
-const ApiHrdMenuComponent: FC<{}> = ({}) => {
+const TenantHrdMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false, // Hidden메뉴
@@ -28,7 +28,6 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
 
-  // grid
   const data: any[] = [
     {
       Sort: 'Common API',
@@ -76,7 +75,7 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'목록'}</h3>
+          <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체펼침'}
@@ -321,5 +320,5 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
   );
 };
 
-ApiHrdMenuComponent.displayName = 'ApiHrdMenu';
-export const ApiHrdMenu = ApiHrdMenuComponent;
+TenantHrdMenuComponent.displayName = 'TenantHrdMenu';
+export const TenantHrdMenu = TenantHrdMenuComponent;

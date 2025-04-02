@@ -317,7 +317,7 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'PMS/플랫폼API관리',
+    screenName: 'PMS/플랫폼관리_플랫폼API관리',
     pageId: 'pms/menu-platform',
     screenId: 'NLP_BO_PMS_1404',
     pageType: 'Page',
@@ -326,7 +326,7 @@ export const guideData = [
     remarks: '진행중', // 비고
   },
   {
-    screenName: 'PMS/메뉴관리',
+    screenName: 'PMS/플랫폼관리_메뉴관리',
     pageId: 'pms/menu-management',
     screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
@@ -335,7 +335,7 @@ export const guideData = [
     remarks: '진행중(트리영역 제외 완료)', // 비고
   },
   {
-    screenName: 'PMS/카테고리관리',
+    screenName: 'PMS/플랫폼관리_카테고리관리',
     pageId: 'pms/category-menagement',
     screenId: 'NLP_BO_PMS_1120',
     pageType: 'Page',
@@ -344,7 +344,7 @@ export const guideData = [
     remarks: '진행중(트리영역 제외 완료)', // 비고
   },
   {
-    screenName: 'PMS/위젯관리',
+    screenName: 'PMS/플랫폼관리_위젯관리',
     pageId: 'pms/widget-management',
     screenId: 'NLP_BO_PMS_1310',
     pageType: 'Page',
@@ -353,7 +353,7 @@ export const guideData = [
     remarks: '작업완료(그리드는 참고용입니다.)', // 비고
   },
   {
-    screenName: 'PMS/위젯관리 미리보기',
+    screenName: 'PMS/플랫폼관리_위젯관리 미리보기',
     pageId: 'pms/popup-widget-management',
     screenId: 'NLP_BO_PMS_1313',
     pageType: 'Pop-up',
@@ -362,7 +362,7 @@ export const guideData = [
     remarks: '작업완료', // 비고
   },
   {
-    screenName: 'PMS/위젯등록',
+    screenName: 'PMS/플랫폼관리_위젯등록',
     pageId: 'pms/widget-register',
     screenId: 'NLP_BO_PMS_1311',
     pageType: 'Page',
@@ -371,13 +371,22 @@ export const guideData = [
     remarks: '진행중(하단 테이블 작업 예정)', // 비고
   },
   {
-    screenName: 'PMS/위젯상세',
+    screenName: 'PMS/플랫폼관리_위젯상세',
     pageId: 'pms/widget-detail',
     screenId: 'NLP_BO_PMS_1312',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '진행중(하단 테이블 작업 예정)', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_메뉴관리',
+    pageId: 'pms/tenant-menu-management',
+    screenId: 'NLP_BO_TMS_1002_01',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
