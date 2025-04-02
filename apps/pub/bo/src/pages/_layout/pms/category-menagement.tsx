@@ -1,6 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 /* style  */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -16,11 +18,12 @@ export const Route = createFileRoute('/_layout/pms/category-menagement')({
 
 function RouteComponent() {
   return (
+    // 컨턴츠 안에 스크롤인 경우 : scrollHidden 추가
     <PageContainer scrollHidden={true}>
       {/* main_contents */}
       <div className={styles.main_contents}>
         <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-          <div className={layoutStyles.inner}>
+          <div className={cn(layoutStyles.inner, layoutStyles.type2)}>
             <div className={titleStyles.title_wrap}>
               <h3 className={titleStyles.title}>{'공통 카테고리  목록'}</h3>
               <div className={layoutStyles.btn_wrap}>
@@ -35,7 +38,7 @@ function RouteComponent() {
             {/* 트리 영역 */}
             <div className={layoutStyles.inner_contents}></div>
           </div>
-          <div className={layoutStyles.inner}>
+          <div className={cn(layoutStyles.inner, layoutStyles.type2)}>
             <div className={titleStyles.title_wrap}>
               <h3 className={titleStyles.title}>{'{러닝웨이} 카테고리'}</h3>
               <div className={layoutStyles.btn_wrap}>
@@ -155,6 +158,9 @@ function RouteComponent() {
                     />
                   </div>
                 </div>
+              </ContentsRow>
+              <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+                <ContentsHistoryInfoFormField />
               </ContentsRow>
             </div>
           </div>

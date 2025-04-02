@@ -317,22 +317,31 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'PMS/메뉴관리',
-    pageId: 'pms/menu-management',
-    screenId: '',
+    screenName: 'PMS/플랫폼API관리',
+    pageId: 'pms/menu-platform',
+    screenId: 'NLP_BO_PMS_1404',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '진행중', // 비고
   },
   {
-    screenName: 'PMS/카테고리관리',
-    pageId: 'pms/category-menagement',
+    screenName: 'PMS/메뉴관리',
+    pageId: 'pms/menu-management',
     screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
     completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    lastUpdateDate: '2025-04-02',
+    remarks: '진행중(트리영역 제외 완료)', // 비고
+  },
+  {
+    screenName: 'PMS/카테고리관리',
+    pageId: 'pms/category-menagement',
+    screenId: 'NLP_BO_PMS_1120',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '2025-04-02',
+    remarks: '진행중(트리영역 제외 완료)', // 비고
   },
   {
     screenName: 'PMS/위젯관리',
