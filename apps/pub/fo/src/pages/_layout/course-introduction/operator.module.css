@@ -33,3 +33,31 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.operator {
+        @apply relative p-[16px];
+        .avatar {
+          @apply absolute left-[16px] top-[16px];
+        }
+        .txt_box {
+          @apply block;
+          .profile {
+            @apply w-full pl-[68px];
+            strong {
+              @apply mt-[4px];
+            }
+            & > div {
+              @apply text-[0];
+            }
+          }
+          .definition_list {
+            @apply mt-[16px] w-full;
+          }
+        }
+      }
+    }
+  }
+}

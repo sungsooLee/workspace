@@ -68,15 +68,15 @@ function RouteComponent() {
         <div className={styles.thumbnail_img}>
           <img src={bnrImage1} alt="" />
         </div>
+        <div className={styles.package_txt_box}>
+          <strong>패키지소개</strong>
+          <p>
+            패키지에 대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백포함 한글 300자 패키지에
+            대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백패키지에 대한 소개 공백포함 한글
+            300자 패키지에 대한 소개 공백포
+          </p>
+        </div>
         <div className={styles.package_box}>
-          <div className={styles.txt_box}>
-            <strong>패키지소개</strong>
-            <p>
-              패키지에 대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백포함 한글 300자 패키지에
-              대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백패키지에 대한 소개 공백포함 한글
-              300자 패키지에 대한 소개 공백포
-            </p>
-          </div>
           <div className={styles.img_box}>
             <img src={package1} alt="" />
           </div>
@@ -146,6 +146,7 @@ function RouteComponent() {
                 <span>77,500</span>
               </div>
             </div>
+            {/* 구독 */}
             <div className={packageInformationStyles.subscribe_box}>
               <span className={packageInformationStyles.channel}>
                 <img src={logoHyundai} alt="" />
@@ -177,7 +178,7 @@ function RouteComponent() {
                 </dl>
               </div>
             </div>
-
+            {/* button */}
             <div className={packageInformationStyles.btn_box}>
               <Button>
                 <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
