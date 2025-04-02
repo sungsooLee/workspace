@@ -58,4 +58,11 @@ body.mobile {
   .auth--box {
     @apply px-[20px] pb-[20px] pt-[16px];
   }
+  .auth--btn_wrap {
+    button {
+      &.min {
+        @apply max-w-[104px];
+      }
+    }
+  }
 }

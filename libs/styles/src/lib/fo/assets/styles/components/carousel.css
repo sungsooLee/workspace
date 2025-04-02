@@ -7,9 +7,6 @@
     &::after {
       @apply h-[24px] w-[24px] bg-[24px_auto] bg-[center_center] bg-no-repeat text-transparent;
     }
-    &.swiper-button-disabled {
-      @apply hidden;
-    }
   }
   .swiper-container {
     overflow: visible !important;
@@ -26,4 +23,8 @@
       @apply bg-[url(../../images/icon/ic_arrow_forward.png)];
     }
   }
+}
+
+.swiper-button-disabled {
+  @apply !hidden;
 }

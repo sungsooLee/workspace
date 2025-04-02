@@ -604,7 +604,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- search-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
+    remarks: '- search-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
   },
   {
     screenId: 'NLP_FO_USE_MA_1011',
@@ -614,7 +614,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- auto-complete-popover.tsx\n- popover body 스크롤 공통에서 삭제 대기중',
+    remarks: '- auto-complete-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
   },
   {
     screenId: 'NLP_FO_USE_M_1000',
@@ -684,8 +684,8 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
-    lastUpdateDate: '',
-    remarks: '- filter.tsx\n- 내용안에 포함',
+    lastUpdateDate: '2025-03-31',
+    remarks: '- filter.tsx\n- 내용안에 포함\n- filter.tsx, filter-popup.tsx 수정 (2025-03-31)',
   },
   {
     screenId: 'NLP_FO_CAT_M_1000',
@@ -1073,51 +1073,53 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1010',
     screenName: '과정상세_수강신청_신청완료',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-complete',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-complete\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1014',
     screenName: '과정상세_수강신청_모든케이스',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1015',
     screenName: '과정상세_수강신청_사전레벨테스트',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-level',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1016',
     screenName: '과정상세_수강신청_교재 배송지',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-textbook\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1017',
     screenName: '과정상세_수강신청_교재 배송지_주소 찾기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-textbook',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- address-popup.tsx\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1018',
@@ -1173,11 +1175,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MR_1023',
     screenName: '과정상세_수강신청_신청완료',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-registration/course-registration-complete',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-registration-complete\n- 디자인 컨펌x',
   },
   {
     screenId: 'NLP_FO_CLA_1000',
@@ -1473,6 +1475,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1015',
@@ -2337,11 +2340,11 @@ export const guideData = [
     screenId: 'NLP_FO_FOT_1006 ',
     screenName: 'FOOTER_오픈소스 라이선스',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'footer-menu/open-license',
+    pageType: 'Page',
+    completionDate: '2025-03-31',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- open-license.tsx',
   },
   {
     screenId: 'NLP_FO_SHF_1000',

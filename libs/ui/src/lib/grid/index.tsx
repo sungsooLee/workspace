@@ -1,5 +1,14 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, {
+  CSSProperties,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
+  Cell,
   Column,
   ColumnFiltersState,
   ColumnPinningState,
@@ -16,8 +25,7 @@ import {
   Table,
   useReactTable,
   VisibilityState,
-} from '@tanstack/react-table';
-// paging Icons
+} from '@tanstack/react-table'; // paging Icons
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -29,8 +37,8 @@ import {
   IcoMinus,
   IcoPlus,
 } from '@learnway/icons';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { cn } from '@learnway/shared';
+import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
+import { cn, isFirefox } from '@learnway/shared';
 import { t } from 'i18next';
 
 import { GridImperative, GridProps } from './types/grid';
@@ -39,43 +47,20 @@ import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
-import './grid.css'; // grid CSS
 import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-// interface IndeterminateCheckboxProps extends Omit<CheckFieldProps, 'ref'> {
-//   indeterminate?: boolean;
-// }
+import './grid.css'; // grid CSS
 
-// /// 체크 박스
-// export const IndeterminateCheckbox = ({
-//   indeterminate,
-//   value,
-//   onChange,
-//   ...rest
-// }: IndeterminateCheckboxProps) => {
-//   const handleChange = (checked: CheckedState) => {
-//     onChange?.(checked === true);
-//   };
-
-//   const checkedState: CheckedState = indeterminate ? 'indeterminate' : value || false;
-
-//   return <Checkbox checked={checkedState} onCheckedChange={handleChange} />;
-// };
-///////
-
-// const Grid = <T extends object>({
 const Grid = forwardRef(
   <T extends object>(
     {
       data,
       columns,
-      onStateChange,
-      onRowSelect,
-      onRowsSelect,
-      multiSelectable = false,
-      enableRowSelectionToggle = true,
+      height = 240,
+      multiple,
+      disabledSelectionToggle,
       hideRowSelectionCheckBox,
       pagination,
       title,
@@ -90,6 +75,11 @@ const Grid = forwardRef(
       showDeleteAll = false,
       showSelectedCount,
       className,
+      tableMode,
+      onStateChange,
+      onRowSelect,
+      onRowsSelect,
+      onChange,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -105,7 +95,7 @@ const Grid = forwardRef(
       [columnGrouping?.columns],
     );
     const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
-      left: multiSelectable ? ['select', ...columnPinning.columns] : columnPinning.columns, // 체크박스가 있으면 'select'를 기본으로 고정
+      left: multiple ? ['select', ...columnPinning.columns] : columnPinning.columns, // 체크박스가 있으면 'select'를 기본으로 고정
       right: [],
     });
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
@@ -133,81 +123,84 @@ const Grid = forwardRef(
     );
 
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
-    const columnsWithCheckbox = useMemo(
-      () =>
-        multiSelectable && !hideRowSelectionCheckBox
-          ? [
-              {
-                id: 'select',
-                size: 50,
-                maxSize: 50,
-                minSize: 50,
-                enablePinning: true, // 핀 기능 활성화
-                meta: {
-                  align: 'center',
-                  headerAlign: 'center',
-                  cellAlign: 'center',
-                },
-                header: ({ table }: { table: Table<T> }) => (
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      textAlign: 'center',
-                      verticalAlign: 'center',
-                    }}>
-                    <Checkbox
-                      checked={table.getIsAllRowsSelected()}
-                      onCheckedChange={(checked) => {
-                        table.toggleAllRowsSelected(!!checked);
-                      }}
-                    />
-                  </div>
-                ),
-                // 바디 체크 박스
-                cell: ({ row }: { row: Row<T> }) => (
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      textAlign: 'center',
-                      paddingRight: '0',
-                    }}>
-                    {' '}
-                    <Checkbox
-                      checked={row.getIsSelected()}
-                      onCheckedChange={(checked) => {
-                        // 그룹핑된 행은 체크박스 비활성화
-                        if (row.getIsGrouped()) {
-                          return;
-                        }
-                        // row.toggleSelected(!!checked);
-                        row.getToggleSelectedHandler();
-                      }}
-                      disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
-                    />
-                  </div>
-                ),
-              },
-              ...columns,
-            ]
-          : columns,
-      [columns, multiSelectable],
-    );
+    const tableColumns = useMemo(() => {
+      // 다중 선택을 위한 체크박스 컬럼 정의
+      const multipleCheckColumn = {
+        id: 'select',
+        size: 50,
+        maxSize: 50,
+        minSize: 50,
+        enablePinning: true, // 컬럼 고정 가능
+        meta: {
+          align: 'center',
+          headerAlign: 'center',
+          cellAlign: 'center',
+        },
+        // 헤더 체크박스: 전체 선택 / 해제
+        header: ({ table }: { table: Table<T> }) => (
+          <div
+            style={{
+              width: '100%',
+              display: 'block',
+              textAlign: 'center',
+              verticalAlign: 'center',
+            }}>
+            <Checkbox
+              checked={table.getIsAllRowsSelected()}
+              onCheckedChange={(checked) => {
+                table.toggleAllRowsSelected(!!checked);
+              }}
+            />
+          </div>
+        ),
+        // 개별 행 체크박스
+        cell: ({ row }: { row: Row<T> }) => (
+          <div
+            style={{
+              width: '100%',
+              display: 'block',
+              textAlign: 'center',
+              paddingRight: '0',
+            }}>
+            {' '}
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
+              onCheckedChange={(checked) => {
+                // 그룹 컬럼이 아닌 경우만 실행
+                if (!row.getIsGrouped()) {
+                  row.getToggleSelectedHandler();
+                }
+              }}
+            />
+          </div>
+        ),
+      };
 
-    // Row Select handle 이벤트 - 단일/다중 분기 처리
+      // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
+      return multiple && !hideRowSelectionCheckBox ? [multipleCheckColumn, ...columns] : columns;
+    }, [columns, multiple, hideRowSelectionCheckBox]);
+
+    /**
+     * Row Select handle - 단일 선택 모드
+     * @param updaterOrValue
+     */
     const handleRowSelectionChangeForSingleMode: OnChangeFn<RowSelectionState> = (
       updaterOrValue,
     ) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
 
-      // 단일 선택 모드: 마지막 선택만 유지
+      // 마지막 선택만 유지
       const selectedRowIds = Object.keys(newSelection);
       const newSelectionState = selectedRowIds.length > 0 ? { [selectedRowIds[0]]: true } : {};
       setRowSelection(newSelectionState);
     };
 
+    /**
+     * Row Select handle - 멀티 선택 모드
+     * @param updaterOrValue
+     */
     const handleRowSelectionChangeForMultiMode: OnChangeFn<RowSelectionState> = (
       updaterOrValue,
     ) => {
@@ -216,9 +209,47 @@ const Grid = forwardRef(
       setRowSelection(newSelection);
     };
 
+    /**
+     * 특정 셀의 데이터를 업데이트하는 함수입니다.
+     *
+     * @param {number} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
+     * @param {string} columnId 업데이트할 셀의 컬럼 ID입니다.
+     * @param {unknown} value 업데이트할 셀의 새로운 값입니다.
+     * @returns {void}
+     */
+    const updateData = (rowIndex: number, columnId: string, value: unknown) => {
+      const newData = table
+        .getRowModel()
+        .rows.map((row) => row.original)
+        .map((row: any, index: number) => {
+          if (index === rowIndex) {
+            return {
+              ...row,
+              [columnId]: value,
+            };
+          }
+          return row;
+        });
+      onChange?.(newData);
+    };
+
+    /**
+     * 특정 행을 삭제하는 함수입니다.
+     *
+     * @param {number} rowIndex 업데이트할 셀이 위치한 행의 인덱스입니다.
+     * @returns {void}
+     */
+    const removeData = (rowIndex: number) => {
+      const newData = table
+        .getRowModel()
+        .rows.map((row) => row.original)
+        .filter((row: any, index: number) => index !== rowIndex);
+      onChange?.(newData);
+    };
+
     const table = useReactTable({
       data,
-      columns: columnsWithCheckbox,
+      columns: tableColumns,
       state: {
         columnOrder,
         columnVisibility,
@@ -256,10 +287,10 @@ const Grid = forwardRef(
       getExpandedRowModel: getExpandedRowModel(),
       enableRowSelection: true,
       // onRowSelectionChange: setRowSelection,
-      onRowSelectionChange: multiSelectable
+      onRowSelectionChange: multiple
         ? handleRowSelectionChangeForMultiMode
         : handleRowSelectionChangeForSingleMode,
-      enableMultiRowSelection: multiSelectable,
+      enableMultiRowSelection: multiple,
       enableHiding: true,
       enableGrouping: true,
       enableExpanding: true,
@@ -278,6 +309,11 @@ const Grid = forwardRef(
       getRowId: (row: T, index: number) => {
         return `${pagination?.pageIndex ?? 0}-${index}`;
       },
+      meta: {
+        updateData,
+        removeData,
+      },
+      // defaultColumn,
     });
 
     // 가상 스크롤 관련 설정
@@ -286,10 +322,9 @@ const Grid = forwardRef(
       count: rows.length,
       estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
       getScrollElement: () => tableContainerRef.current,
-      measureElement:
-        typeof window !== 'undefined' && navigator.userAgent.indexOf('Firefox') === -1
-          ? (element) => element?.getBoundingClientRect().height
-          : undefined,
+      measureElement: !isFirefox()
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
       overscan: 5,
     });
 
@@ -361,129 +396,98 @@ const Grid = forwardRef(
         width: 'sm',
       });
     };
-    ////
 
-    //// 테이블 내용 렌더링
-    const renderTableContent = () => {
-      const paginationGrid = pagination ? true : false;
+    /**
+     * 테이블 내용 로딩
+     */
+    const renderLoading = () => <p>Loading...</p>;
 
-      const renderRows = () => {
-        if (paginationGrid) {
-          return rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
-            const row = rows[virtualRow.index] as Row<T>;
-            return (
-              <tr
-                data-index={virtualRow.index}
-                ref={(node) => rowVirtualizer.measureElement(node)}
-                key={row.id}
-                className={cn(
-                  'cursor-pointer hover:bg-[#F4F8FF]',
-                  row.getIsSelected() && 'bg-[#EDFCFF] hover:bg-blue-100',
-                )}
-                style={{
-                  display: 'flex',
-                  position: 'absolute',
-                  transform: `translateY(${virtualRow.start}px)`,
-                  width: '100%',
-                }}
-                onClick={() => enableRowSelectionToggle && row.toggleSelected()}>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    style={{
-                      display: 'block',
-                      width: cell.column.getSize(),
-                      textAlign:
-                        cell.column.columnDef.meta?.cellAlign ||
-                        cell.column.columnDef.meta?.align ||
-                        'left',
-                      verticalAlign: 'center',
-                    }}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            );
-          });
-        }
-        const virtualRows = rowVirtualizer.getVirtualItems();
-        const paddingTop = virtualRows.length > 0 ? virtualRows[0].start : 0;
-        const paddingBottom =
-          virtualRows.length > 0
-            ? rowVirtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1].end || 0)
-            : 0;
-
+    /**
+     * 테이블 내용 렌더링
+     */
+    const renderTable = () => {
+      // table tbody
+      const renderBody = () => {
+        const bodyStyle = {
+          // display: paginationGrid ? 'table-row-group' : 'grid',
+          display: 'grid',
+          position: 'relative',
+          height: `${rowVirtualizer.getTotalSize()}px`,
+        } as CSSProperties;
         return (
-          <>
-            {paddingTop > 0 && <tr style={{ height: `${paddingTop}px`, width: '100%' }} />}
-            {virtualRows.map((virtualRow) => {
-              const row = rows[virtualRow.index] as Row<T>;
-              return (
-                <tr
-                  key={row.id}
-                  data-index={virtualRow.index}
-                  ref={(node) => rowVirtualizer.measureElement(node)}
-                  className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: `${virtualRow.size}px`,
-                    transform: `translateY(${virtualRow.start}px)`,
-                    display: 'flex',
-                  }}
-                  onClick={() =>
-                    !row.getIsGrouped() && enableRowSelectionToggle && row.toggleSelected()
-                  }>
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className="grid_td h-[100%]"
-                      style={{
-                        background: cell.getIsGrouped()
-                          ? '#0aff0082'
-                          : cell.getIsAggregated()
-                            ? '#ffa50078'
-                            : cell.getIsPlaceholder()
-                              ? '#ff000042'
-                              : '',
-                        width: cell.column.getSize(),
-                        display: 'block',
-                        textAlign:
-                          cell.column.columnDef.meta?.cellAlign ||
-                          cell.column.columnDef.meta?.align ||
-                          'left',
-                        verticalAlign: 'center',
-                      }}>
-                      {cell.getIsGrouped() ? (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            row.toggleExpanded();
-                          }}
-                          style={{
-                            cursor: row.getIsGrouped() ? 'default' : 'pointer',
-                          }}>
-                          {row.getIsExpanded() ? '👇' : '👉'}{' '}
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())} (
-                          {row.subRows.length})
-                        </button>
-                      ) : cell.getIsAggregated() ? (
-                        flexRender(
-                          cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )
-                      ) : cell.getIsPlaceholder() ? null : (
-                        flexRender(cell.column.columnDef.cell, cell.getContext())
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              );
+          <tbody style={bodyStyle}>
+            {rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
+              const row = rows[item.index] as Row<T>;
+              return renderRow(row, item);
             })}
-            {paddingBottom > 0 && <tr style={{ height: `${paddingBottom}px`, width: '100%' }} />}
-          </>
+          </tbody>
+        );
+      };
+
+      // table tbody > tr
+      const renderRow = (row: Row<T>, item: VirtualItem) => {
+        const { index, size, start } = item;
+        const rowStyle = {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: `${size}px`,
+          transform: `translateY(${start}px)`,
+          display: 'flex',
+        } as CSSProperties;
+        return (
+          <tr
+            key={row.id}
+            data-index={index}
+            ref={(node) => rowVirtualizer.measureElement(node)}
+            className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
+            style={rowStyle}
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
+            {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
+          </tr>
+        );
+      };
+
+      // table tbody > tr > td
+      const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
+        const cellStyle = {
+          background: cell.getIsGrouped()
+            ? '#0aff0082'
+            : cell.getIsAggregated()
+              ? '#ffa50078'
+              : cell.getIsPlaceholder()
+                ? '#ff000042'
+                : '',
+          width: cell.column.getSize(),
+          display: 'block',
+          textAlign:
+            cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
+          verticalAlign: 'center',
+        } as CSSProperties;
+        return (
+          <td key={cell.id} className="grid_td h-[100%]" style={cellStyle}>
+            {cell.getIsGrouped() ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  row.toggleExpanded();
+                }}
+                style={{
+                  cursor: row.getIsGrouped() ? 'default' : 'pointer',
+                }}>
+                {row.getIsExpanded() ? '👇' : '👉'}{' '}
+                {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+              </button>
+            ) : cell.getIsAggregated() ? (
+              flexRender(
+                cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+                cell.getContext(),
+              )
+            ) : cell.getIsPlaceholder() ? null : (
+              flexRender(cell.column.columnDef.cell, cell.getContext())
+            )}
+          </td>
         );
       };
 
@@ -491,37 +495,19 @@ const Grid = forwardRef(
         <div
           ref={tableContainerRef}
           className={cn(
-            'grid_table',
+            tableMode ? 'table' : 'grid_table',
             className,
-            multiSelectable && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            multiple && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
           )}
           style={{
-            height: '300px',
+            height: `${height}px`,
             width: '100%',
           }}>
-          <table
-            style={{
-              // display: paginationGrid ? 'table' : 'grid', // 가상 스크롤일 때 grid 사용
-              display: 'grid',
-              width: '100%',
-            }}>
-            <thead
-              style={{
-                // display: paginationGrid ? 'table-header-group' : 'grid',/
-                display: 'grid',
-                position: 'sticky',
-                top: 0,
-                zIndex: 1,
-                backgroundColor: '#F4F8FF',
-              }}>
+          <table>
+            {/*thead*/}
+            <thead>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  key={headerGroup.id}
-                  style={{
-                    // display: paginationGrid ? 'table-row' : 'flex',
-                    display: 'flex',
-                    width: '100%',
-                  }}>
+                <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
@@ -529,12 +515,15 @@ const Grid = forwardRef(
                         // width: paginationGrid ? undefined : header.getSize(),
                         // display: paginationGrid ? 'table-cell' : 'flex',
                         // 정렬 속성 추가
-
                         textAlign:
                           header.column.columnDef.meta?.headerAlign ||
                           header.column.columnDef.meta?.align ||
                           'left',
-                        display: 'flex',
+                        // justifyContent:
+                        //   header.column.columnDef.meta?.headerAlign ||
+                        //   header.column.columnDef.meta?.align ||
+                        //   'justify-start',
+                        display: 'block',
                         width: header.getSize(),
                       }}
                       className="thead_th">
@@ -545,6 +534,13 @@ const Grid = forwardRef(
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
                             'font-bold uppercase text-[#5C636E]',
                           )}
+                          style={{
+                            justifyContent:
+                              header.column.columnDef.meta?.headerAlign ||
+                              header.column.columnDef.meta?.align ||
+                              'justify-start',
+                            width: header.getSize(),
+                          }}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
                             ? null
@@ -585,16 +581,8 @@ const Grid = forwardRef(
                 </tr>
               ))}
             </thead>
-            <tbody
-              style={{
-                // display: paginationGrid ? 'table-row-group' : 'grid',
-                display: 'grid',
-                position: 'relative',
-                // height: paginationGrid ? undefined : `${rowVirtualizer.getTotalSize()}px`,
-                height: `${rowVirtualizer.getTotalSize()}px`,
-              }}>
-              {isLoading ? <p>Loading...</p> : renderRows()}
-            </tbody>
+            {/*tbody*/}
+            {isLoading ? renderLoading() : renderBody()}
           </table>
         </div>
       );
@@ -729,16 +717,15 @@ const Grid = forwardRef(
             <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
           )}
         </div>
-        {renderTableContent()}
+        {renderTable()}
         {renderPagination()}
       </div>
     );
   },
 );
 
-// forwardRef를 제네릭 함수로 감싸기
-// const ForwardedGrid = forwardRef(Grid) as <T extends object>(
-//   props: GridProps<T> & { ref?: React.Ref<HTMLElement> },
-// ) => ReturnType<typeof Grid>;
+const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
+  return <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle />;
+});
 
-export { Grid };
+export { Grid, TableComponent as Table };

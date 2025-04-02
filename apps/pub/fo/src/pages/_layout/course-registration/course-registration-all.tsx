@@ -1,41 +1,59 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, ContentsRow, Input, PhoneNumber, OptionCard, DatePicker } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  Input,
+  PhoneNumber,
+  OptionCard,
+  OptionCardItem,
+  DatePicker,
+  useModal,
+} from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { getRandomId } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { isMobile } from 'react-device-detect';
+import { AddressPopup } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-registration/course-registration-all.module.css';
+import styles from './course-registration-all.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+
   const gender = [
-    { label: '상관없음', value: getRandomId() },
-    { label: '남자', value: getRandomId() },
-    { label: '여자', value: getRandomId() },
+    { label: '상관없음', value: 'value1' },
+    { label: '남자', value: 'value2' },
+    { label: '여자', value: 'value3' },
   ];
 
   const lodgment = [
-    { label: '네, 신청합니다', value: getRandomId() },
-    { label: '아니오, 신청하지 않습니다', value: getRandomId() },
+    { label: '네, 신청합니다', value: 'value1' },
+    { label: '아니오, 신청하지 않습니다', value: 'value2' },
   ];
 
   const car = [
-    { label: '차량을 제공하겠습니다', value: getRandomId() },
-    { label: '카풀을 신청합니다', value: getRandomId() },
-    { label: '카풀을 신청하지 않겠습니다', value: getRandomId() },
+    { label: '차량을 제공하겠습니다', value: 'value1' },
+    { label: '카풀을 신청합니다', value: 'value2' },
+    { label: '카풀을 신청하지 않겠습니다', value: 'value3' },
   ];
 
   const [date, setDate] = useState(new Date());
   const handleDate = (value: any) => {
     setDate(value);
   };
+
+  const [optionCardValue, setOptionCardValue] = useState<string[]>();
+  const [optionCardValue2, setOptionCardValue2] = useState<string[]>();
+  const [optionCardValue3, setOptionCardValue3] = useState<string[]>();
 
   return (
     <div className={`${styles.start} ${styles.course}`}>
@@ -145,7 +163,13 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>강사 선호 성별</span>
                 </div>
                 <div className={formStyles.input_box}>
-                  <OptionCard className={styles.option_card} cols={3} options={gender} />
+                  <OptionCard
+                    value={optionCardValue}
+                    className={styles.option_card}
+                    cols={3}
+                    options={gender}
+                    onOptionSelect={(option: OptionCardItem) => setOptionCardValue(option.value)}
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -213,14 +237,51 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <div className={`${dynamicFormStyles.item_col_full} ${styles.item_col_full}`}>
-                    <div className={dynamicFormStyles.flex_plus}>
-                      <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
-                      <Button variant="gray" size="lg">
+                    {/* pc */}
+                    <BrowserView>
+                      <div className={dynamicFormStyles.flex_plus}>
+                        <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
+                        <Button
+                          variant="gray"
+                          size="lg"
+                          onClick={() =>
+                            openModal({
+                              width: 's',
+                              content: <AddressPopup />,
+                            })
+                          }>
+                          주소 찾기
+                        </Button>
+                      </div>
+                      <Input
+                        id="addr2"
+                        type="text"
+                        placeholder="상세주소를 입력해주세요"
+                        value=""
+                      />
+                      <Input
+                        id="addr3"
+                        type="text"
+                        placeholder="상세주소를 입력해주세요"
+                        value=""
+                      />
+                    </BrowserView>
+                    {/* mo */}
+                    <MobileView>
+                      <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Button
+                        variant="gray"
+                        size="lg"
+                        onClick={() =>
+                          openModal({
+                            width: 'm_full',
+                            content: <AddressPopup />,
+                          })
+                        }>
                         주소 찾기
                       </Button>
-                    </div>
-                    <Input id="addr2" type="text" placeholder="상세주소를 입력해주세요" value="" />
-                    <Input id="addr3" type="text" placeholder="상세주소를 입력해주세요" value="" />
+                    </MobileView>
                   </div>
                 </div>
               </div>
@@ -241,7 +302,13 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>숙박 신청</span>
                 </div>
                 <div className={formStyles.input_box}>
-                  <OptionCard className={styles.option_card} cols={2} options={lodgment} />
+                  <OptionCard
+                    value={optionCardValue2}
+                    className={styles.option_card}
+                    cols={isMobile ? 1 : 2}
+                    options={lodgment}
+                    onOptionSelect={(option: OptionCardItem) => setOptionCardValue2(option.value)}
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -252,7 +319,13 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>카풀 신청</span>
                 </div>
                 <div className={formStyles.input_box}>
-                  <OptionCard className={styles.option_card} cols={3} options={car} />
+                  <OptionCard
+                    value={optionCardValue3}
+                    className={styles.option_card}
+                    cols={isMobile ? 1 : 3}
+                    options={car}
+                    onOptionSelect={(option: OptionCardItem) => setOptionCardValue3(option.value)}
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -339,14 +412,29 @@ function RouteComponent() {
       </div>
 
       {/* button */}
-      <div className={cn(authFormStyles.btn_wrap, 'auth--btn_wrap')}>
-        <Button variant="gray" size="xl" className="min">
-          취소
-        </Button>
-        <Button variant="primary" size="xl">
-          신청
-        </Button>
-      </div>
+      <BrowserView>
+        <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+          <Button variant="gray" size="xl" className="min">
+            취소
+          </Button>
+          <Button variant="primary" size="xl">
+            신청
+          </Button>
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <MobileContainerFooter>
+          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button variant="gray" size="xl" className="min">
+              취소
+            </Button>
+            <Button variant="primary" size="xl">
+              신청
+            </Button>
+          </div>
+        </MobileContainerFooter>
+      </MobileView>
     </div>
   );
 }

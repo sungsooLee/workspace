@@ -2,6 +2,16 @@
   @apply scrollbar relative z-0 overflow-auto border border-solid border-[var(--gray5)] bg-[var(--white)];
   thead {
     @apply border-b-[1px] border-solid border-[var(--gray4)];
+    display: grid;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #F4F8FF;
+
+    tr {
+      display: flex;
+      width: 100%;
+    }
   }
   .thead_th {
     @apply box-border items-center justify-start border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[8px] text-[14px] font-bold text-[#5C636E];
@@ -9,9 +19,9 @@
       @apply border-l border-t-0 border-solid;
     }
     .th_wrap {
-      @apply inline-flex h-full;
+      @apply inline-flex h-full w-full;
       .th_cell {
-        @apply body_bo_4_b relative flex h-full min-h-[40px] items-center;
+        @apply body_bo_4_b relative flex h-full min-h-[40px] w-full items-center;
       }
     }
     .nlp--checkbox {
@@ -22,12 +32,15 @@
     tr {
       @apply min-h-[40px] border-b border-solid border-[var(--gray4)];
       td {
-        @apply body_bo_2_r box-border !overflow-hidden !text-ellipsis !whitespace-nowrap border-l border-solid !border-[var(--gray4)] px-[8px] pt-[10px] text-center text-[var(--gray7)];
+        @apply body_bo_2_r box-border border-l border-solid !border-[var(--gray4)] px-[8px] pt-[10px] text-center text-[var(--gray7)];
         &:first-child {
           @apply border-l-0;
         }
         .nlp--button {
-          @apply !h-[20px] !text-[1rem];
+          @apply !h-[20px] !min-w-[32px] px-0 !text-[1rem];
+          &.link {
+            @apply !text-[1.4rem];
+          }
         }
       }
     }
@@ -133,7 +146,7 @@
 }
 
 .link {
-  @apply text-[1.4rem] font-normal text-[#00afd5] underline;
+  @apply !text-[1.4rem] font-normal text-[#00afd5] underline;
 }
 
 .btn_table {

@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
-import Select, { components, MultiValue, SingleValue, ActionMeta } from 'react-select';
-import { getRandomId, cn } from '@learnway/shared';
+import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
+import { cn, getRandomId } from '@learnway/shared';
 import { Checkbox } from '../checkbox/checkbox';
 import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
 import { DropdownComponentProps, DropdownOption } from './type';
@@ -143,6 +143,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           onBlur={handleBlur}
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
+          menuPlacement="auto"
           className={cn(isFocused || isMenuOpen ? 'focused' : '', isReadonly ? 'readonly' : '')}
           classNamePrefix="nlp-select"
           components={{
@@ -152,8 +153,10 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
             // ValueContainer : CustomValueContainer
             // ValueContainer:  (props) => <CustomValueContainer {...props} variant={variant}/>,
           }}
+          menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
+          // menuIsOpen={true}
           {...customProps}
         />
       </div>
@@ -174,7 +177,7 @@ const FormDropdownComponent = forwardRef<any, any>(
         onChange(multiValues ? multiValues.map((option) => option.value) : []);
       } else {
         const singleValue = newValue as SingleValue<DropdownOption>;
-        onChange(singleValue ? singleValue.value : null);
+        onChange(singleValue?.value ?? null);
       }
     };
 

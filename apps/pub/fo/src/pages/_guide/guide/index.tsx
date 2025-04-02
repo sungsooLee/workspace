@@ -21,6 +21,7 @@ function RouteComponent() {
     remarks: string;
     native?: boolean;
     cancel?: boolean;
+    result: string;
   }
 
   // 통계 상태의 타입 정의
@@ -30,6 +31,7 @@ function RouteComponent() {
     remaining: number;
     native: number;
     cancel: number;
+    result: number;
   }
 
   const [data, setData] = useState<ListItem[]>(guideData); // 데이터를 상태로 저장
@@ -41,9 +43,14 @@ function RouteComponent() {
     remaining: 0,
     native: 0,
     cancel: 0,
+    result: 0,
   });
 
-  const getLayoutType = (screenId: string, native?: boolean): string => {
+  const getLayoutType = (
+    screenId: string,
+    native?: boolean,
+    cancel?: boolean | undefined,
+  ): string => {
     if (screenId.includes('_MR_')) return '반응형(모바일)';
     if (screenId.includes('_MA_')) return '적응형(모바일)';
     if (screenId.includes('_M_')) return '모바일';
@@ -61,10 +68,10 @@ function RouteComponent() {
     const native = data.filter((item) => item.native).length;
     const cancel = data.filter((item) => item.cancel).length;
     const completed = data.filter((item) => item.completionDate).length;
-
     const remaining = total - completed - native - cancel;
+    const result = total - cancel;
 
-    setStats({ total, completed, remaining, native, cancel });
+    setStats({ total, completed, remaining, native, cancel, result });
   }, [data]);
 
   // 레이아웃 타입 자동계산
@@ -104,31 +111,34 @@ function RouteComponent() {
     let pc = 0;
     let native = 0;
     let cancel = 0;
+    let result = 0;
 
     data.forEach((item) => {
-      const layout = getLayoutType(item.screenId, item.native);
+      const layout = getLayoutType(item.screenId, item.native, item.cancel);
       if (layout === '모바일' || layout === '반응형(모바일)' || layout === '적응형(모바일)') {
         mobile++;
+        if (item.cancel) mobile--;
       } else if (layout === 'PC') {
         pc++;
+        if (item.cancel) pc--;
       }
     });
 
     setMobileCount(mobile);
     setPcCount(pc);
     setNativeCount(native);
-    setCancelCount(native);
+    setCancelCount(cancel);
   }, [data]);
 
   return (
     <div>
       <h2 className="guide_tit2">퍼블 리스트 현황 (학습자)</h2>
       <div className="info">
-        모바일 : 브라우저 개발자 도구(디바이스 툴바)에서 모바일로 변경 후 확인가능합니다.
+        모바일 : 브라우저 개발자 도구(디바이스 툴바)에서 모바일로 변경 후 확인가능.
       </div>
       <div className="stats_box">
         <span className="total">
-          총 : <strong>{stats.total - stats.cancel}</strong>본 (PC:{pcCount} / Mobile:
+          총 : <strong>{stats.result}</strong>본 (PC:{pcCount} / Mobile:
           {mobileCount - stats.native} / Native:
           {stats.native} / 취소 {stats.cancel})
         </span>
@@ -152,7 +162,7 @@ function RouteComponent() {
           완료율 :
           <strong>
             {stats.total > 0
-              ? (((stats.completed + stats.native + stats.cancel) / stats.total) * 100).toFixed(1)
+              ? (((stats.completed + stats.native) / stats.result) * 100).toFixed(1)
               : 0}
             %
           </strong>
@@ -163,14 +173,14 @@ function RouteComponent() {
         <div
           className="graph_bar completed"
           style={{
-            width: `${stats.total > 0 ? ((stats.completed + stats.native) / stats.total) * 100 : 0}%`,
+            width: `${stats.result > 0 ? ((stats.completed + stats.native) / stats.result) * 100 : 0}%`,
           }}>
           완료 : {stats.completed}본
         </div>
         <div
           className="graph_bar remaining"
           style={{
-            width: `${stats.total > 0 ? ((stats.remaining + stats.cancel) / stats.total) * 100 : 0}%`,
+            width: `${stats.result > 0 ? ((stats.remaining + stats.cancel) / stats.result) * 100 : 0}%`,
           }}>
           남은본수 : {stats.remaining - stats.cancel}본(취소:{stats.cancel}본)
         </div>
@@ -202,7 +212,7 @@ function RouteComponent() {
                 <a href={item.pageId} target="_blank" rel="noreferrer">
                   {item.pageId}
                 </a>
-                <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
+                <div className="screen">{item.screenId ? `(${item.screenId})` : ''}</div>
               </td>
               <td>{item.native ? 'Native' : item.pageType}</td>
               <td>{item.completionDate || '-'}</td>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '@learnway/styles/fo/features/integrated-search/integrated-search-running.module.css';
+import styles from './integrated-search-running.module.css';
 
 const IntegratedSearchRunningComponent = () => {
   return (

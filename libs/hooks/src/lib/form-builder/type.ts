@@ -219,6 +219,8 @@ export type DynamicFormProvider = {
   getValues: UseFormReturn['getValues'];
   /** 초기 필드 값 */
   originalValues: Record<string, any>;
+  /** 필드 에러 제거 */
+  clearFormError: (field: string) => void;
 };
 
 /**

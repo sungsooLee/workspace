@@ -3,7 +3,7 @@
   .textarea {
     @apply scrollbar box-border h-[120px] w-full overflow-y-auto overflow-x-hidden px-[16px] py-[12px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray9)];
     &.sm {
-      @apply h-[80px];
+      @apply h-[50px];
     }
     &.none {
       @apply resize-none;
@@ -16,13 +16,13 @@
     }
   }
   &.readonly {
-    @apply pointer-events-none border-[#f6f7fd] !bg-[#f6f7fd];
+    @apply pointer-events-none border-[var(--gray1)] !bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[#f6f7fd] text-[#4c515e];
+      @apply !bg-[var(--gray1)] text-[#4c515e];
     }
   }
   &.disabled {
-    @apply bg-[var(--gray1)];
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
     .textarea {
       @apply !bg-[var(--gray1)] !text-[#a9afb8];
     }

@@ -1,6 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { getRandomId } from '@learnway/shared';
+import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
@@ -11,7 +13,8 @@ import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-sea
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
-import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
+import fileStyles from './file-wrap.module.css'; // 오른쪽 파일 리스트
+import fileInfoStyles from './file-info.module.css';
 
 import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
@@ -38,6 +41,7 @@ import {
   ModalFooter,
   DropdownList,
   DropdownOption,
+  Thumbnail,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -68,6 +72,7 @@ function RouteComponent() {
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
     ];
+    const [value, setValue] = useState<any>();
     return (
       <ModalContainer>
         <ModalBody>
@@ -163,7 +168,8 @@ function RouteComponent() {
                   { value: 'type9', label: '경영지원시스템 채널 09' },
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
@@ -186,6 +192,7 @@ function RouteComponent() {
       { value: 'type2', label: '항목' },
       { value: 'type3', label: '항목3' },
     ];
+    const [value, setValue] = useState<any>();
     return (
       <ModalContainer>
         <ModalBody>
@@ -270,7 +277,8 @@ function RouteComponent() {
                     label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)',
                   },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
@@ -381,6 +389,17 @@ function RouteComponent() {
     },
   ];
 
+  const buttons2 = [
+    {
+      label: '원본 다운로드',
+      onClick: () => console.log('btn 1'),
+    },
+    {
+      label: '이미지 변경',
+      onClick: () => console.log('btn 2'),
+    },
+  ];
+
   // media info_list
   const infoList = [
     { title: '파일명', text: '파일명이 들어갑니다' },
@@ -395,6 +414,17 @@ function RouteComponent() {
     { title: '오디오 코덱', text: '' },
     { title: '오디오 샘플레이트', text: '' },
   ];
+
+  //
+  const [value, setValue] = useState<any>();
+  const imageOptions = Array(5)
+    .fill(null)
+    .map((d, i) => ({
+      id: getRandomId(),
+      name: `name${i}`,
+      size: 1024,
+      path: 'https://picsum.photos/200',
+    }));
   return (
     <form className="form_row">
       <PageContainer>
@@ -1241,19 +1271,7 @@ function RouteComponent() {
               </ContentsRow>
             </div>
           </div>
-          <div className={cn(editInfoStyles.start, editInfoStyles.wrap)}>
-            <p>
-              {'최초 등록'} <span className={editInfoStyles.info}>{'홍길동'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <p>
-              {'최종 수정'} <span className={editInfoStyles.info}>{'김현대'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <Button size="xs" variant="gray2" className={editInfoStyles.btn_info}>
-              {'이력정보'}
-            </Button>
-          </div>
+          <ContentsHistoryInfoFormField />
         </div>
         <hr className={styles.vertical_line} />
         {/* sub_contents */}
@@ -1306,6 +1324,48 @@ function RouteComponent() {
               </li>
             ))}
           </ul>
+          {/* 퍼블수정 20240331 : 추가 */}
+          <div className={cn(fileStyles.start, fileStyles.file_wrap)}>
+            <div className={fileStyles.file_info_wrap}>
+              {/* btn_list */}
+              <ul className={movieInfoStyles.btn_list}>
+                {buttons2.map((btn, index) => (
+                  <li>
+                    <Button key={index} onClick={btn.onClick} className={movieInfoStyles.btn_text}>
+                      {btn.label}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+              <p className={fileStyles.file_total}>
+                {'총'}
+                <span className={fileStyles.num}>25</span> {'개'}
+              </p>
+            </div>
+            <div>
+              <List
+                deletable
+                draggable
+                hideBorder
+                hideItemBorder={false}
+                options={imageOptions}
+                value={value}
+                itemRenderer={(option: any) => (
+                  <div className={cn(fileInfoStyles.start, fileInfoStyles.thumb_wrap)}>
+                    <Thumbnail
+                      width={84}
+                      height={55}
+                      path={'https://picsum.photos/200'}
+                      indexNumber={1}
+                      sizeText={'100MB'}
+                    />
+                    <span className={fileInfoStyles.name}>{option.name}</span>
+                  </div>
+                )}
+                onOptionSelect={(option) => setValue(option)}
+              />
+            </div>
+          </div>
         </div>
       </PageContainer>
     </form>

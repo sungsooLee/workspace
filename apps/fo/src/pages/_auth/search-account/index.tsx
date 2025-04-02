@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthForm, AuthFormData, pageRouteConfig } from '../../../features/auth';
 import { useAsyncFetchEmail } from '../../../entities/user';
@@ -36,7 +36,7 @@ export const Route = createFileRoute('/_auth/search-account/')({
 function RouteComponent() {
   const { t } = useTranslation();
 
-  const { search } = useCurrentRoute();
+  const { search } = useCurrentRoute(Route);
   const router = useRouter();
   const { alert } = useModal();
 

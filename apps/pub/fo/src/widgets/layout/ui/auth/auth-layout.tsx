@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
-import styles from './auth-layout.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-layout.module.css';
 
 import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
 import { MobileView, BrowserView } from 'react-device-detect';

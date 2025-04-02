@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { MobileView, BrowserView } from 'react-device-detect';
 
-import { Tenant } from '../../../../entities/tenant';
 import { Button, useModal } from '@learnway/ui';
 import { IcoArray } from '@learnway/icons';
 
@@ -9,17 +8,7 @@ import { MobileNavigateModal } from './navigate-modal';
 
 import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 
-interface TenantsComponentProps {
-  tenants?: Tenant[];
-  activeTenant?: Tenant | null;
-  onTenantSwitch?: (tenant: Tenant) => void;
-}
-
-const NavigateButtonComponent = ({
-  tenants,
-  activeTenant,
-  onTenantSwitch,
-}: TenantsComponentProps) => {
+const NavigateButtonComponent = () => {
   const { open: openModal } = useModal();
   return (
     <div className={`${styles.start} ${styles.menu}`}>

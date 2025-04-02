@@ -5,7 +5,7 @@ import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/auth/auth-container/auth-container-header.module.css';
