@@ -104,6 +104,7 @@ export const TemplateCustomAction: any = (args: any) => {
         </>
       ),
     });
+    console.log(data);
   };
   return (
     <div>

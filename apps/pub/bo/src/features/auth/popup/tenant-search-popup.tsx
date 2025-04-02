@@ -3,17 +3,17 @@ import { cn } from '@learnway/shared';
 import styles from './tenant-search-popup.module.css';
 import {
   Button,
+  ContentsRow,
+  DropdownList,
+  DropdownOption,
+  Grid,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  useModal,
-  Grid,
   RadioGroup,
-  ContentsRow,
-  DropdownList,
-  DropdownOption,
-  Input,
+  useModal,
 } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -127,7 +127,7 @@ const TenantSearchPopupCompoment = () => {
             columns={columns}
             title="업무 담당 회사 정보"
             hideColumnSettings={true}
-            enableRowSelectionToggle={false}
+            disabledSelectionToggle
             pagination={{
               pageSize,
               pageIndex,

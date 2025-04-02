@@ -14,8 +14,10 @@ const ModalComponent: React.FC<ModalConfig> = ({
   width = 'auto',
   hideCloseButton = false,
 }) => {
+  // 닫기 버튼 클릭 시 onClose 콜백 호출
+  const handleOpenChange = () => onClose?.();
   return (
-    <Primitive.Root open={true} onOpenChange={() => onClose?.()}>
+    <Primitive.Root open={true} onOpenChange={handleOpenChange}>
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
@@ -23,15 +25,15 @@ const ModalComponent: React.FC<ModalConfig> = ({
           onInteractOutside={(e) => e.preventDefault()} // Overlay 클릭 방지
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
         >
-          {/* content */}
+          {/* 모달 콘텐츠 */}
           <div className={cn(styles.content_body, width && styles[width])}>{content}</div>
 
-          {/* 해더 버튼 영역 커스텀 하게 사용시 설정 */}
+          {/* 헤더 액션 노드 영역 (커스텀 사용 가능) */}
           {headerActionNode && (
             <div className={cn(styles.header_action_node)}>{headerActionNode}</div>
           )}
 
-          {/* close button */}
+          {/* 닫기 버튼 */}
           {!hideCloseButton && (
             <Primitive.Close asChild>
               <Button className={styles.btn_close} aria-label="Close" onlyIcon>
