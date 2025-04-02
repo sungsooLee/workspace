@@ -87,6 +87,11 @@ export interface GridProps<T> {
   isLoading?: boolean;
 
   /**
+   * 그리드 높이를 설정합니다.
+   */
+  height?: number;
+
+  /**
    * 그리드 상단에 표시할 제목입니다.
    */
   title?: string;
@@ -214,6 +219,14 @@ export interface GridProps<T> {
   className?: string;
 
   /**
+   * 테이블 모드 활성화 여부를 나타내는 속성입니다.
+   * true : 테이블 모드가 활성화 (table view)
+   * false : 일반 모드가 활성화 (grid view)
+   * 기본값은 false입니다.
+   */
+  tableMode?: boolean;
+
+  /**
    * 행 클릭 시 호출되는 콜백 함수입니다.
    * @param {any} selectedRow 선택된 행 데이터
    */
@@ -235,9 +248,7 @@ export interface GridProps<T> {
    * 데이터 변경 시 호출되는 콜백 함수입니다.
    * @param {T[]} data 변경된 데이터 배열
    */
-  onChange?: (data: T[]) => void;
-
-  height?: number;
+  onChange?: (data: any[]) => void;
 }
 
 /**

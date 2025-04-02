@@ -23,9 +23,11 @@ import {
   GridState,
   Input,
   ModalWrapper,
+  Table,
   useModal,
 } from '@learnway/ui';
 import { IcoDownload } from '@learnway/icons';
+import { getRandomId } from '@learnway/shared';
 
 export default {
   title: 'Components/Grid',
@@ -238,7 +240,12 @@ const BaseTable = () => {
 
   return (
     <div className="p-4">
-      <Grid data={data?.data ?? []} columns={columns} onStateChange={handleStateChange} />
+      <Grid
+        data={data?.data ?? []}
+        columns={columns}
+        onStateChange={handleStateChange}
+        onRowSelect={(row: any) => console.log(row)}
+      />
     </div>
   );
 };
@@ -1170,3 +1177,26 @@ export const TemplateColumnSize: any = (args: any) => {
   );
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
+
+// 테이블 모
+export const TemplateTable: any = (args: any) => {
+  const data = Array(10)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+      name5: `name5_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 200 },
+    { accessorKey: 'name2', size: 200 },
+    { accessorKey: 'name3', size: 200 },
+    { accessorKey: 'name4', size: 200 },
+    { accessorKey: 'name5', size: 200 },
+  ];
+  return <Table data={data} columns={columns} />;
+};
+TemplateTable.storyName = '테이블 모드';

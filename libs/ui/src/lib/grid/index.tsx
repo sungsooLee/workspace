@@ -25,8 +25,7 @@ import {
   Table,
   useReactTable,
   VisibilityState,
-} from '@tanstack/react-table';
-// paging Icons
+} from '@tanstack/react-table'; // paging Icons
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -59,7 +58,8 @@ const Grid = forwardRef(
     {
       data,
       columns,
-      multiple = false,
+      height = 240,
+      multiple,
       disabledSelectionToggle,
       hideRowSelectionCheckBox,
       pagination,
@@ -75,7 +75,7 @@ const Grid = forwardRef(
       showDeleteAll = false,
       showSelectedCount,
       className,
-      height = 240,
+      tableMode,
       onStateChange,
       onRowSelect,
       onRowsSelect,
@@ -495,7 +495,7 @@ const Grid = forwardRef(
         <div
           ref={tableContainerRef}
           className={cn(
-            'grid_table',
+            tableMode ? 'table' : 'grid_table',
             className,
             multiple && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
           )}
@@ -724,9 +724,8 @@ const Grid = forwardRef(
   },
 );
 
-// forwardRef를 제네릭 함수로 감싸기
-// const ForwardedGrid = forwardRef(Grid) as <T extends object>(
-//   props: GridProps<T> & { ref?: React.Ref<HTMLElement> },
-// ) => ReturnType<typeof Grid>;
+const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
+  return <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle />;
+});
 
-export { Grid };
+export { Grid, TableComponent as Table };
