@@ -14,13 +14,13 @@ export const Route = createFileRoute('/_layout/pms/menu-management')({
 function RouteComponent() {
   const items = [
     {
-      title: '학습자 메뉴',
-      key: 'a',
+      title: '학습자',
+      key: 'tab01',
       content: <LearningMenu />,
     },
     {
-      title: 'HRD센터 메뉴',
-      key: 'b',
+      title: 'HRD센터',
+      key: 'tab02',
       content: <HrdMenu />,
     },
   ];

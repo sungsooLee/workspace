@@ -107,3 +107,13 @@
     }
   }
 }
+
+.status {
+  @apply ml-[2px] inline-flex align-text-top;
+  &.required svg {
+    @apply fill-[#00afd5];
+  }
+  &.error svg {
+    @apply fill-[#ff4646];
+  }
+}

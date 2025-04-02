@@ -6,7 +6,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '../title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { Button, ContentsRow, Textarea, Switch, Input } from '@learnway/ui';
+import { Button, ContentsRow, Textarea, Switch, Input, RadioGroupFormField } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
 const ApiLearningMenuComponent: FC<{}> = ({}) => {
@@ -117,6 +117,30 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
+              <label htmlFor="name-method" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'API Method 구분'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.radio_wrap}>
+                  <RadioGroupFormField
+                    options={[
+                      { value: 'a', label: 'get' },
+                      { value: 'b', label: 'post' },
+                      { value: 'c', label: 'put' },
+                      { value: 'd', label: 'delete' },
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
               <label htmlFor="name-menuName" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'API 이름'}</span>
                 {/* 필수 케이스 */}
@@ -149,7 +173,7 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menuUrl"
                   type="text"
-                  placeholder="API URL을 입력하세요."
+                  placeholder="API 경로를 입력하세요."
                   value="PMS/compopup_001"
                   className={formStyles.input}
                 />
@@ -160,7 +184,7 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-menuUrl" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>{'설명'}</span>
+                <span className={formStyles.form_text}>{'내용'}</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
@@ -169,7 +193,7 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
                   cols={33}
                   resize="none"
                   value=""
-                  placeholder="API 설명을 입력하세요."
+                  placeholder="내용을 입력하세요."
                   size={'sm'}
                   maxLength={2000}
                 />
@@ -194,7 +218,7 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
               />
             </div>
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
           </ContentsRow>
         </div>
