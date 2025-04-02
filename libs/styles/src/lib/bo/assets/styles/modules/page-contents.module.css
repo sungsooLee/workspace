@@ -1,6 +1,9 @@
 /* page-content.module.css */
 .main_contents {
   @apply box-border min-h-full flex-grow;
+  .tab_wrap {
+    @apply mb-[32px];
+  }
 }
 .sub_contents {
   @apply relative ml-[32px] box-border min-w-[448px] shrink-0 pl-[32px];

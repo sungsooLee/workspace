@@ -1,10 +1,26 @@
 .start {
   &.license_wrap {
+    h2 {
+      @apply title_4_b mt-[32px] text-[var(--gray9)];
+    }
     ul {
+      @apply mt-[32px];
       li {
-        @apply body_3_r px-[20px] py-[17px] text-[var(--gray9)];
-        & + li {
-          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        @apply body_3_r border-b-[1px] border-solid border-[var(--gray3)] px-[20px] py-[17px] text-[var(--gray9)];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.license_wrap {
+        h2 {
+          @apply hidden;
+        }
+        ul {
+          @apply mt-0;
         }
       }
     }

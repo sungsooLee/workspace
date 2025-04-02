@@ -27,7 +27,10 @@
           @apply border-l-0;
         }
         .nlp--button {
-          @apply !h-[20px] !text-[1rem];
+          @apply !h-[20px] !min-w-[32px] px-0 !text-[1rem];
+          &.link {
+            @apply !text-[1.4rem];
+          }
         }
       }
     }
@@ -133,7 +136,7 @@
 }
 
 .link {
-  @apply text-[1.4rem] font-normal text-[#00afd5] underline;
+  @apply !text-[1.4rem] font-normal text-[#00afd5] underline;
 }
 
 .btn_table {

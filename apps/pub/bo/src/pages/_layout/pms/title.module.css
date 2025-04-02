@@ -1,0 +1,7 @@
+/* title.module.css */
+.title_wrap {
+  @apply flex min-h-[44px] w-full items-start justify-between border-b-[1px] border-solid border-[var(--gray4)];
+  .title {
+    @apply title_bo_4_b text-[var(--gray9)];
+  }
+}

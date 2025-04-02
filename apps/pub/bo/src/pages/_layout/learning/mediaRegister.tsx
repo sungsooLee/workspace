@@ -1,8 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { getRandomId } from '@learnway/shared';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { ContentsHistoryInfoFormField } from '../../../../../../../apps/bo/src/shared/ui/form/contents-history-info-form-field';
+import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
@@ -72,6 +72,7 @@ function RouteComponent() {
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
     ];
+    const [value, setValue] = useState<any>();
     return (
       <ModalContainer>
         <ModalBody>
@@ -167,7 +168,8 @@ function RouteComponent() {
                   { value: 'type9', label: '경영지원시스템 채널 09' },
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
@@ -190,6 +192,7 @@ function RouteComponent() {
       { value: 'type2', label: '항목' },
       { value: 'type3', label: '항목3' },
     ];
+    const [value, setValue] = useState<any>();
     return (
       <ModalContainer>
         <ModalBody>
@@ -274,7 +277,8 @@ function RouteComponent() {
                     label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)',
                   },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
