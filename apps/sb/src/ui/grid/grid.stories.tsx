@@ -1029,7 +1029,7 @@ export const WithCustomFactoryCell: Story = {
   render: () => <ColumnFactoryTable />,
 };
 
-const editGridData = Array(5)
+const editGridData = Array(1)
   .fill(null)
   .map((_, i) => ({
     id: `id_${i}`,
@@ -1079,7 +1079,10 @@ export const TemplateEditGrid: any = (args: any) => {
     {
       header: 'check',
       accessorKey: 'check',
-      size: 200,
+      size: 70,
+      meta: {
+        cellAlign: 'center',
+      },
       cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
     },
     {
