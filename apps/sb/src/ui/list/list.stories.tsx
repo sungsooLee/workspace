@@ -86,7 +86,6 @@ TemplateOptionDelete.storyName = 'Delete Option';
 export const TemplateImage: any = (args: any) => {
   const [options, setOptions] = useState(imageOptions);
   const [value, setValue] = useState<any>();
-  console.log(value);
   return (
     <List
       options={options}
