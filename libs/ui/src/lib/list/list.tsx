@@ -148,7 +148,6 @@ const ListComponent = function ({
         >
           {options?.map((d: any, i: number) => (
             <SortableItem
-              class={cn(styles.line)}
               key={d[valueField]}
               id={d[valueField]}
               isSelected={
@@ -159,6 +158,7 @@ const ListComponent = function ({
               item={d}
               index={i}
               itemRenderer={itemRenderer}
+              showItemBorder={showItemBorder}
               deletable={deletable}
               draggable={draggable}
               onOptionDeleteClick={onOptionDeleteClick}
@@ -206,7 +206,7 @@ const SortableItem = ({
       )}
       onClick={onClick}
     >
-      <div className={cn(showItemBorder && styles.line)}>
+      <div className={cn(styles.inner, showItemBorder && styles.line)}>
         {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
         {deletable && (
           <Button type="button" className={cn(styles.clear)} onlyIcon onClick={onDelete}>
