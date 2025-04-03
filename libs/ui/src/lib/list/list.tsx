@@ -124,14 +124,13 @@ const ListComponent = function ({
             <SortableItem
               className={cn(styles.item)}
               key={d[valueField]}
-              id={d[valueField]}
+              item={d}
+              index={i}
+              itemRenderer={itemRenderer}
               isSelected={
                 !disabledActive &&
                 selectedOptions?.find((x: any) => x[valueField] === d[valueField])
               }
-              item={d}
-              index={i}
-              itemRenderer={itemRenderer}
               deletable={deletable}
               draggable={draggable}
               onClick={handleOptionSelect}
@@ -152,6 +151,7 @@ interface SortableItemProps
   extends Pick<ListProps, 'showItemBorder' | 'deletable' | 'draggable' | 'itemRenderer'> {
   item: any;
   index: number;
+  className?: string;
   isSelected?: boolean;
   onDelete?: (event: React.MouseEvent, item: any) => void;
   onClick?: (event: React.MouseEvent, item: any) => void;
@@ -187,7 +187,7 @@ const SortableItem = ({
         styles.item,
         isSelected && styles.active, // selected row style
       )}
-      onClick={(event: React.MouseEvent) => onClick(event, item)}
+      onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(showItemBorder && styles.line)}>
         {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
@@ -196,7 +196,7 @@ const SortableItem = ({
             type="button"
             className={cn(styles.clear)}
             onlyIcon
-            onClick={(event: React.MouseEvent) => onDelete(event, item)}
+            onClick={(event: React.MouseEvent) => onDelete?.(event, item)}
           >
             <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
           </Button>
