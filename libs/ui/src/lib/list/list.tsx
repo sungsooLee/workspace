@@ -5,36 +5,44 @@ import React, { isValidElement, ReactElement } from 'react';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { Button } from '../button/button';
 import { CommonReactElementProps } from '@/libs/ui/src';
+import { ReactSortable } from 'react-sortablejs';
+import { SortableEvent } from 'sortablejs';
 
-export interface ListComponentProps extends CommonReactElementProps {
-  /** options */
+export interface ListProps extends CommonReactElementProps {
+  /** 리스트 옵션 배열 */
   options: Array<any>;
-  /** value */
+  /** 선택된 값 (싱글: 값, 멀티: 값 배열) */
   value?: any;
-  /** option 에서 label 로 사용할 key */
+  /** 옵션 레이블 키 (기본: 'label') */
   labelField?: string;
-  /** option 에서 value 로 사용할 key */
+  /** 옵션 값 키 (기본: 'value') */
   valueField?: string;
-  /** option 선택시 active 표시 여부 */
+  /** 옵션 선택 시 활성 상태 숨김 여부 */
   disabledActive?: boolean;
-  /** 멀티 선택 가능 여부 */
+  /** 다중 선택 가능 여부 */
   multiple?: boolean;
-  /** 삭제 가능 여부 */
+  /** 옵션 삭제 가능 여부 */
   deletable?: boolean;
-  /** 보더 표시 여부 */
+  /** 리스트 테두리 숨김 여부 */
   hideBorder?: boolean;
-  /** 컨텐츠 영역 보더 표시 여부 */
-  hideItemBorder?: boolean;
-  /** 리스트의 개별 아이템을 렌더링 하는 함수 */
-  itemRenderer?: (option: any) => ReactElement;
-  /** draggable 가능 여부 */
+  /** 리스트 아이템 테두리 숨김 여부 */
+  showItemBorder?: boolean;
+  /** 아이템 렌더링 함수
+   * @param option 현재 아이템 데이터
+   * @param index 현재 아이템 인덱스
+   * @returns 렌더링할 ReactElement
+   */
+  itemRenderer?: (option: any, index: number) => ReactElement;
+  /** 아이템 드래그 가능 여부 */
   draggable?: boolean;
-  /** chip 삭제 버튼 클릭시 호출 */
+  /** 옵션 삭제 콜백 */
   onOptionDeleteClick?: (option: any) => void;
-  /** option 선택시 호출 (싱글 모드) */
+  /** 싱글 선택 콜백 */
   onOptionSelect?: (option: any) => void;
-  /** option 선택시 호출 (멀티 모드) */
+  /** 멀티 선택 콜백 */
   onOptionsSelect?: (options: any[]) => void;
+  /** 옵션 순서 변경 콜백 */
+  onOptionsOrderChange?: (options: any[]) => void;
 }
 
 const ListComponent = function ({
@@ -47,13 +55,14 @@ const ListComponent = function ({
   multiple,
   deletable,
   hideBorder,
-  hideItemBorder = true,
+  showItemBorder,
   itemRenderer,
   draggable,
   onOptionDeleteClick,
   onOptionSelect,
   onOptionsSelect,
-}: ListComponentProps) {
+  onOptionsOrderChange,
+}: ListProps) {
   const selectedOptions = getMatchingItemsByKey(options, value, valueField);
 
   const handleOptionClickForSingle = (option: any) => {
@@ -70,17 +79,32 @@ const ListComponent = function ({
     onOptionDeleteClick?.(option);
   };
 
+  const handleSortEnd = ({ newIndex = -1, oldIndex = -1 }: SortableEvent) => {
+    if (newIndex < 0 || oldIndex < 0) {
+      console.error('Invalid indices', { newIndex, oldIndex });
+      return;
+    }
+    const newOptions = [...options];
+    const [movedItem] = newOptions.splice(oldIndex, 1);
+    newOptions.splice(newIndex, 0, movedItem);
+    onOptionsOrderChange?.(newOptions);
+  };
+
   return (
-    <ul
+    <ReactSortable
+      list={options}
+      setList={() => {}} // list 컴포넌트에서 option 값을 state 관리하지 않기 때문에 빈 함수 전달 (안넣으면 발생)
+      onEnd={handleSortEnd}
+      tag="ul"
+      handle=".drag-handle"
       className={cn(
         className,
         'nlp--list',
         styles.start,
         hideBorder && styles.border_none,
-        !hideItemBorder && styles.type_full,
+        showItemBorder && styles.type_full,
       )}>
-      {/* options */}
-      {options?.map((d: any) => (
+      {options?.map((d: any, i: number) => (
         <li
           className={cn(
             styles.item,
@@ -93,10 +117,9 @@ const ListComponent = function ({
             multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
           }>
           {/*컨텐츠 영역*/}
-          <div className={cn(!hideItemBorder && styles.line)}>
+          <div className={cn(showItemBorder && styles.line)}>
             {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
-            {/*{getNodeElement(d) ?? d[labelField]}*/}
-            {isValidElement(itemRenderer?.(d)) ? itemRenderer(d) : d[labelField]}
+            {isValidElement(itemRenderer?.(d, i)) ? itemRenderer(d, i) : d[labelField]}
             {/* 삭제 버튼 */}
             {deletable && (
               <Button
@@ -110,13 +133,13 @@ const ListComponent = function ({
           </div>
           {/* draggable 버튼 */}
           {draggable && (
-            <Button type="button" className={cn(styles.btn_drag)} onlyIcon>
+            <Button type="button" className={cn(styles.btn_drag, 'drag-handle')} onlyIcon>
               <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
             </Button>
           )}
         </li>
       ))}
-    </ul>
+    </ReactSortable>
   );
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getRandomId } from '@learnway/shared';
+import { cn, getRandomId } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -23,9 +23,15 @@ import {
   ChipList,
   ContentsRow,
   DatePicker,
+  DropdownList,
+  DropdownOption,
+  ImageOption,
   Input,
   InputModalSelectorFormField,
   List,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
   PhoneNumber,
   RadioGroup,
   Select,
@@ -33,15 +39,10 @@ import {
   Spinner,
   Switch,
   Textarea,
+  Thumbnail,
   ThumbnailImageUpload,
   Tooltip,
   useModal,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  DropdownList,
-  DropdownOption,
-  Thumbnail,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -52,8 +53,6 @@ import {
   IcoSearch,
   IcoStatusFail,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { ImageOption } from '@learnway/ui';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
@@ -1347,7 +1346,7 @@ function RouteComponent() {
                 deletable
                 draggable
                 hideBorder
-                hideItemBorder={false}
+                showItemBorder
                 options={imageOptions}
                 value={value}
                 itemRenderer={(option: any) => (

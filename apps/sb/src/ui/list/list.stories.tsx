@@ -84,28 +84,36 @@ TemplateOptionDelete.storyName = 'Delete Option';
 
 // Image
 export const TemplateImage: any = (args: any) => {
+  const [options, setOptions] = useState(imageOptions);
   const [value, setValue] = useState<any>();
   console.log(value);
   return (
     <List
-      deletable
-      draggable
-      options={imageOptions}
-      hideBorder
-      hideItemBorder={false}
+      options={options}
       value={value}
       valueField={'id'}
-      itemRenderer={(option: any) => (
+      deletable
+      draggable
+      hideBorder
+      showItemBorder
+      disabledActive
+      itemRenderer={(option: any, index: number) => (
         <div className={'m-2 flex flex-row items-center gap-3'}>
-          <Thumbnail width={84} height={55} path={option.path} indexNumber={1} />
+          <Thumbnail
+            width={84}
+            height={55}
+            path={option.path}
+            indexNumber={index}
+            sizeText={'1.4MB'}
+          />
           <span>{option.name}</span>
         </div>
       )}
-      onOptionSelect={(option) => setValue(option.id)}
+      onOptionsOrderChange={(newOptions: any) => setOptions(newOptions)}
     />
   );
 };
-TemplateImage.storyName = 'Image';
+TemplateImage.storyName = '커스텀 + 드래그';
 
 const imageOptions = Array(5)
   .fill(null)
