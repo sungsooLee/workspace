@@ -149,6 +149,7 @@ const ListComponent = function ({
         >
           {options?.map((d: any, i: number) => (
             <SortableItem
+              class={cn(styles.line)}
               key={d[valueField]}
               id={d[valueField]}
               isSelected={
