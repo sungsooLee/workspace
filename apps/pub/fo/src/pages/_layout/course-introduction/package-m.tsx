@@ -95,7 +95,7 @@ function RouteComponent() {
                   ? setPackageInformation(false)
                   : setPackageInformation(true)
               }>
-              자세히
+              {packageInformation === true ? '닫기' : '자세히'}
               <IcoArrowDown width={16} height={16} stroke="#6f798b" />
             </Button>
           </div>
