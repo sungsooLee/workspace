@@ -63,31 +63,52 @@ const ListComponent = function ({
   onOptionsSelect,
   onOptionsOrderChange,
 }: ListProps) {
+  // 선택된 옵션들을 valueField를 기준으로 필터링하여 가져옴
   const selectedOptions = getMatchingItemsByKey(options, value, valueField);
 
+  /**
+   * 단일 선택 모드에서 옵션 클릭 시 호출되는 핸들러
+   * @param option 선택된 옵션 객체
+   */
   const handleOptionClickForSingle = (option: any) => {
-    onOptionSelect?.(option);
+    onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
   };
 
+  /**
+   * 다중 선택 모드에서 옵션 클릭 시 호출되는 핸들러
+   * @param option 선택된 옵션 객체
+   */
   const handleOptionClickForMultiple = (option: any) => {
     const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
-    onOptionsSelect?.(newSelectedOptions);
+    onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
   };
 
+  /**
+   * 옵션 삭제 버튼 클릭 시 호출되는 핸들러
+   * @param event 클릭 이벤트 객체 (이벤트 전파를 막기 위해 사용)
+   * @param option 삭제할 옵션 객체
+   */
   const handleDeleteClick = (event: React.MouseEvent, option: any) => {
-    event.stopPropagation(); // 이벤트 전파를 중단하여 오버레이 클릭 이벤트를 막음
-    onOptionDeleteClick?.(option);
+    event.stopPropagation(); // 이벤트 전파를 막아 오버레이 클릭 이벤트 방지
+    onOptionDeleteClick?.(option); // 삭제할 옵션을 부모 컴포넌트로 전달
   };
 
+  /**
+   * 옵션 정렬이 끝났을 때 호출되는 핸들러
+   * @param newIndex 새로운 위치의 인덱스
+   * @param oldIndex 기존 위치의 인덱스
+   */
   const handleSortEnd = ({ newIndex = -1, oldIndex = -1 }: SortableEvent) => {
+    // newIndex 또는 oldIndex 가 유효하지 않은 경우 에러 로그를 출력하고 함수를 종료합니다.
     if (newIndex < 0 || oldIndex < 0) {
       console.error('Invalid indices', { newIndex, oldIndex });
       return;
     }
-    const newOptions = [...options];
-    const [movedItem] = newOptions.splice(oldIndex, 1);
-    newOptions.splice(newIndex, 0, movedItem);
-    onOptionsOrderChange?.(newOptions);
+
+    const newOptions = [...options]; // 기존 옵션 배열을 복사하여 새로운 배열 생성
+    const [movedItem] = newOptions.splice(oldIndex, 1); // 이동할 항목을 배열에서 제거
+    newOptions.splice(newIndex, 0, movedItem); // 새로운 위치에 항목 삽입
+    onOptionsOrderChange?.(newOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
   };
 
   return (
