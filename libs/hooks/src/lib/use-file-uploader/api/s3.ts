@@ -41,6 +41,7 @@ export const completedMultiPartUpload = async (
 ): Promise<CompletedMultiPartUploadRes | undefined> => {
   const { uploadId, key, parts } = props;
   try {
+    const encodedKey = encodeURIComponent(key);
     return await httpService.post<CompletedMultiPartUploadRes>(
       `${API_BASE_URL}/multipart/${uploadId}/complete?key=${key}`,
       { parts },
@@ -58,7 +59,10 @@ export const completedMultiPartUpload = async (
  */
 export const getMultiFileParts = async (uploadId: string, key: string) => {
   try {
-    return await httpService.get<MultiFilePartRes>(`${API_BASE_URL}/multipart/${uploadId}`);
+    const encodedKey = encodeURIComponent(key);
+    return await httpService.get<MultiFilePartRes>(
+      `${API_BASE_URL}/multipart/${uploadId}?key=${key}`,
+    );
   } catch (e) {
     console.error(e);
     return Promise.resolve(undefined);
@@ -67,9 +71,8 @@ export const getMultiFileParts = async (uploadId: string, key: string) => {
 
 export const abortMultiPartUpload = async (uploadId: string, key: string) => {
   try {
-    return await httpService.delete<MultiFilePartRes>(
-      `${API_BASE_URL}/multipart/${uploadId}?key=${key}`,
-    );
+    const encodedKey = encodeURIComponent(key);
+    httpService.delete<MultiFilePartRes>(`${API_BASE_URL}/multipart/${uploadId}?key=${key}`);
   } catch (e) {
     console.error(e);
     return Promise.resolve(undefined);
@@ -83,6 +86,7 @@ export const abortMultiPartUpload = async (uploadId: string, key: string) => {
  */
 export const issuePresigendUrlBySingle = async (key: string): Promise<PresignedRes | undefined> => {
   try {
+    const encodedKey = encodeURIComponent(key);
     return await httpService.get<PresignedRes>(`${API_BASE_URL}/uploader`, {
       key,
     });
@@ -100,6 +104,7 @@ export const issuePresigendUrlByPart = async (
   props: PartPresigendReq,
 ): Promise<PresignedRes | undefined> => {
   const { uploadId, partNumber, key } = props;
+  const encodedKey = encodeURIComponent(key);
   try {
     return await httpService.get<PresignedRes>(
       `${API_BASE_URL}/multipart/${uploadId}/${partNumber}`,

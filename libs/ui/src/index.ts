@@ -163,3 +163,5 @@ export * from './lib/dynamic-form-field/dynamic-form-field';
 export * from './lib/dynamic-form-field/type';
 
 export * from './lib/html-content/html-content';
+
+export * from './lib/dnd-file-progress/dnd-file-progress';

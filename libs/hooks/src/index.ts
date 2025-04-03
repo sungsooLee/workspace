@@ -7,3 +7,4 @@ export * from './lib/form-builder/type';
 export * from './lib/form-builder/proxy-type';
 export * from './lib/form-builder/dynamic-form-context';
 export * from './lib/use-file-uploader/use-file-uploader';
+export * from './lib/use-file-uploader/types';

@@ -145,7 +145,7 @@ export type MultiFilePartRes = {
  *  Uppy Reducer Type
  *
  */
-
+export type FileItemStatus = 'waiting' | 'uploading' | 'complete' | 'error' | 'pause' | 'cancel';
 // 파일 아이템 정보 타입
 export type FileItem = {
   id: string;
@@ -153,9 +153,10 @@ export type FileItem = {
   s3FileName: string;
   extension: string;
   size: number;
+  dpSize: string;
   progress: number;
   key: string;
-  status: 'waiting' | 'uploading' | 'complete' | 'error' | 'paused';
+  status: FileItemStatus;
   errorMessage?: string;
   parts?: {
     partNumber: number;
