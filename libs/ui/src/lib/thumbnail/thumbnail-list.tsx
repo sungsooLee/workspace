@@ -3,14 +3,14 @@ import React, { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 import { CheckedState } from '@radix-ui/react-checkbox';
 
-import { Thumbnail, ThumbnailComponentProps } from './thumbnail';
+import { Thumbnail, ThumbnailProps } from './thumbnail';
 import { Carousel } from '../carousel/carousel';
 
 import styles from './thumbnail-list.module.css';
 import { ImageOption } from './type';
 
 export interface ThumbnailListComponentProps
-  extends Omit<ThumbnailComponentProps, 'onCheckedChange' | 'path'> {
+  extends Omit<ThumbnailProps, 'onCheckedChange' | 'path'> {
   options: ImageOption[];
   showCheckbox?: boolean;
   onChecked?: (options: ImageOption[]) => void;
@@ -39,7 +39,8 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
     return (
       <div
         {...props}
-        className={cn(styles.start, styles.thumbnail_list, className, 'nlp--thumbnail-list')}>
+        className={cn(styles.start, styles.thumbnail_list, className, 'nlp--thumbnail-list')}
+      >
         <Carousel
           {...props}
           items={items}

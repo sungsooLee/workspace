@@ -1,7 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getRandomId } from '@learnway/shared';
+import { cn, getRandomId } from '@learnway/shared';
+import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
@@ -12,7 +13,6 @@ import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-sea
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
-import editInfoStyles from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css'; // 하단 박스
 import fileStyles from './file-wrap.module.css'; // 오른쪽 파일 리스트
 import fileInfoStyles from './file-info.module.css';
 
@@ -23,9 +23,15 @@ import {
   ChipList,
   ContentsRow,
   DatePicker,
+  DropdownList,
+  DropdownOption,
+  ImageOption,
   Input,
   InputModalSelectorFormField,
   List,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
   PhoneNumber,
   RadioGroup,
   Select,
@@ -33,15 +39,10 @@ import {
   Spinner,
   Switch,
   Textarea,
+  Thumbnail,
   ThumbnailImageUpload,
   Tooltip,
   useModal,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  DropdownList,
-  DropdownOption,
-  Thumbnail,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -52,8 +53,6 @@ import {
   IcoSearch,
   IcoStatusFail,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { ImageOption } from '@learnway/ui';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
@@ -61,6 +60,16 @@ import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 export const Route = createFileRoute('/_layout/learning/mediaRegister')({
   component: RouteComponent,
 });
+
+// 퍼블수정 2025-04-03 : 순서 변경 수정
+const imageOptions = Array(5)
+  .fill(null)
+  .map((d, i) => ({
+    id: getRandomId(),
+    name: `name${i}`,
+    size: 1024,
+    path: 'https://picsum.photos/200',
+  }));
 
 function RouteComponent() {
   // 퍼블수정 20240317 : 수정된 Modal 컴포넌트로 수정
@@ -72,6 +81,8 @@ function RouteComponent() {
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
     ];
+    const [value, setValue] = useState<any>();
+
     return (
       <ModalContainer>
         <ModalBody>
@@ -138,14 +149,16 @@ function RouteComponent() {
                     className={searchStyles.btn_refresh}
                     variant="search"
                     size="sm"
-                    onlyIcon>
+                    onlyIcon
+                  >
                     <IcoRefresh02 className={searchStyles.icon_refresh} />
                   </Button>
                   <Button
                     type="button"
                     variant="search"
                     size="sm"
-                    className={searchStyles.btn_search}>
+                    className={searchStyles.btn_search}
+                  >
                     <IcoSearch className={searchStyles.icon_sm_search} />
                     조회
                   </Button>
@@ -167,7 +180,8 @@ function RouteComponent() {
                   { value: 'type9', label: '경영지원시스템 채널 09' },
                   { value: 'type10', label: '경영지원시스템 채널 10' },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
@@ -190,6 +204,7 @@ function RouteComponent() {
       { value: 'type2', label: '항목' },
       { value: 'type3', label: '항목3' },
     ];
+    const [value, setValue] = useState<any>();
     return (
       <ModalContainer>
         <ModalBody>
@@ -242,14 +257,16 @@ function RouteComponent() {
                     className={searchStyles.btn_refresh}
                     variant="search"
                     size="sm"
-                    onlyIcon>
+                    onlyIcon
+                  >
                     <IcoRefresh02 className={searchStyles.icon_refresh} />
                   </Button>
                   <Button
                     type="button"
                     variant="search"
                     size="sm"
-                    className={searchStyles.btn_search}>
+                    className={searchStyles.btn_search}
+                  >
                     <IcoSearch className={searchStyles.icon_sm_search} />
                     조회
                   </Button>
@@ -274,7 +291,8 @@ function RouteComponent() {
                     label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)',
                   },
                 ]}
-                onOptionsSelect={(options) => console.log(options)}
+                value={value}
+                onOptionSelect={(option) => setValue(option)}
                 hideBorder
               />
             </div>
@@ -411,16 +429,10 @@ function RouteComponent() {
     { title: '오디오 샘플레이트', text: '' },
   ];
 
-  //
+  // 퍼블수정 2025-04-03 : 순서 변경 수정
+  const [itemOptions, setOptions] = useState(imageOptions);
   const [value, setValue] = useState<any>();
-  const imageOptions = Array(5)
-    .fill(null)
-    .map((d, i) => ({
-      id: getRandomId(),
-      name: `name${i}`,
-      size: 1024,
-      path: 'https://picsum.photos/200',
-    }));
+
   return (
     <form className="form_row">
       <PageContainer>
@@ -551,7 +563,8 @@ function RouteComponent() {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}>
+                  content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -942,7 +955,8 @@ function RouteComponent() {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}>
+                  content={'태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -1175,7 +1189,8 @@ function RouteComponent() {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}>
+                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -1267,19 +1282,7 @@ function RouteComponent() {
               </ContentsRow>
             </div>
           </div>
-          <div className={cn(editInfoStyles.start, editInfoStyles.wrap)}>
-            <p>
-              {'최초 등록'} <span className={editInfoStyles.info}>{'홍길동'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <p>
-              {'최종 수정'} <span className={editInfoStyles.info}>{'김현대'}</span>
-              <span className={editInfoStyles.info}>{'2025-02-18 15:00:22'}</span>
-            </p>
-            <Button size="xs" variant="gray2" className={editInfoStyles.btn_info}>
-              {'이력정보'}
-            </Button>
-          </div>
+          <ContentsHistoryInfoFormField />
         </div>
         <hr className={styles.vertical_line} />
         {/* sub_contents */}
@@ -1350,26 +1353,30 @@ function RouteComponent() {
                 <span className={fileStyles.num}>25</span> {'개'}
               </p>
             </div>
-            <div>
+            {/* 퍼블수정 2025-04-03 : 순서 변경 수정 */}
+            <div className={fileStyles.list_wrap}>
               <List
+                options={itemOptions}
+                value={value}
+                valueField={'id'}
                 deletable
                 draggable
                 hideBorder
-                hideItemBorder={false}
-                options={imageOptions}
-                value={value}
-                itemRenderer={(option: any) => (
+                showItemBorder
+                disabledActive
+                itemRenderer={(option: any, index: number) => (
                   <div className={cn(fileInfoStyles.start, fileInfoStyles.thumb_wrap)}>
                     <Thumbnail
                       width={84}
                       height={55}
-                      path={'https://picsum.photos/200'}
-                      count={true}
+                      path={option.path}
+                      indexNumber={index}
+                      sizeText={'100MB'}
                     />
                     <span className={fileInfoStyles.name}>{option.name}</span>
                   </div>
                 )}
-                onOptionSelect={(option) => setValue(option)}
+                onOptionsOrderChange={(newOptions: any) => setOptions(newOptions)}
               />
             </div>
           </div>

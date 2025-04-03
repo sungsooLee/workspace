@@ -3,7 +3,7 @@ import { useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { isSigninPage } from '../../../../../features/platform';
 import { AuthFooter } from './auth-footer/auth-footer';

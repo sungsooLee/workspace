@@ -5,11 +5,46 @@ export type ModalSize = 'auto' | 's' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'm_f
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';
 
 export interface ModalConfig<T = any> {
+  /**
+   * content 영역
+   * 모달에 표시할 내용
+   */
   content: ReactNode;
-  id?: string; // modal.hook 에서 open시 자동생성
+
+  /**
+   * 해더 버튼 영역 커스텀 하게 사용시 설정
+   * (닫기 버튼 외에 추가적인 버튼을 제공할 수 있는 영역)
+   */
+  headerActionNode?: ReactNode;
+
+  /**
+   * 상태관리시 modal 구분하기 위해 사용
+   * (modal.hook 에서 open시 자동생성)
+   */
+  id?: string;
+
+  /**
+   * 모달의 너비 설정
+   * 예: 'sm', 'md', 'lg' 등의 크기 옵션
+   */
   width?: ModalSize;
+
+  /**
+   * 모달의 높이 설정
+   * 기본적으로 자동으로 높이가 맞춰지지만, 고정 높이를 설정할 수 있음
+   */
   height?: ModalHeight;
+
+  /**
+   * 닫기 버튼 숨기기 여부
+   * true로 설정하면 닫기 버튼이 표시되지 않음
+   */
   hideCloseButton?: boolean;
+
+  /**
+   * 모달이 닫힐 때 실행될 콜백 함수
+   * 모달이 닫힐 때 전달할 데이터와 함께 호출됨
+   */
   onClose?: (data?: ModalClose<T>) => void;
 }
 

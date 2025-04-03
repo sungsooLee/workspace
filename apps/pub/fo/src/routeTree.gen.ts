@@ -48,10 +48,15 @@ import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/inf
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
 import { Route as LayoutIntegratedSearchIntegratedSearchImport } from './pages/_layout/integrated-search/integrated-search'
 import { Route as LayoutFooterMenuPrivacyImport } from './pages/_layout/footer-menu/privacy'
+import { Route as LayoutFooterMenuOpenLicenseImport } from './pages/_layout/footer-menu/open-license'
 import { Route as LayoutFooterMenuAgreementImport } from './pages/_layout/footer-menu/agreement'
 import { Route as LayoutCourseRegistrationCourseRegistrationTextbookImport } from './pages/_layout/course-registration/course-registration-textbook'
 import { Route as LayoutCourseRegistrationCourseRegistrationLevelImport } from './pages/_layout/course-registration/course-registration-level'
+import { Route as LayoutCourseRegistrationCourseRegistrationCompleteImport } from './pages/_layout/course-registration/course-registration-complete'
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
+import { Route as LayoutCourseIntroductionPackageMImport } from './pages/_layout/course-introduction/package-m'
+import { Route as LayoutCourseIntroductionPackageImport } from './pages/_layout/course-introduction/package'
+import { Route as LayoutCourseIntroductionDetailImport } from './pages/_layout/course-introduction/detail'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -62,6 +67,7 @@ import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
+import { Route as GuideGuideResultImport } from './pages/_guide/guide/result'
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
@@ -69,8 +75,11 @@ import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
 import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
+import { Route as GuideGuideOperatorImport } from './pages/_guide/guide/operator'
+import { Route as GuideGuideNoticeImport } from './pages/_guide/guide/notice'
 import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
 import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
+import { Route as GuideGuideListImport } from './pages/_guide/guide/list'
 import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
 import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
@@ -316,6 +325,13 @@ const LayoutFooterMenuPrivacyRoute = LayoutFooterMenuPrivacyImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutFooterMenuOpenLicenseRoute =
+  LayoutFooterMenuOpenLicenseImport.update({
+    id: '/footer-menu/open-license',
+    path: '/footer-menu/open-license',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutFooterMenuAgreementRoute = LayoutFooterMenuAgreementImport.update({
   id: '/footer-menu/agreement',
   path: '/footer-menu/agreement',
@@ -336,10 +352,38 @@ const LayoutCourseRegistrationCourseRegistrationLevelRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutCourseRegistrationCourseRegistrationCompleteRoute =
+  LayoutCourseRegistrationCourseRegistrationCompleteImport.update({
+    id: '/course-registration/course-registration-complete',
+    path: '/course-registration/course-registration-complete',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCourseRegistrationCourseRegistrationAllRoute =
   LayoutCourseRegistrationCourseRegistrationAllImport.update({
     id: '/course-registration/course-registration-all',
     path: '/course-registration/course-registration-all',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseIntroductionPackageMRoute =
+  LayoutCourseIntroductionPackageMImport.update({
+    id: '/course-introduction/package-m',
+    path: '/course-introduction/package-m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseIntroductionPackageRoute =
+  LayoutCourseIntroductionPackageImport.update({
+    id: '/course-introduction/package',
+    path: '/course-introduction/package',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseIntroductionDetailRoute =
+  LayoutCourseIntroductionDetailImport.update({
+    id: '/course-introduction/detail',
+    path: '/course-introduction/detail',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -403,6 +447,12 @@ const GuideGuideSelectRoute = GuideGuideSelectImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideResultRoute = GuideGuideResultImport.update({
+  id: '/guide/result',
+  path: '/guide/result',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideRespondRoute = GuideGuideRespondImport.update({
   id: '/guide/respond',
   path: '/guide/respond',
@@ -445,6 +495,18 @@ const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideOperatorRoute = GuideGuideOperatorImport.update({
+  id: '/guide/operator',
+  path: '/guide/operator',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideNoticeRoute = GuideGuideNoticeImport.update({
+  id: '/guide/notice',
+  path: '/guide/notice',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideModalRoute = GuideGuideModalImport.update({
   id: '/guide/modal',
   path: '/guide/modal',
@@ -454,6 +516,12 @@ const GuideGuideModalRoute = GuideGuideModalImport.update({
 const GuideGuideMobileRoute = GuideGuideMobileImport.update({
   id: '/guide/mobile',
   path: '/guide/mobile',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideListRoute = GuideGuideListImport.update({
+  id: '/guide/list',
+  path: '/guide/list',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -844,6 +912,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideLayoutImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/list': {
+      id: '/_guide/guide/list'
+      path: '/guide/list'
+      fullPath: '/guide/list'
+      preLoaderRoute: typeof GuideGuideListImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/mobile': {
       id: '/_guide/guide/mobile'
       path: '/guide/mobile'
@@ -856,6 +931,20 @@ declare module '@tanstack/react-router' {
       path: '/guide/modal'
       fullPath: '/guide/modal'
       preLoaderRoute: typeof GuideGuideModalImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/notice': {
+      id: '/_guide/guide/notice'
+      path: '/guide/notice'
+      fullPath: '/guide/notice'
+      preLoaderRoute: typeof GuideGuideNoticeImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/operator': {
+      id: '/_guide/guide/operator'
+      path: '/guide/operator'
+      fullPath: '/guide/operator'
+      preLoaderRoute: typeof GuideGuideOperatorImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/optionCard': {
@@ -905,6 +994,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/respond'
       fullPath: '/guide/respond'
       preLoaderRoute: typeof GuideGuideRespondImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/result': {
+      id: '/_guide/guide/result'
+      path: '/guide/result'
+      fullPath: '/guide/result'
+      preLoaderRoute: typeof GuideGuideResultImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/select': {
@@ -977,11 +1073,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/course-introduction/detail': {
+      id: '/_layout/course-introduction/detail'
+      path: '/course-introduction/detail'
+      fullPath: '/course-introduction/detail'
+      preLoaderRoute: typeof LayoutCourseIntroductionDetailImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/course-introduction/package': {
+      id: '/_layout/course-introduction/package'
+      path: '/course-introduction/package'
+      fullPath: '/course-introduction/package'
+      preLoaderRoute: typeof LayoutCourseIntroductionPackageImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/course-introduction/package-m': {
+      id: '/_layout/course-introduction/package-m'
+      path: '/course-introduction/package-m'
+      fullPath: '/course-introduction/package-m'
+      preLoaderRoute: typeof LayoutCourseIntroductionPackageMImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/course-registration/course-registration-all': {
       id: '/_layout/course-registration/course-registration-all'
       path: '/course-registration/course-registration-all'
       fullPath: '/course-registration/course-registration-all'
       preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/course-registration/course-registration-complete': {
+      id: '/_layout/course-registration/course-registration-complete'
+      path: '/course-registration/course-registration-complete'
+      fullPath: '/course-registration/course-registration-complete'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/course-registration/course-registration-level': {
@@ -1003,6 +1127,13 @@ declare module '@tanstack/react-router' {
       path: '/footer-menu/agreement'
       fullPath: '/footer-menu/agreement'
       preLoaderRoute: typeof LayoutFooterMenuAgreementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/footer-menu/open-license': {
+      id: '/_layout/footer-menu/open-license'
+      path: '/footer-menu/open-license'
+      fullPath: '/footer-menu/open-license'
+      preLoaderRoute: typeof LayoutFooterMenuOpenLicenseImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/footer-menu/privacy': {
@@ -1161,8 +1292,11 @@ interface GuideRouteChildren {
   GuideGuideInputRoute: typeof GuideGuideInputRoute
   GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
   GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
+  GuideGuideListRoute: typeof GuideGuideListRoute
   GuideGuideMobileRoute: typeof GuideGuideMobileRoute
   GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideNoticeRoute: typeof GuideGuideNoticeRoute
+  GuideGuideOperatorRoute: typeof GuideGuideOperatorRoute
   GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
@@ -1170,6 +1304,7 @@ interface GuideRouteChildren {
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
+  GuideGuideResultRoute: typeof GuideGuideResultRoute
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
@@ -1198,8 +1333,11 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideInputRoute: GuideGuideInputRoute,
   GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
   GuideGuideLayoutRoute: GuideGuideLayoutRoute,
+  GuideGuideListRoute: GuideGuideListRoute,
   GuideGuideMobileRoute: GuideGuideMobileRoute,
   GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideNoticeRoute: GuideGuideNoticeRoute,
+  GuideGuideOperatorRoute: GuideGuideOperatorRoute,
   GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
@@ -1207,6 +1345,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
+  GuideGuideResultRoute: GuideGuideResultRoute,
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
@@ -1224,10 +1363,15 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutCourseIntroductionDetailRoute: typeof LayoutCourseIntroductionDetailRoute
+  LayoutCourseIntroductionPackageRoute: typeof LayoutCourseIntroductionPackageRoute
+  LayoutCourseIntroductionPackageMRoute: typeof LayoutCourseIntroductionPackageMRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   LayoutCourseRegistrationCourseRegistrationLevelRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   LayoutCourseRegistrationCourseRegistrationTextbookRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
+  LayoutFooterMenuOpenLicenseRoute: typeof LayoutFooterMenuOpenLicenseRoute
   LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
   LayoutIntegratedSearchIntegratedSearchRoute: typeof LayoutIntegratedSearchIntegratedSearchRoute
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1245,13 +1389,19 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutCourseIntroductionDetailRoute: LayoutCourseIntroductionDetailRoute,
+  LayoutCourseIntroductionPackageRoute: LayoutCourseIntroductionPackageRoute,
+  LayoutCourseIntroductionPackageMRoute: LayoutCourseIntroductionPackageMRoute,
   LayoutCourseRegistrationCourseRegistrationAllRoute:
     LayoutCourseRegistrationCourseRegistrationAllRoute,
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute:
+    LayoutCourseRegistrationCourseRegistrationCompleteRoute,
   LayoutCourseRegistrationCourseRegistrationLevelRoute:
     LayoutCourseRegistrationCourseRegistrationLevelRoute,
   LayoutCourseRegistrationCourseRegistrationTextbookRoute:
     LayoutCourseRegistrationCourseRegistrationTextbookRoute,
   LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
+  LayoutFooterMenuOpenLicenseRoute: LayoutFooterMenuOpenLicenseRoute,
   LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
   LayoutIntegratedSearchIntegratedSearchRoute:
     LayoutIntegratedSearchIntegratedSearchRoute,
@@ -1310,8 +1460,11 @@ export interface FileRoutesByFullPath {
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/list': typeof GuideGuideListRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/notice': typeof GuideGuideNoticeRoute
+  '/guide/operator': typeof GuideGuideOperatorRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
@@ -1319,6 +1472,7 @@ export interface FileRoutesByFullPath {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/result': typeof GuideGuideResultRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1329,10 +1483,15 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
+  '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
+  '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1387,8 +1546,11 @@ export interface FileRoutesByTo {
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
+  '/guide/list': typeof GuideGuideListRoute
   '/guide/mobile': typeof GuideGuideMobileRoute
   '/guide/modal': typeof GuideGuideModalRoute
+  '/guide/notice': typeof GuideGuideNoticeRoute
+  '/guide/operator': typeof GuideGuideOperatorRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
@@ -1396,6 +1558,7 @@ export interface FileRoutesByTo {
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
+  '/guide/result': typeof GuideGuideResultRoute
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
@@ -1406,10 +1569,15 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
+  '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
+  '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1467,8 +1635,11 @@ export interface FileRoutesById {
   '/_guide/guide/input': typeof GuideGuideInputRoute
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
+  '/_guide/guide/list': typeof GuideGuideListRoute
   '/_guide/guide/mobile': typeof GuideGuideMobileRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
+  '/_guide/guide/notice': typeof GuideGuideNoticeRoute
+  '/_guide/guide/operator': typeof GuideGuideOperatorRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
@@ -1476,6 +1647,7 @@ export interface FileRoutesById {
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
+  '/_guide/guide/result': typeof GuideGuideResultRoute
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
@@ -1486,10 +1658,15 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
+  '/_layout/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
+  '/_layout/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  '/_layout/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/_layout/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/_layout/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
   '/_layout/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
+  '/_layout/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/_layout/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
   '/_layout/integrated-search/integrated-search': typeof LayoutIntegratedSearchIntegratedSearchRoute
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
@@ -1546,8 +1723,11 @@ export interface FileRouteTypes {
     | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
+    | '/guide/list'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/notice'
+    | '/guide/operator'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
@@ -1555,6 +1735,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/result'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1565,10 +1746,15 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-introduction/detail'
+    | '/course-introduction/package'
+    | '/course-introduction/package-m'
     | '/course-registration/course-registration-all'
+    | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
     | '/footer-menu/agreement'
+    | '/footer-menu/open-license'
     | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
@@ -1622,8 +1808,11 @@ export interface FileRouteTypes {
     | '/guide/input'
     | '/guide/input-timer'
     | '/guide/layout'
+    | '/guide/list'
     | '/guide/mobile'
     | '/guide/modal'
+    | '/guide/notice'
+    | '/guide/operator'
     | '/guide/optionCard'
     | '/guide/pagination'
     | '/guide/panel'
@@ -1631,6 +1820,7 @@ export interface FileRouteTypes {
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
+    | '/guide/result'
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
@@ -1641,10 +1831,15 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-introduction/detail'
+    | '/course-introduction/package'
+    | '/course-introduction/package-m'
     | '/course-registration/course-registration-all'
+    | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
     | '/footer-menu/agreement'
+    | '/footer-menu/open-license'
     | '/footer-menu/privacy'
     | '/integrated-search/integrated-search'
     | '/integrated-search/integrated-search_m'
@@ -1700,8 +1895,11 @@ export interface FileRouteTypes {
     | '/_guide/guide/input'
     | '/_guide/guide/input-timer'
     | '/_guide/guide/layout'
+    | '/_guide/guide/list'
     | '/_guide/guide/mobile'
     | '/_guide/guide/modal'
+    | '/_guide/guide/notice'
+    | '/_guide/guide/operator'
     | '/_guide/guide/optionCard'
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
@@ -1709,6 +1907,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
+    | '/_guide/guide/result'
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
@@ -1719,10 +1918,15 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/course-introduction/detail'
+    | '/_layout/course-introduction/package'
+    | '/_layout/course-introduction/package-m'
     | '/_layout/course-registration/course-registration-all'
+    | '/_layout/course-registration/course-registration-complete'
     | '/_layout/course-registration/course-registration-level'
     | '/_layout/course-registration/course-registration-textbook'
     | '/_layout/footer-menu/agreement'
+    | '/_layout/footer-menu/open-license'
     | '/_layout/footer-menu/privacy'
     | '/_layout/integrated-search/integrated-search'
     | '/_layout/integrated-search/integrated-search_m'
@@ -1810,8 +2014,11 @@ export const routeTree = rootRoute
         "/_guide/guide/input",
         "/_guide/guide/input-timer",
         "/_guide/guide/layout",
+        "/_guide/guide/list",
         "/_guide/guide/mobile",
         "/_guide/guide/modal",
+        "/_guide/guide/notice",
+        "/_guide/guide/operator",
         "/_guide/guide/optionCard",
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
@@ -1819,6 +2026,7 @@ export const routeTree = rootRoute
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
+        "/_guide/guide/result",
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
@@ -1836,10 +2044,15 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/course-introduction/detail",
+        "/_layout/course-introduction/package",
+        "/_layout/course-introduction/package-m",
         "/_layout/course-registration/course-registration-all",
+        "/_layout/course-registration/course-registration-complete",
         "/_layout/course-registration/course-registration-level",
         "/_layout/course-registration/course-registration-textbook",
         "/_layout/footer-menu/agreement",
+        "/_layout/footer-menu/open-license",
         "/_layout/footer-menu/privacy",
         "/_layout/integrated-search/integrated-search",
         "/_layout/integrated-search/integrated-search_m",
@@ -2005,12 +2218,24 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/layout.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/list": {
+      "filePath": "_guide/guide/list.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/mobile": {
       "filePath": "_guide/guide/mobile.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/modal": {
       "filePath": "_guide/guide/modal.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/notice": {
+      "filePath": "_guide/guide/notice.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/operator": {
+      "filePath": "_guide/guide/operator.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/optionCard": {
@@ -2039,6 +2264,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/respond": {
       "filePath": "_guide/guide/respond.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/result": {
+      "filePath": "_guide/guide/result.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/select": {
@@ -2081,8 +2310,24 @@ export const routeTree = rootRoute
       "filePath": "_layout/category/detail_m.tsx",
       "parent": "/_layout"
     },
+    "/_layout/course-introduction/detail": {
+      "filePath": "_layout/course-introduction/detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-introduction/package": {
+      "filePath": "_layout/course-introduction/package.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-introduction/package-m": {
+      "filePath": "_layout/course-introduction/package-m.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/course-registration/course-registration-all": {
       "filePath": "_layout/course-registration/course-registration-all.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-registration/course-registration-complete": {
+      "filePath": "_layout/course-registration/course-registration-complete.tsx",
       "parent": "/_layout"
     },
     "/_layout/course-registration/course-registration-level": {
@@ -2095,6 +2340,10 @@ export const routeTree = rootRoute
     },
     "/_layout/footer-menu/agreement": {
       "filePath": "_layout/footer-menu/agreement.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/footer-menu/open-license": {
+      "filePath": "_layout/footer-menu/open-license.tsx",
       "parent": "/_layout"
     },
     "/_layout/footer-menu/privacy": {

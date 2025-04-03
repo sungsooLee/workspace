@@ -1,4 +1,5 @@
 export type NodeMovePositionType = 'BEFORE' | 'AFTER' | 'INSIDE';
+export type TreeType = 'DEFAULT' | 'DRAG_DROP' | 'SHUTTLE_LIST';
 
 /**
  * 노드 제약 사항
@@ -98,6 +99,7 @@ export type TreeEventPayload =
  */
 export interface TreeNode {
   key: string;
+  // menuId: string;
   title?: string;
   children?: TreeNode[];
   isExpanded?: boolean;
@@ -123,9 +125,14 @@ export interface TreeProps {
   data: TreeNode[];
   onAction?: (payload: TreeEventPayload) => void;
   expandTrigger?: boolean;
-  type?: 'default' | 'advanced';
+  type?: TreeType;
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   searchKeyword?: string;
+  initExpandedKeys?: string[]; // 초기 확장된 키 (내부 상태로만 사용)
+  expandedKeys?: string[]; // 외부에서 제어하는 확장된 키
+  onExpandedKeysChange?: (keys: string[]) => void; // 확장된 키 변경 콜백
+  onSelectedNodeChange?: (node: TreeNode) => void;
+  selectedNode?: TreeNode | null;
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -141,15 +148,19 @@ export interface TreeNodeComponentProps {
   selectedNode?: TreeNode | null;
   expandedKeys: string[];
   setExpandedKeys: React.Dispatch<React.SetStateAction<string[]>>;
-  onDragStart: (node: TreeNode) => void;
+  onDragStart?: (node: TreeNode) => void;
   onDrop: (dropInfo: DropInfo) => void;
   onNodeClick?: (node: TreeNode | null) => void | Promise<void>;
   constraints?: NodeConstraints;
   isDraggable?: boolean;
-  treeType?: 'default' | 'advanced';
+  treeType?: TreeType;
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   onToggleUsed?: (node: TreeNode, isUsed: boolean) => void;
   searchKeyword?: string;
+  draggedNodeKey?: string | null;
+  activeId?: string | null;
+  isDropTarget?: boolean;
+  dropPosition?: any;
 }
 
 /**

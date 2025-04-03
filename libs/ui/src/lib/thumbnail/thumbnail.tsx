@@ -9,7 +9,7 @@ import { Button } from '../button/button';
 import { IcoTrash03 } from '@learnway/icons';
 import styles from './thumbnail.module.css';
 
-export interface ThumbnailComponentProps {
+export interface ThumbnailProps {
   /** variant */
   variant?: 'primary' | 'secondary';
   /** size */
@@ -23,7 +23,7 @@ export interface ThumbnailComponentProps {
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
-  indexNumber?: boolean;
+  indexNumber?: number;
   /** 파일 사이즈*/
   sizeText?: string;
   /** 체크박스 표시 여부 */
@@ -35,10 +35,10 @@ export interface ThumbnailComponentProps {
   /** 카운트 체크 여부 */
   count?: boolean;
   /** 체크 변경 이벤트 */
-  onCheckedChange?: (checked: CheckedState) => any;
+  onCheckedChange?: (checked: CheckedState) => void;
 }
 
-const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
+const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
   ({
     className,
     variant,
@@ -51,7 +51,6 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     showCheckbox,
     showDeleteBtn,
     selected,
-    count,
     onCheckedChange,
     ...props
   }) => {
@@ -60,27 +59,21 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
     return (
       <div
         {...props}
-        style={{ width: width ? width + 'px' : '', height: height ? height + 'px' : '' }}
-        className={cn(
-          styles.start,
-          styles.thumbnail,
-          count ? styles.type_count : '',
-          'nlp--thumbnail',
-          {
-            [styles.active]: isHovered,
-            [styles.selected]: selected,
-          },
-        )}
+        style={{ width: width ? `${width}px` : '', height: height ? `${height}px` : '' }}
+        className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
+          [styles.active]: isHovered,
+          [styles.selected]: selected,
+        })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
         onMouseLeave={() => handleHover(false)}>
-        {/* index number */}
-        {indexNumber && <span className={styles.indexNumber}>{indexNumber}</span>}
+        {/* index 번호 */}
+        {indexNumber !== null && <span className={styles.indexNumber}>{indexNumber}</span>}
         {/* 체크박스 */}
         {showCheckbox && (
           <Checkbox
             className={cn(styles.checkbox)}
             variant="round"
-            hideLabel={true}
+            hideLabel
             onCheckedChange={onCheckedChange}
           />
         )}
@@ -92,7 +85,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailComponentProps>(
             <IcoTrash03 className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
           </Button>
         )}
-        <img src={path} className={styles.thumbnail_image} />
+        <img src={path} className={styles.thumbnail_image} alt="Thumbnail" />
         {/* 시스템에서 제공하는 기본이미지인 경우 styles.default_image 클래스 추가 필요 */}
       </div>
     );

@@ -1,0 +1,96 @@
+/* 드래그 중인 노드 스타일 */
+.tree-node-dragging {
+  opacity: 0.6 !important;
+  transform: scale(0.98);
+  border: 1px dashed #3b82f6 !important;
+  background-color: #eff6ff !important;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  pointer-events: none;
+}
+
+/* 드래그 중인 노드의 자식 노드들 (숨김 효과) */
+.tree-node-dragging + .tree-children {
+  opacity: 0.5;
+}
+
+/* 드래그 이미지 (커서 옆에 표시되는 요소) */
+.drag-node-image {
+  pointer-events: none;
+  z-index: 9999;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+}
+
+/* 드래그 중인 상태일 때 드랍 가능한 영역 강조 */
+body.tree-dragging .tree div:not(.tree-node-dragging):hover {
+  background-color: #f0f9ff;
+  transition: background-color 0.2s ease;
+}
+
+/* 드랍 위치 표시자 애니메이션 */
+.drop-indicator-before,
+.drop-indicator-after {
+  height: 2px;
+  background-color: #3b82f6;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  animation: pulse 1.5s infinite;
+}
+
+.drop-indicator-before {
+  top: -1px;
+}
+
+.drop-indicator-after {
+  bottom: -1px;
+}
+
+.drop-indicator-inside {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 2px dashed #3b82f6;
+  border-radius: 4px;
+  z-index: 5;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* 드래그 커서를 잡는 모양으로 변경 */
+.tree [draggable='true'] {
+  cursor: grab;
+}
+
+.tree [draggable='true']:active {
+  cursor: grabbing;
+}
+
+/* 드래그 중인 노드의 내용물 흔들림 효과 */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.tree-node-dragging > * {
+  animation: shake 0.3s infinite;
+}

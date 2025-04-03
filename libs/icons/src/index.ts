@@ -109,7 +109,9 @@ export { ReactComponent as IcoReview } from './lib/ic_review.svg'; // review
 export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // success_02
 export { ReactComponent as IcoPaperClip } from './lib/ic_paperclip.svg'; // file upload
 export { ReactComponent as IcoPpt } from './lib/ic_ppt.svg'; // ppt, pdf
+export { ReactComponent as IcoShare } from './lib/ic_share.svg'; // share
 
+export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

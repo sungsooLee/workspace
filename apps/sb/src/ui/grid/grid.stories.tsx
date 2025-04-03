@@ -1,6 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
+  CellContext,
   ColumnDef,
   ColumnFiltersState,
   createColumnHelper,
@@ -9,19 +10,24 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   Button,
   ColumnFactory,
   CustomCell,
+  EditCheckboxCell,
+  EditDropdownCell,
+  EditInputCell,
+  EditRadioCell,
   Grid,
   GridState,
   Input,
   ModalWrapper,
+  Table,
   useModal,
 } from '@learnway/ui';
-import { Link } from '@tanstack/react-router';
 import { IcoDownload } from '@learnway/icons';
+import { getRandomId } from '@learnway/shared';
 
 export default {
   title: 'Components/Grid',
@@ -66,7 +72,7 @@ const fetchTableData = async (params: { sorting: SortingState; filters: ColumnFi
     필터: params.filters,
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     data: [
@@ -234,7 +240,12 @@ const BaseTable = () => {
 
   return (
     <div className="p-4">
-      <Grid data={data?.data ?? []} columns={columns} onStateChange={handleStateChange} />
+      <Grid
+        data={data?.data ?? []}
+        columns={columns}
+        onStateChange={handleStateChange}
+        onRowSelect={(row: any) => console.log(row)}
+      />
     </div>
   );
 };
@@ -346,14 +357,14 @@ const MultiSelectTable = () => {
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
-        multiSelectable={true}
+        multiple={true}
       />
     </div>
   );
 };
 
 export const MultiSelectGrid: Story = {
-  name: '멀티 셀렉 그리드',
+  name: '멀티 셀렉트',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -366,9 +377,7 @@ export const MultiSelectGrid: Story = {
   parameters: {
     docs: {
       description: {
-        story: `
-  - 그리드 prop의 multiSelectable을 true값으로 넘겨주면 다중 row 선택 가능.
-        `,
+        story: `- 그리드 prop의 multiple을 true값으로 넘겨주면 다중 row 선택 가능.`,
       },
     },
   },
@@ -433,14 +442,14 @@ const InfiniteScrollTable = () => {
         onStateChange={handleStateChange}
         isLoading={isLoading}
         title="가상 스크롤"
-        multiSelectable={true}
+        multiple={true}
       />
     </div>
   );
 };
 
 export const WithInfiniteScroll: Story = {
-  name: '가상 스크롤 그리드',
+  name: '가상 스크롤',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -539,14 +548,14 @@ const PaginationTable = () => {
           onPageChange: setPageIndex,
           onPageSizeChange: setPageSize,
         }}
-        multiSelectable={true}
+        multiple={true}
       />
     </div>
   );
 };
 
 export const WithPagination: Story = {
-  name: '페이지네이션 그리드',
+  name: '페이지네이션',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -594,7 +603,7 @@ const GroupedColumnTable = () => {
         onStateChange={handleStateChange}
         isLoading={isLoading}
         title="Grouping Columns"
-        multiSelectable={true}
+        multiple={true}
         columnGrouping={{ columns: ['status'] }}
       />
     </div>
@@ -602,7 +611,7 @@ const GroupedColumnTable = () => {
 };
 
 export const WithGroupColumn: Story = {
-  name: '컬럼 그룹 그리드',
+  name: '컬럼 그룹',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -651,7 +660,7 @@ const PinnedColumnTable = () => {
         onStateChange={handleStateChange}
         isLoading={isLoading}
         title="Pinning Columns"
-        multiSelectable={true}
+        multiple={true}
         columnPinning={{ columns: ['status'] }}
       />
     </div>
@@ -659,7 +668,7 @@ const PinnedColumnTable = () => {
 };
 
 export const WithPinColumn: Story = {
-  name: '고정 컬럼 그리드',
+  name: '고정 컬럼',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -856,7 +865,7 @@ const CustomCellTable = () => {
 };
 
 export const WithCustomCell: Story = {
-  name: '커스텀 셀 그리드',
+  name: '커스텀 셀',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -1024,3 +1033,170 @@ export const WithCustomFactoryCell: Story = {
   ],
   render: () => <ColumnFactoryTable />,
 };
+
+const editGridData = Array(10)
+  .fill(null)
+  .map((_, i) => ({
+    id: `id_${i}`,
+    text: 'text',
+    number: 0,
+    checkbox: true,
+    radio: '',
+    dropdown: '',
+  }));
+
+// 셀 편
+export const TemplateEditGrid: any = (args: any) => {
+  const [data, setData] = useState<any[]>(editGridData);
+  const columns = [
+    {
+      header: 'text',
+      accessorKey: 'text',
+      size: 150,
+      cell: (info: CellContext<any, string>) => (
+        <EditInputCell info={info} input={{ type: 'text' }} />
+      ),
+    },
+    {
+      header: 'number',
+      accessorKey: 'number',
+      size: 150,
+      cell: (info: CellContext<any, number>) => (
+        <EditInputCell info={info} input={{ type: 'number' }} />
+      ),
+    },
+    {
+      header: 'dropdown',
+      accessorKey: 'dropdown',
+      size: 100,
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
+    },
+    {
+      header: 'check',
+      accessorKey: 'check',
+      size: 70,
+      meta: {
+        cellAlign: 'center',
+      },
+      cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
+    },
+    {
+      header: 'radio',
+      accessorKey: 'radio',
+      size: 200,
+      cell: (info: CellContext<any, string>) => (
+        <EditRadioCell
+          info={info}
+          radio={{
+            options: [
+              { value: `value1`, label: `label1` },
+              { value: `value2`, label: `label2` },
+            ],
+          }}
+        />
+      ),
+    },
+    {
+      header: 'delete',
+      accessorKey: 'delete',
+      size: 70,
+      meta: {
+        cellAlign: 'center',
+      },
+      cell: (info: CellContext<any, string>) => (
+        <Button
+          label={'삭제'}
+          variant={'point'}
+          size={'xs'}
+          onClick={() => info.table.options.meta?.removeData(info.row.index)}
+        />
+      ),
+    },
+    {
+      header: 'dummy',
+      accessorKey: 'dummy',
+    },
+  ];
+
+  console.log('----- data', data);
+
+  return (
+    <div className={'m-6'}>
+      <div>
+        <Button
+          variant={'point'}
+          size={'md'}
+          label={'reset data'}
+          onClick={() => setData(editGridData)}
+        />
+      </div>
+      <Grid
+        title={'Editable Grid'}
+        data={data}
+        columns={columns}
+        disabledSelectionToggle
+        hideColumnSettings
+        hideRowSelectionCheckBox
+        onChange={(newData: any) => setData(newData)}
+      />
+    </div>
+  );
+};
+TemplateEditGrid.storyName = '셀 편집';
+
+// 컬럼 사이즈
+export const TemplateColumnSize: any = (args: any) => {
+  const data = [
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
+  ];
+  const columns = [
+    { accessorKey: 'name', size: 200 },
+    { accessorKey: 'code', size: 0, minSize: 100 },
+    { accessorKey: 'code2', size: 0, minSize: 100 },
+  ];
+  return (
+    <Grid
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideColumnSettings
+      hideRowSelectionCheckBox
+    />
+  );
+};
+TemplateColumnSize.storyName = '컬럼 사이즈';
+
+// 테이블 모
+export const TemplateTable: any = (args: any) => {
+  const data = Array(10)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+      name5: `name5_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 200 },
+    { accessorKey: 'name2', size: 200 },
+    { accessorKey: 'name3', size: 200 },
+    { accessorKey: 'name4', size: 200 },
+    { accessorKey: 'name5', size: 200 },
+  ];
+  return <Table data={data} columns={columns} />;
+};
+TemplateTable.storyName = '테이블 모드';

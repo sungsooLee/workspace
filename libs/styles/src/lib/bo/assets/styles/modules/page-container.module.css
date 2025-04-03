@@ -10,7 +10,7 @@
   .content_wrap {
     @apply relative w-full px-[40px];
     .content {
-      @apply box-border flex w-full items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[32px];
+      @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
     }
   }
 
@@ -21,7 +21,7 @@
       @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
       .btn_favorites {
         @apply ml-[4px] flex;
-        &.active svg {
+        &:not(.active) svg {
           @apply fill-none stroke-[var(--gray6)];
         }
       }

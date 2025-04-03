@@ -1,0 +1,13 @@
+/* page-contents.module.css */
+.start {
+  @apply flex items-start justify-between;
+  .main_contents {
+    @apply flex-1;
+  }
+  .sub_contents {
+    @apply relative ml-[40px] w-[360px];
+  }
+  .vertical_line {
+    @apply hidden;
+  }
+}

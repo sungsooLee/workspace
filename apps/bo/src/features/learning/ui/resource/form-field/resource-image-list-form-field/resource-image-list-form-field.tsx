@@ -61,7 +61,7 @@ const ResourceImageListFormFieldComponent = forwardRef<
         deletable
         draggable
         hideBorder
-        hideItemBorder={false}
+        showItemBorder
         itemRenderer={(option: any) => (
           <div className={style.thumb_wrap}>
             <Thumbnail width={84} height={55} path={option.path} className={style.image} />

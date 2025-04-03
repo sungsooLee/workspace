@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { TermsButton } from '../../../../../../features/auth';
 
-import styles from './auth-footer.module.css';
+import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-footer/auth-footer.module.css';
 
 function AuthFooterComponent() {
   return (

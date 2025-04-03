@@ -4,7 +4,7 @@ import { useModal, Button } from '@learnway/ui';
 
 import { IcoCheck } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/pages/_layout/setting/setting-language_m.module.css';
+import styles from './setting-language_m.module.css';
 
 export const Route = createFileRoute('/_layout/setting/setting-language_m')({
   component: RouteComponent,

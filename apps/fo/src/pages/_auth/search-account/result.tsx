@@ -6,7 +6,7 @@ import { pageRouteConfig } from '../../../features/auth';
 
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
-import { useCurrentRoute } from '@learnway/config';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { ProccessResult } from '../../../widgets/auth';
 
@@ -31,7 +31,7 @@ function RouteComponent() {
   const { t } = useTranslation();
 
   const router = useRouter();
-  const { state } = useCurrentRoute();
+  const { state } = useCurrentRoute(Route);
 
   const handleGoLogin = () => {
     router.navigate({ to: '/login' });

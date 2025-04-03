@@ -13,13 +13,13 @@ interface TabItemProps {
   count?: boolean;
   number?: string;
   alarm?: boolean;
-  content: React.ReactNode;
+  content?: React.ReactNode;
 }
 
 interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   items: Array<TabItemProps>;
   className?: string;
-  type?: 'line' | 'fill' | 'round' | 'progress';
+  type?: 'line' | 'fill' | 'round' | 'progress' | 'segment';
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   size?: 'sm' | 'md';
   ariaLabel?: string;
@@ -73,14 +73,16 @@ export const TabsComponent = forwardRef<
           variant && styles[variant],
         )}
         value={value}
-        onValueChange={(value) => handleActiveTab(value)}>
+        onValueChange={(value) => handleActiveTab(value)}
+      >
         {/* Tab Buttons */}
         <Primitive.List className={styles.list} aria-label={ariaLabel}>
           {items.map((d: TabItemProps, index) => (
             <Primitive.Trigger
               className={cn(styles.trigger, d.alarm ? styles.alarm : '')}
               value={d.key}
-              key={d.key}>
+              key={d.key}
+            >
               {d.title}
               {d.count && <span className={styles.count}>{d.number}</span>}
               {d.alarm && (

@@ -3,7 +3,7 @@ export * from './ui/notification/notification';
 export * from './ui/tenant-button/tenant-button';
 export * from './ui/admin-link/admin-link';
 export * from './ui/sessionTimer';
-
+export * from './ui/license/license';
 export * from './state/menu.state';
 export * from './state/tenant.state';
 

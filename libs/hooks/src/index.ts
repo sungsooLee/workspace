@@ -8,3 +8,6 @@ export * from './lib/form-builder/proxy-type';
 export * from './lib/form-builder/dynamic-form-context';
 export * from './lib/use-file-uploader/use-file-uploader';
 export * from './lib/use-file-uploader/types';
+
+export * from './lib/router/page-route.state';
+export * from './lib/router/router.hook';

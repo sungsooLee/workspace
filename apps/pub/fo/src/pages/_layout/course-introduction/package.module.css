@@ -1,0 +1,101 @@
+.start {
+  &.package_wrap {
+    @apply mt-[24px];
+    .thumbnail_img {
+      button {
+        @apply relative;
+        .img_play {
+          @apply absolute left-1/2 top-1/2 h-[80px] w-[80px] -translate-x-1/2 -translate-y-1/2;
+          img {
+            @apply h-[80px] w-[80px];
+          }
+        }
+      }
+      img {
+        @apply w-full overflow-hidden rounded-[16px];
+      }
+    }
+    .package_txt_box {
+      @apply mt-[34px];
+      strong {
+        @apply title_5_b block text-[var(--gray9)];
+      }
+      p {
+        @apply body_3_r mt-[16px] text-[var(--gray8)];
+      }
+    }
+    .package_box {
+      @apply mt-[24px];
+      .img_box {
+        img {
+          @apply w-full overflow-hidden rounded-[16px];
+        }
+      }
+      .chip_box {
+        @apply mt-[24px];
+        & > div {
+          @apply border-none p-0;
+          & > div {
+            @apply gap-[4px];
+            span {
+              @apply rounded-[8px];
+            }
+          }
+        }
+      }
+    }
+    .sub_package {
+      @apply mt-[48px];
+      & > div {
+        @apply relative;
+        &::before {
+          @apply absolute left-[11px] top-[13px] h-[calc(100%-13px)] w-[2px] bg-[var(--gray4)] content-[''];
+        }
+        & > div {
+          @apply pb-[40px];
+          &:last-child {
+            @apply pb-0;
+          }
+          & > button {
+            & + div {
+              @apply bg-inherit;
+            }
+          }
+        }
+      }
+      .sub_package_title {
+        @apply relative pl-[32px];
+        .number {
+          @apply body_3_b absolute left-0 top-[3px] flex h-[24px] w-[24px] items-center justify-center rounded-[50%] bg-[var(--secondary1)] leading-[24px] text-white;
+        }
+        strong {
+          @apply body_2_b block leading-[26px] text-[var(--gray8)];
+          em {
+            @apply title_6_b ml-[4px] inline-block text-[var(--secondary1)];
+          }
+        }
+        p {
+          @apply body_3_r mt-[8px] text-[var(--gray7)];
+        }
+      }
+      .sub_package_content {
+        @apply pl-[32px];
+      }
+
+      button {
+        & > svg {
+          @apply top-[14px] mt-0;
+        }
+      }
+    }
+    .operator_box {
+      @apply mt-[48px];
+      & > strong {
+        @apply title_6_b mb-[8px] block text-[var(--gray8)];
+      }
+    }
+    .sub_box {
+      @apply rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
+    }
+  }
+}

@@ -1,0 +1,40 @@
+/* auth_header.module.css */
+.start {
+  &.auth_header {
+    @apply w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
+
+    .header_area {
+      @apply flex h-[64px] items-center justify-between pl-[32px] pr-[8px];
+
+      h1 {
+        img {
+          @apply h-[70px] w-auto;
+        }
+      }
+    }
+    .auth {
+      @apply !text-[var(--gray7)];
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.auth_header {
+        @apply fixed left-0 right-0 top-0 z-[100] w-full min-w-[320px];
+
+        .header_area {
+          @apply h-[56px] !pl-[20px] pr-[16px];
+
+          h1 {
+            img {
+              @apply h-[24px];
+            }
+          }
+        }
+      }
+    }
+  }
+}

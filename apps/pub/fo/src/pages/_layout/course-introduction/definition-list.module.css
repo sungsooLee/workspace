@@ -1,0 +1,16 @@
+.start {
+  &.list {
+    dl {
+      @apply table-row;
+      dt {
+        @apply body_3_r table-cell min-w-[56px] leading-[22px] text-[var(--gray7)];
+      }
+      dd {
+        @apply body_3_r relative pl-[8px] leading-[22px] text-[var(--gray7)];
+        &::before {
+          @apply absolute left-0 top-[5px] h-[12px] w-px bg-[var(--gray5)] content-[''];
+        }
+      }
+    }
+  }
+}

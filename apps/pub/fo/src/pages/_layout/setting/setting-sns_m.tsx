@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Switch } from '@learnway/ui';
 
-import styles from '@learnway/styles/fo/pages/_layout/setting/setting-sns_m.module.css';
+import styles from './setting-sns_m.module.css';
 
 import naver from '@learnway/styles/fo/assets/images/common/logo_sns_naver.png';
 import kakao from '@learnway/styles/fo/assets/images/common/logo_sns_kakao.png';

@@ -1,247 +1,322 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, TreeNode } from '@learnway/ui';
+import { Button, findNodeByKey, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { useEffect, useState } from 'react';
-import { MenuTree } from '../../../../features/platform/ui/menu/menu-tree';
-import MenuView from '../../../../features/platform/ui/menu/menu-view';
+import React, { useEffect, useRef, useState } from 'react';
+import { MenuTree } from '../../../../features/menu/ui/menu-tree';
+import MenuView from '../../../../features/menu/ui/menu-view';
+import { IcoAnnouncement03 } from '../../../../../../../libs/icons/src';
+import { cn } from '@learnway/shared';
+import {
+  useCreateMenu,
+  useDeleteMenu,
+  useMenuManagerFetchTree,
+  useMenuMangerFetchMenus,
+  useUpdateMenu,
+} from '../../../../entities/menu/service/menu-manager.hook';
+import {
+  findNodeByMenuId,
+  transformApiDataToTreeData,
+} from '../../../../features/menu/service/menu.service';
+import { pageRouteConfig } from '../../../../features/auth';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: '메뉴 관리',
+    },
+  }),
 });
 
 function RouteComponent() {
-  const [initData, setInitData] = useState<any>(initTreeData);
-  const [treeData, setTreeData] = useState<any>();
-  const [selectedTreeData, setSelectedTreeData] = useState<any>({});
-  /**
-   * 기초 GNB 메뉴 추가로 세팅
-   */
-  const initDefaultData = () => {
-    const key = new Date().getTime().toString();
-    setSelectedTreeData({
-      type: 'ADD',
-      node: {
-        location: 'Root >',
-        key: key,
-        code: '',
-        title: '',
-        url: '',
-        isPersonalInfo: false,
-        description: '',
-        isUsed: false,
+  // const [initData, setInitData] = useState<any>();
+  const [treeData, setTreeData] = useState();
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
+
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  // Mode: view, add , init
+  const [mode, setMode] = useState('init');
+  const [parentNode, setParentNode] = useState<TreeNode | null>(null);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
+  const { confirm: openConfirm } = useModal();
+  // 데이터 로딩 상태 트래킹
+  const isDataLoading = useRef(false);
+
+  // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
+  const { data, isLoading, refetch } = useMenuManagerFetchTree(selectedTabKey, 'ko');
+  // 메뉴 생성 mutation
+  const { create, data: createdMenuData } = useCreateMenu({
+    onSuccess: async (data: any) => {
+      // 생성된 메뉴의 ID 저장
+      if (data && data.menuId) {
+        setLastCreatedMenuId(data.menuId.toString());
+      }
+      // 트리 데이터 재조회
+      await refetch();
+    },
+  });
+  // 메뉴 수정 mutation
+  const { updateMenu, data: updatedMenuData } = useUpdateMenu({
+    onSuccess: async (data: any) => {
+      if (data && data.menuId) {
+        setSelectedNode(null);
+        setLastCreatedMenuId(data.menuId.toString());
+      }
+      await refetch().then(() => {});
+    },
+  });
+  // 메뉴 삭제 mutation
+  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({
+    onSuccess: (data: any) => {
+      refetch().then(() => {});
+    },
+  });
+  // 데이터가 변경될 때 처리
+  const prevDataRef = React.useRef(null);
+
+  useEffect(() => {
+    // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
+    // if (data && data !== prevDataRef.current) {
+    if (data) {
+      prevDataRef.current = data;
+
+      const transformedData = transformApiDataToTreeData(data);
+      setTreeData(transformedData);
+
+      // 초기 로딩 시 첫 번째 레벨 확장
+      if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: any) => node.key);
+        setExpandedKeys(firstLevelKeys);
+      }
+
+      // 새로 추가된 메뉴가 있는 경우 - lastCreatedMenuId로 체크
+      if (lastCreatedMenuId) {
+        console.log('새 메뉴 ID 발견, 노드 찾기 시도:', lastCreatedMenuId);
+
+        // 새로 생성된 메뉴 노드 찾기
+        const newNode = findNodeByMenuId(transformedData, lastCreatedMenuId);
+
+        if (newNode) {
+          console.log('새 노드 찾음:', newNode);
+
+          // 노드 경로 찾기 (부모 노드들의 키)
+          const nodePath = findNodePath(transformedData, lastCreatedMenuId);
+
+          if (nodePath) {
+            // 부모 노드들을 펼치기 위해 expandedKeys 업데이트
+            // 마지막 노드(새로 생성된 노드)는 제외하지 않고 모두 포함
+            setExpandedKeys((prev) => {
+              // 기존 확장된 키들과 새 경로를 합쳐서 중복 제거
+              const combined = [...new Set([...prev, ...nodePath])];
+              return combined;
+            });
+
+            // 새 노드 선택
+            setSelectedNode(newNode);
+            setMode('view');
+
+            // 처리 완료 후 ID 초기화
+            setLastCreatedMenuId(null);
+          }
+        } else {
+          console.log('새 노드를 찾을 수 없음:', lastCreatedMenuId);
+        }
+      }
+    }
+  }, [data, lastCreatedMenuId]);
+
+  // 노드 클릭
+  const handleNodeClick = (node: TreeNode) => {
+    setMode('view');
+    setSelectedNode(node);
+  };
+
+  //하위 메뉴 추가 버튼
+  const handleAddSubMenu = (parentNode: TreeNode) => {
+    //접혀있으면 확장
+    setExpandedKeys([...expandedKeys, parentNode.key]);
+    setParentNode(parentNode);
+    // 현재 노드 클릭이벤트.
+    setSelectedNode(parentNode);
+    setMode('add');
+  };
+
+  // 메뉴 저장 핸들러
+  const handleSave = (payload: any) => {
+    openConfirm({
+      title: '저장 하시겠습니까?',
+      content: (
+        <>
+          <p>입력한 정보로 저장됩니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          create(payload);
+        }
       },
     });
   };
-  /**
-   * 트리 데이터를 변경하는 작업을 처리합니다.
-   * 이 함수는 데이터를 매개변수로 받아 콘솔에 해당 데이터를 출력한 뒤,
-   * 트리 데이터 상태를 새로운 데이터로 업데이트합니다.
-   * @param {any} data - 처리 및 저장할 갱신된 트리 데이터.
-   */
-  const handleTreeDataChange = (data: any) => {
-    setTreeData(data);
-  };
-  const handleReset = () => {
-    setTreeData(initData);
-  };
-  const handleCurdTreeDataChange = (data: any) => {
-    const { type, node } = data;
 
-    initDefaultData();
-    switch (type) {
-      case 'ADD':
-        if (!node.parentKey || node.parentKey === '') {
-          setInitData([...treeData, { ...node }]);
-          break;
-        } else {
-          const treeNodes = addNode(treeData, node.parentKey, node);
-          setInitData(treeNodes);
-          break;
+  const handleUpdate = (payload: any) => {
+    openConfirm({
+      title: '저장 하시겠습니까?',
+      content: (
+        <>
+          <p>입력한 정보로 저장됩니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          updateMenu(payload);
         }
-      case 'EDIT':
-        if (!node.key) {
-          return treeData;
-        }
-        setInitData(modifyNode(treeData, node.key, node));
+      },
+    });
+  };
 
-        break;
-      case 'DELETE':
-        if (!node.key) {
-          return treeData;
+  const handleExpandChange = (keys: string[]) => {
+    setExpandedKeys(keys);
+  };
+
+  const handleDelete = (payload: any) => {
+    //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
+
+    openConfirm({
+      title: '삭제 하시겠습니까?',
+      content: (
+        <>
+          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
+          <p>삭제 후 복구할 수 없습니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          deleteMenu(payload);
+          setMode('init');
         }
-        setInitData(deleteNode(treeData, node.key));
+      },
+    });
+  };
+
+  const renderTabContent = (tabKey: string) => {
+    return (
+      <div className="mt-2 flex gap-[20px]">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {treeData && (
+              <MenuTree
+                treeData={treeData}
+                onNodeClick={handleNodeClick}
+                onAddSubMenu={handleAddSubMenu}
+                menuScope={tabKey}
+                // onDeleteNode={handleDeleteNode}
+                expandedKeys={expandedKeys} // 확장 상태 전달
+                onExpandChange={handleExpandChange} // 확장 상태 변경 핸들러
+                selectedKey={selectedNode?.key} // selectedKey 추가
+              />
+            )}
+            {selectedNode || mode === 'add' ? (
+              <MenuView
+                treeData={treeData}
+                selectedNode={selectedNode}
+                menuScope={tabKey}
+                menu
+                mode={mode}
+                parentNode={parentNode}
+                onSave={handleSave}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+                onCancel={() => {
+                  setMode('view');
+                  if (!selectedNode) {
+                    setParentNode(null);
+                  }
+                }}
+              />
+            ) : (
+              <MenuView
+                treeData={treeData}
+                selectedNode={null}
+                menuScope={tabKey}
+                menu
+                mode="init"
+                parentNode={null}
+                onSave={handleSave}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+                onCancel={() => {
+                  setMode('view');
+                  setParentNode(null);
+                }}
+              />
+            )}
+          </>
+        )}
+      </div>
+    );
+  };
+
+  // 새로 추가한 탭 변경 핸들러
+  const handleTabChange = (tabKey: string) => {
+    // 탭이 변경되었을 때만 처리
+    if (tabKey !== selectedTabKey) {
+      // 1. 선택된 탭 업데이트
+      setSelectedTabKey(tabKey);
+
+      // 2. 선택된 노드 초기화
+      setSelectedNode(null);
+
+      // 3. 모드를 init으로 설정
+      setMode('init');
+
+      // 4. 부모 노드 초기화
+      setParentNode(null);
+
+      // 5. expandedKeys 초기화
+      setExpandedKeys([]);
     }
   };
 
-  /**
-   * 부모 key에 해당하는 곳에 새 노드 추가
-   */
-  const addNode = (tree: TreeNode[], parentKey: string, newNode: TreeNode): TreeNode[] => {
-    return tree.map((node) => {
-      if (node.key === parentKey) {
-        return {
-          ...node,
-          children: [...(node.children || []), newNode], // 자식 리스트에 추가
-        };
-      }
-      return {
-        ...node,
-        children: node.children ? addNode(node.children, parentKey, newNode) : node.children,
-      };
-    });
-  };
-
-  /**
-   * 특정 key를 가진 노드 수정
-   */
-  const modifyNode = (
-    tree: TreeNode[],
-    key: string,
-    updatedNode: Partial<TreeNode>,
-  ): TreeNode[] => {
-    return tree.map((node) => {
-      if (node.key === key) {
-        return { ...node, ...updatedNode }; // 기존 값 + 수정된 값
-      }
-      return {
-        ...node,
-        children: node.children ? modifyNode(node.children, key, updatedNode) : node.children,
-      };
-    });
-  };
-
-  /**
-   * 특정 key를 가진 노드를 삭제
-   */
-  const deleteNode = (tree: TreeNode[], key: string): TreeNode[] => {
-    return tree
-      .filter((node) => node.key !== key) // 현재 노드가 삭제 대상이면 제거
-      .map((node) => ({
-        ...node,
-        children: node.children ? deleteNode(node.children, key) : node.children,
-      }));
-  };
-
-  const handleSaveTree = () => {
-    setInitData(treeData);
-  };
-
   useEffect(() => {
-    setTreeData(initData);
-  }, [initData]);
+    console.log(selectedTabKey);
+    refetch().then(() => {});
+  }, [selectedTabKey]);
+
+  const items = [
+    {
+      title: '학습자 메뉴',
+      key: 'FO',
+      content: renderTabContent('FO'),
+    },
+    {
+      title: 'HRD센터 메뉴',
+      key: 'BO',
+      content: renderTabContent('BO'),
+    },
+  ];
 
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="point" size="sm" onClick={handleReset}>
-          GNB 메뉴 초기화
-        </Button>
-        <Button type="button" variant="point" size="sm" onClick={handleSaveTree}>
-          GNB 메뉴 저장
+        <Button type="button" variant="primary" size="sm">
+          저장
         </Button>
       </ContentsButtons>
       <MainContents>
-        <div className={'mt-2 flex gap-[20px]'}>
-          {treeData && (
-            <MenuTree
-              treeData={treeData}
-              selectedChange={setSelectedTreeData}
-              onChange={handleTreeDataChange}
-            />
-          )}
-          <MenuView treeData={selectedTreeData} onChange={handleCurdTreeDataChange} />
-        </div>
+        <Tabs
+          selectedTabKey={selectedTabKey}
+          items={items}
+          type="line"
+          onActiveTab={handleTabChange}
+        />
       </MainContents>
     </PageContainer>
   );
 }
-
-const initTreeData: TreeNode[] = [
-  {
-    key: '1',
-    title: 'Root Node 1',
-    code: 'ROOT',
-    isUsed: false,
-    url: '/root',
-    description: 'ROOT 메뉴 입니다.',
-    isPersonalInfo: false,
-
-    children: [
-      {
-        key: '1-1',
-        parentKey: '1',
-        title: 'Child 1',
-        isUsed: false,
-        code: '1-1',
-        url: '/root/1-1',
-        description: '1-1 메뉴 입니다.',
-        isPersonalInfo: false,
-        children: [
-          {
-            key: '1-1-1',
-            parentKey: '1-1',
-            title: 'Grandchild 1',
-            isUsed: false,
-            code: '1-1-1',
-            url: '/root/1-1-1',
-            description: '1-1-1 메뉴 입니다.',
-            isPersonalInfo: false,
-          },
-          {
-            key: '1-1-2',
-            parentKey: '1-1',
-            title: 'Grandchild 2',
-            isUsed: false,
-            code: '1-1-2',
-            url: '/root/1-1-2',
-            description: '1-1-2 메뉴 입니다.',
-            isPersonalInfo: false,
-          },
-        ],
-      },
-      {
-        key: '1-2',
-        parentKey: '1',
-        title: 'Child 2',
-        isUsed: false,
-        code: '1-2',
-        url: '/root/1-2',
-        description: '1-2 메뉴 입니다.',
-        isPersonalInfo: false,
-      },
-    ],
-  },
-  {
-    key: '2',
-    title: 'Root Node 2',
-    isUsed: false,
-    code: 'ROOT2',
-    url: '/root2',
-    description: 'ROOT2 메뉴 입니다.',
-    isPersonalInfo: false,
-    children: [
-      {
-        key: '2-1',
-        parentKey: '2',
-        title: 'Child 3',
-        isUsed: false,
-        code: '2-1',
-        url: '/root/2-1',
-        description: '2-1 메뉴 입니다.',
-        isPersonalInfo: false,
-      },
-      {
-        key: '2-2',
-        parentKey: '2',
-        title: 'Child 4',
-        isUsed: false,
-        code: '2-2',
-        url: '/root/2-2',
-        description: '2-2 메뉴 입니다.',
-        isPersonalInfo: false,
-      },
-    ],
-  },
-];

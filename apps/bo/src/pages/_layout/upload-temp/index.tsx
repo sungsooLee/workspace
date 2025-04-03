@@ -37,11 +37,11 @@ function RouteComponent() {
   const maxSizeBytes = maxSize * 1024 * 1024;
   return (
     <div>
-      <UppyUpload
+      {/* <UppyUpload
         allowedFileTypes={allowedTypes}
         maxFileSize={maxSizeBytes}
         folderPath={folderPath}
-      />
+      /> */}
     </div>
   );
 }

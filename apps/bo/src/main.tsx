@@ -2,7 +2,8 @@ import * as ReactDOM from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import { queryConfig, appConfig, usePageRouteState } from '@learnway/config';
+import { queryConfig, appConfig } from '@learnway/config';
+import { usePageRouteState } from '@learnway/hooks';
 import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';

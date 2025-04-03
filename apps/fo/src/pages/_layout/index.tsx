@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@learnway/ui';
-
 import { pageRouteConfig } from '../../features/auth';
 
 export const Route = createFileRoute('/_layout/')({

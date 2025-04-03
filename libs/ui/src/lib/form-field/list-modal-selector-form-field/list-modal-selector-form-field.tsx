@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { Button, ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
-import { List, ListComponentProps } from '../../list/list';
+import { List, ListProps } from '../../list/list';
 import { ModalConfig } from '../../modal/type';
 import { addOrRemoveItemByKey, cn } from '@learnway/shared';
 import styles from './list-modal-selector-form-field.module.css';
@@ -15,7 +15,7 @@ export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[
   /** Button component props */
   button?: ButtonComponentProps;
   /** List component props */
-  list?: Partial<ListComponentProps>;
+  list?: Partial<ListProps>;
   /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
   transformModalData?: (modalData?: any) => void;
 }
@@ -74,7 +74,8 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           styles.start,
           styles.modal_select_wrap,
           'nlp--list-modal-selector-form-field',
-        )}>
+        )}
+      >
         <Button
           className={styles.btn}
           {...buttonProps}

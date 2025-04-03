@@ -106,3 +106,22 @@ export const checkType = (value: unknown): 'array' | 'string' | 'object' | 'othe
 export const toArray = (value: any) => {
   return isArray(value) ? value : value ? [value] : [];
 };
+
+/**
+ * 옵션 목록을 재정렬하는 함수
+ * @param options 기존 옵션 배열
+ * @param valueField 옵션 객체에서 ID 값을 참조하는 필드명
+ * @param activeId 현재 드래그 중인 요소의 ID
+ * @param overId 드롭된 위치의 요소 ID
+ * @returns 새로운 순서의 옵션 배열
+ */
+export const reorderOptions = (options: any[], valueField: string, activeId: any, overId: any) => {
+  const oldIndex = options.findIndex((d) => d[valueField] === activeId);
+  const newIndex = options.findIndex((d) => d[valueField] === overId);
+
+  const newOptions = [...options]; // 원본 배열 복사
+  const [movedItem] = newOptions.splice(oldIndex, 1); // oldIndex에서 요소 제거
+  newOptions.splice(newIndex, 0, movedItem); // newIndex에 요소 삽입
+
+  return newOptions;
+};

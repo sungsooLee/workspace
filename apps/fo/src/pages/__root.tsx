@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Link, Outlet, createRootRoute, createRootRouteWithContext } from '@tanstack/react-router';
+import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import { ModalWrapper } from '@learnway/ui';
-import { useGlobalRouterEvent } from '@learnway/config';
+import { ModalWrapper, useModalStore } from '@learnway/ui';
+import { useGlobalRouterEvent } from '@learnway/hooks';
+import { PageRouteContext } from '@learnway/config';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 
@@ -16,19 +17,22 @@ const NotFound = () => {
   );
 };
 
-interface RouterContext {
-  setPageRouteState?: any;
-  queryClient?: any;
-}
-
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRouteWithContext<PageRouteContext>()({
   component: RootComponent,
   notFoundComponent: NotFound,
 });
 
 function RootComponent() {
+  const { closeAll } = useModalStore();
+
   useRenewalMenuStateFromRouting();
-  useGlobalRouterEvent();
+
+  // router event subscribe
+  useGlobalRouterEvent({
+    onBeforeLoad: () => {
+      closeAll();
+    },
+  });
 
   return (
     <>

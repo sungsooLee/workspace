@@ -16,7 +16,7 @@ const HtmlContentComponent = function ({ children, className }: HtmlContentCompo
   return (
     <div
       className={cn(styles.start, className)}
-      dangerouslySetInnerHTML={{ __html: children ?? <span></span> }}></div>
+      dangerouslySetInnerHTML={{ __html: children ?? `` }}></div>
   );
 };
 

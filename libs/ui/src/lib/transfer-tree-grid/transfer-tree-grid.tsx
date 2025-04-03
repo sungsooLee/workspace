@@ -83,7 +83,8 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
           className,
           'nlp--transfer-grid',
           'flex h-[300px] flex-row bg-amber-100',
-        )}>
+        )}
+      >
         {/* left grid */}
         <div>
           <TreeView
@@ -91,7 +92,7 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
             treeId={'1'}
             expandTrigger={expandTrigger}
             // nodeButtons={renderNodeButtons}
-            type={'default'}
+            type={'DEFAULT'}
           />
         </div>
         {/* buttons */}
@@ -114,7 +115,7 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
             data={gridData}
             columns={columns}
             hideColumnSettings
-            multiSelectable
+            multiple
             onRowsSelect={(newSelectedRows) => setSelectedGridRows(newSelectedRows)}
           />
         </div>
