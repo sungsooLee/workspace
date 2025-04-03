@@ -63,6 +63,7 @@ function RouteComponent() {
 
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
+      {/* page contents */}
       <div className={pageContentsStyles.start}>
         {/* main content */}
         <div className={pageContentsStyles.main_contents}>
@@ -180,7 +181,7 @@ function RouteComponent() {
                 </div>
               </div>
               {/* button */}
-              <div className={styles.btn_box}>
+              <div className={packageInformationStyles.btn_box}>
                 <Button>
                   <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
                   {/* 찜 상태 */}
