@@ -51,7 +51,8 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Select } from '../select/select';
 import { SelectOption } from '../select/type';
 
-import './grid.css'; // grid CSS
+// import './grid.css'; // grid CSS
+import styles from './grid.module.css'; // grid module CSS
 
 const Grid = forwardRef(
   <T extends object>(
@@ -410,9 +411,8 @@ const Grid = forwardRef(
       const renderBody = () => {
         const bodyStyle = {
           // display: paginationGrid ? 'table-row-group' : 'grid',
-          display: 'grid',
           position: 'relative',
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
         return (
           <tbody style={bodyStyle}>
@@ -432,9 +432,9 @@ const Grid = forwardRef(
           top: 0,
           left: 0,
           width: '100%',
-          height: `${size}px`,
-          transform: `translateY(${start}px)`,
-          display: 'flex',
+          height: !tableMode ? `${size}px` : '',
+          transform: !tableMode ? `translateY(${start}px)` : '',
+          display: !tableMode ? 'flex' : '',
         } as CSSProperties;
         return (
           <tr
@@ -459,14 +459,14 @@ const Grid = forwardRef(
               : cell.getIsPlaceholder()
                 ? '#ff000042'
                 : '',
-          width: cell.column.getSize(),
+          width: !tableMode ? cell.column.getSize() : '',
           display: 'block',
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
           verticalAlign: 'center',
         } as CSSProperties;
         return (
-          <td key={cell.id} className="grid_td h-[100%]" style={cellStyle}>
+          <td key={cell.id} className={styles.tbody_td} style={cellStyle}>
             {cell.getIsGrouped() ? (
               <button
                 onClick={(e) => {
@@ -495,16 +495,24 @@ const Grid = forwardRef(
         <div
           ref={tableContainerRef}
           className={cn(
-            tableMode ? 'table' : 'grid_table',
+            tableMode ? styles.table : styles.grid,
             className,
-            multiple && !hideRowSelectionCheckBox && 'has_select_all_checkbox', // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+            tableMode ? 'table' : 'grid',
           )}
           style={{
-            height: `${height}px`,
+            height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
           }}>
           <table>
             {/*thead*/}
+            {/*colgroup*/}
+            {/* <colgroup>
+              <col style={{ width: '15%' }} />
+              <col style={{ width: '150px' }} />
+              <col style={{ width: '30%' }} />
+              <col />
+            </colgroup> */}
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -524,22 +532,22 @@ const Grid = forwardRef(
                         //   header.column.columnDef.meta?.align ||
                         //   'justify-start',
                         display: 'block',
-                        width: header.getSize(),
+                        width: !tableMode ? header.getSize() : '',
                       }}
-                      className="thead_th">
-                      <div className="th_wrap">
+                      className={styles.thead_th}>
+                      <div className={styles.th_wrap}>
                         <div
                           className={cn(
-                            'th_cell',
+                            styles.th_cell,
                             header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                            'font-bold uppercase text-[#5C636E]',
                           )}
                           style={{
                             justifyContent:
                               header.column.columnDef.meta?.headerAlign ||
                               header.column.columnDef.meta?.align ||
                               'justify-start',
-                            width: header.getSize(),
+                            // width: header.getSize(),
+                            width: !tableMode ? header.getSize() : '',
                           }}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
@@ -614,38 +622,35 @@ const Grid = forwardRef(
       const totalPages = Math.ceil(totalRows / pageSize);
 
       return (
-        <div className="paging_wrap">
+        <div className={styles.paging_wrap}>
           <Select
             value={pageSize.toString()}
             onChange={handleChange}
             options={options}
-            className="select_item"
+            className={styles.select_item}
           />
-          <div className="btn_wrap">
+          <div className={styles.btn_wrap}>
             <Button
               onClick={() => onPageChange(0)}
               disabled={pageIndex === 0}
-              className="btn_first"
+              className={styles.btn_first}
               onlyIcon>
               {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(pageIndex - 1)}
               disabled={pageIndex === 0}
-              className="btn_prev">
+              className={styles.btn_prev}>
               {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
             </Button>
 
             {/* 페이지 번호들 */}
-            <div className="num_wrap">
+            <div className={styles.num_wrap}>
               {Array.from({ length: totalPages }, (_, i) => (
                 <Button
                   key={i}
                   onClick={() => onPageChange(i)}
-                  className={cn(
-                    'h-[32px] w-[32px] rounded-[4px]',
-                    pageIndex === i ? 'bg-[#747d91] text-white' : 'hover:bg-gray-100',
-                  )}>
+                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}>
                   {i + 1}
                 </Button>
               ))}
@@ -654,17 +659,17 @@ const Grid = forwardRef(
             <Button
               onClick={() => onPageChange(pageIndex + 1)}
               disabled={pageIndex >= totalPages - 1}
-              className="btn_next">
+              className={styles.btn_next}>
               {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(totalPages - 1)}
               disabled={pageIndex >= totalPages - 1}
-              className="btn_last">
+              className={styles.btn_last}>
               {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
             </Button>
           </div>
-          <span className="count_wrap">
+          <span className={styles.count_wrap}>
             {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
           {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
             {pageIndex * pageSize + 1}-{totalPages} Page
@@ -674,40 +679,40 @@ const Grid = forwardRef(
     };
 
     return (
-      <div className="table_info_wrap">
-        <div className="table_info_item">
+      <div className={styles.table_info_wrap}>
+        <div className={styles.table_info_item}>
           {/* 제목 */}
-          {title && <div className="title">{title}</div>}
+          {title && <div className={styles.title}>{title}</div>}
           {/* 전체 개수  */}
           {showTotalCount && (
-            <div className="sub_info">
-              {t('전체')} <strong className="num">{data?.length}</strong>
+            <div className={styles.sub_info}>
+              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
             </div>
           )}
           {/* 전체 선택 */}
           {showSelectAll && (
-            <Button variant="text" size="xs" className="btn_all_select">
+            <Button variant="text" size="xs" className={styles.btn_all_select}>
               <IcoPlus width={16} height={16} stroke="#131C30" />
               {'전체 선택'}
             </Button>
           )}
           {/* 전체 삭제 */}
           {showDeleteAll && (
-            <Button variant="text" size="xs" className="btn_all_delete">
+            <Button variant="text" size="xs" className={styles.btn_all_delete}>
               <IcoMinus width={16} height={16} stroke="#131C30" />
               {'전체 삭제'}
             </Button>
           )}
           {/* 업로드 */}
           {showUpload && (
-            <Button variant="text" size="xs" className="btn_upload">
+            <Button variant="text" size="xs" className={styles.btn_upload}>
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'CSV업로드'}
             </Button>
           )}
           {/* 엑셀다운로드 */}
           {showExcelDownload && (
-            <Button variant="text" size="xs" className="btn_excel">
+            <Button variant="text" size="xs" className={styles.btn_excel}>
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'엑셀다운로드'}
             </Button>

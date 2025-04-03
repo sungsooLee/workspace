@@ -1,6 +1,6 @@
 .start {
   &.btn_wrap {
-    @apply fixed bottom-0 left-0 w-full bg-[#ffffff] px-[20px] pb-[16px] pt-[8px];
+    @apply fixed bottom-0 left-0 z-10 w-full bg-[#ffffff] px-[20px] pb-[16px] pt-[8px];
     button {
       @apply w-full;
     }

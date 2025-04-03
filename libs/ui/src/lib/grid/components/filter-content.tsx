@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Input } from '../../input/input';
-import '../grid.css';
 import { debounce } from 'lodash'; // grid CSS
 import { Button } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
