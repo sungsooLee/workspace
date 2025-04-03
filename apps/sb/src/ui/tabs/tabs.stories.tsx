@@ -1,5 +1,5 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Tabs } from '@learnway/ui';
 
@@ -37,11 +37,59 @@ const items = [
   },
 ];
 
-// Switch
+// Tabs
 export const Template: any = (args: any) => {
-  return <Tabs {...args} items={items} className={'XXX'} />;
+  return <Tabs type={'fill'} size={'md'} items={items} />;
 };
-Template.storyName = 'Line Tabs';
+Template.storyName = 'Tabs';
+
+// 앵커 탭
+export const TemplateButton: any = (args: any) => {
+  const sectionA = useRef<HTMLDivElement>(null);
+  const sectionB = useRef<HTMLDivElement>(null);
+  const handleActiveTab = (activeKey: string) => {
+    console.log('activeKey', activeKey);
+    if (activeKey === 'a') {
+      sectionA.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (activeKey === 'b') {
+      sectionB.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div>
+      <Tabs
+        type={'fill'}
+        size={'md'}
+        items={[
+          {
+            title: 'Tab A',
+            key: 'a',
+          },
+          {
+            title: 'Tab B',
+            key: 'b',
+          },
+          {
+            title: 'Tab C',
+            key: 'c',
+          },
+        ]}
+        onActiveTab={handleActiveTab}
+      />
+      <div>
+        <h1 ref={sectionA} className={'h-[500px] w-full bg-amber-100'}>
+          Section A
+        </h1>
+        <h1 ref={sectionB} className={'h-[500px] w-full bg-amber-500'}>
+          Section B
+        </h1>
+      </div>
+    </div>
+  );
+};
+TemplateButton.storyName = '앵커 탭';
 
 //
 // export const TemplateSelectTab: any = (args: any) => {
