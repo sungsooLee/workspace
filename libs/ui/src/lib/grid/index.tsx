@@ -506,12 +506,13 @@ const Grid = forwardRef(
           }}>
           <table>
             {/*thead*/}
-            <colgroup>
+            {/*colgroup*/}
+            {/* <colgroup>
               <col style={{ width: '15%' }} />
               <col style={{ width: '150px' }} />
               <col style={{ width: '30%' }} />
               <col />
-            </colgroup>
+            </colgroup> */}
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
