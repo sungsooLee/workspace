@@ -72,11 +72,12 @@ const ListComponent = function ({
    * @param option 선택한 옵션 객체
    */
   const handleOptionSelect = (event: React.MouseEvent, option: any) => {
-    // for single
-    onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
-    // for multiple
-    const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
-    onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
+    if (multiple) {
+      const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
+      onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
+    } else {
+      onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
+    }
   };
 
   /**
@@ -125,7 +126,10 @@ const ListComponent = function ({
               key={d[valueField]}
               item={d}
               index={i}
+              showItemBorder={showItemBorder}
               itemRenderer={itemRenderer}
+              valueField={valueField}
+              labelField={labelField}
               isSelected={
                 !disabledActive &&
                 selectedOptions?.find((x: any) => x[valueField] === d[valueField])
@@ -146,8 +150,7 @@ const ListComponent = function ({
 // SortableItem
 // -------------------------------------------------------------------------
 
-interface SortableItemProps
-  extends Pick<ListProps, 'showItemBorder' | 'deletable' | 'draggable' | 'itemRenderer'> {
+interface SortableItemProps extends Partial<ListProps> {
   item: any;
   index: number;
   className?: string;
@@ -163,12 +166,14 @@ const SortableItem = ({
   deletable,
   draggable,
   itemRenderer,
+  valueField = '',
+  labelField = '',
   isSelected,
   onDelete,
   onClick,
 }: SortableItemProps) => {
   const { setNodeRef, transform, transition, listeners, attributes, isDragging } = useSortable({
-    id: item.id,
+    id: item[valueField],
   });
 
   const style = {
@@ -177,6 +182,8 @@ const SortableItem = ({
     opacity: isDragging ? 0.5 : 1, // 드래그 중 투명도 조절
     boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none', // 드래그 중 그림자 추가
   };
+
+  console.log('isDragging', isDragging, item);
 
   return (
     <li
@@ -189,7 +196,7 @@ const SortableItem = ({
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
+        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item[labelField]}
         {deletable && (
           <Button
             type="button"
