@@ -411,9 +411,8 @@ const Grid = forwardRef(
       const renderBody = () => {
         const bodyStyle = {
           // display: paginationGrid ? 'table-row-group' : 'grid',
-          display: 'grid',
           position: 'relative',
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
         return (
           <tbody style={bodyStyle}>
@@ -433,9 +432,9 @@ const Grid = forwardRef(
           top: 0,
           left: 0,
           width: '100%',
-          height: `${size}px`,
-          transform: `translateY(${start}px)`,
-          display: 'flex',
+          height: !tableMode ? `${size}px` : '',
+          transform: !tableMode ? `translateY(${start}px)` : '',
+          display: !tableMode ? 'flex' : '',
         } as CSSProperties;
         return (
           <tr
@@ -460,7 +459,7 @@ const Grid = forwardRef(
               : cell.getIsPlaceholder()
                 ? '#ff000042'
                 : '',
-          width: cell.column.getSize(),
+          width: !tableMode ? cell.column.getSize() : '',
           display: 'block',
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
@@ -502,11 +501,17 @@ const Grid = forwardRef(
             tableMode ? 'table' : 'grid',
           )}
           style={{
-            height: `${height}px`,
+            height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
           }}>
           <table>
             {/*thead*/}
+            <colgroup>
+              <col style={{ width: '15%' }} />
+              <col style={{ width: '150px' }} />
+              <col style={{ width: '30%' }} />
+              <col />
+            </colgroup>
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -526,7 +531,7 @@ const Grid = forwardRef(
                         //   header.column.columnDef.meta?.align ||
                         //   'justify-start',
                         display: 'block',
-                        width: header.getSize(),
+                        width: !tableMode ? header.getSize() : '',
                       }}
                       className={styles.thead_th}>
                       <div className={styles.th_wrap}>
@@ -540,7 +545,8 @@ const Grid = forwardRef(
                               header.column.columnDef.meta?.headerAlign ||
                               header.column.columnDef.meta?.align ||
                               'justify-start',
-                            width: header.getSize(),
+                            // width: header.getSize(),
+                            width: !tableMode ? header.getSize() : '',
                           }}
                           onClick={header.column.getToggleSortingHandler()}>
                           {header.isPlaceholder
@@ -672,40 +678,40 @@ const Grid = forwardRef(
     };
 
     return (
-      <div className="table_info_wrap">
-        <div className="table_info_item">
+      <div className={styles.table_info_wrap}>
+        <div className={styles.table_info_item}>
           {/* 제목 */}
-          {title && <div className="title">{title}</div>}
+          {title && <div className={styles.title}>{title}</div>}
           {/* 전체 개수  */}
           {showTotalCount && (
-            <div className="sub_info">
-              {t('전체')} <strong className="num">{data?.length}</strong>
+            <div className={styles.sub_info}>
+              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
             </div>
           )}
           {/* 전체 선택 */}
           {showSelectAll && (
-            <Button variant="text" size="xs" className="btn_all_select">
+            <Button variant="text" size="xs" className={styles.btn_all_select}>
               <IcoPlus width={16} height={16} stroke="#131C30" />
               {'전체 선택'}
             </Button>
           )}
           {/* 전체 삭제 */}
           {showDeleteAll && (
-            <Button variant="text" size="xs" className="btn_all_delete">
+            <Button variant="text" size="xs" className={styles.btn_all_delete}>
               <IcoMinus width={16} height={16} stroke="#131C30" />
               {'전체 삭제'}
             </Button>
           )}
           {/* 업로드 */}
           {showUpload && (
-            <Button variant="text" size="xs" className="btn_upload">
+            <Button variant="text" size="xs" className={styles.btn_upload}>
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'CSV업로드'}
             </Button>
           )}
           {/* 엑셀다운로드 */}
           {showExcelDownload && (
-            <Button variant="text" size="xs" className="btn_excel">
+            <Button variant="text" size="xs" className={styles.btn_excel}>
               <IcoDownload width={16} height={16} stroke={'#3e4550'} />
               {'엑셀다운로드'}
             </Button>
