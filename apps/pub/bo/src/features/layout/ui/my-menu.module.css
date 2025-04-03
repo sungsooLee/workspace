@@ -11,7 +11,7 @@
 
 .start {
   &.mymenu_wrap {
-    @apply scrollbar h-auto max-h-[772px] w-[513px] overflow-y-auto overflow-x-hidden rounded-[8px] bg-[var(--white)] p-[24px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    @apply scrollbar h-auto max-h-[522px] w-[513px] overflow-y-auto overflow-x-hidden rounded-[8px] bg-[var(--white)] p-[24px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .tit {
       @apply title_bo_4_b mb-[8px] block text-[var(--gray9)];
     }
