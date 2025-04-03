@@ -1,9 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import pageStyles from './tenant-menu-management.module.css';
 import { Tabs } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
 /* tab contents */
+import { TenantLearningMenu } from './-tabcontents/tenant-learning-menu'; // 학습자 메뉴
+import { TenantHrdMenu } from './-tabcontents/tenant-hrd-menu'; // HRD 메뉴
 
 export const Route = createFileRoute('/_layout/pms/tenant-menu-management')({
   component: RouteComponent,
@@ -51,18 +55,18 @@ function RouteComponent() {
     {
       title: '학습자 메뉴',
       key: 'tab01',
-      content: '',
+      content: <TenantLearningMenu />,
     },
     {
       title: 'HRD센터 메뉴',
       key: 'tab02',
-      content: '',
+      content: <TenantHrdMenu />,
     },
   ];
   return (
     <PageContainer scrollHidden={true}>
       {/* main_contents */}
-      <div className={styles.main_contents}>
+      <div className={cn(styles.main_contents, pageStyles.start)}>
         <Tabs items={menuItems} type="progress" size="sm" />
         <Tabs items={tabItems} type="line" size={'sm'} className={styles.tab_wrap} />
       </div>
