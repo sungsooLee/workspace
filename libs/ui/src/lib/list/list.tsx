@@ -1,16 +1,11 @@
-import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/shared';
+import { addOrRemoveItemByKey, cn, getMatchingItemsByKey, reorderOptions } from '@learnway/shared';
 
 import styles from './list.module.css';
 import React, { isValidElement, ReactElement } from 'react';
 import { CommonReactElementProps } from '@/libs/ui/src';
 import { Button } from '../button/button';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 
 export interface ListProps extends CommonReactElementProps {
@@ -72,18 +67,14 @@ const ListComponent = function ({
   const selectedOptions = getMatchingItemsByKey(options, value, valueField);
 
   /**
-   * 단일 선택 모드에서 옵션 클릭 시 호출되는 핸들러
-   * @param option 선택된 옵션 객체
+   * 옵션 클릭 시 호출되는 핸들러
+   * @param event 클릭 이벤트 객체
+   * @param option 선택한 옵션 객체
    */
-  const handleOptionClickForSingle = (option: any) => {
+  const handleOptionSelect = (event: React.MouseEvent, option: any) => {
+    // for single
     onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
-  };
-
-  /**
-   * 다중 선택 모드에서 옵션 클릭 시 호출되는 핸들러
-   * @param option 선택된 옵션 객체
-   */
-  const handleOptionClickForMultiple = (option: any) => {
+    // for multiple
     const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
     onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
   };
@@ -93,13 +84,14 @@ const ListComponent = function ({
    * @param event 클릭 이벤트 객체 (이벤트 전파를 막기 위해 사용)
    * @param option 삭제할 옵션 객체
    */
-  const handleDeleteClick = (event: React.MouseEvent, option: any) => {
+  const handleOptionDelete = (event: React.MouseEvent, option: any) => {
     event.stopPropagation(); // 이벤트 전파를 막아 오버레이 클릭 이벤트 방지
     onOptionDeleteClick?.(option); // 삭제할 옵션을 부모 컴포넌트로 전달
   };
 
   /**
    * 드래그 앤 드롭이 끝났을 때 실행되는 함수
+   * @param event DragEndEvent
    */
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -107,26 +99,8 @@ const ListComponent = function ({
     // 만약 드래그 대상이 없거나 위치 변경이 없으면 아무 작업도 수행하지 않음
     if (!over || active.id === over.id) return;
 
-    /**
-     * 옵션 목록을 재정렬하는 함수
-     * @param options 기존 옵션 배열
-     * @param valueField 옵션 객체에서 ID 값을 참조하는 필드명
-     * @param activeId 현재 드래그 중인 요소의 ID
-     * @param overId 드롭된 위치의 요소 ID
-     * @returns 새로운 순서의 옵션 배열
-     */
-    const reorderOptions = (
-      options: any[],
-      valueField: string,
-      activeId: string,
-      overId: string,
-    ) => {
-      const oldIndex = options.findIndex((option) => option[valueField] === activeId);
-      const newIndex = options.findIndex((option) => option[valueField] === overId);
-      return arrayMove(options, oldIndex, newIndex);
-    };
     // 새로운 순서로 옵션을 정렬
-    const newOptions = reorderOptions(options, valueField, active.id as string, over.id as string);
+    const newOptions = reorderOptions(options, valueField, active.id, over.id);
     // 정렬된 옵션을 부모 컴포넌트에 전달
     onOptionsOrderChange?.(newOptions);
   };
@@ -148,23 +122,20 @@ const ListComponent = function ({
         >
           {options?.map((d: any, i: number) => (
             <SortableItem
-              class={cn(styles.line)}
+              className={cn(styles.item)}
               key={d[valueField]}
               id={d[valueField]}
               isSelected={
                 !disabledActive &&
                 selectedOptions?.find((x: any) => x[valueField] === d[valueField])
               }
-              data={d}
               item={d}
               index={i}
               itemRenderer={itemRenderer}
               deletable={deletable}
               draggable={draggable}
-              onOptionDeleteClick={onOptionDeleteClick}
-              onClick={() =>
-                multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
-              }
+              onClick={handleOptionSelect}
+              onDelete={handleOptionDelete}
             />
           ))}
         </ul>
@@ -173,20 +144,32 @@ const ListComponent = function ({
   );
 };
 
+// -------------------------------------------------------------------------
+// SortableItem
+// -------------------------------------------------------------------------
+
+interface SortableItemProps
+  extends Pick<ListProps, 'showItemBorder' | 'deletable' | 'draggable' | 'itemRenderer'> {
+  item: any;
+  index: number;
+  isSelected?: boolean;
+  onDelete?: (event: React.MouseEvent, item: any) => void;
+  onClick?: (event: React.MouseEvent, item: any) => void;
+}
+
 const SortableItem = ({
   item,
-  id,
   index,
-  onDelete,
-  onClick,
   showItemBorder,
   deletable,
   draggable,
   itemRenderer,
   isSelected,
-}: any) => {
+  onDelete,
+  onClick,
+}: SortableItemProps) => {
   const { setNodeRef, transform, transition, listeners, attributes, isDragging } = useSortable({
-    id,
+    id: item.id,
   });
 
   const style = {
@@ -204,12 +187,17 @@ const SortableItem = ({
         styles.item,
         isSelected && styles.active, // selected row style
       )}
-      onClick={onClick}
+      onClick={(event: React.MouseEvent) => onClick(event, item)}
     >
       <div className={cn(showItemBorder && styles.line)}>
         {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
         {deletable && (
-          <Button type="button" className={cn(styles.clear)} onlyIcon onClick={onDelete}>
+          <Button
+            type="button"
+            className={cn(styles.clear)}
+            onlyIcon
+            onClick={(event: React.MouseEvent) => onDelete(event, item)}
+          >
             <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
           </Button>
         )}
