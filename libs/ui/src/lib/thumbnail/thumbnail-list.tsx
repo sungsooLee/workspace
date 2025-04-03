@@ -10,7 +10,7 @@ import styles from './thumbnail-list.module.css';
 import { ImageOption } from './type';
 
 export interface ThumbnailListComponentProps
-  extends Omit<ThumbnailComponentProps, 'onCheckedChange' | 'path'> {
+  extends Omit<ThumbnailProps, 'onCheckedChange' | 'path'> {
   options: ImageOption[];
   showCheckbox?: boolean;
   onChecked?: (options: ImageOption[]) => void;

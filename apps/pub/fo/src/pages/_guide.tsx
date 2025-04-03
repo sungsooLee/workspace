@@ -60,6 +60,8 @@ function RouteComponent() {
       subItems: [
         { label: '유의사항', path: '/guide/notice' },
         { label: '결과페이지', path: '/guide/result' },
+        { label: '프로필', path: '/guide/operator' },
+        { label: '리스트', path: '/guide/list' },
       ],
     },
   ];

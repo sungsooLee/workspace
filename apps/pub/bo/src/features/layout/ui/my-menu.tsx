@@ -1,12 +1,19 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './my-menu.module.css';
-import { ChipList, Popover, SelectOption } from '@learnway/ui';
+import { ChipList, Popover, SelectOption, List, Button } from '@learnway/ui';
 import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, getRandomId } from '@learnway/shared';
 
 // import { useFetchAuthUser } from '../../../entities/user';
+
+const menuOptions = Array(5)
+  .fill(null)
+  .map((d, i) => ({
+    id: getRandomId(),
+    name: `메뉴명${i}`,
+  }));
 
 const PopoverContent = () => {
   // const { t } = useTranslation();
@@ -21,9 +28,9 @@ const PopoverContent = () => {
     { label: '현대자동차 H', value: 'H' },
     { label: '현대자동차 I', value: 'I' },
   ];
-  const handleChange = (event: SelectOption[]) => {
-    console.log(event);
-  };
+  const [isFavorite, setIsFavorite] = useState(true);
+  const [myOptions, setMyOptions] = useState(menuOptions);
+  const [value, setValue] = useState<any>();
   return (
     <div className={cn(styles.start, styles.mymenu_wrap)}>
       <strong className={styles.tit}>{'최근 본 메뉴'}</strong>
@@ -40,11 +47,40 @@ const PopoverContent = () => {
           </div>
         ) : (
           <div className={styles.word_wrap}>
-            <ChipList options={options} onChange={handleChange} size="sm" hideBorder />
+            <ChipList options={options} size="sm" hideBorder />
           </div>
         )}
       </div>
       <strong className={styles.tit}>{'즐겨찾기'}</strong>
+      <div className={styles.menu_list}>
+        <List
+          options={myOptions}
+          value={value}
+          valueField={'id'}
+          draggable
+          hideBorder
+          disabledActive
+          itemRenderer={(option: any) => (
+            <div>
+              <Button
+                className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
+                onlyIcon
+                onClick={() => setIsFavorite(!isFavorite)}
+              >
+                <IcoStar
+                  width={16}
+                  height={16}
+                  stroke="#FFB902"
+                  fill="#FFB902"
+                  className={styles.icon_star}
+                />
+              </Button>
+              <span>{option.name}</span>
+            </div>
+          )}
+          onOptionsOrderChange={(newOptions: any) => setMyOptions(newOptions)}
+        />
+      </div>
       <div className={styles.empty}>
         <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
         <p className={styles.text}>
