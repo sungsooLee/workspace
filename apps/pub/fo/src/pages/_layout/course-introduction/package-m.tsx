@@ -128,7 +128,7 @@ function RouteComponent() {
             </Button>
           </div>
 
-          {/* button */}
+          {/* button fix */}
           <MobileView>
             <MobileContainerFooter>
               <div className={packageInformationStyles.btn_box}>

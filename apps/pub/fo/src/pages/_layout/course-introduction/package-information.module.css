@@ -52,6 +52,7 @@
   @screen mobile {
     .start {
       &.information {
+        @apply z-[1];
         .count_box {
           @apply relative pb-[16px];
           .btn_acc {
@@ -76,7 +77,7 @@
           @apply mt-0;
         }
         .btn_box {
-          @apply bg-white;
+          @apply relative z-[1] mt-0 bg-white;
         }
       }
     }

@@ -93,3 +93,13 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.package_wrap {
+        @apply pb-[80px];
+      }
+    }
+  }
+}
