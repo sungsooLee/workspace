@@ -1,4 +1,5 @@
 export type NodeMovePositionType = 'BEFORE' | 'AFTER' | 'INSIDE';
+export type TreeType = 'DEFAULT' | 'DRAG_DROP' | 'SHUTTLE_LIST';
 
 /**
  * 노드 제약 사항
@@ -124,7 +125,7 @@ export interface TreeProps {
   data: TreeNode[];
   onAction?: (payload: TreeEventPayload) => void;
   expandTrigger?: boolean;
-  type?: 'default' | 'advanced';
+  type?: TreeType;
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   searchKeyword?: string;
   initExpandedKeys?: string[]; // 초기 확장된 키 (내부 상태로만 사용)
@@ -147,15 +148,19 @@ export interface TreeNodeComponentProps {
   selectedNode?: TreeNode | null;
   expandedKeys: string[];
   setExpandedKeys: React.Dispatch<React.SetStateAction<string[]>>;
-  onDragStart: (node: TreeNode) => void;
+  onDragStart?: (node: TreeNode) => void;
   onDrop: (dropInfo: DropInfo) => void;
   onNodeClick?: (node: TreeNode | null) => void | Promise<void>;
   constraints?: NodeConstraints;
   isDraggable?: boolean;
-  treeType?: 'default' | 'advanced';
+  treeType?: TreeType;
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   onToggleUsed?: (node: TreeNode, isUsed: boolean) => void;
   searchKeyword?: string;
+  draggedNodeKey?: string | null;
+  activeId?: string | null;
+  isDropTarget?: boolean;
+  dropPosition?: any;
 }
 
 /**

@@ -13,7 +13,7 @@ import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from
 import { useTreeContext } from './tree.context';
 import { IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
 
-const FilteredTreeNode = ({ node, ...props }: TreeNodeComponentProps) => {
+const FilteredTreeNode = ({ node, draggedNodeKey, ...props }: TreeNodeComponentProps) => {
   const enhancedNode = node as EnhancedTreeNode;
 
   // 노드가 숨김 상태면 아무것도 렌더링하지 않음
@@ -22,7 +22,7 @@ const FilteredTreeNode = ({ node, ...props }: TreeNodeComponentProps) => {
   }
 
   // 보여져야 하는 노드는 실제 TreeNodeComponent로 렌더링
-  return <TreeNodeComponent node={node} {...props} />;
+  return <TreeNodeComponent node={node} draggedNodeKey={draggedNodeKey} {...props} />;
 };
 
 const TreeNodeComponent = ({
@@ -38,15 +38,17 @@ const TreeNodeComponent = ({
   treeType,
   nodeButtons,
   searchKeyword,
+  draggedNodeKey,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   // 드랍 위치(before, inside, after)
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const hasChildren = enhanceNode.children && enhanceNode.children.length > 0;
   const isExpanded = expandedKeys.includes(enhanceNode.key);
-  const isAdvancedMode = treeType === 'advanced';
+  const isDragAndDropMode = treeType === 'DRAG_DROP';
 
   // 드랍 위치에 따른 스타일링
   const dropIndicatorStyle = {
@@ -80,14 +82,18 @@ const TreeNodeComponent = ({
     );
   };
 
-  const getNodeStyle = () => {
+  const getNodeStyle = useMemo(() => {
     const styles = [
-      `flex items-center py-1 rounded  min-h-[40px]
-        ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}`,
+      `flex items-center py-1 rounded min-h-[40px]
+        ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}
+        ${isDragging ? 'opacity-50 scale-[0.98] border border-blue-300 bg-blue-50' : ''}`,
     ];
+
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-blue-50');
     }
+
+    // 제약 조건 스타일
     if (enhanceNode.constraints?.drag === false) {
       styles.push('border-l-4 border-red-300');
     }
@@ -102,6 +108,8 @@ const TreeNodeComponent = ({
     } else {
       styles.push('hover:bg-gray-100');
     }
+
+    // 검색 하이라이트
     if (
       searchKeyword &&
       enhanceNode.title &&
@@ -109,13 +117,68 @@ const TreeNodeComponent = ({
     ) {
       styles.push('bg-yellow-50');
     }
+
     return styles.join(' ');
-  };
+  }, [
+    dropPosition,
+    isDragging,
+    selectedNode,
+    enhanceNode.key,
+    enhanceNode.constraints,
+    enhanceNode.title,
+    searchKeyword,
+  ]);
   // 드래그 가능하면 현재 노드 상위 컴포넌트로 콜백
   const handleDragStart = (e: React.DragEvent) => {
     e.stopPropagation();
     if (!isDraggable || enhanceNode.constraints?.drag === false) return;
-    onDragStart?.(enhanceNode);
+
+    try {
+      // 드래그 이미지 생성
+      const dragImage = document.createElement('div');
+      dragImage.classList.add('drag-node-image');
+      dragImage.innerHTML = `
+      <div class="px-2 py-1 bg-blue-100 rounded border border-blue-300 shadow-md flex items-center">
+        ${level === 0 ? '<span>🏠</span>' : '<span>📁</span>'}
+        <span class="ml-2 font-medium">${enhanceNode.title || ''}</span>
+      </div>
+    `;
+
+      // 위치 조정 - 화면에 보이지 않게
+      dragImage.style.position = 'absolute';
+      dragImage.style.top = '-1000px';
+      dragImage.style.left = '-1000px';
+      dragImage.style.pointerEvents = 'none';
+
+      // 문서에 추가
+      document.body.appendChild(dragImage);
+
+      // 드래그 이미지 설정
+      e.dataTransfer.setDragImage(dragImage, 10, 10);
+      e.dataTransfer.effectAllowed = 'move';
+
+      // 상태 업데이트 - 한 번만 실행되도록
+      if (!isDragging) {
+        setIsDragging(true);
+      }
+
+      // 부모 컴포넌트 콜백 호출 - 한 번만
+      onDragStart?.(enhanceNode);
+
+      // 불필요한 DOM 요소 정리
+      setTimeout(() => {
+        if (document.body.contains(dragImage)) {
+          document.body.removeChild(dragImage);
+        }
+      }, 0);
+    } catch (error) {
+      console.error('Drag start error:', error);
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    e.stopPropagation();
+    setIsDragging(false);
   };
 
   // 노드 위에 드래그 된 노드가 겹칠 때 계산.
@@ -129,8 +192,10 @@ const TreeNodeComponent = ({
     const y = e.clientY - rect.top;
     const threshold = rect.height / 3;
 
+    // 새 위치 계산
     const newPosition = y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
 
+    // 이전과 다를 때만 상태 업데이트
     if (dropPosition !== newPosition) {
       setDropPosition(newPosition);
     }
@@ -173,21 +238,22 @@ const TreeNodeComponent = ({
 
   // 햄버거 버튼으로 드래그 시작 (advanced 모드)
   const handleHamburgerDragStart = (e: React.DragEvent) => {
-    e.stopPropagation();
-    if (!isDraggable || enhanceNode.constraints?.drag === false) return;
-    onDragStart?.(enhanceNode);
+    handleDragStart(e);
   };
 
   return (
     <div className="relative select-none">
       <div
-        className={getNodeStyle()}
+        className={getNodeStyle}
         style={{
           paddingLeft: `${level * 20}px`,
           cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
+          boxShadow: isDragging ? '0 0 0 2px rgba(59, 130, 246, 0.3)' : 'none',
+          transition: 'all 0.2s ease',
         }}
-        draggable={isAdvancedMode ? false : isActuallyDraggable}
-        onDragStart={isAdvancedMode ? undefined : handleDragStart}
+        draggable={isDragAndDropMode ? false : isActuallyDraggable}
+        onDragStart={isDragAndDropMode ? undefined : handleDragStart}
+        onDragEnd={handleDragEnd}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -211,7 +277,6 @@ const TreeNodeComponent = ({
         </span>
         <span className="mr-1 flex h-6 w-6 items-center justify-center">
           {level === 0 ? (
-            // <Folder className="h-4 w-4 text-blue-500" />
             <IcoHome03 stroke="#131C30" />
           ) : isExpanded ? (
             <IcoFolder stroke="#131C30" />
@@ -219,26 +284,26 @@ const TreeNodeComponent = ({
             <IcoFolder stroke="#131C30" />
           )}
         </span>
-        <span className="flex-grow text-sm">
-          {highlightMatch(enhanceNode.title || '')}
-          {/* / key = {enhanceNode.key} / Depth : {level} */}
-        </span>
+        <span className="flex-grow text-sm">{highlightMatch(enhanceNode.title || '')}</span>
 
-        {treeType === 'advanced' && (
+        {treeType === 'DRAG_DROP' && (
           <div className="relative flex items-center">
             {nodeButtons && (
               <div
-                className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered ? 'opacity-100' : 'invisible opacity-0'}`}
+                className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
                 onClick={(e) => e.stopPropagation()}>
                 {nodeButtons(enhanceNode, level)}
               </div>
             )}
-            <span
-              className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isAdvancedMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
-              draggable={isAdvancedMode && isActuallyDraggable}
-              onDragStart={isAdvancedMode ? handleHamburgerDragStart : undefined}>
-              ☰
-            </span>
+            {level >= 1 && (
+              <span
+                className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
+                draggable={isDragAndDropMode && isActuallyDraggable}
+                onDragStart={isDragAndDropMode ? handleHamburgerDragStart : undefined}
+                onDragEnd={handleDragEnd}>
+                ☰
+              </span>
+            )}
           </div>
         )}
       </div>
@@ -325,6 +390,7 @@ const TreeView = ({
     node: null,
     sourceTreeId: null,
   });
+  const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
   const treeContext = useTreeContext();
 
@@ -518,6 +584,7 @@ const TreeView = ({
       treeId,
     });
   };
+
   const canDragNode = (node: TreeNode): boolean => {
     if (node.constraints?.drag === false) return false;
     return true;
@@ -525,6 +592,10 @@ const TreeView = ({
 
   const handleDragStart = (node: TreeNode) => {
     setDragState({ node: node, sourceTreeId: treeId });
+    setDraggedNodeKey(node.key); // 드래그 중인 노드 키 저장
+
+    // 드래그 애니메이션을 위한 CSS 클래스 설정
+    document.body.classList.add('tree-dragging');
   };
 
   const handleNodeClick = (node: TreeNode | null) => {
@@ -547,6 +618,23 @@ const TreeView = ({
     if (!searchKeyword) return true;
     return treeData.some((node) => node._visible);
   }, [treeData, searchKeyword]);
+
+  useEffect(() => {
+    const handleGlobalDragEnd = () => {
+      if (draggedNodeKey) {
+        setDraggedNodeKey(null);
+        document.body.classList.remove('tree-dragging');
+      }
+    };
+
+    // draggedNodeKey가 있을 때만 이벤트 리스너 추가
+    if (draggedNodeKey) {
+      document.addEventListener('dragend', handleGlobalDragEnd);
+      return () => {
+        document.removeEventListener('dragend', handleGlobalDragEnd);
+      };
+    }
+  }, [draggedNodeKey]);
 
   return (
     <div
@@ -580,6 +668,7 @@ const TreeView = ({
               nodeButtons={nodeButtons}
               treeType={type}
               searchKeyword={searchKeyword}
+              draggedNodeKey={draggedNodeKey} // 드래그 중인 노드 키 전달
             />
           ))
         ) : (

@@ -14,6 +14,7 @@ import {
 import { findMenuPathById } from '../service/menu.service';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const MenuViewComponent: FC<any> = ({
   treeData,
@@ -25,9 +26,12 @@ const MenuViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  const { data, isLoading } = useMenuManagerDetail(
+  const { data, isLoading, refetch } = useMenuManagerDetail(
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, selectedNode]);
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -63,16 +67,20 @@ const MenuViewComponent: FC<any> = ({
         const formData = {
           key: data.menuId?.toString() || '',
           parentKey: data.parentId?.toString() || '',
-          isUsed: data.useYn || false,
+          useYn: data.useYn || false,
           location: location || '', // 경로 생성 함수
           code: data.menuCode || '',
           title: data.menuName || t(`${data.menuCode}`),
           url: data.path || '',
-          isPersonalInfo: data.personalDataContainYn || false,
-          description: data.menuDesc || '',
+          personalDataContainYn: data.personalDataContainYn || false,
+          menuDesc: data.menuDesc || '',
           parentMenuName: data.parentCode,
           visiblePcYn: data?.visiblePcYn,
           visibleMobileYn: data?.visibleMobileYn,
+          visible: [
+            data.visiblePcYn === true && 'visiblePcYn',
+            data.visibleMobileYn === true && 'visibleMobileYn',
+          ].filter(Boolean),
           isDuplicateMenuCode: true, // view 모드에서는 기본적으로 중복 체크 통과로 설정
         };
 
@@ -88,15 +96,33 @@ const MenuViewComponent: FC<any> = ({
         key: '', // 신규 메뉴는 키 없음
         parentKey: parentNode.key || '',
         parentMenuName: parentNode.title,
-        isUsed: true,
+        useYn: true,
         location: location,
         code: '',
         title: '',
         url: '',
-        isPersonalInfo: false,
-        description: '',
+        personalDataContainYn: false,
+        menuDesc: '',
         isDuplicateMenuCode: false,
-        // visible: [],
+        visible: ['visiblePcYn'],
+        hiddenYn: false,
+      };
+      fetchData(initialData);
+    } else if (mode === 'init') {
+      const initialData = {
+        key: '',
+        parentKey: '',
+        parentMenuName: '',
+        useYn: false,
+        location: '',
+        code: '',
+        title: '',
+        url: '',
+        personalDataContainYn: false,
+        menuDesc: '',
+        isDuplicateMenuCode: false,
+        visible: [],
+        hiddenYn: false,
       };
       fetchData(initialData);
     }
@@ -104,7 +130,11 @@ const MenuViewComponent: FC<any> = ({
 
   // 폼 초기화를 처리하는 핸들러
   const handleReset = () => {
-    onFormChange(); // 폼 데이터를 초기화
+    // if (initialFromValuesRef.current) {
+    //   fetchData(initialFromValuesRef.current);
+    // } else {
+    onFormChange();
+    // }
   };
 
   const isFieldChanged = (fieldName: string, currentValue: any) => {
@@ -126,6 +156,14 @@ const MenuViewComponent: FC<any> = ({
   };
 
   const handleOnSubmit = (node: any) => {
+    console.log(codeCheckState);
+    console.log(isSuccessCodeCheck);
+    const visibleMobileYn = node.visible.find((element: string) => element === 'visibleMobileYn')
+      ? true
+      : false;
+    const visiblePcYn = node.visible.find((element: string) => element === 'visiblePcYn')
+      ? true
+      : false;
     // View 모드에서 저장 처리
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
@@ -139,12 +177,12 @@ const MenuViewComponent: FC<any> = ({
           menuCode: node.code,
           parentId: node.parentKey,
           deleteYn: false,
-          hiddenYn: false,
+          hiddenYn: node.hiddenYn,
           useYn: true,
-          visiblePcYn: node.visiblePcYn,
-          visibleMobileYn: node.visibleMobileYn,
-          messageDesc: node.description,
-          personalDataContainYn: node.isPersonalInfo,
+          visiblePcYn: visiblePcYn,
+          visibleMobileYn: visibleMobileYn,
+          menuDesc: node.menuDesc,
+          personalDataContainYn: node.personalDataContainYn,
           sortOrder: 1,
           path: node.url,
           menuScope: menuScope,
@@ -160,10 +198,9 @@ const MenuViewComponent: FC<any> = ({
         // 수정 API 호출
         onUpdate(updateData);
         // console.log(updateData);
+        return;
       }
-      return;
     }
-
     if (codeCheckState === 'none') {
       setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
       return;
@@ -174,16 +211,17 @@ const MenuViewComponent: FC<any> = ({
       return;
     }
     console.log(node);
+
     const tmpData = {
       menuCode: node.code,
       parentId: node.parentKey,
       deleteYn: false,
-      hiddenYn: false,
+      hiddenYn: node.hiddenYn,
       useYn: true,
-      visiblePcYn: true,
-      visibleMobileYn: true,
-      messageDesc: node.description,
-      personalDataContainYn: node.isPersonalInfo,
+      visiblePcYn: visiblePcYn,
+      visibleMobileYn: visibleMobileYn,
+      menuDesc: node.menuDesc,
+      personalDataContainYn: node.personalDataContainYn,
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
@@ -194,6 +232,7 @@ const MenuViewComponent: FC<any> = ({
         },
       ],
     };
+    console.log(tmpData);
     onSave(tmpData);
     // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
@@ -223,6 +262,7 @@ const MenuViewComponent: FC<any> = ({
         onFormChange,
         checkExistsMenu,
         isSuccess,
+        disabled,
       },
       ref,
     ) => {
@@ -268,11 +308,13 @@ const MenuViewComponent: FC<any> = ({
               //   setCodeCheckState('none');
               // }
             }}
+            disabled={disabled}
           />
           <Button
             type="button"
             variant="gray"
             size="sm"
+            disabled={disabled}
             onClick={() => {
               const { code, parentKey } = getValues();
 
@@ -299,6 +341,8 @@ const MenuViewComponent: FC<any> = ({
     },
   );
 
+  const isInitMode = mode === 'init';
+
   // UI 렌더링
   return (
     <div className={'flex-1 rounded-2xl bg-white p-5'}>
@@ -306,13 +350,22 @@ const MenuViewComponent: FC<any> = ({
         <div className="mb-4 flex items-center justify-between">
           <h3 className="font-medium">{getTitle()}</h3>
           <div className="flex gap-2">
-            <Button type="button" variant="gray2" size="sm" onClick={handleReset}>
+            <Button
+              type="button"
+              variant="gray2"
+              size="sm"
+              onClick={handleReset}
+              disabled={isInitMode}>
               초기화
             </Button>
-            <Button variant="point" size="sm" disabled={mode === 'add'} onClick={handleDelete}>
+            <Button
+              variant="point"
+              size="sm"
+              disabled={isInitMode || mode === 'add'}
+              onClick={handleDelete}>
               삭제
             </Button>
-            <Button type="submit" variant="point" size="sm">
+            <Button type="submit" variant="point" size="sm" disabled={isInitMode}>
               저장
             </Button>
           </div>
@@ -338,6 +391,7 @@ const MenuViewComponent: FC<any> = ({
                 clearFormError={clearFormError}
                 checkExistsMenu={checkExistsMenu}
                 isSuccess={isSuccessCodeCheck}
+                disabled={isInitMode}
               />
             </DynamicFormField>
           </FormRow>
@@ -346,34 +400,45 @@ const MenuViewComponent: FC<any> = ({
         {/* 폼 필드 - title */}
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'title'} />
+            <DynamicFormField name={'title'} disabled={isInitMode} />
           </FormRow>
         </ContentsRow>
 
         {/* 폼 필드 - url */}
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'url'} />
-          </FormRow>
-        </ContentsRow>
-
-        {/* 폼 필드 - isPersonalInfo */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'isPersonalInfo'} />
+            <DynamicFormField name={'url'} disabled={isInitMode} />
           </FormRow>
         </ContentsRow>
 
         {/* 폼 필드 - description */}
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'description'} />
+            <DynamicFormField name={'menuDesc'} disabled={isInitMode} />
+          </FormRow>
+        </ContentsRow>
+
+        <ContentsRow type={'horizontal'} className={'inactive'}>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
+          </FormRow>
+        </ContentsRow>
+
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'visible'} disabled={isInitMode} />
+          </FormRow>
+        </ContentsRow>
+
+        <ContentsRow type={'horizontal'} className={'inactive'}>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'personalDataContainYn'} disabled={isInitMode} />
           </FormRow>
         </ContentsRow>
 
         {/* <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'visible'} />
+            <DynamicFormField name={'apiMappingMenuList'}></DynamicFormField>
           </FormRow>
         </ContentsRow> */}
       </form>
@@ -388,56 +453,64 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'key',
       type: 'text',
-      label: '키',
+      label: t('키'),
       value: '',
     },
     {
       name: 'parentKey',
       type: 'text',
-      label: '부모키',
+      label: t('부모키'),
       value: '',
     },
     {
-      name: 'isUsed',
+      name: 'useYn',
       type: 'custom',
       value: false,
     },
     {
       name: 'location',
       type: 'text',
-      label: '메뉴 위치',
+      label: t('메뉴 위치'),
       value: '',
     },
     {
-      label: '상위 메뉴명',
+      label: t('상위 메뉴명'),
       name: 'parentMenuName',
       type: 'text',
       value: '',
     },
     {
-      label: '메뉴 코드',
+      label: t('메뉴 코드'),
       name: 'code',
       type: 'custom',
+      maxLength: 20,
       value: '',
     },
     {
-      label: '메뉴명',
+      label: t('메뉴명'),
       name: 'title',
       type: 'text',
+      maxLength: 10,
       value: '',
     },
     {
-      label: '메뉴 URL',
+      label: t('메뉴 URL'),
       name: 'url',
       type: 'text',
       value: '',
     },
     {
-      label: '개인정보',
+      label: t('개인정보'),
       // required: true,
-      // subText: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
-      tooltip: 'ON인 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
-      name: 'isPersonalInfo',
+      tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
+      name: 'personalDataContainYn',
+      type: 'switch',
+      value: false,
+    },
+    {
+      label: t('Hidden 메뉴'),
+      tooltip: '',
+      name: 'hiddenYn',
       type: 'switch',
       value: false,
     },
@@ -445,8 +518,8 @@ const formConfig: DynamicFormConfig = {
     //   label: ''
     // },
     {
-      label: '메뉴 설명',
-      name: 'description',
+      label: t('메뉴 설명'),
+      name: 'menuDesc',
       type: 'textarea',
       value: '',
     },
@@ -456,21 +529,29 @@ const formConfig: DynamicFormConfig = {
       format: 'boolean',
       value: false,
     },
+    {
+      name: 'visible',
+      type: 'checkbox-group',
+      label: t('디바이스 노출 여부'),
+      format: 'array',
+      value: [],
+      options: [
+        {
+          value: 'visiblePcYn',
+          label: 'PC',
+        },
+        {
+          value: 'visibleMobileYn',
+          label: '모바일',
+        },
+      ],
+    },
     // {
-    //   name: 'visible',
-    //   type: 'checkbox-group',
-    //   label: '디바이스 노출 여부',
-    //   value: ['visiblePcYn', 'visibleMobileYn'],
-    //   options: [
-    //     {
-    //       value: 'visiblePcYn',
-    //       label: 'PC',
-    //     },
-    //     {
-    //       value: 'visibleMobileYn',
-    //       label: '모바일',
-    //     },
-    //   ],
+    //   name: 'apiMappingMenuList',
+    //   type: 'custom',
+    //   label: t('API'),
+    //   format: 'array',
+    //   value: [],
     // },
   ],
   validator: {
@@ -479,19 +560,28 @@ const formConfig: DynamicFormConfig = {
         fn: (values) => {
           return values.isDuplicateMenuCode === true;
         },
-        message: '메뉴 코드의 중복 여부를 확인해주세요.',
+        message: t('메뉴 코드의 중복 여부를 확인해주세요.'),
         path: 'code',
       },
       conditions: [],
     },
     code: {
       required: true,
+      // conditions: []
     },
     title: {
       required: true,
     },
     url: {
       required: true,
+    },
+    visible: {
+      required: {
+        fn: (values) => {
+          return !values.visibleMobileYn && !values.visiblePcYn;
+        },
+        message: t('1개 이상 선택하세요.'),
+      },
     },
   },
 };

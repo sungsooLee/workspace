@@ -1,9 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { TreeNode } from './type';
+import { NodeMovePositionType, TreeNode } from './type';
 
 interface DragState {
   node: TreeNode | null;
   sourceTreeId: string | null;
+  currentDropTarget?: {
+    node: TreeNode;
+    position?: NodeMovePositionType;
+  } | null;
 }
 
 interface TreeContextType {

@@ -2,7 +2,7 @@ import { Outlet, createRootRouteWithContext, Link } from '@tanstack/react-router
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
-import { useGlobalRouterEvent } from '@learnway/config';
+import { useGlobalRouterEvent } from '@learnway/hooks';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
 

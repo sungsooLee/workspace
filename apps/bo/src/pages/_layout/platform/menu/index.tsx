@@ -3,7 +3,7 @@ import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/co
 import { Button, findNodeByKey, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MenuTree } from '../../../../features/menu/ui/menu-tree';
 import MenuView from '../../../../features/menu/ui/menu-view';
 import { IcoAnnouncement03 } from '../../../../../../../libs/icons/src';
@@ -19,9 +19,16 @@ import {
   findNodeByMenuId,
   transformApiDataToTreeData,
 } from '../../../../features/menu/service/menu.service';
+import { pageRouteConfig } from '../../../../features/auth';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: '메뉴 관리',
+    },
+  }),
 });
 
 function RouteComponent() {
@@ -32,68 +39,50 @@ function RouteComponent() {
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
-  // Mode: view, add
-  const [mode, setMode] = useState('view');
+  // Mode: view, add , init
+  const [mode, setMode] = useState('init');
   const [parentNode, setParentNode] = useState<TreeNode | null>(null);
-  const [selectedTabKey] = useState<string>('FO');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
+  // 데이터 로딩 상태 트래킹
+  const isDataLoading = useRef(false);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, isLoading, refetch } = useMenuManagerFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
   const { create, data: createdMenuData } = useCreateMenu({
-    onSuccess: (data: any) => {
-      console.log(data);
+    onSuccess: async (data: any) => {
       // 생성된 메뉴의 ID 저장
       if (data && data.menuId) {
         setLastCreatedMenuId(data.menuId.toString());
       }
       // 트리 데이터 재조회
-      refetch().then(() => {});
+      await refetch();
     },
   });
   // 메뉴 수정 mutation
   const { updateMenu, data: updatedMenuData } = useUpdateMenu({
-    onSuccess: (data: any) => {
-      console.log(data);
-
+    onSuccess: async (data: any) => {
       if (data && data.menuId) {
+        setSelectedNode(null);
         setLastCreatedMenuId(data.menuId.toString());
       }
-
-      refetch().then(() => {});
+      await refetch().then(() => {});
     },
   });
   // 메뉴 삭제 mutation
   const { deleteMenu, data: deletedMenuData } = useDeleteMenu({
     onSuccess: (data: any) => {
-      console.log(data);
-
       refetch().then(() => {});
     },
   });
-
-  // useEffect(() => {
-  //   if (data) {
-  //     const transformedData = transformApiDataToTreeData(data);
-  //     setTreeData(transformedData);
-  //     if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
-  //       // 첫 번째 레벨만 확장
-  //       const firstLevelKeys = transformedData.map((node: any) => node.key);
-  //       setExpandedKeys(firstLevelKeys);
-  //     }
-  //     // 새로 추가된 메뉴가 있으면 관련 경로 확장
-  //     // if (lastCreatedMenuId) {
-  //     //   expandNodePath(transformedData, lastCreatedMenuId);
-  //     // }
-  //   }
-  // }, [data]);
   // 데이터가 변경될 때 처리
   const prevDataRef = React.useRef(null);
 
   useEffect(() => {
     // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
-    if (data && data !== prevDataRef.current) {
+    // if (data && data !== prevDataRef.current) {
+    if (data) {
       prevDataRef.current = data;
 
       const transformedData = transformApiDataToTreeData(data);
@@ -169,16 +158,25 @@ function RouteComponent() {
       onClose: (value: boolean) => {
         if (value) {
           create(payload);
-          setMode('view');
         }
       },
     });
   };
 
   const handleUpdate = (payload: any) => {
-    console.log(payload);
-    updateMenu(payload);
-    // setMode('view');
+    openConfirm({
+      title: '저장 하시겠습니까?',
+      content: (
+        <>
+          <p>입력한 정보로 저장됩니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          updateMenu(payload);
+        }
+      },
+    });
   };
 
   const handleExpandChange = (keys: string[]) => {
@@ -199,75 +197,108 @@ function RouteComponent() {
       onClose: (value: boolean) => {
         if (value) {
           deleteMenu(payload);
+          setMode('init');
         }
       },
     });
   };
 
+  const renderTabContent = (tabKey: string) => {
+    return (
+      <div className="mt-2 flex gap-[20px]">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {treeData && (
+              <MenuTree
+                treeData={treeData}
+                onNodeClick={handleNodeClick}
+                onAddSubMenu={handleAddSubMenu}
+                menuScope={tabKey}
+                // onDeleteNode={handleDeleteNode}
+                expandedKeys={expandedKeys} // 확장 상태 전달
+                onExpandChange={handleExpandChange} // 확장 상태 변경 핸들러
+                selectedKey={selectedNode?.key} // selectedKey 추가
+              />
+            )}
+            {selectedNode || mode === 'add' ? (
+              <MenuView
+                treeData={treeData}
+                selectedNode={selectedNode}
+                menuScope={tabKey}
+                menu
+                mode={mode}
+                parentNode={parentNode}
+                onSave={handleSave}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+                onCancel={() => {
+                  setMode('view');
+                  if (!selectedNode) {
+                    setParentNode(null);
+                  }
+                }}
+              />
+            ) : (
+              <MenuView
+                treeData={treeData}
+                selectedNode={null}
+                menuScope={tabKey}
+                menu
+                mode="init"
+                parentNode={null}
+                onSave={handleSave}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+                onCancel={() => {
+                  setMode('view');
+                  setParentNode(null);
+                }}
+              />
+            )}
+          </>
+        )}
+      </div>
+    );
+  };
+
+  // 새로 추가한 탭 변경 핸들러
+  const handleTabChange = (tabKey: string) => {
+    // 탭이 변경되었을 때만 처리
+    if (tabKey !== selectedTabKey) {
+      // 1. 선택된 탭 업데이트
+      setSelectedTabKey(tabKey);
+
+      // 2. 선택된 노드 초기화
+      setSelectedNode(null);
+
+      // 3. 모드를 init으로 설정
+      setMode('init');
+
+      // 4. 부모 노드 초기화
+      setParentNode(null);
+
+      // 5. expandedKeys 초기화
+      setExpandedKeys([]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(selectedTabKey);
+    refetch().then(() => {});
+  }, [selectedTabKey]);
+
   const items = [
     {
       title: '학습자 메뉴',
       key: 'FO',
-      content: (
-        <div className="mt-2 flex gap-[20px]">
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <>
-              {treeData && (
-                <MenuTree
-                  treeData={treeData}
-                  onNodeClick={handleNodeClick}
-                  onAddSubMenu={handleAddSubMenu}
-                  // onDeleteNode={handleDeleteNode}
-                  expandedKeys={expandedKeys} // 확장 상태 전달
-                  onExpandChange={handleExpandChange} // 확장 상태 변경 핸들러
-                  selectedKey={selectedNode?.key} // selectedKey 추가
-                />
-              )}
-              {selectedNode || mode === 'add' ? (
-                <MenuView
-                  treeData={treeData}
-                  selectedNode={selectedNode}
-                  menuScope={selectedTabKey}
-                  menu
-                  mode={mode}
-                  parentNode={parentNode}
-                  onSave={handleSave}
-                  onUpdate={handleUpdate}
-                  onDelete={handleDelete}
-                  onCancel={() => {
-                    setMode('view');
-                    if (!selectedNode) {
-                      setParentNode(null);
-                    }
-                  }}
-                />
-              ) : (
-                <div className={'flex-1 rounded-2xl bg-white p-5'}>
-                  <div className="flex w-full flex-col">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-800">러닝웨이</span>
-                      </div>
-                    </div>
-                    <hr className="mt-2 w-full border-t-2 border-gray-900" />
-                  </div>
-                  <div>
-                    좌측 메뉴 목록에서 메뉴를 추가할 상위메뉴를 마우스 오버한 후 ‘하위메뉴추가’로
-                    메뉴를 추가하세요.
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      ),
+      content: renderTabContent('FO'),
     },
     {
       title: 'HRD센터 메뉴',
       key: 'BO',
-      content: <>BO</>,
+      content: renderTabContent('BO'),
     },
   ];
 
@@ -279,7 +310,12 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
+        <Tabs
+          selectedTabKey={selectedTabKey}
+          items={items}
+          type="line"
+          onActiveTab={handleTabChange}
+        />
       </MainContents>
     </PageContainer>
   );

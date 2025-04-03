@@ -11,6 +11,7 @@ const MenuTreeComponent: FC<any> = ({
   expandedKeys,
   onExpandChange,
   selectedKey,
+  menuScope,
 }) => {
   // expandAll 토글 시 모든 키 확장/축소 처리
   const handleExpandAll = (expand: boolean) => {
@@ -37,26 +38,30 @@ const MenuTreeComponent: FC<any> = ({
   const renderNodeButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
-        {/* <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            onDeleteNode(node);
-          }}
-          variant="gray2"
-          size={'xs'}
-          type={'button'}>
-          삭제
-        </Button> */}
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            onAddSubMenu(node);
-          }}
-          variant="gray2"
-          size={'xs'}
-          type={'button'}>
-          {level == 0 ? '메뉴추가' : '하위메뉴추가'}
-        </Button>
+        {menuScope === 'FO' && level <= 2 && (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddSubMenu(node);
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}>
+            {level == 0 ? '메뉴추가' : '하위메뉴추가'}
+          </Button>
+        )}
+        {menuScope === 'BO' && level <= 3 && (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddSubMenu(node);
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}>
+            {level == 0 ? '메뉴추가' : '하위메뉴추가'}
+          </Button>
+        )}
       </div>
     </div>
   );
@@ -74,7 +79,6 @@ const MenuTreeComponent: FC<any> = ({
   };
 
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
-  console.log(selectedNode);
   return (
     <div className={'flex-1 rounded-2xl bg-white p-5'}>
       {/* 상단 제목 및 버튼 */}
@@ -105,7 +109,7 @@ const MenuTreeComponent: FC<any> = ({
         onExpandedKeysChange={onExpandChange} // 확장된 키 변경 콜백
         nodeButtons={renderNodeButtons}
         onAction={handleTreeAction}
-        type={'advanced'}
+        type={'DRAG_DROP'}
         selectedNode={selectedNode}
         onSelectedNodeChange={handleSelectedNodeChange}
       />
