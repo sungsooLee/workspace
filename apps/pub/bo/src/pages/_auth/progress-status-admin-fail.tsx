@@ -169,7 +169,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={formStyles.select_option}
                   options={[
                     { value: 'type1', label: '관리자 그룹1' },
@@ -190,7 +190,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={formStyles.select_option}
                   options={[
                     { value: 'type1', label: '채널 소유자' },

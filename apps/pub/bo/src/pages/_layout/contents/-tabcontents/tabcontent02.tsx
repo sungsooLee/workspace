@@ -14,7 +14,7 @@ import {
   // // SelectOption,
   Select,
   Button,
-  DropdownList,
+  Dropdown,
   DropdownOption,
   Input,
   TransferGrid,
@@ -22,7 +22,7 @@ import {
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
 const TabContents02Component: FC<{}> = ({}) => {
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -41,10 +41,10 @@ const TabContents02Component: FC<{}> = ({}) => {
                     <span className={searchStyles.text}>테넌트</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -57,7 +57,7 @@ const TabContents02Component: FC<{}> = ({}) => {
                     <span className={searchStyles.text}>채널</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <Select
+                    <Dropdown
                       className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
@@ -73,10 +73,10 @@ const TabContents02Component: FC<{}> = ({}) => {
                     <span className={searchStyles.text}>유형</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -101,7 +101,8 @@ const TabContents02Component: FC<{}> = ({}) => {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>

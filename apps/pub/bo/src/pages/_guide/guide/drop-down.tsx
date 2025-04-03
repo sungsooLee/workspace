@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { DropdownList, DropdownOption } from '@learnway/ui';
+import { Dropdown, DropdownOption } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/drop-down')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
@@ -22,10 +22,10 @@ function RouteComponent() {
   ];
   return (
     <div>
-      <DropdownList
+      <Dropdown
         options={options}
-        value={selectedOptions}
-        onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+        value={selectedValues}
+        onChange={(selected) => setSelectedValues(selected)}
         placeholder="여러 항목 선택"
         label="다중 선택 (체크박스)"
         variant="default"

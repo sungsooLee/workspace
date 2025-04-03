@@ -26,9 +26,9 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
   const { t } = useTranslation();
   const { close: closeModal } = useModal();
 
-  const [termsId, setTermsId] = useState<number | undefined>();
+  const [termsId, setTermsId] = useState<string | undefined>();
 
-  const { data } = useFetchTerms(termsType, termsId);
+  const { data } = useFetchTerms(termsType, Number(termsId));
   const { data: versions } = useFetchTermsVersions(termsType);
 
   const options = useCreation(() => {
@@ -36,7 +36,7 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
       return [];
     }
     return versions.map((version) => ({
-      value: version.termsId,
+      value: String(version.termsId),
       label: version.termsVersion,
     }));
   }, [versions]);
@@ -50,7 +50,7 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
             value={termsId}
             size="lg"
             options={options}
-            onChange={(value: number) => {
+            onChange={(value: string) => {
               setTermsId(value);
             }}
             placeholder={t('LABEL.PREVIOUS_TERMS', { type: t(`CODE.TERMS_TYPE.${termsType}`) })}

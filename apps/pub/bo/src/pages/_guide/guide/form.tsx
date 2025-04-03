@@ -4,7 +4,7 @@ import {
   Input,
   Button,
   Textarea,
-  Select,
+  Dropdown,
   Tooltip,
   ChipList,
   SelectOption,
@@ -201,7 +201,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Select
+              <Dropdown
                 className={formStyles.select_option}
                 options={[
                   { value: 'type1', label: '+82' },
@@ -228,12 +228,14 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(1)}
-                aria-expanded={toggleSections[1] || false}>
+                aria-expanded={toggleSections[1] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
                 <Button variant="gray" size="sm">
@@ -267,7 +269,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       className={formStyles.select_option}
                       options={[
                         { value: 'type1', label: '+82' },
@@ -301,7 +303,8 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'tooltip content'}>
+                content={'tooltip content'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
@@ -334,12 +337,14 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(2)}
-                aria-expanded={toggleSections[2] || false}>
+                aria-expanded={toggleSections[2] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[2] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[2] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Textarea
                   id="name-1-9"
@@ -366,12 +371,14 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(3)}
-                aria-expanded={toggleSections[3] || false}>
+                aria-expanded={toggleSections[3] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[3] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[3] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Textarea
                   id="name-1-10"
@@ -440,14 +447,16 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(4)}
-                aria-expanded={toggleSections[4] || false}>
+                aria-expanded={toggleSections[4] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[4] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[4] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   options={[
                     { value: 'language1', label: '영어' },
@@ -469,7 +478,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 </Button>
               </div>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   options={[
                     { value: 'language1', label: '영어' },
@@ -490,7 +499,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 </Button>
               </div>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   options={[
                     { value: 'language1', label: '영어' },
@@ -522,7 +531,8 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'마켓플레이스 공개설정111111'}>
+                content={'마켓플레이스 공개설정111111'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
@@ -550,7 +560,8 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'공유채널 설정2222222'}>
+                content={'공유채널 설정2222222'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>

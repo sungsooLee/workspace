@@ -13,15 +13,17 @@ export default {
 type Story = StoryObj<typeof Select>;
 
 const Template: React.FC<any> = (args) => {
-  return <Select {...args}  />;
+  return <Dropdown {...args} />;
 };
 
 const TemplateControl: React.FC<any> = (args) => {
   const [value, setValue] = useState<string>('value2');
   return (
     <div>
-      <span><button onClick={() => setValue('value1')}>Set Value</button></span>
-      <Select {...args} value={value} />
+      <span>
+        <button onClick={() => setValue('value1')}>Set Value</button>
+      </span>
+      <Dropdown {...args} value={value} />
     </div>
   );
 };
@@ -30,15 +32,19 @@ const TemplateControl: React.FC<any> = (args) => {
 export const SelectStory: Story = {
   name: 'Select',
   args: {
-    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
+    options: Array(5)
+      .fill(null)
+      .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
   },
-  render: (args) => <Template {...args} onChange={(option: any) => console.log(option)}/>,
+  render: (args) => <Template {...args} onChange={(option: any) => console.log(option)} />,
 };
 
 export const SetValue: Story = {
   args: {
     // value: 'value2',
-    options: Array(5).fill(null).map((d, i) => ({value: `value${i}`, label: `label${i}`}))
+    options: Array(5)
+      .fill(null)
+      .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
   },
   render: (args) => <TemplateControl {...args} />,
 };
