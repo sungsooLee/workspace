@@ -183,8 +183,6 @@ const SortableItem = ({
     boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none', // 드래그 중 그림자 추가
   };
 
-  console.log('isDragging', isDragging, item);
-
   return (
     <li
       ref={setNodeRef}
