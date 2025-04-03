@@ -730,7 +730,9 @@ const Grid = forwardRef(
 );
 
 const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
-  return <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle />;
+  return (
+    <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle tableMode />
+  );
 });
 
 export { Grid, TableComponent as Table };

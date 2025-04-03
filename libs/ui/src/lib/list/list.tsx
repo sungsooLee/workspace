@@ -2,11 +2,16 @@ import { addOrRemoveItemByKey, cn, getMatchingItemsByKey } from '@learnway/share
 
 import styles from './list.module.css';
 import React, { isValidElement, ReactElement } from 'react';
-import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
-import { Button } from '../button/button';
 import { CommonReactElementProps } from '@/libs/ui/src';
-import { ReactSortable } from 'react-sortablejs';
-import { SortableEvent } from 'sortablejs';
+import { Button } from '../button/button';
+import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -94,73 +99,133 @@ const ListComponent = function ({
   };
 
   /**
-   * 옵션 정렬이 끝났을 때 호출되는 핸들러
-   * @param newIndex 새로운 위치의 인덱스
-   * @param oldIndex 기존 위치의 인덱스
+   * 드래그 앤 드롭이 끝났을 때 실행되는 함수
    */
-  const handleSortEnd = ({ newIndex = -1, oldIndex = -1 }: SortableEvent) => {
-    // newIndex 또는 oldIndex 가 유효하지 않은 경우 에러 로그를 출력하고 함수를 종료합니다.
-    if (newIndex < 0 || oldIndex < 0) {
-      console.error('Invalid indices', { newIndex, oldIndex });
-      return;
-    }
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
 
-    const newOptions = [...options]; // 기존 옵션 배열을 복사하여 새로운 배열 생성
-    const [movedItem] = newOptions.splice(oldIndex, 1); // 이동할 항목을 배열에서 제거
-    newOptions.splice(newIndex, 0, movedItem); // 새로운 위치에 항목 삽입
-    onOptionsOrderChange?.(newOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
+    // 만약 드래그 대상이 없거나 위치 변경이 없으면 아무 작업도 수행하지 않음
+    if (!over || active.id === over.id) return;
+
+    /**
+     * 옵션 목록을 재정렬하는 함수
+     * @param options 기존 옵션 배열
+     * @param valueField 옵션 객체에서 ID 값을 참조하는 필드명
+     * @param activeId 현재 드래그 중인 요소의 ID
+     * @param overId 드롭된 위치의 요소 ID
+     * @returns 새로운 순서의 옵션 배열
+     */
+    const reorderOptions = (
+      options: any[],
+      valueField: string,
+      activeId: string,
+      overId: string,
+    ) => {
+      const oldIndex = options.findIndex((option) => option[valueField] === activeId);
+      const newIndex = options.findIndex((option) => option[valueField] === overId);
+      return arrayMove(options, oldIndex, newIndex);
+    };
+    // 새로운 순서로 옵션을 정렬
+    const newOptions = reorderOptions(options, valueField, active.id as string, over.id as string);
+    // 정렬된 옵션을 부모 컴포넌트에 전달
+    onOptionsOrderChange?.(newOptions);
   };
 
   return (
-    <ReactSortable
-      list={options}
-      setList={() => {}} // list 컴포넌트에서 option 값을 state 관리하지 않기 때문에 빈 함수 전달 (안넣으면 발생)
-      onEnd={handleSortEnd}
-      tag="ul"
-      handle=".drag-handle"
-      className={cn(
-        className,
-        'nlp--list',
-        styles.start,
-        hideBorder && styles.border_none,
-        showItemBorder && styles.type_full,
-      )}>
-      {options?.map((d: any, i: number) => (
-        <li
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext
+        items={options.map((item) => item[valueField])}
+        strategy={verticalListSortingStrategy}
+      >
+        <ul
           className={cn(
-            styles.item,
-            selectedOptions?.find((x: any) => x[valueField] === d[valueField]) &&
-              !disabledActive &&
-              styles.active, // selected row style
+            className,
+            'nlp--list',
+            styles.start,
+            hideBorder && styles.border_none,
+            showItemBorder && styles.type_full,
           )}
-          key={d[valueField]}
-          onClick={() =>
-            multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
-          }>
-          {/*컨텐츠 영역*/}
-          <div className={cn(showItemBorder && styles.line)}>
-            {/* child 가 있으면 보여주고 아니면 일반 label 을 보여준다. */}
-            {isValidElement(itemRenderer?.(d, i)) ? itemRenderer(d, i) : d[labelField]}
-            {/* 삭제 버튼 */}
-            {deletable && (
-              <Button
-                type="button"
-                className={cn(styles.clear)}
-                onlyIcon
-                onClick={(event: React.MouseEvent) => handleDeleteClick(event, d)}>
-                <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            )}
-          </div>
-          {/* draggable 버튼 */}
-          {draggable && (
-            <Button type="button" className={cn(styles.btn_drag, 'drag-handle')} onlyIcon>
-              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
-            </Button>
-          )}
-        </li>
-      ))}
-    </ReactSortable>
+        >
+          {options?.map((d: any, i: number) => (
+            <SortableItem
+              key={d[valueField]}
+              id={d[valueField]}
+              isSelected={
+                !disabledActive &&
+                selectedOptions?.find((x: any) => x[valueField] === d[valueField])
+              }
+              data={d}
+              item={d}
+              index={i}
+              itemRenderer={itemRenderer}
+              showItemBorder={showItemBorder}
+              deletable={deletable}
+              draggable={draggable}
+              onOptionDeleteClick={onOptionDeleteClick}
+              onClick={() =>
+                multiple ? handleOptionClickForMultiple(d) : handleOptionClickForSingle(d)
+              }
+            />
+          ))}
+        </ul>
+      </SortableContext>
+    </DndContext>
+  );
+};
+
+const SortableItem = ({
+  item,
+  id,
+  index,
+  onDelete,
+  onClick,
+  showItemBorder,
+  deletable,
+  draggable,
+  itemRenderer,
+  isSelected,
+}: any) => {
+  const { setNodeRef, transform, transition, listeners, attributes, isDragging } = useSortable({
+    id,
+  });
+
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transition,
+    opacity: isDragging ? 0.5 : 1, // 드래그 중 투명도 조절
+    boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none', // 드래그 중 그림자 추가
+  };
+
+  return (
+    <li
+      ref={setNodeRef}
+      style={style}
+      className={cn(
+        styles.item,
+        isSelected && styles.active, // selected row style
+      )}
+      onClick={onClick}
+    >
+      <div className={cn(styles.inner, showItemBorder && styles.line)}>
+        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
+        {deletable && (
+          <Button type="button" className={cn(styles.clear)} onlyIcon onClick={onDelete}>
+            <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+          </Button>
+        )}
+      </div>
+      {draggable && (
+        <Button
+          type="button"
+          className={cn(styles.btn_drag)}
+          onlyIcon
+          {...attributes}
+          {...listeners}
+        >
+          <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
+        </Button>
+      )}
+    </li>
   );
 };
 
