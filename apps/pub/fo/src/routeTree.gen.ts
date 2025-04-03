@@ -56,6 +56,7 @@ import { Route as LayoutCourseRegistrationCourseRegistrationCompleteImport } fro
 import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
 import { Route as LayoutCourseIntroductionPackageMImport } from './pages/_layout/course-introduction/package-m'
 import { Route as LayoutCourseIntroductionPackageImport } from './pages/_layout/course-introduction/package'
+import { Route as LayoutCourseIntroductionDetailImport } from './pages/_layout/course-introduction/detail'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -376,6 +377,13 @@ const LayoutCourseIntroductionPackageRoute =
   LayoutCourseIntroductionPackageImport.update({
     id: '/course-introduction/package',
     path: '/course-introduction/package',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCourseIntroductionDetailRoute =
+  LayoutCourseIntroductionDetailImport.update({
+    id: '/course-introduction/detail',
+    path: '/course-introduction/detail',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1065,6 +1073,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/course-introduction/detail': {
+      id: '/_layout/course-introduction/detail'
+      path: '/course-introduction/detail'
+      fullPath: '/course-introduction/detail'
+      preLoaderRoute: typeof LayoutCourseIntroductionDetailImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/course-introduction/package': {
       id: '/_layout/course-introduction/package'
       path: '/course-introduction/package'
@@ -1348,6 +1363,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutCourseIntroductionDetailRoute: typeof LayoutCourseIntroductionDetailRoute
   LayoutCourseIntroductionPackageRoute: typeof LayoutCourseIntroductionPackageRoute
   LayoutCourseIntroductionPackageMRoute: typeof LayoutCourseIntroductionPackageMRoute
   LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
@@ -1373,6 +1389,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutCourseIntroductionDetailRoute: LayoutCourseIntroductionDetailRoute,
   LayoutCourseIntroductionPackageRoute: LayoutCourseIntroductionPackageRoute,
   LayoutCourseIntroductionPackageMRoute: LayoutCourseIntroductionPackageMRoute,
   LayoutCourseRegistrationCourseRegistrationAllRoute:
@@ -1466,6 +1483,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
@@ -1551,6 +1569,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
@@ -1639,6 +1658,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/_layout/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/_layout/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
   '/_layout/course-registration/course-registration-all': typeof LayoutCourseRegistrationCourseRegistrationAllRoute
@@ -1726,6 +1746,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-introduction/detail'
     | '/course-introduction/package'
     | '/course-introduction/package-m'
     | '/course-registration/course-registration-all'
@@ -1810,6 +1831,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/course-introduction/detail'
     | '/course-introduction/package'
     | '/course-introduction/package-m'
     | '/course-registration/course-registration-all'
@@ -1896,6 +1918,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/course-introduction/detail'
     | '/_layout/course-introduction/package'
     | '/_layout/course-introduction/package-m'
     | '/_layout/course-registration/course-registration-all'
@@ -2021,6 +2044,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/course-introduction/detail",
         "/_layout/course-introduction/package",
         "/_layout/course-introduction/package-m",
         "/_layout/course-registration/course-registration-all",
@@ -2284,6 +2308,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/course-introduction/detail": {
+      "filePath": "_layout/course-introduction/detail.tsx",
       "parent": "/_layout"
     },
     "/_layout/course-introduction/package": {
