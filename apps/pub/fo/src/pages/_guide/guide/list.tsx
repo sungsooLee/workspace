@@ -39,7 +39,7 @@ function RouteComponent() {
         <div className="code_example">
           <pre className="code_block">
             <code>{`// 기본 호출방법
-import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css'; 예시 페이지 모듈
+import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css'; // 예시 페이지 모듈
 
 // 사용 예제
 <div className={\`\${definitionListStyles.start} \${definitionListStyles.list}\`}>

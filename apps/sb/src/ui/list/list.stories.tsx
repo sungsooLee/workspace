@@ -97,7 +97,7 @@ export const TemplateImage: any = (args: any) => {
       showItemBorder
       disabledActive
       itemRenderer={(option: any, index: number) => (
-        <div className={'m-2 flex flex-row items-center gap-3'}>
+        <div className={'flex flex-row items-center gap-3'}>
           <Thumbnail
             width={84}
             height={55}

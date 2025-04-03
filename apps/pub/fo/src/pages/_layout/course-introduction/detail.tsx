@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Tabs } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare } from '@learnway/icons';
 
 import pageContentsStyles from '../../_page-contents.module.css';
@@ -11,55 +11,32 @@ import styles from './package.module.css';
 
 // 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
-export const Route = createFileRoute('/_layout/course-introduction/package')({
+export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [selectedTabKey, selectedTabKey2] = useState<string>('');
+  const items = [
+    {
+      title: '대시보드',
+      key: 'a',
+      content: <h2>a</h2>,
+    },
+    {
+      title: '과정소개',
+      key: 'b',
+      content: <h2>Tab B content</h2>,
+    },
+  ];
+
   const options: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
     { label: '정보보안기술', value: 'C' },
-  ];
-
-  const [value2, setValue2] = useState<string>('');
-  const dummyItems2 = [
-    {
-      value: 'a',
-      title: (
-        <div className={styles.sub_package_title}>
-          <span className={styles.number}>1</span>
-          <strong>
-            서브 패키지 1 타이틀<em>9</em>
-          </strong>
-          <p>
-            서브 패키지 1에 대한 소개 서브 패키지 1에 대한 소개 서브 패키지 1에 대한 소개 서브
-            패키지 1에 대한 소개
-          </p>
-        </div>
-      ),
-      children: <div className={styles.sub_package_content}>Content A</div>,
-    },
-    {
-      value: 'b',
-      title: (
-        <div className={styles.sub_package_title}>
-          <span className={styles.number}>2</span>
-          <strong>
-            서브 패키지 2 타이틀<em>5</em>
-          </strong>
-          <p>
-            서브 패키지 2에 대한 소개서브 패키지 2에 대한 소개서브 패키지 2에 대한 소개서브 패키지
-            2에 대한 소개서브 패키지 2에 대한 소개
-          </p>
-        </div>
-      ),
-      children: <div className={styles.sub_package_content}>Content B</div>,
-    },
   ];
 
   return (
@@ -70,39 +47,24 @@ function RouteComponent() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button>
+            {/* <Button>
               <img src={bnrImage1} alt="" />
               <div className={styles.img_play}>
                 <img src={playImg} alt="" />
               </div>
-            </Button>
+            </Button> */}
             {/* 플레이 버튼 x */}
-            {/* <img src={bnrImage1} alt="" /> */}
+            <img src={bnrImage1} alt="" />
           </div>
-          <div className={styles.package_txt_box}>
-            <strong>패키지소개</strong>
-            <p>
-              패키지에 대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백포함 한글 300자 패키지에
-              대한 소개 공백포함 한글 300자 패키지에 대한 소개 공백패키지에 대한 소개 공백포함 한글
-              300자 패키지에 대한 소개 공백포
-            </p>
+
+          <div>
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
           </div>
+
           <div className={styles.package_box}>
-            <div className={styles.img_box}>
-              <img src={package1} alt="" />
-            </div>
             <div className={styles.chip_box}>
               <ChipList options={options} prefixCharacter="#" hideCloseButton />
             </div>
-          </div>
-
-          <div className={styles.sub_package}>
-            <Accordion
-              items={dummyItems2}
-              value={value2}
-              onValueChange={(value2) => setValue2(value2 as string)}
-              type={'multiple'}
-            />
           </div>
 
           <div className={styles.operator_box}>

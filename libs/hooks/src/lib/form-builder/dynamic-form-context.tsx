@@ -8,11 +8,12 @@ import { DynamicFormContextType } from './type';
  * @param children - 자식 컴포넌트
  */
 export const DynamicFormContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [guideText, onChangeGuideText] = useState<string>('');
+  const [guideText, onChangeGuideText] = useState<any>('');
   const [infoArea, onChangeInfoArea] = useState<ReactNode | null>(null);
   return (
     <DynamicFormContext.Provider
-      value={{ guideText, infoArea, onChangeGuideText, onChangeInfoArea }}>
+      value={{ guideText, infoArea, onChangeGuideText, onChangeInfoArea }}
+    >
       {children}
     </DynamicFormContext.Provider>
   );
