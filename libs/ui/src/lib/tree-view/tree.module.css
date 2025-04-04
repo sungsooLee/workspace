@@ -39,6 +39,11 @@
               & + .tree_children {
                 .tree_item .tree_inner {
                   @apply bg-[left_46px_top_20px] !pl-[58px];
+                  & + .tree_children {
+                    .tree_item .tree_inner {
+                      @apply bg-[left_66px_top_20px] !pl-[78px];
+                    }
+                  }
                 }
               }
             }
