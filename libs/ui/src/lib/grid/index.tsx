@@ -412,79 +412,80 @@ const Grid = forwardRef(
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    style={{
-                      // width: paginationGrid ? undefined : header.getSize(),
-                      // display: paginationGrid ? 'table-cell' : 'flex',
-                      // 정렬 속성 추가
-                      textAlign:
-                        header.column.columnDef.meta?.headerAlign ||
-                        header.column.columnDef.meta?.align ||
-                        'left',
-                      // justifyContent:
-                      //   header.column.columnDef.meta?.headerAlign ||
-                      //   header.column.columnDef.meta?.align ||
-                      //   'justify-start',
-                      display: 'block',
-                      width: !tableMode ? header.getSize() : '',
-                    }}
-                    className={styles.thead_th}
-                  >
-                    <div className={styles.th_wrap}>
-                      <div
-                        className={cn(
-                          styles.th_cell,
-                          header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                        )}
-                        style={{
-                          justifyContent:
-                            header.column.columnDef.meta?.headerAlign ||
-                            header.column.columnDef.meta?.align ||
-                            'justify-start',
-                          // width: header.getSize(),
-                          width: !tableMode ? header.getSize() : '',
-                        }}
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: (
-                            <IcoGridOrder
-                              width={7}
-                              height={4}
-                              fill={'#00afd5'}
-                              stroke={'#00afd5'}
-                              className="icon_up"
-                            />
-                          ),
-                          desc: (
-                            <IcoGridOrder
-                              width={7}
-                              height={4}
-                              fill={'#00afd5'}
-                              stroke={'#00afd5'}
-                              className="icon_down"
-                            />
-                          ),
-                        }[header.column.getIsSorted() as string] ?? null}
-                        {/* 필터 */}
-                        {header.column.columnDef.meta?.filterType && (
-                          <Button
-                            type="button"
-                            onClick={(e) => openFilterPopup(e, header.column)}
-                            className="btn_filter"
-                          >
-                            <IcoGridFilter width={16} height={16} />
-                          </Button>
-                        )}
+                {headerGroup.headers.map((header) => {
+                  const { column } = header;
+                  const { columnDef } = column;
+                  return (
+                    <th
+                      key={header.id}
+                      style={{
+                        // width: paginationGrid ? undefined : header.getSize(),
+                        // display: paginationGrid ? 'table-cell' : 'flex',
+                        // 정렬 속성 추가
+                        textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
+                        // justifyContent:
+                        //   columnDef.meta?.headerAlign ||
+                        //   columnDef.meta?.align ||
+                        //   'justify-start',
+                        display: 'block',
+                        width: !tableMode ? header.getSize() : '',
+                      }}
+                      className={styles.thead_th}
+                    >
+                      <div className={styles.th_wrap}>
+                        <div
+                          className={cn(
+                            styles.th_cell,
+                            column.getCanSort() ? 'cursor-pointer select-none' : '',
+                          )}
+                          style={{
+                            justifyContent:
+                              columnDef.meta?.headerAlign ||
+                              columnDef.meta?.align ||
+                              'justify-start',
+                            // width: header.getSize(),
+                            width: !tableMode ? header.getSize() : '',
+                          }}
+                          onClick={column.getToggleSortingHandler()}
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(columnDef.header, header.getContext())}
+                          {{
+                            asc: (
+                              <IcoGridOrder
+                                width={7}
+                                height={4}
+                                fill={'#00afd5'}
+                                stroke={'#00afd5'}
+                                className="icon_up"
+                              />
+                            ),
+                            desc: (
+                              <IcoGridOrder
+                                width={7}
+                                height={4}
+                                fill={'#00afd5'}
+                                stroke={'#00afd5'}
+                                className="icon_down"
+                              />
+                            ),
+                          }[column.getIsSorted() as string] ?? null}
+                          {/* 필터 */}
+                          {columnDef.meta?.filterType && (
+                            <Button
+                              type="button"
+                              onClick={(e) => openFilterPopup(e, column)}
+                              className="btn_filter"
+                            >
+                              <IcoGridFilter width={16} height={16} />
+                            </Button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </th>
-                ))}
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
@@ -527,7 +528,8 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
             style={rowStyle}
-            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+          >
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
           </tr>
         );

@@ -1159,8 +1159,8 @@ TemplateEditGrid.storyName = '셀 편집';
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
     { name: '현대', code: 'H', code2: 'H' },
-    { name: '현대', code: 'H', code2: 'H' },
-    { name: '현대', code: 'H', code2: 'H' },
+    // { name: '현대', code: 'H', code2: 'H' },
+    // { name: '현대', code: 'H', code2: 'H' },
   ];
   const columns = [
     { accessorKey: 'name', size: 200 },
@@ -1168,13 +1168,14 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code2', size: 0, minSize: 100 },
   ];
   return (
-    <Grid
-      title={'Editable Grid'}
-      data={data}
-      columns={columns}
-      hideColumnSettings
-      hideRowSelectionCheckBox
-    />
+    <div></div>
+    // <Grid
+    //   title={'Editable Grid'}
+    //   data={data}
+    //   columns={columns}
+    //   hideColumnSettings
+    //   hideRowSelectionCheckBox
+    // />
   );
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
