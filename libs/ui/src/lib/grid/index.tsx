@@ -145,7 +145,8 @@ const Grid = forwardRef(
               display: 'block',
               textAlign: 'center',
               verticalAlign: 'center',
-            }}>
+            }}
+          >
             <Checkbox
               checked={table.getIsAllRowsSelected()}
               onCheckedChange={(checked) => {
@@ -162,7 +163,8 @@ const Grid = forwardRef(
               display: 'block',
               textAlign: 'center',
               paddingRight: '0',
-            }}>
+            }}
+          >
             {' '}
             <Checkbox
               checked={row.getIsSelected()}
@@ -186,15 +188,14 @@ const Grid = forwardRef(
      * Row Select handle - 단일 선택 모드
      * @param updaterOrValue
      */
-    const handleRowSelectionChangeForSingleMode: OnChangeFn<RowSelectionState> = (
-      updaterOrValue,
-    ) => {
+    const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
 
       // 마지막 선택만 유지
       const selectedRowIds = Object.keys(newSelection);
-      const newSelectionState = selectedRowIds.length > 0 ? { [selectedRowIds[0]]: true } : {};
+      const lastId = selectedRowIds?.at(-1);
+      const newSelectionState = lastId ? { [lastId]: true } : {};
       setRowSelection(newSelectionState);
     };
 
@@ -202,9 +203,7 @@ const Grid = forwardRef(
      * Row Select handle - 멀티 선택 모드
      * @param updaterOrValue
      */
-    const handleRowSelectionChangeForMultiMode: OnChangeFn<RowSelectionState> = (
-      updaterOrValue,
-    ) => {
+    const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
       setRowSelection(newSelection);
@@ -289,8 +288,8 @@ const Grid = forwardRef(
       enableRowSelection: true,
       // onRowSelectionChange: setRowSelection,
       onRowSelectionChange: multiple
-        ? handleRowSelectionChangeForMultiMode
-        : handleRowSelectionChangeForSingleMode,
+        ? handleRowSelectionChangeForMultiple
+        : handleRowSelectionChangeForSingle,
       enableMultiRowSelection: multiple,
       enableHiding: true,
       enableGrouping: true,
@@ -407,7 +406,92 @@ const Grid = forwardRef(
      * 테이블 내용 렌더링
      */
     const renderTable = () => {
-      // table tbody
+      // table > thead
+      const renderHead = () => {
+        return (
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    style={{
+                      // width: paginationGrid ? undefined : header.getSize(),
+                      // display: paginationGrid ? 'table-cell' : 'flex',
+                      // 정렬 속성 추가
+                      textAlign:
+                        header.column.columnDef.meta?.headerAlign ||
+                        header.column.columnDef.meta?.align ||
+                        'left',
+                      // justifyContent:
+                      //   header.column.columnDef.meta?.headerAlign ||
+                      //   header.column.columnDef.meta?.align ||
+                      //   'justify-start',
+                      display: 'block',
+                      width: !tableMode ? header.getSize() : '',
+                    }}
+                    className={styles.thead_th}
+                  >
+                    <div className={styles.th_wrap}>
+                      <div
+                        className={cn(
+                          styles.th_cell,
+                          header.column.getCanSort() ? 'cursor-pointer select-none' : '',
+                        )}
+                        style={{
+                          justifyContent:
+                            header.column.columnDef.meta?.headerAlign ||
+                            header.column.columnDef.meta?.align ||
+                            'justify-start',
+                          // width: header.getSize(),
+                          width: !tableMode ? header.getSize() : '',
+                        }}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: (
+                            <IcoGridOrder
+                              width={7}
+                              height={4}
+                              fill={'#00afd5'}
+                              stroke={'#00afd5'}
+                              className="icon_up"
+                            />
+                          ),
+                          desc: (
+                            <IcoGridOrder
+                              width={7}
+                              height={4}
+                              fill={'#00afd5'}
+                              stroke={'#00afd5'}
+                              className="icon_down"
+                            />
+                          ),
+                        }[header.column.getIsSorted() as string] ?? null}
+                        {/* 필터 */}
+                        {header.column.columnDef.meta?.filterType && (
+                          <Button
+                            type="button"
+                            onClick={(e) => openFilterPopup(e, header.column)}
+                            className="btn_filter"
+                          >
+                            <IcoGridFilter width={16} height={16} />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+        );
+      };
+
+      // table > tbody
       const renderBody = () => {
         const bodyStyle = {
           // display: paginationGrid ? 'table-row-group' : 'grid',
@@ -424,7 +508,7 @@ const Grid = forwardRef(
         );
       };
 
-      // table tbody > tr
+      // table > tbody > tr
       const renderRow = (row: Row<T>, item: VirtualItem) => {
         const { index, size, start } = item;
         const rowStyle = {
@@ -443,13 +527,14 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
             style={rowStyle}
-            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+          >
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
           </tr>
         );
       };
 
-      // table tbody > tr > td
+      // table > tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
         const cellStyle = {
           background: cell.getIsGrouped()
@@ -475,7 +560,8 @@ const Grid = forwardRef(
                 }}
                 style={{
                   cursor: row.getIsGrouped() ? 'default' : 'pointer',
-                }}>
+                }}
+              >
                 {row.getIsExpanded() ? '👇' : '👉'}{' '}
                 {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
               </button>
@@ -503,7 +589,8 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
-          }}>
+          }}
+        >
           <table>
             {/*thead*/}
             {/*colgroup*/}
@@ -513,83 +600,11 @@ const Grid = forwardRef(
               <col style={{ width: '30%' }} />
               <col />
             </colgroup> */}
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      style={{
-                        // width: paginationGrid ? undefined : header.getSize(),
-                        // display: paginationGrid ? 'table-cell' : 'flex',
-                        // 정렬 속성 추가
-                        textAlign:
-                          header.column.columnDef.meta?.headerAlign ||
-                          header.column.columnDef.meta?.align ||
-                          'left',
-                        // justifyContent:
-                        //   header.column.columnDef.meta?.headerAlign ||
-                        //   header.column.columnDef.meta?.align ||
-                        //   'justify-start',
-                        display: 'block',
-                        width: !tableMode ? header.getSize() : '',
-                      }}
-                      className={styles.thead_th}>
-                      <div className={styles.th_wrap}>
-                        <div
-                          className={cn(
-                            styles.th_cell,
-                            header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          )}
-                          style={{
-                            justifyContent:
-                              header.column.columnDef.meta?.headerAlign ||
-                              header.column.columnDef.meta?.align ||
-                              'justify-start',
-                            // width: header.getSize(),
-                            width: !tableMode ? header.getSize() : '',
-                          }}
-                          onClick={header.column.getToggleSortingHandler()}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(header.column.columnDef.header, header.getContext())}
-                          {{
-                            asc: (
-                              <IcoGridOrder
-                                width={7}
-                                height={4}
-                                fill={'#00afd5'}
-                                stroke={'#00afd5'}
-                                className="icon_up"
-                              />
-                            ),
-                            desc: (
-                              <IcoGridOrder
-                                width={7}
-                                height={4}
-                                fill={'#00afd5'}
-                                stroke={'#00afd5'}
-                                className="icon_down"
-                              />
-                            ),
-                          }[header.column.getIsSorted() as string] ?? null}
-                          {/* 필터 */}
-                          {header.column.columnDef.meta?.filterType && (
-                            <Button
-                              type="button"
-                              onClick={(e) => openFilterPopup(e, header.column)}
-                              className="btn_filter">
-                              <IcoGridFilter width={16} height={16} />
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            {/*tbody*/}
+
+            {/* thead */}
+            {renderHead()}
+
+            {/* tbody */}
             {isLoading ? renderLoading() : renderBody()}
           </table>
         </div>
@@ -634,13 +649,15 @@ const Grid = forwardRef(
               onClick={() => onPageChange(0)}
               disabled={pageIndex === 0}
               className={styles.btn_first}
-              onlyIcon>
+              onlyIcon
+            >
               {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(pageIndex - 1)}
               disabled={pageIndex === 0}
-              className={styles.btn_prev}>
+              className={styles.btn_prev}
+            >
               {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
             </Button>
 
@@ -650,7 +667,8 @@ const Grid = forwardRef(
                 <Button
                   key={i}
                   onClick={() => onPageChange(i)}
-                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}>
+                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}
+                >
                   {i + 1}
                 </Button>
               ))}
@@ -659,13 +677,15 @@ const Grid = forwardRef(
             <Button
               onClick={() => onPageChange(pageIndex + 1)}
               disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_next}>
+              className={styles.btn_next}
+            >
               {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(totalPages - 1)}
               disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_last}>
+              className={styles.btn_last}
+            >
               {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
             </Button>
           </div>

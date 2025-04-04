@@ -955,7 +955,8 @@ export const createPersonColumns = (columnFactory: ColumnFactory<Person>): Colum
                   />
                 </div>,
               );
-            }}>
+            }}
+          >
             팝업
           </Button>
         </div>
@@ -1178,7 +1179,7 @@ export const TemplateColumnSize: any = (args: any) => {
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
 
-// 테이블 모
+// 테이블 모드
 export const TemplateTable: any = (args: any) => {
   const data = Array(10)
     .fill(null)
