@@ -161,6 +161,8 @@ export interface TreeNodeComponentProps {
   activeId?: string | null;
   isDropTarget?: boolean;
   dropPosition?: any;
+  size?: string;
+  className?: string;
 }
 
 /**
