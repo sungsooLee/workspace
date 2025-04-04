@@ -1,12 +1,9 @@
 .start {
-  @apply scrollbar max-h-[calc(100vh-100px)] max-w-[263px] overflow-y-auto overflow-x-hidden;
+  @apply scrollbar max-h-[calc(100vh-100px)] max-w-[263px] overflow-y-auto overflow-x-hidden border-r-[1px] border-solid border-[var(--gray4)];
   &.open {
     @apply w-[263px];
     .lnb_wrap {
-      @apply relative h-full;
-      &::after {
-        @apply absolute right-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray4)] content-[''];
-      }
+      @apply h-full;
     }
   }
   &.close {
