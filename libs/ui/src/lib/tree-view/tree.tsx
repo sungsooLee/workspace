@@ -143,47 +143,47 @@ const TreeNodeComponent = ({
     e.stopPropagation();
     if (!isDraggable || enhanceNode.constraints?.drag === false) return;
 
-    // try {
-    //   // 드래그 이미지 생성
-    //   const dragImage = document.createElement('div');
-    //   dragImage.classList.add('drag-node-image');
-    //   dragImage.innerHTML = `
-    //   <div class="px-2 py-1 bg-blue-100 rounded border border-blue-300 shadow-md flex items-center">
-    //     ${level === 0 ? '<span>🏠</span>' : '<span>📁</span>'}
-    //     <span class="ml-2 font-medium">${enhanceNode.title || ''}</span>
-    //   </div>
-    // `;
+    try {
+      // 드래그 이미지 생성
+      const dragImage = document.createElement('div');
+      dragImage.classList.add('drag-node-image');
+      dragImage.innerHTML = `
+      <div class="px-2 py-1 bg-blue-100 rounded border border-blue-300 shadow-md flex items-center">
+        ${level === 0 ? '<span>🏠</span>' : '<span>📁</span>'}
+        <span class="ml-2 font-medium">${enhanceNode.title || ''}</span>
+      </div>
+    `;
 
-    //   // 위치 조정 - 화면에 보이지 않게
-    //   dragImage.style.position = 'absolute';
-    //   dragImage.style.top = '-1000px';
-    //   dragImage.style.left = '-1000px';
-    //   dragImage.style.pointerEvents = 'none';
+      // 위치 조정 - 화면에 보이지 않게
+      dragImage.style.position = 'absolute';
+      dragImage.style.top = '-1000px';
+      dragImage.style.left = '-1000px';
+      dragImage.style.pointerEvents = 'none';
 
-    //   // 문서에 추가
-    //   document.body.appendChild(dragImage);
+      // 문서에 추가
+      document.body.appendChild(dragImage);
 
-    //   // 드래그 이미지 설정
-    //   e.dataTransfer.setDragImage(dragImage, 10, 10);
-    //   e.dataTransfer.effectAllowed = 'move';
+      // 드래그 이미지 설정
+      e.dataTransfer.setDragImage(dragImage, 10, 10);
+      e.dataTransfer.effectAllowed = 'move';
 
-    //   // 상태 업데이트 - 한 번만 실행되도록
-    //   if (!isDragging) {
-    //     setIsDragging(true);
-    //   }
+      // 상태 업데이트 - 한 번만 실행되도록
+      if (!isDragging) {
+        setIsDragging(true);
+      }
 
-    //   // 부모 컴포넌트 콜백 호출 - 한 번만
-    //   onDragStart?.(enhanceNode);
+      // 부모 컴포넌트 콜백 호출 - 한 번만
+      onDragStart?.(enhanceNode);
 
-    //   // 불필요한 DOM 요소 정리
-    //   setTimeout(() => {
-    //     if (document.body.contains(dragImage)) {
-    //       document.body.removeChild(dragImage);
-    //     }
-    //   }, 0);
-    // } catch (error) {
-    //   console.error('Drag start error:', error);
-    // }
+      // 불필요한 DOM 요소 정리
+      setTimeout(() => {
+        if (document.body.contains(dragImage)) {
+          document.body.removeChild(dragImage);
+        }
+      }, 0);
+    } catch (error) {
+      console.error('Drag start error:', error);
+    }
   };
 
   const handleDragEnd = (e: React.DragEvent) => {

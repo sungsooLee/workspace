@@ -62,7 +62,7 @@ function RouteComponent() {
         <h3 className="guide_tit3">Basic</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <TreeView treeId="source" data={sourceData} type={'DRAG_DROP'} />
+            <TreeView treeId="source" data={sourceData} />
           </div>
         </div>
       </div>
