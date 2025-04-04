@@ -38,51 +38,67 @@ function RouteComponent() {
     switch (typeResult) {
       // 동영상
       case LEARNING_TYPE.VIDEO: {
-        const videoUploadResult = await openModal({
+        /*const videoUploadResult = await openModal({
           content: <LearningResourceFileUploadModal />,
           width: 'lg',
-        });
-        router.navigate({ to: '/learning/resource/view/video' });
+        });*/
+        router.navigate({ to: '/learning/resource/video/view', state: { permission: 'WRITE' } });
         break;
       }
       // HTML 동영상
       case LEARNING_TYPE.HTML_VIDEO: {
-        router.navigate({ to: '/learning_test/resource/view/html-video' });
+        router.navigate({ to: '/learning/resource/html-video/view' });
         break;
       }
       // 이미지
       case LEARNING_TYPE.IMAGE: {
-        router.navigate({ to: '/learning/resource/view/image' });
+        router.navigate({ to: '/learning/resource/image/view' });
         break;
       }
       // 기타
       case LEARNING_TYPE.ETC: {
-        router.navigate({ to: '/learning/resource/view/etc' });
+        router.navigate({ to: '/learning/resource/etc/view' });
         break;
       }
       // 외부링크
       case LEARNING_TYPE.EXTERNAL_LINK: {
-        router.navigate({ to: '/learning/resource/view/link' });
+        router.navigate({ to: '/learning/resource/external-link/view' });
         break;
       }
       // 외부위탁
       case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
-        router.navigate({ to: '/learning/resource/view/consignment' });
+        router.navigate({ to: '/learning/resource/external_consignment/view' });
         break;
       }
       // 블로그
       case LEARNING_TYPE.BLOG: {
-        router.navigate({ to: '/learning/resource/view/blog' });
+        router.navigate({ to: '/learning/resource/blog/view' });
         break;
       }
       // 이북
       case LEARNING_TYPE.E_BOOK: {
-        router.navigate({ to: '/learning/resource/view/ebook' });
+        router.navigate({ to: '/learning/resource/e-book/view' });
         break;
       }
       // 스콤
       case LEARNING_TYPE.SCORM: {
-        router.navigate({ to: '/learning/resource/view/scorm' });
+        router.navigate({ to: '/learning/resource/scorm/view' });
+        break;
+      }
+      // 설문
+
+      case LEARNING_TYPE.SURVEY: {
+        router.navigate({ to: '/learning/resource/survey/view' });
+        break;
+      }
+      // 설문
+      case LEARNING_TYPE.TEST_PAGER: {
+        router.navigate({ to: '/learning/resource/test-paper/view' });
+        break;
+      }
+      // 설문
+      case LEARNING_TYPE.ASSIGNMENT: {
+        router.navigate({ to: '/learning/resource/assignment/view' });
         break;
       }
     }
