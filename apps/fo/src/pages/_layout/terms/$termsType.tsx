@@ -39,9 +39,9 @@ function RouteComponent() {
 
   const termsType = params.termsType;
 
-  const [termsId, setTermsId] = useState<number | undefined>();
+  const [termsId, setTermsId] = useState<string | undefined>();
 
-  const { data } = useFetchTerms(termsType as TermsType, termsId);
+  const { data } = useFetchTerms(termsType as TermsType, Number(termsId));
   const { data: versions } = useFetchTermsVersions(termsType as TermsType);
 
   // paramter 변경 시 상태 초기화
@@ -55,7 +55,7 @@ function RouteComponent() {
       return [];
     }
     return versions.map((version) => ({
-      value: version.termsId,
+      value: String(version.termsId),
       label: version.termsVersion,
     }));
   }, [versions]);
@@ -69,7 +69,7 @@ function RouteComponent() {
           value={termsId}
           size="lg"
           options={options}
-          onChange={(value: number) => {
+          onChange={(value: string) => {
             setTermsId(value);
           }}
           placeholder={t('LABEL.PREVIOUS_TERMS', {

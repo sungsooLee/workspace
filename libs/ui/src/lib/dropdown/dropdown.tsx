@@ -1,16 +1,55 @@
 import React, { forwardRef, useState } from 'react';
 import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
-import { cn, getRandomId } from '@learnway/shared';
-import { Checkbox } from '../checkbox/checkbox';
-import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
-import { DropdownComponentProps, DropdownOption } from './type';
+import { useCreation } from 'ahooks';
+import { map } from 'lodash';
 
-import './dropdown.css';
+import { cn, getRandomId } from '@learnway/shared';
+import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
+
+import { Checkbox } from '../checkbox/checkbox';
+import { DropdownOption } from '../type';
+
+import styles from './dropdown.module.css';
 import { Button } from '../button/button';
+
+export interface ReactSelectComponentProps {
+  options: DropdownOption[];
+  value?: DropdownOption | readonly DropdownOption[] | null;
+  defaultValue?: SingleValue<DropdownOption> | MultiValue<DropdownOption>;
+  onChange?: (
+    newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
+    actionMeta: ActionMeta<DropdownOption>,
+  ) => void;
+  placeholder?: string;
+  isDisabled?: boolean;
+  isReadonly?: boolean;
+  isMulti?: boolean;
+  isSearchable?: boolean;
+  isClearable?: boolean;
+  label?: string;
+  hideLabel?: boolean;
+  hideArrow?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'chip' | 'text';
+  className?: string;
+  name?: string;
+  onBlur?: () => void;
+}
+
+// error, readonly, disabled
+export interface DropdownComponentProps
+  extends Omit<ReactSelectComponentProps, 'value' | 'defaultValue' | 'onChange'> {
+  value?: any;
+  defaultValue?: any;
+  onChange?: (newValue?: any, actionMeta?: ActionMeta<any>) => void;
+  error?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
+}
 
 const CustomValueContainer = ({ children, ...props }: any) => {
   const { getValue, hasValue, selectProps } = props;
-  console.log(props);
+
   const values = getValue();
   const isTextVariant = selectProps['data-variant'] === 'text';
   // isMulti가 아니거나 text 변형이 아닌 경우 기본 컴포넌트 사용
@@ -25,9 +64,9 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 
   return (
     <components.ValueContainer {...props}>
-      <div className="container">
+      <div className={styles.container}>
         {values.length > 0 && (
-          <span className="result_text">
+          <span className={styles.result_text}>
             {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
           </span>
         )}
@@ -44,8 +83,8 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 const Option = (props: any) => {
   return (
     <components.Option {...props}>
-      <div className="select_item">
-        {props.isMulti && <Checkbox checked={props.isSelected} onChange={() => null} />}
+      <div className={styles.select_item}>
+        {props.isMulti && <Checkbox size={'md'} checked={props.isSelected} onChange={() => null} />}
         <span>{props.label}</span>
       </div>
     </components.Option>
@@ -56,7 +95,7 @@ const Option = (props: any) => {
 const dropdownIndicator = (props: any) => {
   return (
     <components.DropdownIndicator {...props}>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" className="icon_arrow" />
+      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
     </components.DropdownIndicator>
   );
 };
@@ -65,14 +104,14 @@ const dropdownIndicator = (props: any) => {
 const clearIndicator = (props: any) => {
   return (
     <components.ClearIndicator {...props}>
-      <Button onlyIcon className="btn_clear">
+      <Button onlyIcon className={styles.btn_clear}>
         <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
       </Button>
     </components.ClearIndicator>
   );
 };
 
-const DropdownComponent = forwardRef<any, DropdownComponentProps>(
+const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
   (
     {
       options,
@@ -97,7 +136,8 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     },
     ref,
   ) => {
-    const uuid = getRandomId();
+    const uuid = useCreation(() => getRandomId(), []);
+
     // const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
     const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className} `;
     const customProps = {
@@ -125,7 +165,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     };
 
     return (
-      <div className={cn(dropdownClass.trim(), 'dropdown', className)}>
+      <div className={cn(dropdownClass.trim(), styles.select_wrap, 'dropdown', className)}>
         <Select
           id={uuid}
           ref={ref}
@@ -164,31 +204,34 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
   },
 );
 
-// FormDropdown 컴포넌트 - DynamicFormField와 함께 사용하기 위한 wrapper
-const FormDropdownComponent = forwardRef<any, any>(
-  ({ value, onChange, onBlur, options = [], isMulti = false, ...props }, ref) => {
+const DropdownComponent = forwardRef<any, DropdownComponentProps>(
+  (
+    { value, onChange, onBlur, options = [], isMulti = false, disabled, readOnly, ...props },
+    ref,
+  ) => {
     // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
     const handleChange = (
       newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
       actionMeta: ActionMeta<DropdownOption>,
     ) => {
       if (isMulti) {
-        const multiValues = newValue as MultiValue<DropdownOption>;
-        onChange(multiValues ? multiValues.map((option) => option.value) : []);
+        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value'); // ? newValue.map((option) => option.value) : [];
+        onChange && onChange(multiValues);
       } else {
         const singleValue = newValue as SingleValue<DropdownOption>;
-        onChange(singleValue?.value ?? null);
+        onChange && onChange(singleValue?.value ?? null);
       }
     };
 
     // value를 react-select 형식으로 변환
-    const getFormattedValue = () => {
-      if (value === null || value === undefined) return null;
+    const selectedOptions = useCreation(() => {
+      if (!value) {
+        return null;
+      }
+      const safeOptions = Array.isArray(options) ? options : [options];
 
-      const safeOptions = Array.isArray(options) ? options : [];
-
-      if (isMulti && Array.isArray(value)) {
-        return value
+      if (isMulti) {
+        return (Array.isArray(value) ? value : [value])
           .map((val) => safeOptions.find((option) => option.value === val))
           .filter(Boolean); // undefined 값 제거
       }
@@ -197,16 +240,18 @@ const FormDropdownComponent = forwardRef<any, any>(
         safeOptions.find((option: DropdownOption) => option.value === value) ||
         (typeof value === 'string' ? { value, label: value } : null)
       );
-    };
+    }, [value, options]);
 
     return (
-      <DropdownComponent
+      <PrimitiveComponent
         ref={ref}
-        value={getFormattedValue()}
+        value={selectedOptions as DropdownOption | DropdownOption[]}
         onChange={handleChange}
         onBlur={onBlur}
         options={Array.isArray(options) ? options : []}
         isMulti={isMulti}
+        isReadonly={readOnly}
+        isDisabled={disabled}
         {...props}
       />
     );
@@ -214,7 +259,5 @@ const FormDropdownComponent = forwardRef<any, any>(
 );
 
 DropdownComponent.displayName = 'Dropdown';
-FormDropdownComponent.displayName = 'FormDropdown';
 
-export const DropdownList = DropdownComponent;
-export const Dropdown = FormDropdownComponent;
+export const Dropdown = DropdownComponent;

@@ -8,8 +8,8 @@ import { getBrowserNation } from '@learnway/shared';
 
 import NationNumbers from './nation-number.json';
 import { Input, InputProps } from '../input/input';
-import { Select } from '../select/select';
-import type { SelectOption } from '../select/type';
+import { Dropdown } from '../dropdown/dropdown';
+import type { DropdownOption } from '../type';
 import styles from './phone-number.module.css';
 
 export interface PhoneNumberValue {
@@ -18,7 +18,7 @@ export interface PhoneNumberValue {
 }
 
 export interface PhoneNumberComponentProps extends Omit<InputProps, 'value' | 'onChange'> {
-  options?: SelectOption[];
+  options?: DropdownOption[];
   value?: PhoneNumberValue;
   onChange?: (value: PhoneNumberValue) => void;
   className?: string;
@@ -53,7 +53,7 @@ const PhoneNumberComponent = function ({
     }
   }, [editionValue]);
 
-  const handleSelect = (option: SelectOption) => {
+  const handleSelect = (option: DropdownOption) => {
     setEditionValue({ ...editionValue, nationCode: option.value });
   };
 
@@ -69,10 +69,11 @@ const PhoneNumberComponent = function ({
         size && styles[size],
         readOnly && styles.readonly,
         disabled && styles.disabled,
-      )}>
-      <Select
+      )}
+    >
+      <Dropdown
         options={options ?? nationOptions}
-        onChange={(option: SelectOption) => handleSelect(option)}
+        onChange={(option: DropdownOption) => handleSelect(option)}
         className={styles.select_area}
         size={size}
         readOnly={readOnly}

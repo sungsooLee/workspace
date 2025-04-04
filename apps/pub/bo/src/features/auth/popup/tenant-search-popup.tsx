@@ -4,7 +4,7 @@ import styles from './tenant-search-popup.module.css';
 import {
   Button,
   ContentsRow,
-  DropdownList,
+  Dropdown,
   DropdownOption,
   Grid,
   Input,
@@ -22,7 +22,7 @@ const TenantSearchPopupCompoment = () => {
   const { close: closeModal } = useModal();
 
   // drop down
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '테넌트명' },
     { value: 'option2', label: '테넌트명 2' },
@@ -106,10 +106,10 @@ const TenantSearchPopupCompoment = () => {
       <ModalBody>
         <div className={cn(styles.start, styles.wrap)}>
           <ContentsRow className={styles.search_box}>
-            <DropdownList
+            <Dropdown
               options={options}
-              value={selectedOptions}
-              onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+              value={selectedValues}
+              onChange={(selected) => setSelectedValues(selected)}
               placeholder="테넌트명"
               variant="default"
               isMulti={false}

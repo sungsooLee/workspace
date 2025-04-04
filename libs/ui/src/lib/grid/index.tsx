@@ -48,8 +48,8 @@ import { FilterContent } from './components/filter-content';
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
-import { Select } from '../select/select';
-import { SelectOption } from '../select/type';
+import { Dropdown } from '../dropdown/dropdown';
+import { DropdownOption } from '../type';
 
 // import './grid.css'; // grid CSS
 import styles from './grid.module.css'; // grid module CSS
@@ -527,8 +527,7 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
             style={rowStyle}
-            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
-          >
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
           </tr>
         );
@@ -624,12 +623,12 @@ const Grid = forwardRef(
         pageSizeOptions = [10, 20, 50, 100],
       } = pagination;
 
-      const options: SelectOption[] = pageSizeOptions.map((size) => ({
+      const options: DropdownOption[] = pageSizeOptions.map((size) => ({
         value: size.toString(),
         label: `${size}개씩 보기`,
       }));
 
-      const handleChange = (value?: SelectOption) => {
+      const handleChange = (value?: DropdownOption) => {
         if (value) {
           onPageSizeChange(Number(value.value));
         }
@@ -638,7 +637,7 @@ const Grid = forwardRef(
 
       return (
         <div className={styles.paging_wrap}>
-          <Select
+          <Dropdown
             value={pageSize.toString()}
             onChange={handleChange}
             options={options}

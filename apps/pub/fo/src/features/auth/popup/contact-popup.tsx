@@ -12,7 +12,7 @@ import {
   useModal,
   ContentsRow,
   Input,
-  Select,
+  Dropdown,
   Textarea,
   UppyUpload,
 } from '@learnway/ui';
@@ -39,7 +39,7 @@ const ContactPopupCompoment = () => {
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       size="lg"
                       options={[{ value: 'type1', label: '선택' }]}
                       className={formStyles.select_option}

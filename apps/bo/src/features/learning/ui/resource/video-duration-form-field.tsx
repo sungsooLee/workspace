@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { DropdownList, Input } from '@learnway/ui';
+import { Input } from '@learnway/ui';
 
 type ValueType = {
   minute: number;

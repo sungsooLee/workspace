@@ -16,7 +16,7 @@
 
   /* title_wrap */
   .title_wrap {
-    @apply sticky left-0 top-0 z-[1] flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
+    @apply sticky left-0 top-0 z-[2] flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
     .title {
       @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
       .btn_favorites {

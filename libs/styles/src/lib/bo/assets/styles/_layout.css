@@ -37,6 +37,9 @@
       }
     }
   }
+  [class*='nlp--lnb'] {
+    @apply max-h-[calc(100vh-50px)];
+  }
 }
 
 .layout_wrap {

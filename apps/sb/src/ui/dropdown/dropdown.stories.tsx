@@ -1,10 +1,10 @@
-import { Dropdown, DropdownList, DropdownOption } from '@learnway/ui';
+import { Dropdown, DropdownOption } from '@learnway/ui';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { useState } from 'react';
 
 export default {
-  title: 'Components/DropdownList',
-  component: DropdownList,
+  title: 'Components/Dropdown',
+  component: Dropdown,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -60,7 +60,7 @@ export default {
     },
   },
 } as Meta;
-type Story = StoryObj<typeof DropdownList>;
+type Story = StoryObj<typeof Dropdown>;
 
 export const Default: Story = {
   args: {
@@ -121,7 +121,7 @@ export const DropdownStory: Story = {
 };
 
 const MultiDropdown: React.FC<any> = (args) => {
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
@@ -135,10 +135,10 @@ const MultiDropdown: React.FC<any> = (args) => {
     { value: 'option10', label: '옵션 10' },
   ];
   return (
-    <DropdownList
+    <Dropdown
       options={options}
       value={selectedOptions}
-      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+      onChange={(selected) => setSelectedOptions(selected as any[])}
       placeholder="여러 항목 선택"
       label="다중 선택 (체크박스)"
       variant="text"
@@ -148,7 +148,7 @@ const MultiDropdown: React.FC<any> = (args) => {
 };
 
 export const MultiDropdownStory: Story = {
-  name: 'MultiDropdownList',
+  name: 'MultiDropdown',
   args: {},
   render: (args) => <MultiDropdown {...args} />,
 };

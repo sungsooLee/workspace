@@ -2,9 +2,10 @@ import React, { forwardRef } from 'react';
 import styles from './shared-channel-grid-form-field.module.css';
 import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, Grid, useModal } from '@learnway/ui';
+import { Button, EditCheckboxCell, Grid, useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 import { ChannelChoiceModal } from '../../../../../shared';
+import { CellContext } from '@tanstack/react-table';
 
 interface SharedChannelGridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   onClick?: (value?: any) => void;
@@ -13,10 +14,11 @@ interface SharedChannelGridFormFieldComponentProps extends BaseFormFieldProps<an
 const SharedChannelGridFormFieldComponent = forwardRef<
   HTMLInputElement,
   SharedChannelGridFormFieldComponentProps
->(({ onClick, value, onChange, ...props }, ref) => {
+>(({ value, onChange }, ref) => {
   const { t } = useTranslation();
   const { open: openModal } = useModal();
 
+  // 테이블 컬럼 정의
   const columns = [
     { header: t('테넌트'), accessorKey: 'tenantName' },
     { header: t('채널'), accessorKey: 'channelName' },
@@ -27,15 +29,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
       meta: {
         cellAlign: 'center',
       },
-      cell: ({ row }: any) => (
-        <input
-          type="checkbox"
-          checked={row.original.checked}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            handleGridCellDownloadCheckChange(row.original, event.target.checked);
-          }}
-        />
-      ),
+      cell: (info: CellContext<any, boolean>) => <EditCheckboxCell info={info} />,
     },
     {
       accessorKey: 'delete',
@@ -44,34 +38,35 @@ const SharedChannelGridFormFieldComponent = forwardRef<
       meta: {
         cellAlign: 'center',
       },
-      cell: ({ row }: any) => (
+      cell: (info: CellContext<any, string>) => (
         <Button
           label={'삭제'}
-          variant={'gray2'}
+          variant={'point'}
           size={'xs'}
-          onClick={() => {
-            handleGridCellDeleteButtonClick(row.original);
-          }}
+          onClick={() => info.table.options.meta?.removeData(info.row.index)}
         />
       ),
     },
   ];
 
-  const handleGridCellDownloadCheckChange = (selectedRow: any, checked: boolean) => {
-    const newValue = value?.map((d: any) => (d.id === selectedRow.id ? { ...d, checked } : d));
-    onChange(newValue);
+  /**
+   * 그리드 데이터 변경 핸들러
+   * @param {any} newGridData - 변경된 그리드 데이터
+   */
+  const handleGridChange = (newGridData: any) => {
+    onChange(newGridData);
   };
 
-  const handleGridCellDeleteButtonClick = (selectedRow: any) => {
-    const newValue = value?.filter((d: any) => d.id !== selectedRow.id);
-    onChange(newValue);
-  };
-
+  /**
+   * 채널 선택 모달 핸들러
+   * @async
+   * @returns {Promise<void>} 없음
+   */
   const handleChannelModalButtonClick = async () => {
     const data = await openModal({
       content: <ChannelChoiceModal />,
     });
-    const isDuplicated = !!value?.find((d) => d.channelId === data?.channelId);
+    const isDuplicated = value?.some((d) => d.channelId === data?.channelId);
     if (data && !isDuplicated) {
       const newItem = {
         tenantId: 'tenantId1', // TODO: ChannelChoiceModal 에서 내려받은 내용
@@ -85,7 +80,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
   };
 
   return (
-    <div className={cn(styles.start, 'nlp--shared-channel-grid-form-field')}>
+    <div className={cn(styles.start, 'nlp--shared-channel-grid-form-field')} ref={ref}>
       <div className={'text-right'}>
         <span>{`${t('채널')} ${value?.length || 0}${t('개')}`}</span>
         <Button
@@ -95,7 +90,13 @@ const SharedChannelGridFormFieldComponent = forwardRef<
           onClick={handleChannelModalButtonClick}
         />
       </div>
-      <Grid data={value} columns={columns} showTotalCount={false} hideColumnSettings />
+      <Grid
+        data={value}
+        columns={columns}
+        showTotalCount={false}
+        hideColumnSettings
+        onChange={handleGridChange}
+      />
     </div>
   );
 });

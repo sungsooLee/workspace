@@ -1,0 +1,9 @@
+/* fab.module.css */
+.start {
+  &.fab_wrap {
+    @apply h-[72px] w-[36px] bg-white shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    .inner {
+      @apply flex flex-col;
+    }
+  }
+}
