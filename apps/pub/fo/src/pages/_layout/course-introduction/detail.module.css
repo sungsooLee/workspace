@@ -207,69 +207,124 @@
 
         .review_box {
           @apply mt-[24px];
-          .review_list {
-            li {
-              /* review */
-              .review {
-                @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
-                .profile {
-                  @apply flex items-center;
-                  img {
-                    @apply h-[40px] w-[40px];
-                  }
-                  .information {
-                    @apply relative ml-[8px] w-full;
-                    .box {
-                      @apply flex items-center;
-                      strong {
-                        @apply title_6_b text-[var(--gray8)];
-                      }
-                      .star {
-                        @apply relative ml-[8px] flex items-center pl-[8px];
-                        &::before {
-                          @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-                        }
-                      }
-                      span {
-                        @apply body_3_r inline-block text-[var(--gray7)];
-                        & + span {
-                          @apply relative ml-[8px] pl-[8px];
-                          &::before {
-                            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-                          }
-                        }
-                      }
-                      .pin {
-                        @apply ml-[10px] inline-block;
-                      }
-                      & + .box {
-                        @apply mt-[2px];
-                      }
-                    }
-                    .setting {
-                      @apply absolute right-0 top-0;
-                    }
-                  }
-                }
-                .txt {
-                  @apply body_3_r mt-[12px] text-[var(--gray7)];
-                }
-                .count_box {
-                  @apply mt-[12px];
-                  button {
-                    @apply body_3_r text-[var(--gray7)];
-                    svg {
-                      @apply mr-[8px] inline-block;
-                    }
-                    & + button {
-                      @apply ml-[16px] leading-[22px];
-                    }
-                  }
-                }
-              }
+        }
+      }
+    }
+  }
+}
+
+/* review */
+.review {
+  @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
+  .profile {
+    @apply flex items-center;
+    img {
+      @apply h-[40px] w-[40px];
+    }
+    .information {
+      @apply relative ml-[8px] w-full;
+      .box {
+        @apply flex items-center;
+        strong {
+          @apply title_6_b text-[var(--gray8)];
+        }
+        .star {
+          @apply relative ml-[8px] flex items-center pl-[8px];
+          &::before {
+            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+          }
+        }
+        span {
+          @apply body_3_r inline-block text-[var(--gray7)];
+          & + span {
+            @apply relative ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
             }
           }
         }
+        .pin {
+          @apply ml-[10px] inline-block;
+        }
+        & + .box {
+          @apply mt-[2px];
+        }
+      }
+      .setting {
+        @apply absolute right-0 top-0;
+      }
+    }
+  }
+  .txt {
+    @apply body_3_r mt-[12px] text-[var(--gray7)];
+  }
+  .count_box {
+    @apply mt-[12px];
+    button {
+      @apply body_3_r text-[var(--gray7)];
+      svg {
+        @apply mr-[8px] inline-block;
+      }
+      & + button {
+        @apply ml-[16px] leading-[22px];
+      }
+      &.active {
+        svg {
+          @apply fill-[#00afd5] stroke-[#00afd5];
+        }
+        path {
+          @apply stroke-white;
+        }
+      }
+    }
+  }
+}
+
+/* comment */
+.comment {
+  @apply relative rounded-[8px] bg-[var(--gray1)] p-[16px] pl-[64px];
+  .ico_comment {
+    @apply absolute left-[16px] top-[24px];
+  }
+  .profile {
+    @apply flex items-center;
+    img {
+      @apply h-[40px] w-[40px];
+    }
+    .information {
+      @apply relative ml-[8px] w-full;
+      .box {
+        @apply flex items-center;
+        strong {
+          @apply title_6_b text-[var(--gray8)];
+        }
+        span {
+          @apply body_3_r inline-block text-[var(--gray7)];
+          & + span {
+            @apply relative ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+            }
+          }
+        }
+        & + .box {
+          @apply mt-[2px];
+        }
+      }
+    }
+  }
+  .txt {
+    @apply body_3_r mt-[12px] text-[var(--gray7)];
+  }
+  .count_box {
+    @apply mt-[12px];
+    button {
+      @apply body_3_r text-[var(--gray7)];
+      svg {
+        @apply mr-[8px] inline-block;
+      }
+      & + button {
+        @apply ml-[16px] leading-[22px];
       }
     }
   }

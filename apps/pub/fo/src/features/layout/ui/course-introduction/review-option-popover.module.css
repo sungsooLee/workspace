@@ -1,0 +1,16 @@
+.start {
+  &.review_option {
+    @apply rounded-[4px] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    ul {
+      @apply min-w-[84px];
+      li {
+        button {
+          @apply body_3_r w-full px-[12px] py-[8px] text-left text-[var(--gray9)];
+          &:hover {
+            @apply bg-[var(--secondary5)];
+          }
+        }
+      }
+    }
+  }
+}
