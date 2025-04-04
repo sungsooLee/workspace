@@ -57,6 +57,7 @@ import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './
 import { Route as LayoutCourseIntroductionPackageMImport } from './pages/_layout/course-introduction/package-m'
 import { Route as LayoutCourseIntroductionPackageImport } from './pages/_layout/course-introduction/package'
 import { Route as LayoutCourseIntroductionDetailImport } from './pages/_layout/course-introduction/detail'
+import { Route as LayoutClassroomDashboardImport } from './pages/_layout/classroom/dashboard'
 import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -386,6 +387,12 @@ const LayoutCourseIntroductionDetailRoute =
     path: '/course-introduction/detail',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutClassroomDashboardRoute = LayoutClassroomDashboardImport.update({
+  id: '/classroom/dashboard',
+  path: '/classroom/dashboard',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutCategoryDetailmRoute = LayoutCategoryDetailmImport.update({
   id: '/category/detail_m',
@@ -1073,6 +1080,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryDetailmImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/classroom/dashboard': {
+      id: '/_layout/classroom/dashboard'
+      path: '/classroom/dashboard'
+      fullPath: '/classroom/dashboard'
+      preLoaderRoute: typeof LayoutClassroomDashboardImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/course-introduction/detail': {
       id: '/_layout/course-introduction/detail'
       path: '/course-introduction/detail'
@@ -1363,6 +1377,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
   LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
+  LayoutClassroomDashboardRoute: typeof LayoutClassroomDashboardRoute
   LayoutCourseIntroductionDetailRoute: typeof LayoutCourseIntroductionDetailRoute
   LayoutCourseIntroductionPackageRoute: typeof LayoutCourseIntroductionPackageRoute
   LayoutCourseIntroductionPackageMRoute: typeof LayoutCourseIntroductionPackageMRoute
@@ -1389,6 +1404,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
   LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
+  LayoutClassroomDashboardRoute: LayoutClassroomDashboardRoute,
   LayoutCourseIntroductionDetailRoute: LayoutCourseIntroductionDetailRoute,
   LayoutCourseIntroductionPackageRoute: LayoutCourseIntroductionPackageRoute,
   LayoutCourseIntroductionPackageMRoute: LayoutCourseIntroductionPackageMRoute,
@@ -1483,6 +1499,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/classroom/dashboard': typeof LayoutClassroomDashboardRoute
   '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
@@ -1569,6 +1586,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
   '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/classroom/dashboard': typeof LayoutClassroomDashboardRoute
   '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
@@ -1658,6 +1676,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
   '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/classroom/dashboard': typeof LayoutClassroomDashboardRoute
   '/_layout/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/_layout/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
   '/_layout/course-introduction/package-m': typeof LayoutCourseIntroductionPackageMRoute
@@ -1746,6 +1765,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/classroom/dashboard'
     | '/course-introduction/detail'
     | '/course-introduction/package'
     | '/course-introduction/package-m'
@@ -1831,6 +1851,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/category/detail'
     | '/category/detail_m'
+    | '/classroom/dashboard'
     | '/course-introduction/detail'
     | '/course-introduction/package'
     | '/course-introduction/package-m'
@@ -1918,6 +1939,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
     | '/_layout/category/detail_m'
+    | '/_layout/classroom/dashboard'
     | '/_layout/course-introduction/detail'
     | '/_layout/course-introduction/package'
     | '/_layout/course-introduction/package-m'
@@ -2044,6 +2066,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/category/detail",
         "/_layout/category/detail_m",
+        "/_layout/classroom/dashboard",
         "/_layout/course-introduction/detail",
         "/_layout/course-introduction/package",
         "/_layout/course-introduction/package-m",
@@ -2308,6 +2331,10 @@ export const routeTree = rootRoute
     },
     "/_layout/category/detail_m": {
       "filePath": "_layout/category/detail_m.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/classroom/dashboard": {
+      "filePath": "_layout/classroom/dashboard.tsx",
       "parent": "/_layout"
     },
     "/_layout/course-introduction/detail": {
