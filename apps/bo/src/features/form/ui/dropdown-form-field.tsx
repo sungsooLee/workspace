@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { BaseFormFieldProps, OptionsConfig } from '@learnway/hooks';
-import { DropdownList, DropdownOption, SelectOption } from '@learnway/ui';
+import { Dropdown, DropdownOption } from '@learnway/ui';
 import { useFetchCodeGroups } from '../../../entities/platform';
 import { t } from 'i18next';
 import { ActionMeta, MultiValue, SingleValue } from 'react-select';
@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface DropdownFormField extends BaseFormFieldProps<string> {
-  options: SelectOption[];
+  options: DropdownOption[];
   optionsConfig?: OptionsConfig;
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
   ({ control, value, onChange, options: initOptions, optionsConfig }, ref) => {
-    const [options, setOptions] = useState<SelectOption[]>([]);
+    const [options, setOptions] = useState<DropdownOption[]>([]);
     const { data: codeData } = useFetchCodeGroups();
     const { t } = useTranslation();
     const queryClient = useQueryClient();
@@ -24,12 +24,6 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
       control,
       name: optionsConfig?.target || '',
     });
-
-    const selectedOption = useMemo<SelectOption>(() => {
-      if (!options) return { value: '', label: '' };
-      const selected = options.find((option) => option.value === value);
-      return selected || { value: '', label: '' };
-    }, [value, options]);
 
     const init = async () => {
       if (!optionsConfig) {
@@ -88,16 +82,6 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
       setOptions(newOptions);
     };
 
-    const handleSelectedChange = (
-      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-      _: ActionMeta<DropdownOption>,
-    ) => {
-      const singleValue = newValue as SingleValue<DropdownOption>;
-      if (singleValue) {
-        onChange(singleValue.value);
-      }
-    };
-
     useEffect(() => {
       init();
     }, [watchedValue]);
@@ -105,12 +89,7 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
     return (
       options &&
       options.length > 0 && (
-        <DropdownList
-          ref={ref}
-          value={selectedOption}
-          options={options}
-          onChange={handleSelectedChange}
-        />
+        <Dropdown ref={ref} value={value} options={options} onChange={onChange} />
       )
     );
   },

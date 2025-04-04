@@ -25,9 +25,9 @@ function RouteComponent() {
     { label: '현대자동차 Q', value: 'Q' },
     { label: '현대자동차 R', value: 'R' },
   ];
-  const handleChange = (event: SelectOption[]) => {
-    console.log(event);
-  };
+  // const handleChange = (event: SelectOption[]) => {
+  //   console.log(event);
+  // };
   const handleClick = () => {
     console.log('1111');
   };
@@ -118,12 +118,7 @@ import { Chip, ChipList, SelectOption } from '@learnway/ui';
         <h3 className="guide_tit3">Chips List Case</h3>
         <div className="flex_box">
           <div className="desc">
-            <ChipList
-              options={options}
-              placeholder="한글, 영문, 숫자 포함 9자 이하"
-              showInput
-              onChange={handleChange}
-            />
+            <ChipList options={options} placeholder="한글, 영문, 숫자 포함 9자 이하" showInput />
           </div>
         </div>
 

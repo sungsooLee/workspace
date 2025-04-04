@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
+import { ChipList, SelectOption, Accordion, Button, Avatar } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare } from '@learnway/icons';
 
 import pageContentsStyles from '../../_page-contents.module.css';
@@ -111,6 +111,8 @@ function RouteComponent() {
             <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
               <div className={operatorStyles.avatar}>
                 <span>김</span>
+                {/* avatar */}
+                {/* <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} /> */}
               </div>
               <div className={operatorStyles.txt_box}>
                 <div className={operatorStyles.profile}>
@@ -143,7 +145,8 @@ function RouteComponent() {
           <div className={styles.sub_box}>
             {/* package information */}
             <div
-              className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}>
+              className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
+            >
               <strong className={packageInformationStyles.tit}>
                 패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
               </strong>
@@ -168,7 +171,8 @@ function RouteComponent() {
                 <Button
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
-                  size="sm">
+                  size="sm"
+                >
                   구독하기
                 </Button>
               </div>

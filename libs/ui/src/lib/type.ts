@@ -115,3 +115,8 @@ export interface Image {
   src: string;
   size: number; // byte
 }
+
+export interface DropdownOption {
+  value: string;
+  label?: string;
+}

@@ -109,7 +109,7 @@ function RouteComponent() {
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       className={formStyles.short}
                       options={[
                         { value: 'type1', label: '+82' },

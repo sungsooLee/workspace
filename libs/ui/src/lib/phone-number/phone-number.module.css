@@ -1,8 +1,8 @@
 .start {
   &.wrap {
     @apply flex w-full items-center;
-    .select_area {
-      @apply mr-[8px] min-w-[120px];
+    [class*='select_wrap'] {
+      @apply mr-[8px] !max-w-[120px];
     }
     .input_area {
       @apply flex-auto;

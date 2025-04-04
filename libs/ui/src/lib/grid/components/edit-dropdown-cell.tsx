@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CellContext } from '@tanstack/react-table';
-import { Dropdown } from '../../dropdown-list/dropdown-list';
+import { Dropdown } from '../../dropdown/dropdown';
 
 interface EditDropdownCellProps<T> {
   info: CellContext<T, string>;

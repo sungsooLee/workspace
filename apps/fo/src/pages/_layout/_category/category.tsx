@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Navigation } from 'swiper/modules';
 
-import { Carousel, ContentsRow, Input, Pagination, Select } from '@learnway/ui';
+import { Carousel, ContentsRow, Input, Pagination, Dropdown } from '@learnway/ui';
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
 
@@ -71,7 +71,7 @@ function RouteComponent() {
               {/*
               카테고리 4,5,6 뎁스 영역
               */}
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -85,7 +85,7 @@ function RouteComponent() {
                   { value: 'h', label: '캐스퍼' },
                 ]}
               />
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -94,7 +94,7 @@ function RouteComponent() {
                   { value: 'c', label: 'NE(2021)' },
                 ]}
               />
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -124,7 +124,7 @@ function RouteComponent() {
           <div className={styles.right}>
             {/* <Arrays className={styles.array}></Arrays>
             <div className={styles.box}>
-              <Select
+              <Dropdown
                 options={[
                   { value: '20', label: '20개씩' },
                   { value: '50', label: '50개씩' },

@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import logoImage from '../../../../../assets/images/logo_footer.png';
-import { Select } from '@learnway/ui';
+import { Dropdown } from '@learnway/ui';
 
 import { TermsButton } from '../../../../../features/auth';
 
@@ -65,7 +65,7 @@ function FooterComponent() {
           </div>
 
           <div className={styles.family_site_info}>
-            <Select
+            <Dropdown
               // onChange={() => {}}
               options={[
                 {

@@ -1,11 +1,30 @@
 import { forwardRef } from 'react';
 import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
-import { AutoCompleteProps, DropdownOption } from './type';
+import { useCreation } from 'ahooks';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { map } from 'lodash';
+
 import { IcoDelete03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+
+import { DropdownOption } from '../type';
+import { ReactSelectComponentProps } from '../dropdown/dropdown';
+
 import { Button } from '../button/button';
-import './auto-complete.css';
+import './auto-complete.module.css';
+
+export interface PrimitiveComponentProps extends Omit<ReactSelectComponentProps, 'options'> {
+  loadOptions: (inputValue: string) => Promise<DropdownOption[]>;
+  defaultOptions?: boolean | DropdownOption[];
+  cacheOptions?: boolean;
+}
+
+export interface AutoCompleteDropdownComponentProps
+  extends Omit<PrimitiveComponentProps, 'value' | 'defaultValue' | 'onChange'> {
+  value?: any;
+  defaultValue?: any;
+  onChange?: (newValue?: any, actionMeta?: ActionMeta<any>) => void;
+}
 
 // clear 버튼
 const clearIndicator = (props: any) => {
@@ -18,7 +37,7 @@ const clearIndicator = (props: any) => {
   );
 };
 
-const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
+const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
   (
     {
       loadOptions,
@@ -43,8 +62,14 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
     },
     ref,
   ) => {
-    const uuid =
-      typeof window !== 'undefined' ? `dropdown-${Math.random().toString(36).substring(2, 9)}` : '';
+    const uuid = useCreation(
+      () =>
+        typeof window !== 'undefined'
+          ? `dropdown-${Math.random().toString(36).substring(2, 9)}`
+          : '',
+      [],
+    );
+
     const dropdownClass = cn(
       `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
       hideArrow && 'hide_arrow',
@@ -88,7 +113,7 @@ const AutoCompleteComponent = forwardRef<any, AutoCompleteProps>(
   },
 );
 
-const FormAutoCompleteComponent = forwardRef<any, any>(
+const AutoCompleteDropdownComponent = forwardRef<any, AutoCompleteDropdownComponentProps>(
   (
     {
       value,
@@ -107,25 +132,35 @@ const FormAutoCompleteComponent = forwardRef<any, any>(
       newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
       actionMeta: ActionMeta<DropdownOption>,
     ) => {
-      const singleValue = newValue as SingleValue<DropdownOption>;
-      onChange(singleValue ? singleValue.value : null);
+      if (isMulti) {
+        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value'); // ? newValue.map((option) => option.value) : [];
+        onChange && onChange(multiValues);
+      } else {
+        const singleValue = newValue as SingleValue<DropdownOption>;
+        onChange && onChange(singleValue?.value ?? null);
+      }
     };
 
     // 비동기로 옵션을 가져오므로 선택된 값이 옵션 목록에 없을 수 있음
-    const getFormattedValue = () => {
-      if (value === null || value === undefined) return null;
-      if (isMulti && Array.isArray(value)) {
-        // 다중 선택의 경우 값 배열을 DropdownOption 배열로 변환
-        return value.map((val) => ({ value: val, label: val.toString() }));
+    const selectedOptions = useCreation(() => {
+      if (!value) {
+        return null;
       }
-      // 단일 선택의 경우 value를 DropdownOption으로 변환
+
+      if (isMulti) {
+        return (Array.isArray(value) ? value : [value]).map((val) => ({
+          value: val,
+          label: val.toString(),
+        }));
+      }
+
       return { value, label: value.toString() };
-    };
+    }, [value]);
 
     return (
-      <AutoCompleteComponent
+      <PrimitiveComponent
         ref={ref}
-        value={getFormattedValue()}
+        value={selectedOptions}
         onChange={handleChange}
         onBlur={onBlur}
         loadOptions={loadOptions}
@@ -139,5 +174,4 @@ const FormAutoCompleteComponent = forwardRef<any, any>(
   },
 );
 
-export const AutoComplete = AutoCompleteComponent;
-export const FormAutoComplete = FormAutoCompleteComponent;
+export const AutoCompleteDropdown = AutoCompleteDropdownComponent;

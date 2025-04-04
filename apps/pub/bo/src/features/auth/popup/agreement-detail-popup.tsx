@@ -17,7 +17,7 @@ const AgreementDetailPopupCompoment = () => {
       <ModalTitle>{'약관 명'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.agreement_popup}`}>
-          <Select
+          <Dropdown
             size="lg"
             options={[
               { value: 'type1', label: '약관 명 YYYY-MM-DD' },

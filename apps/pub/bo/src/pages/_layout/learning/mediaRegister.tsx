@@ -23,7 +23,7 @@ import {
   ChipList,
   ContentsRow,
   DatePicker,
-  DropdownList,
+  Dropdown,
   DropdownOption,
   ImageOption,
   Input,
@@ -76,7 +76,7 @@ function RouteComponent() {
   // Modal : 채널 검색
   const { close: closeModal } = useModal();
   const ModalChannelContent = () => {
-    const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+    const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const options = [
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
@@ -101,12 +101,10 @@ function RouteComponent() {
                           <span className={searchStyles.text}>테넌트</span>
                         </label>
                         <div className={searchStyles.box}>
-                          <DropdownList
+                          <Dropdown
                             options={options}
-                            value={selectedOptions}
-                            onChange={(selected) =>
-                              setSelectedOptions(selected as DropdownOption[])
-                            }
+                            value={selectedValues}
+                            onChange={(selected) => setSelectedValues(selected)}
                             variant="default"
                             size={'sm'}
                           />
@@ -117,12 +115,10 @@ function RouteComponent() {
                           <span className={searchStyles.text}>채널</span>
                         </label>
                         <div className={searchStyles.box}>
-                          <DropdownList
+                          <Dropdown
                             options={options}
-                            value={selectedOptions}
-                            onChange={(selected) =>
-                              setSelectedOptions(selected as DropdownOption[])
-                            }
+                            value={selectedValues}
+                            onChange={(selected) => setSelectedValues(selected)}
                             variant="default"
                             size={'sm'}
                           />
@@ -198,7 +194,7 @@ function RouteComponent() {
 
   // Modal : 담당자 검색
   const ModalManagerContent = () => {
-    const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+    const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const options = [
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
@@ -223,12 +219,10 @@ function RouteComponent() {
                           <span className={searchStyles.text}>채널</span>
                         </label>
                         <div className={searchStyles.box}>
-                          <DropdownList
+                          <Dropdown
                             options={options}
-                            value={selectedOptions}
-                            onChange={(selected) =>
-                              setSelectedOptions(selected as DropdownOption[])
-                            }
+                            value={selectedValues}
+                            onChange={(selected) => setSelectedValues(selected)}
                             variant="default"
                             size={'sm'}
                           />
@@ -1097,7 +1091,7 @@ function RouteComponent() {
                   {/* 퍼블수정 20240319 : 수정 S */}
                   <div className={dynamicFormStyles.multiple_row}>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
-                      <Select
+                      <Dropdown
                         className={dynamicFormStyles.short}
                         options={[
                           { value: 'language1', label: '영어' },
@@ -1118,7 +1112,7 @@ function RouteComponent() {
                       </Button>
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
-                      <Select
+                      <Dropdown
                         className={dynamicFormStyles.short}
                         options={[
                           { value: 'language1', label: '영어' },
@@ -1138,7 +1132,7 @@ function RouteComponent() {
                       </Button>
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
-                      <Select
+                      <Dropdown
                         className={dynamicFormStyles.short}
                         options={[
                           { value: 'language1', label: '영어' },
@@ -1158,7 +1152,7 @@ function RouteComponent() {
                       </Button>
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
-                      <Select
+                      <Dropdown
                         className={dynamicFormStyles.short}
                         options={[
                           { value: 'language1', label: '언어선택' },

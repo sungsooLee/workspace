@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Select } from '@learnway/ui';
+import { Dropdown } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/select')({
   component: RouteComponent,
@@ -24,7 +24,7 @@ import { Select } from '@learnway/ui';`}
         <h3 className="guide_tit3">Select BO 기본(32px)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Select
+            <Dropdown
               options={[
                 { value: 'type1', label: 'aaaaa' },
                 { value: 'type2', label: 'bbbbb' },
@@ -45,7 +45,7 @@ import { Select } from '@learnway/ui';`}
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Select
+            <code>{`<Dropdown
 options={[
   { value: 'type1', label: 'aaaaa' },
   { value: 'type2', label: 'bbbbb' },
@@ -68,7 +68,7 @@ options={[
 
         <div className="flex_box">
           <div className="desc">
-            <Select
+            <Dropdown
               size="lg"
               options={[
                 { value: 'type1', label: 'aaaaa' },
@@ -90,7 +90,7 @@ options={[
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Select
+            <code>{`<Dropdown
         size="lg"
         options={[
           { value: 'type1', label: 'aaaaa' },
@@ -112,19 +112,19 @@ options={[
         <h3 className="guide_tit3">Select error 케이스(error 속성 추가)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Select size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} error={true} />
+            <Dropdown size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} error={true} />
           </div>
         </div>
         <h3 className="guide_tit3">Select readonly 케이스(readOnly 속성 추가)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Select size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} readOnly={true} />
+            <Dropdown size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} readOnly={true} />
           </div>
         </div>
         <h3 className="guide_tit3">Select disabled 케이스(disabled 속성 추가)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Select size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} disabled={true} />
+            <Dropdown size="lg" options={[{ value: 'type1', label: 'aaaaa' }]} disabled={true} />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, Select, Pagination } from '@learnway/ui';
+import { Button, ContentsRow, Input, Dropdown, Pagination } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowForward, IcoFilter, IcoArray, IcoDotpoints } from '@learnway/icons';
 
 import styles from './detail_m.module.css';
@@ -44,7 +44,8 @@ function RouteComponent() {
               width={12}
               height={12}
               stroke="#6f798b"
-              className={styles.arr}></IcoArrowForward>
+              className={styles.arr}
+            ></IcoArrowForward>
           </Button>
         </li>
         <li>
@@ -57,7 +58,8 @@ function RouteComponent() {
               width={12}
               height={12}
               stroke="#6f798b"
-              className={styles.arr}></IcoArrowForward>
+              className={styles.arr}
+            ></IcoArrowForward>
           </Button>
         </li>
         <li>
@@ -72,7 +74,7 @@ function RouteComponent() {
 
       <div className={styles.gray_box}>
         <div className={styles.box}>
-          <Select
+          <Dropdown
             className={styles.select}
             options={[
               { value: 'a', label: '분류선택' },
@@ -97,7 +99,8 @@ function RouteComponent() {
                 width={20}
                 height={20}
                 fill="none"
-                stroke={selectCheck === true ? '#fff' : '#07287e'}></IcoFilter>
+                stroke={selectCheck === true ? '#fff' : '#07287e'}
+              ></IcoFilter>
             </Button>
           </div>
         </div>
@@ -112,7 +115,7 @@ function RouteComponent() {
           </div>
           <div className={styles.right}>
             <div className={styles.box}>
-              <Select
+              <Dropdown
                 options={[
                   { value: 'a', label: '최신순' },
                   { value: 'b', label: '과정명순' },
@@ -121,7 +124,7 @@ function RouteComponent() {
               />
             </div>
             <div className={styles.box}>
-              <Select
+              <Dropdown
                 options={[
                   { value: '20', label: '20개씩' },
                   { value: '50', label: '50개씩' },

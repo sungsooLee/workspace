@@ -200,7 +200,7 @@ function RouteComponent() {
                 <span className={formStyles.form_text}>휴대폰 번호</span>
               </label>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={(formStyles.select_option, formStyles.short)}
                   options={[
                     { value: 'type1', label: '+82' },
