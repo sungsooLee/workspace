@@ -16,48 +16,80 @@ const ResourceImageListFormFieldComponent = forwardRef<
 >(({ value, onChange }, ref) => {
   const { t } = useTranslation();
 
-  const handleDownloadClick = () => {
+  /**
+   * 원본 다운로드 버튼 클릭 핸들러
+   * @returns {void}
+   */
+  const handleDownloadButtonClick = () => {
     console.log('원본 다운로드');
+    // 실제 다운로드 로직 구현
   };
 
-  const handleChangeImageClick = () => {
+  /**
+   * 이미지 변경 버튼 클릭 핸들러
+   * @returns {void}
+   */
+  const handleChangeImageButtonClick = () => {
     console.log('이미지 변경');
+    // 실제 이미지 변경 로직 구현
   };
 
-  const handlePreviewClick = () => {
+  /**
+   * 미리보기 버튼 클릭 핸들러
+   * @returns {void}
+   */
+  const handlePreviewButtonClick = () => {
     console.log('미리보기');
+    // 실제 미리보기 로직 구현
   };
 
+  /**
+   * 옵션 삭제 핸들러
+   * @param {object} option - 삭제할 옵션 객체
+   * @returns {void}
+   */
   const handleOptionDeleteClick = (option: any) => {
     const newValue = value?.filter((d) => d.id !== option.id);
-    onChange(newValue);
+    onChange?.(newValue);
   };
 
+  /**
+   * 옵션 순서 변경 핸들러
+   * @param {object[]} newOptions - 새로운 옵션 목록
+   * @returns {void}
+   */
+  const handleOptionsOrderChange = (newOptions: any) => onChange?.(newOptions);
+
   return (
-    <div className={cn(styles.start)}>
+    <div className={cn(styles.start)} ref={ref}>
       <strong className={style.title}>{t('업로드 파일')}</strong>
       <ul className={style.btn_list}>
         <li>
           <Button
             className={style.btn_text}
             label={t('원본 다운로드')}
-            onClick={handleDownloadClick}
+            onClick={handleDownloadButtonClick}
           />
         </li>
         <li>
           <Button
             className={style.btn_text}
             label={t('이미지 변경')}
-            onClick={handleChangeImageClick}
+            onClick={handleChangeImageButtonClick}
           />
         </li>
         <li>
-          <Button className={style.btn_text} label={t('미리보기')} onClick={handlePreviewClick} />
+          <Button
+            className={style.btn_text}
+            label={t('미리보기')}
+            onClick={handlePreviewButtonClick}
+          />
         </li>
       </ul>
       {/* image list */}
       <List
         options={value}
+        valueField={'id'}
         deletable
         draggable
         hideBorder
@@ -69,6 +101,7 @@ const ResourceImageListFormFieldComponent = forwardRef<
           </div>
         )}
         onOptionDeleteClick={handleOptionDeleteClick}
+        onOptionsOrderChange={handleOptionsOrderChange}
       />
     </div>
   );

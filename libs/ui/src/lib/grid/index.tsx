@@ -51,7 +51,6 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Dropdown } from '../dropdown/dropdown';
 import { DropdownOption } from '../type';
 
-// import './grid.css'; // grid CSS
 import styles from './grid.module.css'; // grid module CSS
 
 const Grid = forwardRef(

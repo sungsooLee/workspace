@@ -1,9 +1,9 @@
 .start {
+  @apply scrollbar max-h-[calc(100vh-100px)] max-w-[263px] overflow-y-auto overflow-x-hidden border-r-[1px] border-solid border-[var(--gray4)];
   &.open {
     @apply w-[263px];
     .lnb_wrap {
       @apply h-full;
-      border-right: 1px solid var(--gray4);
     }
   }
   &.close {

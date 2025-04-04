@@ -9,7 +9,7 @@ import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
 import { Checkbox } from '../checkbox/checkbox';
 import { DropdownOption } from '../type';
 
-import './dropdown.module.css';
+import styles from './dropdown.module.css';
 import { Button } from '../button/button';
 
 export interface ReactSelectComponentProps {
@@ -64,9 +64,9 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 
   return (
     <components.ValueContainer {...props}>
-      <div className="container">
+      <div className={styles.container}>
         {values.length > 0 && (
-          <span className="result_text">
+          <span className={styles.result_text}>
             {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
           </span>
         )}
@@ -83,8 +83,8 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 const Option = (props: any) => {
   return (
     <components.Option {...props}>
-      <div className="select_item">
-        {props.isMulti && <Checkbox checked={props.isSelected} onChange={() => null} />}
+      <div className={styles.select_item}>
+        {props.isMulti && <Checkbox size={'md'} checked={props.isSelected} onChange={() => null} />}
         <span>{props.label}</span>
       </div>
     </components.Option>
@@ -95,7 +95,7 @@ const Option = (props: any) => {
 const dropdownIndicator = (props: any) => {
   return (
     <components.DropdownIndicator {...props}>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" className="icon_arrow" />
+      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
     </components.DropdownIndicator>
   );
 };
@@ -104,7 +104,7 @@ const dropdownIndicator = (props: any) => {
 const clearIndicator = (props: any) => {
   return (
     <components.ClearIndicator {...props}>
-      <Button onlyIcon className="btn_clear">
+      <Button onlyIcon className={styles.btn_clear}>
         <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
       </Button>
     </components.ClearIndicator>
@@ -165,7 +165,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     };
 
     return (
-      <div className={cn(dropdownClass.trim(), 'dropdown', className)}>
+      <div className={cn(dropdownClass.trim(), styles.select_wrap, 'dropdown', className)}>
         <Select
           id={uuid}
           ref={ref}

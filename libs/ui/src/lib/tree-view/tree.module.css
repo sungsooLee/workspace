@@ -1,3 +1,73 @@
+.tree_wrap {
+  @apply w-full;
+  .tree {
+    [draggable='true'] {
+      cursor: grab;
+    }
+
+    [draggable='true']:active {
+      cursor: grabbing;
+    }
+    .node_title {
+      @apply body_bo_2_r ml-[8px] text-[var(--gray8)];
+    }
+    .tree_item {
+      @apply relative resize-none;
+      .tree_inner {
+        @apply flex min-h-[56px] items-center border-t-[1px] border-solid border-[var(--gray4)] bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_20px] bg-no-repeat !pl-[18px];
+        &:hover {
+          @apply bg-[var(--gray1)];
+        }
+        & + .tree_children {
+          .tree_item .tree_inner {
+            @apply bg-[left_26px_top_20px] !pl-[38px];
+            & + .tree_children {
+              .tree_item .tree_inner {
+                @apply bg-[left_46px_top_20px] !pl-[58px];
+              }
+            }
+          }
+        }
+      }
+      .tree_menu {
+        @apply mr-[8px] flex h-[21px] w-[20px] cursor-pointer items-center justify-center;
+      }
+      .folder_wrap {
+        @apply flex h-[21px] w-[20px] items-center justify-center;
+      }
+    }
+
+    .has_children {
+    }
+    .icon_folder {
+      @apply shrink-0;
+    }
+    .icon_plus {
+      @apply h-[21px] !w-[20px] shrink-0;
+      rect {
+        @apply stroke-[#07287E];
+      }
+      path {
+        @apply stroke-[#8C97AE];
+      }
+    }
+    .icon_minus {
+      @apply h-[21px] !w-[20px] shrink-0;
+      rect {
+        @apply stroke-[#07287E];
+      }
+      path {
+        @apply stroke-[#8C97AE];
+      }
+    }
+  }
+}
+.aaa {
+}
+
+.no_data {
+}
+
 /* 드래그 중인 노드 스타일 */
 .tree-node-dragging {
   opacity: 0.6 !important;
@@ -66,15 +136,6 @@ body.tree-dragging .tree div:not(.tree-node-dragging):hover {
   100% {
     opacity: 0.6;
   }
-}
-
-/* 드래그 커서를 잡는 모양으로 변경 */
-.tree [draggable='true'] {
-  cursor: grab;
-}
-
-.tree [draggable='true']:active {
-  cursor: grabbing;
 }
 
 /* 드래그 중인 노드의 내용물 흔들림 효과 */

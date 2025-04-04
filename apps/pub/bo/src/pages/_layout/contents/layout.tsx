@@ -1,6 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
+import { Tabs, Button } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+
+/* fab */
+import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css';
 
 /* tab contents */
 import { TabContents01 } from './-tabcontents/tabcontent01';
@@ -45,6 +49,12 @@ function RouteComponent() {
     <form className="form_row">
       <PageContainer tabs={true}>
         <Tabs items={items} type="fill" className="page_tabs" />
+        <div className={cn(fabStyles.start, fabStyles.fab_wrap, 'fab_wrap')}>
+          <div className={fabStyles.inner}>
+            <Button onlyIcon className={fabStyles.btn_top}></Button>
+            <Button onlyIcon className={fabStyles.btn_bottom}></Button>
+          </div>
+        </div>
       </PageContainer>
     </form>
   );
