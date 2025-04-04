@@ -13,6 +13,8 @@ import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from
 import { useTreeContext } from './tree.context';
 import { IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
 
+import styles from './tree.module.css'; // Tree module CSS
+
 const FilteredTreeNode = ({ node, draggedNodeKey, ...props }: TreeNodeComponentProps) => {
   const enhancedNode = node as EnhancedTreeNode;
 
@@ -262,11 +264,13 @@ const TreeNodeComponent = ({
           handleClick();
         }}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}>
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {dropPosition && <div className={dropIndicatorStyle[dropPosition]} />}
         <span
           className="flex h-6 w-6 cursor-pointer items-center justify-center"
-          onClick={handleToggleExpand}>
+          onClick={handleToggleExpand}
+        >
           {hasChildren ? (
             isExpanded ? (
               <ChevronDown className="h-4 w-4 text-gray-600" />
@@ -291,7 +295,8 @@ const TreeNodeComponent = ({
             {nodeButtons && (
               <div
                 className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
-                onClick={(e) => e.stopPropagation()}>
+                onClick={(e) => e.stopPropagation()}
+              >
                 {nodeButtons(enhanceNode, level)}
               </div>
             )}
@@ -300,7 +305,8 @@ const TreeNodeComponent = ({
                 className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
                 draggable={isDragAndDropMode && isActuallyDraggable}
                 onDragStart={isDragAndDropMode ? handleHamburgerDragStart : undefined}
-                onDragEnd={handleDragEnd}>
+                onDragEnd={handleDragEnd}
+              >
                 ☰
               </span>
             )}
@@ -638,7 +644,7 @@ const TreeView = ({
 
   return (
     <div
-      className="rounded-lg border bg-white p-4 shadow-sm"
+      className={styles.tree_wrap}
       onDragOver={(e) => {
         e.preventDefault();
         e.currentTarget.classList.add('bg-blue-100');
@@ -651,8 +657,9 @@ const TreeView = ({
         e.preventDefault();
         e.currentTarget.classList.remove('bg-blue-100');
         handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
-      }}>
-      <div className="tree">
+      }}
+    >
+      <div className={styles.tree}>
         {treeData.length > 0 && hasVisibleNodes ? (
           treeData.map((node) => (
             <FilteredTreeNode

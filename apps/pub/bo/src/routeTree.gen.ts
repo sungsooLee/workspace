@@ -64,6 +64,7 @@ import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learnin
 import { Route as LayoutContentsLayout02Import } from './pages/_layout/contents/layout02'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
+import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
@@ -427,6 +428,12 @@ const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTreeViewRoute = GuideGuideTreeViewImport.update({
+  id: '/guide/tree-view',
+  path: '/guide/tree-view',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1151,6 +1158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTooltipImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/tree-view': {
+      id: '/_guide/guide/tree-view'
+      path: '/guide/tree-view'
+      fullPath: '/guide/tree-view'
+      preLoaderRoute: typeof GuideGuideTreeViewImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/typography': {
       id: '/_guide/guide/typography'
       path: '/guide/typography'
@@ -1413,6 +1427,7 @@ interface GuideRouteChildren {
   GuideGuideTestRoute: typeof GuideGuideTestRoute
   GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
+  GuideGuideTreeViewRoute: typeof GuideGuideTreeViewRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
 }
@@ -1457,6 +1472,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTestRoute: GuideGuideTestRoute,
   GuideGuideTextareaRoute: GuideGuideTextareaRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
+  GuideGuideTreeViewRoute: GuideGuideTreeViewRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
 }
@@ -1590,6 +1606,7 @@ export interface FileRoutesByFullPath {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
+  '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/contents/layout02': typeof LayoutContentsLayout02Route
@@ -1683,6 +1700,7 @@ export interface FileRoutesByTo {
   '/guide/test': typeof GuideGuideTestRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
+  '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/contents/layout02': typeof LayoutContentsLayout02Route
@@ -1779,6 +1797,7 @@ export interface FileRoutesById {
   '/_guide/guide/test': typeof GuideGuideTestRoute
   '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
+  '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/contents/layout02': typeof LayoutContentsLayout02Route
@@ -1874,6 +1893,7 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/textarea'
     | '/guide/tooltip'
+    | '/guide/tree-view'
     | '/guide/typography'
     | '/contents/layout'
     | '/contents/layout02'
@@ -1966,6 +1986,7 @@ export interface FileRouteTypes {
     | '/guide/test'
     | '/guide/textarea'
     | '/guide/tooltip'
+    | '/guide/tree-view'
     | '/guide/typography'
     | '/contents/layout'
     | '/contents/layout02'
@@ -2060,6 +2081,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/test'
     | '/_guide/guide/textarea'
     | '/_guide/guide/tooltip'
+    | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
     | '/_layout/contents/layout'
     | '/_layout/contents/layout02'
@@ -2184,6 +2206,7 @@ export const routeTree = rootRoute
         "/_guide/guide/test",
         "/_guide/guide/textarea",
         "/_guide/guide/tooltip",
+        "/_guide/guide/tree-view",
         "/_guide/guide/typography",
         "/_guide/guide/"
       ]
@@ -2479,6 +2502,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/tooltip": {
       "filePath": "_guide/guide/tooltip.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/tree-view": {
+      "filePath": "_guide/guide/tree-view.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/typography": {

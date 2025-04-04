@@ -170,6 +170,73 @@
             @apply title_5_r ml-[4px] inline-block text-[var(--gray7)];
           }
         }
+        .rating_box {
+          @apply mt-[16px] table rounded-[8px] bg-[var(--gray1)] p-[24px];
+          .box {
+            @apply table-cell flex-1 px-[32px] align-middle;
+            .tit {
+              @apply body_3_r block w-full text-center text-[var(--gray8)];
+            }
+            .number {
+              @apply title_2_b mt-[4px] flex items-center text-center leading-[48px] text-[var(--gray8)];
+            }
+            ul {
+              li {
+                @apply flex items-center gap-[8px] whitespace-nowrap;
+                span {
+                  @apply body_3_r text-[var(--gray8)];
+                }
+                & > div {
+                  & > div {
+                    @apply w-[193px];
+                    & > div {
+                      @apply bg-[var(--status2)];
+                    }
+                  }
+                }
+                & + li {
+                  @apply mt-[8px];
+                }
+              }
+            }
+            & + .box {
+              @apply border-l-[1px] border-solid border-[var(--gray4)];
+            }
+          }
+        }
+
+        .review_box {
+          @apply mt-[24px];
+          .review_list {
+            li {
+              /* review */
+              .review {
+                @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
+                .profile {
+                  @apply flex items-center;
+                  img {
+                    @apply h-[40px] w-[40px];
+                  }
+                  .information {
+                    @apply ml-[8px];
+                    .box {
+                      @apply flex items-center;
+                      strong {
+                        @apply title_6_b text-[var(--gray8)];
+                      }
+                      .star {
+                        @apply relative ml-[8px] flex items-center pl-[8px];
+                        &::before {
+                          @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
