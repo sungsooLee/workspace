@@ -106,11 +106,6 @@ export * from './lib/progress/progress';
 export * from './lib/radio-group/radio-group';
 export * from './lib/radio-card/radio-card';
 
-// select
-export { selectStyles };
-export * from './lib/select/select';
-export * from './lib/select/type';
-
 // dropdown-list
 export * from './lib/dropdown/dropdown';
 export * from './lib/auto-complete/auto-complete';
