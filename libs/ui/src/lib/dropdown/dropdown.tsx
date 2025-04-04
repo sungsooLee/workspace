@@ -205,7 +205,10 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
 );
 
 const DropdownComponent = forwardRef<any, DropdownComponentProps>(
-  ({ value, onChange, onBlur, options = [], isMulti = false, ...props }, ref) => {
+  (
+    { value, onChange, onBlur, options = [], isMulti = false, disabled, readOnly, ...props },
+    ref,
+  ) => {
     // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
     const handleChange = (
       newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
@@ -247,6 +250,8 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         onBlur={onBlur}
         options={Array.isArray(options) ? options : []}
         isMulti={isMulti}
+        isReadonly={readOnly}
+        isDisabled={disabled}
         {...props}
       />
     );
