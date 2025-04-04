@@ -113,6 +113,7 @@ export { ReactComponent as IcoShare } from './lib/ic_share.svg'; // share
 export { ReactComponent as IcoPin } from './lib/ic_pin.svg'; // pin
 export { ReactComponent as IcoThumbsUp } from './lib/ic_thumbs_up.svg'; // thumbs
 export { ReactComponent as IcoMessageCircle } from './lib/ic_message_circle.svg'; // message
+export { ReactComponent as IcoMoreVertical } from './lib/ic_more_vertical.svg'; // more vertical
 
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 //export Default as Information from './lib/information.svg?react';

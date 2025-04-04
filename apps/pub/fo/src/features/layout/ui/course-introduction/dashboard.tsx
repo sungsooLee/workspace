@@ -5,7 +5,7 @@ import { Button } from '@learnway/ui';
 import styles from './dashboard.module.css';
 
 const CourseDashboardCompoment = () => {
-  return <div className={`${styles.start} ${styles.dashboard}`}></div>;
+  return <div className={`${styles.start} ${styles.dashboard}`}>대시보드</div>;
 };
 
 export const CourseDashboard = memo(CourseDashboardCompoment);

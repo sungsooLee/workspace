@@ -218,7 +218,7 @@
                     @apply h-[40px] w-[40px];
                   }
                   .information {
-                    @apply ml-[8px];
+                    @apply relative ml-[8px] w-full;
                     .box {
                       @apply flex items-center;
                       strong {
@@ -245,6 +245,9 @@
                       & + .box {
                         @apply mt-[2px];
                       }
+                    }
+                    .setting {
+                      @apply absolute right-0 top-0;
                     }
                   }
                 }

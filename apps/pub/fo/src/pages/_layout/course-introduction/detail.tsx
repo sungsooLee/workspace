@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Tabs, Avatar, Progress } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Tabs, Avatar, Progress, Popover } from '@learnway/ui';
 import {
   IcoHeart,
   IcoUser01,
@@ -9,8 +9,9 @@ import {
   IcoPin,
   IcoThumbsUp,
   IcoMessageCircle,
+  IcoMoreVertical,
 } from '@learnway/icons';
-// import { CourseDashboard } from './-dashboard/dashboard';
+import { CourseDashboard } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import operatorStyles from './operator.module.css';
@@ -57,7 +58,11 @@ function RouteComponent() {
     {
       title: '대시보드',
       key: 'a',
-      content: <div className={styles.dashboard_content}>{/* <CourseDashboard /> */}</div>,
+      content: (
+        <div className={styles.dashboard_content}>
+          <CourseDashboard />
+        </div>
+      ),
     },
     {
       title: '과정소개',
@@ -340,7 +345,7 @@ function RouteComponent() {
                             <IcoStar width={16} height={16} fill="#ffb902" />
                             <IcoStar width={16} height={16} fill="#ffb902" />
                             <IcoStar width={16} height={16} fill="#ffb902" />
-                            <IcoStar width={16} height={16} fill="#ffb902" />
+                            <IcoStar width={16} height={16} fill="#ede0f7" stroke="#d6dae1" />
                           </div>
                         </div>
                         <div className={styles.box}>
@@ -352,6 +357,15 @@ function RouteComponent() {
                             <IcoPin width={20} height={20} fill="#d6dae1" />
                           </i>
                         </div>
+                        <Popover
+                          popoverContent={<SettingPopover />}
+                          side="bottom"
+                          align="end"
+                          sideOffset={5}
+                          className={styles.setting}
+                        >
+                          <IcoMoreVertical width={24} height={24} />
+                        </Popover>
                       </div>
                     </div>
                     <p className={styles.txt}>
@@ -483,3 +497,12 @@ function RouteComponent() {
     </div>
   );
 }
+
+const SettingPopover = () => {
+  return (
+    <div className={`${styles.start} ${styles.setting}`}>
+      <Button>수정</Button>
+      <Button>삭제</Button>
+    </div>
+  );
+};
