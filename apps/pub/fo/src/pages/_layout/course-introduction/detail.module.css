@@ -230,6 +230,36 @@
                           @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
                         }
                       }
+                      span {
+                        @apply body_3_r inline-block text-[var(--gray7)];
+                        & + span {
+                          @apply relative ml-[8px] pl-[8px];
+                          &::before {
+                            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+                          }
+                        }
+                      }
+                      .pin {
+                        @apply ml-[10px] inline-block;
+                      }
+                      & + .box {
+                        @apply mt-[2px];
+                      }
+                    }
+                  }
+                }
+                .txt {
+                  @apply body_3_r mt-[12px] text-[var(--gray7)];
+                }
+                .count_box {
+                  @apply mt-[12px];
+                  button {
+                    @apply body_3_r text-[var(--gray7)];
+                    svg {
+                      @apply mr-[8px] inline-block;
+                    }
+                    & + button {
+                      @apply ml-[16px] leading-[22px];
                     }
                   }
                 }

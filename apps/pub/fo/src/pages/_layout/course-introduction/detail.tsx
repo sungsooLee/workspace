@@ -1,7 +1,16 @@
 import { useState, useRef } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Button, Tabs, Avatar, Progress } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
+import {
+  IcoHeart,
+  IcoUser01,
+  IcoShare,
+  IcoStar,
+  IcoPin,
+  IcoThumbsUp,
+  IcoMessageCircle,
+} from '@learnway/icons';
+// import { CourseDashboard } from './-dashboard/dashboard';
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import operatorStyles from './operator.module.css';
@@ -48,7 +57,7 @@ function RouteComponent() {
     {
       title: '대시보드',
       key: 'a',
-      content: <h2>a</h2>,
+      content: <div className={styles.dashboard_content}>{/* <CourseDashboard /> */}</div>,
     },
     {
       title: '과정소개',
@@ -338,6 +347,10 @@ function RouteComponent() {
                           <span>현대오토에버</span>
                           <span>L&D플랫폼팀</span>
                           <span>2026.07.12</span>
+                          {/* pin */}
+                          <i className={styles.pin}>
+                            <IcoPin width={20} height={20} fill="#d6dae1" />
+                          </i>
                         </div>
                       </div>
                     </div>
@@ -348,6 +361,15 @@ function RouteComponent() {
                       <br />
                       발음때문에 -1점 했어요
                     </p>
+                    <div className={styles.count_box}>
+                      <Button>
+                        <IcoThumbsUp width={20} height={20} stroke="6f798b" />
+                        34
+                      </Button>
+                      <Button>
+                        <IcoMessageCircle width={20} height={20} />0
+                      </Button>
+                    </div>
                   </div>
                 </li>
               </ul>

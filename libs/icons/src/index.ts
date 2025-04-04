@@ -110,6 +110,9 @@ export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // succe
 export { ReactComponent as IcoPaperClip } from './lib/ic_paperclip.svg'; // file upload
 export { ReactComponent as IcoPpt } from './lib/ic_ppt.svg'; // ppt, pdf
 export { ReactComponent as IcoShare } from './lib/ic_share.svg'; // share
+export { ReactComponent as IcoPin } from './lib/ic_pin.svg'; // pin
+export { ReactComponent as IcoThumbsUp } from './lib/ic_thumbs_up.svg'; // thumbs
+export { ReactComponent as IcoMessageCircle } from './lib/ic_message_circle.svg'; // message
 
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 //export Default as Information from './lib/information.svg?react';
