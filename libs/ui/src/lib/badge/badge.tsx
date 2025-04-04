@@ -2,7 +2,7 @@ import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import { SelectOption } from '../select/type';
+import { SelectOption } from '../type';
 import styles from './badge.module.css';
 import { Button } from '../button/button';
 
@@ -37,7 +37,8 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
           status && styles[status],
           size && styles[size],
         )}
-        onClick={handleClick}>
+        onClick={handleClick}
+      >
         <Button className={cn(styles.label)} variant="text">
           {label}
         </Button>
