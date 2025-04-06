@@ -6,7 +6,7 @@ import {
   Stepper,
   ContentsRow,
   Input,
-  DropdownList,
+  Dropdown,
   DropdownOption,
   DatePicker,
   Textarea,
@@ -31,8 +31,8 @@ function RouteComponent() {
     { label: '권한정보입력', value: 'step4' },
   ];
 
-  const initialValue: DropdownOption = { value: 'option2', label: '채널 소유자2' };
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[] | null>([initialValue]);
+  const [selectedValues, setSelectedValues] = useState<string[] | null>(['option2']);
+
   const options = [
     { value: 'option1', label: '채널 소유자' },
     { value: 'option2', label: '채널 소유자2' },
@@ -160,10 +160,10 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <DropdownList
+                <Dropdown
                   options={options}
-                  value={selectedOptions}
-                  onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                  value={selectedValues}
+                  onChange={(selected) => setSelectedValues(selected)}
                   variant="default"
                   size={'lg'}
                   isReadonly={true}

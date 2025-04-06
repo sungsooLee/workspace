@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_footer.png';
-import { Select, Button, useModal } from '@learnway/ui';
+import { Dropdown, Button, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
 function FooterComponent() {
@@ -41,7 +41,8 @@ function FooterComponent() {
                           width: 'm_full',
                           content: <AgreementPopup />,
                         })
-                      }>
+                      }
+                    >
                       이용약관
                     </Button>
                   ) : (
@@ -56,7 +57,8 @@ function FooterComponent() {
                           width: 'm_full',
                           content: <PrivacyPopup />,
                         })
-                      }>
+                      }
+                    >
                       <strong>개인정보 처리방침</strong>
                     </Button>
                   ) : (
@@ -90,7 +92,7 @@ function FooterComponent() {
           </div>
 
           <div className={styles.family_site_info}>
-            <Select
+            <Dropdown
               size="lg"
               onChange={() => console.log('change')}
               options={[

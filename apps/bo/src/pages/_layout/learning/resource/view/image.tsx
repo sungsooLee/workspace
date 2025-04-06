@@ -1,22 +1,23 @@
-import React from 'react';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
+import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import {
+  ResourceImageListFormField,
   SharedChannelGridFormField,
   ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
-import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
+import React from 'react';
+import { t } from 'i18next';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
-import { BlogInfo } from '../../../../../features/learning/ui/resource/blog-info';
+import { getRandomId } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/image')({
   component: RouteComponent,
@@ -39,7 +40,8 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}>
+              onClick={() => router.navigate({ to: '/learning/resource' })}
+            >
               목록
             </Button>
           </LinkBox>
@@ -99,9 +101,9 @@ function RouteComponent() {
               <DynamicFormField name={'contact'} />
             </FormRow>
           </ContentsRow>
-          {/*사용기한*/}
           <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
+              {/*사용기한*/}
               <DynamicFormField name={'expirationDate'} />
             </FormRow>
           </ContentsRow>
@@ -120,39 +122,15 @@ function RouteComponent() {
               <DynamicFormField name={'isExternalDevelopmentCompany'} />
             </FormRow>
           </ContentsRow>
-          {/*외주개발업체정보 상세*/}
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
-            {/*외부개발업체*/}
-            <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompany'}>
-                  <InputModalSelectorFormField
-                    modalConfig={{
-                      title: '',
-                      width: 'md',
-                      content: <ManagerChoiceModal />,
-                    }}
-                  />
-                </DynamicFormField>
-              </FormRow>
-            </ContentsRow>
-            {/*외주개발업체 담당자*/}
-            <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
-              </FormRow>
-              {/*외주개발업체 연락처*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'} />
-              </FormRow>
-            </ContentsRow>
-          </FormDisplay>
-          {/* 블로그 내용 */}
+          {/*외주개발업체 담당자, 연락처 */}
           <ContentsRow>
+            {/*외주개발업체 담당자*/}
             <FormRow provider={provider}>
-              <DynamicFormField name="blogContent" />
+              <DynamicFormField name={'externalDevelopmentCompanyManager'} />
+            </FormRow>
+            {/*외주개발업체 연락처*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'externalDevelopmentCompanyContact'}></DynamicFormField>
             </FormRow>
           </ContentsRow>
           {/*썸네일*/}
@@ -225,7 +203,12 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <BlogInfo />
+          {/*<ImageInfo />*/}
+          <FormRow provider={provider}>
+            <DynamicFormField name={'imageList'}>
+              <ResourceImageListFormField />
+            </DynamicFormField>
+          </FormRow>
         </SubContents>
       </PageContainer>
     </form>
@@ -252,9 +235,6 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
-      validation: {
-        type: 'string',
-      },
     },
     {
       label: t('학습자원 설명'),
@@ -350,12 +330,6 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      label: t('블로그 내용'),
-      name: 'blogContent',
-      type: 'textarea',
-      value: '',
-    },
-    {
       label: t('썸네일'),
       name: 'thumbnails',
       type: 'custom',
@@ -430,7 +404,7 @@ const formConfig: DynamicFormConfig = {
       guideText: '공유채널 설정',
     },
     {
-      label: t('검수 확인'),
+      label: t('검수확인'),
       name: 'isInspectionConfirmed',
       type: 'checkbox',
       format: 'boolean',
@@ -441,7 +415,7 @@ const formConfig: DynamicFormConfig = {
       value: false,
     },
     {
-      label: t('저작권 확인'),
+      label: t('저작권확인'),
       name: 'isCopyrightConfirmed',
       format: 'boolean',
       guideText:
@@ -453,7 +427,7 @@ const formConfig: DynamicFormConfig = {
       value: false,
     },
     {
-      label: t('보안 확인'),
+      label: t('보안확인'),
       name: 'isSecurityConfirmed',
       format: 'boolean',
       guideText:
@@ -464,17 +438,31 @@ const formConfig: DynamicFormConfig = {
       },
       value: false,
     },
+    {
+      label: t('이미지'),
+      name: 'imageList',
+      type: 'custom',
+      format: 'array',
+      value: Array(10)
+        .fill(null)
+        .map((d, i) => ({
+          id: getRandomId(),
+          name: `name${i}`,
+          size: 1024,
+          path: 'https://picsum.photos/200',
+        })),
+    },
   ],
   validator: {
     // channelName: {
     //   format: 'string', // 데이터 타입
     //   required: true, // 필수 여부 // 기본값 false
-    //   conditions: [
-    //     {
-    //       fn: (values: Record<string, any>) => values.age > 10,
-    //       path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
-    //     },
-    //   ],
+    // },
+    // learningResourceName: true, // 학습자원명
+    // externalDevelopmentCompanyManager: {
+    //   required: {
+    //     fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
+    //   },
     // },
   },
 };

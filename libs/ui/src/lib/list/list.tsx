@@ -7,6 +7,7 @@ import { Button } from '../button/button';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -72,11 +73,12 @@ const ListComponent = function ({
    * @param option 선택한 옵션 객체
    */
   const handleOptionSelect = (event: React.MouseEvent, option: any) => {
-    // for single
-    onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
-    // for multiple
-    const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
-    onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
+    if (multiple) {
+      const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
+      onOptionsSelect?.(newSelectedOptions); // 변경된 옵션 목록을 부모 컴포넌트로 전달
+    } else {
+      onOptionSelect?.(option); // 선택된 옵션을 부모 컴포넌트로 전달
+    }
   };
 
   /**
@@ -106,7 +108,11 @@ const ListComponent = function ({
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      modifiers={[restrictToVerticalAxis]}
+    >
       <SortableContext
         items={options.map((item) => item[valueField])}
         strategy={verticalListSortingStrategy}
@@ -125,7 +131,10 @@ const ListComponent = function ({
               key={d[valueField]}
               item={d}
               index={i}
+              showItemBorder={showItemBorder}
               itemRenderer={itemRenderer}
+              valueField={valueField}
+              labelField={labelField}
               isSelected={
                 !disabledActive &&
                 selectedOptions?.find((x: any) => x[valueField] === d[valueField])
@@ -146,8 +155,7 @@ const ListComponent = function ({
 // SortableItem
 // -------------------------------------------------------------------------
 
-interface SortableItemProps
-  extends Pick<ListProps, 'showItemBorder' | 'deletable' | 'draggable' | 'itemRenderer'> {
+interface SortableItemProps extends Partial<ListProps> {
   item: any;
   index: number;
   className?: string;
@@ -163,12 +171,14 @@ const SortableItem = ({
   deletable,
   draggable,
   itemRenderer,
+  valueField = '',
+  labelField = '',
   isSelected,
   onDelete,
   onClick,
 }: SortableItemProps) => {
   const { setNodeRef, transform, transition, listeners, attributes, isDragging } = useSortable({
-    id: item.id,
+    id: item[valueField],
   });
 
   const style = {
@@ -189,7 +199,7 @@ const SortableItem = ({
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item.label}
+        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item[labelField]}
         {deletable && (
           <Button
             type="button"

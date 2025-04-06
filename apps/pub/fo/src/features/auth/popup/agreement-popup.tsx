@@ -8,7 +8,7 @@ import {
   ModalTitle,
   Button,
   useModal,
-  Select,
+  Dropdown,
 } from '@learnway/ui';
 
 const AgreementPopupCompoment = () => {
@@ -18,7 +18,7 @@ const AgreementPopupCompoment = () => {
       <ModalTitle>{'이용약관'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.agreement_popup}`}>
-          <Select
+          <Dropdown
             size="lg"
             options={[
               { value: 'type1', label: '약관 명 YYYY-MM-DD' },

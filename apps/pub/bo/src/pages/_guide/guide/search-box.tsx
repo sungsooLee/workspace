@@ -12,7 +12,7 @@ import {
   // ChipList,
   // SelectOption,
   Input,
-  DropdownList,
+  Dropdown,
   DropdownOption,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch, IcoArrowDownDouble } from '@learnway/icons';
@@ -36,7 +36,7 @@ function RouteComponent() {
   const handleDate2 = (value: any) => {
     setDate2(value);
   };
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -57,10 +57,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -75,7 +75,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -99,10 +100,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -115,10 +116,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -133,7 +134,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -157,10 +159,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -173,10 +175,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -189,10 +191,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -207,7 +209,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -231,10 +234,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -247,10 +250,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -263,10 +266,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -277,10 +280,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -295,7 +298,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -319,10 +323,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -335,10 +339,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -351,10 +355,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -367,10 +371,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -385,7 +389,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -409,10 +414,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -425,10 +430,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -443,7 +448,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -467,10 +473,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -483,10 +489,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -497,10 +503,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -515,7 +521,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -539,10 +546,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -553,10 +560,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -569,10 +576,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -587,7 +594,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
@@ -611,10 +619,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>테넌트</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -627,7 +635,7 @@ function RouteComponent() {
                     <span className={searchStyles.text}>채널</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <Select
+                    <Dropdown
                       className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
@@ -643,10 +651,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>유형</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -671,10 +679,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>테넌트</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -687,7 +695,7 @@ function RouteComponent() {
                     <span className={searchStyles.text}>채널</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <Select
+                    <Dropdown
                       className={searchStyles.select_option}
                       options={[
                         { value: 'type1', label: '전체' },
@@ -703,10 +711,10 @@ function RouteComponent() {
                     <span className={searchStyles.text}>유형</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <DropdownList
+                    <Dropdown
                       options={options}
-                      value={selectedOptions}
-                      onChange={(selected) => setSelectedOptions(selected as DropdownOption[])}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
                     />
@@ -769,7 +777,8 @@ function RouteComponent() {
               variant="search"
               size="sm"
               onlyIcon
-              onClick={() => setIsExpanded(!isExpanded)}>
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
               <IcoArrowDownDouble className={searchStyles.ico_expand} />
             </Button>
             <Button
@@ -777,7 +786,8 @@ function RouteComponent() {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>

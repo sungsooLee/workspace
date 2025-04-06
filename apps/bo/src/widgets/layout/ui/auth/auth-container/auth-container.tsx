@@ -21,13 +21,15 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
 
   return (
     <div
-      className={`${styles.start} ${styles.auth_container} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
+      className={`${styles.start} ${styles.auth_container} ${isSigninPage(location.pathname) ? styles.login : ''}`}
+    >
       <div className={styles.auth_area}>
         <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
-          {t(meta.title)}
+          {t(meta?.title)}
         </h2>
         <div
-          className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}>
+          className={`${styles.auth_inner} ${isSigninPage(location.pathname) ? styles.login : ''}`}
+        >
           {children}
         </div>
       </div>

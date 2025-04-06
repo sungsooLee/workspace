@@ -41,7 +41,7 @@ function RouteComponent() {
           size={'lg'}
           className={styles.select}
         />
-        {/* <Select
+        {/* <Dropdown
           size="lg"
           options={[
             { value: 'type1', label: '약관 명 YYYY-MM-DD' },

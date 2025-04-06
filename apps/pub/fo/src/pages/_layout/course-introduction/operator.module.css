@@ -29,6 +29,9 @@
       }
       .definition_list {
         @apply w-1/2;
+        .txt {
+          @apply body_3_r block leading-[22px] text-[var(--gray7)];
+        }
       }
     }
   }

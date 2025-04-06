@@ -205,6 +205,8 @@ export interface TreeNodeComponentProps {
   dropPosition?: any;
   draggedNode?: TreeNode | null; // 드래그 중인 노드 객체 전달
   onCustomNodeClick?: (node: TreeNode) => void;
+  size?: string;
+  className?: string;
 }
 
 /**

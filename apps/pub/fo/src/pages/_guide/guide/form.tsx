@@ -4,7 +4,7 @@ import {
   Input,
   Button,
   Textarea,
-  Select,
+  Dropdown,
   Tooltip,
   ChipList,
   SelectOption,
@@ -228,7 +228,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <Select
+              <Dropdown
                 className={formStyles.select_option}
                 size="lg"
                 options={[
@@ -295,7 +295,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       className={formStyles.select_option}
                       size="lg"
                       options={[
@@ -477,7 +477,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
             <div
               className={`${formStyles.input_box_wrap} ${toggleSections[4] ? formStyles.open : ''}`}>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   size="lg"
                   options={[
@@ -500,7 +500,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 </Button>
               </div>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   size="lg"
                   options={[
@@ -522,7 +522,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 </Button>
               </div>
               <div className={formStyles.input_box}>
-                <Select
+                <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
                   size="lg"
                   options={[

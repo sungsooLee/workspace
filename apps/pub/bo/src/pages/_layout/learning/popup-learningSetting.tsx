@@ -7,7 +7,7 @@ import {
   Checkbox,
   ContentsRow,
   DatePicker,
-  DropdownList,
+  Dropdown,
   DropdownOption,
   Grid,
   Input,
@@ -77,7 +77,7 @@ function RouteComponent() {
 
   // Modal : 담당자 검색
   const ModalManagerContent = () => {
-    const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+    const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const options = [
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
@@ -100,12 +100,10 @@ function RouteComponent() {
                           <span className={searchStyles.text}>채널</span>
                         </label>
                         <div className={searchStyles.box}>
-                          <DropdownList
+                          <Dropdown
                             options={options}
-                            value={selectedOptions}
-                            onChange={(selected) =>
-                              setSelectedOptions(selected as DropdownOption[])
-                            }
+                            value={selectedValues}
+                            onChange={(selected) => setSelectedValues(selected)}
                             variant="default"
                             size={'sm'}
                           />
@@ -134,14 +132,16 @@ function RouteComponent() {
                     className={searchStyles.btn_refresh}
                     variant="search"
                     size="sm"
-                    onlyIcon>
+                    onlyIcon
+                  >
                     <IcoRefresh02 className={searchStyles.icon_refresh} />
                   </Button>
                   <Button
                     type="button"
                     variant="search"
                     size="sm"
-                    className={searchStyles.btn_search}>
+                    className={searchStyles.btn_search}
+                  >
                     <IcoSearch className={searchStyles.icon_sm_search} />
                     조회
                   </Button>
@@ -287,7 +287,8 @@ function RouteComponent() {
                         className={formStyles.tooltip}
                         side="bottom"
                         align="start"
-                        content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}>
+                        content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}
+                      >
                         <Button onlyIcon>
                           <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                         </Button>
@@ -384,7 +385,8 @@ function RouteComponent() {
                         className={formStyles.tooltip}
                         side="bottom"
                         align="start"
-                        content={'설정된 채널에 해당 학습자원이 공유됩니다.'}>
+                        content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                      >
                         <Button onlyIcon>
                           <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                         </Button>

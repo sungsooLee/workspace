@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { Button, ChipList, Select, SelectOption } from '@learnway/ui';
+import { Button, ChipList, Dropdown, SelectOption } from '@learnway/ui';
 import { t } from 'i18next';
 
 export interface FormSelectChipListComponentProps {
@@ -46,7 +46,7 @@ const FormSelectChipListComponent = forwardRef<HTMLDivElement, FormSelectChipLis
     return (
       <div ref={ref}>
         <div>
-          <Select {...props} options={selectOptions} onChange={handleSelectChange} />
+          <Dropdown {...props} options={selectOptions} onChange={handleSelectChange} />
           <Button onClick={handleButtonClick}>{t('선택')}</Button>
         </div>
         <ChipList options={selectedChipOptions} />
