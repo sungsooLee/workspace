@@ -1,5 +1,10 @@
 export type NodeMovePositionType = 'BEFORE' | 'AFTER' | 'INSIDE';
-export type TreeType = 'DEFAULT' | 'DRAG_DROP' | 'SHUTTLE_LIST';
+export type TreeType =
+  | 'DEFAULT'
+  | 'DRAG_DROP'
+  | 'SHUTTLE_LIST'
+  | 'SAME_LEVEL_ONLY' // 같은 레벨 내에서만 이동 가능
+  | 'SAME_PARENT_ONLY'; // 같은 부모 내에서만 순서 변경 가능
 
 /**
  * 노드 제약 사항
@@ -32,10 +37,10 @@ interface BaseEventPayload {
 /**
  * 이벤트별 페이로드 타입 정의
  */
-export interface SelectEventPayload extends BaseEventPayload {
-  type: 'NODE_SELECT';
-  node: TreeNode | null;
-}
+// export interface SelectEventPayload extends BaseEventPayload {
+//   type: 'NODE_SELECT';
+//   node: TreeNode | null;
+// }
 
 export interface MoveEventPayload extends BaseEventPayload {
   type: 'NODE_MOVE';
@@ -108,6 +113,7 @@ export interface TreeNode {
   treeId?: string;
   //추후 Seq 속성 추가 될 것 같음. 해당 속성으로 무브에 대한 이벤트 targetIndex 로직 추가하면 될 것 같음.
   isUsed?: boolean;
+  level?: number;
   [key: string]: any;
 }
 
@@ -124,6 +130,7 @@ export interface TreeProps {
   treeId: string;
   data: TreeNode[];
   onAction?: (payload: TreeEventPayload) => void;
+  onApiCallback?: (payload: ApiCallbackPayload) => Promise<boolean>; // API 호출을 위한 콜백 추가
   expandTrigger?: boolean;
   type?: TreeType;
   nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
@@ -133,6 +140,7 @@ export interface TreeProps {
   onExpandedKeysChange?: (keys: string[]) => void; // 확장된 키 변경 콜백
   onSelectedNodeChange?: (node: TreeNode) => void;
   selectedNode?: TreeNode | null;
+  onCustomNodeClick?: (node: TreeNode) => void;
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -140,6 +148,40 @@ export interface IndicatorPosition {
   targetId: string | null;
   position: NodeMovePositionType;
 }
+
+export interface NodeMoveEventPayload extends BaseEventPayload {
+  type: 'NODE_MOVE' | 'NODE_COPY';
+  sourceNode: TreeNode;
+  targetNode: TreeNode | null;
+  position: NodeMovePositionType;
+  treeId: string;
+}
+
+export interface SelectEventPayload extends BaseEventPayload {
+  type: 'NODE_SELECT';
+  node: TreeNode;
+}
+
+// export interface ApiCallbackPayload extends BaseEventPayload {
+//   type: string;
+//   sourceNode: TreeNode;
+//   targetNode: TreeNode | null;
+//   position: NodeMovePositionType;
+//   treeId: string;
+//   success?: boolean;
+//   error?: string;
+// }
+export interface ApiCallbackPayload extends BaseEventPayload {
+  type: string;
+  sourceNode: TreeNode;
+  targetNode: TreeNode | null;
+  position: NodeMovePositionType;
+  treeId: string;
+  targetIndex?: number;
+  targetParentKey?: string | null;
+}
+
+export type TreeActionPayload = NodeMoveEventPayload | SelectEventPayload | ApiCallbackPayload;
 
 export interface TreeNodeComponentProps {
   node: TreeNode;
@@ -161,6 +203,8 @@ export interface TreeNodeComponentProps {
   activeId?: string | null;
   isDropTarget?: boolean;
   dropPosition?: any;
+  draggedNode?: TreeNode | null; // 드래그 중인 노드 객체 전달
+  onCustomNodeClick?: (node: TreeNode) => void;
 }
 
 /**
@@ -169,4 +213,5 @@ export interface TreeNodeComponentProps {
 export interface DropInfo {
   targetNode: TreeNode | null;
   dropPosition: NodeMovePositionType;
+  sourceNode?: TreeNode | null;
 }

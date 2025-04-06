@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronRight, ChevronDown, Folder, File } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronRight, ChevronDown } from 'lucide-react';
 import {
+  ApiCallbackPayload,
   DropInfo,
   EnhancedTreeNode,
   NodeMovePositionType,
@@ -9,11 +10,85 @@ import {
   TreeNodeComponentProps,
   TreeProps,
 } from './type';
-import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from './tree.service';
+import {
+  calculateTargetIndex,
+  findNodePath,
+  getNodeLevel,
+  insertNodeAtPosition,
+  isValidDrop,
+  removeNodeByKey,
+} from './tree.service';
 import { useTreeContext } from './tree.context';
-import { IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
+import { IcoFolder, IcoHome03 } from '@learnway/icons';
 
-const FilteredTreeNode = ({ node, draggedNodeKey, ...props }: TreeNodeComponentProps) => {
+// 기본 스타일 정의
+const dropStyles = {
+  valid: {
+    before: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#3b82f6',
+      top: '-1px',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+    after: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#3b82f6',
+      bottom: '-1px',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+    inside: {
+      position: 'absolute' as const,
+      inset: 0,
+      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+      borderRadius: '0.25rem',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+  },
+  invalid: {
+    before: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#ef4444',
+      top: '-1px',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+    after: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#ef4444',
+      bottom: '-1px',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+    inside: {
+      position: 'absolute' as const,
+      inset: 0,
+      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+      borderRadius: '0.25rem',
+      border: '1px solid rgba(239, 68, 68, 0.3)',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+  },
+};
+
+const FilteredTreeNode = ({
+  node,
+  draggedNodeKey,
+  draggedNode,
+  ...props
+}: TreeNodeComponentProps) => {
   const enhancedNode = node as EnhancedTreeNode;
 
   // 노드가 숨김 상태면 아무것도 렌더링하지 않음
@@ -22,7 +97,14 @@ const FilteredTreeNode = ({ node, draggedNodeKey, ...props }: TreeNodeComponentP
   }
 
   // 보여져야 하는 노드는 실제 TreeNodeComponent로 렌더링
-  return <TreeNodeComponent node={node} draggedNodeKey={draggedNodeKey} {...props} />;
+  return (
+    <TreeNodeComponent
+      node={node}
+      draggedNodeKey={draggedNodeKey}
+      draggedNode={draggedNode}
+      {...props}
+    />
+  );
 };
 
 const TreeNodeComponent = ({
@@ -39,22 +121,69 @@ const TreeNodeComponent = ({
   nodeButtons,
   searchKeyword,
   draggedNodeKey,
+  draggedNode,
+  onCustomNodeClick,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
-  // 드랍 위치(before, inside, after)
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isDragging, setIsDragging] = useState(false);
 
   const hasChildren = enhanceNode.children && enhanceNode.children.length > 0;
   const isExpanded = expandedKeys.includes(enhanceNode.key);
-  const isDragAndDropMode = treeType === 'DRAG_DROP';
+  const isDragAndDropMode =
+    treeType === 'DRAG_DROP' || treeType === 'SAME_LEVEL_ONLY' || treeType === 'SAME_PARENT_ONLY';
 
-  // 드랍 위치에 따른 스타일링
-  const dropIndicatorStyle = {
-    BEFORE: 'absolute w-full h-0.5 bg-blue-400 -top-[1px] z-10 pointer-events-none',
-    AFTER: 'absolute w-full h-0.5 bg-blue-400 bottom-[-1px] z-10 pointer-events-none',
-    INSIDE: 'absolute inset-0 bg-blue-100 opacity-50 pointer-events-none rounded',
+  // 드롭 위치가 유효한지 확인
+  const isValidDropPosition = useCallback(() => {
+    if (!draggedNode || !dropPosition) return true;
+
+    // 레벨 0 노드는 INSIDE만 허용
+    if (level === 0 && dropPosition !== 'INSIDE') {
+      return false;
+    }
+
+    // 트리 타입에 따른 유효성 검사
+    if (treeType === 'SAME_LEVEL_ONLY') {
+      const draggedLevel = draggedNode.level || 0;
+
+      // BEFORE/AFTER는 같은 레벨이어야 함
+      if ((dropPosition === 'BEFORE' || dropPosition === 'AFTER') && draggedLevel !== level) {
+        return false;
+      }
+      // INSIDE는 부모-자식 관계가 맞아야 함
+      if (dropPosition === 'INSIDE' && draggedLevel !== level + 1) {
+        return false;
+      }
+    }
+
+    if (treeType === 'SAME_PARENT_ONLY') {
+      const sourceParentKey = draggedNode._parentKey;
+
+      // INSIDE는 현재 노드가 원본 부모여야 함
+      if (dropPosition === 'INSIDE' && enhanceNode.key !== sourceParentKey) {
+        return false;
+      }
+      // BEFORE/AFTER는 타겟과 같은 부모를 가져야 함
+      if (
+        (dropPosition === 'BEFORE' || dropPosition === 'AFTER') &&
+        sourceParentKey !== enhanceNode._parentKey
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }, [dropPosition, draggedNode, level, treeType, enhanceNode]);
+
+  // 드롭 위치 표시기 렌더링
+  const renderDropIndicator = () => {
+    if (!dropPosition) return null;
+
+    const isValid = isValidDropPosition();
+    const styleType = isValid ? 'valid' : 'invalid';
+    const positionType = dropPosition.toLowerCase() as 'before' | 'after' | 'inside';
+
+    return <div style={dropStyles[styleType][positionType]} />;
   };
 
   const isActuallyDraggable = isDraggable && enhanceNode.constraints?.drag !== false;
@@ -82,15 +211,18 @@ const TreeNodeComponent = ({
     );
   };
 
-  const getNodeStyle = useMemo(() => {
-    const styles = [
-      `flex items-center py-1 rounded min-h-[40px]
-        ${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}
-        ${isDragging ? 'opacity-50 scale-[0.98] border border-blue-300 bg-blue-50' : ''}`,
-    ];
+  // 노드 스타일 계산
+  const getNodeStyle = useCallback(() => {
+    const styles = [`flex items-center py-1 rounded min-h-[40px] relative`];
 
+    // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-blue-50');
+    }
+
+    // 드롭 위치 스타일
+    if (dropPosition === 'INSIDE') {
+      styles.push(isValidDropPosition() ? 'bg-blue-50' : 'bg-red-50');
     }
 
     // 제약 조건 스타일
@@ -100,14 +232,9 @@ const TreeNodeComponent = ({
     if (enhanceNode.constraints?.drop === false) {
       styles.push('border-l-4 border-yellow-300');
     }
-    if (enhanceNode.constraints?.drag === false && enhanceNode.constraints?.drop === false) {
-      styles.push('bg-gray-50');
-    }
-    if (enhanceNode.constraints?.drag === false || enhanceNode.constraints?.drop === false) {
-      styles.push('opacity-75');
-    } else {
-      styles.push('hover:bg-gray-100');
-    }
+
+    // 기본 호버 스타일
+    styles.push('hover:bg-gray-100');
 
     // 검색 하이라이트
     if (
@@ -119,18 +246,10 @@ const TreeNodeComponent = ({
     }
 
     return styles.join(' ');
-  }, [
-    dropPosition,
-    isDragging,
-    selectedNode,
-    enhanceNode.key,
-    enhanceNode.constraints,
-    enhanceNode.title,
-    searchKeyword,
-  ]);
-  // 드래그 가능하면 현재 노드 상위 컴포넌트로 콜백
+  }, [dropPosition, selectedNode, enhanceNode, searchKeyword, isValidDropPosition]);
+
+  // 드래그 시작
   const handleDragStart = (e: React.DragEvent) => {
-    e.stopPropagation();
     if (!isDraggable || enhanceNode.constraints?.drag === false) return;
 
     try {
@@ -157,15 +276,19 @@ const TreeNodeComponent = ({
       e.dataTransfer.setDragImage(dragImage, 10, 10);
       e.dataTransfer.effectAllowed = 'move';
 
-      // 상태 업데이트 - 한 번만 실행되도록
-      if (!isDragging) {
-        setIsDragging(true);
+      // 노드 데이터 준비
+      const nodeData = {
+        ...enhanceNode,
+        level: level,
+      };
+
+      e.dataTransfer.setData('text/plain', nodeData.key);
+      e.dataTransfer.setData('application/json', JSON.stringify(nodeData));
+
+      if (onDragStart) {
+        onDragStart(nodeData);
       }
 
-      // 부모 컴포넌트 콜백 호출 - 한 번만
-      onDragStart?.(enhanceNode);
-
-      // 불필요한 DOM 요소 정리
       setTimeout(() => {
         if (document.body.contains(dragImage)) {
           document.body.removeChild(dragImage);
@@ -176,54 +299,82 @@ const TreeNodeComponent = ({
     }
   };
 
-  const handleDragEnd = (e: React.DragEvent) => {
-    e.stopPropagation();
-    setIsDragging(false);
-  };
-
-  // 노드 위에 드래그 된 노드가 겹칠 때 계산.
+  // 드래그 오버
   const handleDragOver = (e: React.DragEvent) => {
     if (enhanceNode.constraints?.drop === false) return;
 
     e.preventDefault();
     e.stopPropagation();
 
+    // 데이터 형식 확인
+    const hasJsonData = e.dataTransfer.types.includes('application/json');
+    if (!hasJsonData) return;
+
+    // 레벨 0으로의 드롭은 INSIDE만 허용
+    if (level === 0) {
+      setDropPosition('INSIDE');
+      return;
+    }
+
     const rect = e.currentTarget.getBoundingClientRect();
     const y = e.clientY - rect.top;
     const threshold = rect.height / 3;
 
-    // 새 위치 계산
-    const newPosition = y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
+    // 기본 위치 계산
+    const newPosition: NodeMovePositionType =
+      y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
 
-    // 이전과 다를 때만 상태 업데이트
+    // 항상 드롭 위치 표시 (유효성 여부는 스타일로 표시)
     if (dropPosition !== newPosition) {
       setDropPosition(newPosition);
     }
   };
 
-  // 노드 위에 드래그 된 노드가 벗어날 때
+  // 드래그 리브
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDropPosition(null);
   };
 
-  // 드랍되었을때 상위 컴포넌트로 콜백
+  // 드롭
   const handleDrop = (e: React.DragEvent) => {
     if (enhanceNode.constraints?.drop === false) return;
 
     e.preventDefault();
     e.stopPropagation();
-    e.currentTarget.classList.remove('bg-blue-100');
 
-    onDrop({
-      targetNode: enhanceNode,
-      dropPosition: dropPosition || 'INSIDE',
-    });
+    // 드래그된 노드 데이터 추출
+    let droppedNode;
+    try {
+      const jsonData = e.dataTransfer.getData('application/json');
+      if (jsonData) {
+        droppedNode = JSON.parse(jsonData);
+      }
+    } catch (error) {
+      console.error('Failed to parse drag data:', error);
+      return;
+    }
+
+    if (!droppedNode || !dropPosition) return;
+
+    // 유효성 검사
+    const isValid = isValidDropPosition();
+
+    // 유효한 경우에만 콜백 호출
+    if (isValid) {
+      onDrop?.({
+        targetNode: { ...enhanceNode, level },
+        dropPosition: dropPosition,
+        sourceNode: droppedNode,
+      });
+    }
+
+    // 상태 초기화
     setDropPosition(null);
   };
 
-  // 접기, 펴기 토글.
+  // 접기, 펴기 토글
   const handleToggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
     setExpandedKeys((prev) =>
@@ -231,29 +382,27 @@ const TreeNodeComponent = ({
     );
   };
 
+  // 노드 클릭
   const handleClick = () => {
     if (enhanceNode && onNodeClick) onNodeClick(enhanceNode);
     if (enhanceNode === selectedNode && onNodeClick) onNodeClick(null);
-  };
-
-  // 햄버거 버튼으로 드래그 시작 (advanced 모드)
-  const handleHamburgerDragStart = (e: React.DragEvent) => {
-    handleDragStart(e);
+    if (onCustomNodeClick) {
+      onCustomNodeClick({ ...enhanceNode, level });
+    }
   };
 
   return (
     <div className="relative select-none">
       <div
-        className={getNodeStyle}
+        className={getNodeStyle()}
         style={{
           paddingLeft: `${level * 20}px`,
-          cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
-          boxShadow: isDragging ? '0 0 0 2px rgba(59, 130, 246, 0.3)' : 'none',
+          // cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
           transition: 'all 0.2s ease',
+          //api팝업..
         }}
-        draggable={isDragAndDropMode ? false : isActuallyDraggable}
-        onDragStart={isDragAndDropMode ? undefined : handleDragStart}
-        onDragEnd={handleDragEnd}
+        draggable={false}
+        onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -264,7 +413,9 @@ const TreeNodeComponent = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {dropPosition && <div className={dropIndicatorStyle[dropPosition]} />}
+        {/* 드롭 위치 표시 */}
+        {renderDropIndicator()}
+
         <span
           className="flex h-6 w-6 cursor-pointer items-center justify-center"
           onClick={handleToggleExpand}
@@ -278,17 +429,15 @@ const TreeNodeComponent = ({
           ) : null}
         </span>
         <span className="mr-1 flex h-6 w-6 items-center justify-center">
-          {level === 0 ? (
-            <IcoHome03 stroke="#131C30" />
-          ) : isExpanded ? (
-            <IcoFolder stroke="#131C30" />
-          ) : (
-            <IcoFolder stroke="#131C30" />
-          )}
+          {level === 0 ? <IcoHome03 stroke="#131C30" /> : <IcoFolder stroke="#131C30" />}
         </span>
-        <span className="flex-grow text-sm">{highlightMatch(enhanceNode.title || '')}</span>
+        <span
+          className={`flex-grow text-sm ${onCustomNodeClick && level >= 1 ? 'underline' : 'none'}`}
+        >
+          {highlightMatch(enhanceNode.title || '')}
+        </span>
 
-        {treeType === 'DRAG_DROP' && (
+        {isDragAndDropMode && (
           <div className="relative flex items-center">
             {nodeButtons && (
               <div
@@ -301,9 +450,8 @@ const TreeNodeComponent = ({
             {level >= 1 && (
               <span
                 className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
-                draggable={isDragAndDropMode && isActuallyDraggable}
-                onDragStart={isDragAndDropMode ? handleHamburgerDragStart : undefined}
-                onDragEnd={handleDragEnd}
+                draggable={true}
+                onDragStart={handleDragStart}
               >
                 ☰
               </span>
@@ -343,6 +491,9 @@ const TreeNodeComponent = ({
                 treeType={treeType}
                 nodeButtons={nodeButtons}
                 searchKeyword={searchKeyword}
+                draggedNodeKey={draggedNodeKey}
+                draggedNode={draggedNode}
+                onCustomNodeClick={onCustomNodeClick}
               />
             ))}
         </div>
@@ -351,70 +502,51 @@ const TreeNodeComponent = ({
   );
 };
 
-const TreeView = ({
+const TreeView2 = ({
   treeId,
   data,
   onAction,
+  onApiCallback,
   expandTrigger,
   type,
   nodeButtons,
   searchKeyword,
   selectedNode: externalSelectedNode,
-  initExpandedKeys = [], // 기본값 추가
-  expandedKeys: externalExpandedKeys, // 외부에서 제어할 확장된 키
-  onExpandedKeysChange, // 확장된 키 변경 콜백
+  initExpandedKeys = [],
+  expandedKeys: externalExpandedKeys,
+  onExpandedKeysChange,
   onSelectedNodeChange,
+  onCustomNodeClick,
 }: TreeProps) => {
-  // 내부 상태 관리를 위한 초기 데이터 저장
+  // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
     JSON.parse(JSON.stringify(data)),
   );
-  // 현재 동작 중인 데이터
   const [treeData, setTreeData] = useState<EnhancedTreeNode[]>(JSON.parse(JSON.stringify(data)));
-
+  const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
+  const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
+  const [originalExpandedKeys, setOriginalExpandedKeys] = useState<string[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
-  useEffect(() => {
-    // 외부 selectedNode가 제공되었고 현재 내부 상태와 다르면 업데이트
-    if (externalSelectedNode !== undefined) {
-      setInternalSelectedNode(externalSelectedNode);
-    }
-  }, [externalSelectedNode]);
+  // 중요: 업데이트 사이클을 끊기 위한 ref 추가
+  const shouldUpdateExpandedKeys = useRef(false);
+  const pendingExpandedKeys = useRef<string[]>([]);
 
   const selectedNode =
     externalSelectedNode !== undefined ? externalSelectedNode : internalSelectedNode;
-
-  const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
   const expandedKeys = externalExpandedKeys || internalExpandedKeys;
-  const setExpandedKeys = useCallback(
-    (keys: string[] | ((prev: string[]) => string[])) => {
-      const newKeys = typeof keys === 'function' ? keys(expandedKeys) : keys;
-      setInternalExpandedKeys(newKeys);
-      if (onExpandedKeysChange) {
-        onExpandedKeysChange(newKeys);
-      }
-    },
-    [expandedKeys, onExpandedKeysChange],
-  );
-
-  const [originalExpandedKeys, setOriginalExpandedKeys] = useState<string[]>([]); // 검색 전 확장 상태 저장
-  const [isSearching, setIsSearching] = useState<boolean>(false); // 검색 중인지 상태 추가
-
-  const [internalDragState, setInternalDragState] = useState<{
-    node: TreeNode | null;
-    sourceTreeId: string | null;
-  }>({
-    node: null,
-    sourceTreeId: null,
-  });
-  const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
   const treeContext = useTreeContext();
+  const dragState = treeContext ? treeContext.dragState : { node: null, sourceTreeId: null };
+  const setDragState = treeContext
+    ? treeContext.setDragState
+    : () => {
+        /* 빈 함수 */
+      };
 
-  const dragState = treeContext ? treeContext.dragState : internalDragState;
-  const setDragState = treeContext ? treeContext.setDragState : setInternalDragState;
-
-  // 검색 결과에 맞게 노드의 가시성 업데이트
+  // 노드 가시성 업데이트 함수
   const updateNodeVisibility = useCallback(
     (nodes: EnhancedTreeNode[], keyword: string): boolean => {
       let hasVisibleNodes = false;
@@ -443,79 +575,86 @@ const TreeView = ({
     [],
   );
 
-  // 외부에서 데이터가 업데이트되면 initialData 업데이트
+  // 외부 데이터 변경 감지
   useEffect(() => {
     setInitialData(JSON.parse(JSON.stringify(data)));
+    console.log(JSON.parse(JSON.stringify(data)));
   }, [data]);
 
-  // 검색어 변경 시 노드 가시성 업데이트
+  // 확장된 키를 안전하게 업데이트하는 함수
+  const updateExpandedKeys = useCallback(
+    (newKeys: string[]) => {
+      setInternalExpandedKeys(newKeys);
+      if (onExpandedKeysChange) {
+        onExpandedKeysChange(newKeys);
+      }
+    },
+    [onExpandedKeysChange],
+  );
+
+  // 검색어 변경에 대한 처리 - 의존성 사이클 제거
   useEffect(() => {
-    // 검색 상태 및 키워드 변경 처리를 위한 함수
-    const handleSearchChange = () => {
-      // 검색어가 없으면 모든 노드 표시 (initialData 기반)
-      if (!searchKeyword) {
-        // 검색 중이었다가 검색어를 지운 경우 원래 펼쳐진 상태로 복원
-        if (isSearching) {
-          // 전체 데이터에서 가시성만 업데이트
-          const currentTreeData = JSON.parse(JSON.stringify(initialData));
-          updateNodeVisibility(currentTreeData, '');
-          setTreeData(currentTreeData);
-          // 원래 확장 상태 복원
-          // 직접 타이머를 사용하여 약간의 지연 후 확장 상태 복원
-          setTimeout(() => {
-            setExpandedKeys([...originalExpandedKeys]);
-          }, 10);
-          setIsSearching(false);
+    if (!searchKeyword) {
+      if (isSearching) {
+        const currentTreeData = JSON.parse(JSON.stringify(initialData));
+        updateNodeVisibility(currentTreeData, '');
+        setTreeData(currentTreeData);
+        setIsSearching(false);
+
+        // 즉시 확장 키를 설정하는 대신 대기 중인 키를 표시
+        if (originalExpandedKeys.length > 0) {
+          pendingExpandedKeys.current = [...originalExpandedKeys];
+          shouldUpdateExpandedKeys.current = true;
         }
-        return;
       }
+      return;
+    }
 
-      // 처음 검색을 시작할 때만 현재 펼쳐진 상태 저장
-      if (!isSearching) {
-        setOriginalExpandedKeys([...expandedKeys]);
-        setIsSearching(true);
-      }
+    // 처음 검색을 시작할 때만 현재 펼쳐진 상태 저장
+    if (!isSearching) {
+      setOriginalExpandedKeys([...internalExpandedKeys]);
+      setIsSearching(true);
+    }
 
-      // 노드 가시성 업데이트 - initialData 기반으로 검색
-      const newTreeData = JSON.parse(JSON.stringify(initialData));
-      const hasResults = updateNodeVisibility(newTreeData, searchKeyword);
-      setTreeData(newTreeData);
+    // 노드 가시성 업데이트 - initialData 기반으로 검색
+    const newTreeData = JSON.parse(JSON.stringify(initialData));
+    console.log(newTreeData);
+    const hasResults = updateNodeVisibility(newTreeData, searchKeyword);
+    setTreeData(newTreeData);
 
-      if (hasResults) {
-        // 검색 결과가 있으면 매칭되는 노드의 모든 부모 노드 확장
-        const newExpandedKeys = new Set<string>();
+    if (hasResults) {
+      // 검색 결과가 있으면 매칭되는 노드의 모든 부모 노드 확장
+      const newExpandedKeys = new Set<string>();
 
-        // 모든 매칭 노드의 부모 경로 수집
-        const collectParentKeys = (nodes: EnhancedTreeNode[], parentKeys: string[] = []): void => {
-          for (const node of nodes) {
-            const currentPath = [...parentKeys, node.key];
+      // 모든 매칭 노드의 부모 경로 수집
+      const collectParentKeys = (nodes: EnhancedTreeNode[], parentKeys: string[] = []): void => {
+        for (const node of nodes) {
+          const currentPath = [...parentKeys, node.key];
 
-            // 노드가 표시되고 검색어와 일치하면 모든 부모 키를 확장 키에 추가
-            if (
-              node._visible &&
-              node.title &&
-              node.title.toLowerCase().includes(searchKeyword.toLowerCase())
-            ) {
-              parentKeys.forEach((key) => newExpandedKeys.add(key));
-            }
-
-            // 자식 노드가 표시되면 현재 노드는 확장해야 함
-            if (node.children && node.children.some((child) => child._visible)) {
-              newExpandedKeys.add(node.key);
-              collectParentKeys(node.children, currentPath);
-            }
+          // 노드가 표시되고 검색어와 일치하면 모든 부모 키를 확장 키에 추가
+          if (
+            node._visible &&
+            node.title &&
+            node.title.toLowerCase().includes(searchKeyword.toLowerCase())
+          ) {
+            parentKeys.forEach((key) => newExpandedKeys.add(key));
           }
-        };
-        collectParentKeys(newTreeData);
-        setExpandedKeys([...newExpandedKeys]);
-      }
-    };
 
-    // 검색 키워드나 검색 상태가 변경될 때만 처리
-    handleSearchChange();
-  }, [searchKeyword, initialData, isSearching, originalExpandedKeys, updateNodeVisibility]);
+          // 자식 노드가 표시되면 현재 노드는 확장해야 함
+          if (node.children && node.children.some((child) => child._visible)) {
+            newExpandedKeys.add(node.key);
+            collectParentKeys(node.children, currentPath);
+          }
+        }
+      };
+      collectParentKeys(newTreeData);
 
-  // initialData가 변경되면 treeData 동기화 (외부에서 데이터가 바뀔 때)
+      // 직접 업데이트하지 않고 대기 상태로 표시
+      pendingExpandedKeys.current = [...newExpandedKeys];
+      shouldUpdateExpandedKeys.current = true;
+    }
+  }, [searchKeyword, initialData, isSearching, internalExpandedKeys, updateNodeVisibility]);
+
   useEffect(() => {
     // 외부에서 전달받은 데이터로 트리 데이터 초기화
     const refreshedData = JSON.parse(JSON.stringify(initialData));
@@ -531,6 +670,15 @@ const TreeView = ({
     setTreeData(refreshedData);
   }, [initialData, isSearching, searchKeyword, updateNodeVisibility]);
 
+  // 대기 중인 확장 키 업데이트를 처리하는 별도의 효과
+  useEffect(() => {
+    if (shouldUpdateExpandedKeys.current) {
+      shouldUpdateExpandedKeys.current = false;
+      updateExpandedKeys(pendingExpandedKeys.current);
+    }
+  }, [updateExpandedKeys]);
+
+  // 모든 노드 키 가져오기
   const getAllNodeKeys = useCallback((nodes: TreeNode[]): string[] => {
     return nodes.reduce((keys: string[], node) => {
       keys.push(node.key);
@@ -541,28 +689,86 @@ const TreeView = ({
     }, []);
   }, []);
 
+  // 확장 트리거 처리 - 의존성 사이클 제거
   useEffect(() => {
     if (expandTrigger !== undefined && !isSearching) {
       const newExpandedKeys = expandTrigger ? getAllNodeKeys(treeData) : [];
-      setExpandedKeys(newExpandedKeys);
+      // 직접 상태 업데이트 사용
+      updateExpandedKeys(newExpandedKeys);
       setOriginalExpandedKeys(newExpandedKeys);
     }
-  }, [expandTrigger, getAllNodeKeys, treeData, isSearching]);
+  }, [expandTrigger, getAllNodeKeys, treeData, isSearching, updateExpandedKeys]);
 
-  // 드래그&드랍 노드를 드랍하였을때
-  const handleDrop = (dropInfo: DropInfo) => {
+  const handleDrop = async (dropInfo: DropInfo) => {
+    const sourceNode = dropInfo.sourceNode;
+
+    if (!sourceNode) {
+      console.warn('No source node information in drop event');
+      return;
+    }
+
     if (!dragState.node) return;
 
     const { targetNode, dropPosition } = dropInfo;
+
     // 같은 트리면 이동, 다른 트리면 복사
     const actionType = dragState.sourceTreeId === treeId ? 'NODE_MOVE' : 'NODE_COPY';
 
-    if (targetNode && !isValidDrop(dragState.node.key, targetNode.key, treeData)) return;
+    // 유효성 검증
+    if (
+      targetNode &&
+      !isValidDrop(dragState.node.key, targetNode.key, treeData, dropPosition, type)
+    ) {
+      return;
+    }
+
     if (actionType === 'NODE_COPY' && findNodePath(treeData, dragState.node.key)) {
       alert('이미 트리에 해당 노드가 존재합니다.');
       return;
     }
 
+    // 루트 레벨(레벨 0)로의 이동은 INSIDE가 아니면 방지
+    if (targetNode && getNodeLevel(treeData, targetNode.key) === 0 && dropPosition !== 'INSIDE') {
+      return;
+    }
+
+    // 목표 인덱스 계산
+    let targetIndex = 0;
+    let targetParentKey = null;
+
+    if (targetNode) {
+      const positionInfo = calculateTargetIndex(treeData, targetNode, dropPosition);
+      targetIndex = positionInfo.index;
+      targetParentKey = positionInfo.parentKey;
+    } else {
+      // 트리의 루트 레벨에 추가하는 경우 (마지막 위치)
+      targetIndex = treeData.length;
+    }
+
+    // API 호출 처리
+    if (onApiCallback) {
+      try {
+        const apiPayload: ApiCallbackPayload = {
+          type: actionType,
+          sourceNode: dragState.node,
+          targetNode: targetNode,
+          position: dropPosition,
+          treeId,
+          targetIndex, // 인덱스 정보 추가
+          targetParentKey, // 부모 키 정보 추가
+        };
+
+        const success = await onApiCallback(apiPayload);
+        if (!success) {
+          return;
+        }
+      } catch (error) {
+        console.error('API 호출 중 오류 발생:', error);
+        return;
+      }
+    }
+
+    // UI 업데이트 (이후 코드는 동일)
     let newTreeData = [...treeData];
     if (actionType === 'NODE_MOVE') {
       newTreeData = removeNodeByKey(newTreeData, dragState.node.key);
@@ -573,70 +779,84 @@ const TreeView = ({
     } else {
       newTreeData = [...newTreeData, { ...dragState.node }];
     }
+
     // 검색 중이라면 가시성 업데이트
     if (isSearching && searchKeyword) {
       updateNodeVisibility(newTreeData, searchKeyword);
     }
 
-    // 상태 업데이트 - 현재 트리 데이터 업데이트
+    // 상태 업데이트
     setTreeData(newTreeData);
 
-    // initialData도 업데이트해서 검색 취소 후에도 변경사항이 유지되게 함
-    // 참고: 여기서 treeData 대신 newTreeData를 사용해야 함
+    // initialData 업데이트
     const updatedInitialData = JSON.parse(JSON.stringify(newTreeData));
-
-    // 가시성 속성 초기화 (모든 노드 표시)
     const fullData = JSON.parse(JSON.stringify(updatedInitialData));
     updateNodeVisibility(fullData, '');
-
-    // 초기 데이터 업데이트 (검색 취소 후 사용할 데이터)
     setInitialData(fullData);
 
-    // 액션 콜백 호출 (부모 컴포넌트에서 받은 treeData를 업데이트할 수 있도록)
+    // 액션 콜백 호출 (선택적으로 인덱스 정보 추가)
     onAction?.({
       type: actionType,
       sourceNode: dragState.node,
       targetNode: targetNode,
       position: dropPosition,
       treeId,
+      targetIndex,
+      // targetParentKey,
     });
   };
 
+  // 노드 드래그 가능 여부 확인
   const canDragNode = (node: TreeNode): boolean => {
     if (type === 'SHUTTLE_LIST') return false;
     if (node.constraints?.drag === false) return false;
+    if (node.level === 0) return false;
     return true;
   };
 
+  // 드래그 시작 처리
   const handleDragStart = (node: TreeNode) => {
-    setDragState({ node: node, sourceTreeId: treeId });
-    setDraggedNodeKey(node.key); // 드래그 중인 노드 키 저장
+    const enhancedNode = {
+      ...node,
+      level: node.level !== undefined ? node.level : getNodeLevel(treeData, node.key),
+    };
 
-    // 드래그 애니메이션을 위한 CSS 클래스 설정
+    setDraggedNode(enhancedNode);
+    setDragState({
+      node: enhancedNode,
+      sourceTreeId: treeId,
+    });
+    setDraggedNodeKey(node.key);
     document.body.classList.add('tree-dragging');
   };
 
+  // 노드 클릭 처리
   const handleNodeClick = (node: TreeNode | null) => {
-    // 내부 상태 업데이트
     setInternalSelectedNode(node);
-
-    // 외부 콜백을 통한 외부 상태 업데이트
     if (onSelectedNodeChange && node) {
       onSelectedNodeChange(node);
     }
-
-    // 액션 핸들러 호출
     if (onAction && node) {
       onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
     }
   };
 
-  // 검색 결과가 있는지 체크
+  // 확장된 키를 설정하기 위한 함수 - FilteredTreeNode에 전달할 setExpandedKeys
+  const setExpandedKeys = useCallback(
+    (keys: string[] | ((prevKeys: string[]) => string[])) => {
+      const newKeys = typeof keys === 'function' ? keys(expandedKeys) : keys;
+      updateExpandedKeys(newKeys);
+    },
+    [expandedKeys, updateExpandedKeys],
+  );
+
+  // 검색 결과 존재 여부
   const hasVisibleNodes = useMemo(() => {
     if (!searchKeyword) return true;
     return treeData.some((node) => node._visible);
   }, [treeData, searchKeyword]);
 
+  // 글로벌 드래그 종료 이벤트 처리
   useEffect(() => {
     const handleGlobalDragEnd = () => {
       if (draggedNodeKey) {
@@ -645,7 +865,6 @@ const TreeView = ({
       }
     };
 
-    // draggedNodeKey가 있을 때만 이벤트 리스너 추가
     if (draggedNodeKey) {
       document.addEventListener('dragend', handleGlobalDragEnd);
       return () => {
@@ -668,6 +887,11 @@ const TreeView = ({
       onDrop={(e) => {
         e.preventDefault();
         e.currentTarget.classList.remove('bg-blue-100');
+
+        if (type === 'SAME_LEVEL_ONLY' || type === 'SAME_PARENT_ONLY') {
+          return;
+        }
+
         handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}
     >
@@ -687,7 +911,9 @@ const TreeView = ({
               nodeButtons={nodeButtons}
               treeType={type}
               searchKeyword={searchKeyword}
-              draggedNodeKey={draggedNodeKey} // 드래그 중인 노드 키 전달
+              draggedNodeKey={draggedNodeKey}
+              draggedNode={draggedNode}
+              onCustomNodeClick={onCustomNodeClick}
             />
           ))
         ) : (
@@ -701,4 +927,5 @@ const TreeView = ({
     </div>
   );
 };
-export { TreeView };
+
+export { TreeView2 };

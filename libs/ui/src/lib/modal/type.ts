@@ -46,6 +46,11 @@ export interface ModalConfig<T = any> {
    * 모달이 닫힐 때 전달할 데이터와 함께 호출됨
    */
   onClose?: (data?: ModalClose<T>) => void;
+
+  /**
+   * 모달 외부 영역 클릭으로 모달 창 닫을 수 있게 설정
+   */
+  closeOnOutsideClick?: boolean;
 }
 
 export interface ModalClose<T = any> {

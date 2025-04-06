@@ -103,6 +103,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            maxLength={maxLength > 0 ? maxLength : undefined}
           />
         ) : type === 'mask' ? (
           <PatternFormat
@@ -119,6 +120,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            maxLength={maxLength > 0 ? maxLength : undefined}
           />
         ) : (
           <input
@@ -148,6 +150,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               event.stopPropagation();
               handleInputChange(event?.target?.value);
             }}
+            maxLength={maxLength > 0 ? maxLength : undefined}
           />
         )}
 
@@ -159,7 +162,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               type="button"
               className={cn(styles.clear)}
               onlyIcon
-              onMouseDown={handleClearClick}>
+              onMouseDown={handleClearClick}
+            >
               <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
           )}
@@ -170,7 +174,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 입력글자수/최대입력가능글자수 */}
           {!hideInputLength && maxLength > 0 && type === 'text' && (
             <div
-              className={styles.count}>{`${(value?.toString() || '').length} / ${maxLength}`}</div>
+              className={styles.count}
+            >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
           )}
           {/* 돋보기 */}
           {showSearchIcon && (
@@ -178,7 +183,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               type="button"
               onClick={() => onEnterKeyDown?.()}
               className={cn(styles.clear)}
-              onlyIcon>
+              onlyIcon
+            >
               <IcoSearch width={20} height={20} stroke={'#131C30'} />
             </Button>
           )}

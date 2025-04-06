@@ -249,6 +249,11 @@ export interface GridProps<T> {
    * @param {T[]} data 변경된 데이터 배열
    */
   onChange?: (data: any[]) => void;
+
+  /**
+   * 커스텀 렌더 버튼..
+   */
+  renderButtons?: React.ReactNode;
 }
 
 /**

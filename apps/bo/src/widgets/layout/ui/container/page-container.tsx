@@ -10,6 +10,8 @@ import { useActiveMenuDepthState } from '../../../../features/platform';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui';
+import { IcoStar } from '@learnway/icons';
 
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
@@ -20,8 +22,20 @@ import { cn } from '@learnway/shared';
 const PageContainerComponent: FC<{
   children?: ReactNode; // 자식 요소
   displayContent?: boolean; // 컨텐츠를 출력할지 여부를 결정한다. 기본값은 출력
-}> = ({ children, displayContent = true }) => {
+  showFavoriteButton?: boolean;
+  notice?: boolean; // 화면내에 Notice 있는 경우
+  tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
+  scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
+}> = ({
+  children,
+  displayContent = true,
+  showFavoriteButton = true,
+  notice = false,
+  tabs = false,
+  scrollHidden = false,
+}) => {
   const [activeMenuDepth] = useActiveMenuDepthState();
+  const [isFavorite, setIsFavorite] = useState(true);
 
   const title = useCreation(() => {
     return last(activeMenuDepth)?.title;
@@ -70,15 +84,39 @@ const PageContainerComponent: FC<{
       <div ref={scrollContainerRef} className={cn(styles.inner, 'scroll_inner')}>
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
-          <h3 className={styles.title}>{title || '테스트 제목'}</h3>
+          <h3 className={styles.title}>
+            {title || '테스트 제목'}
+            {showFavoriteButton && (
+              <Button
+                className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
+                onlyIcon
+                onClick={() => setIsFavorite(!isFavorite)}
+              >
+                <IcoStar
+                  width={16}
+                  height={16}
+                  stroke="#FFB902"
+                  fill="#FFB902"
+                  className={styles.icon_star}
+                />
+              </Button>
+            )}
+          </h3>
           {ButtonSlot && displayContent && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
         </div>
         {/* contents */}
         {BodySlot.length > 0 && displayContent && (
-          <div className={cn(styles.content_wrap, 'content_wrap')}>
-            <div className={styles.content}>
-              <PageContents>{BodySlot}</PageContents>
-            </div>
+          <div
+            className={cn(
+              styles.content_wrap,
+              tabs && 'case_tabs',
+              notice && 'case_notice',
+              scrollHidden && 'scroll_hidden',
+              'content_wrap',
+            )}
+          >
+            {/* contents */}
+            <div className={styles.content}>{children}</div>
           </div>
         )}
       </div>

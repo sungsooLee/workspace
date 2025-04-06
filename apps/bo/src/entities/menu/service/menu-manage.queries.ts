@@ -1,4 +1,4 @@
-import MenuMangerService from '../api/menu-manager';
+import MenuMangeService from '../api/menu-manage';
 
 export const queryKeys = {
   all: ['menu-manger-all'] as const,
@@ -6,10 +6,10 @@ export const queryKeys = {
   detail: (menuId: string) => ['menuId', menuId] as const,
 };
 
-export const menuManagerQueryOptions = {
+export const menuManageQueryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
-    queryFn: async () => MenuMangerService.fetchMenus(),
+    queryFn: async () => MenuMangeService.fetchMenus(),
     cacheTime: 0,
     staleTime: 0,
     enabled: false,
@@ -17,28 +17,28 @@ export const menuManagerQueryOptions = {
   //메뉴 목록 조회
   tree: (menuScopeCode: string, locale: string) => ({
     queryKey: queryKeys.tree(),
-    queryFn: () => MenuMangerService.fetchMenuTree(menuScopeCode, locale),
+    queryFn: () => MenuMangeService.fetchMenuTree(menuScopeCode, locale),
     cacheTime: 0,
     staleTime: 0,
   }),
   //메뉴 단건 조회
   detail: (menuId: string) => ({
     queryKey: queryKeys.detail(menuId),
-    queryFn: () => MenuMangerService.fetchMenuDetail(menuId),
+    queryFn: () => MenuMangeService.fetchMenuDetail(menuId),
   }),
 };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => MenuMangerService.createMenu(payload),
+    mutationFn: (payload: any) => MenuMangeService.createMenu(payload),
   }),
   checkExistsMenu: () => ({
-    mutationFn: (payload: any) => MenuMangerService.existsMenu(payload.menuCode, payload.parentId),
+    mutationFn: (payload: any) => MenuMangeService.existsMenu(payload.menuCode, payload.parentId),
   }),
   updateMenu: () => ({
-    mutationFn: (payload: any) => MenuMangerService.updateMenu(payload),
+    mutationFn: (payload: any) => MenuMangeService.updateMenu(payload),
   }),
   deleteMenu: () => ({
-    mutationFn: (payload: any) => MenuMangerService.deleteMenu(payload),
+    mutationFn: (payload: any) => MenuMangeService.deleteMenu(payload),
   }),
 };

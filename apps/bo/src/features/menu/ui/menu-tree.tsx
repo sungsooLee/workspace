@@ -1,6 +1,21 @@
-import { Button, findNodeByKey, Switch, TreeEventPayload, TreeNode, TreeView } from '@learnway/ui';
+import {
+  Button,
+  findNodeByKey,
+  Switch,
+  TreeContainer,
+  TreeEventPayload,
+  TreeNode,
+  TreeView,
+  TreeView2,
+  TreeView3,
+} from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 // MenuTreeComponent 컴포넌트 정의
 const MenuTreeComponent: FC<any> = ({
@@ -46,7 +61,8 @@ const MenuTreeComponent: FC<any> = ({
             }}
             variant="gray2"
             size={'xs'}
-            type={'button'}>
+            type={'button'}
+          >
             {level == 0 ? '메뉴추가' : '하위메뉴추가'}
           </Button>
         )}
@@ -58,7 +74,8 @@ const MenuTreeComponent: FC<any> = ({
             }}
             variant="gray2"
             size={'xs'}
-            type={'button'}>
+            type={'button'}
+          >
             {level == 0 ? '메뉴추가' : '하위메뉴추가'}
           </Button>
         )}
@@ -71,6 +88,7 @@ const MenuTreeComponent: FC<any> = ({
   };
 
   const handleTreeAction = (event: TreeEventPayload) => {
+    console.log(event);
     switch (event.type) {
       case 'NODE_SELECT':
         onNodeClick(event.node);
@@ -80,55 +98,45 @@ const MenuTreeComponent: FC<any> = ({
 
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
   return (
-    <div className={'flex-1 rounded-2xl bg-white p-5'}>
-      {/* 상단 제목 및 버튼 */}
-      <Title title={'목록'}>
-        <Button
-          type="button"
-          variant="text"
-          size="sm"
-          iconAlign="left"
-          onClick={() => handleExpandAll(true)}>
-          전체펼침
-        </Button>
-        <Button
-          type="button"
-          variant="text"
-          size="sm"
-          iconAlign="left"
-          onClick={() => handleExpandAll(false)}>
-          전체닫기
-        </Button>
-      </Title>
-
-      {/* 트리 뷰 렌더링 */}
-      <TreeView
-        data={treeData}
-        treeId={'1'}
-        expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키
-        onExpandedKeysChange={onExpandChange} // 확장된 키 변경 콜백
-        nodeButtons={renderNodeButtons}
-        onAction={handleTreeAction}
-        type={'DRAG_DROP'}
-        selectedNode={selectedNode}
-        onSelectedNodeChange={handleSelectedNodeChange}
-      />
+    <div className={layoutStyles.inner}>
+      <div className={titleStyles.title_wrap}>
+        <h3 className={titleStyles.title}>{'목록'}</h3>
+        <div className={layoutStyles.btn_wrap}>
+          <Button
+            variant="text"
+            size="sm"
+            className={layoutStyles.btn_text}
+            onClick={() => handleExpandAll(true)}
+          >
+            {'전체펼침'}
+          </Button>
+          <Button
+            variant="text"
+            size="sm"
+            className={layoutStyles.btn_text}
+            onClick={() => handleExpandAll(false)}
+          >
+            {'전체닫기'}
+          </Button>
+        </div>
+      </div>
+      <div className={layoutStyles.inner_contents}>
+        <TreeContainer>
+          <TreeView2
+            data={treeData}
+            treeId={'1'}
+            expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키
+            onExpandedKeysChange={onExpandChange} // 확장된 키 변경 콜백
+            nodeButtons={renderNodeButtons}
+            onAction={handleTreeAction}
+            type={'SAME_LEVEL_ONLY'}
+            selectedNode={selectedNode}
+            onSelectedNodeChange={handleSelectedNodeChange}
+          />
+        </TreeContainer>
+      </div>
     </div>
   );
 };
 
 export const MenuTree = MenuTreeComponent;
-
-const Title: FC<any> = ({ title, children }) => {
-  return (
-    <div className="flex w-full flex-col">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="font-medium text-gray-800">{title}</span>
-        </div>
-        <div className="flex items-center space-x-2">{children}</div>
-      </div>
-      <hr className="mt-2 w-full border-t-2 border-gray-900" />
-    </div>
-  );
-};

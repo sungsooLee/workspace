@@ -2,18 +2,18 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
-  menuManagerQueryOptions as queryOptions,
-} from './menu-manager.queries';
+  menuManageQueryOptions as queryOptions,
+} from './menu-manage.queries';
 
-export function useMenuMangerFetchMenus() {
+export function useMenuMangeFetchMenus() {
   return useQuery(queryOptions.all());
 }
 
-export function useMenuManagerFetchTree(menuScopeCode: string, locale: string) {
+export function useMenuManageFetchTree(menuScopeCode: string, locale: string) {
   return useQuery(queryOptions.tree(menuScopeCode, locale));
 }
 
-export function useMenuManagerDetail(menuId: string, enabled?: boolean) {
+export function useMenuManageDetail(menuId: string, enabled?: boolean) {
   return useQuery({
     ...queryOptions.detail(menuId),
     // menuId가 유효한 경우에만 쿼리 활성화

@@ -1,4 +1,4 @@
-import { NodeMovePositionType, TreeNode } from './type';
+import { NodeMovePositionType, TreeNode, TreeType } from './type';
 
 export const generateKey = (): string => {
   return Math.random().toString(36).substr(2, 9);
@@ -19,6 +19,26 @@ export const findNodeByKey = (nodes: TreeNode[], key: string): TreeNode | null =
     }
   }
   return null;
+};
+
+/**
+ * 트리에서 특정 키 배열을 가진 노드를 찾아서 반환.
+ */
+export const findNodesByKeys = (nodes: TreeNode[], keys: string[]): TreeNode[] => {
+  const result: TreeNode[] = [];
+
+  const searchNodes = (nodeArray: TreeNode[]) => {
+    for (const node of nodeArray) {
+      if (keys.includes(node.key)) {
+        result.push(node);
+      }
+      if (node.children && node.children.length > 0) {
+        searchNodes(node.children);
+      }
+    }
+  };
+  searchNodes(nodes);
+  return result;
 };
 
 /**
@@ -137,14 +157,14 @@ export const findNodePath = (
  * @param nodes
  * @returns
  */
-export const isValidDrop = (draggedKey: string, targetKey: string, nodes: TreeNode[]): boolean => {
-  if (draggedKey === targetKey) return false;
+// export const isValidDrop = (draggedKey: string, targetKey: string, nodes: TreeNode[]): boolean => {
+//   if (draggedKey === targetKey) return false;
 
-  const targetPath = findNodePath(nodes, targetKey);
-  if (!targetPath) return true;
+//   const targetPath = findNodePath(nodes, targetKey);
+//   if (!targetPath) return true;
 
-  return !targetPath.includes(draggedKey);
-};
+//   return !targetPath.includes(draggedKey);
+// };
 
 export const insertNodeAtPosition = (
   nodes: TreeNode[],
@@ -259,4 +279,162 @@ export const addTreeId = (nodes: TreeNode[], treeId: string): TreeNode[] => {
     treeId,
     children: node.children ? addTreeId(node.children, treeId) : undefined,
   }));
+};
+
+/**
+ * 특정 노드의 부모 노드를 찾음
+ * @param nodes 트리 노드 배열
+ * @param key 찾을 노드 키
+ * @returns 부모 노드 또는 null
+ */
+export const findParentNode = (nodes: TreeNode[], key: string): TreeNode | null => {
+  for (const node of nodes) {
+    if (node.children && node.children.some((child) => child.key === key)) {
+      return node;
+    }
+    if (node.children) {
+      const parent = findParentNode(node.children, key);
+      if (parent) return parent;
+    }
+  }
+  return null;
+};
+/**
+ * 특정 노드의 레벨을 계산
+ * @param nodes 트리 노드 배열
+ * @param key 찾을 노드 키
+ * @returns 노드의 레벨 (0부터 시작)
+ */
+export const getNodeLevel = (nodes: TreeNode[], key: string): number => {
+  const path = findNodePath(nodes, key);
+  return path ? path.length - 1 : -1;
+};
+
+export const getNodeWithLevel: any = (nodes: TreeNode[], nodeKey: string, currentLevel = 0) => {
+  for (const node of nodes) {
+    if (node.key === nodeKey) {
+      return { ...node, level: currentLevel };
+    }
+
+    if (node.children?.length) {
+      const foundNode = getNodeWithLevel(node.children, nodeKey, currentLevel + 1);
+      if (foundNode) return foundNode;
+    }
+  }
+  return null;
+};
+
+export const isValidDrop = (
+  sourceKey: string,
+  targetKey: string,
+  treeData: TreeNode[],
+  dropPosition: string,
+  treeType?: TreeType,
+) => {
+  // 1. Prevent dropping onto itself
+  if (sourceKey === targetKey) return false;
+
+  // 2. Prevent dropping into its own descendants
+  const sourcePath = findNodePath(treeData, sourceKey);
+  const targetPath = findNodePath(treeData, targetKey);
+
+  if (!sourcePath || !targetPath) return false;
+
+  if (targetPath.includes(sourceKey)) return false;
+
+  // New validation for SAME_LEVEL_ONLY type
+  if (treeType === 'SAME_LEVEL_ONLY') {
+    const sourceNode = getNodeWithLevel(treeData, sourceKey);
+    const targetNode = getNodeWithLevel(treeData, targetKey);
+
+    if (!sourceNode || !targetNode) return false;
+
+    // For "INSIDE" drops, the target level + 1 should equal the source level
+    // because we're checking if we can drop inside that target node at the next level
+    if (dropPosition === 'INSIDE') {
+      return sourceNode.level === targetNode.level + 1;
+    }
+
+    return sourceNode.level === targetNode.level;
+  } else if (treeType === 'SAME_PARENT_ONLY') {
+    //같은 부모 안에서 이동
+    const sourceParent = findParentNode(treeData, sourceKey);
+    const targetParent = findParentNode(treeData, targetKey);
+
+    if (!sourceParent || !targetParent) return false;
+
+    // INSIDE 액션이면 타켓 키와 소스 부모키가 같으면 됨.
+    if (dropPosition === 'INSIDE') {
+      return sourceParent.key === targetKey;
+    }
+
+    console.log('소스 부모' + sourceParent.key);
+    console.log('타겟 부모' + targetParent.key);
+    return sourceParent.key === targetParent.key;
+  }
+
+  return true;
+};
+
+/**
+ * 노드의 부모에서 해당 노드의 인덱스를 찾습니다
+ */
+export const findNodeIndex = (nodes: TreeNode[], nodeKey: string): number => {
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].key === nodeKey) {
+      return i;
+    }
+
+    if (nodes[i].children?.length) {
+      const index = findNodeIndex(nodes[i].children || [], nodeKey);
+      if (index !== -1) {
+        return index;
+      }
+    }
+  }
+  return -1;
+};
+/**
+ * 노드 이동 시 목표 인덱스를 계산합니다
+ */
+export const calculateTargetIndex = (
+  treeData: TreeNode[],
+  targetNode: TreeNode,
+  dropPosition: NodeMovePositionType,
+): { parentKey: string | null; index: number } => {
+  // 상위 노드가 루트인지 확인
+  const isTargetRoot = !findParentNode(treeData, targetNode.key);
+
+  // INSIDE의 경우 항상 마지막 인덱스로 이동
+  if (dropPosition === 'INSIDE') {
+    return {
+      parentKey: targetNode.key,
+      index: targetNode.children?.length || 0,
+    };
+  }
+
+  // 부모 노드 찾기 (또는, 루트인 경우 null)
+  const parentNode = isTargetRoot ? null : findParentNode(treeData, targetNode.key);
+  const siblings = isTargetRoot ? treeData : parentNode?.children || [];
+
+  // 대상 노드의 인덱스 찾기
+  const targetIndex = siblings.findIndex((node) => node.key === targetNode.key);
+
+  if (targetIndex === -1) {
+    return { parentKey: isTargetRoot ? null : parentNode?.key || null, index: 0 };
+  }
+
+  // BEFORE: 대상 노드 앞으로 이동
+  if (dropPosition === 'BEFORE') {
+    return {
+      parentKey: isTargetRoot ? null : parentNode?.key || null,
+      index: targetIndex,
+    };
+  }
+
+  // AFTER: 대상 노드 뒤로 이동
+  return {
+    parentKey: isTargetRoot ? null : parentNode?.key || null,
+    index: targetIndex + 1,
+  };
 };

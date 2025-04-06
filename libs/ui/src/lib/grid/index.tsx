@@ -81,6 +81,7 @@ const Grid = forwardRef(
       onRowSelect,
       onRowsSelect,
       onChange,
+      renderButtons,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -145,7 +146,8 @@ const Grid = forwardRef(
               display: 'block',
               textAlign: 'center',
               verticalAlign: 'center',
-            }}>
+            }}
+          >
             <Checkbox
               checked={table.getIsAllRowsSelected()}
               onCheckedChange={(checked) => {
@@ -162,7 +164,8 @@ const Grid = forwardRef(
               display: 'block',
               textAlign: 'center',
               paddingRight: '0',
-            }}>
+            }}
+          >
             {' '}
             <Checkbox
               checked={row.getIsSelected()}
@@ -443,7 +446,8 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
             style={rowStyle}
-            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}>
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+          >
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
           </tr>
         );
@@ -475,7 +479,8 @@ const Grid = forwardRef(
                 }}
                 style={{
                   cursor: row.getIsGrouped() ? 'default' : 'pointer',
-                }}>
+                }}
+              >
                 {row.getIsExpanded() ? '👇' : '👉'}{' '}
                 {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
               </button>
@@ -503,7 +508,8 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
-          }}>
+          }}
+        >
           <table>
             {/*thead*/}
             {/*colgroup*/}
@@ -534,7 +540,8 @@ const Grid = forwardRef(
                         display: 'block',
                         width: !tableMode ? header.getSize() : '',
                       }}
-                      className={styles.thead_th}>
+                      className={styles.thead_th}
+                    >
                       <div className={styles.th_wrap}>
                         <div
                           className={cn(
@@ -549,7 +556,8 @@ const Grid = forwardRef(
                             // width: header.getSize(),
                             width: !tableMode ? header.getSize() : '',
                           }}
-                          onClick={header.column.getToggleSortingHandler()}>
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
                           {header.isPlaceholder
                             ? null
                             : flexRender(header.column.columnDef.header, header.getContext())}
@@ -578,7 +586,8 @@ const Grid = forwardRef(
                             <Button
                               type="button"
                               onClick={(e) => openFilterPopup(e, header.column)}
-                              className="btn_filter">
+                              className="btn_filter"
+                            >
                               <IcoGridFilter width={16} height={16} />
                             </Button>
                           )}
@@ -634,13 +643,15 @@ const Grid = forwardRef(
               onClick={() => onPageChange(0)}
               disabled={pageIndex === 0}
               className={styles.btn_first}
-              onlyIcon>
+              onlyIcon
+            >
               {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(pageIndex - 1)}
               disabled={pageIndex === 0}
-              className={styles.btn_prev}>
+              className={styles.btn_prev}
+            >
               {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
             </Button>
 
@@ -650,7 +661,8 @@ const Grid = forwardRef(
                 <Button
                   key={i}
                   onClick={() => onPageChange(i)}
-                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}>
+                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}
+                >
                   {i + 1}
                 </Button>
               ))}
@@ -659,13 +671,15 @@ const Grid = forwardRef(
             <Button
               onClick={() => onPageChange(pageIndex + 1)}
               disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_next}>
+              className={styles.btn_next}
+            >
               {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
             </Button>
             <Button
               onClick={() => onPageChange(totalPages - 1)}
               disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_last}>
+              className={styles.btn_last}
+            >
               {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
             </Button>
           </div>
@@ -721,6 +735,7 @@ const Grid = forwardRef(
           {!hideColumnSettings && (
             <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
           )}
+          {renderButtons}
         </div>
         {renderTable()}
         {renderPagination()}

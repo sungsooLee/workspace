@@ -141,10 +141,13 @@ export * from './lib/tabs/tabs';
 
 // tree
 export * from './lib/tree-view/tree';
+export * from './lib/tree-view/tree-2';
+export * from './lib/tree-view/tree-view';
 export * from './lib/tree-view/tree.service';
 export * from './lib/tree-view/node-detail';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
+export * from './lib/tree-view/shuttle-tree';
 
 // textarea
 export * from './lib/textarea/textarea';
