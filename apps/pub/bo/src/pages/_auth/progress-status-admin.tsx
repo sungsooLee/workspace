@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DatePicker, Input, Select, Textarea } from '@learnway/ui';
+import { Button, DatePicker, Input, Dropdown, Textarea } from '@learnway/ui';
 import { IcoCheck02, IcoFormRequired, IcoComplete, IcoSucess, IcoCaution02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -74,7 +74,7 @@ function RouteComponent() {
               반려일시 : <strong>YYYY-MM-DD</strong>*/}
             </div>
           </div>
-          <h4 className={cn(styles.title, 'auth--title')}>{'아이디 확인'}</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 신청 정보'}</h4>
           <div className={cn(authFormStyles.auth_form, 'no_line', 'col')}>
             {/* form_item */}
             <div className={formStyles.form_item}>
