@@ -100,6 +100,9 @@
     .btn_setting {
       @apply text-[var(--gray9)];
     }
+    &:empty {
+      @apply !hidden;
+    }
   }
 }
 
