@@ -295,7 +295,8 @@ function RouteComponent() {
 
   return (
     <PageContainer scrollHidden={true}>
-      <div className={styles.main_contents}>
+      <MainContents>
+        {/* <div className={styles.main_contents}> */}
         <Tabs
           selectedTabKey={selectedTabKey}
           items={items}
@@ -303,7 +304,8 @@ function RouteComponent() {
           onActiveTab={handleTabChange}
           className={styles.tab_wrap}
         />
-      </div>
+        {/* </div> */}
+      </MainContents>
     </PageContainer>
   );
 }
