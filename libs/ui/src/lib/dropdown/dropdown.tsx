@@ -221,7 +221,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
-          menuIsOpen={true}
+          // menuIsOpen={true}
           {...customProps}
         />
       </div>
