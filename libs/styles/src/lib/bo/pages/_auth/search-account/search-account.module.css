@@ -31,4 +31,7 @@
 
 .btn_wrap {
   @apply mt-[48px];
+  button:first-child {
+    @apply !border-[#4C515E] !text-[#4C515E];
+  }
 }

@@ -28,6 +28,12 @@
   .textarea_wrap {
     @apply rounded-[8px];
   }
+  [class*='nlp--contents-row'] label {
+    @apply !text-[#4c515e];
+  }
+  [class*='nlp--input'] input::placeholder {
+    @apply !text-[#a9afb8];
+  }
 }
 
 h4.auth--title {
