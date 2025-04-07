@@ -71,17 +71,17 @@ const searchConfig: any = {
         label: t('회사/법인명'),
         value: '',
       },
-      // {
-      //   name: 'isUsed',
-      //   type: 'dropdown',
-      //   label: t('사용여부'),
-      //   value: '',
-      //   options: [
-      //     { value: '', label: t('전체') },
-      //     { value: 'true', label: t('사용') },
-      //     { value: 'false', label: t('미사용') },
-      //   ],
-      // },
+      {
+        name: 'isUsed',
+        type: 'dropdown',
+        label: t('사용여부'),
+        value: '',
+        options: [
+          { value: '', label: t('전체') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
+        ],
+      },
     ],
   ],
 };
