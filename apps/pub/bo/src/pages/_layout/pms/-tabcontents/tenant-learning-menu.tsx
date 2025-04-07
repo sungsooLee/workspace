@@ -16,10 +16,60 @@ import {
   Tooltip,
   CheckboxGroupFormField,
   Grid,
+  TreeView,
+  TreeNode,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-// eslint-disable-next-line no-empty-pattern
+
+// tree
+const sampleData: TreeNode[] = [
+  {
+    key: '1',
+    title: '러닝웨이 1',
+    isUsed: false,
+    children: [
+      {
+        key: '1-1',
+        title: 'Child 1',
+        isUsed: true,
+        children: [
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
+        ],
+      },
+      { key: '1-2', title: 'Child 2', isUsed: true },
+    ],
+  },
+  {
+    key: '2',
+    title: '러닝웨이 2',
+    isUsed: false,
+    children: [
+      { key: '2-1', title: 'Child 3', isUsed: false },
+      { key: '2-2', title: 'Child 4', isUsed: false },
+    ],
+  },
+  {
+    key: '3',
+    title: '러닝웨이 3',
+    isUsed: false,
+    children: [
+      { key: '3-1', title: 'Child 5', isUsed: false },
+      { key: '3-2', title: 'Child 6', isUsed: false },
+    ],
+  },
+  {
+    key: '4',
+    title: '러닝웨이 4',
+    isUsed: false,
+    children: [
+      { key: '4-1', title: 'Child 7', isUsed: false },
+      { key: '4-2', title: 'Child 8', isUsed: false },
+    ],
+  },
+];
+
 const TenantLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
@@ -84,9 +134,12 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     }),
   ] as ColumnDef<any, unknown>[];
 
+  // tree
+  const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -98,9 +151,11 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             </Button>
           </div>
         </div>
-        <div className={layoutStyles.inner_contents}></div>
+        <div className={layoutStyles.inner_contents}>
+          <TreeView treeId="source" data={sourceData} />
+        </div>
       </div>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -279,7 +334,8 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   align="start"
                   content={
                     'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
-                  }>
+                  }
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -326,7 +382,8 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   className={dynamicFormStyles.tooltip}
                   side="right"
                   align="start"
-                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
+                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
