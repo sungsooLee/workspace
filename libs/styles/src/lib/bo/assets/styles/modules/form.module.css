@@ -379,3 +379,7 @@ hr.divider {
     }
   }
 }
+
+[class*='lnb-open'] .input_box {
+  @apply !max-w-[calc(100vw-420px)];
+}

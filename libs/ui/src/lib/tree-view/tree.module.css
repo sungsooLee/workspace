@@ -14,12 +14,12 @@
     .tree_item {
       @apply relative resize-none;
       .tree_inner {
-        @apply flex min-h-[56px] items-center border-t-[1px] border-solid border-[var(--gray4)] !pl-0;
+        @apply flex min-h-[40px] items-center !pl-0;
         .drag_wrap {
           @apply ml-auto flex items-center;
         }
         &:not(.root_menu) {
-          @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_20px] bg-no-repeat !pl-[18px];
+          @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
         }
         &.root_menu {
           .tree_menu {
@@ -31,17 +31,17 @@
         }
         & + .tree_children {
           .tree_item .tree_inner {
-            @apply bg-[left_6px_top_20px] !pl-[18px];
+            @apply bg-[left_6px_top_12px] !pl-[18px];
             & + .tree_children {
               .tree_item .tree_inner {
-                @apply bg-[left_26px_top_20px] !pl-[38px];
+                @apply bg-[left_26px_top_12px] !pl-[38px];
               }
               & + .tree_children {
                 .tree_item .tree_inner {
-                  @apply bg-[left_46px_top_20px] !pl-[58px];
+                  @apply bg-[left_46px_top_12px] !pl-[58px];
                   & + .tree_children {
                     .tree_item .tree_inner {
-                      @apply bg-[left_66px_top_20px] !pl-[78px];
+                      @apply bg-[left_66px_top_12px] !pl-[78px];
                     }
                   }
                 }
