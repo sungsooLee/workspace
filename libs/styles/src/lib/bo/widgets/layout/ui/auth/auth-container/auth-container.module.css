@@ -21,9 +21,9 @@
     .auth_area {
       @apply mx-auto w-[680px];
       & > h2 {
-        @apply title_2_b flex items-center justify-stretch whitespace-pre pb-[32px] pt-[80px] text-center;
+        @apply title_2_b flex items-center justify-stretch whitespace-pre pb-[32px] pt-[40px] text-center;
         &.title_login {
-          @apply title_3_b min-h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[var(--white)];
+          @apply title_3_b min-h-[406px] w-[277px] flex-col rounded-l-[16px] bg-[url('../../../../../assets/images/common/bg_login_tit.png')] bg-cover bg-[0_0] bg-no-repeat pb-[0] text-[2.6rem] text-[var(--white)];
         }
         &:not(.title_login) {
           @apply justify-center;

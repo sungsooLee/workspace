@@ -11,7 +11,14 @@ import {
 } from './type';
 import { findNodePath, insertNodeAtPosition, isValidDrop, removeNodeByKey } from './tree.service';
 import { useTreeContext } from './tree.context';
-import { IcoFolder, IcoFolderOpen, IcoHome03, IcoBoxMinus, IcoBoxPlus } from '@learnway/icons';
+import {
+  IcoFolder,
+  IcoFolderOpen,
+  IcoHome03,
+  IcoBoxMinus,
+  IcoBoxPlus,
+  IcoMenu01,
+} from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './tree.module.css'; // Tree module CSS
 
@@ -88,12 +95,12 @@ const TreeNodeComponent = ({
 
   const getNodeStyle = useMemo(() => {
     const styles = [
-      `${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}
-        ${isDragging ? 'opacity-50 scale-[0.98] border border-blue-300 bg-blue-50' : ''}`,
+      `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
+        ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
     ];
 
     if (selectedNode && selectedNode.key === enhanceNode.key) {
-      styles.push('bg-[var(--gray4)]');
+      styles.push('bg-[var(--gray1)]');
     }
 
     // 제약 조건 스타일
@@ -136,47 +143,47 @@ const TreeNodeComponent = ({
     e.stopPropagation();
     if (!isDraggable || enhanceNode.constraints?.drag === false) return;
 
-    // try {
-    //   // 드래그 이미지 생성
-    //   const dragImage = document.createElement('div');
-    //   dragImage.classList.add('drag-node-image');
-    //   dragImage.innerHTML = `
-    //   <div class="px-2 py-1 bg-blue-100 rounded border border-blue-300 shadow-md flex items-center">
-    //     ${level === 0 ? '<span>🏠</span>' : '<span>📁</span>'}
-    //     <span class="ml-2 font-medium">${enhanceNode.title || ''}</span>
-    //   </div>
-    // `;
+    try {
+      // 드래그 이미지 생성
+      const dragImage = document.createElement('div');
+      dragImage.classList.add('drag-node-image');
+      dragImage.innerHTML = `
+      <div class="px-2 py-1 bg-blue-100 rounded border border-blue-300 shadow-md flex items-center">
+        ${level === 0 ? '<span>🏠</span>' : '<span>📁</span>'}
+        <span class="ml-2 font-medium">${enhanceNode.title || ''}</span>
+      </div>
+    `;
 
-    //   // 위치 조정 - 화면에 보이지 않게
-    //   dragImage.style.position = 'absolute';
-    //   dragImage.style.top = '-1000px';
-    //   dragImage.style.left = '-1000px';
-    //   dragImage.style.pointerEvents = 'none';
+      // 위치 조정 - 화면에 보이지 않게
+      dragImage.style.position = 'absolute';
+      dragImage.style.top = '-1000px';
+      dragImage.style.left = '-1000px';
+      dragImage.style.pointerEvents = 'none';
 
-    //   // 문서에 추가
-    //   document.body.appendChild(dragImage);
+      // 문서에 추가
+      document.body.appendChild(dragImage);
 
-    //   // 드래그 이미지 설정
-    //   e.dataTransfer.setDragImage(dragImage, 10, 10);
-    //   e.dataTransfer.effectAllowed = 'move';
+      // 드래그 이미지 설정
+      e.dataTransfer.setDragImage(dragImage, 10, 10);
+      e.dataTransfer.effectAllowed = 'move';
 
-    //   // 상태 업데이트 - 한 번만 실행되도록
-    //   if (!isDragging) {
-    //     setIsDragging(true);
-    //   }
+      // 상태 업데이트 - 한 번만 실행되도록
+      if (!isDragging) {
+        setIsDragging(true);
+      }
 
-    //   // 부모 컴포넌트 콜백 호출 - 한 번만
-    //   onDragStart?.(enhanceNode);
+      // 부모 컴포넌트 콜백 호출 - 한 번만
+      onDragStart?.(enhanceNode);
 
-    //   // 불필요한 DOM 요소 정리
-    //   setTimeout(() => {
-    //     if (document.body.contains(dragImage)) {
-    //       document.body.removeChild(dragImage);
-    //     }
-    //   }, 0);
-    // } catch (error) {
-    //   console.error('Drag start error:', error);
-    // }
+      // 불필요한 DOM 요소 정리
+      setTimeout(() => {
+        if (document.body.contains(dragImage)) {
+          document.body.removeChild(dragImage);
+        }
+      }, 0);
+    } catch (error) {
+      console.error('Drag start error:', error);
+    }
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
@@ -247,7 +254,7 @@ const TreeNodeComponent = ({
   return (
     <div className={styles.tree_item}>
       <div
-        className={cn(getNodeStyle, styles.tree_inner)}
+        className={cn(getNodeStyle, styles.tree_inner, level === 0 && styles.root_menu)}
         style={{
           // paddingLeft: `${level * 20}px`,
           cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
@@ -273,7 +280,10 @@ const TreeNodeComponent = ({
             className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
             onClick={handleToggleExpand}
           >
-            {hasChildren ? (
+            {level === 0 && hasChildren ? (
+              <IcoHome03 stroke="#131C30" className={styles.icon_home} />
+            ) : null}
+            {level !== 0 && hasChildren ? (
               isExpanded ? (
                 <IcoBoxMinus className={styles.icon_minus} width={20} height={21} />
               ) : (
@@ -282,17 +292,20 @@ const TreeNodeComponent = ({
             ) : null}
           </span>
         )}
-        <span className={cn(styles.folder_wrap)}>
-          {isExpanded ? (
-            <IcoFolderOpen stroke="#131C30" className={styles.icon_folder} />
-          ) : (
-            <IcoFolder stroke="#131C30" className={styles.icon_folder} />
-          )}
-        </span>
+        {level !== 0 && (
+          <span className={cn(styles.folder_wrap)}>
+            {isExpanded ? (
+              <IcoFolderOpen stroke="#131C30" className={styles.icon_folder} />
+            ) : (
+              <IcoFolder stroke="#131C30" className={styles.icon_folder} />
+            )}
+          </span>
+        )}
+
         <span className={styles.node_title}>{highlightMatch(enhanceNode.title || '')}</span>
 
-        {treeType === 'DRAG_DROP' && (
-          <div className="relative flex items-center">
+        {level !== 0 && treeType === 'DRAG_DROP' && (
+          <div className={styles.drag_wrap}>
             {nodeButtons && (
               <div
                 className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
@@ -303,12 +316,18 @@ const TreeNodeComponent = ({
             )}
             {level >= 1 && (
               <span
-                className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
+                className={`body_bo_2_r flex items-center justify-center text-5xl text-[var(--gray8)] transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
                 draggable={isDragAndDropMode && isActuallyDraggable}
                 onDragStart={isDragAndDropMode ? handleHamburgerDragStart : undefined}
                 onDragEnd={handleDragEnd}
               >
-                ☰
+                <IcoMenu01
+                  width={24}
+                  height={24}
+                  fill="#A9AFB8"
+                  stroke="#A9AFB8"
+                  className={styles.icon_drag}
+                />
               </span>
             )}
           </div>
@@ -663,15 +682,15 @@ const TreeView = ({
       className={cn(styles.tree_wrap, 'tree_wrap')}
       onDragOver={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.add('bg-blue-100');
+        e.currentTarget.classList.add('bg-[var(--gray1)]');
       }}
       onDragLeave={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.remove('bg-blue-100');
+        e.currentTarget.classList.remove('bg-[var(--gray1)]');
       }}
       onDrop={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.remove('bg-blue-100');
+        e.currentTarget.classList.remove('bg-[var(--gray1)]');
         handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}
     >

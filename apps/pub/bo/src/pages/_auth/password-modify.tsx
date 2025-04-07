@@ -84,9 +84,9 @@ function RouteComponent() {
             </ContentsRow>
           </div>
           {/* 180일 경과 */}
-          <div className={styles.noti_info_txt}>
+          {/* <div className={styles.noti_info_txt}>
             <Button className={styles.btn_txt}>{'1개월 후에 변경'}</Button>
-          </div>
+          </div> */}
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>

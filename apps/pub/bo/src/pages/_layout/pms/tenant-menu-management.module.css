@@ -1,1 +1,6 @@
 /* tenant-menu-management.module.css */
+.start {
+  [class*='nlp--tabs'] + [class*='nlp--tabs'] {
+    @apply mt-[24px];
+  }
+}

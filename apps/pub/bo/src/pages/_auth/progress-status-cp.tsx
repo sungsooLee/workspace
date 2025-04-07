@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Input, Select } from '@learnway/ui';
+import { Button, Input, PhoneNumber } from '@learnway/ui';
 import { IcoSucess, IcoFormRequired, IcoComplete } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -200,21 +200,12 @@ function RouteComponent() {
                 <span className={formStyles.form_text}>휴대폰 번호</span>
               </label>
               <div className={formStyles.input_box}>
-                <Dropdown
-                  className={(formStyles.select_option, formStyles.short)}
+                <PhoneNumber
                   options={[
                     { value: 'type1', label: '+82' },
                     { value: 'type2', label: '+83' },
                   ]}
-                  readOnly
-                  size="lg"
-                />
-                <Input
-                  id="name-phoneNum"
-                  type="text"
-                  placeholder="-없이 휴대폰 번호입력(0102345678)"
-                  readOnly
-                  value="01012345678"
+                  size={'lg'}
                 />
               </div>
             </div>
