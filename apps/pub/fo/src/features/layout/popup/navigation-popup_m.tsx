@@ -6,7 +6,7 @@ import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar, Button } from 
 
 import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-modal.module.css';
+import styles from './navigate-modal.module.css';
 
 const NavigationPopupMComponent = () => {
   const { open: openModal } = useModal();
@@ -37,7 +37,8 @@ const NavigationPopupMComponent = () => {
                     width: 'm_full',
                     content: <PasswordVerifyPopup />,
                   })
-                }>
+                }
+              >
                 개인정보변경
               </Button>
             </div>
