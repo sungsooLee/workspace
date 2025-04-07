@@ -92,7 +92,9 @@ const ApiInfoModalComponent = ({ apiId }: any) => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={() => close()}>확인</Button>
+        <Button onClick={() => close()} size={'md'} variant={'primary'}>
+          확인
+        </Button>
       </ModalFooter>
     </ModalContainer>
   );

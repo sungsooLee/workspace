@@ -513,7 +513,7 @@ const TreeNodeComponent = ({
         )}
 
         {treeType === 'SHUTTLE_LIST' && (
-          <div className="relative flex items-center">
+          <div className={styles.btn_area}>
             {nodeButtons && (
               <div
                 className={`duration-150} mr-2 flex space-x-1 transition-opacity`}

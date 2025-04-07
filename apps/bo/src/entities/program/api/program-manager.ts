@@ -14,8 +14,6 @@ export default class ProgramManagerService {
    * @returns
    */
   static fetchPrograms(rootTreeId: string, apiScopeCode: string): Promise<any> {
-    return httpService.get<any>(
-      `${PMSApiPrefix()}/apis/tree/${rootTreeId}?apiScopeCode=${apiScopeCode}`,
-    );
+    return httpService.get<any>(`${PMSApiPrefix()}/apis/tree?apiScopeCode=${apiScopeCode}`);
   }
 }

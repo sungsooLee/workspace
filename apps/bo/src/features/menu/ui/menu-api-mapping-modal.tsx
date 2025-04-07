@@ -70,8 +70,12 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={close}>취소</Button>
+        <Button variant={'gray'} size={'md'} onClick={close}>
+          취소
+        </Button>
         <Button
+          variant={'primary'}
+          size={'md'}
           onClick={() => {
             console.log(selectedItems);
             close(selectedItems);
