@@ -31,9 +31,6 @@ function RouteComponent() {
     console.log(data);
   };
 
-  const openModal = () => {
-    // 모달 다으면 oncofmr(value)
-  };
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -43,7 +40,8 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}>
+              onClick={() => router.navigate({ to: '/learning/resource' })}
+            >
               목록
             </Button>
           </LinkBox>
@@ -456,15 +454,15 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    channelName: {
-      format: 'string', // 데이터 타입
-      required: true, // 필수 여부 // 기본값 false
-    },
-    learningResourceName: true, // 학습자원명
-    externalDevelopmentCompanyManager: {
-      required: {
-        fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
-      },
-    },
+    // channelName: {
+    //   format: 'string', // 데이터 타입
+    //   required: true, // 필수 여부 // 기본값 false
+    // },
+    // learningResourceName: true, // 학습자원명
+    // externalDevelopmentCompanyManager: {
+    //   required: {
+    //     fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
+    //   },
+    // },
   },
 };

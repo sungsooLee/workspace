@@ -1,20 +1,31 @@
-import { z } from '@learnway/shared';
-import { Button, Input, TreeNode } from '@learnway/ui';
+import { z, cn } from '@learnway/shared';
+import { Button, Grid, Input, TreeNode, useModal } from '@learnway/ui';
 import { ContentsRow } from '@learnway/ui';
 import React, { FC, forwardRef, useEffect, useState } from 'react';
-import { BaseFormFieldProps, useDynamicForm, useDynamicFormContext } from '@learnway/hooks';
-import { FormRow } from '../../../shared/ui/form';
+import { useDynamicForm } from '@learnway/hooks';
+import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 import {
   useCheckExistsMenu,
-  useCreateMenu,
-  useMenuManagerDetail,
-} from '../../../entities/menu/service/menu-manager.hook';
+  useMenuManageDetail,
+} from '../../../entities/menu/service/menu-manage.hook';
 import { findMenuPathById } from '../service/menu.service';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
+
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { DuplicateCodeGuideText } from './menu-code-input';
+import { MenuApiMappingModal } from './menu-api-mapping-modal';
+import { ApiInfoModal } from './api-info-modal';
+
+/// 메뉴 - API 매핑 그리드 설정 //////
+const columnHelper = createColumnHelper<any>();
+
+///////////////
 
 const MenuViewComponent: FC<any> = ({
   treeData,
@@ -26,16 +37,17 @@ const MenuViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  const { data, isLoading, refetch } = useMenuManagerDetail(
+  const { data, isLoading, refetch } = useMenuManageDetail(
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
+  const { open: openModal } = useModal();
+
   // useEffect(() => {
   //   refetch();
   // }, [refetch, selectedNode]);
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
-
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
   const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
     'none',
@@ -106,6 +118,7 @@ const MenuViewComponent: FC<any> = ({
         isDuplicateMenuCode: false,
         visible: ['visiblePcYn'],
         hiddenYn: false,
+        apiMappingMenuList: [],
       };
       fetchData(initialData);
     } else if (mode === 'init') {
@@ -156,8 +169,7 @@ const MenuViewComponent: FC<any> = ({
   };
 
   const handleOnSubmit = (node: any) => {
-    console.log(codeCheckState);
-    console.log(isSuccessCodeCheck);
+    console.log(node.apiMappingMenuList);
     const visibleMobileYn = node.visible.find((element: string) => element === 'visibleMobileYn')
       ? true
       : false;
@@ -192,7 +204,7 @@ const MenuViewComponent: FC<any> = ({
               translation: node.title,
             },
           ],
-          apiMappingMenuList: [],
+          apiMappingMenuList: node.apiMappingMenuList,
         };
 
         // 수정 API 호출
@@ -231,6 +243,7 @@ const MenuViewComponent: FC<any> = ({
           translation: node.title,
         },
       ],
+      apiMappingMenuList: node.apiMappingMenuList,
     };
     console.log(tmpData);
     onSave(tmpData);
@@ -251,196 +264,214 @@ const MenuViewComponent: FC<any> = ({
     return '메뉴 정보';
   };
 
-  const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
-    (
-      {
-        name,
-        value,
-        onChange,
-        getValues,
-        clearFormError,
-        onFormChange,
-        checkExistsMenu,
-        isSuccess,
-        disabled,
-      },
-      ref,
-    ) => {
-      const { onChangeGuideText } = useDynamicFormContext();
-      useEffect(() => {
-        switch (codeCheckState) {
-          case 'success':
-            onChangeGuideText(
-              <span style={{ color: 'blue' }}>사용할 수 있는 메뉴 코드입니다.</span>,
-            );
-            break;
-          case 'duplicate':
-            onChangeGuideText(
-              <span style={{ color: 'red' }}>이미 사용 중인 메뉴 코드입니다.</span>,
-            );
-            break;
-          case 'error':
-            onChangeGuideText(
-              <span style={{ color: 'red' }}>중복 확인 중 오류가 발생했습니다.</span>,
-            );
-            break;
-          // case 'none':
-          // default:
-          //   onChangeGuideText('코드 입력 후 중복 버튼을 눌러 중복 확인을 해주세요.');
-        }
-      }, [codeCheckState, onChangeGuideText]);
-
-      useEffect(() => {
-        return () => {
-          onChangeGuideText('');
-        };
-      }, [onChangeGuideText]);
-
-      return (
-        <div className="flex w-full gap-x-2" ref={ref}>
-          <Input
-            value={value}
-            onChange={(e: any) => {
-              onChange(e.target.value);
-              handleCodeChange(e.target.value);
-              // if (onFormChange) {
-              //   onFormChange({ isDuplicateMenuCode: false });
-              //   setCodeCheckState('none');
-              // }
-            }}
-            disabled={disabled}
-          />
-          <Button
-            type="button"
-            variant="gray"
-            size="sm"
-            disabled={disabled}
-            onClick={() => {
-              const { code, parentKey } = getValues();
-
-              // Validate code before checking
-              if (!code) {
-                clearFormError(name);
-                setFormError?.('code', '메뉴 코드를 입력해주세요.');
-                return;
-              }
-
-              const data = {
-                menuCode: code,
-                parentId: parentKey,
-              };
-
-              // Clear any existing errors and perform the check
-              clearFormError(name);
-              checkExistsMenu(data);
-            }}>
-            중복
-          </Button>
-        </div>
-      );
-    },
-  );
-
   const isInitMode = mode === 'init';
+
+  const handleApiMapping = async () => {
+    const selectedApiKeys = getValues('apiMappingMenuList');
+    const keyArray = selectedApiKeys.map((item: TreeNode) => item.key);
+
+    const selectApis = await openModal({
+      content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
+      width: 'lg',
+    });
+    console.log(getValues());
+    fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
+    // console.log(tt);
+  };
+
+  // API 정보 컬럼
+
+  const columns = [
+    columnHelper.accessor('apiName', {
+      cell: (info) => info.getValue(),
+      header: '분류',
+      // size: 120,
+      // enableGrouping: false,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'left', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('apiId', {
+      cell: (info: CellContext<any, string>) => {
+        const rowData = info.row.original;
+        return (
+          <p
+            className="cursor-pointer underline"
+            onClick={() => {
+              openModal({
+                content: <ApiInfoModal apiId={rowData.apiId} />,
+                width: 's',
+                closeOnOutsideClick: true,
+              });
+            }}
+          >
+            {info.getValue()}
+          </p>
+        );
+      },
+      header: 'API',
+      // size: 490,
+      // enableGrouping: false,
+    }),
+    columnHelper.accessor('Delete', {
+      cell: (info) => {
+        return (
+          <Button
+            onClick={() => {
+              // 현재 row의 데이터 가져오기
+              const rowData = info.row.original;
+              // 현재 apiMappingMenuList 가져오기
+              const currentApiList = getValues('apiMappingMenuList') || [];
+              // 해당 row를 제외한 새 배열 생성 (apiId로 필터링)
+              const updatedApiList = currentApiList.filter(
+                (item: any) => item.apiId !== rowData.apiId,
+              );
+              fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
+            }}
+          >
+            삭제
+          </Button>
+        );
+      },
+      header: '삭제',
+      // size: 100,
+      // enableGrouping: false,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
 
   // UI 렌더링
   return (
-    <div className={'flex-1 rounded-2xl bg-white p-5'}>
+    <div className={layoutStyles.inner}>
       <form onSubmit={onSubmit(handleOnSubmit)}>
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-medium">{getTitle()}</h3>
-          <div className="flex gap-2">
+        <div className={titleStyles.title_wrap}>
+          <h3 className={titleStyles.title}>{getTitle()}</h3>
+          <div className={layoutStyles.btn_wrap}>
             <Button
               type="button"
-              variant="gray2"
+              variant="text"
               size="sm"
               onClick={handleReset}
-              disabled={isInitMode}>
+              disabled={isInitMode}
+              className={layoutStyles.btn_text}
+            >
               초기화
             </Button>
             <Button
-              variant="point"
+              variant="text"
               size="sm"
               disabled={isInitMode || mode === 'add'}
-              onClick={handleDelete}>
+              onClick={handleDelete}
+              className={layoutStyles.btn_text}
+            >
               삭제
             </Button>
-            <Button type="submit" variant="point" size="sm" disabled={isInitMode}>
+            <Button type="submit" variant="save" size="sm" disabled={isInitMode}>
               저장
             </Button>
           </div>
         </div>
         {/* 폼 필드 - location (비활성화 상태) */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'location'} disabled={true} />
-          </FormRow>
-        </ContentsRow>
 
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'parentMenuName'} disabled={true} />
-          </FormRow>
-        </ContentsRow>
+        <div className={layoutStyles.inner_contents}>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'location'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
 
-        {/* 폼 필드 - code */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'code'}>
-              <DuplicateCodeGuideText
-                clearFormError={clearFormError}
-                checkExistsMenu={checkExistsMenu}
-                isSuccess={isSuccessCodeCheck}
-                disabled={isInitMode}
-              />
-            </DynamicFormField>
-          </FormRow>
-        </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'parentMenuName'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
 
-        {/* 폼 필드 - title */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'title'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          {/* 폼 필드 - code */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'code'}>
+                <DuplicateCodeGuideText
+                  clearFormError={clearFormError}
+                  checkExistsMenu={checkExistsMenu}
+                  isSuccess={isSuccessCodeCheck}
+                  disabled={isInitMode}
+                  codeCheckState={codeCheckState}
+                  handleCodeChange={handleCodeChange}
+                  setFormError={setFormError}
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
 
-        {/* 폼 필드 - url */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'url'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          {/* 폼 필드 - title */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'title'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
 
-        {/* 폼 필드 - description */}
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'menuDesc'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          {/* 폼 필드 - url */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'url'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
 
-        <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          {/* 폼 필드 - description */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'menuDesc'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
 
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'visible'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
 
-        <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'personalDataContainYn'} disabled={isInitMode} />
-          </FormRow>
-        </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'visible'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
 
-        {/* <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'apiMappingMenuList'}></DynamicFormField>
-          </FormRow>
-        </ContentsRow> */}
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'personalDataContainYn'} disabled={isInitMode} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'apiMappingMenuList'}>
+                <Grid
+                  data={getValues('apiMappingMenuList') || []}
+                  columns={columns}
+                  showTotalCount={true}
+                  hideColumnSettings={true}
+                  title={t('API')}
+                  renderButtons={
+                    <Button
+                      variant="text"
+                      onClick={() => handleApiMapping()}
+                      disabled={isInitMode}
+                      className={layoutStyles.btn_text}
+                    >
+                      추가
+                    </Button>
+                  }
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
+            <ContentsHistoryInfoFormField />
+          </ContentsRow>
+        </div>
       </form>
     </div>
   );
@@ -497,6 +528,7 @@ const formConfig: DynamicFormConfig = {
       label: t('메뉴 URL'),
       name: 'url',
       type: 'text',
+      maxLength: 50,
       value: '',
     },
     {
@@ -521,6 +553,7 @@ const formConfig: DynamicFormConfig = {
       label: t('메뉴 설명'),
       name: 'menuDesc',
       type: 'textarea',
+      maxLength: 100,
       value: '',
     },
     {
@@ -546,13 +579,13 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    // {
-    //   name: 'apiMappingMenuList',
-    //   type: 'custom',
-    //   label: t('API'),
-    //   format: 'array',
-    //   value: [],
-    // },
+    {
+      name: 'apiMappingMenuList',
+      type: 'custom',
+      // label: t('API'),
+      format: 'array',
+      value: [],
+    },
   ],
   validator: {
     isDuplicateMenuCode: {

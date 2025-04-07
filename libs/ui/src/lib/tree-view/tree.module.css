@@ -14,16 +14,37 @@
     .tree_item {
       @apply relative resize-none;
       .tree_inner {
-        @apply flex min-h-[56px] items-center border-t-[1px] border-solid border-[var(--gray4)] bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_20px] bg-no-repeat !pl-[18px];
+        @apply flex min-h-[40px] items-center !pl-0;
+        .drag_wrap {
+          @apply ml-auto flex items-center;
+        }
+        &:not(.root_menu) {
+          @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
+        }
+        &.root_menu {
+          .tree_menu {
+            @apply mr-0;
+          }
+        }
         &:hover {
           @apply bg-[var(--gray1)];
         }
         & + .tree_children {
           .tree_item .tree_inner {
-            @apply bg-[left_26px_top_20px] !pl-[38px];
+            @apply bg-[left_6px_top_12px] !pl-[18px];
             & + .tree_children {
               .tree_item .tree_inner {
-                @apply bg-[left_46px_top_20px] !pl-[58px];
+                @apply bg-[left_26px_top_12px] !pl-[38px];
+              }
+              & + .tree_children {
+                .tree_item .tree_inner {
+                  @apply bg-[left_46px_top_12px] !pl-[58px];
+                  & + .tree_children {
+                    .tree_item .tree_inner {
+                      @apply bg-[left_66px_top_12px] !pl-[78px];
+                    }
+                  }
+                }
               }
             }
           }
@@ -31,9 +52,15 @@
       }
       .tree_menu {
         @apply mr-[8px] flex h-[21px] w-[20px] cursor-pointer items-center justify-center;
+        .icon_home {
+          @apply !h-[16px] !w-[16px];
+        }
       }
       .folder_wrap {
         @apply flex h-[21px] w-[20px] items-center justify-center;
+        .icon_folder {
+          @apply !h-[16px] !w-[16px];
+        }
       }
     }
 
@@ -126,32 +153,62 @@ body.tree-dragging .tree div:not(.tree-node-dragging):hover {
   animation: pulse 1.5s infinite;
 }
 
-@keyframes pulse {
+@keyframes invalidPulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
   50% {
     opacity: 1;
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
 
-/* 드래그 중인 노드의 내용물 흔들림 효과 */
 @keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
+  10%,
+  90% {
+    transform: translateX(-1px);
   }
-  25% {
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
     transform: translateX(-2px);
   }
-  75% {
+  40%,
+  60% {
     transform: translateX(2px);
   }
 }
 
-.tree-node-dragging > * {
-  animation: shake 0.3s infinite;
+.tree-node-success-drop {
+  animation: successDrop 0.5s ease;
+}
+
+@keyframes successDrop {
+  0% {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* 드래그 중인 커서 스타일 */
+.tree-dragging {
+  cursor: grabbing !important;
+}
+
+/* 드롭 인디케이터 스타일 강화 */
+.drop-indicator-invalid-before,
+.drop-indicator-invalid-after,
+.drop-indicator-invalid-inside {
+  z-index: 100 !important; /* 유효하지 않은 드롭 인디케이터의 우선순위 높임 */
 }

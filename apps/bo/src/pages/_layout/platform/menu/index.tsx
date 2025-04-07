@@ -11,16 +11,17 @@ import { cn } from '@learnway/shared';
 import {
   useCreateMenu,
   useDeleteMenu,
-  useMenuManagerFetchTree,
-  useMenuMangerFetchMenus,
+  useMenuManageFetchTree,
+  useMenuMangeFetchMenus,
   useUpdateMenu,
-} from '../../../../entities/menu/service/menu-manager.hook';
+} from '../../../../entities/menu/service/menu-manage.hook';
 import {
   findNodeByMenuId,
   transformApiDataToTreeData,
 } from '../../../../features/menu/service/menu.service';
 import { pageRouteConfig } from '../../../../features/auth';
-import { useQueryClient } from '@tanstack/react-query';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -32,7 +33,6 @@ export const Route = createFileRoute('/_layout/platform/menu/')({
 });
 
 function RouteComponent() {
-  // const [initData, setInitData] = useState<any>();
   const [treeData, setTreeData] = useState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
@@ -48,7 +48,7 @@ function RouteComponent() {
   const isDataLoading = useRef(false);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, isLoading, refetch } = useMenuManagerFetchTree(selectedTabKey, 'ko');
+  const { data, isLoading, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
   const { create, data: createdMenuData } = useCreateMenu({
     onSuccess: async (data: any) => {
@@ -205,59 +205,52 @@ function RouteComponent() {
 
   const renderTabContent = (tabKey: string) => {
     return (
-      <div className="mt-2 flex gap-[20px]">
-        {isLoading ? (
-          <div>Loading...</div>
+      <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+        {treeData && (
+          <MenuTree
+            treeData={treeData}
+            onNodeClick={handleNodeClick}
+            onAddSubMenu={handleAddSubMenu}
+            menuScope={tabKey}
+            expandedKeys={expandedKeys} // 확장 상태 전달
+            onExpandChange={handleExpandChange} // 확장 상태 변경 핸들러
+            selectedKey={selectedNode?.key} // selectedKey 추가
+          />
+        )}
+        {selectedNode || mode === 'add' ? (
+          <MenuView
+            treeData={treeData}
+            selectedNode={selectedNode}
+            menuScope={tabKey}
+            menu
+            mode={mode}
+            parentNode={parentNode}
+            onSave={handleSave}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+            onCancel={() => {
+              setMode('view');
+              if (!selectedNode) {
+                setParentNode(null);
+              }
+            }}
+          />
         ) : (
-          <>
-            {treeData && (
-              <MenuTree
-                treeData={treeData}
-                onNodeClick={handleNodeClick}
-                onAddSubMenu={handleAddSubMenu}
-                menuScope={tabKey}
-                // onDeleteNode={handleDeleteNode}
-                expandedKeys={expandedKeys} // 확장 상태 전달
-                onExpandChange={handleExpandChange} // 확장 상태 변경 핸들러
-                selectedKey={selectedNode?.key} // selectedKey 추가
-              />
-            )}
-            {selectedNode || mode === 'add' ? (
-              <MenuView
-                treeData={treeData}
-                selectedNode={selectedNode}
-                menuScope={tabKey}
-                menu
-                mode={mode}
-                parentNode={parentNode}
-                onSave={handleSave}
-                onUpdate={handleUpdate}
-                onDelete={handleDelete}
-                onCancel={() => {
-                  setMode('view');
-                  if (!selectedNode) {
-                    setParentNode(null);
-                  }
-                }}
-              />
-            ) : (
-              <MenuView
-                treeData={treeData}
-                selectedNode={null}
-                menuScope={tabKey}
-                menu
-                mode="init"
-                parentNode={null}
-                onSave={handleSave}
-                onUpdate={handleUpdate}
-                onDelete={handleDelete}
-                onCancel={() => {
-                  setMode('view');
-                  setParentNode(null);
-                }}
-              />
-            )}
-          </>
+          <MenuView
+            treeData={treeData}
+            selectedNode={null}
+            menuScope={tabKey}
+            menu
+            mode="init"
+            parentNode={null}
+            onSave={handleSave}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+            onCancel={() => {
+              setMode('view');
+              setParentNode(null);
+            }}
+          />
         )}
       </div>
     );
@@ -303,20 +296,16 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button type="button" variant="primary" size="sm">
-          저장
-        </Button>
-      </ContentsButtons>
-      <MainContents>
+    <PageContainer scrollHidden={true}>
+      <div className={styles.main_contents}>
         <Tabs
           selectedTabKey={selectedTabKey}
           items={items}
           type="line"
           onActiveTab={handleTabChange}
+          className={styles.tab_wrap}
         />
-      </MainContents>
+      </div>
     </PageContainer>
   );
 }

@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { cn } from '@learnway/shared';
 
 import styles from './stepper.module.css';
-import { SelectOption } from '../select/type';
+import { SelectOption } from '../type';
 // import { IcoCheckboxChecked } from '@/libs/icons/src';
 import { IcoCheckboxChecked } from '@learnway/icons';
 
@@ -59,7 +59,8 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               d.isActive && styles.active,
               d.isComplete && styles.complete,
             )}
-            onClick={() => enableMoveStep && handleClick(d)}>
+            onClick={() => enableMoveStep && handleClick(d)}
+          >
             {/* icon or step value */}
             <div className={styles.step_status}>
               {d.isActive || d.isComplete ? (

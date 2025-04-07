@@ -48,26 +48,8 @@ function RouteComponent() {
             />
           </div>
 
-          {/* OTP 인증폼 */}
-          <div className={cn(styles.auth_form, 'no_line', 'col')}>
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>구글 OTP 번호</span>
-                  {/* 필수 케이스 */}
-                  <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={12} height={12} />
-                  </span>
-                </label>
-                <div className={formStyles.input_box}>
-                  <Input id="name" type="password" placeholder="구글 OTP 번호 입력" value="" />
-                </div>
-              </div>
-            </ContentsRow>
-          </div>
-
           {/* 유의사항 모듈 */}
-          <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti} noti_wrap`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -87,7 +69,8 @@ function RouteComponent() {
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })
-                  }>
+                  }
+                >
                   구글 OTP 인증 가이드
                 </Button>
               </dd>
@@ -95,7 +78,7 @@ function RouteComponent() {
           </div>
           {/* 유의사항 모듈 */}
 
-          <div className={styles.noti_info_txt}>
+          {/* <div className={styles.noti_info_txt}>
             <Button
               className={styles.btn_txt}
               onClick={() =>
@@ -104,10 +87,11 @@ function RouteComponent() {
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
                 })
-              }>
+              }
+            >
               QR코드로 인증키 생성
             </Button>
-          </div>
+          </div> */}
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
@@ -123,7 +107,8 @@ function RouteComponent() {
                   width: 'sm',
                   content: <MpassPopup />,
                 })
-              }>
+              }
+            >
               구글 OTP 인증
             </Button>
           </div>

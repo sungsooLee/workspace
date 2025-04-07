@@ -7,6 +7,7 @@ import { Button } from '../button/button';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -107,7 +108,11 @@ const ListComponent = function ({
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      modifiers={[restrictToVerticalAxis]}
+    >
       <SortableContext
         items={options.map((item) => item[valueField])}
         strategy={verticalListSortingStrategy}

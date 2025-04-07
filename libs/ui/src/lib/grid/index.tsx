@@ -80,6 +80,7 @@ const Grid = forwardRef(
       onRowSelect,
       onRowsSelect,
       onChange,
+      renderButtons,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -733,6 +734,7 @@ const Grid = forwardRef(
           {!hideColumnSettings && (
             <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
           )}
+          {renderButtons}
         </div>
         {renderTable()}
         {renderPagination()}

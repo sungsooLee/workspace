@@ -955,7 +955,8 @@ export const createPersonColumns = (columnFactory: ColumnFactory<Person>): Colum
                   />
                 </div>,
               );
-            }}>
+            }}
+          >
             팝업
           </Button>
         </div>
@@ -1088,7 +1089,7 @@ export const TemplateEditGrid: any = (args: any) => {
       meta: {
         cellAlign: 'center',
       },
-      cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
+      cell: (info: CellContext<any, boolean>) => <EditCheckboxCell info={info} />,
     },
     {
       header: 'radio',
