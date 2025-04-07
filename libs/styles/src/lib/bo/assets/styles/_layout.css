@@ -1,4 +1,18 @@
 /* layout */
+body main {
+  @apply !max-w-[100vw];
+  [class*='content_wrap'] {
+    & > div {
+      @apply !max-w-[calc(100vw-77px)];
+      & > div {
+        @apply !max-w-[calc(100vw-157px)];
+      }
+    }
+  }
+  [class*='nlp--contents-row'] [class*='grid_wrap'] {
+    @apply !max-w-[calc(100vw-157px)];
+  }
+}
 .lnb-open main {
   /* lnb open */
   @apply !max-w-[calc(100vw-263px)];
