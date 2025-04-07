@@ -52,7 +52,7 @@ function RouteComponent() {
     columnHelper.accessor('Number', {
       cell: (info) => info.getValue(),
       header: 'NO.',
-      size: 64,
+      size: 164,
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
