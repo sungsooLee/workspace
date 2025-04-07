@@ -34,7 +34,8 @@ function RouteComponent() {
           {/* 인증선택 모듈 */}
           <div
             className={cn(otpToolFormField.signup_select, 'auth--signup-select')}
-            role="radiogroup">
+            role="radiogroup"
+          >
             <RadioCard
               options={[
                 {
@@ -87,7 +88,7 @@ function RouteComponent() {
           )}
 
           {/* 유의사항 모듈 */}
-          <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
+          <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti} noti_wrap`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -116,7 +117,8 @@ function RouteComponent() {
                   width: 'sm',
                   content: <MpassPopup />,
                 })
-              }>
+              }
+            >
               MPASS 인증
             </Button>
           </div>

@@ -1,9 +1,7 @@
-import React, { forwardRef, useEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { BaseFormFieldProps, OptionsConfig } from '@learnway/hooks';
-import { Dropdown, DropdownOption } from '@learnway/ui';
+import { Dropdown, DropdownComponentProps, DropdownOption } from '@learnway/ui';
 import { useFetchCodeGroups } from '../../../entities/platform';
-import { t } from 'i18next';
-import { ActionMeta, MultiValue, SingleValue } from 'react-select';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
@@ -11,10 +9,11 @@ import { useQueryClient } from '@tanstack/react-query';
 interface DropdownFormField extends BaseFormFieldProps<string> {
   options: DropdownOption[];
   optionsConfig?: OptionsConfig;
+  dropdownConfig?: DropdownComponentProps;
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
-  ({ control, value, onChange, options: initOptions, optionsConfig }, ref) => {
+  ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
     const [options, setOptions] = useState<DropdownOption[]>([]);
     const { data: codeData } = useFetchCodeGroups();
     const { t } = useTranslation();
@@ -89,7 +88,13 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
     return (
       options &&
       options.length > 0 && (
-        <Dropdown ref={ref} value={value} options={options} onChange={onChange} />
+        <Dropdown
+          ref={ref}
+          value={value}
+          options={options}
+          variant={dropdownConfig?.variant}
+          onChange={onChange}
+        />
       )
     );
   },

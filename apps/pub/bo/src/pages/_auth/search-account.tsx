@@ -6,7 +6,7 @@ import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioCard, Dropdown, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,

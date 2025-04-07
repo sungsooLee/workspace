@@ -114,10 +114,12 @@ export { ReactComponent as IcoPin } from './lib/ic_pin.svg'; // pin
 export { ReactComponent as IcoThumbsUp } from './lib/ic_thumbs_up.svg'; // thumbs
 export { ReactComponent as IcoMessageCircle } from './lib/ic_message_circle.svg'; // message
 export { ReactComponent as IcoMoreVertical } from './lib/ic_more_vertical.svg'; // more vertical
+export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
 
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
+export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

@@ -6,7 +6,6 @@ import {
   RefAttributes,
   RefObject,
 } from 'react';
-import { ZodTypeAny } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 import { CODE_GROUP } from '@learnway/config';
 
@@ -80,6 +79,9 @@ export type FormConfig =
   | (BaseFormFieldConfigProps<string> & {
       /** 필드 타입이 드롭다운인 경우 */
       type: 'dropdown' | 'multi-dropdown';
+      dropdownConfig?: {
+        variant?: string; // ReactSelectComponentProps.variant
+      };
       /** 드롭다운 옵션 항목 목록 */
       options: SelectOption[];
       /** 옵션 구성 설정 */

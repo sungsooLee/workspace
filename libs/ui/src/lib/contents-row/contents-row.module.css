@@ -19,6 +19,9 @@
         @apply flex-1;
         & + div {
           @apply mt-0 flex flex-1 justify-end;
+          & + p {
+            @apply pb-[16px];
+          }
         }
       }
     }
