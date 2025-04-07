@@ -19,7 +19,14 @@ import {
   removeNodeByKey,
 } from './tree.service';
 import { useTreeContext } from './tree.context';
-import { IcoBoxMinus, IcoBoxPlus, IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
+import {
+  IcoBoxMinus,
+  IcoBoxPlus,
+  IcoFolder,
+  IcoFolderOpen,
+  IcoHome03,
+  IcoMenu01,
+} from '@learnway/icons';
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 
@@ -219,13 +226,13 @@ const TreeNodeComponent = ({
     // const styles = [`flex items-center py-1 rounded min-h-[40px] relative`];
 
     const styles = [
-      `${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}
-        ${isDragging ? 'opacity-50 scale-[0.98] border border-blue-300 bg-blue-50' : ''}`,
+      `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
+        ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
     ];
 
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
-      styles.push('bg-[var(--gray4)]');
+      styles.push('bg-[var(--gray1)]');
     }
 
     // 드롭 위치 스타일
@@ -417,11 +424,11 @@ const TreeNodeComponent = ({
   };
 
   return (
-    <div className="relative select-none">
+    <div className={styles.tree_item}>
       <div
-        className={getNodeStyle()}
+        className={cn(getNodeStyle, styles.tree_inner, level === 0 && styles.root_menu)}
         style={{
-          paddingLeft: `${level * 20}px`,
+          // paddingLeft: `${level * 20}px`,
           // cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
           boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none',
           transition: 'all 0.2s ease',
@@ -447,7 +454,10 @@ const TreeNodeComponent = ({
             className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
             onClick={handleToggleExpand}
           >
-            {hasChildren ? (
+            {level === 0 && hasChildren ? (
+              <IcoHome03 stroke="#131C30" className={styles.icon_home} />
+            ) : null}
+            {level !== 0 && hasChildren ? (
               isExpanded ? (
                 <IcoBoxMinus className={styles.icon_minus} width={20} height={21} />
               ) : (
@@ -456,13 +466,15 @@ const TreeNodeComponent = ({
             ) : null}
           </span>
         )}
-        <span className={cn(styles.folder_wrap)}>
-          {isExpanded ? (
-            <IcoFolderOpen stroke="#131C30" width={20} height={21} className={styles.icon_folder} />
-          ) : (
-            <IcoFolder stroke="#131C30" width={20} height={21} className={styles.icon_folder} />
-          )}
-        </span>
+        {level !== 0 && (
+          <span className={cn(styles.folder_wrap)}>
+            {isExpanded ? (
+              <IcoFolderOpen stroke="#131C30" className={styles.icon_folder} />
+            ) : (
+              <IcoFolder stroke="#131C30" className={styles.icon_folder} />
+            )}
+          </span>
+        )}
         <span
           className={cn(
             styles.node_title,
@@ -472,8 +484,8 @@ const TreeNodeComponent = ({
           {highlightMatch(enhanceNode.title || '')}
         </span>
 
-        {isDragAndDropMode && (
-          <div className="relative flex items-center">
+        {level !== 0 && isDragAndDropMode && (
+          <div className={styles.drag_wrap}>
             {nodeButtons && (
               <div
                 className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
@@ -488,14 +500,20 @@ const TreeNodeComponent = ({
                 draggable={true}
                 onDragStart={handleDragStart}
               >
-                ☰
+                <IcoMenu01
+                  width={24}
+                  height={24}
+                  fill="#A9AFB8"
+                  stroke="#A9AFB8"
+                  className={styles.icon_drag}
+                />
               </span>
             )}
           </div>
         )}
 
         {treeType === 'SHUTTLE_LIST' && (
-          <div className="relative flex items-center">
+          <div className={styles.btn_area}>
             {nodeButtons && (
               <div
                 className={`duration-150} mr-2 flex space-x-1 transition-opacity`}
