@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Button, useModal } from '@learnway/ui';
 import { LEARNING_TYPE } from '@learnway/config';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { LearningTypeChoiceModal, VideoUploadModal } from '../../../../features/learning';
+import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
+import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
+import { LearningTypeChoiceModal, VideoUploadModal } from '../../../../../features/learning';
 import { t } from 'i18next';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { SearchBox } from '../../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
 
-export const Route = createFileRoute('/_unauth/platform_test/company/')({
+export const Route = createFileRoute('/_unauth/platform_test/company/company/')({
   component: RouteComponent,
 });
 
