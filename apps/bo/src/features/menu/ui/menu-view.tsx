@@ -42,9 +42,6 @@ const MenuViewComponent: FC<any> = ({
   );
   const { open: openModal } = useModal();
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch, selectedNode]);
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -94,6 +91,7 @@ const MenuViewComponent: FC<any> = ({
             data.visibleMobileYn === true && 'visibleMobileYn',
           ].filter(Boolean),
           isDuplicateMenuCode: true, // view 모드에서는 기본적으로 중복 체크 통과로 설정
+          apiMappingMenuList: data?.apiMappingMenuList,
         };
 
         initialFromValuesRef.current = { ...formData };
@@ -176,6 +174,8 @@ const MenuViewComponent: FC<any> = ({
     const visiblePcYn = node.visible.find((element: string) => element === 'visiblePcYn')
       ? true
       : false;
+    const apiMappingKeys = [] as number[];
+    node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
     // View 모드에서 저장 처리
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
@@ -204,7 +204,7 @@ const MenuViewComponent: FC<any> = ({
               translation: node.title,
             },
           ],
-          apiMappingMenuList: node.apiMappingMenuList,
+          apiMappingMenuList: apiMappingKeys,
         };
 
         // 수정 API 호출
@@ -243,7 +243,7 @@ const MenuViewComponent: FC<any> = ({
           translation: node.title,
         },
       ],
-      apiMappingMenuList: node.apiMappingMenuList,
+      apiMappingMenuList: apiMappingKeys,
     };
     console.log(tmpData);
     onSave(tmpData);

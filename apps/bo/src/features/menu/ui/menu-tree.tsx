@@ -5,9 +5,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView,
   TreeView2,
-  TreeView3,
 } from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';

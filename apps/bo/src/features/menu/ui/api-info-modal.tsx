@@ -43,14 +43,14 @@ const ApiInfoModalComponent = ({ apiId }: any) => {
             </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
-                <label htmlFor="apiName" className={formStyles.form_label}>
+                <label htmlFor="fullPath" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>{'API 위치'}</span>
                 </label>
                 <div className={formStyles.input_box}>
                   <Input
-                    id="apiName"
+                    id="fullPath"
                     type="text"
-                    value={''}
+                    value={data && data.fullPath}
                     disabled
                     className={formStyles.input}
                   />

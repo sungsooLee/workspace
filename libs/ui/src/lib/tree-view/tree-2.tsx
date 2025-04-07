@@ -19,7 +19,9 @@ import {
   removeNodeByKey,
 } from './tree.service';
 import { useTreeContext } from './tree.context';
-import { IcoFolder, IcoHome03 } from '@learnway/icons';
+import { IcoBoxMinus, IcoBoxPlus, IcoFolder, IcoFolderOpen, IcoHome03 } from '@learnway/icons';
+import styles from './tree.module.css'; // Tree module CSS
+import { cn } from '@learnway/shared';
 
 // 기본 스타일 정의
 const dropStyles = {
@@ -123,11 +125,12 @@ const TreeNodeComponent = ({
   draggedNodeKey,
   draggedNode,
   onCustomNodeClick,
+  size = 'md',
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-
+  const [isDragging, setIsDragging] = useState(false);
   const hasChildren = enhanceNode.children && enhanceNode.children.length > 0;
   const isExpanded = expandedKeys.includes(enhanceNode.key);
   const isDragAndDropMode =
@@ -213,11 +216,16 @@ const TreeNodeComponent = ({
 
   // 노드 스타일 계산
   const getNodeStyle = useCallback(() => {
-    const styles = [`flex items-center py-1 rounded min-h-[40px] relative`];
+    // const styles = [`flex items-center py-1 rounded min-h-[40px] relative`];
+
+    const styles = [
+      `${dropPosition === 'INSIDE' ? 'bg-blue-200' : ''}
+        ${isDragging ? 'opacity-50 scale-[0.98] border border-blue-300 bg-blue-50' : ''}`,
+    ];
 
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
-      styles.push('bg-blue-50');
+      styles.push('bg-[var(--gray4)]');
     }
 
     // 드롭 위치 스타일
@@ -232,9 +240,17 @@ const TreeNodeComponent = ({
     if (enhanceNode.constraints?.drop === false) {
       styles.push('border-l-4 border-yellow-300');
     }
+    if (enhanceNode.constraints?.drag === false && enhanceNode.constraints?.drop === false) {
+      styles.push('bg-gray-50');
+    }
+    if (enhanceNode.constraints?.drag === false || enhanceNode.constraints?.drop === false) {
+      styles.push('opacity-75');
+    } else {
+      styles.push('');
+    }
 
     // 기본 호버 스타일
-    styles.push('hover:bg-gray-100');
+    // styles.push('hover:bg-gray-100');
 
     // 검색 하이라이트
     if (
@@ -246,7 +262,7 @@ const TreeNodeComponent = ({
     }
 
     return styles.join(' ');
-  }, [dropPosition, selectedNode, enhanceNode, searchKeyword, isValidDropPosition]);
+  }, [dropPosition, isDragging, selectedNode, enhanceNode, searchKeyword, isValidDropPosition]);
 
   // 드래그 시작
   const handleDragStart = (e: React.DragEvent) => {
@@ -284,6 +300,10 @@ const TreeNodeComponent = ({
 
       e.dataTransfer.setData('text/plain', nodeData.key);
       e.dataTransfer.setData('application/json', JSON.stringify(nodeData));
+
+      if (!isDragging) {
+        setIsDragging(true);
+      }
 
       if (onDragStart) {
         onDragStart(nodeData);
@@ -391,6 +411,11 @@ const TreeNodeComponent = ({
     }
   };
 
+  const handleDragEnd = (e: React.DragEvent) => {
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
   return (
     <div className="relative select-none">
       <div
@@ -398,6 +423,7 @@ const TreeNodeComponent = ({
         style={{
           paddingLeft: `${level * 20}px`,
           // cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
+          boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none',
           transition: 'all 0.2s ease',
           //api팝업..
         }}
@@ -405,6 +431,7 @@ const TreeNodeComponent = ({
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
+        onDragEnd={handleDragEnd}
         onDrop={handleDrop}
         onClick={(e) => {
           e.stopPropagation();
@@ -415,24 +442,32 @@ const TreeNodeComponent = ({
       >
         {/* 드롭 위치 표시 */}
         {renderDropIndicator()}
-
-        <span
-          className="flex h-6 w-6 cursor-pointer items-center justify-center"
-          onClick={handleToggleExpand}
-        >
-          {hasChildren ? (
-            isExpanded ? (
-              <ChevronDown className="h-4 w-4 text-gray-600" />
-            ) : (
-              <ChevronRight className="h-4 w-4 text-gray-600" />
-            )
-          ) : null}
+        {hasChildren && (
+          <span
+            className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
+            onClick={handleToggleExpand}
+          >
+            {hasChildren ? (
+              isExpanded ? (
+                <IcoBoxMinus className={styles.icon_minus} width={20} height={21} />
+              ) : (
+                <IcoBoxPlus className={styles.icon_plus} />
+              )
+            ) : null}
+          </span>
+        )}
+        <span className={cn(styles.folder_wrap)}>
+          {isExpanded ? (
+            <IcoFolderOpen stroke="#131C30" width={20} height={21} className={styles.icon_folder} />
+          ) : (
+            <IcoFolder stroke="#131C30" width={20} height={21} className={styles.icon_folder} />
+          )}
         </span>
-        <span className="mr-1 flex h-6 w-6 items-center justify-center">
-          {level === 0 ? <IcoHome03 stroke="#131C30" /> : <IcoFolder stroke="#131C30" />}
-        </span>
         <span
-          className={`flex-grow text-sm ${onCustomNodeClick && level >= 1 ? 'underline' : 'none'}`}
+          className={cn(
+            styles.node_title,
+            `${onCustomNodeClick && level >= 1 ? 'underline' : 'none'}`,
+          )}
         >
           {highlightMatch(enhanceNode.title || '')}
         </span>
@@ -474,7 +509,7 @@ const TreeNodeComponent = ({
       </div>
 
       {hasChildren && isExpanded && (
-        <div className="tree-children">
+        <div className={styles.tree_children}>
           {enhanceNode.children &&
             enhanceNode.children.map((child) => (
               <FilteredTreeNode
@@ -494,6 +529,7 @@ const TreeNodeComponent = ({
                 draggedNodeKey={draggedNodeKey}
                 draggedNode={draggedNode}
                 onCustomNodeClick={onCustomNodeClick}
+                size={size}
               />
             ))}
         </div>
@@ -875,7 +911,7 @@ const TreeView2 = ({
 
   return (
     <div
-      className="rounded-lg border bg-white p-4 shadow-sm"
+      className={cn(styles.tree_wrap, 'tree_wrap')}
       onDragOver={(e) => {
         e.preventDefault();
         e.currentTarget.classList.add('bg-blue-100');
@@ -895,7 +931,7 @@ const TreeView2 = ({
         handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}
     >
-      <div className="tree">
+      <div className={styles.tree}>
         {treeData.length > 0 && hasVisibleNodes ? (
           treeData.map((node) => (
             <FilteredTreeNode
@@ -917,7 +953,7 @@ const TreeView2 = ({
             />
           ))
         ) : (
-          <div className="py-4 text-center text-gray-500">
+          <div className={styles.no_data}>
             {searchKeyword
               ? `검색 결과가 없습니다: "${searchKeyword}"`
               : '트리에 노드가 없습니다. 노드를 추가해주세요.'}

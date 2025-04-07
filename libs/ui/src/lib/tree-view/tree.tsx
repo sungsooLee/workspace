@@ -561,7 +561,7 @@ const TreeView = ({
     // 같은 트리면 이동, 다른 트리면 복사
     const actionType = dragState.sourceTreeId === treeId ? 'NODE_MOVE' : 'NODE_COPY';
 
-    if (targetNode && !isValidDrop(dragState.node.key, targetNode.key, treeData)) return;
+    // if (targetNode && !isValidDrop(dragState.node.key, targetNode.key, treeData)) return;
     if (actionType === 'NODE_COPY' && findNodePath(treeData, dragState.node.key)) {
       alert('이미 트리에 해당 노드가 존재합니다.');
       return;

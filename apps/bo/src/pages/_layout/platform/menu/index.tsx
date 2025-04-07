@@ -44,11 +44,9 @@ function RouteComponent() {
   const [parentNode, setParentNode] = useState<TreeNode | null>(null);
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
-  // 데이터 로딩 상태 트래킹
-  const isDataLoading = useRef(false);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, isLoading, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
+  const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
   const { create, data: createdMenuData } = useCreateMenu({
     onSuccess: async (data: any) => {
