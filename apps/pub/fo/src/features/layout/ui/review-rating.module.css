@@ -1,0 +1,36 @@
+.start {
+  &.rating_box {
+    @apply table rounded-[8px] bg-[var(--gray1)] p-[24px];
+    .box {
+      @apply table-cell flex-1 px-[32px] align-middle;
+      .tit {
+        @apply body_3_r block w-full text-center text-[var(--gray8)];
+      }
+      .number {
+        @apply title_2_b mt-[4px] flex items-center text-center leading-[48px] text-[var(--gray8)];
+      }
+      ul {
+        li {
+          @apply flex items-center gap-[8px] whitespace-nowrap;
+          span {
+            @apply body_3_r text-[var(--gray8)];
+          }
+          & > div {
+            & > div {
+              @apply w-[193px];
+              & > div {
+                @apply bg-[var(--status2)];
+              }
+            }
+          }
+          & + li {
+            @apply mt-[8px];
+          }
+        }
+      }
+      & + .box {
+        @apply border-l-[1px] border-solid border-[var(--gray4)];
+      }
+    }
+  }
+}

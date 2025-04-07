@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
 import { IcoBell03, IcoXclose, IcoSetting01 } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/features/layout/popup/notification-popup-m.module.css';
+import styles from './notification-popup-m.module.css';
 
 interface NotificationInfo {
   id: number;
@@ -89,7 +89,8 @@ const NotificationPopupMComponent = () => {
             popoverContent={<PopoverAlarmState />}
             side="bottom"
             align="center"
-            sideOffset={5}>
+            sideOffset={5}
+          >
             <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
           </Popover>
         </div>
@@ -112,7 +113,8 @@ const NotificationPopupMComponent = () => {
                     <li
                       key={id}
                       className={`${styles.info_item} ${!isRead ? styles.yet : ''}`}
-                      onClick={() => markAsRead(id)}>
+                      onClick={() => markAsRead(id)}
+                    >
                       <div className={styles.title_wrap}>
                         <strong className={styles.title}>{title}</strong>
                         <Button
@@ -120,7 +122,8 @@ const NotificationPopupMComponent = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(id);
-                          }}>
+                          }}
+                        >
                           <IcoXclose width={24} height={24} stroke="#131C30" />
                         </Button>
                       </div>

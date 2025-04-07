@@ -4,7 +4,8 @@ import { Link } from '@tanstack/react-router';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { Button } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
-import { IcoStar } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
+import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
+import { IcoStar, IcoArrowLineTop } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
 
 interface PageContainerComponentProps {
@@ -27,13 +28,13 @@ function PageContainerComponent({
 
   // scroll event
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [hasScroll, setHasScroll] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
       const scrollTop = scrollContainerRef.current.scrollTop;
       setScrollPosition(scrollTop);
-      console.log('스크롤 위치:', scrollTop, scrollPosition);
       scrollTop > 0
         ? document.body.classList.add('scrolled')
         : document.body.classList.remove('scrolled');
@@ -52,8 +53,29 @@ function PageContainerComponent({
         container.removeEventListener('scroll', handleScroll);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (scrollContainerRef.current) {
+        const isScrollable =
+          scrollContainerRef.current.scrollHeight > scrollContainerRef.current.clientHeight;
+        setHasScroll(isScrollable);
+        console.log(hasScroll ? '스크롤 있음' : '스크롤 없음');
+      }
+    };
+
+    // 컴포넌트가 처음 렌더링 될 때 체크
+    checkScroll();
+
+    // 창 크기 조정 시에도 체크할 수 있도록 이벤트 리스너 추가
+    window.addEventListener('resize', checkScroll);
+
+    // 클린업
+    return () => {
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [hasScroll]);
 
   return (
     <div className={`${styles.start} ${styles.contents}`}>
@@ -68,7 +90,8 @@ function PageContainerComponent({
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
                 onlyIcon
-                onClick={() => setIsFavorite(!isFavorite)}>
+                onClick={() => setIsFavorite(!isFavorite)}
+              >
                 <IcoStar
                   width={16}
                   height={16}
@@ -115,11 +138,35 @@ function PageContainerComponent({
             notice && 'case_notice',
             scrollHidden && 'scroll_hidden',
             'content_wrap',
-          )}>
+          )}
+        >
           {/* contents */}
           <div className={styles.content}>{children}</div>
         </div>
       </div>
+      {/* fab */}
+      {hasScroll && (
+        <div className={cn(fabStyles.start, fabStyles.fab_wrap, 'fab_wrap')}>
+          <div className={fabStyles.inner}>
+            <Button onlyIcon className={fabStyles.btn_top}>
+              <IcoArrowLineTop
+                width={16}
+                height={16}
+                stroke="#6F798B"
+                className={styles.icon_top}
+              />
+            </Button>
+            <Button onlyIcon className={fabStyles.btn_bottom}>
+              <IcoArrowLineTop
+                width={16}
+                height={16}
+                stroke="#6F798B"
+                className={styles.icon_bottom}
+              />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

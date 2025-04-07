@@ -14,7 +14,7 @@ import { IcoFormRequired, IcoCaution } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/password-change-popup.module.css';
+import styles from './password-change-popup.module.css';
 
 const PasswordChangePopupComponent = () => {
   const { alert: openAlert } = useModal();

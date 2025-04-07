@@ -15,7 +15,7 @@ import {
 import { IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/phone-change-popup.module.css';
+import styles from './phone-change-popup.module.css';
 
 const PhoneChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
