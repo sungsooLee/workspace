@@ -116,7 +116,9 @@ const PageContainerComponent: FC<{
             )}
           >
             {/* contents */}
-            <div className={styles.content}>{children}</div>
+            <div className={styles.content}>
+              <PageContents>{BodySlot}</PageContents>
+            </div>
           </div>
         )}
       </div>
