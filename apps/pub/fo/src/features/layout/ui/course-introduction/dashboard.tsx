@@ -20,35 +20,32 @@ const CourseDashboardCompoment = () => {
           options={options}
           value={selectedValues}
           onChange={(selected) => setSelectedValues(selected)}
-          placeholder="선택"
+          placeholder="전체 차수보기"
           variant="text"
           isMulti={false}
           size={'lg'}
         />
       </div>
-      {/* 학습전 : status_before 
-        학습중 : status-progress
-        학습완료 (이수) : status-completed
-        학습미완료 (미이수) : status-incomplete
-    */}
-      <div className={`${statusStyles.start} ${statusStyles.status_before}`}>
-        <Panel type="secondary" hideHeaderUnderline className={statusStyles.panel_degreey}>
-          <div className={statusStyles.degreey}>
-            <div className={statusStyles.list}>
-              <h3>
-                <span className={statusStyles.ico}>
-                  <IcoMessageText />
-                </span>
-                이수
-              </h3>
-              <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
-            </div>
+      {/* 
+        학습전 : status_before 
+        학습중 : status_progress
+        학습완료 (이수) : status_completed
+        학습미완료 (미이수) : status_incomplete
+      */}
+      <div className={`${statusStyles.start} ${statusStyles.status_incomplete}`}>
+        <div className={statusStyles.panel_degreey}>
+          <div className={statusStyles.list}>
+            <h3>
+              <span className={statusStyles.ico}>
+                <IcoMessageText />
+              </span>
+              학습전
+            </h3>
+            <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
           </div>
-        </Panel>
+        </div>
 
-        <Panel type="gray" hideHeaderUnderline>
-          <div className={statusStyles.status_box}></div>
-        </Panel>
+        <div className={statusStyles.status_box}></div>
       </div>
     </div>
   );
