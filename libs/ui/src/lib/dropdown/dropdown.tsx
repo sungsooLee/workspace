@@ -167,6 +167,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     return (
       <div className={cn(dropdownClass.trim(), styles.select_wrap, 'dropdown', className)}>
         <Select
+          menuIsOpen
           id={uuid}
           ref={ref}
           options={options}

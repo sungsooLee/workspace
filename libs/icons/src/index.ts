@@ -118,6 +118,7 @@ export { ReactComponent as IcoMoreVertical } from './lib/ic_more_vertical.svg'; 
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
+export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
