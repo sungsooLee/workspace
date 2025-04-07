@@ -38,3 +38,4 @@ export * from './ui/review';
 export * from './ui/comment';
 export * from './ui/review-rating';
 export * from './ui/curriculum';
+export * from './popup/review-popup';
