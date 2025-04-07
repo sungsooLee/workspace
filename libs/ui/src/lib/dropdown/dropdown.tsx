@@ -111,6 +111,32 @@ const clearIndicator = (props: any) => {
   );
 };
 
+/**
+ * react-select 라이브러리의 기본 MenuPortal 컴포넌트를 대체하는 커스텀 컴포넌트입니다.
+ * react-select의 'components' prop을 통해 이 커스텀 컴포넌트를 전달하여 사용합니다.
+ *
+ * MenuPortal은 드롭다운 메뉴 목록을 DOM의 다른 위치(기본적으로 document.body)에 렌더링하여
+ * z-index 및 overflow 문제를 해결하는 역할을 합니다.
+ * 이 커스텀 컴포넌트는 기본 기능에 더해, selectProps로 전달된 'data-variant' 값에 따라
+ * 포털 주변에 추가적인 스타일링을 적용하는 것을 목표로 합니다.
+ *
+ * @param {CustomMenuPortalProps} props - react-select로부터 전달받는 props 객체입니다.
+ * MenuPortalProps 타입을 확장하여 selectProps 내의 커스텀 타입 ('data-variant')을 포함할 수 있습니다.
+ */
+const MenuPortal = (props: any) => {
+  const variant = props.selectProps?.['data-variant'] || 'default';
+  console.log(variant);
+  const className = cn(
+    'menu-portal',
+    variant && `menu-portal-${variant}`, // ex) menu-portal-chip, menu-portal-text
+  );
+  return (
+    <components.MenuPortal {...props}>
+      <div className={className}>{props.children}</div>
+    </components.MenuPortal>
+  );
+};
+
 const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
   (
     {
@@ -190,13 +216,12 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
             Option,
             DropdownIndicator: dropdownIndicator,
             ClearIndicator: clearIndicator,
-            // ValueContainer : CustomValueContainer
-            // ValueContainer:  (props) => <CustomValueContainer {...props} variant={variant}/>,
+            MenuPortal,
           }}
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
-          // menuIsOpen={true}
+          menuIsOpen={true}
           {...customProps}
         />
       </div>
