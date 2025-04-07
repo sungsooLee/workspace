@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import { SearchBox } from '../../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
 import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
-import { useGridBox } from '../../../../../shared/ui/grid-box';
+import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
 
 export const Route = createFileRoute('/_unauth/platform_test/company/company/')({
   component: RouteComponent,
@@ -39,7 +39,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        {/*<GridBox config={gridConfig} />*/}
+        <GridBox config={gridConfig} />
       </MainContents>
     </PageContainer>
   );
@@ -52,7 +52,9 @@ const searchConfig: any = {
         type: 'dropdown',
         label: t('회사구분'),
         value: '',
-        variant: 'chip',
+        dropdownConfig: {
+          variant: 'chip',
+        },
         options: [
           { value: '', label: t('전체') },
           { value: 'tenantA', label: t('테넌트A') },
