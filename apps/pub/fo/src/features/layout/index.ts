@@ -33,3 +33,4 @@ export * from './ui/notification-m';
 export * from './popup/phone-change-popup';
 export * from './popup/address-popup';
 export * from './ui/course-introduction/dashboard';
+export * from './ui/course-introduction/review-option-popover';
