@@ -31,6 +31,7 @@
   [class*='nlp-select__control--is-disabled'] {
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
   }
+
   &[class*='nlp--dropdown-sm'] {
     [class*='nlp-select__control'] {
       @apply !min-h-[32px] border-[var(--gray4)];
@@ -46,6 +47,15 @@
       @apply !min-h-[40px] rounded-[8px] pr-[16px];
       .nlp-select__single-value {
         @apply pl-[8px];
+      }
+    }
+  }
+  &[class*='nlp--dropdown-text'] {
+    [class*='nlp-select__control'] {
+      @apply !border-0 !px-0;
+      [class*='css-1dimb5e-singleValue'],
+      [class*='nlp-select__placeholder'] {
+        @apply !body_3_r text-right text-[var(--gray8)];
       }
     }
   }
