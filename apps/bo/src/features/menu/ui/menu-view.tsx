@@ -21,11 +21,9 @@ import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-tabl
 import { DuplicateCodeGuideText } from './menu-code-input';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 import { ApiInfoModal } from './api-info-modal';
+import { useWatch } from 'react-hook-form';
 
-/// 메뉴 - API 매핑 그리드 설정 //////
 const columnHelper = createColumnHelper<any>();
-
-///////////////
 
 const MenuViewComponent: FC<any> = ({
   treeData,
@@ -51,6 +49,12 @@ const MenuViewComponent: FC<any> = ({
   );
   const initialFromValuesRef = React.useRef<any>(null);
 
+  const visibleValues = useWatch({
+    control: provider.control,
+    name: 'visible',
+    defaultValue: [],
+  });
+
   const { checkExistsMenu } = useCheckExistsMenu({
     onSuccess: (data: any) => {
       const isUnique = !data;
@@ -68,6 +72,10 @@ const MenuViewComponent: FC<any> = ({
     },
   });
   const { t } = useTranslation();
+
+  useEffect(() => {
+    console.log(visibleValues);
+  }, [visibleValues]);
 
   useEffect(() => {
     if (mode === 'view') {
@@ -141,16 +149,11 @@ const MenuViewComponent: FC<any> = ({
 
   // 폼 초기화를 처리하는 핸들러
   const handleReset = () => {
-    // if (initialFromValuesRef.current) {
-    //   fetchData(initialFromValuesRef.current);
-    // } else {
     onFormChange();
-    // }
   };
 
   const isFieldChanged = (fieldName: string, currentValue: any) => {
     if (!initialFromValuesRef.current) return true; // 초기 값이 없으면 변경된 것으로 간주
-
     return initialFromValuesRef.current[fieldName] !== currentValue;
   };
 
@@ -268,7 +271,7 @@ const MenuViewComponent: FC<any> = ({
 
   const handleApiMapping = async () => {
     const selectedApiKeys = getValues('apiMappingMenuList');
-    const keyArray = selectedApiKeys.map((item: TreeNode) => item.key);
+    const keyArray = selectedApiKeys.map((item: TreeNode) => item.apiId.toString());
 
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
@@ -285,7 +288,7 @@ const MenuViewComponent: FC<any> = ({
     columnHelper.accessor('apiName', {
       cell: (info) => info.getValue(),
       header: '분류',
-      // size: 120,
+      size: 120,
       // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -311,7 +314,7 @@ const MenuViewComponent: FC<any> = ({
         );
       },
       header: 'API',
-      // size: 490,
+      size: 490,
       // enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
@@ -335,7 +338,7 @@ const MenuViewComponent: FC<any> = ({
         );
       },
       header: '삭제',
-      // size: 100,
+      size: 100,
       // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -533,7 +536,6 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('개인정보'),
-      // required: true,
       tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
       name: 'personalDataContainYn',
       type: 'switch',
@@ -546,9 +548,6 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       value: false,
     },
-    // {
-    //   label: ''
-    // },
     {
       label: t('메뉴 설명'),
       name: 'menuDesc',
@@ -582,7 +581,6 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiMappingMenuList',
       type: 'custom',
-      // label: t('API'),
       format: 'array',
       value: [],
     },
@@ -600,7 +598,6 @@ const formConfig: DynamicFormConfig = {
     },
     code: {
       required: true,
-      // conditions: []
     },
     title: {
       required: true,

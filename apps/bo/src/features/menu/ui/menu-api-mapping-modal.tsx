@@ -31,7 +31,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         const firstLevelKeys = transformedData.map((node: any) => node.key);
         setExpandedKeys(firstLevelKeys);
       }
-
+      console.log(transformedData);
       if (selectedApiKeys && selectedApiKeys.length > 0) {
         const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
         setSelectedItems(selectedNodes);
