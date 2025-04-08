@@ -68,7 +68,7 @@
   @apply h-[32px] min-h-[32px] !cursor-pointer items-center border-[#C8D2E5] pr-[8px];
 }
 [class*='nlp-select__control--is-focused'] {
-  @apply !border-[#6F798B] !bg-transparent !shadow-none;
+  @apply !border-[#6F798B] bg-[var(--white)] !shadow-none;
 }
 
 [class*='nlp-select__option'] {
