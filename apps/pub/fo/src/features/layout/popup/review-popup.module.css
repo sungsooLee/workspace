@@ -1,5 +1,36 @@
 .start {
   &.review_wrap {
+    .information_box {
+      @apply mb-[16px];
+      .information {
+        @apply flex items-center;
+        span {
+          @apply body_3_r relative inline-block text-[var(--secondary3)];
+          & + span {
+            @apply ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary1)] content-[''];
+            }
+          }
+        }
+      }
+      .tit_box {
+        @apply body_1_r block leading-[31px] text-[var(--gray9)];
+      }
+      .date_box {
+        @apply mt-[8px] flex items-center;
+        span {
+          @apply body_3_r relative inline-block text-[var(--gray8)];
+          & + span {
+            @apply ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+            }
+          }
+        }
+      }
+    }
+
     .info_box {
       & + .info_box {
         @apply mt-[16px];

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Tabs, Avatar } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown } from '@learnway/icons';
+import { ChipList, SelectOption, Button, Tabs, Avatar, Accordion } from '@learnway/ui';
+import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown, IcoStar } from '@learnway/icons';
 import { CourseDashboard, Review, ReviewRating, Curriculum } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
@@ -37,6 +37,10 @@ function RouteComponent() {
     { label: '스마트팩토리', value: 'M' },
   ];
 
+  // 찜
+  const [heart, setHeart] = useState(false);
+
+  // 탭
   const [selectedTabKey, setSelectedTabKey] = useState<string>('');
   const items = [
     {
@@ -248,6 +252,36 @@ function RouteComponent() {
     },
   ];
 
+  // 패키지 아코디언
+  const [value2, setValue2] = useState<string>('');
+  const dummyItems2 = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 1</strong>
+        </div>
+      ),
+      children: (
+        <div className={styles.sub_package_content}>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 2</strong>
+        </div>
+      ),
+      children: <div className={styles.sub_package_content}>Content B</div>,
+    },
+  ];
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       {/* page contents */}
@@ -282,6 +316,10 @@ function RouteComponent() {
                 패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
               </strong>
               <div className={packageInformationStyles.count_box}>
+                <div className={packageInformationStyles.box}>
+                  <IcoStar width={16} height={16} stroke="#ffb902" fill="#ffb902" />
+                  <span>4.2</span>
+                </div>
                 <div className={packageInformationStyles.box}>
                   <IcoHeart width={16} height={16} stroke="#6f798b" fill="none" />
                   <span>500</span>
@@ -326,16 +364,47 @@ function RouteComponent() {
               </div>
               {/* button */}
               <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* 패키지 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                패키지<em>10</em>
+              </strong>
+            </div>
+            <div className={styles.package_box}>
+              <Accordion
+                items={dummyItems2}
+                value={value2}
+                className={styles.acc_package}
+                onValueChange={(value2) => setValue2(value2 as string)}
+                type={'multiple'}
+              />
+            </div>
+          </div>
+
+          {/* 연관 과정 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                연관 과정<em>20</em>
+              </strong>
+            </div>
+            <div className={styles.procedure_box}>contents</div>
           </div>
         </div>
       </div>

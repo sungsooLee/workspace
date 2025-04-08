@@ -1,5 +1,9 @@
 /* _common.css 공통 */
 
+* {
+  @apply scrollbar;
+}
+
 html {
   font-size: 62.5%;
 }

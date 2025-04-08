@@ -14,7 +14,7 @@
           }
         }
         span {
-          @apply body_3_r ml-[4px] text-[var(--gray7)];
+          @apply body_3_r ml-[4px] leading-[16px] text-[var(--gray7)];
         }
       }
     }

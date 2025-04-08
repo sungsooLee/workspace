@@ -29,6 +29,24 @@ const ReviewPopupComponent = () => {
       <ModalTitle>{'후기 작성'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.review_wrap}`}>
+          <div className={styles.information_box}>
+            <div className={styles.information}>
+              <span>학습 중</span>
+              <span>입문</span>
+              <span>라이브</span>
+              <span>사내/사외</span>
+              <span>근무시간내</span>
+              <span>Pc/Mobile</span>
+            </div>
+            <div className={styles.tit_box}>
+              <strong>필수 개발 과정 Spring Framework를 활용한 OpenAPI 서비스 개발</strong>
+            </div>
+            <div className={styles.date_box}>
+              <span>학습기간</span>
+              <span>2025-03-01 ~ 2025-03-31</span>
+            </div>
+          </div>
+
           <div className={styles.info_box}>
             <div className={styles.tit_box}>
               <strong>학습만족도</strong>
