@@ -11,7 +11,6 @@ import {
   EmptyText,
 } from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
-import { Navigation } from 'swiper/modules';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
@@ -68,7 +67,6 @@ function RouteComponent() {
           className={`${styles.recent_swiper} category_swiper`}
           spaceBetween={20}
           slidesPerView={2.2}
-          modules={[Navigation]}
           navigation={true}
         />
       </div>

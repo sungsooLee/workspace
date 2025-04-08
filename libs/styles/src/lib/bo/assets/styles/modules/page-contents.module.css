@@ -1,7 +1,7 @@
 /* page-content.module.css */
 .main_contents {
   @apply box-border min-h-full flex-grow;
-  .tab_wrap [role='tablist'] {
+  [role='tablist']:first-child {
     @apply mb-[32px];
   }
 }
