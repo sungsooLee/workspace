@@ -7,13 +7,11 @@ import {
   // Tooltip,
   DatePicker,
   // Switch,
-  Select,
   // ThumbnailImageUpload,
   // ChipList,
   // SelectOption,
   Input,
   Dropdown,
-  DropdownOption,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch, IcoArrowDownDouble } from '@learnway/icons';
 

@@ -1,0 +1,293 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import { useState } from 'react';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+
+import { cn } from '@learnway/shared';
+
+import {
+  Button,
+  Grid,
+  // Tooltip,
+  // ThumbnailImageUpload,
+  // ChipList,
+  // SelectOption,
+  Input,
+  Dropdown,
+} from '@learnway/ui';
+
+export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-management')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
+  const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
+  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
+  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
+  const options = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
+  const options2 = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
+  const options3 = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
+  const options4 = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
+  const options5 = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
+
+  // grid
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const data: any[] = [
+    {
+      order: '1',
+      tenantName: <Button className="link">미리보기</Button>,
+      tenantSite: (
+        <Link to="/" className="link">
+          미리보기
+        </Link>
+      ),
+      company: '현대자동차, 기아자동차',
+    },
+  ];
+
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('order', {
+      cell: (info) => info.getValue(),
+      header: 'NO.',
+      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+      size: 64,
+      meta: {
+        headerAlign: 'left',
+        cellAlign: 'center',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('tenantName', {
+      cell: (info) => info.getValue(),
+      header: '테넌트명',
+      enableGrouping: false,
+      size: 152,
+    }),
+    columnHelper.accessor('tenantSite', {
+      cell: (info) => info.getValue(),
+      header: '테넌트 사이트',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('company', {
+      cell: (info) => info.getValue(),
+      header: '회사',
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('status', {
+      cell: (info) => info.getValue(),
+      header: 'Status',
+      getGroupingValue: (row) => `${row.status}`,
+      enableGrouping: true,
+      aggregationFn: 'count',
+      meta: {
+        filterType: 'select',
+        filterOptions: [
+          { label: '활성', value: 'active' },
+          { label: '비활성', value: 'inactive' },
+        ],
+      },
+    }),
+    columnHelper.accessor('progress', {
+      cell: (info) => info.getValue(),
+      header: 'Progress',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('preview', {
+      cell: (info) => info.getValue(),
+      header: '미리보기',
+      size: 100,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('download', {
+      cell: (info) => info.getValue(),
+      header: '다운로드',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+    // columnHelper.accessor('procedure', {
+    //   cell: (info) => info.getValue(),
+    //   header: '과정개설',
+    //   size: 100,
+    //   enableGrouping: false,
+    //   meta: {
+    //     headerAlign: 'left', // 헤더만 가운데 정렬
+    //     cellAlign: 'center', // 셀은 오른쪽 정렬
+    //   },
+    // }),
+  ] as ColumnDef<any, unknown>[];
+  return (
+    <form className="form_row">
+      <PageContainer>
+        {/* main_contents */}
+        <div className={styles.main_contents}>
+          <div className={cn(searchStyles.start, searchStyles.wrap)}>
+            <div className={searchStyles.contents}>
+              <div className={searchStyles.item_row}>
+                <div className={searchStyles.item_wrap}>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>테넌트명</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues}
+                          onChange={(selected) => setSelectedValues(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>회사</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options2}
+                          value={selectedValues2}
+                          onChange={(selected) => setSelectedValues2(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>테넌트 담당자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options3}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={searchStyles.item_wrap}>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>회사 담당자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options4}
+                          value={selectedValues4}
+                          onChange={(selected) => setSelectedValues4(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>사용여부</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options5}
+                          value={selectedValues5}
+                          onChange={(selected) => setSelectedValues5(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.btn_box}>
+                <Button
+                  type="button"
+                  className={searchStyles.btn_refresh}
+                  variant="search"
+                  size="sm"
+                  onlyIcon
+                >
+                  <IcoRefresh02 className={searchStyles.icon_refresh} />
+                </Button>
+                <Button
+                  type="button"
+                  variant="search"
+                  size="sm"
+                  className={searchStyles.btn_search}
+                >
+                  <IcoSearch className={searchStyles.icon_sm_search} />
+                  조회
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className={cn(boxStyles.start, boxStyles.inner)}>
+            <div className="grid_wrap">
+              <Grid
+                data={data}
+                columns={columns}
+                multiple
+                showSelectedCount={true}
+                pagination={{
+                  pageSize,
+                  pageIndex,
+                  totalRows: 100,
+                  onPageChange: setPageIndex,
+                  onPageSizeChange: setPageSize,
+                }}
+                title="타이틀"
+              />
+            </div>
+          </div>
+        </div>
+      </PageContainer>
+    </form>
+  );
+}
