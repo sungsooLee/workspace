@@ -159,6 +159,12 @@ function RouteComponent() {
                   </dl>
                 </div>
               </div>
+
+              {/* 강의 */}
+              <div className={packageInformationStyles.lecture_wrap}>
+                <div className={packageInformationStyles.lecture_box}></div>
+              </div>
+
               {/* button */}
               <div className={packageInformationStyles.btn_box}>
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
