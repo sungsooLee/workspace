@@ -10,7 +10,7 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (tenantNo: number) =>
+  all: (tenantNo?: number) =>
     tenantNo //&& params?.roleIds
       ? {
           queryKey: queryKeys.all,

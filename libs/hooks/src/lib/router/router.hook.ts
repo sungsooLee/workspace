@@ -53,6 +53,6 @@ export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
     state: location.state,
     params: route.useParams(),
     search: route.useSearch(),
-    meta: { ...(metchRoute?.staticData as any).meta, ...pageRouteState?.meta },
+    meta: { ...route.options.staticData?.meta, ...pageRouteState?.meta },
   };
 }

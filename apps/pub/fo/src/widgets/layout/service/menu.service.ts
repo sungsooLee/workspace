@@ -11,15 +11,11 @@ import { useActiveMenuDepthState } from '../../../features/platform';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
- * isQuickAccessArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
+ * quickAccessAreaYn 에 따라 GNB quick menu area에 메뉴를 출력한다.
  */
-export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
+export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus({
-    parentMenuId: 1,
-    tenantId: authUser?.activeTenantNo,
-    //roleIds: authUser?.activeRoleId,
-  });
+  const { data } = useFetchMenus(authUser?.activeTenantNo ?? 0);
 
   return {
     data: useCreation(() => {
@@ -27,10 +23,10 @@ export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
         return [];
       }
 
-      return isQuickAccessArea
-        ? data?.filter((menu: Menu) => menu?.isQuickAccessArea)
-        : data?.filter((menu: Menu) => !menu?.isQuickAccessArea);
-    }, [data, isQuickAccessArea]),
+      return quickAccessAreaYn
+        ? data?.filter((menu: Menu) => menu?.quickAccessAreaYn)
+        : data?.filter((menu: Menu) => !menu?.quickAccessAreaYn);
+    }, [data, quickAccessAreaYn]),
   };
 }
 

@@ -15,7 +15,7 @@ import styles from '@learnway/styles/fo/pages/_layout.module.css';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
-  ...pageRouteConfig({ authorization: true }),
+  ...pageRouteConfig({ authorization: false }),
 });
 
 function LayoutComponent() {
