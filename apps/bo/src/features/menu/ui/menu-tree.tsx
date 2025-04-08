@@ -19,6 +19,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 const MenuTreeComponent: FC<any> = ({
   treeData,
   onNodeClick,
+  onNodeMove,
   onAddSubMenu,
   onDeleteNode,
   expandedKeys,
@@ -86,10 +87,25 @@ const MenuTreeComponent: FC<any> = ({
   };
 
   const handleTreeAction = (event: TreeEventPayload) => {
-    console.log(event);
     switch (event.type) {
       case 'NODE_SELECT':
         onNodeClick(event.node);
+        break;
+      case 'NODE_MOVE':
+        const nodeInfo = event;
+        console.log(event);
+        if (nodeInfo.position === 'INSIDE') {
+          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.menuId, nodeInfo.targetIndex);
+        }
+        //BEFORE 혹은 AFTER 이면 부모 노드가 타겟 되어야함.
+        else {
+          onNodeMove(
+            nodeInfo.sourceNode.menuId,
+            nodeInfo.targetNode?.parentKey,
+            nodeInfo.targetIndex,
+          );
+        }
+
         break;
     }
   };

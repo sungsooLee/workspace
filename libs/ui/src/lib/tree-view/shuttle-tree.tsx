@@ -149,9 +149,9 @@ export const ShuttleTreeWithChips = ({
               선택된 항목이 없습니다.
             </div>
           ) : (
-            actualSelectedItems.map((item: TreeNode) => (
+            actualSelectedItems.map((item: any) => (
               <div key={item.key} className={styles.selected_item}>
-                <span className={styles.selected_text}>{item.title}</span>
+                <span className={styles.selected_text}>{item.fullPath}</span>
                 <Button onClick={() => handleRemoveItem(item)} className={styles.btn_close}>
                   <IcoXclose width={20} height={20} stroke="#131C30" />
                 </Button>

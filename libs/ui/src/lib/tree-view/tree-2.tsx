@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronRight, ChevronDown } from 'lucide-react';
 import {
   ApiCallbackPayload,
   DropInfo,
@@ -10,14 +9,7 @@ import {
   TreeNodeComponentProps,
   TreeProps,
 } from './type';
-import {
-  calculateTargetIndex,
-  findNodePath,
-  getNodeLevel,
-  insertNodeAtPosition,
-  isValidDrop,
-  removeNodeByKey,
-} from './tree.service';
+import { calculateTargetIndex, findNodePath, getNodeLevel, isValidDrop } from './tree.service';
 import { useTreeContext } from './tree.context';
 import {
   IcoBoxMinus,
@@ -428,11 +420,8 @@ const TreeNodeComponent = ({
       <div
         className={cn(getNodeStyle, styles.tree_inner, level === 0 && styles.root_menu)}
         style={{
-          // paddingLeft: `${level * 20}px`,
-          // cursor: enhanceNode.constraints?.drag === false ? 'not-allowed' : 'grab',
           boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none',
           transition: 'all 0.2s ease',
-          //api팝업..
         }}
         draggable={false}
         onDragStart={handleDragStart}
@@ -478,13 +467,13 @@ const TreeNodeComponent = ({
         <span
           className={cn(
             styles.node_title,
-            `${onCustomNodeClick && level >= 1 ? 'underline' : 'none'}`,
+            `${onCustomNodeClick && level >= 1 ? 'cursor-pointer underline' : 'none'}`,
           )}
         >
           {highlightMatch(enhanceNode.title || '')}
         </span>
 
-        {level !== 0 && isDragAndDropMode && (
+        {isDragAndDropMode && (
           <div className={styles.drag_wrap}>
             {nodeButtons && (
               <div
@@ -823,30 +812,30 @@ const TreeView2 = ({
     }
 
     // UI 업데이트 (이후 코드는 동일)
-    let newTreeData = [...treeData];
-    if (actionType === 'NODE_MOVE') {
-      newTreeData = removeNodeByKey(newTreeData, dragState.node.key);
-    }
+    // let newTreeData = [...treeData];
+    // if (actionType === 'NODE_MOVE') {
+    //   newTreeData = removeNodeByKey(newTreeData, dragState.node.key);
+    // }
 
-    if (targetNode) {
-      newTreeData = insertNodeAtPosition(newTreeData, targetNode.key, dragState.node, dropPosition);
-    } else {
-      newTreeData = [...newTreeData, { ...dragState.node }];
-    }
+    // if (targetNode) {
+    //   newTreeData = insertNodeAtPosition(newTreeData, targetNode.key, dragState.node, dropPosition);
+    // } else {
+    //   newTreeData = [...newTreeData, { ...dragState.node }];
+    // }
 
-    // 검색 중이라면 가시성 업데이트
-    if (isSearching && searchKeyword) {
-      updateNodeVisibility(newTreeData, searchKeyword);
-    }
+    // // 검색 중이라면 가시성 업데이트
+    // if (isSearching && searchKeyword) {
+    //   updateNodeVisibility(newTreeData, searchKeyword);
+    // }
 
-    // 상태 업데이트
-    setTreeData(newTreeData);
+    // // 상태 업데이트
+    // setTreeData(newTreeData);
 
-    // initialData 업데이트
-    const updatedInitialData = JSON.parse(JSON.stringify(newTreeData));
-    const fullData = JSON.parse(JSON.stringify(updatedInitialData));
-    updateNodeVisibility(fullData, '');
-    setInitialData(fullData);
+    // // initialData 업데이트
+    // const updatedInitialData = JSON.parse(JSON.stringify(newTreeData));
+    // const fullData = JSON.parse(JSON.stringify(updatedInitialData));
+    // updateNodeVisibility(fullData, '');
+    // setInitialData(fullData);
 
     // 액션 콜백 호출 (선택적으로 인덱스 정보 추가)
     onAction?.({

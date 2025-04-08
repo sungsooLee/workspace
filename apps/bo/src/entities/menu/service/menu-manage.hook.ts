@@ -117,3 +117,28 @@ export function useDeleteMenu(options: any) {
     data: mutation.data,
   };
 }
+
+export function useMoveMenu(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.moveMenu(),
+    onSuccess: async (data, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions,
+  });
+
+  return {
+    moveMenu: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

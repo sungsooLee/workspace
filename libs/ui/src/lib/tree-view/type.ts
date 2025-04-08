@@ -104,7 +104,7 @@ export type TreeEventPayload =
  */
 export interface TreeNode {
   key: string;
-  // menuId: string;
+  menuId?: string;
   title?: string;
   children?: TreeNode[];
   isExpanded?: boolean;

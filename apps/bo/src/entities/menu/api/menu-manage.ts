@@ -81,4 +81,11 @@ export default class MenuMangerService {
   static deleteMenu(payload: any): Promise<any> {
     return httpService.delete<any>(`${PMSApiPrefix()}/menus/${payload.menuId}`, payload);
   }
+
+  /**
+   * 메뉴 이동
+   */
+  static moveMenu(payload: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/menus/${payload.menuId}/dnd`, payload);
+  }
 }

@@ -1,27 +1,23 @@
-import { z, cn } from '@learnway/shared';
-import { Button, Grid, Input, TreeNode, useModal } from '@learnway/ui';
-import { ContentsRow } from '@learnway/ui';
-import React, { FC, forwardRef, useEffect, useState } from 'react';
-import { useDynamicForm } from '@learnway/hooks';
+import React, { FC, useEffect, useState } from 'react';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { cn } from '@learnway/shared';
+import { Button, Grid, TreeNode, useModal, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DuplicateCodeGuideText } from './menu-code-input';
+import { MenuApiMappingModal } from './menu-api-mapping-modal';
+import { ApiInfoModal } from './api-info-modal';
+import { findMenuPathById } from '../service/menu.service';
 import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
 import {
   useCheckExistsMenu,
   useMenuManageDetail,
 } from '../../../entities/menu/service/menu-manage.hook';
-import { findMenuPathById } from '../service/menu.service';
-import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { DuplicateCodeGuideText } from './menu-code-input';
-import { MenuApiMappingModal } from './menu-api-mapping-modal';
-import { ApiInfoModal } from './api-info-modal';
-import { useWatch } from 'react-hook-form';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -35,7 +31,7 @@ const MenuViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  const { data, isLoading, refetch } = useMenuManageDetail(
+  const { data, isLoading } = useMenuManageDetail(
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
   const { open: openModal } = useModal();
@@ -48,12 +44,6 @@ const MenuViewComponent: FC<any> = ({
     'none',
   );
   const initialFromValuesRef = React.useRef<any>(null);
-
-  const visibleValues = useWatch({
-    control: provider.control,
-    name: 'visible',
-    defaultValue: [],
-  });
 
   const { checkExistsMenu } = useCheckExistsMenu({
     onSuccess: (data: any) => {
@@ -74,10 +64,6 @@ const MenuViewComponent: FC<any> = ({
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.log(visibleValues);
-  }, [visibleValues]);
-
-  useEffect(() => {
     if (mode === 'view') {
       const location = findMenuPathById(treeData, selectedNode.menuId);
       if (data) {
@@ -94,6 +80,7 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           visiblePcYn: data?.visiblePcYn,
           visibleMobileYn: data?.visibleMobileYn,
+          hiddenYn: data?.hiddenYn || false,
           visible: [
             data.visiblePcYn === true && 'visiblePcYn',
             data.visibleMobileYn === true && 'visibleMobileYn',
@@ -212,7 +199,6 @@ const MenuViewComponent: FC<any> = ({
 
         // 수정 API 호출
         onUpdate(updateData);
-        // console.log(updateData);
         return;
       }
     }
@@ -279,11 +265,9 @@ const MenuViewComponent: FC<any> = ({
     });
     console.log(getValues());
     fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
-    // console.log(tt);
   };
 
   // API 정보 컬럼
-
   const columns = [
     columnHelper.accessor('apiName', {
       cell: (info) => info.getValue(),
@@ -347,7 +331,6 @@ const MenuViewComponent: FC<any> = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  // UI 렌더링
   return (
     <div className={layoutStyles.inner}>
       <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -543,7 +526,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('Hidden 메뉴'),
-      tooltip: '',
+      tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
       name: 'hiddenYn',
       type: 'switch',
       value: false,

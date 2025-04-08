@@ -13,6 +13,7 @@ import {
   useDeleteMenu,
   useMenuManageFetchTree,
   useMenuMangeFetchMenus,
+  useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
 import {
@@ -74,6 +75,12 @@ function RouteComponent() {
       refetch().then(() => {});
     },
   });
+  const { moveMenu } = useMoveMenu({
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+  });
+
   // 데이터가 변경될 때 처리
   const prevDataRef = React.useRef(null);
 
@@ -132,6 +139,17 @@ function RouteComponent() {
   const handleNodeClick = (node: TreeNode) => {
     setMode('view');
     setSelectedNode(node);
+  };
+
+  // 노드 순서 변경
+  const handleNodeMove = (menuId: number, destinationParentId: number, sortSeq: number) => {
+    const payload = {
+      menuId,
+      destinationParentId,
+      sortSeq: sortSeq + 1,
+    };
+    console.log(payload);
+    moveMenu(payload);
   };
 
   //하위 메뉴 추가 버튼
@@ -208,6 +226,7 @@ function RouteComponent() {
           <MenuTree
             treeData={treeData}
             onNodeClick={handleNodeClick}
+            onNodeMove={handleNodeMove} // 메뉴 움직일때
             onAddSubMenu={handleAddSubMenu}
             menuScope={tabKey}
             expandedKeys={expandedKeys} // 확장 상태 전달

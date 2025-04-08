@@ -41,4 +41,7 @@ export const mutateOptions = {
   deleteMenu: () => ({
     mutationFn: (payload: any) => MenuMangeService.deleteMenu(payload),
   }),
+  moveMenu: () => ({
+    mutationFn: (payload: any) => MenuMangeService.moveMenu(payload),
+  }),
 };
