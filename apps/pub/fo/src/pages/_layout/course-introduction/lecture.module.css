@@ -18,21 +18,6 @@
       }
       .terminology {
         @apply flex items-center;
-        dt {
-          @apply body_3_r leading-[24px] text-[var(--gray7)];
-        }
-        dd {
-          @apply body_3_r relative ml-[8px] pl-[8px] leading-[24px] text-[var(--gray8)];
-          &::before {
-            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-          }
-          em {
-            @apply text-[var(--status1)];
-          }
-          button {
-            @apply ml-[8px] h-[24px] rounded-[4px];
-          }
-        }
         & + .terminology {
           @apply mt-[4px];
         }
@@ -50,9 +35,6 @@
       &.course_information {
         @apply rounded-[8px] px-[16px] py-[16px];
         .box {
-          &:last-child {
-            @apply hidden;
-          }
           .date {
             span {
               @apply body_4_r;

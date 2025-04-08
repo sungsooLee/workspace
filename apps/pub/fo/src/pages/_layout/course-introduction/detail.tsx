@@ -7,6 +7,7 @@ import { CourseDashboard, CourseIntroduction } from '../../../features/layout';
 import pageContentsStyles from '../../_page-contents.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
+import lectureStyles from './lecture.module.css';
 
 import styles from './detail.module.css';
 
@@ -162,7 +163,57 @@ function RouteComponent() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
-                <div className={packageInformationStyles.lecture_box}></div>
+                {/* 강의 정보 */}
+                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    <p className={lectureStyles.date}>
+                      <span>1차교육</span>
+                      <span>2026-01-01 ~ 2026-01-31 </span>
+                    </p>
+                    <strong className={lectureStyles.tit}>
+                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
+                    </strong>
+                  </div>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    {/* definition list */}
+                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                      <dl>
+                        <dt>잔여석</dt>
+                        <dd>999</dd>
+                      </dl>
+                      <dl>
+                        <dt>장소</dt>
+                        <dd>온라인 비대면</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 강의 정보 */}
+                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    <p className={lectureStyles.date}>
+                      <span>2차교육</span>
+                      <span>2026-01-01 ~ 2026-01-31 </span>
+                    </p>
+                    <strong className={lectureStyles.tit}>
+                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
+                    </strong>
+                  </div>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    {/* definition list */}
+                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                      <dl>
+                        <dt>잔여석</dt>
+                        <dd>999</dd>
+                      </dl>
+                      <dl>
+                        <dt>장소</dt>
+                        <dd>온라인 비대면</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* button */}

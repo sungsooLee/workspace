@@ -20,7 +20,7 @@ body main {
     & > div {
       @apply !max-w-[calc(100vw-340px)];
       & > div {
-        @apply !max-w-[calc(100vw-420px)];
+        @apply !max-w-[calc(100vw-409px)];
       }
     }
   }
