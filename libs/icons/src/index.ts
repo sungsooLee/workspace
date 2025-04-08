@@ -116,7 +116,6 @@ export { ReactComponent as IcoMessageCircle } from './lib/ic_message_circle.svg'
 export { ReactComponent as IcoMoreVertical } from './lib/ic_more_vertical.svg'; // more vertical
 export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
 export { ReactComponent as IcoArrowLineTop } from './lib/ic_arrow_line_top.svg'; // fab button
-
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
 export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
