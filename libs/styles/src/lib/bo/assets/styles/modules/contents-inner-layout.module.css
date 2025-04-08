@@ -29,6 +29,20 @@
         }
       }
     }
+    &.ratio_third {
+      .inner {
+        @apply min-h-[calc(100vh-435px)];
+        .inner_contents {
+          @apply scrollbar max-h-[calc(100vh-508px)] overflow-y-auto py-[16px];
+        }
+        &:first-child {
+          @apply w-[calc(100%-453px)] shrink-0;
+        }
+        &:not(:first-child) {
+          @apply relative w-[453px] shrink-0;
+        }
+      }
+    }
   }
 }
 .btn_wrap {
