@@ -28,7 +28,7 @@ function RouteComponent() {
     <PageContainer scrollHidden={true}>
       {/* main_contents */}
       <div className={styles.main_contents}>
-        <Tabs items={items} type="line" size={'sm'} className={styles.tab_wrap} />
+        <Tabs items={items} type="line" size={'sm'} />
       </div>
     </PageContainer>
   );
