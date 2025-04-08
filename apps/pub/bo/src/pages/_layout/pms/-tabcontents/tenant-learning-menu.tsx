@@ -87,7 +87,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
       Sort: 'Common API',
       API: <Button className="link">API 1</Button>,
       Delete: (
-        <Button size="xs" variant="gray2">
+        <Button size="xs" variant="gray2" disabled>
           삭제
         </Button>
       ),
@@ -96,7 +96,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
       Sort: 'Common API2',
       API: <Button className="link">API 2</Button>,
       Delete: (
-        <Button size="xs" variant="gray2">
+        <Button size="xs" variant="gray2" disabled>
           삭제
         </Button>
       ),
@@ -109,7 +109,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('Sort', {
       cell: (info) => info.getValue(),
       header: '분류',
-      size: 120,
+      size: 300,
       enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -119,7 +119,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('API', {
       cell: (info) => info.getValue(),
       header: 'API',
-      size: 490,
+      size: 310,
       enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
