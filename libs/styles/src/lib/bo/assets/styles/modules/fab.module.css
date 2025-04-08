@@ -1,9 +1,24 @@
 /* fab.module.css */
 .start {
   &.fab_wrap {
-    @apply fixed bottom-[64px] right-[24px] z-10 h-[72px] w-[36px] bg-white shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    @apply fixed bottom-[64px] right-[36px] z-10 h-[65px] w-[32px] rounded-[8px] bg-white shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .inner {
-      @apply flex flex-col;
+      @apply flex flex-col p-[4px];
+      button {
+        @apply relative flex h-[24px] w-[24px] items-center justify-center;
+        & + button {
+          @apply !ml-0;
+          &::before {
+            @apply absolute -top-[4px] left-1/2 h-[1px] w-[16px] -translate-x-1/2 bg-[#E3E9EF] content-[''];
+          }
+        }
+        &.btn_top {
+          @apply mb-[4px];
+        }
+        &.btn_bottom {
+          @apply mt-[4px];
+        }
+      }
     }
   }
 }

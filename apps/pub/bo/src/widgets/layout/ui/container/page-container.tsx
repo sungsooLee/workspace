@@ -61,7 +61,6 @@ function PageContainerComponent({
         const isScrollable =
           scrollContainerRef.current.scrollHeight > scrollContainerRef.current.clientHeight;
         setHasScroll(isScrollable);
-        console.log(hasScroll ? '스크롤 있음' : '스크롤 없음');
       }
     };
 
@@ -76,6 +75,24 @@ function PageContainerComponent({
       window.removeEventListener('resize', checkScroll);
     };
   }, [hasScroll]);
+
+  const scrollToTop = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <div className={`${styles.start} ${styles.contents}`}>
@@ -148,7 +165,7 @@ function PageContainerComponent({
       {hasScroll && (
         <div className={cn(fabStyles.start, fabStyles.fab_wrap, 'fab_wrap')}>
           <div className={fabStyles.inner}>
-            <Button onlyIcon className={fabStyles.btn_top}>
+            <Button onlyIcon className={fabStyles.btn_top} onClick={scrollToTop}>
               <IcoArrowLineTop
                 width={16}
                 height={16}
@@ -156,7 +173,7 @@ function PageContainerComponent({
                 className={styles.icon_top}
               />
             </Button>
-            <Button onlyIcon className={fabStyles.btn_bottom}>
+            <Button onlyIcon className={fabStyles.btn_bottom} onClick={scrollToBottom}>
               <IcoArrowLineTop
                 width={16}
                 height={16}
