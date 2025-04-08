@@ -35,6 +35,7 @@ export { ReactComponent as IcoConfirm } from './lib/ic_success_alt.svg'; // conf
 export { ReactComponent as IcoModify } from './lib/ic_pencil_fill.svg';
 export { ReactComponent as IcoTrash } from './lib/ic_trash.svg';
 export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
+export { ReactComponent as IcoSearchWrite } from './lib/ic_search_write.svg'; // tree search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
 export { ReactComponent as IcoCaution02 } from './lib/ic_caution02.svg'; // alert caution icon 24*25
