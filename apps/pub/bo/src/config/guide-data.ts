@@ -332,16 +332,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
-  },
-  {
-    screenName: 'PMS/플랫폼관리_공통코드관리',
-    pageId: 'pms/menu-platform-common',
-    screenId: 'NLP_BO_PMS_1401',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '완료(그리드는 개발에서 적용)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_플랫폼API관리',

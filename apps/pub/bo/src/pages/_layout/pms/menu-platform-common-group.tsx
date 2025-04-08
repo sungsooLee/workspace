@@ -204,7 +204,6 @@ function RouteComponent() {
                           type="text"
                           placeholder="입력"
                           value="Country Code"
-                          readOnly
                           className={formStyles.input}
                         />
                       </div>
@@ -222,7 +221,6 @@ function RouteComponent() {
                           type="text"
                           placeholder="입력"
                           value="국가 코드 그룹"
-                          readOnly
                           className={formStyles.input}
                         />
                       </div>
