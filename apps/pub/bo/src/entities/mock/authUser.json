@@ -27,7 +27,7 @@
     "accountNonExpired": true,
     "accountNonLocked": true,
     "credentialsNonExpired": true,
-    "activeTenantId": 2,
+    "activeTenantNo": 2,
     "menus": [
         {
             "title": "플랫폼 관리",

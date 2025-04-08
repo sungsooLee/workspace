@@ -1,23 +1,13 @@
-import { httpService } from '@learnway/shared';
+import { httpService, objectToQueryString } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import menuMock from '../../mock/menu.json';
+import type { Menu } from '../../../types';
+//import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
-  static getMenus(params?: any): Promise<any> {
-    /*
-    return httpService.get<Menu>(
-      `${PMSApiPrefix()}/menus/${params.parentMenuId ?? ''}?roleIds=${params.roleIds}&tenantId=${
-        params.tenantId
-      }`,
-    );
-*/
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        console.log('menu api fetch');
-        resolve(menuMock as any);
-      }),
-    );
+  static getMenus(tenantNo: number): Promise<any> {
+    const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, { tenantNo });
+    return httpService.get<Menu>(url);
   }
 
   static getMenu(menuId: string) {

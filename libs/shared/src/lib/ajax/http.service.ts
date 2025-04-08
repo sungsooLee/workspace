@@ -119,6 +119,10 @@ export class HttpService {
       })
       .catch((error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
+          //status 4** backend 예외 코드
+          if (error?.status && error.status >= 400 && error.status < 500) {
+            throw error.response?.data;
+          }
           console.log('axios.error', error);
         } else {
           // this.showNotification('Unknown Error', error.message);
@@ -178,8 +182,8 @@ export class HttpService {
 
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
-        console.log('response.data.data', response.data);
-        if (response.data?.status === 200) {
+        console.log('response', response);
+        if (response.status === 200) {
           return response.data.data;
         } else {
           throw response.data;
@@ -187,6 +191,10 @@ export class HttpService {
       })
       .catch((error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
+          //status 4** backend 예외 코드
+          if (error?.status && error.status >= 400 && error.status < 500) {
+            throw error.response?.data;
+          }
           console.log('axios.error', error);
         } else {
           // this.showNotification('Unknown Error', error.message);

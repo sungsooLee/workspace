@@ -50,7 +50,7 @@ vi.mock('../../../src/entities/auth', () => ({
   useFetchAuthUser: () => ({
     data: {
       email: 'test@example.com',
-      activeTenantId: 'tenant123',
+      activeTenantNo: 'tenant123',
     },
   }),
 }));
