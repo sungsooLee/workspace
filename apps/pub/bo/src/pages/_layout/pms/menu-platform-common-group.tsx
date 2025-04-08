@@ -1,10 +1,13 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useState } from 'react';
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { cn } from '@learnway/shared';
+
 import {
-  // Spinner,
-  // Textarea,
   Button,
   // Tooltip,
   // DatePicker,
@@ -15,13 +18,8 @@ import {
   Input,
   Dropdown,
 } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { cn } from '@learnway/shared';
 
-export const Route = createFileRoute('/_layout/learning/learningSearch')({
+export const Route = createFileRoute('/_layout/pms/menu-platform-common-group')({
   component: RouteComponent,
 });
 
@@ -37,16 +35,34 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          {/* 퍼블수정 20240318 : search 영역 수정 */}
           <div className={cn(searchStyles.start, searchStyles.wrap)}>
             <div className={searchStyles.contents}>
-              {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 S */}
               <div className={searchStyles.item_row}>
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-select1" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트</span>
+                      <label htmlFor="name-codeGroupNum" className={searchStyles.label}>
+                        <span className={searchStyles.text}>코드그룹번호</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input id="name-codeGroupNum" type="text" placeholder="입력" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-codeGroupName" className={searchStyles.label}>
+                        <span className={searchStyles.text}>코드그룹명</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input id="name-codeGroupName" type="text" placeholder="입력" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-use" className={searchStyles.label}>
+                        <span className={searchStyles.text}>사용</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -61,43 +77,11 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-channel" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널</span>
+                      <label htmlFor="name-codeName" className={searchStyles.label}>
+                        <span className={searchStyles.text}>코드명</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          className={searchStyles.select_option}
-                          options={[
-                            { value: 'type1', label: '전체' },
-                            { value: 'type2', label: '항목' },
-                          ]}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={searchStyles.inner}>
-                    <div className={searchStyles.item}>
-                      <label htmlFor="name-type" className={searchStyles.label}>
-                        <span className={searchStyles.text}>유형</span>
-                      </label>
-                      <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options}
-                          value={selectedValues}
-                          onChange={(selected) => setSelectedValues(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={searchStyles.inner}>
-                    <div className={searchStyles.item}>
-                      <label htmlFor="name-course" className={searchStyles.label}>
-                        <span className={searchStyles.text}>과정</span>
-                      </label>
-                      <div className={searchStyles.box}>
-                        <Input id="name-course" type="text" placeholder="과정명으로 조회하세요." />
+                        <Input id="name-codeName" type="text" placeholder="입력" />
                       </div>
                     </div>
                   </div>
@@ -123,7 +107,6 @@ function RouteComponent() {
                   조회
                 </Button>
               </div>
-              {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
             </div>
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}></div>
