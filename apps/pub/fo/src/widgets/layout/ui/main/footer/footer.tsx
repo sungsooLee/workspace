@@ -97,6 +97,7 @@ function FooterComponent() {
           </div>
 
           <div className={styles.family_site_info}>
+            {/* 퍼블수정 : 드랍다운으로 변경 */}
             <Dropdown
               options={options}
               value={selectedValues}
