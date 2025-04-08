@@ -97,6 +97,7 @@
         .color_info {
           text-align: center;
           position: relative;
+          margin-bottom: 20px;
           i {
             display: inline-block;
             width: 90px;

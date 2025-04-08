@@ -53,7 +53,7 @@ function RouteComponent() {
         { name: '--gray4', textColor: '', code: '' },
         { name: '--gray5', textColor: '', code: '' },
         { name: '--gray6', textColor: '', code: '' },
-        { name: '--gray7', textColor: '', code: '' },
+        { name: '--gray7', textColor: '--white', code: '' },
         { name: '--gray8', textColor: '--white', code: '' },
         { name: '--gray9', textColor: '--white', code: '' },
       ],
