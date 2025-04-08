@@ -2,6 +2,7 @@ import type {
   UseQueryOptions,
   DefinedInitialDataOptions,
   UndefinedInitialDataOptions,
+  AnyDataTag,
 } from '@tanstack/react-query';
 import { skipToken } from '@tanstack/react-query';
 import { endsWith, isEmpty, startsWith } from 'lodash';
@@ -73,4 +74,23 @@ export function getQuerySkipToken<T>() {
     | UseQueryOptions<T, unknown, T>
     | DefinedInitialDataOptions<T, unknown, T>
     | UndefinedInitialDataOptions<T, unknown, T>;
+}
+
+export function objectToQueryString(originUrl: string, conditions: any = {}) {
+  let url = originUrl;
+  const paramList = [] as string[];
+  if (conditions && !isEmpty(conditions)) {
+    Object.keys(conditions).map((key: string) => {
+      const value = conditions[key];
+      if (!isNullOrUndefined(value)) {
+        paramList.push(`${key}=${value}`);
+      }
+    });
+  }
+  url += !isEmpty(paramList) ? `?${paramList.join('&')}` : '';
+  return url;
+}
+
+export function isNullOrUndefined<T>(obj: T | null | undefined): boolean {
+  return typeof obj === 'undefined' || obj === null;
 }

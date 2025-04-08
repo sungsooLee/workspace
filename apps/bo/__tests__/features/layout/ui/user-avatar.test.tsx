@@ -32,7 +32,7 @@ vi.mock('../../../../src/entities/auth', () => ({
     data: {
       email: 'test@example.com',
       tenants: [{ name: 'Tenant A' }],
-      activeTenantId: 'tenant123',
+      activeTenantNo: 'tenant123',
     },
   }),
   useLogoutUser: () => ({

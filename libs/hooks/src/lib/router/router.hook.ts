@@ -39,13 +39,13 @@ export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
   const location = useLocation();
   const matches = useMatches();
 
+  const metchRoute = useCreation(() => (!route ? last(matches) : undefined), [matches]);
   if (!route) {
-    const r = last(matches);
     return {
       state: location.state,
-      params: r?.params,
-      search: r?.search,
-      meta: (r?.staticData as any).meta,
+      params: metchRoute?.params,
+      search: metchRoute?.search,
+      meta: (metchRoute?.staticData as any).meta,
     };
   }
 
@@ -53,6 +53,6 @@ export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
     state: location.state,
     params: route.useParams(),
     search: route.useSearch(),
-    meta: { ...pageRouteState?.meta },
+    meta: { ...(metchRoute?.staticData as any).meta, ...pageRouteState?.meta },
   };
 }
