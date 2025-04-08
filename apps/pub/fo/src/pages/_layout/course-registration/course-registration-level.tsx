@@ -14,10 +14,13 @@ import { getRandomId } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { isMobile } from 'react-device-detect';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
+import definitionListStyles from '../course-introduction/definition-list.module.css';
+import lectureStyles from '../course-introduction/lecture.module.css';
 import styles from './course-registration-level.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-level')({
   component: RouteComponent,
@@ -53,37 +56,44 @@ function RouteComponent() {
       <h2>수강신청</h2>
 
       {/* 수간신청 정보 */}
-      <div className={styles.course_information}>
-        <div className={styles.box}>
-          <p className={styles.date}>
+      <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+        <div className={lectureStyles.box}>
+          <p className={lectureStyles.date}>
             <span>1차교육</span>
             <span>2026-01-01 ~ 2026-01-31 </span>
           </p>
-          <strong className={styles.tit}>
+          <strong className={lectureStyles.tit}>
             스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
           </strong>
         </div>
-        <div className={styles.box}>
-          <dl className={styles.terminology}>
-            <dt>신청기간</dt>
-            <dd>26-01-15 10:00 ~ 26-01-14 23:59</dd>
-          </dl>
-          <dl className={styles.terminology}>
-            <dt>수강인원</dt>
-            <dd>
-              494 / 500명 (잔여석 <em>6</em>명)
-            </dd>
-          </dl>
-          <dl className={styles.terminology}>
-            <dt>교육장소</dt>
-            <dd>
-              마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-              <Button variant="gray2" size="xs">
-                약도보기
-              </Button>
-            </dd>
-          </dl>
-        </div>
+        {isMobile ? (
+          ''
+        ) : (
+          <div className={lectureStyles.box}>
+            {/* definition list */}
+            <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+              <dl>
+                <dt>신청기간</dt>
+                <dd>26-01-15 10:00 ~ 26-01-14 23:59</dd>
+              </dl>
+              <dl>
+                <dt>수강인원</dt>
+                <dd>
+                  494 / 500명 (잔여석 <em>6</em>명)
+                </dd>
+              </dl>
+              <dl>
+                <dt>교육장소</dt>
+                <dd>
+                  마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
+                  <Button variant="gray2" size="xs">
+                    약도보기
+                  </Button>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 입력정보 */}

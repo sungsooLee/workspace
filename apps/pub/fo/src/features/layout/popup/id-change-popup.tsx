@@ -14,7 +14,7 @@ import {
 import { IcoFormRequired, IcoSucess02 } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/id-change-popup.module.css';
+import styles from './id-change-popup.module.css';
 
 const IdChangePopupComponent = () => {
   const { alert: openAlert } = useModal();

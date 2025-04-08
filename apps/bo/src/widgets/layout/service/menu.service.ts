@@ -16,7 +16,7 @@ export function useMenuHierarchy(isQuickAccessArea = false): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
   const { data } = useFetchMenus({
     parentMenuId: 1,
-    tenantId: authUser?.activeTenantId,
+    tenantId: authUser?.activeTenantNo,
     //roleIds: authUser?.activeRoleId,
   });
 

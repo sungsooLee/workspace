@@ -14,7 +14,7 @@
           }
         }
         span {
-          @apply body_3_r ml-[4px] text-[var(--gray7)];
+          @apply body_3_r ml-[4px] leading-[16px] text-[var(--gray7)];
         }
       }
     }
@@ -42,6 +42,20 @@
         @apply flex h-[48px] flex-1 justify-center border-[1px] border-solid border-[var(--gray5)];
         & + button {
           @apply ml-[8px];
+        }
+      }
+    }
+    .lecture_wrap {
+      @apply mt-[16px];
+      & > div {
+        @apply p-[16px];
+        & + div {
+          @apply mt-[12px];
+        }
+        .box {
+          & + .box {
+            @apply mt-[12px] border-none pt-0;
+          }
         }
       }
     }

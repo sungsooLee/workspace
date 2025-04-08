@@ -1,9 +1,9 @@
 /* editInfoStyles.module.css */
 .start {
   &.wrap {
-    @apply flex w-full items-center rounded-[8px] bg-[#f6f8fd] p-[16px];
+    @apply relative flex w-full flex-wrap items-center break-words rounded-[8px] bg-[#f6f8fd] p-[16px] pr-[93px];
     p {
-      @apply body_4_r flex items-center text-[var(--gray9)];
+      @apply body_4_r flex shrink-0 items-center text-[var(--gray9)];
       span {
         @apply ml-[8px] inline-flex text-[var(--gray7)];
       }
@@ -15,7 +15,15 @@
       }
     }
     .btn_info {
-      @apply ml-auto !font-normal;
+      @apply absolute right-[16px] top-1/2 ml-auto w-[58px] shrink-0 -translate-y-1/2 !font-normal;
+    }
+    &.column {
+      p + p {
+        @apply ml-0 mt-[4px] pl-0;
+        &::before {
+          @apply !hidden;
+        }
+      }
     }
   }
 }

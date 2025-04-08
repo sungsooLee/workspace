@@ -1,31 +1,25 @@
-import { z, cn } from '@learnway/shared';
-import { Button, Grid, Input, TreeNode, useModal } from '@learnway/ui';
-import { ContentsRow } from '@learnway/ui';
-import React, { FC, forwardRef, useEffect, useState } from 'react';
-import { useDynamicForm } from '@learnway/hooks';
+import React, { FC, useEffect, useState } from 'react';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { cn } from '@learnway/shared';
+import { Button, Grid, TreeNode, useModal, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DuplicateCodeGuideText } from './menu-code-input';
+import { MenuApiMappingModal } from './menu-api-mapping-modal';
+import { ApiInfoModal } from './api-info-modal';
+import { findMenuPathById } from '../service/menu.service';
 import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
 import {
   useCheckExistsMenu,
   useMenuManageDetail,
 } from '../../../entities/menu/service/menu-manage.hook';
-import { findMenuPathById } from '../service/menu.service';
-import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { DuplicateCodeGuideText } from './menu-code-input';
-import { MenuApiMappingModal } from './menu-api-mapping-modal';
-import { ApiInfoModal } from './api-info-modal';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
-/// 메뉴 - API 매핑 그리드 설정 //////
 const columnHelper = createColumnHelper<any>();
-
-///////////////
 
 const MenuViewComponent: FC<any> = ({
   treeData,
@@ -37,14 +31,11 @@ const MenuViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  const { data, isLoading, refetch } = useMenuManageDetail(
+  const { data, isLoading } = useMenuManageDetail(
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
   const { open: openModal } = useModal();
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch, selectedNode]);
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -89,11 +80,13 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           visiblePcYn: data?.visiblePcYn,
           visibleMobileYn: data?.visibleMobileYn,
+          hiddenYn: data?.hiddenYn || false,
           visible: [
             data.visiblePcYn === true && 'visiblePcYn',
             data.visibleMobileYn === true && 'visibleMobileYn',
           ].filter(Boolean),
           isDuplicateMenuCode: true, // view 모드에서는 기본적으로 중복 체크 통과로 설정
+          apiMappingMenuList: data?.apiMappingMenuList,
         };
 
         initialFromValuesRef.current = { ...formData };
@@ -143,16 +136,11 @@ const MenuViewComponent: FC<any> = ({
 
   // 폼 초기화를 처리하는 핸들러
   const handleReset = () => {
-    // if (initialFromValuesRef.current) {
-    //   fetchData(initialFromValuesRef.current);
-    // } else {
     onFormChange();
-    // }
   };
 
   const isFieldChanged = (fieldName: string, currentValue: any) => {
     if (!initialFromValuesRef.current) return true; // 초기 값이 없으면 변경된 것으로 간주
-
     return initialFromValuesRef.current[fieldName] !== currentValue;
   };
 
@@ -176,6 +164,8 @@ const MenuViewComponent: FC<any> = ({
     const visiblePcYn = node.visible.find((element: string) => element === 'visiblePcYn')
       ? true
       : false;
+    const apiMappingKeys = [] as number[];
+    node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
     // View 모드에서 저장 처리
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
@@ -204,12 +194,11 @@ const MenuViewComponent: FC<any> = ({
               translation: node.title,
             },
           ],
-          apiMappingMenuList: node.apiMappingMenuList,
+          apiMappingMenuList: apiMappingKeys,
         };
 
         // 수정 API 호출
         onUpdate(updateData);
-        // console.log(updateData);
         return;
       }
     }
@@ -243,7 +232,7 @@ const MenuViewComponent: FC<any> = ({
           translation: node.title,
         },
       ],
-      apiMappingMenuList: node.apiMappingMenuList,
+      apiMappingMenuList: apiMappingKeys,
     };
     console.log(tmpData);
     onSave(tmpData);
@@ -268,7 +257,7 @@ const MenuViewComponent: FC<any> = ({
 
   const handleApiMapping = async () => {
     const selectedApiKeys = getValues('apiMappingMenuList');
-    const keyArray = selectedApiKeys.map((item: TreeNode) => item.key);
+    const keyArray = selectedApiKeys.map((item: TreeNode) => item.apiId.toString());
 
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
@@ -276,16 +265,14 @@ const MenuViewComponent: FC<any> = ({
     });
     console.log(getValues());
     fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
-    // console.log(tt);
   };
 
   // API 정보 컬럼
-
   const columns = [
     columnHelper.accessor('apiName', {
       cell: (info) => info.getValue(),
       header: '분류',
-      // size: 120,
+      size: 120,
       // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -311,7 +298,7 @@ const MenuViewComponent: FC<any> = ({
         );
       },
       header: 'API',
-      // size: 490,
+      size: 490,
       // enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
@@ -335,7 +322,7 @@ const MenuViewComponent: FC<any> = ({
         );
       },
       header: '삭제',
-      // size: 100,
+      size: 100,
       // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -344,7 +331,6 @@ const MenuViewComponent: FC<any> = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  // UI 렌더링
   return (
     <div className={layoutStyles.inner}>
       <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -533,7 +519,6 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('개인정보'),
-      // required: true,
       tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
       name: 'personalDataContainYn',
       type: 'switch',
@@ -541,14 +526,11 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('Hidden 메뉴'),
-      tooltip: '',
+      tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
       name: 'hiddenYn',
       type: 'switch',
       value: false,
     },
-    // {
-    //   label: ''
-    // },
     {
       label: t('메뉴 설명'),
       name: 'menuDesc',
@@ -582,7 +564,6 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiMappingMenuList',
       type: 'custom',
-      // label: t('API'),
       format: 'array',
       value: [],
     },
@@ -600,7 +581,6 @@ const formConfig: DynamicFormConfig = {
     },
     code: {
       required: true,
-      // conditions: []
     },
     title: {
       required: true,

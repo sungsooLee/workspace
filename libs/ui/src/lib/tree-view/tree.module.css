@@ -18,6 +18,9 @@
         .drag_wrap {
           @apply ml-auto flex items-center;
         }
+        .btn_area {
+          @apply ml-auto;
+        }
         &:not(.root_menu) {
           @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
         }
@@ -93,6 +96,16 @@
 }
 
 .no_data {
+}
+
+.data_wrap {
+  @apply pt-[20px];
+  .selected_item {
+    @apply flex min-h-[56px] w-full items-center justify-between rounded-[8px] bg-[var(--gray1)] px-[16px];
+    & + .selected_item {
+      @apply mt-[12px];
+    }
+  }
 }
 
 /* 드래그 중인 노드 스타일 */

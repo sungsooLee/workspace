@@ -31,7 +31,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         const firstLevelKeys = transformedData.map((node: any) => node.key);
         setExpandedKeys(firstLevelKeys);
       }
-
+      console.log(transformedData);
       if (selectedApiKeys && selectedApiKeys.length > 0) {
         const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
         setSelectedItems(selectedNodes);
@@ -70,8 +70,12 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={close}>취소</Button>
+        <Button variant={'gray'} size={'md'} onClick={close}>
+          취소
+        </Button>
         <Button
+          variant={'primary'}
+          size={'md'}
           onClick={() => {
             console.log(selectedItems);
             close(selectedItems);

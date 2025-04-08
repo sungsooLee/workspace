@@ -20,7 +20,7 @@ body main {
     & > div {
       @apply !max-w-[calc(100vw-340px)];
       & > div {
-        @apply !max-w-[calc(100vw-420px)];
+        @apply !max-w-[calc(100vw-409px)];
       }
     }
   }
@@ -29,7 +29,8 @@ body main {
   }
 }
 
-.scrolled {
+body.scrolled {
+  @apply overflow-x-auto overflow-y-hidden;
   .layout_wrap {
     header {
       @apply !h-[50px] !overflow-hidden;

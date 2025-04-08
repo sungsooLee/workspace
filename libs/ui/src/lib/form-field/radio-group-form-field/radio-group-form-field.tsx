@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 import { RadioGroup } from '../../radio-group/radio-group';
+import { cn } from '@learnway/shared';
+import styles from './radio-group-form-field.module.css';
 
 const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
   ({ value, name, onChange, options, ...props }, ref) => {
@@ -10,6 +12,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
         defaultValue={value}
         onValueChange={onChange}
         options={options.map((item: any) => ({ value: item.value, label: item.label }))}
+        className={cn(styles.start, styles.radio_list)}
         {...props}
       />
     );

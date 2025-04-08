@@ -13,6 +13,7 @@ import {
   useDeleteMenu,
   useMenuManageFetchTree,
   useMenuMangeFetchMenus,
+  useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
 import {
@@ -44,11 +45,9 @@ function RouteComponent() {
   const [parentNode, setParentNode] = useState<TreeNode | null>(null);
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
-  // 데이터 로딩 상태 트래킹
-  const isDataLoading = useRef(false);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, isLoading, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
+  const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
   const { create, data: createdMenuData } = useCreateMenu({
     onSuccess: async (data: any) => {
@@ -76,6 +75,12 @@ function RouteComponent() {
       refetch().then(() => {});
     },
   });
+  const { moveMenu } = useMoveMenu({
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+  });
+
   // 데이터가 변경될 때 처리
   const prevDataRef = React.useRef(null);
 
@@ -134,6 +139,17 @@ function RouteComponent() {
   const handleNodeClick = (node: TreeNode) => {
     setMode('view');
     setSelectedNode(node);
+  };
+
+  // 노드 순서 변경
+  const handleNodeMove = (menuId: number, destinationParentId: number, sortSeq: number) => {
+    const payload = {
+      menuId,
+      destinationParentId,
+      sortSeq: sortSeq + 1,
+    };
+    console.log(payload);
+    moveMenu(payload);
   };
 
   //하위 메뉴 추가 버튼
@@ -210,6 +226,7 @@ function RouteComponent() {
           <MenuTree
             treeData={treeData}
             onNodeClick={handleNodeClick}
+            onNodeMove={handleNodeMove} // 메뉴 움직일때
             onAddSubMenu={handleAddSubMenu}
             menuScope={tabKey}
             expandedKeys={expandedKeys} // 확장 상태 전달
@@ -297,7 +314,8 @@ function RouteComponent() {
 
   return (
     <PageContainer scrollHidden={true}>
-      <div className={styles.main_contents}>
+      <MainContents>
+        {/* <div className={styles.main_contents}> */}
         <Tabs
           selectedTabKey={selectedTabKey}
           items={items}
@@ -305,7 +323,8 @@ function RouteComponent() {
           onActiveTab={handleTabChange}
           className={styles.tab_wrap}
         />
-      </div>
+        {/* </div> */}
+      </MainContents>
     </PageContainer>
   );
 }

@@ -82,6 +82,7 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
         useYn: node?.useYn,
         apiDesc: node?.apiDesc,
         children: node.children || [],
+        fullPath: node?.fullPath,
       };
 
       // 자식 노드가 있는 경우 재귀적으로 변환

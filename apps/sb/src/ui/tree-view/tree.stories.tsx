@@ -14,9 +14,9 @@ import { TreeView } from '@learnway/ui';
 import { NodeDetail } from '@learnway/ui';
 import { TreeContainer } from '@learnway/ui';
 
-const meta: Meta<typeof TreeView2> = {
+const meta: Meta<typeof TreeView> = {
   title: 'Components/TreeView',
-  component: TreeView2,
+  component: TreeView,
   parameters: {
     layout: 'centered',
     docs: {
@@ -29,7 +29,7 @@ const meta: Meta<typeof TreeView2> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof TreeView2>;
+type Story = StoryObj<typeof TreeView>;
 
 const sampleData: TreeNode[] = [
   {

@@ -6,9 +6,11 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 import { TreeView2 } from './tree-2';
 import { useModal } from '../modal/modal.hook';
+import { IcoXclose } from '@learnway/icons';
 
 export const ShuttleTreeWithChips = ({
   sourceData,
@@ -141,19 +143,18 @@ export const ShuttleTreeWithChips = ({
             </Button>
           </div>
         </div>
-        <div>
+        <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className="w-full py-4 text-center text-gray-500">선택된 항목이 없습니다.</div>
+            <div className={cn('w-full py-4 text-center text-gray-500', styles.no_data)}>
+              선택된 항목이 없습니다.
+            </div>
           ) : (
-            actualSelectedItems.map((item: TreeNode) => (
-              <div key={item.key} className="flex items-center rounded bg-blue-100 px-2 py-1">
-                <span className="mr-2 text-sm">{item.title}</span>
-                <button
-                  onClick={() => handleRemoveItem(item)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  ×
-                </button>
+            actualSelectedItems.map((item: any) => (
+              <div key={item.key} className={styles.selected_item}>
+                <span className={styles.selected_text}>{item.fullPath}</span>
+                <Button onClick={() => handleRemoveItem(item)} className={styles.btn_close}>
+                  <IcoXclose width={20} height={20} stroke="#131C30" />
+                </Button>
               </div>
             ))
           )}

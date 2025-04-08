@@ -8,7 +8,6 @@ export interface Menu extends Hierarchy<Menu> {
 }
 
 export interface FetchMenusParams {
-  parentMenuId?: number;
   roleIds?: string;
-  tenantId?: number;
+  tenantNo?: number;
 }

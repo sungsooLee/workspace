@@ -6,7 +6,8 @@ import i18nResourceKoMock from '../../mock/i18n-resource-ko.json';
 
 export default class I18nResourceService {
   static fetchResource(languageCode: string) {
-    //return httpService.get<Company[]>(`${PMSApiPrefix()}/codes?languageCode=${languageCode}`);
+    //return httpService.get<any[]>(`${PMSApiPrefix()}/codes?languageCode=${languageCode}`);
+
     console.log('I18nResourceService.fetchResource', languageCode);
     return new Promise((resolve) =>
       setTimeout(

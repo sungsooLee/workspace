@@ -1,7 +1,7 @@
 import React, { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { useFieldArray } from 'react-hook-form';
-import { Button, ContentsRow, Dropdown, DropdownOption, Input, Select } from '@learnway/ui';
+import { Button, ContentsRow, Dropdown, DropdownOption, Input } from '@learnway/ui';
 import { LOCALES } from '@learnway/config';
 import { t } from 'i18next';
 import { IcoCloseCircle } from '@learnway/icons';

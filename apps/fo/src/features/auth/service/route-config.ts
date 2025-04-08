@@ -61,7 +61,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         }
       }
 
-      return { ...context, state: location?.state };
+      return { ...context, state: location?.state }; // context 정보 확장
     },
     loader: ({ location, context, params, search, preload, route, ...props }: any) => {
       // 기타 validation

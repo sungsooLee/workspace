@@ -110,6 +110,17 @@ import {
   IcoSucess02,
   IcoPaperClip,
   IcoPpt,
+  IcoShare,
+  IcoPin,
+  IcoThumbsUp,
+  IcoMessageCircle,
+  IcoMoreVertical,
+  IcoDownArrow,
+  IcoArrowLineTop,
+  IcoFolderOpen,
+  IcoBoxMinus,
+  IcoBoxPlus,
+  IcoMessageText,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -139,7 +150,16 @@ function RouteComponent() {
 import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수명 호출
   
 // 적용방법(예시)
-<IcoAlertCircleGray width={24} height={24} stroke="#444" fill="" />`}
+<IcoAlertCircleGray width={24} height={24} stroke="#444" fill="" />
+
+ // CSS활용 예시
+<IcoAlertCircleGray className={styles.ico} />
+
+// CSS
+.ico {
+  @apply w-[30px] h-[30px] stroke-[var(--white)];
+}
+`}
           </code>
         </pre>
       </div>
@@ -244,6 +264,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoArrowDownDouble width={30} height={30} stroke="#4C515E" />
             <IcoNarrowRight width={30} height={30} stroke="#4C515E" />
             <IcoGridOrder width={30} height={30} stroke="#4C515E" />
+            <IcoFileVideo width={48} height={48} stroke="#4C515E" />
             <IcoFileImg width={48} height={48} stroke="#4C515E" />
             <IcoExam width={30} height={30} stroke="#4C515E" />
             <IcoFolder width={30} height={30} stroke="#4C515E" />
@@ -255,13 +276,19 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoSucess02 width={30} height={30} stroke="#4C515E" />
             <IcoPaperClip width={30} height={30} stroke="#4C515E" />
             <IcoPpt width={30} height={30} stroke="#4C515E" />
+            <IcoFileMp4 width={30} height={30} stroke="#4C515E" />
+            <IcoShare width={30} height={30} stroke="#4C515E" />
+            <IcoPin width={30} height={30} stroke="#4C515E" />
+            <IcoThumbsUp width={30} height={30} stroke="#4C515E" />
+            <IcoMessageCircle width={30} height={30} stroke="#4C515E" />
+            <IcoMoreVertical width={30} height={30} stroke="#4C515E" />
+            <IcoDownArrow width={30} height={30} stroke="#4C515E" />
+            <IcoArrowLineTop width={30} height={30} stroke="#4C515E" />
+            <IcoFolderOpen width={30} height={30} stroke="#4C515E" />
+            <IcoBoxMinus width={30} height={30} stroke="#4C515E" />
+            <IcoBoxPlus width={30} height={30} stroke="#4C515E" />
+            <IcoMessageText width={30} height={30} stroke="#4C515E" />
           </div>
-        </div>
-
-        <div className="code_example">
-          <pre className="code_block">
-            <code>{`<IcoAlertCircleGray width={24} height={24} stroke='#444' />`}</code>
-          </pre>
         </div>
       </div>
     </div>
