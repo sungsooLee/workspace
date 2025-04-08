@@ -86,13 +86,12 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
     }, [watchedValue]);
 
     return (
-      options &&
-      options.length > 0 && (
+      options?.length > 0 && (
         <Dropdown
+          {...dropdownConfig}
           ref={ref}
           value={value}
           options={options}
-          variant={dropdownConfig?.variant}
           onChange={onChange}
         />
       )
