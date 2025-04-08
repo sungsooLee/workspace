@@ -328,6 +328,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                 label={checked[1] ? '적용' : '미적용'}
                 checked={checked[1]}
                 onCheckedChange={handleCheckedChange(1)}
+                disabled
               />
             </div>
           </ContentsRow>
@@ -376,6 +377,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                 label={checked[2] ? '사용' : '미사용'}
                 checked={checked[2]}
                 onCheckedChange={handleCheckedChange(2)}
+                disabled
               />
             </div>
           </ContentsRow>
