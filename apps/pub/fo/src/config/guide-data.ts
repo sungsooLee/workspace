@@ -725,7 +725,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- detail.tsx',
+    remarks: '- detail.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1001',

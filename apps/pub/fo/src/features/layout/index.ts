@@ -39,3 +39,5 @@ export * from './ui/comment';
 export * from './ui/review-rating';
 export * from './ui/curriculum';
 export * from './popup/review-popup';
+export * from './popup/review-delete-popup';
+export * from './ui/course-introduction/introduction';

@@ -1,0 +1,7 @@
+.start {
+  &.review_delete_wrap {
+    p {
+      @apply text-[var(--gray8)];
+    }
+  }
+}
