@@ -45,6 +45,20 @@
         }
       }
     }
+    .lecture_wrap {
+      @apply mt-[16px];
+      & > div {
+        @apply p-[16px];
+        & + div {
+          @apply mt-[12px];
+        }
+        .box {
+          & + .box {
+            @apply mt-[12px] border-none pt-0;
+          }
+        }
+      }
+    }
   }
 }
 

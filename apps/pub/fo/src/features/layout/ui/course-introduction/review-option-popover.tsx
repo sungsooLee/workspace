@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Button, useModal } from '@learnway/ui';
-import { ReviewPopup } from '../../../../features/layout';
+import { ReviewPopup, ReviewDeletePopup } from '../../../../features/layout';
 import styles from './review-option-popover.module.css';
 
 interface ReviewOptionPopoverProps {
@@ -26,7 +26,16 @@ function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
           </Button>
         </li>
         <li>
-          <Button>삭제</Button>
+          <Button
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <ReviewDeletePopup />,
+              })
+            }
+          >
+            삭제
+          </Button>
         </li>
       </ul>
     </div>

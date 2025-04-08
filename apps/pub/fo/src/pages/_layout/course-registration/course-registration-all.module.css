@@ -5,51 +5,6 @@
       @apply title_4_b mb-[16px] mt-[24px] text-[var(--gray9)];
     }
 
-    /* 수강신청 정보 */
-    .course_information {
-      @apply rounded-[16px] border-[1px] border-solid border-[var(--secondary3)] p-[24px];
-      .box {
-        .date {
-          span {
-            @apply body_3_r inline-block text-[var(--secondary3)];
-            & + span {
-              @apply relative ml-[8px] pl-[8px];
-              &::before {
-                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary3)] content-[''];
-              }
-            }
-          }
-        }
-        .tit {
-          @apply body_1_b mt-[4px] block text-[var(--gray8)];
-        }
-        .terminology {
-          @apply flex items-center;
-          dt {
-            @apply body_3_r leading-[24px] text-[var(--gray7)];
-          }
-          dd {
-            @apply body_3_r relative ml-[8px] pl-[8px] leading-[24px] text-[var(--gray8)];
-            &::before {
-              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-            }
-            em {
-              @apply text-[var(--status1)];
-            }
-            button {
-              @apply ml-[8px] h-[24px] rounded-[4px];
-            }
-          }
-          & + .terminology {
-            @apply mt-[4px];
-          }
-        }
-        & + .box {
-          @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
-        }
-      }
-    }
-
     .input_wrap {
       @apply mt-[32px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
       .input_area {
@@ -120,22 +75,6 @@
         @apply m-auto w-full px-[20px] pb-[80px] pt-[16px];
         & > h2 {
           @apply hidden;
-        }
-        .course_information {
-          @apply rounded-[8px] px-[16px] py-[16px];
-          .box {
-            &:last-child {
-              @apply hidden;
-            }
-            .date {
-              span {
-                @apply body_4_r;
-              }
-            }
-            .tit {
-              @apply body_2_b;
-            }
-          }
         }
         .input_wrap {
           @apply mt-[32px] border-none px-0 py-0;

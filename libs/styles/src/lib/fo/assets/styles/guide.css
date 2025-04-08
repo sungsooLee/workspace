@@ -97,6 +97,7 @@
         .color_info {
           text-align: center;
           position: relative;
+          margin-bottom: 20px;
           i {
             display: inline-block;
             width: 90px;
@@ -144,7 +145,7 @@
           margin-top: 40px;
         }
         .flex_box {
-          @apply relative flex items-center overflow-x-auto;
+          @apply relative flex items-center gap-[10px] overflow-x-auto;
           padding: 20px 20px 20px;
           border: 1px dashed #ccc;
           &:has(.desc)::after {

@@ -120,6 +120,10 @@
   }
 }
 
+div + .title_wrap {
+  @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+}
+
 .status {
   @apply ml-[2px] inline-flex align-text-top;
   &.required svg {

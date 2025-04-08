@@ -10,6 +10,12 @@
         &::before {
           @apply absolute left-0 top-[5px] h-[12px] w-px bg-[var(--gray5)] content-[''];
         }
+        em {
+          @apply text-[var(--status1)];
+        }
+        button {
+          @apply ml-[8px] h-[24px] rounded-[4px];
+        }
       }
     }
   }
