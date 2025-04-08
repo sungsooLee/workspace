@@ -1,5 +1,14 @@
 export interface Company {
-  orgId: string;
-  orgEngName: string;
-  orgName: string;
+  companyId: number;
+  uuid: string;
+  companyCode: string;
+  companyTypeCode: string;
+  name: string;
+  engName: string;
+  useYn: boolean;
+  brn: string;
+  rpsntrName: string;
+  basicAddress: string;
+  detailAddress: string;
+  postNo: string;
 }

@@ -125,10 +125,11 @@ const clearIndicator = (props: any) => {
  */
 const MenuPortal = (props: any) => {
   const variant = props.selectProps?.['data-variant'] || 'default';
-  console.log(variant);
+  const size = props.selectProps?.['size'] || 'default';
   const className = cn(
     'menu-portal',
-    variant && `menu-portal-${variant}`, // ex) menu-portal-chip, menu-portal-text
+    variant && `menu-portal-variant-${variant}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
+    size && `menu-portal-size-${size}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
   );
   return (
     <components.MenuPortal {...props}>
@@ -221,7 +222,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
-          // menuIsOpen={true}
+          menuIsOpen={true}
           {...customProps}
         />
       </div>
@@ -234,7 +235,6 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     { value, onChange, onBlur, options = [], isMulti = false, disabled, readOnly, ...props },
     ref,
   ) => {
-    console.log('----------------', props);
     // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
     const handleChange = (
       newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
