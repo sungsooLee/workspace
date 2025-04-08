@@ -194,10 +194,6 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-menu2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'상위 메뉴명'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
@@ -216,16 +212,20 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-code" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'메뉴 코드'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
                   id="name-menu2"
                   type="text"
-                  placeholder=""
+                  placeholder="메뉴 코드를 입력하세요."
                   value="1932267687686"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={10}
+                  maxLength={150}
                   disabled
                 />
                 <Button variant="gray" size="sm" disabled>
@@ -250,28 +250,9 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   type="text"
                   placeholder="메뉴명을 입력하세요."
                   value="러닝웨이"
+                  hideInputLength={false}
+                  maxLength={150}
                   disabled
-                  className={formStyles.input}
-                />
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-menuName" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>{'메뉴 이름'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name-menuName"
-                  type="text"
-                  placeholder="메뉴 이름을 입력하세요."
-                  value="입력 정보 출력"
                   className={formStyles.input}
                 />
               </div>
@@ -295,7 +276,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   value="URL"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={10}
+                  maxLength={150}
                   disabled
                 />
               </div>
@@ -316,7 +297,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   value=""
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
-                  maxLength={100}
+                  maxLength={50}
                   disabled
                 />
               </div>
@@ -326,14 +307,14 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
-                {'Hidden메뉴'}
+                {'Hidden 메뉴'}
 
                 <Tooltip
                   className={formStyles.tooltip}
                   side="right"
                   align="start"
                   content={
-                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
+                    'Hidden 메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
                   }
                 >
                   <Button onlyIcon>

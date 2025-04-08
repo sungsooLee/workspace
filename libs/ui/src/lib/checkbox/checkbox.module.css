@@ -22,8 +22,10 @@
       }
     }
     &:disabled {
-      @apply bg-[var(--gray2)];
-      border-color: var(--gray4);
+      @apply border border-solid border-[var(--gray2)] bg-[var(--gray2)];
+      & + .label {
+        @apply text-[var(--gray5)];
+      }
     }
     &.md {
       @apply h-[1.6rem] w-[1.6rem];

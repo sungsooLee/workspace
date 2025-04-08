@@ -67,8 +67,20 @@ function RouteComponent() {
     <PageContainer scrollHidden={true}>
       {/* main_contents */}
       <div className={cn(styles.main_contents, pageStyles.start)}>
-        <Tabs items={menuItems} type="progress" size="sm" className={styles.progress_wrap} />
-        <Tabs items={tabItems} type="line" size={'sm'} className={styles.tab_wrap} />
+        <Tabs
+          items={menuItems}
+          type="progress"
+          size="sm"
+          className={styles.progress_wrap}
+          selectedTabKey={'menu03'}
+        />
+        <Tabs
+          items={tabItems}
+          type="line"
+          size={'sm'}
+          className={styles.tab_wrap}
+          selectedTabKey={'tab01'}
+        />
       </div>
     </PageContainer>
   );
