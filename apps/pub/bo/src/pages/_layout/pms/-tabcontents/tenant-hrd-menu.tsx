@@ -13,9 +13,61 @@ import {
   Tooltip,
   Input,
   Grid,
+  TreeView,
+  TreeNode,
 } from '@learnway/ui';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+// tree
+const sampleData: TreeNode[] = [
+  {
+    key: '1',
+    title: '러닝웨이 1',
+    isUsed: false,
+    children: [
+      {
+        key: '1-1',
+        title: 'Child 1',
+        isUsed: true,
+        children: [
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
+        ],
+      },
+      { key: '1-2', title: 'Child 2', isUsed: true },
+    ],
+  },
+  {
+    key: '2',
+    title: '러닝웨이 2',
+    isUsed: false,
+    children: [
+      { key: '2-1', title: 'Child 3', isUsed: false },
+      { key: '2-2', title: 'Child 4', isUsed: false },
+    ],
+  },
+  {
+    key: '3',
+    title: '러닝웨이 3',
+    isUsed: false,
+    children: [
+      { key: '3-1', title: 'Child 5', isUsed: false },
+      { key: '3-2', title: 'Child 6', isUsed: false },
+    ],
+  },
+  {
+    key: '4',
+    title: '러닝웨이 4',
+    isUsed: false,
+    children: [
+      { key: '4-1', title: 'Child 7', isUsed: false },
+      { key: '4-2', title: 'Child 8', isUsed: false },
+    ],
+  },
+];
 // eslint-disable-next-line no-empty-pattern
 const TenantHrdMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
@@ -46,7 +98,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('Sort', {
       cell: (info) => info.getValue(),
       header: '분류',
-      size: 120,
+      size: 300,
       enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -56,7 +108,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('API', {
       cell: (info) => info.getValue(),
       header: 'API',
-      size: 490,
+      size: 310,
       enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
@@ -71,9 +123,12 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
     }),
   ] as ColumnDef<any, unknown>[];
 
+  // tree
+  const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -85,9 +140,11 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
             </Button>
           </div>
         </div>
-        <div className={layoutStyles.inner_contents}></div>
+        <div className={layoutStyles.inner_contents}>
+          <TreeView treeId="source" data={sourceData} />
+        </div>
       </div>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -115,7 +172,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   type="text"
                   placeholder="메뉴 위치를 입력하세요."
                   value="러닝웨이"
-                  disabled
+                  readOnly
                   className={formStyles.input}
                 />
               </div>
@@ -157,7 +214,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   value="러닝웨이"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={20}
+                  maxLength={10}
                 />
                 <Button variant="gray" size="sm">
                   {'중복'}
@@ -183,7 +240,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   value="메뉴명"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={20}
+                  maxLength={10}
                 />
               </div>
             </div>
@@ -206,7 +263,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   value="api/menu/menu0001"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={50}
+                  maxLength={10}
                 />
               </div>
             </div>
@@ -226,7 +283,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   value="메뉴 001"
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
-                  maxLength={50}
+                  maxLength={100}
                 />
               </div>
             </div>
@@ -243,7 +300,8 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   align="start"
                   content={
                     'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
-                  }>
+                  }
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -290,7 +348,8 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   className={dynamicFormStyles.tooltip}
                   side="right"
                   align="start"
-                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
+                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -313,6 +372,9 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
               hideColumnSettings={true}
               title="API"
             />
+          </ContentsRow>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+            <ContentsHistoryInfoFormField />
           </ContentsRow>
         </div>
       </div>

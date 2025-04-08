@@ -10,7 +10,7 @@ import {
 } from '@learnway/ui';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/address-popup.module.css';
+import styles from './address-popup.module.css';
 
 const AddressPopupComponent = () => {
   // pagenation

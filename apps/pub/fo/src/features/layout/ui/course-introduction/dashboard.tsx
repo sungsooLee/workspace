@@ -1,8 +1,8 @@
 import { memo, useState, useEffect } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoMessageText } from '@learnway/icons';
-import { Button, Dropdown, Panel } from '@learnway/ui';
+import { IcoMessageText, IcoCheck } from '@learnway/icons';
+import { Button, Dropdown, Panel, Progress } from '@learnway/ui';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
 
@@ -12,6 +12,8 @@ const CourseDashboardCompoment = () => {
     { value: 'option1', label: '1차 | 25-03-01 ~ 26-03-31' },
     { value: 'option2', label: '2차 | 25-03-01 ~ 26-03-31' },
   ];
+
+  const progress = 80;
   return (
     <div className={styles.start}>
       <div className={styles.title_box}>
@@ -24,6 +26,7 @@ const CourseDashboardCompoment = () => {
           variant="text"
           isMulti={false}
           size={'lg'}
+          menu-portal-text
         />
       </div>
       {/* 
@@ -32,20 +35,80 @@ const CourseDashboardCompoment = () => {
         학습완료 (이수) : status_completed
         학습미완료 (미이수) : status_incomplete
       */}
-      <div className={`${statusStyles.start} ${statusStyles.status_incomplete}`}>
+      <div className={`${statusStyles.start} ${statusStyles.status_before}`}>
         <div className={statusStyles.panel_degreey}>
           <div className={statusStyles.list}>
             <h3>
               <span className={statusStyles.ico}>
                 <IcoMessageText />
               </span>
-              학습전
+              이수
             </h3>
             <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
           </div>
         </div>
 
-        <div className={statusStyles.status_box}></div>
+        <div className={statusStyles.status_box}>
+          <div className={statusStyles.progress_rate}>
+            <Progress value={progress} className={statusStyles.progress_bar} />
+            <div className={statusStyles.info}>
+              <span className={statusStyles.txt}>진도율</span>
+              <span className={statusStyles.progress}>{progress}%</span>
+            </div>
+          </div>
+
+          <div className={statusStyles.status_list}>
+            <div className={statusStyles.status_info}>
+              <span className={statusStyles.tt}>출석 (40%)</span>
+              <div className={statusStyles.score}>
+                <span className={statusStyles.ico}>
+                  <IcoCheck width={20} height={20} stroke="#000" />
+                </span>
+                80%
+              </div>
+            </div>
+
+            <div className={statusStyles.status_info}>
+              <span className={statusStyles.tt}>평가 (1/2, 30%)</span>
+              <div className={statusStyles.score}>
+                <span className={statusStyles.ico}>
+                  <IcoCheck width={20} height={20} stroke="#000" />
+                </span>
+                38점
+              </div>
+            </div>
+
+            <div className={statusStyles.status_info}>
+              <span className={statusStyles.tt}>과제 (30%)</span>
+              <div className={statusStyles.score}>
+                <span className={statusStyles.ico}>
+                  <IcoCheck width={20} height={20} stroke="#000" />
+                </span>
+                90점
+              </div>
+            </div>
+
+            <div className={statusStyles.status_info}>
+              <span className={statusStyles.tt}>설문 (0%)</span>
+              <div className={statusStyles.score}>
+                <span className={statusStyles.ico}>
+                  <IcoCheck width={20} height={20} stroke="#000" />
+                </span>
+                완료
+              </div>
+            </div>
+
+            <div className={statusStyles.status_info}>
+              <span className={statusStyles.tt}>총점 (100%)</span>
+              <div className={statusStyles.score}>
+                <span className={statusStyles.ico}>
+                  <IcoCheck width={20} height={20} stroke="#000" />
+                </span>
+                100점
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

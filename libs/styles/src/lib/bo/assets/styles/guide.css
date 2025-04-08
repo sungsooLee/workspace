@@ -400,12 +400,16 @@
             padding: 5px 10px;
             font-size: 1.5rem;
             color: #444;
+            &:hover {
+              @apply text-[var(--secondary1)];
+            }
           }
         }
-        > li.active a {
+        > li .active {
           color: #000;
-          background-color: #e3e3e3;
+          background-color: #e4e7f1;
           border-radius: 8px;
+          @apply shadow-[0px_0px_3px_rgba(0,0,0,0.3)];
         }
       }
     }

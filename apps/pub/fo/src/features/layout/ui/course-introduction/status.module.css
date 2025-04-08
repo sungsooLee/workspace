@@ -19,6 +19,46 @@
       }
     }
   }
+
+  .status_box {
+    @apply mt-[8px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[24px] py-[24px];
+    .progress_rate {
+      @apply flex items-center justify-between;
+      > div {
+        @apply w-full;
+      }
+      .progress_bar {
+        @apply flex-1 border border-solid border-[var(--gray5)] bg-[var(--white)];
+      }
+      .info {
+        @apply mr-[6px] flex w-[160px] items-center justify-end text-right;
+        .txt {
+          @apply body_3_r inline-block pl-[30px] text-left text-[var(--gray8)];
+        }
+        .progress {
+          @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
+        }
+      }
+    }
+    .status_list {
+      @apply mt-[16px] flex items-center justify-between gap-[16px];
+      .status_info {
+        @apply w-full text-center;
+        .tt {
+          @apply body_4_r inline-flex h-[29px] w-full items-center justify-center rounded-tl-[8px] rounded-tr-[8px] bg-[var(--gray4)] text-center text-[var(--gray9)];
+        }
+        .score {
+          @apply title_4_b flex h-[79px] items-center justify-center gap-[8px] rounded-bl-[8px] rounded-br-[8px] bg-[var(--white)] text-[var(--primary4)];
+          .ico {
+            @apply inline-flex h-[30px] w-[30px] items-center justify-center rounded-full;
+            svg {
+              @apply h-[18px] w-[18px];
+            }
+          }
+        }
+      }
+    }
+  }
   /* 학습전 */
   &.status_before {
     .panel_degreey {
@@ -33,6 +73,38 @@
         @apply text-[var(--gray7)];
         .ico {
           @apply bg-[var(--gray5)];
+        }
+      }
+    }
+
+    .status_box {
+      @apply border-[var(--gray5)] bg-[var(--gray1)];
+      .progress_rate {
+        .progress_bar {
+          @apply border-[var(--gray5)] bg-[var(--white)];
+        }
+        .info {
+          .txt {
+            @apply text-[var(--gray8)];
+          }
+          .progress {
+            @apply text-[var(--secondary3)];
+          }
+        }
+      }
+      .status_list {
+        .status_info {
+          .tt {
+          }
+          .score {
+            @apply text-[var(--primary4)];
+            .ico {
+              @apply bg-[var(--gray4)];
+              svg {
+                @apply stroke-[var(--gray7)];
+              }
+            }
+          }
         }
       }
     }

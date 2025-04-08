@@ -3,7 +3,7 @@
   &.wrap {
     @apply flex w-full items-center rounded-[8px] bg-[#f6f8fd] p-[16px];
     p {
-      @apply body_4_r flex items-center text-[var(--gray9)];
+      @apply body_4_r flex shrink-0 items-center text-[var(--gray9)];
       span {
         @apply ml-[8px] inline-flex text-[var(--gray7)];
       }
@@ -15,7 +15,7 @@
       }
     }
     .btn_info {
-      @apply ml-auto !font-normal;
+      @apply ml-auto w-[58px] shrink-0 !font-normal;
     }
   }
 }

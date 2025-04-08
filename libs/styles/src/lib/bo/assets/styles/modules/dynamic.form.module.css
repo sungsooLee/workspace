@@ -86,6 +86,7 @@
 }
 
 .radio_wrap {
+  @apply w-full;
   [role='radiogroup'] > div {
     @apply !min-w-[75px];
   }
@@ -102,9 +103,20 @@
   @apply flex w-full items-center justify-between pb-[16px];
   .title {
     @apply body_3_r flex items-center text-[var(--gray9)];
+    button {
+      @apply ml-[2px];
+    }
     & + div {
       @apply translate-y-0;
     }
+  }
+}
+
+/* title */
+.title_wrap {
+  @apply mb-[16px];
+  .title {
+    @apply title_bo_4_b text-[var(--gray9)];
   }
 }
 

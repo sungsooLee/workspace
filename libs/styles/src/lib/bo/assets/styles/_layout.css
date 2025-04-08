@@ -29,7 +29,8 @@ body main {
   }
 }
 
-.scrolled {
+body.scrolled {
+  @apply overflow-x-auto overflow-y-hidden;
   .layout_wrap {
     header {
       @apply !h-[50px] !overflow-hidden;

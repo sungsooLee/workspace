@@ -70,6 +70,7 @@ function RouteComponent() {
         { name: '--primary1', textColor: '--white', code: '' },
         { name: '--primary2', textColor: '--white', code: '' },
         { name: '--primary3', textColor: '--white', code: '' },
+        { name: '--primary4', textColor: '--white', code: '' },
       ],
     },
     {
@@ -154,7 +155,8 @@ function RouteComponent() {
                   style={{
                     backgroundColor: `var(${color.name})`,
                     border: color.border || 'none',
-                  }}></i>
+                  }}
+                ></i>
                 <span className="txt">{color.name}</span>
                 <span className="code" style={{ color: `var(${color.textColor})` }}>
                   {color.code}

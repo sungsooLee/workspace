@@ -1,18 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Tabs, Avatar, Progress, Popover } from '@learnway/ui';
-import {
-  IcoHeart,
-  IcoUser01,
-  IcoShare,
-  IcoStar,
-  IcoPin,
-  IcoThumbsUp,
-  IcoMessageCircle,
-  IcoMoreVertical,
-  IcoDownArrow,
-} from '@learnway/icons';
-import { CourseDashboard, ReviewOptionPopover } from '../../../features/layout';
+import { ChipList, SelectOption, Button, Tabs, Avatar, Accordion } from '@learnway/ui';
+import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown, IcoStar } from '@learnway/icons';
+import { CourseDashboard, Review, ReviewRating, Curriculum } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import operatorStyles from './operator.module.css';
@@ -47,9 +37,11 @@ function RouteComponent() {
     { label: '스마트팩토리', value: 'M' },
   ];
 
-  const [thumbs, setThumbs] = useState(true);
+  // 찜
+  const [heart, setHeart] = useState(false);
 
-  const [selectedTabKey, selectedTabKey2] = useState<string>('');
+  // 탭
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('');
   const items = [
     {
       title: '대시보드',
@@ -139,57 +131,8 @@ function RouteComponent() {
               <strong>커리큘럼</strong>
             </div>
 
-            <div className={styles.curriculum}>
-              <ol>
-                <li>
-                  <div className={styles.tit_box}>
-                    <strong>1. 안전교육 | 강사 이승훈(현대오토에버 L&D플랫폼팀)</strong>
-                  </div>
-                  <div className={styles.txt_box}>
-                    <ul>
-                      <li>
-                        <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                        <span>8시간</span>
-                      </li>
-                      <li>
-                        <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                        <span>8시간</span>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <div className={styles.tit_box}>
-                    <strong>2. 사업장 교육 1 (강사 김지선)</strong>
-                  </div>
-                  <div className={styles.txt_box}>
-                    <ul>
-                      <li>
-                        <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                        <span>8시간</span>
-                      </li>
-                      <li>
-                        <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                        <span>8시간</span>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <div className={styles.tit_box}>
-                    <strong>3. 사업장 교육 2 (강사 : 이승훈 )</strong>
-                  </div>
-                  <div className={styles.txt_box}>
-                    <ul>
-                      <li>
-                        <p>냉연공정의 이해(PL/TCM, CAL 등)</p>
-                        <span>2시간</span>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              </ol>
-            </div>
+            {/* curriculum */}
+            <Curriculum />
           </div>
 
           {/* 과정 및 학습제한 안내 */}
@@ -279,146 +222,25 @@ function RouteComponent() {
             <h2>
               후기<span>999,999+</span>
             </h2>
-            <div className={styles.rating_box}>
-              <div className={styles.box}>
-                <div></div>
-                <strong className={styles.tit}>총 평점</strong>
-                <p className={styles.number}>
-                  <IcoStar width={32} height={32} fill="#ffb902" />
-                  4.2
-                </p>
-              </div>
-              <div className={styles.box}>
-                <strong className={styles.tit}>전체 참가자수</strong>
-                <p className={styles.number}>999,999+</p>
-              </div>
-              <div className={styles.box}>
-                <ul>
-                  <li>
-                    <span>5점</span>
-                    <Progress value={40} />
-                    <span>999,999+</span>
-                  </li>
-                  <li>
-                    <span>4점</span>
-                    <Progress value={40} />
-                    <span>999,999+</span>
-                  </li>
-                  <li>
-                    <span>3점</span>
-                    <Progress value={40} />
-                    <span>999,999+</span>
-                  </li>
-                  <li>
-                    <span>2점</span>
-                    <Progress value={40} />
-                    <span>999,999+</span>
-                  </li>
-                  <li>
-                    <span>1점</span>
-                    <Progress value={40} />
-                    <span>999,999+</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+            {/* review rating */}
+            <ReviewRating className={styles.review_rating} />
             <div className={styles.review_box}>
               <ul className={styles.review_list}>
+                {/* review */}
                 <li>
-                  {/* review */}
-                  <div className={styles.review}>
-                    <div className={styles.profile}>
-                      <Avatar
-                        imageUrl="https://github.com/shadcn.png"
-                        className={styles.info_avata}
-                      />
-                      <div className={styles.information}>
-                        <div className={styles.box}>
-                          <strong>박이나</strong>
-                          <div className={styles.star}>
-                            <IcoStar width={16} height={16} fill="#ffb902" />
-                            <IcoStar width={16} height={16} fill="#ffb902" />
-                            <IcoStar width={16} height={16} fill="#ffb902" />
-                            <IcoStar width={16} height={16} fill="#ffb902" />
-                            <IcoStar width={16} height={16} fill="#ede0f7" stroke="#d6dae1" />
-                          </div>
-                        </div>
-                        <div className={styles.box}>
-                          <span>현대오토에버</span>
-                          <span>L&D플랫폼팀</span>
-                          <span>2026.07.12</span>
-                          {/* pin */}
-                          <i className={styles.pin}>
-                            <IcoPin width={20} height={20} fill="#d6dae1" />
-                          </i>
-                        </div>
-                        <Popover
-                          popoverContent={<ReviewOptionPopover />}
-                          side="bottom"
-                          align="end"
-                          sideOffset={5}
-                          className={styles.setting}
-                        >
-                          <IcoMoreVertical width={24} height={24} fill="#6f798b" stroke="#6f798b" />
-                        </Popover>
-                      </div>
-                    </div>
-                    <p className={styles.txt}>
-                      안녕하세요. 저는 영어 발음이 잘 이해가 안갑니다.
-                      <br />
-                      그래도 선생님 설명이 아주 좋아요! 저는 만족합니다.
-                      <br />
-                      발음때문에 -1점 했어요
-                    </p>
-                    <div className={styles.count_box}>
-                      <Button className={thumbs === true ? styles.active : ''}>
-                        <IcoThumbsUp width={20} height={20} fill="#000" stroke="red" />
-                        34
-                      </Button>
-                      <Button>
-                        <IcoMessageCircle width={20} height={20} />0
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* comment */}
-                  <div className={styles.comment}>
-                    <i className={styles.ico_comment}>
-                      <IcoDownArrow width={32} height={32} stroke="#a9afb8" />
-                    </i>
-                    <div className={styles.profile}>
-                      <Avatar
-                        imageUrl="https://github.com/shadcn.png"
-                        className={styles.info_avata}
-                      />
-                      <div className={styles.information}>
-                        <div className={styles.box}>
-                          <strong>박이나</strong>
-                        </div>
-                        <div className={styles.box}>
-                          <span>현대오토에버</span>
-                          <span>L&D플랫폼팀</span>
-                          <span>2026.07.12</span>
-                        </div>
-                      </div>
-                    </div>
-                    <p className={styles.txt}>
-                      안녕하세요. 저는 영어 발음이 잘 이해가 안갑니다.
-                      <br />
-                      그래도 선생님 설명이 아주 좋아요! 저는 만족합니다.
-                      <br />
-                      발음때문에 -1점 했어요
-                    </p>
-                    <div className={styles.count_box}>
-                      <Button>
-                        <IcoThumbsUp width={20} height={20} stroke="6f798b" />
-                        34
-                      </Button>
-                    </div>
-                  </div>
+                  <Review />
+                </li>
+                <li>
+                  <Review />
                 </li>
               </ul>
+              {/* 더보기 */}
+              <div className={styles.more_box}>
+                <Button className={styles.btn_more}>
+                  <span>더보기</span>
+                  <IcoArrowDown width={16} height={16} stroke="#6f798b" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -427,6 +249,36 @@ function RouteComponent() {
     {
       title: '후기',
       key: 'c',
+    },
+  ];
+
+  // 패키지 아코디언
+  const [value2, setValue2] = useState<string>('');
+  const dummyItems2 = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 1</strong>
+        </div>
+      ),
+      children: (
+        <div className={styles.sub_package_content}>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 2</strong>
+        </div>
+      ),
+      children: <div className={styles.sub_package_content}>Content B</div>,
     },
   ];
 
@@ -464,6 +316,10 @@ function RouteComponent() {
                 패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
               </strong>
               <div className={packageInformationStyles.count_box}>
+                <div className={packageInformationStyles.box}>
+                  <IcoStar width={16} height={16} stroke="#ffb902" fill="#ffb902" />
+                  <span>4.2</span>
+                </div>
                 <div className={packageInformationStyles.box}>
                   <IcoHeart width={16} height={16} stroke="#6f798b" fill="none" />
                   <span>500</span>
@@ -508,16 +364,47 @@ function RouteComponent() {
               </div>
               {/* button */}
               <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* 패키지 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                패키지<em>10</em>
+              </strong>
+            </div>
+            <div className={styles.package_box}>
+              <Accordion
+                items={dummyItems2}
+                value={value2}
+                className={styles.acc_package}
+                onValueChange={(value2) => setValue2(value2 as string)}
+                type={'multiple'}
+              />
+            </div>
+          </div>
+
+          {/* 연관 과정 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                연관 과정<em>20</em>
+              </strong>
+            </div>
+            <div className={styles.procedure_box}>contents</div>
           </div>
         </div>
       </div>
