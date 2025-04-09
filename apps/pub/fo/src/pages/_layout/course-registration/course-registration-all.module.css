@@ -51,6 +51,12 @@
               }
             }
           }
+          .input_date {
+            @apply flex w-full items-center gap-[8px];
+            & > div {
+              @apply flex-1;
+            }
+          }
         }
         & + .input_area {
           @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray3)] pt-[32px];

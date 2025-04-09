@@ -96,7 +96,7 @@
       .list {
         @apply flex w-full overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
         .trigger {
-          @apply body_bo_1_b min-h-[54px] flex-1 bg-[var(--white)] text-[var(--gray7)];
+          @apply body_bo_1_r min-h-[54px] flex-1 bg-[var(--white)] text-[var(--gray7)];
           &::before,
           &::after {
             @apply absolute z-[1] h-full w-[19px] bg-transparent bg-[19px_auto] bg-[position:left_top] bg-no-repeat content-[''];
@@ -139,35 +139,41 @@
               @apply hidden;
             }
           }
+          &[aria-selected='true'] {
+            @apply body_bo_1_b;
+          }
         }
       }
       &.sm {
-        .trigger {
-          @apply min-h-[38px] rounded-[4px] text-[1.4rem] leading-[1.6rem];
-          &::before,
-          &::after {
-            @apply bg-[auto_38px];
-          }
-          &::before {
-            @apply left-0 top-0 hidden bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
-          }
-          &::after {
-            @apply -right-[19px] top-0 bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
-          }
-          &[data-state='active'] {
-            &::before {
-              @apply bg-[url('../../assets/images/bg/bg_progress_sm_left_active.png')];
+        .list {
+          @apply rounded-[4px];
+          .trigger {
+            @apply min-h-[44px] rounded-[4px] text-[1.4rem] leading-[1.6rem];
+            &::before,
+            &::after {
+              @apply bg-[auto_44px];
             }
-            & + .trigger {
+            &::before {
+              @apply left-0 top-0 bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
+            }
+            &::after {
+              @apply -right-[19px] top-0 bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
+            }
+            &[data-state='active'] {
               &::before {
-                @apply bg-[url('../../assets/images/bg/bg_progress_sm_right_active.png')];
+                @apply bg-[url('../../assets/images/bg/bg_progress_sm_left_active.png')];
+              }
+              & + .trigger {
+                &::before {
+                  @apply bg-[url('../../assets/images/bg/bg_progress_sm_right_active.png')];
+                }
               }
             }
-          }
-          &:nth-child(1) {
-            &[data-state='inactive'] {
-              &::after {
-                @apply block bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
+            &:nth-child(1) {
+              &[data-state='inactive'] {
+                &::after {
+                  @apply block bg-[url('../../assets/images/bg/bg_progress_sm_default.png')];
+                }
               }
             }
           }

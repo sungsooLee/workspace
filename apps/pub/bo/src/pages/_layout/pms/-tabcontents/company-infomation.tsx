@@ -32,8 +32,8 @@ const CompanyInfomationComponent: FC<{}> = ({}) => {
   };
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <div className={dynamicFormStyles.title_wrap}>
-        <strong className={dynamicFormStyles.title}>{'회사 기본 정보'}</strong>
+      <div className="title_wrap">
+        <strong className="title">{'회사 기본 정보'}</strong>
       </div>
       <ContentsRow>
         {/* form_item */}
@@ -218,8 +218,8 @@ const CompanyInfomationComponent: FC<{}> = ({}) => {
           </div>
         </div>
       </ContentsRow>
-      <div className={dynamicFormStyles.title_wrap}>
-        <strong className={dynamicFormStyles.title}>{'연동 정보 설정'}</strong>
+      <div className="title_wrap">
+        <strong className="title">{'연동 정보 설정'}</strong>
       </div>
       <ContentsRow type="horizontal">
         {/* form_item */}
