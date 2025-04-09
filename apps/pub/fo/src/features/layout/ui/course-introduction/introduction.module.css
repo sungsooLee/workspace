@@ -24,6 +24,31 @@
           @apply title_6_b text-[var(--gray8)];
         }
       }
+      .data_box {
+        button {
+          @apply flex h-[54px] w-full items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] px-[16px];
+          span {
+            @apply body_3_r flex items-center leading-[16px] text-[var(--gray8)];
+            &:first-child {
+              @apply flex-1;
+            }
+            svg {
+              @apply mr-[3px];
+            }
+          }
+          & + button {
+            @apply ml-0 mt-[8px];
+          }
+        }
+      }
+      .img_box {
+        img {
+          @apply w-full;
+        }
+        p {
+          @apply body_3_r mt-[8px] leading-[22px] text-[var(--gray7)];
+        }
+      }
     }
     .review_wrap {
       @apply mt-[42px];
