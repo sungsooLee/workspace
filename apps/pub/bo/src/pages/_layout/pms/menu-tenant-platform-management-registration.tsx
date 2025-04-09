@@ -14,7 +14,7 @@ import {
   Switch,
   ThumbnailImageUpload,
   ImageOption,
-  InputModalSelectorFormField,
+  ChipListModalSelectorFormField,
   useModal,
   ModalTitle,
   ModalContainer,
@@ -287,10 +287,12 @@ function RouteComponent() {
               </span>
             </label>
             <div className={formStyles.input_box}>
-              <InputModalSelectorFormField
-                modalConfig={{
-                  width: 'xl',
-                  content: <ModalCompanySearchContent />,
+              <ChipListModalSelectorFormField
+                modalConfig={{ width: 'xl', content: <ModalCompanySearchContent /> }}
+                chipList={{
+                  labelField: 'name',
+                  valueField: 'value',
+                  hideBorder: true,
                 }}
               />
             </div>
