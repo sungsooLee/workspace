@@ -55,7 +55,7 @@ const TenantAttribute01Component: FC<{}> = ({}) => {
           </div>
         </div>
       </ContentsRow>
-      <div className="title_wrap">
+      <div className="title_wrap no_line">
         <strong className="title">{'과정 등록 연관 설정'}</strong>
       </div>
       <ContentsRow type="horizontal">
