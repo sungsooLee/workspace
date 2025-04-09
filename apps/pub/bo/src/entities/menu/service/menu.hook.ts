@@ -3,9 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions } from './menu.queries';
-import { FetchMenusParams } from '../../../types/entities/menu';
 import menuMock from '../../mock/menu.json';
-export function useFetchMenus(params: FetchMenusParams) {
+export function useFetchMenus(tenantNo: number) {
   return { data: menuMock.children }; //useQuery(queryOptions.all(params));
 }
 

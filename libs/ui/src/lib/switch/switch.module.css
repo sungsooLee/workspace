@@ -31,6 +31,11 @@
   .label {
     @apply ml-[8px] select-none text-[14px] font-normal leading-[1.4rem] text-[var(--gray6)];
   }
+  &.disabled {
+    .label {
+      @apply text-[var(--gray5)];
+    }
+  }
 }
 
 .active {

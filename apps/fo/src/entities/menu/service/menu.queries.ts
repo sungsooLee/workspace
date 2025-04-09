@@ -10,14 +10,12 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (params?: FetchMenusParams) =>
-    params?.tenantId //&& params?.roleIds
+  all: (tenantNo?: number) =>
+    tenantNo //&& params?.roleIds
       ? {
-          queryKey: params.parentMenuId
-            ? queryKeys.allByParentMenuId(params.parentMenuId)
-            : queryKeys.all,
+          queryKey: queryKeys.all,
           queryFn: async () => {
-            const data = await MenuService.getMenus(params);
+            const data = await MenuService.getMenus(tenantNo);
 
             return convertHierarchyNode(
               data?.children,

@@ -10,7 +10,6 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">리스트 Page Component</h2>
-      <div className="info">css 경로는 변경 될 수 있습니다.</div>
 
       {/* definition list */}
       <p className="loc css">
@@ -19,6 +18,8 @@ function RouteComponent() {
       <p className="loc react">
         <Link to="/course-introduction/package">예제링크</Link>
       </p>
+
+      <div className="info">css 경로는 변경 될 수 있습니다.</div>
 
       <div className="group">
         <h3 className="guide_tit3">용어 리스트 미리보기</h3>

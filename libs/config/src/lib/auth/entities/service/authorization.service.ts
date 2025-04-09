@@ -26,7 +26,7 @@ export function convertToAuthUser(data: AxiosResponse): AuthUser {
   const { tenants } = user;
   return {
     ...user,
-    activeTenantId: user.tenants?.length > 0 ? tenants?.[0].tenantId : null,
+    activeTenantNo: user.tenants?.length > 0 ? tenants?.[0].tenantNo : null,
     //activeTenantId: user.tenantIds?.length > 0 ? tenantIds[0] : null,
     //activeRoleId: user.roles?.length > 0 ? user.roles[0].roleId : null,
   };

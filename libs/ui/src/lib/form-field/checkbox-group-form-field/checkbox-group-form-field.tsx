@@ -1,5 +1,6 @@
 import { forwardRef, Fragment } from 'react';
 import { Checkbox } from '../../checkbox/checkbox';
+import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
 
 const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
@@ -15,7 +16,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       onChange(checkedValues);
     };
     return (
-      <div ref={ref} className={styles.checkbox_list}>
+      <div ref={ref} className={cn(styles.start, styles.radio_list)}>
         {options &&
           options.map((item: any) => (
             <Fragment key={item.value}>

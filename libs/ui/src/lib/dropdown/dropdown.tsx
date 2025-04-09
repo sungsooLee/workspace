@@ -125,9 +125,11 @@ const clearIndicator = (props: any) => {
  */
 const MenuPortal = (props: any) => {
   const variant = props.selectProps?.['data-variant'] || 'default';
+  const size = props.selectProps?.['size'] || 'default';
   const className = cn(
     'menu-portal',
-    variant && `menu-portal-${variant}`, // ex) menu-portal-chip, menu-portal-text
+    variant && `menu-portal-variant-${variant}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
+    size && `menu-portal-size-${size}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
   );
   return (
     <components.MenuPortal {...props}>
@@ -220,7 +222,6 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
-          // menuIsOpen={true}
           {...customProps}
         />
       </div>

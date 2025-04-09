@@ -35,6 +35,7 @@ export const mutateOptions = {
         return convertToAuthUser(data);
       } catch (e) {
         removeToken();
+
         throw e;
       }
     },

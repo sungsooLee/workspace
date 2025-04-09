@@ -43,14 +43,16 @@ function RouteComponent() {
         {state?.email ? (
           <ProccessResult
             title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')}
-            className={styles.success_info}>
+            className={styles.success_info}
+          >
             <div className={styles.result_message}>{state.email}</div>
           </ProccessResult>
         ) : (
           <ProccessResult
             isSuccess={false}
             title={t('MESSAGE.SEARCH_ACCOUNT_RESULT_NOT_FOUND')}
-            className={styles.success_info}></ProccessResult>
+            className={styles.success_info}
+          ></ProccessResult>
         )}
 
         <div className={styles.btn_txt}>

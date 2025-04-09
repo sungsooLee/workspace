@@ -43,14 +43,14 @@ const ApiInfoModalComponent = ({ apiId }: any) => {
             </ContentsRow>
             <ContentsRow>
               <div className={formStyles.form_item}>
-                <label htmlFor="apiName" className={formStyles.form_label}>
+                <label htmlFor="fullPath" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>{'API 위치'}</span>
                 </label>
                 <div className={formStyles.input_box}>
                   <Input
-                    id="apiName"
+                    id="fullPath"
                     type="text"
-                    value={''}
+                    value={data && data.fullPath}
                     disabled
                     className={formStyles.input}
                   />
@@ -92,7 +92,9 @@ const ApiInfoModalComponent = ({ apiId }: any) => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={() => close()}>확인</Button>
+        <Button onClick={() => close()} size={'md'} variant={'primary'}>
+          확인
+        </Button>
       </ModalFooter>
     </ModalContainer>
   );

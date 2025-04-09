@@ -45,7 +45,7 @@
 
       .family_site_info {
         @apply absolute right-[0] top-[0];
-        button {
+        [class*='select_wrap'] {
           @apply w-[250px];
         }
       }
