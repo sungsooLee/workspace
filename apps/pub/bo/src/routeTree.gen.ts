@@ -49,6 +49,7 @@ import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget
 import { Route as LayoutPmsTenantMenuManagementImport } from './pages/_layout/pms/tenant-menu-management'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsMenuTenantPlatformManagementImport } from './pages/_layout/pms/menu-tenant-platform-management'
+import { Route as LayoutPmsMenuTenantAttributeManagementImport } from './pages/_layout/pms/menu-tenant-attribute-management'
 import { Route as LayoutPmsMenuPlatformCompanyDetailImport } from './pages/_layout/pms/menu-platform-company-detail'
 import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout/pms/menu-platform-common-group'
 import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
@@ -336,6 +337,13 @@ const LayoutPmsMenuTenantPlatformManagementRoute =
   LayoutPmsMenuTenantPlatformManagementImport.update({
     id: '/pms/menu-tenant-platform-management',
     path: '/pms/menu-tenant-platform-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuTenantAttributeManagementRoute =
+  LayoutPmsMenuTenantAttributeManagementImport.update({
+    id: '/pms/menu-tenant-attribute-management',
+    path: '/pms/menu-tenant-attribute-management',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1315,6 +1323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuPlatformCompanyDetailImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-tenant-attribute-management': {
+      id: '/_layout/pms/menu-tenant-attribute-management'
+      path: '/pms/menu-tenant-attribute-management'
+      fullPath: '/pms/menu-tenant-attribute-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantAttributeManagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-tenant-platform-management': {
       id: '/_layout/pms/menu-tenant-platform-management'
       path: '/pms/menu-tenant-platform-management'
@@ -1545,6 +1560,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
   LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
   LayoutPmsMenuPlatformCompanyDetailRoute: typeof LayoutPmsMenuPlatformCompanyDetailRoute
+  LayoutPmsMenuTenantAttributeManagementRoute: typeof LayoutPmsMenuTenantAttributeManagementRoute
   LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
   LayoutPmsTenantMenuManagementRoute: typeof LayoutPmsTenantMenuManagementRoute
@@ -1578,6 +1594,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsMenuPlatformCommonGroupRoute: LayoutPmsMenuPlatformCommonGroupRoute,
   LayoutPmsMenuPlatformCompanyDetailRoute:
     LayoutPmsMenuPlatformCompanyDetailRoute,
+  LayoutPmsMenuTenantAttributeManagementRoute:
+    LayoutPmsMenuTenantAttributeManagementRoute,
   LayoutPmsMenuTenantPlatformManagementRoute:
     LayoutPmsMenuTenantPlatformManagementRoute,
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
@@ -1678,6 +1696,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
+  '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
@@ -1775,6 +1794,7 @@ export interface FileRoutesByTo {
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
+  '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
@@ -1875,6 +1895,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/_layout/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/_layout/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
+  '/_layout/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/_layout/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/_layout/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
@@ -1974,6 +1995,7 @@ export interface FileRouteTypes {
     | '/pms/menu-platform'
     | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
+    | '/pms/menu-tenant-attribute-management'
     | '/pms/menu-tenant-platform-management'
     | '/pms/popup-widget-management'
     | '/pms/tenant-menu-management'
@@ -2070,6 +2092,7 @@ export interface FileRouteTypes {
     | '/pms/menu-platform'
     | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
+    | '/pms/menu-tenant-attribute-management'
     | '/pms/menu-tenant-platform-management'
     | '/pms/popup-widget-management'
     | '/pms/tenant-menu-management'
@@ -2168,6 +2191,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-platform'
     | '/_layout/pms/menu-platform-common-group'
     | '/_layout/pms/menu-platform-company-detail'
+    | '/_layout/pms/menu-tenant-attribute-management'
     | '/_layout/pms/menu-tenant-platform-management'
     | '/_layout/pms/popup-widget-management'
     | '/_layout/pms/tenant-menu-management'
@@ -2305,6 +2329,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-platform",
         "/_layout/pms/menu-platform-common-group",
         "/_layout/pms/menu-platform-company-detail",
+        "/_layout/pms/menu-tenant-attribute-management",
         "/_layout/pms/menu-tenant-platform-management",
         "/_layout/pms/popup-widget-management",
         "/_layout/pms/tenant-menu-management",
@@ -2652,6 +2677,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-platform-company-detail": {
       "filePath": "_layout/pms/menu-platform-company-detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-tenant-attribute-management": {
+      "filePath": "_layout/pms/menu-tenant-attribute-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-tenant-platform-management": {
