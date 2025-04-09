@@ -411,6 +411,15 @@ export const guideData = [
     pageId: 'pms/menu-tenant-platform-management',
     screenId: 'NLP_BO_TMS_1000',
     pageType: 'Page',
+    completionDate: '2025-04-09',
+    lastUpdateDate: '2025-04-09',
+    remarks: '완료', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트속성관리',
+    pageId: 'pms/menu-tenant-attribute-management',
+    screenId: 'NLP_BO_TMS_1003_00-04',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '진행중', // 비고
