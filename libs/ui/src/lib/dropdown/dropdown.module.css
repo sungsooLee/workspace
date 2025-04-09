@@ -150,3 +150,8 @@
     }
   }
 }
+[class*='nlp-select__line-none'] {
+  [class*='nlp-select__control'] {
+    @apply !border-none;
+  }
+}

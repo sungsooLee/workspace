@@ -1,8 +1,8 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Button, Avatar } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
-import { Review, ReviewRating, Curriculum } from '../../../../features/layout';
+import { IcoArrowDown, IcoDownload } from '@learnway/icons';
+import { Review, ReviewRating, Curriculum, Arrays } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -10,6 +10,7 @@ import bulletStyles from '../../../../pages/_layout/course-introduction/bullet.m
 import styles from './introduction.module.css';
 
 import learnImg from '@learnway/styles/fo/assets/images/common/img_learn.png';
+import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
 
 const CourseIntroductionCompoment = () => {
   const options: SelectOption[] = [
@@ -30,6 +31,12 @@ const CourseIntroductionCompoment = () => {
 
   // 찜
   const [heart, setHeart] = useState(false);
+
+  // 소팅 조건
+  const arrays = {
+    items: ['수강신청만', '전체보기'],
+    initialSelectedItem: 0, // 초기 선택값
+  };
 
   return (
     <div className={`${styles.start} ${styles.introduction}`}>
@@ -108,6 +115,48 @@ const CourseIntroductionCompoment = () => {
 
         {/* curriculum */}
         <Curriculum />
+      </div>
+
+      {/* 자료실 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>자료실</strong>
+        </div>
+
+        <div className={styles.data_box}>
+          <Button>
+            <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span>
+              <IcoDownload width={16} height={16} stroke="#131c30" />
+              다운로드
+            </span>
+          </Button>
+          <Button>
+            <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span>
+              <IcoDownload width={16} height={16} stroke="#131c30" />
+              다운로드
+            </span>
+          </Button>
+        </div>
+      </div>
+
+      {/* 다른 강의와의 차별점 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>다른 강의와의 차별점</strong>
+        </div>
+
+        <div className={styles.img_box}>
+          <img src={discriminationImg} alt="" />
+          <p>
+            어드민에서 에디터를 활용하여 내용을 입력했을 경우 이렇게 나오도록 합니다.
+            <br />
+            이미지가 먼저 나오고, 이미지에 대한 설명이 나오도록 합니다.
+            <br />
+            관리자는 에디터에서 제목, 내용, 이미지를 등록하고 링크추가도 가능합니다.
+          </p>
+        </div>
       </div>
 
       {/* 과정 및 학습제한 안내 */}
@@ -191,6 +240,17 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
+      {/* 교육일정 */}
+      <div className={styles.education_wrap}></div>
+      <h2>교육일정</h2>
+      <div className={styles.filter_wrap}>
+        <span className={styles.date}>2026년</span>
+        <div className={styles.filter}>
+          <Arrays arraysData={arrays} className={styles.array}></Arrays>
+        </div>
+      </div>
+
+      {/* 후기 */}
       <div className={styles.review_wrap}>
         <h2>
           후기<span>999,999+</span>
