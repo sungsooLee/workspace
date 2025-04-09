@@ -21,13 +21,14 @@ import {
   ModalBody,
   ModalFooter,
   Dropdown,
+  Grid,
 } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
@@ -52,19 +53,97 @@ function RouteComponent() {
   };
 
   const { close: closeModal } = useModal();
-  const ModalChannelContent = () => {
+  const ModalCompanySearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
     const options = [
       { value: 'type1', label: '전체' },
       { value: 'type2', label: '항목' },
     ];
-    const [value, setValue] = useState<any>();
+    const options2 = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+    ];
+
+    // grid
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const data: any[] = [
+      {
+        order: '1',
+        companySort: '그룹사',
+        company: '현대차',
+        owner: '김현대',
+        registerNumber: '123-45-12345',
+        callNumber: '+82 2 1234-4567',
+        email: 'asdfged@gmail.com',
+      },
+      {
+        order: '2',
+        companySort: '그룹사',
+        company: '현대차',
+        owner: '김현대',
+        registerNumber: '123-45-12345',
+        callNumber: '+82 2 1234-4567',
+        email: 'asdfged@gmail.com',
+      },
+    ];
+
+    const columnHelper = createColumnHelper<any>();
+
+    const columns = [
+      columnHelper.accessor('order', {
+        cell: (info) => info.getValue(),
+        header: 'NO.',
+        size: 64,
+        meta: {
+          headerAlign: 'left',
+          cellAlign: 'center',
+        },
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('companySort', {
+        cell: (info) => info.getValue(),
+        header: '회사구분',
+        enableGrouping: false,
+        size: 210,
+      }),
+      columnHelper.accessor('company', {
+        cell: (info) => info.getValue(),
+        header: '회사',
+        size: 240,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('owner', {
+        cell: (info) => info.getValue(),
+        header: '대표자',
+        size: 150,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('registerNumber', {
+        cell: (info) => info.getValue(),
+        header: '사업자 등록번호',
+        size: 220,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('callNumber', {
+        cell: (info) => info.getValue(),
+        header: '대표 전화',
+        size: 220,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('email', {
+        cell: (info) => info.getValue(),
+        header: '대표 이메일',
+        size: 240,
+        enableGrouping: false,
+      }),
+    ] as ColumnDef<any, unknown>[];
 
     return (
       <ModalContainer>
         <ModalTitle>회사 조회</ModalTitle>
         <ModalBody>
-          {/* 퍼블수정 20240318 : 수정 S */}
           <div className={popupStyles.wrap}>
             <div className={cn(searchStyles.start, searchStyles.wrap)}>
               <div className={searchStyles.contents}>
@@ -91,9 +170,9 @@ function RouteComponent() {
                         </label>
                         <div className={searchStyles.box}>
                           <Dropdown
-                            options={options}
-                            value={selectedValues}
-                            onChange={(selected) => setSelectedValues(selected)}
+                            options={options2}
+                            value={selectedValues2}
+                            onChange={(selected) => setSelectedValues2(selected)}
                             variant="default"
                             size={'sm'}
                           />
@@ -124,8 +203,23 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
+            <div className={popupStyles.container}>
+              <Grid
+                data={data}
+                columns={columns}
+                height={380}
+                hideColumnSettings={true}
+                pagination={{
+                  pageSize,
+                  pageIndex,
+                  totalRows: 100,
+                  onPageChange: setPageIndex,
+                  onPageSizeChange: setPageSize,
+                }}
+                title="타이틀"
+              />
+            </div>
           </div>
-          {/* 퍼블수정 20240318 : 수정 E */}
         </ModalBody>
         <ModalFooter>
           <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
@@ -192,16 +286,14 @@ function RouteComponent() {
                 <IcoFormRequired width={12} height={12} />
               </span>
             </label>
-            {/* 퍼블수정 20240317 : Modal 수정 S  */}
             <div className={formStyles.input_box}>
               <InputModalSelectorFormField
                 modalConfig={{
-                  width: 'md',
-                  content: <ModalChannelContent />,
+                  width: 'xl',
+                  content: <ModalCompanySearchContent />,
                 }}
               />
             </div>
-            {/* 퍼블수정 20240317 : Modal 수정 E  */}
           </div>
         </ContentsRow>
         <ContentsRow type="horizontal">
