@@ -181,6 +181,36 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+            {/* 퍼블수정 20250409 : 추가 s */}
+            {/* 사전 레벨테스트 시간(2개 선택) */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <div className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>사전 레벨테스트 시간(2개 선택)</span>
+                </div>
+                <div className={formStyles.input_box}>
+                  <div className={styles.input_date}>
+                    <DatePicker displayType="time" onChange={handleDate} value={date} size="lg" />
+                    <DatePicker displayType="time" onChange={handleDate} value={date} size="lg" />
+                  </div>
+                </div>
+              </div>
+            </ContentsRow>
+            {/* 희망 교육 시간(2개 선택) */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <div className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>희망 교육 시간(2개 선택)</span>
+                </div>
+                <div className={formStyles.input_box}>
+                  <div className={styles.input_date}>
+                    <DatePicker displayType="time" onChange={handleDate} value={date} size="lg" />
+                    <DatePicker displayType="time" onChange={handleDate} value={date} size="lg" />
+                  </div>
+                </div>
+              </div>
+            </ContentsRow>
+            {/* 퍼블수정 20250409 : 추가 e */}
           </div>
         </div>
       </div>

@@ -984,8 +984,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
-    remarks: '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-09',
+    remarks: '- course-registration-all.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1007',
@@ -994,8 +994,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-level',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
-    remarks: '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-09',
+    remarks: '- course-registration-level.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1016',
@@ -1084,8 +1084,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
-    remarks: '- course-registration-all.tsx\n- datepicker 시간 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-09',
+    remarks: '- course-registration-all.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1015',
@@ -1094,8 +1094,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-level',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
-    remarks: '- course-registration-level.tsx\n- datepicker 시간 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-09',
+    remarks: '- course-registration-level.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1016',
