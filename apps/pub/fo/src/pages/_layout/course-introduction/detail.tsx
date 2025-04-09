@@ -216,8 +216,9 @@ function RouteComponent() {
                 </div>
               </div>
 
+              {/* 수강신청 없는 case */}
               {/* button */}
-              <div className={packageInformationStyles.btn_box}>
+              {/* <div className={packageInformationStyles.btn_box}>
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
@@ -229,6 +230,26 @@ function RouteComponent() {
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
+              </div> */}
+
+              {/* 수강신청 있는 case */}
+              <div
+                className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
+              >
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
+                </Button>
+                <Button>
+                  <IcoShare width={20} height={20} stroke="#4c515e" />
+                </Button>
+                <div className={packageInformationStyles.course}>
+                  <Button variant="primary">수강신청</Button>
+                </div>
               </div>
             </div>
           </div>
