@@ -1,0 +1,100 @@
+.start {
+  &.education {
+    @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[24px] pt-[24px];
+    .info_box {
+      @apply flex items-center justify-between;
+      & + .info_box {
+        @apply mt-[12px] border-t-[1px] border-solid border-[var(--gray3)] pt-[12px];
+      }
+      .txt_box {
+        @apply flex-1;
+        .box {
+          @apply flex items-center;
+          .state,
+          .date {
+            @apply body_3_r text-[var(--secondary3)];
+          }
+          .date {
+            @apply relative ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary3)] content-[''];
+            }
+          }
+          .label {
+            @apply label_3_r ml-[8px] inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--gray1)] px-[6px] py-[4px] leading-[11px] text-[var(--gray8)];
+          }
+          p {
+            @apply body_2_b mt-[4px] text-[var(--gray8)];
+          }
+        }
+      }
+      .list {
+        @apply flex w-full flex-wrap;
+        dl {
+          @apply w-1/2;
+          dt {
+            @apply pr-[8px];
+          }
+          dd {
+            @apply table-cell;
+          }
+          &:nth-child(n + 3) {
+            @apply mt-[4px];
+          }
+        }
+      }
+      .more_list {
+        @apply mt-[4px] flex flex-wrap;
+        .full {
+          @apply flex w-full;
+          dd {
+            @apply flex-1;
+          }
+        }
+        .evaluation_box {
+          & > ul {
+            @apply mb-[8px] flex w-full items-start;
+            li {
+              @apply flex-1 rounded-[8px] bg-[var(--secondary5)] py-[8px];
+              span {
+                @apply body_4_r block text-center text-[var(--gray8)];
+              }
+              strong {
+                @apply body_3_b block text-center text-[var(--secondary10)];
+              }
+              & + li {
+                @apply ml-[8px];
+              }
+            }
+          }
+          & > div {
+            ul {
+              li {
+                & + li {
+                  @apply mt-[4px];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .btn_action {
+      @apply -mx-[24px] mt-[24px] w-[calc(100%+48px)] border-t-[1px] border-solid border-[var(--gray3)];
+      button {
+        @apply flex h-[40px] w-full items-center justify-center;
+        span {
+          @apply body_3_r text-[var(--gray8)];
+        }
+        svg {
+          @apply ml-[3px];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+    }
+  }
+}
