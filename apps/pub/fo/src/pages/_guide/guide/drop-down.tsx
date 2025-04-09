@@ -88,59 +88,6 @@ function RouteComponent() {
         <div className="code_example">
           <pre className="code_block">
             <code>
-              {`// 초기 import
-      import { useState } from 'react';
-      import { Dropdown } from '@learnway/ui';
-
-      const [selectedValues, setSelectedValues] = useState<string[]>([]);
-      const options = [
-        { value: 'option1', label: '옵션 1' },
-        { value: 'option2', label: '옵션 2' },
-        { value: 'option3', label: '옵션 3' },
-        { value: 'option4', label: '옵션 4' },
-        { value: 'option5', label: '옵션 5' },
-        { value: 'option6', label: '옵션 6' },
-        { value: 'option7', label: '옵션 7' },
-        { value: 'option8', label: '옵션 8' },
-        { value: 'option9', label: '옵션 9' },
-        { value: 'option10', label: '옵션 10' },
-      ];
-      
-      // 적용방법(예시)
-      <Dropdown
-        options={options}
-        value={selectedValues}
-        onChange={(selected) => setSelectedValues(selected)}
-        placeholder="선택"
-        variant="default"
-        isMulti={false}
-        size={'sm'}
-        className="nlp-select__line-none"
-      />`}
-            </code>
-          </pre>
-        </div>
-        <div className="group">
-          <h3 className="guide_tit3">default (line 없음)</h3>
-          <div className="flex_box">
-            <div className="desc w-full">
-              <Dropdown
-                options={options}
-                value={selectedValues}
-                onChange={(selected) => setSelectedValues(selected)}
-                placeholder="선택"
-                label="다중 선택 (체크박스)"
-                variant="default"
-                isMulti={false}
-                size={'sm'}
-                className="nlp-select__line-none"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="code_example">
-          <pre className="code_block">
-            <code>
               {`// 적용방법(예시)
       const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
       const otherOptions = [
