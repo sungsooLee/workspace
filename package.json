@@ -17,9 +17,9 @@
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
     "test:editor": "nx test editor --coverage --watch",
-    "type-generate-pms": "npx openapi-typescript-codegen --input ./temp/pms.json --output ./temp/pms --client fetch",
-    "type-generate-lms": "npx openapi-typescript-codegen --input ./temp/lms.json --output ./temp/lms --client fetch",
-    "type-generate-cms": "npx openapi-typescript-codegen --input ./temp/cms.json --output ./temp/cms --client fetch"
+    "type-generate-pms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/v3/api-docs --output ./temp/pms --client fetch",
+    "type-generate-lms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/lms-module/v3/api-docs --output ./temp/lms --client fetch",
+    "type-generate-cms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs --output ./temp/cms --client fetch"
   },
   "private": true,
   "dependencies": {
