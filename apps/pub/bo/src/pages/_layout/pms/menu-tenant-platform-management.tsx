@@ -70,6 +70,30 @@ function RouteComponent() {
         </Link>
       ),
       company: '현대자동차, 기아자동차',
+      tenantOwner: '담당자명',
+      companyOwner: '담당자명',
+      useable: '사용',
+      register: '김현대',
+      registerDate: '2025-01-01 07:12',
+      modifier: '김현대',
+      modificationDate: '2025-01-01 07:12',
+    },
+    {
+      order: '2',
+      tenantName: <Button className="link">미리보기</Button>,
+      tenantSite: (
+        <Link to="/" className="link">
+          미리보기
+        </Link>
+      ),
+      company: '현대자동차, 기아자동차',
+      tenantOwner: '담당자명',
+      companyOwner: '담당자명',
+      useable: '미사용',
+      register: '김현대',
+      registerDate: '2025-01-01 07:12',
+      modifier: '김현대',
+      modificationDate: '2025-01-01 07:12',
     },
   ];
 
@@ -96,64 +120,57 @@ function RouteComponent() {
     columnHelper.accessor('tenantSite', {
       cell: (info) => info.getValue(),
       header: '테넌트 사이트',
-      meta: {
-        filterType: 'range',
-      },
+      size: 240,
       enableGrouping: false,
     }),
     columnHelper.accessor('company', {
       cell: (info) => info.getValue(),
       header: '회사',
+      size: 200,
       enableGrouping: false,
     }),
-    columnHelper.accessor('status', {
+    columnHelper.accessor('tenantOwner', {
       cell: (info) => info.getValue(),
-      header: 'Status',
-      getGroupingValue: (row) => `${row.status}`,
-      enableGrouping: true,
-      aggregationFn: 'count',
-      meta: {
-        filterType: 'select',
-        filterOptions: [
-          { label: '활성', value: 'active' },
-          { label: '비활성', value: 'inactive' },
-        ],
-      },
-    }),
-    columnHelper.accessor('progress', {
-      cell: (info) => info.getValue(),
-      header: 'Progress',
-      meta: {
-        filterType: 'range',
-      },
+      header: '테넌트 담당자',
+      size: 120,
       enableGrouping: false,
     }),
-    columnHelper.accessor('preview', {
+    columnHelper.accessor('companyOwner', {
       cell: (info) => info.getValue(),
-      header: '미리보기',
-      size: 100,
+      header: '회사 담당자',
+      size: 120,
       enableGrouping: false,
     }),
-    columnHelper.accessor('download', {
+    columnHelper.accessor('useable', {
       cell: (info) => info.getValue(),
-      header: '다운로드',
+      header: '사용여부',
+      size: 104,
       enableGrouping: false,
-      size: 100,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
-      },
     }),
-    // columnHelper.accessor('procedure', {
-    //   cell: (info) => info.getValue(),
-    //   header: '과정개설',
-    //   size: 100,
-    //   enableGrouping: false,
-    //   meta: {
-    //     headerAlign: 'left', // 헤더만 가운데 정렬
-    //     cellAlign: 'center', // 셀은 오른쪽 정렬
-    //   },
-    // }),
+    columnHelper.accessor('register', {
+      cell: (info) => info.getValue(),
+      header: '등록자',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('registerDate', {
+      cell: (info) => info.getValue(),
+      header: '등록일시',
+      enableGrouping: false,
+      size: 152,
+    }),
+    columnHelper.accessor('modifier', {
+      cell: (info) => info.getValue(),
+      header: '수정자',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('modificationDate', {
+      cell: (info) => info.getValue(),
+      header: '수정일',
+      enableGrouping: false,
+      size: 152,
+    }),
   ] as ColumnDef<any, unknown>[];
   return (
     <form className="form_row">
@@ -273,8 +290,8 @@ function RouteComponent() {
               <Grid
                 data={data}
                 columns={columns}
-                multiple
-                showSelectedCount={true}
+                height={440}
+                hideColumnSettings={true}
                 pagination={{
                   pageSize,
                   pageIndex,
