@@ -78,10 +78,16 @@ body.scrolled {
   @apply min-h-[calc(100vh-244px)];
 }
 
-.content_wrap.scroll_hidden {
+/* .content_wrap.scroll_hidden {
   @apply max-h-[calc(100vh-260px)] overflow-y-hidden;
   & > div {
     @apply max-h-[calc(100vh-332px)] min-h-[calc(100vh-260px)] overflow-y-hidden;
+  }
+} */
+.content_wrap.scroll_hidden {
+  @apply max-h-[calc(100vh-244px)] overflow-y-hidden;
+  & > div {
+    @apply max-h-[calc(100vh-308px)] overflow-y-hidden;
   }
 }
 
