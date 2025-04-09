@@ -1,6 +1,6 @@
 /* checkbox-group-form-field.module.css */
 .start {
   &.checkbox_list {
-    @apply grid w-full grid-cols-4 gap-4;
+    @apply grid w-full grid-cols-4 gap-[1.6rem];
   }
 }

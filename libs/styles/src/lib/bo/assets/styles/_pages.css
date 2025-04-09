@@ -93,13 +93,20 @@ h4.auth--title {
 }
 
 /* title */
-.title_wrap {
+.content_wrap .title_wrap {
   @apply mb-[16px];
   .title {
     @apply title_bo_4_b text-[var(--gray9)];
   }
+  &::before,
+  &::after {
+    @apply hidden;
+  }
 }
 
-div + .title_wrap {
+.content_wrap div + .title_wrap {
   @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+  &.no_line {
+    @apply border-0;
+  }
 }

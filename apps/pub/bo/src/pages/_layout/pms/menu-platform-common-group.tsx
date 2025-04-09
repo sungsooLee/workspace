@@ -1,8 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
@@ -16,7 +17,7 @@ import { IcoFormRequired } from '@learnway/icons';
 
 import {
   Button,
-  // Tooltip,
+  Grid,
   DatePicker,
   Switch,
   // ThumbnailImageUpload,
@@ -47,6 +48,204 @@ function RouteComponent() {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
+
+  // grid
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const data: any[] = [
+    {
+      order: '1',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'N',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '2',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '3',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '4',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '5',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '6',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '7',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '8',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+    {
+      order: '9',
+      groupCode: '7000',
+      groupCodeName: '그룹코드명',
+      groupCodeNameEng: 'Cell Text',
+      useable: 'Y',
+      contents: '예시코드',
+      commonCode: <Button className="link">코드관리</Button>,
+      registerDate: '2025-01-01 07:12',
+      lastRegister: '김현대',
+      lastModificationDate: '2025-01-01 07:12',
+      lastModifier: '김현대',
+    },
+  ];
+
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('order', {
+      cell: (info) => info.getValue(),
+      header: 'NO.',
+      size: 64,
+      meta: {
+        headerAlign: 'left',
+        cellAlign: 'center',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('groupCode', {
+      cell: (info) => info.getValue(),
+      header: '그룹코드',
+      enableGrouping: false,
+      size: 88,
+    }),
+    columnHelper.accessor('groupCodeName', {
+      cell: (info) => info.getValue(),
+      header: '그룹코드 명',
+      size: 160,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('groupCodeNameEng', {
+      cell: (info) => info.getValue(),
+      header: '그룹코드 약어영문',
+      size: 190,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('useable', {
+      cell: (info) => info.getValue(),
+      header: '사용',
+      size: 50,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('contents', {
+      cell: (info) => info.getValue(),
+      header: '내용',
+      size: 200,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('commonCode', {
+      cell: (info) => info.getValue(),
+      header: '공통코드',
+      size: 104,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('registerDate', {
+      cell: (info) => info.getValue(),
+      header: '최초등록 일자',
+      enableGrouping: false,
+      size: 130,
+    }),
+    columnHelper.accessor('lastRegister', {
+      cell: (info) => info.getValue(),
+      header: '최종등록자',
+      enableGrouping: false,
+      size: 85,
+    }),
+    columnHelper.accessor('lastModificationDate', {
+      cell: (info) => info.getValue(),
+      header: '최종수정일',
+      enableGrouping: false,
+      size: 130,
+    }),
+    columnHelper.accessor('lastModifier', {
+      cell: (info) => info.getValue(),
+      header: '최종수정자',
+      enableGrouping: false,
+      size: 75,
+    }),
+  ] as ColumnDef<any, unknown>[];
   return (
     <form className="form_row">
       <PageContainer scrollHidden={true}>
@@ -59,7 +258,7 @@ function RouteComponent() {
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-codeGroupNum" className={searchStyles.label}>
-                        <span className={searchStyles.text}>코드그룹번호</span>
+                        <span className={searchStyles.text}>코드그룹 Key</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Input id="name-codeGroupNum" type="text" placeholder="입력" />
@@ -128,8 +327,23 @@ function RouteComponent() {
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-              <div className={layoutStyles.inner}>
-                <div className={layoutStyles.inner_contents}></div>
+              <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
+                <div className={layoutStyles.inner_contents}>
+                  <Grid
+                    data={data}
+                    columns={columns}
+                    height={350}
+                    hideColumnSettings={true}
+                    pagination={{
+                      pageSize,
+                      pageIndex,
+                      totalRows: 100,
+                      onPageChange: setPageIndex,
+                      onPageSizeChange: setPageSize,
+                    }}
+                    title="공통코드그룹목록"
+                  />
+                </div>
               </div>
               <div className={layoutStyles.inner}>
                 <div className={titleStyles.title_wrap}>
@@ -256,7 +470,7 @@ function RouteComponent() {
                     </div>
                   </ContentsRow>
                   <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-                    <ContentsHistoryInfoFormField />
+                    <ContentsHistoryInfoFormField type={'column'} />
                   </ContentsRow>
                 </div>
               </div>

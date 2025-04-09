@@ -18,6 +18,11 @@
         &.btn_bottom {
           @apply mt-[4px];
         }
+        &:hover {
+          svg {
+            @apply stroke-[#B5C2D7];
+          }
+        }
       }
     }
   }
