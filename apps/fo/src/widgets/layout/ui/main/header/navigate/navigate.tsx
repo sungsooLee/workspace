@@ -53,18 +53,21 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
           modules={[Navigation]}
           simulateTouch={isMobile}
           allowTouchMove={isMobile}
-          className={styles.gnb_swiper}>
+          className={styles.gnb_swiper}
+        >
           {menus.map((menu, index) => (
             <SwiperSlide
               key={index}
               // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
-              className={`${styles.slide}`}>
+              className={`${styles.slide}`}
+            >
               <Link
                 to={menu.path}
                 onMouseEnter={onMouseEnter}
                 onClick={(e) => e.preventDefault()}
-                preload={false}>
-                {menu.title}
+                preload={false}
+              >
+                {menu.menuName}
               </Link>
               {/* 라벨 표시 */}
               {/* <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}

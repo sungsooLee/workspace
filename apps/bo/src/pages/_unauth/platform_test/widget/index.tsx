@@ -69,12 +69,6 @@ const searchConfig: any = {
         label: '위젯명',
         value: '',
       },
-      {
-        name: 'widgetName',
-        type: 'text',
-        label: '등록자',
-        value: '',
-      },
     ],
   ],
 };

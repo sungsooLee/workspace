@@ -5,7 +5,9 @@ import { useFetchAuthUser } from '@learnway/config';
 
 import { Search, Logo, UserAvatar } from '../../../../../features/layout';
 import { Language, Notification, TenantButton, AdminLink } from '../../../../../features/platform';
-import { Tenant, useFetchTenantByUser } from '../../../../../entities/tenant';
+import { useFetchTenantByUser } from '../../../../../entities/tenant';
+
+import { Tenant } from '../../../../../types';
 
 import { NavigateHover } from './navigate/navigate-hover';
 import { SessionTimer } from '../../../../../features/platform/ui/sessionTimer';

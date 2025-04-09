@@ -19,6 +19,7 @@ export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
 
   return {
     data: useCreation(() => {
+      console.log('useMenuHierarchy', data);
       if (!data || !data?.length) {
         return [];
       }

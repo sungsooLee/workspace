@@ -137,7 +137,8 @@ const AvatarCompoment = ({ className }: any) => {
       className={cn(styles.btn_avatar, className)}
       side="bottom"
       align="end"
-      sideOffset={10}>
+      sideOffset={10}
+    >
       {data ? (
         <Avatar imageUrl="https://github.com/shadcn.png" />
       ) : (
