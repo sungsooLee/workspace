@@ -83,7 +83,7 @@ export class BoFileInternalApiService {
     public static deleteGarbageFile(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/internal/api/v1/file/schedule',
+            url: '/internal/api/v1/file/garbage',
         });
     }
 }

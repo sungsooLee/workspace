@@ -5,6 +5,7 @@
 export type com_ever_edu_pms_menu_dto_res_MenuTreeDto = {
     menuId?: number;
     menuCode?: string;
+    menuName?: string;
     path?: string;
     sortOrder?: number;
     quickAccessAreaYn?: boolean;

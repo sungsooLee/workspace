@@ -13,6 +13,7 @@ export type com_ever_edu_pms_api_dto_res_ApiTreeDto = {
     apiMethod?: com_ever_edu_pms_api_dto_res_ApiTreeDto.apiMethod;
     apiDesc?: string;
     parentId?: number;
+    fullPath?: string;
     children?: Array<com_ever_edu_pms_api_dto_res_ApiTreeDto>;
 };
 export namespace com_ever_edu_pms_api_dto_res_ApiTreeDto {

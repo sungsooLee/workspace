@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_api_dto_req_ApiSaveReqDto } from '../models/com_ever_edu_pms_api_dto_req_ApiSaveReqDto';
 import type { com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin';
 import type { com_ever_edu_pms_api_dto_res_ApiTreeDto } from '../models/com_ever_edu_pms_api_dto_res_ApiTreeDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -65,6 +66,18 @@ export class BoApiService {
             path: {
                 'apiId': apiId,
             },
+        });
+    }
+    /**
+     * API 분류 목록 조회
+     * API 분류 목록을 조회한다.
+     * @returns com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin OK
+     * @throws ApiError
+     */
+    public static getApiCategoryList(): CancelablePromise<Array<com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/apis',
         });
     }
     /**

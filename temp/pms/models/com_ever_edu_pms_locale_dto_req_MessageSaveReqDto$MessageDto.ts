@@ -17,6 +17,10 @@ export type com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto = {
      */
     useYn?: boolean | null;
     /**
+     * 삭제여부
+     */
+    deleteYn?: boolean | null;
+    /**
      * 다국어 설명
      */
     messageDesc?: string | null;
@@ -38,7 +42,6 @@ export namespace com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto {
         MENU = 'MENU',
         LABEL = 'LABEL',
         CATEGORY = 'CATEGORY',
-        ERROR = 'ERROR',
         MESSAGE = 'MESSAGE',
     }
 }

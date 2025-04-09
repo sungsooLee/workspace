@@ -17,6 +17,7 @@ export type com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin = {
     visibleMobileYn?: boolean;
     visiblePcYn?: boolean;
     menuDesc?: string;
+    hiddenYn?: boolean;
     parentId?: number;
     parentCode?: string;
     parentName?: string;

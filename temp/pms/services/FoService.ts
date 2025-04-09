@@ -14,11 +14,13 @@ import type { com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser }
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnUser';
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordReqDto';
+import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto';
+import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../models/com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto';
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
@@ -160,6 +162,23 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/users/register',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * 비밀번호 확인
+     * 비밀번호가 일치하는지 확인한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto OK
+     * @throws ApiError
+     */
+    public static confirmPassword(
+        requestBody: com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/users/confirm-password',
             body: requestBody,
             mediaType: 'application/json',
         });

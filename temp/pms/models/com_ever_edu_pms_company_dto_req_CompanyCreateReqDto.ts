@@ -6,7 +6,7 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
     /**
      * 회사코드
      */
-    companyCode?: string;
+    companyCode: string;
     /**
      * 회사유형코드
      */
@@ -14,7 +14,7 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
     /**
      * 회사명
      */
-    name?: string;
+    name: string;
     /**
      * 회사영문명
      */

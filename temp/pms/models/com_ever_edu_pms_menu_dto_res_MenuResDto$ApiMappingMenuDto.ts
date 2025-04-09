@@ -19,5 +19,9 @@ export type com_ever_edu_pms_menu_dto_res_MenuResDto$ApiMappingMenuDto = {
      * api name
      */
     apiName?: string;
+    /**
+     * api 분류
+     */
+    apiCategory?: string;
 };
 

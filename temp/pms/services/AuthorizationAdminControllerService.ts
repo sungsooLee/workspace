@@ -19,7 +19,7 @@ export class AuthorizationAdminControllerService {
      * @returns com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto OK
      * @throws ApiError
      */
-    public static findById4(
+    public static findById3(
         authorizationNo: number,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto> {
         return __request(OpenAPI, {
@@ -78,7 +78,7 @@ export class AuthorizationAdminControllerService {
      * @returns com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto OK
      * @throws ApiError
      */
-    public static findPage7(
+    public static findPage6(
         searchDto: com_ever_edu_pms_authorization_dto_req_SearchDto,
         pageable: org_springdoc_core_converters_models_Pageable,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto> {

@@ -15,7 +15,6 @@ export namespace com_ever_edu_pms_locale_dto_res_MessageTreeDto {
         MENU = 'MENU',
         LABEL = 'LABEL',
         CATEGORY = 'CATEGORY',
-        ERROR = 'ERROR',
         MESSAGE = 'MESSAGE',
     }
 }

@@ -16,7 +16,7 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
      */
     companyCode?: string;
     /**
-     * 회사유형코드
+     * 회사코드
      */
     companyTypeCode?: string;
     /**

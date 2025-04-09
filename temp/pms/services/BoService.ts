@@ -3,12 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_enums_EnumValue } from '../models/com_ever_edu_enums_EnumValue';
+import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto';
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchByAdmin';
-import type { com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto';
-import type { com_ever_edu_pms_common_cd_dto_req_CommonCdSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin';
-import type { com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
@@ -21,9 +20,10 @@ import type { com_ever_edu_pms_locale_dto_req_MessageSearchReqDto$SearchByAdmin 
 import type { com_ever_edu_pms_locale_dto_res_MessageResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_locale_dto_res_MessageResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_locale_dto_res_MessageTreeDto } from '../models/com_ever_edu_pms_locale_dto_res_MessageTreeDto';
 import type { com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto } from '../models/com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto';
+import type { com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto';
 import type { com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto';
 import type { com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto';
-import type { com_ever_edu_pms_menu_dto_req_MenuUpdateOrderReqDto$MenuOrderReqDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuUpdateOrderReqDto$MenuOrderReqDto';
+import type { com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto } from '../models/com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto';
 import type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin';
@@ -47,6 +47,7 @@ import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin } from '.
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordByEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordByEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordByPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordByPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordReqDto';
+import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
@@ -55,12 +56,14 @@ import type { com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto } from
 import type { com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto } from '../models/com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto';
+import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../models/com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto';
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
+import type { com_ever_edu_pms_user_dto_res_UserGroupDto } from '../models/com_ever_edu_pms_user_dto_res_UserGroupDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
+import type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_locale_dto_res_MessageResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_locale_dto_res_MessageResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto';
@@ -320,23 +323,6 @@ export class BoService {
         });
     }
     /**
-     * 메뉴/테넌트메뉴 순서변경
-     * 메뉴/테넌트메뉴 순서변경
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static updateMenu1(
-        requestBody: com_ever_edu_pms_menu_dto_req_MenuUpdateOrderReqDto$MenuOrderReqDto,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/menus/order',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
      * 다국어 단건 조회
      * 다국어 단건 조회
      * @param messageId
@@ -536,8 +522,8 @@ export class BoService {
         });
     }
     /**
-     * 회사 생성
-     * 회사를 생성한다.
+     * 회사 수정
+     * 회사를 수정한다.
      * @param uuid
      * @param requestBody
      * @returns com_ever_edu_pms_company_dto_res_CompanyResDto OK
@@ -558,69 +544,20 @@ export class BoService {
         });
     }
     /**
-     * 공통코드 단일 조회
-     * 공통코드 단일 조회
-     * @param commonCdGroupId
-     * @param commonCdId
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static findById2(
-        commonCdGroupId: string,
-        commonCdId: string,
-    ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/codes/{commonCdGroupId}/{commonCdId}',
-            path: {
-                'commonCdGroupId': commonCdGroupId,
-                'commonCdId': commonCdId,
-            },
-        });
-    }
-    /**
-     * 공통코드 수정
-     * 공통코드 수정
-     * @param commonCdGroupId
-     * @param commonCdId
-     * @param requestBody
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static updateCommonCd(
-        commonCdGroupId: string,
-        commonCdId: string,
-        requestBody: com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/codes/{commonCdGroupId}/{commonCdId}',
-            path: {
-                'commonCdGroupId': commonCdGroupId,
-                'commonCdId': commonCdId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
-     * 공통코드 삭제
-     * 공통코드 삭제
-     * @param commonCdGroupId
-     * @param commonCdId
+     * 회사 삭제
+     * 회사를 삭제한다.
+     * @param uuid
      * @returns any OK
      * @throws ApiError
      */
-    public static deleteCommonCd(
-        commonCdGroupId: string,
-        commonCdId: string,
+    public static deleteCompany(
+        uuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/codes/{commonCdGroupId}/{commonCdId}',
+            url: '/admin/api/v1/companies/{uuid}',
             path: {
-                'commonCdGroupId': commonCdGroupId,
-                'commonCdId': commonCdId,
+                'uuid': uuid,
             },
         });
     }
@@ -631,7 +568,7 @@ export class BoService {
      * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findById3(
+    public static findById2(
         commonCdGroupId: string,
     ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -812,6 +749,23 @@ export class BoService {
         });
     }
     /**
+     * 비밀번호 확인
+     * 비밀번호가 일치하는지 확인한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto OK
+     * @throws ApiError
+     */
+    public static confirmPassword1(
+        requestBody: com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/users/confirm-password',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
      * 이용약관 목록 조회
      * 이용약관 목록 조회
      * @param pageable
@@ -885,6 +839,28 @@ export class BoService {
         });
     }
     /**
+     * 메뉴 순서변경
+     * 메뉴 순서변경
+     * @param menuId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static updateMenuDnD(
+        menuId: number,
+        requestBody: com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/menus/{menuId}/dnd',
+            path: {
+                'menuId': menuId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
      * 테넌트메뉴 등록
      * 테넌트메뉴를 등록한다.
      * @param tenantNo
@@ -901,6 +877,31 @@ export class BoService {
             url: '/admin/api/v1/menus/tenant/{tenantNo}',
             path: {
                 'tenantNo': tenantNo,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * 테넌트메뉴 순서변경
+     * 테넌트메뉴 순서변경
+     * @param tenantId
+     * @param menuId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static updateTenantMenuDnD(
+        tenantId: number,
+        menuId: number,
+        requestBody: com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/menus/tenant/{tenantId}/menu/{menuId}/dnd',
+            path: {
+                'tenantId': tenantId,
+                'menuId': menuId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1141,44 +1142,6 @@ export class BoService {
         });
     }
     /**
-     * 공통코드 목록 조회
-     * 공통코드 목록 조회
-     * @param pageable
-     * @param params
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static findPage5(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        params: com_ever_edu_pms_common_cd_dto_req_CommonCdSearchReqDto$SearchByAdmin,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/codes',
-            query: {
-                'pageable': pageable,
-                'params': params,
-            },
-        });
-    }
-    /**
-     * 공통코드 등록
-     * 공통코드 등록
-     * @param requestBody
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static createCommonCd(
-        requestBody: com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/codes',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
      * 공통코드그룹 목록 조회
      * 공통코드그룹 목록 조회
      * @param pageable
@@ -1186,7 +1149,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static findPage6(
+    public static findPage5(
         pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchByAdmin,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin> {
@@ -1278,17 +1241,20 @@ export class BoService {
      * 위젯 전체 조회
      * 위젯 전체를 반환한다.
      * @param pageable
+     * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType OK
      * @throws ApiError
      */
     public static findPage1(
         pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/widgets',
             query: {
                 'pageable': pageable,
+                'params': params,
             },
         });
     }
@@ -1398,6 +1364,18 @@ export class BoService {
             query: {
                 'email': email,
             },
+        });
+    }
+    /**
+     * 사용자 조회(단건)
+     * 사용자를 조회한다.
+     * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
+     * @throws ApiError
+     */
+    public static findByUserId1(): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/userGroup/userGroups',
         });
     }
     /**
@@ -1610,7 +1588,7 @@ export class BoService {
      */
     public static findI18NJson(
         locale: string,
-        keyTypeCode?: 'COMMON_CODE' | 'MENU' | 'LABEL' | 'CATEGORY' | 'ERROR' | 'MESSAGE',
+        keyTypeCode?: 'COMMON_CODE' | 'MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
     ): CancelablePromise<Record<string, Record<string, any>>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1651,7 +1629,7 @@ export class BoService {
      * @throws ApiError
      */
     public static existsMessageCode(
-        keyType: 'COMMON_CODE' | 'MENU' | 'LABEL' | 'CATEGORY' | 'ERROR' | 'MESSAGE',
+        keyType: 'COMMON_CODE' | 'MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
         messageCode: string,
         parentId: number,
     ): CancelablePromise<boolean> {
@@ -1773,32 +1751,50 @@ export class BoService {
         });
     }
     /**
-     * 공통 코드 (enum) 전체 조회
-     * 존재하는 enum 전체를 반환한다. enumConfig에 정의된
-     * @returns com_ever_edu_enums_EnumValue OK
+     * 공통 코드(enum) 목록 조회
+     * 등록된 모든 enum의 이름을 반환한다.
+     * @returns string OK
      * @throws ApiError
      */
-    public static findEnumAll1(): CancelablePromise<Record<string, Array<com_ever_edu_enums_EnumValue>>> {
+    public static findAllEnums(): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/codes/enums',
+            url: '/admin/api/v1/code-groups/enums',
         });
     }
     /**
-     * 공통 코드 (enum) 조회
+     * 공통 코드(enum) 단건 조회
      * 존재하는 enum을 찾아 반환한다.
      * @param enumName
      * @returns com_ever_edu_enums_EnumValue OK
      * @throws ApiError
      */
-    public static findEnumList1(
+    public static findEnum(
         enumName: string,
     ): CancelablePromise<Record<string, Array<com_ever_edu_enums_EnumValue>>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/codes/enums/{enumName}',
+            url: '/admin/api/v1/code-groups/enum/{enumName}',
             path: {
                 'enumName': enumName,
+            },
+        });
+    }
+    /**
+     * 채널 조회
+     * 테넌트의 채널목록을 조회한다.
+     * @param channelSearchReqDto
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelResDto OK
+     * @throws ApiError
+     */
+    public static findContents(
+        channelSearchReqDto: com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto,
+    ): CancelablePromise<Array<com_ever_edu_pms_channel_dto_res_ChannelResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/channel',
+            query: {
+                'channelSearchReqDto': channelSearchReqDto,
             },
         });
     }
