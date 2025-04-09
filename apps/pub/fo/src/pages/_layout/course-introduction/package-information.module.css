@@ -37,11 +37,22 @@
       @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
     }
     .btn_box {
-      @apply sticky bottom-0 left-0 right-0 -mx-[24px] mt-[24px] flex w-[calc(100%+48px)] bg-white px-[24px] pt-[16px];
+      @apply sticky bottom-0 left-0 right-0 -mx-[24px] mt-[24px] flex w-[calc(100%+48px)] gap-[8px] bg-white px-[24px] pt-[16px];
       button {
         @apply flex h-[48px] flex-1 justify-center border-[1px] border-solid border-[var(--gray5)];
         & + button {
-          @apply ml-[8px];
+          @apply ml-0;
+        }
+      }
+      &.course_box {
+        button {
+          @apply w-[48px] flex-none;
+        }
+        .course {
+          @apply flex-1;
+          button {
+            @apply w-full;
+          }
         }
       }
     }

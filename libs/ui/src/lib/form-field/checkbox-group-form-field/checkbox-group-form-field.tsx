@@ -16,7 +16,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       onChange(checkedValues);
     };
     return (
-      <div ref={ref} className={cn(styles.start, styles.radio_list)}>
+      <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
         {options &&
           options.map((item: any) => (
             <Fragment key={item.value}>

@@ -63,10 +63,10 @@ function RouteComponent() {
   const data: any[] = [
     {
       order: '1',
-      tenantName: <Button className="link">미리보기</Button>,
+      tenantName: <Button className="link">테넌트명1</Button>,
       tenantSite: (
         <Link to="/" className="link">
-          미리보기
+          /1000001
         </Link>
       ),
       company: '현대자동차, 기아자동차',
@@ -80,10 +80,10 @@ function RouteComponent() {
     },
     {
       order: '2',
-      tenantName: <Button className="link">미리보기</Button>,
+      tenantName: <Button className="link">테넌트명2</Button>,
       tenantSite: (
         <Link to="/" className="link">
-          미리보기
+          /1000001
         </Link>
       ),
       company: '현대자동차, 기아자동차',

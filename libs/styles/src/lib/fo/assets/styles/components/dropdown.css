@@ -1,4 +1,3 @@
-.nlp-select__menu,
-.nlp-select__menu-list {
+.menu-portal-size-lg {
   @apply !rounded-[8px];
 }
