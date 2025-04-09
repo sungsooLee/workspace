@@ -2,7 +2,7 @@
   &.array {
     @apply flex items-center;
     button {
-      @apply !body_3_r text-[var(--gray8)];
+      @apply !body_3_r whitespace-nowrap text-[var(--gray8)];
       &.active {
         @apply !body_3_b;
       }
