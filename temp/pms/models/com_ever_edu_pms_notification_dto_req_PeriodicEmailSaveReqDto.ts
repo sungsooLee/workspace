@@ -1,0 +1,61 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto } from './com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto';
+import type { com_ever_edu_pms_notification_dto_req_EmailTemplateReqDto } from './com_ever_edu_pms_notification_dto_req_EmailTemplateReqDto';
+export type com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto = {
+    /**
+     * 이메일 타입
+     */
+    sendingTypeCode?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.sendingTypeCode;
+    /**
+     * 템플릿 ID
+     */
+    templateId?: string;
+    template?: com_ever_edu_pms_notification_dto_req_EmailTemplateReqDto;
+    /**
+     * 수신인 리스트
+     */
+    receivers?: Array<com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto>;
+    /**
+     * 정기 메일명
+     */
+    periodicEmailName?: string;
+    /**
+     * 발송 여부
+     */
+    isActive?: boolean;
+    /**
+     * 발신 시작일
+     */
+    sendingStartDate?: string;
+    /**
+     * 발신 시간
+     */
+    scheduledTime?: string;
+    /**
+     * 발송 주기
+     */
+    periodicEmailCycleCode?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.periodicEmailCycleCode;
+};
+export namespace com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto {
+    /**
+     * 이메일 타입
+     */
+    export enum sendingTypeCode {
+        RESERVED = 'RESERVED',
+        PERIODIC = 'PERIODIC',
+        ONETIME = 'ONETIME',
+    }
+    /**
+     * 발송 주기
+     */
+    export enum periodicEmailCycleCode {
+        WEEKDAY = 'WEEKDAY',
+        WEEKDAY_EXCEPT_FRI = 'WEEKDAY_EXCEPT_FRI',
+        MWF = 'MWF',
+        TT = 'TT',
+    }
+}
+

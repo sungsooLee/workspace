@@ -2,9 +2,9 @@
   @apply flex w-full flex-col;
   &.tabs {
     &.fill {
-      .list {
+      & > .list {
         @apply flex w-full;
-        .trigger {
+        & > .trigger {
           @apply title_bo_4_b box-border min-h-[48px] flex-1 border border-r-0 border-solid border-[var(--gray4)] bg-[var(--white)] text-center text-[var(--gray8)];
           /* .icon_active {
             @apply absolute -bottom-[8px] left-1/2 hidden -translate-x-1/2;
@@ -24,7 +24,7 @@
         }
       }
       &.primary {
-        .trigger {
+        & > .trigger {
           @apply border-b border-t border-[#E3E9EF] border-b-[#F0F3FB] border-t-[#F0F3FB] bg-[#F0F3FB] font-normal;
           &[data-state='active'] {
             @apply border-[#0F3492] bg-[#0F3492] font-bold;
@@ -35,15 +35,15 @@
         }
       }
       &.sm {
-        .trigger {
+        & > .trigger {
           @apply min-h-[40px] text-[1.4rem];
         }
       }
     }
     &.line {
-      .list {
+      & > .list {
         @apply relative flex w-full;
-        .trigger {
+        & > .trigger {
           @apply title_bo_4_r min-h-[56px] w-auto text-[var(--gray7)];
           & + .trigger {
             @apply ml-[32px];
@@ -60,12 +60,12 @@
         }
       }
       &.sm {
-        .trigger {
+        & > .trigger {
           @apply min-h-[42px];
         }
       }
       &.gray {
-        .list {
+        & > .list {
           &::after {
             @apply bg-[var(--gray3)];
           }
@@ -73,9 +73,9 @@
       }
     }
     &.round {
-      .list {
+      & > .list {
         @apply relative flex w-full;
-        .trigger {
+        & > .trigger {
           @apply z-0 -mb-[1px] min-h-[32px] w-auto rounded-[4px] rounded-b-none border border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[8px] text-[1.4rem] font-normal leading-[1.4rem];
           &::after {
             @apply absolute bottom-0 left-[1px] h-[1px] w-[calc(100%-2px)] bg-transparent content-[''];
@@ -93,9 +93,9 @@
       }
     }
     &.progress {
-      .list {
+      & > .list {
         @apply flex w-full overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
-        .trigger {
+        & > .trigger {
           @apply body_bo_1_r min-h-[54px] flex-1 bg-[var(--white)] text-[var(--gray7)];
           &::before,
           &::after {
@@ -145,9 +145,9 @@
         }
       }
       &.sm {
-        .list {
+        & > .list {
           @apply rounded-[4px];
-          .trigger {
+          & > .trigger {
             @apply min-h-[44px] rounded-[4px] text-[1.4rem] leading-[1.6rem];
             &::before,
             &::after {
@@ -181,9 +181,9 @@
       }
     }
     &.segment {
-      .list {
+      & > .list {
         @apply flex;
-        button {
+        & > button {
           @apply button_bo_2_r relative h-[40px] flex-1 overflow-hidden border-b-[1px] border-l-[1px] border-r-0 border-t-[1px] border-solid border-[var(--gray4)] text-[var(--gray8)];
           &:first-child {
             @apply rounded-l-[4px];
@@ -205,7 +205,7 @@
         }
       }
       &.sm {
-        .list button {
+        & > .list > button {
           @apply button_bo_3_r h-[32px];
           &[data-state='active'] {
             @apply button_bo_3_b;

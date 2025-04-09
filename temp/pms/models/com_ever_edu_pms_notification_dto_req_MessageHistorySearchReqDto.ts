@@ -1,0 +1,34 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export type com_ever_edu_pms_notification_dto_req_MessageHistorySearchReqDto = {
+    /**
+     * 메세지 타입
+     */
+    messageTypeCode?: com_ever_edu_pms_notification_dto_req_MessageHistorySearchReqDto.messageTypeCode;
+    /**
+     * 발송 상태
+     */
+    status?: com_ever_edu_pms_notification_dto_req_MessageHistorySearchReqDto.status;
+};
+export namespace com_ever_edu_pms_notification_dto_req_MessageHistorySearchReqDto {
+    /**
+     * 메세지 타입
+     */
+    export enum messageTypeCode {
+        EMAIL = 'EMAIL',
+        SMS = 'SMS',
+        KAKAO = 'KAKAO',
+        PUSH = 'PUSH',
+    }
+    /**
+     * 발송 상태
+     */
+    export enum status {
+        WAITING = 'WAITING',
+        SENT = 'SENT',
+        FAILED = 'FAILED',
+    }
+}
+

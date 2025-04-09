@@ -121,3 +121,7 @@
     @apply fill-[#ff4646];
   }
 }
+
+.check_wrap {
+  @apply w-full;
+}
