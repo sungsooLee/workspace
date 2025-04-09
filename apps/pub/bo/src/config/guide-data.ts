@@ -332,7 +332,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '완료(그리드는 개발에서 적용)', // 비고
+    remarks: '완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_플랫폼API관리',
