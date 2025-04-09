@@ -7,7 +7,7 @@ interface ContentsHistoryInfoFormFieldComponentProp {
 }
 
 const ContentsHistoryInfoFormFieldComponent = ({
-  type = 'column',
+  type, // column
 }: ContentsHistoryInfoFormFieldComponentProp) => {
   return (
     <div className={cn(style.start, style.wrap, type && style[type])}>

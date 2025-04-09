@@ -470,7 +470,7 @@ function RouteComponent() {
                     </div>
                   </ContentsRow>
                   <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-                    <ContentsHistoryInfoFormField />
+                    <ContentsHistoryInfoFormField type={'column'} />
                   </ContentsRow>
                 </div>
               </div>

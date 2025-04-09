@@ -23,9 +23,9 @@
         }
       }
       &.type_progress {
-        @apply min-h-[calc(100vh-458px)];
+        @apply min-h-[calc(100vh-442px)];
         .inner_contents {
-          @apply max-h-[calc(100vh-502px)];
+          @apply max-h-[calc(100vh-486px)];
         }
       }
     }
