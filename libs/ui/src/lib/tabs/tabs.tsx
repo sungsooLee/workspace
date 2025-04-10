@@ -64,10 +64,10 @@ export const TabsComponent = forwardRef<
     return (
       <Primitive.Root
         className={cn(
+          'nlp--tabs',
           styles.start,
           styles.tabs,
           className,
-          'nlp--tabs',
           size && styles[size],
           type && styles[type],
           variant && styles[variant],

@@ -23,6 +23,19 @@ function RouteComponent() {
     console.log('handleSave');
   };
 
+  const tabItems = [
+    {
+      title: '회사정보',
+      key: '회사정보',
+      content: <CompanyInfo />,
+    },
+    {
+      title: '자동유저그룹관리',
+      key: '자동유저그룹관리',
+      content: <AutoUserGroup />,
+    },
+  ];
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -30,22 +43,7 @@ function RouteComponent() {
         <Button type="button" variant="primary" size="sm" onClick={handleSave} label={t('저장')} />
       </ContentsButtons>
       <MainContents>
-        <Tabs
-          type={'line'}
-          size={'sm'}
-          items={[
-            {
-              title: '회사정보',
-              key: 'a',
-              content: <CompanyInfo />,
-            },
-            {
-              title: '자동유저그룹관리',
-              key: 'a2',
-              content: <AutoUserGroup />,
-            },
-          ]}
-        />
+        <Tabs type={'line'} size={'md'} items={tabItems} />
       </MainContents>
     </PageContainer>
   );
