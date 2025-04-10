@@ -638,6 +638,7 @@ function RouteComponent() {
                   labelField: 'name',
                   valueField: 'value',
                   hideBorder: true,
+                  type: 'round2',
                 }}
               />
             </div>

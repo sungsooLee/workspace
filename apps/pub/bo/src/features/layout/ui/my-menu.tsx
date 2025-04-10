@@ -59,7 +59,7 @@ const PopoverContent = () => {
           </div>
         ) : (
           <div className={styles.word_wrap}>
-            <ChipList options={options} size="sm" hideBorder />
+            <ChipList options={options} size="sm" hideBorder={true} type={'round2'} />
           </div>
         )}
       </div>
