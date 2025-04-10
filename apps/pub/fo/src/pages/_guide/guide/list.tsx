@@ -145,7 +145,7 @@ import bulletStyles from '../../../pages/_layout/course-introduction/definition-
 
 // 사용 예제
 <div className={\`\${bulletStyles.start} \${bulletStyles.list_number}\`}>
-  <ul>
+  <ol>
     <li>
       본 과정은 다양한 OPIC 문제에 대한 답변 연습을 통해 고급영어 말하기를 완성할 수
       있도록 도와주는 과정입니다.
@@ -154,7 +154,7 @@ import bulletStyles from '../../../pages/_layout/course-introduction/definition-
       OPIC IH 이상의 등급을 받는 데 도움을 받을 수 있는 과정이며 다양한 OPIC 문제에 대한
       답변 연습을 통해 고급 영어 말하기 능력을 키울 수 있습니다.
     </li>
-  </ul>
+  </ol>
 </div>
 `}</code>
           </pre>

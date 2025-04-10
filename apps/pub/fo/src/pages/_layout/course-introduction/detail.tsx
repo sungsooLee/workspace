@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tabs, Accordion } from '@learnway/ui';
+import { Button, Tabs, Accordion, EmptyText } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
 import { CourseDashboard, CourseIntroduction } from '../../../features/layout';
 
@@ -163,6 +163,15 @@ function RouteComponent() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
+                {/* 강의 정보 없을 시 */}
+                <div className={styles.empty_box}>
+                  <EmptyText
+                    hideTitle
+                    size="lg"
+                    description={'현재 수강 신청 가능한 차수가 없습니다.'}
+                  />
+                </div>
+
                 {/* 강의 정보 */}
                 <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
                   <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
@@ -218,7 +227,7 @@ function RouteComponent() {
 
               {/* 수강신청 없는 case */}
               {/* button */}
-              {/* <div className={packageInformationStyles.btn_box}>
+              <div className={packageInformationStyles.btn_box}>
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
@@ -230,10 +239,10 @@ function RouteComponent() {
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
-              </div> */}
+              </div>
 
               {/* 수강신청 있는 case */}
-              <div
+              {/* <div
                 className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
               >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
@@ -250,7 +259,7 @@ function RouteComponent() {
                 <div className={packageInformationStyles.course}>
                   <Button variant="primary">수강신청</Button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
