@@ -22,6 +22,7 @@ import {
   ModalFooter,
   Dropdown,
   Grid,
+  TransferGrid,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -53,6 +54,7 @@ function RouteComponent() {
   };
 
   const { close: closeModal } = useModal();
+  const columnHelper = createColumnHelper<any>();
   // 회사 조회 팝업 (공통)
   const ModalCompanySearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -89,8 +91,6 @@ function RouteComponent() {
         email: 'asdfged@gmail.com',
       },
     ];
-
-    const columnHelper = createColumnHelper<any>();
 
     const columns = [
       columnHelper.accessor('order', {
@@ -205,6 +205,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
+              {/* Grid Case */}
               <Grid
                 data={data}
                 columns={columns}

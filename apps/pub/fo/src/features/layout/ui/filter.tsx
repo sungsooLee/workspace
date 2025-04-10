@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Button, ChipList, useModal } from '@learnway/ui';
+import { Button, ChipList, useModal, OptionCard, OptionCardItem } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
-import { OptionCard, OptionCardItem } from '@learnway/ui';
 import styles from './filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
@@ -71,12 +70,14 @@ const FilterComponent = () => {
               width: 'md',
               content: <FilterPopup />,
             })
-          }>
+          }
+        >
           <IcoFilter
             width={20}
             height={20}
             fill="none"
-            stroke={selectCheck === true ? '#fff' : '#07287e'}></IcoFilter>
+            stroke={selectCheck === true ? '#fff' : '#07287e'}
+          ></IcoFilter>
         </Button>
       </div>
 
@@ -102,7 +103,8 @@ const FilterComponent = () => {
             width={20}
             height={20}
             fill="none"
-            stroke="#131c30"></IcoRefresh02>
+            stroke="#131c30"
+          ></IcoRefresh02>
           초기화
         </Button>
       </div>

@@ -63,7 +63,7 @@ const EducationComponent = ({ className }: EducationProps) => {
               <Button
                 onClick={() =>
                   openModal({
-                    width: 's',
+                    width: 'md',
                     content: <EducationPlacePopup />,
                   })
                 }
