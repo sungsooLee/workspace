@@ -8,6 +8,38 @@
     .text_wrap {
       .title {
         @apply body_bo_1_b block text-[var(--gray9)];
+        & + .text {
+          @apply mt-[8px];
+        }
+      }
+      .text {
+        @apply body_bo_2_r text-[var(--gray8)];
+      }
+    }
+    ul {
+      @apply mt-[8px];
+      &.bullet {
+        li {
+          @apply relative pl-[8px];
+          &::before {
+            @apply absolute left-0 top-[7px] h-[4px] w-[4px] rounded-[2px] bg-[var(--gray8)] content-[''];
+          }
+        }
+      }
+      &.count {
+        counter-reset: list-counter;
+        li {
+          counter-increment: list-counter;
+          &::before {
+            content: counter(list-counter) '. ';
+          }
+        }
+      }
+      li {
+        @apply body_bo_2_r text-[var(--gray8)];
+        & + li {
+          @apply mt-[4px];
+        }
       }
     }
   }
