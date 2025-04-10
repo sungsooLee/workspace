@@ -1,5 +1,5 @@
-import { FormRow, FormSubTitle } from '../../../../../../../shared/ui/form';
-import { ContentsRow, DynamicFormField } from '@learnway/ui';
+import { FormRow, FormSubTitle } from '../../../../../../../../shared/ui/form';
+import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import React from 'react';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,11 @@ const CompanyInfoComponent = () => {
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
   return (
     <>
-      <FormSubTitle>{t('회사 기본 정보')}</FormSubTitle>
+      <FormSubTitle
+        label={t('회사 기본 정보')}
+        actionNode={<Button label={'저장'} variant={'point'} size={'md'} />}
+        underLine
+      />
       <ContentsRow>
         <FormRow provider={provider}>
           <DynamicFormField name={'companyType'} />

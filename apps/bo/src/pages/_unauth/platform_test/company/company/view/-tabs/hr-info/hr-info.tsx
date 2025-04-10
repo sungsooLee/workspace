@@ -1,14 +1,14 @@
-import { NoticeBox } from '../../../../../../../shared/ui';
 import { useTranslation } from 'react-i18next';
 import { Tabs } from '@learnway/ui';
 import React from 'react';
-import { Organization } from './organization';
-import { Position } from './position';
-import { Group } from './group';
-import { Designation } from './designation';
-import { Role } from './role';
+import { Organization } from './-tabs/organization';
+import { Position } from './-tabs/position';
+import { Group } from './-tabs/group';
+import { Designation } from './-tabs/designation';
+import { Role } from './-tabs/role';
+import { NoticeBox } from '../../../../../../../../shared/ui';
 
-const AutoUserGroupComponent = () => {
+const HrInfoComponent = () => {
   const { t } = useTranslation();
   const tabItems = [
     {
@@ -50,4 +50,4 @@ const AutoUserGroupComponent = () => {
   );
 };
 
-export const AutoUserGroup = AutoUserGroupComponent;
+export const HrInfo = HrInfoComponent;
