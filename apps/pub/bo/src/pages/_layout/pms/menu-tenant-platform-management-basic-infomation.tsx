@@ -22,6 +22,8 @@ import {
   ModalFooter,
   Dropdown,
   Grid,
+  Tabs,
+  // TransferGrid,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -35,7 +37,9 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 /* image */
 import selectedImg from '../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
-export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-management-registration')({
+export const Route = createFileRoute(
+  '/_layout/pms/menu-tenant-platform-management-basic-infomation',
+)({
   component: RouteComponent,
 });
 
@@ -484,10 +488,40 @@ function RouteComponent() {
     );
   };
 
+  const menuItems = [
+    {
+      title: '1. 테넌트 기본 정보',
+      key: 'menu01',
+      content: '',
+    },
+    {
+      title: '2. 테넌트 메뉴 매핑',
+      key: 'menu02',
+      content: '',
+    },
+    {
+      title: '3. 테넌트 카테고리 매핑',
+      key: 'menu03',
+      content: '',
+    },
+    {
+      title: '4. 테넌트 역할 생성',
+      key: 'menu04',
+      content: '',
+    },
+  ];
+
   return (
     <PageContainer>
       {/* main_contents */}
       <div className={cn(styles.main_contents)}>
+        <Tabs
+          items={menuItems}
+          type="progress"
+          size="sm"
+          className={styles.progress_wrap}
+          selectedTabKey={'menu01'}
+        />
         <div className="title_wrap">
           <strong className="title">{'기본 정보'}</strong>
         </div>

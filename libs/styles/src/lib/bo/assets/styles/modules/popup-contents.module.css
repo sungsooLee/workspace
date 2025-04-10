@@ -2,16 +2,18 @@
 .wrap {
   @apply relative;
   .title_wrap {
-    @apply w-full;
+    @apply fixed left-0 top-0 w-full bg-white;
     .title {
       @apply title_bo_3_b pt-[48px] text-center;
     }
     .text {
       @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
     }
+    & + div {
+      @apply pt-[73px];
+    }
   }
   .pop_contents {
-    @apply mt-[24px];
     .sub_text {
       @apply body_2_r mt-[8px] text-[1.4rem] text-[var(--gray8)];
       &.dot {
