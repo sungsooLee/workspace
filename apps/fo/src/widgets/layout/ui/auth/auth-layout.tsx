@@ -22,6 +22,7 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
 
   return (
     <>
+      {/**모바일인 경우 로그인 페이지만 Header를 render하고 나머지 페이지는 containerHeader를 사용 */}
       {isMobile ? meta.mobile.showHeader && <AuthHeader /> : <AuthHeader />}
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>

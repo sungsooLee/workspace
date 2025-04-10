@@ -66,7 +66,10 @@ export function useQueryPaging<
               try {
                 const result = (await options.queryFn(context)) as QueryFnPagingData<TContent>;
                 if (!result?.page?.first && result?.page?.last && isEmpty(result.content)) {
-                  result.page = { ...result.page, number: (result.page?.number ?? 0) - 1 };
+                  result.page = {
+                    ...result.page,
+                    currentPage: (result.page?.currentPage ?? 0) - 1,
+                  };
                 }
                 if (result.content && convert && Array.isArray(result.content)) {
                   result.content = result.content.map((data: any) =>

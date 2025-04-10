@@ -9,7 +9,7 @@ export const queryKeys = {
   all: ['tenants'] as const,
   detail: (tenantNo: number) => [...queryKeys.all, tenantNo] as const,
   // 유저 ID 기반으로 특정 유저의 테넌트를 가져오는 쿼리 키
-  byUser: (accountId: string) => ['tenants', 'byUser', accountId] as const,
+  byUser: (accountId: number) => ['tenants', 'byUser', accountId] as const,
 };
 
 export const queryOptions = {
@@ -21,7 +21,7 @@ export const queryOptions = {
         }
       : getQuerySkipToken<Tenant>(),
   // 유저 ID에 따른 테넌트 리스트 쿼리 옵션
-  byUser: (userId: string) =>
+  byUser: (userId?: number) =>
     userId
       ? {
           queryKey: queryKeys.byUser(userId),

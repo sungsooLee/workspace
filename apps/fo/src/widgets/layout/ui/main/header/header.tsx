@@ -23,7 +23,7 @@ import { CategoryButton } from '../../../../../features/category';
 
 function HeaderComponent() {
   const { data: authUser } = useFetchAuthUser();
-  const { data: tenants } = useFetchTenantByUser(authUser?.userTsid);
+  const { data: tenants } = useFetchTenantByUser(authUser?.userId);
   const [isHoverNavigate, setIsHoverNavigate] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 

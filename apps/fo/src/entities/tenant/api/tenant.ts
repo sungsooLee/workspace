@@ -12,7 +12,7 @@ export default class TenantService {
     return new Promise((resolve) => setTimeout(() => resolve(tenantsMock as any)));
   }
 
-  static fetchTenantsByUser(id: string) {
+  static fetchTenantsByUser(id: number) {
     return new Promise((resolve) => setTimeout(() => resolve(tenantsMockByUser as any)));
   }
 

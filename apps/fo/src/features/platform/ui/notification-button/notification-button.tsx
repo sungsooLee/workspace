@@ -6,6 +6,7 @@ import { Popover, Button, useModal } from '@learnway/ui';
 import { IcoBell02, IcoArray } from '@learnway/icons';
 import { PMSApiPrefix } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/config';
+import { cn } from '@learnway/shared';
 
 import { useNotifications } from '../../../../entities/notification/service/notification.hook';
 import { queryKeys } from '../../../../entities/notification/service/notification.queries';
@@ -14,6 +15,26 @@ import { NotificationModal } from './notification-modal';
 import { Notification } from './notification';
 
 import styles from './notification-button.module.css';
+
+const PopoverContent = () => {
+  return (
+    <div className={cn(styles.start, styles.alarm_wrap)}>
+      <div className={styles.alarm_content}>
+        {/* alarm_header */}
+        <div className={styles.alarm_header}>
+          <strong className={styles.tit}>{'알림'}</strong>
+          <div className={styles.btn_wrap}>
+            <Button className={styles.btn}>전체읽음</Button>
+            <Button className={styles.btn}>전체삭제</Button>
+          </div>
+        </div>
+
+        {/* contents */}
+        <Notification />
+      </div>
+    </div>
+  );
+};
 
 const NotificationComponent = ({ userUUID }: any) => {
   const { data } = useFetchAuthUser();
@@ -96,12 +117,15 @@ const NotificationComponent = ({ userUUID }: any) => {
   }
 
   return (
-    <Popover popoverContent={<Notification />}>
-      <button type="button" className={styles.btn_alarm}>
-        <IcoBell02 width={20} height={20} stroke="#131C30" />
-        {unreadCount > 0 && <em className={styles.noti}>{unreadCount}</em>}
-      </button>
-    </Popover>
+    <div className={styles.alarm_info}>
+      <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
+        <span className={styles.alarm_info22}>
+          <IcoBell02 width={20} height={20} stroke="#131C30" />
+          <em className={styles.noti}></em>
+        </span>
+      </Popover>
+      {/* <p className={styles.text}>새로운 알림이 왔어요.</p> */}
+    </div>
   );
 };
 

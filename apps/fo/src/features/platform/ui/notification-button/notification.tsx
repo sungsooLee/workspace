@@ -81,7 +81,7 @@ const NotificationComponent = ({ userUUID }: any) => {
   };
 
   return (
-    <div className={styles.alarm_contents}>
+    <div className={`${styles.start} ${styles.alarm_contents}`}>
       {/* 알림 없는 경우 */}
       {notifications.length === 0 ? (
         <p className={styles.empty}>
