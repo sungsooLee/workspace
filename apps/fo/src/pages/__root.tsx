@@ -38,7 +38,6 @@ function RootComponent() {
     <>
       <Outlet />
       <ModalWrapper />
-      <TanStackRouterDevtools position="bottom-right" />
     </>
   );
 }

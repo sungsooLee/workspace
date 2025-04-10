@@ -1,24 +1,26 @@
 import { memo, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { isMobile } from 'react-device-detect';
 
-import { Popover } from '@learnway/ui';
-import { IcoBell02 } from '@learnway/icons';
+import { Popover, Button, useModal } from '@learnway/ui';
+import { IcoBell02, IcoArray } from '@learnway/icons';
 import { PMSApiPrefix } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/config';
 
 import { useNotifications } from '../../../../entities/notification/service/notification.hook';
 import { queryKeys } from '../../../../entities/notification/service/notification.queries';
 
-import styles from './notification.module.css';
+import { NotificationModal } from './notification-modal';
+import { Notification } from './notification';
 
-const PopoverContent = () => {
-  return <div className={styles.alarm_content}></div>;
-};
+import styles from './notification-button.module.css';
 
 const NotificationComponent = ({ userUUID }: any) => {
   const { data } = useFetchAuthUser();
   const queryClient = useQueryClient();
   const [isConnected, setIsConnected] = useState(false);
+
+  const { open: openModal } = useModal();
 
   const { notifications, unreadCount, markAsRead, checkAll } = useNotifications({ userUUID });
 
@@ -71,8 +73,30 @@ const NotificationComponent = ({ userUUID }: any) => {
       }
     };
   }, [userUUID, queryClient]);
+
+  if (isMobile) {
+    return (
+      <div className={`${styles.start} ${styles.alarm_info}`}>
+        <Button
+          onClick={() =>
+            openModal({
+              width: 'm_full',
+              content: <NotificationModal />,
+            })
+          }
+        >
+          <span className={styles.alarm_info}>
+            <IcoBell02 width={24} height={24} stroke="#131C30" />
+            <em className={styles.noti}></em>
+          </span>
+        </Button>
+        {/* <p className={styles.text}>새로운 알림이 왔어요.</p> */}
+      </div>
+    );
+  }
+
   return (
-    <Popover popoverContent={<PopoverContent />}>
+    <Popover popoverContent={<Notification />}>
       <button type="button" className={styles.btn_alarm}>
         <IcoBell02 width={20} height={20} stroke="#131C30" />
         {unreadCount > 0 && <em className={styles.noti}>{unreadCount}</em>}
@@ -81,4 +105,4 @@ const NotificationComponent = ({ userUUID }: any) => {
   );
 };
 
-export const Notification = memo(NotificationComponent);
+export const NotificationButton = memo(NotificationComponent);

@@ -18,7 +18,7 @@ function LayoutComponent() {
   const { t } = useTranslation();
 
   const { data } = useFetchAuthUser();
-  const { data: tenant } = useFetchTenant(data?.activeTenantNo);
+  const { data: tenant } = useFetchTenant(data?.activeTenant?.tenantNo);
 
   useEffect(() => {
     if (!tenant) {

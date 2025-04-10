@@ -14,7 +14,7 @@ import { useActiveMenuDepthState } from '../../../features/platform';
  */
 export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenantNo);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantNo);
 
   return {
     data: useCreation(() => {

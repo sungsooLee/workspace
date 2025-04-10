@@ -6,6 +6,8 @@ import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } 
 import { IcoCheck, IcoArrowForward } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateUser } from '@learnway/config';
 
+import type { Tenant } from '../../../../types';
+
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
 const TenantModalComponent = () => {
@@ -21,10 +23,10 @@ const TenantModalComponent = () => {
     setTip(tenantNo);
   };
 
-  const handleChangeTenant = async (tenantNo: number) => {
+  const handleChangeTenant = async (tenant: Tenant) => {
     const result = await confirm(t('MESSAGE.선택한 테넌트로 변경하시겠습니까?'));
     if (result) {
-      updateActiveTenant(tenantNo);
+      updateActiveTenant(tenant);
       window.location.reload();
     }
   };
@@ -58,7 +60,7 @@ const TenantModalComponent = () => {
                   <Button
                     key={idx}
                     className={styles.btn_refresh}
-                    onClick={() => handleChangeTenant(tenant.tenantNo)}
+                    onClick={() => handleChangeTenant(tenant)}
                   >
                     <span className={styles.txt}>
                       {tenant.tenantName}

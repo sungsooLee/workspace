@@ -4,7 +4,7 @@ import { useRouterState } from '@tanstack/react-router';
 
 import { useFetchAuthUser } from '@learnway/config';
 
-import { useFetchMenus } from '../../../entities/menu';
+import { useFetchMenus } from '..';
 import { Menu, HookData } from '../../../types';
 
 import { useActiveMenuDepthState } from '../../../features/platform';
@@ -13,21 +13,24 @@ import { useActiveMenuDepthState } from '../../../features/platform';
  * 메뉴 정보를 트리 구조로 반환
  * quickAccessAreaYn 에 따라 GNB quick menu area에 메뉴를 출력한다.
  */
-export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
+export function useMenuHierarchy(): HookData<{ menus: Menu[]; eventMenus: Menu[] }> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenantNo);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantNo);
 
   return {
     data: useCreation(() => {
-      console.log('useMenuHierarchy', data);
       if (!data || !data?.length) {
-        return [];
+        return {
+          menus: [],
+          eventMenus: [],
+        };
       }
 
-      return quickAccessAreaYn
-        ? data?.filter((menu: Menu) => menu?.quickAccessAreaYn)
-        : data?.filter((menu: Menu) => !menu?.quickAccessAreaYn);
-    }, [data, quickAccessAreaYn]),
+      return {
+        menus: data?.filter((menu: Menu) => menu?.menuScope === 'FO'),
+        eventMenus: data?.filter((menu: Menu) => menu?.menuScope === 'EX'),
+      };
+    }, [data]),
   };
 }
 

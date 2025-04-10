@@ -1,0 +1,10 @@
+.nlp--modal-header-action-node {
+  .mobile-navigate-button--header-action {
+    @apply flex w-full items-center justify-end pr-[40px];
+    & > a {
+      & + a {
+        @apply ml-[16px];
+      }
+    }
+  }
+}

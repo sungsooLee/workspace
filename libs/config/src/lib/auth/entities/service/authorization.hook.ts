@@ -3,7 +3,7 @@ import { useRouter } from '@tanstack/react-router';
 
 import type { MutateCallback } from '@learnway/shared';
 
-import type { AuthUser } from '../../../types';
+import type { AuthUser, Tenant } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 
 export const authUserQueryKeys = queryKeys;
@@ -98,12 +98,12 @@ export function useUpdateUser(mutationOptions = {}) {
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },
-    updateActiveTenant: (tenantNo: number): AuthUser | undefined => {
+    updateActiveTenant: (tenant: Tenant): AuthUser | undefined => {
       const user = queryClient.getQueryData(queryKeys.authUser);
       if (!user) {
         return;
       }
-      const updateUser = { ...user, activeTenantNo: tenantNo };
+      const updateUser = { ...user, activeTenant: tenant };
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },
