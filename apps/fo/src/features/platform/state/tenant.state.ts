@@ -1,4 +1,4 @@
 import { atom } from 'jotai';
-import { Tenant } from '../../../entities/tenant';
+import { Tenant } from '../../../types';
 
 export const activeTenantAtom = atom<Tenant>();

@@ -28,7 +28,7 @@ function LayoutComponent() {
     if (!tenant) {
       return;
     }
-    document.title = tenant.windowTitle;
+    document.title = tenant.windowTitle ?? '';
   }, [tenant]);
 
   return (
