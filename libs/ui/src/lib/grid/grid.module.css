@@ -161,6 +161,9 @@
           .th_cell {
             @apply !w-full;
           }
+          svg {
+            @apply hidden;
+          }
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];
           }
