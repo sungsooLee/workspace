@@ -29,7 +29,7 @@ const NavigateModalComponent = () => {
         <div className={styles.start}>
           <div className={styles.profile_info}>
             <div className={styles.profile}>
-              <span className={styles.name}>{authUser?.username}</span>
+              <span className={styles.name}>{authUser?.name}</span>
               <span className={styles.tenant}>{authUser?.activeTenant?.tenantName}</span>
               <span className={styles.team}>팀명</span>
               <Button

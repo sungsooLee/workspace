@@ -13,14 +13,6 @@ export default class MenuService {
   static getMenu(menuId: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/menu/${menuId}`);
   }
-
-  static createMenus(menu: any[]) {
-    return httpService.post<any>(`/menus`, menu);
-  }
-
-  static updateMenu(menuId: string, menu: any) {
-    return httpService.patch<any>(`/menus`, menu);
-  }
 }
 /*
 API 인터페이스 규칙

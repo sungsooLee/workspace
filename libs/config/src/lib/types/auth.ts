@@ -20,6 +20,7 @@ export interface AuthUser {
   activeTenant?: Tenant;
   mainTenantId?: number;
   menus?: any;
+  avataImage?: string;
 }
 
 export interface AuthSSOHealthcheck {

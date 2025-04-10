@@ -11,7 +11,7 @@ export interface Menu extends Hierarchy<Menu> {
   personalDataContainYn: boolean;
   visibleMobileYn: boolean;
   visiblePcYn: boolean;
-  menuScope: string;
+  menuScope: 'FO' | 'BO' | 'EX';
   menuDesc: string;
   hiddenYn: boolean;
   parentId: number;

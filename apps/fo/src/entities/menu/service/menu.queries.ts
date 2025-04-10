@@ -1,7 +1,8 @@
 import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
 
 import MenuService from '../api/menu';
-import { FetchMenusParams, Menu } from '../../../types/entities/menu';
+import { Menu } from '../../../types/entities/menu';
 
 export const queryKeys = {
   all: ['menus'] as const,
@@ -15,7 +16,7 @@ export const queryOptions = {
       ? {
           queryKey: queryKeys.all,
           queryFn: async () => {
-            const data = await MenuService.getMenus(tenantNo);
+            const data = await MenuService.getMenus(tenantNo, isMobile);
 
             return convertHierarchyNode(
               data?.children,
