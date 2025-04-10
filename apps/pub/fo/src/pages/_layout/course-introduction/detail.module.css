@@ -66,6 +66,21 @@
           }
         }
       }
+      .empty_box {
+        @apply rounded-[8px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
+        & > div {
+          @apply mb-0;
+          & > div {
+            @apply m-0;
+          }
+          svg {
+            @apply h-[40px] w-[40px];
+          }
+          p {
+            @apply body_2_r mt-[4px] text-[var(--gray8)];
+          }
+        }
+      }
     }
   }
 }

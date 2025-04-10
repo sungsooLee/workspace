@@ -1,0 +1,5 @@
+.start {
+  .text_info {
+    @apply body_3_r mt-[16px] text-[var(--gray8)];
+  }
+}

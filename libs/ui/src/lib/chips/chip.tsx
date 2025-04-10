@@ -49,8 +49,16 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
     return (
       <span
         {...props}
-        className={cn(styles.start, styles.chips, className, 'nlp--chips')}
-        onClick={handleClick}>
+        className={cn(
+          styles.start,
+          styles.chips,
+          variant && styles[variant],
+          size && styles[size],
+          className,
+          'nlp--chips',
+        )}
+        onClick={handleClick}
+      >
         {/* prefix character */}
         {prefixCharacter}
 

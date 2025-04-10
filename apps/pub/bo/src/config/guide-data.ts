@@ -19,15 +19,6 @@ export const guideData = [
     remarks: '작업중', // 비고
   },
   {
-    screenName: '컨텐츠 레이아웃(상단 공지_notice)',
-    pageId: 'contents/layout',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '작업중', // 비고
-  },
-  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -278,7 +269,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-06',
     lastUpdateDate: '2025-03-17',
-    remarks: '완료(아이콘 추후 적용 예정)', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'CMS/파일업로드',
@@ -296,7 +287,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-06',
     lastUpdateDate: '2025-03-18',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'CMS/학습자원조회',
@@ -305,7 +296,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-20',
     lastUpdateDate: '',
-    remarks: '완료(레이아웃)', // 비고
+    remarks: '작업 완료(레이아웃)', // 비고
   },
   {
     screenName: 'CMS/학습자원 일괄설정',
@@ -314,7 +305,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-20',
     lastUpdateDate: '',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
@@ -332,7 +323,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_플랫폼API관리',
@@ -341,7 +332,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-08',
     lastUpdateDate: '',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_메뉴관리',
@@ -350,7 +341,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-08',
     lastUpdateDate: '2025-04-02',
-    remarks: '완료(트리영역 개발환경에서 작업중)', // 비고
+    remarks: '작업 완료(트리영역 개발환경에서 작업중)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_카테고리관리',
@@ -359,7 +350,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-08',
     lastUpdateDate: '2025-04-02',
-    remarks: '완료(트리영역 개발환경에서 작업중)', // 비고
+    remarks: '작업 완료(트리영역 개발환경에서 작업중)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯관리',
@@ -368,7 +359,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-31',
     lastUpdateDate: '2025-03-31',
-    remarks: '완료(그리드는 참고용입니다.)', // 비고
+    remarks: '작업 완료(그리드는 참고용입니다.)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯관리 미리보기',
@@ -377,7 +368,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-31',
     lastUpdateDate: '2025-03-31',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯등록',
@@ -395,7 +386,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-07',
     lastUpdateDate: '2025-04-07',
-    remarks: '완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
+    remarks: '작업 완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_메뉴관리',
@@ -404,7 +395,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-08',
     lastUpdateDate: '',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리',
@@ -413,7 +404,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-09',
     lastUpdateDate: '2025-04-09',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 등록',
@@ -431,7 +422,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-09',
     lastUpdateDate: '',
-    remarks: '완료', // 비고
+    remarks: '작업 완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

@@ -1,8 +1,8 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Avatar } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Avatar, Dropdown } from '@learnway/ui';
 import { IcoArrowDown, IcoDownload } from '@learnway/icons';
-import { Review, ReviewRating, Curriculum, Arrays } from '../../../../features/layout';
+import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -37,6 +37,14 @@ const CourseIntroductionCompoment = () => {
     items: ['수강신청만', '전체보기'],
     initialSelectedItem: 0, // 초기 선택값
   };
+  const [dropdownValues, setDropdownValues] = useState<string[]>([]);
+  const dropdownOptions = [
+    { value: 'option1', label: '옵션 1' },
+    { value: 'option2', label: '옵션 2' },
+  ];
+
+  // 교육일정 더보기 버튼
+  const [btnEducation, setBtnEducation] = useState<boolean>(false);
 
   return (
     <div className={`${styles.start} ${styles.introduction}`}>
@@ -241,12 +249,49 @@ const CourseIntroductionCompoment = () => {
       </div>
 
       {/* 교육일정 */}
-      <div className={styles.education_wrap}></div>
-      <h2>교육일정</h2>
-      <div className={styles.filter_wrap}>
-        <span className={styles.date}>2026년</span>
-        <div className={styles.filter}>
-          <Arrays arraysData={arrays} className={styles.array}></Arrays>
+      <div className={styles.education_wrap}>
+        <h2>교육일정</h2>
+        <div className={styles.filter_wrap}>
+          <span className={styles.date}>2026년</span>
+          <div className={styles.filter}>
+            <Arrays arraysData={arrays} className={styles.array}></Arrays>
+            <Dropdown
+              options={dropdownOptions}
+              value={dropdownValues}
+              onChange={(selected) => setDropdownValues(selected)}
+              variant="text"
+              isMulti={false}
+              size={'sm'}
+            />
+          </div>
+        </div>
+        <div className={styles.education_box}>
+          <ul>
+            <li>
+              <Education />
+            </li>
+            <li>
+              <Education />
+            </li>
+            <li>
+              <Education />
+            </li>
+            <li>
+              <Education />
+            </li>
+          </ul>
+          {/* 더보기 */}
+          <div className={styles.more_box}>
+            <Button
+              className={`${styles.btn_more} ${btnEducation === true ? styles.active : ''}`}
+              onClick={() =>
+                btnEducation === true ? setBtnEducation(false) : setBtnEducation(true)
+              }
+            >
+              <span>{btnEducation === true ? '접기' : '더보기'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#6f798b" />
+            </Button>
+          </div>
         </div>
       </div>
 

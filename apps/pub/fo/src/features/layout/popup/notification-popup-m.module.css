@@ -1,49 +1,6 @@
 .start {
   &.alarm_wrap {
     @apply -mx-[20px] -my-[16px] h-auto w-[calc(100%+40px)];
-
-    .empty {
-      @apply body_bo_1_b mt-[40px] flex flex-col items-center justify-center text-center text-[var(--gray9)];
-      .ico_bell {
-        @apply mb-[8px] flex;
-      }
-      .sub_text {
-        @apply body_bo_2_r block text-[var(--gray9)];
-      }
-    }
-
-    .info_list {
-      .info_item {
-        @apply py-[20px] pl-[32px] pr-[20px];
-        &:not(:first-child) {
-          @apply border-t-[1px] border-solid border-[var(--gray3)];
-        }
-        &.yet {
-          @apply bg-[#fff9e7];
-        }
-        .title_wrap {
-          @apply flex justify-between;
-          .title {
-            @apply inline-flex items-center pr-[12px];
-          }
-          .date {
-            @apply ml-[8px] inline-flex text-[1.2rem] font-normal text-[var(--gray6)];
-          }
-          .btn_close {
-            @apply min-h-[20px] min-w-[20px] shrink-0;
-          }
-        }
-        .link {
-          @apply body_bo_2_r text-[var(--gray7)] underline;
-        }
-        .message {
-          @apply body_3_r mt-[8px] text-[var(--gray7)];
-        }
-        .time {
-          @apply mt-[8px] flex text-[1.2rem] leading-[1rem] text-[var(--gray6)];
-        }
-      }
-    }
   }
 }
 

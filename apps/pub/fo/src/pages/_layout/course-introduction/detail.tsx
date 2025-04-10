@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tabs, Accordion } from '@learnway/ui';
+import { Button, Tabs, Accordion, EmptyText, OptionCard } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
 import { CourseDashboard, CourseIntroduction } from '../../../features/layout';
 
@@ -51,8 +51,8 @@ function RouteComponent() {
   ];
 
   // 패키지 아코디언
-  const [value2, setValue2] = useState<string>('');
-  const dummyItems2 = [
+  const [accordionValue, setAccordionValue] = useState<string>('');
+  const accordionValueItems = [
     {
       value: 'a',
       title: (
@@ -163,8 +163,25 @@ function RouteComponent() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
+                {/* 강의 정보 없을 시 */}
+                <div className={styles.empty_box}>
+                  <EmptyText
+                    hideTitle
+                    size="lg"
+                    description={'현재 수강 신청 가능한 차수가 없습니다.'}
+                  />
+                </div>
+
                 {/* 강의 정보 */}
-                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+                {/* <OptionCard
+                  value={values2}
+                  cols={5}
+                  size="lg"
+                  options={dummyOptions2}
+                  onOptionSelect={(option: OptionCardItem) => setValues2(option.value)}
+                /> */}
+
+                {/* <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
                   <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
                     <p className={lectureStyles.date}>
                       <span>1차교육</span>
@@ -175,7 +192,6 @@ function RouteComponent() {
                     </strong>
                   </div>
                   <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                    {/* definition list */}
                     <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                       <dl>
                         <dt>잔여석</dt>
@@ -187,38 +203,12 @@ function RouteComponent() {
                       </dl>
                     </div>
                   </div>
-                </div>
-
-                {/* 강의 정보 */}
-                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
-                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                    <p className={lectureStyles.date}>
-                      <span>2차교육</span>
-                      <span>2026-01-01 ~ 2026-01-31 </span>
-                    </p>
-                    <strong className={lectureStyles.tit}>
-                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
-                    </strong>
-                  </div>
-                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                    {/* definition list */}
-                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                      <dl>
-                        <dt>잔여석</dt>
-                        <dd>999</dd>
-                      </dl>
-                      <dl>
-                        <dt>장소</dt>
-                        <dd>온라인 비대면</dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
+                </div> */}
               </div>
 
               {/* 수강신청 없는 case */}
               {/* button */}
-              {/* <div className={packageInformationStyles.btn_box}>
+              <div className={packageInformationStyles.btn_box}>
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
@@ -230,10 +220,10 @@ function RouteComponent() {
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
-              </div> */}
+              </div>
 
               {/* 수강신청 있는 case */}
-              <div
+              {/* <div
                 className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
               >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
@@ -250,7 +240,7 @@ function RouteComponent() {
                 <div className={packageInformationStyles.course}>
                   <Button variant="primary">수강신청</Button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -263,10 +253,10 @@ function RouteComponent() {
             </div>
             <div className={styles.package_box}>
               <Accordion
-                items={dummyItems2}
-                value={value2}
+                items={accordionValueItems}
+                value={accordionValue}
                 className={styles.acc_package}
-                onValueChange={(value2) => setValue2(value2 as string)}
+                onValueChange={(value) => setAccordionValue(value as string)}
                 type={'multiple'}
               />
             </div>
