@@ -28,7 +28,6 @@ function RouteComponent() {
     <div className="content">
       <h2 className="guide_tit2">Modal Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/modal/modal.tsx (공통)</p>
-      <p className="loc react">/src/features/auth/popup (외부 모달(팝업) 저장소)</p>
       <p className="info">
         모달 size(가로 기준) : sm(600px), md(800px), lg(1024px), xl(1400px) width 속성 적용
       </p>
@@ -73,7 +72,8 @@ openModal({
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
                   content: <ContentModal />,
                 })
-              }>
+              }
+            >
               모달 팝업 열기
             </Button>
           </div>
@@ -115,7 +115,8 @@ onClick={() =>
                   width: isMobile ? 'm_full' : 'sm',
                   content: <ContentModal />,
                 })
-              }>
+              }
+            >
               모달 팝업 열기
             </Button>
           </div>
@@ -197,6 +198,33 @@ const { close: closeModal } = useModal();
 </Button>`}</code>
           </pre>
         </div>
+
+        <h3 className="guide_tit3">Modal (자동으로 띄우기)</h3>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import
+import { useEffect, useRef, useState } from 'react';
+import { Button, useModal } from '@learnway/ui';
+
+// 호출
+const { open: openModal, close: closeModal } = useModal();
+
+// 자동모달 띄우기
+const hasRun = useRef(false);
+useEffect(() => {
+  if (!hasRun.current) {
+    openModal({
+      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
+    });
+    hasRun.current = true;
+  }
+}, [openModal]);`}</code>
+          </pre>
+        </div>
+
+        <div className="info">페이지 접근시 모달팝업 자동실행(퍼블확인용)</div>
       </div>
     </div>
   );

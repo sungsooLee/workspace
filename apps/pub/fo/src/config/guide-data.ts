@@ -1192,10 +1192,10 @@ export const guideData = [
     screenName: '강의실_공지사항_상세',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-10',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 그리드(테이블) FO 스타일 추가해야됨(FE)',
   },
   {
     screenId: 'NLP_FO_CLA_1002',

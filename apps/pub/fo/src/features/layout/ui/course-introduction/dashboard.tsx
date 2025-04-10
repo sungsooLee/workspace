@@ -2,9 +2,10 @@ import { memo, useState, useEffect } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoMessageText, IcoCheck } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress } from '@learnway/ui';
+import { Button, Dropdown, Panel, Progress, useModal } from '@learnway/ui';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
+import { NoticeDetailPopup } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -14,6 +15,10 @@ const CourseDashboardCompoment = () => {
   ];
 
   const progress = 80;
+
+  const { open: openModal } = useModal();
+  const { close: closeModal } = useModal();
+
   return (
     <div className={styles.start}>
       <div className={styles.title_box}>
