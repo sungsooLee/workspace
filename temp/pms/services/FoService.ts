@@ -13,7 +13,9 @@ import type { com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByUser } fr
 import type { com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnUser';
+import type { com_ever_edu_pms_user_dto_req_ChangeEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangeEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordReqDto';
+import type { com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
@@ -42,6 +44,40 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/user/api/v1/users/verifications/change-password',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * 휴대전화번호 변경
+     * 사용자의 휴대전화번호를 변경한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changePhoneNumber(
+        requestBody: com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/users/change-phone-number',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * 이메일 변경
+     * 사용자의 이메일 주소를 변경한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changeEmail(
+        requestBody: com_ever_edu_pms_user_dto_req_ChangeEmailReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/users/change-email',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -443,12 +479,14 @@ export class FoService {
      * 메뉴 목록을 트리구조로 조회한다.
      * @param tenantNo
      * @param roleIds
+     * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_MenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu(
         tenantNo: number,
         roleIds?: Array<string>,
+        deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -456,6 +494,7 @@ export class FoService {
             query: {
                 'roleIds': roleIds,
                 'tenantNo': tenantNo,
+                'deviceType': deviceType,
             },
         });
     }
@@ -539,6 +578,18 @@ export class FoService {
             path: {
                 'id': id,
             },
+        });
+    }
+    /**
+     * 회원 탈퇴
+     * 회원 탈퇴를 요청한다.
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteAccount(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/user/api/v1/users/delete-account',
         });
     }
     /**

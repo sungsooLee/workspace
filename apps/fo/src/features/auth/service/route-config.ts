@@ -35,12 +35,12 @@ function authorization({ location, context }: { location: ParsedLocation; contex
     }
     return;
   }
-
+  /* 메뉴별 접근 권한에 대한 설계 필요 
   const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
   if (!unauthScreen) {
     throw ERROR.PAGE_ACCESS_RIGHTS;
   }
-
+*/
   //router.history.push(search.redirect)
 }
 

@@ -5,13 +5,12 @@ export interface FetchPaginationParam {
 }
 
 export interface PageInfo {
-  size?: number;
-  first?: boolean;
-  last?: boolean;
-  toatlElements?: number;
-  totalPage?: number;
-  number?: number;
-  numberOfElements?: number;
+  size?: number; // page당 row size
+  first?: boolean; // true: 첫번째 페이지
+  last?: boolean; // true: 마지막 페이지
+  totals?: number; // 전체 row count
+  totalPages?: number; // 전체 page수
+  currentPage?: number; // 현재 page
 }
 
 export interface QueryFnPagingData<T> {
