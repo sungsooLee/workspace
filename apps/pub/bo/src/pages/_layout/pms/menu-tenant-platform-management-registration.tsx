@@ -53,6 +53,7 @@ function RouteComponent() {
   };
 
   const { close: closeModal } = useModal();
+  // 회사 조회 팝업 (공통)
   const ModalCompanySearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
@@ -228,6 +229,201 @@ function RouteComponent() {
     );
   };
 
+  // HRD 담당자 역할 조회 팝업 (공통)
+  const ModalOwnerSearchContent = () => {
+    const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
+    const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
+    const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
+    const options3 = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+    ];
+    const options4 = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+    ];
+    const options5 = [
+      { value: 'type1', label: '전체' },
+      { value: 'type2', label: '항목' },
+    ];
+
+    // grid
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const data: any[] = [
+      {
+        order: '1',
+        companySort: '그룹사',
+        company: '현대차',
+        owner: '김현대',
+        registerNumber: '123-45-12345',
+        callNumber: '+82 2 1234-4567',
+        email: 'asdfged@gmail.com',
+      },
+      {
+        order: '2',
+        companySort: '그룹사',
+        company: '현대차',
+        owner: '김현대',
+        registerNumber: '123-45-12345',
+        callNumber: '+82 2 1234-4567',
+        email: 'asdfged@gmail.com',
+      },
+    ];
+
+    const columnHelper = createColumnHelper<any>();
+
+    const columns = [
+      columnHelper.accessor('order', {
+        cell: (info) => info.getValue(),
+        header: 'NO.',
+        size: 64,
+        meta: {
+          headerAlign: 'left',
+          cellAlign: 'center',
+        },
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('companySort', {
+        cell: (info) => info.getValue(),
+        header: '회사구분',
+        enableGrouping: false,
+        size: 210,
+      }),
+      columnHelper.accessor('company', {
+        cell: (info) => info.getValue(),
+        header: '회사',
+        size: 240,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('owner', {
+        cell: (info) => info.getValue(),
+        header: '대표자',
+        size: 150,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('registerNumber', {
+        cell: (info) => info.getValue(),
+        header: '사업자 등록번호',
+        size: 220,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('callNumber', {
+        cell: (info) => info.getValue(),
+        header: '대표 전화',
+        size: 220,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('email', {
+        cell: (info) => info.getValue(),
+        header: '대표 이메일',
+        size: 240,
+        enableGrouping: false,
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    return (
+      <ModalContainer>
+        <ModalTitle>HRD 담당자 역할 조회</ModalTitle>
+        <ModalBody>
+          <div className={popupStyles.wrap}>
+            <div className={cn(searchStyles.start, searchStyles.wrap)}>
+              <div className={searchStyles.contents}>
+                <div className={searchStyles.item_row}>
+                  <div className={searchStyles.item_wrap}>
+                    <div className={searchStyles.inner}>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-tenantName" className={searchStyles.label}>
+                          <span className={searchStyles.text}>테넌트명</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Dropdown
+                            options={options3}
+                            value={selectedValues3}
+                            onChange={(selected) => setSelectedValues3(selected)}
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-select2" className={searchStyles.label}>
+                          <span className={searchStyles.text}>회사명</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Dropdown
+                            options={options4}
+                            value={selectedValues4}
+                            onChange={(selected) => setSelectedValues4(selected)}
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-ownerRole" className={searchStyles.label}>
+                          <span className={searchStyles.text}>관리자 역할</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Dropdown
+                            options={options5}
+                            value={selectedValues5}
+                            onChange={(selected) => setSelectedValues5(selected)}
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={searchStyles.btn_box}>
+                  <Button
+                    type="button"
+                    className={searchStyles.btn_refresh}
+                    variant="search"
+                    size="sm"
+                    onlyIcon
+                  >
+                    <IcoRefresh02 className={searchStyles.icon_refresh} />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="search"
+                    size="sm"
+                    className={searchStyles.btn_search}
+                  >
+                    <IcoSearch className={searchStyles.icon_sm_search} />
+                    조회
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className={popupStyles.container}>
+              <Grid
+                data={data}
+                columns={columns}
+                height={380}
+                hideColumnSettings={true}
+                pagination={{
+                  pageSize,
+                  pageIndex,
+                  totalRows: 100,
+                  onPageChange: setPageIndex,
+                  onPageSizeChange: setPageSize,
+                }}
+                title="타이틀"
+              />
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
+    );
+  };
+
   return (
     <PageContainer>
       {/* main_contents */}
@@ -285,6 +481,61 @@ function RouteComponent() {
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <ChipListModalSelectorFormField
+                modalConfig={{ width: 'xl', content: <ModalOwnerSearchContent /> }}
+                chipList={{
+                  labelField: 'name',
+                  valueField: 'value',
+                  hideBorder: true,
+                }}
+              />
+            </div>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-tag" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>테넌트 정산 태그</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input
+                id="name-tag"
+                type="text"
+                placeholder="입력"
+                className={formStyles.input}
+                maxLength={150}
+              />
+            </div>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-companySelect" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>회사 선택</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+              <Tooltip
+                className={formStyles.tooltip}
+                side="bottom"
+                align="start"
+                content={
+                  '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다. '
+                }
+              >
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Button>
+              </Tooltip>
             </label>
             <div className={formStyles.input_box}>
               <ChipListModalSelectorFormField
