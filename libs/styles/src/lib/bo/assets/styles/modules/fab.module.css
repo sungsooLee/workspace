@@ -17,6 +17,14 @@
         }
         &.btn_bottom {
           @apply mt-[4px];
+          svg {
+            @apply rotate-180;
+          }
+        }
+        &:hover {
+          svg {
+            @apply stroke-[#B5C2D7];
+          }
         }
       }
     }

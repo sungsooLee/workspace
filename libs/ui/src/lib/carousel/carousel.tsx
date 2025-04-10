@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 
 export interface CarouselComponentProps extends SwiperProps {
   items: Array<React.ReactNode>;
@@ -22,14 +22,14 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
       <Swiper
         {...props}
         ref={ref}
-        className={cn(styles.Swiper, className, 'nlp-carousel')}
-        modules={[FreeMode, Pagination, Navigation]}
+        className={cn(styles.swiper, className, 'nlp-carousel')}
+        modules={[FreeMode, Pagination, Navigation, Autoplay]}
         // onSlideChange={() => console.log('slide change')}
         // onSwiper={(swiper) => console.log(swiper)}
       >
         {/* items */}
         {items.map((item, index) => (
-          <SwiperSlide key={index} className={cn(styles.SwiperSlide)}>
+          <SwiperSlide key={index} className={cn(styles.swiper_slide)}>
             {item}
           </SwiperSlide>
         ))}

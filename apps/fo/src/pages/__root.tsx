@@ -25,7 +25,7 @@ export const Route = createRootRouteWithContext<PageRouteContext>()({
 function RootComponent() {
   const { closeAll } = useModalStore();
 
-  useRenewalMenuStateFromRouting();
+  //useRenewalMenuStateFromRouting();
 
   // router event subscribe
   useGlobalRouterEvent({

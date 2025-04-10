@@ -9,13 +9,11 @@ import {
   // Tooltip,
   // DatePicker,
   // Switch,
-  Select,
   // ThumbnailImageUpload,
   // ChipList,
   // SelectOption,
   Input,
   Dropdown,
-  DropdownOption,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

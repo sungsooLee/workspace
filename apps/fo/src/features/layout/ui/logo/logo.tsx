@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 
-import { Tenant } from '../../../../entities/tenant';
+import { Tenant } from '../../../../types';
 import logoImage from '../../../../assets/images/logo.png';
 import mIogoImage from '../../../../assets/images/m_logo.png';
 
@@ -27,9 +27,9 @@ const LogoComponent = ({ activeTenant }: LogoComponentProps) => {
     <div className={`${styles.start} ${styles.logo}`}>
       <Link to={'/'}>
         {(activeTenant?.logoImageUrl && (
-          <img src={activeTenant?.logoImageUrl} title={activeTenant.name} />
+          <img src={activeTenant?.logoImageUrl} title={activeTenant.tenantName} />
         )) ??
-          activeTenant?.name}
+          activeTenant?.tenantName}
         {/* {activeTenant.} */}
         {/* <div className="min-w-[100px] cursor-pointer">{activeTenant?.name || '로고'}</div> */}
       </Link>

@@ -5,14 +5,30 @@
     .profile_info {
       @apply pb-[32px] pt-[36px];
       .avata_img {
-        @apply m-auto h-[66px] w-[66px] text-center;
+        @apply m-auto text-center;
         .start {
           @apply h-[66px] w-[66px];
         }
+        .avata_box {
+          @apply flex items-center justify-center;
+          .info_avata {
+            @apply h-[66px] w-[66px];
+            & + .info_avata {
+              @apply -ml-[12px];
+            }
+          }
+        }
+        .name {
+          @apply flex h-[66px] w-[66px] items-center justify-center rounded-[50%] bg-[#00afd5];
+          .text {
+            @apply title_3_b text-white;
+          }
+          & + .info_avata {
+            @apply -ml-[12px];
+          }
+        }
       }
-      .info_avata {
-        @apply m-auto h-[66px] w-[66px];
-      }
+
       .profile {
         @apply m-auto max-w-[300px] px-[34px];
         .name {
@@ -24,6 +40,18 @@
         }
         .team {
           @apply ellipsis mt-[0] overflow-hidden text-ellipsis whitespace-nowrap;
+        }
+        .time {
+          @apply mt-[16px] flex justify-center;
+          span {
+            @apply body_bo_3_r text-[var(--gray7)];
+            & + span {
+              @apply relative ml-[8px] pl-[8px];
+              &::before {
+                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+              }
+            }
+          }
         }
       }
     }

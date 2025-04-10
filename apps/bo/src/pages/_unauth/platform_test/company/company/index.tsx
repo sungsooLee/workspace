@@ -19,23 +19,36 @@ function RouteComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
 
-  /**
-   * 학습 컨텐츠를 등록하기 위한 Dialog 호출
-   */
+  const handleBulkRegister = async () => {
+    console.log('handleBulkRegister');
+  };
+
   const handleRegister = async () => {
-    console.log('');
+    console.log('handleRegister');
   };
 
   const handleOnSearch = useCallback((data: any) => {
+    console.log('handleOnSearch', data);
     gridFetch(data);
   }, []);
 
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="point" size="sm" onClick={handleRegister}>
-          등록
-        </Button>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={handleBulkRegister}
+          label={t('일괄등록')}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={handleRegister}
+          label={t('등록')}
+        />
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -48,46 +61,41 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'tenant',
+        name: 'companyTypeCode',
         type: 'dropdown',
         label: t('회사구분'),
         value: '',
-        dropdownConfig: {
-          variant: 'chip',
-        },
         options: [
           { value: '', label: t('전체') },
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-          { value: 'tenantF', label: t('테넌트F') },
+          { value: '완성차', label: t('완성차') },
+          { value: '현대', label: t('현대') },
+          { value: '기아', label: t('기아') },
         ],
       },
       {
-        name: 'learningResourceName',
+        name: 'name',
         type: 'text',
         label: t('회사/법인명'),
         value: '',
       },
-      // {
-      //   name: 'isUsed',
-      //   type: 'dropdown',
-      //   label: t('사용여부'),
-      //   value: '',
-      //   options: [
-      //     { value: '', label: t('전체') },
-      //     { value: 'true', label: t('사용') },
-      //     { value: 'false', label: t('미사용') },
-      //   ],
-      // },
+      {
+        name: 'useYn',
+        type: 'dropdown',
+        label: t('사용여부'),
+        value: '',
+        options: [
+          { value: '', label: t('전체') },
+          { value: true, label: t('사용') },
+          { value: false, label: t('미사용') },
+        ],
+      },
     ],
   ],
 };
 
 const gridConfig = {
   query: translationQueryOptions.all,
+  title: t('회사(법인)목록'),
   columns: [
     {
       name: 'no1',
@@ -109,4 +117,7 @@ const gridConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
+  height: 566,
+  hideColumnSettings: true,
+  showExcelDownload: true,
 };

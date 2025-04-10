@@ -98,12 +98,12 @@ export function useUpdateUser(mutationOptions = {}) {
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },
-    updateActiveTenant: (tenantId: number): AuthUser | undefined => {
+    updateActiveTenant: (tenantNo: number): AuthUser | undefined => {
       const user = queryClient.getQueryData(queryKeys.authUser);
       if (!user) {
         return;
       }
-      const updateUser = { ...user, activeTenantId: tenantId };
+      const updateUser = { ...user, activeTenantNo: tenantNo };
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },

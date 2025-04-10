@@ -112,14 +112,6 @@
   }
 }
 
-/* title */
-.title_wrap {
-  @apply mb-[16px];
-  .title {
-    @apply title_bo_4_b text-[var(--gray9)];
-  }
-}
-
 .status {
   @apply ml-[2px] inline-flex align-text-top;
   &.required svg {
@@ -128,4 +120,8 @@
   &.error svg {
     @apply fill-[#ff4646];
   }
+}
+
+.check_wrap {
+  @apply w-full;
 }

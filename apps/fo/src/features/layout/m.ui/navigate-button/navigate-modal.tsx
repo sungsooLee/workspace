@@ -19,15 +19,15 @@ const NavigateModalComponent = () => {
   const { data } = useFetchAuthUser();
   const { updateActiveTenant, updateMainTenant } = useUpdateUser();
 
-  const handleChangeMainTenant = async (tenantId: number) => {
-    updateMainTenant(tenantId);
-    setTip(tenantId);
+  const handleChangeMainTenant = async (tenantNo: number) => {
+    updateMainTenant(tenantNo);
+    setTip(tenantNo);
   };
 
-  const handleChangeTenant = async (tenantId: number) => {
+  const handleChangeTenant = async (tenantNo: number) => {
     const result = await confirm(t('MESSAGE.선택한 테넌트로 변경하시겠습니까?'));
     if (result) {
-      updateActiveTenant(tenantId);
+      updateActiveTenant(tenantNo);
       window.location.reload();
     }
   };
@@ -59,7 +59,8 @@ const NavigateModalComponent = () => {
                     width: 'm_full',
                     content: <div />, //PasswordVerifyPopup
                   })
-                }>
+                }
+              >
                 개인정보변경
               </Button>
             </div>

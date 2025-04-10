@@ -5,7 +5,7 @@ export * from './ui/resource/ebook-info';
 export * from './ui/resource/image-info';
 export * from './ui/resource/movie-info';
 export * from './ui/resource/scorm-info';
-export * from './ui/resource/video-upload-modal';
+export * from './ui/resource/learning-resource-file-upload-modal';
 
 // resource > form-field
 export * from './ui/resource/form-field/consignment-parameters-form-field/consignment-parameters-form-field';

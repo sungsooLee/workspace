@@ -8,7 +8,7 @@ import { Grid } from '@learnway/ui';
  * @constructor
  */
 const GridBoxComponent: FC<any> = ({ config }) => {
-  const { data: data, page, totalRows, gridFetch, columns } = config;
+  const { data: data, page, totalRows, gridFetch, columns, ...props } = config;
   const columnHelper = createColumnHelper<any>();
   const girdColumns = columns.map((column: any) => {
     switch (column.type) {
@@ -55,6 +55,7 @@ const GridBoxComponent: FC<any> = ({ config }) => {
 
   return (
     <Grid
+      {...props}
       data={data}
       columns={girdColumns}
       pagination={

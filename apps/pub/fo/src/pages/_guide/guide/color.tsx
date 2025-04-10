@@ -41,22 +41,21 @@ function RouteComponent() {
         'Text Color는 WCAG 2.0의 접근성지침을 반영하여 최소 3:1의 명도대비를 준수하는 권장 컬러를 사용합니다.',
       ],
       colors: [
-        { name: '--gray10', textColor: '--white', code: '' },
-        { name: '--gray9', textColor: '--white', code: '' },
-        { name: '--gray8', textColor: '--white', code: '' },
-        { name: '--gray7', textColor: '', code: '' },
-        { name: '--gray6', textColor: '', code: '' },
-        { name: '--gray5', textColor: '', code: '' },
-        { name: '--gray4', textColor: '', code: '' },
-        { name: '--gray3', textColor: '', code: '' },
-        { name: '--gray2', textColor: '', code: '' },
-        { name: '--gray1', textColor: '', code: '' },
         {
           name: '--white',
           textColor: '--gray9',
-          code: '#ffffff',
+          code: '',
           border: '1px solid var(--gray3)',
         },
+        { name: '--gray1', textColor: '', code: '' },
+        { name: '--gray2', textColor: '', code: '' },
+        { name: '--gray3', textColor: '', code: '' },
+        { name: '--gray4', textColor: '', code: '' },
+        { name: '--gray5', textColor: '', code: '' },
+        { name: '--gray6', textColor: '', code: '' },
+        { name: '--gray7', textColor: '--white', code: '' },
+        { name: '--gray8', textColor: '--white', code: '' },
+        { name: '--gray9', textColor: '--white', code: '' },
       ],
     },
     {
@@ -71,6 +70,7 @@ function RouteComponent() {
         { name: '--primary2', textColor: '--white', code: '' },
         { name: '--primary3', textColor: '--white', code: '' },
         { name: '--primary4', textColor: '--white', code: '' },
+        { name: '--primary5', textColor: '', code: '' },
       ],
     },
     {
@@ -85,13 +85,12 @@ function RouteComponent() {
         { name: '--secondary2', textColor: '--white', code: '' },
         { name: '--secondary3', textColor: '--white', code: '' },
         { name: '--secondary4', textColor: '', code: '' },
-        { name: '--secondary4', textColor: '', code: '' },
         { name: '--secondary5', textColor: '', code: '' },
         { name: '--secondary6', textColor: '', code: '' },
         { name: '--secondary7', textColor: '', code: '' },
         { name: '--secondary8', textColor: '', code: '' },
         { name: '--secondary9', textColor: '', code: '' },
-        { name: '--secondary10', textColor: '', code: '' },
+        { name: '--secondary10', textColor: '--white', code: '' },
       ],
     },
     {
@@ -103,6 +102,8 @@ function RouteComponent() {
       colors: [
         { name: '--status1', textColor: '--white', code: '' },
         { name: '--status2', textColor: '', code: '' },
+        { name: '--status3', textColor: '', code: '' },
+        { name: '--status4', textColor: '', code: '' },
       ],
     },
   ];
@@ -133,7 +134,7 @@ function RouteComponent() {
       <h2 className="guide_tit2">Color Guide</h2>
       <p className="loc css">CSS 위치 : /src/assets/styles/_color.css</p>
       <p className="info">
-        /src/assets/styles/_color.css 컬러값을 수정하면 가이드에 자동 반영됩니다.
+        /libs/styles/rc/lib/fo/assets/styles/_color.css 컬러값을 수정하면 가이드에 자동 반영됩니다.
       </p>
       <div className="code_example">
         <pre className="code_block css">

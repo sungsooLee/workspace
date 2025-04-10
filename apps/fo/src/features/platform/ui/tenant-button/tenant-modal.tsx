@@ -16,15 +16,15 @@ const TenantModalComponent = () => {
   const { data } = useFetchAuthUser();
   const { updateActiveTenant, updateMainTenant } = useUpdateUser();
 
-  const handleChangeMainTenant = async (tenantId: number) => {
-    updateMainTenant(tenantId);
-    setTip(tenantId);
+  const handleChangeMainTenant = async (tenantNo: number) => {
+    updateMainTenant(tenantNo);
+    setTip(tenantNo);
   };
 
-  const handleChangeTenant = async (tenantId: number) => {
+  const handleChangeTenant = async (tenantNo: number) => {
     const result = await confirm(t('MESSAGE.선택한 테넌트로 변경하시겠습니까?'));
     if (result) {
-      updateActiveTenant(tenantId);
+      updateActiveTenant(tenantNo);
       window.location.reload();
     }
   };
@@ -40,15 +40,16 @@ const TenantModalComponent = () => {
                 <li>
                   <Button
                     key={idx}
-                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantId ? styles.active : ''}`}
-                    onClick={() => handleChangeMainTenant(tenant.tenantId)}>
+                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantNo ? styles.active : ''}`}
+                    onClick={() => handleChangeMainTenant(tenant.tenantNo)}
+                  >
                     <span className={styles.label}>
                       <i>
                         <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
                       </i>
                       대표
                     </span>
-                    {tip === tenant.tenantId && (
+                    {tip === tenant.tenantNo && (
                       <p className={`${styles.tip} ${styles.tip_show}`}>
                         대표 테넌트로 설정되었습니다.
                       </p>
@@ -57,7 +58,8 @@ const TenantModalComponent = () => {
                   <Button
                     key={idx}
                     className={styles.btn_refresh}
-                    onClick={() => handleChangeTenant(tenant.tenantId)}>
+                    onClick={() => handleChangeTenant(tenant.tenantNo)}
+                  >
                     <span className={styles.txt}>
                       {tenant.tenantName}
                       {isMobile ? (
@@ -65,7 +67,8 @@ const TenantModalComponent = () => {
                           <IcoArrowForward
                             width={20}
                             height={20}
-                            stroke="#6f798b"></IcoArrowForward>
+                            stroke="#6f798b"
+                          ></IcoArrowForward>
                         </i>
                       ) : null}
                     </span>

@@ -17,11 +17,14 @@ const LinkBoxComponent: FC<{ children: ReactNode }> = ({ children }) => {
   );
   return (
     <div className={styles.link_box}>
-      <div className={styles.link}>
-        {links.map(
-          (link, index) => cloneElement(link, { key: `link-${index}` }), // key 추가
-        )}
-      </div>
+      {links && links.length > 0 && (
+        <div className={styles.link}>
+          {links.map(
+            (link, index) => cloneElement(link, { key: `link-${index}` }), // key 추가
+          )}
+        </div>
+      )}
+
       {others}
     </div>
   );

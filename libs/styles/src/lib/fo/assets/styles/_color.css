@@ -20,6 +20,7 @@
   --primary2: #07287e;
   --primary3: #0f3492; /* 버튼 호버 */
   --primary4: #3f5da8;
+  --primary5: #e6ecf9;
 
   --secondary1: #00afd5;
   --secondary2: #00b6de; /* 버튼 호버 */
@@ -29,6 +30,8 @@
   --secondary6: #f7feff; /* bg */
   --secondary7: #ffdada; /* red plus */
   --secondary8: #ffeded; /* red bg */
+  --secondary9: #fff9e7;
+  --secondary10: #045161;
 
   /* Support */
   --status1: #ff4646; /* Error */

@@ -470,7 +470,7 @@ const Grid = forwardRef(
                                 height={4}
                                 fill={'#00afd5'}
                                 stroke={'#00afd5'}
-                                className="icon_up"
+                                className={styles.icon_up}
                               />
                             ),
                             desc: (
@@ -479,7 +479,7 @@ const Grid = forwardRef(
                                 height={4}
                                 fill={'#00afd5'}
                                 stroke={'#00afd5'}
-                                className="icon_down"
+                                className={styles.icon_down}
                               />
                             ),
                           }[column.getIsSorted() as string] ?? null}
@@ -488,7 +488,7 @@ const Grid = forwardRef(
                             <Button
                               type="button"
                               onClick={(e) => openFilterPopup(e, column)}
-                              className="btn_filter"
+                              className={styles.btn_filter}
                             >
                               <IcoGridFilter width={16} height={16} />
                             </Button>

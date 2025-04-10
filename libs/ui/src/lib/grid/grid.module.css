@@ -11,6 +11,14 @@
           @apply h-full;
           .th_cell {
             @apply body_bo_4_b flex min-h-[40px] items-center px-[8px] text-[var(--gray8)];
+            .icon_up,
+            .icon_down,
+            .btn_filter {
+              @apply ml-auto;
+            }
+            .icon_down {
+              @apply rotate-180;
+            }
           }
         }
         & + .thead_th {
