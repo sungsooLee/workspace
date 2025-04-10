@@ -2,15 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_locale_dto_req_MessageSearchReqDto$SearchByAdmin = {
+export type com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin = {
     /**
      * 다국어 분류
      */
-    keyType?: com_ever_edu_pms_locale_dto_req_MessageSearchReqDto$SearchByAdmin.keyType;
+    keyType?: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin.keyType;
     /**
      * 다국어 코드
      */
-    code?: string;
+    multilingualKey?: string;
     /**
      * 기준 언어
      */
@@ -20,7 +20,7 @@ export type com_ever_edu_pms_locale_dto_req_MessageSearchReqDto$SearchByAdmin = 
      */
     useYn?: boolean;
 };
-export namespace com_ever_edu_pms_locale_dto_req_MessageSearchReqDto$SearchByAdmin {
+export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin {
     /**
      * 다국어 분류
      */

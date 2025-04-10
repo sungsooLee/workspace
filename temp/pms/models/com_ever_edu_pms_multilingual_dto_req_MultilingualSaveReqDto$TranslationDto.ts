@@ -5,7 +5,7 @@
 /**
  * 번역 리스트
  */
-export type com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto = {
+export type com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto = {
     /**
      * 지역
      */

@@ -2,16 +2,16 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto } from './com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto';
-export type com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto = {
+import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
+export type com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto = {
     /**
      * 다국어 코드
      */
-    code: string;
+    multilingualKey: string;
     /**
      * 키 타입
      */
-    keyType?: com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto.keyType | null;
+    keyType?: com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto.keyType | null;
     /**
      * 사용여부
      */
@@ -31,9 +31,9 @@ export type com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto = {
     /**
      * 번역 리스트
      */
-    translations: Array<com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto>;
+    translations: Array<com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto>;
 };
-export namespace com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$MessageDto {
+export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto {
     /**
      * 키 타입
      */
