@@ -12,8 +12,8 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_Tena
     content?: Array<com_ever_edu_pms_tenant_dto_TenantResponse>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

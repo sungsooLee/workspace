@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_locale_dto_res_MessageResDto$TranslationDto = {
+export type com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$TranslationDto = {
     /**
      * 지역
      */

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto } from './com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto';
+import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
 export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
     /**
      * 메뉴ID
@@ -63,7 +63,7 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
     /**
      * 번역 리스트
      */
-    translations: Array<com_ever_edu_pms_locale_dto_req_MessageSaveReqDto$TranslationDto>;
+    translations: Array<com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto>;
 };
 export namespace com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto {
     /**
