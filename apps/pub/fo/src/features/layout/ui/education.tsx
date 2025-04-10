@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Button, useModal } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
-import { EducationPlacePopup } from '../../../features/layout';
+import { EducationPlacePopup, CourseInformationPopup } from '../../../features/layout';
 
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../pages/_layout/course-introduction/bullet.module.css';
@@ -30,7 +30,17 @@ const EducationComponent = ({ className }: EducationProps) => {
           </div>
         </div>
         <div className={styles.btn_box}>
-          <Button variant="primary" size="lg">
+          {/* CourseInformationPopup (수강신청 불가 팝업창) */}
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <CourseInformationPopup />,
+              })
+            }
+          >
             수강 신청
           </Button>
           <Button variant="gray" size="lg">

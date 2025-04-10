@@ -20,8 +20,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   return (
     <div className={styles.start}>
-      <MobileContainerHeader />
-      {/* <MobileHeader /> */}
+      {/* <MobileContainerHeader /> */}
+      <MobileHeader />
       <main>{children}</main>
       {/* 하단 반응형 footer */}
       {/* <Footer />  */}

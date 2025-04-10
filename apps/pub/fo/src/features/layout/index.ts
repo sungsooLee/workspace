@@ -45,3 +45,4 @@ export * from './ui/education';
 export * from './popup/education-place-popup';
 export * from './ui/notification-contents';
 export * from './popup/notice-detail-popup';
+export * from './popup/course-information-popup';

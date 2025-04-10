@@ -755,7 +755,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx',
+    remarks: '- introduction.tsx\n- optioncard 확인중\n- tooltip 확인중',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -775,7 +775,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx',
+    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
   },
   {
     screenId: 'NLP_FO_LEC_1004',
