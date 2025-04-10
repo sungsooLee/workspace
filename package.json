@@ -16,7 +16,13 @@
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
-    "test:editor": "nx test editor --coverage --watch"
+    "test:editor": "nx test editor --coverage --watch",
+    "fetch:swagger-pms": "curl -o ./temp/pms.json http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/v3/api-docs",
+    "fetch:swagger-lms": "curl -o ./temp/lms.json http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/lms-module/v3/api-docs",
+    "fetch:swagger-cms": "curl -o ./temp/cms.json http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs",
+    "type-generate-pms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/v3/api-docs --output ./temp/pms --client fetch",
+    "type-generate-lms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/lms-module/v3/api-docs --output ./temp/lms --client fetch",
+    "type-generate-cms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs --output ./temp/cms --client fetch"
   },
   "private": true,
   "dependencies": {
@@ -173,6 +179,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "~22.1.0",
     "nx": "20.0.3",
+    "openapi-typescript-codegen": "^0.29.0",
     "postcss": "8.4.38",
     "postcss-nested": "^7.0.2",
     "prettier": "^3.5.3",

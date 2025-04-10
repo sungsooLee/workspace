@@ -2,7 +2,7 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Checkbox, Select, Dropdown, DropdownOption } from '@learnway/ui';
+import { Button, Checkbox, Dropdown, DropdownOption } from '@learnway/ui';
 // import styles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
@@ -41,7 +41,7 @@ function RouteComponent() {
           size={'lg'}
           className={styles.select}
         />
-        {/* <Select
+        {/* <Dropdown
           size="lg"
           options={[
             { value: 'type1', label: '약관 명 YYYY-MM-DD' },

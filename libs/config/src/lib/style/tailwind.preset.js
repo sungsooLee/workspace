@@ -11,6 +11,8 @@ module.exports = {
           DEFAULT: 'hsl(var(--primary))',
           1: 'var(--primary1)',
           2: 'var(--primary2)',
+          3: 'var(--primary3)',
+          4: 'var(--primary4)',
         },
         secondary: {
           DEFAULT: 'var(--secondary)',

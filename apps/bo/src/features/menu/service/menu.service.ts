@@ -52,6 +52,52 @@ export const transformApiDataToTreeData = (apiData: any) => {
 };
 
 /**
+ * API 응답 데이터에서 API 프로그램 관리를 위한 데이터
+ * @param {any} apiData - API에서 받은 원본 데이터
+ * @returns {TreeNode[]} - 트리 컴포넌트에 적합한 형태로 변환된 데이터
+ */
+export const transformApiDataToApiTreeData = (apiData: any) => {
+  // 단일 노드인 경우 배열로 감싸기
+  const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+
+  // 재귀적으로 데이터 구조 변환
+  const transform = (nodes: any) => {
+    if (!nodes) return [];
+
+    return nodes.map((node: any) => {
+      console.log(node);
+      // 새로운 노드 객체 생성
+      const transformedNode = {
+        key: node.apiId.toString(),
+        title: node?.apiName,
+
+        apiId: node.apiId.toString(),
+        apiMethod: node?.apiMethod,
+        apiName: node?.apiName,
+        apiScope: node?.apiScope,
+        apiUrl: node?.apiUrl,
+        depth: node?.depth,
+        parentId: node?.parentId,
+        sortOrder: node?.sortOrder,
+        useYn: node?.useYn,
+        apiDesc: node?.apiDesc,
+        children: node.children || [],
+        fullPath: node?.fullPath,
+      };
+
+      // 자식 노드가 있는 경우 재귀적으로 변환
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(dataArray);
+};
+
+/**
  * 트리 컴포넌트 데이터를 API 요청 형식으로 다시 변환하는 함수 (저장 시 사용)
  * @param {TreeNode[]} treeData - 트리 컴포넌트의 데이터
  * @returns {any} - API 요청에 적합한 형태로 변환된 데이터
@@ -140,4 +186,29 @@ export const findNodeByMenuId = (nodes: TreeNode[], menuId: string): TreeNode | 
     }
   }
   return null;
+};
+
+export const treeExpandAll = (
+  expand: boolean,
+  treeData: TreeNode[],
+  onExpandChange: (keys: string[]) => void,
+) => {
+  if (expand) {
+    // 모든 노드 키 수집
+    const getAllKeys = (nodes: TreeNode[]): string[] => {
+      return nodes.reduce((keys: string[], node) => {
+        keys.push(node.key);
+        if (node.children?.length) {
+          keys.push(...getAllKeys(node.children));
+        }
+        return keys;
+      }, []);
+    };
+
+    const allKeys = getAllKeys(treeData);
+    onExpandChange(allKeys);
+  } else {
+    // 모두 축소
+    onExpandChange([]);
+  }
 };

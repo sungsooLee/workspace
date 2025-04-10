@@ -19,6 +19,7 @@ import {
   Textarea,
   Grid,
   CheckboxGroupFormField,
+  Table,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/widget-detail')({
@@ -74,6 +75,82 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '필수여부',
       size: 200,
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<any, unknown>[];
+
+  // Table
+  const data2: any[] = [
+    {
+      Sort: <strong>PC</strong>,
+      ComponentId: <Input value={'dsbdbshjdbshbd'} />,
+      ComponentSize: (
+        <div className={dynamicFormStyles.size_wrap}>
+          <Input
+            id=""
+            type="text"
+            placeholder="입력"
+            value="600"
+            className={dynamicFormStyles.input}
+            disabled
+          />
+          <span className={dynamicFormStyles.unit}>{'X'}</span>
+          <Input
+            id=""
+            type="text"
+            placeholder="입력"
+            value="800"
+            className={dynamicFormStyles.input}
+            disabled
+          />
+        </div>
+      ),
+    },
+    {
+      Sort: <strong>Mobile</strong>,
+      ComponentId: <Input value={'dsbdbshjdbshbd'} />,
+      ComponentSize: (
+        <div className={dynamicFormStyles.size_wrap}>
+          <Input
+            id=""
+            type="text"
+            placeholder="입력"
+            value="320"
+            className={dynamicFormStyles.input}
+            disabled
+          />
+          <span className={dynamicFormStyles.unit}>{'X'}</span>
+          <Input
+            id=""
+            type="text"
+            placeholder="입력"
+            value="580"
+            className={dynamicFormStyles.input}
+            disabled
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const columns2 = [
+    columnHelper.accessor('Sort', {
+      cell: (info) => info.getValue(),
+      header: '구분',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('ComponentId', {
+      cell: (info) => info.getValue(),
+      header: '컴포넌트 ID',
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('ComponentSize', {
+      cell: (info) => info.getValue(),
+      header: '사이즈(가로X세로) pixel',
       enableGrouping: false,
     }),
   ] as ColumnDef<any, unknown>[];
@@ -197,6 +274,22 @@ function RouteComponent() {
                 보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에
                 {checked[1] ? ' 강합니다.' : ' 취약합니다.'}
               </p>
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240407 : 테이블 추가 */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-id" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>컴포넌트 ID</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Table data={data2} columns={columns2} tableMode={true} />
+              </div>
             </div>
           </ContentsRow>
           <ContentsRow>

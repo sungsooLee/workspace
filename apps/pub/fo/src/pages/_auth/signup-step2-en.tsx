@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Input, ContentsRow, RadioCard, Select } from '@learnway/ui';
+import { Button, Stepper, SelectOption, Dropdown, ContentsRow, RadioCard } from '@learnway/ui';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
@@ -85,17 +85,17 @@ function RouteComponent() {
                 </label>
                 <div className={formStyles.input_box}>
                   <div className={dynamicFormStyles.item_col_full}>
-                    <Select
+                    <Dropdown
                       size="lg"
                       options={[{ value: 'type1', label: 'Select Region' }]}
                       className={formStyles.select_option}
                     />
-                    <Select
+                    <Dropdown
                       size="lg"
                       options={[{ value: 'type1', label: 'Select Distributor' }]}
                       className={formStyles.select_option}
                     />
-                    <Select
+                    <Dropdown
                       size="lg"
                       options={[{ value: 'type1', label: 'Select Dealer' }]}
                       className={formStyles.select_option}

@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react/*';
-import { AutoComplete, DropdownOption } from '@learnway/ui';
+import { AutoCompleteDropdown, DropdownOption } from '@learnway/ui';
 
 export default {
-  title: 'Components/AutoComplete',
-  component: AutoComplete,
+  title: 'Components/AutoCompleteDropdown',
+  component: AutoCompleteDropdown,
   tags: ['autodocs'],
   argTypes: {},
 } as Meta;
-type Story = StoryObj<typeof AutoComplete>;
+type Story = StoryObj<typeof AutoCompleteDropdown>;
 
 const sampleOptions: DropdownOption[] = [
   { value: '서울', label: '서울특별시' },
@@ -26,8 +26,9 @@ const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
   return new Promise<DropdownOption[]>((resolve) => {
     console.log('API 호출 해야함' + inputValue);
     setTimeout(() => {
-      const filteredOptions = sampleOptions.filter((option) =>
-        option.label.toLowerCase().includes(inputValue.toLowerCase()),
+      const filteredOptions = sampleOptions.filter(
+        (option: DropdownOption) =>
+          option?.label && option.label.toLowerCase().includes(inputValue.toLowerCase()),
       );
       resolve(filteredOptions);
     }, 500); // 0.5초 지연
@@ -35,7 +36,7 @@ const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
 };
 
 const Template: React.FC<any> = (args) => {
-  return <AutoComplete {...args} />;
+  return <AutoCompleteDropdown {...args} />;
 };
 
 export const AutoCompleteStory: Story = {

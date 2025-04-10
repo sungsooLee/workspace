@@ -1,5 +1,5 @@
 export function useFetchAuthUser() {
-  const data = { activeTenantId: 'uiuu', menus: 'dffd' };
+  const data = { activeTenantNo: 'uiuu', menus: 'dffd' };
 
   return {
     data,

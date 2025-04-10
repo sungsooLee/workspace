@@ -1,4 +1,4 @@
-import { SelectOption } from '../select/type';
+import { SelectOption } from '../type';
 import { BaseFieldProps, FieldType } from '../type';
 
 export interface RadioGroupOption extends SelectOption {

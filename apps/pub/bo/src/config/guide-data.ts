@@ -317,31 +317,49 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
+    screenName: 'PMS/플랫폼관리_회사/조직관리',
+    pageId: 'pms/menu-platform-company-detail',
+    screenId: 'NLP_BO_TMS_1302',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행예정', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리_공통코드그룹관리',
+    pageId: 'pms/menu-platform-common-group',
+    screenId: 'NLP_BO_PMS_1400',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
+  },
+  {
     screenName: 'PMS/플랫폼관리_플랫폼API관리',
     pageId: 'pms/menu-platform',
     screenId: 'NLP_BO_PMS_1404',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-08',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_메뉴관리',
     pageId: 'pms/menu-management',
     screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-08',
     lastUpdateDate: '2025-04-02',
-    remarks: '진행중(트리영역 제외 완료)', // 비고
+    remarks: '완료(트리영역 개발환경에서 작업중)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_카테고리관리',
     pageId: 'pms/category-menagement',
     screenId: 'NLP_BO_PMS_1120',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-08',
     lastUpdateDate: '2025-04-02',
-    remarks: '진행중(트리영역 제외 완료)', // 비고
+    remarks: '완료(트리영역 개발환경에서 작업중)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯관리',
@@ -350,7 +368,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-31',
     lastUpdateDate: '2025-03-31',
-    remarks: '작업완료(그리드는 참고용입니다.)', // 비고
+    remarks: '완료(그리드는 참고용입니다.)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯관리 미리보기',
@@ -359,34 +377,61 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-31',
     lastUpdateDate: '2025-03-31',
-    remarks: '작업완료', // 비고
+    remarks: '완료', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯등록',
     pageId: 'pms/widget-register',
     screenId: 'NLP_BO_PMS_1311',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-07',
     lastUpdateDate: '',
-    remarks: '진행중(하단 테이블 작업 예정)', // 비고
+    remarks: '화면 삭제(위젯 등록/삭제 기능 없어짐)', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_위젯상세',
     pageId: 'pms/widget-detail',
     screenId: 'NLP_BO_PMS_1312',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행중(하단 테이블 작업 예정)', // 비고
+    completionDate: '2025-04-07',
+    lastUpdateDate: '2025-04-07',
+    remarks: '완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_메뉴관리',
     pageId: 'pms/tenant-menu-management',
     screenId: 'NLP_BO_TMS_1002_01',
     pageType: 'Page',
+    completionDate: '2025-04-08',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리',
+    pageId: 'pms/menu-tenant-platform-management',
+    screenId: 'NLP_BO_TMS_1000',
+    pageType: 'Page',
+    completionDate: '2025-04-09',
+    lastUpdateDate: '2025-04-09',
+    remarks: '완료', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 등록',
+    pageId: 'pms/menu-tenant-platform-management-registration',
+    screenId: 'NLP_BO_TMS_1001',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '진행중', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트속성관리',
+    pageId: 'pms/menu-tenant-attribute-management',
+    screenId: 'NLP_BO_TMS_1003_00-04',
+    pageType: 'Page',
+    completionDate: '2025-04-09',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

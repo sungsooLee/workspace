@@ -17,7 +17,7 @@ export interface PanelComponentProps {
   collapsed?: boolean; // 외부에서 collapsed 컨트롤 필요한 경우 사용
   headerClassName?: string;
   hideHeaderUnderline?: boolean;
-  type?: 'line' | 'fill';
+  type?: 'line' | 'fill' | 'secondary' | 'gray';
 }
 
 const PanelComponent = function ({
@@ -43,24 +43,26 @@ const PanelComponent = function ({
   }, [ownerCollapsed]);
 
   return (
-    <div className={cn(styles.start, className, 'nlp--panel', type && styles[type])}>
+    <div className={cn(styles.start, className, 'nlp--panel')}>
       {/* Header */}
-      <div className={cn(styles.header, 'flex flex-row')}>
-        {/* Title */}
-        <div className={cn(styles.title, 'flex-1')}>{isString(title) ? t(title) : title}</div>
-        {/* Action */}
-        <div className={styles.actions}>{actions}</div>
-        {/* Collapse Button */}
-        {collapsible && (
-          <Button icon={collapsed ? <ChevronUp /> : <ChevronDown />} onClick={handleClick} />
-        )}
-      </div>
+      {(isString(title) || collapsible !== undefined) && (
+        <div className={cn(styles.header, className)}>
+          <h2 className={cn(styles.title, className)}>{isString(title) ? t(title) : title}</h2>
+
+          {collapsible && (
+            <Button icon={collapsed ? <ChevronUp /> : <ChevronDown />} onClick={handleClick}>
+              {/* actions*/}
+              <div className={styles.actions}>{actions}</div>
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Header Underline */}
       {!hideHeaderUnderline && <hr />}
 
       {/* Body */}
-      <div className={cn(styles.body, !collapsed && 'hidden')}>
+      <div className={cn(styles.body, !collapsed && 'hidden', type && styles[type])}>
         <div className={cn(styles.col)}>{children}</div>
       </div>
     </div>

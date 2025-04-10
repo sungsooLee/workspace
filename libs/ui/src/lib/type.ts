@@ -1,10 +1,4 @@
 import { FocusEventHandler } from 'react';
-import { CheckFieldProps } from './checkbox/type';
-import { DateRangeFieldProps } from './date-picker/date-range-picker';
-import { NumberFieldProps } from './input/type';
-import { RadioFieldProps } from './radio-group/type';
-import { SelectFieldProps } from './select/type';
-import { SwitchFieldProps } from './switch/type';
 import { Control } from 'react-hook-form';
 
 export enum FieldType {
@@ -55,18 +49,6 @@ export interface BaseFieldProps<T = any> {
   extra?: any;
 }
 
-export type DynamicFieldProps =
-  // | TextFieldProps
-  | NumberFieldProps
-  | SelectFieldProps
-  | CheckFieldProps
-  | SwitchFieldProps
-  | RadioFieldProps
-  // | DateFieldProps
-  | DateRangeFieldProps;
-
-///////
-
 export interface BaseField<T = any> {
   name: string;
   label: string;
@@ -114,4 +96,18 @@ export interface CommonReactElementProps {
 export interface Image {
   src: string;
   size: number; // byte
+}
+
+export interface DropdownOption {
+  value: string;
+  label?: string;
+}
+
+export interface SelectOption {
+  label: string;
+  value: string;
+  disabled?: boolean;
+  subLabel?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  extra?: any;
 }

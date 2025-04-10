@@ -1,7 +1,7 @@
 import React, { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { useFieldArray } from 'react-hook-form';
-import { Button, ContentsRow, DropdownList, DropdownOption, Input, Select } from '@learnway/ui';
+import { Button, ContentsRow, Dropdown, DropdownOption, Input } from '@learnway/ui';
 import { LOCALES } from '@learnway/config';
 import { t } from 'i18next';
 import { IcoCloseCircle } from '@learnway/icons';
@@ -28,13 +28,9 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProp
       label: t(value),
     }));
 
-    const handleBaseLocalChange = (
-      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-      _: ActionMeta<DropdownOption>,
-    ) => {
-      const singleValue = newValue as SingleValue<DropdownOption>;
-      if (singleValue) {
-        setBase({ ...base, locale: singleValue.value });
+    const handleBaseLocalChange = (newValue: string) => {
+      if (newValue) {
+        setBase({ ...base, locale: newValue });
       }
     };
 
@@ -76,7 +72,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProp
         <div ref={ref}>
           {fields.map((field: Record<string, any>, index: number) => (
             <ContentsRow className={dynamicFormStyles.row_inner} key={field.id}>
-              <DropdownList
+              <Dropdown
                 className={dynamicFormStyles.short}
                 options={localeOptions}
                 value={{ value: field.locale, label: field.locale }}
@@ -102,7 +98,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProp
             </ContentsRow>
           ))}
           <ContentsRow className={dynamicFormStyles.row_inner}>
-            <DropdownList
+            <Dropdown
               className={dynamicFormStyles.short}
               options={localeOptions}
               value={{ value: base.locale, label: base.locale }}
@@ -118,7 +114,8 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProp
               variant="gray"
               size="sm"
               className={dynamicFormStyles.btn_edit}
-              onClick={handleFileChangeClick}>
+              onClick={handleFileChangeClick}
+            >
               자막 추가
             </Button>
             <input type="file" className={'hidden'} ref={fileRef} />

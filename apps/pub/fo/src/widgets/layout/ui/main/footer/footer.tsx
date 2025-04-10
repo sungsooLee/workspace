@@ -1,14 +1,19 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_footer.png';
-import { Select, Button, useModal } from '@learnway/ui';
+import { Dropdown, Button, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
 function FooterComponent() {
   const { open: openModal } = useModal();
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const options = [
+    { value: 'option1', label: 'site1' },
+    { value: 'option2', label: 'site2' },
+  ];
   return (
     <div className={`${styles.start} ${styles.footer}`}>
       <div className={styles.footer_area}>
@@ -41,7 +46,8 @@ function FooterComponent() {
                           width: 'm_full',
                           content: <AgreementPopup />,
                         })
-                      }>
+                      }
+                    >
                       이용약관
                     </Button>
                   ) : (
@@ -56,7 +62,8 @@ function FooterComponent() {
                           width: 'm_full',
                           content: <PrivacyPopup />,
                         })
-                      }>
+                      }
+                    >
                       <strong>개인정보 처리방침</strong>
                     </Button>
                   ) : (
@@ -90,23 +97,15 @@ function FooterComponent() {
           </div>
 
           <div className={styles.family_site_info}>
-            <Select
-              size="lg"
-              onChange={() => console.log('change')}
-              options={[
-                {
-                  label: 'Family site',
-                  value: 'value0',
-                },
-                {
-                  label: 'site1',
-                  value: 'value1',
-                },
-                {
-                  label: 'site2',
-                  value: 'value2',
-                },
-              ]}
+            {/* 퍼블수정 : 드랍다운으로 변경 */}
+            <Dropdown
+              options={options}
+              value={selectedValues}
+              onChange={(selected) => setSelectedValues(selected)}
+              placeholder="Famliy site"
+              variant="default"
+              isMulti={false}
+              size={'lg'}
             />
           </div>
         </div>

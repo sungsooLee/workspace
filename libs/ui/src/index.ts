@@ -106,15 +106,9 @@ export * from './lib/progress/progress';
 export * from './lib/radio-group/radio-group';
 export * from './lib/radio-card/radio-card';
 
-// select
-export { selectStyles };
-export * from './lib/select/select';
-export * from './lib/select/type';
-
 // dropdown-list
-export * from './lib/dropdown-list/dropdown-list';
-export * from './lib/dropdown-list/auto-complete';
-export * from './lib/dropdown-list/type';
+export * from './lib/dropdown/dropdown';
+export * from './lib/auto-complete/auto-complete';
 
 // switch
 export * from './lib/switch/switch';
@@ -141,10 +135,12 @@ export * from './lib/tabs/tabs';
 
 // tree
 export * from './lib/tree-view/tree';
+export * from './lib/tree-view/tree-2';
 export * from './lib/tree-view/tree.service';
 export * from './lib/tree-view/node-detail';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
+export * from './lib/tree-view/shuttle-tree';
 
 // textarea
 export * from './lib/textarea/textarea';

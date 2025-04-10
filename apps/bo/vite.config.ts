@@ -45,6 +45,7 @@ export default defineConfig(({ mode }) => {
     base: basePath,
     build: {
       outDir: '../../dist/apps/bo',
+      assetsDir: 'assets',
       emptyOutDir: true,
       reportCompressedSize: true,
       commonjsOptions: {

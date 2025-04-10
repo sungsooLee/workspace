@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { Select, Button, EmptyText } from '@learnway/ui';
+import { Dropdown, Button, EmptyText } from '@learnway/ui';
 import { IcoArray, IcoDotpoints, IcoArrowForward } from '@learnway/icons';
 import {
   Arrays,
@@ -76,7 +76,7 @@ function RouteComponent() {
               <div className={styles.classify}>
                 <Arrays arraysData={arrays}></Arrays>
                 <div className={styles.box}>
-                  <Select
+                  <Dropdown
                     options={[
                       { value: '20', label: '20개씩' },
                       { value: '50', label: '50개씩' },

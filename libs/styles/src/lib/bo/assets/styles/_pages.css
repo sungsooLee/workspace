@@ -28,6 +28,12 @@
   .textarea_wrap {
     @apply rounded-[8px];
   }
+  [class*='nlp--contents-row'] label {
+    @apply !text-[#4c515e];
+  }
+  [class*='nlp--input'] input::placeholder {
+    @apply !text-[#a9afb8];
+  }
 }
 
 h4.auth--title {
@@ -83,5 +89,24 @@ h4.auth--title {
     &:first-child {
       @apply !font-normal;
     }
+  }
+}
+
+/* title */
+.content_wrap .title_wrap {
+  @apply mb-[16px];
+  .title {
+    @apply title_bo_4_b text-[var(--gray9)];
+  }
+  &::before,
+  &::after {
+    @apply hidden;
+  }
+}
+
+.content_wrap div + .title_wrap {
+  @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+  &.no_line {
+    @apply border-0;
   }
 }

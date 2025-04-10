@@ -3,6 +3,19 @@
   &.contents {
     .inner {
       @apply scrollbar box-border h-auto overflow-y-auto bg-[#f2f4f9] pb-[40px];
+      /* title_wrap */
+      .title_wrap {
+        @apply sticky left-0 top-0 z-[2] mb-0 flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
+        .title {
+          @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
+          .btn_favorites {
+            @apply ml-[4px] flex;
+            &:not(.active) svg {
+              @apply fill-none stroke-[var(--gray6)];
+            }
+          }
+        }
+      }
     }
   }
 
@@ -11,20 +24,6 @@
     @apply relative w-full px-[40px];
     .content {
       @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
-    }
-  }
-
-  /* title_wrap */
-  .title_wrap {
-    @apply sticky left-0 top-0 z-[1] flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
-    .title {
-      @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
-      .btn_favorites {
-        @apply ml-[4px] flex;
-        &:not(.active) svg {
-          @apply fill-none stroke-[var(--gray6)];
-        }
-      }
     }
   }
 

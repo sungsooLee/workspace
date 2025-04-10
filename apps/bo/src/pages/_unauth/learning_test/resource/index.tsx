@@ -92,7 +92,7 @@ function RouteComponent() {
     <PageContainer displayContent={displayContent}>
       <ContentsButtons>
         <Button type="button" variant="point" size="sm" onClick={handleRegister}>
-          등록
+          등록2
         </Button>
       </ContentsButtons>
       <MainContents>

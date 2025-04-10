@@ -1,9 +1,16 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Select, Button, Pagination, Input, ContentsRow, Carousel, EmptyText } from '@learnway/ui';
+import {
+  Dropdown,
+  Button,
+  Pagination,
+  Input,
+  ContentsRow,
+  Carousel,
+  EmptyText,
+} from '@learnway/ui';
 import { Arrays, Filter, ThumnailList } from '../../../features/layout';
-import { Navigation } from 'swiper/modules';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
@@ -60,7 +67,6 @@ function RouteComponent() {
           className={`${styles.recent_swiper} category_swiper`}
           spaceBetween={20}
           slidesPerView={2.2}
-          modules={[Navigation]}
           navigation={true}
         />
       </div>
@@ -69,7 +75,7 @@ function RouteComponent() {
         <ul className={styles.divisio_box}>
           <li>
             <div className={styles.search_division}>
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -83,7 +89,7 @@ function RouteComponent() {
                   { value: 'h', label: '캐스퍼' },
                 ]}
               />
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -92,7 +98,7 @@ function RouteComponent() {
                   { value: 'c', label: 'NE(2021)' },
                 ]}
               />
-              <Select
+              <Dropdown
                 className={styles.search_select}
                 size="lg"
                 options={[
@@ -125,7 +131,7 @@ function RouteComponent() {
             {/* 퍼블수정 20250313 : arraysData 데이터 삽입 */}
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
             <div className={styles.box}>
-              <Select
+              <Dropdown
                 options={[
                   { value: '20', label: '20개씩' },
                   { value: '50', label: '50개씩' },

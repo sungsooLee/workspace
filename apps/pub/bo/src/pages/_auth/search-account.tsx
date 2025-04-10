@@ -6,7 +6,7 @@ import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioCard, Dropdown, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,
@@ -109,7 +109,7 @@ function RouteComponent() {
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       className={formStyles.short}
                       options={[
                         { value: 'type1', label: '+82' },

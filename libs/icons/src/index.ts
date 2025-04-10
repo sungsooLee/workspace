@@ -35,6 +35,7 @@ export { ReactComponent as IcoConfirm } from './lib/ic_success_alt.svg'; // conf
 export { ReactComponent as IcoModify } from './lib/ic_pencil_fill.svg';
 export { ReactComponent as IcoTrash } from './lib/ic_trash.svg';
 export { ReactComponent as IcoSearch } from './lib/ic_search.svg'; // search
+export { ReactComponent as IcoSearchWrite } from './lib/ic_search_write.svg'; // tree search
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoCaution } from './lib/ic_caution.svg'; // alert caution icon 48*48
 export { ReactComponent as IcoCaution02 } from './lib/ic_caution02.svg'; // alert caution icon 24*25
@@ -110,8 +111,16 @@ export { ReactComponent as IcoSucess02 } from './lib/ic_sucess_02.svg'; // succe
 export { ReactComponent as IcoPaperClip } from './lib/ic_paperclip.svg'; // file upload
 export { ReactComponent as IcoPpt } from './lib/ic_ppt.svg'; // ppt, pdf
 export { ReactComponent as IcoShare } from './lib/ic_share.svg'; // share
-
+export { ReactComponent as IcoPin } from './lib/ic_pin.svg'; // pin
+export { ReactComponent as IcoThumbsUp } from './lib/ic_thumbs_up.svg'; // thumbs
+export { ReactComponent as IcoMessageCircle } from './lib/ic_message_circle.svg'; // message
+export { ReactComponent as IcoMoreVertical } from './lib/ic_more_vertical.svg'; // more vertical
+export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
+export { ReactComponent as IcoArrowLineTop } from './lib/ic_arrow_line_top.svg'; // fab button
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
+export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
+export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
+export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

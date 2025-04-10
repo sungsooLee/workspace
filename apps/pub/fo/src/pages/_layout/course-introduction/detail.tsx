@@ -1,42 +1,83 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Tabs } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare } from '@learnway/icons';
+import { Button, Tabs, Accordion } from '@learnway/ui';
+import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
+import { CourseDashboard, CourseIntroduction } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
-import operatorStyles from './operator.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
-import styles from './package.module.css';
+import lectureStyles from './lecture.module.css';
+
+import styles from './detail.module.css';
 
 // 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [selectedTabKey, selectedTabKey2] = useState<string>('');
+  // 찜
+  const [heart, setHeart] = useState(false);
+
+  // 탭
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('');
   const items = [
     {
       title: '대시보드',
       key: 'a',
-      content: <h2>a</h2>,
+      content: (
+        <div className={styles.dashboard_content}>
+          <CourseDashboard />
+        </div>
+      ),
     },
     {
       title: '과정소개',
       key: 'b',
-      content: <h2>Tab B content</h2>,
+      content: (
+        <div className={styles.introduction_content}>
+          <CourseIntroduction />
+        </div>
+      ),
+    },
+    {
+      title: '후기',
+      key: 'c',
     },
   ];
 
-  const options: SelectOption[] = [
-    { label: '스마트팩토리', value: 'A' },
-    { label: '디지털혁신', value: 'B' },
-    { label: '정보보안기술', value: 'C' },
+  // 패키지 아코디언
+  const [value2, setValue2] = useState<string>('');
+  const dummyItems2 = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 1</strong>
+        </div>
+      ),
+      children: (
+        <div className={styles.sub_package_content}>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.sub_package_title}>
+          <strong>패키지 2</strong>
+        </div>
+      ),
+      children: <div className={styles.sub_package_content}>Content B</div>,
+    },
   ];
 
   return (
@@ -57,46 +98,8 @@ function RouteComponent() {
             <img src={bnrImage1} alt="" />
           </div>
 
-          <div>
+          <div className={styles.tab_wrap}>
             <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
-          </div>
-
-          <div className={styles.package_box}>
-            <div className={styles.chip_box}>
-              <ChipList options={options} prefixCharacter="#" hideCloseButton />
-            </div>
-          </div>
-
-          <div className={styles.operator_box}>
-            <strong>과정 운영자</strong>
-            {/* operator */}
-            <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-              <div className={operatorStyles.avatar}>
-                <span>김</span>
-              </div>
-              <div className={operatorStyles.txt_box}>
-                <div className={operatorStyles.profile}>
-                  <strong>김지민 책임</strong>
-                  <div>
-                    <span>현대오토에버</span>
-                    <span>L&D플랫폼팀</span>
-                  </div>
-                </div>
-                <div className={operatorStyles.definition_list}>
-                  {/* definition list */}
-                  <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                    <dl>
-                      <dt>이메일</dt>
-                      <dd>abc@hyundai.conm</dd>
-                    </dl>
-                    <dl>
-                      <dt>전화</dt>
-                      <dd>02-555-2323</dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -105,11 +108,16 @@ function RouteComponent() {
           <div className={styles.sub_box}>
             {/* package information */}
             <div
-              className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}>
+              className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
+            >
               <strong className={packageInformationStyles.tit}>
                 패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
               </strong>
               <div className={packageInformationStyles.count_box}>
+                <div className={packageInformationStyles.box}>
+                  <IcoStar width={16} height={16} stroke="#ffb902" fill="#ffb902" />
+                  <span>4.2</span>
+                </div>
                 <div className={packageInformationStyles.box}>
                   <IcoHeart width={16} height={16} stroke="#6f798b" fill="none" />
                   <span>500</span>
@@ -130,7 +138,8 @@ function RouteComponent() {
                 <Button
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
-                  size="sm">
+                  size="sm"
+                >
                   구독하기
                 </Button>
               </div>
@@ -151,18 +160,126 @@ function RouteComponent() {
                   </dl>
                 </div>
               </div>
+
+              {/* 강의 */}
+              <div className={packageInformationStyles.lecture_wrap}>
+                {/* 강의 정보 */}
+                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    <p className={lectureStyles.date}>
+                      <span>1차교육</span>
+                      <span>2026-01-01 ~ 2026-01-31 </span>
+                    </p>
+                    <strong className={lectureStyles.tit}>
+                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
+                    </strong>
+                  </div>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    {/* definition list */}
+                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                      <dl>
+                        <dt>잔여석</dt>
+                        <dd>999</dd>
+                      </dl>
+                      <dl>
+                        <dt>장소</dt>
+                        <dd>온라인 비대면</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 강의 정보 */}
+                <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    <p className={lectureStyles.date}>
+                      <span>2차교육</span>
+                      <span>2026-01-01 ~ 2026-01-31 </span>
+                    </p>
+                    <strong className={lectureStyles.tit}>
+                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
+                    </strong>
+                  </div>
+                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                    {/* definition list */}
+                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                      <dl>
+                        <dt>잔여석</dt>
+                        <dd>999</dd>
+                      </dl>
+                      <dl>
+                        <dt>장소</dt>
+                        <dd>온라인 비대면</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 수강신청 없는 case */}
               {/* button */}
-              <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+              {/* <div className={packageInformationStyles.btn_box}>
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
+              </div> */}
+
+              {/* 수강신청 있는 case */}
+              <div
+                className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
+              >
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
+                </Button>
+                <Button>
+                  <IcoShare width={20} height={20} stroke="#4c515e" />
+                </Button>
+                <div className={packageInformationStyles.course}>
+                  <Button variant="primary">수강신청</Button>
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* 패키지 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                패키지<em>10</em>
+              </strong>
+            </div>
+            <div className={styles.package_box}>
+              <Accordion
+                items={dummyItems2}
+                value={value2}
+                className={styles.acc_package}
+                onValueChange={(value2) => setValue2(value2 as string)}
+                type={'multiple'}
+              />
+            </div>
+          </div>
+
+          {/* 연관 과정 */}
+          <div className={styles.sub_box}>
+            <div className={styles.tit_box}>
+              <strong>
+                연관 과정<em>20</em>
+              </strong>
+            </div>
+            <div className={styles.procedure_box}>contents</div>
           </div>
         </div>
       </div>

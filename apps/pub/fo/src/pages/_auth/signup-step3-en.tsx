@@ -11,7 +11,7 @@ import {
   SelectOption,
   Input,
   Checkbox,
-  Select,
+  Dropdown,
   ContentsRow,
   PhoneNumber,
   InputTimer,
@@ -194,18 +194,18 @@ function RouteComponent() {
                 <div className={formStyles.input_box}>
                   <div className={dynamicFormStyles.item_col_full}>
                     <div className={dynamicFormStyles.flex_plus}>
-                      <Select
+                      <Dropdown
                         size="lg"
                         options={[{ value: 'type1', label: 'Select Job Domin' }]}
                         className="flex-1"
                       />
-                      <Select
+                      <Dropdown
                         size="lg"
                         options={[{ value: 'type2', label: 'Select Role' }]}
                         className="flex-1"
                       />
 
-                      <Select
+                      <Dropdown
                         size="lg"
                         options={[{ value: 'type2', label: 'Select Role' }]}
                         className="flex-1"
@@ -217,18 +217,18 @@ function RouteComponent() {
                     </div>
                     <div className={dynamicFormStyles.item_col_full}>
                       <div className={dynamicFormStyles.flex_plus}>
-                        <Select
+                        <Dropdown
                           size="lg"
                           options={[{ value: 'type1', label: 'Select Job Domin' }]}
                           className="flex-1"
                         />
-                        <Select
+                        <Dropdown
                           size="lg"
                           options={[{ value: 'type2', label: 'Select Role' }]}
                           className="flex-1"
                         />
 
-                        <Select
+                        <Dropdown
                           size="lg"
                           options={[{ value: 'type2', label: 'Select Role' }]}
                           className="flex-1"

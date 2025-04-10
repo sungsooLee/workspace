@@ -3,12 +3,12 @@
   &.wrap {
     @apply flex h-full w-full justify-between;
     .inner {
-      @apply relative h-full min-h-[calc(100vh-458px)] w-[calc(50%-32px)];
+      @apply relative h-full min-h-[calc(100vh-384px)] w-[calc(50%-32px)];
       .inner_contents {
-        @apply scrollbar max-h-[calc(100vh-402px)] overflow-y-auto py-[16px];
+        @apply scrollbar max-h-[calc(100vh-426px)] overflow-y-auto py-[16px];
       }
       &::before {
-        @apply absolute -left-[33px] top-0 flex h-[calc(100%-16px)] w-[1px] bg-[var(--gray4)] content-[''];
+        @apply absolute -left-[33px] top-0 flex h-full w-[1px] bg-[var(--gray4)] content-[''];
       }
       &:first-child::before {
         @apply hidden;
@@ -20,6 +20,40 @@
         }
         &::before {
           @apply h-full;
+        }
+      }
+      &.type_progress {
+        @apply min-h-[calc(100vh-442px)];
+        .inner_contents {
+          @apply max-h-[calc(100vh-486px)];
+        }
+      }
+    }
+    &.ratio_third {
+      .inner {
+        @apply min-h-[calc(100vh-435px)];
+        & + .inner > div:first-child {
+          @apply ml-[32px] w-[calc(100%-32px)];
+        }
+        .inner_contents {
+          @apply scrollbar max-h-[calc(100vh-476px)] overflow-y-auto py-[16px];
+        }
+        &:first-child {
+          @apply w-[calc(100%-485px)] shrink-0;
+        }
+        &:not(:first-child) {
+          @apply relative w-[452px] shrink-0;
+          .inner_contents {
+            @apply pl-[32px];
+          }
+          &::before {
+            @apply left-0;
+          }
+        }
+        &.scrollHidden {
+          .inner_contents {
+            @apply overflow-hidden pt-0;
+          }
         }
       }
     }

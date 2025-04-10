@@ -30,7 +30,6 @@ declare module '@tanstack/react-router' {
   }
   interface HistoryState {
     [key: string]: any;
-    //    params?: any;
   }
   interface StaticDataRouteOption {
     meta?: PageMeta;

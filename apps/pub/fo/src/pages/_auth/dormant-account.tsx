@@ -22,7 +22,6 @@ import {
   RadioCard,
   Tabs,
   Input,
-  Select,
   InputTimer,
   ContentsRow,
   useModal,
@@ -62,7 +61,8 @@ function RouteComponent() {
               {/* 인증선택 모듈 */}
               <div
                 className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
-                role="radiogroup">
+                role="radiogroup"
+              >
                 <RadioCard
                   options={[
                     {

@@ -16,10 +16,60 @@ import {
   Tooltip,
   CheckboxGroupFormField,
   Grid,
+  TreeView,
+  TreeNode,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-// eslint-disable-next-line no-empty-pattern
+
+// tree
+const sampleData: TreeNode[] = [
+  {
+    key: '1',
+    title: '러닝웨이 1',
+    isUsed: false,
+    children: [
+      {
+        key: '1-1',
+        title: 'Child 1',
+        isUsed: true,
+        children: [
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
+        ],
+      },
+      { key: '1-2', title: 'Child 2', isUsed: true },
+    ],
+  },
+  {
+    key: '2',
+    title: '러닝웨이 2',
+    isUsed: false,
+    children: [
+      { key: '2-1', title: 'Child 3', isUsed: false },
+      { key: '2-2', title: 'Child 4', isUsed: false },
+    ],
+  },
+  {
+    key: '3',
+    title: '러닝웨이 3',
+    isUsed: false,
+    children: [
+      { key: '3-1', title: 'Child 5', isUsed: false },
+      { key: '3-2', title: 'Child 6', isUsed: false },
+    ],
+  },
+  {
+    key: '4',
+    title: '러닝웨이 4',
+    isUsed: false,
+    children: [
+      { key: '4-1', title: 'Child 7', isUsed: false },
+      { key: '4-2', title: 'Child 8', isUsed: false },
+    ],
+  },
+];
+
 const TenantLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
@@ -37,7 +87,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
       Sort: 'Common API',
       API: <Button className="link">API 1</Button>,
       Delete: (
-        <Button size="xs" variant="gray2">
+        <Button size="xs" variant="gray2" disabled>
           삭제
         </Button>
       ),
@@ -46,7 +96,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
       Sort: 'Common API2',
       API: <Button className="link">API 2</Button>,
       Delete: (
-        <Button size="xs" variant="gray2">
+        <Button size="xs" variant="gray2" disabled>
           삭제
         </Button>
       ),
@@ -59,7 +109,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('Sort', {
       cell: (info) => info.getValue(),
       header: '분류',
-      size: 120,
+      size: 300,
       enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -69,7 +119,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     columnHelper.accessor('API', {
       cell: (info) => info.getValue(),
       header: 'API',
-      size: 490,
+      size: 310,
       enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
@@ -84,9 +134,12 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
     }),
   ] as ColumnDef<any, unknown>[];
 
+  // tree
+  const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -98,9 +151,11 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             </Button>
           </div>
         </div>
-        <div className={layoutStyles.inner_contents}></div>
+        <div className={layoutStyles.inner_contents}>
+          <TreeView treeId="source" data={sourceData} />
+        </div>
       </div>
-      <div className={layoutStyles.inner}>
+      <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
@@ -139,10 +194,6 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-menu2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'상위 메뉴명'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
@@ -161,16 +212,20 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-code" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'메뉴 코드'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
                   id="name-menu2"
                   type="text"
-                  placeholder=""
+                  placeholder="메뉴 코드를 입력하세요."
                   value="1932267687686"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={10}
+                  maxLength={150}
                   disabled
                 />
                 <Button variant="gray" size="sm" disabled>
@@ -195,28 +250,9 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   type="text"
                   placeholder="메뉴명을 입력하세요."
                   value="러닝웨이"
+                  hideInputLength={false}
+                  maxLength={150}
                   disabled
-                  className={formStyles.input}
-                />
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-menuName" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>{'메뉴 이름'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  id="name-menuName"
-                  type="text"
-                  placeholder="메뉴 이름을 입력하세요."
-                  value="입력 정보 출력"
                   className={formStyles.input}
                 />
               </div>
@@ -240,7 +276,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   value="URL"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={10}
+                  maxLength={150}
                   disabled
                 />
               </div>
@@ -261,7 +297,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   value=""
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
-                  maxLength={100}
+                  maxLength={50}
                   disabled
                 />
               </div>
@@ -271,15 +307,16 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
-                {'Hidden메뉴'}
+                {'Hidden 메뉴'}
 
                 <Tooltip
                   className={formStyles.tooltip}
                   side="right"
                   align="start"
                   content={
-                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
-                  }>
+                    'Hidden 메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
+                  }
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -291,6 +328,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                 label={checked[1] ? '적용' : '미적용'}
                 checked={checked[1]}
                 onCheckedChange={handleCheckedChange(1)}
+                disabled
               />
             </div>
           </ContentsRow>
@@ -326,7 +364,8 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                   className={dynamicFormStyles.tooltip}
                   side="right"
                   align="start"
-                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
+                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -338,6 +377,7 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
                 label={checked[2] ? '사용' : '미사용'}
                 checked={checked[2]}
                 onCheckedChange={handleCheckedChange(2)}
+                disabled
               />
             </div>
           </ContentsRow>

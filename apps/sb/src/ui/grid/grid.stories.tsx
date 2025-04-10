@@ -955,7 +955,8 @@ export const createPersonColumns = (columnFactory: ColumnFactory<Person>): Colum
                   />
                 </div>,
               );
-            }}>
+            }}
+          >
             팝업
           </Button>
         </div>
@@ -1088,7 +1089,7 @@ export const TemplateEditGrid: any = (args: any) => {
       meta: {
         cellAlign: 'center',
       },
-      cell: (info: CellContext<any, string>) => <EditCheckboxCell info={info} />,
+      cell: (info: CellContext<any, boolean>) => <EditCheckboxCell info={info} />,
     },
     {
       header: 'radio',
@@ -1158,13 +1159,13 @@ TemplateEditGrid.storyName = '셀 편집';
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
     { name: '현대', code: 'H', code2: 'H' },
-    { name: '현대', code: 'H', code2: 'H' },
-    { name: '현대', code: 'H', code2: 'H' },
+    // { name: '현대', code: 'H', code2: 'H' },
+    // { name: '현대', code: 'H', code2: 'H' },
   ];
   const columns = [
-    { accessorKey: 'name', size: 200 },
-    { accessorKey: 'code', size: 0, minSize: 100 },
-    { accessorKey: 'code2', size: 0, minSize: 100 },
+    { accessorKey: 'name', size: 100, maxSize: 100, minSize: 100, enableResizing: false },
+    { accessorKey: 'code', maxSize: 100 },
+    { accessorKey: 'code2', size: undefined },
   ];
   return (
     <Grid
@@ -1178,7 +1179,7 @@ export const TemplateColumnSize: any = (args: any) => {
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
 
-// 테이블 모
+// 테이블 모드
 export const TemplateTable: any = (args: any) => {
   const data = Array(10)
     .fill(null)

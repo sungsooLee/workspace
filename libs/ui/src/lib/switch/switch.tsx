@@ -41,10 +41,12 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           className,
           'nlp--switch',
           checked && styles.active,
+          disabled && styles.disabled,
           {
             [styles.reversed]: reversed,
           },
-        )}>
+        )}
+      >
         {/* left label */}
         {labelAlign === 'left' && showLabel && label && (
           <label className={styles.label} htmlFor={id}>
@@ -58,7 +60,8 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           id={id}
           checked={checked}
           disabled={disabled}
-          onCheckedChange={onCheckedChange}>
+          onCheckedChange={onCheckedChange}
+        >
           <Primitive.Thumb className={styles.switch_thumb} />
         </Primitive.Root>
 

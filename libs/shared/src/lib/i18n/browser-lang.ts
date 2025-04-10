@@ -36,6 +36,7 @@ export const getBrowserNation = () => {
       nationCode = code.split('-')[1];
       return true;
     }
+    return false;
   });
   return nationCode ?? 'US';
 };

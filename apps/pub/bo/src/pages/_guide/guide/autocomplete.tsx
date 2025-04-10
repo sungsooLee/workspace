@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { AutoComplete, DropdownOption } from '@learnway/ui';
+import { AutoCompleteDropdown, DropdownOption } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/autocomplete')({
   component: RouteComponent,
@@ -22,8 +22,8 @@ const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
   return new Promise<DropdownOption[]>((resolve) => {
     console.log('API 호출 해야함' + inputValue);
     setTimeout(() => {
-      const filteredOptions = sampleOptions.filter((option) =>
-        option.label.toLowerCase().includes(inputValue.toLowerCase()),
+      const filteredOptions = sampleOptions.filter(
+        (option) => option?.label && option.label.toLowerCase().includes(inputValue.toLowerCase()),
       );
       resolve(filteredOptions);
     }, 500); // 0.5초 지연
@@ -33,7 +33,7 @@ const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
 function RouteComponent() {
   return (
     <div>
-      <AutoComplete loadOptions={loadOptions} />
+      <AutoCompleteDropdown loadOptions={loadOptions} />
     </div>
   );
 }

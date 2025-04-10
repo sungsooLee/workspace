@@ -10,7 +10,13 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Panel Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/panel/panel.tsx</p>
-      <p className="info">필요 시에 컨텐츠 내에 wrap 영역에 사용</p>
+      <p className="info">
+        필요 시에 컨텐츠 내에 wrap 영역에 사용
+        <br />
+        옵션 : title, actions, className, children, collapsible, collapsed, hideHeaderUnderline =
+        false, type,
+        <br /> type: 'line' | 'fill' | 'secondary' | 'gray'; (추가 타입이 있을경우 추가해야함)
+      </p>
       <div className="code_example">
         <pre className="code_block">
           <code>
@@ -29,7 +35,14 @@ import { Panel } from '@learnway/ui';
         <h3 className="guide_tit3">박스형태 활용 예시</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Panel type="line" hideHeaderUnderline>
+            <Panel
+              type="gray"
+              title="타이틀"
+              hideHeaderUnderline
+              collapsible
+              actions="전체 펼침"
+              className="w-full"
+            >
               <p>content</p>
             </Panel>
           </div>

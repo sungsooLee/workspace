@@ -2,7 +2,7 @@ import { Hierarchy } from '@learnway/shared';
 
 export interface Menu extends Hierarchy<Menu> {
   id?: number;
-  isQuickAccessArea?: boolean;
+  quickAccessAreaYn?: boolean;
   roles?: string;
   tenantName?: string; // 제거 예정
 }

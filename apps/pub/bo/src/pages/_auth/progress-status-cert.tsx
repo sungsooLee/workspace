@@ -10,7 +10,7 @@ import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-
 
 // import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, RadioCard, Input, Select, ContentsRow, useModal } from '@learnway/ui';
+import { Button, RadioCard, Input, Dropdown, ContentsRow, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_auth/progress-status-cert')({
   component: RouteComponent,
@@ -121,7 +121,7 @@ function RouteComponent() {
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <Select
+                    <Dropdown
                       className={formStyles.short}
                       options={[
                         { value: 'type1', label: '+82' },
