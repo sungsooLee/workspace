@@ -24,6 +24,8 @@ type QueryOptionType<
   initialData?: () => undefined;
 };
 
+//const { data, pageInfo, isError, isLoading, refetch } = useQueryPaging<T>()
+
 export function useQueryPaging<
   TContent = unknown,
   TQueryFnData = QueryFnPagingData<TContent>,

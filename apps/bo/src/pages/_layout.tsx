@@ -11,7 +11,7 @@ import { pageRouteConfig } from '../features/auth';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
-  ...pageRouteConfig({ authorization: true }),
+  ...pageRouteConfig({ authorization: false }),
 });
 
 function LayoutComponent() {
