@@ -7,13 +7,17 @@ import { t } from 'i18next';
 
 const CompanyInfoComponent = () => {
   const { t } = useTranslation();
-  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { provider, onSubmit } = useDynamicForm(formConfig);
+
+  const handleOnSubmit = (data: any) => {
+    console.log('data {} => ', data);
+  };
+
   return (
-    <>
+    <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
         label={t('회사 기본 정보')}
         actionNode={<Button label={'저장'} variant={'point'} size={'md'} />}
-        underLine
       />
       <ContentsRow>
         <FormRow provider={provider}>
@@ -25,7 +29,7 @@ const CompanyInfoComponent = () => {
           <DynamicFormField name={'name'} />
         </FormRow>
       </ContentsRow>
-    </>
+    </form>
   );
 };
 
