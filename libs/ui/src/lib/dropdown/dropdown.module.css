@@ -141,7 +141,7 @@
 }
 
 [class*='nlp-select__menu-portal'] {
-  @apply !z-[151];
+  @apply pointer-events-auto !z-[151];
   [class*='menu-portal-variant-text'] {
     [class*='nlp-select__menu'] {
       @apply !border-0 !shadow-[0px_2px_6px_rgba(0,0,0,0.09)];

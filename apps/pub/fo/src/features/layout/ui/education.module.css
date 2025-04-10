@@ -36,7 +36,10 @@
             @apply pr-[8px];
           }
           dd {
-            @apply table-cell;
+            @apply table-cell text-[var(--gray8)];
+            button {
+              @apply body_3_r ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
+            }
           }
           &:nth-child(n + 3) {
             @apply mt-[4px];

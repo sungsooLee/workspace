@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
-import { Button } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
+import { EducationPlacePopup } from '../../../features/layout';
 
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../pages/_layout/course-introduction/bullet.module.css';
@@ -11,6 +12,8 @@ interface EducationProps {
 }
 
 const EducationComponent = ({ className }: EducationProps) => {
+  const { open: openModal } = useModal();
+
   const [detail, setDetail] = useState<boolean>();
 
   return (
@@ -55,7 +58,19 @@ const EducationComponent = ({ className }: EducationProps) => {
           </dl>
           <dl>
             <dt>교육장소</dt>
-            <dd>온라인 비대면</dd>
+            <dd>
+              온라인 비대면{' '}
+              <Button
+                onClick={() =>
+                  openModal({
+                    width: 's',
+                    content: <EducationPlacePopup />,
+                  })
+                }
+              >
+                약도보기
+              </Button>
+            </dd>
           </dl>
           <dl>
             <dt>학습기간</dt>
