@@ -460,7 +460,7 @@ function RouteComponent() {
               <Grid
                 data={data}
                 columns={columns}
-                height={300}
+                height={310}
                 hideColumnSettings={true}
                 pagination={{
                   pageSize,
@@ -586,7 +586,7 @@ function RouteComponent() {
               </span>
               <Tooltip
                 className={formStyles.tooltip}
-                side="bottom"
+                side="right"
                 align="start"
                 content={
                   '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다. '
@@ -619,7 +619,7 @@ function RouteComponent() {
               </span>
               <Tooltip
                 className={formStyles.tooltip}
-                side="bottom"
+                side="right"
                 align="start"
                 content={
                   '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.'
