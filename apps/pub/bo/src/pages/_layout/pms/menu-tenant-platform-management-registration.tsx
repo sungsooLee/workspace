@@ -58,12 +58,12 @@ function RouteComponent() {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
     const options = [
-      { value: 'type1', label: '전체' },
-      { value: 'type2', label: '항목' },
+      { value: 'type1-1', label: '전체' },
+      { value: 'type1-2', label: '항목' },
     ];
     const options2 = [
-      { value: 'type1', label: '전체' },
-      { value: 'type2', label: '항목' },
+      { value: 'type2-1', label: '전체' },
+      { value: 'type2-2', label: '항목' },
     ];
 
     // grid
@@ -234,17 +234,22 @@ function RouteComponent() {
     const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
     const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
     const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
+    const [selectedValues6, setSelectedValues6] = useState<string[]>([]);
     const options3 = [
-      { value: 'type1', label: '전체' },
-      { value: 'type2', label: '항목' },
+      { value: 'type3-1', label: '전체' },
+      { value: 'type3-2', label: '항목' },
     ];
     const options4 = [
-      { value: 'type1', label: '전체' },
-      { value: 'type2', label: '항목' },
+      { value: 'type4-1', label: '전체' },
+      { value: 'type4-2', label: '항목' },
     ];
     const options5 = [
-      { value: 'type1', label: '전체' },
-      { value: 'type2', label: '항목' },
+      { value: 'type5-1', label: '전체' },
+      { value: 'type5-2', label: '항목' },
+    ];
+    const options6 = [
+      { value: 'type5-1', label: '전체' },
+      { value: 'type5-2', label: '항목' },
     ];
 
     // grid
@@ -252,72 +257,80 @@ function RouteComponent() {
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
-        order: '1',
-        companySort: '그룹사',
-        company: '현대차',
-        owner: '김현대',
-        registerNumber: '123-45-12345',
-        callNumber: '+82 2 1234-4567',
-        email: 'asdfged@gmail.com',
-      },
-      {
-        order: '2',
-        companySort: '그룹사',
-        company: '현대차',
-        owner: '김현대',
-        registerNumber: '123-45-12345',
-        callNumber: '+82 2 1234-4567',
-        email: 'asdfged@gmail.com',
+        tenantName: '테넌트A',
+        channelName: '내 관리 채널명',
+        company: '현대자동차',
+        affiliation: '경영지원팀',
+        hrdOwner: '테넌트 담당자',
+        companyNumber: '1234567',
+        name: '김현대',
+        roleTerm: '2025-01-03 ~ 2025-01-03',
+        tenure: '재직',
+        roleStatus: '정상',
       },
     ];
 
     const columnHelper = createColumnHelper<any>();
 
     const columns = [
-      columnHelper.accessor('order', {
+      columnHelper.accessor('tenantName', {
         cell: (info) => info.getValue(),
-        header: 'NO.',
-        size: 64,
-        meta: {
-          headerAlign: 'left',
-          cellAlign: 'center',
-        },
+        header: '테넌트명',
         enableGrouping: false,
+        size: 180,
       }),
-      columnHelper.accessor('companySort', {
+      columnHelper.accessor('channelName', {
         cell: (info) => info.getValue(),
-        header: '회사구분',
+        header: '채널명',
+        size: 150,
         enableGrouping: false,
-        size: 210,
       }),
       columnHelper.accessor('company', {
         cell: (info) => info.getValue(),
         header: '회사',
-        size: 240,
-        enableGrouping: false,
-      }),
-      columnHelper.accessor('owner', {
-        cell: (info) => info.getValue(),
-        header: '대표자',
         size: 150,
         enableGrouping: false,
       }),
-      columnHelper.accessor('registerNumber', {
+      columnHelper.accessor('affiliation', {
         cell: (info) => info.getValue(),
-        header: '사업자 등록번호',
-        size: 220,
+        header: '소속',
+        size: 100,
         enableGrouping: false,
       }),
-      columnHelper.accessor('callNumber', {
+      columnHelper.accessor('hrdOwner', {
         cell: (info) => info.getValue(),
-        header: '대표 전화',
-        size: 220,
+        header: 'HRD 담당자 역할',
+        size: 130,
         enableGrouping: false,
       }),
-      columnHelper.accessor('email', {
+      columnHelper.accessor('companyNumber', {
         cell: (info) => info.getValue(),
-        header: '대표 이메일',
-        size: 240,
+        header: '사번',
+        size: 100,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('name', {
+        cell: (info) => info.getValue(),
+        header: '이름',
+        size: 100,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('roleTerm', {
+        cell: (info) => info.getValue(),
+        header: '역할 기간',
+        size: 200,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('tenure', {
+        cell: (info) => info.getValue(),
+        header: '재직여부',
+        size: 100,
+        enableGrouping: false,
+      }),
+      columnHelper.accessor('roleStatus', {
+        cell: (info) => info.getValue(),
+        header: '역할 상태',
+        size: 100,
         enableGrouping: false,
       }),
     ] as ColumnDef<any, unknown>[];
@@ -376,6 +389,50 @@ function RouteComponent() {
                       </div>
                     </div>
                   </div>
+                  <div className={searchStyles.item_wrap}>
+                    <div className={searchStyles.inner}>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name" className={searchStyles.label}>
+                          <span className={searchStyles.text}>이름</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Input
+                            id="name"
+                            type="text"
+                            placeholder="이름을 입력하세요."
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-companyNum" className={searchStyles.label}>
+                          <span className={searchStyles.text}>사번</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Input
+                            id="name-companyNum"
+                            type="text"
+                            placeholder="사번을 입력하세요."
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                      <div className={searchStyles.item}>
+                        <label htmlFor="name-roleStatus" className={searchStyles.label}>
+                          <span className={searchStyles.text}>역할 상태</span>
+                        </label>
+                        <div className={searchStyles.box}>
+                          <Dropdown
+                            options={options6}
+                            value={selectedValues6}
+                            onChange={(selected) => setSelectedValues6(selected)}
+                            variant="default"
+                            size={'sm'}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className={searchStyles.btn_box}>
                   <Button
@@ -403,7 +460,7 @@ function RouteComponent() {
               <Grid
                 data={data}
                 columns={columns}
-                height={380}
+                height={300}
                 hideColumnSettings={true}
                 pagination={{
                   pageSize,
@@ -412,13 +469,16 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
+                multiple
+                hideRowSelectionCheckBox={false}
                 title="타이틀"
               />
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );
