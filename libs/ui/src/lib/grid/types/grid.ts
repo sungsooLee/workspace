@@ -289,4 +289,9 @@ export interface GridImperative {
    * 행 선택 상태를 초기화하는 메서드입니다.
    */
   resetRowSelection: () => void;
+
+  /**
+   * 행 선택을 위한 메서드
+   */
+  selectRowById: (idField: string, idValue: string) => boolean;
 }

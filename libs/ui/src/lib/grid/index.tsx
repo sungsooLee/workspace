@@ -91,6 +91,7 @@ const Grid = forwardRef(
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
     const groupingState = useMemo<GroupingState>(
       () => columnGrouping?.columns || [],
       [columnGrouping?.columns],
@@ -114,14 +115,25 @@ const Grid = forwardRef(
     /**
      * 부모 컴포넌트에서 grid 특정 기능 수행시 필요
      */
-    useImperativeHandle(
-      ref,
-      (): GridImperative => ({
-        resetRowSelection: () => {
-          setRowSelection({});
-        },
-      }),
-    );
+    useImperativeHandle(ref, () => ({
+      resetRowSelection: () => {
+        setRowSelection({});
+      },
+      // 추가: ID로 행을 선택하는 메서드
+      selectRowById: (idField: string, idValue: string) => {
+        // 해당 ID 값을 가진 행 찾기
+        const rowIndex = data.findIndex((row: any) => row[idField] === idValue);
+        if (rowIndex >= 0) {
+          // 현재 페이지 정보를 포함한 행 ID 생성
+          const pageIndex = pagination?.pageIndex || 0;
+          const rowId = `${pageIndex}-${rowIndex}`;
+          // 행 선택 상태 업데이트
+          setRowSelection({ [rowId]: true });
+          return true;
+        }
+        return false;
+      },
+    }));
 
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
     const tableColumns = useMemo(() => {
@@ -521,6 +533,7 @@ const Grid = forwardRef(
           transform: !tableMode ? `translateY(${start}px)` : '',
           display: !tableMode ? 'flex' : '',
         } as CSSProperties;
+
         return (
           <tr
             key={row.id}
@@ -632,13 +645,13 @@ const Grid = forwardRef(
 
       const handleChange = (value?: DropdownOption) => {
         if (value) {
-          onPageSizeChange(Number(value.value));
+          onPageSizeChange(Number(value));
         }
       };
       const totalPages = Math.ceil(totalRows / pageSize);
 
       return (
-        <div className={styles.paging_wrap}>
+        <div className={styles.paging_wrap} onClick={(e) => e.stopPropagation()}>
           <Dropdown
             value={pageSize.toString()}
             onChange={handleChange}
