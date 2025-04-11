@@ -65,7 +65,8 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
           variant && styles[variant],
           size && styles[size],
         )}
-        disabled={disabled || isLoading}>
+        disabled={disabled || isLoading}
+      >
         {/* loading icon */}
         {isLoading && <Loader2 className="animate-spin" />}
 

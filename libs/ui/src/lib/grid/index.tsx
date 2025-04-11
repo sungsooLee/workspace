@@ -81,6 +81,7 @@ const Grid = forwardRef(
       onRowsSelect,
       onChange,
       renderButtons,
+      variant = 'line',
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -586,6 +587,8 @@ const Grid = forwardRef(
             className,
             multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
             tableMode ? 'table' : 'grid',
+            tableMode && styles[variant],
+            tableMode && variant,
           )}
           style={{
             height: tableMode ? 'auto' : `${height}px`,
@@ -750,6 +753,8 @@ const Grid = forwardRef(
     );
   },
 );
+
+//
 
 const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
   return (

@@ -103,30 +103,23 @@ export const TemplateCustom: any = (args: any) => {
     [],
   );
   return (
-    <OptionCard
-      {...args}
-      value={value}
-      options={options}
-      cols={1}
-      itemRenderer={({ label, original }: OptionCardItem, index: number) => (
-        <div className={'flex flex-col items-center gap-3'}>
-          <span>{label}</span>
-          <span>ID : {original?.id}</span>
-          <span>PATH : {original?.path}</span>
-          <Button
-            label={'Btn'}
-            variant={'gray'}
-            size={'sm'}
-            onClick={(event: React.MouseEvent) => {
-              event.preventDefault();
-              event.stopPropagation();
-              console.log('xxxxx', event);
-            }}
-          />
-        </div>
-      )}
-      onOptionSelect={(option: OptionCardItem) => setValue(option.value)}
-    />
+    <div className={'w-[200px]'}>
+      <OptionCard
+        {...args}
+        value={value}
+        options={options}
+        cols={1}
+        itemRenderer={({ label, original }: OptionCardItem, index: number) => (
+          <div className={'flex flex-col items-center gap-3'}>
+            <span>{label}</span>
+            <span>ID : {original?.id}</span>
+            <span>PATH : {original?.path}</span>
+            <Button label={'Btn'} variant={'primary'} size={'sm'} />
+          </div>
+        )}
+        onOptionSelect={(option: OptionCardItem) => setValue(option.value)}
+      />
+    </div>
   );
 };
 TemplateCustom.storyName = '커스텀 노드';
