@@ -78,7 +78,7 @@ const sampleData: TreeNode[] = [
   },
 ];
 // eslint-disable-next-line no-empty-pattern
-const TenantHrdMenuComponent: FC<{}> = ({}) => {
+const TenantPlatformHrdMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false, // Hidden메뉴
@@ -147,6 +147,9 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체닫기'}
             </Button>
+            <Button variant="save" size="sm">
+              {'메뉴 맵핑'}
+            </Button>
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
@@ -160,10 +163,10 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'삭제'}
             </Button>
-            <Button variant="save" size="sm">
+            <Button variant="save" size="sm" disabled>
               {'저장'}
             </Button>
           </div>
@@ -391,5 +394,5 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
   );
 };
 
-TenantHrdMenuComponent.displayName = 'TenantHrdMenu';
-export const TenantHrdMenu = TenantHrdMenuComponent;
+TenantPlatformHrdMenuComponent.displayName = 'TenantPlatformHrdMenu';
+export const TenantPlatformHrdMenu = TenantPlatformHrdMenuComponent;

@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
@@ -8,7 +7,6 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { Button, ContentsRow, Textarea, Switch, Input, RadioGroupFormField } from '@learnway/ui';
 import { IcoFormRequired } from '@learnway/icons';
-// eslint-disable-next-line no-empty-pattern
 const ApiLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({

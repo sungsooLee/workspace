@@ -23,9 +23,15 @@
         }
       }
       &.type_progress {
-        @apply min-h-[calc(100vh-442px)];
+        @apply max-h-[calc(100vh-442px)] min-h-[calc(100vh-442px)];
         .inner_contents {
           @apply max-h-[calc(100vh-486px)];
+        }
+      }
+      &.type_progress2 {
+        @apply max-h-[calc(100vh-376px)] min-h-[calc(100vh-376px)];
+        .inner_contents {
+          @apply max-h-[calc(100vh-420px)];
         }
       }
     }
