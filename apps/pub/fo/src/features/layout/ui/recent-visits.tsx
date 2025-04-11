@@ -47,7 +47,8 @@ const RecentVisitsCompoment = () => {
         slidesPerView="auto"
         loop={false}
         modules={[Navigation]}
-        className={styles.recent_swiper}>
+        className={styles.recent_swiper}
+      >
         <div className={styles.lists}>
           {items.map((item, index) => (
             <SwiperSlide key={index} className={styles.slide}>

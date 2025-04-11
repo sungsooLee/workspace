@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Tabs } from '@learnway/ui';
 import React from 'react';
-import { Organization } from './-tabs/organization';
-import { Position } from './-tabs/position';
-import { Group } from './-tabs/group';
-import { Designation } from './-tabs/designation';
-import { Role } from './-tabs/role';
+import { Organization } from './-tabs/organization/organization';
+import { Position } from './-tabs/position/position';
+import { Group } from './-tabs/group/group';
+import { Designation } from './-tabs/designation/designation';
+import { Role } from './-tabs/role/role';
 import { NoticeBox } from '../../../../../../../../shared/ui';
 
 const HrInfoComponent = () => {

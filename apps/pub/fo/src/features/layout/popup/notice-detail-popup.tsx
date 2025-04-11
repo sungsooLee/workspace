@@ -21,7 +21,7 @@ const NoticeDetailPopupComponent = () => {
     {
       name1: '완료',
       name2: '4',
-      name3: '26-03-04 12:24pm ~ 26-03-04 12:28pm',
+      name3: '26-03-04 12:24pm ~ 26-03-04 12:28pm\n 26-03-04 12:24pm ~ 26-03-04 12:28pm',
     },
   ];
 

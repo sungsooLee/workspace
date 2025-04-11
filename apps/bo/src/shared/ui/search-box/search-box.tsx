@@ -13,7 +13,7 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
  * @param onSearch - 검색 실행 시 호출될 함수
  */
 const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
-  const { builders: initBuilders, onSubmit, control, ...props } = provider;
+  const { builders: initBuilders, onFormChange, onSubmit, control, ...props } = provider;
   // expand 버튼 상태 관리 (접기/펼치기)
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -31,6 +31,17 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
       ),
     [provider.builders],
   );
+
+  /**
+   * 폼 리셋 핸들러
+   * - 리셋 버튼 클릭 시 실행되는 함수입니다.
+   * - 폼의 상태를 초기화하거나 관련 로직을 트리거할 수 있습니다.
+   *
+   * @param {React.MouseEvent<HTMLButtonElement>} event - 버튼 클릭 이벤트 객체입니다. 현재 함수 본문에서는 사용되지 않고 있습니다.
+   */
+  const handleFormReset = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onFormChange();
+  };
 
   /**
    * 폼 제출 핸들러
@@ -150,7 +161,8 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
                 variant="search"
                 size="sm"
                 onlyIcon
-                onClick={() => setIsExpanded(!isExpanded)}>
+                onClick={() => setIsExpanded(!isExpanded)}
+              >
                 <IcoArrowDownDouble className={searchStyles.ico_expand} />
               </Button>
             )}
@@ -159,7 +171,9 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
               className={searchStyles.btn_refresh}
               variant="search"
               size="sm"
-              onlyIcon>
+              onlyIcon
+              onClick={handleFormReset}
+            >
               <IcoRefresh02 className={searchStyles.icon_refresh} />
             </Button>
             <Button type="submit" variant="search" size="sm" className={searchStyles.btn_search}>
