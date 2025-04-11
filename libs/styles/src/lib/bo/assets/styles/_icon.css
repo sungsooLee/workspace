@@ -1,0 +1,7 @@
+/* icon.css */
+.icon_refresh {
+  @apply mr-[2px] fill-none stroke-none;
+  path {
+    @apply stroke-[#4c515e];
+  }
+}
