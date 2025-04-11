@@ -22,7 +22,7 @@
           @apply ml-[4px];
         }
         svg {
-          @apply ml-[4px] h-[auto] w-[16px];
+          @apply ml-[4px] h-[16px] w-[16px];
         }
       }
     }
