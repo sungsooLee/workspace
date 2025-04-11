@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 import {
   ModalBody,
   ModalContainer,
