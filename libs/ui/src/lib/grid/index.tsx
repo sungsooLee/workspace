@@ -26,6 +26,8 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'; // paging Icons
+import { isEmpty } from 'lodash';
+
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -343,6 +345,10 @@ const Grid = forwardRef(
 
     // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
     useEffect(() => {
+      if (isEmpty(data)) {
+        // 최초 로딩 인경우 수행하지 않음
+        return;
+      }
       const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
       const selectedRow = selectedRows?.[0];
       onRowSelect?.(selectedRow);

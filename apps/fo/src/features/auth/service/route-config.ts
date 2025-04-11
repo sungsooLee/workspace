@@ -29,6 +29,10 @@ function authorization({ location, context }: { location: ParsedLocation; contex
   const queryClient = context.queryClient;
   const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
 
+  if (authUser === undefined) {
+    throw ERROR.AUTHORIZATION;
+  }
+
   if (location.pathname === '/' || !authUser?.menus) {
     if (authUser === undefined) {
       throw ERROR.AUTHORIZATION;

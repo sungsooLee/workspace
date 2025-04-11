@@ -5,3 +5,4 @@ export * from './pagination';
 export * from './sequence';
 export * from './sort';
 export * from './tenant';
+export * from './widgets';

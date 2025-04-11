@@ -39,8 +39,7 @@ const useGridBoxHook = (config: any, getData?: any) => {
   const [gridConfig, setGridConfig] = useState(config);
 
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
-    const queryString = objectToQueryString({ ...params, ...page });
-    const result = (await queryClient.fetchQuery(config.query(queryString))) as any;
+    const result = (await queryClient.fetchQuery(config.query({ ...params, page }))) as any;
     if (result) {
       setGridConfig((state: any) => ({
         ...state,
