@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { CellContext } from '@tanstack/react-table';
-import { Input, InputProps } from '../../input/input';
+import { Textarea, TextareaProps } from '@learnway/ui';
 
 interface EditTextareaCellProps<T> {
   info: CellContext<T, string>;
-  input?: InputProps;
+  textarea?: TextareaProps;
 }
 
-const EditTextareaCell = <T,>({ info, input: inputProps }: EditTextareaCellProps<T>) => {
+const EditTextareaCell = <T,>({ info, textarea: textareaProps }: EditTextareaCellProps<T>) => {
   const { table, row, cell, getValue } = info;
   const [value, setValue] = useState<any>(getValue());
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(event.target.value);
   };
 
@@ -24,7 +24,12 @@ const EditTextareaCell = <T,>({ info, input: inputProps }: EditTextareaCellProps
   }, [getValue]);
 
   return (
-    <Input {...inputProps} value={value as string} onChange={handleChange} onBlur={handleBlur} />
+    <Textarea
+      {...textareaProps}
+      value={value as string}
+      onChange={handleChange}
+      onBlur={handleBlur}
+    />
   );
 };
 
