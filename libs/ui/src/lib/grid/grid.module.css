@@ -29,7 +29,7 @@
   }
   tbody {
     tr {
-      @apply !min-h-[40px];
+      @apply h-auto !min-h-[40px];
       td {
         @apply body_bo_2_r h-full border-b border-solid border-[var(--gray2)] px-[8px] py-[8px] align-middle text-[var(--gray7)];
         button {
@@ -41,6 +41,12 @@
         }
         [class*='nlp--checkbox'] {
           @apply mt-[6px];
+          button {
+            &:read-only,
+            &:disabled {
+              @apply !border-[var(--gray5)];
+            }
+          }
         }
         [class*='link'] {
           @apply body_bo_2_r text-[var(--gray7)] underline;

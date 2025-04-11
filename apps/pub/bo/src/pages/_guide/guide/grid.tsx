@@ -38,7 +38,8 @@ function RouteComponent() {
         <Tooltip
           side="bottom"
           align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
           {'과정명'}
         </Tooltip>
       ),
@@ -65,7 +66,8 @@ function RouteComponent() {
         <Tooltip
           side="bottom"
           align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
           {'과정명'}
         </Tooltip>
       ),
@@ -96,7 +98,8 @@ function RouteComponent() {
         <Tooltip
           side="bottom"
           align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
           {'과정명'}
         </Tooltip>
       ),
@@ -127,7 +130,8 @@ function RouteComponent() {
         <Tooltip
           side="bottom"
           align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
           {'과정명'}
         </Tooltip>
       ),
@@ -158,7 +162,8 @@ function RouteComponent() {
         <Tooltip
           side="bottom"
           align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}>
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
           {'과정명'}
         </Tooltip>
       ),
