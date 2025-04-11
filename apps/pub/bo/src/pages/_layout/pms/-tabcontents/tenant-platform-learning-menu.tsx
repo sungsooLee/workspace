@@ -1,23 +1,24 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import titleStyles from '../title.module.css'; // 타이틀 css
+import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+// style
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '../title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
   Button,
   ContentsRow,
   Textarea,
-  CheckboxGroupFormField,
   Switch,
-  Tooltip,
   Input,
+  Tooltip,
+  CheckboxGroupFormField,
   Grid,
   TreeView,
   TreeNode,
 } from '@learnway/ui';
-
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -33,16 +34,7 @@ const sampleData: TreeNode[] = [
         title: 'Child 1',
         isUsed: true,
         children: [
-          {
-            key: '1-1-1',
-            title: 'Grandchild 1',
-            isUsed: true,
-            children: [
-              { key: '1-1-1-1', title: 'Grandchild 1', isUsed: true },
-              { key: '1-1-1-2', title: 'Grandchild 2', isUsed: false },
-              { key: '1-1-1-3', title: 'Grandchild 3', isUsed: false },
-            ],
-          },
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
           { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
         ],
       },
@@ -77,11 +69,11 @@ const sampleData: TreeNode[] = [
     ],
   },
 ];
-// eslint-disable-next-line no-empty-pattern
-const TenantHrdMenuComponent: FC<{}> = ({}) => {
+
+const TenantPlatformLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false, // Hidden메뉴
+    1: false, // Hidden 메뉴
     2: false, // 개인정보
   });
   // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
@@ -89,12 +81,22 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
 
+  // grid
   const data: any[] = [
     {
       Sort: 'Common API',
       API: <Button className="link">API 1</Button>,
       Delete: (
-        <Button size="xs" variant="gray2">
+        <Button size="xs" variant="gray2" disabled>
+          삭제
+        </Button>
+      ),
+    },
+    {
+      Sort: 'Common API2',
+      API: <Button className="link">API 2</Button>,
+      Delete: (
+        <Button size="xs" variant="gray2" disabled>
           삭제
         </Button>
       ),
@@ -146,6 +148,9 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
             </Button>
             <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체닫기'}
+            </Button>
+            <Button variant="save" size="sm">
+              {'메뉴 맵핑'}
             </Button>
           </div>
         </div>
@@ -199,7 +204,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                   type="text"
                   placeholder="상위 메뉴명을 입력하세요."
                   value="러닝웨이"
-                  disabled
+                  readOnly
                   className={formStyles.input}
                 />
               </div>
@@ -219,13 +224,14 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menu2"
                   type="text"
-                  placeholder="메뉴코드를 입력하세요."
-                  value="러닝웨이"
+                  placeholder="메뉴 코드를 입력하세요."
+                  value="1932267687686"
                   className={formStyles.input}
                   hideInputLength={false}
-                  maxLength={10}
+                  maxLength={15}
+                  readOnly
                 />
-                <Button variant="gray" size="sm">
+                <Button variant="gray" size="sm" disabled>
                   {'중복'}
                 </Button>
               </div>
@@ -245,11 +251,12 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menuName"
                   type="text"
-                  placeholder="메뉴명를 입력하세요."
-                  value="메뉴명"
-                  className={formStyles.input}
+                  placeholder="메뉴명을 입력하세요."
+                  value="러닝웨이"
                   hideInputLength={false}
                   maxLength={10}
+                  readOnly
+                  className={formStyles.input}
                 />
               </div>
             </div>
@@ -268,11 +275,12 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-menuUrl"
                   type="text"
-                  placeholder="메뉴명를 입력하세요."
-                  value="api/menu/menu0001"
+                  placeholder="메뉴 URL을 입력하세요."
+                  value="URL"
                   className={formStyles.input}
                   hideInputLength={false}
                   maxLength={10}
+                  readOnly
                 />
               </div>
             </div>
@@ -280,19 +288,20 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
-              <label htmlFor="name-menuUrl" className={formStyles.form_label}>
+              <label htmlFor="name-menuContents" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'설명'}</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
-                  id="name-menuUrl"
+                  id="name-menuContents"
                   rows={5}
                   cols={33}
                   resize="none"
-                  value="메뉴 001"
+                  value=""
                   placeholder="메뉴 설명을 입력하세요."
                   size={'sm'}
-                  maxLength={100}
+                  maxLength={50}
+                  readOnly
                 />
               </div>
             </div>
@@ -301,14 +310,14 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
-                {'Hidden메뉴'}
+                {'Hidden 메뉴'}
 
                 <Tooltip
                   className={formStyles.tooltip}
                   side="right"
                   align="start"
                   content={
-                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
+                    'Hidden 메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
                   }
                 >
                   <Button onlyIcon>
@@ -322,6 +331,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                 label={checked[1] ? '적용' : '미적용'}
                 checked={checked[1]}
                 onCheckedChange={handleCheckedChange(1)}
+                disabled
               />
             </div>
           </ContentsRow>
@@ -342,7 +352,6 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: '모바일' },
                     ]}
-                    value={['pc']}
                   />
                 </div>
               </div>
@@ -370,6 +379,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
                 label={checked[2] ? '사용' : '미사용'}
                 checked={checked[2]}
                 onCheckedChange={handleCheckedChange(2)}
+                disabled
               />
             </div>
           </ContentsRow>
@@ -391,5 +401,5 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
   );
 };
 
-TenantHrdMenuComponent.displayName = 'TenantHrdMenu';
-export const TenantHrdMenu = TenantHrdMenuComponent;
+TenantPlatformLearningMenuComponent.displayName = 'TenantPlatformLearningMenu';
+export const TenantPlatformLearningMenu = TenantPlatformLearningMenuComponent;

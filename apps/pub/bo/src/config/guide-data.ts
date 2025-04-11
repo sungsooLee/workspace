@@ -321,7 +321,7 @@ export const guideData = [
     pageId: 'pms/menu-platform-common-group',
     screenId: 'NLP_BO_PMS_1400',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-10',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
   },
@@ -411,18 +411,36 @@ export const guideData = [
     pageId: 'pms/menu-tenant-platform-management-registration',
     screenId: 'NLP_BO_TMS_1001',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-11',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 기본정보',
     pageId: 'pms/menu-tenant-platform-management-basic-infomation',
     screenId: 'NLP_BO_TMS_1002',
     pageType: 'Page',
+    completionDate: '2025-04-11',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_학습자 메뉴',
+    pageId: 'pms/menu-tenant-platform-learning-menu',
+    screenId: 'NLP_BO_TMS_1002_02',
+    pageType: 'Page',
+    completionDate: '2025-04-11',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 카테고리 매핑',
+    pageId: 'pms/menu-tenant-platform-category-menu',
+    screenId: 'NLP_BO_TMS_1002_02_01',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트속성관리',

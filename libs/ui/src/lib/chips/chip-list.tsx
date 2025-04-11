@@ -13,9 +13,9 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   options: Array<any>;
   showInput?: boolean;
   orientation?: 'vertical' | 'horizontal';
-  type?: 'line' | 'round';
+  type?: 'line' | 'round' | 'round2';
   placeholder?: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  size?: 'ts' | 'xs' | 'sm' | 'md' | 'lg'; // ts(20), xs(28) , sm(32) , md(36), lg(40)
   hideBorder?: boolean;
   /** 최대 표시 개수 (한번에 보여줄 chip 개수) */
   visibleCount?: number;
@@ -82,7 +82,8 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
         className={cn(styles.start, styles.chips_list, className, 'nlp--chip-list', {
           [styles.chips_box]: !hideBorder,
           [styles.border_none]: hideBorder,
-        })}>
+        })}
+      >
         {/* input */}
         {showInput && (
           <Input
@@ -120,7 +121,8 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
                   labelField={labelField}
                   valueField={valueField}
                 />
-              }>
+              }
+            >
               <Button label={`...+(${overCount})`} size={'md'} variant={'gray2'} />
             </Popover>
           )}
