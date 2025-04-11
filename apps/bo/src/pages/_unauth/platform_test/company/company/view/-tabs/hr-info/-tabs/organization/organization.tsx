@@ -3,14 +3,16 @@ import React from 'react';
 import { OrganizationTree } from './organization-tree';
 import { OrganizationTable } from './organization-table';
 
+import styles from './oranization.module.css';
+
 const OrganizationComponent = () => {
   const { t } = useTranslation();
   return (
-    <div className={'flex flex-row'}>
-      <div className="w-[200px]">
+    <div className={styles.start}>
+      <div className={styles.inner}>
         <OrganizationTree />
       </div>
-      <div className="flex-1">
+      <div className={styles.inner}>
         <OrganizationTable />
       </div>
     </div>
