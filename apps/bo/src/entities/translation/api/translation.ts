@@ -1,10 +1,13 @@
-import { httpService } from '@learnway/shared';
+import { httpService, objectToQueryString } from '@learnway/shared';
+import { PMSApiPrefix } from '@learnway/config';
+
 import { Tenant } from '../../../types';
 
 export default class TranslationService {
-  static fetchTranslations(params: string) {
+  static fetchTranslations(params: any) {
+    const url = objectToQueryString(`${PMSApiPrefix()}/i18n`, params);
     // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/i18n?page=0&size=10&keyType=&code=&locale=&isUsed=true
-    return httpService.get<any>(`/pms-module/admin/api/v1/i18n${params ? `?${params}` : ''}`);
+    return httpService.get<any>(url);
     /*return httpService.get<any>(
       `/pms-module/admin/api/v1/i18n?page=0&size=10&keyType&code&locale&isUsed=true`,
     );*/

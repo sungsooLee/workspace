@@ -1,10 +1,8 @@
 import React, { useCallback } from 'react';
-import { Button, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
 
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 
@@ -14,12 +12,13 @@ import { SearchBox } from '../../../../shared/ui/search-box';
 
 import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
 
+import { WidgetPreviewButton } from '../../../../features/platform';
+
 export const Route = createFileRoute('/_layout/platform/widget/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { open } = useModal();
   const router = useRouter();
 
   const gridInitConfig = useCreation(
@@ -38,11 +37,7 @@ function RouteComponent() {
         {
           name: 'preview',
           label: '미리보기',
-          render: ({ row }: any) => (
-            <Link to={'/'} className="link">
-              미리보기
-            </Link>
-          ),
+          render: ({ row }: any) => <WidgetPreviewButton widgetCode={row?.widgetCode} />,
         },
       ],
       data: [],
