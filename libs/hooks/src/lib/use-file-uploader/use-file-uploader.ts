@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer, useRef } from 'react';
-import { getUniqueId } from '@learnway/shared';
+import { getRandomId } from '@learnway/shared';
 import Uppy, { UppyFile } from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import { uppyFileReducer } from './uppy-reducer';
@@ -236,7 +236,7 @@ const useFileUploaderHook = (config: FileUploaderConfig) => {
     if (!uppyRef || !uppyRef.current) return;
     uppyRef.current.addFiles(
       files.map((file) => {
-        const s3FileName = getUniqueId() + '.' + file.name.split('.').pop() || '';
+        const s3FileName = getRandomId() + '.' + file.name.split('.').pop() || '';
         return {
           name: file.name,
           type: file.type,

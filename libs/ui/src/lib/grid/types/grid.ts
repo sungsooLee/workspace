@@ -254,6 +254,11 @@ export interface GridProps<T> {
    * 커스텀 렌더 버튼..
    */
   renderButtons?: React.ReactNode;
+
+  /**
+   * 테이블 모드에서 style 을 구분하기 위해 사용
+   */
+  variant?: 'line' | 'fill';
 }
 
 /**

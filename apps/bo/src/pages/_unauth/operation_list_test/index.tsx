@@ -35,6 +35,7 @@ function RouteComponent() {
   };
 
   const handleOnSearch = useCallback((data: any) => {
+    console.log('handleOnSearch.data', data);
     gridFetch(data);
   }, []);
 
