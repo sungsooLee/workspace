@@ -17,7 +17,12 @@ const CompanyInfoComponent = () => {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
         label={t('회사 기본 정보')}
-        actionNode={<Button label={'저장'} variant={'point'} size={'md'} />}
+        actionNode={
+          <>
+            <Button label={'저장'} variant={'point'} size={'md'} type={'submit'} />
+            <Button label={'저장2'} variant={'point'} size={'md'} />
+          </>
+        }
       />
       <ContentsRow>
         <FormRow provider={provider}>

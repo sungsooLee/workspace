@@ -1,62 +1,26 @@
 import React, { useCallback } from 'react';
-import { Button } from '@learnway/ui';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { t } from 'i18next';
-import { SearchBox } from '../../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
-import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
-import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
+import { SearchBox } from '../../../../../../../../../../shared/ui/search-box';
+import { GridBox, useGridBox } from '../../../../../../../../../../shared/ui/grid-box';
+import { translationQueryOptions } from '../../../../../../../../../../entities/translation/service/translation.queries';
 
-export const Route = createFileRoute('/_unauth/platform_test/company/company/')({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  const router = useRouter();
+export const OrganizationTable = () => {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
 
-  const handleBulkRegister = async () => {
-    console.log('handleBulkRegister');
-  };
-
-  const handleRegister = async () => {
-    console.log('handleRegister');
-  };
-
   const handleOnSearch = useCallback((data: any) => {
-    console.log('handleOnSearch', data);
-    gridFetch(data);
+    console.log('OrganizationRight : handleOnSearch', data);
+    // gridFetch(data);
   }, []);
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          onClick={handleBulkRegister}
-          label={t('일괄등록')}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          onClick={handleRegister}
-          label={t('등록')}
-        />
-      </ContentsButtons>
-      <MainContents>
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <GridBox config={gridConfig} />
-      </MainContents>
-    </PageContainer>
+    <>
+      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <GridBox config={gridConfig} />
+    </>
   );
-}
+};
 
 const searchConfig: any = {
   builders: [

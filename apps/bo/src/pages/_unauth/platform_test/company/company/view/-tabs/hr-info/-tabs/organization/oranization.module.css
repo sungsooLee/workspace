@@ -1,0 +1,12 @@
+.start {
+  @apply flex flex-wrap;
+  .inner {
+    @apply shrink-0;
+    &:first-child {
+      @apply w-[350px];
+    }
+    &:not(:first-child) {
+      @apply max-w-[calc(100%-350px)];
+    }
+  }
+}
