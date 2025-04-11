@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
+import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoAlertCircle, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import {
   ContentsRow,
@@ -554,6 +555,16 @@ function RouteComponent() {
               <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
+              <Tooltip
+                className={formStyles.tooltip}
+                side="right"
+                align="start"
+                content={'테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'}
+              >
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Button>
+              </Tooltip>
             </label>
             <div className={formStyles.input_box}>
               <ThumbnailImageUpload
@@ -813,6 +824,9 @@ function RouteComponent() {
               </div>
             </div>
           </div>
+        </ContentsRow>
+        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+          <ContentsHistoryInfoFormField />
         </ContentsRow>
       </div>
     </PageContainer>
