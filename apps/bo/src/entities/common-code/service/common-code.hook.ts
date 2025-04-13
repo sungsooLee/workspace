@@ -8,69 +8,58 @@ import {
 import {
   mutateOptions,
   queryKeys,
-  commonCodeGroupQueryOptions as queryOptions,
-} from './common-code-group.queries';
-import { CreateCommonCodeGroup } from '../../../types/entities/common-code';
-import { isError } from 'lodash';
+  commonCodeQueryOptions as queryOptions,
+} from './common-code.queries';
 
-// 코드 그룹 목록 조회 훅
-export function useCommonCodeGroupList(
+// 코드 목록 조회
+export function useCommonCodeList(
   page: number,
   size: number,
   cdGroupId = '',
   cdGroupName = '',
-  cdGroupAbbreviatonEnglishName = '',
   cdGroupContent = '',
-  validityYn = true,
+  isUsed = true,
   cdName = '',
 ) {
   return useQuery(
-    queryOptions.list(
-      page,
-      size,
-      cdGroupId,
-      cdGroupName,
-      cdGroupAbbreviatonEnglishName,
-      cdGroupContent,
-      validityYn,
-      cdName,
-    ),
+    queryOptions.list(page, size, cdGroupId, cdGroupName, cdGroupContent, isUsed, cdName),
   );
 }
 
-export function useCommonCodeGroupDetail(cdGroupId: string) {
-  return useQuery({ ...queryOptions.detail(cdGroupId), enabled: !!cdGroupId });
+export function useCommonCodeDetail(cdGroupId: string, cdId: string) {
+  return useQuery({
+    ...queryOptions.detail(cdGroupId, cdId),
+    enabled: Boolean(cdGroupId) && Boolean(cdId),
+  });
 }
 
-export function useCreateCommonCodeGroup({
+export function useCreateCommonCode({
   onSuccess,
   onError,
-  queryParams, // 쿼리 무효화에 사용될 파라미터
-  ...rest
+  queryParams,
+  ...reset
 }: {
-  onSuccess?: (data: any, variables: CreateCommonCodeGroup, context: unknown) => void;
-  onError?: (error: Error, variables: CreateCommonCodeGroup, context: unknown) => void;
+  onSuccess?: (data: any, variables: any, context: unknown) => void;
+  onError?: (error: Error, variables: any, context: unknown) => void;
   queryParams?: {
     page: number;
     size: number;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
     cdGroupContent?: string;
-    validityYn?: boolean;
+    isUsed?: boolean;
     cdName?: string;
   };
 } & Omit<
-  UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
+  UseMutationOptions<any, Error, any, unknown>,
   'mutationFn' | 'onSuccess' | 'onError'
 > = {}) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<any, Error, CreateCommonCodeGroup>({
+  const mutation = useMutation<any, Error, any>({
     ...mutateOptions.create(),
     onSuccess: async (data, variables, context) => {
       if (queryParams) {
-        console.log(queryParams);
         await queryClient.invalidateQueries({
           queryKey: queryKeys.list(queryParams),
         });
@@ -85,14 +74,11 @@ export function useCreateCommonCodeGroup({
       }
     },
     onError,
-    ...rest,
+    ...reset,
   });
 
   return {
-    create: (
-      payload: CreateCommonCodeGroup,
-      callback?: MutateOptions<any, Error, CreateCommonCodeGroup, unknown>,
-    ) => {
+    create: (payload: any, callback?: MutateOptions<any, Error, any, unknown>) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
@@ -101,31 +87,30 @@ export function useCreateCommonCodeGroup({
   };
 }
 
-export function useUpdateCommonCodGroup({
+export function useUpdateCommonCode({
   onSuccess,
   onError,
   queryParams,
-  ...rest
+  ...reset
 }: {
-  onSuccess?: (data: any, variables: CreateCommonCodeGroup, context: unknown) => void;
-  onError?: (data: Error, variabels: CreateCommonCodeGroup, context: unknown) => void;
+  onSuccess?: (data: any, variables: any, context: unknown) => void;
+  onError?: (error: Error, variables: any, context: unknown) => void;
   queryParams?: {
     page: number;
     size: number;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
     cdGroupContent?: string;
-    validityYn?: boolean;
+    isUsed?: boolean;
     cdName?: string;
   };
 } & Omit<
-  UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
+  UseMutationOptions<any, Error, any, unknown>,
   'mutationFn' | 'onSuccess' | 'onError'
 > = {}) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<any, Error, CreateCommonCodeGroup>({
+  const mutation = useMutation<any, Error, any>({
     ...mutateOptions.update(),
     onSuccess: async (data, variables, context) => {
       if (queryParams) {
@@ -137,19 +122,17 @@ export function useUpdateCommonCodGroup({
           queryKey: queryKeys.all,
         });
       }
+
       if (onSuccess) {
         onSuccess(data, variables, context);
       }
     },
     onError,
-    ...rest,
+    ...reset,
   });
 
   return {
-    update: (
-      payload: CreateCommonCodeGroup,
-      callback?: MutateOptions<any, Error, CreateCommonCodeGroup, unknown>,
-    ) => {
+    update: (payload: any, callback?: MutateOptions<any, Error, any, unknown>) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

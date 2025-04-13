@@ -254,6 +254,11 @@ export interface GridProps<T> {
    * 커스텀 렌더 버튼..
    */
   renderButtons?: React.ReactNode;
+
+  /**
+   * 데이터 없을 때 표시할 메세지
+   */
+  emptyMessage?: string;
 }
 
 /**

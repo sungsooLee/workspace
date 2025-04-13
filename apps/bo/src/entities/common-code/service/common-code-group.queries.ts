@@ -6,21 +6,21 @@ export const queryKeys = {
   list: (params: {
     page: number;
     size: number;
-    cdGroupNo?: string;
+    cdGroupId?: string;
     cdGroupName?: string;
     cdGroupAbbreviatonEnglishName?: string;
     cdGroupContent?: string;
     validityYn?: boolean;
     cdName?: string;
   }) => [...queryKeys.all, 'list', params] as const,
-  detail: (cdGroupNo: string) => [...queryKeys.all, 'detail', cdGroupNo] as const,
+  detail: (cdGroupId: string) => [...queryKeys.all, 'detail', cdGroupId] as const,
 };
 
 export const commonCodeGroupQueryOptions = {
   list: (
     page: number,
     size: number,
-    cdGroupNo = '',
+    cdGroupId = '',
     cdGroupName = '',
     cdGroupAbbreviatonEnglishName = '',
     cdGroupContent = '',
@@ -30,7 +30,7 @@ export const commonCodeGroupQueryOptions = {
     queryKey: queryKeys.list({
       page,
       size,
-      cdGroupNo,
+      cdGroupId,
       cdGroupName,
       cdGroupAbbreviatonEnglishName,
       cdGroupContent,
@@ -41,7 +41,7 @@ export const commonCodeGroupQueryOptions = {
       CommonCodeGroupService.fetchCodeGroups(
         page,
         size,
-        cdGroupNo,
+        cdGroupId,
         cdGroupName,
         cdGroupAbbreviatonEnglishName,
         cdGroupContent,
@@ -49,9 +49,9 @@ export const commonCodeGroupQueryOptions = {
         cdName,
       ),
   }),
-  detail: (cdGroupNo: string) => ({
-    queryKey: queryKeys.detail(cdGroupNo),
-    queryFn: () => CommonCodeGroupService.fetchCodeGroup(cdGroupNo),
+  detail: (cdGroupId: string) => ({
+    queryKey: queryKeys.detail(cdGroupId),
+    queryFn: () => CommonCodeGroupService.fetchCodeGroup(cdGroupId),
   }),
 };
 

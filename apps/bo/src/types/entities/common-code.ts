@@ -1,10 +1,21 @@
 export interface CommonCodeGroup {
-  cdGroupNo: string;
+  cdGroupId: string;
   cdGroupName: string;
   cdGroupAbbreviatonEnglishName: string;
   cdGroupContent: string;
-  applyDatetime: string;
-  useYn: boolean;
+  isUsed: boolean;
+}
+
+export interface CommonCode
+  extends Omit<CommonCodeGroup, 'cdGroupAbbreviatonEnglishName' | 'cdGroupContent'> {
+  cdId: string;
+  cdName: string;
+  cdContent: string;
+  referenceVal1?: string;
+  referenceVal2?: string;
+  referenceVal3?: string;
+  referenceVal4?: string;
+  _timestamp?: number;
 }
 
 export interface CreateCommonCodeGroup extends CommonCodeGroup {
@@ -18,4 +29,18 @@ export interface CreateCommonCodeGroup extends CommonCodeGroup {
   requestorEmployeeNo: string;
   multilingulCd: string;
   deleteYn: boolean;
+}
+
+export interface CommonCodeResponse {
+  cdGroupId: string;
+  cdGroupName: string;
+  cdId: string;
+  cdName: string;
+  cdSeq: number;
+  cdContent: string;
+  referenceVal1: string;
+  referenceVal2: string;
+  referenceVal3: string;
+  referenceVal4: string;
+  isUsed: boolean;
 }

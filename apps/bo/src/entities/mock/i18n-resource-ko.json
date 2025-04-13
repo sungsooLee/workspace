@@ -67,6 +67,19 @@
     "회원 가입 현황": "회원 가입 현황",
     "회원가입": "회원가입",
     "HTA/HTACV 이용자": "HTA/HTACV 이용자",
-    "일반 회원": "일반 회원"
+    "일반 회원": "일반 회원",
+    "cdGroupId": "그룹코드",
+    "cdGroupName": "그룹 명",
+    "isUsed": "사용",
+    "cdName": "코드 명",
+    "cdGroupAbbreviatonEnglishName": "그룹코드 약어영문",
+    "cdGroupContent": "내용",
+    "cdSeq": "순서",
+    "cdContent": "내용",
+    "referenceVal1": "참고 1",
+    "referenceVal2": "참고 2",
+    "referenceVal3": "참고 3",
+    "referenceVal4": "참고 4",
+    "cdId": "코드"
   }
 }

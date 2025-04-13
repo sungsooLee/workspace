@@ -81,6 +81,7 @@ const Grid = forwardRef(
       onRowsSelect,
       onChange,
       renderButtons,
+      emptyMessage,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -427,6 +428,8 @@ const Grid = forwardRef(
                 {headerGroup.headers.map((header) => {
                   const { column } = header;
                   const { columnDef } = column;
+                  const isPinnedLeft = column.getIsPinned() === 'left';
+
                   return (
                     <th
                       key={header.id}
@@ -441,8 +444,13 @@ const Grid = forwardRef(
                         //   'justify-start',
                         display: 'block',
                         width: !tableMode ? header.getSize() : '',
+                        // 고정 헤더 스타일 추가
+                        position: isPinnedLeft ? 'sticky' : undefined,
+                        left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
+                        zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
+                        backgroundColor: isPinnedLeft ? 'white' : undefined,
                       }}
-                      className={styles.thead_th}
+                      className={cn(styles.thead_th, isPinnedLeft && styles['pinned-left'])}
                     >
                       <div className={styles.th_wrap}>
                         <div
@@ -504,6 +512,21 @@ const Grid = forwardRef(
         );
       };
 
+      /**
+       * 데이터가 없을 때 표시할 메시지 렌더링
+       */
+      const renderEmptyMessage = () => {
+        // const message = isInitialState ? initialMessage : emptyMessage;
+
+        return (
+          <div className={styles.empty_message_container}>
+            <p className={styles.empty_message}>
+              {emptyMessage ? emptyMessage : '조회 결과가 없습니다.'}
+            </p>
+          </div>
+        );
+      };
+
       // table > tbody
       const renderBody = () => {
         const bodyStyle = {
@@ -511,6 +534,20 @@ const Grid = forwardRef(
           position: 'relative',
           height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
+
+        // 데이터가 없을 경우 메시지 표시
+        if (data.length === 0) {
+          return (
+            <tbody>
+              <tr>
+                <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
+                  {renderEmptyMessage()}
+                </td>
+              </tr>
+            </tbody>
+          );
+        }
+
         return (
           <tbody style={bodyStyle}>
             {rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
@@ -550,6 +587,8 @@ const Grid = forwardRef(
 
       // table > tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
+        const isPinnedLeft = cell.column.getIsPinned() === 'left';
+
         const cellStyle = {
           background: cell.getIsGrouped()
             ? '#0aff0082'
@@ -563,9 +602,20 @@ const Grid = forwardRef(
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
           verticalAlign: 'center',
+
+          // 고정열 스타일 추가
+          position: isPinnedLeft ? 'sticky' : undefined,
+          left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
+          zIndex: isPinnedLeft ? 1 : undefined,
+          backgroundColor: isPinnedLeft ? 'white' : undefined,
         } as CSSProperties;
+
         return (
-          <td key={cell.id} className={styles.tbody_td} style={cellStyle}>
+          <td
+            key={cell.id}
+            className={cn(styles.tbody_td, isPinnedLeft && styles['pinned-left'])}
+            style={cellStyle}
+          >
             {cell.getIsGrouped() ? (
               <button
                 onClick={(e) => {
@@ -603,6 +653,7 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
+            overflow: 'auto', // 스크롤 가능하게 설정
           }}
         >
           <table>
@@ -706,7 +757,8 @@ const Grid = forwardRef(
           <span className={styles.count_wrap}>
             {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
           {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
-            {pageIndex * pageSize + 1}-{totalPages} Page
+            {/* {pageIndex * pageSize + 1}-{totalPages} Page */}
+            {pageIndex + 1} / {totalPages} Page
           </span>
         </div>
       );

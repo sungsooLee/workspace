@@ -12,7 +12,7 @@ export default class CommonCodeGroupService {
   static fetchCodeGroups(
     page: number,
     size: number,
-    cdGroupNo = '',
+    cdGroupId = '',
     cdGroupName = '',
     cdGroupAbbreviatonEnglishName = '',
     cdGroupContent = '',
@@ -22,7 +22,7 @@ export default class CommonCodeGroupService {
     const params = new URLSearchParams({
       page: page.toString(),
       size: size.toString(),
-      cdGroupNo,
+      cdGroupId,
       cdGroupName,
       cdGroupAbbreviatonEnglishName,
       cdGroupContent,
@@ -35,11 +35,11 @@ export default class CommonCodeGroupService {
 
   /**
    * 공통코드그룹 단건 조회
-   * @param cdGroupNo 공통 코드 그룹 번호
+   * @param cdGroupId 공통 코드 그룹 번호
    * @returns
    */
-  static fetchCodeGroup(cdGroupNo: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/code-groups/${cdGroupNo}`);
+  static fetchCodeGroup(cdGroupId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/code-groups/${cdGroupId}`);
   }
 
   static createCodeGroup(payload: CreateCommonCodeGroup): Promise<any> {
@@ -47,6 +47,6 @@ export default class CommonCodeGroupService {
   }
 
   static updateCodeGroup(payload: CreateCommonCodeGroup): Promise<any> {
-    return httpService.put<any>(`${PMSApiPrefix()}/code-groups/${payload.cdGroupNo}`, payload);
+    return httpService.put<any>(`${PMSApiPrefix()}/code-groups/${payload.cdGroupId}`, payload);
   }
 }
