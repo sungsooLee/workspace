@@ -42,7 +42,9 @@ const ModalComponent: React.FC<ModalConfig> = ({
 
           {/* 헤더 액션 노드 영역 (커스텀 사용 가능) */}
           {headerActionNode && (
-            <div className={cn(styles.header_action_node)}>{headerActionNode}</div>
+            <div className={cn(styles.header_action_node, 'nlp--modal-header-action-node')}>
+              {headerActionNode}
+            </div>
           )}
 
           {/* 닫기 버튼 */}

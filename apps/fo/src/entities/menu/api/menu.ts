@@ -5,21 +5,13 @@ import type { Menu } from '../../../types';
 //import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
-  static getMenus(tenantNo: number): Promise<any> {
+  static getMenus(tenantNo: number, isMobile: boolean): Promise<any> {
     const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, { tenantNo });
     return httpService.get<Menu>(url);
   }
 
   static getMenu(menuId: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/menu/${menuId}`);
-  }
-
-  static createMenus(menu: any[]) {
-    return httpService.post<any>(`/menus`, menu);
-  }
-
-  static updateMenu(menuId: string, menu: any) {
-    return httpService.patch<any>(`/menus`, menu);
   }
 }
 /*

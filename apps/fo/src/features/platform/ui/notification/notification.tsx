@@ -1,84 +1,130 @@
-import { memo, useEffect, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
 
-import { Popover } from '@learnway/ui';
-import { IcoBell02 } from '@learnway/icons';
-import { PMSApiPrefix } from '@learnway/config';
-import { useFetchAuthUser } from '@learnway/config';
-
-import { useNotifications } from '../../../../entities/notification/service/notification.hook';
-import { queryKeys } from '../../../../entities/notification/service/notification.queries';
+import { Button } from '@learnway/ui';
+import { IcoBell03, IcoXclose } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
 import styles from './notification.module.css';
 
-const PopoverContent = () => {
-  return <div className={styles.alarm_content}></div>;
-};
+interface NotificationInfo {
+  id: number;
+  title: string;
+  message: string;
+  time: string;
+  isRead: boolean;
+  hasLink: boolean;
+}
+
+const initialNotifications: NotificationInfo[] = [
+  {
+    id: 1,
+    title: '새 공지',
+    message: `${'관리자'}로 부터 ${'김현대'}님에게 요청이 왔습니다.`,
+    time: '10분전',
+    isRead: false,
+    hasLink: true,
+  },
+  {
+    id: 2,
+    title: '시스템 점검',
+    message: `내일 오전 2시에 점검이 있습니다. 내일 오전 2시에 점검이 있습니다.  내일 오전 2시에 점검이 있습니다.`,
+    time: '10분전',
+    isRead: true,
+    hasLink: false,
+  },
+  {
+    id: 3,
+    title: '시스템 점검2',
+    message: '내일 오전 2시에 점검이 있습니다2.',
+    time: '10분전',
+    isRead: true,
+    hasLink: false,
+  },
+  {
+    id: 4,
+    title: '시스템 점검3',
+    message: '내일 오전 2시에 점검이 있습니다3.',
+    time: '10분전',
+    isRead: true,
+    hasLink: false,
+  },
+  {
+    id: 5,
+    title: '시스템 점검4',
+    message: '내일 오전 2시에 점검이 있습니다4.',
+    time: '10분전',
+    isRead: false,
+    hasLink: true,
+  },
+  {
+    id: 6,
+    title: '시스템 점검5',
+    message: '내일 오전 2시에 점검이 있습니다5.',
+    time: '10분전',
+    isRead: false,
+    hasLink: true,
+  },
+];
 
 const NotificationComponent = ({ userUUID }: any) => {
-  const { data } = useFetchAuthUser();
-  const queryClient = useQueryClient();
-  const [isConnected, setIsConnected] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationInfo[]>(initialNotifications);
 
-  const { notifications, unreadCount, markAsRead, checkAll } = useNotifications({ userUUID });
+  const handleDelete = (id: number) => {
+    setNotifications(notifications.filter((notif) => notif.id !== id));
+  };
 
-  useEffect(() => {
-    let eventSource: EventSource | null = null;
+  const markAsRead = (id: number) => {
+    setNotifications(
+      notifications.map((notif) => (notif.id === id ? { ...notif, isRead: true } : notif)),
+    );
+  };
 
-    const connectSSE = () => {
-      // SSE 연결 설정
-      eventSource = new EventSource(`/pms-module/api/v1/alarm/subscribe/${userUUID}`);
-
-      // 연결 성공
-      eventSource.onopen = () => {
-        setIsConnected(true);
-        console.log('SSE 연결 성공');
-      };
-
-      eventSource.onerror = (error) => {
-        console.log('SSE 연결 에러: ', error);
-        setIsConnected(false);
-        if (eventSource) eventSource.close();
-        setTimeout(connectSSE, 100000);
-      };
-
-      eventSource.addEventListener('connect', (event) => {
-        console.log('Connect 이벤트:', event.data);
-      });
-
-      eventSource.onmessage = (event) => {
-        console.log('메세지 도착', event.data);
-        try {
-          const data = JSON.parse(event.data);
-          queryClient.invalidateQueries({ queryKey: queryKeys.unreadCount(userUUID) });
-        } catch (error) {
-          console.error('메시지 파싱 에러' + error);
-        }
-      };
-
-      eventSource.addEventListener('notice', (event) => {
-        console.log('notice 이벤트', event.data);
-        queryClient.invalidateQueries({ queryKey: queryKeys.unreadCount(userUUID) });
-      });
-    };
-    // 초기 연결 시도 SSE 연결 구현 완료 되면 추가 예정.
-    // connectSSE();
-
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-        fetch(`${PMSApiPrefix}/alarm/close/${userUUID}`);
-      }
-    };
-  }, [userUUID, queryClient]);
   return (
-    <Popover popoverContent={<PopoverContent />}>
-      <button type="button" className={styles.btn_alarm}>
-        <IcoBell02 width={20} height={20} stroke="#131C30" />
-        {unreadCount > 0 && <em className={styles.noti}>{unreadCount}</em>}
-      </button>
-    </Popover>
+    <div className={`${styles.start} ${styles.alarm_contents}`}>
+      {/* 알림 없는 경우 */}
+      {notifications.length === 0 ? (
+        <p className={styles.empty}>
+          <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
+          새로운 알림이 없습니다.
+          <span className={styles.sub_text}>알림은 30일 동안 보관됩니다.</span>
+        </p>
+      ) : (
+        <ul className={styles.info_list}>
+          {notifications.map(({ id, title, message, time, isRead, hasLink }) => (
+            <li
+              key={id}
+              className={`${styles.info_item} ${!isRead ? styles.yet : ''}`}
+              onClick={() => markAsRead(id)}
+            >
+              <div className={styles.title_wrap}>
+                <strong className={styles.title}>{title}</strong>
+                <Button
+                  className={styles.btn_close}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(id);
+                  }}
+                >
+                  <IcoXclose width={24} height={24} stroke="#131C30" />
+                </Button>
+              </div>
+              <div className={styles.message_wrap}>
+                {hasLink ? (
+                  <Link to={''} className={styles.link}>
+                    {message}
+                  </Link>
+                ) : (
+                  <p className={styles.message}>{message}</p>
+                )}
+                <p className={styles.time}>{time}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
-export const Notification = memo(NotificationComponent);
+export const Notification = NotificationComponent;

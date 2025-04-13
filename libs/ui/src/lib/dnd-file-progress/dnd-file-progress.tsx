@@ -1,4 +1,4 @@
-import { cn, getUniqueId } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { Badge, Button, Progress } from '@learnway/ui';
 import {
   IcoComplete02,
@@ -9,11 +9,12 @@ import {
   IcoUploadCloud,
 } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, useCallback } from 'react';
 import { DndFileProgressProps } from '@/libs/ui/src/lib/dnd-file-progress/types';
 import { FileItemStatus } from '@learnway/hooks';
 import { t } from 'i18next';
 import { useDropzone } from 'react-dropzone';
+
 /**
  * DndProgress
  * @param files

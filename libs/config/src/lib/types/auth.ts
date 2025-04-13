@@ -1,22 +1,26 @@
 export interface AuthUser {
   userId: number;
-  userTsid: string;
   employeeNumber: string;
   name: string;
+  birthday: number;
   companyId: number;
   companyCode: string;
-  emailAddress: string;
-  tenants: Tenant[];
-  tenantIds: number[];
-  stateCode: string;
+  email: string;
+  phoneNumber: string;
   locale: string;
+  passwordChangeDate: string;
+  passwordExpireDate: string;
+  stateCode: string;
+  tenants: Tenant[];
+  enabled: boolean;
   username: string;
   accountNonExpired: boolean;
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
-  activeTenantNo?: number;
+  activeTenant?: Tenant;
   mainTenantId?: number;
   menus?: any;
+  avataImage?: string;
 }
 
 export interface AuthSSOHealthcheck {

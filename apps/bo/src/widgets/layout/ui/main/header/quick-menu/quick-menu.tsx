@@ -16,6 +16,7 @@ function QuickMenuComponent() {
   return (
     <div className={cn(styles.start, 'nlp--quick-menu')}>
       <div className={styles.menu_wrap}>
+        {/**
         <ul className={styles.menu_list}>
           {data?.map((menu: Menu, index: number) => {
             return (
@@ -27,6 +28,7 @@ function QuickMenuComponent() {
             );
           })}
         </ul>
+         */}
         <MyMenu />
       </div>
     </div>

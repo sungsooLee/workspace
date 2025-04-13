@@ -19,6 +19,7 @@ import {
   EditDropdownCell,
   EditInputCell,
   EditRadioCell,
+  EditTextareaCell,
   Grid,
   GridState,
   Input,
@@ -1040,6 +1041,7 @@ const editGridData = Array(10)
   .map((_, i) => ({
     id: `id_${i}`,
     text: 'text',
+    textarea: 'textarea',
     number: 0,
     checkbox: true,
     radio: '',
@@ -1056,6 +1058,14 @@ export const TemplateEditGrid: any = (args: any) => {
       size: 150,
       cell: (info: CellContext<any, string>) => (
         <EditInputCell info={info} input={{ type: 'text' }} />
+      ),
+    },
+    {
+      header: 'textarea',
+      accessorKey: 'textarea',
+      size: 150,
+      cell: (info: CellContext<any, string>) => (
+        <EditTextareaCell info={info} textarea={{ maxLength: 100 }} />
       ),
     },
     {
@@ -1198,6 +1208,6 @@ export const TemplateTable: any = (args: any) => {
     { accessorKey: 'name4', size: 200 },
     { accessorKey: 'name5', size: 200 },
   ];
-  return <Table data={data} columns={columns} />;
+  return <Table data={data} columns={columns} variant={'fill'} />;
 };
 TemplateTable.storyName = '테이블 모드';

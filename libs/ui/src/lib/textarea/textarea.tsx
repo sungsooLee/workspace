@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 
 import styles from './textarea.module.css';
 
-export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   dummy?: any;
   className?: string;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
@@ -14,7 +14,7 @@ export interface TextareaComponentProps extends React.TextareaHTMLAttributes<HTM
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps>(
+const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
       size = 'md',
@@ -59,7 +59,8 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaComponentProps
           readOnly && styles.readonly,
           'textarea_wrap',
           className,
-        )}>
+        )}
+      >
         {/* textarea */}
         <textarea
           value={value}

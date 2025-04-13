@@ -8,8 +8,8 @@ export function useFetchTenant(tenantNo?: number) {
   return useQuery(queryOptions.detail(tenantNo));
 }
 
-export function useFetchTenantByUser(accountId?: string) {
-  return useQuery(queryOptions.byUser(accountId || ''));
+export function useFetchTenantByUser(accountId?: number) {
+  return useQuery(queryOptions.byUser(accountId));
 }
 
 export function useCreateTenant(mutationOptions = {}) {

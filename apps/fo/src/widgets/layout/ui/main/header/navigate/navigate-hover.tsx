@@ -3,7 +3,7 @@ import { Link, useRouter } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
 import styles from './navigate-hover.module.css';
 
-import { useMenuHierarchy } from '../../../../service/menu.service';
+import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';
 
 interface NavigateHoverComponentProps {
   onClose: () => void;

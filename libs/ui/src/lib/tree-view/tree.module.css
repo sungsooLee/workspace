@@ -33,18 +33,23 @@
           @apply bg-[var(--gray1)];
         }
         & + .tree_children {
-          .tree_item .tree_inner {
+          & > .tree_item > .tree_inner {
             @apply bg-[left_6px_top_12px] !pl-[18px];
             & + .tree_children {
-              .tree_item .tree_inner {
+              & > .tree_item > .tree_inner {
                 @apply bg-[left_26px_top_12px] !pl-[38px];
-              }
-              & + .tree_children {
-                .tree_item .tree_inner {
-                  @apply bg-[left_46px_top_12px] !pl-[58px];
-                  & + .tree_children {
-                    .tree_item .tree_inner {
-                      @apply bg-[left_66px_top_12px] !pl-[78px];
+                & + .tree_children {
+                  & > .tree_item > .tree_inner {
+                    @apply bg-[left_46px_top_12px] !pl-[58px];
+                    & + .tree_children {
+                      & > .tree_item > .tree_inner {
+                        @apply bg-[left_66px_top_12px] !pl-[78px];
+                        & + .tree_children {
+                          & > .tree_item > .tree_inner {
+                            @apply bg-[left_86px_top_12px] !pl-[98px];
+                          }
+                        }
+                      }
                     }
                   }
                 }

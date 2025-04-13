@@ -5,17 +5,26 @@
         @apply title_6_b block text-[var(--gray8)];
       }
       .number {
-        @apply mt-[8px];
+        @apply mt-[8px] flex items-center;
         dt,
         dd {
-          @apply body_bo_2_r text-[var(--gray7)];
+          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
+        }
+        dd {
+          @apply ml-[4px];
         }
       }
       .addr {
-        @apply mt-[8px];
+        @apply mt-[8px] flex items-center;
         dt,
         dd {
-          @apply body_bo_2_r text-[var(--gray7)];
+          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
+        }
+        dd {
+          @apply ml-[4px];
+          button {
+            @apply ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 export * from './ui/language/language';
-export * from './ui/notification/notification';
+export * from './ui/notification/notification-button';
 export * from './ui/tenant-button/tenant-button';
 export * from './ui/admin-link/admin-link';
 export * from './ui/sessionTimer';

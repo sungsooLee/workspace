@@ -26,9 +26,6 @@ export const queryOptions = {
                   node['parentNode'] = cloneParentNode;
                 }
                 node['depth'] = depth;
-                if (!node?.key) {
-                  node['key'] = getRandomId();
-                }
                 return [node, node.children];
               },
             );

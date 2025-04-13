@@ -11,14 +11,14 @@ import { pageRouteConfig } from '../features/auth';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
-  ...pageRouteConfig({ authorization: false }),
+  ...pageRouteConfig({ authorization: true }),
 });
 
 function LayoutComponent() {
   const { t } = useTranslation();
 
   const { data } = useFetchAuthUser();
-  const { data: tenant } = useFetchTenant(data?.activeTenantNo);
+  const { data: tenant } = useFetchTenant(data?.activeTenant?.tenantNo);
 
   useEffect(() => {
     if (!tenant) {

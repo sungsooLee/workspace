@@ -12,6 +12,20 @@ import styles from './user-avatar.module.css';
 
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 
+export const AvataFallback = ({ name }: { name?: string }) => {
+  const firstUnit = useCreation(() => {
+    if (!name) {
+      return '';
+    }
+    return name.substring(0, 1);
+  }, [name]);
+  return (
+    <span className={styles.name}>
+      <em className={styles.text}>{firstUnit}</em>
+    </span>
+  );
+};
+
 interface ProfileMenu {
   title: string;
   action: () => void;
@@ -23,6 +37,7 @@ const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
+  const { data: authUser } = useFetchAuthUser();
   //const { startSession } = useLoginTimeout();
 
   const PROFILE_MENU: ProfileMenu[] = useCreation(
@@ -97,14 +112,11 @@ const PopoverContent = () => {
     <div className={`${styles.start} ${styles.avata_area}`}>
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
-          {data ? (
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-          ) : (
-            // 아바타 이미지 없는 경우 CASE
-            <span className={styles.name}>
-              <em className={styles.text}>{'김'}</em>
-            </span>
-          )}
+          <Avatar
+            imageUrl={authUser?.avataImage}
+            className={styles.info_avata}
+            fallback={<AvataFallback name={authUser?.name} />}
+          />
         </div>
         <div className={styles.profile}>
           <span className={styles.name}>{data?.name}</span>
@@ -129,7 +141,7 @@ const PopoverContent = () => {
 };
 
 const AvatarCompoment = ({ className }: any) => {
-  const { data } = useFetchAuthUser();
+  const { data: authUser } = useFetchAuthUser();
 
   return (
     <Popover
@@ -139,13 +151,7 @@ const AvatarCompoment = ({ className }: any) => {
       align="end"
       sideOffset={10}
     >
-      {data ? (
-        <Avatar imageUrl="https://github.com/shadcn.png" />
-      ) : (
-        <span className={styles.name}>
-          <em className={styles.text}>{'김'}</em>
-        </span>
-      )}
+      <Avatar imageUrl={authUser?.avataImage} fallback={<AvataFallback name={authUser?.name} />} />
     </Popover>
   );
 };

@@ -53,6 +53,7 @@ function RouteComponent() {
   };
 
   const { close: closeModal } = useModal();
+  const columnHelper = createColumnHelper<any>();
   // 회사 조회 팝업 (공통)
   const ModalCompanySearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -89,8 +90,6 @@ function RouteComponent() {
         email: 'asdfged@gmail.com',
       },
     ];
-
-    const columnHelper = createColumnHelper<any>();
 
     const columns = [
       columnHelper.accessor('order', {
@@ -205,6 +204,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
+              {/* Grid Case */}
               <Grid
                 data={data}
                 columns={columns}
@@ -460,7 +460,7 @@ function RouteComponent() {
               <Grid
                 data={data}
                 columns={columns}
-                height={300}
+                height={310}
                 hideColumnSettings={true}
                 pagination={{
                   pageSize,
@@ -520,6 +520,16 @@ function RouteComponent() {
               <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
               </span>
+              <Tooltip
+                className={formStyles.tooltip}
+                side="right"
+                align="start"
+                content={'테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'}
+              >
+                <Button onlyIcon>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Button>
+              </Tooltip>
             </label>
             <div className={formStyles.input_box}>
               <ThumbnailImageUpload
@@ -586,7 +596,7 @@ function RouteComponent() {
               </span>
               <Tooltip
                 className={formStyles.tooltip}
-                side="bottom"
+                side="right"
                 align="start"
                 content={
                   '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다. '
@@ -619,7 +629,7 @@ function RouteComponent() {
               </span>
               <Tooltip
                 className={formStyles.tooltip}
-                side="bottom"
+                side="right"
                 align="start"
                 content={
                   '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.'

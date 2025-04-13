@@ -13,16 +13,7 @@ const NavigationPopupMComponent = () => {
   const { close: closeModal } = useModal();
   return (
     <ModalContainer>
-      <ModalTitle>
-        <div className={styles.header}>
-          <Link to={''}>
-            <IcoHome03 width={24} height={24} stroke="#131c30"></IcoHome03>
-          </Link>
-          <Link to={''}>
-            <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
-          </Link>
-        </div>
-      </ModalTitle>
+      <ModalTitle> </ModalTitle>
       <ModalBody>
         <div className={styles.start}>
           <div className={styles.profile_info}>
@@ -54,13 +45,14 @@ const NavigationPopupMComponent = () => {
               <ul className={styles.gnb_list}>
                 <li>
                   <Link to={''}>
-                    <IcoReview width={20} height={20} stroke="#131c30"></IcoReview>
+                    <IcoReview width={20} height={20} stroke="#131c30" />
                     H-Sence
                   </Link>
                 </li>
                 <li>
                   <Link to={''}>
-                    <IcoMybook width={20} height={20} stroke="#131c30"></IcoMybook>법정필수교육
+                    <IcoMybook width={20} height={20} stroke="#131c30" />
+                    법정필수교육
                   </Link>
                 </li>
               </ul>

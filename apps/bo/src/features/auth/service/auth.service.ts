@@ -19,7 +19,7 @@ export function useAuthSignin() {
   return {
     login: async (payload: LoginParams): Promise<AuthUser | undefined> => {
       const user = await login(payload);
-      const menus = await asyncMenus(user?.activeTenantNo);
+      const menus = await asyncMenus(user?.activeTenant.tenantNo);
 
       if (payload.saveId) {
         cookieService.set('SAVED_USER_ID', payload.username);
@@ -30,7 +30,7 @@ export function useAuthSignin() {
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
-      const menus = await asyncMenus(user?.activeTenantNo);
+      const menus = await asyncMenus(user?.activeTenant.tenantNo);
       return updateMenu(menus);
     },
   };

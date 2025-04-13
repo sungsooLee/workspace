@@ -1,5 +1,6 @@
 import { Outlet, createRootRouteWithContext, Link } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
@@ -41,6 +42,7 @@ function RootComponent() {
       <ModalWrapper />
       <ToastWrapper />
       <TanStackRouterDevtools position="bottom-right" />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </>
   );
 }

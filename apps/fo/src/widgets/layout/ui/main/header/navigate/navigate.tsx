@@ -2,10 +2,11 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
-import { Link, useMatchRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
-import { useMenuHierarchy } from '../../../../service/menu.service';
+import { useMenuHierarchy } from '../../../../../../entities/menu';
 
 import styles from './navigate.module.css';
 
@@ -15,7 +16,7 @@ interface NavigateComponentProps {
 }
 
 function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
-  const { data: menus } = useMenuHierarchy();
+  const { data } = useMenuHierarchy();
   const location = useRouterState();
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
@@ -55,12 +56,33 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
           allowTouchMove={isMobile}
           className={styles.gnb_swiper}
         >
-          {menus.map((menu, index) => (
-            <SwiperSlide
-              key={index}
-              // className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
-              className={`${styles.slide}`}
-            >
+          {data.eventMenus.map(
+            (
+              menu,
+              index, //event menu
+            ) => (
+              <SwiperSlide
+                key={index}
+                className={cn(
+                  styles.slide,
+                  data.eventMenus.length - 1 === index ? styles.division : '',
+                )}
+              >
+                <Link
+                  to={menu.path}
+                  onMouseEnter={onMouseEnter}
+                  onClick={(e) => e.preventDefault()}
+                  preload={false}
+                >
+                  {menu.menuName}
+                </Link>
+                {/* 라벨 표시 */}
+                {/* <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
+              </SwiperSlide>
+            ),
+          )}
+          {data.menus.map((menu, index) => (
+            <SwiperSlide key={index} className={`${styles.slide}`}>
               <Link
                 to={menu.path}
                 onMouseEnter={onMouseEnter}
@@ -69,8 +91,6 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
               >
                 {menu.menuName}
               </Link>
-              {/* 라벨 표시 */}
-              {/* <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
             </SwiperSlide>
           ))}
         </Swiper>

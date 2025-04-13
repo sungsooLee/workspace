@@ -79,7 +79,7 @@
         }
         .more_box {
           @apply relative mt-[20px];
-          s .btn_more {
+          .btn_more {
             @apply relative flex w-full items-center justify-center;
             span {
               @apply body_3_r text-[var(--gray8)];

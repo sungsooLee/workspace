@@ -33,7 +33,11 @@
       td {
         @apply body_bo_2_r h-full border-b border-solid border-[var(--gray2)] px-[8px] py-[8px] align-middle text-[var(--gray7)];
         button {
-          @apply !min-w-auto !h-[20px];
+          @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
+          &:read-only,
+          &:disabled {
+            @apply !border-[var(--gray1)];
+          }
         }
         [class*='nlp--checkbox'] {
           @apply mt-[6px];
@@ -160,6 +164,9 @@
           @apply body_bo_2_b !table-cell !h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] text-center align-middle text-[#3E4550];
           .th_cell {
             @apply !w-full;
+          }
+          svg {
+            @apply hidden;
           }
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];

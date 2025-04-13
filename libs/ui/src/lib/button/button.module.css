@@ -66,6 +66,15 @@
   &:disabled {
     @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[var(--gray5)];
   }
+  &.lg {
+    @apply border-[var(--gray6)];
+    &:hover {
+      @apply border-[var(--gray5)];
+    }
+    &:active {
+      @apply border-[var(--gray7)];
+    }
+  }
 }
 .gray2 {
   @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] text-[var(--gray8)];

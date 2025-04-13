@@ -26,6 +26,8 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'; // paging Icons
+import { isEmpty } from 'lodash';
+
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -82,6 +84,7 @@ const Grid = forwardRef(
       onChange,
       renderButtons,
       emptyMessage,
+      variant = 'line',
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -355,6 +358,10 @@ const Grid = forwardRef(
 
     // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
     useEffect(() => {
+      if (isEmpty(data)) {
+        // 최초 로딩 인경우 수행하지 않음
+        return;
+      }
       const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
       const selectedRow = selectedRows?.[0];
       onRowSelect?.(selectedRow);
@@ -649,6 +656,8 @@ const Grid = forwardRef(
             className,
             multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
             tableMode ? 'table' : 'grid',
+            tableMode && styles[variant],
+            tableMode && variant,
           )}
           style={{
             height: tableMode ? 'auto' : `${height}px`,
@@ -815,6 +824,8 @@ const Grid = forwardRef(
     );
   },
 );
+
+//
 
 const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
   return (

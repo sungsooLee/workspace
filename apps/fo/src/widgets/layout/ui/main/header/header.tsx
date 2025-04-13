@@ -4,7 +4,12 @@ import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/config';
 
 import { Search, Logo, UserAvatar } from '../../../../../features/layout';
-import { Language, Notification, TenantButton, AdminLink } from '../../../../../features/platform';
+import {
+  Language,
+  NotificationButton,
+  TenantButton,
+  AdminLink,
+} from '../../../../../features/platform';
 import { useFetchTenantByUser } from '../../../../../entities/tenant';
 
 import { Tenant } from '../../../../../types';
@@ -18,7 +23,7 @@ import { CategoryButton } from '../../../../../features/category';
 
 function HeaderComponent() {
   const { data: authUser } = useFetchAuthUser();
-  const { data: tenants } = useFetchTenantByUser(authUser?.userTsid);
+  const { data: tenants } = useFetchTenantByUser(authUser?.userId);
   const [isHoverNavigate, setIsHoverNavigate] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
@@ -83,7 +88,7 @@ function HeaderComponent() {
           <div className={styles.util}>
             <AdminLink />
             <Language />
-            <Notification userUUID={authUser?.userId} />
+            <NotificationButton userUUID={authUser?.userId} />
             <UserAvatar />
           </div>
         </div>

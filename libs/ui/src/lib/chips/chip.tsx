@@ -9,7 +9,7 @@ import { Button } from '../button/button';
 export interface ChipComponentProps extends PropsWithChildren {
   option: any;
   variant?: 'primary' | 'secondary';
-  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  size?: 'ts' | 'xs' | 'sm' | 'md' | 'lg'; //  ts(20), xs(28) , sm(32) , md(36), lg(40)
   className?: string;
   prefixCharacter?: string;
   hideCloseButton?: boolean;
@@ -49,8 +49,16 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
     return (
       <span
         {...props}
-        className={cn(styles.start, styles.chips, className, 'nlp--chips')}
-        onClick={handleClick}>
+        className={cn(
+          styles.start,
+          styles.chips,
+          variant && styles[variant],
+          size && styles[size],
+          className,
+          'nlp--chips',
+        )}
+        onClick={handleClick}
+      >
         {/* prefix character */}
         {prefixCharacter}
 

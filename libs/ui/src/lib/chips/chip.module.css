@@ -1,13 +1,16 @@
 .start {
   &.chips {
-    @apply mr-0 inline-flex min-h-[2.8rem] items-center justify-center rounded-full bg-[var(--gray2)] px-[10px] text-[13px] font-light text-[var(--gray9)];
+    @apply mr-0 inline-flex min-h-[2.8rem] items-center justify-center rounded-full bg-[#d8f8ff] px-[10px] text-[13px] font-light text-[var(--gray9)];
     .label {
       @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
       &.button_mode {
         @apply pointer-events-auto;
       }
       & + button {
-        @apply ml-[2px];
+        @apply ml-[8px] flex h-[14px] w-[14px] shrink-0 items-center justify-center rounded-full bg-[#6f798b];
+        svg {
+          @apply ml-0 h-[10px] w-[10px] stroke-[#fff];
+        }
       }
     }
   }
@@ -23,6 +26,12 @@
   .chips_wapper {
     @apply mt-[8px] flex max-w-fit flex-wrap gap-x-[8px] gap-y-[12px];
     .btn_chips {
+      &.ts {
+        @apply !h-[2rem] !min-h-[2rem] px-[8px];
+      }
+      &.xs {
+        @apply !h-[2.8rem] !min-h-[2.8rem];
+      }
       &.sm {
         @apply min-h-[3.2rem];
       }
@@ -40,6 +49,15 @@
         }
         .close {
           @apply h-[16px] w-[16px] stroke-[#06226a];
+        }
+      }
+      &.round2 {
+        @apply !bg-[var(--gray2)];
+        .label + button {
+          @apply !bg-transparent;
+          svg {
+            @apply !stroke-[#131C30];
+          }
         }
       }
     }

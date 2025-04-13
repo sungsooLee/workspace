@@ -33,7 +33,7 @@ function RouteComponent() {
         { label: 'Grid, Table', path: '/guide/grid' },
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
-        // { label: 'Select', path: '/guide/select' },
+        { label: 'Select', path: '/guide/notice-box' },
         { label: 'Dropdown', path: '/guide/drop-down' },
         { label: 'Tootip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },

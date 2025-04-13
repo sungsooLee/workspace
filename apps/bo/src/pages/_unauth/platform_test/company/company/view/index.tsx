@@ -5,8 +5,8 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../../../widgets/layout/ui/container/page-container';
-import { CompanyInfo } from './-tabs/company-info';
-import { AutoUserGroup } from './-tabs/auto-user-group';
+import { CompanyInfo } from './-tabs/company-info/company-info';
+import { HrInfo } from './-tabs/hr-info/hr-info';
 
 export const Route = createFileRoute('/_unauth/platform_test/company/company/view/')({
   component: RouteComponent,
@@ -30,9 +30,9 @@ function RouteComponent() {
       content: <CompanyInfo />,
     },
     {
-      title: '자동유저그룹관리',
-      key: '자동유저그룹관리',
-      content: <AutoUserGroup />,
+      title: 'HR연동정보',
+      key: 'HR연동정보',
+      content: <HrInfo />,
     },
   ];
 
@@ -43,7 +43,7 @@ function RouteComponent() {
         <Button type="button" variant="primary" size="sm" onClick={handleSave} label={t('저장')} />
       </ContentsButtons>
       <MainContents>
-        <Tabs type={'line'} size={'md'} items={tabItems} />
+        <Tabs type={'line'} size={'sm'} items={tabItems} />
       </MainContents>
     </PageContainer>
   );

@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 
 import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
-import { Logo, UserAvatar, Notification } from '../../../../../features/layout';
+import { Logo, UserAvatar, NotificationButton } from '../../../../../features/layout';
 import { Language } from '../../../../../features/platform';
 
 import styles from './header.module.css';
@@ -26,7 +26,7 @@ function HeaderComponent() {
 
         <div className={cn(styles.util, 'util')}>
           <Language />
-          <Notification />
+          <NotificationButton />
           <UserAvatar />
         </div>
 

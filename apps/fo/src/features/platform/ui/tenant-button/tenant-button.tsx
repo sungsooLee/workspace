@@ -16,16 +16,6 @@ const TenantComponent = () => {
 
   const { data } = useFetchAuthUser();
 
-  const activeTenantName = useCreation(() => {
-    if (!data?.tenants || !data?.activeTenantNo) {
-      return;
-    }
-    const activeTenant = data?.tenants.filter(
-      (tenant: Tenant) => tenant.tenantNo === data?.activeTenantNo,
-    )?.[0];
-    return activeTenant?.tenantName;
-  }, [data?.activeTenantNo]);
-
   return (
     <Button
       className={styles.btn_tenant}
@@ -37,7 +27,7 @@ const TenantComponent = () => {
         })
       }
     >
-      <span className={styles.select}>{activeTenantName}</span>
+      <span className={styles.select}>{data?.activeTenant?.tenantName}</span>
       <IcoArrowDown width={16} height={16} stroke="#131C30" />
     </Button>
   );

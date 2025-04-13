@@ -93,6 +93,9 @@ h4.auth--title {
 }
 
 /* title */
+.nlp--tabs + .title_wrap {
+  @apply !border-t-0 !pt-0;
+}
 .content_wrap .title_wrap {
   @apply mb-[16px];
   .title {

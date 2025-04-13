@@ -7,4 +7,4 @@ export * from './ui/main/header/header';
 export * from './ui/main/footer/footer';
 export * from './m.ui/main/layout';
 
-export * from './service/menu.service';
+export * from '../../entities/menu/service/menu.service';

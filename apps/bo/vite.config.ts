@@ -35,7 +35,17 @@ export default defineConfig(({ mode }) => {
       svgr(),
     ],
     resolve: {
-      alias: { find: '@/', replacement: path.resolve(__dirname, 'src') },
+      alias: [
+        { find: '@/', replacement: path.resolve(__dirname, 'src') },
+        { find: '@app', replacement: path.resolve(__dirname, 'src/app') },
+        { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
+        { find: '@entities', replacement: path.resolve(__dirname, 'src/entities') },
+        { find: '@features', replacement: path.resolve(__dirname, 'src/features') },
+        { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+        { find: '@shared', replacement: path.resolve(__dirname, 'src/shared') },
+        { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
+        { find: '@widgets', replacement: path.resolve(__dirname, 'src/widgets') },
+      ],
     },
     // Uncomment this if you are using workers.
     // worker: {

@@ -1,10 +1,11 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoMessageText, IcoCheck } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress } from '@learnway/ui';
+import { Button, Dropdown, Panel, Progress, useModal } from '@learnway/ui';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
+import { NoticeDetailPopup } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -14,6 +15,22 @@ const CourseDashboardCompoment = () => {
   ];
 
   const progress = 80;
+
+  const { open: openModal } = useModal();
+  const { close: closeModal } = useModal();
+
+  // 자동모달 띄우기 퍼블 확인용
+  const hasRun = useRef(false);
+  useEffect(() => {
+    if (!hasRun.current) {
+      openModal({
+        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+        content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
+      });
+      hasRun.current = true;
+    }
+  }, [openModal]);
+
   return (
     <div className={styles.start}>
       <div className={styles.title_box}>

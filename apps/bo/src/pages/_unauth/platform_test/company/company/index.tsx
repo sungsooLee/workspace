@@ -57,6 +57,7 @@ function RouteComponent() {
     </PageContainer>
   );
 }
+
 const searchConfig: any = {
   builders: [
     [
@@ -85,8 +86,8 @@ const searchConfig: any = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: true, label: t('사용') },
-          { value: false, label: t('미사용') },
+          { value: 2, label: t('사용') },
+          { value: 3, label: t('미사용') },
         ],
       },
     ],
