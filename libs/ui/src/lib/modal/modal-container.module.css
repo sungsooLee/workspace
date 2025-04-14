@@ -29,6 +29,9 @@
   &.notitle {
     @apply pt-[48px];
   }
+  & > [class*='nlp--tabs'] > [role='tablist'] {
+    @apply mb-[24px];
+  }
 }
 .md,
 .lg,

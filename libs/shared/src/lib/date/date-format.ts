@@ -191,3 +191,22 @@ export function timeFormatMilliSecond() {
       return 'YYYY-MM-DD HH:mm:ss.SSS';
   }
 }
+
+/**
+ * ISO 날짜 문자열을 포맷팅된 날짜/시간 문자열로 변환합니다.
+ * @param dateString ISO 형식의 날짜 문자열 (예: "2025-04-11T06:02:02.416Z")
+ * @param format 적용할 포맷 (기본값: DATE_TIME_FORMAT.DATETIME_SEC)
+ * @returns 포맷팅된 날짜 문자열 또는 빈 문자열(유효하지 않은 날짜)
+ */
+export function formatISODateString(
+  dateString: string | null | undefined,
+  format: DATE_TIME_FORMAT = DATE_TIME_FORMAT.DATETIME_SEC,
+): string {
+  if (!dateString) return '';
+
+  const date = dayjs(dateString);
+  if (!date.isValid()) return '';
+
+  const formatStr = getDateTimeFormat(format);
+  return date.format(formatStr);
+}

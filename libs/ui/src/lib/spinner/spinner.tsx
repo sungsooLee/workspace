@@ -13,12 +13,12 @@ export interface SpinnerProps {
 }
 
 const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ className, isLoading, showBackdrop }) => {
+  ({ className, isLoading, showBackdrop }, ref) => {
     return (
-      <>
+      <div ref={ref} className={className}>
         {isLoading && <IcoSpinner className={cn(styles.spinner, className, 'nlp--spinner')} />}
         {isLoading && showBackdrop ? <BackDrop /> : ''}
-      </>
+      </div>
     );
   },
 );

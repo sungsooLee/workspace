@@ -256,6 +256,10 @@ export interface GridProps<T> {
   renderButtons?: React.ReactNode;
 
   /**
+   * 데이터 없을 때 표시할 메세지
+   */
+  emptyMessage?: string;
+  /**
    * 테이블 모드에서 style 을 구분하기 위해 사용
    */
   variant?: 'line' | 'fill';
@@ -294,4 +298,9 @@ export interface GridImperative {
    * 행 선택 상태를 초기화하는 메서드입니다.
    */
   resetRowSelection: () => void;
+
+  /**
+   * 행 선택을 위한 메서드
+   */
+  selectRowById: (idField: string, idValue: string) => boolean;
 }

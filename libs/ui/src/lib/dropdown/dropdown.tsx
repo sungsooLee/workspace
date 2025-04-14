@@ -250,9 +250,11 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
 
     // value를 react-select 형식으로 변환
     const selectedOptions = useCreation(() => {
-      if (!value) {
+      // 빈 문자열('')도 유효한 값으로 처리
+      if (value === undefined || value === null) {
         return null;
       }
+
       const safeOptions = Array.isArray(options) ? options : [options];
 
       if (isMulti) {
@@ -261,10 +263,15 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
           .filter(Boolean); // undefined 값 제거
       }
 
-      return (
-        safeOptions.find((option: DropdownOption) => option.value === value) ||
-        (typeof value === 'string' ? { value, label: value } : null)
-      );
+      // 빈 문자열인 경우에도 해당 옵션을 찾도록 수정
+      const selectedOption = safeOptions.find((option: DropdownOption) => option.value === value);
+
+      // 값이 명시적으로 존재하지만 옵션에서 찾을 수 없는 경우에만 대체값 생성
+      if (!selectedOption && value !== undefined && value !== null) {
+        return { value, label: value.toString() };
+      }
+
+      return selectedOption || null;
     }, [value, options]);
 
     return (

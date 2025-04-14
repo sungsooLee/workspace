@@ -15,15 +15,15 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
     /**
      * 사용여부
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean | null;
+    isDeleted?: boolean | null;
     /**
      * 테넌트ID
      */
-    tenantNo?: number | null;
+    tenantId?: number | null;
     /**
      * 메뉴CODE
      */
@@ -39,11 +39,11 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
     /**
      * 바로가기영역여부
      */
-    quickAccessAreaYn?: boolean | null;
+    isShortCutArea?: boolean | null;
     /**
      * 개인정보포함여부
      */
-    personalDataContainYn?: boolean | null;
+    isPersoninfoInclusion?: boolean | null;
     /**
      * 메뉴scope (FO/BO/EX)
      */

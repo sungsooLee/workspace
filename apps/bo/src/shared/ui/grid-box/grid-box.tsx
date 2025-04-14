@@ -51,7 +51,7 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   const handleChangePageSize = (pageSize: number) => {
     console.log('page size');
   };
-  console.log('page =>  ', page);
+  console.log('page =>  ', page, data);
 
   return (
     <Grid

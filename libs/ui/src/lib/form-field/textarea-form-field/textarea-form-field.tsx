@@ -13,13 +13,13 @@ export interface TextareaFormFieldProps {
  * @param props
  * @constructor
  */
-const TextareaFormFieldComponent = forwardRef<HTMLElement, TextareaFormFieldProps>(
-  ({ value, onChange: ownerOnChange, ...props }) => {
+const TextareaFormFieldComponent = forwardRef<HTMLTextAreaElement, TextareaFormFieldProps>(
+  ({ value, onChange: ownerOnChange, ...props }, ref) => {
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       ownerOnChange?.(event.target.value);
     };
 
-    return <Textarea {...props} onChange={handleChange} />;
+    return <Textarea {...props} ref={ref} onChange={handleChange} />;
   },
 );
 export const TextareaFormField = TextareaFormFieldComponent;

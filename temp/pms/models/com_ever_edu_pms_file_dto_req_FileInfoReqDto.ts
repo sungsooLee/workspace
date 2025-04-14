@@ -3,10 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_file_dto_req_FileInfoReqDto = {
+    groupId?: number;
     /**
      * 파일그룹 아이디
      */
-    fileGroupId?: number;
+    groupUuid?: string;
     /**
      * 원본파일이름
      */
@@ -20,8 +21,8 @@ export type com_ever_edu_pms_file_dto_req_FileInfoReqDto = {
      */
     fileSize?: number;
     /**
-     * S3세부경로, S3경로에서 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
+     * 세부경로, 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
      */
-    s3DetailPath: string;
+    detailPath: string;
 };
 

@@ -6,6 +6,9 @@
   .txt {
     @apply mt-[12px];
   }
+  .noti {
+    @apply body_3_r mt-[4px] text-[#6F798B];
+  }
   strong {
     @apply text-[var(--gray8)];
   }

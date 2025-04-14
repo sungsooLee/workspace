@@ -5,7 +5,7 @@
     .qrcode {
       @apply pt-[16px];
       img {
-        @apply m-auto h-[160px] w-[160px];
+        @apply m-auto h-[120px] w-[120px];
       }
     }
     .txt_info {

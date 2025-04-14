@@ -26,6 +26,8 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'; // paging Icons
+import { isEmpty } from 'lodash';
+
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -81,6 +83,7 @@ const Grid = forwardRef(
       onRowsSelect,
       onChange,
       renderButtons,
+      emptyMessage,
       variant = 'line',
     }: GridProps<T>,
     ref: any,
@@ -92,6 +95,7 @@ const Grid = forwardRef(
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
     const groupingState = useMemo<GroupingState>(
       () => columnGrouping?.columns || [],
       [columnGrouping?.columns],
@@ -115,14 +119,25 @@ const Grid = forwardRef(
     /**
      * 부모 컴포넌트에서 grid 특정 기능 수행시 필요
      */
-    useImperativeHandle(
-      ref,
-      (): GridImperative => ({
-        resetRowSelection: () => {
-          setRowSelection({});
-        },
-      }),
-    );
+    useImperativeHandle(ref, () => ({
+      resetRowSelection: () => {
+        setRowSelection({});
+      },
+      // 추가: ID로 행을 선택하는 메서드
+      selectRowById: (idField: string, idValue: string) => {
+        // 해당 ID 값을 가진 행 찾기
+        const rowIndex = data.findIndex((row: any) => row[idField] === idValue);
+        if (rowIndex >= 0) {
+          // 현재 페이지 정보를 포함한 행 ID 생성
+          const pageIndex = pagination?.pageIndex || 0;
+          const rowId = `${pageIndex}-${rowIndex}`;
+          // 행 선택 상태 업데이트
+          setRowSelection({ [rowId]: true });
+          return true;
+        }
+        return false;
+      },
+    }));
 
     // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
     const tableColumns = useMemo(() => {
@@ -343,6 +358,10 @@ const Grid = forwardRef(
 
     // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
     useEffect(() => {
+      if (isEmpty(data)) {
+        // 최초 로딩 인경우 수행하지 않음
+        return;
+      }
       const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
       const selectedRow = selectedRows?.[0];
       onRowSelect?.(selectedRow);
@@ -407,6 +426,10 @@ const Grid = forwardRef(
      * 테이블 내용 렌더링
      */
     const renderTable = () => {
+      // 고정된 왼쪽 열의 ID들 가져오기
+      const pinnedLeftColumns = table.getState().columnPinning.left || [];
+      // 마지막 고정 열의 ID
+      const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
         return (
@@ -416,6 +439,9 @@ const Grid = forwardRef(
                 {headerGroup.headers.map((header) => {
                   const { column } = header;
                   const { columnDef } = column;
+                  const isPinnedLeft = column.getIsPinned() === 'left';
+                  const isLastPinnedColumn = isPinnedLeft && column.id === lastPinnedColumnId;
+
                   return (
                     <th
                       key={header.id}
@@ -430,8 +456,17 @@ const Grid = forwardRef(
                         //   'justify-start',
                         display: 'block',
                         width: !tableMode ? header.getSize() : '',
+                        // 고정 헤더 스타일 추가
+                        position: isPinnedLeft ? 'sticky' : undefined,
+                        left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
+                        zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
                       }}
-                      className={styles.thead_th}
+                      className={cn(
+                        styles.thead_th,
+                        isPinnedLeft && styles.th_pinned_left,
+                        isPinnedLeft && 'th_pinned_left',
+                        isLastPinnedColumn && 'th_pinned_last',
+                      )}
                     >
                       <div className={styles.th_wrap}>
                         <div
@@ -493,6 +528,21 @@ const Grid = forwardRef(
         );
       };
 
+      /**
+       * 데이터가 없을 때 표시할 메시지 렌더링
+       */
+      const renderEmptyMessage = () => {
+        // const message = isInitialState ? initialMessage : emptyMessage;
+
+        return (
+          <div className={styles.empty_message_container}>
+            <p className={styles.empty_message}>
+              {emptyMessage ? emptyMessage : '조회 결과가 없습니다.'}
+            </p>
+          </div>
+        );
+      };
+
       // table > tbody
       const renderBody = () => {
         const bodyStyle = {
@@ -500,6 +550,20 @@ const Grid = forwardRef(
           position: 'relative',
           height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
+
+        // 데이터가 없을 경우 메시지 표시
+        if (data.length === 0) {
+          return (
+            <tbody>
+              <tr>
+                <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
+                  {renderEmptyMessage()}
+                </td>
+              </tr>
+            </tbody>
+          );
+        }
+
         return (
           <tbody style={bodyStyle}>
             {rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
@@ -522,12 +586,16 @@ const Grid = forwardRef(
           transform: !tableMode ? `translateY(${start}px)` : '',
           display: !tableMode ? 'flex' : '',
         } as CSSProperties;
+
         return (
           <tr
             key={row.id}
             data-index={index}
             ref={(node) => rowVirtualizer.measureElement(node)}
-            className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
+            className={cn(
+              row.getIsSelected() && styles.selected,
+              row.getIsSelected() && 'bg-[#edfcff] hover:bg-[#edfcff]',
+            )}
             style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
           >
@@ -538,6 +606,10 @@ const Grid = forwardRef(
 
       // table > tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
+        const isPinnedLeft = cell.column.getIsPinned() === 'left';
+        // 마지막 고정 열인지 확인
+        const isLastPinnedColumn = isPinnedLeft && cell.column.id === lastPinnedColumnId;
+
         const cellStyle = {
           background: cell.getIsGrouped()
             ? '#0aff0082'
@@ -551,9 +623,24 @@ const Grid = forwardRef(
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
           verticalAlign: 'center',
+
+          // 고정열 스타일 추가
+          position: isPinnedLeft ? 'sticky' : undefined,
+          left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
+          zIndex: isPinnedLeft ? 3 : undefined,
         } as CSSProperties;
+
         return (
-          <td key={cell.id} className={styles.tbody_td} style={cellStyle}>
+          <td
+            key={cell.id}
+            className={cn(
+              styles.tbody_td,
+              isPinnedLeft && styles.td_pinned_left,
+              // 마지막 고정 열에 클래스 추가
+              isLastPinnedColumn && 'td_pinned_last',
+            )}
+            style={cellStyle}
+          >
             {cell.getIsGrouped() ? (
               <button
                 onClick={(e) => {
@@ -593,6 +680,7 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
+            overflow: 'auto', // 스크롤 가능하게 설정
           }}
         >
           <table>
@@ -635,13 +723,13 @@ const Grid = forwardRef(
 
       const handleChange = (value?: DropdownOption) => {
         if (value) {
-          onPageSizeChange(Number(value.value));
+          onPageSizeChange(Number(value));
         }
       };
       const totalPages = Math.ceil(totalRows / pageSize);
 
       return (
-        <div className={styles.paging_wrap}>
+        <div className={styles.paging_wrap} onClick={(e) => e.stopPropagation()}>
           <Dropdown
             value={pageSize.toString()}
             onChange={handleChange}
@@ -696,7 +784,8 @@ const Grid = forwardRef(
           <span className={styles.count_wrap}>
             {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
           {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
-            {pageIndex * pageSize + 1}-{totalPages} Page
+            {/* {pageIndex * pageSize + 1}-{totalPages} Page */}
+            {pageIndex + 1} / {totalPages} Page
           </span>
         </div>
       );

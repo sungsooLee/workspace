@@ -4,21 +4,21 @@
 /* eslint-disable */
 export type com_ever_edu_pms_notification_dto_res_MessageHistoryResDto = {
     messageHistoryId?: number;
-    messageTypeCode?: com_ever_edu_pms_notification_dto_res_MessageHistoryResDto.messageTypeCode;
-    sendingTypeCode?: com_ever_edu_pms_notification_dto_res_MessageHistoryResDto.sendingTypeCode;
+    messageType?: com_ever_edu_pms_notification_dto_res_MessageHistoryResDto.messageType;
+    sendingType?: com_ever_edu_pms_notification_dto_res_MessageHistoryResDto.sendingType;
     templateId?: string;
     completedDate?: string;
     status?: com_ever_edu_pms_notification_dto_res_MessageHistoryResDto.status;
     recordId?: string;
 };
 export namespace com_ever_edu_pms_notification_dto_res_MessageHistoryResDto {
-    export enum messageTypeCode {
+    export enum messageType {
         EMAIL = 'EMAIL',
         SMS = 'SMS',
         KAKAO = 'KAKAO',
         PUSH = 'PUSH',
     }
-    export enum sendingTypeCode {
+    export enum sendingType {
         RESERVED = 'RESERVED',
         PERIODIC = 'PERIODIC',
         ONETIME = 'ONETIME',

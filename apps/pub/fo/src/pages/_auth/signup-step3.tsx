@@ -51,7 +51,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>회사명</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -67,7 +68,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>사업자 등록 번호</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -88,7 +90,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>이메일</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -113,7 +116,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>인증번호</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -133,7 +137,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>비밀번호</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -156,7 +161,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>이름</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -171,7 +177,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>직위</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -186,7 +192,8 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>연락처</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    {/* 퍼블수정 20250414 : 아이콘 사이즈수정 */}
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -217,31 +224,31 @@ function RouteComponent() {
               <li>
                 <Checkbox label="러닝웨이 이용약관(필수)" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="개인정보 이용동의(필수)" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="고유식별 정보 처리 동의(필수)" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="회원가입 및 이용 개인정보 제3자 제공동의(필수)" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="민감정보 수집 및 이용(선택)" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
             </ul>

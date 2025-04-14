@@ -27,11 +27,11 @@ export type com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMe
     /**
      * 사용여부
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean | null;
+    isDeleted?: boolean | null;
     /**
      * 번역 리스트
      */

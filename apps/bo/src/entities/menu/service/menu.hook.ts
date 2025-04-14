@@ -19,7 +19,9 @@ export function useAsycFetchMenus(mutationOptions = {}) {
   return {
     asyncMenus: async (params: any) => {
       const menus = await queryClient.fetchQuery(queryOptions.all(params));
-
+      if (!menus) {
+        throw {};
+      }
       return convertHierarchyToList(
         menus,
         /*

@@ -8,7 +8,7 @@ export type com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin = {
     fullPath?: string;
     apiDesc?: string;
     apiUrl?: string;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
 };
 

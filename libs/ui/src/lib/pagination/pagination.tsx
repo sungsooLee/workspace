@@ -25,20 +25,23 @@ export interface PaginationComponentProps {
   // prop 자세한 내용은 https://mui.com/material-ui/react-pagination/#api 참조
 }
 
-const PaginationComponent = forwardRef<HTMLButtonElement, PaginationComponentProps>(
-  ({
-    className,
-    color = 'standard',
-    disabled = false,
-    size = 'medium',
-    variant = 'text',
-    ...props
-  }) => {
+const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>(
+  (
+    {
+      className,
+      color = 'standard',
+      disabled = false,
+      size = 'medium',
+      variant = 'text',
+      ...props
+    },
+    ref,
+  ) => {
     const { items } = usePagination({ ...props, componentName: 'Pagination' });
     console.log(items);
 
     return (
-      <div className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
+      <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         {items.map((item: any, index: number) => (
           <PaginationItem
             key={index}

@@ -7,7 +7,7 @@ export const Route = createFileRoute('/_unauth')({
 
 function RouteComponent() {
   const isScrolled = useBodyScroll();
-  console.log('isScrolled', isScrolled);
+  // console.log('isScrolled', isScrolled);
   return (
     <main>
       <Outlet />

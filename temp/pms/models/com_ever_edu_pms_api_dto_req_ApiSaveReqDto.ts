@@ -38,11 +38,11 @@ export type com_ever_edu_pms_api_dto_req_ApiSaveReqDto = {
     /**
      * 사용여부
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean | null;
+    isDeleted?: boolean | null;
     /**
      * 부모 ID
      */
