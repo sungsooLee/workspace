@@ -54,22 +54,6 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
             </div>
             <div className={searchStyles.inner}>
               <div className={searchStyles.item}>
-                <label htmlFor="name-select3" className={searchStyles.label}>
-                  <span className={searchStyles.text}>소속</span>
-                </label>
-                <div className={searchStyles.box}>
-                  <Dropdown
-                    options={options}
-                    value={selectedValues}
-                    onChange={(selected) => setSelectedValues(selected)}
-                    variant="default"
-                    size={'sm'}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={searchStyles.inner}>
-              <div className={searchStyles.item}>
                 <label htmlFor="name-input1" className={searchStyles.label}>
                   <span className={searchStyles.text}>사번</span>
                 </label>

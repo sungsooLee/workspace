@@ -59,6 +59,11 @@
       }
     }
   }
+  &[class*='error'] {
+    [class*='nlp-select__control'] {
+      @apply !border-[var(--status1)];
+    }
+  }
 }
 
 [class*='select__menu'] {

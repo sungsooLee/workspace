@@ -268,12 +268,13 @@ const UserMenuComponent: FC<{}> = ({}) => {
           </div>
         </div>
       </div>
-      <div className={styles.grid_wrap}>
+      <div className="grid_wrap line">
         <Grid
           data={data}
           columns={columns}
           showSelectedCount={true}
-          height={300}
+          hideColumnSettings={true}
+          height={200}
           pagination={{
             pageSize,
             pageIndex,
