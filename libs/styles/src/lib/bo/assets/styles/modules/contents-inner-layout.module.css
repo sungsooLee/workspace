@@ -38,7 +38,8 @@
     &.ratio_third {
       .inner {
         @apply min-h-[calc(100vh-435px)];
-        & + .inner > div:first-child {
+        & + .inner > div:first-child,
+        & + .inner form > div:first-child {
           @apply ml-[32px] w-[calc(100%-32px)];
         }
         .inner_contents {
