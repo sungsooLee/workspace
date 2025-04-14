@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <div>
       <NoticeBox
-        title="타이틀"
+        // title="타이틀"
         // description="자동 유저그룹은 인사 DB를 기준으로 특정 시간에 배치로 자동 매핑됩니다."
         descriptions={[
           '자동 유저그룹은 인사 DB를 기준으로 특정 시간에 배치로 자동 매핑됩니다.',

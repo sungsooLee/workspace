@@ -254,6 +254,15 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '공통/공통기능_유저검색팝업',
+    pageId: 'common/pop-user-search',
+    screenId: 'NLP_BO_TMS_1100_02',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
+  },
+  {
     screenName: 'CMS/파일업로드',
     pageId: 'learning/popup-fileupload',
     screenId: '',

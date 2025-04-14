@@ -70,6 +70,7 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -480,6 +481,12 @@ const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
 const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   id: '/contents/layout',
   path: '/contents/layout',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
+  id: '/common/pop-user-search',
+  path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1243,6 +1250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/common/pop-user-search': {
+      id: '/_layout/common/pop-user-search'
+      path: '/common/pop-user-search'
+      fullPath: '/common/pop-user-search'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/contents/layout': {
       id: '/_layout/contents/layout'
       path: '/contents/layout'
@@ -1605,6 +1619,7 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -1639,6 +1654,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -1752,6 +1768,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1854,6 +1871,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1959,6 +1977,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2063,6 +2082,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-user-search'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2164,6 +2184,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-user-search'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2267,6 +2288,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_layout/common/pop-user-search'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
@@ -2409,6 +2431,7 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/common/pop-user-search",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
@@ -2714,6 +2737,10 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/common/pop-user-search": {
+      "filePath": "_layout/common/pop-user-search.tsx",
+      "parent": "/_layout"
     },
     "/_layout/contents/layout": {
       "filePath": "_layout/contents/layout.tsx",
