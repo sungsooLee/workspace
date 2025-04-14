@@ -6,7 +6,8 @@
     tr {
       @apply flex w-full;
       th.thead_th {
-        @apply border-b-[1px] border-solid border-[var(--gray2)] bg-[var(--gray1)];
+        @apply bg-[var(--gray1)];
+        border-bottom: 1px solid var(--gray4) !important;
         .th_wrap {
           @apply h-full;
           .th_cell {
@@ -20,8 +21,6 @@
               @apply rotate-180;
             }
           }
-        }
-        &.last {
         }
         & + .thead_th {
           @apply border-l-[1px] border-solid border-[var(--gray3)];
