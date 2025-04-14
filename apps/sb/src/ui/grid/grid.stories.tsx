@@ -246,6 +246,9 @@ const BaseTable = () => {
         columns={columns}
         onStateChange={handleStateChange}
         onRowSelect={(row: any) => console.log(row)}
+        columnPinning={{
+          columns: ['firstName', 'age'],
+        }}
       />
     </div>
   );
