@@ -41,7 +41,7 @@
     .notice {
       @apply mt-[32px];
       a {
-        @apply body_4_r ml-[20px] text-[var(--gray7)];
+        @apply ml-[20px] text-[var(--gray7)];
       }
     }
     .bullet_notice {

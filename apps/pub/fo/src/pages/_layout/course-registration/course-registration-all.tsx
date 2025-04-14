@@ -445,7 +445,7 @@ function RouteComponent() {
           <dd>동일과정을 연속 신청하실 경우 레벨테스트가 없습니다.</dd>
           <dd>
             교재 배송은 강의시작 1주일 전까지 수강 신청 내역에서 변경 할 수 있습니다.
-            <Button>수강 신청 내역</Button>
+            <Button className={noticeBoxStyles.link}>수강 신청 내역</Button>
           </dd>
           <dd>강의 시작 전 주소지가 변경 된 경우, 교육담당자에게 문의해주세요.</dd>
           <dd>결재자가 부재이거나, 없는경우 결재자변경을 통해 결재자를 지정해주세요.</dd>
