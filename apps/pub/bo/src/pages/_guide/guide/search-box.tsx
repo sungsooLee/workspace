@@ -13,7 +13,7 @@ import {
   Input,
   Dropdown,
 } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoArrowDownDouble } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoArrowDownDouble, IcoFormRequired } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/search-box')({
   component: RouteComponent,
@@ -53,6 +53,10 @@ function RouteComponent() {
                 <div className={searchStyles.item}>
                   <label htmlFor="name-label" className={searchStyles.label}>
                     <span className={searchStyles.text}>타이틀</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(searchStyles.status, searchStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -63,6 +67,7 @@ function RouteComponent() {
                       size={'sm'}
                     />
                   </div>
+                  <p className={cn(searchStyles.guide_text)}>기본 메시지</p>
                 </div>
               </div>
             </div>
