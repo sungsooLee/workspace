@@ -9,31 +9,34 @@
       & > div + div {
         @apply border-t-0;
       }
-      label {
-        & > span {
-          @apply text-[12px] text-[var(--gray8)];
-        }
-        & + div {
-          .half {
-            @apply flex;
+      .inner {
+        @apply relative pb-[24px];
+        label {
+          & > span {
+            @apply text-[12px] text-[var(--gray8)];
+          }
+          & + div {
+            .half {
+              @apply flex;
+              & > div {
+                @apply order-1 !flex-1;
+              }
+              &::before {
+                @apply order-2 ml-[40px] h-full w-full flex-1 justify-stretch content-[''];
+              }
+            }
             & > div {
-              @apply order-1 !flex-1;
+              @apply flex-1;
             }
-            &::before {
-              @apply order-2 ml-[40px] h-full w-full flex-1 justify-stretch content-[''];
+            .space {
+              @apply ml-[40px];
             }
-          }
-          & > div {
-            @apply flex-1;
-          }
-          .space {
-            @apply ml-[40px];
           }
         }
       }
     }
     .btn_box {
-      @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
+      @apply flex w-auto shrink-0 items-end justify-end pb-[24px] pl-[40px];
     }
     .item_row {
       @apply flex w-full flex-col flex-wrap;
@@ -60,25 +63,7 @@
         .item {
           @apply w-full;
         }
-        .box {
-          @apply pb-[16px];
-        }
       }
-      /* .item {
-        @apply flex-1;
-        &.cols1 {
-          @apply !grow-[1];
-        }
-        &.cols2 {
-          @apply !grow-[2];
-        }
-        &.cols3 {
-          @apply !grow-[3];
-        }
-        &.cols4 {
-          @apply !grow-[4];
-        }
-      } */
     }
   }
 }
@@ -129,6 +114,26 @@
         @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
       }
     }
+  }
+}
+
+.guide_text {
+  @apply absolute bottom-0 left-0 mt-[4px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
+  &:empty {
+    @apply hidden;
+  }
+  &.error {
+    @apply text-[var(--status1)];
+  }
+}
+
+.status {
+  @apply ml-[2px] inline-flex align-text-top;
+  &.required svg {
+    @apply fill-[#00afd5];
+  }
+  &.error svg {
+    @apply fill-[#ff4646];
   }
 }
 
