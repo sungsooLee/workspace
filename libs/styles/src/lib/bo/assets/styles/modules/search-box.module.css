@@ -10,7 +10,7 @@
         @apply border-t-0;
       }
       .inner {
-        @apply relative pb-[24px];
+        @apply relative pb-[16px];
         label {
           & > span {
             @apply text-[12px] text-[var(--gray8)];
@@ -36,7 +36,7 @@
       }
     }
     .btn_box {
-      @apply flex w-auto shrink-0 items-end justify-end pb-[24px] pl-[40px];
+      @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
     }
     .item_row {
       @apply flex w-full flex-col flex-wrap;
@@ -118,7 +118,7 @@
 }
 
 .guide_text {
-  @apply absolute bottom-0 left-0 mt-[4px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
+  @apply absolute bottom-0 left-0 text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
   &:empty {
     @apply hidden;
   }

@@ -346,133 +346,143 @@ function RouteComponent() {
                 </div>
               </div>
               <div className={layoutStyles.inner}>
-                <div className={titleStyles.title_wrap}>
-                  <h3 className={titleStyles.title}>{'상세정보'}</h3>
-                  <div className={layoutStyles.btn_wrap}>
-                    <Button variant="text" size="sm" className={layoutStyles.btn_text}>
-                      {'추가'}
-                    </Button>
-                    <Button variant="save" size="sm">
-                      {'저장'}
-                    </Button>
+                <form className="form">
+                  <div className={titleStyles.title_wrap}>
+                    <h3 className={titleStyles.title}>{'상세정보'}</h3>
+                    <div className={layoutStyles.btn_wrap}>
+                      <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+                        {'추가'}
+                      </Button>
+                      <Button variant="save" size="sm">
+                        {'저장'}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className={layoutStyles.inner_contents}>
-                  <ContentsRow>
-                    {/* form_item */}
-                    <div className={formStyles.form_item}>
-                      <label htmlFor="name-codeKey" className={formStyles.form_label}>
-                        <span className={formStyles.form_text}>{'코드그룹 Key'}</span>
-                        {/* 필수 케이스 */}
-                        <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
-                          <IcoFormRequired width={12} height={12} />
-                        </span>
-                      </label>
-                      <div className={formStyles.input_box}>
-                        <Input
-                          id="name-codeKey"
-                          type="text"
-                          placeholder="입력"
-                          value="등록 정보 출력(자동채번)"
-                          readOnly
-                          className={formStyles.input}
+                  <div className={layoutStyles.inner_contents}>
+                    <ContentsRow>
+                      {/* form_item */}
+                      <div className={formStyles.form_item}>
+                        <label htmlFor="name-codeKey" className={formStyles.form_label}>
+                          <span className={formStyles.form_text}>{'코드그룹 Key'}</span>
+                          {/* 필수 케이스 */}
+                          <span
+                            className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}
+                          >
+                            <IcoFormRequired width={12} height={12} />
+                          </span>
+                        </label>
+                        <div className={formStyles.input_box}>
+                          <Input
+                            id="name-codeKey"
+                            type="text"
+                            placeholder="입력"
+                            value="등록 정보 출력(자동채번)"
+                            readOnly
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                    </ContentsRow>
+                    <ContentsRow>
+                      {/* form_item */}
+                      <div className={formStyles.form_item}>
+                        <label htmlFor="name-codeName" className={formStyles.form_label}>
+                          <span className={formStyles.form_text}>{'코드그룹 명'}</span>
+                          {/* 필수 케이스 */}
+                          <span
+                            className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}
+                          >
+                            <IcoFormRequired width={12} height={12} />
+                          </span>
+                        </label>
+                        <div className={formStyles.input_box}>
+                          <Input
+                            id="name-codeName"
+                            type="text"
+                            placeholder="입력"
+                            value="등록 정보 출력"
+                            readOnly
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                    </ContentsRow>
+                    <ContentsRow>
+                      {/* form_item */}
+                      <div className={formStyles.form_item}>
+                        <label htmlFor="name-codeAbbEng" className={formStyles.form_label}>
+                          <span className={formStyles.form_text}>{'코드그룹 약어영문'}</span>
+                          {/* 필수 케이스 */}
+                          <span
+                            className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}
+                          >
+                            <IcoFormRequired width={12} height={12} />
+                          </span>
+                        </label>
+                        <div className={formStyles.input_box}>
+                          <Input
+                            id="name-codeAbbEng"
+                            type="text"
+                            placeholder="입력"
+                            value="Country Code"
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                    </ContentsRow>
+                    <ContentsRow>
+                      {/* form_item */}
+                      <div className={formStyles.form_item}>
+                        <label htmlFor="name-codeAbbEng" className={formStyles.form_label}>
+                          <span className={formStyles.form_text}>{'내용'}</span>
+                        </label>
+                        <div className={formStyles.input_box}>
+                          <Input
+                            id="name-codeAbbEng"
+                            type="text"
+                            placeholder="입력"
+                            value="국가 코드 그룹"
+                            className={formStyles.input}
+                          />
+                        </div>
+                      </div>
+                    </ContentsRow>
+                    <ContentsRow>
+                      <div className={dynamicFormStyles.switch_wrap}>
+                        <p className={dynamicFormStyles.title}>
+                          {'사용'}
+                          {/* 필수 케이스 */}
+                          <span
+                            className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}
+                          >
+                            <IcoFormRequired width={12} height={12} />
+                          </span>
+                        </p>
+                        <Switch
+                          id="name-useabled"
+                          className={dynamicFormStyles.btn_switch}
+                          label={checked[1] ? '사용' : '미사용'}
+                          checked={checked[1]}
+                          onCheckedChange={handleCheckedChange(1)}
                         />
                       </div>
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow>
-                    {/* form_item */}
-                    <div className={formStyles.form_item}>
-                      <label htmlFor="name-codeName" className={formStyles.form_label}>
-                        <span className={formStyles.form_text}>{'코드그룹 명'}</span>
-                        {/* 필수 케이스 */}
-                        <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
-                          <IcoFormRequired width={12} height={12} />
-                        </span>
-                      </label>
-                      <div className={formStyles.input_box}>
-                        <Input
-                          id="name-codeName"
-                          type="text"
-                          placeholder="입력"
-                          value="등록 정보 출력"
-                          readOnly
-                          className={formStyles.input}
-                        />
+                    </ContentsRow>
+                    <ContentsRow>
+                      {/* form_item */}
+                      <div className={formStyles.form_item}>
+                        <label htmlFor="name-Date" className={formStyles.form_label}>
+                          <span className={formStyles.form_text}>{'적용일시'}</span>
+                        </label>
+                        <div className={formStyles.input_box}>
+                          <DatePicker displayType={'day-time'} size={'md'} />
+                        </div>
                       </div>
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow>
-                    {/* form_item */}
-                    <div className={formStyles.form_item}>
-                      <label htmlFor="name-codeAbbEng" className={formStyles.form_label}>
-                        <span className={formStyles.form_text}>{'코드그룹 약어영문'}</span>
-                        {/* 필수 케이스 */}
-                        <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
-                          <IcoFormRequired width={12} height={12} />
-                        </span>
-                      </label>
-                      <div className={formStyles.input_box}>
-                        <Input
-                          id="name-codeAbbEng"
-                          type="text"
-                          placeholder="입력"
-                          value="Country Code"
-                          className={formStyles.input}
-                        />
-                      </div>
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow>
-                    {/* form_item */}
-                    <div className={formStyles.form_item}>
-                      <label htmlFor="name-codeAbbEng" className={formStyles.form_label}>
-                        <span className={formStyles.form_text}>{'내용'}</span>
-                      </label>
-                      <div className={formStyles.input_box}>
-                        <Input
-                          id="name-codeAbbEng"
-                          type="text"
-                          placeholder="입력"
-                          value="국가 코드 그룹"
-                          className={formStyles.input}
-                        />
-                      </div>
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow>
-                    <div className={dynamicFormStyles.switch_wrap}>
-                      <p className={dynamicFormStyles.title}>
-                        {'사용'}
-                        {/* 필수 케이스 */}
-                        <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
-                          <IcoFormRequired width={12} height={12} />
-                        </span>
-                      </p>
-                      <Switch
-                        id="name-useabled"
-                        className={dynamicFormStyles.btn_switch}
-                        label={checked[1] ? '사용' : '미사용'}
-                        checked={checked[1]}
-                        onCheckedChange={handleCheckedChange(1)}
-                      />
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow>
-                    {/* form_item */}
-                    <div className={formStyles.form_item}>
-                      <label htmlFor="name-Date" className={formStyles.form_label}>
-                        <span className={formStyles.form_text}>{'적용일시'}</span>
-                      </label>
-                      <div className={formStyles.input_box}>
-                        <DatePicker displayType={'day-time'} size={'md'} />
-                      </div>
-                    </div>
-                  </ContentsRow>
-                  <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-                    <ContentsHistoryInfoFormField type={'column'} />
-                  </ContentsRow>
-                </div>
+                    </ContentsRow>
+                    <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+                      <ContentsHistoryInfoFormField type={'column'} />
+                    </ContentsRow>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
