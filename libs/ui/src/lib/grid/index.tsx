@@ -464,8 +464,7 @@ const Grid = forwardRef(
                       className={cn(
                         styles.thead_th,
                         isPinnedLeft && styles.th_pinned_left,
-                        isPinnedLeft && 'th_pinned_left',
-                        isLastPinnedColumn && 'th_pinned_last',
+                        isLastPinnedColumn && styles.th_pinned_last,
                       )}
                     >
                       <div className={styles.th_wrap}>
@@ -637,7 +636,7 @@ const Grid = forwardRef(
               styles.tbody_td,
               isPinnedLeft && styles.td_pinned_left,
               // 마지막 고정 열에 클래스 추가
-              isLastPinnedColumn && 'td_pinned_last',
+              isLastPinnedColumn && styles.td_pinned_last,
             )}
             style={cellStyle}
           >

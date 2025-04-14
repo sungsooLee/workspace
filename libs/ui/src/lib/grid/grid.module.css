@@ -230,14 +230,15 @@
 
 .th_pinned_left {
   @apply !sticky left-0 !z-[3] border-b-[1px] border-solid !border-[var(--gray3)] bg-[var(--gray1)];
-  &::last-of-type {
-    .thead_th {
-      @apply !bg-red-500;
-    }
+  &.th_pinned_last {
+    border-right: 1px solid var(--gray5) !important;
   }
 }
 .td_pinned_left {
   @apply !z-[3] bg-white;
+  &.td_pinned_last {
+    border-right: 1px solid var(--gray5) !important;
+  }
 }
 [class*='th_pinned_left'] {
   &:last-of-type {
