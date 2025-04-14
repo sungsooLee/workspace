@@ -22,7 +22,10 @@ export interface ThumbnailImageUploadComponentProps {
   onImageSelect?: (options: ImageOption) => void;
 }
 
-const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUploadComponentProps>(
+const ThumbnailImageUploadComponent = forwardRef<
+  HTMLDivElement,
+  ThumbnailImageUploadComponentProps
+>(
   (
     {
       className,
@@ -59,7 +62,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
     };
 
     return (
-      <div {...props} className={cn(styles.start, className, 'nlp--image-upload')}>
+      <div {...props} ref={ref} className={cn(styles.start, className, 'nlp--image-upload')}>
         {/**/}
         <p className={styles.description}>{description}</p>
         {/* ThumbnailList */}

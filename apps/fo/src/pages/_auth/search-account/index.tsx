@@ -47,7 +47,7 @@ function RouteComponent() {
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
-  const handleActiveTab = (value: any) => {
+  const handleTabChange = (value: any) => {
     setDefaultAuthValues({
       authToolType: 'PHONE',
       userId: '',
@@ -122,7 +122,7 @@ function RouteComponent() {
           items={items}
           type="fill"
           variant="primary"
-          onActiveTab={handleActiveTab}
+          onTabChange={handleTabChange}
         />
 
         <EmbededAlert className={styles.search_info} hiddenIcon>

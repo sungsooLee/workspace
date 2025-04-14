@@ -59,6 +59,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
     return (
       <button
         {...props}
+        ref={ref}
         type={type}
         className={cn(
           styles.start,

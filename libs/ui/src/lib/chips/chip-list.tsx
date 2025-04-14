@@ -82,6 +82,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     return (
       <div
         {...props}
+        ref={ref}
         className={cn(styles.start, styles.chips_list, className, 'nlp--chip-list', {
           [styles.chips_box]: !hideBorder,
           [styles.border_none]: hideBorder,

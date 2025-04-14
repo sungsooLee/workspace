@@ -38,7 +38,7 @@ export interface ThumbnailProps {
   onCheckedChange?: (checked: CheckedState) => void;
 }
 
-const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
+const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
   (
     {
       className,
@@ -62,6 +62,7 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
     return (
       <div
         {...props}
+        ref={ref}
         style={{ width: width ? `${width}px` : '', height: height ? `${height}px` : '' }}
         className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
           [styles.active]: isHovered,

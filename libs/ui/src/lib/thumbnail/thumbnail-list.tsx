@@ -18,7 +18,7 @@ export interface ThumbnailListComponentProps
   onChangeChecked?: (option: ImageOption) => void;
 }
 
-const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentProps>(
+const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponentProps>(
   ({ className, options = [], showCheckbox, onChecked, onChangeChecked, ...props }, ref) => {
     const handlerCheckChange = (checked: CheckedState, currentOption: ImageOption) => {
       const newOption = { ...currentOption, checked: !!checked };
@@ -39,6 +39,7 @@ const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentPro
     return (
       <div
         {...props}
+        ref={ref}
         className={cn(styles.start, styles.thumbnail_list, className, 'nlp--thumbnail-list')}
       >
         <Carousel

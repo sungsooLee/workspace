@@ -28,6 +28,7 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
     return (
       <span
         {...props}
+        ref={ref}
         className={cn(
           styles.start,
           styles.badge,

@@ -52,6 +52,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
     return (
       <span
         {...props}
+        ref={ref}
         className={cn(
           styles.start,
           styles.chips,
