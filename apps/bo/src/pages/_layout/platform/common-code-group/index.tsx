@@ -51,7 +51,7 @@ function RouteComponent() {
   //     setPageState({ ...pageState, page: 1 });
   //   };
 
-  const { data: commonCodeGroupListData, refetch } = useCommonCodeGroupList(
+  const { data: commonCodeGroupListData } = useCommonCodeGroupList(
     pageState.page,
     pageState.size,
     searchParams.cdGroupId,

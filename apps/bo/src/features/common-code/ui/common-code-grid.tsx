@@ -428,8 +428,7 @@ const CommonCodeGridComponent = ({
                         to: '/platform/system/translation',
                         state: {
                           keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
-                          cdId: cdId,
-                          cdName: cdName,
+                          multilinguaKey: cdId,
                         },
                       });
                     }}
