@@ -1,6 +1,6 @@
 import React from 'react';
 import { t } from 'i18next';
-import { Button, Tabs } from '@learnway/ui';
+import { Button, Tabs, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../../widgets/layout/ui/container/slot/main-contents';
@@ -14,6 +14,7 @@ export const Route = createFileRoute('/_unauth/platform_test/company/company/vie
 
 function RouteComponent() {
   const router = useRouter();
+  const { confirm: openConfirm } = useModal();
 
   const handleDelete = async () => {
     console.log('handleDelete');
@@ -36,6 +37,15 @@ function RouteComponent() {
     },
   ];
 
+  const handleBeforeTabChange = async (currentTabKey: string, nextTabKey: string) => {
+    // alert(1);
+    console.log('handleBeforeTabChange', currentTabKey, nextTabKey);
+    const isChanged = true;
+    const isConform = isChanged && (await openConfirm('수정된 내용은 초기화 됩니다.'));
+    console.log('isConfirm', isConform);
+    return isChanged && isConform;
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -43,7 +53,12 @@ function RouteComponent() {
         <Button type="button" variant="primary" size="sm" onClick={handleSave} label={t('저장')} />
       </ContentsButtons>
       <MainContents>
-        <Tabs type={'line'} size={'sm'} items={tabItems} />
+        <Tabs
+          type={'line'}
+          size={'sm'}
+          items={tabItems}
+          onBeforeTabChange={handleBeforeTabChange}
+        />
       </MainContents>
     </PageContainer>
   );

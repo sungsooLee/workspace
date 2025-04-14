@@ -16,7 +16,7 @@ export interface BadgeComponentProps extends PropsWithChildren {
 }
 
 const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
-  ({ className, variant, size, status, onClick, option: { label, value }, ...props }) => {
+  ({ className, variant, size, status, onClick, option: { label, value }, ...props }, ref) => {
     const handleClick = (event: React.MouseEvent) => {
       const option: SelectOption = {
         label,
@@ -28,6 +28,7 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
     return (
       <span
         {...props}
+        ref={ref}
         className={cn(
           styles.start,
           styles.badge,

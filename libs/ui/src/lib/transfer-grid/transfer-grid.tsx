@@ -19,8 +19,11 @@ export interface TransferGridProps {
   onChange?: (newGridData: any) => void;
 }
 
-const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
-  ({ gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props }) => {
+const TransferGridComponent = forwardRef<HTMLDivElement, TransferGridProps>(
+  (
+    { gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props },
+    ref,
+  ) => {
     const [leftGridData, setLeftGridData] = useState<any>(gridData);
     const [rightGridData, setRightGridData] = useState<any>([]);
     const leftGridRef = useRef<GridImperative>(null);
@@ -101,7 +104,10 @@ const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
     };
 
     return (
-      <div className={cn(styles.start, styles.transfer_grid, className, 'nlp--transfer-grid')}>
+      <div
+        ref={ref}
+        className={cn(styles.start, styles.transfer_grid, className, 'nlp--transfer-grid')}
+      >
         {/* left grid */}
         <div className={styles.grid_wrap}>
           <Grid

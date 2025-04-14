@@ -13,7 +13,7 @@ export interface ToastComponentProps {
 }
 
 const ToastComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, ToastComponentProps>(
-  ({ className, onClose, config: { title, description } }) => {
+  ({ className, onClose, config: { title, description } }, ref) => {
     const [open, setOpen] = useState(true);
 
     const handleOpenChange = (value: boolean) => {
@@ -22,7 +22,7 @@ const ToastComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Toast
     };
 
     return (
-      <Primitive.Root className={styles.Root} open={open} onOpenChange={handleOpenChange}>
+      <Primitive.Root className={styles.Root} open={open} onOpenChange={handleOpenChange} ref={ref}>
         {/* Title*/}
         <Primitive.Title className={styles.Title}>{title}</Primitive.Title>
 
