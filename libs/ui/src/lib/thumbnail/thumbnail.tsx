@@ -39,21 +39,24 @@ export interface ThumbnailProps {
 }
 
 const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
-  ({
-    className,
-    variant,
-    size,
-    width,
-    height,
-    path,
-    indexNumber,
-    sizeText,
-    showCheckbox,
-    showDeleteBtn,
-    selected,
-    onCheckedChange,
-    ...props
-  }) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      width,
+      height,
+      path,
+      indexNumber,
+      sizeText,
+      showCheckbox,
+      showDeleteBtn,
+      selected,
+      onCheckedChange,
+      ...props
+    },
+    ref,
+  ) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleHover = (state: boolean) => setIsHovered(state);
     return (
@@ -65,7 +68,8 @@ const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
           [styles.selected]: selected,
         })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
-        onMouseLeave={() => handleHover(false)}>
+        onMouseLeave={() => handleHover(false)}
+      >
         {/* index 번호 */}
         {indexNumber !== null && <span className={styles.indexNumber}>{indexNumber}</span>}
         {/* 체크박스 */}

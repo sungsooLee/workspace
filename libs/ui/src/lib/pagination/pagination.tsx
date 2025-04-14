@@ -26,14 +26,17 @@ export interface PaginationComponentProps {
 }
 
 const PaginationComponent = forwardRef<HTMLButtonElement, PaginationComponentProps>(
-  ({
-    className,
-    color = 'standard',
-    disabled = false,
-    size = 'medium',
-    variant = 'text',
-    ...props
-  }) => {
+  (
+    {
+      className,
+      color = 'standard',
+      disabled = false,
+      size = 'medium',
+      variant = 'text',
+      ...props
+    },
+    ref,
+  ) => {
     const { items } = usePagination({ ...props, componentName: 'Pagination' });
     console.log(items);
 

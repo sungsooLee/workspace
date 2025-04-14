@@ -14,7 +14,7 @@ export interface TextareaFormFieldProps {
  * @constructor
  */
 const TextareaFormFieldComponent = forwardRef<HTMLElement, TextareaFormFieldProps>(
-  ({ value, onChange: ownerOnChange, ...props }) => {
+  ({ value, onChange: ownerOnChange, ...props }, ref) => {
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       ownerOnChange?.(event.target.value);
     };

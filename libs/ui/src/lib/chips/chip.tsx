@@ -20,19 +20,22 @@ export interface ChipComponentProps extends PropsWithChildren {
 }
 
 const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
-  ({
-    className,
-    variant,
-    size,
-    prefixCharacter,
-    labelField = 'label',
-    valueField = 'value',
-    option,
-    onClick,
-    onDelete,
-    hideCloseButton,
-    ...props
-  }) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      prefixCharacter,
+      labelField = 'label',
+      valueField = 'value',
+      option,
+      onClick,
+      onDelete,
+      hideCloseButton,
+      ...props
+    },
+    ref,
+  ) => {
     // 버튼 모드 사용 여부 - onClick 설정 했을때만 버튼으로 판단 (button style 조정시 사용)
     const isButtonMode = !!onClick;
 

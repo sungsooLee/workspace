@@ -19,7 +19,7 @@ export interface ThumbnailListComponentProps
 }
 
 const ThumbnailListComponent = forwardRef<HTMLElement, ThumbnailListComponentProps>(
-  ({ className, options = [], showCheckbox, onChecked, onChangeChecked, ...props }) => {
+  ({ className, options = [], showCheckbox, onChecked, onChangeChecked, ...props }, ref) => {
     const handlerCheckChange = (checked: CheckedState, currentOption: ImageOption) => {
       const newOption = { ...currentOption, checked: !!checked };
       onChangeChecked?.(newOption);

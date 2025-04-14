@@ -4,11 +4,10 @@ export interface BreadcrumbComponentProps extends HTMLAttributes<HTMLDivElement>
   items?: Array<never>;
 }
 
-const BreadcrumbComponent = forwardRef<
-  HTMLDivElement,
-  BreadcrumbComponentProps
->(({ ...props }) => {
-  return <>Breadcrumb</>;
-});
+const BreadcrumbComponent = forwardRef<HTMLDivElement, BreadcrumbComponentProps>(
+  ({ ...props }, ref) => {
+    return <>Breadcrumb</>;
+  },
+);
 
 export const Breadcrumb = BreadcrumbComponent;

@@ -20,7 +20,10 @@ export interface TransferGridProps {
 }
 
 const TransferGridComponent = forwardRef<HTMLElement, TransferGridProps>(
-  ({ gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props }) => {
+  (
+    { gridData = [], columns, rowKey, className, leftTitle, rightTitle, onChange, ...props },
+    ref,
+  ) => {
     const [leftGridData, setLeftGridData] = useState<any>(gridData);
     const [rightGridData, setRightGridData] = useState<any>([]);
     const leftGridRef = useRef<GridImperative>(null);

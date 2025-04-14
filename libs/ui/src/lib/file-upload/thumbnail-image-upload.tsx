@@ -23,17 +23,20 @@ export interface ThumbnailImageUploadComponentProps {
 }
 
 const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUploadComponentProps>(
-  ({
-    className,
-    options,
-    description,
-    disabled,
-    onItemClick,
-    onChange,
-    onCheckedChange,
-    onImageSelect,
-    ...props
-  }) => {
+  (
+    {
+      className,
+      options,
+      description,
+      disabled,
+      onItemClick,
+      onChange,
+      onCheckedChange,
+      onImageSelect,
+      ...props
+    },
+    ref,
+  ) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleButtonClick = () => {
@@ -66,7 +69,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLElement, ThumbnailImageUplo
             <Button
               className={cn(styles.btn_file, disabled && styles.disabled)}
               icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
-              onClick={handleButtonClick}>
+              onClick={handleButtonClick}
+            >
               <span className={styles.text}>썸네일 업로드</span>
             </Button>
             <Input

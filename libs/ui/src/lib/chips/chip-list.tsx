@@ -32,25 +32,28 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
 }
 
 const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
-  ({
-    className,
-    showInput,
-    options = [],
-    placeholder = t('태그를 입력해주세요.'),
-    orientation,
-    type,
-    size,
-    hideBorder,
-    visibleCount = 10000,
-    wordwrap = false,
-    labelField = 'label',
-    valueField = 'value',
-    onChipClick,
-    onChipDeleteClick,
-    onChipListClick,
-    onAddInputEnterKeyDown,
-    ...props
-  }) => {
+  (
+    {
+      className,
+      showInput,
+      options = [],
+      placeholder = t('태그를 입력해주세요.'),
+      orientation,
+      type,
+      size,
+      hideBorder,
+      visibleCount = 10000,
+      wordwrap = false,
+      labelField = 'label',
+      valueField = 'value',
+      onChipClick,
+      onChipDeleteClick,
+      onChipListClick,
+      onAddInputEnterKeyDown,
+      ...props
+    },
+    ref,
+  ) => {
     const [inputValue, setInputValue] = useState<string>('');
     const overCount = options?.length - visibleCount;
     const isOverCount = overCount > 0;
