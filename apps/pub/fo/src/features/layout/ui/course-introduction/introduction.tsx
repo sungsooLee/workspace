@@ -56,7 +56,7 @@ const CourseIntroductionCompoment = () => {
           <img src={learnImg} alt="" />
           <strong>이런 걸 배워요!</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>
@@ -83,7 +83,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>교육목표</strong>
         </div>
-        {/* bullet list number */}
+        {/* bullet number module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list_number}`}>
           <ol>
             <li>스마트팩토리 추진 사례를 통한 현업 적용과 실천 방향을 습득한다.</li>
@@ -100,7 +100,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>교육내용</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>4차 산업혁명, 디지털 혁신</li>
@@ -123,6 +123,47 @@ const CourseIntroductionCompoment = () => {
 
         {/* curriculum */}
         <Curriculum />
+      </div>
+
+      {/* 이수기준 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>이수기준</strong>
+        </div>
+        <div className={styles.evaluation_box}>
+          <ul>
+            <li>
+              <span>총점(100%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>진도/출석(50%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>진행단계평가 (10%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>최종평가 (20%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>과제평가 (20%)</span>
+              <strong>70점 이상</strong>
+            </li>
+          </ul>
+          {/* bulletStyles */}
+          <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+            <ul>
+              <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+              <li>
+                최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는 1회)
+              </li>
+              <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       {/* 자료실 */}
@@ -172,7 +213,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>과정 및 학습제한 안내</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>
@@ -197,7 +238,7 @@ const CourseIntroductionCompoment = () => {
       {/* 강사소개 */}
       <div className={styles.operator_box}>
         <strong>강사소개</strong>
-        {/* operator */}
+        {/* operator module */}
         <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
           <div className={operatorStyles.avatar}>
             <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
@@ -218,7 +259,7 @@ const CourseIntroductionCompoment = () => {
       {/* 과정 운영자 */}
       <div className={styles.operator_box}>
         <strong>과정 운영자</strong>
-        {/* operator */}
+        {/* operator module */}
         <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
           <div className={operatorStyles.avatar}>
             <span>김</span>
@@ -232,7 +273,7 @@ const CourseIntroductionCompoment = () => {
               </div>
             </div>
             <div className={operatorStyles.definition_list}>
-              {/* definition list */}
+              {/* definition module */}
               <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                 <dl>
                   <dt>이메일</dt>

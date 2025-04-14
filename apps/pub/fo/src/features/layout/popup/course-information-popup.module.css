@@ -7,4 +7,28 @@
       @apply body_3_r mt-[16px] text-center text-[var(--gray7)];
     }
   }
+
+  &.course_revert {
+    .information {
+      @apply rounded-[8px] bg-[#f6f8fd] p-[16px];
+      strong {
+        @apply button_2_b block text-[var(--gray8)];
+      }
+      .box {
+        @apply flex items-center;
+        span {
+          @apply button_3_r inline-block text-[var(--gray7)];
+          & + span {
+            @apply relative ml-[4px] pl-[4px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+            }
+          }
+        }
+      }
+    }
+    p {
+      @apply body_3_r mt-[16px] text-[var(--gray8)];
+    }
+  }
 }
