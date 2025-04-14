@@ -26,8 +26,6 @@ import {
 } from '../../../entities/common-code/service/common-code-group.hook';
 import { CommonCodeGroup } from '../../../types/entities/common-code';
 
-// import { mutateOptions } from '../../'
-
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
   'cdGroupId',
@@ -45,7 +43,6 @@ const initCdGroup = {
   cdGroupAbbreviatonEnglishName: '',
   cdGroupContent: '',
   isUsed: true,
-  // validityYn: true,
 };
 
 // 폼 모드를 상수로 정의
@@ -98,7 +95,7 @@ const CommonCodeGroupGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
@@ -376,7 +373,6 @@ const formConfig: DynamicFormConfig = {
 
 const columns = (router: any) => {
   return [
-    // 기존 columns 정의 유지
     columnHelper.accessor('cdGroupId', {
       cell: (info) => info.getValue(),
       enablePinning: true,
