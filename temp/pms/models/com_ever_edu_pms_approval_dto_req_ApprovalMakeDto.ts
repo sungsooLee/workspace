@@ -4,11 +4,11 @@
 /* eslint-disable */
 export type com_ever_edu_pms_approval_dto_req_ApprovalMakeDto = {
     requesterId?: number;
-    approvalType?: com_ever_edu_pms_approval_dto_req_ApprovalMakeDto.approvalType;
+    approvalBusinessType?: com_ever_edu_pms_approval_dto_req_ApprovalMakeDto.approvalBusinessType;
     typeRefId?: number;
 };
 export namespace com_ever_edu_pms_approval_dto_req_ApprovalMakeDto {
-    export enum approvalType {
+    export enum approvalBusinessType {
         ENROLL = 'ENROLL',
         LICENSE_EXPENSE = 'LICENSE_EXPENSE',
     }

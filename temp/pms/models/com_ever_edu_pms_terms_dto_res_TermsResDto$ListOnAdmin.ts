@@ -7,8 +7,8 @@ export type com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin = {
     termsName?: string;
     termsEffectiveDate?: string;
     termsTarget?: com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin.termsTarget;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
     mandatoryYn?: boolean;
     termsTypeCode?: com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin.termsTypeCode;
     termsStatus?: com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin.termsStatus;
@@ -25,10 +25,10 @@ export type com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin = {
     noticeAutoSendingYn?: boolean;
     translationCount?: number;
     translationLocaleCount?: number;
-    firstRgstrId?: string;
-    firstRegTmstamp?: string;
-    finalUpdaterId?: string;
-    finalUpdateTmstamp?: string;
+    createdBy?: string;
+    createdDate?: string;
+    lastModifiedBy?: string;
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin {
     export enum termsTarget {

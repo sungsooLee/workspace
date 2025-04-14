@@ -28,13 +28,13 @@ export type com_ever_edu_pms_notification_dto_req_PeriodicEmailUpdateReqDto = {
     /**
      * 발송 주기
      */
-    periodicEmailCycleCode?: com_ever_edu_pms_notification_dto_req_PeriodicEmailUpdateReqDto.periodicEmailCycleCode;
+    periodicEmailCycle?: com_ever_edu_pms_notification_dto_req_PeriodicEmailUpdateReqDto.periodicEmailCycle;
 };
 export namespace com_ever_edu_pms_notification_dto_req_PeriodicEmailUpdateReqDto {
     /**
      * 발송 주기
      */
-    export enum periodicEmailCycleCode {
+    export enum periodicEmailCycle {
         WEEKDAY = 'WEEKDAY',
         WEEKDAY_EXCEPT_FRI = 'WEEKDAY_EXCEPT_FRI',
         MWF = 'MWF',

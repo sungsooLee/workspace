@@ -4,27 +4,27 @@
 /* eslint-disable */
 export type com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto = {
     messageQueueEntryId?: number;
-    messageTypeCode?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.messageTypeCode;
-    sendingTypeCode?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.sendingTypeCode;
+    messageType?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.messageType;
+    sendingType?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.sendingType;
     templateId?: string;
     sendingStartDate?: string;
     completedDate?: string;
-    status?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.status;
+    messageQueueStatus?: com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto.messageQueueStatus;
     isDeleted?: boolean;
 };
 export namespace com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto {
-    export enum messageTypeCode {
+    export enum messageType {
         EMAIL = 'EMAIL',
         SMS = 'SMS',
         KAKAO = 'KAKAO',
         PUSH = 'PUSH',
     }
-    export enum sendingTypeCode {
+    export enum sendingType {
         RESERVED = 'RESERVED',
         PERIODIC = 'PERIODIC',
         ONETIME = 'ONETIME',
     }
-    export enum status {
+    export enum messageQueueStatus {
         WAITING = 'WAITING',
         SENT = 'SENT',
         FAILED = 'FAILED',

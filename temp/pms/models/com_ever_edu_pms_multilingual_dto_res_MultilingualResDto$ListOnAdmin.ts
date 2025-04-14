@@ -6,12 +6,11 @@ export type com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin
     multilingualId?: number;
     multilingualKey?: string;
     translation?: string;
-    firstRegTmstamp?: string;
-    firstRgstrId?: string;
-    finalUpdateTmstamp?: string;
-    finalUpdaterId?: string;
-    useYn?: boolean;
+    createdDate?: string;
+    createdBy?: string;
+    modifiedDate?: string;
+    lastModifiedBy?: string;
+    isUsed?: boolean;
     translationCount?: number;
-    parent?: com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin;
 };
 
