@@ -80,7 +80,7 @@ const searchConfig: any = {
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: t('사용여부'),
         value: '',

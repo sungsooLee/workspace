@@ -4,7 +4,7 @@ import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions } from './menu.queries';
 import menuMock from '../../mock/menu.json';
-export function useFetchMenus(tenantNo: number) {
+export function useFetchMenus(tenantId: number) {
   return { data: menuMock.children }; //useQuery(queryOptions.all(params));
 }
 

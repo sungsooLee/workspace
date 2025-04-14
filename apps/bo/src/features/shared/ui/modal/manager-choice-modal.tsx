@@ -127,7 +127,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: '사용여부',
         value: '',

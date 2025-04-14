@@ -4,13 +4,17 @@ import { Tenant } from '../../../types';
 
 export default class WidgetsService {
   static fetchWidgets({
-    useYn,
+    isUsed,
     widgetName,
     size,
     page,
-  }: { useYn?: boolean; widgetName?: string } & FetchPaginationParam) {
-    const url = objectToQueryString(`${PMSApiPrefix()}/widgets`, { widgetName, useYn, size, page });
-    console.log('fetchWidgets', url);
+  }: { isUsed?: boolean; widgetName?: string } & FetchPaginationParam) {
+    const url = objectToQueryString(`${PMSApiPrefix()}/widgets`, {
+      widgetName,
+      isUsed,
+      size,
+      page,
+    });
     return httpService.get<any>(url);
   }
   static fetchWidget(widgetCode: string) {

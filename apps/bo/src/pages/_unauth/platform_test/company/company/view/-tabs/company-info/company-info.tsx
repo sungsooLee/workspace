@@ -50,11 +50,11 @@ const formConfig: DynamicFormConfig = {
       value: [],
       options: [
         {
-          value: 'visiblePcYn',
+          value: 'isWebExposed',
           label: 'PC',
         },
         {
-          value: 'visibleMobileYn',
+          value: 'isMobileExposed',
           label: '모바일',
         },
       ],

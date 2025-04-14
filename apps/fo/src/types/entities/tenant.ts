@@ -1,5 +1,5 @@
 export interface Tenant {
-  tenantNo: number;
+  tenantId: number;
   tenantName: string;
   windowTitle?: string;
   logoImageUrl?: string;
