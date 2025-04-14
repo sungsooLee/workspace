@@ -44,7 +44,6 @@
       @apply mt-[32px];
       dd {
         button {
-          @apply label_12_500 ml-[8px] text-[var(--secondary3)] underline;
         }
       }
     }

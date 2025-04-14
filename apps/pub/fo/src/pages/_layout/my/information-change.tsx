@@ -56,7 +56,8 @@ function RouteComponent() {
                       width: isMobile ? 'm_full' : 'sm',
                       content: <IdChangePopup />,
                     })
-                  }>
+                  }
+                >
                   아이디 변경
                 </Button>
               </div>
@@ -91,7 +92,8 @@ function RouteComponent() {
                       width: isMobile ? 'm_full' : 'sm',
                       content: <PasswordChangePopup />,
                     })
-                  }>
+                  }
+                >
                   비밀번호 변경
                 </Button>
               </div>
@@ -180,7 +182,8 @@ function RouteComponent() {
                       width: isMobile ? 'm_full' : 'sm',
                       content: <PhoneChangePopup />,
                     })
-                  }>
+                  }
+                >
                   휴대폰 번호 변경
                 </Button>
               </div>
@@ -208,7 +211,8 @@ function RouteComponent() {
             안내사항
           </dt>
           <dd>
-            개인정보가 다를 경우 DDMS에서 변경해주세요.<Link to={''}>DDMD 바로 가기 &#62;</Link>
+            개인정보가 다를 경우 DDMS에서 변경해주세요.
+            <Link to={''}>DDMD 바로 가기 &#62;</Link>
           </dd>
         </dl>
       </div>
