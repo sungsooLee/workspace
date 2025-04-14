@@ -126,7 +126,7 @@ export class HttpService {
           console.log('axios.error', error);
         } else {
           // this.showNotification('Unknown Error', error.message);
-          console.log('> unknown error-2:', url, error.message);
+          console.log('> unknown error-2:', url, error);
         }
         throw error;
       })

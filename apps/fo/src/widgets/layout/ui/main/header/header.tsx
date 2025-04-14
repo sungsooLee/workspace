@@ -34,8 +34,8 @@ function HeaderComponent() {
 
   useEffect(() => {
     if (!activeTenant && tenants?.length) {
-      const tenantNo = cookieService.get('LOGIN_TENANT_ID');
-      const tenant = tenants.find((t) => t.tenantNo.toString() === tenantNo) || tenants[0];
+      const tenantId = cookieService.get('LOGIN_TENANT_ID');
+      const tenant = tenants.find((t) => t.tenantId.toString() === tenantId) || tenants[0];
       setActiveTenant(tenant);
       sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
     }

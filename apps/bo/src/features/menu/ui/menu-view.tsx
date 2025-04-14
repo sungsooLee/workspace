@@ -70,20 +70,20 @@ const MenuViewComponent: FC<any> = ({
         const formData = {
           key: data.menuId?.toString() || '',
           parentKey: data.parentId?.toString() || '',
-          useYn: data.useYn || false,
+          isUsed: data.isUsed || false,
           location: location || '', // 경로 생성 함수
           code: data.menuCode || '',
           title: data.menuName || t(`${data.menuCode}`),
           url: data.path || '',
-          personalDataContainYn: data.personalDataContainYn || false,
+          isPersoninfoInclusion: data.isPersoninfoInclusion || false,
           menuDesc: data.menuDesc || '',
           parentMenuName: data.parentCode,
-          visiblePcYn: data?.visiblePcYn,
-          visibleMobileYn: data?.visibleMobileYn,
+          isWebExposed: data?.isWebExposed,
+          isMobileExposed: data?.isMobileExposed,
           hiddenYn: data?.hiddenYn || false,
           visible: [
-            data.visiblePcYn === true && 'visiblePcYn',
-            data.visibleMobileYn === true && 'visibleMobileYn',
+            data.isWebExposed === true && 'isWebExposed',
+            data.isMobileExposed === true && 'isMobileExposed',
           ].filter(Boolean),
           isDuplicateMenuCode: true, // view 모드에서는 기본적으로 중복 체크 통과로 설정
           apiMappingMenuList: data?.apiMappingMenuList,
@@ -101,15 +101,15 @@ const MenuViewComponent: FC<any> = ({
         key: '', // 신규 메뉴는 키 없음
         parentKey: parentNode.key || '',
         parentMenuName: parentNode.title,
-        useYn: true,
+        isUsed: true,
         location: location,
         code: '',
         title: '',
         url: '',
-        personalDataContainYn: false,
+        isPersoninfoInclusion: false,
         menuDesc: '',
         isDuplicateMenuCode: false,
-        visible: ['visiblePcYn'],
+        visible: ['isWebExposed'],
         hiddenYn: false,
         apiMappingMenuList: [],
       };
@@ -119,12 +119,12 @@ const MenuViewComponent: FC<any> = ({
         key: '',
         parentKey: '',
         parentMenuName: '',
-        useYn: false,
+        isUsed: false,
         location: '',
         code: '',
         title: '',
         url: '',
-        personalDataContainYn: false,
+        isPersoninfoInclusion: false,
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: [],
@@ -158,10 +158,10 @@ const MenuViewComponent: FC<any> = ({
 
   const handleOnSubmit = (node: any) => {
     console.log(node.apiMappingMenuList);
-    const visibleMobileYn = node.visible.find((element: string) => element === 'visibleMobileYn')
+    const isMobileExposed = node.visible.find((element: string) => element === 'isMobileExposed')
       ? true
       : false;
-    const visiblePcYn = node.visible.find((element: string) => element === 'visiblePcYn')
+    const isWebExposed = node.visible.find((element: string) => element === 'isWebExposed')
       ? true
       : false;
     const apiMappingKeys = [] as number[];
@@ -178,13 +178,13 @@ const MenuViewComponent: FC<any> = ({
           menuId: selectedNode.menuId,
           menuCode: node.code,
           parentId: node.parentKey,
-          deleteYn: false,
+          isDeleted: false,
           hiddenYn: node.hiddenYn,
-          useYn: true,
-          visiblePcYn: visiblePcYn,
-          visibleMobileYn: visibleMobileYn,
+          isUsed: true,
+          isWebExposed: isWebExposed,
+          isMobileExposed: isMobileExposed,
           menuDesc: node.menuDesc,
-          personalDataContainYn: node.personalDataContainYn,
+          isPersoninfoInclusion: node.isPersoninfoInclusion,
           sortOrder: 1,
           path: node.url,
           menuScope: menuScope,
@@ -216,13 +216,13 @@ const MenuViewComponent: FC<any> = ({
     const tmpData = {
       menuCode: node.code,
       parentId: node.parentKey,
-      deleteYn: false,
+      isDeleted: false,
       hiddenYn: node.hiddenYn,
-      useYn: true,
-      visiblePcYn: visiblePcYn,
-      visibleMobileYn: visibleMobileYn,
+      isUsed: true,
+      isWebExposed: isWebExposed,
+      isMobileExposed: isMobileExposed,
       menuDesc: node.menuDesc,
-      personalDataContainYn: node.personalDataContainYn,
+      isPersoninfoInclusion: node.isPersoninfoInclusion,
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
@@ -428,7 +428,7 @@ const MenuViewComponent: FC<any> = ({
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'personalDataContainYn'} disabled={isInitMode} />
+              <DynamicFormField name={'isPersoninfoInclusion'} disabled={isInitMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -480,7 +480,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: 'useYn',
+      name: 'isUsed',
       type: 'custom',
       value: false,
     },
@@ -520,7 +520,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('개인정보'),
       tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
-      name: 'personalDataContainYn',
+      name: 'isPersoninfoInclusion',
       type: 'switch',
       value: false,
     },
@@ -552,11 +552,11 @@ const formConfig: DynamicFormConfig = {
       value: [],
       options: [
         {
-          value: 'visiblePcYn',
+          value: 'isWebExposed',
           label: 'PC',
         },
         {
-          value: 'visibleMobileYn',
+          value: 'isMobileExposed',
           label: '모바일',
         },
       ],
@@ -591,7 +591,7 @@ const formConfig: DynamicFormConfig = {
     visible: {
       required: {
         fn: (values) => {
-          return !values.visibleMobileYn && !values.visiblePcYn;
+          return !values.isMobileExposed && !values.isWebExposed;
         },
         message: t('1개 이상 선택하세요.'),
       },

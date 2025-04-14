@@ -77,7 +77,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: '사용여부',
         value: '',
@@ -105,7 +105,8 @@ const gridConfig = {
       render: (info: any) => (
         <Link
           className={'text-blue-600'}
-          to={'/platform/system/translation/view?messageId=' + info.row.original.messageId}>
+          to={'/platform/system/translation/view?messageId=' + info.row.original.messageId}
+        >
           {info.getValue()}
         </Link>
       ),
@@ -122,7 +123,7 @@ const gridConfig = {
       render: (info: any) => (info.row.original.translationCount < 28 ? '번역필요' : '번역완료'),
     },
     {
-      name: 'useYn',
+      name: 'isUsed',
       label: '사용여부',
       render: (info: any) => (info.getValue() ? '사용' : '미사용'),
     },

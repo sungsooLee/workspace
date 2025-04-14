@@ -11,9 +11,9 @@ import { useActiveMenuDepthState } from '../../../features/platform';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
- * quickAccessAreaYn 에 따라 GNB quick menu area에 메뉴를 출력한다.
+ * isShortCutArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
  */
-export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
+export function useMenuHierarchy(isShortCutArea = false): HookData<Menu[]> {
   const { data: authUser } = useFetchAuthUser();
   const { data } = useFetchMenus(authUser?.activeTenantNo);
 
@@ -23,10 +23,10 @@ export function useMenuHierarchy(quickAccessAreaYn = false): HookData<Menu[]> {
         return [];
       }
 
-      return quickAccessAreaYn
-        ? data?.filter((menu: any) => menu?.quickAccessAreaYn)
-        : data?.filter((menu: any) => !menu?.quickAccessAreaYn);
-    }, [data, quickAccessAreaYn]),
+      return isShortCutArea
+        ? data?.filter((menu: any) => menu?.isShortCutArea)
+        : data?.filter((menu: any) => !menu?.isShortCutArea);
+    }, [data, isShortCutArea]),
   };
 }
 

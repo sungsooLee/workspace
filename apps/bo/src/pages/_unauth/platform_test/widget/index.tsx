@@ -53,7 +53,7 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: '상태',
         value: '',
@@ -83,7 +83,7 @@ const gridConfig = {
     },
     { name: 'widgetName', label: '위젯명' },
     { name: 'device', label: '디바이스' },
-    { name: 'useYn', label: '상태' },
+    { name: 'isUsed', label: '상태' },
     { name: 'preview', label: '미리보기' },
   ],
   data: [],

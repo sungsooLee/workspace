@@ -76,7 +76,7 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: '상태',
         value: '',
