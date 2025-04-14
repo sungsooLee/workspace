@@ -253,27 +253,36 @@ export const guideData = [
     lastUpdateDate: '2025-03-25',
     remarks: '작업 완료', // 비고
   },
+  // {
+  //   screenName: '공통/공통기능_유저그룹검색팝업',
+  //   pageId: 'common/pop-user-search',
+  //   screenId: 'NLP_BO_TMS_1100_01',
+  //   pageType: 'Pop-up',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '진행중', // 비고
+  // },
+  // {
+  //   screenName: '공통/공통기능_유저그룹대상자팝업',
+  //   pageId: 'common/pop-user-search',
+  //   screenId: 'NLP_BO_TMS_1100_07',
+  //   pageType: 'Pop-up',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '진행중', // 비고
+  // },
   {
-    screenName: '공통/공통기능_유저그룹검색팝업',
+    screenName: '공통/공통기능_유저검색 외 공통팝업(텝)',
     pageId: 'common/pop-user-search',
-    screenId: 'NLP_BO_TMS_1100_01',
+    screenId: 'NLP_BO_TMS_1100_02',
     pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
-    screenName: '공통/공통기능_유저그룹대상자팝업',
-    pageId: 'common/pop-user-search',
-    screenId: 'NLP_BO_TMS_1100_07',
-    pageType: 'Pop-up',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행중', // 비고
-  },
-  {
-    screenName: '공통/공통기능_유저검색 외 공통팝업',
-    pageId: 'common/pop-user-search',
+    screenName: '공통/공통기능_유저검색 외 공통팝업_셔틀팝업',
+    pageId: 'common/pop-user-search-check',
     screenId: 'NLP_BO_TMS_1100_02',
     pageType: 'Pop-up',
     completionDate: '',

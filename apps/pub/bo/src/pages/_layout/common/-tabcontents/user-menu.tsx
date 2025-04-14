@@ -282,7 +282,7 @@ const UserMenuComponent: FC<{}> = ({}) => {
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
           }}
-          title="타이틀"
+          title="유저 목록"
         />
       </div>
     </div>
