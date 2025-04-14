@@ -1,6 +1,23 @@
 .start {
   &.education {
     @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[24px] pt-[24px];
+    &.disabled {
+      .info_box {
+        .txt_box {
+          .box {
+            .state,
+            .date {
+              @apply text-[var(--gray6)];
+            }
+            .state {
+              &::before {
+                @apply bg-[var(--gray6)];
+              }
+            }
+          }
+        }
+      }
+    }
     .info_box {
       @apply flex items-center justify-between;
       & + .info_box {
@@ -14,7 +31,7 @@
           .date {
             @apply body_3_r text-[var(--secondary3)];
           }
-          .date {
+          .state {
             @apply relative ml-[8px] pl-[8px];
             &::before {
               @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary3)] content-[''];
