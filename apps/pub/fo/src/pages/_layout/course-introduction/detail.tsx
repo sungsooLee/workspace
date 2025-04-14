@@ -1,9 +1,23 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tabs, Accordion, EmptyText, OptionCard } from '@learnway/ui';
+import {
+  Button,
+  Tabs,
+  Accordion,
+  EmptyText,
+  OptionCard,
+  OptionCardItem,
+  useModal,
+  Textarea,
+} from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
-import { CourseDashboard, CourseIntroduction } from '../../../features/layout';
+import {
+  CourseDashboard,
+  CourseIntroduction,
+  CourseInformationPopup,
+} from '../../../features/layout';
 
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import pageContentsStyles from '../../_page-contents.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
@@ -20,6 +34,10 @@ export const Route = createFileRoute('/_layout/course-introduction/detail')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+  const { confirm: openConfirm } = useModal();
+  const { alert: openAlert } = useModal();
+
   // 찜
   const [heart, setHeart] = useState(false);
 
@@ -80,6 +98,124 @@ function RouteComponent() {
     },
   ];
 
+  // 수강신청 있는 과정
+  const [courseValues, setCourseValues] = useState<string>();
+  const courseOptions = [
+    {
+      label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
+      value: 'a',
+      original: {
+        number: '1차',
+        date: '2026-01-15 ~ 2026-01-04',
+        definitionList: [
+          {
+            tit: '잔여석',
+            txt: '999',
+          },
+          {
+            tit: '장소',
+            txt: '온라인 비대면',
+          },
+        ],
+      },
+    },
+    {
+      label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
+      value: 'b',
+      original: {
+        number: '2차',
+        date: '2026-01-15 ~ 2026-01-04',
+        definitionList: [
+          {
+            tit: '잔여석',
+            txt: '111',
+          },
+          {
+            tit: '장소',
+            txt: '온라인 비대면',
+          },
+        ],
+      },
+    },
+  ];
+
+  // 수강신청 취소 신청
+  const CourseCencelConfirm = () => {
+    openConfirm({
+      title: <>수강 신청을 취소하시겠습니까?</>,
+      content: (
+        <>
+          지금 취소하실 경우,
+          <br />
+          다시 수강신청을 해주셔야 합니다.
+        </>
+      ),
+      okButtonLabel: '취소하기',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
+  // 수강신청 취소 사유 입력
+  const CourseCencelReasonConfirm = () => {
+    openConfirm({
+      title: <>수강신청 취소 사유를 입력해주세요</>,
+      content: (
+        <div className={`${formStyles.form_item} ${styles.form_item}`}>
+          <div className={formStyles.input_box}>
+            <Textarea
+              id="textarea"
+              rows={2}
+              cols={2}
+              resize="none"
+              placeholder="Text"
+              maxLength={100}
+              className={formStyles.textarea}
+            />
+          </div>
+        </div>
+      ),
+      okButtonLabel: '확인',
+      cancelButtonLabel: '취소',
+    });
+  };
+
+  // 수창취소 완료
+  const CourseCencelCompleteAlert = () => {
+    openAlert({
+      title: <>수강취소 되었습니다</>,
+    });
+  };
+
+  // 수강신청 알림
+  const CourseAlarmAlert = () => {
+    openAlert({
+      title: <>수강신청 알림</>,
+      content: (
+        <>
+          수강신청이 가능할 때 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
+
+  // 수강대기자 등록
+  const CourseWaitAlert = () => {
+    openAlert({
+      title: <>수강대기자 등록</>,
+      content: (
+        <>
+          본 과정의 수강신청 대기자로 등록되었습니다.
+          <br />
+          수강 취소 발생시 순차적으로 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       {/* page contents */}
@@ -106,7 +242,7 @@ function RouteComponent() {
         {/* sub content */}
         <div className={pageContentsStyles.sub_contents}>
           <div className={styles.sub_box}>
-            {/* package information */}
+            {/* packageInformationStyles module */}
             <div
               className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
             >
@@ -145,7 +281,7 @@ function RouteComponent() {
               </div>
               {/* 학습정보 */}
               <div className={packageInformationStyles.list_box}>
-                {/* definition list */}
+                {/* definitionListStyles module */}
                 <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                   <dl>
                     <dt>학습유형</dt>
@@ -173,42 +309,46 @@ function RouteComponent() {
                 </div>
 
                 {/* 강의 정보 */}
-                {/* <OptionCard
-                  value={values2}
-                  cols={5}
+                <OptionCard
+                  className={packageInformationStyles.course_card}
+                  cols={1}
                   size="lg"
-                  options={dummyOptions2}
-                  onOptionSelect={(option: OptionCardItem) => setValues2(option.value)}
-                /> */}
-
-                {/* <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
-                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                    <p className={lectureStyles.date}>
-                      <span>1차교육</span>
-                      <span>2026-01-01 ~ 2026-01-31 </span>
-                    </p>
-                    <strong className={lectureStyles.tit}>
-                      스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
-                    </strong>
-                  </div>
-                  <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                      <dl>
-                        <dt>잔여석</dt>
-                        <dd>999</dd>
-                      </dl>
-                      <dl>
-                        <dt>장소</dt>
-                        <dd>온라인 비대면</dd>
-                      </dl>
+                  value={courseValues}
+                  options={courseOptions}
+                  itemRenderer={({ label, original }: OptionCardItem, index: number) => (
+                    // lectureStyles module
+                    <div
+                      className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
+                    >
+                      <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                        <p className={lectureStyles.date}>
+                          <span>{original?.number}</span>
+                          <span>{original?.date}</span>
+                        </p>
+                        <strong className={lectureStyles.tit}>{label}</strong>
+                      </div>
+                      <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                        {/* definitionListStyles module */}
+                        <div
+                          className={`${definitionListStyles.start} ${definitionListStyles.list}`}
+                        >
+                          {original.definitionList.map((item: any) => (
+                            <dl>
+                              <dt>{item.tit}</dt>
+                              <dd>{item.txt}</dd>
+                            </dl>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div> */}
+                  )}
+                  onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
+                />
               </div>
 
               {/* 수강신청 없는 case */}
               {/* button */}
-              <div className={packageInformationStyles.btn_box}>
+              {/* <div className={packageInformationStyles.btn_box}>
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
@@ -220,10 +360,10 @@ function RouteComponent() {
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
-              </div>
+              </div> */}
 
               {/* 수강신청 있는 case */}
-              {/* <div
+              <div
                 className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
               >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
@@ -238,9 +378,19 @@ function RouteComponent() {
                   <IcoShare width={20} height={20} stroke="#4c515e" />
                 </Button>
                 <div className={packageInformationStyles.course}>
-                  <Button variant="primary">수강신청</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      openModal({
+                        width: 's',
+                        content: <CourseInformationPopup />,
+                      })
+                    }
+                  >
+                    수강신청
+                  </Button>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
 

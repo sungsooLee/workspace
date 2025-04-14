@@ -416,6 +416,15 @@ export const guideData = [
     remarks: '작업 완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
   },
   {
+    screenName: 'PMS/플랫폼관리_라벨/메시지 관리',
+    pageId: 'pms/',
+    screenId: 'NLP_BO_PMS_1406',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행 예정', // 비고
+  },
+  {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리',
     pageId: 'pms/menu-tenant-platform-management',
     screenId: 'NLP_BO_TMS_1000',
