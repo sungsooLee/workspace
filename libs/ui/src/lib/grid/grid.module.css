@@ -21,6 +21,8 @@
             }
           }
         }
+        &.last {
+        }
         & + .thead_th {
           @apply border-l-[1px] border-solid border-[var(--gray3)];
         }
@@ -228,10 +230,17 @@
 
 .th_pinned_left {
   @apply !sticky left-0 !z-[3] border-b-[1px] border-solid !border-[var(--gray3)] bg-[var(--gray1)];
-  &:nth-last-child(1) {
-    @apply bg-red-500;
+  &::last-of-type {
+    .thead_th {
+      @apply !bg-red-500;
+    }
   }
 }
 .td_pinned_left {
   @apply !z-[3] bg-white;
+}
+[class*='th_pinned_left'] {
+  &:last-of-type {
+    @apply !hidden;
+  }
 }

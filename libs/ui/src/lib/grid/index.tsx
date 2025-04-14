@@ -456,7 +456,11 @@ const Grid = forwardRef(
                         left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
                         zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
                       }}
-                      className={cn(styles.thead_th, isPinnedLeft && styles.th_pinned_left)}
+                      className={cn(
+                        styles.thead_th,
+                        isPinnedLeft && styles.th_pinned_left,
+                        isPinnedLeft && 'th_pinned_left',
+                      )}
                     >
                       <div className={styles.th_wrap}>
                         <div
