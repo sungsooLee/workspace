@@ -426,6 +426,10 @@ const Grid = forwardRef(
      * 테이블 내용 렌더링
      */
     const renderTable = () => {
+      // 고정된 왼쪽 열의 ID들 가져오기
+      const pinnedLeftColumns = table.getState().columnPinning.left || [];
+      // 마지막 고정 열의 ID
+      const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
         return (
@@ -436,6 +440,7 @@ const Grid = forwardRef(
                   const { column } = header;
                   const { columnDef } = column;
                   const isPinnedLeft = column.getIsPinned() === 'left';
+                  const isLastPinnedColumn = isPinnedLeft && column.id === lastPinnedColumnId;
 
                   return (
                     <th
@@ -460,6 +465,7 @@ const Grid = forwardRef(
                         styles.thead_th,
                         isPinnedLeft && styles.th_pinned_left,
                         isPinnedLeft && 'th_pinned_left',
+                        isLastPinnedColumn && 'th_pinned_last',
                       )}
                     >
                       <div className={styles.th_wrap}>
@@ -601,6 +607,8 @@ const Grid = forwardRef(
       // table > tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
         const isPinnedLeft = cell.column.getIsPinned() === 'left';
+        // 마지막 고정 열인지 확인
+        const isLastPinnedColumn = isPinnedLeft && cell.column.id === lastPinnedColumnId;
 
         const cellStyle = {
           background: cell.getIsGrouped()
@@ -625,7 +633,12 @@ const Grid = forwardRef(
         return (
           <td
             key={cell.id}
-            className={cn(styles.tbody_td, isPinnedLeft && styles.td_pinned_left)}
+            className={cn(
+              styles.tbody_td,
+              isPinnedLeft && styles.td_pinned_left,
+              // 마지막 고정 열에 클래스 추가
+              isLastPinnedColumn && 'td_pinned_last',
+            )}
             style={cellStyle}
           >
             {cell.getIsGrouped() ? (
