@@ -32,7 +32,8 @@ const GoogleKeyPopupCompoment = () => {
                   width: isMobile ? 'm_full' : 'sm',
                   content: <GoogleQrcodePopup />,
                 });
-              }}>
+              }}
+            >
               QR코드 스캔
             </Button>
           </div>
@@ -55,7 +56,7 @@ const GoogleKeyPopupCompoment = () => {
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
             <Button
-              label={'확인'}
+              label={'다음'}
               variant={'primary'}
               size={'lg'}
               onClick={() => {

@@ -6,7 +6,7 @@ import VerificationsService from '../api/verifications';
 
 export const queryKeys = {
   all: ['tenants'] as const,
-  detail: (tenantNo: number) => [...queryKeys.all, tenantNo] as const,
+  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
   // 유저 ID 기반으로 특정 유저의 테넌트를 가져오는 쿼리 키
   byUser: (accountId: string) => ['tenants', 'byUser', accountId] as const,
 };

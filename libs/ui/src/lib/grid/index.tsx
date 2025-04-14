@@ -426,6 +426,10 @@ const Grid = forwardRef(
      * 테이블 내용 렌더링
      */
     const renderTable = () => {
+      // 고정된 왼쪽 열의 ID들 가져오기
+      const pinnedLeftColumns = table.getState().columnPinning.left || [];
+      // 마지막 고정 열의 ID
+      const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
         return (
@@ -436,6 +440,7 @@ const Grid = forwardRef(
                   const { column } = header;
                   const { columnDef } = column;
                   const isPinnedLeft = column.getIsPinned() === 'left';
+                  const isLastPinnedColumn = isPinnedLeft && column.id === lastPinnedColumnId;
 
                   return (
                     <th
@@ -455,9 +460,13 @@ const Grid = forwardRef(
                         position: isPinnedLeft ? 'sticky' : undefined,
                         left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
                         zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
-                        backgroundColor: isPinnedLeft ? 'white' : undefined,
                       }}
-                      className={cn(styles.thead_th, isPinnedLeft && styles['pinned-left'])}
+                      className={cn(
+                        styles.thead_th,
+                        isPinnedLeft && styles.th_pinned_left,
+                        isPinnedLeft && 'th_pinned_left',
+                        isLastPinnedColumn && 'th_pinned_last',
+                      )}
                     >
                       <div className={styles.th_wrap}>
                         <div
@@ -583,7 +592,10 @@ const Grid = forwardRef(
             key={row.id}
             data-index={index}
             ref={(node) => rowVirtualizer.measureElement(node)}
-            className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
+            className={cn(
+              row.getIsSelected() && styles.selected,
+              row.getIsSelected() && 'bg-[#edfcff] hover:bg-[#edfcff]',
+            )}
             style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
           >
@@ -595,6 +607,8 @@ const Grid = forwardRef(
       // table > tbody > tr > td
       const renderCell = (row: Row<T>, cell: Cell<T, unknown>) => {
         const isPinnedLeft = cell.column.getIsPinned() === 'left';
+        // 마지막 고정 열인지 확인
+        const isLastPinnedColumn = isPinnedLeft && cell.column.id === lastPinnedColumnId;
 
         const cellStyle = {
           background: cell.getIsGrouped()
@@ -613,14 +627,18 @@ const Grid = forwardRef(
           // 고정열 스타일 추가
           position: isPinnedLeft ? 'sticky' : undefined,
           left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
-          zIndex: isPinnedLeft ? 1 : undefined,
-          backgroundColor: isPinnedLeft ? 'white' : undefined,
+          zIndex: isPinnedLeft ? 3 : undefined,
         } as CSSProperties;
 
         return (
           <td
             key={cell.id}
-            className={cn(styles.tbody_td, isPinnedLeft && styles['pinned-left'])}
+            className={cn(
+              styles.tbody_td,
+              isPinnedLeft && styles.td_pinned_left,
+              // 마지막 고정 열에 클래스 추가
+              isLastPinnedColumn && 'td_pinned_last',
+            )}
             style={cellStyle}
           >
             {cell.getIsGrouped() ? (

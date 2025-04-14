@@ -1,18 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, findNodeByKey, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MenuTree } from '../../../../features/menu/ui/menu-tree';
 import MenuView from '../../../../features/menu/ui/menu-view';
-import { IcoAnnouncement03 } from '../../../../../../../libs/icons/src';
 import { cn } from '@learnway/shared';
 import {
   useCreateMenu,
   useDeleteMenu,
   useMenuManageFetchTree,
-  useMenuMangeFetchMenus,
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
@@ -320,7 +317,7 @@ function RouteComponent() {
           selectedTabKey={selectedTabKey}
           items={items}
           type="line"
-          onActiveTab={handleTabChange}
+          onTabChange={handleTabChange}
           className={styles.tab_wrap}
         />
         {/* </div> */}

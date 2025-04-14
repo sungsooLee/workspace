@@ -8,7 +8,7 @@ export type com_ever_edu_pms_api_dto_res_ApiTreeDto = {
     apiUrl?: string;
     depth?: number;
     sortOrder?: number;
-    useYn?: boolean;
+    isUsed?: boolean;
     apiScope?: com_ever_edu_pms_api_dto_res_ApiTreeDto.apiScope;
     apiMethod?: com_ever_edu_pms_api_dto_res_ApiTreeDto.apiMethod;
     apiDesc?: string;

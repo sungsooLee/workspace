@@ -12,6 +12,7 @@ export function initAxios() {
 
   const interceptors = {
     request: {
+      // request 시 accessToken을 header로 전송
       onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
         const accessToken = tokenService.accessToken;
         if (accessToken) {
@@ -25,6 +26,7 @@ export function initAxios() {
       onFulfilled: function (config: AxiosResponse<any, any>) {
         return config;
       },
+      // response rejected 상태가 401인 경우 reissue
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         // error
@@ -40,6 +42,7 @@ export function initAxios() {
     },
   };
 
+  // accessToken 만료인 경우 refreshToken을 이용해 accessToken 갱신
   const reissueProccess = (error: any): Promise<any> => {
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;

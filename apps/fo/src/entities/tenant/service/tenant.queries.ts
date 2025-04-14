@@ -7,17 +7,17 @@ import { Tenant } from '../../../types';
 
 export const queryKeys = {
   all: ['tenants'] as const,
-  detail: (tenantNo: number) => [...queryKeys.all, tenantNo] as const,
+  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
   // 유저 ID 기반으로 특정 유저의 테넌트를 가져오는 쿼리 키
   byUser: (accountId: number) => ['tenants', 'byUser', accountId] as const,
 };
 
 export const queryOptions = {
-  detail: (tenantNo?: number) =>
-    tenantNo
+  detail: (tenantId?: number) =>
+    tenantId
       ? {
-          queryKey: queryKeys.detail(tenantNo),
-          queryFn: (): Promise<any> => TenantService.fetchTenant(tenantNo),
+          queryKey: queryKeys.detail(tenantId),
+          queryFn: (): Promise<any> => TenantService.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
   // 유저 ID에 따른 테넌트 리스트 쿼리 옵션
@@ -38,7 +38,7 @@ export const mutateOptions = {
     mutationFn: (payload: Tenant) => TenantService.updateTenant(payload),
   }),
   delete: () => ({
-    mutationFn: (tenantNo?: number) =>
-      tenantNo ? TenantService.deleteTenant(tenantNo) : skipToken,
+    mutationFn: (tenantId?: number) =>
+      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
   }),
 };

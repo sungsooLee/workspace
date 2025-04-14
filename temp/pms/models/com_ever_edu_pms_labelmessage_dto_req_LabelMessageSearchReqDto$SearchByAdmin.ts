@@ -18,7 +18,7 @@ export type com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$Searc
     /**
      * 사용여부
      */
-    useYn?: boolean;
+    isUsed?: boolean;
 };
 export namespace com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin {
     /**

@@ -109,6 +109,9 @@
     & + div {
       @apply translate-y-0;
     }
+    .required {
+      @apply -mt-[8px] inline-block;
+    }
   }
 }
 

@@ -33,9 +33,11 @@ export function CMSApiPrefix(): string {
 export function LMSApiPrefix(): string {
   return `/lms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
+// 로그인 관련 api module
 export function OAuthApiPrefix(): string {
   return getConfig()?.OAuth_API_PREFIX || `/pms-module${API_FIXED_URI}`;
 }
+// SSO 관련 api module
 export function SSOApiPrefix(): string {
   return getConfig()?.SSO_API_PREFIX || `/pms-module${API_SSO_URI}`;
 }

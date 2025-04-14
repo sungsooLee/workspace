@@ -5,11 +5,11 @@
 export type com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto = {
     userName: string;
     emailAddress: string;
-    userStateCode?: com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto.userStateCode;
+    userState?: com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto.userState;
     companyCode?: string;
 };
 export namespace com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto {
-    export enum userStateCode {
+    export enum userState {
         WAIT = 'WAIT',
         NORMAL = 'NORMAL',
         HALT = 'HALT',

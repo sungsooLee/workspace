@@ -19,8 +19,7 @@ const CompanyInfoComponent = () => {
         label={t('회사 기본 정보')}
         actionNode={
           <>
-            <Button label={'저장'} variant={'point'} size={'md'} type={'submit'} />
-            <Button label={'저장2'} variant={'point'} size={'md'} />
+            <Button label={'저장'} variant={'primary'} size={'md'} type={'submit'} />
           </>
         }
       />
@@ -46,15 +45,15 @@ const formConfig: DynamicFormConfig = {
       name: 'companyType',
       type: 'radio-group',
       label: t('화사구분'),
-      format: 'array',
+      format: 'string',
       value: [],
       options: [
         {
-          value: 'visiblePcYn',
+          value: 'isWebExposed',
           label: 'PC',
         },
         {
-          value: 'visibleMobileYn',
+          value: 'isMobileExposed',
           label: '모바일',
         },
       ],

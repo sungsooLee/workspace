@@ -8,7 +8,7 @@ export type com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto = {
     /**
      * 이메일 타입
      */
-    sendingTypeCode?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.sendingTypeCode;
+    sendingType?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.sendingType;
     /**
      * 템플릿 ID
      */
@@ -37,13 +37,13 @@ export type com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto = {
     /**
      * 발송 주기
      */
-    periodicEmailCycleCode?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.periodicEmailCycleCode;
+    periodicEmailCycle?: com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto.periodicEmailCycle;
 };
 export namespace com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto {
     /**
      * 이메일 타입
      */
-    export enum sendingTypeCode {
+    export enum sendingType {
         RESERVED = 'RESERVED',
         PERIODIC = 'PERIODIC',
         ONETIME = 'ONETIME',
@@ -51,7 +51,7 @@ export namespace com_ever_edu_pms_notification_dto_req_PeriodicEmailSaveReqDto {
     /**
      * 발송 주기
      */
-    export enum periodicEmailCycleCode {
+    export enum periodicEmailCycle {
         WEEKDAY = 'WEEKDAY',
         WEEKDAY_EXCEPT_FRI = 'WEEKDAY_EXCEPT_FRI',
         MWF = 'MWF',

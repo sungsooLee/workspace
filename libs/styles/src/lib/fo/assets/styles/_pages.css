@@ -20,7 +20,7 @@ h4.auth--title {
     @apply flex items-center justify-center gap-[16px] text-center;
 
     button {
-      @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[#D6DAE1] text-center text-[#A9AFB8];
+      @apply body_3_r m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[#D6DAE1] text-center text-[#A9AFB8];
       span {
         @apply mt-[8px] block text-[#A9AFB8];
       }

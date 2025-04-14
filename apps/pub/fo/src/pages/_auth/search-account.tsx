@@ -52,7 +52,8 @@ function RouteComponent() {
               {/* 인증선택 모듈 */}
               <div
                 className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
-                role="radiogroup">
+                role="radiogroup"
+              >
                 <RadioCard
                   options={[
                     {
@@ -226,7 +227,8 @@ function RouteComponent() {
               {/* 인증선택 모듈 */}
               <div
                 className={cn(authToolFormFieldStyles.signup_select, 'auth--signup-select')}
-                role="radiogroup">
+                role="radiogroup"
+              >
                 <RadioCard
                   options={[
                     {
@@ -389,7 +391,8 @@ function RouteComponent() {
                         width: 'md',
                         content: <GoogleCertGuidePopup />,
                       })
-                    }>
+                    }
+                  >
                     구글 OTP 인증 가이드
                   </Button>
                 </dd>

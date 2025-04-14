@@ -39,23 +39,27 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
 }
 
 const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
-  ({
-    icon,
-    iconAlign = 'left',
-    onlyIcon = false,
-    isLoading,
-    disabled,
-    children,
-    className,
-    variant,
-    size,
-    label,
-    type = 'button',
-    ...props
-  }) => {
+  (
+    {
+      icon,
+      iconAlign = 'left',
+      onlyIcon = false,
+      isLoading,
+      disabled,
+      children,
+      className,
+      variant,
+      size,
+      label,
+      type = 'button',
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <button
         {...props}
+        ref={ref}
         type={type}
         className={cn(
           styles.start,

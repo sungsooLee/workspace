@@ -8,8 +8,8 @@ export type com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin = {
     termsName?: string;
     termsEffectiveDate?: string;
     termsTarget?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsTarget;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
     mandatoryYn?: boolean;
     termsTypeCode?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsTypeCode;
     termsStatus?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsStatus;

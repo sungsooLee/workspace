@@ -44,7 +44,7 @@ const searchConfig: any = {
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: t('사용여부'),
         value: '',
@@ -82,7 +82,7 @@ const gridConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
-  height: 566,
+  height: 300,
   hideColumnSettings: true,
   showExcelDownload: true,
 };

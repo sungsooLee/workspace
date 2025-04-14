@@ -21,16 +21,19 @@ export interface TransferTreeGridProps {
 }
 
 const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>(
-  ({
-    treeData: ownerTreeData = [],
-    columns,
-    rowKey,
-    className,
-    leftTitle,
-    rightTitle,
-    onChange,
-    ...props
-  }) => {
+  (
+    {
+      treeData: ownerTreeData = [],
+      columns,
+      rowKey,
+      className,
+      leftTitle,
+      rightTitle,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
     const [selectedItems, setSelectedItems] = useState<any>();
     const [treeData, setTreeData] = useState<any>(ownerTreeData);
     const [selectedTreeItems, setSelectedTreeItems] = useState<any>();

@@ -8,8 +8,8 @@ export type com_ever_edu_pms_menu_dto_res_MenuResDto$ListOnAdmin = {
     menuName?: string;
     path?: string;
     sortOrder?: number;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
     parent?: com_ever_edu_pms_menu_dto_res_MenuResDto;
 };
 

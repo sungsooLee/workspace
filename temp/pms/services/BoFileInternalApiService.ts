@@ -29,49 +29,37 @@ export class BoFileInternalApiService {
     /**
      * Simple 파일 정보 조회 - Internal API
      * 간략한 파일 정보를 조회한다.<BR> 예를 들어 Module-CMS서 스콤 파일 처리 시 파일 정보를 조회한다
-     * @param fileId 파일Id
+     * @param uuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto OK
      * @throws ApiError
      */
     public static getSimpleFileInfo(
-        fileId: number,
+        uuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/internal/api/v1/file/{fileId}',
+            url: '/internal/api/v1/file/{uuid}',
             path: {
-                'fileId': fileId,
+                'uuid': uuid,
             },
         });
     }
     /**
      * Kafka 파일 암/복호화 이벤트 - 사용금지(임시 테스트용)
      * Kafka outbox pattern을 이용해서 파일업로드 암/복호화 이벤트 전달한다.
-     * @param fileId 파일Id
+     * @param uuid 파일 UUID
      * @returns any OK
      * @throws ApiError
      */
     public static testKafkaFileEvent(
-        fileId: number,
+        uuid: string,
     ): CancelablePromise<Record<string, Record<string, any>>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/internal/api/v1/file/{fileId}/kafka',
+            url: '/internal/api/v1/file/{uuid}/kafka',
             path: {
-                'fileId': fileId,
+                'uuid': uuid,
             },
-        });
-    }
-    /**
-     * DRM 키파일 생성 업데이트 - 사용금지(임시 테스트용)
-     * DRM 키파일 생성 업데이트.
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static testDrmKeyFileUpdateEvent(): CancelablePromise<string> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/internal/api/v1/file/test/drm',
         });
     }
     /**

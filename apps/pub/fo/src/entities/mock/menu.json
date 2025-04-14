@@ -15,7 +15,7 @@
           "id": 11,
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false,
+          "isShortCutArea": false,
           "path": "/menu/menu2-1"
         },
         {
@@ -24,7 +24,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu2-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -39,7 +39,7 @@
           "id": 21,
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false,
+          "isShortCutArea": false,
           "path": "/menu/menu3-1"
         },
         {
@@ -48,7 +48,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu3-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -63,7 +63,7 @@
           "id": 31,
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false,
+          "isShortCutArea": false,
           "path": "/menu/menu4-1"
         },
         {
@@ -72,7 +72,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu4-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "시험결과",
@@ -80,7 +80,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu4-3",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -95,7 +95,7 @@
           "id": 41,
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false,
+          "isShortCutArea": false,
           "path": "/menu/menu5-1"
         }
       ]
@@ -112,7 +112,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-1",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "학습노트",
@@ -120,7 +120,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "학습실적",
@@ -128,7 +128,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-3",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "학습이력",
@@ -136,7 +136,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-4",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "나의활동",
@@ -144,7 +144,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-5",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "배지",
@@ -152,7 +152,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-6",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "설문",
@@ -160,7 +160,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-7",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "평가",
@@ -168,7 +168,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-8",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "결재함",
@@ -176,7 +176,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu6-9",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -192,7 +192,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-1",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀진단현황",
@@ -200,7 +200,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀계획수립",
@@ -208,7 +208,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-3",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀학습현황",
@@ -216,7 +216,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-4",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀학습이력",
@@ -224,7 +224,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-5",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀학습실적",
@@ -232,7 +232,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-6",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀교육지원현황",
@@ -240,7 +240,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-7",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀아학점수",
@@ -248,7 +248,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-8",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "팀자격증현황",
@@ -256,7 +256,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-9",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "사업부진단예산",
@@ -264,7 +264,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu7-10",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -280,7 +280,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-1",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "FAQ",
@@ -288,7 +288,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "Q&A",
@@ -296,7 +296,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-3",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "강의장예약",
@@ -304,7 +304,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-4",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "교육비지원",
@@ -312,7 +312,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-5",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "출강신청",
@@ -320,7 +320,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-6",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "교육/채널요청",
@@ -328,7 +328,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-7",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "1:1 문의",
@@ -336,7 +336,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu8-8",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     },
@@ -352,7 +352,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu9-1",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "지식공유",
@@ -360,7 +360,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu9-2",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "OJT",
@@ -368,7 +368,7 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu9-3",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         },
         {
           "title": "코칭",
@@ -376,11 +376,11 @@
           "roles": "ROLE_ADMIN",
           "path": "/menu/menu9-4",
           "tenantName": "현대자동차",
-          "quickAccessAreaYn": false
+          "isShortCutArea": false
         }
       ]
     }
   ],
   "tenantName": "현대자동차",
-  "quickAccessAreaYn": false
+  "isShortCutArea": false
 }

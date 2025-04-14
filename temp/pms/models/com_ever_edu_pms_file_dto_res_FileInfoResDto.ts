@@ -7,13 +7,13 @@
  */
 export type com_ever_edu_pms_file_dto_res_FileInfoResDto = {
     /**
-     * 파일 그룹 아이디
+     * 파일 그룹 UUID
      */
-    groupId?: number;
+    groupUuid?: string;
     /**
-     * 파일 아이디
+     * 파일 UUID
      */
-    fileId?: number;
+    uuid?: string;
     /**
      * 원본파일이름
      */
@@ -27,24 +27,46 @@ export type com_ever_edu_pms_file_dto_res_FileInfoResDto = {
      */
     fileSize?: number;
     /**
-     * S3세부경로, S3경로에서 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
+     * 파일세부경로, 3Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
      */
-    s3DetailPath?: string;
+    detailPath?: string;
     /**
-     * 파일유형, IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
+     * 파일유형 Enum(FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
      */
-    fileType?: string;
+    fileType?: com_ever_edu_pms_file_dto_res_FileInfoResDto.fileType;
     /**
-     * 업로드 상태. COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패, 사용여부 false)
+     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
      */
-    uploadStatus?: string;
+    uploadStatus?: com_ever_edu_pms_file_dto_res_FileInfoResDto.uploadStatus;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean;
+    isDeleted?: boolean;
     /**
      * 사용여부
      */
-    useYn?: boolean;
+    isUsed?: boolean;
 };
+export namespace com_ever_edu_pms_file_dto_res_FileInfoResDto {
+    /**
+     * 파일유형 Enum(FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
+     */
+    export enum fileType {
+        IMAGE = 'IMAGE',
+        VIDEO = 'VIDEO',
+        DOC = 'DOC',
+        TXT = 'TXT',
+        WEB = 'WEB',
+        ZIP = 'ZIP',
+        ETC = 'ETC',
+    }
+    /**
+     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
+     */
+    export enum uploadStatus {
+        COMPLETE = 'COMPLETE',
+        ONGOING = 'ONGOING',
+        FAIL = 'FAIL',
+    }
+}
 

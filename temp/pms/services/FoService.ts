@@ -241,19 +241,19 @@ export class FoService {
      * 즐겨찾기 메뉴 조회
      * 즐겨찾기 메뉴를 조회한다.
      * @param userNo
-     * @param tenantNo
+     * @param tenantId
      * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin OK
      * @throws ApiError
      */
     public static getFavoritesMenuList(
         userNo: number,
-        tenantNo?: number,
+        tenantId?: number,
     ): CancelablePromise<Array<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/menus/favorites',
             query: {
-                'tenantNo': tenantNo,
+                'tenantId': tenantId,
                 'userNo': userNo,
             },
         });
@@ -477,14 +477,14 @@ export class FoService {
     /**
      * FO/BO 테넌트메뉴목록 트리 조회
      * 메뉴 목록을 트리구조로 조회한다.
-     * @param tenantNo
+     * @param tenantId
      * @param roleIds
      * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_MenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu(
-        tenantNo: number,
+        tenantId: number,
         roleIds?: Array<string>,
         deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuTreeDto> {
@@ -493,7 +493,7 @@ export class FoService {
             url: '/user/api/v1/menus/tenantTree',
             query: {
                 'roleIds': roleIds,
-                'tenantNo': tenantNo,
+                'tenantId': tenantId,
                 'deviceType': deviceType,
             },
         });

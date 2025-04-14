@@ -19,7 +19,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
         // 필수 트리 속성
         key: node.menuId.toString(), // menuId를 key로 사용
         title: node.title || node.menuCode, // title이 없으면 menuCode 사용
-        isUsed: node.useYn === true, // useYn을 isUsed로 변환
+        isUsed: node.isUsed === true, // isUsed을 isUsed로 변환
 
         // 원본 데이터 속성 유지
         menuId: node.menuId,
@@ -27,14 +27,14 @@ export const transformApiDataToTreeData = (apiData: any) => {
         description: node.menuDesc,
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         url: node.path,
-        isPersonalInfo: node.personalDataContainYn === true,
+        isPersonalInfo: node.isPersoninfoInclusion === true,
 
         // 추가 속성
         code: node.menuCode,
         sortOrder: node.sortOrder,
-        visiblePcYn: node.visiblePcYn,
-        visibleMobileYn: node.visibleMobileYn,
-        quickAccessAreaYn: node.quickAccessAreaYn,
+        isWebExposed: node.isWebExposed,
+        isMobileExposed: node.isMobileExposed,
+        isShortCutArea: node.isShortCutArea,
 
         children: node.children || [],
       };
@@ -79,7 +79,7 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
         depth: node?.depth,
         parentId: node?.parentId,
         sortOrder: node?.sortOrder,
-        useYn: node?.useYn,
+        isUsed: node?.isUsed,
         apiDesc: node?.apiDesc,
         children: node.children || [],
         fullPath: node?.fullPath,
@@ -115,11 +115,11 @@ export const transformTreeDataToApiFormat = (treeData: any) => {
         menuDesc: node.description,
         parentId: node.parentKey ? parseInt(node.parentKey) : null,
         path: node.url,
-        personalDataContainYn: node.isPersonalInfo === true,
-        useYn: node.isUsed === true,
-        visiblePcYn: node.visiblePcYn !== false,
-        visibleMobileYn: node.visibleMobileYn !== false,
-        quickAccessAreaYn: node.quickAccessAreaYn === true,
+        isPersoninfoInclusion: node.isPersonalInfo === true,
+        isUsed: node.isUsed === true,
+        isWebExposed: node.isWebExposed !== false,
+        isMobileExposed: node.isMobileExposed !== false,
+        isShortCutArea: node.isShortCutArea === true,
         sortOrder: node.sortOrder || 0,
         children: node.children || [],
       };

@@ -2,14 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_common_code_dto_res_CommonCodeResDto$ListOnAdmin } from './com_ever_edu_pms_common_code_dto_res_CommonCodeResDto$ListOnAdmin';
+import type { com_ever_edu_pms_schedule_dto_res_ScheduleResultResDto } from './com_ever_edu_pms_schedule_dto_res_ScheduleResultResDto';
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
-export type org_springframework_data_domain_PageCom_ever_edu_pms_common_code_dto_res_CommonCodeResDto$ListOnAdmin = {
-    totalElements?: number;
+export type org_springframework_data_domain_PageCom_ever_edu_pms_schedule_dto_res_ScheduleResultResDto = {
     totalPages?: number;
+    totalElements?: number;
     size?: number;
-    content?: Array<com_ever_edu_pms_common_code_dto_res_CommonCodeResDto$ListOnAdmin>;
+    content?: Array<com_ever_edu_pms_schedule_dto_res_ScheduleResultResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
     numberOfElements?: number;

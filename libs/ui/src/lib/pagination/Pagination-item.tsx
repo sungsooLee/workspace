@@ -37,18 +37,21 @@ export interface PaginationItemComponentProps {
 }
 
 const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComponentProps>(
-  ({
-    className,
-    color = 'standard',
-    disabled = false,
-    page,
-    selected = false,
-    size = 'medium',
-    type = 'page',
-    variant = 'text',
-    onClick,
-    ...other
-  }) => {
+  (
+    {
+      className,
+      color = 'standard',
+      disabled = false,
+      page,
+      selected = false,
+      size = 'medium',
+      type = 'page',
+      variant = 'text',
+      onClick,
+      ...other
+    },
+    ref,
+  ) => {
     // button icon
     const icon = {
       previous: <IcoChevronLeft width={32} height={32} fill="#4C515E" />,
@@ -65,7 +68,8 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
       <Button
         className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
         icon={icon}
-        onClick={() => onClick?.()}>
+        onClick={() => onClick?.()}
+      >
         {type === 'page' && page}
       </Button>
     );

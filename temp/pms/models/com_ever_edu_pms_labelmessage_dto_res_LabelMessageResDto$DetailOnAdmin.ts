@@ -8,8 +8,8 @@ export type com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdm
     labelMessageType?: com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin.labelMessageType;
     labelMessageName?: string;
     labelMessageDesc?: string;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
 };
 export namespace com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin {
     export enum labelMessageType {

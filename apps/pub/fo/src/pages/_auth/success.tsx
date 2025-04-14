@@ -42,7 +42,7 @@ function RouteComponent() {
           {/* 아이디 찾기 결과 일때 출력 */}
 
           {/* 휴면 해제 일때 출력 */}
-          <h3 className={proccessResultStyles.title}>휴먼 해제 되었습니다.</h3>
+          <h3 className={proccessResultStyles.title}>휴면 해제 되었습니다.</h3>
           <p className={proccessResultStyles.noti}>
             휴면 상태가 해제 되면 별도로 보관되던 개인정보도 함께 복구되어
             <br /> 정상적인 서비스를 사용할수 있습니다

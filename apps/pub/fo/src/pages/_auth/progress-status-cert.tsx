@@ -196,16 +196,18 @@ function RouteComponent() {
                 <Button variant="gray" size="xl">
                   취소
                 </Button>
+                {/* 퍼블수정 20250414 : 문구 */}
                 <Button variant="primary" size="xl">
-                  확인
+                  인증번호 요청
                 </Button>
               </div>
             </BrowserView>
 
             <MobileView>
               <MobileContainerFooter>
+                {/* 퍼블수정 20250414 : 문구 */}
                 <Button variant="primary" size="xl">
-                  확인
+                  인증번호 요청
                 </Button>
               </MobileContainerFooter>
             </MobileView>

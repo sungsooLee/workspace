@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs } from '@learnway/ui';
+import type { Meta } from '@storybook/react';
+import { ModalWrapper, Tabs, useModal } from '@learnway/ui';
 
 export default {
   title: 'Components/Tabs',
@@ -14,10 +14,6 @@ export default {
     size: 'md',
   },
 } as Meta;
-
-type Story = StoryObj<typeof Tabs>;
-
-// const Template: React.FC<any> = (args: any) => <Tabs {...args} />
 
 const items = [
   {
@@ -43,11 +39,29 @@ export const Template: any = (args: any) => {
 };
 Template.storyName = 'Tabs';
 
+// 체크 후 탭 이동
+export const TemplateBeforeTabChange: any = (args: any) => {
+  const { confirm: openConfirm } = useModal();
+
+  const handleBeforeTabChange = async (currentTabKey: string, nextTabKey: string) => {
+    const isDirty = true; // form 내용 변경 여부
+    return isDirty ? await openConfirm('수정된 내용은 초기화 됩니다.') : false;
+  };
+
+  return (
+    <>
+      <Tabs type={'fill'} size={'md'} items={items} onBeforeTabChange={handleBeforeTabChange} />
+      <ModalWrapper />
+    </>
+  );
+};
+TemplateBeforeTabChange.storyName = '체크 후 탭 이동';
+
 // 앵커 탭
 export const TemplateButton: any = (args: any) => {
   const sectionA = useRef<HTMLDivElement>(null);
   const sectionB = useRef<HTMLDivElement>(null);
-  const handleActiveTab = (activeKey: string) => {
+  const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
     if (activeKey === 'a') {
       sectionA.current?.scrollIntoView({ behavior: 'smooth' });
@@ -76,7 +90,7 @@ export const TemplateButton: any = (args: any) => {
             key: 'c',
           },
         ]}
-        onActiveTab={handleActiveTab}
+        onTabChange={handleTabChange}
       />
       <div>
         <h1 ref={sectionA} className={'h-[500px] w-full bg-amber-100'}>
