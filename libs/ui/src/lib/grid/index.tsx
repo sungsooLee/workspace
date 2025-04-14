@@ -455,9 +455,12 @@ const Grid = forwardRef(
                         position: isPinnedLeft ? 'sticky' : undefined,
                         left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
                         zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
-                        backgroundColor: isPinnedLeft ? 'white' : undefined,
                       }}
-                      className={cn(styles.thead_th, isPinnedLeft && styles['pinned-left'])}
+                      className={cn(
+                        styles.thead_th,
+                        isPinnedLeft && styles.th_pinned_left,
+                        isPinnedLeft && 'th_pinned_left',
+                      )}
                     >
                       <div className={styles.th_wrap}>
                         <div
@@ -583,7 +586,10 @@ const Grid = forwardRef(
             key={row.id}
             data-index={index}
             ref={(node) => rowVirtualizer.measureElement(node)}
-            className={cn(row.getIsSelected() && 'bg-[#edfcff] hover:bg-blue-100')}
+            className={cn(
+              row.getIsSelected() && styles.selected,
+              row.getIsSelected() && 'bg-[#edfcff] hover:bg-[#edfcff]',
+            )}
             style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
           >
@@ -613,14 +619,13 @@ const Grid = forwardRef(
           // 고정열 스타일 추가
           position: isPinnedLeft ? 'sticky' : undefined,
           left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
-          zIndex: isPinnedLeft ? 1 : undefined,
-          backgroundColor: isPinnedLeft ? 'white' : undefined,
+          zIndex: isPinnedLeft ? 3 : undefined,
         } as CSSProperties;
 
         return (
           <td
             key={cell.id}
-            className={cn(styles.tbody_td, isPinnedLeft && styles['pinned-left'])}
+            className={cn(styles.tbody_td, isPinnedLeft && styles.td_pinned_left)}
             style={cellStyle}
           >
             {cell.getIsGrouped() ? (
