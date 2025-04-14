@@ -80,19 +80,19 @@ const searchConfig: any = {
         ],
       },
       {
-        name: 'name',
+        name: 'labelMessageMultilingulKey',
         type: 'text',
         label: t('라벨/메세지 코드'),
         value: '',
       },
       {
-        name: 'name',
+        name: 'labelMessageName',
         type: 'text',
         label: t('라벨명/메세지'),
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: t('사용여부'),
         value: '',

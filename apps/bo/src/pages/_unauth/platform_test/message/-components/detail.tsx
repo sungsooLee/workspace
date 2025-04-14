@@ -15,54 +15,52 @@ const MessageDetailComponent = () => {
   };
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <div className={layoutStyles.inner}>
-        <FormSubTitle
-          label={'상세정보'}
-          underLine
-          actionNode={
-            <div className={layoutStyles.btn_wrap}>
-              <Button variant="text" size="sm" className={layoutStyles.btn_text}>
-                {'추가'}
-              </Button>
-              <Button variant="save" size="sm">
-                {'저장'}
-              </Button>
-            </div>
-          }
-        />
-        <div className={layoutStyles.inner_contents}>
-          {/*분류*/}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'labelMessageType'} />
-            </FormRow>
-          </ContentsRow>
-          {/*메세지코드*/}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'labelMessageMultilingulKey'} />
-            </FormRow>
-          </ContentsRow>
-          {/*메세*/}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'labelMessageName'} />
-            </FormRow>
-          </ContentsRow>
-          {/*설명*/}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'labelMessageDesc'} />
-            </FormRow>
-          </ContentsRow>
-          {/*사용여부*/}
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} />
-            </FormRow>
-          </ContentsRow>
-        </div>
+    <form className={layoutStyles.inner} onSubmit={onSubmit(handleOnSubmit)}>
+      <FormSubTitle
+        label={'상세정보'}
+        underLine
+        actionNode={
+          <div className={layoutStyles.btn_wrap}>
+            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+              {'추가'}
+            </Button>
+            <Button variant="save" size="sm">
+              {'저장'}
+            </Button>
+          </div>
+        }
+      />
+      <div className={layoutStyles.inner_contents}>
+        {/*분류*/}
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'labelMessageType'} />
+          </FormRow>
+        </ContentsRow>
+        {/*메세지코드*/}
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'labelMessageMultilingulKey'} />
+          </FormRow>
+        </ContentsRow>
+        {/*메세*/}
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'labelMessageName'} />
+          </FormRow>
+        </ContentsRow>
+        {/*설명*/}
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'labelMessageDesc'} />
+          </FormRow>
+        </ContentsRow>
+        {/*사용여부*/}
+        <ContentsRow>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'isUsed'} />
+          </FormRow>
+        </ContentsRow>
       </div>
     </form>
   );
