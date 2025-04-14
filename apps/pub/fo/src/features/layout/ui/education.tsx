@@ -14,14 +14,17 @@ interface EducationProps {
 const EducationComponent = ({ className }: EducationProps) => {
   const { open: openModal } = useModal();
   const [detail, setDetail] = useState<boolean>();
+  const [disabled, setDisabled] = useState(true); // 기간만료, 인원마감 등 case
 
   return (
-    <div className={`${styles.start} ${styles.education} ${styles.className}`}>
+    <div
+      className={`${styles.start} ${styles.education} ${disabled === true ? styles.disabled : ''} ${styles.className}`}
+    >
       <div className={styles.info_box}>
         <div className={styles.txt_box}>
           <div className={styles.box}>
-            <span className={styles.state}>[접수중] 2차</span>
             <span className={styles.date}>2026-01-01 ~ 2026-01-31</span>
+            <span className={styles.state}>2차</span>
             <span className={styles.label}>접수중</span>
           </div>
           <div className={styles.box}>

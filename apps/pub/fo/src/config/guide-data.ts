@@ -986,7 +986,8 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-03-31',
     lastUpdateDate: '2025-04-09',
-    remarks: '- course-registration-all.tsx',
+    remarks:
+      '- course-registration-all.tsx\n- 상세주소 입력 전 (AddressAlert)\n- 주소 입력 전 (AddressAlert2)\n- 취소 (CourseCancelConfirm)',
   },
   {
     screenId: 'NLP_FO_LEC_1007',
@@ -1022,11 +1023,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1018',
     screenName: '과정상세_수강신청_교재 배송지_배송지 확인',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- address-confirmation-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1008',
