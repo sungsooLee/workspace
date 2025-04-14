@@ -17,7 +17,8 @@ export const Route = createFileRoute('/_layout/platform/system/translation/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { state } = Route.useRouteContext();
+  const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   /**
@@ -31,10 +32,13 @@ function RouteComponent() {
    * 등록화면 이동
    */
   const handleNewTranslation = () => {
-    router.navigate({ to: '/platform/system/translation/view' });
+    //router.navigate({ to: '/platform/system/translation/view' });
   };
 
   useEffect(() => {
+    if (state) {
+      onFormChange({ keyType: state.keyType });
+    }
     gridFetch(getValues(), { page: 0, size: 10 });
   }, []);
   return (
@@ -105,7 +109,8 @@ const gridConfig = {
       render: (info: any) => (
         <Link
           className={'text-blue-600'}
-          to={'/platform/system/translation/view?messageId=' + info.row.original.messageId}>
+          to={'/platform/system/translation/view?messageId=' + info.row.original.messageId}
+        >
           {info.getValue()}
         </Link>
       ),
