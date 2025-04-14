@@ -1,6 +1,9 @@
 /* logo.module.css */
 .start {
   .logo {
+    img {
+      @apply h-[40px];
+    }
   }
 }
 
