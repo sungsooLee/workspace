@@ -52,7 +52,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Name</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -68,7 +68,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Employee No.</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -88,7 +88,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Email</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -111,7 +111,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>인증번호</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -131,7 +131,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>New Password</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -154,7 +154,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Mobile phone Number</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -188,7 +188,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>Dealer User</span>
                   {/* 필수 케이스 */}
                   <span className={cn(formStyles.status, formStyles.required)}>
-                    <IcoFormRequired width={14} height={14} />
+                    <IcoFormRequired width={12} height={12} />
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
@@ -260,13 +260,13 @@ function RouteComponent() {
               <li>
                 <Checkbox label="Terms of Use" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
               <li>
                 <Checkbox label="Privacy Policy" />
                 <Button className={styles.btn_view}>
-                  <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                  <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
                 </Button>
               </li>
             </ul>

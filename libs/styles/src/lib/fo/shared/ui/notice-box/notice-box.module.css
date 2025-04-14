@@ -5,7 +5,7 @@
     dt {
       @apply body_4_b flex items-center justify-start;
       svg {
-        @apply mr-[4px];
+        @apply mr-[4px] stroke-[var(--gray7)];
       }
     }
     dd {
