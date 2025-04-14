@@ -41,6 +41,32 @@
           }
         }
       }
+      .evaluation_box {
+        & > ul {
+          @apply mb-[8px] flex w-full items-start;
+          li {
+            @apply flex-1 rounded-[8px] bg-[var(--secondary5)] py-[8px];
+            span {
+              @apply body_4_r block text-center text-[var(--gray8)];
+            }
+            strong {
+              @apply body_3_b block text-center text-[var(--secondary10)];
+            }
+            & + li {
+              @apply ml-[8px];
+            }
+          }
+        }
+        & > div {
+          ul {
+            li {
+              & + li {
+                @apply mt-[4px];
+              }
+            }
+          }
+        }
+      }
       .img_box {
         img {
           @apply w-full;

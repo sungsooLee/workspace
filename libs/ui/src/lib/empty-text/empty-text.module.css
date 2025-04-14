@@ -8,7 +8,7 @@
       }
     }
     .text {
-      @apply body_3_r mt-[24px] text-[#6f798b];
+      @apply body_3_r mt-[24px] text-center text-[#6f798b];
     }
     .footer {
       @apply mt-[32px];

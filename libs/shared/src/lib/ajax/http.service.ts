@@ -126,7 +126,7 @@ export class HttpService {
           console.log('axios.error', error);
         } else {
           // this.showNotification('Unknown Error', error.message);
-          console.log('> unknown error-2:', url, error.message);
+          console.log('> unknown error-2:', url, error);
         }
         throw error;
       })
@@ -183,7 +183,7 @@ export class HttpService {
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
         console.log('response', response);
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           return response.data.data;
         } else {
           throw response.data;

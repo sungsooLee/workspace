@@ -32,8 +32,6 @@ function RouteComponent() {
   const [searchParams, setSearchParams] = useState({
     cdGroupId: '',
     cdGroupName: '',
-    cdGroupAbbreviatonEnglishName: '',
-    cdGroupContent: '',
     isUsed: true,
     cdName: '',
   });
@@ -53,13 +51,11 @@ function RouteComponent() {
   //     setPageState({ ...pageState, page: 1 });
   //   };
 
-  const { data: commonCodeGroupListData, refetch } = useCommonCodeGroupList(
+  const { data: commonCodeGroupListData } = useCommonCodeGroupList(
     pageState.page,
     pageState.size,
     searchParams.cdGroupId,
     searchParams.cdGroupName,
-    searchParams.cdGroupAbbreviatonEnglishName,
-    searchParams.cdGroupContent,
     searchParams.isUsed,
     searchParams.cdName,
   );
@@ -68,8 +64,6 @@ function RouteComponent() {
     setSearchParams({
       cdGroupId: data.cdGroupId || '',
       cdGroupName: data.cdGroupName || '',
-      cdGroupAbbreviatonEnglishName: data.cdGroupAbbreviatonEnglishName || '',
-      cdGroupContent: data.cdGroupContent || '',
       isUsed: data.isUsed || '',
       cdName: data.cdName || '',
     });
@@ -86,6 +80,7 @@ function RouteComponent() {
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           totalRows={commonCodeGroupListData && commonCodeGroupListData.totalElements}
+          state={searchParams}
         />
       </MainContents>
     </PageContainer>

@@ -25,6 +25,7 @@ import {
   useCreateCommonCode,
   useUpdateCommonCode,
 } from '../../../entities/common-code/service/common-code.hook';
+import { useRouter } from '@tanstack/react-router';
 
 // import { mutateOptions } from '../../'
 
@@ -126,7 +127,7 @@ const CommonCodeGridComponent = ({
   totalRows,
 }: any) => {
   const gridRef = useRef<GridImperative>(null);
-
+  const router = useRouter();
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRow, setSelectedRow] = useState<CommonCode | null>(null);
   const [dataProcessed, setDataProcessed] = useState(false);
@@ -139,7 +140,7 @@ const CommonCodeGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       console.log(data);
 
@@ -160,7 +161,7 @@ const CommonCodeGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
@@ -329,7 +330,6 @@ const CommonCodeGridComponent = ({
   // 데이터가 로드되면 폼에 채우기
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
-      console.log('Filling form with data:', detailData);
       fetchData(detailData);
       // 데이터 처리 완료 표시
       setDataProcessed(true);
@@ -412,13 +412,26 @@ const CommonCodeGridComponent = ({
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'cdId'} disabled={isFormDisabled} />
+                  <DynamicFormField
+                    name={'cdId'}
+                    disabled={isFormDisabled || FORM_MODE.VIEW === formMode}
+                  />
                   <Button
                     type="button"
                     variant="point"
                     size="sm"
                     className="p-[10px]"
-                    onClick={() => console.log('다국어 관리 페이지로 이동')}
+                    onClick={() => {
+                      const cdId = getValues('cdId');
+                      const cdName = getValues('cdName');
+                      router.navigate({
+                        to: '/platform/system/translation',
+                        state: {
+                          keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
+                          multilinguaKey: cdId,
+                        },
+                      });
+                    }}
                     disabled={isFormDisabled}
                   >
                     다국어관리

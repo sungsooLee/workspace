@@ -24,13 +24,13 @@ export const widgetsQueryOptions = {
           return {
             ...widget,
             deviceNames: deviceNames.join(','),
-            status: widget.useYn ? '사용' : '사용불가',
+            status: widget.isUsed ? '사용' : '사용불가',
           };
         }),
       };
     },
   }),
-  detail: (widgetCode?: string) =>
+  get: (widgetCode?: string) =>
     widgetCode
       ? {
           queryKey: queryKeys.detail(widgetCode),

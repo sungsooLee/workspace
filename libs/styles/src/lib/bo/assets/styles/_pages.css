@@ -92,6 +92,13 @@ h4.auth--title {
   }
 }
 
+/* grid */
+.grid_wrap {
+  &.line {
+    @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[24px];
+  }
+}
+
 /* title */
 .nlp--tabs + .title_wrap {
   @apply !border-t-0 !pt-0;

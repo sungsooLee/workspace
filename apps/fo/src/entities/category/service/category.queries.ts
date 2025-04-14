@@ -11,7 +11,7 @@ export const queryOptions = {
     enabled: true,
     staleTime: 1000 * 60 * 5, // 5분
     queryFn: async () => {
-      const data = await CategoryService.getCategories('tenantNo');
+      const data = await CategoryService.getCategories('tenantId');
       return convertHierarchyNode(
         data,
         (node: any, depth: number, index: number, parentNode?: any) => {

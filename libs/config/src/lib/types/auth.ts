@@ -17,6 +17,7 @@ export interface AuthUser {
   accountNonExpired: boolean;
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
+  // fe custom spec
   activeTenant?: Tenant;
   mainTenantId?: number;
   menus?: any;
@@ -36,6 +37,6 @@ export interface AuthSSOLogin {
 }
 
 export interface Tenant {
-  tenantNo: number;
+  tenantId: number;
   tenantName: string;
 }

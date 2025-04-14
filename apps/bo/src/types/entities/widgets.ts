@@ -4,7 +4,7 @@ export interface Widget {
   widgetDesc: string;
   devicePcYn: boolean;
   deviceMobileYn: boolean;
-  useYn: boolean;
+  isUsed: boolean;
   secureContentYn: boolean;
   componentPcId: string;
   componentMobileId: string;

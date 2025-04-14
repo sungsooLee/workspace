@@ -22,10 +22,10 @@
       ],
       "tenants": [
         {
-          "tenantNo": 3
+          "tenantId": 3
         },
         {
-          "tenantNo": 6
+          "tenantId": 6
         }
       ],
       "orgId": 1,

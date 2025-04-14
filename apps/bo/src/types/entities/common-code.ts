@@ -28,7 +28,7 @@ export interface CreateCommonCodeGroup extends CommonCodeGroup {
   sourceInformationSystemNo: string;
   requestorEmployeeNo: string;
   multilingulCd: string;
-  deleteYn: boolean;
+  isDeleted: boolean;
 }
 
 export interface CommonCodeResponse {

@@ -5,7 +5,7 @@ export interface Company {
   companyTypeCode: string;
   name: string;
   engName: string;
-  useYn: boolean;
+  isUsed: boolean;
   brn: string;
   rpsntrName: string;
   basicAddress: string;

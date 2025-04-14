@@ -182,7 +182,7 @@ function RouteComponent() {
           </dt>
           <dd>
             교재 배송은 강의시작 1주일 전까지 수강 신청 내역에서 변경 할 수 있습니다.
-            <Button>수강 신청 내역</Button>
+            <Button className={noticeBoxStyles.link}>수강 신청 내역</Button>
           </dd>
           <dd>강의 시작 전 주소지가 변경 된 경우, 교육담당자에게 문의해주세요.</dd>
         </dl>
