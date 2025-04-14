@@ -1,5 +1,4 @@
 import React, { forwardRef, useEffect } from 'react';
-import { isFunction } from 'lodash';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-tabs';
@@ -24,12 +23,12 @@ interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root>
   size?: 'sm' | 'md';
   ariaLabel?: string;
   selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
-  onActiveTab?: (value: string) => void;
+  onTabChange?: (value: string) => void;
   /**
    * 탭 변경 시도 시 호출됩니다.
    * false 또는 false로 resolve되는 Promise를 반환하면 탭 변경이 취소됩니다.
-   * @param {string} nextValue - 이동하려는 대상 탭의 key (value)
    * @param {string} currentValue - 현재 활성화된 탭의 key (value)
+   * @param {string} nextValue - 이동하려는 대상 탭의 key (value)
    * @returns {boolean | Promise<boolean>} - true면 변경 허용, false면 변경 취소
    */
   onBeforeTabChange?: (currentTabKey: string, nextTabKey: string) => boolean | Promise<boolean>;
@@ -50,53 +49,37 @@ export const TabsComponent = forwardRef<
       type,
       ariaLabel,
       selectedTabKey,
-      onActiveTab,
+      onTabChange,
       onBeforeTabChange,
       ...props
     },
     ref,
   ) => {
+    // 현재 선택된 탭 상태 (초기값은 외부에서 주어진 selectedTabKey 또는 첫 번째 탭)
     const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key || '');
 
-    // changed selectedTabKey
+    // 외부에서 selectedTabKey 변경되면 내부 상태도 동기화
     useEffect(() => {
-      selectedTabKey && setValue(selectedTabKey);
+      if (selectedTabKey) {
+        setValue(selectedTabKey);
+      }
     }, [selectedTabKey]);
 
-    const handleActiveTab = (value: string) => {
-      if (isFunction(onActiveTab)) {
-        onActiveTab(value);
-      }
-      setValue(value);
-    };
-
-    // Radix onValueChange에 전달될 핸들러 (탭 변경 시도 시 호출됨)
+    /**
+     * 탭 변경을 처리하는 핸들러
+     * Radix의 onValueChange에 바인딩됨
+     */
     const handleValueChange = async (nextValue: string) => {
-      // 선택된 탭이 없고 || 현재 탭과 다음 탭이 동일한 경우
-      if (!value || value === nextValue) {
-        return;
-      }
-      let proceed = true; // 탭 변경 진행 여부 플래그
+      // 현재 탭이 없거나 동일한 탭 클릭 시 무시
+      if (!value || value === nextValue) return;
 
-      // onBeforeTabChange 콜백이 있으면 실행하고 결과를 기다림
-      if (isFunction(onBeforeTabChange)) {
-        // 현재 값(value)과 다음 값(nextValue) 전달
-        proceed = await onBeforeTabChange(value, nextValue);
-      }
+      // 탭 변경 가능 여부 확인 (비동기 가능)
+      const proceed = await (onBeforeTabChange?.(value, nextValue) ?? true);
+      if (!proceed) return;
 
-      // onBeforeTabChange 결과가 true일 때만 실제 변경 진행
-      if (proceed) {
-        // 비제어 컴포넌트일 경우에만 내부 상태 업데이트
-        // if (selectedTabKey === undefined) {
-        //   setInternalValue(nextValue);
-        // }
-        //
-        // setValue(nextValue);
-        // 탭 변경이 최종 결정된 후 onActiveTab 콜백 호출 (존재하는 경우)
-        if (isFunction(onActiveTab)) {
-          onActiveTab(nextValue);
-        }
-      }
+      // 탭 상태 변경 및 콜백 실행
+      setValue(nextValue);
+      onTabChange?.(nextValue);
     };
 
     return (
@@ -111,12 +94,12 @@ export const TabsComponent = forwardRef<
           variant && styles[variant],
         )}
         value={value}
-        // onValueChange={(value) => handleActiveTab(value)}
+        ref={ref}
         onValueChange={handleValueChange}
       >
-        {/* Tab Buttons */}
+        {/* 탭 버튼 목록 */}
         <Primitive.List className={styles.list} aria-label={ariaLabel}>
-          {items.map((d: TabItemProps, index) => (
+          {items.map((d: TabItemProps) => (
             <Primitive.Trigger
               className={cn(styles.trigger, d.alarm ? styles.alarm : '')}
               value={d.key}
@@ -136,8 +119,8 @@ export const TabsComponent = forwardRef<
           ))}
         </Primitive.List>
 
-        {/* Tab Contents */}
-        {items.map((d: TabItemProps, index) => (
+        {/* 탭 콘텐츠 영역 */}
+        {items.map((d: TabItemProps) => (
           <Primitive.Content className={styles.content} value={d.key} key={d.key}>
             {d.content}
           </Primitive.Content>

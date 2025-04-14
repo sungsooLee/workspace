@@ -2,11 +2,11 @@ import React from 'react';
 import { t } from 'i18next';
 import { Button, Tabs, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../../../widgets/layout/ui/container/page-container';
 import { CompanyInfo } from './-tabs/company-info/company-info';
 import { HrInfo } from './-tabs/hr-info/hr-info';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
 export const Route = createFileRoute('/_unauth/platform_test/company/company/view/')({
   component: RouteComponent,
@@ -38,12 +38,9 @@ function RouteComponent() {
   ];
 
   const handleBeforeTabChange = async (currentTabKey: string, nextTabKey: string) => {
-    // alert(1);
-    console.log('handleBeforeTabChange', currentTabKey, nextTabKey);
-    const isChanged = true;
-    const isConform = isChanged && (await openConfirm('수정된 내용은 초기화 됩니다.'));
-    console.log('isConfirm', isConform);
-    return isChanged && isConform;
+    // TODO: tab 별 form dirty 체크 방법....
+    const isDirty = currentTabKey === '회사정보'; // form 내용 변경 여부
+    return isDirty ? await openConfirm('수정된 내용은 초기화 됩니다.') : true;
   };
 
   return (
