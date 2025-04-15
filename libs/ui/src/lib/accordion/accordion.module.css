@@ -6,10 +6,17 @@
       & > span {
         @apply text-left text-[14px] leading-[22px] text-[var(--gray9)];
       }
-      &[data-state='open'] {
-        @apply font-bold;
+      &[data-state='closed'] {
         svg {
-          @apply rotate-180;
+          @apply stroke-[var(--gray6)];
+        }
+      }
+      &[data-state='open'] {
+        [class*='accordion_title'] a.active {
+          @apply font-bold;
+        }
+        svg {
+          @apply rotate-180 stroke-[var(--gray9)];
         }
       }
       svg {
