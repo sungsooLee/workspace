@@ -35,9 +35,26 @@ function RouteComponent() {
         활용한다.
       </p>
 
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`// import 
+      <div className="group">
+        <h3 className="guide_tit3">popover (기본)</h3>
+
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Popover
+              popoverContent={<PopoverContent />}
+              className=""
+              side="bottom"
+              align="end"
+              sideOffset={10}
+            >
+              팝오버 클릭요소
+            </Popover>
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import 
 import { memo } from 'react';
 import { Popover } from '@learnway/ui';
 
@@ -64,30 +81,31 @@ const PopOverCompoment = () => {
 };
 
 export const PopOverCompoment = memo(PopOverCompoment);`}</code>
-        </pre>
+          </pre>
+        </div>
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">popover (기본)</h3>
+        <h3 className="guide_tit3">popover (dropdown 형식)</h3>
 
         <div className="flex_box">
           <div className="desc w-full">
             <Popover
-              popoverContent={<PopoverContent />}
-              className=""
+              popoverContent={<DropdownPopoverCompoment />}
+              className={dropdownPopoverStyles.btn}
               side="bottom"
               align="end"
               sideOffset={10}
             >
-              팝오버 클릭요소
+              <span>popover dropdown 형식</span>
+              <IcoArrowDown width={16} height={16} stroke="#131C30" />
             </Popover>
           </div>
         </div>
-      </div>
 
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`// import 
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import 
 import { memo } from 'react';
 import { Popover, Button } from '@learnway/ui';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
@@ -119,41 +137,9 @@ const PopOverCompoment = () => {
 };
 
 export const PopOverCompoment = memo(PopOverCompoment);`}</code>
-        </pre>
-      </div>
-
-      <div className="group">
-        <h3 className="guide_tit3">popover (dropdown 형식)</h3>
-
-        <div className="flex_box">
-          <div className="desc w-full">
-            <Popover
-              popoverContent={<DropdownPopoverCompoment />}
-              className={dropdownPopoverStyles.btn}
-              side="bottom"
-              align="end"
-              sideOffset={10}
-            >
-              <span>popover dropdown 형식</span>
-              <IcoArrowDown width={16} height={16} stroke="#131C30" />
-            </Popover>
-          </div>
+          </pre>
         </div>
       </div>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 }
