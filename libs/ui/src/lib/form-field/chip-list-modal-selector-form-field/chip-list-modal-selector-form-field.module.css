@@ -5,9 +5,17 @@
       @apply flex flex-auto items-center justify-end pr-[8px];
     }
     span {
-      @apply !h-[23px] !min-h-[23px];
+      @apply !h-[24px] !min-h-[24px];
       button {
         @apply !input_bo_2_r !min-h-[23px];
+        & + button {
+          @apply !min-h-[1.4rem];
+        }
+      }
+    }
+    [class*='nlp--chip-list'] {
+      [class*='nlp--chips'] {
+        @apply !h-[24px] !min-h-[24px];
       }
     }
   }

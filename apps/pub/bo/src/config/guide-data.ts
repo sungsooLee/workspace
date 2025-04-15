@@ -298,15 +298,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '레이아웃 작업완료', // 비고
   },
-  {
-    screenName: 'CMS/파일업로드',
-    pageId: 'learning/popup-fileupload',
-    screenId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
-    lastUpdateDate: '2025-03-31',
-    remarks: '진행중', // 비고
-  },
+  // {
+  //   screenName: 'CMS/파일업로드',
+  //   pageId: 'learning/popup-fileupload',
+  //   screenId: '',
+  //   pageType: 'Pop-up',
+  //   completionDate: '',
+  //   lastUpdateDate: '2025-03-31',
+  //   remarks: '진행중', // 비고
+  // },
   {
     screenName: 'CMS/학습유형선택',
     pageId: 'learning/popup-learningRegisteration',
@@ -321,9 +321,9 @@ export const guideData = [
     pageId: 'learning/popup-upload',
     screenId: '',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-03-06',
     lastUpdateDate: '',
-    remarks: '진행중(디자인 적용중)', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: 'CMS/학습자원등록 동영상 등록',
@@ -433,15 +433,15 @@ export const guideData = [
     lastUpdateDate: '2025-04-07',
     remarks: '작업 완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
   },
-  {
-    screenName: 'PMS/플랫폼관리_라벨/메시지 관리',
-    pageId: 'pms/',
-    screenId: 'NLP_BO_PMS_1406',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '진행 예정', // 비고
-  },
+  // {
+  //   screenName: 'PMS/플랫폼관리_라벨/메시지 관리',
+  //   pageId: 'pms/',
+  //   screenId: 'NLP_BO_PMS_1406',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '진행 예정', // 비고
+  // },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리',
     pageId: 'pms/menu-tenant-platform-management',
@@ -492,7 +492,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-platform-category-menu',
     screenId: 'NLP_BO_TMS_1002_02_01',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-15',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
   },
@@ -504,15 +504,6 @@ export const guideData = [
     completionDate: '2025-04-09',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
-  },
-  {
-    screenName: 'PMS/테넌트관리_카테고리관리_플랫폼관리_테넌트관리',
-    pageId: 'pms/menu-tenant-mainbanner-management',
-    screenId: 'NLP_BO_TMS_1105',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '작업 예정', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_메인위젯관리',
@@ -527,6 +518,15 @@ export const guideData = [
     screenName: 'PMS/테넌트관리_플랫폼관리_메인배너관리',
     pageId: 'pms/menu-tenant-mainbanner-management',
     screenId: 'NLP_BO_TMS_1105',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '작업 예정', // 비고
+  },
+  {
+    screenName: 'PMS/교육관리_교육장소관리_교육장소 관리_등록/상세',
+    pageId: 'pms/menu-education-register-detail',
+    screenId: 'NLP_BO_EDO_1602',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
