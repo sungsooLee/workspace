@@ -16,6 +16,7 @@ import { CheckBoxFormField } from './checkbox-form-field';
 
 export const formFieldConfig: FormFieldConfig = {
   text: Input,
+  number: Input,
   'radio-group': RadioGroupFormField,
   checkbox: CheckBoxFormField,
   'checkbox-group': CheckboxGroupFormField,

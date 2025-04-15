@@ -1,11 +1,13 @@
 import { Outlet, createRootRouteWithContext, Link } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 
 import { useRenewalMenuStateFromRouting } from '../widgets/layout';
+import { useEffect } from 'react';
+import { setupErrorToastListener } from '@learnway/shared';
 
 const NotFound = () => {
   return (
@@ -36,12 +38,19 @@ function RootComponent() {
     },
   });
 
+  useEffect(() => {
+    const unsubscribe = setupErrorToastListener();
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 해제
+    return unsubscribe;
+  }, []);
+
   return (
     <>
       <Outlet />
       <ModalWrapper />
       <ToastWrapper />
-      <TanStackRouterDevtools position="bottom-right" />
+      {/* <TanStackRouterDevtools position="bottom-right" /> */}
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </>
   );

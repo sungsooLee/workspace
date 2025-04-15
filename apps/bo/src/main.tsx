@@ -10,6 +10,8 @@ import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
 
 import type { PageMeta } from './types';
+import { registerToastHandler } from '@learnway/shared';
+import { showToast } from '@learnway/ui';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -37,6 +39,15 @@ declare module '@tanstack/react-router' {
 }
 
 appConfig.init({});
+
+registerToastHandler((config: any) => {
+  showToast({
+    title: config.title,
+    description: config.description,
+    type: config.type,
+    // duration: config.duration,
+  });
+});
 
 function App() {
   const [, setPageRouteState] = usePageRouteState();
