@@ -71,6 +71,7 @@ import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/lea
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -489,6 +490,13 @@ const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopCategorySelectRoute =
+  LayoutCommonPopCategorySelectImport.update({
+    id: '/common/pop-category-select',
+    path: '/common/pop-category-select',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
@@ -1250,6 +1258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/common/pop-category-select': {
+      id: '/_layout/common/pop-category-select'
+      path: '/common/pop-category-select'
+      fullPath: '/common/pop-category-select'
+      preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-user-search': {
       id: '/_layout/common/pop-user-search'
       path: '/common/pop-user-search'
@@ -1619,6 +1634,7 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
@@ -1654,6 +1670,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
@@ -1768,6 +1785,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
@@ -1871,6 +1889,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
@@ -1977,6 +1996,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
@@ -2082,6 +2102,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
     | '/contents/layout'
     | '/learning/file-upload'
@@ -2184,6 +2205,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
     | '/contents/layout'
     | '/learning/file-upload'
@@ -2288,6 +2310,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-user-search'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
@@ -2431,6 +2454,7 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/common/pop-category-select",
         "/_layout/common/pop-user-search",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
@@ -2737,6 +2761,10 @@ export const routeTree = rootRoute
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/common/pop-category-select": {
+      "filePath": "_layout/common/pop-category-select.tsx",
+      "parent": "/_layout"
     },
     "/_layout/common/pop-user-search": {
       "filePath": "_layout/common/pop-user-search.tsx",
