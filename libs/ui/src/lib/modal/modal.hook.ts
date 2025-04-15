@@ -135,9 +135,9 @@ const useModal = (): useModalReturnValue => {
    * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
-   * await saveComplete(); // 기본 메시지 표시
+   * await showSaveComplete(); // 기본 메시지 표시
    */
-  const saveComplete = useCallback(
+  const showSaveComplete = useCallback(
     (props?: AlertComponentProps): Promise<boolean> =>
       alert({
         ...props,
@@ -154,9 +154,9 @@ const useModal = (): useModalReturnValue => {
    * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
-   * await updateComplete(); // 기본 메시지 표시
+   * await showUpdateComplete(); // 기본 메시지 표시
    */
-  const updateComplete = useCallback(
+  const showUpdateComplete = useCallback(
     (props?: AlertComponentProps): Promise<boolean> =>
       alert({
         ...props,
@@ -173,9 +173,9 @@ const useModal = (): useModalReturnValue => {
    * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
-   * await deleteComplete(); // 기본 메시지 표시
+   * await showDeleteComplete(); // 기본 메시지 표시
    */
-  const deleteComplete = useCallback(
+  const showDeleteComplete = useCallback(
     (props?: AlertComponentProps): Promise<boolean> =>
       alert({
         ...props,
@@ -192,9 +192,9 @@ const useModal = (): useModalReturnValue => {
     alert,
     confirm,
     modals,
-    saveComplete,
-    updateComplete,
-    deleteComplete,
+    showSaveComplete,
+    showUpdateComplete,
+    showDeleteComplete,
   };
 };
 

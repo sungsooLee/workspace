@@ -8,13 +8,13 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 
 const MessageDetailComponent = () => {
   const { t } = useTranslation();
-  const { saveComplete } = useModal();
+  const { showSaveComplete } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
 
-    const x = await saveComplete();
+    const x = await showSaveComplete();
     console.log(x);
   };
 
