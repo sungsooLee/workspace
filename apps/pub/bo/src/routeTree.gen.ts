@@ -55,6 +55,7 @@ import { Route as LayoutPmsMenuTenantPlatformLearningMenuImport } from './pages/
 import { Route as LayoutPmsMenuTenantPlatformCategoryMenuImport } from './pages/_layout/pms/menu-tenant-platform-category-menu'
 import { Route as LayoutPmsMenuTenantAttributeManagementImport } from './pages/_layout/pms/menu-tenant-attribute-management'
 import { Route as LayoutPmsMenuPlatformCompanyDetailImport } from './pages/_layout/pms/menu-platform-company-detail'
+import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout/pms/menu-platform-common-group'
 import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
@@ -387,6 +388,13 @@ const LayoutPmsMenuPlatformCompanyDetailRoute =
   LayoutPmsMenuPlatformCompanyDetailImport.update({
     id: '/pms/menu-platform-company-detail',
     path: '/pms/menu-platform-company-detail',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuPlatformCommonGroupRoute =
+  LayoutPmsMenuPlatformCommonGroupImport.update({
+    id: '/pms/menu-platform-common-group',
+    path: '/pms/menu-platform-common-group',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1405,6 +1413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuPlatformImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-platform-common-group': {
+      id: '/_layout/pms/menu-platform-common-group'
+      path: '/pms/menu-platform-common-group'
+      fullPath: '/pms/menu-platform-common-group'
+      preLoaderRoute: typeof LayoutPmsMenuPlatformCommonGroupImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-platform-company-detail': {
       id: '/_layout/pms/menu-platform-company-detail'
       path: '/pms/menu-platform-company-detail'
@@ -1683,6 +1698,7 @@ interface LayoutRouteChildren {
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
+  LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
   LayoutPmsMenuPlatformCompanyDetailRoute: typeof LayoutPmsMenuPlatformCompanyDetailRoute
   LayoutPmsMenuTenantAttributeManagementRoute: typeof LayoutPmsMenuTenantAttributeManagementRoute
   LayoutPmsMenuTenantPlatformCategoryMenuRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
@@ -1721,6 +1737,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
   LayoutPmsMenuPlatformRoute: LayoutPmsMenuPlatformRoute,
+  LayoutPmsMenuPlatformCommonGroupRoute: LayoutPmsMenuPlatformCommonGroupRoute,
   LayoutPmsMenuPlatformCompanyDetailRoute:
     LayoutPmsMenuPlatformCompanyDetailRoute,
   LayoutPmsMenuTenantAttributeManagementRoute:
@@ -1836,6 +1853,7 @@ export interface FileRoutesByFullPath {
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
+  '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
@@ -1942,6 +1960,7 @@ export interface FileRoutesByTo {
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
+  '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
@@ -2051,6 +2070,7 @@ export interface FileRoutesById {
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_layout/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
+  '/_layout/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/_layout/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/_layout/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
   '/_layout/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
@@ -2159,6 +2179,7 @@ export interface FileRouteTypes {
     | '/pms/category-menagement'
     | '/pms/menu-management'
     | '/pms/menu-platform'
+    | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
     | '/pms/menu-tenant-attribute-management'
     | '/pms/menu-tenant-platform-category-menu'
@@ -2264,6 +2285,7 @@ export interface FileRouteTypes {
     | '/pms/category-menagement'
     | '/pms/menu-management'
     | '/pms/menu-platform'
+    | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
     | '/pms/menu-tenant-attribute-management'
     | '/pms/menu-tenant-platform-category-menu'
@@ -2371,6 +2393,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/menu-management'
     | '/_layout/pms/menu-platform'
+    | '/_layout/pms/menu-platform-common-group'
     | '/_layout/pms/menu-platform-company-detail'
     | '/_layout/pms/menu-tenant-attribute-management'
     | '/_layout/pms/menu-tenant-platform-category-menu'
@@ -2517,6 +2540,7 @@ export const routeTree = rootRoute
         "/_layout/pms/category-menagement",
         "/_layout/pms/menu-management",
         "/_layout/pms/menu-platform",
+        "/_layout/pms/menu-platform-common-group",
         "/_layout/pms/menu-platform-company-detail",
         "/_layout/pms/menu-tenant-attribute-management",
         "/_layout/pms/menu-tenant-platform-category-menu",
@@ -2882,6 +2906,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-platform": {
       "filePath": "_layout/pms/menu-platform.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-platform-common-group": {
+      "filePath": "_layout/pms/menu-platform-common-group.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-platform-company-detail": {
