@@ -18,6 +18,7 @@ function RouteComponent() {
         { label: '타이포그래픽', path: '/guide/typography' },
         { label: 'CSS', path: '/guide/css' },
         { label: 'Form', path: '/guide/form' },
+        { label: '이미지', path: '/guide/image' },
       ],
     },
     {
@@ -49,8 +50,7 @@ function RouteComponent() {
         { label: 'Panel', path: '/guide/panel' },
         { label: 'PhoneNumber', path: '/guide/phone-number' },
         { label: 'InputTimer', path: '/guide/input-timer' },
-        // { label: '텍스트필드', path: '/guide/textfield' },
-        // { label: '이미지', path: '/guide/image' },
+        { label: 'Popover', path: '/guide/popover' },
         { label: 'Icon', path: '/guide/icon' },
       ],
     },

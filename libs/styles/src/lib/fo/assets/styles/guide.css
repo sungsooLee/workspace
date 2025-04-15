@@ -171,6 +171,9 @@
               @apply w-full flex-wrap justify-start;
             }
           }
+          + .info_ul {
+            @apply mt-[20px];
+          }
 
           + .code_example {
             margin-bottom: 50px;
@@ -223,6 +226,9 @@
           .guide_tit3 {
             @apply mt-[20px];
           }
+        }
+        + p {
+          @apply mt-[20px];
         }
       }
       .info_ul {

@@ -86,6 +86,7 @@ import { Route as GuideGuideSearchBoxImport } from './pages/_guide/guide/search-
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePopoverImport } from './pages/_guide/guide/popover'
 import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
@@ -96,6 +97,7 @@ import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
 import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
@@ -580,6 +582,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuidePopoverRoute = GuideGuidePopoverImport.update({
+  id: '/guide/popover',
+  path: '/guide/popover',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
   id: '/guide/phone-number',
   path: '/guide/phone-number',
@@ -637,6 +645,12 @@ const GuideGuideInputRoute = GuideGuideInputImport.update({
 const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   id: '/guide/info',
   path: '/guide/info',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideImageRoute = GuideGuideImageImport.update({
+  id: '/guide/image',
+  path: '/guide/image',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1075,6 +1089,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideIconImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/image': {
+      id: '/_guide/guide/image'
+      path: '/guide/image'
+      fullPath: '/guide/image'
+      preLoaderRoute: typeof GuideGuideImageImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/info': {
       id: '/_guide/guide/info'
       path: '/guide/info'
@@ -1143,6 +1164,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/phone-number'
       fullPath: '/guide/phone-number'
       preLoaderRoute: typeof GuideGuidePhoneNumberImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/popover': {
+      id: '/_guide/guide/popover'
+      path: '/guide/popover'
+      fullPath: '/guide/popover'
+      preLoaderRoute: typeof GuideGuidePopoverImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/progress': {
@@ -1539,6 +1567,7 @@ interface GuideRouteChildren {
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
+  GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideInputRoute: typeof GuideGuideInputRoute
   GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
@@ -1549,6 +1578,7 @@ interface GuideRouteChildren {
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
   GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
+  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -1585,6 +1615,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
+  GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideInputRoute: GuideGuideInputRoute,
   GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
@@ -1595,6 +1626,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
   GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
+  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -1743,6 +1775,7 @@ export interface FileRoutesByFullPath {
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1753,6 +1786,7 @@ export interface FileRoutesByFullPath {
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/guide/popover': typeof GuideGuidePopoverRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1846,6 +1880,7 @@ export interface FileRoutesByTo {
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1856,6 +1891,7 @@ export interface FileRoutesByTo {
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/guide/popover': typeof GuideGuidePopoverRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1952,6 +1988,7 @@ export interface FileRoutesById {
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
+  '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/input': typeof GuideGuideInputRoute
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1962,6 +1999,7 @@ export interface FileRoutesById {
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
   '/_guide/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/_guide/guide/popover': typeof GuideGuidePopoverRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -2057,6 +2095,7 @@ export interface FileRouteTypes {
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/input'
     | '/guide/input-timer'
@@ -2067,6 +2106,7 @@ export interface FileRouteTypes {
     | '/guide/pagination'
     | '/guide/panel'
     | '/guide/phone-number'
+    | '/guide/popover'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -2159,6 +2199,7 @@ export interface FileRouteTypes {
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/input'
     | '/guide/input-timer'
@@ -2169,6 +2210,7 @@ export interface FileRouteTypes {
     | '/guide/pagination'
     | '/guide/panel'
     | '/guide/phone-number'
+    | '/guide/popover'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -2263,6 +2305,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
+    | '/_guide/guide/image'
     | '/_guide/guide/info'
     | '/_guide/guide/input'
     | '/_guide/guide/input-timer'
@@ -2273,6 +2316,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
     | '/_guide/guide/phone-number'
+    | '/_guide/guide/popover'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -2397,6 +2441,7 @@ export const routeTree = rootRoute
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
+        "/_guide/guide/image",
         "/_guide/guide/info",
         "/_guide/guide/input",
         "/_guide/guide/input-timer",
@@ -2407,6 +2452,7 @@ export const routeTree = rootRoute
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
         "/_guide/guide/phone-number",
+        "/_guide/guide/popover",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -2638,6 +2684,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/icon.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/image": {
+      "filePath": "_guide/guide/image.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/info": {
       "filePath": "_guide/guide/info.tsx",
       "parent": "/_guide"
@@ -2676,6 +2726,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/phone-number": {
       "filePath": "_guide/guide/phone-number.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/popover": {
+      "filePath": "_guide/guide/popover.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/progress": {
