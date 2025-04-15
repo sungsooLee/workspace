@@ -3,7 +3,7 @@ import { Button, ContentsRow, Input, PhoneNumber, useModal } from '@learnway/ui'
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { IcoCaution } from '@learnway/icons';
-import { AddressPopup } from '../../../features/layout';
+import { AddressPopup, EducationPlacePopup } from '../../../features/layout';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -56,7 +56,16 @@ function RouteComponent() {
                 <dt>교육장소</dt>
                 <dd>
                   마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-                  <Button variant="gray2" size="xs">
+                  <Button
+                    variant="gray2"
+                    size="xs"
+                    onClick={() =>
+                      openModal({
+                        width: 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
                     약도보기
                   </Button>
                 </dd>
@@ -182,7 +191,7 @@ function RouteComponent() {
           </dt>
           <dd>
             교재 배송은 강의시작 1주일 전까지 수강 신청 내역에서 변경 할 수 있습니다.
-            <Button>수강 신청 내역</Button>
+            <Button className={noticeBoxStyles.link}>수강 신청 내역</Button>
           </dd>
           <dd>강의 시작 전 주소지가 변경 된 경우, 교육담당자에게 문의해주세요.</dd>
         </dl>

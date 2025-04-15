@@ -29,3 +29,15 @@ export const useToastStore = create<ToastStore>((set, get) => ({
     }));
   },
 }));
+
+export const showToast = (config: ToastConfig): void => {
+  useToastStore.getState().open(config);
+};
+
+export const closeToast = (index: number, data?: any): void => {
+  useToastStore.getState().close(index, data);
+};
+
+export const closeAllToasts = (): void => {
+  useToastStore.getState().closeAll();
+};

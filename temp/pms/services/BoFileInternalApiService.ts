@@ -8,13 +8,15 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoFileInternalApiService {
     /**
-     * MultipartFile 업데이트 처리(복호화) - 사용금지(임시 테스트용)
-     * MultipartFile 업데이트 처리(복호화) 테스트
+     * MultipartFile 업로드 처리(복호화) - 사용금지(임시 테스트용)
+     * MultipartFile 업로드 처리(복호화) 테스트
+     * @param companyCode companyCode
      * @param formData
      * @returns string OK
      * @throws ApiError
      */
     public static testAttachFileDec(
+        companyCode: string,
         formData?: {
             file?: Blob;
         },
@@ -22,6 +24,33 @@ export class BoFileInternalApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/internal/api/v1/file/test/attach',
+            query: {
+                'companyCode': companyCode,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+        });
+    }
+    /**
+     * MultipartFile Excel 업로드 처리(복호화, 파싱) - 사용금지(임시 테스트용)
+     * MultipartFile Excel 업로드 처리(복호화, 파싱) 테스트
+     * @param companyCode companyCode
+     * @param formData
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static testExcelAttachFileDec(
+        companyCode: string,
+        formData?: {
+            file?: Blob;
+        },
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/internal/api/v1/file/test/attach/excel',
+            query: {
+                'companyCode': companyCode,
+            },
             formData: formData,
             mediaType: 'multipart/form-data',
         });

@@ -11,12 +11,12 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (tenantNo?: number) =>
-    tenantNo //&& params?.roleIds
+  all: (tenantId?: number) =>
+    tenantId //&& params?.roleIds
       ? {
           queryKey: queryKeys.all,
           queryFn: async () => {
-            const data = await MenuService.getMenus(tenantNo, isMobile);
+            const data = await MenuService.getMenus(tenantId, isMobile);
 
             return convertHierarchyNode(
               data?.children,

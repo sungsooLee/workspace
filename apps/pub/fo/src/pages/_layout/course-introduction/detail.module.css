@@ -84,3 +84,17 @@
     }
   }
 }
+
+.form_item {
+  @apply mt-[8px] pb-0;
+  & > div {
+    & > div {
+      textarea {
+        @apply !h-[100px];
+      }
+      p {
+        @apply pb-0;
+      }
+    }
+  }
+}

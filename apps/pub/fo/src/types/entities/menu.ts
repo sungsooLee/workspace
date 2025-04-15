@@ -2,7 +2,7 @@ import { Hierarchy } from '../hierarchy';
 
 export interface Menu extends Hierarchy<Menu> {
   id?: number;
-  quickAccessAreaYn?: boolean;
+  isShortCutArea?: boolean;
   roles?: string;
   tenantName?: string; // 제거 예정
 }

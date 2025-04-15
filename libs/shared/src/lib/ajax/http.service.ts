@@ -8,7 +8,7 @@ import axios, {
 } from 'axios';
 
 import { cookieService } from '../cookie/cookie.service';
-import { encodeQueryString } from '../../index';
+import { encodeQueryString, eventService, HTTP_EVENTS } from '../../index';
 
 const API_REQUEST_TIMEOUT = 9000;
 
@@ -126,7 +126,7 @@ export class HttpService {
           console.log('axios.error', error);
         } else {
           // this.showNotification('Unknown Error', error.message);
-          console.log('> unknown error-2:', url, error.message);
+          console.log('> unknown error-2:', url, error);
         }
         throw error;
       })
@@ -183,7 +183,7 @@ export class HttpService {
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
         console.log('response', response);
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           return response.data.data;
         } else {
           throw response.data;
@@ -191,13 +191,37 @@ export class HttpService {
       })
       .catch((error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
-          //status 4** backend 예외 코드
-          if (error?.status && error.status >= 400 && error.status < 500) {
+          // 400 에러 체크 수정
+          if (
+            error?.response?.status &&
+            error.response.status >= 400 &&
+            error.response.status < 500
+          ) {
+            // 에러 이벤트 발행
+            eventService.emit(HTTP_EVENTS.ERROR, {
+              title: 'Request Error',
+              message: error.response.data?.message || '요청 처리 중 오류가 발생했습니다.',
+              status: error.response.status,
+              url,
+            });
             throw error.response?.data;
           }
+
+          // 서버 오류 등 기타 에러
+          eventService.emit(HTTP_EVENTS.ERROR, {
+            title: 'Request Error',
+            message: '서버 통신 중 오류가 발생했습니다.',
+            status: error.response?.status,
+            url,
+          });
           console.log('axios.error', error);
         } else {
-          // this.showNotification('Unknown Error', error.message);
+          // 알 수 없는 에러
+          eventService.emit(HTTP_EVENTS.ERROR, {
+            title: 'Request Error',
+            message: error.message || '알 수 없는 오류가 발생했습니다.',
+            url,
+          });
           console.log('> unknown error-2:', url, error.message);
         }
         throw error;

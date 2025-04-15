@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
+import { trim } from 'lodash';
+
 import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
+import { useRouter } from '@tanstack/react-router';
+
 import {
   Button,
   ContentsRow,
@@ -12,7 +16,6 @@ import {
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -25,8 +28,6 @@ import {
   useCreateCommonCode,
   useUpdateCommonCode,
 } from '../../../entities/common-code/service/common-code.hook';
-
-// import { mutateOptions } from '../../'
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -96,8 +97,6 @@ const columns = [
 ];
 
 const initCdGroup = {
-  // cdGroupId: '',
-  // cdGroupName: '',
   cdId: '',
   cdName: '',
   cdSeq: '',
@@ -126,7 +125,7 @@ const CommonCodeGridComponent = ({
   totalRows,
 }: any) => {
   const gridRef = useRef<GridImperative>(null);
-
+  const router = useRouter();
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRow, setSelectedRow] = useState<CommonCode | null>(null);
   const [dataProcessed, setDataProcessed] = useState(false);
@@ -139,7 +138,7 @@ const CommonCodeGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       console.log(data);
 
@@ -160,7 +159,7 @@ const CommonCodeGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
@@ -217,23 +216,6 @@ const CommonCodeGridComponent = ({
 
   // 추가 버튼 핸들러
   const handleAddMode = () => {
-    // 현재 작업 중인 내용이 있을 경우 확인 (실제 구현시 사용자에게 확인)
-    const currentFormData = getValues();
-    // const isFormDirty = Object.keys(currentFormData).some(
-    //   (key) =>
-    //     currentFormData[key] !==
-    //     (selectedRow
-    //       ? selectedRow[key as keyof CommonCodeGroup]
-    //       : initCdGroup[key as keyof typeof initCdGroup]),
-    // );
-
-    // 실제 구현시 아래 주석을 해제하여 사용자에게 확인
-    // if (isFormDirty) {
-    //   if (!window.confirm('작성 중인 내용이 있습니다. 정말로 새로운 추가를 시작하시겠습니까?')) {
-    //     return;
-    //   }
-    // }
-
     setFormMode(FORM_MODE.ADD);
     setSelectedRow(null);
     onFormChange({
@@ -243,7 +225,6 @@ const CommonCodeGridComponent = ({
     });
     // 데이터 처리 플래그 초기화
     setDataProcessed(false);
-    // 모든 필드의 에러를 지웁니다
     clearAllFormErrors();
   };
 
@@ -255,15 +236,6 @@ const CommonCodeGridComponent = ({
       const hasChanges = Object.keys(initCdGroup).some(
         (key) => currentValues[key] !== initCdGroup[key as keyof typeof initCdGroup],
       );
-
-      // // 실제 구현시 아래 주석을 해제하여 사용자에게 확인
-      // if (
-      //   hasChanges &&
-      //   !window.confirm('작성 중인 내용이 있습니다. 변경 내용을 취소하시겠습니까?')
-      // ) {
-      //   window.confirm('작성 중인 내용이 있습니다. 변경 내용을 취소하시겠습니까?');
-      //   return;
-      // }
     }
 
     if (row) {
@@ -289,7 +261,7 @@ const CommonCodeGridComponent = ({
     if (formMode === FORM_MODE.ADD) {
       const isAdd = await openConfirm({
         title: '요청하신 정보 추가하시겠습니까?',
-        description: '요청하신 정보를 정확히 확인 후 등록하세요',
+        content: '요청하신 정보를 정확히 확인 후 등록하세요',
       });
       if (isAdd) {
         const createPayload = {
@@ -306,7 +278,7 @@ const CommonCodeGridComponent = ({
     } else if (formMode === FORM_MODE.VIEW) {
       const isUpdate = await openConfirm({
         title: '적용하시겠습니까?',
-        description: '요청하신 정보를 정확히 확인 후 저장하세요.',
+        content: '요청하신 정보를 정확히 확인 후 저장하세요.',
       });
 
       if (isUpdate) {
@@ -329,7 +301,6 @@ const CommonCodeGridComponent = ({
   // 데이터가 로드되면 폼에 채우기
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
-      console.log('Filling form with data:', detailData);
       fetchData(detailData);
       // 데이터 처리 완료 표시
       setDataProcessed(true);
@@ -385,7 +356,7 @@ const CommonCodeGridComponent = ({
                   size="sm"
                   className={layoutStyles.btn_text}
                   onClick={handleAddMode}
-                  // disabled={}
+                  disabled={trim(state.cdGroupId) === ''}
                 >
                   추가
                 </Button>
@@ -412,13 +383,26 @@ const CommonCodeGridComponent = ({
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'cdId'} disabled={isFormDisabled} />
+                  <DynamicFormField
+                    name={'cdId'}
+                    disabled={isFormDisabled || FORM_MODE.VIEW === formMode}
+                  />
                   <Button
                     type="button"
                     variant="point"
                     size="sm"
                     className="p-[10px]"
-                    onClick={() => console.log('다국어 관리 페이지로 이동')}
+                    onClick={() => {
+                      const cdId = getValues('cdId');
+                      const cdName = getValues('cdName');
+                      router.navigate({
+                        to: '/platform/system/translation',
+                        state: {
+                          keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
+                          multilinguaKey: cdId,
+                        },
+                      });
+                    }}
                     disabled={isFormDisabled}
                   >
                     다국어관리
@@ -502,7 +486,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'cdSeq',
-      type: 'text',
+      type: 'number',
       label: t('LABEL.cdSeq'),
       value: '',
     },

@@ -12,11 +12,7 @@ import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/common-code-group/')({
   component: RouteComponent,
-  ...pageRouteConfig({
-    meta: {
-      title: '공통코드그룹관리',
-    },
-  }),
+  ...pageRouteConfig({}),
 });
 
 function RouteComponent() {
@@ -32,8 +28,6 @@ function RouteComponent() {
   const [searchParams, setSearchParams] = useState({
     cdGroupId: '',
     cdGroupName: '',
-    cdGroupAbbreviatonEnglishName: '',
-    cdGroupContent: '',
     isUsed: true,
     cdName: '',
   });
@@ -53,13 +47,11 @@ function RouteComponent() {
   //     setPageState({ ...pageState, page: 1 });
   //   };
 
-  const { data: commonCodeGroupListData, refetch } = useCommonCodeGroupList(
+  const { data: commonCodeGroupListData } = useCommonCodeGroupList(
     pageState.page,
     pageState.size,
     searchParams.cdGroupId,
     searchParams.cdGroupName,
-    searchParams.cdGroupAbbreviatonEnglishName,
-    searchParams.cdGroupContent,
     searchParams.isUsed,
     searchParams.cdName,
   );
@@ -68,15 +60,13 @@ function RouteComponent() {
     setSearchParams({
       cdGroupId: data.cdGroupId || '',
       cdGroupName: data.cdGroupName || '',
-      cdGroupAbbreviatonEnglishName: data.cdGroupAbbreviatonEnglishName || '',
-      cdGroupContent: data.cdGroupContent || '',
       isUsed: data.isUsed || '',
       cdName: data.cdName || '',
     });
   };
 
   return (
-    <PageContainer scrollHidden={true}>
+    <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <CommonCodeGroupGrid
@@ -86,6 +76,7 @@ function RouteComponent() {
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           totalRows={commonCodeGroupListData && commonCodeGroupListData.totalElements}
+          state={searchParams}
         />
       </MainContents>
     </PageContainer>

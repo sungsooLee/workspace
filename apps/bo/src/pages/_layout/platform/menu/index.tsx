@@ -1,11 +1,14 @@
+import React, { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { useEffect, useState } from 'react';
 import { MenuTree } from '../../../../features/menu/ui/menu-tree';
 import MenuView from '../../../../features/menu/ui/menu-view';
-import { cn } from '@learnway/shared';
 import {
   useCreateMenu,
   useDeleteMenu,
@@ -18,8 +21,6 @@ import {
   transformApiDataToTreeData,
 } from '../../../../features/menu/service/menu.service';
 import { pageRouteConfig } from '../../../../features/auth';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -43,7 +44,6 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
 
-  // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
   const { create, data: createdMenuData } = useCreateMenu({

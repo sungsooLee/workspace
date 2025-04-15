@@ -1051,7 +1051,7 @@ const editGridData = Array(10)
     dropdown: '',
   }));
 
-// 셀 편
+// 셀 편집
 export const TemplateEditGrid: any = (args: any) => {
   const [data, setData] = useState<any[]>(editGridData);
   const columns = [

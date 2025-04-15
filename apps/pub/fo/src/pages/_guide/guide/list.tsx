@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
-import bulletStyles from '../../../pages/_layout/course-introduction/bullet.module.css';
+import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 
 export const Route = createFileRoute('/_guide/guide/list')({
   component: RouteComponent,
@@ -66,7 +66,7 @@ import definitionListStyles from '../../../pages/_layout/course-introduction/def
       </div>
 
       {/* bullet list */}
-      <p className="loc css">../../../pages/_layout/course-introduction/bulletStyles.module.css</p>
+      <p className="loc css">../../../shared/ui/list/bullet.module.css</p>
       <p className="loc react">
         <Link to="/course-introduction/detail">예제링크</Link>
       </p>
@@ -93,7 +93,7 @@ import definitionListStyles from '../../../pages/_layout/course-introduction/def
         <div className="code_example">
           <pre className="code_block">
             <code>{`// 기본 호출방법
-import bulletStyles from '../../../pages/_layout/course-introduction/definition-list.module.css'; 예시 페이지 모듈
+import bulletStyles from '../../../shared/ui/list/bullet.module.css'; 예시 페이지 모듈
 
 // 사용 예제
 <div className={\`\${bulletStyles.start} \${bulletStyles.list}\`}>
@@ -114,7 +114,7 @@ import bulletStyles from '../../../pages/_layout/course-introduction/definition-
       </div>
 
       {/* number list */}
-      <p className="loc css">../../../pages/_layout/course-introduction/bulletStyles.module.css</p>
+      <p className="loc css">../../../shared/ui/list/bullet.module.css</p>
       <p className="loc react">
         <Link to="/course-introduction/detail">예제링크</Link>
       </p>
@@ -141,7 +141,7 @@ import bulletStyles from '../../../pages/_layout/course-introduction/definition-
         <div className="code_example">
           <pre className="code_block">
             <code>{`// 기본 호출방법
-import bulletStyles from '../../../pages/_layout/course-introduction/definition-list.module.css'; 예시 페이지 모듈
+import bulletStyles from '../../../shared/ui/list/bullet.module.css'; 예시 페이지 모듈
 
 // 사용 예제
 <div className={\`\${bulletStyles.start} \${bulletStyles.list_number}\`}>

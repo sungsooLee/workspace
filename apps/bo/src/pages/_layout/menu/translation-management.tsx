@@ -74,7 +74,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'useYn',
+        name: 'isUsed',
         type: 'dropdown',
         label: '사용여부',
         value: '',
@@ -105,7 +105,7 @@ const gridConfig = {
         </Link>
       ),
     },
-    { name: 'useYn', label: '사용여부' },
+    { name: 'isUsed', label: '사용여부' },
     { name: 'koreanName', label: '한국어' },
     { name: 'englishName', label: '영어' },
     { name: 'registerName', label: '등록자' },

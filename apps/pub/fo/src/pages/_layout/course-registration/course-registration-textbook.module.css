@@ -41,10 +41,9 @@
       }
     }
     .notice {
-      @apply mt-[32px];
+      @apply mt-[32px] rounded-[16px];
       dd {
         button {
-          @apply label_12_500 ml-[8px] text-[var(--secondary3)] underline;
         }
       }
     }

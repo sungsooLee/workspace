@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useMemo, useState } from 'react';
+import React, { FC, FormEvent, KeyboardEvent, useMemo, useState } from 'react';
 import { Button, DynamicFormField } from '@learnway/ui';
 import { searchFieldConfig } from './search-field-config';
 import { SearchBoxProps } from './type';
@@ -52,6 +52,23 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (onSearch) {
       onSubmit(onSearch)(event); // ✅ 반환된 함수 직접 실행
+    }
+  };
+
+  /**
+   * 키보드 이벤트 핸들러
+   * - 엔터 키 입력 시 폼 제출
+   *
+   * @param event - 키보드 이벤트 객체
+   */
+  const handleKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+    // 엔터 키(Enter) 입력 시 폼 제출
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+      form.dispatchEvent(submitEvent);
     }
   };
 
@@ -126,7 +143,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleFormSubmit} onKeyDown={handleKeyDown}>
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
           <div className={rowClassName}>

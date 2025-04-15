@@ -14,9 +14,7 @@ export default class CommonCodeGroupService {
     size: number,
     cdGroupId = '',
     cdGroupName = '',
-    cdGroupAbbreviatonEnglishName = '',
-    cdGroupContent = '',
-    validityYn = true,
+    isUsed = true,
     cdName = '',
   ): Promise<any> {
     const params = new URLSearchParams({
@@ -24,9 +22,7 @@ export default class CommonCodeGroupService {
       size: size.toString(),
       cdGroupId,
       cdGroupName,
-      cdGroupAbbreviatonEnglishName,
-      cdGroupContent,
-      validityYn: validityYn.toString(),
+      isUsed: isUsed.toString(),
       cdName,
     });
 

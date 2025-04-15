@@ -5,8 +5,8 @@ import { convertHierarchyToList } from '@learnway/shared';
 import { queryOptions } from './menu.queries';
 import { FetchMenusParams } from '../../../types/entities/menu';
 
-export function useFetchMenus(tenantNo?: number) {
-  return useQuery(queryOptions.all(tenantNo));
+export function useFetchMenus(tenantId?: number) {
+  return useQuery(queryOptions.all(tenantId));
 }
 
 export function useFetchMenu({ menuId }: { menuId: string }) {

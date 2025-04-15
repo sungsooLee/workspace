@@ -18,9 +18,9 @@ const TenantModalComponent = () => {
   const { data } = useFetchAuthUser();
   const { updateActiveTenant, updateMainTenant } = useUpdateUser();
 
-  const handleChangeMainTenant = async (tenantNo: number) => {
-    updateMainTenant(tenantNo);
-    setTip(tenantNo);
+  const handleChangeMainTenant = async (tenantId: number) => {
+    updateMainTenant(tenantId);
+    setTip(tenantId);
   };
 
   const handleChangeTenant = async (tenant: Tenant) => {
@@ -42,8 +42,8 @@ const TenantModalComponent = () => {
                 <li>
                   <Button
                     key={idx}
-                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantNo ? styles.active : ''}`}
-                    onClick={() => handleChangeMainTenant(tenant.tenantNo)}
+                    className={`${styles.btn} ${data?.mainTenantId === tenant.tenantId ? styles.active : ''}`}
+                    onClick={() => handleChangeMainTenant(tenant.tenantId)}
                   >
                     <span className={styles.label}>
                       <i>
@@ -51,7 +51,7 @@ const TenantModalComponent = () => {
                       </i>
                       대표
                     </span>
-                    {tip === tenant.tenantNo && (
+                    {tip === tenant.tenantId && (
                       <p className={`${styles.tip} ${styles.tip_show}`}>
                         대표 테넌트로 설정되었습니다.
                       </p>

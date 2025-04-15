@@ -19,23 +19,10 @@ export function useCommonCodeGroupList(
   size: number,
   cdGroupId = '',
   cdGroupName = '',
-  cdGroupAbbreviatonEnglishName = '',
-  cdGroupContent = '',
-  validityYn = true,
+  isUsed = true,
   cdName = '',
 ) {
-  return useQuery(
-    queryOptions.list(
-      page,
-      size,
-      cdGroupId,
-      cdGroupName,
-      cdGroupAbbreviatonEnglishName,
-      cdGroupContent,
-      validityYn,
-      cdName,
-    ),
-  );
+  return useQuery(queryOptions.list(page, size, cdGroupId, cdGroupName, isUsed, cdName));
 }
 
 export function useCommonCodeGroupDetail(cdGroupId: string) {
@@ -55,9 +42,7 @@ export function useCreateCommonCodeGroup({
     size: number;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
-    cdGroupContent?: string;
-    validityYn?: boolean;
+    isUsed?: boolean;
     cdName?: string;
   };
 } & Omit<

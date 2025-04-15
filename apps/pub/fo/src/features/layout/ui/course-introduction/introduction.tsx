@@ -1,12 +1,13 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Avatar, Dropdown } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Avatar, Popover } from '@learnway/ui';
 import { IcoArrowDown, IcoDownload } from '@learnway/icons';
 import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../../features/layout';
 
+import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
-import bulletStyles from '../../../../pages/_layout/course-introduction/bullet.module.css';
+import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
 import learnImg from '@learnway/styles/fo/assets/images/common/img_learn.png';
@@ -37,11 +38,18 @@ const CourseIntroductionCompoment = () => {
     items: ['수강신청만', '전체보기'],
     initialSelectedItem: 0, // 초기 선택값
   };
-  const [dropdownValues, setDropdownValues] = useState<string[]>([]);
-  const dropdownOptions = [
-    { value: 'option1', label: '옵션 1' },
-    { value: 'option2', label: '옵션 2' },
-  ];
+
+  // 교육일정 년도별 보기 popover
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>년도별 보기1</Button>
+        <Button>년도별 보기2</Button>
+        <Button>년도별 보기3</Button>
+        <Button>년도별 보기444444444</Button>
+      </div>
+    );
+  };
 
   // 교육일정 더보기 버튼
   const [btnEducation, setBtnEducation] = useState<boolean>(false);
@@ -56,7 +64,7 @@ const CourseIntroductionCompoment = () => {
           <img src={learnImg} alt="" />
           <strong>이런 걸 배워요!</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>
@@ -83,7 +91,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>교육목표</strong>
         </div>
-        {/* bullet list number */}
+        {/* bullet number module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list_number}`}>
           <ol>
             <li>스마트팩토리 추진 사례를 통한 현업 적용과 실천 방향을 습득한다.</li>
@@ -100,7 +108,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>교육내용</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>4차 산업혁명, 디지털 혁신</li>
@@ -115,6 +123,20 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
+      {/* 이런 학습자에게 유익해요! */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>이런 학습자에게 유익해요!</strong>
+        </div>
+        {/* bullet module */}
+        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+          <ul>
+            <li>제조실행시스템(MES) 적용방법 이해</li>
+            <li>제조실행시스템(MES)을 활용한 기업의 생산 및 품질관리 능력 배양</li>
+          </ul>
+        </div>
+      </div>
+
       {/* 커리큘럼 */}
       <div className={styles.info_box}>
         <div className={styles.tit_box}>
@@ -125,15 +147,61 @@ const CourseIntroductionCompoment = () => {
         <Curriculum />
       </div>
 
+      {/* 이수기준 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>이수기준</strong>
+        </div>
+        <div className={styles.evaluation_box}>
+          <ul>
+            <li>
+              <span>총점(100%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>진도/출석(50%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>진행단계평가 (10%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>최종평가 (20%)</span>
+              <strong>70점 이상</strong>
+            </li>
+            <li>
+              <span>과제평가 (20%)</span>
+              <strong>70점 이상</strong>
+            </li>
+          </ul>
+          {/* bulletStyles */}
+          <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+            <ul>
+              <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+              <li>
+                최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는 1회)
+              </li>
+              <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* 자료실 */}
       <div className={styles.info_box}>
         <div className={styles.tit_box}>
           <strong>자료실</strong>
+          <Button>
+            <IcoDownload width={16} height={16} stroke="#131c30" />
+            전체 다운로드
+          </Button>
         </div>
 
         <div className={styles.data_box}>
           <Button>
-            <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.size}>200MB</span>
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
@@ -141,6 +209,7 @@ const CourseIntroductionCompoment = () => {
           </Button>
           <Button>
             <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.size}>200MB</span>
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
@@ -172,7 +241,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.tit_box}>
           <strong>과정 및 학습제한 안내</strong>
         </div>
-        {/* bullet list */}
+        {/* bullet module */}
         <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
           <ul>
             <li>
@@ -180,7 +249,7 @@ const CourseIntroductionCompoment = () => {
               받아주세요.
             </li>
             <li>
-              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,{' '}
+              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
               <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
             </li>
             <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
@@ -197,7 +266,7 @@ const CourseIntroductionCompoment = () => {
       {/* 강사소개 */}
       <div className={styles.operator_box}>
         <strong>강사소개</strong>
-        {/* operator */}
+        {/* operator module */}
         <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
           <div className={operatorStyles.avatar}>
             <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
@@ -218,7 +287,7 @@ const CourseIntroductionCompoment = () => {
       {/* 과정 운영자 */}
       <div className={styles.operator_box}>
         <strong>과정 운영자</strong>
-        {/* operator */}
+        {/* operator module */}
         <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
           <div className={operatorStyles.avatar}>
             <span>김</span>
@@ -232,7 +301,7 @@ const CourseIntroductionCompoment = () => {
               </div>
             </div>
             <div className={operatorStyles.definition_list}>
-              {/* definition list */}
+              {/* definition module */}
               <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                 <dl>
                   <dt>이메일</dt>
@@ -255,14 +324,17 @@ const CourseIntroductionCompoment = () => {
           <span className={styles.date}>2026년</span>
           <div className={styles.filter}>
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
-            <Dropdown
-              options={dropdownOptions}
-              value={dropdownValues}
-              onChange={(selected) => setDropdownValues(selected)}
-              variant="text"
-              isMulti={false}
-              size={'sm'}
-            />
+            {/* dropdownpopover module */}
+            <Popover
+              className={`${dropdownPopoverStyles.btn} ${styles.drop_btn}`}
+              popoverContent={<DropdownPopoverCompoment />}
+              side="bottom"
+              align="end"
+              sideOffset={5}
+            >
+              <span>{'년도별 보기'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#131C30" />
+            </Popover>
           </div>
         </div>
         <div className={styles.education_box}>

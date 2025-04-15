@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
-
+import { useRouter } from '@tanstack/react-router';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
 import {
   Button,
@@ -12,6 +13,11 @@ import {
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+
 import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
 import {
   useCommonCodeGroupDetail,
@@ -19,20 +25,6 @@ import {
   useUpdateCommonCodGroup,
 } from '../../../entities/common-code/service/common-code-group.hook';
 import { CommonCodeGroup } from '../../../types/entities/common-code';
-import { useMutation } from '@tanstack/react-query';
-
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-
-import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
-import { useRouter, useRouterState } from '@tanstack/react-router';
-
-// import { mutateOptions } from '../../'
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -51,7 +43,6 @@ const initCdGroup = {
   cdGroupAbbreviatonEnglishName: '',
   cdGroupContent: '',
   isUsed: true,
-  // validityYn: true,
 };
 
 // 폼 모드를 상수로 정의
@@ -67,6 +58,7 @@ const CommonCodeGroupGridComponent = ({
   onPageChange,
   onPageSizeChange,
   totalRows,
+  state,
 }: any) => {
   const gridRef = useRef<GridImperative>(null);
   const router = useRouter();
@@ -83,7 +75,7 @@ const CommonCodeGroupGridComponent = ({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
 
       if (data) {
@@ -93,14 +85,17 @@ const CommonCodeGroupGridComponent = ({
     queryParams: {
       page,
       size,
-      //TODO: 검색어 입력값..
+      cdGroupId: state.cdGroupId,
+      cdGroupName: state.cdGroupName,
+      isUsed: state.isUsed,
+      cdName: state.cdName,
     },
   });
   const { update: updateCodeGroup } = useUpdateCommonCodGroup({
     onSuccess: (data: any) => {
       openAlert({
         title: '완료되었습니다.',
-        description: '요청하신 작업이 정상적으로 완료되었습니다.',
+        content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
@@ -169,26 +164,15 @@ const CommonCodeGroupGridComponent = ({
       const hasChanges = Object.keys(initCdGroup).some(
         (key) => currentValues[key] !== initCdGroup[key as keyof typeof initCdGroup],
       );
-
-      // // 실제 구현시 아래 주석을 해제하여 사용자에게 확인
-      // if (
-      //   hasChanges &&
-      //   !window.confirm('작성 중인 내용이 있습니다. 변경 내용을 취소하시겠습니까?')
-      // ) {
-      //   window.confirm('작성 중인 내용이 있습니다. 변경 내용을 취소하시겠습니까?');
-      //   return;
-      // }
     }
 
     if (row) {
       setFormMode(FORM_MODE.VIEW);
       setSelectedRow(row);
-      // 새로운 행이 선택되면 데이터 처리 플래그 초기화
       setDataProcessed(false);
     } else {
       setFormMode(FORM_MODE.NONE);
       setSelectedRow(null);
-      // 선택 해제 시 폼 초기화
       onFormChange({
         ...initCdGroup,
       });
@@ -203,7 +187,7 @@ const CommonCodeGroupGridComponent = ({
     if (formMode === FORM_MODE.ADD) {
       const isAdd = await openConfirm({
         title: '요청하신 정보 추가하시겠습니까?',
-        description: '요청하신 정보를 정확히 확인 후 등록하세요',
+        content: '요청하신 정보를 정확히 확인 후 등록하세요',
       });
       if (isAdd) {
         const createPayload = {
@@ -214,7 +198,7 @@ const CommonCodeGroupGridComponent = ({
     } else if (formMode === FORM_MODE.VIEW) {
       const isUpdate = await openConfirm({
         title: '적용하시겠습니까?',
-        description: '요청하신 정보를 정확히 확인 후 저장하세요.',
+        content: '요청하신 정보를 정확히 확인 후 저장하세요.',
       });
 
       if (isUpdate) {
@@ -224,8 +208,6 @@ const CommonCodeGroupGridComponent = ({
         updateCodeGroup(updatePayload);
       }
     }
-
-    // 여기에 API 호출 로직 추가
   };
 
   // 데이터가 로드되면 폼에 채우기
@@ -302,7 +284,7 @@ const CommonCodeGroupGridComponent = ({
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupId'} disabled={isFormDisabled} />
+                  <DynamicFormField name={'cdGroupId'} disabled={true} />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
@@ -349,6 +331,7 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('LABEL.cdGroupId'),
       value: '',
+      placeholder: '자동 채번',
     },
     {
       name: 'cdGroupName',
@@ -379,9 +362,6 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    cdGroupId: {
-      required: true,
-    },
     cdGroupName: {
       required: true,
     },
@@ -393,7 +373,6 @@ const formConfig: DynamicFormConfig = {
 
 const columns = (router: any) => {
   return [
-    // 기존 columns 정의 유지
     columnHelper.accessor('cdGroupId', {
       cell: (info) => info.getValue(),
       enablePinning: true,

@@ -31,7 +31,7 @@
             @apply gap-[8px];
             button {
               span {
-                @apply !text-[var(--gray8)];
+                @apply button_3_r !text-[var(--gray8)];
               }
               &[class*='active'] {
                 @apply !border-[var(--primary1)];
@@ -51,7 +51,7 @@
       }
     }
     .notice {
-      @apply mt-[32px];
+      @apply mt-[32px] rounded-[16px];
       dd {
         button {
           @apply label_12_500 ml-[8px] text-[var(--secondary3)] underline;

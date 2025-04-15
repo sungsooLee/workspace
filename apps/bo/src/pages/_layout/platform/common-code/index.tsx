@@ -82,9 +82,21 @@ function RouteComponent() {
 
   return (
     <div>
-      <PageContainer scrollHidden={true}>
+      <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
         <ContentsButtons>
-          <Button type="button" variant="point" size="sm">
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            onClick={() => {
+              router.navigate({
+                to: '/platform/system/translation',
+                state: {
+                  keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
+                },
+              });
+            }}
+          >
             다국어관리
           </Button>
           <Button

@@ -6,11 +6,11 @@ export interface Menu extends Hierarchy<Menu> {
   menuName: string;
   path: string;
   sortOrder: number;
-  quickAccessAreaYn: boolean;
-  useYn: boolean;
-  personalDataContainYn: boolean;
-  visibleMobileYn: boolean;
-  visiblePcYn: boolean;
+  isShortCutArea: boolean;
+  isUsed: boolean;
+  isPersoninfoInclusion: boolean;
+  isMobileExposed: boolean;
+  isWebExposed: boolean;
   menuScope: 'FO' | 'BO' | 'EX';
   menuDesc: string;
   hiddenYn: boolean;
@@ -20,5 +20,5 @@ export interface Menu extends Hierarchy<Menu> {
 
 export interface FetchMenusParams {
   roleIds?: string;
-  tenantNo?: number;
+  tenantId?: number;
 }

@@ -11,11 +11,11 @@ import { useActiveMenuDepthState } from '../../../features/platform';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
- * quickAccessAreaYn 에 따라 GNB quick menu area에 메뉴를 출력한다.
+ * isShortCutArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
  */
 export function useMenuHierarchy(): HookData<{ menus: Menu[]; eventMenus: Menu[] }> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenant?.tenantNo);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId);
 
   return {
     data: useCreation(() => {
