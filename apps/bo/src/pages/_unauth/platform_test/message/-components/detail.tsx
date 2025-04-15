@@ -56,7 +56,7 @@ const MessageDetailComponent = () => {
           </FormRow>
         </ContentsRow>
         {/*사용여부*/}
-        <ContentsRow>
+        <ContentsRow type={'horizontal'} className={'inactive'}>
           <FormRow provider={provider}>
             <DynamicFormField name={'isUsed'} />
           </FormRow>
