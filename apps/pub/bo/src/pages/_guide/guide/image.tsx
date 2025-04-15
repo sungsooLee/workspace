@@ -9,7 +9,7 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">Images Component Guide</h2>
-      <p className="loc react">/libs/styles/src/lib/fo/assets/images</p>
+      <p className="loc react">@learnway/styles/fo/assets/images</p>
       <p className="info">
         이미지에 맞는 폴더에 업로드한다.
         <br />
@@ -19,7 +19,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import snsGoogleImage from '../../assets/images/common/logo_sns_google.png'; // 필요한 이미지 import
+import snsGoogleImage from '@learnway/styles/fo/assets/images/common/logo_sns_google.png'; // 필요한 이미지 import
   
 // 적용방법(예시)
 <img src={snsGoogleImage} alt="google" />`}
