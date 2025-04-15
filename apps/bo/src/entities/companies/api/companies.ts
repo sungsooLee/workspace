@@ -4,33 +4,32 @@ import { PMSApiPrefix } from '@learnway/config';
 
 export default class CompaniesService {
   // 회사 목록 조회
-  static fetchCompanies() {
+  static fetchAll() {
     return httpService.get<Company[]>(`${PMSApiPrefix()}/companies`);
-    // return new Promise((resolve) => resolve(Mock));
   }
 
   // 회사 조회
-  static fetchCompany(id: number) {
+  static fetch(id: number) {
     return httpService.get<Company>(`${PMSApiPrefix()}/companies/${id}`);
   }
 
   // 회사 생성
-  static createCompany(payload: any) {
+  static create(payload: Company) {
     return httpService.post<Company>(`${PMSApiPrefix()}/companies`, payload);
   }
 
   // 회사 수정
-  static updateCompany(payload: any) {
+  static update(payload: Company) {
     return httpService.post<Company>(`${PMSApiPrefix()}/companies`, payload);
   }
 
   // 회사 삭제
-  static deleteCompany(id: number) {
+  static delete(id: number) {
     return httpService.delete<Company>(`${PMSApiPrefix()}/companies`, { id });
   }
 
   // 사업자등록번호로 회사 조회
-  static fetchCompanyBrn(id: number) {
+  static fetchBrn(id: number) {
     return httpService.get<Company>(`${PMSApiPrefix()}/companies/brn/${id}`);
   }
 }

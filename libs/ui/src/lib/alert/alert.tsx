@@ -92,14 +92,16 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
           variant="gray"
           size="lg"
           className={styles.btn_cancel}
-          onClick={() => handleClose(false)}>
+          onClick={() => handleClose(false)}
+        >
           {cancelButtonLabel}
         </Button>
         <Button
           variant="primary"
           size="lg"
           className={styles.btn_confirm}
-          onClick={() => handleClose(true)}>
+          onClick={() => handleClose(true)}
+        >
           {okButtonLabel}
         </Button>
       </div>
@@ -110,8 +112,6 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
         </Button>
       </div>
     );
-
-    console.log(content);
 
     return (
       <ModalContainer className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
