@@ -30,18 +30,18 @@ const FormSubTitleComponent = ({
     <div
       className={cn(
         styles.root,
+        styles.title_wrap,
         'title_wrap',
-        underLine && 'border-b border-solid',
-        'flex items-center justify-between',
+        underLine && styles.line,
         className,
       )}
     >
       {/* Label */}
-      <div className="">
-        <strong className={'title'}>{label}</strong>
+      <div className={styles.title_area}>
+        <strong className={styles.title}>{label}</strong>
       </div>
       {/* Action Node */}
-      {actionNode && <div className="flex justify-end">{actionNode}</div>}
+      {actionNode && <div className={styles.input_area}>{actionNode}</div>}
     </div>
   );
 };

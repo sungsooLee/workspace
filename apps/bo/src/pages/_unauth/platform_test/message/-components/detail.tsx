@@ -30,7 +30,7 @@ const MessageDetailComponent = () => {
           </div>
         }
       />
-      <div className={layoutStyles.inner_contents}>
+      <div className="inner_contents">
         {/*분류*/}
         <ContentsRow>
           <FormRow provider={provider}>
