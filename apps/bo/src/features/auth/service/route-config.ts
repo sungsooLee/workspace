@@ -34,7 +34,7 @@ function authorization({ location, context }: { location: ParsedLocation; contex
     }
     return;
   }
-  /* 메뉴별 접근 권한에 대한 설계 필요 
+  /* 메뉴별 접근 권한에 대한 설계 필요
   const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
   if (!unauthScreen) {
     throw ERROR.PAGE_ACCESS_RIGHTS;
@@ -52,12 +52,12 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         try {
           authorization({ location, context });
         } catch (e) {
-          /*if (e === ERROR.PAGE_ACCESS_RIGHTS) {
+          if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });
           } else {
             console.log('go liogin');
             throw redirect({ to: '/login', search: { redirect: location.pathname } });
-          }*/
+          }
         }
       }
 
