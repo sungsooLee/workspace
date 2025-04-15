@@ -207,5 +207,147 @@
         "name": "GPWC"
       }
     ]
+  },
+  {
+    "groupCode": "pms.multilingual.KeyTypeCode",
+    "name": "다국어 키타입 코드",
+    "description": "다국어 키타입 코드",
+    "codes": [
+      {
+        "code": "COMMON_CODE",
+        "name": "공통코드"
+      },
+      {
+        "code": "MENU",
+        "name": "HRD센터 메뉴"
+      },
+      {
+        "code": "CATEGORY",
+        "name": "카테고리"
+      },
+      {
+        "code": "LABEL",
+        "name": "라벨"
+      },
+      {
+        "code": "MESSAGE",
+        "name": "메세지"
+      }
+    ]
+  },
+  {
+    "groupCode": "pms.multilingual",
+    "name": "다국어",
+    "description": "다국어",
+    "codes": [
+      {
+        "code": "kr",
+        "name": "한국어"
+      },
+      {
+        "code": "en",
+        "name": "영어"
+      },
+      {
+        "code": "ar",
+        "name": "아랍어"
+      },
+      {
+        "code": "zh",
+        "name": "중국어"
+      },
+      {
+        "code": "zh-TW",
+        "name": "중국어(대만)"
+      },
+      {
+        "code": "hr",
+        "name": "크로아티아어"
+      },
+      {
+        "code": "de",
+        "name": "독일어"
+      },
+      {
+        "code": "en-AU",
+        "name": "영어(호주)"
+      },
+      {
+        "code": "et",
+        "name": "에스토니아어"
+      },
+      {
+        "code": "fr",
+        "name": "프랑스어"
+      },
+      {
+        "code": "he",
+        "name": "히브리어"
+      },
+      {
+        "code": "hi",
+        "name": "힌디어"
+      },
+      {
+        "code": "id",
+        "name": "인도네시아어"
+      },
+      {
+        "code": "it",
+        "name": "이탈리아어"
+      },
+      {
+        "code": "ja",
+        "name": "일본어"
+      },
+      {
+        "code": "fo",
+        "name": "네팔어"
+      },
+      {
+        "code": "fa",
+        "name": "페르시아어"
+      },
+      {
+        "code": "pt",
+        "name": "포르투칼어"
+      },
+      {
+        "code": "pt-BR",
+        "name": "포르투칼어(브라질)"
+      },
+      {
+        "code": "ro",
+        "name": "루마니아어"
+      },
+      {
+        "code": "ru",
+        "name": "러시아어"
+      },
+      {
+        "code": "sl",
+        "name": "슬로베니아어"
+      },
+      {
+        "code": "es",
+        "name": "스페인어"
+      },
+      {
+        "code": "es-LT",
+        "name": "스페인어(라틴)"
+      },
+      {
+        "code": "th",
+        "name": "태국어"
+      },
+      {
+        "code": "tr-TR",
+        "name": "튀르키예어"
+      },
+      {
+        "code": "vi",
+        "name": "베트남어"
+      }
+    ]
   }
 ]
