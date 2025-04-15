@@ -115,6 +115,20 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
+      {/* 이런 학습자에게 유익해요! */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>이런 학습자에게 유익해요!</strong>
+        </div>
+        {/* bullet module */}
+        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+          <ul>
+            <li>제조실행시스템(MES) 적용방법 이해</li>
+            <li>제조실행시스템(MES)을 활용한 기업의 생산 및 품질관리 능력 배양</li>
+          </ul>
+        </div>
+      </div>
+
       {/* 커리큘럼 */}
       <div className={styles.info_box}>
         <div className={styles.tit_box}>
@@ -170,11 +184,16 @@ const CourseIntroductionCompoment = () => {
       <div className={styles.info_box}>
         <div className={styles.tit_box}>
           <strong>자료실</strong>
+          <Button>
+            <IcoDownload width={16} height={16} stroke="#131c30" />
+            전체 다운로드
+          </Button>
         </div>
 
         <div className={styles.data_box}>
           <Button>
-            <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.size}>200MB</span>
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
@@ -182,6 +201,7 @@ const CourseIntroductionCompoment = () => {
           </Button>
           <Button>
             <span>비즈니스 영어 단어&숙어집.pdf</span>
+            <span className={styles.size}>200MB</span>
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
