@@ -15,7 +15,7 @@ const MessageDetailComponent = () => {
   };
 
   return (
-    <form className={layoutStyles.inner} onSubmit={onSubmit(handleOnSubmit)}>
+    <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
         label={'상세정보'}
         underLine
@@ -24,7 +24,7 @@ const MessageDetailComponent = () => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'추가'}
             </Button>
-            <Button variant="save" size="sm">
+            <Button variant="save" size="sm" type={'submit'}>
               {'저장'}
             </Button>
           </div>
@@ -56,7 +56,7 @@ const MessageDetailComponent = () => {
           </FormRow>
         </ContentsRow>
         {/*사용여부*/}
-        <ContentsRow>
+        <ContentsRow type={'horizontal'} className={'inactive'}>
           <FormRow provider={provider}>
             <DynamicFormField name={'isUsed'} />
           </FormRow>
@@ -88,7 +88,7 @@ const formConfig: DynamicFormConfig = {
           value: '2',
         },
       ],
-      value: [],
+      value: '',
     },
     {
       name: 'labelMessageMultilingulKey',

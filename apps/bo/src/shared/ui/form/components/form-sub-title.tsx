@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 
+import styles from './form-sub-title.module.css';
+
 interface FormSubTitleProps {
   /** action node */
   actionNode?: ReactNode;
@@ -27,6 +29,7 @@ const FormSubTitleComponent = ({
   return (
     <div
       className={cn(
+        styles.root,
         'title_wrap',
         underLine && 'border-b border-solid',
         'flex items-center justify-between',
