@@ -7,12 +7,12 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { cn } from '@learnway/shared';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
+import { GridBox, useGridBox } from '@shared/ui/grid-box';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,
