@@ -70,6 +70,7 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -484,6 +485,13 @@ const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   path: '/contents/layout',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopUserSearchCheckRoute =
+  LayoutCommonPopUserSearchCheckImport.update({
+    id: '/common/pop-user-search-check',
+    path: '/common/pop-user-search-check',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   id: '/common/pop-user-search',
@@ -1272,6 +1280,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonPopUserSearchImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/pop-user-search-check': {
+      id: '/_layout/common/pop-user-search-check'
+      path: '/common/pop-user-search-check'
+      fullPath: '/common/pop-user-search-check'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchCheckImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/contents/layout': {
       id: '/_layout/contents/layout'
       path: '/contents/layout'
@@ -1636,6 +1651,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
+  LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -1672,6 +1688,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
+  LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -1787,6 +1804,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1891,6 +1909,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1998,6 +2017,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2104,6 +2124,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2207,6 +2228,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2312,6 +2334,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-user-search'
+    | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
@@ -2456,6 +2479,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-user-search",
+        "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
@@ -2768,6 +2792,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-user-search": {
       "filePath": "_layout/common/pop-user-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-user-search-check": {
+      "filePath": "_layout/common/pop-user-search-check.tsx",
       "parent": "/_layout"
     },
     "/_layout/contents/layout": {

@@ -276,7 +276,7 @@ export const guideData = [
     pageId: 'common/pop-user-search',
     screenId: 'NLP_BO_TMS_1100_02',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-15',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
   },
@@ -285,16 +285,16 @@ export const guideData = [
     pageId: 'common/pop-user-search-check',
     screenId: 'NLP_BO_TMS_1100_02',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-15',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: '공통/공통기능_카테고리 선택(Drag&Drop)',
     pageId: 'common/pop-category-select',
     screenId: 'NLP_BO_TMS_1100_02',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-15',
     lastUpdateDate: '',
     remarks: '레이아웃 작업완료', // 비고
   },
