@@ -486,7 +486,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'cdSeq',
-      type: 'text',
+      type: 'number',
       label: t('LABEL.cdSeq'),
       value: '',
     },

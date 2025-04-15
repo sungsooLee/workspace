@@ -26,6 +26,7 @@ const PageContainerComponent: FC<{
   notice?: boolean; // 화면내에 Notice 있는 경우
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
+  titleProp?: string; // menu상태로 title 못 갖고 올 경우에 title 세팅.
 }> = ({
   children,
   displayContent = true,
@@ -33,6 +34,7 @@ const PageContainerComponent: FC<{
   notice = false,
   tabs = false,
   scrollHidden = false,
+  titleProp,
 }) => {
   const [activeMenuDepth] = useActiveMenuDepthState();
   const [isFavorite, setIsFavorite] = useState(true);
@@ -85,7 +87,7 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
           <h3 className={styles.title}>
-            {title || '테스트 제목'}
+            {title || titleProp || '테스트 제목'}
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}

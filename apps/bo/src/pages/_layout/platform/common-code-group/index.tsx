@@ -12,11 +12,7 @@ import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/common-code-group/')({
   component: RouteComponent,
-  ...pageRouteConfig({
-    meta: {
-      title: '공통코드그룹관리',
-    },
-  }),
+  ...pageRouteConfig({}),
 });
 
 function RouteComponent() {
@@ -70,7 +66,7 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer scrollHidden={true}>
+    <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <CommonCodeGroupGrid

@@ -94,7 +94,12 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <NumericFormat
             {...props}
             getInputRef={ref}
-            className={cn(className)}
+            className={cn(
+              styles.input,
+              className,
+              borderNone ? styles.bd_none : '',
+              error ? styles.error : '',
+            )}
             value={value}
             thousandSeparator={thousandSeparator}
             placeholder={placeholder}

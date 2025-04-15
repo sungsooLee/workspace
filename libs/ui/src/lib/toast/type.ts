@@ -4,7 +4,8 @@ import * as Primitive from '@radix-ui/react-toast';
 export interface ToastConfig {
   title?: string;
   description?: string | ReactNode;
-  type?: 'info' | 'success' | 'warning'; // 기획 나오면 재정의
+  type?: 'info' | 'success' | 'warning' | 'error'; // 기획 나오면 재정의
+  duration?: number;
   onClose?: () => void;
 }
 
