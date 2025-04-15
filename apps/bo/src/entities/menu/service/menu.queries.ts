@@ -10,12 +10,12 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (tenantId?: number) =>
-    tenantId //&& params?.roleIds
+  all: (tenantNo?: number) =>
+    tenantNo //&& params?.roleIds
       ? {
           queryKey: queryKeys.all,
           queryFn: async () => {
-            const data = await MenuService.getMenus(tenantId);
+            const data = await MenuService.getMenus(tenantNo);
 
             return convertHierarchyNode(
               data?.children,
@@ -26,6 +26,9 @@ export const queryOptions = {
                   node['parentNode'] = cloneParentNode;
                 }
                 node['depth'] = depth;
+                if (!node?.key) {
+                  node['key'] = getRandomId();
+                }
                 return [node, node.children];
               },
             );

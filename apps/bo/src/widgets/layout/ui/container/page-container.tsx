@@ -2,16 +2,18 @@ import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } 
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
-import { ContentsButtons } from './slot/contents-buttons';
-import { PageContents } from './page-contents';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui';
+import { IcoStar } from '@learnway/icons';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { useActiveMenuDepthState } from '../../../../features/platform';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
-import { IcoStar } from '@learnway/icons';
+import { ContentsButtons } from './slot/contents-buttons';
+import { PageContents } from './page-contents';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
@@ -34,11 +36,12 @@ const PageContainerComponent: FC<{
   tabs = false,
   scrollHidden = false,
 }) => {
+  const { meta } = useCurrentRoute();
   const [activeMenuDepth] = useActiveMenuDepthState();
   const [isFavorite, setIsFavorite] = useState(true);
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.title;
+    return last(activeMenuDepth)?.menuName ?? meta?.title;
   }, [activeMenuDepth]);
 
   const ButtonSlot = Children.toArray(children).find(
@@ -85,7 +88,7 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
           <h3 className={styles.title}>
-            {title || '테스트 제목'}
+            {title}
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}

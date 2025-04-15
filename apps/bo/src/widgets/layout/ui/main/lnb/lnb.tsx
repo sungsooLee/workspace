@@ -25,7 +25,7 @@ function LNBComponent() {
   useEffect(() => {
     setOpenAll(false);
     setOpenAllButtonState(false);
-  }, [activeMenuDepth?.[0]?.title]);
+  }, [activeMenuDepth?.[0]?.menuName]);
 
   useEffect(() => {
     if (!activeMenuDepth?.[0]?.children) {
@@ -80,8 +80,9 @@ function LNBComponent() {
           <Button
             type="button"
             className={cn(styles.lnb_title_btn, buttonClass)}
-            onClick={() => handleOpenAll()}>
-            <span className={styles.lnb_title_text}>{activeMenuDepth[0].title}</span>
+            onClick={() => handleOpenAll()}
+          >
+            <span className={styles.lnb_title_text}>{activeMenuDepth[0].menuName}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>
         </h2>
@@ -99,7 +100,8 @@ function LNBComponent() {
         className={styles.btn_toggle}
         onlyIcon
         aria-expanded={toggleLnb}
-        onClick={handleToggleLnb}>
+        onClick={handleToggleLnb}
+      >
         <IcoArrowBackward width={20} height={20} stroke="#131C30" />
       </Button>
     </div>

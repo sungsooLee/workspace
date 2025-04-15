@@ -29,7 +29,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   const { closeAll } = useModalStore();
 
-  //useRenewalMenuStateFromRouting();
+  useRenewalMenuStateFromRouting();
   useGlobalRouterEvent({
     onBeforeLoad: () => {
       closeAll();
