@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { Grid } from '@learnway/ui';
+import { Grid, GridState } from '@learnway/ui';
 import { pageRouteConfig } from '../../../../features/auth';
 import { CommonCodeGroupGrid } from '../../../../features/common-code/ui/common-code-group-grid';
 import { useCommonCodeGroupList } from '../../../../entities/common-code/service/common-code-group.hook';
@@ -24,6 +24,10 @@ function RouteComponent() {
     size: 10,
   });
 
+  const [sortState, setSortState] = useState({
+    sort: '',
+  });
+
   // 검색 파라미터 상태
   const [searchParams, setSearchParams] = useState({
     cdGroupId: '',
@@ -40,16 +44,10 @@ function RouteComponent() {
     setPageState({ page: 0, size: newSize });
   };
 
-  // 검색 파라미터 변경 핸들러
-  //   const handleSearchChange = (newParams: Partial<typeof searchParams>) => {
-  //     setSearchParams({ ...searchParams, ...newParams });
-  //     // 검색 시 1페이지로 리셋
-  //     setPageState({ ...pageState, page: 1 });
-  //   };
-
   const { data: commonCodeGroupListData } = useCommonCodeGroupList(
     pageState.page,
     pageState.size,
+    sortState.sort,
     searchParams.cdGroupId,
     searchParams.cdGroupName,
     searchParams.isUsed,
@@ -65,6 +63,19 @@ function RouteComponent() {
     });
   };
 
+  const handleGridStateChange = (newState: GridState) => {
+    // sorting 정보가 있으면 처리
+    if (newState.sorting && newState.sorting.length > 0) {
+      const sortItem = newState.sorting[0];
+      const direction = sortItem.desc ? 'desc' : 'asc';
+      const sortValue = `${sortItem.id},${direction}`;
+      console.log('Sort value:', sortValue); // 디버깅용
+      setSortState({ sort: sortValue });
+    } else {
+      setSortState({ sort: '' });
+    }
+  };
+
   return (
     <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
       <MainContents>
@@ -77,6 +88,7 @@ function RouteComponent() {
           onPageSizeChange={handlePageSizeChange}
           totalRows={commonCodeGroupListData && commonCodeGroupListData.totalElements}
           state={searchParams}
+          onStateChange={handleGridStateChange} // 이 부분 추가
         />
       </MainContents>
     </PageContainer>

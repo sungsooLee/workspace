@@ -12,6 +12,7 @@ import {
   DynamicFormField,
   Grid,
   GridImperative,
+  GridState,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -123,6 +124,7 @@ const CommonCodeGridComponent = ({
   onPageSizeChange,
   state,
   totalRows,
+  onStateChange,
 }: any) => {
   const gridRef = useRef<GridImperative>(null);
   const router = useRouter();
@@ -149,6 +151,7 @@ const CommonCodeGridComponent = ({
     queryParams: {
       page,
       size,
+      sort: state.sort || '',
       cdGroupId: state.cdGroupId,
       cdGroupName: state.cdGroupName,
       isUsed: state.isUsed,
@@ -317,6 +320,13 @@ const CommonCodeGridComponent = ({
   // 폼 필드 활성화 여부 결정
   const isFormDisabled = formMode === FORM_MODE.NONE;
 
+  const handleStateChange = (newState: GridState) => {
+    console.log(newState);
+    if (onStateChange) {
+      onStateChange(newState);
+    }
+  };
+
   return (
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
@@ -342,6 +352,7 @@ const CommonCodeGridComponent = ({
               emptyMessage={
                 state.cdGroupId === '' ? '코드그룹을 먼저 검색해주세요.' : '조회 결과가 없습니다.'
               }
+              onStateChange={handleStateChange}
             />
           </div>
         </div>
@@ -396,7 +407,7 @@ const CommonCodeGridComponent = ({
                       const cdId = getValues('cdId');
                       const cdName = getValues('cdName');
                       router.navigate({
-                        to: '/platform/system/translation',
+                        to: '/platform/system/multilingual',
                         state: {
                           keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
                           multilinguaKey: cdId,
