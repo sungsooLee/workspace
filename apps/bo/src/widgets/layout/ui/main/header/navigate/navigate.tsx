@@ -30,8 +30,9 @@ function NavigateComponent() {
                       activeMenuDepthMenu?.[0]?.path === menu?.path)
                       ? styles._active
                       : ''
-                  }>
-                  {menu.title}
+                  }
+                >
+                  {menu.menuName}
                 </Link>
               </li>
             );

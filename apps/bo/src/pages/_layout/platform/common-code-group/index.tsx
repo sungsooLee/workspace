@@ -77,7 +77,7 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
+    <PageContainer scrollHidden={true}>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <CommonCodeGroupGrid

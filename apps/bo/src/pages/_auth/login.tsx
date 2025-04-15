@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/config';
-import { cn } from '@learnway/shared';
+import { cn, dateDiff } from '@learnway/shared';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
@@ -52,11 +52,20 @@ function RouteComponent() {
     });
   }, []);
 
-  const handleOnSubmit = async (data: any) => {
-    const user = await login(data);
-    const locale = user?.locale;
-    locale && (await setLanguage(locale));
-    router.navigate({ to: '/' });
+  const handleOnSubmit = async (values: any) => {
+    await login(values, {
+      onSuccess: async (data) => {
+        const locale = data?.locale;
+        locale && (await setLanguage(locale));
+
+        // 패스워드 만료 시 패스워드 변경 페이지로 이동
+        const diff = dateDiff(data.passwordExpireDate, new Date(), 'd');
+        if (diff && 0 <= diff) {
+          router.navigate({ to: '/change-password' });
+        }
+        router.navigate({ to: '/' });
+      },
+    });
   };
 
   return (

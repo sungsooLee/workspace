@@ -21,9 +21,25 @@ function RouteComponent() {
         활용한다.
       </p>
 
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`// import 
+      <div className="group">
+        <h3 className="guide_tit3">popover (기본)</h3>
+
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Popover
+              popoverContent={<PopoverContent />}
+              className=""
+              side="bottom"
+              align="end"
+              sideOffset={10}
+            >
+              팝오버 클릭요소
+            </Popover>
+          </div>
+        </div>
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import 
 import { memo } from 'react';
 import { Popover } from '@learnway/ui';
 
@@ -50,24 +66,7 @@ const PopOverCompoment = () => {
 };
 
 export const PopOverCompoment = memo(PopOverCompoment);`}</code>
-        </pre>
-      </div>
-
-      <div className="group">
-        <h3 className="guide_tit3">popover (기본)</h3>
-
-        <div className="flex_box">
-          <div className="desc w-full">
-            <Popover
-              popoverContent={<PopoverContent />}
-              className=""
-              side="bottom"
-              align="end"
-              sideOffset={10}
-            >
-              팝오버 클릭요소
-            </Popover>
-          </div>
+          </pre>
         </div>
       </div>
     </div>

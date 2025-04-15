@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { Button, DynamicFormField, useModal } from '@learnway/ui';
 import { LOCALES } from '@learnway/config';
 
+import { pageRouteConfig } from '../../../../features/auth';
+
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
@@ -21,6 +23,14 @@ import { useWidgets } from '../../../../entities/widgets';
 
 export const Route = createFileRoute('/_layout/platform/widget/view')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    validateState: {
+      widgetCode: {
+        format: 'string',
+        required: true,
+      },
+    },
+  }),
 });
 
 function RouteComponent() {
@@ -35,18 +45,14 @@ function RouteComponent() {
   }, []);
 
   const init = async () => {
-    const widget = (await widgetCode(widgetCode)) as any;
-    /*
-    const newTranslation = {
-      messageId: translation.messageId + '',
-      code: translation.code,
-      keyType: translation.keyType,
-      messageDesc: translation.messageDesc,
-      translations,
-      isUsed: true,
+    const widget = (await getWidget(widgetCode)) as any;
+    console.log('widget', widget);
+
+    const values = {
+      ...widget,
+      devices: [],
     };
-    fetchData(newTranslation);
-    */
+    fetchData(values);
   };
 
   /**
@@ -81,7 +87,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={`device`}>
+                <DynamicFormField name={`devices`}>
                   <FormTranslationBox />
                 </DynamicFormField>
               </FormRow>
@@ -91,7 +97,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={'secureContentYn'} />
+                <DynamicFormField name={'isSecurityContent'} />
               </FormRow>
             </ContentsRow>
           </MainContents>
@@ -104,41 +110,32 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'isCodeChecked',
-      type: 'switch',
+      name: 'widgetName',
+      type: 'text',
+      label: '위젯명',
       value: false,
     },
     {
-      name: 'code',
-      type: 'text',
-      label: '다국어 코드',
-      value: '',
-    },
-    {
-      name: 'messageId',
-      type: 'text',
-      label: 'messageId',
-      value: '',
-    },
-    {
-      name: 'keyType',
-      type: 'dropdown',
-      label: '다국어 분류',
-      value: 'COMMON_CODE',
-      options: [
-        { value: 'COMMON_CODE', label: '공통코드' },
-        { value: 'MENU', label: '메뉴' },
-        { value: 'ERROR', label: '에러' },
-        { value: 'LABEL', label: '라벨' },
-        { value: 'MESSAGE', label: '메세지' },
-        { value: 'CATEGORY', label: '카테고리' },
-      ],
-    },
-    {
-      name: 'messageDesc',
+      name: 'widgetDesc',
       type: 'textarea',
-      label: '설명',
+      label: '위젯설명',
       value: '',
+    },
+    {
+      name: 'devices',
+      type: 'checkbox-group',
+      label: '디바이스',
+      value: [],
+      options: [
+        {
+          value: 'pc',
+          label: 'PC',
+        },
+        {
+          value: 'mobile',
+          label: 'Mobile',
+        },
+      ],
     },
     {
       name: 'isUsed',
@@ -146,23 +143,17 @@ const formConfig: DynamicFormConfig = {
       label: '사용여부',
       value: true,
     },
+    {
+      name: 'isSecurityContent',
+      type: 'switch',
+      label: '보안컨텐츠여부',
+      format: 'boolean',
+      switchConfig: {
+        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
+      },
+      guideText: '보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다',
+      value: true,
+    },
   ],
-  validator: {
-    /*code: z.string().required(),*/
-    /*isCodeChecked: z.boolean(),
-    code: z
-      .string()
-      .required()
-      .superRefine((data: any, ctx) => {
-        console.log('data => ', data);
-        if (!data.isCodeChecked && data.code.trim() === '') {
-          ctx.addIssue({
-            path: ['code'],
-            message: 'isCodeChecked가 false일 때는 code가 비워져 있으면 안 됩니다.',
-          });
-        }
-      }),*/
-    /*translations: z.array(translationItemSchema),
-    keyType: z.string().required(),*/
-  },
+  validator: {},
 };
