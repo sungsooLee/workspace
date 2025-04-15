@@ -211,22 +211,22 @@
   }
 }
 
+.empty_wrap {
+  &:hover {
+    @apply !bg-transparent;
+  }
+}
+
 .empty_cell {
-  text-align: center;
-  padding: 40px 0;
-  width: 100%;
+  @apply w-full py-[40px] text-center;
 }
 
 .empty_message_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  @apply flex w-full items-center justify-center;
 }
 
 .empty_message {
-  color: #666;
-  font-size: 14px;
+  @apply button_bo_2_r text-[var(--gray6)];
 }
 
 .th_pinned_left {
