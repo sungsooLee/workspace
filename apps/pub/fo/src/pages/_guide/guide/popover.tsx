@@ -68,7 +68,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">popover</h3>
+        <h3 className="guide_tit3">popover (기본)</h3>
 
         <div className="flex_box">
           <div className="desc w-full">
@@ -123,7 +123,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">popover</h3>
+        <h3 className="guide_tit3">popover (dropdown 형식)</h3>
 
         <div className="flex_box">
           <div className="desc w-full">
