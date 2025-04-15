@@ -554,7 +554,7 @@ const Grid = forwardRef(
         if (data.length === 0) {
           return (
             <tbody>
-              <tr>
+              <tr className={styles.empty_wrap}>
                 <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
                   {renderEmptyMessage()}
                 </td>

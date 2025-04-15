@@ -1,7 +1,5 @@
 import React from 'react';
 import { cn } from '@learnway/shared';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import styles from './split-panel.module.css';
 
 interface SplitPanelProps {
@@ -13,14 +11,14 @@ interface SplitPanelProps {
 const SplitPanelComponent = ({ children, className }: SplitPanelProps) => {
   const [left, right] = children;
   return (
-    <div className={cn(styles.root, boxStyles.start, boxStyles.inner)}>
-      <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
+    <div className={cn(styles.root, styles.wrap)}>
+      <div className={cn(styles.container)}>
         {/*left*/}
-        <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
-          <div className={layoutStyles.inner_contents}>{left}</div>
+        <div className={cn(styles.inner)}>
+          <div className={styles.inner_contents}>{left}</div>
         </div>
         {/*right*/}
-        <div className={layoutStyles.inner}>{right}</div>
+        <div className={styles.inner}>{right}</div>
       </div>
     </div>
   );

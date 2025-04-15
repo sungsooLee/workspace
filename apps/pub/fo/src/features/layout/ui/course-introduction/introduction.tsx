@@ -7,7 +7,7 @@ import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../..
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
-import bulletStyles from '../../../../pages/_layout/course-introduction/bullet.module.css';
+import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
 import learnImg from '@learnway/styles/fo/assets/images/common/img_learn.png';
