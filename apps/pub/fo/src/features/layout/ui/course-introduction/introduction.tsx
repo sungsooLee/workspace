@@ -1,9 +1,10 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Avatar, Dropdown } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Avatar, Popover } from '@learnway/ui';
 import { IcoArrowDown, IcoDownload } from '@learnway/icons';
 import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../../features/layout';
 
+import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../../pages/_layout/course-introduction/bullet.module.css';
@@ -37,11 +38,18 @@ const CourseIntroductionCompoment = () => {
     items: ['수강신청만', '전체보기'],
     initialSelectedItem: 0, // 초기 선택값
   };
-  const [dropdownValues, setDropdownValues] = useState<string[]>([]);
-  const dropdownOptions = [
-    { value: 'option1', label: '옵션 1' },
-    { value: 'option2', label: '옵션 2' },
-  ];
+
+  // 교육일정 년도별 보기 popover
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>년도별 보기1</Button>
+        <Button>년도별 보기2</Button>
+        <Button>년도별 보기3</Button>
+        <Button>년도별 보기444444444</Button>
+      </div>
+    );
+  };
 
   // 교육일정 더보기 버튼
   const [btnEducation, setBtnEducation] = useState<boolean>(false);
@@ -241,7 +249,7 @@ const CourseIntroductionCompoment = () => {
               받아주세요.
             </li>
             <li>
-              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,{' '}
+              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
               <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
             </li>
             <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
@@ -316,14 +324,17 @@ const CourseIntroductionCompoment = () => {
           <span className={styles.date}>2026년</span>
           <div className={styles.filter}>
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
-            <Dropdown
-              options={dropdownOptions}
-              value={dropdownValues}
-              onChange={(selected) => setDropdownValues(selected)}
-              variant="text"
-              isMulti={false}
-              size={'sm'}
-            />
+            {/* dropdownpopover module */}
+            <Popover
+              className={`${dropdownPopoverStyles.btn} ${styles.drop_btn}`}
+              popoverContent={<DropdownPopoverCompoment />}
+              side="bottom"
+              align="end"
+              sideOffset={5}
+            >
+              <span>{'년도별 보기'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#131C30" />
+            </Popover>
           </div>
         </div>
         <div className={styles.education_box}>
