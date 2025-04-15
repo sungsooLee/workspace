@@ -82,7 +82,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
+      <PageContainer scrollHidden={true}>
         <ContentsButtons>
           <Button
             type="button"

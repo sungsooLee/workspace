@@ -31,7 +31,7 @@ function HeaderComponent() {
     const storedTenant = sessionStorage.getItem('ACTIVE_TENANT');
     return storedTenant ? JSON.parse(storedTenant) : null;
   });
-
+  /*
   useEffect(() => {
     if (!activeTenant && tenants?.length) {
       const tenantId = cookieService.get('LOGIN_TENANT_ID');
@@ -46,7 +46,7 @@ function HeaderComponent() {
     sessionStorage.setItem('ACTIVE_TENANT', JSON.stringify(tenant));
     window.location.reload();
   }, []);
-
+*/
   const handleMouseEnter = () => {
     if (isCategoryOpen) {
       setIsCategoryOpen(false);

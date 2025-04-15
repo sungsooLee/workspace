@@ -24,6 +24,7 @@ export function useAuthSignin() {
     ): Promise<AuthUser | undefined> => {
       try {
         return await login(payload, {
+          ...callback,
           onSuccess: async (data, variables, context) => {
             const menus = await asyncMenus(data.activeTenant?.tenantId);
 
@@ -32,7 +33,7 @@ export function useAuthSignin() {
             } else {
               cookieService.remove('SAVED_USER_ID');
             }
-            return updateMenu(menus);
+            callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
           },
         });
       } catch (e) {
