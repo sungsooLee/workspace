@@ -1,1 +1,1 @@
-export * from './service/companies.hook';
+export * from './service/label-messages.hook';
