@@ -10,7 +10,7 @@
           @apply mt-[8px];
         }
         a {
-          @apply text-[var(--secondary2)] underline;
+          @apply text-[var(--secondary2)] underline underline-offset-[2px];
         }
       }
     }

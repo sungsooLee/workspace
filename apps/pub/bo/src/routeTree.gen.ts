@@ -70,7 +70,9 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -486,11 +488,25 @@ const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutCommonPopUserSearchCheckRoute =
+  LayoutCommonPopUserSearchCheckImport.update({
+    id: '/common/pop-user-search-check',
+    path: '/common/pop-user-search-check',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   id: '/common/pop-user-search',
   path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopCategorySelectRoute =
+  LayoutCommonPopCategorySelectImport.update({
+    id: '/common/pop-category-select',
+    path: '/common/pop-category-select',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
@@ -1278,11 +1294,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/common/pop-category-select': {
+      id: '/_layout/common/pop-category-select'
+      path: '/common/pop-category-select'
+      fullPath: '/common/pop-category-select'
+      preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-user-search': {
       id: '/_layout/common/pop-user-search'
       path: '/common/pop-user-search'
       fullPath: '/common/pop-user-search'
       preLoaderRoute: typeof LayoutCommonPopUserSearchImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-user-search-check': {
+      id: '/_layout/common/pop-user-search-check'
+      path: '/common/pop-user-search-check'
+      fullPath: '/common/pop-user-search-check'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchCheckImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/contents/layout': {
@@ -1651,7 +1681,9 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
+  LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -1686,7 +1718,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
+  LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -1802,7 +1836,9 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1907,7 +1943,9 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2015,7 +2053,9 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2122,7 +2162,9 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2226,7 +2268,9 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2332,7 +2376,9 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-user-search'
+    | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
@@ -2477,7 +2523,9 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/common/pop-category-select",
         "/_layout/common/pop-user-search",
+        "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
@@ -2792,8 +2840,16 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
     },
+    "/_layout/common/pop-category-select": {
+      "filePath": "_layout/common/pop-category-select.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/common/pop-user-search": {
       "filePath": "_layout/common/pop-user-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-user-search-check": {
+      "filePath": "_layout/common/pop-user-search-check.tsx",
       "parent": "/_layout"
     },
     "/_layout/contents/layout": {
