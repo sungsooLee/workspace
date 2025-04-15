@@ -132,57 +132,57 @@ const useModal = (): useModalReturnValue => {
    * 서버 저장 완료 후 호출하여 사용자에게 성공 알림을 표시하는 함수입니다.
    *
    * @param props - AlertComponentProps 타입의 선택적 알림 설정 값
-   * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
+   * @returns Promise<any> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
    * await showSaveComplete(); // 기본 메시지 표시
    */
   const showSaveComplete = useCallback(
-    (props?: AlertComponentProps): Promise<boolean> =>
+    (props?: AlertComponentProps): Promise<any> =>
       alert({
         ...props,
         content: '정상적으로 저장되었습니다.',
         type: 'complete',
       }),
-    [openModal],
+    [],
   );
 
   /**
    * 서버 수정 완료 후 호출하여 사용자에게 성공 알림을 표시하는 함수입니다.
    *
    * @param props - AlertComponentProps 타입의 선택적 알림 설정 값
-   * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
+   * @returns Promise<any> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
    * await showUpdateComplete(); // 기본 메시지 표시
    */
   const showUpdateComplete = useCallback(
-    (props?: AlertComponentProps): Promise<boolean> =>
+    (props?: AlertComponentProps): Promise<any> =>
       alert({
         ...props,
         content: '정상적으로 수정되었습니다.',
         type: 'complete',
       }),
-    [openModal],
+    [],
   );
 
   /**
    * 서버 삭제 완료 후 호출하여 사용자에게 성공 알림을 표시하는 함수입니다.
    *
    * @param props - AlertComponentProps 타입의 선택적 알림 설정 값
-   * @returns Promise<boolean> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
+   * @returns Promise<any> - 알림 표시 이후의 처리를 위한 Promise 객체 반환
    *
    * 사용 예:
    * await showDeleteComplete(); // 기본 메시지 표시
    */
   const showDeleteComplete = useCallback(
-    (props?: AlertComponentProps): Promise<boolean> =>
+    (props?: AlertComponentProps): Promise<any> =>
       alert({
         ...props,
         content: '정상적으로 삭제되었습니다.',
         type: 'complete',
       }),
-    [openModal],
+    [],
   );
 
   return {
