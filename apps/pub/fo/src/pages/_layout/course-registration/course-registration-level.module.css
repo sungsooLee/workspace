@@ -31,7 +31,7 @@
             @apply gap-[8px];
             button {
               span {
-                @apply !text-[var(--gray8)];
+                @apply button_3_r !text-[var(--gray8)];
               }
               &[class*='active'] {
                 @apply !border-[var(--primary1)];
