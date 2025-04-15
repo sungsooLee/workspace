@@ -6,7 +6,7 @@ import { Tenant } from '../../../types';
 export default class TranslationService {
   static fetchTranslations(params: any) {
     console.log('params => ', params);
-    return httpService.get<any>(`${PMSApiPrefix()}/i18n`, params);
+    return httpService.get<any>(`${PMSApiPrefix()}/multilingual`, params);
   }
   static fetchTranslation(messageId: string) {
     return httpService.get<any>(`/pms-module/admin/api/v1/i18n/${messageId}`);
