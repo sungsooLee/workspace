@@ -1,0 +1,25 @@
+.start {
+  &.package_wrap {
+    @apply px-[20px] pb-[80px];
+    .thumbnail_img {
+      button {
+        @apply relative;
+        .img_play {
+          @apply absolute left-1/2 top-1/2 h-[56px] w-[56px] -translate-x-1/2 -translate-y-1/2;
+          img {
+            @apply h-[56px] w-[56px];
+          }
+        }
+      }
+      img {
+        @apply w-full overflow-hidden rounded-[16px];
+      }
+    }
+    .sub_box {
+      @apply relative mt-[16px] pb-[28px];
+      &::after {
+        @apply absolute bottom-0 left-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
+      }
+    }
+  }
+}
