@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
 import React from 'react';
 import { FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -8,10 +8,14 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 
 const MessageDetailComponent = () => {
   const { t } = useTranslation();
+  const { showSaveComplete } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
-  const handleOnSubmit = (data: any) => {
+  const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
+
+    const x = await showSaveComplete();
+    console.log(x);
   };
 
   return (
@@ -30,7 +34,7 @@ const MessageDetailComponent = () => {
           </div>
         }
       />
-      <div className={layoutStyles.inner_contents}>
+      <div className="inner_contents">
         {/*분류*/}
         <ContentsRow>
           <FormRow provider={provider}>
@@ -43,7 +47,7 @@ const MessageDetailComponent = () => {
             <DynamicFormField name={'labelMessageMultilingulKey'} />
           </FormRow>
         </ContentsRow>
-        {/*메세*/}
+        {/*메세지*/}
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'labelMessageName'} />
@@ -53,6 +57,12 @@ const MessageDetailComponent = () => {
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'labelMessageDesc'} />
+          </FormRow>
+        </ContentsRow>
+        {/*사용여부*/}
+        <ContentsRow type={'horizontal'} className={'inactive'}>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'isUsed'} />
           </FormRow>
         </ContentsRow>
         {/*사용여부*/}

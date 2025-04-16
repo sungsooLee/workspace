@@ -7,8 +7,7 @@ import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { IcoArrowBackward } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui';
-
-import { useActiveMenuDepthState } from '../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/container/container-header.module.css';
 
@@ -24,7 +23,7 @@ function ContainerHeaderComponent() {
   const [activeMenuDepth] = useActiveMenuDepthState();
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.title;
+    return last(activeMenuDepth)?.menuName ?? meta?.title;
   }, [activeMenuDepth]);
 
   const handleBack = () => {
@@ -43,7 +42,7 @@ function ContainerHeaderComponent() {
         <Button onClick={handleBack}>
           <IcoArrowBackward width={24} height={24} stroke="#131c30"></IcoArrowBackward>
         </Button>
-        <h2>{t(meta?.title ?? title)}</h2>
+        <h2>{t(title)}</h2>
       </div>
     </div>
   );

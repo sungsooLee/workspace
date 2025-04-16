@@ -3,7 +3,7 @@ import { Button, ContentsRow, Input, PhoneNumber, useModal } from '@learnway/ui'
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { IcoCaution } from '@learnway/icons';
-import { AddressPopup } from '../../../features/layout';
+import { AddressPopup, EducationPlacePopup } from '../../../features/layout';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -56,7 +56,16 @@ function RouteComponent() {
                 <dt>교육장소</dt>
                 <dd>
                   마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-                  <Button variant="gray2" size="xs">
+                  <Button
+                    variant="gray2"
+                    size="xs"
+                    onClick={() =>
+                      openModal({
+                        width: 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
                     약도보기
                   </Button>
                 </dd>

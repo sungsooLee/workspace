@@ -1,3 +1,13 @@
 .root {
-
+  &.title_wrap {
+    @apply flex flex-wrap justify-between pb-[12px];
+    .title {
+      @apply flex h-[32px] items-center;
+    }
+    .input_area {
+    }
+    &.line {
+      @apply border-b-[1px] border-solid border-[var(--gray4)];
+    }
+  }
 }

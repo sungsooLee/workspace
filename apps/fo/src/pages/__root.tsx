@@ -5,9 +5,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
-import { PageRouteContext } from '@learnway/config';
-
-import { useRenewalMenuStateFromRouting } from '../widgets/layout';
+import { PageRouteContext } from '@learnway/shared';
+import { useRenewalMenuStateFromRouting } from '@learnway/auth';
 
 const NotFound = () => {
   return (
@@ -26,7 +25,7 @@ export const Route = createRootRouteWithContext<PageRouteContext>()({
 function RootComponent() {
   const { closeAll } = useModalStore();
 
-  //useRenewalMenuStateFromRouting();
+  useRenewalMenuStateFromRouting();
 
   // router event subscribe
   useGlobalRouterEvent({

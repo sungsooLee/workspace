@@ -29,26 +29,28 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref,
   ) => {
-    const [inputValue, setInputValue] = useState(value);
+    // const [inputValue, setInputValue] = useState(value);
 
-    useEffect(() => {
-      setInputValue(value);
-    }, [value]);
+    // useEffect(() => {
+    //   setInputValue(value);
+    // }, [value]);
 
-    useEffect(() => {
-      if (value !== inputValue) {
-        const event = {
-          target: {
-            value: inputValue,
-          },
-        } as React.ChangeEvent<HTMLTextAreaElement>;
-        onChange?.(event);
-      }
-    }, [inputValue]);
+    // useEffect(() => {
+    //   if (value !== inputValue) {
+    //     const event = {
+    //       target: {
+    //         value: inputValue,
+    //       },
+    //     } as React.ChangeEvent<HTMLTextAreaElement>;
+    //     onChange?.(event);
+    //   }
+    // }, [inputValue]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setInputValue(e.target.value);
-    };
+    // const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //   setInputValue(e.target.value);
+    // };
+
+    const currentLength = (value as string)?.length || 0;
 
     return (
       <div
@@ -72,13 +74,14 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
             size && styles[size],
           )}
           disabled={disabled}
-          onChange={handleChange}
+          readOnly={readOnly}
+          onChange={onChange}
           {...props}
         />
         {/* 입력 글자수 */}
         {maxLength > 0 && (
           <p className={styles.text_limit}>
-            <span className={styles.num}>{(inputValue?.toString() || '').length}</span>/{maxLength}
+            <span className={styles.num}>{currentLength}</span>/{maxLength}
           </p>
         )}
       </div>

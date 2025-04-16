@@ -1,4 +1,2 @@
 export * from './ui/auth/auth-layout';
 export * from './ui/main/layout';
-
-export * from './service/menu.service';

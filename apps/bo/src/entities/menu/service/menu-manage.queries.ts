@@ -16,7 +16,7 @@ export const menuManageQueryOptions = {
   }),
   //메뉴 목록 조회
   tree: (menuScopeCode: string, locale: string) => ({
-    queryKey: queryKeys.tree(),
+    queryKey: [...queryKeys.tree(), menuScopeCode],
     queryFn: () => MenuMangeService.fetchMenuTree(menuScopeCode, locale),
     cacheTime: 0,
     staleTime: 0,

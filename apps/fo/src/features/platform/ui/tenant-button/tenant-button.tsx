@@ -4,7 +4,7 @@ import { useCreation } from 'ahooks';
 
 import { Button, useModal } from '@learnway/ui';
 import { IcoCheck, IcoArrowDown } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import { TenantModal } from './tenant-modal';
 import { Tenant } from '../../../../types';

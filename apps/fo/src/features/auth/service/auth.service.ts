@@ -1,9 +1,7 @@
-import { useLoginUser, useReissue, useUpdateUser } from '@learnway/config';
-import type { AuthUser } from '@learnway/config';
+import { useLoginUser, useReissue, useUpdateUser, useAsycFetchMenus } from '@learnway/auth';
+import type { AuthUser } from '@learnway/auth';
 
 import { cookieService, MutateCallback } from '@learnway/shared';
-
-import { useAsycFetchMenus } from '../../../entities/menu';
 
 interface LoginParams {
   username: string;
@@ -24,6 +22,7 @@ export function useAuthSignin() {
     ): Promise<AuthUser | undefined> => {
       try {
         return await login(payload, {
+          ...callback,
           onSuccess: async (data, variables, context) => {
             const menus = await asyncMenus(data.activeTenant?.tenantId);
 
@@ -32,7 +31,7 @@ export function useAuthSignin() {
             } else {
               cookieService.remove('SAVED_USER_ID');
             }
-            return updateMenu(menus);
+            callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
           },
         });
       } catch (e) {

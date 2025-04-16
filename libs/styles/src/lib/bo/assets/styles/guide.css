@@ -168,7 +168,17 @@
           .desc {
             @apply flex items-center gap-[20px];
             &.col {
-              @apply flex-wrap justify-start;
+              @apply w-full flex-wrap justify-start;
+            }
+          }
+          + .info_ul {
+            @apply mt-[20px];
+          }
+
+          + .code_example {
+            margin-bottom: 50px;
+            code {
+              margin-top: 10px;
             }
           }
 
@@ -197,6 +207,9 @@
         + .info_ul {
           @apply mt-[20px];
         }
+        a {
+          @apply text-[#33CCED] underline;
+        }
       }
       img {
         border-radius: 0;
@@ -208,6 +221,14 @@
         border-radius: 10px;
         a {
           @apply text-[#000] underline;
+        }
+        + .group {
+          .guide_tit3 {
+            @apply mt-[20px];
+          }
+        }
+        + p {
+          @apply mt-[20px];
         }
       }
       .info_ul {
@@ -415,11 +436,22 @@
       }
     }
   }
+
   .pub_table {
-    width: 100%;
+    @apply w-full;
     caption {
       padding: 0 20px 20px;
       font-size: 2rem;
+    }
+    tr.native {
+      td {
+        @apply bg-[#f4f4f4] opacity-40;
+      }
+    }
+    tr.cancel {
+      td {
+        @apply line-through;
+      }
     }
     th {
       background-color: #f4f4f4;
@@ -429,14 +461,25 @@
     td {
       padding: 10px;
       font-size: 1.4rem;
+      white-space: pre;
       &.completed {
         color: var(--status3);
       }
-      &.menu_name {
-        @apply text-left;
+      &.status {
+        color: var(--status2);
+      }
+      &.native {
+        color: var(--gray10);
+      }
+      &.cancel {
+        color: var(--gray10);
+      }
+      button {
+        color: var(--status3);
       }
     }
     td {
+      @apply text-[13px];
       text-align: center;
       border-bottom: 1px solid #eee;
       > a {
@@ -448,7 +491,7 @@
           @apply text-[#00AFD5];
         }
         .screen {
-          @apply ml-[5px] text-[12px] text-[#999];
+          @apply text-[12px] text-[#999];
         }
       }
       &.remarks {
@@ -465,5 +508,10 @@
     font-size: 1.4rem;
     text-align: center;
     padding: 3px 8px;
+  }
+
+  .btn_top {
+    @apply absolute bottom-[50px] right-[30px] block flex h-[30px] w-[30px] items-center justify-center rounded-full border border-solid border-[#222] bg-[#ffffff] text-center text-[12px];
+    filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.1));
   }
 }

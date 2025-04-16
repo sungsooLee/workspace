@@ -6,15 +6,16 @@ import {
   Input,
   PhoneNumber,
   OptionCard,
+  OptionCardItem,
   DatePicker,
   useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { getRandomId } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
+import { EducationPlacePopup } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -27,15 +28,19 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+
   const gender = [
-    { label: '상관없음', value: getRandomId() },
-    { label: '남자', value: getRandomId() },
-    { label: '여자', value: getRandomId() },
+    { label: '상관없음', value: 'value1' },
+    { label: '남자', value: 'value2' },
+    { label: '여자', value: 'value3' },
   ];
   const [date, setDate] = useState(new Date());
   const handleDate = (value: any) => {
     setDate(value);
   };
+
+  const [optionCardValue, setOptionCardValue] = useState<string[]>();
 
   const { alert: openAlert } = useModal();
   const alert = () => {
@@ -86,7 +91,16 @@ function RouteComponent() {
                 <dt>교육장소</dt>
                 <dd>
                   마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-                  <Button variant="gray2" size="xs">
+                  <Button
+                    variant="gray2"
+                    size="xs"
+                    onClick={() =>
+                      openModal({
+                        width: 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
                     약도보기
                   </Button>
                 </dd>
@@ -166,7 +180,13 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>강사 선호 성별</span>
                 </div>
                 <div className={formStyles.input_box}>
-                  <OptionCard className={styles.option_card} cols={3} options={gender} />
+                  <OptionCard
+                    value={optionCardValue}
+                    className={styles.option_card}
+                    cols={3}
+                    options={gender}
+                    onOptionSelect={(option: OptionCardItem) => setOptionCardValue(option.value)}
+                  />
                 </div>
               </div>
             </ContentsRow>

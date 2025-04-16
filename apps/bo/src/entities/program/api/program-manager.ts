@@ -13,7 +13,7 @@ export default class ProgramManagerService {
    * @param apiScopeCode 'FO' / 'BO'
    * @returns
    */
-  static fetchPrograms(rootTreeId: string, apiScopeCode: string): Promise<any> {
+  static fetchPrograms(apiScopeCode: string): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/apis/tree?apiScopeCode=${apiScopeCode}`);
   }
 }

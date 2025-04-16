@@ -2,16 +2,17 @@ import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } 
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
-import { ContentsButtons } from './slot/contents-buttons';
-import { PageContents } from './page-contents';
-
-import { useActiveMenuDepthState } from '../../../../features/platform';
-
-import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
+import { useCurrentRoute } from '@learnway/hooks';
+import { useActiveMenuDepthState } from '@learnway/auth';
+
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
+import { ContentsButtons } from './slot/contents-buttons';
+import { PageContents } from './page-contents';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
@@ -26,7 +27,6 @@ const PageContainerComponent: FC<{
   notice?: boolean; // 화면내에 Notice 있는 경우
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
-  titleProp?: string; // menu상태로 title 못 갖고 올 경우에 title 세팅.
 }> = ({
   children,
   displayContent = true,
@@ -34,13 +34,13 @@ const PageContainerComponent: FC<{
   notice = false,
   tabs = false,
   scrollHidden = false,
-  titleProp,
 }) => {
+  const { meta } = useCurrentRoute();
   const [activeMenuDepth] = useActiveMenuDepthState();
   const [isFavorite, setIsFavorite] = useState(true);
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.title;
+    return last(activeMenuDepth)?.menuName ?? meta?.title;
   }, [activeMenuDepth]);
 
   const ButtonSlot = Children.toArray(children).find(
@@ -87,7 +87,7 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
           <h3 className={styles.title}>
-            {title || titleProp || '테스트 제목'}
+            {title}
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}

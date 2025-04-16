@@ -53,6 +53,7 @@ import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } f
 import { Route as LayoutPmsMenuTenantPlatformManagementImport } from './pages/_layout/pms/menu-tenant-platform-management'
 import { Route as LayoutPmsMenuTenantPlatformLearningMenuImport } from './pages/_layout/pms/menu-tenant-platform-learning-menu'
 import { Route as LayoutPmsMenuTenantPlatformCategoryMenuImport } from './pages/_layout/pms/menu-tenant-platform-category-menu'
+import { Route as LayoutPmsMenuTenantMainwidgetManagementImport } from './pages/_layout/pms/menu-tenant-mainwidget-management'
 import { Route as LayoutPmsMenuTenantAttributeManagementImport } from './pages/_layout/pms/menu-tenant-attribute-management'
 import { Route as LayoutPmsMenuPlatformCompanyDetailImport } from './pages/_layout/pms/menu-platform-company-detail'
 import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout/pms/menu-platform-common-group'
@@ -70,7 +71,9 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -86,6 +89,7 @@ import { Route as GuideGuideSearchBoxImport } from './pages/_guide/guide/search-
 import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
 import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
 import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePopoverImport } from './pages/_guide/guide/popover'
 import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
 import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
 import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
@@ -96,6 +100,7 @@ import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
 import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
 import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
 import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
 import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
@@ -373,6 +378,13 @@ const LayoutPmsMenuTenantPlatformCategoryMenuRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutPmsMenuTenantMainwidgetManagementRoute =
+  LayoutPmsMenuTenantMainwidgetManagementImport.update({
+    id: '/pms/menu-tenant-mainwidget-management',
+    path: '/pms/menu-tenant-mainwidget-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuTenantAttributeManagementRoute =
   LayoutPmsMenuTenantAttributeManagementImport.update({
     id: '/pms/menu-tenant-attribute-management',
@@ -484,11 +496,25 @@ const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutCommonPopUserSearchCheckRoute =
+  LayoutCommonPopUserSearchCheckImport.update({
+    id: '/common/pop-user-search-check',
+    path: '/common/pop-user-search-check',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   id: '/common/pop-user-search',
   path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopCategorySelectRoute =
+  LayoutCommonPopCategorySelectImport.update({
+    id: '/common/pop-category-select',
+    path: '/common/pop-category-select',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
@@ -580,6 +606,12 @@ const GuideGuideProgressRoute = GuideGuideProgressImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuidePopoverRoute = GuideGuidePopoverImport.update({
+  id: '/guide/popover',
+  path: '/guide/popover',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
   id: '/guide/phone-number',
   path: '/guide/phone-number',
@@ -637,6 +669,12 @@ const GuideGuideInputRoute = GuideGuideInputImport.update({
 const GuideGuideInfoRoute = GuideGuideInfoImport.update({
   id: '/guide/info',
   path: '/guide/info',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideImageRoute = GuideGuideImageImport.update({
+  id: '/guide/image',
+  path: '/guide/image',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1075,6 +1113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideIconImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/image': {
+      id: '/_guide/guide/image'
+      path: '/guide/image'
+      fullPath: '/guide/image'
+      preLoaderRoute: typeof GuideGuideImageImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/info': {
       id: '/_guide/guide/info'
       path: '/guide/info'
@@ -1143,6 +1188,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/phone-number'
       fullPath: '/guide/phone-number'
       preLoaderRoute: typeof GuideGuidePhoneNumberImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/popover': {
+      id: '/_guide/guide/popover'
+      path: '/guide/popover'
+      fullPath: '/guide/popover'
+      preLoaderRoute: typeof GuideGuidePopoverImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/progress': {
@@ -1250,11 +1302,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/common/pop-category-select': {
+      id: '/_layout/common/pop-category-select'
+      path: '/common/pop-category-select'
+      fullPath: '/common/pop-category-select'
+      preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-user-search': {
       id: '/_layout/common/pop-user-search'
       path: '/common/pop-user-search'
       fullPath: '/common/pop-user-search'
       preLoaderRoute: typeof LayoutCommonPopUserSearchImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-user-search-check': {
+      id: '/_layout/common/pop-user-search-check'
+      path: '/common/pop-user-search-check'
+      fullPath: '/common/pop-user-search-check'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchCheckImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/contents/layout': {
@@ -1374,6 +1440,13 @@ declare module '@tanstack/react-router' {
       path: '/pms/menu-tenant-attribute-management'
       fullPath: '/pms/menu-tenant-attribute-management'
       preLoaderRoute: typeof LayoutPmsMenuTenantAttributeManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-tenant-mainwidget-management': {
+      id: '/_layout/pms/menu-tenant-mainwidget-management'
+      path: '/pms/menu-tenant-mainwidget-management'
+      fullPath: '/pms/menu-tenant-mainwidget-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantMainwidgetManagementImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/menu-tenant-platform-category-menu': {
@@ -1539,6 +1612,7 @@ interface GuideRouteChildren {
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
   GuideGuideIconRoute: typeof GuideGuideIconRoute
+  GuideGuideImageRoute: typeof GuideGuideImageRoute
   GuideGuideInfoRoute: typeof GuideGuideInfoRoute
   GuideGuideInputRoute: typeof GuideGuideInputRoute
   GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
@@ -1549,6 +1623,7 @@ interface GuideRouteChildren {
   GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
   GuideGuidePanelRoute: typeof GuideGuidePanelRoute
   GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
+  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
   GuideGuideProgressRoute: typeof GuideGuideProgressRoute
   GuideGuideRadioRoute: typeof GuideGuideRadioRoute
   GuideGuideRespondRoute: typeof GuideGuideRespondRoute
@@ -1585,6 +1660,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
   GuideGuideIconRoute: GuideGuideIconRoute,
+  GuideGuideImageRoute: GuideGuideImageRoute,
   GuideGuideInfoRoute: GuideGuideInfoRoute,
   GuideGuideInputRoute: GuideGuideInputRoute,
   GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
@@ -1595,6 +1671,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuidePaginationRoute: GuideGuidePaginationRoute,
   GuideGuidePanelRoute: GuideGuidePanelRoute,
   GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
+  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
   GuideGuideProgressRoute: GuideGuideProgressRoute,
   GuideGuideRadioRoute: GuideGuideRadioRoute,
   GuideGuideRespondRoute: GuideGuideRespondRoute,
@@ -1619,7 +1696,9 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
+  LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -1637,6 +1716,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
   LayoutPmsMenuPlatformCompanyDetailRoute: typeof LayoutPmsMenuPlatformCompanyDetailRoute
   LayoutPmsMenuTenantAttributeManagementRoute: typeof LayoutPmsMenuTenantAttributeManagementRoute
+  LayoutPmsMenuTenantMainwidgetManagementRoute: typeof LayoutPmsMenuTenantMainwidgetManagementRoute
   LayoutPmsMenuTenantPlatformCategoryMenuRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
   LayoutPmsMenuTenantPlatformLearningMenuRoute: typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
   LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
@@ -1654,7 +1734,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
+  LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -1676,6 +1758,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuPlatformCompanyDetailRoute,
   LayoutPmsMenuTenantAttributeManagementRoute:
     LayoutPmsMenuTenantAttributeManagementRoute,
+  LayoutPmsMenuTenantMainwidgetManagementRoute:
+    LayoutPmsMenuTenantMainwidgetManagementRoute,
   LayoutPmsMenuTenantPlatformCategoryMenuRoute:
     LayoutPmsMenuTenantPlatformCategoryMenuRoute,
   LayoutPmsMenuTenantPlatformLearningMenuRoute:
@@ -1743,6 +1827,7 @@ export interface FileRoutesByFullPath {
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1753,6 +1838,7 @@ export interface FileRoutesByFullPath {
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/guide/popover': typeof GuideGuidePopoverRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1768,7 +1854,9 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1786,6 +1874,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
+  '/pms/menu-tenant-mainwidget-management': typeof LayoutPmsMenuTenantMainwidgetManagementRoute
   '/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
   '/pms/menu-tenant-platform-learning-menu': typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
@@ -1846,6 +1935,7 @@ export interface FileRoutesByTo {
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
   '/guide/icon': typeof GuideGuideIconRoute
+  '/guide/image': typeof GuideGuideImageRoute
   '/guide/info': typeof GuideGuideInfoRoute
   '/guide/input': typeof GuideGuideInputRoute
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1856,6 +1946,7 @@ export interface FileRoutesByTo {
   '/guide/pagination': typeof GuideGuidePaginationRoute
   '/guide/panel': typeof GuideGuidePanelRoute
   '/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/guide/popover': typeof GuideGuidePopoverRoute
   '/guide/progress': typeof GuideGuideProgressRoute
   '/guide/radio': typeof GuideGuideRadioRoute
   '/guide/respond': typeof GuideGuideRespondRoute
@@ -1871,7 +1962,9 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1889,6 +1982,7 @@ export interface FileRoutesByTo {
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
+  '/pms/menu-tenant-mainwidget-management': typeof LayoutPmsMenuTenantMainwidgetManagementRoute
   '/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
   '/pms/menu-tenant-platform-learning-menu': typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
@@ -1952,6 +2046,7 @@ export interface FileRoutesById {
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
   '/_guide/guide/icon': typeof GuideGuideIconRoute
+  '/_guide/guide/image': typeof GuideGuideImageRoute
   '/_guide/guide/info': typeof GuideGuideInfoRoute
   '/_guide/guide/input': typeof GuideGuideInputRoute
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
@@ -1962,6 +2057,7 @@ export interface FileRoutesById {
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
   '/_guide/guide/panel': typeof GuideGuidePanelRoute
   '/_guide/guide/phone-number': typeof GuideGuidePhoneNumberRoute
+  '/_guide/guide/popover': typeof GuideGuidePopoverRoute
   '/_guide/guide/progress': typeof GuideGuideProgressRoute
   '/_guide/guide/radio': typeof GuideGuideRadioRoute
   '/_guide/guide/respond': typeof GuideGuideRespondRoute
@@ -1977,7 +2073,9 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
+  '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -1995,6 +2093,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
   '/_layout/pms/menu-platform-company-detail': typeof LayoutPmsMenuPlatformCompanyDetailRoute
   '/_layout/pms/menu-tenant-attribute-management': typeof LayoutPmsMenuTenantAttributeManagementRoute
+  '/_layout/pms/menu-tenant-mainwidget-management': typeof LayoutPmsMenuTenantMainwidgetManagementRoute
   '/_layout/pms/menu-tenant-platform-category-menu': typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
   '/_layout/pms/menu-tenant-platform-learning-menu': typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
   '/_layout/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
@@ -2057,6 +2156,7 @@ export interface FileRouteTypes {
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/input'
     | '/guide/input-timer'
@@ -2067,6 +2167,7 @@ export interface FileRouteTypes {
     | '/guide/pagination'
     | '/guide/panel'
     | '/guide/phone-number'
+    | '/guide/popover'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -2082,7 +2183,9 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2100,6 +2203,7 @@ export interface FileRouteTypes {
     | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
     | '/pms/menu-tenant-attribute-management'
+    | '/pms/menu-tenant-mainwidget-management'
     | '/pms/menu-tenant-platform-category-menu'
     | '/pms/menu-tenant-platform-learning-menu'
     | '/pms/menu-tenant-platform-management'
@@ -2159,6 +2263,7 @@ export interface FileRouteTypes {
     | '/guide/form'
     | '/guide/grid'
     | '/guide/icon'
+    | '/guide/image'
     | '/guide/info'
     | '/guide/input'
     | '/guide/input-timer'
@@ -2169,6 +2274,7 @@ export interface FileRouteTypes {
     | '/guide/pagination'
     | '/guide/panel'
     | '/guide/phone-number'
+    | '/guide/popover'
     | '/guide/progress'
     | '/guide/radio'
     | '/guide/respond'
@@ -2184,7 +2290,9 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/common/pop-category-select'
     | '/common/pop-user-search'
+    | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learningSearch'
@@ -2202,6 +2310,7 @@ export interface FileRouteTypes {
     | '/pms/menu-platform-common-group'
     | '/pms/menu-platform-company-detail'
     | '/pms/menu-tenant-attribute-management'
+    | '/pms/menu-tenant-mainwidget-management'
     | '/pms/menu-tenant-platform-category-menu'
     | '/pms/menu-tenant-platform-learning-menu'
     | '/pms/menu-tenant-platform-management'
@@ -2263,6 +2372,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
     | '/_guide/guide/icon'
+    | '/_guide/guide/image'
     | '/_guide/guide/info'
     | '/_guide/guide/input'
     | '/_guide/guide/input-timer'
@@ -2273,6 +2383,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/pagination'
     | '/_guide/guide/panel'
     | '/_guide/guide/phone-number'
+    | '/_guide/guide/popover'
     | '/_guide/guide/progress'
     | '/_guide/guide/radio'
     | '/_guide/guide/respond'
@@ -2288,7 +2399,9 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-user-search'
+    | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learningSearch'
@@ -2306,6 +2419,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-platform-common-group'
     | '/_layout/pms/menu-platform-company-detail'
     | '/_layout/pms/menu-tenant-attribute-management'
+    | '/_layout/pms/menu-tenant-mainwidget-management'
     | '/_layout/pms/menu-tenant-platform-category-menu'
     | '/_layout/pms/menu-tenant-platform-learning-menu'
     | '/_layout/pms/menu-tenant-platform-management'
@@ -2397,6 +2511,7 @@ export const routeTree = rootRoute
         "/_guide/guide/form",
         "/_guide/guide/grid",
         "/_guide/guide/icon",
+        "/_guide/guide/image",
         "/_guide/guide/info",
         "/_guide/guide/input",
         "/_guide/guide/input-timer",
@@ -2407,6 +2522,7 @@ export const routeTree = rootRoute
         "/_guide/guide/pagination",
         "/_guide/guide/panel",
         "/_guide/guide/phone-number",
+        "/_guide/guide/popover",
         "/_guide/guide/progress",
         "/_guide/guide/radio",
         "/_guide/guide/respond",
@@ -2431,7 +2547,9 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/common/pop-category-select",
         "/_layout/common/pop-user-search",
+        "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learningSearch",
@@ -2449,6 +2567,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-platform-common-group",
         "/_layout/pms/menu-platform-company-detail",
         "/_layout/pms/menu-tenant-attribute-management",
+        "/_layout/pms/menu-tenant-mainwidget-management",
         "/_layout/pms/menu-tenant-platform-category-menu",
         "/_layout/pms/menu-tenant-platform-learning-menu",
         "/_layout/pms/menu-tenant-platform-management",
@@ -2638,6 +2757,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/icon.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/image": {
+      "filePath": "_guide/guide/image.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/info": {
       "filePath": "_guide/guide/info.tsx",
       "parent": "/_guide"
@@ -2676,6 +2799,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/phone-number": {
       "filePath": "_guide/guide/phone-number.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/popover": {
+      "filePath": "_guide/guide/popover.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/progress": {
@@ -2738,8 +2865,16 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
     },
+    "/_layout/common/pop-category-select": {
+      "filePath": "_layout/common/pop-category-select.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/common/pop-user-search": {
       "filePath": "_layout/common/pop-user-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-user-search-check": {
+      "filePath": "_layout/common/pop-user-search-check.tsx",
       "parent": "/_layout"
     },
     "/_layout/contents/layout": {
@@ -2808,6 +2943,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-tenant-attribute-management": {
       "filePath": "_layout/pms/menu-tenant-attribute-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-tenant-mainwidget-management": {
+      "filePath": "_layout/pms/menu-tenant-mainwidget-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-tenant-platform-category-menu": {

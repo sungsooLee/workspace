@@ -1,4 +1,4 @@
-import React, { Children, FC, memo, useMemo } from 'react';
+import React, { Children, FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
@@ -12,6 +12,7 @@ import {
 import { formFieldConfig } from './form-field-config';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
 /**
  * FormRowComponent
@@ -48,12 +49,47 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
     children,
     name,
   );
-  const { guideText, infoArea } = useDynamicFormContext();
+  const { guideText, infoArea, onChangeInfoArea } = useDynamicFormContext();
   const DynamicComponent = useMemo(
-    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
+    () =>
+      Children.toArray(children)
+        .filter(
+          (child) =>
+            !(
+              isValidElement(child) &&
+              child.type &&
+              (child.type as any).displayName === 'FormInfoArea'
+            ),
+        )
+        .map((child) => renderFormRowContent(child, formFieldConfig)),
     [provider],
   );
+  /**
+   * FormInfoArea 가져오기
+   * @param children
+   */
+  const extractFormInfoArea = (children: ReactNode): ReactNode => {
+    const childArray = React.Children.toArray(children);
 
+    for (const child of childArray) {
+      if (
+        isValidElement(child) &&
+        child.type &&
+        (child.type as any).displayName === 'FormInfoArea'
+      ) {
+        return child;
+      }
+    }
+
+    return null;
+  };
+
+  useEffect(() => {
+    const infoArea = extractFormInfoArea(children);
+    if (infoArea) {
+      onChangeInfoArea(infoArea);
+    }
+  }, []);
   return (
     <div
       className={cn(styles.form_item, className)}
