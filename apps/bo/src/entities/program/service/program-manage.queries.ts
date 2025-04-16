@@ -5,9 +5,9 @@ export const queryKeys = {
 };
 
 export const programManageQueryOptions = {
-  all: (rootTreeId = '1', apiScopeCode = 'FO') => ({
-    queryKey: queryKeys.all,
-    queryFn: async () => ProgramManagerService.fetchPrograms(rootTreeId, apiScopeCode),
+  all: (apiScopeCode = 'FO') => ({
+    queryKey: [queryKeys.all, apiScopeCode],
+    queryFn: async () => ProgramManagerService.fetchPrograms(apiScopeCode),
   }),
   getProgram: (apiId: string) => ({
     queryKey: [...queryKeys.all, apiId],
