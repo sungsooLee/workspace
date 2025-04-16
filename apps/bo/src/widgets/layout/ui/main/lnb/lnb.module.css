@@ -19,7 +19,7 @@
     @apply relative box-border w-full min-w-[263px] p-[32px] transition-all duration-300 ease-in-out;
   }
   .lnb_title {
-    @apply mb-[16px] box-border border-b-2 border-solid border-[var(--gray9)] pb-[16px];
+    @apply mb-[8px] box-border border-b-2 border-solid border-[var(--gray9)] pb-[16px];
     .lnb_title_btn {
       @apply relative flex min-h-[25px] w-full items-center break-all pr-[20px];
       span {
