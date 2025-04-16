@@ -6,7 +6,10 @@ import type { Menu } from '../../../types';
 
 export default class MenuService {
   static getMenus(tenantId: number, isMobile: boolean): Promise<any> {
-    const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, { tenantId });
+    const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, {
+      tenantId,
+      deviceType: isMobile ? 'mobile' : 'pc',
+    });
     return httpService.get<Menu>(url);
   }
 

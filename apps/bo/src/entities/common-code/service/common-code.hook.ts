@@ -15,6 +15,7 @@ import {
 export function useCommonCodeList(
   page: number,
   size: number,
+  sort: string,
   cdGroupId = '',
   cdGroupName = '',
   cdGroupContent = '',
@@ -22,7 +23,7 @@ export function useCommonCodeList(
   cdName = '',
 ) {
   return useQuery(
-    queryOptions.list(page, size, cdGroupId, cdGroupName, cdGroupContent, isUsed, cdName),
+    queryOptions.list(page, size, sort, cdGroupId, cdGroupName, cdGroupContent, isUsed, cdName),
   );
 }
 
@@ -44,6 +45,7 @@ export function useCreateCommonCode({
   queryParams?: {
     page: number;
     size: number;
+    sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupContent?: string;
@@ -98,6 +100,7 @@ export function useUpdateCommonCode({
   queryParams?: {
     page: number;
     size: number;
+    sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupContent?: string;

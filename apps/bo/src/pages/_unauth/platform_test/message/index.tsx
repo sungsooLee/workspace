@@ -7,12 +7,10 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
-import { cn } from '@learnway/shared';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
+import { GridBox, useGridBox } from '@shared/ui/grid-box';
+import { SplitPanel } from '@shared/ui';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,
@@ -33,7 +31,7 @@ function RouteComponent() {
   }, []);
 
   return (
-    <PageContainer>
+    <PageContainer scrollHidden={true}>
       <ContentsButtons>
         <Button
           type="button"
@@ -47,18 +45,10 @@ function RouteComponent() {
         {/* 검색 */}
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-            {/* 그리드 */}
-            <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
-              <div className={layoutStyles.inner_contents}>
-                <GridBox config={gridConfig} />
-              </div>
-            </div>
-            {/* 상세 */}
-            <MessageDetail />
-          </div>
-        </div>
+        <SplitPanel>
+          <GridBox config={gridConfig} />
+          <MessageDetail />
+        </SplitPanel>
       </MainContents>
     </PageContainer>
   );

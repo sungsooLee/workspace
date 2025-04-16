@@ -44,12 +44,9 @@ const AccordionMenuComponent = ({
         activeMenuDepth[depth - 1]?.path === menu?.path;
       return {
         value: menu.key,
-        title: (
-          <span className={active ? styles.active : ''}>
-            {menu.path ? <Link to={menu.path}>{menu.title}</Link> : menu.title}
-          </span>
-        ),
+        title: menu.path ? <Link to={menu.path}>{menu.menuName}</Link> : menu.menuName,
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
+        active,
       } as AccordionItem;
     });
   }, [menus, activeMenuDepth]);

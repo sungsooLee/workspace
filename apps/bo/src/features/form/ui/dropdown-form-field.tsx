@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { BaseFormFieldProps, OptionsConfig } from '@learnway/hooks';
+import { BaseFormFieldProps, OptionsConfig, SelectOption } from '@learnway/hooks';
 import { Dropdown, DropdownComponentProps, DropdownOption } from '@learnway/ui';
 import { useFetchCodeGroups } from '../../../entities/platform';
 import { useWatch } from 'react-hook-form';
@@ -13,12 +13,18 @@ interface DropdownFormField extends BaseFormFieldProps<string> {
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
-  ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
+  (
+    { control, name, value, onChange, options: initOptions, optionsConfig, dropdownConfig },
+    ref,
+  ) => {
     const [options, setOptions] = useState<DropdownOption[]>([]);
     const { data: codeData } = useFetchCodeGroups();
     const { t } = useTranslation();
     const queryClient = useQueryClient();
-
+    const filterWatchedValue = useWatch({
+      control,
+      name: optionsConfig?.filter?.target || '',
+    });
     const watchedValue = useWatch({
       control,
       name: optionsConfig?.target || '',
@@ -78,12 +84,27 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
                 })();
         }
       }
-      setOptions(newOptions);
+      console.log('newOptions => ', newOptions, filterWatchedValue);
+      if (
+        filterWatchedValue &&
+        optionsConfig?.filter &&
+        filterWatchedValue === optionsConfig.filter.value
+      ) {
+        const filterOptions = optionsConfig.filter.fn(newOptions as SelectOption[]);
+        const currentValue = filterOptions.find((option: SelectOption) => option.value === value);
+        if (!currentValue) {
+          onChange(filterOptions[0]?.value);
+        }
+        setOptions(filterOptions);
+      } else {
+        setOptions(newOptions);
+      }
     };
 
     useEffect(() => {
+      console.log('watchedValue => ', watchedValue, name);
       init();
-    }, [watchedValue]);
+    }, [watchedValue, filterWatchedValue]);
 
     return (
       options?.length > 0 && (

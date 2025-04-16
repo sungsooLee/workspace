@@ -10,8 +10,7 @@ import {
   Textarea,
 } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
-
-import bulletStyles from '../../../pages/_layout/course-introduction/bullet.module.css';
+import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './review-popup.module.css';
 

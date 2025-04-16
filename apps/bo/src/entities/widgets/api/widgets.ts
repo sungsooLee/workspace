@@ -18,6 +18,6 @@ export default class WidgetsService {
     return httpService.get<any>(url);
   }
   static fetchWidget(widgetCode: string) {
-    return httpService.get<any>(`${PMSApiPrefix()}/widgets?code=${widgetCode}`);
+    return httpService.get<any>(`${PMSApiPrefix()}/widgets/${widgetCode}`);
   }
 }

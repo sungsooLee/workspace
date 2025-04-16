@@ -15,7 +15,11 @@ import { IcoCaution } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
-import { AddressPopup } from '../../../features/layout';
+import {
+  AddressPopup,
+  EducationPlacePopup,
+  AddressConfirmationPopup,
+} from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -30,6 +34,8 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 
 function RouteComponent() {
   const { open: openModal } = useModal();
+  const { confirm: openConfirm } = useModal();
+  const { alert: openAlert } = useModal();
 
   const gender = [
     { label: '상관없음', value: 'value1' },
@@ -56,6 +62,50 @@ function RouteComponent() {
   const [optionCardValue, setOptionCardValue] = useState<string[]>();
   const [optionCardValue2, setOptionCardValue2] = useState<string[]>();
   const [optionCardValue3, setOptionCardValue3] = useState<string[]>();
+
+  // 상세주소 입력 전 [신청] 클릭 시
+  const AddressAlert = () => {
+    openAlert({
+      title: <>상세 주소를 입력해주세요</>,
+      content: (
+        <>
+          교재 배송이 원할하게 될 수 있도록
+          <br />
+          상세주소를 정확하게 입력해주세요
+        </>
+      ),
+    });
+  };
+
+  // 주소 입력 전 [신청] 클릭 시
+  const AddressAlert2 = () => {
+    openAlert({
+      title: <>배송지 주소를 입력해주세요</>,
+      content: (
+        <>
+          교재 배송이 원할하게 될 수 있도록
+          <br />
+          상세주소를 정확하게 입력해주세요
+        </>
+      ),
+    });
+  };
+
+  // [취소] 클릭 시
+  const CourseCancelConfirm = () => {
+    openConfirm({
+      title: <>수강 신청을 취소하시겠습니까?</>,
+      content: (
+        <>
+          지금 취소하실 경우
+          <br />
+          입력한 내용은 저장되지 않습니다
+        </>
+      ),
+      okButtonLabel: '취소하기',
+      cancelButtonLabel: '아니요',
+    });
+  };
 
   return (
     <div className={`${styles.start} ${styles.course}`}>
@@ -92,7 +142,16 @@ function RouteComponent() {
                 <dt>교육장소</dt>
                 <dd>
                   마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-                  <Button variant="gray2" size="xs">
+                  <Button
+                    variant="gray2"
+                    size="xs"
+                    onClick={() =>
+                      openModal({
+                        width: 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
                     약도보기
                   </Button>
                 </dd>
@@ -455,10 +514,19 @@ function RouteComponent() {
       {/* button */}
       <BrowserView>
         <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="gray" size="xl" className="min">
+          <Button variant="gray" size="xl" className="min" onClick={() => CourseCancelConfirm()}>
             취소
           </Button>
-          <Button variant="primary" size="xl">
+          <Button
+            variant="primary"
+            size="xl"
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <AddressConfirmationPopup />,
+              })
+            }
+          >
             신청
           </Button>
         </div>

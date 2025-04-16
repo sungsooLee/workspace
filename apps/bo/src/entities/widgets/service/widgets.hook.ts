@@ -16,9 +16,12 @@ const useWidgetsHook = () => {
 
   const handleGetWidget = async (widgetCode: string) => {
     setProcessType('LOADING');
-    return await queryClient.fetchQuery(widgetsQueryOptions.get(widgetCode)).then(() => {
-      setProcessType('VIEW');
-    });
+    return await queryClient
+      .fetchQuery(widgetsQueryOptions.get(widgetCode))
+      .then((response: any) => {
+        setProcessType('VIEW');
+        return response;
+      });
   };
 
   useEffect(() => {

@@ -46,37 +46,12 @@ function RouteComponent() {
 
   const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
-  const { create, data: createdMenuData } = useCreateMenu({
-    onSuccess: async (data: any) => {
-      // 생성된 메뉴의 ID 저장
-      if (data && data.menuId) {
-        setLastCreatedMenuId(data.menuId.toString());
-      }
-      // 트리 데이터 재조회
-      await refetch();
-    },
-  });
+  const { create, data: createdMenuData } = useCreateMenu({});
   // 메뉴 수정 mutation
-  const { updateMenu, data: updatedMenuData } = useUpdateMenu({
-    onSuccess: async (data: any) => {
-      if (data && data.menuId) {
-        setSelectedNode(null);
-        setLastCreatedMenuId(data.menuId.toString());
-      }
-      await refetch().then(() => {});
-    },
-  });
+  const { updateMenu, data: updatedMenuData } = useUpdateMenu({});
   // 메뉴 삭제 mutation
-  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({
-    onSuccess: (data: any) => {
-      refetch().then(() => {});
-    },
-  });
-  const { moveMenu } = useMoveMenu({
-    onSuccess: (data: any) => {
-      console.log(data);
-    },
-  });
+  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({});
+  const { moveMenu } = useMoveMenu({});
 
   // 데이터가 변경될 때 처리
   const prevDataRef = React.useRef(null);
@@ -170,7 +145,16 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          create(payload);
+          create(payload, {
+            onSuccess: async (data: any) => {
+              // 생성된 메뉴의 ID 저장
+              if (data && data.menuId) {
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              // 트리 데이터 재조회
+              await refetch();
+            },
+          });
         }
       },
     });
@@ -186,7 +170,15 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          updateMenu(payload);
+          updateMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (data && data.menuId) {
+                setSelectedNode(null);
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              await refetch().then(() => {});
+            },
+          });
         }
       },
     });
@@ -209,7 +201,11 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          deleteMenu(payload);
+          deleteMenu(payload, {
+            onSuccess: (data: any) => {
+              refetch().then(() => {});
+            },
+          });
           setMode('init');
         }
       },

@@ -22,7 +22,7 @@
 }
 
 .contents {
-  @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden p-[24px] pb-[8px];
+  @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden p-[32px] pb-[8px];
   &.scrolled {
     border-bottom: 1px solid var(--gray3);
   }
@@ -31,14 +31,6 @@
   }
   & > [class*='nlp--tabs'] > [role='tablist'] {
     @apply mb-[24px];
-  }
-}
-.md,
-.lg,
-.xl,
-.full {
-  .contents {
-    @apply p-[32px] pb-[16px];
   }
 }
 .btn_wrap {
@@ -52,20 +44,6 @@
     @apply bg-[#e0e0e0];
   }
 }
-
-/* 빌드 오류로 인하여 주석 처리 */
-/* .content_body {
-  @apply max-h-[710px] overflow-hidden;
-  .contents {
-    @apply scrollbar max-h-[710px] overflow-y-auto overflow-x-hidden px-[32px] py-[24px];
-    &.scroll {
-      border-bottom: 1px solid var(--gray3);
-    }
-  }
-  &:empty {
-    @apply p-0;
-  }
-} */
 
 .footer {
   @apply flex items-center justify-center pb-[24px] pt-[16px];
@@ -82,40 +60,6 @@
 
 .btn_close {
   @apply absolute right-[16px] top-[12px] flex items-center justify-center;
-}
-
-.Fieldset {
-  all: unset;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.Label {
-  font-size: 15px;
-  color: var(--violet-11);
-  width: 90px;
-  text-align: right;
-}
-
-.Input {
-  all: unset;
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 0 10px;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--violet-11);
-  box-shadow: 0 0 0 1px var(--violet-7);
-  height: 35px;
-  &:focus {
-    box-shadow: 0 0 0 2px var(--violet-8);
-  }
 }
 
 .modal_wrap {

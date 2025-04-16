@@ -1,6 +1,6 @@
 import { useLoginUser, useReissue, useUpdateUser } from '@learnway/config';
 import type { AuthUser } from '@learnway/config';
-import { cookieService } from '@learnway/shared';
+import { cookieService, MutateCallback } from '@learnway/shared';
 
 import { useAsycFetchMenus } from '../../../entities/menu';
 
@@ -17,16 +17,28 @@ export function useAuthSignin() {
   const { asyncMenus } = useAsycFetchMenus();
 
   return {
-    login: async (payload: LoginParams): Promise<AuthUser | undefined> => {
-      const user = await login(payload);
-      const menus = await asyncMenus(user?.activeTenant.tenantId);
+    login: async (
+      payload: LoginParams,
+      callback?: MutateCallback<any>,
+    ): Promise<AuthUser | undefined> => {
+      try {
+        return await login(payload, {
+          ...callback,
+          onSuccess: async (data, variables, context) => {
+            const menus = await asyncMenus(data.activeTenant?.tenantId);
 
-      if (payload.saveId) {
-        cookieService.set('SAVED_USER_ID', payload.username);
-      } else {
-        cookieService.remove('SAVED_USER_ID');
+            if (payload.saveId) {
+              cookieService.set('SAVED_USER_ID', payload.username);
+            } else {
+              cookieService.remove('SAVED_USER_ID');
+            }
+            callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
+          },
+        });
+      } catch (e) {
+        console.log('login error ', e);
+        throw e;
       }
-      return updateMenu(menus);
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();

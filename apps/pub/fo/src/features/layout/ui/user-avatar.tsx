@@ -75,7 +75,8 @@ const PopoverContent = () => {
                 width: 's',
                 content: <PasswordVerifyPopup />,
               })
-            }>
+            }
+          >
             개인정보 변경
           </Button>
           {/* <Link to={''}>개인정보 변경</Link> */}
@@ -104,7 +105,8 @@ const AvatarCompoment = () => {
       className={styles.btn_avatar}
       side="bottom"
       align="end"
-      sideOffset={10}>
+      sideOffset={10}
+    >
       {hasAvataImage ? (
         <Avatar imageUrl="https://github.com/shadcn.png" />
       ) : (

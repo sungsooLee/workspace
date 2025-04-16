@@ -19,6 +19,7 @@ import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
 import { buildJodObject } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';
 import React, { forwardRef } from 'react';
+import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
   component: RouteComponent,
@@ -73,6 +74,9 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
+              <FormInfoArea>
+                <Button variant={'primary'}>인포영역</Button>
+              </FormInfoArea>
               <DynamicFormField name={'channelId'} />
             </FormRow>
           </ContentsRow>
@@ -83,7 +87,8 @@ function RouteComponent() {
           </ContentsRow>
           <FormDisplay
             provider={provider}
-            dependencies={[{ name: 'isExternalCompanyInfo', value: true }]}>
+            dependencies={[{ name: 'isExternalCompanyInfo', value: true }]}
+          >
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'externalCompanyName'} />
@@ -127,7 +132,8 @@ const ChangeGuidText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
           size="sm"
           onClick={() =>
             onChangeGuideText(<span style={{ color: 'blue' }}>가이드 텍스트 변경1 입니다.</span>)
-          }>
+          }
+        >
           변경1
         </Button>
         <Button
@@ -136,7 +142,8 @@ const ChangeGuidText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
           size="sm"
           onClick={() =>
             onChangeGuideText(<span style={{ color: 'red' }}>가이드 텍스트 변경 2 입니다.</span>)
-          }>
+          }
+        >
           변경2
         </Button>
       </div>

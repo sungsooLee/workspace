@@ -19,18 +19,27 @@
     .info_box {
       @apply mt-[40px];
       .tit_box {
-        @apply mb-[8px];
+        @apply mb-[8px] flex items-center justify-between;
         strong {
           @apply title_6_b text-[var(--gray8)];
+        }
+        button {
+          @apply body_3_r flex items-center text-[var(--gray8)];
+          svg {
+            @apply mr-[2px];
+          }
         }
       }
       .data_box {
         button {
-          @apply flex h-[54px] w-full items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] px-[16px];
+          @apply flex w-full items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
           span {
-            @apply body_3_r flex items-center leading-[16px] text-[var(--gray8)];
+            @apply body_3_r flex items-center text-left leading-[26px] text-[var(--gray8)];
             &:first-child {
               @apply flex-1;
+            }
+            &.size {
+              @apply mr-[156px] inline-block;
             }
             svg {
               @apply mr-[3px];
@@ -60,6 +69,7 @@
         & > div {
           ul {
             li {
+              @apply body_4_r leading-[19px];
               & + li {
                 @apply mt-[4px];
               }
@@ -129,12 +139,10 @@
         }
         .filter {
           @apply flex items-center;
-          & > div {
-            & + div {
-              @apply relative ml-[24px] pl-[24px];
-              &::before {
-                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
-              }
+          .drop_btn {
+            @apply relative ml-[24px] pl-[24px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
             }
           }
         }
