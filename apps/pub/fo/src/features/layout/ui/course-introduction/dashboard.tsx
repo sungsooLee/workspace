@@ -20,16 +20,16 @@ const CourseDashboardCompoment = () => {
   const { close: closeModal } = useModal();
 
   // 자동모달 띄우기 퍼블 확인용
-  const hasRun = useRef(false);
-  useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
-      });
-      hasRun.current = true;
-    }
-  }, [openModal]);
+  // const hasRun = useRef(false);
+  // useEffect(() => {
+  //   if (!hasRun.current) {
+  //     openModal({
+  //       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+  //       content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
+  //     });
+  //     hasRun.current = true;
+  //   }
+  // }, [openModal]);
 
   return (
     <div className={styles.start}>

@@ -20,7 +20,11 @@ function RouteComponent() {
       <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={`${embededAlert.start} ${styles.search_info}`}>
           <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-          <p className={embededAlert.txt}>약관에 동의하셔야 서비스를 이용할 수 있습니다.</p>
+          {/* 퍼블수정 20250414 : 문구, noti 추가 */}
+          <p className={embededAlert.txt}>Learningway 이용약관 및 개인정보 처리방침 </p>
+          <p className={embededAlert.noti}>
+            이용약관 및 개인정보 처리방침에 동의하셔야 러닝웨이 서비스를 이용할 수 있습니다.
+          </p>
         </div>
 
         <div className={styles.signup_check}>
@@ -37,8 +41,10 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                {/* 퍼블수정 20250414 : 아이콘 색상 */}
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
             <li>
@@ -50,8 +56,10 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                {/* 퍼블수정 20250414 : 아이콘 색상 */}
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
             <li>
@@ -63,8 +71,10 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                {/* 퍼블수정 20250414 : 아이콘 색상 */}
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
             <li>
@@ -76,8 +86,9 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
             <li>
@@ -89,8 +100,10 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                {/* 퍼블수정 20250414 : 아이콘 색상 */}
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
             <li>
@@ -102,8 +115,10 @@ function RouteComponent() {
                     width: isMobile ? 'm_full' : 'sm',
                     content: <AgreementDetailPopup />,
                   })
-                }>
-                <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
+                }
+              >
+                {/* 퍼블수정 20250414 : 아이콘 색상 */}
+                <IcoArrowForward width={14} height={14} stroke="#6F798B" />{' '}
               </Button>
             </li>
           </ul>
@@ -115,16 +130,18 @@ function RouteComponent() {
             <Button variant="gray" size="xl">
               취소
             </Button>
+            {/* 퍼블수정 20250414 : 문구 */}
             <Button variant="primary" size="xl">
-              동의
+              확인
             </Button>
           </div>
         </BrowserView>
 
         <MobileView>
           <MobileContainerFooter>
+            {/* 퍼블수정 20250414 : 문구 */}
             <Button variant="primary" size="xl">
-              동의
+              확인
             </Button>
           </MobileContainerFooter>
         </MobileView>

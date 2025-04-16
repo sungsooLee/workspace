@@ -1,6 +1,7 @@
 export * from './company';
 export * from './course';
 export * from './pagination';
+export * from './label-meesage';
 export * from './sequence';
 export * from './sort';
 export * from './tenant';

@@ -5,21 +5,21 @@
 export type com_ever_edu_enums_EnumValue = {
     key?: string;
     value?: string;
-    cdGroupNo?: number;
-    cdNo?: number;
+    cdGroupId?: number;
+    cdId?: number;
     cdName?: string;
     cdSeq?: number;
-    cdContent?: string;
+    cdDescription?: string;
     applyDatetime?: string;
-    validityYn?: boolean;
+    isValidated?: boolean;
     referenceVal1?: string;
     referenceVal2?: string;
     referenceVal3?: string;
     referenceVal4?: string;
     referenceVal5?: string;
-    firstRgstrId?: string;
-    finalUpdaterId?: string;
-    firstRegTmstamp?: string;
-    finalUpdateTmstamp?: string;
+    createdBy?: string;
+    lastModifiedBy?: string;
+    createdDate?: string;
+    modifiedDate?: string;
 };
 

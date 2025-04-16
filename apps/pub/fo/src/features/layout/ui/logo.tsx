@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 //import styles from './logo.module.css';
-import logoImage from '@learnway/styles/fo/assets/images/logo.png';
+import logoImage from '@learnway/styles/fo/assets/images/logo_auth.png';
 import mIogoImage from '@learnway/styles/fo/assets/images/m_logo.png';
 
 import styles from '@learnway/styles/fo/features/layout/ui/logo.module.css';

@@ -322,6 +322,11 @@ export interface OptionsConfig<T = any> {
   api?: any; // 옵션을 가져오기 위한 API 함수.
   callback?: ApiCallback<T>; // API 응답 데이터를 SelectOption 배열로 변환하는 콜백 함수.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
+  filter?: {
+    target: string;
+    value: string;
+    fn: (options: SelectOption[]) => SelectOption[];
+  };
 }
 
 /*===================================

@@ -12,7 +12,7 @@ export class UserInternalControllerService {
      * 사용자 조회(목록)
      * 사용자를 목록을 조회한다.
      * @param pageable
-     * @param userStateCode
+     * @param userState
      * @param userName
      * @param companyCode
      * @returns com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto OK
@@ -20,7 +20,7 @@ export class UserInternalControllerService {
      */
     public static findPage(
         pageable: org_springdoc_core_converters_models_Pageable,
-        userStateCode?: 'WAIT' | 'NORMAL' | 'HALT' | 'LEAVE' | 'DELETE',
+        userState?: 'WAIT' | 'NORMAL' | 'HALT' | 'LEAVE' | 'DELETE',
         userName?: string,
         companyCode?: string,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto> {
@@ -28,7 +28,7 @@ export class UserInternalControllerService {
             method: 'GET',
             url: '/internal/api/v1/users',
             query: {
-                'userStateCode': userStateCode,
+                'userState': userState,
                 'userName': userName,
                 'companyCode': companyCode,
                 'pageable': pageable,

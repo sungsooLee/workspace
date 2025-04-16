@@ -4,13 +4,11 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from './com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
 export type com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin = {
-    cdGroupNo?: string;
+    cdGroupId?: string;
     cdGroupName?: string;
     cdGroupAbbreviatonEnglishName?: string;
     cdGroupContent?: string;
-    applyDatetime?: string;
-    validityYn?: boolean;
-    useYn?: boolean;
+    isUsed?: boolean;
     messages?: Array<com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin>;
 };
 

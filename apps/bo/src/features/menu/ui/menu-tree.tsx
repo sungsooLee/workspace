@@ -15,6 +15,20 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
+const handleExpandAll = (treeData: TreeNode[]) => {
+  const getAllKeys = (nodes: TreeNode[]): string[] => {
+    return nodes.reduce((keys: string[], node) => {
+      keys.push(node.key);
+      if (node.children?.length) {
+        keys.push(...getAllKeys(node.children));
+      }
+
+      return keys;
+    }, []);
+  };
+  return getAllKeys(treeData);
+};
+
 // MenuTreeComponent 컴포넌트 정의
 const MenuTreeComponent: FC<any> = ({
   treeData,
@@ -27,28 +41,6 @@ const MenuTreeComponent: FC<any> = ({
   selectedKey,
   menuScope,
 }) => {
-  // expandAll 토글 시 모든 키 확장/축소 처리
-  const handleExpandAll = (expand: boolean) => {
-    if (expand) {
-      // 모든 노드 키 수집
-      const getAllKeys = (nodes: TreeNode[]): string[] => {
-        return nodes.reduce((keys: string[], node) => {
-          keys.push(node.key);
-          if (node.children?.length) {
-            keys.push(...getAllKeys(node.children));
-          }
-          return keys;
-        }, []);
-      };
-
-      const allKeys = getAllKeys(treeData);
-      onExpandChange(allKeys);
-    } else {
-      // 모두 축소
-      onExpandChange([]);
-    }
-  };
-
   const renderNodeButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
@@ -120,7 +112,10 @@ const MenuTreeComponent: FC<any> = ({
             variant="text"
             size="sm"
             className={layoutStyles.btn_text}
-            onClick={() => handleExpandAll(true)}
+            onClick={() => {
+              const allKeys = handleExpandAll(treeData);
+              onExpandChange(allKeys);
+            }}
           >
             {'전체펼침'}
           </Button>
@@ -128,7 +123,7 @@ const MenuTreeComponent: FC<any> = ({
             variant="text"
             size="sm"
             className={layoutStyles.btn_text}
-            onClick={() => handleExpandAll(false)}
+            onClick={() => onExpandChange([])}
           >
             {'전체닫기'}
           </Button>

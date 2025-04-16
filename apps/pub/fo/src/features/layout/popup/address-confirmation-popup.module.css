@@ -1,0 +1,20 @@
+.start {
+  &.confirmation {
+    p {
+      @apply title_bo_4_b text-[var(--gray9)];
+    }
+    .box {
+      @apply mt-[8px];
+      dl {
+        @apply leading-[20px];
+        dt,
+        dd {
+          @apply button_3_r inline text-[var(--gray8)];
+        }
+        dd {
+          @apply ml-[4px];
+        }
+      }
+    }
+  }
+}

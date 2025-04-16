@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
+import { Button } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/notice')({
   component: RouteComponent,
@@ -38,7 +39,8 @@ function RouteComponent() {
                 </dd>
                 <dd>
                   3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의
-                  문자는 입력하실 수 없습니다.
+                  문자는 입력하실 수 없습니다.{' '}
+                  <Button className={noticeBoxStyles.link}>링크</Button>
                 </dd>
               </dl>
             </div>
@@ -70,7 +72,7 @@ import styles from './test.module.css'; // 예시 페이지 모듈
     </dd>
     <dd>
       3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는
-      입력하실 수 없습니다.
+      입력하실 수 없습니다. <Button className={noticeBoxStyles.link}>링크</Button>
     </dd>
   </dl>
 </div>

@@ -15,19 +15,15 @@ export type com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$Multili
     /**
      * 사용여부
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean | null;
+    isDeleted?: boolean | null;
     /**
      * 다국어 설명
      */
     messageDesc?: string | null;
-    /**
-     * 상위코드ID
-     */
-    parentId?: number | null;
     /**
      * 번역 리스트
      */

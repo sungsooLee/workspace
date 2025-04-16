@@ -12,12 +12,12 @@ export type com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAd
     isDeleted?: boolean;
     sendingStartDate?: string;
     scheduledTime?: java_time_LocalTime;
-    periodicEmailCycleCode?: com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin.periodicEmailCycleCode;
+    periodicEmailCycle?: com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin.periodicEmailCycle;
     template?: com_ever_edu_pms_notification_dto_res_EmailTemplateResDto;
     receivers?: Array<com_ever_edu_pms_notification_dto_res_PeriodicEmailReceiverResDto$ListOnAdmin>;
 };
 export namespace com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin {
-    export enum periodicEmailCycleCode {
+    export enum periodicEmailCycle {
         WEEKDAY = 'WEEKDAY',
         WEEKDAY_EXCEPT_FRI = 'WEEKDAY_EXCEPT_FRI',
         MWF = 'MWF',

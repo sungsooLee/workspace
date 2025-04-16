@@ -67,7 +67,7 @@ export type com_ever_edu_global_security_AuthUser = {
     /**
      * 회원상태코드
      */
-    stateCode?: com_ever_edu_global_security_AuthUser.stateCode;
+    userState?: com_ever_edu_global_security_AuthUser.userState;
     /**
      * 역할
      */
@@ -86,7 +86,7 @@ export namespace com_ever_edu_global_security_AuthUser {
     /**
      * 회원상태코드
      */
-    export enum stateCode {
+    export enum userState {
         WAIT = 'WAIT',
         NORMAL = 'NORMAL',
         HALT = 'HALT',

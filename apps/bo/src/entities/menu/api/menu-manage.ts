@@ -72,7 +72,7 @@ export default class MenuMangerService {
    * 메뉴 수정
    */
   static updateMenu(payload: any): Promise<any> {
-    return httpService.put<any>(`${PMSApiPrefix()}/menus` + `/${payload.menuId}`, payload);
+    return httpService.put<any>(`${PMSApiPrefix()}/menus/${payload.menuId}`, payload);
   }
 
   /**

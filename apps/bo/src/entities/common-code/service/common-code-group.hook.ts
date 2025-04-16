@@ -17,25 +17,13 @@ import { isError } from 'lodash';
 export function useCommonCodeGroupList(
   page: number,
   size: number,
+  sort: string,
   cdGroupId = '',
   cdGroupName = '',
-  cdGroupAbbreviatonEnglishName = '',
-  cdGroupContent = '',
-  validityYn = true,
+  isUsed = true,
   cdName = '',
 ) {
-  return useQuery(
-    queryOptions.list(
-      page,
-      size,
-      cdGroupId,
-      cdGroupName,
-      cdGroupAbbreviatonEnglishName,
-      cdGroupContent,
-      validityYn,
-      cdName,
-    ),
-  );
+  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed, cdName));
 }
 
 export function useCommonCodeGroupDetail(cdGroupId: string) {
@@ -53,11 +41,10 @@ export function useCreateCommonCodeGroup({
   queryParams?: {
     page: number;
     size: number;
+    sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
-    cdGroupContent?: string;
-    validityYn?: boolean;
+    isUsed?: boolean;
     cdName?: string;
   };
 } & Omit<
@@ -112,6 +99,7 @@ export function useUpdateCommonCodGroup({
   queryParams?: {
     page: number;
     size: number;
+    sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupAbbreviatonEnglishName?: string;

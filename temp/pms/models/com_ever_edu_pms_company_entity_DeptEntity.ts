@@ -7,10 +7,10 @@ import type { com_ever_edu_pms_company_entity_CompanyEntity } from './com_ever_e
  * 부서코드id
  */
 export type com_ever_edu_pms_company_entity_DeptEntity = {
-    firstRegTmstamp?: string;
-    finalUpdateTmstamp?: string;
-    firstRgstrId?: string;
-    finalUpdaterId?: string;
+    createdDate?: string;
+    modifiedDate?: string;
+    createdBy?: string;
+    lastModifiedBy?: string;
     deptId?: number;
     companyEntity?: com_ever_edu_pms_company_entity_CompanyEntity;
     deptCode?: string;
@@ -18,13 +18,13 @@ export type com_ever_edu_pms_company_entity_DeptEntity = {
     deptManagerName?: string;
     deptName?: string;
     deptEngName?: string;
-    upperDeptCode?: string;
-    upperDeptNm?: string;
+    parentDepartmentCd?: string;
+    parentDepartmentName?: string;
     deptGradeCode?: string;
     deptGradeName?: string;
-    isIntegrationDept?: boolean;
-    isExistBottomDept?: boolean;
-    useYn?: boolean;
-    deleteYn?: boolean;
+    isIntegratOranization?: boolean;
+    isLowlevelDepartmentExist?: boolean;
+    isUsed?: boolean;
+    isDeleted?: boolean;
 };
 

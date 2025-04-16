@@ -66,6 +66,9 @@
   label + .input_box {
     @apply mt-[8px];
   }
+  .form_label + .input_box {
+    @apply mt-[8px];
+  }
 }
 .input_box_wrap {
   @apply hidden;
@@ -151,7 +154,7 @@
   }
 }
 .form_label {
-  @apply block overflow-hidden;
+  @apply block overflow-hidden leading-[120%];
   .form_text {
     @apply text-[1.4rem] text-[var(--gray8)];
     &.sm {

@@ -8,6 +8,10 @@ export type com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$Searc
      */
     keyType?: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin.keyType;
     /**
+     * 번역 언어
+     */
+    targetLocale?: string;
+    /**
      * 다국어 코드
      */
     multilingualKey?: string;
@@ -18,7 +22,7 @@ export type com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$Searc
     /**
      * 사용여부
      */
-    useYn?: boolean;
+    isUsed?: boolean;
 };
 export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin {
     /**

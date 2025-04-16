@@ -37,8 +37,10 @@ function RouteComponent() {
               {/* 반려 
               회원가입이 반려되었습니다.*/}
             </h3>
+
             <p className={proccessResultStyles.noti}>
-              회원가입 결과는 입력하신 메일로 발송되었습니다.
+              {/* 퍼블수정 20250414 : 문구 */}
+              회원가입 승인결과는 입력하신 메일로 발송 됩니다.
             </p>
             {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
             <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
@@ -64,7 +66,6 @@ function RouteComponent() {
                 <div className={formStyles.input_box}>
                   <Input id="name" type="text" placeholder="" value="현대오토애버" readOnly />
                 </div>
-                <p className={cn(formStyles.guide_text)}>사업자 등록 번호가 확인 되었습니다.</p>
               </div>
             </ContentsRow>
 
@@ -151,9 +152,7 @@ function RouteComponent() {
           {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
           <BrowserView>
             <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-              <Button variant="gray" size="xl">
-                취소
-              </Button>
+              {/* 퍼블수정 20250414 : 취소버튼 삭제 */}
               <Button variant="primary" size="xl">
                 로그인
               </Button>

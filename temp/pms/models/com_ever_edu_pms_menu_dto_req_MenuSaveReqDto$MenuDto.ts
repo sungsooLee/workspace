@@ -31,27 +31,27 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto = {
     /**
      * 바로가기영역여부
      */
-    quickAccessAreaYn?: boolean | null;
+    isShortCutArea?: boolean | null;
     /**
      * 사용여부
      */
-    useYn?: boolean;
+    isUsed?: boolean;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean;
+    isDeleted?: boolean;
     /**
      * 개인정보포함여부
      */
-    personalDataContainYn?: boolean | null;
+    isPersoninfoInclusion?: boolean | null;
     /**
      * 디바이스 노출여부 - 모바일
      */
-    visibleMobileYn?: boolean | null;
+    isMobileExposed?: boolean | null;
     /**
      * 디바이스 노출여부 - PC
      */
-    visiblePcYn?: boolean | null;
+    isWebExposed?: boolean | null;
     /**
      * 메뉴 설명
      */
@@ -59,7 +59,7 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto = {
     /**
      * 숨김 여부
      */
-    hiddenYn?: boolean;
+    isHiddenMenu?: boolean;
     /**
      * 상위메뉴번호
      */

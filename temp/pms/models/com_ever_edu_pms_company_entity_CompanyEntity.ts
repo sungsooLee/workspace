@@ -2,26 +2,32 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_api_entity_ApiEntity } from './com_ever_edu_pms_api_entity_ApiEntity';
+import type { com_ever_edu_pms_company_entity_CompanyAdditionalEntity } from './com_ever_edu_pms_company_entity_CompanyAdditionalEntity';
 export type com_ever_edu_pms_company_entity_CompanyEntity = {
-    firstRegTmstamp?: string;
-    finalUpdateTmstamp?: string;
-    firstRgstrId?: string;
-    finalUpdaterId?: string;
+    createdDate?: string;
+    modifiedDate?: string;
+    createdBy?: string;
+    lastModifiedBy?: string;
     companyId?: number;
     uuid?: string;
     companyCode?: string;
-    companyTypeCode?: com_ever_edu_pms_company_entity_CompanyEntity.companyTypeCode;
+    companyType?: com_ever_edu_pms_company_entity_CompanyEntity.companyType;
     name?: string;
     engName?: string;
-    useYn?: boolean;
+    isUsed?: boolean;
     brn?: string;
     rpsntrName?: string;
     basicAddress?: string;
     detailAddress?: string;
     postNo?: string;
+    parentCompanyId?: com_ever_edu_pms_api_entity_ApiEntity;
+    faxNo?: string;
+    abbreviationName?: string;
+    companyAdditionalEntity?: com_ever_edu_pms_company_entity_CompanyAdditionalEntity;
 };
 export namespace com_ever_edu_pms_company_entity_CompanyEntity {
-    export enum companyTypeCode {
+    export enum companyType {
         CAR = 'CAR',
         GROUP = 'GROUP',
         HYUNDAI_GLOBAL = 'HYUNDAI_GLOBAL',

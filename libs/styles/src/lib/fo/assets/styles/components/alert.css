@@ -1,4 +1,11 @@
 .nlp--alert {
+  &.nlp--modal-content {
+    h2 {
+      & + .modal-content {
+        @apply !pb-[20px] !pt-[8px];
+      }
+    }
+  }
   .time {
     @apply mt-[15px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary1)];
   }

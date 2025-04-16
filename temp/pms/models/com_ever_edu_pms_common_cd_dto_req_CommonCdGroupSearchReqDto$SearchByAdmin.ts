@@ -6,7 +6,7 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchB
     /**
      * 코드그룹번호
      */
-    cdGroupNo?: string | null;
+    cdGroupId?: string | null;
     /**
      * 코드그룹명
      */
@@ -20,9 +20,9 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchB
      */
     cdGroupContent?: string | null;
     /**
-     * 유효여부
+     * 사용여부
      */
-    validityYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 코드명
      */

@@ -51,13 +51,17 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   const handleChangePageSize = (pageSize: number) => {
     console.log('page size');
   };
-  console.log('page =>  ', page, data);
+  console.log('page =>  ', girdColumns, data);
 
   return (
     <Grid
+      title={'Editable Grid'}
       {...props}
       data={data}
       columns={girdColumns}
+      disabledSelectionToggle
+      hideColumnSettings
+      hideRowSelectionCheckBox
       pagination={
         page
           ? {

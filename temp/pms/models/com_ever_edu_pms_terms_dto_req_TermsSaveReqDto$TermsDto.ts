@@ -23,11 +23,11 @@ export type com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto = {
     /**
      * 사용여부
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 삭제여부
      */
-    deleteYn?: boolean | null;
+    isDeleted?: boolean | null;
     /**
      * 필수여부
      */

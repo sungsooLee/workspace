@@ -68,102 +68,120 @@ export class BoFileService {
     /**
      * 파일정보 조회
      * 파일정보를 조회한다.
-     * @param fileId 파일Id
+     * @param uuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDetailResDto OK
      * @throws ApiError
      */
     public static getFileInfo1(
-        fileId: number,
+        uuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/file/{fileId}',
+            url: '/admin/api/v1/file/{uuid}',
             path: {
-                'fileId': fileId,
+                'uuid': uuid,
             },
         });
     }
     /**
      * 파일정보 삭제
-     * 파일 정보를 삭제한다. delYn값 false 업데이트
-     * @param fileId 파일Id
+     * 파일 정보를 삭제한다. isDeleletd 값 false 업데이트
+     * @param uuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto OK
      * @throws ApiError
      */
     public static deleteFileInfo1(
-        fileId: number,
+        uuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/file/{fileId}',
+            url: '/admin/api/v1/file/{uuid}',
             path: {
-                'fileId': fileId,
+                'uuid': uuid,
             },
         });
     }
     /**
      * 파일 다운로드
      * 파일을 다운로드한다.
-     * @param fileId 파일Id
+     * @param uuid 파일 UUID
      * @returns any OK
      * @throws ApiError
      */
     public static fileDownload1(
-        fileId: number,
+        uuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/file/{fileId}/download',
+            url: '/admin/api/v1/file/{uuid}/download',
             path: {
-                'fileId': fileId,
+                'uuid': uuid,
             },
         });
     }
     /**
      * 파일그룹 목록 조회
      * 파일그룹 목록을 조회한다.
+     * @param uploadType 파일업로드유형, ATTATCH|CONTENTS
+     * @param affairsType 파일업무유형, LMS|PMS|CMS
+     * @param reposType 저정소유형, S3(기본)|HMG
+     * @param isDeleted 삭제여부
+     * @param isUsed 사용여부
      * @returns com_ever_edu_pms_file_dto_res_FileGroupListResDto OK
      * @throws ApiError
      */
-    public static getFileGroupList1(): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupListResDto> {
+    public static getFileGroupList1(
+        uploadType?: string,
+        affairsType?: string,
+        reposType?: string,
+        isDeleted?: boolean,
+        isUsed?: boolean,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/file/groups',
+            query: {
+                'uploadType': uploadType,
+                'affairsType': affairsType,
+                'reposType': reposType,
+                'isDeleted': isDeleted,
+                'isUsed': isUsed,
+            },
         });
     }
     /**
      * 파일그룹 정보 조회
      * 파일그룹 정보를 조회한다.
-     * @param groupNo 파일 그룹No
+     * @param uuid 파일 그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroup1(
-        groupNo: number,
+        uuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/file/group/{groupNo}',
+            url: '/admin/api/v1/file/group/{uuid}',
             path: {
-                'groupNo': groupNo,
+                'uuid': uuid,
             },
         });
     }
     /**
      * 파일그룹 파일 목록 조회
      * 파일그룹 파일 목록을 조회한다.
-     * @param groupId 파일그룹ID
+     * @param uuid 파일그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
      * @throws ApiError
      */
     public static getGroupFileInfoList1(
-        groupId: number,
+        uuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/file/group/{groupId}/files',
+            url: '/admin/api/v1/file/group/{uuid}/files',
             path: {
-                'groupId': groupId,
+                'uuid': uuid,
             },
         });
     }

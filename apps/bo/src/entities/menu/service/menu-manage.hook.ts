@@ -82,7 +82,7 @@ export function useCheckExistsMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
+    ...options,
   });
 
   return {
@@ -105,7 +105,7 @@ export function useDeleteMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
+    ...options,
   });
 
   return {
@@ -130,7 +130,7 @@ export function useMoveMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
+    ...options,
   });
 
   return {

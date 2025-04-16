@@ -11,34 +11,39 @@
         & + .text {
           @apply mt-[8px];
         }
+        & + ul {
+          @apply !mt-[8px];
+        }
       }
       .text {
         @apply body_bo_2_r text-[var(--gray8)];
       }
-    }
-    ul {
-      @apply mt-[8px];
-      &.bullet {
-        li {
-          @apply relative pl-[8px];
-          &::before {
-            @apply absolute left-0 top-[7px] h-[4px] w-[4px] rounded-[2px] bg-[var(--gray8)] content-[''];
+      ul {
+        @apply mt-[16px];
+        &.bullet {
+          li {
+            @apply relative pl-[8px];
+            &::before {
+              @apply absolute left-0 top-[7px] h-[4px] w-[4px] rounded-[2px] bg-[var(--gray8)] content-[''];
+            }
           }
         }
-      }
-      &.count {
-        counter-reset: list-counter;
-        li {
-          counter-increment: list-counter;
-          &::before {
-            content: counter(list-counter) '. ';
+        &.count {
+          counter-reset: list-counter;
+          li {
+            @apply relative pl-[12px];
+            counter-increment: list-counter;
+            &::before {
+              content: counter(list-counter) '. ';
+              @apply absolute left-0 top-0;
+            }
           }
         }
-      }
-      li {
-        @apply body_bo_2_r text-[var(--gray8)];
-        & + li {
-          @apply mt-[4px];
+        li {
+          @apply body_bo_2_r text-[var(--gray8)];
+          & + li {
+            @apply mt-[4px];
+          }
         }
       }
     }

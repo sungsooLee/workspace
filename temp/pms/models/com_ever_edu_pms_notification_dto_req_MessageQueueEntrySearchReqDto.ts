@@ -6,7 +6,7 @@ export type com_ever_edu_pms_notification_dto_req_MessageQueueEntrySearchReqDto 
     /**
      * 메세지 타입
      */
-    messageTypeCode?: com_ever_edu_pms_notification_dto_req_MessageQueueEntrySearchReqDto.messageTypeCode;
+    messageType?: com_ever_edu_pms_notification_dto_req_MessageQueueEntrySearchReqDto.messageType;
     /**
      * 발송 상태
      */
@@ -16,7 +16,7 @@ export namespace com_ever_edu_pms_notification_dto_req_MessageQueueEntrySearchRe
     /**
      * 메세지 타입
      */
-    export enum messageTypeCode {
+    export enum messageType {
         EMAIL = 'EMAIL',
         SMS = 'SMS',
         KAKAO = 'KAKAO',

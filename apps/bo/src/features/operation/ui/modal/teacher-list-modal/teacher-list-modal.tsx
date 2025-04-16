@@ -66,7 +66,7 @@ export const TeacherListModal = TeacherListModalComponent;
 
 const getMockData = () => {
   return {
-    data: Array(5)
+    data: Array(10)
       .fill(null)
       .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
   };

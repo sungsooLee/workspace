@@ -1,18 +1,18 @@
+import React, { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { Button, findNodeByKey, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import React, { useEffect, useRef, useState } from 'react';
 import { MenuTree } from '../../../../features/menu/ui/menu-tree';
 import MenuView from '../../../../features/menu/ui/menu-view';
-import { IcoAnnouncement03 } from '../../../../../../../libs/icons/src';
-import { cn } from '@learnway/shared';
 import {
   useCreateMenu,
   useDeleteMenu,
   useMenuManageFetchTree,
-  useMenuMangeFetchMenus,
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
@@ -21,8 +21,6 @@ import {
   transformApiDataToTreeData,
 } from '../../../../features/menu/service/menu.service';
 import { pageRouteConfig } from '../../../../features/auth';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -46,40 +44,14 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
 
-  // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
   // 메뉴 생성 mutation
-  const { create, data: createdMenuData } = useCreateMenu({
-    onSuccess: async (data: any) => {
-      // 생성된 메뉴의 ID 저장
-      if (data && data.menuId) {
-        setLastCreatedMenuId(data.menuId.toString());
-      }
-      // 트리 데이터 재조회
-      await refetch();
-    },
-  });
+  const { create, data: createdMenuData } = useCreateMenu({});
   // 메뉴 수정 mutation
-  const { updateMenu, data: updatedMenuData } = useUpdateMenu({
-    onSuccess: async (data: any) => {
-      if (data && data.menuId) {
-        setSelectedNode(null);
-        setLastCreatedMenuId(data.menuId.toString());
-      }
-      await refetch().then(() => {});
-    },
-  });
+  const { updateMenu, data: updatedMenuData } = useUpdateMenu({});
   // 메뉴 삭제 mutation
-  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({
-    onSuccess: (data: any) => {
-      refetch().then(() => {});
-    },
-  });
-  const { moveMenu } = useMoveMenu({
-    onSuccess: (data: any) => {
-      console.log(data);
-    },
-  });
+  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({});
+  const { moveMenu } = useMoveMenu({});
 
   // 데이터가 변경될 때 처리
   const prevDataRef = React.useRef(null);
@@ -173,7 +145,16 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          create(payload);
+          create(payload, {
+            onSuccess: async (data: any) => {
+              // 생성된 메뉴의 ID 저장
+              if (data && data.menuId) {
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              // 트리 데이터 재조회
+              await refetch();
+            },
+          });
         }
       },
     });
@@ -189,7 +170,15 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          updateMenu(payload);
+          updateMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (data && data.menuId) {
+                setSelectedNode(null);
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              await refetch().then(() => {});
+            },
+          });
         }
       },
     });
@@ -212,7 +201,11 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          deleteMenu(payload);
+          deleteMenu(payload, {
+            onSuccess: (data: any) => {
+              refetch().then(() => {});
+            },
+          });
           setMode('init');
         }
       },
@@ -320,7 +313,7 @@ function RouteComponent() {
           selectedTabKey={selectedTabKey}
           items={items}
           type="line"
-          onActiveTab={handleTabChange}
+          onTabChange={handleTabChange}
           className={styles.tab_wrap}
         />
         {/* </div> */}

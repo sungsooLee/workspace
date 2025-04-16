@@ -18,7 +18,7 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
     /**
      * 회사유형코드
      */
-    companyTypeCode?: com_ever_edu_pms_company_dto_res_CompanyResDto.companyTypeCode;
+    companyType?: com_ever_edu_pms_company_dto_res_CompanyResDto.companyType;
     /**
      * 회사명
      */
@@ -56,7 +56,7 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
     /**
      * 회사유형코드
      */
-    export enum companyTypeCode {
+    export enum companyType {
         CAR = 'CAR',
         GROUP = 'GROUP',
         HYUNDAI_GLOBAL = 'HYUNDAI_GLOBAL',

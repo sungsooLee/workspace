@@ -5,8 +5,8 @@
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
 export type org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType = {
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<'WEATHER' | 'STOCK' | 'NEWS'>;
     number?: number;

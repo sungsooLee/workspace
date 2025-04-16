@@ -1,7 +1,7 @@
 /* navigate-hover.module.css */
 .start {
   &.menu_all {
-    @apply absolute left-[50%] top-[128px] z-10 flex hidden w-[100vw] -translate-x-1/2 justify-center border-b-[1px] border-t-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] shadow-[0px_2px_6px_rgba(0,0,0,0.08)];
+    @apply absolute left-[50%] top-[114px] z-10 flex hidden w-[100vw] -translate-x-1/2 justify-center border-b-[1px] border-t-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] shadow-[0px_2px_6px_rgba(0,0,0,0.08)];
     &.active {
       @apply block;
     }

@@ -12,6 +12,7 @@ export default class CommonCodeService {
   static fetchCodes(
     page: number,
     size: number,
+    sort: string,
     // sort?: string[],
     cdGroupId = '',
     cdGroupName = '',
@@ -19,17 +20,23 @@ export default class CommonCodeService {
     isUsed = true,
     cdName = '',
   ): Promise<any> {
-    const params = new URLSearchParams({
-      page: page.toString(),
-      size: size.toString(),
-      cdGroupId,
-      cdGroupName,
-      cdGroupContent,
-      isUsed: isUsed.toString(),
-      cdName,
-    });
+    const baseUrl = `${PMSApiPrefix()}/codes`;
+    // 쿼리 파라미터 객체로 전달
+    const queryParams: any = {
+      page,
+      size,
+      sort,
+      cdGroupId: cdGroupId || undefined,
+      cdGroupName: cdGroupName || undefined,
+      isUsed: isUsed !== undefined ? isUsed : undefined,
+      cdName: cdName || undefined,
+    };
 
-    return httpService.get<any>(`${PMSApiPrefix()}/codes?${params.toString()}`);
+    Object.keys(queryParams).forEach(
+      (key) => queryParams[key] === undefined && delete queryParams[key],
+    );
+
+    return httpService.get(baseUrl, queryParams);
   }
 
   /**

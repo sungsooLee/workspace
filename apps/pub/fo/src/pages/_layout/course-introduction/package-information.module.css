@@ -59,9 +59,12 @@
     .lecture_wrap {
       @apply mt-[16px];
       & > div {
-        @apply p-[16px];
         & + div {
           @apply mt-[12px];
+        }
+        & > div,
+        & > button {
+          @apply !p-[16px];
         }
         .box {
           & + .box {

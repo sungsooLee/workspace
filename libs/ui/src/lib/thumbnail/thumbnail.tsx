@@ -38,34 +38,39 @@ export interface ThumbnailProps {
   onCheckedChange?: (checked: CheckedState) => void;
 }
 
-const ThumbnailComponent = forwardRef<HTMLElement, ThumbnailProps>(
-  ({
-    className,
-    variant,
-    size,
-    width,
-    height,
-    path,
-    indexNumber,
-    sizeText,
-    showCheckbox,
-    showDeleteBtn,
-    selected,
-    onCheckedChange,
-    ...props
-  }) => {
+const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
+  (
+    {
+      className,
+      variant,
+      size,
+      width,
+      height,
+      path,
+      indexNumber,
+      sizeText,
+      showCheckbox,
+      showDeleteBtn,
+      selected,
+      onCheckedChange,
+      ...props
+    },
+    ref,
+  ) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleHover = (state: boolean) => setIsHovered(state);
     return (
       <div
         {...props}
+        ref={ref}
         style={{ width: width ? `${width}px` : '', height: height ? `${height}px` : '' }}
         className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
           [styles.active]: isHovered,
           [styles.selected]: selected,
         })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
-        onMouseLeave={() => handleHover(false)}>
+        onMouseLeave={() => handleHover(false)}
+      >
         {/* index 번호 */}
         {indexNumber !== null && <span className={styles.indexNumber}>{indexNumber}</span>}
         {/* 체크박스 */}

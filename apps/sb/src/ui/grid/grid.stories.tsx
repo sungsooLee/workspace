@@ -246,6 +246,9 @@ const BaseTable = () => {
         columns={columns}
         onStateChange={handleStateChange}
         onRowSelect={(row: any) => console.log(row)}
+        columnPinning={{
+          columns: ['firstName', 'age'],
+        }}
       />
     </div>
   );
@@ -1048,7 +1051,7 @@ const editGridData = Array(10)
     dropdown: '',
   }));
 
-// 셀 편
+// 셀 편집
 export const TemplateEditGrid: any = (args: any) => {
   const [data, setData] = useState<any[]>(editGridData);
   const columns = [
