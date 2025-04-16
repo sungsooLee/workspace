@@ -3,7 +3,7 @@ import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { httpService, HttpMethod } from '@learnway/shared';
 
-import { tokenService } from '../auth/entities';
+import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
 
 export function initAxios() {

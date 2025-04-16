@@ -5,8 +5,10 @@ import type { ParsedLocation } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys, ERROR } from '@learnway/config';
-import type { AuthUser, PageRouteConfig } from '@learnway/config';
+import { authUserQueryKeys } from '@learnway/auth';
+import type { AuthUser } from '@learnway/auth';
+import { ERROR } from '@learnway/config';
+import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
@@ -55,7 +57,6 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });
           } else {
-            console.log('go liogin');
             throw redirect({ to: '/login', search: { redirect: location.pathname } });
           }
         }

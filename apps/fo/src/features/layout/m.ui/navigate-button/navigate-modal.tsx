@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import { useMenuHierarchy } from '../../../../entities/menu';
 

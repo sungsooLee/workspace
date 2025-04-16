@@ -5,8 +5,8 @@ import { map, intersection } from 'lodash';
 import { cn } from '@learnway/shared';
 import { Accordion, AccordionItem } from '@learnway/ui';
 
-import { Menu } from '../../../../../../types/entities';
-import { useActiveMenuDepthState } from '../../../../../../features/platform';
+import type { Menu } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth';
 
 import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';

@@ -1,6 +1,7 @@
 import { memo, useRef, useEffect, useState } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
+import type { Menu } from '@learnway/auth';
 import styles from './navigate-hover.module.css';
 
 import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';
@@ -39,7 +40,7 @@ function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps
 
               {menu.children && menu.children.length > 0 && (
                 <ul className={styles.list}>
-                  {menu.children.map((subMenu, subIndex) => (
+                  {menu.children.map((subMenu: Menu, subIndex: number) => (
                     <li key={subIndex}>
                       <Link to={subMenu.path}>{subMenu.menuName}</Link>
                     </li>

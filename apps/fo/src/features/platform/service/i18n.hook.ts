@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { getDefaultLang, setDefaultLang, useUpdateUser } from '@learnway/config';
+import { getDefaultLang, setDefaultLang } from '@learnway/config';
+import { useUpdateUser } from '@learnway/auth';
 
 import { useFetchAsyncI18nResource } from '../../../entities/platform';
 

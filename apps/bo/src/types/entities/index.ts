@@ -1,6 +1,5 @@
 export * from './company';
 export * from './course';
-export * from './menu';
 export * from './pagination';
 export * from './sequence';
 export * from './sort';

@@ -4,8 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
-
-import { useRenewalMenuStateFromRouting } from '../widgets/layout';
+import { useRenewalMenuStateFromRouting } from '@learnway/auth';
 
 const NotFound = () => {
   return (

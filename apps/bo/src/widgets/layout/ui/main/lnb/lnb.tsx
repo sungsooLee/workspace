@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
-import { useActiveMenuDepthState } from '../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ChipList, Popover, SelectOption, List, Button } from '@learnway/ui';
 import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { cn, getRandomId } from '@learnway/shared';
 
 import styles from './my-menu.module.css';

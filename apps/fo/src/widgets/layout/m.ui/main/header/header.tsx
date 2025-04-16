@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 
 import { Language, NotificationButton, TenantButton } from '../../../../../features/platform';
 import { Logo, MobileNavigateButton } from '../../../../../features/layout';
-import { useFetchAuthUser } from '../../../../../../../../libs/config/src';
+import { useLogoutUser } from '@learnway/auth';
 import { useFetchTenantByUser } from '../../../../../entities/tenant';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';

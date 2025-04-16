@@ -182,7 +182,6 @@ export class HttpService {
 
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
-        console.log('response', response);
         if (response.status >= 200 && response.status < 300) {
           return response.data.data;
         } else {
