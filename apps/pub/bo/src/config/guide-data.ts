@@ -510,7 +510,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-mainwidget-management',
     screenId: 'NLP_BO_TMS_1003_00-05',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-16',
     lastUpdateDate: '',
     remarks: '작업 예정', // 비고
   },

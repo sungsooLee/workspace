@@ -5,9 +5,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Button, Table, Input } from '@learnway/ui';
 
 /* styles */
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import styles from './main-widget.module.css';
+import styles from './main-widget-detail.module.css';
+import dataWrapStyles from './data-wrap.module.css';
 
 const MainWidgetDetailComponent: FC<{}> = ({}) => {
   // Table
@@ -16,18 +15,18 @@ const MainWidgetDetailComponent: FC<{}> = ({}) => {
     {
       Sort: <strong>PC</strong>,
       ComponentId: (
-        <div className={styles.set_wrap}>
+        <div className={cn(dataWrapStyles.wrap)}>
           <Input value={'dsbdbshjdbshbd'} disabled />
-          <span>{'가로*세로 600*800'}</span>
+          <span className={dataWrapStyles.guide_text}>{'가로*세로 600*800'}</span>
         </div>
       ),
     },
     {
       Sort: <strong>Mobile</strong>,
       ComponentId: (
-        <div className={styles.set_wrap}>
+        <div className={cn(dataWrapStyles.wrap)}>
           <Input value={'dsbdbshjdbshbd'} disabled />
-          <span>{'가로*세로 1,000*1,000'}</span>
+          <span className={dataWrapStyles.guide_text}>{'가로*세로 1,000*1,000'}</span>
         </div>
       ),
     },
