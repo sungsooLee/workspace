@@ -3,14 +3,34 @@
   }
   &.depth3 {
     @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
+    & > [data-state='open'] {
+      @apply rounded-[8px] bg-[var(--primary2)];
+      button[aria-expanded='true'] {
+        span a {
+          @apply bg-[var(--primary2)] text-white;
+          &[class*='active'] {
+            @apply rounded-[8px] bg-[var(--primary2)] text-white;
+          }
+        }
+        svg {
+          @apply stroke-[#fff];
+        }
+      }
+    }
+    span a {
+      &[class*='active'] {
+        @apply rounded-[8px] bg-[var(--primary2)] text-white;
+      }
+    }
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    & > div span {
-      [data-status='active'] {
-        @apply relative flex items-center justify-start;
+    span a {
+      @apply relative !pl-[24px] text-white;
+      &[class*='active'] {
+        @apply !pl-[36px];
         &::before {
-          @apply absolute -left-[12px] top-[8px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+          @apply absolute left-[24px] top-[20px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
         }
       }
     }

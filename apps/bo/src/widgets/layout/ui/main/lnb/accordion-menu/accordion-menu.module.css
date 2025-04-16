@@ -3,14 +3,39 @@
   }
   &.depth3 {
     @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
+    & > [data-state='open'] {
+      @apply rounded-[8px] bg-[var(--primary2)];
+      button[aria-expanded='true'] {
+        span a {
+          @apply bg-[var(--primary2)] text-white;
+          &[class*='active'] {
+            @apply rounded-[8px] bg-[var(--primary2)] text-white;
+          }
+        }
+        svg {
+          @apply stroke-[#fff];
+        }
+      }
+    }
+    span a {
+      &[class*='active'] {
+        @apply rounded-[8px] bg-[var(--primary2)] text-white;
+      }
+    }
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    .accordion_title {
-      @apply text-[var(--white)];
-      & + svg {
-        @apply stroke-[#fff];
+    span a {
+      @apply relative !pl-[24px] text-white;
+      &[class*='active'] {
+        @apply !pl-[36px];
+        &::before {
+          @apply absolute left-[24px] top-[20px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+        }
       }
     }
+  }
+  [data-status='active'] {
+    @apply font-bold;
   }
 }
