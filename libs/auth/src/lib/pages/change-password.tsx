@@ -2,13 +2,13 @@ import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { cn, formatDate, DATE_TIME_FORMAT } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
 
 import { FormRow, NoticeBox, HighlightMessageBox } from '../shared/ui';
 import { GoogleOtpGuideButton } from '../features/auth';
 import { useUpdatePassword } from '../entities/user';
-import { useLogoutUser } from '../entities/authorization';
+import { useLogoutUser, useFetchAuthUser } from '../entities/authorization';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 
@@ -18,6 +18,7 @@ export function ChangePasswordPage({ route }: any) {
 
   const { provider, onSubmit, setFormError } = useDynamicForm(passwordFormConfig);
   const { logout } = useLogoutUser();
+  const { data: authUser } = useFetchAuthUser();
 
   const { alert, confirm } = useModal();
   const { update } = useUpdatePassword();
@@ -25,7 +26,7 @@ export function ChangePasswordPage({ route }: any) {
   const handleOnSubmit = async (data: any) => {
     update(
       {
-        username: data.username,
+        username: authUser?.email,
         oldPassword: data.oldPassword,
         newPassword: data.password,
       },
@@ -64,7 +65,13 @@ export function ChangePasswordPage({ route }: any) {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
             <HighlightMessageBox className={styles.noti_box}>
-              마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
+              마지막 변경일 :
+              <strong>
+                {formatDate(
+                  authUser?.passwordChangeDate ?? new Date(),
+                  DATE_TIME_FORMAT.DATETIME_WEEK_SEC,
+                )}
+              </strong>
             </HighlightMessageBox>
           </div>
 
@@ -148,7 +155,7 @@ const passwordFormConfig: DynamicFormConfig = {
   ],
   validator: {
     oldPassword: {
-      format: 'password',
+      format: 'string',
       required: true,
     },
     password: {
@@ -160,7 +167,7 @@ const passwordFormConfig: DynamicFormConfig = {
       required: true,
       conditions: [
         {
-          fn: (values: Record<string, any>) => values.password === values.confirm_password,
+          fn: (values: Record<string, any>) => values.password !== values.confirm_password,
           message: '새로운 비밀번호를 다시 확인해 주세요.',
           path: 'confirm_password',
         },

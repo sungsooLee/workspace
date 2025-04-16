@@ -38,9 +38,11 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, []);
 
   useEffect(() => {
+    console.log(';i18nData', i18nData);
     if (!i18nData) {
       return;
     }
+
     initI18N(i18nData);
   }, [i18nData]);
 

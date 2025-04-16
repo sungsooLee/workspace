@@ -47,7 +47,7 @@ export function initAxios() {
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
-      return Promise.reject();
+      return Promise.reject(error);
     }
     return httpService
       .execute<AxiosResponse>(

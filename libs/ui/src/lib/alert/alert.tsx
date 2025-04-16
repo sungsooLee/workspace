@@ -1,4 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { isString } from 'lodash';
 
 import { Button } from '../button/button';
 import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
@@ -39,6 +41,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     const { close: closeModal } = useModal();
 
     // description scroll check Start
@@ -120,12 +123,12 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
             <div className={styles.icon}>
               <Icon />
             </div>
-            <div className={styles.title}>{title}</div>
+            <div className={styles.title}>{isString(title) ? t(title) : title}</div>
           </>
         </ModalTitle>
         {content && (
           <ModalBody>
-            <div className={styles.content}>{content}</div>
+            <div className={styles.content}>{isString(content) ? t(content) : content}</div>
           </ModalBody>
         )}
         <ModalFooter>

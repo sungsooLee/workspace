@@ -9,7 +9,7 @@ import { authUserQueryKeys } from '@learnway/auth';
 import type { AuthUser } from '@learnway/auth';
 import { ERROR } from '@learnway/config';
 import type { PageRouteConfig } from '@learnway/shared';
-import { buildJodObject } from '@learnway/shared';
+import { buildJodObject, dateDiff } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
 
@@ -28,6 +28,12 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 
   if (authUser === undefined) {
     throw ERROR.AUTHORIZATION;
+  }
+
+  // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
+  const diff = dateDiff(authUser!.passwordExpireDate, new Date(), 'd');
+  if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
+    throw ERROR.PASSWORD_EXPIRE;
   }
 
   if (location.pathname === '/' || !authUser?.menus) {
@@ -56,6 +62,8 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         } catch (e) {
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });
+          } else if (e === ERROR.PASSWORD_EXPIRE) {
+            throw redirect({ to: '/change-password' });
           } else {
             throw redirect({ to: '/login', search: { redirect: location.pathname } });
           }

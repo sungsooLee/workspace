@@ -53,13 +53,6 @@ function RouteComponent() {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
 
-        // 패스워드 만료 시 패스워드 변경 페이지로 이동
-        const diff = dateDiff(data.passwordExpireDate, new Date(), 'd');
-
-        if (diff !== undefined && 0 >= diff) {
-          router.navigate({ to: '/change-password' });
-          return;
-        }
         router.navigate({ to: '/' });
       },
     });
