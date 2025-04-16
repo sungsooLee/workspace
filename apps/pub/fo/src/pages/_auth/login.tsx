@@ -56,6 +56,7 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} />
           <div className={styles.info}>
+            <Link to="/search-account">아이디/비밀번호찾기</Link>{' '}
             <Link to="/search-account">아이디/비밀번호찾기</Link>
           </div>
         </div>

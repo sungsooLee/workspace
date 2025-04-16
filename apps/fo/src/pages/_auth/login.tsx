@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 
 import { z } from '@learnway/shared';
-import { authSSOQueryOptions, getHMGSSORedirectUrl } from '@learnway/config';
+import { authSSOQueryOptions, getHMGSSORedirectUrl } from '@learnway/auth';
 
 const ssoSearchSchema = z.object({
   company: z.string().required(),

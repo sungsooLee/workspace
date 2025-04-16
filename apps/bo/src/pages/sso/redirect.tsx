@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 
 import { z } from '@learnway/shared';
-import { authSSOQueryOptions } from '@learnway/config';
+import { authSSOQueryOptions } from '@learnway/auth';
 
 const ssoSearchSchema = z.object({
   state: z.string().required(),

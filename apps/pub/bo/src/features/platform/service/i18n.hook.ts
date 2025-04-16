@@ -4,7 +4,7 @@ import { useCreation } from 'ahooks';
 import { SelectOption } from '@learnway/ui';
 import { CODE_GROUP, Code } from '@learnway/config';
 import { getDefaultLang, setDefaultLang } from '@learnway/config';
-import { useUpdateUser } from '@learnway/config';
+import { useUpdateUser } from '@learnway/auth';
 
 import { useCodesByCodeGroup, useFetchAsyncI18nResource } from '../../../entities/platform';
 

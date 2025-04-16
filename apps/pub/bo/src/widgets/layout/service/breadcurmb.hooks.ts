@@ -1,17 +1,17 @@
 // hooks/useCategoryBreadcrumbs.ts
 
 import { useMatch, useRouter } from '@tanstack/react-router';
-import { useCategories } from '../../../features/category/services/category.service';
-import { Category } from '../../../types/entities/category';
+//import { useCategories } from '../../../features/';
+//import { Category } from '../../../types/entities/category';
 import { useEffect, useState } from 'react';
 
 function useCategoryBreadcrumbs(currentCategoryId: number | null) {
-  const { data: categories } = useCategories();
-  console.log(categories);
-  const findCategoryPath = (categoryId: number) => {
-    const path: Category[] = [];
+  const { data: categories } = { data: [] }; // useCategories();
 
-    const findParent = (categories: Category[], targetId: number) => {
+  const findCategoryPath = (categoryId: number) => {
+    const path: any[] = [];
+
+    const findParent = (categories: any[], targetId: number) => {
       for (const category of categories) {
         if (category.categoryId === targetId) {
           path.unshift(category);
@@ -19,7 +19,7 @@ function useCategoryBreadcrumbs(currentCategoryId: number | null) {
         }
 
         if (category.children) {
-          if (findParent(category.children as Category[], targetId)) {
+          if (findParent(category.children as any[], targetId)) {
             path.unshift(category);
             return true;
           }
@@ -27,11 +27,11 @@ function useCategoryBreadcrumbs(currentCategoryId: number | null) {
       }
       return false;
     };
-
-    if (currentCategoryId) {
+    /*
+    if (currentanyId) {
       findParent(categories, currentCategoryId);
     }
-
+*/
     return path;
   };
 

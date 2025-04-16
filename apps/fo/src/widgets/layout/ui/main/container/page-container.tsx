@@ -1,8 +1,5 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '../../../../../features/platform';
-import { useCreation } from 'ahooks';
-import { last } from 'lodash';
-import { Breadcrumbs } from '../../container/breadcrumbs/breadcrumbs';
+import { useActiveMenuDepthState } from '@learnway/auth';
 
 import { useCurrentRoute } from '@learnway/hooks';
 

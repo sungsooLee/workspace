@@ -3,7 +3,7 @@ import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { httpService, HttpMethod } from '@learnway/shared';
 
-import { tokenService } from '../auth/entities';
+import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
 
 export function initAxios() {
@@ -47,7 +47,7 @@ export function initAxios() {
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
-      return Promise.reject();
+      return Promise.reject(error);
     }
     return httpService
       .execute<AxiosResponse>(

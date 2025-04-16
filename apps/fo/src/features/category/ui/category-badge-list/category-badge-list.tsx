@@ -34,7 +34,7 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
   // 최근 방문한 카테고리는 일단 로컬 스토리지에서 관리한다고 가정
   const [recentCategories, setRecentCategories] = React.useState<Category[]>([]);
   const { data: categories } = useCategories();
-  console.log(categories);
+
   React.useEffect(() => {
     // 로컬 스토리지에서 최근 방문 카테고리 ID 목록을 가져옴
     const recentCategoryIds = JSON.parse(localStorage.getItem('recentCategories') || '[]');
@@ -88,13 +88,15 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
           slidesPerView="auto"
           loop={false}
           modules={[Navigation]}
-          className={styles.recent_swiper}>
+          className={styles.recent_swiper}
+        >
           <div className={styles.lists}>
             {recentCategories.map((item) => (
               <SwiperSlide
                 key={item.categoryId}
                 className={styles.slide}
-                onClick={() => handleClick(item)}>
+                onClick={() => handleClick(item)}
+              >
                 <Chip
                   className={styles.item}
                   option={{ label: item.name, value: item.categoryId + '' }}

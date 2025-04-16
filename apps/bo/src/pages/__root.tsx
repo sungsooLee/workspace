@@ -1,12 +1,11 @@
-import { Outlet, createRootRouteWithContext, Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { Outlet, createRootRouteWithContext, Link, useRouter } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
-
-import { useRenewalMenuStateFromRouting } from '../widgets/layout';
-import { useEffect } from 'react';
+import { useRenewalMenuStateFromRouting, useFetchAuthUser } from '@learnway/auth';
 import { setupErrorToastListener } from '@learnway/shared';
 
 const NotFound = () => {
@@ -30,6 +29,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   const { closeAll } = useModalStore();
+  const { data: authUser } = useFetchAuthUser();
+  const router = useRouter();
 
   useRenewalMenuStateFromRouting();
   useGlobalRouterEvent({
