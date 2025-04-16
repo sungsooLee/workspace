@@ -18,20 +18,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
   return {
     asyncMenus: async (tenantId: number) => {
       const menus = await queryClient.fetchQuery(queryOptions.all(tenantId));
-      console.log(
-        'convertHierarchyToList',
-        menus,
-        convertHierarchyToList(
-          menus,
-          /*
-  (node: any, depth: number, index: number, parentNode?: any) => {
-    node['depth'] = depth;
-    node['parentNode'] = parentNode;
-    node['key'] = getRandomId();
-    return node;
-  },*/
-        ),
-      );
+
       return convertHierarchyToList(
         menus,
         /*

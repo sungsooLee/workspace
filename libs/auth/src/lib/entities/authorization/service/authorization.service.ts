@@ -22,7 +22,7 @@ export function removeToken() {
 }
 
 export function convertToAuthUser(data: AxiosResponse): AuthUser {
-  console.log('convertToAuthUser', data);
+  //console.log('convertToAuthUser', data);
   const user = data.data;
   const { tenants } = user;
   return {
