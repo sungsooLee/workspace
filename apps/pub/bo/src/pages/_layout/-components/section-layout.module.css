@@ -1,0 +1,15 @@
+/* section-layout.module.css */
+.start {
+  @apply flex w-full flex-wrap items-stretch;
+  &.half {
+    & > div {
+      @apply w-1/2 pr-[32px];
+      &:not(:first-child) {
+        @apply pl-[32px] pr-0;
+      }
+    }
+  }
+  &.line {
+    @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
+  }
+}

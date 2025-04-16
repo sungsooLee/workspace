@@ -1,10 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import pageStyles from './tenant-menu-management.module.css';
 import { Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import { SectionLayout } from '../-components/section-layout';
+
+/* styles */
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import pageStyles from './tenant-menu-management.module.css';
+
+/* contents */
+import { MainWidget } from './-contents/main-widget';
+import { MainWidgetDetail } from './-contents/main-widget-detail';
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-mainwidget-management')({
   component: RouteComponent,
@@ -68,6 +75,10 @@ function RouteComponent() {
           ]}
           type="bullet"
         />
+        <SectionLayout isLineVisible={true}>
+          <MainWidget />
+          <MainWidgetDetail />
+        </SectionLayout>
       </div>
     </PageContainer>
   );
