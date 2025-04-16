@@ -31,7 +31,7 @@
   .btn_wrap {
     @apply flex;
     .link_box {
-      @apply mr-[8px] flex;
+      @apply mr-[16px] flex;
       .link {
         @apply flex items-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[10px];
         a {
@@ -48,7 +48,7 @@
         }
       }
       &::after {
-        @apply ml-[8px] flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
+        @apply ml-[16px] flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
   }
