@@ -5,23 +5,23 @@
     @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
     & > [data-state='open'] {
       @apply rounded-[8px] bg-[var(--primary2)];
-      button[aria-expanded='true'] {
-        span a {
-          @apply bg-[var(--primary2)] text-white;
-          &[class*='active'] {
+      & > button > [class*='accordion_title'] {
+        @apply bg-[var(--gray1)];
+        &[class*='active'] {
+          @apply rounded-[8px] bg-[var(--primary2)] text-white;
+        }
+      }
+      button {
+        &[class*='has_children'] {
+          [class*='accordion_title'] {
             @apply rounded-[8px] bg-[var(--primary2)] text-white;
           }
         }
       }
-      svg {
-        @apply stroke-[#fff];
-      }
     }
-    span {
-      a {
-        &[class*='active'] {
-          @apply rounded-[8px] bg-[var(--primary2)] text-white;
-        }
+    [aria-expanded='false'] {
+      svg {
+        @apply !stroke-[#A9AFB8];
       }
     }
     svg {
@@ -30,12 +30,10 @@
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    span a {
-      @apply relative !pl-[24px] text-white;
+    button [class*='accordion_title'] {
       &[class*='active'] {
-        @apply !pl-[36px];
         &::before {
-          @apply absolute left-[24px] top-[20px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+          @apply mr-[6px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
         }
       }
     }
