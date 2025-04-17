@@ -203,7 +203,7 @@
   .content {
     @apply !animate-none border-0;
     &.auto {
-      @apply min-w-auto w-[calc(100vw-40px)] max-w-[500px];
+      @apply min-w-auto w-[calc(100dvw-40px)] max-w-[500px];
     }
 
     &.m_full {
