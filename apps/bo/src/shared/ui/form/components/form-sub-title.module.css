@@ -5,6 +5,15 @@
       @apply flex h-[32px] items-center;
     }
     .input_area {
+      [class*='btn_text'] {
+        @apply text-[var(--gray8)];
+        & + [class*='btn_text'] {
+          @apply relative pl-[16px];
+          &::before {
+            @apply absolute left-0 top-1/2 h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
+          }
+        }
+      }
     }
     &.line {
       @apply border-b-[1px] border-solid border-[var(--gray4)];

@@ -92,6 +92,11 @@ h4.auth--title {
   }
 }
 
+/* notice-box */
+[class*='nlp--tabs'] + [class*='notice'] {
+  @apply mt-[16px];
+}
+
 /* grid */
 .grid_wrap {
   &.line {
