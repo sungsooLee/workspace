@@ -9,9 +9,12 @@ import {
   OptionCardItem,
   DatePicker,
   useModal,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { IcoCaution } from '@learnway/icons';
+import { IcoCaution, IcoProgress } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
@@ -104,6 +107,16 @@ function RouteComponent() {
       ),
       okButtonLabel: '취소하기',
       cancelButtonLabel: '아니요',
+    });
+  };
+
+  // 접수중 (미작업)
+  const AcceptingPopup = () => {
+    openConfirm({
+      title: <>수강 신청 접수중입니다</>,
+      content: <>잠시만 기다려주세요.</>,
+      // okButtonLabel: '나의 학습',
+      // cancelButtonLabel: '기다리기',
     });
   };
 
@@ -517,16 +530,7 @@ function RouteComponent() {
           <Button variant="gray" size="xl" className="min" onClick={() => CourseCancelConfirm()}>
             취소
           </Button>
-          <Button
-            variant="primary"
-            size="xl"
-            onClick={() =>
-              openModal({
-                width: 's',
-                content: <AddressConfirmationPopup />,
-              })
-            }
-          >
+          <Button variant="primary" size="xl" onClick={() => AcceptingPopup()}>
             신청
           </Button>
         </div>
@@ -538,7 +542,7 @@ function RouteComponent() {
             <Button variant="gray" size="xl" className="min">
               취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button variant="primary" size="xl" onClick={() => AcceptingPopup()}>
               신청
             </Button>
           </div>

@@ -1,5 +1,5 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 

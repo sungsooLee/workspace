@@ -9,7 +9,22 @@ export type com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdm
     labelMessageName?: string;
     labelMessageDesc?: string;
     isUsed?: boolean;
-    isDeleted?: boolean;
+    /**
+     * 등록자
+     */
+    createdBy?: string;
+    /**
+     * 등록일
+     */
+    createdDate?: string;
+    /**
+     * 수정자
+     */
+    lastModifiedBy?: string;
+    /**
+     * 수정일
+     */
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin {
     export enum labelMessageType {

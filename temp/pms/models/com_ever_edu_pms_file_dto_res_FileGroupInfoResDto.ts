@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * 파일 그룹 정보
+ * 파일그룹 정보
  */
 export type com_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
     /**
@@ -33,11 +33,11 @@ export type com_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
     /**
      * 삭제여부
      */
-    deleteYn?: boolean;
+    isDeleted?: boolean;
     /**
      * 사용여부
      */
-    useYn?: boolean;
+    isUsed?: boolean;
 };
 export namespace com_ever_edu_pms_file_dto_res_FileGroupInfoResDto {
     /**

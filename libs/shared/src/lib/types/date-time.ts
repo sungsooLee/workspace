@@ -5,6 +5,7 @@ export const DATE_TIME_FORMAT = {
   DATETIME_HOUR: 'dateTimeFormatHour',
   DATETIME_MIN: 'dateTimeFormatHourMinute',
   DATETIME_SEC: 'dateTimeFormatHourSecond',
+  DATETIME_WEEK_SEC: 'dateTimeFormatWeekHourSecond',
   DATETIME_MLS: 'dateTimeFormatHourMilliSecond',
   HOUR_MIN: 'timeFormatHourMinute',
 };

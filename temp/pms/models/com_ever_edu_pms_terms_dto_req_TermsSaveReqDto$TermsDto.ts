@@ -31,7 +31,7 @@ export type com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto = {
     /**
      * 필수여부
      */
-    mandatoryYn?: boolean | null;
+    isMandatory?: boolean | null;
     /**
      * 약관유형코드
      */
@@ -69,25 +69,9 @@ export type com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto = {
      */
     mailSendingDate?: string | null;
     /**
-     * 스냅샷여부
-     */
-    snapshotYn?: boolean | null;
-    /**
-     * 스냅샷일
-     */
-    snapshotDate?: string | null;
-    /**
-     * 생성 GMT 타임존명
-     */
-    timezone?: string | null;
-    /**
-     * 국가/지역명 노출여부
-     */
-    displayNationsYn?: boolean | null;
-    /**
      * 약관개정 공지 자동 발송 여부
      */
-    noticeAutoSendingYn?: boolean | null;
+    isNoticeAutoSending?: boolean | null;
     /**
      * 약관 사용대상 목록
      */

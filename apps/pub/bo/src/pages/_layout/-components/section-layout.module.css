@@ -1,0 +1,18 @@
+/* section-layout.module.css */
+.start {
+  @apply flex w-full flex-wrap items-stretch;
+  &.half {
+    & > div {
+      @apply w-1/2 pr-[32px];
+      &:not(:first-child) {
+        @apply relative pl-[32px] pr-0;
+        &::before {
+          @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
+        }
+      }
+    }
+  }
+  &.line {
+    @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
+  }
+}

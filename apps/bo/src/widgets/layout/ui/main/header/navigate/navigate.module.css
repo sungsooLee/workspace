@@ -7,7 +7,8 @@
         a {
           @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
           &:hover,
-          &:active {
+          &:active,
+          &[class*='active'] {
             @apply font-bold;
           }
         }

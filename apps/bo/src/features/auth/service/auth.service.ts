@@ -1,8 +1,11 @@
-import { useLoginUser, useReissue, useUpdateUser } from '@learnway/config';
-import type { AuthUser } from '@learnway/config';
-import { cookieService, MutateCallback } from '@learnway/shared';
+import { useTranslation } from 'react-i18next';
 
-import { useAsycFetchMenus } from '../../../entities/menu';
+import { useLoginUser, useReissue, useUpdateUser, useAsycFetchMenus } from '@learnway/auth';
+import type { AuthUser } from '@learnway/auth';
+import { cookieService, MutateCallback } from '@learnway/shared';
+import { useModal } from '@learnway/ui';
+
+//import { useAsycFetchMenus } from '../../../entities/menu';
 
 interface LoginParams {
   username: string;
@@ -11,34 +14,41 @@ interface LoginParams {
 }
 
 export function useAuthSignin() {
+  //const { t } = useTranslation();
   const { login } = useLoginUser();
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
+  const { alert } = useModal();
 
   return {
     login: async (
       payload: LoginParams,
       callback?: MutateCallback<any>,
     ): Promise<AuthUser | undefined> => {
-      try {
-        return await login(payload, {
-          ...callback,
-          onSuccess: async (data, variables, context) => {
-            const menus = await asyncMenus(data.activeTenant?.tenantId);
+      return await login(payload, {
+        ...callback,
+        onSuccess: async (data, variables, context) => {
+          const menus = await asyncMenus(data.activeTenant?.tenantId);
 
-            if (payload.saveId) {
-              cookieService.set('SAVED_USER_ID', payload.username);
-            } else {
-              cookieService.remove('SAVED_USER_ID');
-            }
-            callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
-          },
-        });
+          if (payload.saveId) {
+            cookieService.set('SAVED_USER_ID', payload.username);
+          } else {
+            cookieService.remove('SAVED_USER_ID');
+          }
+          callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
+        },
+        onError: async (error, variables, context) => {
+          console.log('login error ', error, error?.message);
+          alert({ title: 'MESSAGE.INVALID_INPUT_INFORMATION', content: error?.message });
+          callback?.onError && callback.onError(error, variables, context);
+        },
+      });
+      /*
       } catch (e) {
         console.log('login error ', e);
         throw e;
-      }
+      }*/
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();

@@ -4,23 +4,24 @@ import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { cn, dateDiff } from '@learnway/shared';
+import { DynamicFormField } from '@learnway/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 
-import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { FormRow } from '../../shared/ui/form';
 
 import authStyles from './auth.module.css';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../shared/ui/form';
+import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
   ...pageRouteConfig({
+    authorization: false,
     meta: {
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
     },
@@ -39,12 +40,6 @@ function RouteComponent() {
   const { set: setLanguage, inProgress } = useSetLanguage();
 
   useEffect(() => {
-    if ((authData as any)?.username && !inProgress) {
-      router.navigate({ to: '/' });
-    }
-  }, [authData, inProgress]);
-
-  useEffect(() => {
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
@@ -58,11 +53,6 @@ function RouteComponent() {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
 
-        // 패스워드 만료 시 패스워드 변경 페이지로 이동
-        const diff = dateDiff(data.passwordExpireDate, new Date(), 'd');
-        if (diff && 0 <= diff) {
-          router.navigate({ to: '/change-password' });
-        }
         router.navigate({ to: '/' });
       },
     });

@@ -80,7 +80,8 @@ function LNBComponent() {
           <Button
             type="button"
             className={cn(styles.lnb_title_btn, buttonClass)}
-            onClick={() => handleOpenAll()}>
+            onClick={() => handleOpenAll()}
+          >
             <span className={styles.lnb_title_text}>{activeMenuDepth[0].title}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>
@@ -99,7 +100,8 @@ function LNBComponent() {
         className={styles.btn_toggle}
         onlyIcon
         aria-expanded={toggleLnb}
-        onClick={handleToggleLnb}>
+        onClick={handleToggleLnb}
+      >
         <IcoArrowBackward width={20} height={20} stroke="#131C30" />
       </Button>
     </div>

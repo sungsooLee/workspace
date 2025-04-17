@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 
 import { IcoArrowForward } from '@learnway/icons';
 import { useModal, Button } from '@learnway/ui';
-import { useLogoutUser } from '@learnway/config';
+import { useLogoutUser } from '@learnway/auth';
 
 import { pageRouteConfig } from '../../features/auth';
 

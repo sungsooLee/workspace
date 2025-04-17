@@ -1,5 +1,5 @@
-import { useLoginUser, useReissue, useUpdateUser } from '@learnway/config';
-import type { AuthUser } from '@learnway/config';
+import { useLoginUser, useReissue, useUpdateUser } from '@learnway/auth';
+import type { AuthUser } from '@learnway/auth';
 
 import { useAsycFetchMenus } from '../../../entities/menu';
 

@@ -1,0 +1,8 @@
+/* banner-info.module.css */
+.start {
+  .menu_wrap {
+    [class*='nlp--list'] > li {
+      @apply px-0;
+    }
+  }
+}

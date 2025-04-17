@@ -34,6 +34,13 @@ export class BoSmsService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -51,6 +58,13 @@ export class BoSmsService {
             url: '/admin/api/v1/sms/template',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -68,6 +82,13 @@ export class BoSmsService {
             url: '/admin/api/v1/sms/send',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -85,6 +106,13 @@ export class BoSmsService {
             url: '/admin/api/v1/sms/reserve',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -106,6 +134,13 @@ export class BoSmsService {
                 'pageable': pageable,
                 'dto': dto,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -123,6 +158,13 @@ export class BoSmsService {
             url: '/admin/api/v1/sms/templates/{smsTemplateId}',
             path: {
                 'smsTemplateId': smsTemplateId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -149,6 +191,13 @@ export class BoSmsService {
             query: {
                 'page': page,
                 'size': size,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }

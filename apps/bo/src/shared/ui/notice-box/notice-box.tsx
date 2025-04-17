@@ -9,6 +9,7 @@ interface NoticeComponentProps {
   description?: string;
   descriptions?: string[];
   className?: string;
+  iconVisible?: boolean;
   type?: 'bullet' | 'count';
 }
 
@@ -16,15 +17,18 @@ const NoticeBoxComponent: FC<NoticeComponentProps> = ({
   title,
   description,
   descriptions,
+  iconVisible = true,
   type = 'bullet',
   className,
 }: NoticeComponentProps) => {
   return (
     <div className={cn(styles.start, styles.notice, 'notice', className)}>
       {/* 📢 아이콘 영역 */}
-      <div className={styles.icon_wrap}>
-        <IcoAnnouncement03 width="32" height="32" stroke="#07287E" />
-      </div>
+      {iconVisible && (
+        <div className={styles.icon_wrap}>
+          <IcoAnnouncement03 width="32" height="32" stroke="#07287E" />
+        </div>
+      )}
 
       {/* 📝 텍스트 영역 */}
       <div className={styles.text_wrap}>

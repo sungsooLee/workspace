@@ -12,6 +12,8 @@ export type { com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_
 export type { com_ever_edu_global_dto_ResponseDtoJava_lang_Long } from './models/com_ever_edu_global_dto_ResponseDtoJava_lang_Long';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
+export type { com_ever_edu_global_exception_dto_ErrorResponse } from './models/com_ever_edu_global_exception_dto_ErrorResponse';
+export type { com_ever_edu_global_exception_dto_ErrorResponse$FieldError } from './models/com_ever_edu_global_exception_dto_ErrorResponse$FieldError';
 export { com_ever_edu_global_security_AuthUser } from './models/com_ever_edu_global_security_AuthUser';
 export { com_ever_edu_pms_api_dto_req_ApiSaveReqDto } from './models/com_ever_edu_pms_api_dto_req_ApiSaveReqDto';
 export type { com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin } from './models/com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin';
@@ -46,10 +48,11 @@ export { com_ever_edu_pms_company_entity_CompanyEntity } from './models/com_ever
 export type { com_ever_edu_pms_company_entity_DeptEntity } from './models/com_ever_edu_pms_company_entity_DeptEntity';
 export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto';
 export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
-export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto';
+export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto';
 export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto';
-export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto';
-export type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from './models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
+export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto';
+export { com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto } from './models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto';
+export { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from './models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 export type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto } from './models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto';
 export type { com_ever_edu_pms_file_dto_req_CompleteUploadReqDto } from './models/com_ever_edu_pms_file_dto_req_CompleteUploadReqDto';
 export type { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto } from './models/com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto';
@@ -61,7 +64,6 @@ export type { com_ever_edu_pms_file_dto_req_UploadETagPartsReqDto } from './mode
 export type { com_ever_edu_pms_file_dto_res_AbortUploadResDto } from './models/com_ever_edu_pms_file_dto_res_AbortUploadResDto';
 export type { com_ever_edu_pms_file_dto_res_CompleteUploadResDto } from './models/com_ever_edu_pms_file_dto_res_CompleteUploadResDto';
 export { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from './models/com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
-export type { com_ever_edu_pms_file_dto_res_FileGroupListResDto } from './models/com_ever_edu_pms_file_dto_res_FileGroupListResDto';
 export type { com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto } from './models/com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto';
 export { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from './models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 export { com_ever_edu_pms_file_dto_res_FileInfoResDto } from './models/com_ever_edu_pms_file_dto_res_FileInfoResDto';
@@ -97,11 +99,12 @@ export { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from './models/com_ever_edu
 export type { com_ever_edu_pms_menu_entity_ApiMappingMenuEntity } from './models/com_ever_edu_pms_menu_entity_ApiMappingMenuEntity';
 export { com_ever_edu_pms_menu_entity_MenuEntity } from './models/com_ever_edu_pms_menu_entity_MenuEntity';
 export { com_ever_edu_pms_menu_entity_TenantMappingMenuEntity } from './models/com_ever_edu_pms_menu_entity_TenantMappingMenuEntity';
-export { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto';
 export type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
 export { com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin';
+export type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
+export type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto';
 export { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin';
-export type { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
+export { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
 export type { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$TranslationDto } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$TranslationDto';
 export type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from './models/com_ever_edu_pms_notification_dto_req_AlarmSendReqDto';
 export type { com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto } from './models/com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto';
@@ -171,6 +174,9 @@ export type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from './models
 export type { com_ever_edu_pms_user_dto_res_UserGroupDto } from './models/com_ever_edu_pms_user_dto_res_UserGroupDto';
 export { com_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_pms_user_dto_res_UserResDto';
 export type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin';
+export type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin } from './models/com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin';
+export type { com_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin } from './models/com_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin';
+export type { com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantListOnAdmin } from './models/com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantListOnAdmin';
 export type { java_time_LocalTime } from './models/java_time_LocalTime';
 export type { org_springdoc_core_converters_models_Pageable } from './models/org_springdoc_core_converters_models_Pageable';
 export type { org_springdoc_core_converters_models_SortObject } from './models/org_springdoc_core_converters_models_SortObject';
@@ -178,7 +184,9 @@ export type { org_springframework_data_domain_PageCom_ever_edu_pms_authorization
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
+export type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
+export type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto';
@@ -195,7 +203,7 @@ export type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_Te
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
-export type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType';
+export type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin';
 export type { org_springframework_security_core_GrantedAuthority } from './models/org_springframework_security_core_GrantedAuthority';
 export type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from './models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
 export type { PageableObject } from './models/PageableObject';

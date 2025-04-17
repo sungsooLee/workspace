@@ -74,7 +74,8 @@ function RouteComponent() {
       <div className={styles.sub_box}>
         {/* package information */}
         <div
-          className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}>
+          className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
+        >
           <strong className={packageInformationStyles.tit}>
             패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
           </strong>
@@ -94,15 +95,17 @@ function RouteComponent() {
                 packageInformation === true
                   ? setPackageInformation(false)
                   : setPackageInformation(true)
-              }>
+              }
+            >
               {packageInformation === true ? '닫기' : '자세히'}
               <IcoArrowDown width={16} height={16} stroke="#6f798b" />
             </Button>
           </div>
           {/* 학습정보 */}
           <div
-            className={`${packageInformationStyles.list_box} ${packageInformation === true ? packageInformationStyles.active : ''}`}>
-            {/* definition list */}
+            className={`${packageInformationStyles.list_box} ${packageInformation === true ? packageInformationStyles.active : ''}`}
+          >
+            {/* definition module */}
             <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
               <dl>
                 <dt>학습유형</dt>
@@ -188,7 +191,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={operatorStyles.definition_list}>
-              {/* definition list */}
+              {/* definition module */}
               <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                 <dl>
                   <dt>이메일</dt>

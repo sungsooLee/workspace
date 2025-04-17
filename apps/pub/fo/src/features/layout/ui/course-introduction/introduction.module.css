@@ -198,6 +198,39 @@
             span {
               @apply rounded-[8px];
             }
+            button {
+              @apply text-[var(--gray8)];
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.introduction {
+        h2 {
+          @apply title_6_b;
+        }
+        .learn_box {
+          @apply mt-[8px] p-[16px];
+          img {
+            @apply h-[24px] w-[24px];
+          }
+          strong {
+            @apply title_7_b;
+          }
+        }
+        .info_box {
+          @apply mt-[24px];
+          .tit_box {
+            @apply mb-[8px];
+            strong {
+              @apply title_7_b;
+            }
           }
         }
       }

@@ -118,3 +118,17 @@
     }
   }
 }
+
+/* 접수증 */
+.accepting_popup {
+  @apply flex flex-col items-center py-[8px];
+  svg {
+    @apply stroke-none;
+  }
+  strong {
+    @apply title_5_b mt-[16px] block text-center text-[var(--gray9)];
+  }
+  p {
+    @apply body_3_r mt-[8px] text-center text-[var(--gray7)];
+  }
+}

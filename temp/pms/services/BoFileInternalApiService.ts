@@ -29,6 +29,14 @@ export class BoFileInternalApiService {
             },
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -53,6 +61,78 @@ export class BoFileInternalApiService {
             },
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * MultipartFile AIP 암호화 처리 - 사용금지(임시 테스트용)
+     * MultipartFile AIP 암호화 처리 테스트
+     * @param companyCode companyCode
+     * @param formData
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static testAipEnc(
+        companyCode: string,
+        formData?: {
+            file?: Blob;
+        },
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/internal/api/v1/file/test/aip/enc',
+            query: {
+                'companyCode': companyCode,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * MultipartFile AIP 복호화 처리 - 사용금지(임시 테스트용)
+     * MultipartFile AIP 복호화 처리 테스트
+     * @param companyCode companyCode
+     * @param formData
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static testAipDec(
+        companyCode: string,
+        formData?: {
+            file?: Blob;
+        },
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/internal/api/v1/file/test/aip/dec',
+            query: {
+                'companyCode': companyCode,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -70,6 +150,13 @@ export class BoFileInternalApiService {
             url: '/internal/api/v1/file/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -89,6 +176,13 @@ export class BoFileInternalApiService {
             path: {
                 'uuid': uuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -101,6 +195,13 @@ export class BoFileInternalApiService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/internal/api/v1/file/garbage',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
 }

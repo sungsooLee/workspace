@@ -22,11 +22,11 @@ export type com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByAdmin = {
     /**
      * 필수여부
      */
-    mandatoryYn?: boolean;
+    isMandatory?: boolean;
     /**
      * 약관개정 공지 자동 발송 여부
      */
-    noticeAutoSendingYn?: boolean | null;
+    isNoticeAutoSending?: boolean | null;
     /**
      * 약관 노출 위치 코드
      */

@@ -15,8 +15,6 @@ export const Route = createFileRoute('/_layout/contents/layout')({
 });
 
 function RouteComponent() {
-  // const [selectedTabKey] = useState<string>('');
-
   const items = [
     {
       title: 'Tab A',
