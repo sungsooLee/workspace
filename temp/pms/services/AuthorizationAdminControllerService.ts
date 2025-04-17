@@ -28,6 +28,13 @@ export class AuthorizationAdminControllerService {
             path: {
                 'authorizationNo': authorizationNo,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -38,7 +45,7 @@ export class AuthorizationAdminControllerService {
      * @returns com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto OK
      * @throws ApiError
      */
-    public static update5(
+    public static update4(
         authorizationNo: number,
         requestBody: com_ever_edu_pms_authorization_dto_req_AuthorizationUpdateDto,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto> {
@@ -50,6 +57,13 @@ export class AuthorizationAdminControllerService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -59,7 +73,7 @@ export class AuthorizationAdminControllerService {
      * @returns void
      * @throws ApiError
      */
-    public static delete6(
+    public static delete5(
         authorizationNo: number,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
@@ -67,6 +81,13 @@ export class AuthorizationAdminControllerService {
             url: '/admin/api/v1/authorizations/{authorizationNo}',
             path: {
                 'authorizationNo': authorizationNo,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -89,6 +110,13 @@ export class AuthorizationAdminControllerService {
                 'searchDto': searchDto,
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -106,6 +134,13 @@ export class AuthorizationAdminControllerService {
             url: '/admin/api/v1/authorizations',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -116,6 +151,13 @@ export class AuthorizationAdminControllerService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/authorizations/sort-seq/next',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
 }

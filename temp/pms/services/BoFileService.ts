@@ -6,10 +6,10 @@ import type { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto } from '../m
 import type { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileInfoReqDto';
 import type { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
-import type { com_ever_edu_pms_file_dto_res_FileGroupListResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupListResDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -29,6 +29,13 @@ export class BoFileService {
             url: '/admin/api/v1/file',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -46,6 +53,13 @@ export class BoFileService {
             url: '/admin/api/v1/file/group',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -63,6 +77,13 @@ export class BoFileService {
             url: '/admin/api/v1/file/group/files',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -80,6 +101,13 @@ export class BoFileService {
             url: '/admin/api/v1/file/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -99,6 +127,13 @@ export class BoFileService {
             path: {
                 'uuid': uuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -117,26 +152,39 @@ export class BoFileService {
             path: {
                 'uuid': uuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
      * 파일그룹 목록 조회
      * 파일그룹 목록을 조회한다.
+     * @param page 페이징 처리를 위한 페이지 번호. 0 ~
+     * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
+     * @param sort 페이징 처리를 위한 sort
      * @param uploadType 파일업로드유형, ATTATCH|CONTENTS
      * @param affairsType 파일업무유형, LMS|PMS|CMS
      * @param reposType 저정소유형, S3(기본)|HMG
      * @param isDeleted 삭제여부
      * @param isUsed 사용여부
-     * @returns com_ever_edu_pms_file_dto_res_FileGroupListResDto OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroupList1(
+        page: number,
+        size: number,
+        sort: string,
         uploadType?: string,
         affairsType?: string,
         reposType?: string,
         isDeleted?: boolean,
         isUsed?: boolean,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupListResDto> {
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/file/groups',
@@ -146,6 +194,16 @@ export class BoFileService {
                 'reposType': reposType,
                 'isDeleted': isDeleted,
                 'isUsed': isUsed,
+                'page': page,
+                'size': size,
+                'sort': sort,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -165,6 +223,13 @@ export class BoFileService {
             path: {
                 'uuid': uuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -182,6 +247,13 @@ export class BoFileService {
             url: '/admin/api/v1/file/group/{uuid}/files',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }

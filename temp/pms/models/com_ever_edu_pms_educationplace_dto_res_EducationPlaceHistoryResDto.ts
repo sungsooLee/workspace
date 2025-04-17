@@ -3,16 +3,16 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto } from './com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto';
-import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from './com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
-export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto = {
+export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto = {
+    historyId?: number;
     educationPlaceId?: number;
+    educationHistoryTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto.educationHistoryTypecd;
     uuid?: string;
-    educationPlaceTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto.educationPlaceTypecd;
+    educationPlaceTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto.educationPlaceTypecd;
     educationPlaceCode?: string;
     educationPlaceCodeName?: string;
     isReservationUsed?: boolean;
     mapImageFileGroupId?: number;
-    mapImageFileInfo?: com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto;
     mapImageLinkContent?: string;
     educationPlaceRemarkContent?: string;
     isUsed?: boolean;
@@ -22,7 +22,15 @@ export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto = {
     lastModifiedBy?: string;
     modifiedDate?: string;
 };
-export namespace com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto {
+export namespace com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto {
+    export enum educationHistoryTypecd {
+        TEMP_SAVE = 'TEMP_SAVE',
+        REGISTER = 'REGISTER',
+        UPDATE = 'UPDATE',
+        APPROVED = 'APPROVED',
+        REJECTED = 'REJECTED',
+        CANCEL = 'CANCEL',
+    }
     export enum educationPlaceTypecd {
         CAMPUS = 'CAMPUS',
         SERVISE_TECH = 'SERVISE_TECH',
