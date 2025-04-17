@@ -5,13 +5,23 @@
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto } from './com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto';
 export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto = {
     uuid: string;
-    educationPlaceTypecd: string;
+    educationPlaceTypecd: com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto.educationPlaceTypecd;
     educationPlaceCode: string;
     tenantList: Array<com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto>;
     educationPlaceCodeName: string;
     isReservationUsed: boolean;
+    mapImageFileGroupId?: number;
     mapImgLinkContent?: string;
-    educationPlaceEtcContent?: string;
+    educationPlaceRemarkContent?: string;
     isUsed: boolean;
 };
+export namespace com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto {
+    export enum educationPlaceTypecd {
+        CAMPUS = 'CAMPUS',
+        SERVISE_TECH = 'SERVISE_TECH',
+        ME_CLUSTER = 'ME_CLUSTER',
+        OUTSIDE = 'OUTSIDE',
+        ABROAD = 'ABROAD',
+    }
+}
 

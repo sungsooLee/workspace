@@ -10,7 +10,7 @@ export type com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin = {
     termsTarget?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsTarget;
     isUsed?: boolean;
     isDeleted?: boolean;
-    mandatoryYn?: boolean;
+    isMandatory?: boolean;
     termsTypeCode?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsTypeCode;
     termsStatus?: com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin.termsStatus;
     termsOrder?: number;
@@ -19,11 +19,7 @@ export type com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin = {
     noticeStartDate?: string;
     noticeEndDate?: string;
     mailSendingDate?: string;
-    snapshotYn?: boolean;
-    snapshotDate?: string;
-    timezone?: string;
-    displayNationsYn?: boolean;
-    noticeAutoSendingYn?: boolean;
+    isNoticeAutoSending?: boolean;
     termsMappingTargetList?: Array<number>;
     termsTranslationLocaleList?: Array<string>;
     termsDisplayLocationCodeList?: Array<'LOGIN_PAGE' | 'SIGNUP_PAGE' | 'SITE'>;

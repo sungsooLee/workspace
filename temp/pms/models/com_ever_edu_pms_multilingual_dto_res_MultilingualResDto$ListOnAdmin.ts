@@ -3,14 +3,61 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin = {
+    /**
+     * 다국어 ID
+     */
     multilingualId?: number;
+    /**
+     * 다국어 분류
+     */
+    keyType?: com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin.keyType;
+    /**
+     * 다국어 코드
+     */
     multilingualKey?: string;
-    translation?: string;
-    createdDate?: string;
-    createdBy?: string;
+    /**
+     * 기준명(한국어)
+     */
+    baseLanguage?: string;
+    /**
+     * 번역명(번역언어)
+     */
+    targetLanguage?: string;
+    /**
+     * 번역 언어
+     */
+    targetLocale?: string;
+    /**
+     * 목록 번역언어 기준 번역완료수
+     */
+    targetTranslatedCount?: number;
+    /**
+     * 번역완료 번역 수
+     */
+    totalTranslatedCount?: number;
+    /**
+     * 번역완료 총 언어셋 수
+     */
+    totalLocaleCount?: number;
+    /**
+     * 수정일
+     */
     modifiedDate?: string;
+    /**
+     * 수정자
+     */
     lastModifiedBy?: string;
-    isUsed?: boolean;
-    translationCount?: number;
 };
+export namespace com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin {
+    /**
+     * 다국어 분류
+     */
+    export enum keyType {
+        COMMON_CODE = 'COMMON_CODE',
+        MENU = 'MENU',
+        LABEL = 'LABEL',
+        CATEGORY = 'CATEGORY',
+        MESSAGE = 'MESSAGE',
+    }
+}
 

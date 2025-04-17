@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto = {
+    uuid?: string;
     /**
      * 테넌트명
      */
@@ -16,15 +17,15 @@ export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto 
      */
     managerId?: string;
     /**
-     * 이력구분
+     * 이력구분코드
      */
-    educationHistoryType?: com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto.educationHistoryType;
+    educationHistoryTypecd?: com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto.educationHistoryTypecd;
 };
 export namespace com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto {
     /**
-     * 이력구분
+     * 이력구분코드
      */
-    export enum educationHistoryType {
+    export enum educationHistoryTypecd {
         TEMP_SAVE = 'TEMP_SAVE',
         REGISTER = 'REGISTER',
         UPDATE = 'UPDATE',

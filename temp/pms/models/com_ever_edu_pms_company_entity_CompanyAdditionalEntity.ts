@@ -12,10 +12,10 @@ export type com_ever_edu_pms_company_entity_CompanyAdditionalEntity = {
     companyEntity?: com_ever_edu_pms_company_entity_CompanyEntity;
     serviceType?: com_ever_edu_pms_company_entity_CompanyAdditionalEntity.serviceType;
     paymentCompanyCode?: string;
-    useEditableDept?: boolean;
-    useLinkageSystem?: boolean;
     linkageType?: com_ever_edu_pms_company_entity_CompanyAdditionalEntity.linkageType;
     linkageSystem?: com_ever_edu_pms_company_entity_CompanyAdditionalEntity.linkageSystem;
+    useEditableDept?: boolean;
+    useLinkageSystem?: boolean;
 };
 export namespace com_ever_edu_pms_company_entity_CompanyAdditionalEntity {
     export enum serviceType {
