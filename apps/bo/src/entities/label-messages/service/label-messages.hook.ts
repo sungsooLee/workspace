@@ -5,7 +5,7 @@ import { mutateOptions, queryOptions } from './label-messages.queries';
 import { useModal } from '@learnway/ui';
 import { LabelMessage } from '@types';
 
-export const useLabelMessagesHook = () => {
+const useLabelMessagesHook = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [processType, setProcessType] = useState('LOADING');
@@ -28,7 +28,11 @@ export const useLabelMessagesHook = () => {
     },
   });
 
-  const handleGet = async (id: number) => {
+  const handleAll = async () => {
+    return await queryClient.fetchQuery(queryOptions.all());
+  };
+
+  const handleDetail = async (id: number) => {
     return await queryClient.fetchQuery(queryOptions.detail(id));
   };
 
@@ -41,7 +45,6 @@ export const useLabelMessagesHook = () => {
 
   useEffect(() => {
     const query = router.state.location.search as any;
-    console.log(query);
     if ('messageId' in query) {
       setMessageId(query['messageId']);
       setProcessType('MODIFY');
@@ -51,7 +54,8 @@ export const useLabelMessagesHook = () => {
   }, []);
 
   return {
-    get: handleGet,
+    all: handleAll,
+    detail: handleDetail,
     save: handleSave,
     update: handleModify,
     messageId,
