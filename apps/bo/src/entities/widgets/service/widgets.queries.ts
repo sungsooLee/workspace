@@ -18,12 +18,12 @@ export const widgetsQueryOptions = {
         ...data,
         content: data.content.map((widget: any) => {
           const deviceNames: string[] = [];
-          widget.devicePcYn && deviceNames.push('PC');
-          widget.deviceMobileYn && deviceNames.push('Mobile');
+          widget.isWebExposed && deviceNames.push('PC');
+          widget.isMobileExposed && deviceNames.push('Mobile');
 
           return {
             ...widget,
-            deviceNames: deviceNames.join(','),
+            deviceNames: deviceNames.join(', '),
             status: widget.isUsed ? '사용' : '사용불가',
           };
         }),

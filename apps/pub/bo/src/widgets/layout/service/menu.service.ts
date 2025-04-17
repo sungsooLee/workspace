@@ -13,7 +13,7 @@ import { useActiveMenuDepthState } from '../../../features/platform';
  * 메뉴 정보를 트리 구조로 반환
  * isShortCutArea 에 따라 GNB quick menu area에 메뉴를 출력한다.
  */
-export function useMenuHierarchy(isShortCutArea = false): HookData<Menu[]> {
+export function useMenuHierarchy(isShortCutArea = false): HookData<any[]> {
   const { data: authUser } = useFetchAuthUser();
   const { data } = useFetchMenus(authUser?.activeTenantNo);
 
@@ -44,7 +44,7 @@ export function useRenewalMenuStateFromRouting() {
       return;
     }
     if (state.location.pathname === '/') {
-      //setActiveMenuDepth([]);
+      setActiveMenuDepth([]);
       return;
     }
     const depths: Menu[] = [];
@@ -53,7 +53,7 @@ export function useRenewalMenuStateFromRouting() {
         if (menu.path === path) {
           depths.unshift(menu);
           if (menu.depth === 1) {
-            //setActiveMenuDepth(depths);
+            setActiveMenuDepth(depths);
           } else {
             recursiveCall(menu.parentNode.path);
           }

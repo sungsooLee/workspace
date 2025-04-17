@@ -15,8 +15,6 @@ import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/conte
 import { FormTranslationBox } from '../../../../features/platform/ui/platform/system/translation/form-translation-box';
 import { useTranslation } from '../../../../entities/translation/service/translation.hook';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { TranslationPopup } from '../../../../features/form/ui/translation';
-import { FormI18n } from '../../../../features/form/ui';
 import { FormRow } from '../../../../shared/ui/form';
 
 import { useWidgets } from '../../../../entities/widgets';

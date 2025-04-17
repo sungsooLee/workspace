@@ -3,10 +3,10 @@ import { atom, Provider, useAtom } from 'jotai';
 import type { Menu } from '../../../types';
 
 // import datae from ';
-import datae from '../../../entities/mock/activeMenuDepth.json';
+import data from '../../../entities/mock/activeMenuDepth.json';
 
-const menuState = atom<Menu[]>();
+const menuState = atom<any[]>();
 
 export function useActiveMenuDepthState() {
-  return [datae];
+  return useAtom(menuState);
 }

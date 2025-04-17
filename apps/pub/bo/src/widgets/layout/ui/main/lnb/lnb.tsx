@@ -14,7 +14,7 @@ function LNBComponent() {
   const { t } = useTranslation();
 
   const [activeMenuDepth] = useActiveMenuDepthState();
-
+  console.log('activeMenuDepth', activeMenuDepth);
   const [toggleLnb, setToggleLnb] = useState<boolean>(true);
   const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
