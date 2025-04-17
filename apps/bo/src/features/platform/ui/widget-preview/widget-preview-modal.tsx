@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useCreation } from 'ahooks';
 
 import {
   Button,
@@ -12,21 +13,30 @@ import {
 import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
+import type { Widget } from '../../../../types';
 
-const WidgetPreviewModalComponent = ({ widgetCode }: { widgetCode: string }) => {
+import { EmbedWidgetPreview } from '../embed-widget-preview/embed-widget-preview';
+
+const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
   const { close: closeModal } = useModal();
-  const items = [
-    {
+  
+  const items = useCreation(() => {
+  return [
+    ...(widget.isWebExposed ? [{
       title: 'PC',
       key: 'a',
-      content: <></>,
-    },
-    {
+      content: (
+        <EmbedWidgetPreview componentId={'completion-status-widget'} width={''} height={''} />
+      ),
+  }]: []),
+    ...(widget.isMobileExposed ? [{
       title: 'Mobile',
       key: 'b',
-      content: <></>,
-    },
-  ];
+      content: <EmbedWidgetPreview componentId={widget.componentMobileId} width={''} height={''} isMobile />
+    }] : [])
+  ]
+  }, [widget]);
+  
   return (
     <ModalContainer>
       <ModalTitle>{'위젯 미리보기'}</ModalTitle>

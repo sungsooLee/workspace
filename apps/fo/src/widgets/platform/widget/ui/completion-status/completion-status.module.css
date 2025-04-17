@@ -1,0 +1,12 @@
+.start {
+  @apply pt-[26px];
+  .title_box {
+    @apply mb-[8px] flex h-[40px] items-center justify-between;
+    h2 {
+      @apply title_5_b text-[var(--gray9)];
+    }
+    [class*='nlp--dropdown-text'] {
+      @apply !w-[250px] flex-initial;
+    }
+  }
+}
