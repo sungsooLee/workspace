@@ -17,6 +17,7 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../../shared/ui/form';
 
 import { useWidgets } from '../../../../entities/widgets';
+import { WidgetPreviewButton } from '../../../../features/platform';
 
 import { WidgetComponentTable } from './-components/widget-component-table';
 import { WidgetAssignedTenantGrid } from './-components/widget-assigned-tenant-grid';
@@ -50,7 +51,6 @@ function RouteComponent() {
 
   const init = async () => {
     const widget = (await getWidget(widgetCode)) as any;
-    console.log('widget', processType, widget);
 
     const values = {
       ...widget,
@@ -79,6 +79,7 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'widgetName'} />
+                <WidgetPreviewButton widget={data as any} />
               </FormRow>
             </ContentsRow>
             <ContentsRow>

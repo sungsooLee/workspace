@@ -19,5 +19,5 @@ function RouteComponent() {
     }
   }, []);
 
-  return <WidgetContainer componentId={params.componentId} />;
+  return <WidgetContainer componentId={params.componentId} isPreview />;
 }

@@ -1,22 +1,29 @@
 import { memo } from 'react';
 
-import { CompletionStatusWidget } from '../completion-status/completion-status';
+import { useWigetComponentConfig, hasComponent } from '../../service/widget-container.service';
 
 interface WidgetContainerComponentProps {
   componentId: string;
+  isPreview: boolean;
+  props?: any;
 }
 
 export interface EmbedWidgetProps {
   data?: any;
 }
 
-const WidgetContainerComponent = ({ componentId }: WidgetContainerComponentProps) => {
-  switch (componentId) {
-    case 'completion-status-widget':
-      return <CompletionStatusWidget />;
-    default:
-      return <></>;
+const WidgetContainerComponent = ({
+  componentId,
+  isPreview,
+  props = {},
+}: WidgetContainerComponentProps) => {
+  const { Component, data } = useWigetComponentConfig(componentId, isPreview);
+
+  if (!hasComponent(componentId)) {
+    return <></>;
   }
+
+  return <Component data={data} {...props} />;
 };
 
 export const WidgetContainer = memo(WidgetContainerComponent);

@@ -19,24 +19,43 @@ import { EmbedWidgetPreview } from '../embed-widget-preview/embed-widget-preview
 
 const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
   const { close: closeModal } = useModal();
-  
+
   const items = useCreation(() => {
-  return [
-    ...(widget.isWebExposed ? [{
-      title: 'PC',
-      key: 'a',
-      content: (
-        <EmbedWidgetPreview componentId={'completion-status-widget'} width={''} height={''} />
-      ),
-  }]: []),
-    ...(widget.isMobileExposed ? [{
-      title: 'Mobile',
-      key: 'b',
-      content: <EmbedWidgetPreview componentId={widget.componentMobileId} width={''} height={''} isMobile />
-    }] : [])
-  ]
+    return [
+      ...(widget.isWebExposed
+        ? [
+            {
+              title: 'PC',
+              key: 'a',
+              content: (
+                <EmbedWidgetPreview
+                  componentId={'completion-status-widget'}
+                  width={widget.pcWidth}
+                  height={widget.pcHeight}
+                />
+              ),
+            },
+          ]
+        : []),
+      ...(widget.isMobileExposed
+        ? [
+            {
+              title: 'Mobile',
+              key: 'b',
+              content: (
+                <EmbedWidgetPreview
+                  componentId={widget.componentMobileId}
+                  width={widget.mobileWidth}
+                  height={widget.mobileHeight}
+                  isMobile
+                />
+              ),
+            },
+          ]
+        : []),
+    ];
   }, [widget]);
-  
+
   return (
     <ModalContainer>
       <ModalTitle>{'위젯 미리보기'}</ModalTitle>

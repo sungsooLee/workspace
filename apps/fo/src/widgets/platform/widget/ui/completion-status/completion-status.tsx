@@ -10,7 +10,6 @@ import styles from './completion-status.module.css';
 import statusStyles from './completion-status-status.module.css';
 
 const CompletionStatusComponent = ({ data }: EmbedWidgetProps) => {
-  const progress = 80;
   return (
     <div className={styles.start}>
       {/* 
@@ -34,10 +33,10 @@ const CompletionStatusComponent = ({ data }: EmbedWidgetProps) => {
 
         <div className={statusStyles.status_box}>
           <div className={statusStyles.progress_rate}>
-            <Progress value={progress} className={statusStyles.progress_bar} />
+            <Progress value={data.progress} className={statusStyles.progress_bar} />
             <div className={statusStyles.info}>
               <span className={statusStyles.txt}>진도율</span>
-              <span className={statusStyles.progress}>{progress}%</span>
+              <span className={statusStyles.progress}>{data.progress}%</span>
             </div>
           </div>
 

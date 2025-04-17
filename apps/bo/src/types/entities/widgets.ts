@@ -8,4 +8,8 @@ export interface Widget {
   secureContentYn: boolean;
   componentPcId: string;
   componentMobileId: string;
+  pcWidth: string;
+  pcHeight: string;
+  mobileWidth: string;
+  mobileHeight: string;
 }

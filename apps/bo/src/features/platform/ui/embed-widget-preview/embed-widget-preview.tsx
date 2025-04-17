@@ -16,6 +16,8 @@ const EmbedWidgetPreviewComponent = ({
   return (
     <iframe
       src={`${import.meta.env.VITE_FO_DOMAIN}/widget/${componentId}?isMobile=${isMobile}`}
+      width={width}
+      height={height}
     ></iframe>
   );
 };
