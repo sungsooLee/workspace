@@ -12,7 +12,6 @@ const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
   return (
     <div className={`${styles.start} ${styles.rating_box} ${className}`}>
       <div className={styles.box}>
-        <div></div>
         <strong className={styles.tit}>총 평점</strong>
         <p className={styles.number}>
           <IcoStar width={32} height={32} fill="#ffb902" />
@@ -27,13 +26,13 @@ const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
         <ul>
           <li>
             <span>5점</span>
-            <Progress value={40} />
+            <Progress value={100} />
             <span>999,999+</span>
           </li>
           <li>
             <span>4점</span>
             <Progress value={40} />
-            <span>999,999+</span>
+            <span>10</span>
           </li>
           <li>
             <span>3점</span>

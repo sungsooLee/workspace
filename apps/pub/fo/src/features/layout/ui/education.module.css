@@ -136,7 +136,7 @@
             dl {
               @apply w-full;
               & + dl {
-                @apply mt-[4px];
+                @apply mt-0;
               }
             }
           }
@@ -152,6 +152,9 @@
               }
             }
           }
+        }
+        .btn_action {
+          @apply mt-[16px];
         }
       }
     }
