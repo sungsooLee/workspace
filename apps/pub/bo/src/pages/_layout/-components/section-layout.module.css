@@ -17,6 +17,7 @@
   }
   &.thirty {
     & > div {
+      @apply w-[calc(100%-452px)];
       &:first-child {
         @apply w-[452px];
       }
