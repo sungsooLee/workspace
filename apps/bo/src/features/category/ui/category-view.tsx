@@ -152,6 +152,18 @@ const CategoryViewComponent: FC<any> = ({
   const handleOnSubmit = (node: any) => {
     console.log('## node :: ', node);
 
+    /*
+    {카테고리 코드}를 입력해 주세요. 
+
+    {카테고리 코드}를 다시 확인해 주세요.
+
+    이미 사용 중인 {카테고리 코드}입니다. 
+
+    사용할 수 있는 {카테고리 코드} 입니다. 
+
+    {카테고리 코드}의 중복 여부를 확인해 주세요. 
+    */
+
     if (codeCheckState === 'none') {
       setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
       return;
