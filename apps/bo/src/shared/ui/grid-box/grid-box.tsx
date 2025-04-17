@@ -59,7 +59,7 @@ const GridBoxComponent: FC<any> = ({ config }) => {
       {...props}
       data={data}
       columns={girdColumns}
-      disabledSelectionToggle
+      //disabledSelectionToggle
       hideColumnSettings
       hideRowSelectionCheckBox
       pagination={
