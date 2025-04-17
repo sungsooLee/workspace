@@ -48,7 +48,7 @@ const AccordionMenuComponent = ({
     console.log('activeMenuDepth', activeMenuDepth);
     return (menus ?? []).map((menu: Menu) => {
       const active =
-        depth === 4 &&
+        // depth === 4 &&
         activeMenuDepth &&
         activeMenuDepth[depth - 1] &&
         activeMenuDepth[depth - 1]?.path === menu?.path;
