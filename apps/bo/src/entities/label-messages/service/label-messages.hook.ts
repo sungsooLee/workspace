@@ -5,36 +5,26 @@ import { mutateOptions, queryOptions } from './label-messages.queries';
 import { useModal } from '@learnway/ui';
 import { LabelMessage } from '@types';
 
-const useTranslationHook = () => {
+export const useLabelMessagesHook = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [processType, setProcessType] = useState('LOADING');
   const [messageId, setMessageId] = useState();
-  const { alert: openAlert } = useModal();
+  const { showSaveComplete, showUpdateComplete } = useModal();
 
   const { mutate: saveMutate } = useMutation({
     ...mutateOptions.create(),
     onSuccess: async (data: any, variables, context) => {
-      openAlert({
-        description: '정상적으로 저장되었습니다.',
-        type: 'complete',
-        onClose: () => {
-          router.navigate({ to: '/platform/system/translation' });
-        },
-      });
+      await showSaveComplete();
+      // router.navigate({ to: '/platform/system/translation' });
     },
   });
 
   const { mutate: updateMutate } = useMutation({
     ...mutateOptions.update(),
     onSuccess: async (data: any, variables, context) => {
-      openAlert({
-        description: '정상적으로 수정되었습니다.',
-        type: 'complete',
-        onClose: () => {
-          router.navigate({ to: '/platform/system/translation' });
-        },
-      });
+      await showUpdateComplete();
+      // router.navigate({ to: '/platform/system/translation' });
     },
   });
 
@@ -69,4 +59,4 @@ const useTranslationHook = () => {
   };
 };
 
-export const useTranslation = useTranslationHook;
+export const useLabelMessages = useLabelMessagesHook;

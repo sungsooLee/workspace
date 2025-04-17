@@ -133,31 +133,6 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
         </ModalFooter>
       </ModalContainer>
     );
-
-    // return (
-    //   <div className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
-    //     {/* icon */}
-    //     {iconVisible && <div className={styles.icon}>{iconCase()}</div>}
-    //
-    //     {/* title */}
-    //     <div className={styles.title}>{title}</div>
-    //
-    //     {/* description */}
-    //     {description && (
-    //       <div
-    //         ref={descriptionRef}
-    //         className={`${styles.description} ${isScrolled ? styles.scroll : ''}`}>
-    //         {description}
-    //       </div>
-    //     )}
-    //
-    //     {/* content */}
-    //     <div className={styles.content}>{content}</div>
-    //
-    //     {/* footer */}
-    //     <div className={styles.footer}>{footer ?? defaultFooter}</div>
-    //   </div>
-    // );
   },
 );
 
