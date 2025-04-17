@@ -1063,11 +1063,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1020',
     screenName: '과정상세_수강신청_접수중',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- accepting-popup.tsx\n- progress 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1010',
@@ -1163,11 +1163,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MR_1022',
     screenName: '과정상세_수강신청_접수중',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- accepting-popup.tsx\n- progress 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1023',

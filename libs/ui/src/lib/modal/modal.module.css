@@ -202,7 +202,7 @@
 :global(body.mobile) {
   .content {
     @apply !animate-none border-0;
-    &.auto {
+    &.s {
       @apply min-w-auto w-[calc(100dvw-40px)] max-w-[500px];
     }
 

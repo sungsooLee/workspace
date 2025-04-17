@@ -7,7 +7,7 @@ import { BannerInfo } from '../-contents/banner-info';
 
 const TenantPlatformCampaignMenuComponent: FC<{}> = ({}) => {
   return (
-    <SectionLayout>
+    <SectionLayout contentsRatio={'thirty'}>
       <BannerList />
       <BannerInfo />
     </SectionLayout>

@@ -1,14 +1,24 @@
 /* section-layout.module.css */
 .start {
   @apply flex w-full flex-wrap items-stretch;
+  & > div {
+    @apply pr-[32px];
+    &:not(:first-child) {
+      @apply relative flex-grow pl-[32px] pr-0;
+      &::before {
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
   &.half {
     & > div {
-      @apply w-1/2 pr-[32px];
-      &:not(:first-child) {
-        @apply relative pl-[32px] pr-0;
-        &::before {
-          @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
-        }
+      @apply w-1/2;
+    }
+  }
+  &.thirty {
+    & > div {
+      &:first-child {
+        @apply w-[452px];
       }
     }
   }

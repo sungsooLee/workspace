@@ -6,15 +6,24 @@ interface SectionLayoutComponentProps {
   isLineVisible?: boolean;
   children: React.ReactNode;
   className?: string;
+  contentsRatio?: string; // half | thirty | seventy
 }
 
 function SectionLayoutComponent({
   isLineVisible,
   children,
   className,
+  contentsRatio,
 }: SectionLayoutComponentProps) {
   return (
-    <div className={cn(styles.start, styles.half, isLineVisible && styles.line, className)}>
+    <div
+      className={cn(
+        styles.start,
+        contentsRatio ? styles[contentsRatio] : styles.half,
+        isLineVisible && styles.line,
+        className,
+      )}
+    >
       {children}
     </div>
   );
