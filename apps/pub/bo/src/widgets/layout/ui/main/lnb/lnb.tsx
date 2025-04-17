@@ -15,7 +15,7 @@ function LNBComponent() {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
   console.log('activeMenuDepth', activeMenuDepth);
-  const [toggleLnb, setToggleLnb] = useState<boolean>(true);
+  const [toggleLnb, setToggleLnb] = useState<boolean>(false);
   const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
@@ -31,6 +31,7 @@ function LNBComponent() {
     if (!activeMenuDepth?.[0]?.children) {
       return;
     }
+    setToggleLnb(true);
     setMenus(activeMenuDepth?.[0]?.children);
   }, [activeMenuDepth?.[0]?.children]);
 

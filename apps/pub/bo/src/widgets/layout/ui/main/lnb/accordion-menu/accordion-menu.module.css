@@ -4,7 +4,7 @@
   &.depth3 {
     @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
     & > [data-state='open'] {
-      @apply rounded-[8px] bg-[var(--primary2)];
+      @apply rounded-[8px];
       & > button > [class*='accordion_title'] {
         @apply bg-[var(--gray1)];
         &[class*='active'] {
@@ -14,7 +14,7 @@
       button {
         &[class*='has_children'] {
           [class*='accordion_title'] {
-            @apply rounded-[8px] bg-[var(--primary2)] text-white;
+            @apply rounded-t-[8px] bg-[var(--primary2)] text-white;
           }
         }
       }
