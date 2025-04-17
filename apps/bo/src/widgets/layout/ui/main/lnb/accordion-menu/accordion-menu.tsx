@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from 'react';
-import { Link } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { map, intersection } from 'lodash';
 
 import { cn } from '@learnway/shared';
@@ -26,6 +26,7 @@ const AccordionMenuComponent = ({
   openAll,
   onOpenStateAll,
 }: AccordionMenuComponentProps) => {
+  const router = useRouter();
   const [value, setValue] = useState<string[] | undefined>();
   const [activeMenuDepth] = useActiveMenuDepthState();
 
@@ -44,7 +45,7 @@ const AccordionMenuComponent = ({
         activeMenuDepth[depth - 1]?.path === menu?.path;
       return {
         value: menu.key,
-        title: menu.path ? <Link to={menu.path}>{menu.menuName}</Link> : menu.menuName,
+        title: <span onClick={() => handleNavigate(menu)}>{menu.menuName}</span>,
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
         active,
       } as AccordionItem;
@@ -77,6 +78,13 @@ const AccordionMenuComponent = ({
       );
     }
   }, [value]);
+
+  const handleNavigate = (menu: Menu) => {
+    if (!menu?.path) {
+      return;
+    }
+    router.navigate({ to: menu.path });
+  };
 
   const handleValueChange = (value: string[]) => {
     setValue(value);
