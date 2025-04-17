@@ -124,7 +124,7 @@
     .view_file {
       @apply flex max-w-[calc(100%-74px)] flex-auto shrink-0 flex-wrap items-center;
       .attach_area {
-        @apply relative flex min-h-[32px] w-full flex-wrap items-center justify-between rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--gray2)] px-[12px];
+        @apply relative flex min-h-[32px] w-full flex-wrap items-center justify-between rounded-[4px] border border-solid border-[var(--gray2)] bg-[var(--gray2)] px-[12px];
         .text {
           @apply input_bo_1_r text-[var(--gray6)];
         }
