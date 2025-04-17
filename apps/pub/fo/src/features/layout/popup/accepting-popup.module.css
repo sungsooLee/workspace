@@ -1,0 +1,11 @@
+.start {
+  &.accepting_wrap {
+    @apply flex flex-col items-center;
+    strong {
+      @apply title_5_b mt-[16px] block text-center text-[var(--gray9)];
+    }
+    p {
+      @apply body_3_r mt-[8px] text-center text-[var(--gray7)];
+    }
+  }
+}
