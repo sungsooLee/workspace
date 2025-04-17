@@ -9,3 +9,18 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.accepting_wrap {
+        strong {
+          @apply title_7_b mt-[12px];
+        }
+        p {
+          @apply mt-[2px];
+        }
+      }
+    }
+  }
+}

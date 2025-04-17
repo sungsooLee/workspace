@@ -40,9 +40,19 @@
   }
   &.s {
     @apply w-[400px];
+    [class*='nlp--modal-content'] {
+      [class*='modal-content'] {
+        @apply !p-[24px];
+      }
+    }
   }
   &.sm {
     @apply w-[600px];
+    [class*='nlp--modal-content'] {
+      [class*='modal-content'] {
+        @apply !p-[24px];
+      }
+    }
   }
   &.md {
     @apply w-[800px];
@@ -202,6 +212,7 @@
 :global(body.mobile) {
   .content {
     @apply !animate-none border-0;
+    &.auto,
     &.s {
       @apply min-w-auto w-[calc(100dvw-40px)] max-w-[500px];
     }

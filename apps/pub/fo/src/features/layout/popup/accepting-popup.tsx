@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalFooter, Button } from '@learnway/ui';
 import { IcoProgress } from '@learnway/icons';
+import { isMobile } from 'react-device-detect';
 
 import styles from './accepting-popup.module.css';
 
@@ -10,7 +11,7 @@ const AcceptingPopupComponent = () => {
       <ModalBody>
         <div className={`${styles.start} ${styles.accepting_wrap}`}>
           {/* progress 미작업 (아이콘 임시) */}
-          <IcoProgress width={54} height={54} />
+          <IcoProgress width={isMobile ? 32 : 54} height={isMobile ? 32 : 54} />
           <strong>수강 신청 접수중입니다</strong>
           <p>잠시만 기다려주세요.</p>
         </div>
