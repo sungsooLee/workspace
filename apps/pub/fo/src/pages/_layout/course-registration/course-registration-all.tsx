@@ -524,7 +524,7 @@ function RouteComponent() {
             onClick={() =>
               openModal({
                 width: 's',
-                content: <AcceptingPopup />,
+                content: <AddressConfirmationPopup />,
                 hideCloseButton: true,
               })
             }
@@ -546,7 +546,7 @@ function RouteComponent() {
               onClick={() =>
                 openModal({
                   width: 's',
-                  content: <AcceptingPopup />,
+                  content: <AddressConfirmationPopup />,
                   hideCloseButton: true,
                 })
               }
