@@ -524,6 +524,15 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
+    screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
+    pageId: 'pms/menu-education-location-management',
+    screenId: 'NLP_BO_EDO_1601',
+    pageType: 'Page',
+    completionDate: '2025-04-18',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
+  },
+  {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리_등록/상세',
     pageId: 'pms/menu-education-register-detail',
     screenId: 'NLP_BO_EDO_1602',
