@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoInfoCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -18,8 +18,6 @@ function RouteComponent() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
-  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
-  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -42,37 +40,25 @@ function RouteComponent() {
   const data: any[] = [
     {
       order: '1',
-      tenantName: <Button className="link">테넌트명1</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
+      sort: '서비스 기술교육',
+      spot: 'Cell Text',
+      useable: 'Y',
+      reservation: 'N',
+      companyOwner: '담당자명',
+      map: (
+        <Link to={'/'} className="link">
+          약도보기
         </Link>
       ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
-    },
-    {
-      order: '2',
-      tenantName: <Button className="link">테넌트명2</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
       ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '미사용',
-      register: '김현대',
       registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
+      registerOwner: '김현대',
       modificationDate: '2025-01-01 07:12',
+      modifier: '김현대',
     },
   ];
 
@@ -90,65 +76,69 @@ function RouteComponent() {
       },
       enableGrouping: false,
     }),
-    columnHelper.accessor('tenantName', {
+    columnHelper.accessor('sort', {
       cell: (info) => info.getValue(),
-      header: '테넌트명',
+      header: '구분',
       enableGrouping: false,
-      size: 152,
-    }),
-    columnHelper.accessor('tenantSite', {
-      cell: (info) => info.getValue(),
-      header: '테넌트 사이트',
-      size: 240,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('company', {
-      cell: (info) => info.getValue(),
-      header: '회사',
       size: 200,
-      enableGrouping: false,
     }),
-    columnHelper.accessor('tenantOwner', {
+    columnHelper.accessor('spot', {
       cell: (info) => info.getValue(),
-      header: '테넌트 담당자',
-      size: 120,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('companyOwner', {
-      cell: (info) => info.getValue(),
-      header: '회사 담당자',
-      size: 120,
+      header: '장소 명',
+      size: 300,
       enableGrouping: false,
     }),
     columnHelper.accessor('useable', {
       cell: (info) => info.getValue(),
-      header: '사용여부',
-      size: 104,
+      header: '사용가능',
+      size: 90,
       enableGrouping: false,
     }),
-    columnHelper.accessor('register', {
+    columnHelper.accessor('reservation', {
       cell: (info) => info.getValue(),
-      header: '등록자',
+      header: '예약가능',
+      size: 90,
       enableGrouping: false,
-      size: 104,
+    }),
+    columnHelper.accessor('map', {
+      cell: (info) => info.getValue(),
+      header: '약도',
+      size: 90,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('link', {
+      cell: (info) => info.getValue(),
+      header: '링크',
+      size: 90,
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
     }),
     columnHelper.accessor('registerDate', {
       cell: (info) => info.getValue(),
-      header: '등록일시',
+      header: '최초등록일시',
       enableGrouping: false,
-      size: 152,
+      size: 190,
     }),
-    columnHelper.accessor('modifier', {
+    columnHelper.accessor('registerOwner', {
       cell: (info) => info.getValue(),
-      header: '수정자',
+      header: '최초등록자',
       enableGrouping: false,
-      size: 104,
+      size: 100,
     }),
     columnHelper.accessor('modificationDate', {
       cell: (info) => info.getValue(),
-      header: '수정일',
+      header: '최종수정일시',
       enableGrouping: false,
-      size: 152,
+      size: 190,
+    }),
+    columnHelper.accessor('modifier', {
+      cell: (info) => info.getValue(),
+      header: '최종수정자',
+      enableGrouping: false,
+      size: 100,
     }),
   ] as ColumnDef<any, unknown>[];
   return (
@@ -199,9 +189,9 @@ function RouteComponent() {
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
-                          options={options2}
-                          value={selectedValues2}
-                          onChange={(selected) => setSelectedValues2(selected)}
+                          options={options3}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
                           variant="default"
                           size={'sm'}
                         />
