@@ -19,7 +19,7 @@ export function useCommonCodeList(
   cdGroupId = '',
   cdGroupName = '',
   cdGroupContent = '',
-  isUsed = true,
+  isUsed = '',
   cdName = '',
 ) {
   return useQuery(
@@ -49,7 +49,7 @@ export function useCreateCommonCode({
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupContent?: string;
-    isUsed?: boolean;
+    isUsed?: string;
     cdName?: string;
   };
 } & Omit<
@@ -104,7 +104,7 @@ export function useUpdateCommonCode({
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupContent?: string;
-    isUsed?: boolean;
+    isUsed?: string;
     cdName?: string;
   };
 } & Omit<

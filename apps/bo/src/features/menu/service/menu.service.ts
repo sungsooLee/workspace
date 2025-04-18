@@ -61,23 +61,23 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
   // 재귀적으로 데이터 구조 변환
-  const transform = (nodes: any) => {
+  const transform = (nodes: any, parentId?: any) => {
     if (!nodes) return [];
 
     return nodes.map((node: any) => {
-      console.log(node);
       // 새로운 노드 객체 생성
       const transformedNode = {
         key: node.apiId.toString(),
         title: node?.apiName,
 
+        apiUuid: node?.apiUuid,
         apiId: node.apiId.toString(),
         apiMethod: node?.apiMethod,
         apiName: node?.apiName,
         apiScope: node?.apiScope,
         apiUrl: node?.apiUrl,
         depth: node?.depth,
-        parentId: node?.parentId,
+        parentId: node?.parentId || parentId,
         sortOrder: node?.sortOrder,
         isUsed: node?.isUsed,
         apiDesc: node?.apiDesc,
@@ -87,7 +87,7 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
-        transformedNode.children = transform(node.children);
+        transformedNode.children = transform(node.children, transformedNode.apiId);
       }
 
       return transformedNode;

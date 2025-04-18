@@ -32,7 +32,7 @@ function RouteComponent() {
   const [searchParams, setSearchParams] = useState({
     cdGroupId: '',
     cdGroupName: '',
-    isUsed: true,
+    isUsed: '',
     cdName: '',
   });
 
@@ -64,12 +64,18 @@ function RouteComponent() {
   };
 
   const handleGridStateChange = (newState: GridState) => {
-    // sorting 정보가 있으면 처리
     if (newState.sorting && newState.sorting.length > 0) {
       const sortItem = newState.sorting[0];
       const direction = sortItem.desc ? 'desc' : 'asc';
-      const sortValue = `${sortItem.id},${direction}`;
-      console.log('Sort value:', sortValue); // 디버깅용
+      const sortItemNameMap: Record<string, string> = {
+        isUsed: 'commonCdGroupEntity.isUsed',
+        createdDate: 'commonCdGroupEntity.createdDate',
+        createdBy: 'commonCdGroupEntity.createdBy',
+        modifiedDate: 'commonCdGroupEntity.modifiedDate',
+        lastModifiedBy: 'commonCdGroupEntity.lastModifiedBy',
+      };
+      const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+      const sortValue = `${sortItemName},${direction}`;
       setSortState({ sort: sortValue });
     } else {
       setSortState({ sort: '' });

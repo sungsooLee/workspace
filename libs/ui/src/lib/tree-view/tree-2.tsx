@@ -214,14 +214,13 @@ const TreeNodeComponent = ({
   };
 
   // 노드 스타일 계산
-  const getNodeStyle = useCallback(() => {
+  const getNodeStyle = () => {
     // const styles = [`flex items-center py-1 rounded min-h-[40px] relative`];
 
     const styles = [
       `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
         ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
     ];
-
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-[var(--gray1)]');
@@ -261,7 +260,8 @@ const TreeNodeComponent = ({
     }
 
     return styles.join(' ');
-  }, [dropPosition, isDragging, selectedNode, enhanceNode, searchKeyword, isValidDropPosition]);
+  };
+  // }, [dropPosition, isDragging, selectedNode, enhanceNode, searchKeyword, isValidDropPosition]);
 
   // 드래그 시작
   const handleDragStart = (e: React.DragEvent) => {
@@ -418,7 +418,7 @@ const TreeNodeComponent = ({
   return (
     <div className={styles.tree_item}>
       <div
-        className={cn(getNodeStyle, styles.tree_inner, level === 0 && styles.root_menu)}
+        className={cn(getNodeStyle(), styles.tree_inner, level === 0 && styles.root_menu)}
         style={{
           boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none',
           transition: 'all 0.2s ease',
@@ -621,7 +621,6 @@ const TreeView2 = ({
   // 외부 데이터 변경 감지
   useEffect(() => {
     setInitialData(JSON.parse(JSON.stringify(data)));
-    console.log(JSON.parse(JSON.stringify(data)));
   }, [data]);
 
   // 확장된 키를 안전하게 업데이트하는 함수
