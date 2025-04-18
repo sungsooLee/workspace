@@ -13,6 +13,7 @@ const CurriculumComponent = ({ className }: CurriculumProps) => {
         <li>
           <div className={styles.tit_box}>
             <strong>1. 안전교육 | 강사 이승훈(현대오토에버 L&D플랫폼팀)</strong>
+            <span>완료</span>
           </div>
           <div className={styles.txt_box}>
             <ul>

@@ -16,6 +16,9 @@
           [class*='accordion_title'] {
             @apply rounded-b-none rounded-t-[8px] bg-[var(--primary2)] text-white;
           }
+          & + [data-state='open'] > div {
+            @apply rounded-t-none;
+          }
         }
       }
     }
