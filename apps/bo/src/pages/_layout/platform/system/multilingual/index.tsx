@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, EditInputCell, EditTextareaCell } from '@learnway/ui';
+import { Button, EditInputCell, EditTextareaCell, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -23,38 +23,45 @@ type TranslationType = {
 };
 
 function RouteComponent() {
-  const router = useRouter();
+  const { confirm } = useModal();
   const { state } = Route.useRouteContext();
   const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
-  const { data: codeData } = useFetchCodeGroups();
-  const isSaveDisable = useMemo(() => gConfig.totalRows === 0, [gConfig.totalRows]);
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
+  const isSaveDisable = useMemo(
+    () => gConfig.totalRows === 0 || currentTargetLocale === '',
+    [gConfig.totalRows, currentTargetLocale],
+  );
   /**
    * @param data
    */
   const handleOnSearch = useCallback((data: any) => {
+    setCurrentTargetLocale(getValues('targetLocale'));
     gridFetch(data);
   }, []);
   /**
    * 등록화면 이동
    */
-  const handleNewTranslation = useCallback(() => {
+  const handleNewTranslation = useCallback(async () => {
+    if (
+      !(await confirm({
+        title: '저장 하시겠습니까?',
+        content: '화면에 노출된 번역 언어만 저장됩니다.',
+      }))
+    )
+      return;
+
     const uploadData: TranslationType = {
       targetLocale: getValues('targetLocale'),
       translations: [],
     };
-    if (!currentTargetLocale && uploadData.targetLocale !== currentTargetLocale) {
-      alert('언어가 변경되었습니다. 조회 후 이용해주세요.');
-    }
     data.forEach((item: any) => {
       uploadData.translations.push({
         multilingualKey: item.multilingualKey,
         translation: item.targetLanguage || '',
       });
     });
-    setCurrentTargetLocale(uploadData.targetLocale);
     update(uploadData);
   }, [data]);
 
@@ -62,7 +69,6 @@ function RouteComponent() {
     if (state.keyType) {
       onFormChange({ keyType: 'MENU', multilingualKey: state.multilingualKey || '' });
     }
-    //gridFetch(getValues(), { page: 0, size: 10 });
   }, []);
   return (
     <PageContainer>
@@ -91,6 +97,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        {currentTargetLocale}
         <GridBox config={gConfig} />
       </MainContents>
     </PageContainer>

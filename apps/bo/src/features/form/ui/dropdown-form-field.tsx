@@ -87,12 +87,13 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
         filterWatchedValue === optionsConfig.filter.value
       ) {
         newOptions = optionsConfig.filter.fn(newOptions as SelectOption[]) as SelectOption[];
-        const currentValue = newOptions.find((option: SelectOption) => option.value === value);
+        const currentValue = newOptions.find((option) => option.value === value);
         if (!currentValue) {
           onChange(newOptions[0]?.value);
         }
       }
-      setOptions(newOptions);
+      const excludeValues = optionsConfig.excludeValues || [];
+      setOptions(newOptions.filter((option) => !excludeValues.includes(option.value)));
     };
 
     useEffect(() => {
