@@ -8,7 +8,7 @@ import {
   ModalFooter,
   Button,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
+import { IcoHeart, IcoShare } from '@learnway/icons';
 
 import lectureStyles from '../../../pages/_layout/course-introduction/lecture.module.css';
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -101,25 +101,21 @@ const CourseSelectionPopupComponent = () => {
       </ModalBody>
       <ModalFooter>
         <div
-          className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
+          className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
         >
-          <div
-            className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
-          >
-            <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-              <IcoHeart
-                width={20}
-                height={20}
-                stroke={heart === true ? '#ff4646' : '#4c515e'}
-                fill={heart === true ? '#ff4646' : 'none'}
-              />
-            </Button>
-            <Button>
-              <IcoShare width={20} height={20} stroke="#4c515e" />
-            </Button>
-            <div className={packageInformationStyles.course}>
-              <Button variant="primary">수강신청</Button>
-            </div>
+          <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+            <IcoHeart
+              width={20}
+              height={20}
+              stroke={heart === true ? '#ff4646' : '#4c515e'}
+              fill={heart === true ? '#ff4646' : 'none'}
+            />
+          </Button>
+          <Button>
+            <IcoShare width={20} height={20} stroke="#4c515e" />
+          </Button>
+          <div className={packageInformationStyles.course}>
+            <Button variant="primary">수강신청</Button>
           </div>
         </div>
       </ModalFooter>

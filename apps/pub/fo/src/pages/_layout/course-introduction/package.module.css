@@ -57,8 +57,18 @@
             @apply pb-0;
           }
           & > button {
+            @apply max-h-none;
+            & > span {
+              @apply pl-0;
+            }
             & + div {
               @apply bg-inherit;
+            }
+            & > svg {
+              @apply right-0 top-[2px] h-[20px] w-[20px] !stroke-[#6f798b];
+            }
+            strong {
+              @apply leading-[26px];
             }
           }
         }

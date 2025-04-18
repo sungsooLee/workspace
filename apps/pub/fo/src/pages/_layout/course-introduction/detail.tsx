@@ -14,7 +14,7 @@ import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
-  CourseInformationPopup,
+  CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';

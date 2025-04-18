@@ -8,8 +8,8 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import {
   CourseDashboard,
   CourseIntroduction,
-  CourseInformationPopup,
-  CourseSelectionPopup,
+  CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
+  CourseSelectionPopup, // 차수선택 팝업
 } from '../../../features/layout';
 
 import definitionListStyles from './definition-list.module.css';
@@ -161,7 +161,7 @@ function RouteComponent() {
         <MobileContainerFooter>
           {/* 수강신청 없는 case */}
           {/* button */}
-          <div className={`${packageInformationStyles.course_btn_wrap}`}>
+          {/* <div className={`${packageInformationStyles.course_btn_wrap}`}>
             <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
               <IcoHeart
                 width={20}
@@ -173,7 +173,7 @@ function RouteComponent() {
             <Button>
               <IcoShare width={20} height={20} stroke="#4c515e" />
             </Button>
-          </div>
+          </div> */}
 
           {/* 수강신청 못하는 case */}
           {/* <div
@@ -198,7 +198,7 @@ function RouteComponent() {
           </div> */}
 
           {/* 수강신청 있는 case */}
-          {/* <div
+          <div
             className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
           >
             <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
@@ -218,14 +218,14 @@ function RouteComponent() {
                 onClick={() =>
                   openModal({
                     width: 'm_full',
-                    content: <CourseSelectionPopup />,
+                    content: <CourseSelectionPopup />, // 차수선택 팝업
                   })
                 }
               >
                 수강신청
               </Button>
             </div>
-          </div> */}
+          </div>
         </MobileContainerFooter>
       </MobileView>
     </div>
