@@ -1,20 +1,10 @@
-import { FC, useState } from 'react';
-import { cn, getRandomId } from '@learnway/shared';
+import { FC } from 'react';
+import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, List } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 import styles from './banner-info.module.css';
 
-const menuLength = 5;
-const menuOptions = Array(menuLength)
-  .fill(null)
-  .map((d, i) => ({
-    id: getRandomId(),
-    name: `배너${i}`,
-  }));
-
 const BannerInfoComponent: FC<{}> = ({}) => {
-  const [myOptions, setMyOptions] = useState(menuOptions);
-  const [value, setValue] = useState<any>();
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
@@ -29,22 +19,7 @@ const BannerInfoComponent: FC<{}> = ({}) => {
         }
         underLine={true}
       />
-      <div className={styles.menu_wrap}>
-        <List
-          options={myOptions}
-          value={value}
-          valueField={'id'}
-          draggable
-          hideBorder
-          disabledActive
-          itemRenderer={(option: any) => (
-            <div className={styles.menu_box}>
-              <p className={styles.menu_name}>{option.name}</p>
-            </div>
-          )}
-          onOptionsOrderChange={(newOptions: any) => setMyOptions(newOptions)}
-        />
-      </div>
+      <div className={styles.contents_wrap}></div>
     </div>
   );
 };

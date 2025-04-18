@@ -63,6 +63,7 @@ import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
+import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
 import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
@@ -442,6 +443,12 @@ const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
 const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
   id: '/menu4/menu5',
   path: '/menu4/menu5',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
+  id: '/menu/$menuId',
+  path: '/menu/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1394,6 +1401,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningPopupUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/menu/$menuId': {
+      id: '/_layout/menu/$menuId'
+      path: '/menu/$menuId'
+      fullPath: '/menu/$menuId'
+      preLoaderRoute: typeof LayoutMenuMenuIdImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu4/menu5': {
       id: '/_layout/menu4/menu5'
       path: '/menu4/menu5'
@@ -1723,6 +1737,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
+  LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
@@ -1764,6 +1779,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningPopupLearningSettingRoute:
     LayoutLearningPopupLearningSettingRoute,
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
+  LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
@@ -1884,6 +1900,7 @@ export interface FileRoutesByFullPath {
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
+  '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
@@ -1993,6 +2010,7 @@ export interface FileRoutesByTo {
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
+  '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
@@ -2105,6 +2123,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
+  '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
@@ -2216,6 +2235,7 @@ export interface FileRouteTypes {
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
+    | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
@@ -2324,6 +2344,7 @@ export interface FileRouteTypes {
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
     | '/learning/popup-upload'
+    | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
@@ -2434,6 +2455,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/learning/popup-learningSetting'
     | '/_layout/learning/popup-upload'
+    | '/_layout/menu/$menuId'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
@@ -2583,6 +2605,7 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/learning/popup-learningSetting",
         "/_layout/learning/popup-upload",
+        "/_layout/menu/$menuId",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
@@ -2936,6 +2959,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/popup-upload": {
       "filePath": "_layout/learning/popup-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/menu/$menuId": {
+      "filePath": "_layout/menu/$menuId.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu4/menu5": {

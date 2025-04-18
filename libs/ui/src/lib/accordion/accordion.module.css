@@ -3,11 +3,8 @@
   .accordion_item {
     .accordion_btn {
       @apply relative box-border flex max-h-[70px] w-full items-center;
-      span {
-        @apply flex w-full text-left text-[14px] leading-[22px] text-[var(--gray9)];
-        a {
-          @apply flex min-h-[44px] w-full items-center pl-[16px];
-        }
+      & > span {
+        @apply flex h-full min-h-[40px] w-full items-center pl-[16px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
       }
       &[data-state='closed'] {
         svg {
@@ -15,15 +12,17 @@
         }
       }
       &[data-state='open'] {
-        [class*='accordion_title'] a.active {
-          @apply font-bold;
+        [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply font-bold;
+          }
         }
         svg {
           @apply rotate-180 stroke-[var(--gray9)];
         }
       }
       svg {
-        @apply absolute right-0 top-1/2 -mt-[8px] h-[16px] w-[16px];
+        @apply absolute right-[12px] top-1/2 -mt-[8px] h-[16px] w-[16px];
       }
     }
     .accordion_content {

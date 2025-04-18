@@ -1037,7 +1037,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_1009',
@@ -1047,7 +1047,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_1019',
@@ -1057,17 +1057,17 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_1020',
     screenName: '과정상세_수강신청_접수중',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- accepting-popup.tsx\n- progress 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1010',
@@ -1123,11 +1123,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MR_1018',
     screenName: '과정상세_수강신청_교재 배송지_배송지 확인',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-14	',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- address-confirmation-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1019',
@@ -1137,7 +1137,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1020',
@@ -1147,7 +1147,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1021',
@@ -1157,17 +1157,17 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- 결재 정책미정',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1022',
     screenName: '과정상세_수강신청_접수중',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-registration/course-registration-all',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- accepting-popup.tsx\n- progress 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_MR_1023',
