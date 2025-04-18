@@ -225,6 +225,7 @@ function RouteComponent() {
                       { value: 'mobile', label: 'Mobile' },
                     ]}
                     value={['all']}
+                    disabled
                   />
                 </div>
               </div>
