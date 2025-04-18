@@ -15,9 +15,9 @@
           @apply title_6_b block text-[var(--gray8)];
         }
         & > div {
-          @apply mt-[4px];
+          @apply mt-[4px] leading-[22px];
           & > span {
-            @apply body_3_r inline-block text-[var(--gray7)];
+            @apply body_3_r inline-block align-top leading-[22px] text-[var(--gray7)];
             & + span {
               @apply relative ml-[8px] pl-[8px];
               &::before {
@@ -46,12 +46,10 @@
           @apply absolute left-[16px] top-[16px];
         }
         .txt_box {
-          @apply block;
+          @apply flex-col;
           .profile {
-            @apply w-full pl-[68px];
-            strong {
-              @apply mt-[4px];
-            }
+            @apply flex min-h-[56px] w-full flex-col justify-center pl-[68px];
+
             & > div {
               @apply text-[0];
             }

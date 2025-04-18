@@ -16,7 +16,7 @@
     @apply body_3_r whitespace-nowrap text-[var(--gray8)];
   }
   &[class*='nlp--popover-trigger'] {
-    @apply min-h-[40px] rounded-[8px] border border-solid border-[var(--gray4)] px-[8px];
+    @apply min-h-[32px] rounded-[4px] border border-solid border-[var(--gray4)] px-[8px];
   }
   svg {
     @apply ml-[4px] transition-all;

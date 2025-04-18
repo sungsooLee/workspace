@@ -26,6 +26,9 @@ export const Route = createFileRoute('/_layout/course-introduction/detail-m')({
 });
 
 function RouteComponent() {
+  // 찜
+  const [heart, setHeart] = useState(false);
+
   // 패키지 자세한 정보 아코디언
   const [packageInformation, setPackageInformation] = useState(true);
 
@@ -134,10 +137,13 @@ function RouteComponent() {
           <MobileView>
             <MobileContainerFooter>
               <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />

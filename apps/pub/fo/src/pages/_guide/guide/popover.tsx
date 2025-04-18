@@ -44,7 +44,7 @@ function RouteComponent() {
               popoverContent={<PopoverContent />}
               className=""
               side="bottom"
-              align="end"
+              align="start"
               sideOffset={10}
             >
               팝오버 클릭요소
@@ -73,7 +73,7 @@ const PopOverCompoment = () => {
       popoverContent={<PopoverContent />}
       className=""
       side="bottom"
-      align="end"
+      align="start"
       sideOffset={10}>
       팝오버 클릭요소
     </Popover>
@@ -86,7 +86,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">popover (dropdown 형식)</h3>
+        <h3 className="guide_tit3">popover (dropdown default 형식)</h3>
 
         <div className="flex_box">
           <div className="desc w-full">
@@ -94,10 +94,10 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
               popoverContent={<DropdownPopoverCompoment />}
               className={dropdownPopoverStyles.btn}
               side="bottom"
-              align="end"
+              align="start"
               sideOffset={10}
             >
-              <span>popover dropdown 형식</span>
+              <span>popover dropdown default 형식</span>
               <IcoArrowDown width={16} height={16} stroke="#131C30" />
             </Popover>
           </div>
@@ -128,9 +128,65 @@ const PopOverCompoment = () => {
       popoverContent={<DropdownPopoverCompoment />}
       className={dropdownPopoverStyles.btn}
       side="bottom"
+      align="start"
+      sideOffset={10}>
+        <span>{'popover text 형식'}</span>
+        <IcoArrowDown width={16} height={16} stroke="#131C30" />
+    </Popover>
+  );
+};
+
+export const PopOverCompoment = memo(PopOverCompoment);`}</code>
+          </pre>
+        </div>
+      </div>
+
+      <div className="group">
+        <h3 className="guide_tit3">popover (dropdown text 형식)</h3>
+
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Popover
+              popoverContent={<DropdownPopoverCompoment />}
+              className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+              side="bottom"
+              align="end"
+              sideOffset={10}
+            >
+              <span>popover dropdown text 형식</span>
+              <IcoArrowDown width={16} height={16} stroke="#131C30" />
+            </Popover>
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`// import 
+import { memo } from 'react';
+import { Popover, Button } from '@learnway/ui';
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+
+const DropdownPopoverCompoment = () => {
+  return (
+    <div className={\`\${dropdownPopoverStyles.start} \${dropdownPopoverStyles.dropdown_wrap}\`}>
+        <Button>년도별 보기1</Button>
+        <Button>년도별 보기2</Button>
+        <Button>년도별 보기3</Button>
+        <Button>년도별 보기444444444</Button>
+      </div>
+  );
+};
+
+const PopOverCompoment = () => {
+  
+  return (
+    <Popover
+      popoverContent={<DropdownPopoverCompoment />}
+      className={\`\${dropdownPopoverStyles.btn} \${dropdownPopoverStyles.text}\`}
+      side="bottom"
       align="end"
       sideOffset={10}>
-        <span>{'popover dropdown 형식'}</span>
+        <span>{'popover dropdown text 형식'}</span>
         <IcoArrowDown width={16} height={16} stroke="#131C30" />
     </Popover>
   );

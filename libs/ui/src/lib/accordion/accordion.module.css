@@ -12,13 +12,13 @@
         }
       }
       &[data-state='open'] {
-        [class*='accordion_title'] {
-          &[class*='active'] {
-            @apply font-bold;
-          }
-        }
         svg {
           @apply rotate-180 stroke-[var(--gray9)];
+        }
+      }
+      [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply font-bold;
         }
       }
       svg {
