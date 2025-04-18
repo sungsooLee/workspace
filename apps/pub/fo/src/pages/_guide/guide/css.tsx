@@ -77,9 +77,6 @@ ex) test.module.css
           <p className="loc react">
             설장파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
           </p>
-          <p className="loc react">
-            설장파일 위치(FO or BO) : /pub/fo/<strong>tailwind.config.js</strong>
-          </p>
           <div className="info">지정 class명이 없을경우 설정파일에서 추가</div>
 
           <div className="code_example">
@@ -94,7 +91,7 @@ ex) test.module.css
 
           <h3 className="guide_tit3">Global CSS</h3>
           <p className="loc css">
-            파일 위치 : /apps/pub/fo/src/assets/styles/<strong>global.css</strong>
+            파일 위치 : /libs/styles/src/lib/fo/assets/styles/<strong>global.css</strong>
           </p>
           <ul className="info_ul">
             <li>
