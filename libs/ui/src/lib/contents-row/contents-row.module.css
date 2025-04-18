@@ -29,7 +29,10 @@
       @apply border-0 pt-0;
     }
     & + .horizontal {
-      @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pt-[16px];
+      @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pb-[16px] pt-[16px];
+      [class*='nlp--switch'] {
+        @apply translate-y-0;
+      }
     }
     & + [class*='nlp--contents-row'] {
       @apply border-t-[1px] border-[var(--gray2)] pt-[16px];
@@ -39,6 +42,13 @@
     }
     label ~ p {
       @apply w-full !flex-none;
+    }
+  }
+}
+[class*='title_wrap'] + .row {
+  &.horizontal {
+    [class*='nlp--switch'] {
+      @apply translate-y-0;
     }
   }
 }

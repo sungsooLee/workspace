@@ -39,6 +39,7 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
 
+  // 공통 팝업(이력 정보)
   const { close: closeModal } = useModal();
   const ModalHistoryInfoContent = () => {
     // 이력 구분
@@ -247,6 +248,55 @@ function RouteComponent() {
         {/* main_contents */}
         <div className={styles.main_contents}>
           <FormSubTitle label={'교육장소 정보 '} />
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-sort" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>구분</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Dropdown
+                  options={options}
+                  value={selectedValues}
+                  onChange={(selected) => setSelectedValues(selected)}
+                  variant="default"
+                  size={'sm'}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-locationCode" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>장소 코드</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input id="name-locationCode" type="text" placeholder="입력" />
+              </div>
+            </div>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-locationName" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>장소 명</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input id="name-locationName" type="text" placeholder="입력" />
+              </div>
+            </div>
+          </ContentsRow>
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
