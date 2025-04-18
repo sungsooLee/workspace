@@ -197,7 +197,9 @@ function RouteComponent() {
                 </div>
               </div>
               {/* button */}
-              <div className={packageInformationStyles.btn_box}>
+              <div
+                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
+              >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
