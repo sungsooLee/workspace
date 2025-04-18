@@ -20,6 +20,9 @@ export const Route = createFileRoute('/_layout/course-introduction/package-m')({
 });
 
 function RouteComponent() {
+  // 찜
+  const [heart, setHeart] = useState(false);
+
   const options: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
@@ -74,7 +77,8 @@ function RouteComponent() {
       <div className={styles.sub_box}>
         {/* package information */}
         <div
-          className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}>
+          className={`${packageInformationStyles.start} ${packageInformationStyles.information}`}
+        >
           <strong className={packageInformationStyles.tit}>
             패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
           </strong>
@@ -94,15 +98,17 @@ function RouteComponent() {
                 packageInformation === true
                   ? setPackageInformation(false)
                   : setPackageInformation(true)
-              }>
+              }
+            >
               {packageInformation === true ? '닫기' : '자세히'}
               <IcoArrowDown width={16} height={16} stroke="#6f798b" />
             </Button>
           </div>
           {/* 학습정보 */}
           <div
-            className={`${packageInformationStyles.list_box} ${packageInformation === true ? packageInformationStyles.active : ''}`}>
-            {/* definition list */}
+            className={`${packageInformationStyles.list_box} ${packageInformation === true ? packageInformationStyles.active : ''}`}
+          >
+            {/* definition module */}
             <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
               <dl>
                 <dt>학습유형</dt>
@@ -132,10 +138,13 @@ function RouteComponent() {
           <MobileView>
             <MobileContainerFooter>
               <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />
@@ -188,7 +197,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={operatorStyles.definition_list}>
-              {/* definition list */}
+              {/* definition module */}
               <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
                 <dl>
                   <dt>이메일</dt>

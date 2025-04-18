@@ -1,25 +1,25 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { z } from '@learnway/shared';
 import { useEffect } from 'react';
+import { useWatch } from 'react-hook-form';
 
-import { Button, DynamicFormField, useModal } from '@learnway/ui';
-import { LOCALES } from '@learnway/config';
+import { Button, DynamicFormField, ContentsRow } from '@learnway/ui';
 
 import { pageRouteConfig } from '../../../../features/auth';
 
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
 
 import { FormTranslationBox } from '../../../../features/platform/ui/platform/system/translation/form-translation-box';
-import { useTranslation } from '../../../../entities/translation/service/translation.hook';
+
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { TranslationPopup } from '../../../../features/form/ui/translation';
-import { FormI18n } from '../../../../features/form/ui';
 import { FormRow } from '../../../../shared/ui/form';
 
 import { useWidgets } from '../../../../entities/widgets';
+import { WidgetPreviewButton } from '../../../../features/platform';
+
+import { WidgetComponentTable } from './-components/widget-component-table';
+import { WidgetAssignedTenantGrid } from './-components/widget-assigned-tenant-grid';
 
 export const Route = createFileRoute('/_layout/platform/widget/view')({
   component: RouteComponent,
@@ -40,13 +40,16 @@ function RouteComponent() {
   const { provider, control, onSubmit, fetchData, getValues, onFormChange, setFormError } =
     useDynamicForm(formConfig);
 
+  const data = useWatch({
+    control,
+  });
+
   useEffect(() => {
     init();
   }, []);
 
   const init = async () => {
     const widget = (await getWidget(widgetCode)) as any;
-    console.log('widget', widget);
 
     const values = {
       ...widget,
@@ -67,9 +70,6 @@ function RouteComponent() {
       <form>
         <PageContainer>
           <ContentsButtons>
-            <Button type="submit" variant="point" size="sm">
-              {processType === 'REGISTER' ? '저장' : '수정'}
-            </Button>
             <Button type="button" variant="primary" size="sm" onClick={handleGoToListPage}>
               목록
             </Button>
@@ -78,6 +78,7 @@ function RouteComponent() {
             <ContentsRow>
               <FormRow provider={provider}>
                 <DynamicFormField name={'widgetName'} />
+                <WidgetPreviewButton widget={data as any} />
               </FormRow>
             </ContentsRow>
             <ContentsRow>
@@ -87,7 +88,7 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider}>
-                <DynamicFormField name={`devices`}>
+                <DynamicFormField name={`deviceNames`}>
                   <FormTranslationBox />
                 </DynamicFormField>
               </FormRow>
@@ -95,10 +96,20 @@ function RouteComponent() {
                 <DynamicFormField name={'isUsed'} />
               </FormRow>
             </ContentsRow>
-            <ContentsRow>
+            <ContentsRow type="horizontal">
               <FormRow provider={provider}>
                 <DynamicFormField name={'isSecurityContent'} />
               </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'components'}>
+                  {data?.components && <WidgetComponentTable data={data.components} />}
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              {data?.components && <WidgetAssignedTenantGrid data={data.tenantWidgetList} />}
             </ContentsRow>
           </MainContents>
         </PageContainer>
@@ -113,35 +124,49 @@ const formConfig: DynamicFormConfig = {
       name: 'widgetName',
       type: 'text',
       label: '위젯명',
-      value: false,
+      value: '',
+      disabled: true,
     },
     {
       name: 'widgetDesc',
       type: 'textarea',
       label: '위젯설명',
       value: '',
+      disabled: true,
     },
     {
-      name: 'devices',
+      name: 'deviceNames',
       type: 'checkbox-group',
       label: '디바이스',
       value: [],
       options: [
         {
-          value: 'pc',
+          value: 'PC',
           label: 'PC',
         },
         {
-          value: 'mobile',
+          value: 'Mobile',
           label: 'Mobile',
         },
       ],
+      disabled: true,
     },
     {
       name: 'isUsed',
-      type: 'switch',
+      type: 'radio-group',
       label: '사용여부',
       value: true,
+      options: [
+        {
+          value: true,
+          label: '사용',
+        },
+        {
+          value: false,
+          label: '미사용',
+        },
+      ],
+      disabled: true,
     },
     {
       name: 'isSecurityContent',
@@ -153,6 +178,13 @@ const formConfig: DynamicFormConfig = {
       },
       guideText: '보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다',
       value: true,
+      disabled: true,
+    },
+    {
+      name: 'components',
+      type: 'custom',
+      label: '컴포넌트 ID',
+      value: [],
     },
   ],
   validator: {},

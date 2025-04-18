@@ -24,7 +24,7 @@ const useModal = (): useModalReturnValue => {
         const newConfig: ModalConfig = {
           ...config,
           id: getRandomId(),
-          width: isMobile ? 'm_full' : config.width || 'md', // modal 은 기본 width 'md'
+          width: config.width ?? (isMobile ? 'm_full' : 'md'), // modal 은 기본 width 'md'
           onClose: (data?: any) => {
             config?.onClose?.(data);
             resolve(data);

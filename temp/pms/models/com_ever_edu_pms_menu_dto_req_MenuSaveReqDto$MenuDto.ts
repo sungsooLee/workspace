@@ -5,10 +5,6 @@
 import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
 export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto = {
     /**
-     * 메뉴번호
-     */
-    menuId?: number | null;
-    /**
      * 메뉴코드
      */
     menuCode?: string;
@@ -36,10 +32,6 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto = {
      * 사용여부
      */
     isUsed?: boolean;
-    /**
-     * 삭제여부
-     */
-    isDeleted?: boolean;
     /**
      * 개인정보포함여부
      */

@@ -7,7 +7,7 @@
           .box {
             .state,
             .date {
-              @apply text-[var(--gray6)];
+              @apply whitespace-nowrap text-[var(--gray6)];
             }
             .state {
               &::before {
@@ -50,10 +50,10 @@
         dl {
           @apply w-1/2;
           dt {
-            @apply pr-[8px];
+            @apply pr-[8px] leading-[22px];
           }
           dd {
-            @apply table-cell text-[var(--gray8)];
+            @apply table-cell leading-[22px] text-[var(--gray8)];
             button {
               @apply body_3_r ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
             }
@@ -113,6 +113,48 @@
           svg {
             @apply rotate-180;
           }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.education {
+        @apply px-[16px] pt-[16px];
+        .info_box {
+          @apply block;
+          .btn_box {
+            @apply mt-[8px];
+            button {
+              @apply !m-0 w-full;
+            }
+          }
+          .list {
+            dl {
+              @apply w-full;
+              & + dl {
+                @apply mt-0;
+              }
+            }
+          }
+          .more_list {
+            .evaluation_box {
+              ul {
+                @apply block;
+                li {
+                  & + li {
+                    @apply ml-0 mt-[8px];
+                  }
+                }
+              }
+            }
+          }
+        }
+        .btn_action {
+          @apply mt-[16px];
         }
       }
     }

@@ -37,7 +37,7 @@ function RouteComponent() {
         {
           name: 'preview',
           label: '미리보기',
-          render: ({ row }: any) => <WidgetPreviewButton widgetCode={row?.widgetCode} />,
+          render: ({ row }: any) => <WidgetPreviewButton widget={row} />,
         },
       ],
       data: [],
@@ -49,6 +49,7 @@ function RouteComponent() {
       height: 566,
       hideColumnSettings: true,
       onRowSelect: (row: any) => {
+        console.log('onRowSelect', row);
         router.navigate({ to: '/platform/widget/view', state: { widgetCode: row?.widgetCode } });
       },
     }),

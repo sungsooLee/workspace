@@ -37,8 +37,8 @@ import type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin } fr
 import type { com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_MenuResDto$ListOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_MenuResDto$ListOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_MenuTreeDto';
-import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto } from '../models/com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto';
 import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin';
+import type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from '../models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
 import type { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto } from '../models/com_ever_edu_pms_notification_dto_req_EmailReceiverReqDto';
 import type { com_ever_edu_pms_notification_dto_req_EmailSendReqDto } from '../models/com_ever_edu_pms_notification_dto_req_EmailSendReqDto';
@@ -75,10 +75,12 @@ import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../model
 import type { com_ever_edu_pms_user_dto_res_UserGroupDto } from '../models/com_ever_edu_pms_user_dto_res_UserGroupDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
 import type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin';
+import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
@@ -91,7 +93,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -111,6 +113,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/change-password',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -128,6 +137,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/change-password-by-phone-number',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -145,6 +161,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/change-password-by-email',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -162,6 +185,13 @@ export class BoService {
             url: '/admin/api/v1/users/issue-new-password',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -179,6 +209,13 @@ export class BoService {
             url: '/admin/api/v1/users/change-phone-number',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -196,6 +233,13 @@ export class BoService {
             url: '/admin/api/v1/users/change-email',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -213,6 +257,13 @@ export class BoService {
             url: '/admin/api/v1/terms/{termsId}',
             path: {
                 'termsId': termsId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -236,6 +287,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -254,45 +312,64 @@ export class BoService {
             path: {
                 'termsId': termsId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
-     * 다국어 수정
-     * 다국어 수정
-     * @param multilingualId
-     * @param requestBody
-     * @returns com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin OK
+     * 다국어 목록 조회
+     * 다국어 목록 조회
+     * @param pageable
+     * @param params
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static update1(
-        multilingualId: number,
-        requestBody: com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto,
-    ): CancelablePromise<com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin> {
+    public static findPage4(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin> {
         return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/multilingual/{multilingualId}',
-            path: {
-                'multilingualId': multilingualId,
+            method: 'GET',
+            url: '/admin/api/v1/multilingual',
+            query: {
+                'pageable': pageable,
+                'params': params,
             },
-            body: requestBody,
-            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
-     * 다국어 삭제
-     * 다국어를 삭제한다.
-     * @param multilingualId
+     * 다국어 번역목록 수정
+     * 다국어 번역목록 수정
+     * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
-    public static delete2(
-        multilingualId: number,
+    public static updateMultilingualList(
+        requestBody: com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/multilingual/{multilingualId}',
-            path: {
-                'multilingualId': multilingualId,
+            method: 'PUT',
+            url: '/admin/api/v1/multilingual',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -312,6 +389,13 @@ export class BoService {
             path: {
                 'messageQueueEntryId': messageQueueEntryId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -330,6 +414,13 @@ export class BoService {
             path: {
                 'menuId': menuId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -340,7 +431,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static update2(
+    public static update1(
         menuId: number,
         requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
@@ -352,6 +443,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -361,7 +459,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete3(
+    public static delete2(
         menuId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -369,6 +467,13 @@ export class BoService {
             url: '/admin/api/v1/menus/{menuId}',
             path: {
                 'menuId': menuId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -392,6 +497,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -410,6 +522,13 @@ export class BoService {
             path: {
                 'tenantMappingMenuId': tenantMappingMenuId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -424,9 +543,16 @@ export class BoService {
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/labelmessages/{labelMessageId}',
+            url: '/admin/api/v1/label-messages/{labelMessageId}',
             path: {
                 'labelMessageId': labelMessageId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -438,18 +564,25 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static update3(
+    public static update2(
         labelMessageId: number,
         requestBody: com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/labelmessages/{labelMessageId}',
+            url: '/admin/api/v1/label-messages/{labelMessageId}',
             path: {
                 'labelMessageId': labelMessageId,
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -459,14 +592,21 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete4(
+    public static delete3(
         labelMessageId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/labelmessages/{labelMessageId}',
+            url: '/admin/api/v1/label-messages/{labelMessageId}',
             path: {
                 'labelMessageId': labelMessageId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -485,6 +625,13 @@ export class BoService {
             url: '/admin/api/v1/email/templates/{emailTemplateId}',
             path: {
                 'emailTemplateId': emailTemplateId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -511,6 +658,13 @@ export class BoService {
             },
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -528,6 +682,13 @@ export class BoService {
             url: '/admin/api/v1/email/periodic/{periodicEmailId}',
             path: {
                 'periodicEmailId': periodicEmailId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -551,6 +712,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -573,6 +741,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -591,6 +766,13 @@ export class BoService {
             path: {
                 'periodicEmailId': periodicEmailId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -600,7 +782,7 @@ export class BoService {
      * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
-    public static getEducationPlaceInfo(
+    public static getEducationPlaceInfo1(
         uuid: string,
     ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
@@ -608,6 +790,14 @@ export class BoService {
             url: '/admin/api/v1/education/place/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -631,6 +821,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -649,6 +846,13 @@ export class BoService {
             path: {
                 'uuid': uuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -666,6 +870,13 @@ export class BoService {
             url: '/admin/api/v1/companies/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -689,6 +900,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -706,6 +924,13 @@ export class BoService {
             url: '/admin/api/v1/companies/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -727,6 +952,13 @@ export class BoService {
             path: {
                 'commonCdGroupId': commonCdGroupId,
                 'commonCdId': commonCdId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -753,6 +985,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -774,6 +1013,13 @@ export class BoService {
                 'commonCdGroupId': commonCdGroupId,
                 'commonCdId': commonCdId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -792,6 +1038,13 @@ export class BoService {
             path: {
                 'commonCdGroupId': commonCdGroupId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -802,7 +1055,7 @@ export class BoService {
      * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static update4(
+    public static update3(
         commonCdGroupId: string,
         requestBody: com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto,
     ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin> {
@@ -814,6 +1067,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -823,7 +1083,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete5(
+    public static delete4(
         commonCdGroupId: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -831,6 +1091,13 @@ export class BoService {
             url: '/admin/api/v1/code-groups/{commonCdGroupId}',
             path: {
                 'commonCdGroupId': commonCdGroupId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -859,6 +1126,13 @@ export class BoService {
                 'companyCode': companyCode,
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -876,6 +1150,13 @@ export class BoService {
             url: '/admin/api/v1/users',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -893,6 +1174,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/verify-phone-number',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -910,6 +1198,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/verify-email',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -927,6 +1222,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/send-verify-phone-number',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -944,6 +1246,13 @@ export class BoService {
             url: '/admin/api/v1/users/verifications/send-verify-email',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -961,6 +1270,13 @@ export class BoService {
             url: '/admin/api/v1/users/register',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -978,6 +1294,13 @@ export class BoService {
             url: '/admin/api/v1/users/confirm-password',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -999,6 +1322,13 @@ export class BoService {
                 'pageable': pageable,
                 'params': params,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1016,44 +1346,13 @@ export class BoService {
             url: '/admin/api/v1/terms',
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-    /**
-     * 다국어 목록 조회
-     * 다국어 목록 조회
-     * @param pageable
-     * @param params
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static findPage4(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        params: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/multilingual',
-            query: {
-                'pageable': pageable,
-                'params': params,
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
-        });
-    }
-    /**
-     * 다국어 등록
-     * 신규 다국어를 등록한다.
-     * @param requestBody
-     * @returns com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin Created
-     * @throws ApiError
-     */
-    public static save2(
-        requestBody: com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$MultilingualDto,
-    ): CancelablePromise<com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/multilingual',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
     /**
@@ -1072,6 +1371,13 @@ export class BoService {
             query: {
                 'depth': depth,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1081,7 +1387,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static save3(
+    public static save2(
         requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -1089,6 +1395,13 @@ export class BoService {
             url: '/admin/api/v1/menus',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1111,6 +1424,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1133,6 +1453,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1158,6 +1485,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1179,6 +1513,13 @@ export class BoService {
                 'tenantId': tenantId,
                 'userNo': userNo,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1196,6 +1537,13 @@ export class BoService {
             url: '/admin/api/v1/menus/favorites',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1212,10 +1560,17 @@ export class BoService {
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/labelmessages',
+            url: '/admin/api/v1/label-messages',
             query: {
                 'pageable': pageable,
                 'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1226,14 +1581,21 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin Created
      * @throws ApiError
      */
-    public static save4(
+    public static save3(
         requestBody: com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/labelmessages',
+            url: '/admin/api/v1/label-messages',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1251,6 +1613,13 @@ export class BoService {
             url: '/admin/api/v1/form/optional/usage',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1268,6 +1637,13 @@ export class BoService {
             url: '/admin/api/v1/form/custom',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1288,6 +1664,13 @@ export class BoService {
             url: '/admin/api/v1/email/template',
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1305,6 +1688,13 @@ export class BoService {
             url: '/admin/api/v1/email/send',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1322,6 +1712,13 @@ export class BoService {
             url: '/admin/api/v1/email/reserve',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1340,6 +1737,13 @@ export class BoService {
             query: {
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1357,6 +1761,13 @@ export class BoService {
             url: '/admin/api/v1/email/periodic',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1365,13 +1776,15 @@ export class BoService {
      * @param paramDto
      * @param page
      * @param size
+     * @param sort
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
-    public static getEducationPlaceList(
+    public static getEducationPlaceList1(
         paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto,
         page?: number,
         size: number = 10,
+        sort: string = 'educationPlaceId,asc',
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1379,7 +1792,15 @@ export class BoService {
             query: {
                 'page': page,
                 'size': size,
+                'sort': sort,
                 'paramDto': paramDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1398,6 +1819,13 @@ export class BoService {
             url: '/admin/api/v1/education/place',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1416,6 +1844,13 @@ export class BoService {
             query: {
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1433,6 +1868,13 @@ export class BoService {
             url: '/admin/api/v1/companies',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1454,6 +1896,13 @@ export class BoService {
                 'pageable': pageable,
                 'params': params,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1471,6 +1920,13 @@ export class BoService {
             url: '/admin/api/v1/codes',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1492,6 +1948,13 @@ export class BoService {
                 'pageable': pageable,
                 'params': params,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1501,7 +1964,7 @@ export class BoService {
      * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin Created
      * @throws ApiError
      */
-    public static save5(
+    public static save4(
         requestBody: com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto,
     ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -1509,6 +1972,13 @@ export class BoService {
             url: '/admin/api/v1/code-groups',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1526,6 +1996,13 @@ export class BoService {
             url: '/admin/api/v1/users/{userId}',
             path: {
                 'userId': userId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1545,6 +2022,13 @@ export class BoService {
             path: {
                 'userId': userId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1555,7 +2039,7 @@ export class BoService {
      * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
      * @throws ApiError
      */
-    public static update6(
+    public static update5(
         userId: number,
         requestBody: com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto,
     ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
@@ -1567,6 +2051,13 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1574,13 +2065,13 @@ export class BoService {
      * 위젯 전체를 반환한다.
      * @param pageable
      * @param params
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin OK
      * @throws ApiError
      */
     public static findPage1(
         pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_widget_enums_WidgetType> {
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/widgets',
@@ -1588,23 +2079,37 @@ export class BoService {
                 'pageable': pageable,
                 'params': params,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
      * 위젯 조회
      * 위젯을 찾아 반환한다.
      * @param code
-     * @returns string OK
+     * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static findWidget(
         code: string,
-    ): CancelablePromise<'WEATHER' | 'STOCK' | 'NEWS'> {
+    ): CancelablePromise<com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/widgets/{code}',
             path: {
                 'code': code,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1630,6 +2135,13 @@ export class BoService {
                 'birthday': birthday,
                 'phoneNumber': phoneNumber,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1653,6 +2165,13 @@ export class BoService {
                 'name': name,
                 'birthday': birthday,
                 'email': email,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1678,6 +2197,13 @@ export class BoService {
                 'birthday': birthday,
                 'phoneNumber': phoneNumber,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1696,6 +2222,13 @@ export class BoService {
             query: {
                 'email': email,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1708,6 +2241,13 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/userGroup/userGroups',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1729,6 +2269,13 @@ export class BoService {
                 'pageable': pageable,
                 'params': params,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1746,6 +2293,13 @@ export class BoService {
             url: '/admin/api/v1/multilingual/{multilingualKeyValue}',
             path: {
                 'multilingualKeyValue': multilingualKeyValue,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1768,6 +2322,13 @@ export class BoService {
                 'keyType': keyType,
                 'messageCode': messageCode,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1789,6 +2350,13 @@ export class BoService {
                 'pageable': pageable,
                 'dto': dto,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1806,6 +2374,13 @@ export class BoService {
             url: '/admin/api/v1/message/queue-entry/{messageQueueEntryId}',
             path: {
                 'messageQueueEntryId': messageQueueEntryId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1830,6 +2405,13 @@ export class BoService {
             query: {
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1851,6 +2433,13 @@ export class BoService {
                 'pageable': pageable,
                 'dto': dto,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1869,6 +2458,13 @@ export class BoService {
             path: {
                 'menuId': menuId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1886,6 +2482,13 @@ export class BoService {
             url: '/admin/api/v1/menus/tree',
             query: {
                 'menuScopeCode': menuScopeCode,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1911,6 +2514,13 @@ export class BoService {
                 'tenantId': tenantId,
                 'deviceType': deviceType,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1931,6 +2541,13 @@ export class BoService {
             query: {
                 'menuCode': menuCode,
                 'parentId': parentId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -1953,6 +2570,13 @@ export class BoService {
                 'formUUID': formUuid,
                 'tenantUUID': tenantUuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1974,6 +2598,13 @@ export class BoService {
                 'formUUID': formUuid,
                 'tenantUUID': tenantUuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -1994,6 +2625,13 @@ export class BoService {
             query: {
                 'pageable': pageable,
                 'dto': dto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -2021,26 +2659,46 @@ export class BoService {
                 'page': page,
                 'size': size,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
      * 교육장소 이력 목록 조회
      * 교육장소 이력 목록 정보를 조회한다.
-     * @param pageable
      * @param paramDto
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
+     * @param page
+     * @param size
+     * @param sort
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceHistoryList(
-        pageable: org_springdoc_core_converters_models_Pageable,
         paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
+        page?: number,
+        size: number = 10,
+        sort: string = 'educationPlaceId,desc',
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/education/place/history',
             query: {
-                'pageable': pageable,
+                'page': page,
+                'size': size,
+                'sort': sort,
                 'paramDto': paramDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -2060,6 +2718,13 @@ export class BoService {
             path: {
                 'brn': brn,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -2072,6 +2737,13 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/code-groups/enums',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -2089,6 +2761,13 @@ export class BoService {
             url: '/admin/api/v1/code-groups/enum/{enumName}',
             path: {
                 'enumName': enumName,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -2108,6 +2787,13 @@ export class BoService {
             query: {
                 'channelSearchReqDto': channelSearchReqDto,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -2120,6 +2806,13 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/users/delete-account',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -2137,6 +2830,13 @@ export class BoService {
             url: '/admin/api/v1/menus/favorites/{favoritesMenuId}',
             path: {
                 'favoritesMenuId': favoritesMenuId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }

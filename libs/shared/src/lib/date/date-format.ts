@@ -41,6 +41,8 @@ export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
       return timeFormatMinute();
     case DATE_TIME_FORMAT.DATETIME_SEC:
       return timeFormatSecond();
+    case DATE_TIME_FORMAT.DATETIME_WEEK_SEC:
+      return timeFormatWeekSecond();
     case DATE_TIME_FORMAT.DATETIME_MLS:
       return timeFormatMilliSecond();
     case DATE_TIME_FORMAT.HOUR_MIN:
@@ -175,6 +177,20 @@ export function timeFormatSecond() {
     case 'zh-cn':
     default:
       return 'YYYY-MM-DD HH:mm:ss';
+  }
+}
+
+export function timeFormatWeekSecond() {
+  const locale = getDefaultLang();
+  switch (locale) {
+    case 'en':
+      return 'MMM/DD/YYYY(ddd) HH:mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD(ddd) HH:mm:ss';
   }
 }
 

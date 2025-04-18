@@ -6,8 +6,7 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
-
-import { useActiveMenuDepthState } from '../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { ContentsButtons } from './slot/contents-buttons';

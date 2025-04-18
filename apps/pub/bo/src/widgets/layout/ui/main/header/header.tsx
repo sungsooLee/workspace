@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, useRouter } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
@@ -18,7 +19,11 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <strong className={styles.title}>{'HRD 센터'}</strong>
+          <strong className={styles.title}>
+            <Link to={'/menu/$menuId'} params={{ menuId: 'menu2-3-2' }}>
+              {'HRD 센터'}
+            </Link>
+          </strong>
         </h1>
         <div className={cn(styles.nav_area, 'nav_area')}>
           <Navigate />

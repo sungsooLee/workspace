@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { Popover, Badge, Button } from '@learnway/ui';
 import { IcoAlarmFill } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 
 import { Notification } from './notification';

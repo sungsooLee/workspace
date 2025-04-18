@@ -1,8 +1,5 @@
 import { memo } from 'react';
 
-import { Menu } from '../../../../../types';
-import { useActiveMenuDepthState } from '../../../../../features/platform';
-
 import styles from './breadcrumbs.module.css';
 import { Link } from '@tanstack/react-router';
 import { IcoHome03, IcoArrowForward, IcoArrowDown } from '@learnway/icons';
@@ -38,7 +35,8 @@ function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
               <Link
                 to="/category"
                 state={{ categoryId: sibling.categoryId.toString() }}
-                className={sibling.categoryId === category.categoryId ? styles.active : ''}>
+                className={sibling.categoryId === category.categoryId ? styles.active : ''}
+              >
                 {sibling.name}
               </Link>
             </li>
@@ -64,7 +62,8 @@ function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
               className={styles.btn_menu}
               side="bottom"
               align="start"
-              sideOffset={10}>
+              sideOffset={10}
+            >
               <span className={styles.select}>{category.name}</span>
               <i className={styles.stats}>
                 <IcoArrowDown width={16} height={16} stroke="#6F798B" />

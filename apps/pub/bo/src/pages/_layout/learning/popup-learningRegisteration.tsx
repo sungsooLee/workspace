@@ -1,7 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, ModalBody, ModalContainer, ModalFooter, OptionCard, useModal } from '@learnway/ui';
+import {
+  Button,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  OptionCard,
+  useModal,
+} from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
 import eBookstyles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
@@ -29,7 +37,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
 
-  // 퍼블수정 20240319 : 아이콘 수정 S
+  // 퍼블수정 20240418 : 메뉴 수정 S
   const data = [
     {
       label: '동영상',
@@ -37,13 +45,13 @@ function RouteComponent() {
       icon: <IcoVideo01 />,
       description: '1개 동영상 업로드',
     },
-    {
-      label: '멀티 동영상',
-      value: getRandomId(),
-      icon: <IcoVideo02 />,
-      description:
-        '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
-    },
+    // {
+    //   label: '멀티 동영상',
+    //   value: getRandomId(),
+    //   icon: <IcoVideo02 />,
+    //   description:
+    //     '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
+    // },
     {
       label: 'HTML 동영상',
       value: getRandomId(),
@@ -77,17 +85,17 @@ function RouteComponent() {
       description: '설명문구2줄설명',
     },
     { label: '스콤', value: getRandomId(), icon: <IcoFolder />, description: '설명문구2줄설명' },
-    {
-      label: '멀티 스콤',
-      value: getRandomId(),
-      icon: <IcoMultiScorm />,
-      description: '설명문구2줄설명',
-    },
-    { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
+    // {
+    //   label: '멀티 스콤',
+    //   value: getRandomId(),
+    //   icon: <IcoMultiScorm />,
+    //   description: '설명문구2줄설명',
+    // },
     { label: '시험지', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
+    { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
   ];
-  // 퍼블수정 20240319 : 아이콘 수정 E
+  // 퍼블수정 20240418 : 메뉴 수정 E
 
   // 퍼블수정 20240317 : Modal 수정 S
   const EbookContent = () => {
@@ -123,11 +131,13 @@ function RouteComponent() {
   const TypeSelectContent = () => {
     return (
       <ModalContainer>
+        {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 S */}
+        <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <div className={styles.title_wrap}>
+            {/* <div className={styles.title_wrap}>
               <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-            </div>
+            </div> */}
             <OptionCard
               cols={5}
               size="lg"
@@ -146,6 +156,7 @@ function RouteComponent() {
             />
           </div>
         </ModalBody>
+        {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 E */}
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>

@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 import { CODE_GROUP, getDefaultLang } from '@learnway/config';
 import { Popover, Button } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import { useSetLanguage } from '../../service/i18n.hook';
 import { useCodesByCodeGroup, type Code } from '../../../../entities/platform';
@@ -52,7 +52,8 @@ const PopoverContent = ({ data }: { data?: Code[] }) => {
               <Button
                 key={idx}
                 className={`${styles.btn} ${code.code === getDefaultLang() ? styles.active : ''}`}
-                onClick={() => handleLang(code.code)}>
+                onClick={() => handleLang(code.code)}
+              >
                 {code.label}
               </Button>
             </li>
@@ -95,7 +96,8 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
           side="bottom"
           align="center"
           sideOffset={5}
-          popoverContent={<PopoverContent data={languages} />}>
+          popoverContent={<PopoverContent data={languages} />}
+        >
           <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>

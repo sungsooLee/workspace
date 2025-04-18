@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 
 import { Button, useModal } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import type { TermsType } from '../../../../types';
 
@@ -35,7 +35,8 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
           width: 'sm',
           content: <TermsModal termsType={termsType} />,
         })
-      }>
+      }
+    >
       {t(`CODE.TERMS_TYPE.${termsType}`)}
     </Button>
   );

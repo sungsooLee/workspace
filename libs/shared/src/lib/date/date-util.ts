@@ -44,16 +44,26 @@ export const getStringToDate = (stringDate: string, format = DATE_TIME_FORMAT.DA
 };
 
 /**
+ * date 형식의 문자열을 Date 타입으로 반환
+ * @param stringDate 변환할 date 형식 문자열
+ * @param format 변환될 포맷
+ * @retrun Date
+ */
+export const getStringF = (stringDate: string, format = DATE_TIME_FORMAT.DATE) => {
+  return dayjs(stringDate, getDateTimeFormat(format));
+};
+
+/**
  * value 를 Dayjs format 형태의 문자열로 리턴
  * format 이 없으면 Date type 리턴
  * @param value date | string
  * @param format 변환 포맷
  * @return string
  */
-export const formatDate = (value: Date | string | number, format?: string) => {
+export const formatDate = (value: Date | string | number, format = DATE_TIME_FORMAT.DATE) => {
   const d = dayjs(value);
   if (d.isValid()) {
-    return format ? d.format(format) : d.toDate();
+    return d.format(getDateTimeFormat(format));
   }
   return '';
 };

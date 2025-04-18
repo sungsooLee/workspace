@@ -95,7 +95,7 @@
       }
     }
     .sub_box {
-      @apply rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
+      @apply overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
     }
   }
 }

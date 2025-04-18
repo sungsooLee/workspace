@@ -246,6 +246,7 @@ function RouteComponent() {
                       { value: 'type2', label: '사용불가' },
                     ]}
                     className={cn(formStyles.radio_box)}
+                    disabled
                   />
                 </div>
               </div>

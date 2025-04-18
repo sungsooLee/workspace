@@ -25,6 +25,13 @@ export class TenantControllerService {
             path: {
                 'tenantId': tenantId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -45,6 +52,13 @@ export class TenantControllerService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -60,6 +74,13 @@ export class TenantControllerService {
             url: '/admin/api/v1/tenants/{tenantId}',
             path: {
                 'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -77,6 +98,13 @@ export class TenantControllerService {
             query: {
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -92,6 +120,13 @@ export class TenantControllerService {
             url: '/admin/api/v1/tenants',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
 }

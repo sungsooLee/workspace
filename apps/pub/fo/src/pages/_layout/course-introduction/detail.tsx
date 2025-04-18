@@ -28,6 +28,7 @@ import styles from './detail.module.css';
 // 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
+import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,

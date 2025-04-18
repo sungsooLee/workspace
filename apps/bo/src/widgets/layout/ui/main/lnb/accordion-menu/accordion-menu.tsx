@@ -1,12 +1,12 @@
 import { memo, useState, useEffect } from 'react';
-import { Link } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { map, intersection } from 'lodash';
 
 import { cn } from '@learnway/shared';
 import { Accordion, AccordionItem } from '@learnway/ui';
 
-import { Menu } from '../../../../../../types/entities';
-import { useActiveMenuDepthState } from '../../../../../../features/platform';
+import type { Menu } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth';
 
 import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';
@@ -26,9 +26,13 @@ const AccordionMenuComponent = ({
   openAll,
   onOpenStateAll,
 }: AccordionMenuComponentProps) => {
+  const router = useRouter();
   const [value, setValue] = useState<string[] | undefined>();
   const [activeMenuDepth] = useActiveMenuDepthState();
 
+  /**
+   * current routing menu의 경우 accordion open
+   */
   useEffect(() => {
     if (!activeMenuDepth || !activeMenuDepth?.length || !activeMenuDepth?.[depth - 1]) {
       return;
@@ -36,6 +40,10 @@ const AccordionMenuComponent = ({
     setValue([...(value ?? []), activeMenuDepth[depth - 1].key]);
   }, [activeMenuDepth, depth]);
 
+  /**
+   * active: current routing menu (4 depth에 한해 적용 - 디자인 정의)
+   * 2~3 depth의 경우 route path가 있는 경우, title click시 navigate, 없는 경우 accordion open
+   */
   const items = useCreation(() => {
     return (menus ?? []).map((menu: Menu) => {
       const active =
@@ -44,7 +52,11 @@ const AccordionMenuComponent = ({
         activeMenuDepth[depth - 1]?.path === menu?.path;
       return {
         value: menu.key,
-        title: menu.path ? <Link to={menu.path}>{menu.menuName}</Link> : menu.menuName,
+        title: (
+          <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
+            {menu.menuName}
+          </span>
+        ),
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
         active,
       } as AccordionItem;
@@ -77,6 +89,13 @@ const AccordionMenuComponent = ({
       );
     }
   }, [value]);
+
+  const handleNavigate = (menu: Menu) => {
+    if (!menu?.path) {
+      return;
+    }
+    router.navigate({ to: menu.path });
+  };
 
   const handleValueChange = (value: string[]) => {
     setValue(value);

@@ -14,8 +14,8 @@ function LNBComponent() {
   const { t } = useTranslation();
 
   const [activeMenuDepth] = useActiveMenuDepthState();
-
-  const [toggleLnb, setToggleLnb] = useState<boolean>(true);
+  console.log('activeMenuDepth', activeMenuDepth);
+  const [toggleLnb, setToggleLnb] = useState<boolean>(false);
   const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
@@ -31,11 +31,14 @@ function LNBComponent() {
     if (!activeMenuDepth?.[0]?.children) {
       return;
     }
+    setToggleLnb(true);
     setMenus(activeMenuDepth?.[0]?.children);
   }, [activeMenuDepth?.[0]?.children]);
 
   // 25-02-13 Lnb 추가
   useEffect(() => {
+    console.log('toggleLnb ===================================', toggleLnb);
+
     if (toggleLnb) {
       document.body.classList.add('lnb-open');
     } else {
@@ -80,7 +83,8 @@ function LNBComponent() {
           <Button
             type="button"
             className={cn(styles.lnb_title_btn, buttonClass)}
-            onClick={() => handleOpenAll()}>
+            onClick={() => handleOpenAll()}
+          >
             <span className={styles.lnb_title_text}>{activeMenuDepth[0].title}</span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>
@@ -99,7 +103,8 @@ function LNBComponent() {
         className={styles.btn_toggle}
         onlyIcon
         aria-expanded={toggleLnb}
-        onClick={handleToggleLnb}>
+        onClick={handleToggleLnb}
+      >
         <IcoArrowBackward width={20} height={20} stroke="#131C30" />
       </Button>
     </div>

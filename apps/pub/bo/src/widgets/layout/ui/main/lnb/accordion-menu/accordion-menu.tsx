@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useRouter } from '@tanstack/react-router';
 import { map, intersection } from 'lodash';
 
 import { cn } from '@learnway/shared';
@@ -28,7 +28,11 @@ const AccordionMenuComponent = ({
 }: AccordionMenuComponentProps) => {
   const [value, setValue] = useState<string[] | undefined>();
   const [activeMenuDepth] = useActiveMenuDepthState();
+  const router = useRouter();
 
+  /**
+   * current routing menu의 경우 accordion open
+   */
   useEffect(() => {
     if (!activeMenuDepth || !activeMenuDepth?.length || !activeMenuDepth?.[depth - 1]) {
       return;
@@ -36,20 +40,27 @@ const AccordionMenuComponent = ({
     setValue([...(value ?? []), activeMenuDepth[depth - 1].key]);
   }, [activeMenuDepth, depth]);
 
+  /**
+   * active: current routing menu (4 depth에 한해 적용 - 디자인 정의)
+   * 2~3 depth의 경우 route path가 있는 경우, title click시 navigate, 없는 경우 accordion open
+   */
   const items = useCreation(() => {
+    console.log('activeMenuDepth', activeMenuDepth);
     return (menus ?? []).map((menu: Menu) => {
       const active =
+        // depth === 4 &&
         activeMenuDepth &&
         activeMenuDepth[depth - 1] &&
         activeMenuDepth[depth - 1]?.path === menu?.path;
       return {
         value: menu.key,
         title: (
-          <span className={active ? styles.active : ''}>
-            {menu.path ? <Link to={menu.path}>{menu.title}</Link> : menu.title}
+          <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
+            {menu.title}
           </span>
         ),
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
+        active,
       } as AccordionItem;
     });
   }, [menus, activeMenuDepth]);
@@ -80,6 +91,13 @@ const AccordionMenuComponent = ({
       );
     }
   }, [value]);
+
+  const handleNavigate = (menu: Menu) => {
+    if (!menu?.path) {
+      return;
+    }
+    router.navigate({ to: menu.path });
+  };
 
   const handleValueChange = (value: string[]) => {
     setValue(value);

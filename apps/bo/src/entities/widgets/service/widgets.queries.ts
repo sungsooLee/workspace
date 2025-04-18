@@ -18,12 +18,12 @@ export const widgetsQueryOptions = {
         ...data,
         content: data.content.map((widget: any) => {
           const deviceNames: string[] = [];
-          widget.devicePcYn && deviceNames.push('PC');
-          widget.deviceMobileYn && deviceNames.push('Mobile');
+          widget.isWebExposed && deviceNames.push('PC');
+          widget.isMobileExposed && deviceNames.push('Mobile');
 
           return {
             ...widget,
-            deviceNames: deviceNames.join(','),
+            deviceNames: deviceNames.join(', '),
             status: widget.isUsed ? '사용' : '사용불가',
           };
         }),
@@ -34,7 +34,37 @@ export const widgetsQueryOptions = {
     widgetCode
       ? {
           queryKey: queryKeys.detail(widgetCode),
-          queryFn: (): Promise<any> => WidgetsService.fetchWidget(widgetCode),
+          queryFn: async (): Promise<any> => {
+            const data = (await WidgetsService.fetchWidget(widgetCode)) as any;
+            const deviceNames: string[] = [];
+            data.isWebExposed && deviceNames.push('PC');
+            data.isMobileExposed && deviceNames.push('Mobile');
+
+            return {
+              ...data,
+              deviceNames,
+              components: [
+                ...(data.isWebExposed
+                  ? [
+                      {
+                        type: 'PC',
+                        componentId: data.componentPcId,
+                        size: `${data.pcWidth} * ${data.pcHeight}`,
+                      },
+                    ]
+                  : []),
+                ...(data.isMobileExposed
+                  ? [
+                      {
+                        type: 'Mobile',
+                        componentId: data.componentMobileId,
+                        size: `${data.mobileWidth} * ${data.mobileHeight}`,
+                      },
+                    ]
+                  : []),
+              ],
+            };
+          },
         }
       : getQuerySkipToken<Widget>(),
 };

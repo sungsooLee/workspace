@@ -19,7 +19,6 @@
         @apply body_bo_2_r text-[var(--gray8)];
       }
       ul {
-        @apply mt-[16px];
         &.bullet {
           li {
             @apply relative pl-[8px];

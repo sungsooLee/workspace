@@ -29,6 +29,13 @@ export class BoAwsService {
                 'size': size,
                 'sort': sort,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -56,6 +63,13 @@ export class BoAwsService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }

@@ -78,7 +78,9 @@ const AccordionComponent = forwardRef<
               className={cn(styles.accordion_item)}
               key={item.value}
             >
-              <Primitive.Trigger className={cn(styles.accordion_btn)}>
+              <Primitive.Trigger
+                className={cn(styles.accordion_btn, item.children && 'has_children')}
+              >
                 <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
                   {item.title}
                 </span>

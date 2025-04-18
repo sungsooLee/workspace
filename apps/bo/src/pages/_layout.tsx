@@ -3,7 +3,7 @@ import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import { Layout } from '../widgets/layout';
 import { useFetchTenant } from '../entities/tenant';
