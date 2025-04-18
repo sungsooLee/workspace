@@ -259,13 +259,16 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Dropdown
-                  options={options}
-                  value={selectedValues}
-                  onChange={(selected) => setSelectedValues(selected)}
-                  variant="default"
-                  size={'sm'}
-                />
+                {/* 50% 만 적용인 경우 */}
+                <div className={dynamicFormStyles.w_half}>
+                  <Dropdown
+                    options={options}
+                    onChange={(selected) => setSelectedValues(selected)}
+                    variant="default"
+                    size={'sm'}
+                    placeholder="선택"
+                  />
+                </div>
               </div>
             </div>
           </ContentsRow>
@@ -300,8 +303,8 @@ function RouteComponent() {
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
-              <label htmlFor="name-channel" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널</span>
+              <label htmlFor="name-tenantName" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>테넌트 명</span>
                 {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
