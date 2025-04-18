@@ -537,9 +537,9 @@ export const guideData = [
     pageId: 'pms/menu-education-register-detail',
     screenId: 'NLP_BO_EDO_1602',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-18',
     lastUpdateDate: '',
-    remarks: '작업 예정', // 비고
+    remarks: '완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

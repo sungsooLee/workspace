@@ -124,7 +124,7 @@
     .view_file {
       @apply flex max-w-[calc(100%-74px)] flex-auto shrink-0 flex-wrap items-center;
       .attach_area {
-        @apply relative flex min-h-[32px] w-full flex-wrap items-center justify-between rounded-[4px] border border-solid border-[var(--gray2)] bg-[var(--gray2)] px-[12px];
+        @apply relative flex min-h-[32px] w-full flex-wrap items-center justify-between rounded-[4px] border border-solid border-[var(--gray4)] bg-white px-[12px];
         .text {
           @apply input_bo_1_r text-[var(--gray6)];
         }
@@ -158,6 +158,10 @@
   &::before {
     @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
+}
+
+.guide_file_text {
+  @apply button_5_r mt-[8px] text-[var(--gray6)];
 }
 
 /* file status */

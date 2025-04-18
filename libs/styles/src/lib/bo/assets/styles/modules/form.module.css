@@ -142,7 +142,7 @@
     @apply !ml-[16px];
   }
   .textarea {
-    @apply !rounded-[8px];
+    @apply !rounded-[4px];
   }
   .radio_box {
     @apply flex w-full;
