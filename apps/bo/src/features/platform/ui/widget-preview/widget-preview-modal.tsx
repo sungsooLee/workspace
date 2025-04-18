@@ -30,7 +30,7 @@ const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
               content: (
                 <div className="flex w-full justify-center">
                   <EmbedWidgetPreview
-                    componentId={'completion-status-widget'}
+                    componentId={widget.componentPcId}
                     width={widget.pcWidth}
                     height={widget.pcHeight}
                   />

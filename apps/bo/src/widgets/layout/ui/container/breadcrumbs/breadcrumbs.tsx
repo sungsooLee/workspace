@@ -30,7 +30,7 @@ function BreadcrumbsComponent() {
                   className={matchRoute({ to: menu?.path }) ? styles.active : ''}
                 >
                   <IcoArrowForward width={12} height={12} stroke="#131C30" />
-                  {menu.menuName}
+                  {t(`MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
 
 import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
@@ -16,6 +17,7 @@ interface NavigateComponentProps {
 }
 
 function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
+  const { t } = useTranslation();
   const { data } = useMenuHierarchy();
   const location = useRouterState();
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +76,7 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
                   onClick={(e) => e.preventDefault()}
                   preload={false}
                 >
-                  {menu.menuName}
+                  {t(`MENU.${menu.menuCode}`)}
                 </Link>
                 {/* 라벨 표시 */}
                 {/* <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
@@ -89,7 +91,7 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
                 onClick={(e) => e.preventDefault()}
                 preload={false}
               >
-                {menu.menuName}
+                {t(`MENU.${menu.menuCode}`)}
               </Link>
             </SwiperSlide>
           ))}
