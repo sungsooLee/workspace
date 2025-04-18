@@ -66,7 +66,7 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
         <SplitPanel>
-          <GridBox config={gridConfig} gridProps={{ onRowSelect: handleGridRowSelect }} />
+          <GridBox config={gridConfig} />
           <MessageDetail labelMessageId={labelMessageId} />
         </SplitPanel>
       </MainContents>
