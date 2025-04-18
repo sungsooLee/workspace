@@ -37,6 +37,8 @@ function LNBComponent() {
 
   // 25-02-13 Lnb 추가
   useEffect(() => {
+    console.log('toggleLnb ===================================', toggleLnb);
+
     if (toggleLnb) {
       document.body.classList.add('lnb-open');
     } else {
