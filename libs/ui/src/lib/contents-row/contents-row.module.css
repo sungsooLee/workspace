@@ -31,6 +31,12 @@
     & + .horizontal {
       @apply mt-[16px] border-t-[1px] border-[var(--gray2)] pt-[16px];
     }
+    & + [class*='nlp--contents-row'] {
+      @apply border-t-[1px] border-[var(--gray2)] pt-[16px];
+    }
+    [class*='nlp--switch'] {
+      @apply translate-y-1/2;
+    }
     label ~ p {
       @apply w-full !flex-none;
     }
