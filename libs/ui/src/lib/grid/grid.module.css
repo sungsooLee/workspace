@@ -47,7 +47,7 @@
             }
           }
           [class*='link'] {
-            @apply body_bo_2_r text-[var(--gray7)] underline;
+            @apply !body_bo_2_r text-[var(--gray7)] underline;
           }
           [class*='nlp--input'] {
             input {

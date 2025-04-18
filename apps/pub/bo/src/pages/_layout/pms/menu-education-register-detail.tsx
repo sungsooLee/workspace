@@ -60,6 +60,28 @@ function RouteComponent() {
       modificationDate: '2025-01-01 07:12',
       modifier: '김현대',
     },
+    {
+      order: '2',
+      sort: '서비스 기술교육',
+      spot: 'Cell Text',
+      useable: 'Y',
+      reservation: 'N',
+      companyOwner: '담당자명',
+      map: (
+        <Button className="link" disabled>
+          약도보기
+        </Button>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+      registerDate: '2025-01-01 07:12',
+      registerOwner: '김현대',
+      modificationDate: '2025-01-01 07:12',
+      modifier: '김현대',
+    },
   ];
 
   const columnHelper = createColumnHelper<any>();
