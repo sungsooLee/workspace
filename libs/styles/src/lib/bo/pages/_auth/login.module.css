@@ -199,6 +199,9 @@
           }
         }
       }
+      & > div:first-child {
+        @apply pb-0;
+      }
     }
     .btn_box {
       @apply mt-[24px];

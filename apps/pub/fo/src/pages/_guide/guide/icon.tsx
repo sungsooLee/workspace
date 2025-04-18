@@ -241,7 +241,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoComplete02 width={30} height={30} stroke="#4C515E" fill="#4c515e" />
             <IcoBlog width={30} height={30} stroke="#4C515E" />
             <IcoEntrust width={30} height={30} stroke="#4C515E" />
-            <IcoInfoCircle width={30} height={30} stroke="#4C515E" />
+            <IcoInfoCircle width={30} height={30} stroke="#4C515E" fill="none" />
             <IcoImage01 width={30} height={30} stroke="#4C515E" />
             <IcoVideo01 width={30} height={30} stroke="#4C515E" />
             <IcoVideo02 width={30} height={30} stroke="#4C515E" />
