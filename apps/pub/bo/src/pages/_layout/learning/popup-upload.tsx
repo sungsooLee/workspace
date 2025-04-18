@@ -26,7 +26,9 @@ function RouteComponent() {
         <ModalTitle>{'파일 업로드'}</ModalTitle>
         <ModalBody>
           <div className={popupStyles.wrap}>
-            <p className={popupStyles.selected_area}>{'선택한 관리채널명채널명채널명'}</p>
+            <div className={popupStyles.selected_area}>
+              <p className={popupStyles.selected_text}>{'선택한 관리채널명채널명채널명'}</p>
+            </div>
             <div className={popupStyles.title_wrap}>
               {/* <h2 className={popupStyles.title}>{'파일 업로드'}</h2> */}
               <p className={popupStyles.text}>{' 파일1개당 4G 이하로 업로드 가능합니다.'}</p>

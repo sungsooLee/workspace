@@ -30,6 +30,10 @@
   }
 }
 .selected_area {
+  @apply body_bo_2_r mb-[12px] flex h-[4rem] items-center rounded-[8px] bg-[var(--gray1)] px-[16px] text-[var(--gray8)];
+  .selected_text {
+    @apply line-clamp-1;
+  }
 }
 
 .upload_wrap {
