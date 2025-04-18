@@ -41,7 +41,7 @@ function RouteComponent() {
     cdGroupId: state.cdGroupId || '',
     cdGroupName: state.cdGroupName || '',
     cdGroupContent: '',
-    isUsed: true,
+    isUsed: '',
     cdName: '',
   });
 
@@ -88,8 +88,16 @@ function RouteComponent() {
     if (newState.sorting && newState.sorting.length > 0) {
       const sortItem = newState.sorting[0];
       const direction = sortItem.desc ? 'desc' : 'asc';
-      const sortValue = `${sortItem.id},${direction}`;
-      console.log('Sort value:', sortValue); // 디버깅용
+      const sortItemNameMap: Record<string, string> = {
+        cdId: 'commonCdEntityId.cdId',
+        isUsed: 'commonCdEntity.isUsed',
+        createdDate: 'commonCdEntity.createdDate',
+        createdBy: 'commonCdEntity.createdBy',
+        modifiedDate: 'commonCdEntity.modifiedDate',
+        lastModifiedBy: 'commonCdEntity.lastModifiedBy',
+      };
+      const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+      const sortValue = `${sortItemName},${direction}`;
       setSortState({ sort: sortValue });
     } else {
       setSortState({ sort: '' });

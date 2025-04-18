@@ -9,8 +9,8 @@
         @apply absolute left-0 top-0 flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
         border-color: var(--secondary1);
       }
-      & + .label {
-        @apply font-bold;
+      & ~ .label {
+        @apply !font-bold;
       }
     }
     &.round {
@@ -23,7 +23,10 @@
     }
     &:disabled {
       @apply border border-solid border-[var(--gray2)] bg-[var(--gray2)];
-      & + .label {
+      [data-state='checked'] {
+        @apply !bg-[var(--gray5)];
+      }
+      & ~ .label {
         @apply text-[var(--gray5)];
       }
     }

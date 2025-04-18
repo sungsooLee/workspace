@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, Grid, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
-import { IcoDownload } from '@learnway/icons';
+import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
   component: RouteComponent,
@@ -43,6 +43,11 @@ function RouteComponent() {
           {'과정명'}
         </Tooltip>
       ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -71,6 +76,11 @@ function RouteComponent() {
           {'과정명'}
         </Tooltip>
       ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -103,6 +113,11 @@ function RouteComponent() {
           {'과정명'}
         </Tooltip>
       ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -135,6 +150,11 @@ function RouteComponent() {
           {'과정명'}
         </Tooltip>
       ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
     },
     {
       firstName: 'tandy',
@@ -166,6 +186,11 @@ function RouteComponent() {
         >
           {'과정명'}
         </Tooltip>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
       ),
     },
   ];
@@ -260,6 +285,11 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '과정명',
       size: 220,
+    }),
+    columnHelper.accessor('link', {
+      cell: (info) => info.getValue(),
+      header: '링크',
+      size: 90,
     }),
   ] as ColumnDef<any, unknown>[];
 

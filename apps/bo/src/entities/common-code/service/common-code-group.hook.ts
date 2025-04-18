@@ -20,7 +20,7 @@ export function useCommonCodeGroupList(
   sort: string,
   cdGroupId = '',
   cdGroupName = '',
-  isUsed = true,
+  isUsed = '',
   cdName = '',
 ) {
   return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed, cdName));
@@ -44,7 +44,7 @@ export function useCreateCommonCodeGroup({
     sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
-    isUsed?: boolean;
+    isUsed?: string;
     cdName?: string;
   };
 } & Omit<

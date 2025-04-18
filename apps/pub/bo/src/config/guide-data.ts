@@ -512,16 +512,16 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-16',
     lastUpdateDate: '',
-    remarks: '작업 예정', // 비고
+    remarks: '완료', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_메인배너관리',
     pageId: 'pms/menu-tenant-mainbanner-management',
     screenId: 'NLP_BO_TMS_1105',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '작업 예정', // 비고
+    remarks: '완료', // 비고
   },
   {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리_등록/상세',

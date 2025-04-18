@@ -9,7 +9,7 @@ export const queryKeys = {
     sort: string | string[];
     cdGroupId?: string;
     cdGroupName?: string;
-    isUsed?: boolean;
+    isUsed?: string;
     cdName?: string;
   }) => [...queryKeys.all, 'list', params] as const,
   detail: (cdGroupId: string) => [...queryKeys.all, 'detail', cdGroupId] as const,
@@ -22,7 +22,7 @@ export const commonCodeGroupQueryOptions = {
     sort: string,
     cdGroupId = '',
     cdGroupName = '',
-    isUsed = true,
+    isUsed = '',
     cdName = '',
   ) => ({
     queryKey: queryKeys.list({

@@ -108,6 +108,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            disabled={disabled}
             maxLength={maxLength > 0 ? maxLength : undefined}
           />
         ) : type === 'mask' ? (

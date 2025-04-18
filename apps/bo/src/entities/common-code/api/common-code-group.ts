@@ -15,7 +15,7 @@ export default class CommonCodeGroupService {
     sort = '',
     cdGroupId = '',
     cdGroupName = '',
-    isUsed = true,
+    isUsed = '',
     cdName = '',
   ): Promise<any> {
     const baseUrl = `${PMSApiPrefix()}/code-groups`;
