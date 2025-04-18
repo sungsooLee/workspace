@@ -27,13 +27,19 @@ const useGridBoxHook = (config: any, getData?: any) => {
   const handleGridDataFetch = (page: any) => {
     handleExternalGridDataFetch(getData(), page);
   };
+
+  const onDataChange = (data: any) => {
+    setGridConfig((state: any) => ({ ...state, data }));
+  };
   return {
     config: {
       ...gridConfig,
       getParams: getData,
       gridFetch: handleGridDataFetch,
+      onDataChange,
     },
     gridFetch: handleExternalGridDataFetch,
+    data: gridConfig.data,
   };
 };
 

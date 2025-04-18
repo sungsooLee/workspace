@@ -8,7 +8,7 @@ import { Grid } from '@learnway/ui';
  * @constructor
  */
 const GridBoxComponent: FC<any> = ({ config }) => {
-  const { data: data, page, totalRows, gridFetch, columns, ...props } = config;
+  const { data: data, page, totalRows, gridFetch, columns, onDataChange, ...props } = config;
   const columnHelper = createColumnHelper<any>();
   const girdColumns = columns.map((column: any) => {
     switch (column.type) {
@@ -51,8 +51,9 @@ const GridBoxComponent: FC<any> = ({ config }) => {
   const handleChangePageSize = (pageSize: number) => {
     console.log('page size');
   };
-  console.log('page =>  ', girdColumns, data);
-
+  const handleChangeGridData = (newData: any) => {
+    onDataChange(newData);
+  };
   return (
     <Grid
       title={'Editable Grid'}
@@ -62,6 +63,7 @@ const GridBoxComponent: FC<any> = ({ config }) => {
       disabledSelectionToggle
       hideColumnSettings
       hideRowSelectionCheckBox
+      onChange={(newData: any) => handleChangeGridData(newData)}
       pagination={
         page
           ? {
@@ -71,9 +73,6 @@ const GridBoxComponent: FC<any> = ({ config }) => {
             }
           : undefined
       }
-      /*pagination={
-
-      }*/
     />
   );
 };

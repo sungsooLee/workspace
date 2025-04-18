@@ -12,7 +12,7 @@ export default class TranslationService {
     return httpService.get<any>(`/pms-module/admin/api/v1/i18n/${messageId}`);
   }
   static updateTranslation(payload: any) {
-    return httpService.put<Tenant>(`/pms-module/admin/api/v1/i18n/${payload.messageId}`, payload);
+    return httpService.put<Tenant>(`${PMSApiPrefix()}/multilingual`, payload);
   }
   static createTranslation(payload: any) {
     return httpService.post<Tenant>(`/pms-module/admin/api/v1/i18n`, payload);

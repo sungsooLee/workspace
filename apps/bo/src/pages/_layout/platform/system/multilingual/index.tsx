@@ -1,42 +1,62 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Button, EditInputCell } from '@learnway/ui';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button, EditInputCell, EditTextareaCell } from '@learnway/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { GridBox, useGridBox } from '@shared/ui/grid-box';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../../../shared/ui/search-box';
+import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP } from '@learnway/config';
 import { CellContext } from '@tanstack/react-table';
+import { useTranslation } from '@entities/translation/service/translation.hook';
+import { useFetchCodeGroups } from '@entities/platform';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
 });
+type TranslationType = {
+  targetLocale: string;
+  translations: { multilingualKey: string; translation: string }[];
+};
 
 function RouteComponent() {
   const router = useRouter();
   const { state } = Route.useRouteContext();
   const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const isSaveDiable = useMemo(() => gConfig.totalRows > 0, [gConfig.totalRows]);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { update } = useTranslation();
+  const { data: codeData } = useFetchCodeGroups();
+  const isSaveDisable = useMemo(() => gConfig.totalRows === 0, [gConfig.totalRows]);
+  const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   /**
    * @param data
    */
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(data);
   }, []);
-
   /**
    * 등록화면 이동
    */
   const handleNewTranslation = useCallback(() => {
-    console.log('data => ', gConfig.data);
-    //router.navigate({ to: '/platform/system/translation/view' });
-  }, [gConfig.data]);
+    const uploadData: TranslationType = {
+      targetLocale: getValues('targetLocale'),
+      translations: [],
+    };
+    if (!currentTargetLocale && uploadData.targetLocale !== currentTargetLocale) {
+      alert('언어가 변경되었습니다. 조회 후 이용해주세요.');
+    }
+    data.forEach((item: any) => {
+      uploadData.translations.push({
+        multilingualKey: item.multilingualKey,
+        translation: item.targetLanguage || '',
+      });
+    });
+    setCurrentTargetLocale(uploadData.targetLocale);
+    update(uploadData);
+  }, [data]);
 
   useEffect(() => {
     if (state.keyType) {
@@ -62,7 +82,7 @@ function RouteComponent() {
         <Button
           type="button"
           variant="primary"
-          disabled={isSaveDiable}
+          disabled={isSaveDisable}
           size="sm"
           onClick={handleNewTranslation}
         >
@@ -71,7 +91,6 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <div style={{ height: '100px' }}></div>
         <GridBox config={gConfig} />
       </MainContents>
     </PageContainer>
@@ -85,7 +104,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'keyType',
         type: 'dropdown',
         label: '분류',
-        value: 'CATEGORY',
+        value: 'LABEL',
         options: [],
         optionsConfig: {
           type: 'self',
@@ -96,11 +115,12 @@ const searchConfig: SearchBoxConfig = {
         name: 'targetLocale',
         type: 'dropdown',
         label: '번역언어',
-        value: 'kr',
+        value: 'en',
         options: [],
         optionsConfig: {
           type: 'self',
           codeGroup: CODE_GROUP.MULTILINGUAL,
+          excludeValues: ['kr'],
           filter: {
             target: 'keyType',
             value: 'MENU',
@@ -152,28 +172,27 @@ const gridConfig = {
     },
     { name: 'multilingualKey', label: '코드' },
     {
-      name: 'targetLocale',
+      name: 'baseLanguage',
       label: '번역명(한국어)',
-      cell: (info: CellContext<any, string>) => {
-        console.log('cell info =>  ', info);
-        return <EditInputCell info={info} input={{ type: 'text' }} />;
+    },
+    {
+      name: 'targetLanguage',
+      label: '번역명(번역언어)',
+      accessorKey: 'text',
+      render: (info: CellContext<any, string>) => {
+        return info.row.getValue('keyType') === 'MESSAGE' ? (
+          <EditTextareaCell info={info} textarea={{ maxLength: 100 }} />
+        ) : (
+          <EditInputCell info={info} input={{ type: 'text' }} />
+        );
       },
     },
     {
-      /*name: 'multilingual',
-      label: '번역명(번역언어)',
-      accessorKey: 'text',
-      size: 150,
-      cell: (info: CellContext<any, string>) => (
-        <EditInputCell info={info} input={{ type: 'text' }} />
-      ),*/
-      name: 'multilingual',
-      header: 'multilingual',
-      accessorKey: 'text',
-      size: 150,
-      cell: (info: CellContext<any, string>) => (
-        <EditInputCell info={info} input={{ type: 'text' }} />
-      ),
+      name: 'totalTranslatedCount',
+      label: '번역완료',
+      render: (info: CellContext<any, string>) => {
+        return `${info.row.original.totalTranslatedCount} / ${info.row.original.totalLocaleCount}`;
+      },
     },
     { name: 'lastModifiedBy', label: '수정자' },
     {
@@ -186,14 +205,7 @@ const gridConfig = {
       ),
     },
   ],
-  data: [
-    {
-      keyType: 'COMMON_CODE',
-      multilingualKey: 'COMMON_CODE_1',
-      multilingual: '',
-      targetLocale: '공통코드',
-    },
-  ],
+  data: [],
   pagination: {
     pageSize: 10,
     pageIndex: 0,
@@ -201,3 +213,13 @@ const gridConfig = {
   },
 };
 // 2025-03-05 04:06:10
+/*{
+
+  "labelMessageMultilingulKey": "label.test1",
+  "labelMessageType": "LABEL",
+  "labelMessageName": "테스트라벨1",
+  "labelMessageDesc": "테스트라벨1",
+  "isUsed": true,
+  "isDeleted": false,
+
+} */
