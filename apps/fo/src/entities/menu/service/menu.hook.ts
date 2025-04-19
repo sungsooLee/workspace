@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions } from './menu.queries';
-import { FetchMenusParams } from '../../../types/entities/menu';
 
 export function useFetchMenus(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));

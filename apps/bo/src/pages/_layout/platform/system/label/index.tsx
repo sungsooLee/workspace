@@ -21,7 +21,7 @@ function RouteComponent() {
    * 등록화면 이동
    */
   const handleNewTranslation = () => {
-    router.navigate({ to: '/platform/system/translation', state: { keyType: 'COMMON_CODE' } });
+    //router.navigate({ to: '/platform/system/translation', state: { keyType: 'COMMON_CODE' } });
   };
 
   return (
