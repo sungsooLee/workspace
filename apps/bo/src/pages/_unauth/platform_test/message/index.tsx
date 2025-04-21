@@ -21,7 +21,7 @@ function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
-  const [labelMessageId, setLabelMessageId] = useState<number>();
+  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>();
 
   const handleMultilingualManageClick = () => {
     console.log('다국어 관리 화면 이동', {
@@ -47,7 +47,7 @@ function RouteComponent() {
 
   const handleGridRowSelect = (row: any) => {
     console.log('handleGridRowSelect', row);
-    // setLabelMessageId(row.labelMessageId);
+    // setSelectedLabelMessageId(row.labelMessageId);
   };
 
   return (
@@ -67,7 +67,7 @@ function RouteComponent() {
         {/* 그리드 + 상세 */}
         <SplitPanel>
           <GridBox config={gridConfig} />
-          <MessageDetail labelMessageId={labelMessageId} />
+          <MessageDetail labelMessageId={selectedLabelMessageId} />
         </SplitPanel>
       </MainContents>
     </PageContainer>
