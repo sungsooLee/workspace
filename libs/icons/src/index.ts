@@ -48,6 +48,7 @@ export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; 
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
 export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // tootip icon
 export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray.svg';
+export { ReactComponent as IcoAlertCircle03 } from './lib/ic_alert_circle_03.svg';
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout

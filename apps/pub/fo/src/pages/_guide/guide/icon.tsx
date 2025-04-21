@@ -48,6 +48,7 @@ import {
   IcoCheckboxChecked,
   IcoAlertCircle,
   IcoAlertCircleGray,
+  IcoAlertCircle03,
   IcoTooltipArrow,
   IcoCloseCircle,
   IcLogOut01,
@@ -214,6 +215,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoCheckboxChecked width={30} height={30} stroke="#4C515E" />
             <IcoAlertCircle width={30} height={30} stroke="#4C515E" />
             <IcoAlertCircleGray width={30} height={30} stroke="#4C515E" />
+            <IcoAlertCircle03 width={30} height={30} />
             <IcoTooltipArrow width={30} height={30} stroke="#4C515E" />
             <IcoCloseCircle width={30} height={30} stroke="#4C515E" />
             <IcLogOut01 width={30} height={30} stroke="#4C515E" />
