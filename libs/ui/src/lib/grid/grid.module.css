@@ -105,6 +105,9 @@
       &.table_title {
         @apply body_3_r;
       }
+      & + button:first-child {
+        @apply ml-auto;
+      }
     }
     .sub_info {
       @apply title_bo_4_b relative ml-[12px] mr-auto pl-[12px] text-[var(--gray9)];

@@ -81,6 +81,9 @@
           }
         }
       }
+      .course_btn_wrap {
+        @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] p-[24px];
+      }
     }
   }
 }

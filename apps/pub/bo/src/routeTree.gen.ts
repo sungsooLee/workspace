@@ -61,6 +61,8 @@ import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout
 import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
+import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
+import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
@@ -432,6 +434,20 @@ const LayoutPmsMenuEducationRegisterDetailRoute =
   LayoutPmsMenuEducationRegisterDetailImport.update({
     id: '/pms/menu-education-register-detail',
     path: '/pms/menu-education-register-detail',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuEducationLocationManagementRoute =
+  LayoutPmsMenuEducationLocationManagementImport.update({
+    id: '/pms/menu-education-location-management',
+    path: '/pms/menu-education-location-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsLanguagemanagementRoute =
+  LayoutPmsLanguagemanagementImport.update({
+    id: '/pms/language_management',
+    path: '/pms/language_management',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1437,6 +1453,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsCategoryMenagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/language_management': {
+      id: '/_layout/pms/language_management'
+      path: '/pms/language_management'
+      fullPath: '/pms/language_management'
+      preLoaderRoute: typeof LayoutPmsLanguagemanagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-education-location-management': {
+      id: '/_layout/pms/menu-education-location-management'
+      path: '/pms/menu-education-location-management'
+      fullPath: '/pms/menu-education-location-management'
+      preLoaderRoute: typeof LayoutPmsMenuEducationLocationManagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-education-register-detail': {
       id: '/_layout/pms/menu-education-register-detail'
       path: '/pms/menu-education-register-detail'
@@ -1756,6 +1786,8 @@ interface LayoutRouteChildren {
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
+  LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
+  LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
   LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
@@ -1799,6 +1831,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
+  LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
+  LayoutPmsMenuEducationLocationManagementRoute:
+    LayoutPmsMenuEducationLocationManagementRoute,
   LayoutPmsMenuEducationRegisterDetailRoute:
     LayoutPmsMenuEducationRegisterDetailRoute,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
@@ -1922,6 +1957,8 @@ export interface FileRoutesByFullPath {
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
@@ -2033,6 +2070,8 @@ export interface FileRoutesByTo {
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
@@ -2147,6 +2186,8 @@ export interface FileRoutesById {
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/_layout/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/_layout/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_layout/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
@@ -2260,6 +2301,8 @@ export interface FileRouteTypes {
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
+    | '/pms/language_management'
+    | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
     | '/pms/menu-platform'
@@ -2370,6 +2413,8 @@ export interface FileRouteTypes {
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
+    | '/pms/language_management'
+    | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
     | '/pms/menu-platform'
@@ -2482,6 +2527,8 @@ export interface FileRouteTypes {
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
+    | '/_layout/pms/language_management'
+    | '/_layout/pms/menu-education-location-management'
     | '/_layout/pms/menu-education-register-detail'
     | '/_layout/pms/menu-management'
     | '/_layout/pms/menu-platform'
@@ -2633,6 +2680,8 @@ export const routeTree = rootRoute
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
+        "/_layout/pms/language_management",
+        "/_layout/pms/menu-education-location-management",
         "/_layout/pms/menu-education-register-detail",
         "/_layout/pms/menu-management",
         "/_layout/pms/menu-platform",
@@ -3000,6 +3049,14 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/category-menagement": {
       "filePath": "_layout/pms/category-menagement.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/language_management": {
+      "filePath": "_layout/pms/language_management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-education-location-management": {
+      "filePath": "_layout/pms/menu-education-location-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-education-register-detail": {

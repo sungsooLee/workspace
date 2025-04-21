@@ -48,3 +48,4 @@ export * from './popup/notice-detail-popup';
 export * from './popup/course-information-popup';
 export * from './popup/address-confirmation-popup';
 export * from './popup/accepting-popup';
+export * from './popup/course-selection-popup';

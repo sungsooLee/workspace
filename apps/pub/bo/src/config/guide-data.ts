@@ -433,6 +433,24 @@ export const guideData = [
     lastUpdateDate: '2025-04-07',
     remarks: '작업 완료(하단 테이블 사이즈 적용 추후 작업예정)', // 비고
   },
+  {
+    screenName: 'PMS/플랫폼관리_언어관리_다국어관리',
+    pageId: 'pms/language_management',
+    screenId: 'NLP_BO_PMS_1421',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리_언어관리_다국어관리_메시지번역',
+    pageId: 'pms/language_translation_management',
+    screenId: 'NLP_BO_PMS_1422_02',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'PMS/플랫폼관리_라벨/메시지 관리',
   //   pageId: 'pms/',
@@ -524,13 +542,22 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
+    screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
+    pageId: 'pms/menu-education-location-management',
+    screenId: 'NLP_BO_EDO_1601',
+    pageType: 'Page',
+    completionDate: '2025-04-18',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
+  },
+  {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리_등록/상세',
     pageId: 'pms/menu-education-register-detail',
     screenId: 'NLP_BO_EDO_1602',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-18',
     lastUpdateDate: '',
-    remarks: '작업 예정', // 비고
+    remarks: '완료', // 비고
   },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',

@@ -99,12 +99,9 @@
   input {
     @apply flex-auto !border-[var(--gray4)];
   }
-  /* [class*='nlp--button'] {
-    &:read-only,
-    &:disabled {
-      @apply border-[var(--gray1)];
-    }
-  } */
+  [class*='table'] {
+    @apply mb-[4px];
+  }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
   }
@@ -145,7 +142,7 @@
     @apply !ml-[16px];
   }
   .textarea {
-    @apply !rounded-[8px];
+    @apply !rounded-[4px];
   }
   .radio_box {
     @apply flex w-full;

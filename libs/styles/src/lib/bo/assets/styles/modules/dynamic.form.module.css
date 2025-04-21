@@ -128,3 +128,8 @@
 .check_wrap {
   @apply w-full;
 }
+
+/* inputbox size case */
+.w_half {
+  @apply flex-[0_0_calc(50%-20px)];
+}
