@@ -10,7 +10,7 @@ const ContentsHistoryInfoFormFieldComponent = ({
   type, // column
 }: ContentsHistoryInfoFormFieldComponentProp) => {
   return (
-    <div className={cn(style.start, style.wrap, type && style[type])}>
+    <div className={cn(style.start, style.wrap, 'history_info_wrap', type && style[type])}>
       <p>
         {'최초 등록'} <span className={style.info}>{'홍길동'}</span>
         <span className={style.info}>{'2025-02-18 15:00:22'}</span>
