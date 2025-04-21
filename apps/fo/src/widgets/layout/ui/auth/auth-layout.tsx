@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
-
 import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthHeader } from './auth-header/auth-header';

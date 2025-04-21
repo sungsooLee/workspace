@@ -1,12 +1,12 @@
-import { startTransition, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
 import { isFunction, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
-import { Button, ContentsRow, InputTimer, PhoneNumber, DynamicFormField } from '@learnway/ui';
-import { cn, z } from '@learnway/shared';
+import { Button, ContentsRow, InputTimer, DynamicFormField } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import {
@@ -295,7 +295,8 @@ function AuthFormComponent({
               variant="primary"
               size="xl"
               onClick={() => handleSendVerify()}
-              disabled={includeUserId}>
+              disabled={includeUserId}
+            >
               {t('LABEL.CHECK_AUTH_REQUEST')}
             </Button>
           )}

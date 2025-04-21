@@ -1,0 +1,125 @@
+.start {
+  &.information_change {
+    @apply mx-[auto] w-[780px];
+    h2 {
+      @apply title_4_b mt-[24px] text-[var(--gray9)];
+    }
+    .box {
+      @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] px-[24px] pb-[24px] pt-[30px];
+      .avata_img {
+        @apply relative;
+        .avata_box {
+          @apply relative mx-auto h-[128px] w-[128px];
+          .file {
+            @apply absolute -bottom-[5px] -right-[5px] h-[40px] w-[40px];
+            input {
+              @apply h-0 w-0;
+            }
+            label {
+              @apply flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-[50%] bg-white;
+            }
+          }
+          @apply flex justify-center;
+          .info_avata {
+            @apply h-[128px] w-[128px] rounded-[50%];
+          }
+          span.info_avata {
+            @apply title_1_b inline-flex items-center justify-center bg-[#00afd5] text-center text-white;
+          }
+        }
+      }
+      .information {
+        @apply mt-[48px];
+        & > div {
+          @apply border-none pt-0;
+        }
+        textarea {
+          @apply h-[72px];
+        }
+      }
+    }
+    .notice {
+      @apply mt-[32px];
+      a {
+        @apply ml-[20px] text-[var(--gray7)];
+      }
+    }
+    .bullet_notice {
+      @apply mt-[32px];
+      dl {
+        dt {
+          @apply body_4_b mb-[8px] text-[var(--gray7)];
+        }
+        dd {
+          @apply body_4_r relative flex justify-between pl-[10px] leading-[19px] text-[var(--gray7)];
+          &::before {
+            @apply absolute left-0 top-[8px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
+          }
+          & + dd {
+            @apply mt-[4px];
+          }
+          button {
+            @apply button_5_r -mt-[4px] ml-[16px] h-[24px] flex-none whitespace-nowrap rounded-[4px] px-[8px] leading-[24px];
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.information_change {
+        @apply w-full px-[20px] pb-[40px];
+        h2 {
+          @apply hidden;
+        }
+        .box {
+          @apply border-none px-0 py-0;
+          .avata_img {
+            .avata_box {
+              @apply h-[96px] w-[96px];
+              .info_avata {
+                @apply h-[96px] w-[96px];
+              }
+            }
+          }
+          .information {
+            @apply mt-[32px];
+            .phone_box {
+              @apply flex-wrap;
+              & > div {
+                @apply flex-none;
+              }
+              & > button {
+                @apply ml-0 mt-[8px] w-full;
+              }
+            }
+          }
+        }
+        .notice {
+          @apply mt-[8px];
+          dl {
+            dd {
+              @apply grid;
+              a {
+                @apply ml-0 mt-[4px];
+              }
+            }
+          }
+        }
+        .bullet_notice {
+          dl {
+            dd {
+              @apply inline-grid;
+              button {
+                @apply ml-auto mt-[16px];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
