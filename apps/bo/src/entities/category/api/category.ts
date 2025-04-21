@@ -42,6 +42,10 @@ export default class CategoryService {
     };
     return httpService.post<any>(`${LMSApiPrefix()}/category/${id}/dnd`, body);
   }
+
+  static existsCategory(code: string) {
+    return httpService.get<any>(`${LMSApiPrefix()}/category/${code}/validation`);
+  }
 }
 
 /*

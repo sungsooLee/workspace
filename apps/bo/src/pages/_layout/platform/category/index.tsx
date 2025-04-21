@@ -72,14 +72,7 @@ function RouteComponent() {
   });
 
   // 수정 mutation
-  const { update: updateCategory } = useUpdateCategory({
-    onSuccess: async (data: any) => {
-      await refetch();
-    },
-    onError: async (data: any) => {
-      // TODO 팝업 (해당 카테고리는 테넌트 카테고리에 사용 중이어서 삭제할 수 없습니다. )
-    },
-  });
+  const { update: updateCategory } = useUpdateCategory({});
 
   // 이동
 
@@ -201,7 +194,15 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          updateCategory(payload);
+          updateCategory(payload, {
+            onSuccess: (data: any) => {
+              console.log('#### success', data);
+              refetch();
+            },
+            onError: (error: unknown) => {
+              console.log('#### error', error);
+            },
+          });
         }
       },
     });

@@ -43,25 +43,7 @@ const CategoryViewComponent: FC<any> = ({
   );
   const initialFromValuesRef = React.useRef<any>(null);
 
-  const { checkExistsCategory: checkExists } = useCheckExistsCategory({
-    onSuccess: (data: any) => {
-      console.log('success');
-
-      const isUnique = !data;
-      setIsSuccessCodeCheck(isUnique);
-      setCodeCheckState(isUnique ? 'success' : 'duplicate');
-
-      onFormChange?.({
-        isDuplicateMenuCode: isUnique,
-      });
-    },
-    onError: () => {
-      console.log('error');
-      setIsSuccessCodeCheck(false);
-      setCodeCheckState('error');
-      onFormChange?.({ isDuplicateMenuCode: false });
-    },
-  });
+  const { checkExistsCategory: checkExists } = useCheckExistsCategory({});
 
   useEffect(() => {
     dataInit(data, selectedNode, mode);
@@ -77,7 +59,7 @@ const CategoryViewComponent: FC<any> = ({
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
           parentMenuName: selectedNode.parentMenuName,
-          isDuplicateMenuCode: false,
+          isDuplicateMenuCode: true,
           name: data?.name,
           code: data?.categoryCode,
           categoryContent: data?.categoryContent,
@@ -141,6 +123,7 @@ const CategoryViewComponent: FC<any> = ({
     const isChanged = isFieldChanged('code', newCode);
 
     if (onFormChange) {
+      console.log('## view ::: ', !isChanged && mode === 'view');
       // 코드가 변경됐을 경우에만 중복 체크 필요
       onFormChange({
         isDuplicateMenuCode: !isChanged && mode === 'view',
@@ -164,6 +147,24 @@ const CategoryViewComponent: FC<any> = ({
     {카테고리 코드}의 중복 여부를 확인해 주세요. 
     */
 
+    // View 모드에서 저장 처리
+    if (mode === 'view') {
+      const isCodeChanged = isFieldChanged('code', node.code);
+      // 코드가 변경되지 않았으면 중복 체크 없이 진행
+      if (!isCodeChanged) {
+        const body = {
+          name: node.name,
+          categoryCode: node.code,
+          categoryContent: node.categoryContent,
+          id: node.key,
+        };
+        console.log('## check body', body);
+        // 수정 API 호출
+        onUpdate(body);
+        return;
+      }
+    }
+
     if (codeCheckState === 'none') {
       setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
       return;
@@ -171,20 +172,6 @@ const CategoryViewComponent: FC<any> = ({
 
     if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
-      return;
-    }
-
-    // View 모드에서 저장 처리
-    if (mode === 'view') {
-      const body = {
-        name: node.name,
-        categoryCode: node.code,
-        categoryContent: node.categoryContent,
-        id: node.key,
-      };
-      console.log('## check body', body);
-      // 수정 API 호출
-      onUpdate(body);
       return;
     }
 
@@ -267,7 +254,27 @@ const CategoryViewComponent: FC<any> = ({
               <DynamicFormField name={'code'} disabled={isRoot}>
                 <DuplicateCodeGuideText
                   clearFormError={clearFormError}
-                  checkExists={checkExists}
+                  checkExists={(data: string) => {
+                    checkExists(data, {
+                      onSuccess: (data: any) => {
+                        console.log('#### success', data);
+
+                        const isUnique = data;
+                        setIsSuccessCodeCheck(isUnique);
+                        setCodeCheckState(isUnique ? 'success' : 'duplicate');
+
+                        onFormChange?.({
+                          isDuplicateMenuCode: isUnique,
+                        });
+                      },
+                      onError: () => {
+                        console.log('#### error');
+                        setIsSuccessCodeCheck(false);
+                        setCodeCheckState('error');
+                        onFormChange?.({ isDuplicateMenuCode: false });
+                      },
+                    });
+                  }}
                   isSuccess={isSuccessCodeCheck}
                   disabled={isInitMode || isRoot}
                   codeCheckState={codeCheckState}

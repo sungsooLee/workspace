@@ -35,9 +35,9 @@ export const mutateOptions = {
   create: () => ({
     mutationFn: (payload: CategoryCreate) => CategoryService.createCategory(payload),
   }),
-  // checkExistsMenu: () => ({
-  //   mutationFn: (payload: any) => CategoryService.existsMenu(payload.menuCode, payload.parentId),
-  // }),
+  checkExists: () => ({
+    mutationFn: (payload: string) => CategoryService.existsCategory(payload),
+  }),
   update: () => ({
     mutationFn: (payload: CategoryUpdate) => CategoryService.updateCategory(payload),
   }),

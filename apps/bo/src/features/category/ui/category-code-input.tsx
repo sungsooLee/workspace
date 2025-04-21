@@ -66,23 +66,18 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
           size="sm"
           disabled={disabled}
           onClick={() => {
-            const { code, parentKey } = getValues();
+            const { code } = getValues();
 
             // Validate code before checking
             if (!code) {
               clearFormError(name);
-              setFormError?.('code', '메뉴 코드를 입력해주세요.');
+              setFormError?.('code', '카테고리 코드를 입력해주세요.');
               return;
             }
 
-            const data = {
-              menuCode: code,
-              parentId: parentKey,
-            };
-
             // Clear any existing errors and perform the check
             clearFormError && clearFormError(name);
-            checkExists?.(data);
+            checkExists?.(code);
           }}
         >
           중복

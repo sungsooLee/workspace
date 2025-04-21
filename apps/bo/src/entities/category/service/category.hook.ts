@@ -93,26 +93,24 @@ export function useUpdateCategory(options: any) {
   };
 }
 
-// TODO 중복체크 API 없음
 export function useCheckExistsCategory(options: any) {
-  // const { mutate, isSuccess, isError } = useMutation({
-  //   ...mutateOptions.checkExistsMenu(),
-  //   onSuccess: async (data, variables, context) => {
-  //     if (options.onSuccess) {
-  //       options.onSuccess(data, variables, context);
-  //     }
-  //   },
-  //   ...mutateOptions,
-  // });
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.checkExists(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions,
+  });
 
   return {
     checkExistsCategory: (payload: any, callback?: any) => {
-      // mutate(payload, callback);
-
+      mutate(payload, callback);
       options?.onSuccess?.(false);
     },
-    // isSuccess,
-    // isError,
+    isSuccess,
+    isError,
   };
 }
 
