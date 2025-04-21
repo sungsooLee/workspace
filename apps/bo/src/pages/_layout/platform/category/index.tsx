@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { findNodePath, TreeNode, useModal } from '@learnway/ui';
+import { Button, findNodePath, TreeNode, useModal } from '@learnway/ui';
 
 import {
   useCreateCategory,
@@ -22,6 +22,8 @@ import { pageRouteConfig } from '@features/auth/index';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { useCurrentRoute } from '@learnway/hooks';
 
 // TODO
 // 중복체크 API 없음
@@ -39,6 +41,9 @@ export const Route = createFileRoute('/_layout/platform/category/')({
 type mode = 'init' | 'add' | 'view';
 
 function RouteComponent() {
+  // const { state } = useCurrentRoute(Route);
+  const router = useRouter();
+
   const [treeData, setTreeData] = useState();
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -234,6 +239,23 @@ function RouteComponent() {
 
   return (
     <PageContainer scrollHidden={true}>
+      <ContentsButtons>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({
+              to: '/platform/system/multilingual',
+              state: {
+                keyType: 'CATEGORY', // 다국어 분류 - 공통코드
+              },
+            });
+          }}
+        >
+          다국어관리
+        </Button>
+      </ContentsButtons>
       <MainContents>
         <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
           {treeData && (
