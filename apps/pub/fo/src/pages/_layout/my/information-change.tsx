@@ -8,7 +8,7 @@ import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './information-change.module.css';
-import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
+import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,
@@ -18,8 +18,8 @@ function RouteComponent() {
   const { open: openModal } = useModal();
 
   return (
-    <div className={myContainerStyles.start}>
-      <h2 className={myContainerStyles.start}>개인정보변경</h2>
+    <div className={myPageContainerStyles.start}>
+      <h2 className={myPageContainerStyles.start}>개인정보변경</h2>
       <div className={`${styles.start} ${styles.information_change}`}>
         <div className={styles.box}>
           <div className={styles.avata_img}>

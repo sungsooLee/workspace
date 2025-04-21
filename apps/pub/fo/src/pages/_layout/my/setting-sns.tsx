@@ -8,7 +8,7 @@ import naver from '@learnway/styles/fo/assets/images/common/logo_sns_naver.png';
 import kakao from '@learnway/styles/fo/assets/images/common/logo_sns_kakao.png';
 import google from '@learnway/styles/fo/assets/images/common/logo_sns_google.png';
 
-import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
+import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
 export const Route = createFileRoute('/_layout/my/setting-sns')({
   component: RouteComponent,
@@ -16,8 +16,8 @@ export const Route = createFileRoute('/_layout/my/setting-sns')({
 
 function RouteComponent() {
   return (
-    <div className={myContainerStyles.start}>
-      <h2 className={myContainerStyles.start}>SNS 로그인 설정</h2>
+    <div className={myPageContainerStyles.start}>
+      <h2 className={myPageContainerStyles.start}>SNS 로그인 설정</h2>
       <div className={`${styles.start} ${styles.sns_wrap}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>
