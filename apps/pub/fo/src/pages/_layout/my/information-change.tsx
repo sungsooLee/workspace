@@ -8,7 +8,7 @@ import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './information-change.module.css';
-import myContainerStyles from './my-container.module.css';
+import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,

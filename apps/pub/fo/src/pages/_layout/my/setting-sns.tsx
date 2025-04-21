@@ -8,7 +8,7 @@ import naver from '@learnway/styles/fo/assets/images/common/logo_sns_naver.png';
 import kakao from '@learnway/styles/fo/assets/images/common/logo_sns_kakao.png';
 import google from '@learnway/styles/fo/assets/images/common/logo_sns_google.png';
 
-import myContainerStyles from './my-container.module.css';
+import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
 export const Route = createFileRoute('/_layout/my/setting-sns')({
   component: RouteComponent,

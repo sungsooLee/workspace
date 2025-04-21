@@ -1,9 +1,17 @@
-/* page-container.module.css */
 .start {
-  &.page_container {
-    @apply relative pb-[80px] pt-[16px];
+  @apply mx-[auto] w-[780px];
+  h2 {
+    @apply title_4_b mt-[24px] text-[var(--gray9)];
   }
-  .title {
-    @apply title_4_b pb-[16px];
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply w-full px-[20px] pb-[40px];
+      h2 {
+        @apply hidden;
+      }
+    }
   }
 }
