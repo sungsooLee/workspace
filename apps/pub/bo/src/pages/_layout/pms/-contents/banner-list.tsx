@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { Button, List } from '@learnway/ui';
 import styles from './banner-list.module.css';

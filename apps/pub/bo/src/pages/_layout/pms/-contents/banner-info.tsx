@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, ContentsRow, Input } from '@learnway/ui';
+import { Button, ContentsRow } from '@learnway/ui';
 /* style */
 import styles from './banner-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import { IcoFormRequired, IcoPpt, IcoTrash03 } from '@learnway/icons';
 
