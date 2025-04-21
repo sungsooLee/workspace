@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_layout/my/membership-secession')({
 function RouteComponent() {
   return (
     <div className={myPageContainerStyles.start}>
-      <h2 className={myPageContainerStyles.start}>회원탈퇴</h2>
+      <h2>회원탈퇴</h2>
       <div className={`${styles.start} ${styles.secession}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>

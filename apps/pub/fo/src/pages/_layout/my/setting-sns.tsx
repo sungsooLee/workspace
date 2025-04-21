@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_layout/my/setting-sns')({
 function RouteComponent() {
   return (
     <div className={myPageContainerStyles.start}>
-      <h2 className={myPageContainerStyles.start}>SNS 로그인 설정</h2>
+      <h2>SNS 로그인 설정</h2>
       <div className={`${styles.start} ${styles.sns_wrap}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>

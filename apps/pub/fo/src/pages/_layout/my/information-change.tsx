@@ -19,7 +19,7 @@ function RouteComponent() {
 
   return (
     <div className={myPageContainerStyles.start}>
-      <h2 className={myPageContainerStyles.start}>개인정보변경</h2>
+      <h2>개인정보변경</h2>
       <div className={`${styles.start} ${styles.information_change}`}>
         <div className={styles.box}>
           <div className={styles.avata_img}>
