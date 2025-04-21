@@ -1,3 +1,9 @@
+.start {
+  &.toast_wrap {
+    @apply fixed bottom-[64px] left-1/2 z-[10000] flex -translate-x-1/2 flex-col gap-[8px];
+  }
+}
+
 .Viewport {
   --viewport-padding: 25px;
   position: fixed;
@@ -15,33 +21,26 @@
   outline: none;
 }
 
-.Root {
-  background-color: white;
-  border-radius: 6px;
-  box-shadow:
-    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-  padding: 15px;
-  display: grid;
-  grid-template-areas: "title action" "description action";
+.root {
+  @apply grid items-center rounded-[8px] bg-black/80 px-[16px] py-[12px] text-center;
+  grid-template-areas: 'title action' 'description action';
   grid-template-columns: auto max-content;
-  column-gap: 15px;
-  align-items: center;
-  &[data-state="open"] {
-    animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  &[data-state='open'] {
+    animation: slideUp 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  &[data-state="closed"] {
+  &[data-state='closed'] {
     animation: hide 100ms ease-in;
   }
-  &[data-swipe="move"] {
-    transform: translateX(var(--radix-toast-swipe-move-x));
+  &[data-swipe='move'] {
+    transform: translateY(var(--radix-toast-swipe-move-y));
   }
-  &[data-swipe="cancel"] {
-    transform: translateX(0);
+  &[data-swipe='cancel'] {
+    transform: translateY(0);
     transition: transform 200ms ease-out;
   }
-  &[data-swipe="end"] {
-    animation: swipeOut 100ms ease-out;
+  &[data-swipe='end'] {
+    transform: translateY(var(--radix-toast-swipe-end-y));
+    transition: slideOut 100ms ease-out;
   }
 }
 
@@ -51,6 +50,24 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(calc(100% - 25px));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(var(--radix-toast-swipe-end-y));
+  }
+  to {
+    transform: translateY(calc(100% - 25px));
   }
 }
 
@@ -72,20 +89,14 @@
   }
 }
 
-.Title {
+.title {
+  @apply body_bo_3_r text-center text-white;
   grid-area: title;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: var(--slate-12);
-  font-size: 15px;
 }
 
-.Description {
+.description {
   grid-area: description;
-  margin: 0;
-  color: var(--slate-11);
-  font-size: 13px;
-  line-height: 1.3;
+  @apply body_bo_3_r text-center text-white;
 }
 
 .Action {

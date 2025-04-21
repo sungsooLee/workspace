@@ -22,12 +22,12 @@ const ToastComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Toast
     };
 
     return (
-      <Primitive.Root className={styles.Root} open={open} onOpenChange={handleOpenChange} ref={ref}>
+      <Primitive.Root className={styles.root} open={open} onOpenChange={handleOpenChange} ref={ref}>
         {/* Title*/}
-        <Primitive.Title className={styles.Title}>{title}</Primitive.Title>
+        <Primitive.Title className={styles.title}>{title}</Primitive.Title>
 
         {/* Description */}
-        <Primitive.Description className={styles.Description}>{description}</Primitive.Description>
+        <Primitive.Description className={styles.description}>{description}</Primitive.Description>
       </Primitive.Root>
     );
   },
