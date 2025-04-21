@@ -17,6 +17,7 @@ import {
   TreeNode,
 } from '@learnway/ui';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';

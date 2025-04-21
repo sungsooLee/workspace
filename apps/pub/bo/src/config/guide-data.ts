@@ -542,6 +542,15 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
+    screenName: 'PMS/테넌트관리_학습자역할정보_플랫폼관리_테넌트관리_역할관리',
+    pageId: 'pms/menu-tenant-learning-role-management',
+    screenId: 'NLP_BO_TMS_1003_04',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
     pageId: 'pms/menu-education-location-management',
     screenId: 'NLP_BO_EDO_1601',
