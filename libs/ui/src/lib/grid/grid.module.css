@@ -85,12 +85,12 @@
             @apply !bg-[#edfcff];
           }
         }
-        &:hover {
+        /* &:hover {
           @apply bg-[#edfcff];
           .td_pinned_left {
             @apply !bg-[#edfcff];
           }
-        }
+        } */
       }
     }
   }
