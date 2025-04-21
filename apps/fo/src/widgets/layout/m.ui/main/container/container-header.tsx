@@ -23,7 +23,8 @@ function ContainerHeaderComponent() {
   const [activeMenuDepth] = useActiveMenuDepthState();
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.menuName ?? meta?.title;
+    const currentMenuCode = last(activeMenuDepth)?.menuCode;
+    return currentMenuCode ? `MENU.${currentMenuCode}` : meta?.title;
   }, [activeMenuDepth]);
 
   const handleBack = () => {

@@ -1,6 +1,7 @@
 import { memo, useState, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { map, intersection } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 import { Accordion, AccordionItem } from '@learnway/ui';
@@ -26,6 +27,7 @@ const AccordionMenuComponent = ({
   openAll,
   onOpenStateAll,
 }: AccordionMenuComponentProps) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const [value, setValue] = useState<string[] | undefined>();
   const [activeMenuDepth] = useActiveMenuDepthState();
@@ -47,7 +49,6 @@ const AccordionMenuComponent = ({
   const items = useCreation(() => {
     return (menus ?? []).map((menu: Menu) => {
       const active =
-        depth === 4 &&
         activeMenuDepth &&
         activeMenuDepth[depth - 1] &&
         activeMenuDepth[depth - 1]?.path === menu?.path;
@@ -55,7 +56,7 @@ const AccordionMenuComponent = ({
         value: menu.key,
         title: (
           <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
-            {menu.menuName}
+            {t(`MENU.${menu.menuCode}`)}
           </span>
         ),
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,

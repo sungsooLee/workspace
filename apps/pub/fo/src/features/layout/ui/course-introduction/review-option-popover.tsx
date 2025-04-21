@@ -14,18 +14,20 @@ function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
     <div className={`${styles.start} ${styles.review_option} ${className}`}>
       <ul>
         <li>
+          {/* 후기 팝업 미정 */}
           <Button
-            onClick={() =>
-              openModal({
-                width: 'sm',
-                content: <ReviewPopup />,
-              })
-            }
+          // onClick={() =>
+          //   openModal({
+          //     width: 'sm',
+          //     content: <ReviewPopup />,
+          //   })
+          // }
           >
             수정
           </Button>
         </li>
         <li>
+          {/* 후기 팝업 미정 */}
           <Button
             onClick={() =>
               openModal({

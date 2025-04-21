@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_api_dto_req_ApiDnDRequestDto } from '../models/com_ever_edu_pms_api_dto_req_ApiDnDRequestDto';
 import type { com_ever_edu_pms_api_dto_req_ApiSaveReqDto } from '../models/com_ever_edu_pms_api_dto_req_ApiSaveReqDto';
 import type { com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin';
@@ -13,18 +14,18 @@ export class BoApiService {
     /**
      * Api 단일 조회
      * Api 단일 조회
-     * @param apiId
+     * @param apiUuid
      * @returns com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static getApi(
-        apiId: number,
+        apiUuid: string,
     ): CancelablePromise<com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/apis/{apiId}',
+            url: '/admin/api/v1/apis/{apiUuid}',
             path: {
-                'apiId': apiId,
+                'apiUuid': apiUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -38,20 +39,20 @@ export class BoApiService {
     /**
      * Api 수정
      * Api 수정
-     * @param apiId
+     * @param apiUuid
      * @param requestBody
      * @returns com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static updateApi(
-        apiId: number,
+        apiUuid: string,
         requestBody: com_ever_edu_pms_api_dto_req_ApiSaveReqDto,
     ): CancelablePromise<com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/apis/{apiId}',
+            url: '/admin/api/v1/apis/{apiUuid}',
             path: {
-                'apiId': apiId,
+                'apiUuid': apiUuid,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -67,18 +68,18 @@ export class BoApiService {
     /**
      * Api 삭제
      * Api 삭제
-     * @param apiId
+     * @param apiUuid
      * @returns any OK
      * @throws ApiError
      */
     public static deleteApi(
-        apiId: number,
+        apiUuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/apis/{apiId}',
+            url: '/admin/api/v1/apis/{apiUuid}',
             path: {
-                'apiId': apiId,
+                'apiUuid': apiUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -121,6 +122,35 @@ export class BoApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/apis',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * Api 순서변경
+     * Api 순서변경
+     * @param apiUuid
+     * @param requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static updateMenuDnD1(
+        apiUuid: string,
+        requestBody: com_ever_edu_pms_api_dto_req_ApiDnDRequestDto,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/apis/{apiUuid}/dnd',
+            path: {
+                'apiUuid': apiUuid,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {

@@ -9,13 +9,16 @@
       @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
       .profile {
         @apply flex items-center;
-        img {
+        .info_avata {
           @apply h-[40px] w-[40px];
+          img {
+            @apply h-[40px] w-[40px];
+          }
         }
         .information {
-          @apply relative ml-[8px] w-full;
+          @apply relative ml-[8px] w-full flex-1;
           .box {
-            @apply flex items-center;
+            @apply flex items-center overflow-hidden;
             strong {
               @apply title_6_b text-[var(--gray8)];
             }
@@ -26,12 +29,12 @@
               }
             }
             span {
-              @apply body_3_r inline-block text-[var(--gray7)];
-              & + span {
-                @apply relative ml-[8px] pl-[8px];
-                &::before {
-                  @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-                }
+              @apply body_3_r relative -ml-[9px] inline-block pl-[8px] pr-[16px] align-top leading-[20px] text-[var(--gray7)];
+              &::before {
+                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+              }
+              &:last-of-type {
+                @apply pr-0;
               }
             }
             .pin {
@@ -65,6 +68,26 @@
             }
             path {
               @apply stroke-[#00afd5];
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.review_wrap {
+        .review {
+          .profile {
+            .information {
+              .box {
+                &:nth-child(2) {
+                  @apply block;
+                }
+              }
             }
           }
         }

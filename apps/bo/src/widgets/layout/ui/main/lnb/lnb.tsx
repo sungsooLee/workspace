@@ -25,7 +25,7 @@ function LNBComponent() {
   useEffect(() => {
     setOpenAll(false);
     setOpenAllButtonState(false);
-  }, [activeMenuDepth?.[0]?.menuName]);
+  }, [activeMenuDepth?.[0]?.menuCode]);
 
   useEffect(() => {
     if (!activeMenuDepth?.[0]?.children) {
@@ -83,7 +83,9 @@ function LNBComponent() {
             className={cn(styles.lnb_title_btn, buttonClass)}
             onClick={() => handleOpenAll()}
           >
-            <span className={styles.lnb_title_text}>{activeMenuDepth[0].menuName}</span>
+            <span className={styles.lnb_title_text}>
+              {t(`MENU.${activeMenuDepth[0].menuCode}`)}
+            </span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>
         </h2>

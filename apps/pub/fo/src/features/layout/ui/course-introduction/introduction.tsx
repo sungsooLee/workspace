@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
 import { ChipList, SelectOption, Button, Avatar, Popover } from '@learnway/ui';
 import { IcoArrowDown, IcoDownload } from '@learnway/icons';
 import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../../features/layout';
@@ -201,7 +202,7 @@ const CourseIntroductionCompoment = () => {
         <div className={styles.data_box}>
           <Button>
             <span className={styles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
-            <span className={styles.size}>200MB</span>
+            {isMobile ? '' : <span className={styles.size}>200MB</span>}
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
@@ -209,7 +210,7 @@ const CourseIntroductionCompoment = () => {
           </Button>
           <Button>
             <span>비즈니스 영어 단어&숙어집.pdf</span>
-            <span className={styles.size}>200MB</span>
+            {isMobile ? '' : <span className={styles.size}>200MB</span>}
             <span>
               <IcoDownload width={16} height={16} stroke="#131c30" />
               다운로드
@@ -321,20 +322,24 @@ const CourseIntroductionCompoment = () => {
       <div className={styles.education_wrap}>
         <h2>교육일정</h2>
         <div className={styles.filter_wrap}>
-          <span className={styles.date}>2026년</span>
+          {isMobile ? '' : <span className={styles.date}>2026년</span>}
           <div className={styles.filter}>
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
             {/* dropdownpopover module */}
-            <Popover
-              className={`${dropdownPopoverStyles.btn} ${styles.drop_btn}`}
-              popoverContent={<DropdownPopoverCompoment />}
-              side="bottom"
-              align="end"
-              sideOffset={5}
-            >
-              <span>{'년도별 보기'}</span>
-              <IcoArrowDown width={16} height={16} stroke="#131C30" />
-            </Popover>
+            {isMobile ? (
+              ''
+            ) : (
+              <Popover
+                className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text} ${styles.drop_btn}`}
+                popoverContent={<DropdownPopoverCompoment />}
+                side="bottom"
+                align="end"
+                sideOffset={5}
+              >
+                <span>{'년도별 보기'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
+            )}
           </div>
         </div>
         <div className={styles.education_box}>

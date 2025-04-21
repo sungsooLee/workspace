@@ -1,9 +1,13 @@
 .root {
   &.title_wrap {
-    @apply flex flex-wrap justify-between pb-[12px];
-    .title {
+    @apply flex flex-wrap justify-between;
+    .title_area {
       @apply flex h-[32px] items-center;
+      .title {
+        @apply title_bo_4_b text-[var(--gray9)];
+      }
     }
+
     .input_area {
       [class*='btn_text'] {
         @apply text-[var(--gray8)];
@@ -19,7 +23,7 @@
       }
     }
     &.line {
-      @apply border-b-[1px] border-solid border-[var(--gray4)];
+      @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
     }
   }
 }

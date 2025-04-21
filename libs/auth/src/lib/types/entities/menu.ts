@@ -3,7 +3,6 @@ import { Hierarchy } from '@learnway/shared';
 export interface Menu extends Hierarchy<Menu> {
   menuId: number;
   menuCode: string;
-  menuName: string;
   path: string;
   sortOrder: number;
   isShortCutArea: boolean;

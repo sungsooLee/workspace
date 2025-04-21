@@ -9,7 +9,7 @@
     }
   }
   .short {
-    @apply !min-w-[224px] shrink-0;
+    @apply w-[224px] !min-w-[224px] shrink-0;
   }
   .btn_edit {
     @apply !min-w-[68px] shrink-0;
@@ -127,4 +127,9 @@
 
 .check_wrap {
   @apply w-full;
+}
+
+/* inputbox size case */
+.w_half {
+  @apply flex-[0_0_calc(50%-20px)];
 }

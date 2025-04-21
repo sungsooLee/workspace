@@ -2,15 +2,11 @@
 .wrap {
   @apply relative;
   .title_wrap {
-    @apply fixed left-0 top-0 w-full bg-white;
     .title {
       @apply title_bo_3_b pt-[48px] text-center;
     }
     .text {
-      @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
-    }
-    & + div {
-      @apply pt-[73px];
+      @apply body_bo_2_r mb-[16px] text-left text-[var(--gray8)];
     }
   }
   .pop_contents {
@@ -24,7 +20,6 @@
     }
   }
   .select_wrap {
-    @apply mt-[24px];
     button {
       span {
         &:nth-last-child(1) {
@@ -32,6 +27,12 @@
         }
       }
     }
+  }
+}
+.selected_area {
+  @apply body_bo_2_r mb-[12px] flex h-[4rem] items-center rounded-[8px] bg-[var(--gray1)] px-[16px] text-[var(--gray8)];
+  .selected_text {
+    @apply line-clamp-1;
   }
 }
 

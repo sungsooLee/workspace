@@ -4,7 +4,7 @@ import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { Button, List } from '@learnway/ui';
 import styles from './banner-list.module.css';
 
-const menuLength = 5;
+const menuLength = 15;
 const menuOptions = Array(menuLength)
   .fill(null)
   .map((d, i) => ({
@@ -27,7 +27,7 @@ const BannerListComponent: FC<{}> = ({}) => {
         }
         underLine={true}
       />
-      <div className={styles.menu_wrap}>
+      <div className={styles.contents_wrap}>
         <List
           options={myOptions}
           value={value}

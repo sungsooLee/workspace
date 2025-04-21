@@ -28,11 +28,13 @@ const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
               title: 'PC',
               key: 'a',
               content: (
-                <EmbedWidgetPreview
-                  componentId={'completion-status-widget'}
-                  width={widget.pcWidth}
-                  height={widget.pcHeight}
-                />
+                <div className="flex w-full justify-center">
+                  <EmbedWidgetPreview
+                    componentId={widget.componentPcId}
+                    width={widget.pcWidth}
+                    height={widget.pcHeight}
+                  />
+                </div>
               ),
             },
           ]
@@ -43,12 +45,14 @@ const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
               title: 'Mobile',
               key: 'b',
               content: (
-                <EmbedWidgetPreview
-                  componentId={widget.componentMobileId}
-                  width={widget.mobileWidth}
-                  height={widget.mobileHeight}
-                  isMobile
-                />
+                <div className="flex w-full justify-center">
+                  <EmbedWidgetPreview
+                    componentId={widget.componentMobileId}
+                    width={widget.mobileWidth}
+                    height={widget.mobileHeight}
+                    isMobile
+                  />
+                </div>
               ),
             },
           ]

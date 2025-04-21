@@ -4,9 +4,13 @@
 /* eslint-disable */
 export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
     /**
+     * 파일 아이디
+     */
+    fileId?: number;
+    /**
      * 파일 UUID
      */
-    uuid?: string;
+    fileUuid?: string;
     /**
      * 원본파일이름
      */

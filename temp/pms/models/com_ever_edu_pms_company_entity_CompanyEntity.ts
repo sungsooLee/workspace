@@ -10,7 +10,7 @@ export type com_ever_edu_pms_company_entity_CompanyEntity = {
     createdBy?: string;
     lastModifiedBy?: string;
     companyId?: number;
-    uuid?: string;
+    companyUuid?: string;
     companyCode?: string;
     companyType?: com_ever_edu_pms_company_entity_CompanyEntity.companyType;
     name?: string;

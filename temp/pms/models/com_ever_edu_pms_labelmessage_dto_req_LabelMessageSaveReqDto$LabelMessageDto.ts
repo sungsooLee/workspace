@@ -2,12 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
 export type com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto = {
-    /**
-     * 라벨/메세지 NO
-     */
-    labelMessageId?: number | null;
     /**
      * 라벨/메세지 다국어키
      */
@@ -32,10 +27,6 @@ export type com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMe
      * 삭제여부
      */
     isDeleted?: boolean | null;
-    /**
-     * 번역 리스트
-     */
-    translations: Array<com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto>;
 };
 export namespace com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto {
     /**

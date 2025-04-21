@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { Button, useModal } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
 import { IcoArrowDown } from '@learnway/icons';
 import { EducationPlacePopup } from '../../../features/layout';
 
@@ -32,13 +33,13 @@ const EducationComponent = ({ className }: EducationProps) => {
           </div>
         </div>
         <div className={styles.btn_box}>
-          <Button variant="primary" size="lg">
+          <Button variant="primary" size={isMobile ? 'md' : 'lg'}>
             수강 신청
           </Button>
-          <Button variant="gray" size="lg">
+          <Button variant="gray" size={isMobile ? 'md' : 'lg'}>
             학습완료
           </Button>
-          <Button variant="line" size="lg">
+          <Button variant="line" size={isMobile ? 'md' : 'lg'}>
             수강 취소
           </Button>
         </div>
@@ -65,7 +66,7 @@ const EducationComponent = ({ className }: EducationProps) => {
               <Button
                 onClick={() =>
                   openModal({
-                    width: 'md',
+                    width: isMobile ? 'm_full' : 'md',
                     content: <EducationPlacePopup />,
                   })
                 }

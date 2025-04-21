@@ -9,24 +9,32 @@ export type com_ever_edu_pms_api_entity_ApiEntity = {
     createdBy?: string;
     lastModifiedBy?: string;
     apiId?: number;
+    apiUuid?: string;
     apiName?: string;
     apiDesc?: string;
     apiUrl?: string;
     apiScope?: com_ever_edu_pms_api_entity_ApiEntity.apiScope;
-    apiMethod?: com_ever_edu_pms_api_entity_ApiEntity.apiMethod;
+    apiNodeType?: com_ever_edu_pms_api_entity_ApiEntity.apiNodeType;
+    apiMethodCode?: com_ever_edu_pms_api_entity_ApiEntity.apiMethodCode;
     depth?: number;
     sortOrder?: number;
     isUsed?: boolean;
     isDeleted?: boolean;
     parent?: com_ever_edu_pms_api_entity_ApiEntity;
+    childList?: Array<com_ever_edu_pms_api_entity_ApiEntity>;
     apiMappingMenuEntityList?: Array<com_ever_edu_pms_menu_entity_ApiMappingMenuEntity>;
+    sort?: number;
 };
 export namespace com_ever_edu_pms_api_entity_ApiEntity {
     export enum apiScope {
         FO = 'FO',
         BO = 'BO',
     }
-    export enum apiMethod {
+    export enum apiNodeType {
+        FOLDER = 'FOLDER',
+        API = 'API',
+    }
+    export enum apiMethodCode {
         GET = 'GET',
         PUT = 'PUT',
         POST = 'POST',

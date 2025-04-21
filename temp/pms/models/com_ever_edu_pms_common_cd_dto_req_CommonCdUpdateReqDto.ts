@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto } from './com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto';
 export type com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto = {
     /**
      * 코드명
@@ -36,9 +35,5 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto = {
      * 사용여부
      */
     isUsed?: boolean | null;
-    /**
-     * 번역 리스트
-     */
-    translations?: Array<com_ever_edu_pms_multilingual_dto_req_MultilingualSaveReqDto$TranslationDto>;
 };
 

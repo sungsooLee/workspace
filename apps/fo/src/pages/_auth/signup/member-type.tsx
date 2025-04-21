@@ -17,7 +17,7 @@ import { useDynamicForm } from '@learnway/hooks';
 import { IcoOverseasDealer, IcoBuilding01 } from '@learnway/icons';
 
 import { FormRow, NoticeBox } from '../../../shared/ui';
-import { MEMBER_TYPE } from '../../../types';
+import { MEMBER_TYPE } from '@learnway/auth';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 

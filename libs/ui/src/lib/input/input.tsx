@@ -10,6 +10,7 @@ import styles from './input.module.css';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
+  id?: string;
   placeholder?: string;
   unitText?: string;
   timerText?: string; // timer input 에서만 사용
@@ -33,6 +34,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       type = 'text',
+      id,
       thousandSeparator = true,
       readOnly,
       disabled,
@@ -94,6 +96,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <NumericFormat
             {...props}
             getInputRef={ref}
+            id={id}
             className={cn(
               styles.input,
               className,
@@ -108,12 +111,14 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            disabled={disabled}
             maxLength={maxLength > 0 ? maxLength : undefined}
           />
         ) : type === 'mask' ? (
           <PatternFormat
             {...props}
             getInputRef={ref}
+            id={id}
             className={cn(className)}
             value={value}
             format={format}
@@ -130,6 +135,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         ) : (
           <input
             ref={ref}
+            id={id}
             value={value || ''}
             readOnly={readOnly}
             disabled={disabled}

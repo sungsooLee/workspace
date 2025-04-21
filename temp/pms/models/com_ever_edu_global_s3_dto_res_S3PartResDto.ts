@@ -5,7 +5,7 @@
 /**
  * 업로드 Part 목록
  */
-export type com_ever_edu_pms_file_dto_res_S3PartResDto = {
+export type com_ever_edu_global_s3_dto_res_S3PartResDto = {
     /**
      * S3 멀티파트 업로드 파트 번호(1 ~ 1000)
      */

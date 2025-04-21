@@ -45,12 +45,9 @@ function RouteComponent() {
   const { confirm: openConfirm } = useModal();
 
   const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
-  // 메뉴 생성 mutation
-  const { create, data: createdMenuData } = useCreateMenu({});
-  // 메뉴 수정 mutation
-  const { updateMenu, data: updatedMenuData } = useUpdateMenu({});
-  // 메뉴 삭제 mutation
-  const { deleteMenu, data: deletedMenuData } = useDeleteMenu({});
+  const { create } = useCreateMenu({});
+  const { updateMenu } = useUpdateMenu({});
+  const { deleteMenu } = useDeleteMenu({});
   const { moveMenu } = useMoveMenu({});
 
   // 데이터가 변경될 때 처리

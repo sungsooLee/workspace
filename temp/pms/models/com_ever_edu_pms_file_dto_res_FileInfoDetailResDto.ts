@@ -8,7 +8,7 @@ export type com_ever_edu_pms_file_dto_res_FileInfoDetailResDto = {
     /**
      * 파일 아이디
      */
-    uuid?: string;
+    fileUuid?: string;
     /**
      * 원본파일이름
      */

@@ -40,7 +40,8 @@ const PageContainerComponent: FC<{
   const [isFavorite, setIsFavorite] = useState(true);
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.menuName ?? meta?.title;
+    const currentMenuCode = last(activeMenuDepth)?.menuCode;
+    return currentMenuCode ? `MENU.${currentMenuCode}` : meta?.title;
   }, [activeMenuDepth]);
 
   const ButtonSlot = Children.toArray(children).find(

@@ -434,6 +434,7 @@ const columns = (router: any) => {
         );
       },
       header: '공통코드',
+      enableSorting: false,
     }),
 
     columnHelper.accessor('createdDate', {

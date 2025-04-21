@@ -102,7 +102,7 @@ export function SearchAccountPage({ route }: any) {
           items={items}
           type="fill"
           variant="primary"
-          onActiveTab={handleActiveTab}
+          onTabChange={handleActiveTab}
         />
 
         <EmbededAlert className={styles.search_info} hiddenIcon>

@@ -1,7 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal, ModalBody, ModalContainer, ModalFooter, UppyUpload } from '@learnway/ui';
+import {
+  Button,
+  useModal,
+  ModalTitle,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  UppyUpload,
+} from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
@@ -13,13 +21,17 @@ function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const FileUploadContent = () => {
     return (
-      // 퍼블수정 20240319 : 파일업로드 */}
+      // 퍼블수정 20240418 : ModalTitle 추가 */}
       <ModalContainer>
+        <ModalTitle>{'파일 업로드'}</ModalTitle>
         <ModalBody>
           <div className={popupStyles.wrap}>
+            <div className={popupStyles.selected_area}>
+              <p className={popupStyles.selected_text}>{'선택한 관리채널명채널명채널명'}</p>
+            </div>
             <div className={popupStyles.title_wrap}>
-              <h2 className={popupStyles.title}>{'파일 업로드'}</h2>
-              <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
+              {/* <h2 className={popupStyles.title}>{'파일 업로드'}</h2> */}
+              <p className={popupStyles.text}>{' 파일1개당 4G 이하로 업로드 가능합니다.'}</p>
             </div>
             <div className={popupStyles.pop_contents}>
               <UppyUpload />
