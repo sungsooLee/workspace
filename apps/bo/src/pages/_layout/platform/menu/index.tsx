@@ -135,11 +135,7 @@ function RouteComponent() {
   const handleSave = (payload: any) => {
     openConfirm({
       title: '저장 하시겠습니까?',
-      content: (
-        <>
-          <p>입력한 정보로 저장됩니다.</p>
-        </>
-      ),
+      content: <p>입력한 정보로 저장됩니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
           create(payload, {
@@ -148,8 +144,6 @@ function RouteComponent() {
               if (data && data.menuId) {
                 setLastCreatedMenuId(data.menuId.toString());
               }
-              // 트리 데이터 재조회
-              await refetch();
             },
           });
         }
@@ -159,12 +153,8 @@ function RouteComponent() {
 
   const handleUpdate = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: (
-        <>
-          <p>입력한 정보로 저장됩니다.</p>
-        </>
-      ),
+      title: '수정 하시겠습니까?',
+      content: <p>입력한 정보로 저장됩니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
           updateMenu(payload, {
@@ -173,7 +163,6 @@ function RouteComponent() {
                 setSelectedNode(null);
                 setLastCreatedMenuId(data.menuId.toString());
               }
-              await refetch().then(() => {});
             },
           });
         }

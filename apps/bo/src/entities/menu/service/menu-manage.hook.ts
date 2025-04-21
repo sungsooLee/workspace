@@ -54,13 +54,11 @@ export function useUpdateMenu(options: any) {
   const mutation = useMutation({
     ...mutateOptions.updateMenu(),
     onSuccess: async (data: any, variables, context) => {
-      console.log('!!!!!!!!!!!!!!');
-      console.log(data.menuId);
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
       await queryClient.invalidateQueries({ queryKey: queryKeys.all });
-      await queryClient.invalidateQueries({ queryKey: queryKeys.detail(data.menuId) });
+      // await queryClient.invalidateQueries({ queryKey: queryKeys.detail(data.menuId) });
     },
     ...options,
   });

@@ -47,7 +47,17 @@ export function useRenewalMenuStateFromRouting() {
     if (!authUser?.menus) {
       return;
     }
-    if (state.location.pathname === '/') {
+
+    // window를 any 타입으로 단언하여 접근
+    const env = (window as any).__ENV__ || {};
+    const basePath = env.BASE_PATH || '';
+
+    // 현재 pathname에서 basePath 제거하여 실제 라우트 경로 추출
+    let currentPath = state.location.pathname;
+    if (basePath && currentPath.startsWith(basePath)) {
+      currentPath = currentPath.substring(basePath.length) || '/';
+    }
+    if (currentPath === '/') {
       setActiveMenuDepth([]);
       return;
     }
@@ -66,6 +76,6 @@ export function useRenewalMenuStateFromRouting() {
       });
     };
 
-    recursiveCall(state.location.pathname);
+    recursiveCall(currentPath);
   }, [state.location?.state?.key, authUser?.menus]);
 }

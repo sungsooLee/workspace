@@ -72,6 +72,7 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
 
         apiUuid: node?.apiUuid,
         apiId: node.apiId.toString(),
+        apiNodeType: node?.apiNodeType,
         apiMethod: node?.apiMethod,
         apiName: node?.apiName,
         apiScope: node?.apiScope,

@@ -12,6 +12,7 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView2,
+  useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -61,6 +62,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreateApiId, setLastCreateApiId] = useState<string | null>(null);
+  const { confirm: openConfirm } = useModal();
 
   const prevDataRef = useRef(null);
 
@@ -203,28 +205,43 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   const handleOnSubmit = (node: any) => {
     if (formMode === FORM_MODE.VIEW) {
-      update(
-        { ...node },
-        {
-          onSuccess: (data: any) => {
-            if (data && data.apiId) {
-              setLastCreateApiId(data.apiId.toString());
-            }
-          },
+      openConfirm({
+        title: '수정 하시겠습니까?',
+        content: <p>입력한 정보로 저장됩니다.</p>,
+        onClose: (value: boolean) => {
+          if (value) {
+            update(
+              { ...node },
+              {
+                onSuccess: (data: any) => {
+                  if (data && data.apiId) {
+                    setLastCreateApiId(data.apiId.toString());
+                  }
+                },
+              },
+            );
+          }
         },
-      );
+      });
     } else if (formMode === FORM_MODE.ADD) {
-      create(
-        { ...node, apiScope: menuScope },
-        {
-          onSuccess: (data: any) => {
-            console.log(data);
-            if (data && data.apiId) {
-              setLastCreateApiId(data.apiId.toString());
-            }
-          },
+      openConfirm({
+        title: '저장 하시겠습니까?',
+        content: <p>입력한 정보로 저장됩니다.</p>,
+        onClose: (value: boolean) => {
+          if (value) {
+            create(
+              { ...node, apiScope: menuScope },
+              {
+                onSuccess: (data: any) => {
+                  if (data && data.apiId) {
+                    setLastCreateApiId(data.apiId.toString());
+                  }
+                },
+              },
+            );
+          }
         },
-      );
+      });
     }
   };
 

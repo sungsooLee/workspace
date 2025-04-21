@@ -14,6 +14,7 @@ import { useTreeContext } from './tree.context';
 import {
   IcoBoxMinus,
   IcoBoxPlus,
+  IcoFile01,
   IcoFolder,
   IcoFolderOpen,
   IcoHome03,
@@ -457,7 +458,9 @@ const TreeNodeComponent = ({
         )}
         {level !== 0 && (
           <span className={cn(styles.folder_wrap)}>
-            {isExpanded ? (
+            {enhanceNode && enhanceNode?.apiNodeType === 'API' ? (
+              <IcoFile01 width={'16'} height={'16'} stroke={'#131C30'} fill={'none'} />
+            ) : isExpanded ? (
               <IcoFolderOpen stroke="#131C30" className={styles.icon_folder} />
             ) : (
               <IcoFolder stroke="#131C30" className={styles.icon_folder} />
