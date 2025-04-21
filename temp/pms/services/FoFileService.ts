@@ -89,18 +89,18 @@ export class FoFileService {
     /**
      * 파일정보 조회
      * 파일정보를 조회한다.
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDetailResDto OK
      * @throws ApiError
      */
     public static getFileInfo(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{uuid}',
+            url: '/api/v1/file/{fileUuid}',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -114,18 +114,18 @@ export class FoFileService {
     /**
      * 파일정보 삭제
      * 파일 정보를 삭제한다. isDeleletd 값 false 업데이트
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto OK
      * @throws ApiError
      */
     public static deleteFileInfo(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v1/file/{uuid}',
+            url: '/api/v1/file/{fileUuid}',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -139,18 +139,18 @@ export class FoFileService {
     /**
      * 파일 다운로드
      * 파일을 다운로드한다.
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns any OK
      * @throws ApiError
      */
     public static fileDownload(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{uuid}/download',
+            url: '/api/v1/file/{fileUuid}/download',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -204,18 +204,18 @@ export class FoFileService {
     /**
      * 파일그룹 정보 조회
      * 파일그룹 정보를 조회한다.
-     * @param uuid 파일 그룹 UUID
+     * @param groupUuid 파일 그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroup(
-        uuid: string,
+        groupUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{uuid}',
+            url: '/api/v1/file/group/{groupUuid}',
             path: {
-                'uuid': uuid,
+                'groupUuid': groupUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -229,18 +229,18 @@ export class FoFileService {
     /**
      * 파일그룹 파일 목록 조회
      * 파일그룹 파일 목록을 조회한다.
-     * @param uuid 파일그룹 UUID
+     * @param groupUuid 파일그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
      * @throws ApiError
      */
     public static getGroupFileInfoList(
-        uuid: string,
+        groupUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{uuid}/files',
+            url: '/api/v1/file/group/{groupUuid}/files',
             path: {
-                'uuid': uuid,
+                'groupUuid': groupUuid,
             },
             errors: {
                 400: `Bad Request`,

@@ -5,7 +5,7 @@
 /**
  * ETag 및 PartNumber 속성이 있는 객체 배열
  */
-export type com_ever_edu_pms_file_dto_req_UploadETagPartsReqDto = {
+export type com_ever_edu_global_s3_dto_req_UploadETagPartsReqDto = {
     /**
      * S3 Part 업로드 ETag
      */

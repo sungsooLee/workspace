@@ -10,6 +10,7 @@ export type com_ever_edu_pms_menu_entity_MenuEntity = {
     createdBy?: string;
     lastModifiedBy?: string;
     menuId?: number;
+    menuUuid?: string;
     menuCode?: string;
     menuName?: string;
     path?: string;

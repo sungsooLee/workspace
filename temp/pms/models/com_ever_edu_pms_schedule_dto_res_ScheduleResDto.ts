@@ -6,7 +6,7 @@ export type com_ever_edu_pms_schedule_dto_res_ScheduleResDto = {
     /**
      * UUID
      */
-    uuid?: string;
+    scheduleUuid?: string;
     /**
      * Schedule 이름 (Job 이름)
      */

@@ -858,18 +858,18 @@ export class BoService {
     /**
      * 회사 조회(단건)
      * 회사 정보를 조회한다.
-     * @param uuid
+     * @param companyUuid
      * @returns com_ever_edu_pms_company_dto_res_CompanyResDto OK
      * @throws ApiError
      */
     public static getCompanyByUuid(
-        uuid: string,
+        companyUuid: string,
     ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/companies/{uuid}',
+            url: '/admin/api/v1/companies/{companyUuid}',
             path: {
-                'uuid': uuid,
+                'companyUuid': companyUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -883,20 +883,20 @@ export class BoService {
     /**
      * 회사 수정
      * 회사를 수정한다.
-     * @param uuid
+     * @param companyUuid
      * @param requestBody
      * @returns com_ever_edu_pms_company_dto_res_CompanyResDto OK
      * @throws ApiError
      */
     public static updateCompany(
-        uuid: string,
+        companyUuid: string,
         requestBody: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto,
     ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/companies/{uuid}',
+            url: '/admin/api/v1/companies/{companyUuid}',
             path: {
-                'uuid': uuid,
+                'companyUuid': companyUuid,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -912,18 +912,18 @@ export class BoService {
     /**
      * 회사 삭제
      * 회사를 삭제한다.
-     * @param uuid
+     * @param companyUuid
      * @returns any OK
      * @throws ApiError
      */
     public static deleteCompany(
-        uuid: string,
+        companyUuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/companies/{uuid}',
+            url: '/admin/api/v1/companies/{companyUuid}',
             path: {
-                'uuid': uuid,
+                'companyUuid': companyUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -1502,7 +1502,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static getFavoritesMenuList1(
+    public static getFavoritesMenuList(
         userNo: number,
         tenantId?: number,
     ): CancelablePromise<Array<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin>> {
@@ -1529,7 +1529,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static saveFavoritesMenu1(
+    public static saveFavoritesMenu(
         requestBody: com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -2312,7 +2312,7 @@ export class BoService {
      * @throws ApiError
      */
     public static existsMessageCode(
-        keyType: 'COMMON_CODE' | 'MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
+        keyType: 'COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
         messageCode: string,
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
@@ -2526,21 +2526,21 @@ export class BoService {
     /**
      * 메뉴코드 중복체크
      * 메뉴코드를 중복체크한다.
+     * @param menuScopeCode
      * @param menuCode
-     * @param parentId
      * @returns boolean OK
      * @throws ApiError
      */
     public static existsMenuCode(
+        menuScopeCode: 'FO' | 'BO' | 'EX',
         menuCode: string,
-        parentId: number,
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/menus/exists',
             query: {
+                'menuScopeCode': menuScopeCode,
                 'menuCode': menuCode,
-                'parentId': parentId,
             },
             errors: {
                 400: `Bad Request`,
@@ -2822,7 +2822,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static deleteFavoritesMenu1(
+    public static deleteFavoritesMenu(
         favoritesMenuId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

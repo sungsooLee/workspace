@@ -8,5 +8,11 @@ export type com_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin = {
     isWebExposed?: boolean;
     isMobileExposed?: boolean;
     isUsed?: boolean;
+    componentPcId?: string;
+    componentMobileId?: string;
+    pcWidth?: number;
+    pcHeight?: number;
+    mobileWidth?: number;
+    mobileHeight?: number;
 };
 

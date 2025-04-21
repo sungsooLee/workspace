@@ -9,7 +9,7 @@ export type com_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
     /**
      * 파일그룹 UUID
      */
-    uuid?: string;
+    groupUuid?: string;
     /**
      * 업로드유형 Enum(FileUploadType) - ATTATCH|CONTENTS
      */

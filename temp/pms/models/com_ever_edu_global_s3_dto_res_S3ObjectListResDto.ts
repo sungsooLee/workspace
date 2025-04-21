@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_file_dto_res_S3ObjectListResDto = {
+export type com_ever_edu_global_s3_dto_res_S3ObjectListResDto = {
     bucketName?: string;
     key?: string;
     lastModified?: string;

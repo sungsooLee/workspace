@@ -4,10 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_pms_api_dto_req_ApiSaveReqDto = {
     /**
-     * api ID
-     */
-    apiId?: number | null;
-    /**
      * api 명
      */
     apiName: string | null;
@@ -24,9 +20,13 @@ export type com_ever_edu_pms_api_dto_req_ApiSaveReqDto = {
      */
     apiScope?: com_ever_edu_pms_api_dto_req_ApiSaveReqDto.apiScope | null;
     /**
+     * api 유형
+     */
+    apiNodeType?: com_ever_edu_pms_api_dto_req_ApiSaveReqDto.apiNodeType | null;
+    /**
      * api 메소드 구분
      */
-    apiMethod?: com_ever_edu_pms_api_dto_req_ApiSaveReqDto.apiMethod;
+    apiMethodCode?: com_ever_edu_pms_api_dto_req_ApiSaveReqDto.apiMethodCode;
     /**
      * api 뎁스
      */
@@ -57,9 +57,16 @@ export namespace com_ever_edu_pms_api_dto_req_ApiSaveReqDto {
         BO = 'BO',
     }
     /**
+     * api 유형
+     */
+    export enum apiNodeType {
+        FOLDER = 'FOLDER',
+        API = 'API',
+    }
+    /**
      * api 메소드 구분
      */
-    export enum apiMethod {
+    export enum apiMethodCode {
         GET = 'GET',
         PUT = 'PUT',
         POST = 'POST',

@@ -30,7 +30,8 @@ export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$
      */
     export enum keyType {
         COMMON_CODE = 'COMMON_CODE',
-        MENU = 'MENU',
+        LEARNER_MENU = 'LEARNER_MENU',
+        HRD_CENTER_MENU = 'HRD_CENTER_MENU',
         LABEL = 'LABEL',
         CATEGORY = 'CATEGORY',
         MESSAGE = 'MESSAGE',

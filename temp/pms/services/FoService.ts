@@ -5,9 +5,6 @@
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
-import type { com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto } from '../models/com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto';
-import type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin';
-import type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_MenuTreeDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSendReqDto';
 import type { com_ever_edu_pms_notification_dto_res_AlarmResDto } from '../models/com_ever_edu_pms_notification_dto_res_AlarmResDto';
@@ -315,58 +312,6 @@ export class FoService {
             query: {
                 'termsId': termsId,
             },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 즐겨찾기 메뉴 조회
-     * 즐겨찾기 메뉴를 조회한다.
-     * @param userNo
-     * @param tenantId
-     * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static getFavoritesMenuList(
-        userNo: number,
-        tenantId?: number,
-    ): CancelablePromise<Array<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/menus/favorites',
-            query: {
-                'tenantId': tenantId,
-                'userNo': userNo,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 즐겨찾기 메뉴 등록
-     * 즐겨찾기 메뉴를 등록한다.
-     * @param requestBody
-     * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static saveFavoritesMenu(
-        requestBody: com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/api/v1/menus/favorites',
-            body: requestBody,
-            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -860,31 +805,6 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/user/api/v1/users/delete-account',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 즐겨찾기 메뉴 삭제
-     * 즐겨찾기 메뉴를 삭제한다.
-     * @param favoritesMenuId
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static deleteFavoritesMenu(
-        favoritesMenuId: number,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/user/api/v1/menus/favorites/{favoritesMenuId}',
-            path: {
-                'favoritesMenuId': favoritesMenuId,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
