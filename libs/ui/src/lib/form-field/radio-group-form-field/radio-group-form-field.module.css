@@ -3,7 +3,6 @@
   &.radio_list {
     @apply grid w-full grid-cols-4 gap-[1.6rem];
     & > div {
-      @apply !min-w-[200px];
       & + div {
         @apply !ml-0;
       }

@@ -121,6 +121,7 @@ export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
+export { ReactComponent as IcoFile01 } from './lib/ic_file_01.svg'; // tree file
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

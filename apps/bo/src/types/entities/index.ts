@@ -1,3 +1,4 @@
+export * from './category';
 export * from './company';
 export * from './course';
 export * from './pagination';
