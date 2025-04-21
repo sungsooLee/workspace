@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect';
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import styles from './membership-secession.module.css';
-import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css ';
+import myContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
 export const Route = createFileRoute('/_layout/my/membership-secession')({
   component: RouteComponent,
