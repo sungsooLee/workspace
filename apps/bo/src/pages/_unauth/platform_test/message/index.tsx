@@ -117,7 +117,7 @@ const searchConfig: any = {
 };
 
 const gridConfig = {
-  query: queryOptions.all(),
+  query: queryOptions.all,
   title: t('목록'),
   data: [
     { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
