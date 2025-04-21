@@ -756,7 +756,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 및 반려 팝업 course-information-popup.tsx',
+      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -887,7 +887,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 및 반려 팝업 course-information-popup.tsx\n- 차수선택 팝업 course-selection-popup.tsx',
+      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려 팝업 미결정)\n- 차수선택 팝업 course-selection-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1004',
@@ -915,9 +915,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- detail-m.tsx (CourseAlarmAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1007',
@@ -925,9 +925,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- detail-m.tsx (CourseWaitAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1008',
@@ -935,9 +935,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- detail-m.tsx (CourseCencelConfirm)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1009',
@@ -945,9 +945,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- detail-m.tsx (CourseCencelReasonConfirm)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1010',
@@ -955,9 +955,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- detail-m.tsx (CourseCencelCompleteAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1011',

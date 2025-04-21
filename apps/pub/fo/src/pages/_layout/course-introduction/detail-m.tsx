@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tabs, useModal } from '@learnway/ui';
+import { Button, Tabs, useModal, Textarea } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -12,6 +12,7 @@ import {
   CourseSelectionPopup, // 차수선택 팝업
 } from '../../../features/layout';
 
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import styles from './detail-m.module.css';
@@ -27,6 +28,7 @@ export const Route = createFileRoute('/_layout/course-introduction/detail-m')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
+  const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
   // 찜
@@ -61,6 +63,83 @@ function RouteComponent() {
       key: 'c',
     },
   ];
+
+  // 수강신청 취소 신청
+  const CourseCencelConfirm = () => {
+    openConfirm({
+      title: <>수강 신청을 취소하시겠습니까?</>,
+      content: (
+        <>
+          지금 취소하실 경우,
+          <br />
+          다시 수강신청을 해주셔야 합니다.
+        </>
+      ),
+      okButtonLabel: '취소하기',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
+  // 수강신청 취소 사유 입력
+  const CourseCencelReasonConfirm = () => {
+    openConfirm({
+      title: <>수강신청 취소 사유를 입력해주세요</>,
+      content: (
+        <div className={`${formStyles.form_item} ${styles.form_item}`}>
+          <div className={formStyles.input_box}>
+            <Textarea
+              id="textarea"
+              rows={2}
+              cols={2}
+              resize="none"
+              placeholder="Text"
+              maxLength={100}
+              className={formStyles.textarea}
+            />
+          </div>
+        </div>
+      ),
+      okButtonLabel: '확인',
+      cancelButtonLabel: '취소',
+    });
+  };
+
+  // 수창취소 완료
+  const CourseCencelCompleteAlert = () => {
+    openAlert({
+      title: <>수강취소 되었습니다</>,
+    });
+  };
+
+  // 수강신청 알림
+  const CourseAlarmAlert = () => {
+    openAlert({
+      title: <>수강신청 알림</>,
+      content: (
+        <>
+          수강신청이 가능할 때 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
+
+  // 수강대기자 등록
+  const CourseWaitAlert = () => {
+    openAlert({
+      title: <>수강대기자 등록</>,
+      content: (
+        <>
+          본 과정의 수강신청 대기자로 등록되었습니다.
+          <br />
+          수강 취소 발생시 순차적으로 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
 
   // 차수 알림 등록
   const CourseTimeAlert = () => {
@@ -217,7 +296,7 @@ function RouteComponent() {
                 variant="primary"
                 onClick={() =>
                   openModal({
-                    width: 'm_full',
+                    width: 's',
                     content: <CourseSelectionPopup />, // 차수선택 팝업
                   })
                 }

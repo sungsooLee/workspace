@@ -46,7 +46,7 @@ function RouteComponent() {
         pageIndex: 0,
         totalRows: 0,
       },
-      height: 566,
+      height: 450,
       hideColumnSettings: true,
       onRowSelect: (row: any) => {
         console.log('onRowSelect', row);
@@ -67,7 +67,9 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <GridBox config={gridConfig} />
+        <div className="grid_wrap line">
+          <GridBox config={gridConfig} />
+        </div>
       </MainContents>
     </PageContainer>
   );

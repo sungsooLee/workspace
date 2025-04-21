@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from '@tanstack/react-router';
 
 import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
@@ -23,6 +24,7 @@ const CategoryViewComponent: FC<any> = ({
 }) => {
   console.log('## selectedNode :: ', selectedNode);
   const { t } = useTranslation();
+  const router = useRouter();
 
   const isRoot = useMemo(() => {
     return selectedNode?.depth === 0;
@@ -289,6 +291,26 @@ const CategoryViewComponent: FC<any> = ({
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'name'} disabled={isInitMode || isRoot} />
+              <Button
+                type="button"
+                variant="point"
+                size="sm"
+                className="p-[10px]"
+                onClick={() => {
+                  const code = getValues('code');
+                  console.log('### code', code);
+                  router.navigate({
+                    to: '/platform/system/multilingual',
+                    state: {
+                      keyType: 'CATEGORY', // 다국어 분류 - 공통코드
+                      multilinguaKey: code,
+                    },
+                  });
+                }}
+                disabled={isInitMode || isRoot}
+              >
+                다국어관리
+              </Button>
             </FormRow>
           </ContentsRow>
 

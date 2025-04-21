@@ -11,6 +11,7 @@ import { cn } from '@learnway/shared';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
+import { AUTH_CONTAINERS } from '../../widgets/layout';
 
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
@@ -28,6 +29,7 @@ export const Route = createFileRoute('/_auth/login')({
         showHeader: true,
       },
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+      container: AUTH_CONTAINERS.LOGIN,
     },
   }),
 });

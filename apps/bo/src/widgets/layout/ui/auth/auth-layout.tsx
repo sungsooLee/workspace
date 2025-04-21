@@ -1,11 +1,19 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCreation } from 'ahooks';
 
 import { cn } from '@learnway/shared';
+import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthHeader } from './auth-header/auth-header';
 import { AuthContainer } from './auth-container/auth-container';
+import { LoginContainer } from './auth-container/login-container';
+
 import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-layout.module.css';
+
+export const AUTH_CONTAINERS = {
+  LOGIN: 'login-container',
+};
 
 interface AuthLayoutComponentProps {
   children: ReactNode;
@@ -14,13 +22,18 @@ interface AuthLayoutComponentProps {
 function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
 
+  const { meta } = useCurrentRoute();
+
   return (
     <>
       <AuthHeader />
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
           <main>
-            <AuthContainer>{children}</AuthContainer>
+            {meta?.container === AUTH_CONTAINERS.LOGIN && (
+              <LoginContainer>{children}</LoginContainer>
+            )}
+            {!meta?.container && <AuthContainer>{children}</AuthContainer>}
           </main>
         </div>
       </div>

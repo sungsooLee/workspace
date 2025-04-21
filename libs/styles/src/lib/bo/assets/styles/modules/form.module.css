@@ -5,7 +5,7 @@
     @apply mt-[16px];
   }
   & + .row {
-    @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+    @apply border-t-[1px] border-solid border-[var(--gray2)] pt-[16px];
     &.no_line {
       @apply border-0 pt-[0];
     }
@@ -267,7 +267,7 @@
 }
 
 .info_area {
-  @apply flex items-center justify-end pb-[16px];
+  @apply flex items-center justify-end;
   .info_text {
     @apply body_bo_2_r text-[var(--gray6)];
     em {

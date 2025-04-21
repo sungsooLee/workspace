@@ -1,5 +1,8 @@
 import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, Button } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
+import { IcoCaution02, IcoAlertCircle03 } from '@learnway/icons';
+
 import styles from './course-information-popup.module.css';
 
 // 인워마감 안내
@@ -9,6 +12,7 @@ const CourseInformationPopupComponent01 = () => {
       <ModalTitle>인원마감 안내</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_information}`}>
+          {isMobile ? <IcoCaution02 width={56} height={56} /> : ''}
           <strong>수강인원이 마감되었습니다.</strong>
           <p>
             수강신청에 불편을 드려 대단히 죄송합니다.
@@ -57,6 +61,7 @@ const CourseInformationPopupComponent03 = () => {
       <ModalTitle>인원마감 안내</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_information}`}>
+          {isMobile ? <IcoCaution02 width={56} height={56} /> : ''}
           <strong>수강대기 인원까지 모두 마감되었습니다!</strong>
           <p>
             본 과정의 수강대기 인원까지 모두 마감이 되어
@@ -83,6 +88,7 @@ const CourseInformationPopupComponent04 = () => {
       <ModalTitle>수강제한 안내</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_information}`}>
+          {isMobile ? <IcoCaution02 width={56} height={56} /> : ''}
           <strong>수강신청을 하실 수 없습니다.</strong>
           <p>
             본사의 교육제도에 의거 XX 하였기에
@@ -107,6 +113,7 @@ const CourseInformationPopupComponent05 = () => {
       <ModalTitle>수강제한 안내</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_information}`}>
+          {isMobile ? <IcoAlertCircle03 width={64} height={64} /> : ''}
           <strong>더 이상 수강신청을 하실 수 없습니다.</strong>
           <p>
             본사의 교육제도에 의거 XX한 과정을
@@ -131,6 +138,7 @@ const CourseInformationPopupComponent06 = () => {
       <ModalTitle>수강중복 안내</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_information}`}>
+          {isMobile ? <IcoAlertCircle03 width={64} height={64} /> : ''}
           <strong>동일한 기간에 타 클래스를 수강신청하셨습니다</strong>
           <p>
             [스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축] 클래스 과정이 YYYY-MM-HH에
@@ -149,28 +157,28 @@ const CourseInformationPopupComponent06 = () => {
 };
 
 // 수강신청 반려
-const CourseRevertPopupComponent = () => {
-  return (
-    <ModalContainer>
-      <ModalTitle>{'반려'}</ModalTitle>
-      <ModalBody>
-        <div className={`${styles.start} ${styles.course_revert}`}>
-          <div className={styles.information}>
-            <strong>김지혜</strong>
-            <div className={styles.box}>
-              <span>현대오토에버</span>
-              <span>L&D플랫폼팀</span>
-              <span>2026.07.12</span>
-            </div>
-          </div>
-          <p>반려사유</p>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button label={'확인'} variant={'primary'} size={'lg'}></Button>
-      </ModalFooter>
-    </ModalContainer>
-  );
-};
+// const CourseRevertPopupComponent = () => {
+//   return (
+//     <ModalContainer>
+//       <ModalTitle>{'반려'}</ModalTitle>
+//       <ModalBody>
+//         <div className={`${styles.start} ${styles.course_revert}`}>
+//           <div className={styles.information}>
+//             <strong>김지혜</strong>
+//             <div className={styles.box}>
+//               <span>현대오토에버</span>
+//               <span>L&D플랫폼팀</span>
+//               <span>2026.07.12</span>
+//             </div>
+//           </div>
+//           <p>반려사유</p>
+//         </div>
+//       </ModalBody>
+//       <ModalFooter>
+//         <Button label={'확인'} variant={'primary'} size={'lg'}></Button>
+//       </ModalFooter>
+//     </ModalContainer>
+//   );
+// };
 
-export const CourseInformationPopup = memo(CourseRevertPopupComponent);
+export const CourseInformationPopup = memo(CourseInformationPopupComponent06);
