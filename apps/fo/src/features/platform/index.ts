@@ -7,4 +7,3 @@ export * from './ui/license/license';
 export * from './state/tenant.state';
 
 export * from './service/i18n.hook';
-export * from './service/page.service';

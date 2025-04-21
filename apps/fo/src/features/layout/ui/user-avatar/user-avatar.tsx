@@ -44,7 +44,7 @@ const PopoverContent = () => {
     () => [
       {
         title: '개인정보 변경',
-        action: () => router.navigate({ to: '/' }),
+        action: () => router.navigate({ to: '/my-page/privacy' }),
       },
       {
         title: '프로필 작성',

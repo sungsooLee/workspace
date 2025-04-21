@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/auth';
-import { cn, dateDiff } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
@@ -13,6 +13,7 @@ import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/a
 import { useSetLanguage } from '../../features/platform';
 
 import { FormRow } from '../../shared/ui/form';
+import { AUTH_CONTAINERS } from '../../widgets/layout';
 
 import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
@@ -24,6 +25,7 @@ export const Route = createFileRoute('/_auth/login')({
     authorization: false,
     meta: {
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+      container: AUTH_CONTAINERS.LOGIN,
     },
   }),
 });
