@@ -31,6 +31,9 @@
   [class*='nlp-select__control--is-disabled'] {
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
   }
+  [class*='nlp-select__placeholder'] {
+    @apply !text-[var(--gray5)];
+  }
 
   &[class*='nlp--dropdown-sm'] {
     [class*='nlp-select__control'] {

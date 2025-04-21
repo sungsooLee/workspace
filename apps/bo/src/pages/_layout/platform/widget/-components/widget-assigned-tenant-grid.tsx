@@ -33,5 +33,14 @@ export function WidgetAssignedTenantGrid({ data }: { data: any }) {
     ] as ColumnDef<any, unknown>[];
   }, []);
 
-  return <Grid data={data} columns={gridColumns} tableMode={false} />;
+  return (
+    <Grid
+      data={data}
+      columns={gridColumns}
+      tableMode={false}
+      title={'테넌트 정보(해당 위젯을 사용하는 테넌트)'}
+      disabledSelectionToggle
+      hideColumnSettings
+    />
+  );
 }

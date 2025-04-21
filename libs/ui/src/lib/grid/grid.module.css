@@ -47,7 +47,7 @@
             }
           }
           [class*='link'] {
-            @apply body_bo_2_r text-[var(--gray7)] underline;
+            @apply !body_bo_2_r text-[var(--gray7)] underline;
           }
           [class*='nlp--input'] {
             input {
@@ -104,6 +104,9 @@
       @apply title_bo_4_b text-[var(--gray9)];
       &.table_title {
         @apply body_3_r;
+      }
+      & + button:first-child {
+        @apply ml-auto;
       }
     }
     .sub_info {

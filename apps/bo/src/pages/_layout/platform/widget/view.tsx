@@ -2,14 +2,13 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import { Button, DynamicFormField } from '@learnway/ui';
+import { Button, DynamicFormField, ContentsRow } from '@learnway/ui';
 
 import { pageRouteConfig } from '../../../../features/auth';
 
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
 
 import { FormTranslationBox } from '../../../../features/platform/ui/platform/system/translation/form-translation-box';
 
@@ -97,13 +96,21 @@ function RouteComponent() {
                 <DynamicFormField name={'isUsed'} />
               </FormRow>
             </ContentsRow>
-            <ContentsRow>
+            <ContentsRow type="horizontal">
               <FormRow provider={provider}>
                 <DynamicFormField name={'isSecurityContent'} />
               </FormRow>
             </ContentsRow>
-            {data?.components && <WidgetComponentTable data={data.components} />}
-            {data?.components && <WidgetAssignedTenantGrid data={data.tenantWidgetList} />}
+            <ContentsRow>
+              <FormRow provider={provider}>
+                <DynamicFormField name={'components'}>
+                  {data?.components && <WidgetComponentTable data={data.components} />}
+                </DynamicFormField>
+              </FormRow>
+            </ContentsRow>
+            <ContentsRow>
+              {data?.components && <WidgetAssignedTenantGrid data={data.tenantWidgetList} />}
+            </ContentsRow>
           </MainContents>
         </PageContainer>
       </form>
@@ -146,9 +153,19 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
-      type: 'switch',
+      type: 'radio-group',
       label: '사용여부',
       value: true,
+      options: [
+        {
+          value: true,
+          label: '사용',
+        },
+        {
+          value: false,
+          label: '미사용',
+        },
+      ],
       disabled: true,
     },
     {
@@ -162,6 +179,12 @@ const formConfig: DynamicFormConfig = {
       guideText: '보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다',
       value: true,
       disabled: true,
+    },
+    {
+      name: 'components',
+      type: 'custom',
+      label: '컴포넌트 ID',
+      value: [],
     },
   ],
   validator: {},

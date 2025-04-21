@@ -725,7 +725,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- detail.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
@@ -756,7 +756,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks:
-      '- introduction.tsx\n- optioncard 확인중\n- tooltip 확인중\n- 수강신청 불가 팝업창들 및 반려 팝업 course-information-popup.tsx',
+      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 및 반려 팝업 course-information-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -764,7 +764,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-09',
     lastUpdateDate: '',
     remarks: '- introduction.tsx',
   },
@@ -852,11 +852,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1000',
     screenName: '과정상세_과정소개_수강신청 없는 과정',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1001',
@@ -882,38 +882,39 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1003',
     screenName: '과정상세_수강신청 있는 과정_과정소개',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks:
+      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 및 반려 팝업 course-information-popup.tsx\n- 차수선택 팝업 course-selection-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1004',
     screenName: '과정상세_교육일정',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Page',
+    completionDate: '2025-04-18',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- introduction.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1005',
     screenName: '과정상세_교육일정_약도보기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1006',
     screenName: '과정상세_교육일정_수강신청 알림',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
@@ -922,8 +923,8 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1007',
     screenName: '과정상세_교육일정_수강대기 신청',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
@@ -932,8 +933,8 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1008',
     screenName: '과정상세_교육일정_수강취소',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
@@ -942,8 +943,8 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1009',
     screenName: '과정상세_교육일정_수강취소_사유입력',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
@@ -952,8 +953,8 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1010',
     screenName: '과정상세_교육일정_수강취소_신청완료',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',

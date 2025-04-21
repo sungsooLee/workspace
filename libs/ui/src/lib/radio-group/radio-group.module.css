@@ -32,6 +32,11 @@
       & ~ .label {
         @apply text-[var(--gray5)];
       }
+      &[data-state='unchecked'] {
+        &::after {
+          @apply !hidden;
+        }
+      }
     }
   }
   &.md {

@@ -133,25 +133,6 @@ function RouteComponent() {
               구독하기
             </Button>
           </div>
-
-          {/* button fix */}
-          <MobileView>
-            <MobileContainerFooter>
-              <div className={packageInformationStyles.btn_box}>
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-              </div>
-            </MobileContainerFooter>
-          </MobileView>
         </div>
       </div>
 
@@ -212,6 +193,25 @@ function RouteComponent() {
           </div>
         </div>
       </div>
+
+      {/* button fix */}
+      <MobileView>
+        <MobileContainerFooter>
+          <div className={packageInformationStyles.course_btn_wrap}>
+            <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+              <IcoHeart
+                width={20}
+                height={20}
+                stroke={heart === true ? '#ff4646' : '#4c515e'}
+                fill={heart === true ? '#ff4646' : 'none'}
+              />
+            </Button>
+            <Button>
+              <IcoShare width={20} height={20} stroke="#4c515e" />
+            </Button>
+          </div>
+        </MobileContainerFooter>
+      </MobileView>
     </div>
   );
 }
