@@ -1,10 +1,27 @@
 .start {
   &.procedure {
     .empty {
-      @apply mt-[54px];
+      @apply mt-[54px] rounded-[8px];
     }
     .procedure_box {
       @apply h-[50px] w-full bg-black;
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.procedure {
+        .empty {
+          @apply mt-[16px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
+          & > div {
+            & > div {
+              @apply mt-[12px];
+            }
+          }
+        }
+      }
     }
   }
 }
