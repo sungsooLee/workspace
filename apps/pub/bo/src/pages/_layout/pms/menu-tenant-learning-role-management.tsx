@@ -8,6 +8,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 
 /* tab contents */
 import { TenantLearningRoleMenu } from './-tabcontents/tenant-learning-role-menu'; // 학습자 역할정보
+import { TenantLearningMenuSetting } from './-tabcontents/tenant-learning-menu-setting'; // 학습자 메뉴설정
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-learning-role-management')({
   component: RouteComponent,
@@ -60,7 +61,7 @@ function RouteComponent() {
     {
       title: '학습자 메뉴설정',
       key: 'tab02',
-      content: '',
+      content: <TenantLearningMenuSetting />,
     },
     {
       title: '학습자 역할부여',
