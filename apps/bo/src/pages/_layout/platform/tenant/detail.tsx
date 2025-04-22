@@ -10,8 +10,8 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 /* tab contents */
-import { TenantDetailMenu } from '@features/platform/ui/platform/tenant/tenant-detail-menu';
-import { TenantDetailBase } from '@features/platform/ui/platform/tenant/tenant-detail-base';
+import { TenantDetailMenu } from '@features/tenant/ui/tenant-detail-menu';
+import { TenantDetailBase } from '@features/tenant/ui/tenant-detail-base';
 import { TenantDetailCategory } from '@features/platform/ui/platform/tenant/tenant-detail-category';
 
 export const Route = createFileRoute('/_layout/platform/tenant/detail')({
