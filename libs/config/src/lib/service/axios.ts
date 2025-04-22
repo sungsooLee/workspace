@@ -1,12 +1,17 @@
 import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { isFunction } from 'lodash';
 
 import { httpService, HttpMethod } from '@learnway/shared';
 
 import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
 
-export function initAxios() {
+interface axiosConfig {
+  onRejected?: (error: any) => Promise<any>;
+}
+
+export function initAxios(extendConfig?: axiosConfig) {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
 
@@ -33,8 +38,9 @@ export function initAxios() {
         if (errorResponse?.status === 401) {
           return await reissueProccess(error);
         }
-        if (errorResponse?.status === 403) {
-          //return await reissueProccess(error);
+
+        if (extendConfig?.onRejected && isFunction(extendConfig?.onRejected)) {
+          return await extendConfig.onRejected(error);
         }
 
         return Promise.reject(error);
