@@ -116,6 +116,11 @@ export interface GridProps<T> {
   showNumberingColumn?: boolean;
 
   /**
+   * 테이블 해더 표시 여부
+   */
+  hideHeader?: boolean;
+
+  /**
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
    */
   pagination?: {
@@ -218,11 +223,6 @@ export interface GridProps<T> {
    * 테이블 모드에서 style 을 구분하기 위해 사용
    */
   variant?: 'line' | 'fill';
-
-  /**
-   * 테이블 해더 표시 여부
-   */
-  hideHeader?: boolean;
 }
 
 /**

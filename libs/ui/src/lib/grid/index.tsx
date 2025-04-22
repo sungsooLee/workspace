@@ -61,6 +61,7 @@ const Grid = forwardRef(
       multiple,
       disabledSelectionToggle,
       hideRowSelectionCheckBox,
+      hideHeader,
       showNumberingColumn,
       pagination,
       isLoading,
@@ -74,7 +75,6 @@ const Grid = forwardRef(
       onChange,
       emptyMessage,
       variant = 'line',
-      hideHeader,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -423,6 +423,9 @@ const Grid = forwardRef(
       const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
+        if (hideHeader) {
+          return <></>;
+        }
         return (
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

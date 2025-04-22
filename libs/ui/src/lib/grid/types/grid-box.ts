@@ -1,23 +1,25 @@
 import { GridProps } from './grid';
 import React from 'react';
 
-export interface GridBoxProps<T = any> extends GridProps<any> {
+export interface GridBoxConfig<T> {
+  data?: T[]; // Grid에 표시될 데이터
+  columns?: any[]; // 커스텀 컬럼 정의
+  page?: {
+    pageIndex: number;
+    pageSize: number;
+    totalRows: number;
+    [key: string]: any;
+  };
+  totalRows?: number; // page 외부에 따로 totalRows가 있을 경우
+  gridFetch?: (params: { page?: number; size?: number; [key: string]: any }) => void;
+}
+
+export interface GridBoxProps<T extends object = object>
+  extends Omit<GridProps<T>, 'data' | 'columns'> {
   /**
    * config
    */
-  config?: Partial<{
-    data: T[]; // Grid에 표시될 데이터 배열
-    columns: any[]; // 컬럼 설정 배열 (GridBox의 커스텀 컬럼 정의 형식)
-    page: {
-      // 페이지네이션 상태 객체 (선택적)
-      pageIndex: number; // 현재 페이지 인덱스 (0부터 시작)
-      pageSize: number; // 페이지당 행 수
-      totalRows: number; // 전체 행 수 (page 객체 안에 포함될 수도 있음)
-      [key: string]: any; // 필요한 다른 페이지네이션 속성
-    };
-    totalRows: number; // 전체 행 개수 (page 객체 외부에 별도로 있을 경우)
-    gridFetch: (params: { page?: number; size?: number; [key: string]: any }) => void; // 데이터를 다시 불러오는 함수
-  }>;
+  config?: GridBoxConfig<T>;
 
   /**
    * 타이틀
@@ -82,7 +84,8 @@ export interface GridBoxProps<T = any> extends GridProps<any> {
   guideText?: string;
 
   /**
-   * Grid Props
+   * override GridProps
    */
-  gridProps?: GridProps<any>;
+  data?: T[];
+  columns?: any[];
 }

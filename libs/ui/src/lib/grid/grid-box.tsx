@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Button, Grid, GridBoxProps } from '@learnway/ui';
+import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
 import { t } from 'i18next';
 import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
 import styles from './grid-box.module.css';
@@ -15,21 +15,24 @@ import { cn } from '@learnway/shared';
  * @param props - GridBoxProps<T>
  * @returns React component
  */
-const GridBoxComponent = <T,>({
-  config = {},
-  title,
-  hideColumnSettings,
-  showTotalCount = true,
-  showSelectedCount,
-  showExcelDownload,
-  showUpload,
-  showSelectAll,
-  showDeleteAll,
-  titleCustomNode,
-  renderButtons,
-  guideText,
-  ...props
-}: GridBoxProps<T>) => {
+const GridBoxComponent = <T extends object>(
+  {
+    config = {},
+    title,
+    hideColumnSettings,
+    showTotalCount = true,
+    showSelectedCount,
+    showExcelDownload,
+    showUpload,
+    showSelectAll,
+    showDeleteAll,
+    titleCustomNode,
+    renderButtons,
+    guideText,
+    ...props
+  }: GridBoxProps<T>,
+  ref: React.Ref<GridImperative>,
+) => {
   const { data, page, totalRows, gridFetch, columns } = config;
   const columnHelper = createColumnHelper<any>();
 
@@ -194,8 +197,9 @@ const GridBoxComponent = <T,>({
       {/* 데이터 테이블 렌더링 */}
       <Grid
         {...props}
-        data={props.data || data} // 외부 data props 우선 사용
-        columns={props.columns || girdColumns} // 외부 columns props 우선 사용
+        ref={ref}
+        data={props.data ?? data ?? []}
+        columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
         hideRowSelectionCheckBox={showNumberingColumn} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
@@ -203,4 +207,4 @@ const GridBoxComponent = <T,>({
     </div>
   );
 };
-export const GridBox = GridBoxComponent;
+export const GridBox = forwardRef(GridBoxComponent);
