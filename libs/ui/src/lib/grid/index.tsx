@@ -33,18 +33,14 @@ import {
   IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
-  IcoDownload,
   IcoGridFilter,
   IcoGridOrder,
-  IcoMinus,
-  IcoPlus,
 } from '@learnway/icons';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 import { cn, isFirefox } from '@learnway/shared';
-import { t } from 'i18next';
 
-import { GridImperative, GridProps } from './types/grid';
-import ColumnSettings, { ColumnSetting } from './components/column-setting';
+import { GridProps } from './types/grid';
+import { ColumnSetting } from './components/column-setting';
 import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
@@ -85,6 +81,7 @@ const Grid = forwardRef(
       renderButtons,
       emptyMessage,
       variant = 'line',
+      hideHeader,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -527,21 +524,6 @@ const Grid = forwardRef(
         );
       };
 
-      /**
-       * 데이터가 없을 때 표시할 메시지 렌더링
-       */
-      const renderEmptyMessage = () => {
-        // const message = isInitialState ? initialMessage : emptyMessage;
-
-        return (
-          <div className={styles.empty_message_container}>
-            <p className={styles.empty_message}>
-              {emptyMessage ? emptyMessage : '조회 결과가 없습니다.'}
-            </p>
-          </div>
-        );
-      };
-
       // table > tbody
       const renderBody = () => {
         const bodyStyle = {
@@ -549,19 +531,6 @@ const Grid = forwardRef(
           position: 'relative',
           height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
-
-        // 데이터가 없을 경우 메시지 표시
-        if (data.length === 0) {
-          return (
-            <tbody>
-              <tr className={styles.empty_wrap}>
-                <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
-                  {renderEmptyMessage()}
-                </td>
-              </tr>
-            </tbody>
-          );
-        }
 
         return (
           <tbody style={bodyStyle}>
@@ -665,6 +634,17 @@ const Grid = forwardRef(
         );
       };
 
+      /**
+       * 데이터가 없을 때 표시할 메시지 렌더링
+       */
+      const renderEmptyMessage = () => {
+        return (
+          <div className={styles.empty_message_container}>
+            <p className={styles.empty_message}>{emptyMessage || '조회 결과가 없습니다.'}</p>
+          </div>
+        );
+      };
+
       return (
         <div
           ref={tableContainerRef}
@@ -679,25 +659,17 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
-            overflow: 'auto', // 스크롤 가능하게 설정
+            overflow: data.length === 0 ? 'hidden' : 'auto', // 데이터 있을때만 스크롤 가능
           }}
         >
           <table>
-            {/*thead*/}
-            {/*colgroup*/}
-            {/* <colgroup>
-              <col style={{ width: '15%' }} />
-              <col style={{ width: '150px' }} />
-              <col style={{ width: '30%' }} />
-              <col />
-            </colgroup> */}
-
             {/* thead */}
             {renderHead()}
-
             {/* tbody */}
             {isLoading ? renderLoading() : renderBody()}
           </table>
+          {/* 데이터 없을 때 메세지 */}
+          {data.length === 0 && renderEmptyMessage()}
         </div>
       );
     };
@@ -791,53 +763,10 @@ const Grid = forwardRef(
     };
 
     return (
-      <div className={styles.table_info_wrap}>
-        <div className={styles.table_info_item}>
-          {/* 제목 */}
-          {title && <div className={styles.title}>{title}</div>}
-          {/* 전체 개수  */}
-          {showTotalCount && (
-            <div className={styles.sub_info}>
-              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
-            </div>
-          )}
-          {/* 전체 선택 */}
-          {showSelectAll && (
-            <Button variant="text" size="xs" className={styles.btn_all_select}>
-              <IcoPlus width={16} height={16} stroke="#131C30" />
-              {'전체 선택'}
-            </Button>
-          )}
-          {/* 전체 삭제 */}
-          {showDeleteAll && (
-            <Button variant="text" size="xs" className={styles.btn_all_delete}>
-              <IcoMinus width={16} height={16} stroke="#131C30" />
-              {'전체 삭제'}
-            </Button>
-          )}
-          {/* 업로드 */}
-          {showUpload && (
-            <Button variant="text" size="xs" className={styles.btn_upload}>
-              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
-              {'CSV업로드'}
-            </Button>
-          )}
-          {/* 엑셀다운로드 */}
-          {showExcelDownload && (
-            <Button variant="text" size="xs" className={styles.btn_excel}>
-              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
-              {'엑셀다운로드'}
-            </Button>
-          )}
-          {/* 컬럼 설정 */}
-          {!hideColumnSettings && (
-            <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
-          )}
-          {renderButtons}
-        </div>
+      <>
         {renderTable()}
         {renderPagination()}
-      </div>
+      </>
     );
   },
 );

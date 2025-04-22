@@ -6,20 +6,20 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
-import { useLabelMessages } from '@entities/label-messages';
+import { useFetchLabelMessage } from '@entities/label-messages';
 
 interface MessageDetailProps {
   /**
    * 라벨/메세지 NO
    */
-  labelMessageId?: number;
+  labelMessageId: number;
 }
 
 const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
   const { t } = useTranslation();
   const { showSaveComplete } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
-  const { detail } = useLabelMessages();
+  const { data } = useFetchLabelMessage(labelMessageId);
 
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
@@ -165,4 +165,18 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
   ],
+  validator: {
+    labelMessageType: {
+      required: true,
+    },
+    labelMessageMultilingulKey: {
+      required: true,
+    },
+    labelMessageName: {
+      required: true,
+    },
+    isUsed: {
+      required: true,
+    },
+  },
 };

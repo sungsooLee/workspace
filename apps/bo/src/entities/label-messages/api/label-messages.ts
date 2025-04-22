@@ -1,11 +1,11 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { LabelMessage } from '@types';
+import { LabelMessage, LabelMessagesQueryParams } from '@types';
 
 export default class LabelMessagesService {
   //라벨 메세지 목록 조회
-  static async fetchAll<T = LabelMessage>(): Promise<T[]> {
-    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`);
+  static async fetchAll<T = LabelMessage>(queryParam?: LabelMessagesQueryParams): Promise<T[]> {
+    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, { queryParam });
     // return new Promise((resolve) => resolve(Mock));
   }
 

@@ -8,8 +8,7 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
-import { SplitPanel } from '@shared/ui';
+import { GridBox, SplitPanel, useGridBox } from '@shared/ui';
 import { CellContext } from '@tanstack/react-table';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 
@@ -21,7 +20,7 @@ function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>();
+  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
 
   const handleMultilingualManageClick = () => {
     console.log('다국어 관리 화면 이동', {
@@ -47,7 +46,7 @@ function RouteComponent() {
 
   const handleGridRowSelect = (row: any) => {
     console.log('handleGridRowSelect', row);
-    // setSelectedLabelMessageId(row.labelMessageId);
+    setSelectedLabelMessageId(row?.labelMessageId);
   };
 
   return (
@@ -66,7 +65,16 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
         <SplitPanel>
-          <GridBox config={gridConfig} />
+          <GridBox
+            config={gridConfig}
+            gridProps={{
+              title: t('목록'),
+              height: 440,
+              hideColumnSettings: true,
+              showExcelDownload: false,
+              onRowSelect: handleGridRowSelect,
+            }}
+          />
           <MessageDetail labelMessageId={selectedLabelMessageId} />
         </SplitPanel>
       </MainContents>
@@ -108,8 +116,8 @@ const searchConfig: any = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: 2, label: t('사용') },
-          { value: 3, label: t('미사용') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
         ],
       },
     ],
@@ -118,7 +126,6 @@ const searchConfig: any = {
 
 const gridConfig = {
   query: queryOptions.all,
-  title: t('목록'),
   data: [
     { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
     { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
@@ -146,7 +153,4 @@ const gridConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
-  height: 440,
-  hideColumnSettings: true,
-  showExcelDownload: true,
 };

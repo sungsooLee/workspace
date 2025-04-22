@@ -1,5 +1,5 @@
 import LabelMessagesService from '../api/label-messages';
-import { LabelMessage } from '../../../types';
+import { LabelMessage, LabelMessagesQueryParams } from '../../../types';
 import { UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
@@ -8,15 +8,15 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: <T = LabelMessage>() => ({
+  all: <T = LabelMessage>(queryParam?: LabelMessagesQueryParams) => ({
     queryKey: queryKeys.all,
-    queryFn: async (): Promise<T[]> => LabelMessagesService.fetchAll(),
+    queryFn: async (): Promise<T[]> => LabelMessagesService.fetchAll(queryParam),
   }),
   detail: <T = LabelMessage>(id: number): UseQueryOptions<T> => {
     return {
       queryKey: queryKeys.detail(id),
       queryFn: () => LabelMessagesService.fetch<T>(id),
-      enabled: !!id,
+      enabled: id > 0,
     };
   },
 };

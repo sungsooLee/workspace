@@ -259,10 +259,16 @@ export interface GridProps<T> {
    * 데이터 없을 때 표시할 메세지
    */
   emptyMessage?: string;
+
   /**
    * 테이블 모드에서 style 을 구분하기 위해 사용
    */
   variant?: 'line' | 'fill';
+
+  /**
+   * 테이블 해더 표시 여부
+   */
+  hideHeader?: boolean;
 }
 
 /**
