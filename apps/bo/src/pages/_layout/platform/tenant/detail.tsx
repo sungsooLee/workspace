@@ -12,6 +12,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 /* tab contents */
 import { TenantDetailMenu } from '@features/platform/ui/platform/tenant/tenant-detail-menu';
 import { TenantDetailBase } from '@features/platform/ui/platform/tenant/tenant-detail-base';
+import { TenantDetailCategory } from '@features/platform/ui/platform/tenant/tenant-detail-category';
 
 export const Route = createFileRoute('/_layout/platform/tenant/detail')({
   component: RouteComponent,
@@ -91,7 +92,7 @@ const menuItems = [
   {
     title: '3. 테넌트 카테고리 관리',
     key: 'menu04',
-    content: '',
+    content: <TenantDetailCategory />,
   },
   {
     title: '4. 테넌트 역할 생성',
