@@ -13,6 +13,7 @@ import {
   Badge,
 } from '@learnway/ui';
 import {
+  IcoUploadCloud,
   IcoFileExcel,
   IcoDownload,
   IcoComplete02,
@@ -39,9 +40,9 @@ function RouteComponent() {
         <ModalBody>
           <div className={popupStyles.wrap}>
             <div className={cn(styles.start, styles.wrap)}>
-              <div className={cn(styles.file_wrap)}>
+              <div className={cn(styles.file_wrap, styles.type_excel)}>
                 {/* 파일 첨부 하기 전 */}
-                {/* <div className={styles.attach_area}>
+                <div className={styles.attach_area}>
                   <Button className={styles.btn_file}>
                     <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
                     <strong className={styles.file_title}>
@@ -50,8 +51,8 @@ function RouteComponent() {
                     <span className={styles.file_guide}>{'XLSX, CSV / Max file size : 50MB'}</span>
                     <input type="file" className={styles.input_file} />
                   </Button>
-                </div> */}
-                {/* 파일 업로드 */}
+                </div>
+                {/* 파일 업로드 후 */}
                 <div className={styles.upload_status}>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -199,6 +200,27 @@ function RouteComponent() {
                         variant="dot"
                         status="error"
                       />
+                    </div>
+                    <Button className={styles.btn_delete} onlyIcon>
+                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                    </Button>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <div className={styles.file_name}>
+                      <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <p className={styles.file_status_text}>{'업로드 취소'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                      </Button>
                     </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />

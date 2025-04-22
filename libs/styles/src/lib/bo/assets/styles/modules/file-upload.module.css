@@ -39,7 +39,16 @@
     }
   }
   .file_wrap {
-    @apply scrollbar relative h-[168px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] py-[16px];
+    @apply scrollbar relative h-[320px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    &.type_excel {
+      @apply h-[168px];
+    }
+    &.error {
+      @apply border-solid border-[var(--status1)];
+    }
+  }
+  .upload_status {
+    @apply py-[16px];
   }
   .attach_area {
     @apply relative;
@@ -202,6 +211,12 @@
   &::before {
     @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
+  &.error {
+    @apply text-[var(--status1)];
+    &::before {
+      @apply bg-[var(--status1)];
+    }
+  }
 }
 
 .guide_file_text {
@@ -210,7 +225,7 @@
 
 /* file status */
 .file_status_view {
-  @apply body_bo_2_r mb-[24px] mt-[4px] text-center text-[var(--gray8)];
+  @apply body_bo_2_r mb-[16px] mt-[12px] text-[var(--gray8)];
   .file_completed {
     @apply inline-block;
     em {

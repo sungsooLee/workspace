@@ -50,9 +50,9 @@ export const guideData = [
     pageId: 'common/pop-excel-upload',
     screenId: 'NLP_BO_PMS_1100_04',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-22',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '작업 완료', // 비고
   },
   {
     screenName: '로그인',
