@@ -11,6 +11,9 @@
         [class*='nlp--input'] {
           @apply mr-[8px] w-[120px];
         }
+        [class*='nlp--button'] {
+          @apply w-auto flex-none;
+        }
       }
     }
 
