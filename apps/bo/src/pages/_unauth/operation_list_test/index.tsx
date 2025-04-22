@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { CourseTypeOptionCardModal } from '../../../features/operation';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../shared/ui/search-box';
-import styles from '@shared/ui/grid-box/grid-box.module.css';
+
+import styles from './index.module.css';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,

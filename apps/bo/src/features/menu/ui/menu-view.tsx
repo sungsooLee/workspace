@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { Button, Grid, TreeNode, useModal, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, GridBox, TreeNode, useModal } from '@learnway/ui';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DuplicateCodeGuideText } from './menu-code-input';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 import { ApiInfoModal } from './api-info-modal';
@@ -434,7 +434,7 @@ const MenuViewComponent: FC<any> = ({
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'apiMappingMenuList'}>
-                <Grid
+                <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}

@@ -1,83 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Button, Grid, GridProps } from '@learnway/ui';
+import { Button, Grid, GridBoxProps } from '@learnway/ui';
 import { t } from 'i18next';
 import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
-
-export interface GridBoxProps {
-  /**
-   * config
-   */
-  config: any;
-  /**
-   * Grid Props
-   */
-  gridProps?: GridProps<any>;
-
-  /**
-   * 타이틀
-   */
-  title?: string;
-
-  /**
-   * 항목 설정 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 항목 설정 버튼이 숨겨집니다.
-   */
-  hideColumnSettings?: boolean;
-
-  /**
-   * 전체 행 개수 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 행 개수가 표시됩니다.
-   */
-  showTotalCount?: boolean;
-
-  /**
-   * 선택된 행 개수 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 선택된 행 개수가 표시됩니다.
-   */
-  showSelectedCount?: boolean;
-
-  /**
-   * 엑셀 다운로드 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 엑셀 다운로드 버튼이 표시됩니다.
-   */
-  showExcelDownload?: boolean;
-
-  /**
-   * 업로드 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 업로드 버튼이 표시됩니다.
-   */
-  showUpload?: boolean;
-
-  /**
-   * 전체 선택 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 선택 버튼이 표시됩니다.
-   */
-  showSelectAll?: boolean;
-
-  /**
-   * 전체 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 삭제 버튼이 표시됩니다.
-   */
-  showDeleteAll?: boolean;
-
-  /**
-   * 좌측 타이틀 영역 커스텀
-   */
-  titleCustomNode?: React.ReactNode;
-
-  /**
-   * 우측 버튼 영역 커스텀
-   */
-  renderButtons?: React.ReactNode;
-
-  /**
-   * guideText
-   */
-  guideText?: string;
-}
 
 /**
  * 임시
@@ -85,67 +12,79 @@ export interface GridBoxProps {
  * @constructor
  */
 const GridBoxComponent: FC<any> = ({
-  config,
-  gridProps,
+  config = {},
   title,
   hideColumnSettings,
   showTotalCount = true,
-  showExcelDownload = false,
-  showUpload = false,
-  showSelectAll = false,
-  showDeleteAll = false,
   showSelectedCount,
+  showExcelDownload,
+  showUpload,
+  showSelectAll,
+  showDeleteAll,
   titleCustomNode,
   renderButtons,
   guideText,
+  ...props
 }: GridBoxProps) => {
   const { data, page, totalRows, gridFetch, columns } = config;
   const columnHelper = createColumnHelper<any>();
-  const girdColumns = columns.map((column: any) => {
-    switch (column.type) {
-      case 'numbering':
-        return columnHelper.display({
-          id: column.name,
-          header: column.label,
-          cell: ({ row }) =>
-            page ? page.pageIndex * page.pageSize + row.index + 1 : row.index + 1,
-        });
-      case 'reverse-numbering':
-        return columnHelper.display({
-          id: column.name,
-          header: column.label,
-          cell: ({ row }) =>
-            page
-              ? page.totalRows - (page.pageIndex * page.pageSize + row.index)
-              : totalRows - row.index,
-        });
-      default:
+  const girdColumns = useMemo(() => {
+    return columns
+      ?.filter((column: any) => column.type !== 'numbering')
+      ?.map((column: any) => {
         return columnHelper.accessor(column.name, {
           cell: (info) => {
             if (column.render) {
+              // render 함수 내부에서 필요한 값(page, row 등)은 info 객체나 클로저로 접근
               return column.render(info);
             }
             return info.getValue();
           },
           header: column.label,
+          // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
-    }
-  });
+      });
+  }, [columns, page, totalRows, columnHelper]);
 
-  const handleChangePage = (pageIndex: number) => {
-    gridFetch({
-      size: page.pageSize,
-      page: pageIndex,
-    });
-  };
+  const showNumberingColumn =
+    columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
 
-  const handleChangePageSize = (pageSize: number) => {
-    console.log('page size');
-  };
+  const handleChangePage = useCallback(
+    (pageIndex: number) => {
+      gridFetch({
+        size: page.pageSize, // page 객체의 pageSize 사용
+        page: pageIndex,
+      });
+    },
+    [gridFetch, page], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  const handleChangePageSize = useCallback(
+    (pageSize: number) => {
+      gridFetch({
+        size: pageSize,
+        page: 1, // 페이지 사이즈 변경 시 첫 페이지로 이동
+      });
+    },
+    [gridFetch],
+  );
 
   const handleColumnSettings = () => {
+    //TODO: grid column setting 연동
     console.log('columnSettings');
   };
+
+  const paginationProps = useMemo(() => {
+    // pagination prop 설정된 경우는 우선 사용
+    if (props.pagination) return props.pagination;
+    return page
+      ? {
+          ...page, // page 객체의 현재 상태 스프레드
+          onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
+          onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
+        }
+      : undefined; // page가 falsy일 경우 undefined 반환
+  }, [page, handleChangePage, handleChangePageSize, props.pagination]);
 
   return (
     <div className={cn(styles.table_box)}>
@@ -222,25 +161,14 @@ const GridBoxComponent: FC<any> = ({
           {renderButtons}
         </div>
       </div>
-      {/*  */}
+      {/* 그리드 */}
       <Grid
-        title={'Editable Grid'}
-        data={data}
-        columns={girdColumns}
-        hideColumnSettings
+        {...props}
+        data={props.data || data}
+        columns={props.columns || girdColumns}
+        showNumberingColumn={showNumberingColumn}
         hideRowSelectionCheckBox
-        pagination={
-          page
-            ? {
-                ...page,
-                onPageChange: handleChangePage,
-                onPageSizeChange: handleChangePageSize,
-              }
-            : undefined
-        }
-        /*pagination={
-
-          }*/
+        pagination={paginationProps}
       />
     </div>
   );

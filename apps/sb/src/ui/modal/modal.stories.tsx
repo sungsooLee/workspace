@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
 import {
   Button,
-  Grid,
+  GridBox,
   ModalBody,
   ModalContainer,
   ModalDescription,
@@ -37,7 +37,7 @@ const ContentModal = () => {
       <ModalTitle>{t('Modal Title')}</ModalTitle>
       <ModalDescription>{t('Modal Description')}</ModalDescription>
       <ModalBody>
-        <Grid
+        <GridBox
           title={'grid title'}
           data={[
             { id: 'id1', name: 'name1' },

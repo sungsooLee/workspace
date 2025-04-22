@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button } from '@learnway/ui';
+import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { useSearchBox } from '@learnway/hooks';
@@ -11,8 +11,6 @@ import { PageContainer } from '../../../../widgets/layout/ui/container/page-cont
 import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
 
 import { SearchBox } from '../../../../shared/ui/search-box';
-
-import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
 
 export const Route = createFileRoute('/_unauth/platform_test/widget/')({
   component: RouteComponent,

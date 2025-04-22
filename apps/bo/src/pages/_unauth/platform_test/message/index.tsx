@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, EditInputCell } from '@learnway/ui';
+import { Button, EditInputCell, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useSearchBox } from '@learnway/hooks';
@@ -8,7 +8,7 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
-import { GridBox, SplitPanel, useGridBox } from '@shared/ui';
+import { SplitPanel } from '@shared/ui';
 import { CellContext } from '@tanstack/react-table';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 
@@ -67,13 +67,10 @@ function RouteComponent() {
         <SplitPanel>
           <GridBox
             config={gridConfig}
-            gridProps={{
-              title: t('목록'),
-              height: 440,
-              hideColumnSettings: true,
-              showExcelDownload: false,
-              onRowSelect: handleGridRowSelect,
-            }}
+            title={t('목록')}
+            height={440}
+            hideColumnSettings
+            onRowSelect={handleGridRowSelect}
           />
           <MessageDetail labelMessageId={selectedLabelMessageId} />
         </SplitPanel>

@@ -10,6 +10,7 @@ import React, {
 import {
   Cell,
   Column,
+  ColumnDef,
   ColumnFiltersState,
   ColumnPinningState,
   flexRender,
@@ -60,25 +61,17 @@ const Grid = forwardRef(
       multiple,
       disabledSelectionToggle,
       hideRowSelectionCheckBox,
+      showNumberingColumn,
       pagination,
-      title,
       isLoading,
       columnGrouping,
       columnPinning = { columns: [] },
-      hideColumnSettings,
-      showTotalCount = true,
-      showExcelDownload = false,
-      showUpload = false,
-      showSelectAll = false,
-      showDeleteAll = false,
-      showSelectedCount,
       className,
       tableMode,
       onStateChange,
       onRowSelect,
       onRowsSelect,
       onChange,
-      renderButtons,
       emptyMessage,
       variant = 'line',
       hideHeader,
@@ -136,30 +129,33 @@ const Grid = forwardRef(
       },
     }));
 
-    // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
+    /**
+     * 테이블 columns
+     */
     const tableColumns = useMemo(() => {
-      // 다중 선택을 위한 체크박스 컬럼 정의
-      const multipleCheckColumn = {
+      // 넘버링 컬럼 생성
+      const createNumberingColumn = (): ColumnDef<T> => ({
+        id: 'numbering',
+        size: 50,
+        header: 'NO.',
+        cell: ({ row }: any) =>
+          pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
+      });
+
+      // 체크박스 컬럼 생성
+      const createMultipleCheckColumn = (): ColumnDef<T> => ({
         id: 'select',
         size: 50,
         maxSize: 50,
         minSize: 50,
-        enablePinning: true, // 컬럼 고정 가능
+        enablePinning: true,
         meta: {
           align: 'center',
           headerAlign: 'center',
           cellAlign: 'center',
         },
-        // 헤더 체크박스: 전체 선택 / 해제
         header: ({ table }: { table: Table<T> }) => (
-          <div
-            style={{
-              width: '100%',
-              display: 'block',
-              textAlign: 'center',
-              verticalAlign: 'center',
-            }}
-          >
+          <div style={{ width: '100%', textAlign: 'center' }}>
             <Checkbox
               checked={table.getIsAllRowsSelected()}
               onCheckedChange={(checked) => {
@@ -168,22 +164,12 @@ const Grid = forwardRef(
             />
           </div>
         ),
-        // 개별 행 체크박스
         cell: ({ row }: { row: Row<T> }) => (
-          <div
-            style={{
-              width: '100%',
-              display: 'block',
-              textAlign: 'center',
-              paddingRight: '0',
-            }}
-          >
-            {' '}
+          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
             <Checkbox
               checked={row.getIsSelected()}
-              disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
-              onCheckedChange={(checked) => {
-                // 그룹 컬럼이 아닌 경우만 실행
+              disabled={row.getIsGrouped()}
+              onCheckedChange={() => {
                 if (!row.getIsGrouped()) {
                   row.getToggleSelectedHandler();
                 }
@@ -191,10 +177,18 @@ const Grid = forwardRef(
             />
           </div>
         ),
-      };
+      });
 
+      let finalColumns = [...columns];
       // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
-      return multiple && !hideRowSelectionCheckBox ? [multipleCheckColumn, ...columns] : columns;
+      if (multiple && !hideRowSelectionCheckBox) {
+        finalColumns = [createMultipleCheckColumn(), ...finalColumns];
+      }
+      // numbering 컬럼
+      if (showNumberingColumn) {
+        finalColumns = [createNumberingColumn(), ...finalColumns];
+      }
+      return finalColumns;
     }, [columns, multiple, hideRowSelectionCheckBox]);
 
     /**
@@ -753,9 +747,6 @@ const Grid = forwardRef(
             </Button>
           </div>
           <span className={styles.count_wrap}>
-            {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
-          {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
-            {/* {pageIndex * pageSize + 1}-{totalPages} Page */}
             {pageIndex + 1} / {totalPages} Page
           </span>
         </div>
@@ -774,9 +765,7 @@ const Grid = forwardRef(
 //
 
 const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
-  return (
-    <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle tableMode />
-  );
+  return <Grid {...props} disabledSelectionToggle tableMode />;
 });
 
 export { Grid, TableComponent as Table };
