@@ -73,7 +73,7 @@ const columns = [
     cell: (info) => {
       return <p>{info.getValue() === true ? 'Y' : 'N'}</p>;
     },
-    header: '사용',
+    header: '코드사용',
   }),
   columnHelper.accessor('cdGroupContent', {
     cell: (info) => info.getValue(),

@@ -37,7 +37,6 @@ function RouteComponent() {
     cdGroupId: '',
     cdGroupName: '',
     isUsed: '',
-    cdName: '',
   });
 
   const handlePageChange = (newPage: number) => {
@@ -55,7 +54,6 @@ function RouteComponent() {
     searchParams.cdGroupId,
     searchParams.cdGroupName,
     searchParams.isUsed,
-    searchParams.cdName,
   );
 
   const handleOnSearch = (data: any) => {
@@ -63,7 +61,6 @@ function RouteComponent() {
       cdGroupId: data.cdGroupId || '',
       cdGroupName: data.cdGroupName || '',
       isUsed: data.isUsed || '',
-      cdName: data.cdName || '',
     });
   };
 
@@ -130,12 +127,6 @@ const searchConfig: SearchBoxConfig = {
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
         ],
-      },
-      {
-        name: 'cdName',
-        type: 'text',
-        label: t('LABEL.cdName'),
-        value: '',
       },
     ],
   ],

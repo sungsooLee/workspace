@@ -388,16 +388,16 @@ const columns = (router: any) => {
     columnHelper.accessor('cdGroupId', {
       cell: (info) => info.getValue(),
       enablePinning: true,
-      header: '코드그룹번호',
+      header: '그룹코드',
     }),
     columnHelper.accessor('cdGroupName', {
       cell: (info) => info.getValue(),
       enablePinning: true,
-      header: '코드그룹명',
+      header: '그룹 명',
     }),
     columnHelper.accessor('cdGroupAbbreviatonEnglishName', {
       cell: (info) => info.getValue(),
-      header: '코드그룹 약어영문',
+      header: '그룹 명 약어 영문',
     }),
     columnHelper.accessor('isUsed', {
       cell: (info) => {
@@ -405,10 +405,10 @@ const columns = (router: any) => {
       },
       header: '사용',
     }),
-    columnHelper.accessor('cdGroupContent', {
-      cell: (info) => info.getValue(),
-      header: '내용',
-    }),
+    // columnHelper.accessor('cdGroupContent', {
+    //   cell: (info) => info.getValue(),
+    //   header: '내용',
+    // }),
     columnHelper.accessor('cmCd', {
       cell: (info) => {
         return (
@@ -437,21 +437,21 @@ const columns = (router: any) => {
       enableSorting: false,
     }),
 
-    columnHelper.accessor('createdDate', {
-      cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-      header: '최초등록 일자',
-    }),
-    columnHelper.accessor('createdBy', {
-      cell: (info) => info.getValue(),
-      header: '최초등록자',
-    }),
+    // columnHelper.accessor('createdDate', {
+    //   cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    //   header: '최초등록 일자',
+    // }),
+    // columnHelper.accessor('createdBy', {
+    //   cell: (info) => info.getValue(),
+    //   header: '최초등록자',
+    // }),
     columnHelper.accessor('modifiedDate', {
       cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
       header: '최종수정 일자',
     }),
-    columnHelper.accessor('lastModifiedBy', {
-      cell: (info) => info.getValue(),
-      header: '최종수정자',
-    }),
+    // columnHelper.accessor('lastModifiedBy', {
+    //   cell: (info) => info.getValue(),
+    //   header: '최종수정자',
+    // }),
   ];
 };
