@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initAxios, initI18N, initZod, tokenService } from '@learnway/config';
-import { Spinner } from '@learnway/ui';
+import { initI18N, initZod, initAxios, tokenService } from '@learnway/config';
+import { Spinner, useModal } from '@learnway/ui';
 
-import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
+import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
@@ -27,17 +27,32 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
   const { reissue } = useAuthSignin();
+  const { alert } = useModal();
 
   useMount(async () => {
     tokenService.refreshToken && (await reissue());
   });
 
   useEffect(() => {
-    initAxios();
+    initAxios({
+      // API Error ux 대응
+      onRejected: async (error: any) => {
+        const { config, response: errorResponse } = error;
+        if (error?.code === 'ERR_NETWORK' || errorResponse?.status === 500) {
+          await alert({
+            title: '시스템 에러',
+            content: '시스템 관리자에게 문의하세요',
+            type: 'error',
+          });
+        }
+        return Promise.reject(error);
+      },
+    });
     initZod();
   }, []);
 
   useEffect(() => {
+    console.log(';i18nData', i18nData);
     if (!i18nData) {
       return;
     }

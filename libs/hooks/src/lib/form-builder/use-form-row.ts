@@ -8,6 +8,7 @@ import {
   cloneElement,
   ReactElement,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DynamicFormProvider, ErrorState, FormConfig, FormFieldConfig } from './type';
 
 /**
@@ -92,6 +93,7 @@ const collectNames = (children: ReactNode): string[] => {
 
 export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, name?: string) => {
   const { control, builders, formState, fieldRefs, ...providerProps } = provider;
+  const { t } = useTranslation();
 
   // children에서 name 값을 수집
   const names = useMemo(() => collectNames(children), [children]);
@@ -164,7 +166,7 @@ export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, n
         errorMessage = message;
 
         if (errorMessage.indexOf('{{label}}') > -1 && rootConfig.label) {
-          errorMessage = errorMessage.replace('{{label}}', rootConfig.label);
+          errorMessage = errorMessage.replace('{{label}}', t(rootConfig.label));
         }
       }
     }
