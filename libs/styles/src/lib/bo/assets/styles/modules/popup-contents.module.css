@@ -3,7 +3,7 @@
   @apply relative;
   .title_wrap {
     .title {
-      @apply title_bo_3_b pt-[48px] text-center;
+      @apply title_bo_3_b pt-[48px];
     }
     .text {
       @apply body_bo_2_r mb-[16px] text-left text-[var(--gray8)];

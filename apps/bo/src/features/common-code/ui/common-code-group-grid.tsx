@@ -7,7 +7,7 @@ import {
   Button,
   ContentsRow,
   DynamicFormField,
-  Grid,
+  GridBox,
   GridImperative,
   GridState,
   useModal,
@@ -247,7 +247,7 @@ const CommonCodeGroupGridComponent = ({
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
         <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
           <div className={layoutStyles.inner_contents}>
-            <Grid
+            <GridBox
               ref={gridRef}
               data={data || []}
               columns={columns(router)}

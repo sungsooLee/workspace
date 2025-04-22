@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { Button, Grid, TreeNode, useModal, ContentsRow, DynamicFormField } from '@learnway/ui';
-import { CellContext, ColumnDef, createColumnHelper, useReactTable } from '@tanstack/react-table';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { Button, ContentsRow, DynamicFormField, GridBox, TreeNode, useModal } from '@learnway/ui';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DuplicateCodeGuideText } from './menu-code-input';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 import { ApiInfoModal } from './api-info-modal';
@@ -36,6 +36,7 @@ const MenuViewComponent: FC<any> = ({
   );
   const { open: openModal } = useModal();
 
+  // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
@@ -79,7 +80,7 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           isWebExposed: data?.isWebExposed,
           isMobileExposed: data?.isMobileExposed,
-          isHiddenMenu: data?.isHiddenMenu || false,
+          hiddenYn: data?.hiddenYn || false,
           visible: [
             data.isWebExposed === true && 'isWebExposed',
             data.isMobileExposed === true && 'isMobileExposed',
@@ -109,7 +110,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: ['isWebExposed'],
-        isHiddenMenu: false,
+        hiddenYn: false,
         apiMappingMenuList: [],
       };
       fetchData(initialData);
@@ -127,7 +128,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: [],
-        isHiddenMenu: false,
+        hiddenYn: false,
       };
       fetchData(initialData);
     }
@@ -165,20 +166,20 @@ const MenuViewComponent: FC<any> = ({
       : false;
     const apiMappingKeys = [] as number[];
     node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
+    // View 모드에서 저장 처리
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
       const isCodeChanged = isFieldChanged('code', node.code);
-      console.log(isCodeChanged);
+
       // 코드가 변경되지 않았으면 중복 체크 없이 진행
       if (!isCodeChanged) {
         // 수정 API 호출을 위한 데이터 준비
         const updateData = {
           menuId: selectedNode.menuId,
           menuCode: node.code,
-          menuName: node.title,
           parentId: node.parentKey,
           isDeleted: false,
-          isHiddenMenu: node.isHiddenMenu,
+          hiddenYn: node.hiddenYn,
           isUsed: true,
           isWebExposed: isWebExposed,
           isMobileExposed: isMobileExposed,
@@ -187,6 +188,12 @@ const MenuViewComponent: FC<any> = ({
           sortOrder: 1,
           path: node.url,
           menuScope: menuScope,
+          translations: [
+            {
+              locale: 'ko',
+              translation: node.title,
+            },
+          ],
           apiMappingMenuList: apiMappingKeys,
         };
 
@@ -204,26 +211,32 @@ const MenuViewComponent: FC<any> = ({
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
       return;
     }
+    console.log(node);
 
     const tmpData = {
       menuCode: node.code,
-      menuName: node.title,
       parentId: node.parentKey,
       isDeleted: false,
-      isHiddenMenu: node.isHiddenMenu,
+      hiddenYn: node.hiddenYn,
       isUsed: true,
       isWebExposed: isWebExposed,
       isMobileExposed: isMobileExposed,
       menuDesc: node.menuDesc,
       isPersoninfoInclusion: node.isPersoninfoInclusion,
-      isShortCutArea: true,
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
+      translations: [
+        {
+          locale: 'ko', //TODO: 현재 선택된 locale값 들어가게 변경해야됨.
+          translation: node.title,
+        },
+      ],
       apiMappingMenuList: apiMappingKeys,
     };
-    if (mode === 'view') onUpdate({ ...tmpData, menuId: selectedNode.menuId });
-    else onSave(tmpData);
+    console.log(tmpData);
+    onSave(tmpData);
+    // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
   const handleDelete = () => {
@@ -244,7 +257,7 @@ const MenuViewComponent: FC<any> = ({
 
   const handleApiMapping = async () => {
     const selectedApiKeys = getValues('apiMappingMenuList');
-    const keyArray = selectedApiKeys.map((item: TreeNode) => item.apiUuid.toString());
+    const keyArray = selectedApiKeys.map((item: TreeNode) => item.apiId.toString());
 
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
@@ -260,6 +273,7 @@ const MenuViewComponent: FC<any> = ({
       cell: (info) => info.getValue(),
       header: '분류',
       size: 120,
+      // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'left', // 셀은 오른쪽 정렬
@@ -273,7 +287,7 @@ const MenuViewComponent: FC<any> = ({
             className="cursor-pointer underline"
             onClick={() => {
               openModal({
-                content: <ApiInfoModal apiId={rowData.apiUuid} />,
+                content: <ApiInfoModal apiId={rowData.apiId} />,
                 width: 's',
                 closeOnOutsideClick: true,
               });
@@ -285,18 +299,20 @@ const MenuViewComponent: FC<any> = ({
       },
       header: 'API',
       size: 490,
+      // enableGrouping: false,
     }),
     columnHelper.accessor('Delete', {
       cell: (info) => {
         return (
           <Button
             onClick={() => {
+              // 현재 row의 데이터 가져오기
               const rowData = info.row.original;
               // 현재 apiMappingMenuList 가져오기
               const currentApiList = getValues('apiMappingMenuList') || [];
               // 해당 row를 제외한 새 배열 생성 (apiId로 필터링)
               const updatedApiList = currentApiList.filter(
-                (item: any) => item.apiUuid !== rowData.apiUuid,
+                (item: any) => item.apiId !== rowData.apiId,
               );
               fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
             }}
@@ -307,6 +323,7 @@ const MenuViewComponent: FC<any> = ({
       },
       header: '삭제',
       size: 100,
+      // enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'center', // 셀은 오른쪽 정렬
@@ -371,7 +388,6 @@ const MenuViewComponent: FC<any> = ({
                   codeCheckState={codeCheckState}
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
-                  menuScope={menuScope}
                 />
               </DynamicFormField>
             </FormRow>
@@ -400,7 +416,7 @@ const MenuViewComponent: FC<any> = ({
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isHiddenMenu'} disabled={isInitMode} />
+              <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
             </FormRow>
           </ContentsRow>
 
@@ -418,7 +434,7 @@ const MenuViewComponent: FC<any> = ({
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'apiMappingMenuList'}>
-                <Grid
+                <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
@@ -511,7 +527,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('Hidden 메뉴'),
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
-      name: 'isHiddenMenu',
+      name: 'hiddenYn',
       type: 'switch',
       value: false,
     },

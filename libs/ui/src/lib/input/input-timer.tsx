@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useCounter } from 'react-use';
 
-import { duration, cn } from '@learnway/shared';
+import { duration, cn, DATE_TIME_FORMAT } from '@learnway/shared';
 
 import { Input, InputProps } from './input';
 import { Button } from '../button/button';
@@ -35,7 +35,7 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
     const [seconds, setSeconds] = useState(initialTime);
     const [timer, timerCounter] = useCounter(0);
 
-    const timerText = timer === 0 ? '' : duration({ seconds }, 'mm:ss').toString();
+    const timerText = timer === 0 ? '' : duration({ seconds }, DATE_TIME_FORMAT.MIN_SEC).toString();
 
     useEffect(() => {
       // 0 이라는건 input-timer 최초 로드 했을경우 or 사용하는 곳에서 타이머 정지를 목적으로 0을 설정한 경우

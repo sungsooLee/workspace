@@ -4,8 +4,6 @@ import { cn } from '@learnway/shared';
 import styles from './form-sub-title.module.css';
 
 interface FormSubTitleProps {
-  /** action node */
-  actionNode?: ReactNode;
   /** 제목으로 표시될 문자열 */
   label?: string;
   /** 시각적 변형 (예: 텍스트 색상 등) */
@@ -16,6 +14,8 @@ interface FormSubTitleProps {
   underLine?: boolean;
   /** 외부에서 추가할 CSS 클래스 이름 */
   className?: string;
+  /** action node */
+  actionNode?: ReactNode;
 }
 
 const FormSubTitleComponent = ({

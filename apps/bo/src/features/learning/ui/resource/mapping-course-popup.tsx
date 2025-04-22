@@ -1,10 +1,10 @@
-import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
 import { t } from 'i18next';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../../shared/ui/search-box';
+import { GridBox, useGridBox } from '@learnway/ui';
 
 const MappingCoursePopupComponent = () => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);

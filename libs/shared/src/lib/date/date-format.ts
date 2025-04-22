@@ -47,6 +47,8 @@ export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
       return timeFormatMilliSecond();
     case DATE_TIME_FORMAT.HOUR_MIN:
       return timeFormatHourMinute();
+    case DATE_TIME_FORMAT.MIN_SEC:
+      return timeFormatMinuteSecond();
     case DATE_TIME_FORMAT.DATE:
     default:
       return timeFormatDate();
@@ -163,6 +165,20 @@ export function timeFormatHourMinute() {
     case 'zh-cn':
     default:
       return 'HH:mm';
+  }
+}
+
+export function timeFormatMinuteSecond() {
+  const locale = getDefaultLang();
+  switch (locale) {
+    case 'en':
+      return 'mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'mm:ss';
   }
 }
 

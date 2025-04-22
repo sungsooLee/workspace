@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { ChangeUserIdFormField } from '@learnway/auth';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';
-import { ChangeUserIdFormField } from '../../../../features/my-page';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
@@ -50,7 +50,7 @@ function RouteComponent() {
       <div className={styles.information}>
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'userId'}>
+            <DynamicFormField name={'email'}>
               <ChangeUserIdFormField />
             </DynamicFormField>
           </FormRow>
@@ -109,7 +109,7 @@ const authFormConfig: DynamicFormConfig = {
     },
     {
       name: 'email',
-      type: 'text',
+      type: 'custom',
       label: '이메일',
       value: '',
       placeholder: '이메일(hyunidai.kim@hyundai.com)',

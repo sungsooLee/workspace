@@ -1,23 +1,55 @@
 import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
+import { useFetchLabelMessage } from '@entities/label-messages';
 
-const MessageDetailComponent = () => {
+interface MessageDetailProps {
+  /**
+   * 라벨/메세지 NO
+   */
+  labelMessageId: number;
+}
+
+const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
   const { t } = useTranslation();
   const { showSaveComplete } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { data } = useFetchLabelMessage(labelMessageId);
+
+  useEffect(() => {
+    console.log('labelMessageId', labelMessageId);
+  }, [labelMessageId]);
+
+  const handleMultilingualManageClick = (multilinguaKey: string) => {
+    console.log('다국어 관리 화면 이동', {
+      to: '/platform/system/multilingual',
+      state: {
+        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+        multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
+      },
+    });
+    // 다국어 관리 화면 이동
+    // router.navigate({
+    //   to: '/platform/system/multilingual',
+    //   state: {
+    //     keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+    // multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
+    //   },
+    // });
+  };
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
-
-    const x = await showSaveComplete();
-    console.log(x);
+    // const x = await showSaveComplete();
+    // console.log(x);
   };
 
+  // console.log('getValues', getValues('labelMessageMultilingulKey'));
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
@@ -25,12 +57,8 @@ const MessageDetailComponent = () => {
         underLine
         actionNode={
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text}>
-              {'추가'}
-            </Button>
-            <Button variant="save" size="sm" type={'submit'}>
-              {'저장'}
-            </Button>
+            <Button variant="text" size="sm" label={t('추가')} />
+            <Button variant="save" size="sm" type={'submit'} label={t('저장')} />
           </div>
         }
       />
@@ -50,6 +78,17 @@ const MessageDetailComponent = () => {
         {/*메세지*/}
         <ContentsRow>
           <FormRow provider={provider}>
+            <FormInfoArea>
+              <Button
+                variant="point"
+                size="sm"
+                label={t('다국어 관리')}
+                disabled={!getValues('labelMessageId')}
+                onClick={() =>
+                  handleMultilingualManageClick(getValues('labelMessageMultilingulKey'))
+                }
+              />
+            </FormInfoArea>
             <DynamicFormField name={'labelMessageName'} />
           </FormRow>
         </ContentsRow>
@@ -57,12 +96,6 @@ const MessageDetailComponent = () => {
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'labelMessageDesc'} />
-          </FormRow>
-        </ContentsRow>
-        {/*사용여부*/}
-        <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'isUsed'} />
           </FormRow>
         </ContentsRow>
         {/*사용여부*/}
@@ -110,6 +143,7 @@ const formConfig: DynamicFormConfig = {
       name: 'labelMessageName',
       label: t('메세지'),
       type: 'text-area',
+      format: 'string',
       value: '',
     },
     {
@@ -125,5 +159,24 @@ const formConfig: DynamicFormConfig = {
       value: false,
       format: 'boolean',
     },
+    {
+      name: 'labelMessageId',
+      type: 'hidden',
+      value: '',
+    },
   ],
+  validator: {
+    labelMessageType: {
+      required: true,
+    },
+    labelMessageMultilingulKey: {
+      required: true,
+    },
+    labelMessageName: {
+      required: true,
+    },
+    isUsed: {
+      required: true,
+    },
+  },
 };

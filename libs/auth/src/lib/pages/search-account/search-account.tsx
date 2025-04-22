@@ -83,7 +83,7 @@ export function SearchAccountPage({ route }: any) {
           // 인증 성공 후 사용자 정보 조회 실패
           alert({
             title: 'MESSAGE.INVALID_INPUT_INFORMATION',
-            description: 'MESSAGE.INVALID_INPUT_INFORMATION_DESCRIPTION',
+            content: 'MESSAGE.INVALID_INPUT_INFORMATION_DESCRIPTION',
           });
         },
       },

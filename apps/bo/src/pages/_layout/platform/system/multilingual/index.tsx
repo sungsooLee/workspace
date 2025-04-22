@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Button, EditInputCell } from '@learnway/ui';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
+import { Button, EditInputCell, GridBox, useGridBox } from '@learnway/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
@@ -22,7 +20,7 @@ function RouteComponent() {
   const { state } = Route.useRouteContext();
   const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const isSaveDiable = useMemo(() => gConfig.totalRows > 0, [gConfig.totalRows]);
+  const isSaveDiable = useMemo(() => gConfig.hasData, [gConfig.hasData]);
   /**
    * @param data
    */

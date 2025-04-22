@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import styles from './shared-channel-grid-form-field.module.css';
 import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, EditCheckboxCell, Grid, useModal } from '@learnway/ui';
+import { Button, EditCheckboxCell, GridBox, useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 import { ChannelChoiceModal } from '../../../../../shared';
 import { CellContext } from '@tanstack/react-table';
@@ -90,7 +90,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
           onClick={handleChannelModalButtonClick}
         />
       </div>
-      <Grid
+      <GridBox
         data={value}
         columns={columns}
         showTotalCount={false}
