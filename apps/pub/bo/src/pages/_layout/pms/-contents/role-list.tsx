@@ -74,7 +74,6 @@ const RoleListComponent: FC<{}> = ({}) => {
           <>
             <Button label={'전체펼침'} variant={'text'} size={'sm'} className="btn_text" disabled />
             <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'저장'} variant={'save'} size={'sm'} disabled />
           </>
         }
         underLine={true}
