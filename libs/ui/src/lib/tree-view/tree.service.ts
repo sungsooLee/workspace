@@ -29,7 +29,7 @@ export const findNodesByKeys = (nodes: TreeNode[], keys: string[]): TreeNode[] =
 
   const searchNodes = (nodeArray: TreeNode[]) => {
     for (const node of nodeArray) {
-      if (keys.includes(node.key)) {
+      if (keys.includes(node?.apiUuid)) {
         result.push(node);
       }
       if (node.children && node.children.length > 0) {
