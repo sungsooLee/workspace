@@ -12,7 +12,7 @@ import { cn } from '@learnway/shared';
 
 import {
   Button,
-  Grid,
+  GridBox,
   // Tooltip,
   // ThumbnailImageUpload,
   // ChipList,
@@ -287,7 +287,7 @@ function RouteComponent() {
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={440}

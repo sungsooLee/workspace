@@ -12,7 +12,7 @@ import {
   Switch,
   Tooltip,
   Input,
-  Grid,
+  GridBox,
   TreeView,
   TreeNode,
 } from '@learnway/ui';
@@ -375,7 +375,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
             </div>
           </ContentsRow>
           <ContentsRow>
-            <Grid
+            <GridBox
               data={data}
               columns={columns}
               showTotalCount={true}

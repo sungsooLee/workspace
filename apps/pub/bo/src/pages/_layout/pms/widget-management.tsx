@@ -6,7 +6,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { Button, Grid, Input, Dropdown, DropdownOption } from '@learnway/ui';
+import { Button, GridBox, Input, Dropdown, DropdownOption } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -22,7 +22,7 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
 
-  /* grid */
+  /* GridBox */
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
@@ -166,7 +166,7 @@ function RouteComponent() {
             </div>
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <Grid
+            <GridBox
               data={data}
               columns={columns}
               showSelectedCount={true}

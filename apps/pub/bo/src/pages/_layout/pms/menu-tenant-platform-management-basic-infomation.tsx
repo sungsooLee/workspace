@@ -23,7 +23,7 @@ import {
   ModalBody,
   ModalFooter,
   Dropdown,
-  Grid,
+  GridBox,
   Tabs,
   // TransferGrid,
 } from '@learnway/ui';
@@ -73,7 +73,7 @@ function RouteComponent() {
       { value: 'type2-2', label: '항목' },
     ];
 
-    // grid
+    // GridBox
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
@@ -210,8 +210,8 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
-              {/* Grid Case */}
-              <Grid
+              {/* GridBox Case */}
+              <GridBox
                 data={data}
                 columns={columns}
                 height={380}
@@ -463,7 +463,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={310}

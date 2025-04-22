@@ -17,7 +17,7 @@ import { IcoFormRequired } from '@learnway/icons';
 
 import {
   Button,
-  Grid,
+  GridBox,
   DatePicker,
   Switch,
   // ThumbnailImageUpload,
@@ -329,7 +329,7 @@ function RouteComponent() {
             <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
               <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
                 <div className={layoutStyles.inner_contents}>
-                  <Grid
+                  <GridBox
                     data={data}
                     columns={columns}
                     height={350}
