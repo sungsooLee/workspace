@@ -19,6 +19,42 @@ export const guideData = [
     remarks: '작업중', // 비고
   },
   {
+    screenName: '공통/공통기능_유저검색 외 공통팝업(텝)',
+    pageId: 'common/pop-user-search',
+    screenId: 'NLP_BO_TMS_1100_02',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-15',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '공통/공통기능_유저검색 외 공통팝업_셔틀팝업',
+    pageId: 'common/pop-user-search-check',
+    screenId: 'NLP_BO_TMS_1100_02',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-15',
+    lastUpdateDate: '',
+    remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '공통/공통기능_카테고리 선택(Drag&Drop)',
+    pageId: 'common/pop-category-select',
+    screenId: 'NLP_BO_TMS_1100_02',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-15',
+    lastUpdateDate: '',
+    remarks: '레이아웃 작업완료', // 비고
+  },
+  {
+    screenName: '공통/공통기능_엑셀 업로드',
+    pageId: 'common/pop-excel-upload',
+    screenId: 'NLP_BO_PMS_1100_04',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -271,33 +307,6 @@ export const guideData = [
   //   lastUpdateDate: '',
   //   remarks: '진행중', // 비고
   // },
-  {
-    screenName: '공통/공통기능_유저검색 외 공통팝업(텝)',
-    pageId: 'common/pop-user-search',
-    screenId: 'NLP_BO_TMS_1100_02',
-    pageType: 'Pop-up',
-    completionDate: '2025-04-15',
-    lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
-  },
-  {
-    screenName: '공통/공통기능_유저검색 외 공통팝업_셔틀팝업',
-    pageId: 'common/pop-user-search-check',
-    screenId: 'NLP_BO_TMS_1100_02',
-    pageType: 'Pop-up',
-    completionDate: '2025-04-15',
-    lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
-  },
-  {
-    screenName: '공통/공통기능_카테고리 선택(Drag&Drop)',
-    pageId: 'common/pop-category-select',
-    screenId: 'NLP_BO_TMS_1100_02',
-    pageType: 'Pop-up',
-    completionDate: '2025-04-15',
-    lastUpdateDate: '',
-    remarks: '레이아웃 작업완료', // 비고
-  },
   // {
   //   screenName: 'CMS/파일업로드',
   //   pageId: 'learning/popup-fileupload',
