@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useWatch } from 'react-hook-form';
 import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
@@ -27,55 +27,45 @@ import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-
-const data: any[] = [
-  {
-    Sort: 'Common API',
-    API: <Button className="link">API 1</Button>,
-    Delete: (
-      <Button size="xs" variant="gray2">
-        삭제
-      </Button>
-    ),
-  },
-];
+/** Hook 정의 */
+import {
+  useCreateMenu,
+  useDeleteMenu,
+  useMenuManageFetchTree,
+  useMoveMenu,
+  useUpdateMenu,
+} from '@entities/menu/service/menu-manage.hook';
+import {
+  useMenuTenantManageDetail,
+  useMenuTenantMangeFetchTrees,
+} from '@entities/menu/service/menu-tenant-manage.hook';
+import { transformApiDataToTreeData } from '@features/menu/service/menu.service';
 
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const [treeData, setTreeData] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
   const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
     useDynamicForm(formConfig);
 
-  const columnHelper = createColumnHelper<any>();
+  const { data: menuDataOld, refetch: refetchOld } = useMenuManageFetchTree(menuScope, 'ko');
+  const { data: menuData, refetch } = useMenuTenantMangeFetchTrees('1', menuScope);
+  const prevDataRef = React.useRef(null);
 
-  const columns = [
-    columnHelper.accessor('Sort', {
-      cell: (info) => info.getValue(),
-      header: '분류',
-      size: 120,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'left', // 셀은 오른쪽 정렬
-      },
-    }),
-    columnHelper.accessor('API', {
-      cell: (info) => info.getValue(),
-      header: 'API',
-      size: 490,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('Delete', {
-      cell: (info) => info.getValue(),
-      header: '삭제',
-      size: 100,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
+  useEffect(() => {
+    if (menuData) {
+      prevDataRef.current = menuData;
+      console.log(menuData);
+      const transformedData = transformApiDataToTreeData(menuData);
+      console.log(transformedData);
+      setTreeData(transformedData);
+      if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setExpandedKeys(firstLevelKeys);
+      }
+    }
+  }, [menuData]);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
@@ -92,7 +82,12 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
-            <TreeView2 data={treeData} treeId="tenant-menu-tree" />
+            <TreeView2
+              treeId="tenant-menu-tree"
+              type={'DRAG_DROP'}
+              data={treeData}
+              expandedKeys={expandedKeys}
+            />
           </TreeContainer>
         </div>
       </div>
@@ -126,7 +121,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             <FormRow provider={provider}>
               <DynamicFormField name={'menuCode'} disabled={true} />
               <Button variant="gray" size="sm" disabled>
-                {'중복'}
+                {t('중복')}
               </Button>
             </FormRow>
           </ContentsRow>
@@ -149,15 +144,15 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           <ContentsRow>
             <div className={dynamicFormStyles.switch_wrap}>
               <p className={dynamicFormStyles.title}>
-                {'Hidden메뉴'}
+                {t('Hidden메뉴')}
 
                 <Tooltip
                   className={formStyles.tooltip}
                   side="right"
                   align="start"
-                  content={
-                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
-                  }
+                  content={t(
+                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
@@ -208,7 +203,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <Grid
-              data={data}
+              data={gridData}
               columns={columns}
               showTotalCount={true}
               hideColumnSettings={true}
@@ -225,7 +220,8 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
 };
 
 export const TenantDetailMenuTree = TenantDetailMenuTreeComponent;
-// fullPath
+
+// Form 구조 정의
 const formConfig: DynamicFormConfig = {
   builders: [
     {
@@ -293,3 +289,47 @@ const formConfig: DynamicFormConfig = {
     deviceNames: { required: true },
   },
 };
+
+//Column Helper 정의
+const columnHelper = createColumnHelper<any>();
+
+const columns = [
+  columnHelper.accessor('Sort', {
+    cell: (info) => info.getValue(),
+    header: '분류',
+    size: 120,
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'left', // 셀은 오른쪽 정렬
+    },
+  }),
+  columnHelper.accessor('API', {
+    cell: (info) => info.getValue(),
+    header: 'API',
+    size: 490,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('Delete', {
+    cell: (info) => info.getValue(),
+    header: '삭제',
+    size: 100,
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
+  }),
+] as ColumnDef<any, unknown>[];
+
+const gridData: any[] = [
+  {
+    Sort: 'Common API',
+    API: <Button className="link">API 1</Button>,
+    Delete: (
+      <Button size="xs" variant="gray2">
+        삭제
+      </Button>
+    ),
+  },
+];
