@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Grid } from '@learnway/ui';
+import { GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 
@@ -237,10 +237,10 @@ function RouteComponent() {
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Grid } from '@learnway/ui';
+import { GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-<Grid
+<GridBox
   data={data}
   columns={columns}
   pagination={{
@@ -265,7 +265,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             </span>
           </div>
         </div>
-        <Grid
+        <GridBox
           data={data}
           columns={columns}
           pagination={{

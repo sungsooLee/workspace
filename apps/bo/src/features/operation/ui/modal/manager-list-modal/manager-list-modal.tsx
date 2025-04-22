@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import {
   Button,
-  Grid,
+  GridBox,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -39,7 +39,7 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
         <ModalTitle>{t('운영자 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <Grid
+            <GridBox
               title={'목록'}
               data={gridData}
               columns={columns}

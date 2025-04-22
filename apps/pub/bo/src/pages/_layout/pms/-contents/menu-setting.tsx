@@ -2,9 +2,9 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, TreeView, TreeNode } from '@learnway/ui';
+import { Button, RadioGroupFormField, TreeView, TreeNode } from '@learnway/ui';
 /* style */
-import styles from './role-list.module.css';
+import styles from './role-list-search.module.css';
 
 // tree
 const sampleData: TreeNode[] = [
@@ -63,17 +63,22 @@ const sampleData: TreeNode[] = [
   },
 ];
 
-const RoleListComponent: FC<{}> = ({}) => {
+const MenuSettingComponent: FC<{}> = ({}) => {
   // tree
   const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
-        label={'역할 정보'}
+        label={'메뉴 설정'}
         actionNode={
           <>
-            <Button label={'전체펼침'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
+            <RadioGroupFormField
+              options={[
+                { value: 'option01', label: '모든 메뉴/API' },
+                { value: 'option02', label: '직접 선택' },
+              ]}
+            />
+            <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
           </>
         }
         underLine={true}
@@ -85,5 +90,5 @@ const RoleListComponent: FC<{}> = ({}) => {
   );
 };
 
-RoleListComponent.displayName = 'RoleList';
-export const RoleList = RoleListComponent;
+MenuSettingComponent.displayName = 'MenuSetting';
+export const MenuSetting = MenuSettingComponent;

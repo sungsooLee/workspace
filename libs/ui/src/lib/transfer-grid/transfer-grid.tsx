@@ -5,9 +5,9 @@ import { cn } from '@learnway/shared';
 import styles from './transfer-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { Grid } from '../grid';
-import { GridImperative } from '@/libs/ui/src';
 import { IcoNarrowRight } from '@learnway/icons';
+import { GridBox } from '../grid/grid-box';
+import { GridImperative } from '../grid/types';
 
 export interface TransferGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
@@ -110,7 +110,7 @@ const TransferGridComponent = forwardRef<HTMLDivElement, TransferGridProps>(
       >
         {/* left grid */}
         <div className={styles.grid_wrap}>
-          <Grid
+          <GridBox
             ref={leftGridRef}
             title={leftTitle}
             data={leftGridData}
@@ -126,7 +126,7 @@ const TransferGridComponent = forwardRef<HTMLDivElement, TransferGridProps>(
           <IcoNarrowRight width={24} height={24} stroke={'#B5C2D7'} />
         </div>
         <div className={styles.grid_wrap}>
-          <Grid
+          <GridBox
             ref={rightGridRef}
             title={rightTitle}
             data={rightGridData}

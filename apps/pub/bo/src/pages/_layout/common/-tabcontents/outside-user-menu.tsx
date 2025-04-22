@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Input, Dropdown, Button, Grid } from '@learnway/ui';
+import { Input, Dropdown, Button, GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -260,7 +260,7 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
         </div>
       </div>
       <div className="grid_wrap line">
-        <Grid
+        <GridBox
           data={data}
           columns={columns}
           showSelectedCount={true}

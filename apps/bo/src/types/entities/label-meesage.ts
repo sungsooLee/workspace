@@ -2,41 +2,60 @@ export interface LabelMessage {
   /**
    * 라벨/메세지 NO
    */
-  labelMessageId?: number | null;
+  labelMessageId?: number;
   /**
    * 라벨/메세지 다국어키
    */
-  labelMessageMultilingulKey?: string | null;
+  labelMessageMultilingulKey?: string;
   /**
    * 라벨/메세지 분류
    */
-  labelMessageType?: string | null;
+  labelMessageType?: string;
   /**
    * 라벨/메세지명
    */
-  labelMessageName?: string | null;
+  labelMessageName?: string;
   /**
    * 라벨/메세지설명
    */
-  labelMessageDesc?: string | null;
+  labelMessageDesc?: string;
   /**
    * 사용여부
    */
-  isUsed?: boolean | null;
+  isUsed?: boolean;
   /**
    * 생성자
    */
-  createdBy?: string | null;
+  createdBy?: string;
   /**
    * 생성날짜
    */
-  createdDate?: string | null;
+  createdDate?: string;
   /**
    * 수정자
    */
-  lastModifiedBy?: string | null;
+  lastModifiedBy?: string;
   /**
    * 수정날짜
    */
-  modifiedDate?: string | null;
+  modifiedDate?: string;
+}
+
+export interface LabelMessagesQueryParams {
+  /**
+   * 라벨/메세지 다국어키
+   */
+  labelMessageMultilingulKey?: string;
+  /**
+   * 라벨/메세지 분류
+   */
+  labelMessageType?: string;
+  /**
+   * 라벨/메세지명
+   */
+  labelMessageName?: string;
+  /**
+   * 사용여부
+   */
+  isUsed?: boolean;
 }

@@ -1,6 +1,6 @@
 // BaseForm.stories.tsx
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { Button } from '@learnway/ui';
 import { Camera } from 'lucide-react';
 

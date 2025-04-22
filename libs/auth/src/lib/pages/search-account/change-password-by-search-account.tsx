@@ -49,7 +49,7 @@ export function ChangePasswordBySearchAccountPage({ route }: any) {
   const handleSuccess = () => {
     openAlert({
       title: '비밀번호가 변경되었습니다.',
-      description: '변경된 비밀번호로 다시 로그인해 주세요.',
+      content: '변경된 비밀번호로 다시 로그인해 주세요.',
     });
     router.navigate({ to: '/login' });
   };

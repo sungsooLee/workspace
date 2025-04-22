@@ -1,27 +1,27 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { LabelMessage } from '@types';
+import { LabelMessage, LabelMessagesQueryParams } from '@types';
 
 export default class LabelMessagesService {
   //라벨 메세지 목록 조회
-  static fetchAll() {
-    return httpService.get<LabelMessage[]>(`${PMSApiPrefix()}/label-messages`);
+  static async fetchAll<T = LabelMessage>(queryParam?: LabelMessagesQueryParams): Promise<T[]> {
+    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, { queryParam });
     // return new Promise((resolve) => resolve(Mock));
   }
 
   //라벨 메세지 조회
-  static fetch(id: number) {
-    return httpService.get<LabelMessage>(`${PMSApiPrefix()}/label-messages/${id}`);
+  static async fetch<T = LabelMessage>(id: number): Promise<T> {
+    return httpService.get<T>(`${PMSApiPrefix()}/label-messages/${id}`);
   }
 
   //라벨 메세지 생성
-  static create(payload: LabelMessage) {
-    return httpService.post<LabelMessage>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async create<T = LabelMessage>(payload: T) {
+    return httpService.post<T>(`${PMSApiPrefix()}/label-messages`, payload);
   }
 
   //라벨 메세지 수정
-  static update(payload: LabelMessage) {
-    return httpService.post<LabelMessage>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async update<T = LabelMessage>(payload: T) {
+    return httpService.put<T>(`${PMSApiPrefix()}/label-messages`, payload);
   }
 }
 

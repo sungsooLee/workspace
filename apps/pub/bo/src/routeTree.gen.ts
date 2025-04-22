@@ -79,6 +79,7 @@ import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learnin
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
@@ -555,6 +556,14 @@ const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
+  {
+    id: '/common/pop-excel-upload',
+    path: '/common/pop-excel-upload',
+    getParentRoute: () => LayoutRoute,
+  } as any,
+)
 
 const LayoutCommonPopCategorySelectRoute =
   LayoutCommonPopCategorySelectImport.update({
@@ -1356,6 +1365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/pop-excel-upload': {
+      id: '/_layout/common/pop-excel-upload'
+      path: '/common/pop-excel-upload'
+      fullPath: '/common/pop-excel-upload'
+      preLoaderRoute: typeof LayoutCommonPopExcelUploadImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-user-search': {
       id: '/_layout/common/pop-user-search'
       path: '/common/pop-user-search'
@@ -1786,6 +1802,7 @@ interface LayoutRouteChildren {
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
+  LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
@@ -1830,6 +1847,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
+  LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
@@ -1960,6 +1978,7 @@ export interface FileRoutesByFullPath {
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2074,6 +2093,7 @@ export interface FileRoutesByTo {
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2191,6 +2211,7 @@ export interface FileRoutesById {
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2307,6 +2328,7 @@ export interface FileRouteTypes {
     | '/guide/tree-view'
     | '/guide/typography'
     | '/common/pop-category-select'
+    | '/common/pop-excel-upload'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2420,6 +2442,7 @@ export interface FileRouteTypes {
     | '/guide/tree-view'
     | '/guide/typography'
     | '/common/pop-category-select'
+    | '/common/pop-excel-upload'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2535,6 +2558,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
     | '/_layout/common/pop-category-select'
+    | '/_layout/common/pop-excel-upload'
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
@@ -2689,6 +2713,7 @@ export const routeTree = rootRoute
         "/_layout/test",
         "/_layout/",
         "/_layout/common/pop-category-select",
+        "/_layout/common/pop-excel-upload",
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
@@ -3014,6 +3039,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-category-select": {
       "filePath": "_layout/common/pop-category-select.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-excel-upload": {
+      "filePath": "_layout/common/pop-excel-upload.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-user-search": {

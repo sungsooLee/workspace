@@ -55,6 +55,8 @@ export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/components/edit-textarea-cell';
 export * from './lib/grid/configs/column-factory';
+export * from './lib/grid/grid-box';
+export * from './lib/grid/use-grid-box';
 
 // input
 export * from './lib/input/input';

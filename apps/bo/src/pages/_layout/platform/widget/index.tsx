@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
 
@@ -10,9 +10,8 @@ import { widgetsQueryOptions } from '../../../../entities/widgets';
 
 import { SearchBox } from '../../../../shared/ui/search-box';
 
-import { GridBox, useGridBox } from '../../../../shared/ui/grid-box';
-
 import { WidgetPreviewButton } from '../../../../features/platform';
+import { GridBox, useGridBox } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/platform/widget/')({
   component: RouteComponent,

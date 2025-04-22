@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Button } from '@learnway/ui';
+import React, { useCallback, useState } from 'react';
+import { Button, EditInputCell, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useSearchBox } from '@learnway/hooks';
@@ -7,10 +7,10 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { SplitPanel } from '@shared/ui';
+import { CellContext } from '@tanstack/react-table';
+import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,
@@ -20,15 +20,34 @@ function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
+  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
 
-  const handleI18nManageClick = (code?: string) => {
-    console.log('handleI18nManageClick');
+  const handleMultilingualManageClick = () => {
+    console.log('다국어 관리 화면 이동', {
+      to: '/platform/system/multilingual',
+      state: {
+        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+      },
+    });
+    // 다국어 관리 화면 이동
+    // router.navigate({
+    //   to: '/platform/system/multilingual',
+    //   state: {
+    //     keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+    //     // multilinguaKey: key,
+    //   },
+    // });
   };
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('handleOnSearch', data);
     gridFetch(data);
   }, []);
+
+  const handleGridRowSelect = (row: any) => {
+    console.log('handleGridRowSelect', row);
+    setSelectedLabelMessageId(row?.labelMessageId);
+  };
 
   return (
     <PageContainer scrollHidden={true}>
@@ -37,7 +56,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          onClick={() => handleI18nManageClick()}
+          onClick={() => handleMultilingualManageClick()}
           label={t('다국어 관리')}
         />
       </ContentsButtons>
@@ -46,8 +65,14 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
         <SplitPanel>
-          <GridBox config={gridConfig} />
-          <MessageDetail />
+          <GridBox
+            config={gridConfig}
+            title={t('목록')}
+            height={440}
+            hideColumnSettings
+            onRowSelect={handleGridRowSelect}
+          />
+          <MessageDetail labelMessageId={selectedLabelMessageId} />
         </SplitPanel>
       </MainContents>
     </PageContainer>
@@ -88,8 +113,8 @@ const searchConfig: any = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: 2, label: t('사용') },
-          { value: 3, label: t('미사용') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
         ],
       },
     ],
@@ -97,8 +122,11 @@ const searchConfig: any = {
 };
 
 const gridConfig = {
-  query: translationQueryOptions.all,
-  title: t('목록'),
+  query: queryOptions.all,
+  data: [
+    { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
+    { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
+  ],
   columns: [
     {
       name: 'no1',
@@ -106,18 +134,20 @@ const gridConfig = {
       type: 'numbering',
     },
     { name: 'labelMessageType', label: '분류' },
-    { name: 'labelMessageMultilingulKey', label: '라벨/메세지 코드' },
+    {
+      name: 'labelMessageMultilingulKey',
+      label: '라벨/메세지 코드',
+      cell: (info: CellContext<any, string>) => (
+        <EditInputCell info={info} input={{ type: 'text' }} />
+      ),
+    },
     { name: 'labelMessageName', label: '라벨명/메세지' },
     { name: 'createdBy', label: '등록자' },
     { name: 'createdDate', label: '등록일' },
   ],
-  data: [],
   pagination: {
     pageSize: 10,
     pageIndex: 0,
     totalRows: 0,
   },
-  height: 440,
-  hideColumnSettings: true,
-  showExcelDownload: true,
 };

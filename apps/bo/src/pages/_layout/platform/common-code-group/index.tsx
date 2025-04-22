@@ -12,7 +12,11 @@ import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/common-code-group/')({
   component: RouteComponent,
-  ...pageRouteConfig({}),
+  ...pageRouteConfig({
+    meta: {
+      title: '공통코드그룹관리',
+    },
+  }),
 });
 
 function RouteComponent() {

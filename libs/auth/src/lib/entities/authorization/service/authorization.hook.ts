@@ -116,6 +116,13 @@ export function useUpdateUser(mutationOptions = {}) {
       queryClient.setQueryData(queryKeys.authUser, updateUser);
       return updateUser as AuthUser;
     },
+    updateEmail: (email: string): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      queryClient.setQueryData(queryKeys.authUser, { ...user, email });
+    },
   };
 }
 /*

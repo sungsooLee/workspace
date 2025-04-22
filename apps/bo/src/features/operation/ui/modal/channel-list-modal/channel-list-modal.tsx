@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import {
   Button,
-  Grid,
+  GridBox,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -41,7 +41,7 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
         <ModalTitle>{t('채널 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <Grid
+            <GridBox
               title={'목록'}
               data={gridData}
               columns={columns}
