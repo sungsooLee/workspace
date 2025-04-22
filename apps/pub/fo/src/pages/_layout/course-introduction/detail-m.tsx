@@ -296,7 +296,7 @@ function RouteComponent() {
                 variant="primary"
                 onClick={() =>
                   openModal({
-                    width: 's',
+                    width: 'm_full',
                     content: <CourseSelectionPopup />, // 차수선택 팝업
                   })
                 }

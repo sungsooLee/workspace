@@ -337,8 +337,8 @@ function RouteComponent() {
                     >
                       <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
                         <p className={lectureStyles.date}>
-                          <span>{original?.number}</span>
                           <span>{original?.date}</span>
+                          <span>{original?.number}</span>
                         </p>
                         <strong className={lectureStyles.tit}>{label}</strong>
                       </div>
