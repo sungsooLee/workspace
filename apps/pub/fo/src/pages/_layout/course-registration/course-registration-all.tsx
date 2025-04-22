@@ -19,6 +19,7 @@ import {
   AddressPopup,
   EducationPlacePopup,
   AddressConfirmationPopup,
+  AcceptingPopup,
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -524,6 +525,7 @@ function RouteComponent() {
               openModal({
                 width: 's',
                 content: <AddressConfirmationPopup />,
+                hideCloseButton: true,
               })
             }
           >
@@ -538,7 +540,17 @@ function RouteComponent() {
             <Button variant="gray" size="xl" className="min">
               취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button
+              variant="primary"
+              size="xl"
+              onClick={() =>
+                openModal({
+                  width: 's',
+                  content: <AddressConfirmationPopup />,
+                  hideCloseButton: true,
+                })
+              }
+            >
               신청
             </Button>
           </div>

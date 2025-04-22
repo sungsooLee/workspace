@@ -33,7 +33,7 @@
       tr {
         @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
-          @apply body_bo_2_r h-full px-[8px] py-[8px] align-middle text-[var(--gray7)];
+          @apply body_bo_2_r line-clamp-1 h-full text-ellipsis px-[8px] py-[8px] align-middle text-[var(--gray7)];
           button {
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
           }
@@ -47,7 +47,7 @@
             }
           }
           [class*='link'] {
-            @apply body_bo_2_r text-[var(--gray7)] underline;
+            @apply !body_bo_2_r text-[var(--gray7)] underline;
           }
           [class*='nlp--input'] {
             input {
@@ -85,12 +85,12 @@
             @apply !bg-[#edfcff];
           }
         }
-        &:hover {
+        /* &:hover {
           @apply bg-[#edfcff];
           .td_pinned_left {
             @apply !bg-[#edfcff];
           }
-        }
+        } */
       }
     }
   }
@@ -102,6 +102,12 @@
     @apply mb-[12px] flex min-h-[28px] w-full items-center;
     .title {
       @apply title_bo_4_b text-[var(--gray9)];
+      &.table_title {
+        @apply body_3_r;
+      }
+      & + button:first-child {
+        @apply ml-auto;
+      }
     }
     .sub_info {
       @apply title_bo_4_b relative ml-[12px] mr-auto pl-[12px] text-[var(--gray9)];
@@ -135,6 +141,12 @@
     }
     &:empty {
       @apply !hidden;
+    }
+    &.type_table {
+      @apply min-h-[22px];
+      .title {
+        @apply body_3_r;
+      }
     }
   }
 }
@@ -201,7 +213,7 @@
       tr {
         @apply !relative !h-auto !w-full !table-fixed;
         td {
-          @apply body_bo_2_r !table-cell !h-[52px] !min-h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[12px] text-center align-middle;
+          @apply body_bo_2_r !table-cell !h-[52px] !min-h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[9px] text-center align-middle;
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];
           }
@@ -211,22 +223,22 @@
   }
 }
 
+.empty_wrap {
+  &:hover {
+    @apply !bg-transparent;
+  }
+}
+
 .empty_cell {
-  text-align: center;
-  padding: 40px 0;
-  width: 100%;
+  @apply w-full py-[40px] text-center;
 }
 
 .empty_message_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  @apply flex w-full items-center justify-center;
 }
 
 .empty_message {
-  color: #666;
-  font-size: 14px;
+  @apply button_bo_2_r text-[var(--gray6)];
 }
 
 .th_pinned_left {

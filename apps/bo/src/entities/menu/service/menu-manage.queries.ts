@@ -16,7 +16,7 @@ export const menuManageQueryOptions = {
   }),
   //메뉴 목록 조회
   tree: (menuScopeCode: string, locale: string) => ({
-    queryKey: queryKeys.tree(),
+    queryKey: [...queryKeys.tree(), menuScopeCode],
     queryFn: () => MenuMangeService.fetchMenuTree(menuScopeCode, locale),
     cacheTime: 0,
     staleTime: 0,
@@ -33,7 +33,8 @@ export const mutateOptions = {
     mutationFn: (payload: any) => MenuMangeService.createMenu(payload),
   }),
   checkExistsMenu: () => ({
-    mutationFn: (payload: any) => MenuMangeService.existsMenu(payload.menuCode, payload.parentId),
+    mutationFn: (payload: any) =>
+      MenuMangeService.existsMenu(payload.menuScopeCode, payload.menuCode),
   }),
   updateMenu: () => ({
     mutationFn: (payload: any) => MenuMangeService.updateMenu(payload),

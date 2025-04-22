@@ -12,17 +12,17 @@ export type com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$Searc
      */
     targetLocale?: string;
     /**
+     * 번역상태
+     */
+    isTranslated?: boolean;
+    /**
      * 다국어 코드
      */
     multilingualKey?: string;
     /**
-     * 기준 언어
+     * 기준명
      */
     translation?: string;
-    /**
-     * 사용여부
-     */
-    isUsed?: boolean;
 };
 export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin {
     /**
@@ -30,7 +30,8 @@ export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$
      */
     export enum keyType {
         COMMON_CODE = 'COMMON_CODE',
-        MENU = 'MENU',
+        LEARNER_MENU = 'LEARNER_MENU',
+        HRD_CENTER_MENU = 'HRD_CENTER_MENU',
         LABEL = 'LABEL',
         CATEGORY = 'CATEGORY',
         MESSAGE = 'MESSAGE',

@@ -17,6 +17,7 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
       codeCheckState,
       handleCodeChange,
       setFormError,
+      menuScope,
     },
     ref,
   ) => {
@@ -75,11 +76,15 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
               return;
             }
 
+            // const data = {
+            //   menuCode: code,
+            //   parentId: parentKey,
+            // };
             const data = {
+              menuScopeCode: menuScope,
               menuCode: code,
-              parentId: parentKey,
             };
-
+            console.log(data);
             // Clear any existing errors and perform the check
             clearFormError && clearFormError(name);
             checkExistsMenu(data);

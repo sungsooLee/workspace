@@ -80,7 +80,7 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           isWebExposed: data?.isWebExposed,
           isMobileExposed: data?.isMobileExposed,
-          hiddenYn: data?.hiddenYn || false,
+          isHiddenMenu: data?.isHiddenMenu || false,
           visible: [
             data.isWebExposed === true && 'isWebExposed',
             data.isMobileExposed === true && 'isMobileExposed',
@@ -110,7 +110,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: ['isWebExposed'],
-        hiddenYn: false,
+        isHiddenMenu: false,
         apiMappingMenuList: [],
       };
       fetchData(initialData);
@@ -128,7 +128,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: [],
-        hiddenYn: false,
+        isHiddenMenu: false,
       };
       fetchData(initialData);
     }
@@ -170,16 +170,17 @@ const MenuViewComponent: FC<any> = ({
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
       const isCodeChanged = isFieldChanged('code', node.code);
-
+      console.log(isCodeChanged);
       // 코드가 변경되지 않았으면 중복 체크 없이 진행
       if (!isCodeChanged) {
         // 수정 API 호출을 위한 데이터 준비
         const updateData = {
           menuId: selectedNode.menuId,
           menuCode: node.code,
+          menuName: node.title,
           parentId: node.parentKey,
           isDeleted: false,
-          hiddenYn: node.hiddenYn,
+          isHiddenMenu: node.isHiddenMenu,
           isUsed: true,
           isWebExposed: isWebExposed,
           isMobileExposed: isMobileExposed,
@@ -188,12 +189,6 @@ const MenuViewComponent: FC<any> = ({
           sortOrder: 1,
           path: node.url,
           menuScope: menuScope,
-          translations: [
-            {
-              locale: 'ko',
-              translation: node.title,
-            },
-          ],
           apiMappingMenuList: apiMappingKeys,
         };
 
@@ -211,31 +206,28 @@ const MenuViewComponent: FC<any> = ({
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
       return;
     }
-    console.log(node);
 
     const tmpData = {
+      // menuId: selectedNode.menuId,
       menuCode: node.code,
+      menuName: node.title,
       parentId: node.parentKey,
       isDeleted: false,
-      hiddenYn: node.hiddenYn,
+      isHiddenMenu: node.isHiddenMenu,
       isUsed: true,
       isWebExposed: isWebExposed,
       isMobileExposed: isMobileExposed,
       menuDesc: node.menuDesc,
       isPersoninfoInclusion: node.isPersoninfoInclusion,
+      isShortCutArea: true,
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
-      translations: [
-        {
-          locale: 'ko', //TODO: 현재 선택된 locale값 들어가게 변경해야됨.
-          translation: node.title,
-        },
-      ],
       apiMappingMenuList: apiMappingKeys,
     };
     console.log(tmpData);
-    onSave(tmpData);
+    if (mode === 'view') onUpdate({ ...tmpData, menuId: selectedNode.menuId });
+    else onSave(tmpData);
     // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
@@ -388,6 +380,7 @@ const MenuViewComponent: FC<any> = ({
                   codeCheckState={codeCheckState}
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
+                  menuScope={menuScope}
                 />
               </DynamicFormField>
             </FormRow>
@@ -416,7 +409,7 @@ const MenuViewComponent: FC<any> = ({
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
+              <DynamicFormField name={'isHiddenMenu'} disabled={isInitMode} />
             </FormRow>
           </ContentsRow>
 
@@ -527,7 +520,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('Hidden 메뉴'),
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
-      name: 'hiddenYn',
+      name: 'isHiddenMenu',
       type: 'switch',
       value: false,
     },

@@ -18,7 +18,7 @@ import { ApiInfoModal } from './api-info-modal';
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const { open: openModal, close } = useModal();
   const [treeData, setTreeData] = useState([]);
-  const { data, isLoading } = useFetchPrograms('1', menuScopeCode);
+  const { data, isLoading } = useFetchPrograms(menuScopeCode);
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);

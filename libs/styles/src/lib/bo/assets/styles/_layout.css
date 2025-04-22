@@ -53,6 +53,7 @@ body.scrolled {
       .scroll_inner {
         @apply relative !min-h-[calc(100vh-90px)];
         .title_wrap {
+          @apply z-[1];
           &::before {
             @apply absolute -bottom-[1px] left-0 z-[0] h-[2px] w-full bg-[url('../../assets/images/common/bg_sticky_line.png')] bg-[auto_2px] bg-[position:left_center] bg-repeat-x content-[''];
           }

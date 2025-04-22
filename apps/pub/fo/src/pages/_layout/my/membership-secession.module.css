@@ -1,9 +1,5 @@
 .start {
   &.secession {
-    @apply mx-auto mt-[24px] w-[780px];
-    h2 {
-      @apply title_4_b text-[var(--gray9)];
-    }
     .box {
       @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] pb-[24px] pt-[32px];
       .confirm {
@@ -47,10 +43,6 @@
   @screen mobile {
     .start {
       &.secession {
-        @apply mt-[16px] w-full px-[20px] pb-[80px];
-        h2 {
-          @apply hidden;
-        }
         .box {
           @apply border-none pt-0;
           .bullet_notice {

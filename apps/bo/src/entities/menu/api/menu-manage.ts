@@ -43,9 +43,9 @@ export default class MenuMangerService {
    * 메뉴 중복 확인
    * @param menuCode 메뉴 코드
    */
-  static existsMenu(menuCode: string, parentId: string): Promise<boolean> {
+  static existsMenu(menuScopeCode: string, menuCode: string): Promise<boolean> {
     return httpService.get<any>(
-      `${PMSApiPrefix()}/menus/exists?menuCode=${menuCode}&parentId=${parentId}`,
+      `${PMSApiPrefix()}/menus/exists?menuScopeCode=${menuScopeCode}&menuCode=${menuCode}`,
     );
     // return httpService.get<boolean>(`${PMSApiPrefix()}/menus/exists/?menuCode=${menuCode}`);
   }
@@ -72,7 +72,7 @@ export default class MenuMangerService {
    * 메뉴 수정
    */
   static updateMenu(payload: any): Promise<any> {
-    return httpService.put<any>(`${PMSApiPrefix()}/menus` + `/${payload.menuId}`, payload);
+    return httpService.put<any>(`${PMSApiPrefix()}/menus/${payload.menuId}`, payload);
   }
 
   /**

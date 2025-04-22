@@ -19,6 +19,7 @@
 }
 
 .btn_select {
+  @apply mt-[6px];
   button {
     @apply !h-[20px] !w-[32px] !min-w-[32px] !rounded-[4px] !p-0 !text-[10px] !font-normal !text-[var(--gray7)];
     &.active {

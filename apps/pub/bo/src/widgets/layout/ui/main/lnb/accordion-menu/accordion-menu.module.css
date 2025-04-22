@@ -3,14 +3,40 @@
   }
   &.depth3 {
     @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
+    & > [data-state='open'] {
+      @apply rounded-[8px];
+      & > button > [class*='accordion_title'] {
+        @apply bg-[var(--gray1)];
+        &[class*='active'] {
+          @apply rounded-[8px] bg-[var(--primary2)] text-white;
+        }
+      }
+      button {
+        &[class*='has_children'] {
+          [class*='accordion_title'] {
+            @apply rounded-b-none rounded-t-[8px] bg-[var(--primary2)] text-white;
+          }
+          & + [data-state='open'] > div {
+            @apply rounded-t-none;
+          }
+        }
+      }
+    }
+    [aria-expanded='false'] {
+      svg {
+        @apply !stroke-[#A9AFB8];
+      }
+    }
+    svg {
+      @apply !stroke-[#fff];
+    }
   }
   &.depth4 {
     @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    & > div span {
-      [data-status='active'] {
-        @apply relative flex items-center justify-start;
+    button [class*='accordion_title'] {
+      &[class*='active'] {
         &::before {
-          @apply absolute -left-[12px] top-[8px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+          @apply mr-[6px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
         }
       }
     }

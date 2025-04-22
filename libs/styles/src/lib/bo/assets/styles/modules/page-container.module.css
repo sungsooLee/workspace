@@ -5,7 +5,7 @@
       @apply scrollbar box-border h-auto overflow-y-auto bg-[#f2f4f9] pb-[40px];
       /* title_wrap */
       .title_wrap {
-        @apply sticky left-0 top-0 z-[2] mb-0 flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
+        @apply sticky left-0 top-0 z-auto mb-0 flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
         .title {
           @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
           .btn_favorites {
@@ -31,7 +31,7 @@
   .btn_wrap {
     @apply flex;
     .link_box {
-      @apply mr-[8px] flex;
+      @apply mr-[16px] flex;
       .link {
         @apply flex items-center rounded-[4px] border border-solid border-[var(--gray4)] bg-[var(--white)] px-[10px];
         a {
@@ -48,7 +48,7 @@
         }
       }
       &::after {
-        @apply ml-[8px] flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
+        @apply ml-[16px] flex h-[32px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
   }

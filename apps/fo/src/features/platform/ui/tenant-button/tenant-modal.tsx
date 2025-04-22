@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { IcoCheck, IcoArrowForward } from '@learnway/icons';
-import { useFetchAuthUser, useUpdateUser } from '@learnway/config';
+import { useFetchAuthUser, useUpdateUser } from '@learnway/auth';
 
 import type { Tenant } from '../../../../types';
 

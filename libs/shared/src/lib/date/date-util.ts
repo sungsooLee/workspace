@@ -1,7 +1,18 @@
 import dayjs, { ManipulateType } from 'dayjs';
 import { DATE_TIME_FORMAT } from '../types/date-time';
 import { getDateTimeFormat } from './date-format';
-
+/*
+day         d	  Day
+week  	    w	  Week of Year
+quarter	    Q	  Quarter
+month       M	  Month (January as 0, December as 11)
+year	      y	  Year
+hour	      h	  Hour
+minute	    m	  Minute
+second	    s	  Second
+millisecond	ms	Millisecond
+*/
+type DateShorthandUnit = 'd' | 'w' | 'Q' | 'M' | 'y' | 'h' | 'm' | 's' | 'ms';
 /**
  *  Date 형식을 지정된 format 형태의 문자열로 반환
  * @param date date 객체
@@ -33,16 +44,26 @@ export const getStringToDate = (stringDate: string, format = DATE_TIME_FORMAT.DA
 };
 
 /**
+ * date 형식의 문자열을 Date 타입으로 반환
+ * @param stringDate 변환할 date 형식 문자열
+ * @param format 변환될 포맷
+ * @retrun Date
+ */
+export const getStringF = (stringDate: string, format = DATE_TIME_FORMAT.DATE) => {
+  return dayjs(stringDate, getDateTimeFormat(format));
+};
+
+/**
  * value 를 Dayjs format 형태의 문자열로 리턴
  * format 이 없으면 Date type 리턴
  * @param value date | string
  * @param format 변환 포맷
  * @return string
  */
-export const formatDate = (value: Date | string | number, format?: string) => {
+export const formatDate = (value: Date | string | number, format = DATE_TIME_FORMAT.DATE) => {
   const d = dayjs(value);
   if (d.isValid()) {
-    return format ? d.format(format) : d.toDate();
+    return d.format(getDateTimeFormat(format));
   }
   return '';
 };
@@ -63,4 +84,26 @@ export const formatDate = (value: Date | string | number, format?: string) => {
 export const duration = (config: any, format?: string) => {
   const d = (dayjs as any).duration(config);
   return formatDate(d, format);
+};
+
+/**
+ * value 와 target 날짜의 차리를 요청 unit에 맞게 리턴
+ * value > target : positive number(양수) 리턴
+ * value < target : negative number(음수) 리턴
+ * @param value date | string = 기준일
+ * @param target date | string = 대상일자
+ * @param unit DateShorthandUnit = diff 단위
+ * @return number | undefined
+ */
+export const dateDiff = (
+  value: Date | string,
+  target: Date | string,
+  unit?: DateShorthandUnit,
+): number | undefined => {
+  const d = dayjs(value);
+  const t = dayjs(target);
+  if (d.isValid() && t.isValid()) {
+    return d.diff(t, unit ?? 'd');
+  }
+  return undefined;
 };

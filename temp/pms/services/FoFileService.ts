@@ -6,10 +6,10 @@ import type { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto } from '../m
 import type { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileInfoReqDto';
 import type { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
-import type { com_ever_edu_pms_file_dto_res_FileGroupListResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupListResDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -29,6 +29,13 @@ export class FoFileService {
             url: '/api/v1/file',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -46,6 +53,13 @@ export class FoFileService {
             url: '/api/v1/file/group',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
@@ -63,76 +77,110 @@ export class FoFileService {
             url: '/api/v1/file/group/files',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
         });
     }
     /**
      * 파일정보 조회
      * 파일정보를 조회한다.
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDetailResDto OK
      * @throws ApiError
      */
     public static getFileInfo(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{uuid}',
+            url: '/api/v1/file/{fileUuid}',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
     /**
      * 파일정보 삭제
      * 파일 정보를 삭제한다. isDeleletd 값 false 업데이트
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto OK
      * @throws ApiError
      */
     public static deleteFileInfo(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v1/file/{uuid}',
+            url: '/api/v1/file/{fileUuid}',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
     /**
      * 파일 다운로드
      * 파일을 다운로드한다.
-     * @param uuid 파일 UUID
+     * @param fileUuid 파일 UUID
      * @returns any OK
      * @throws ApiError
      */
     public static fileDownload(
-        uuid: string,
+        fileUuid: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{uuid}/download',
+            url: '/api/v1/file/{fileUuid}/download',
             path: {
-                'uuid': uuid,
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
     /**
      * 파일그룹 목록 조회
      * 파일그룹 목록을 조회한다.
+     * @param page 페이징 처리를 위한 페이지 번호. 0 ~
+     * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
+     * @param sort 페이징 처리를 위한 sort
      * @param uploadType 파일업로드유형, ATTATCH|CONTENTS
      * @param affairsType 파일업무유형, LMS|PMS|CMS
      * @param reposType 저정소유형, S3(기본)|HMG
-     * @returns com_ever_edu_pms_file_dto_res_FileGroupListResDto OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroupList(
+        page: number,
+        size: number,
+        sort: string,
         uploadType?: string,
         affairsType?: string,
         reposType?: string,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupListResDto> {
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/file/groups',
@@ -140,42 +188,66 @@ export class FoFileService {
                 'uploadType': uploadType,
                 'affairsType': affairsType,
                 'reposType': reposType,
+                'page': page,
+                'size': size,
+                'sort': sort,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
     /**
      * 파일그룹 정보 조회
      * 파일그룹 정보를 조회한다.
-     * @param uuid 파일 그룹 UUID
+     * @param groupUuid 파일 그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroup(
-        uuid: string,
+        groupUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{uuid}',
+            url: '/api/v1/file/group/{groupUuid}',
             path: {
-                'uuid': uuid,
+                'groupUuid': groupUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }
     /**
      * 파일그룹 파일 목록 조회
      * 파일그룹 파일 목록을 조회한다.
-     * @param uuid 파일그룹 UUID
+     * @param groupUuid 파일그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
      * @throws ApiError
      */
     public static getGroupFileInfoList(
-        uuid: string,
+        groupUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{uuid}/files',
+            url: '/api/v1/file/group/{groupUuid}/files',
             path: {
-                'uuid': uuid,
+                'groupUuid': groupUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
         });
     }

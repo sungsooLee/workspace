@@ -5,10 +5,11 @@ export const queryKeys = {
   list: (params: {
     page: number;
     size: number;
+    sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
     cdGroupContent?: string;
-    isUsed?: boolean;
+    isUsed?: string;
     cdName?: string;
   }) => [...queryKeys.all, 'list', params] as const,
   detail: (cdGroupId: string, cdId: string) =>
@@ -19,15 +20,17 @@ export const commonCodeQueryOptions = {
   list: (
     page: number,
     size: number,
+    sort: string,
     cdGroupId = '',
     cdGroupName = '',
     cdGroupContent = '',
-    isUsed = true,
+    isUsed = '',
     cdName = '',
   ) => ({
     queryKey: queryKeys.list({
       page,
       size,
+      sort,
       cdGroupId,
       cdGroupName,
       cdGroupContent,
@@ -38,6 +41,7 @@ export const commonCodeQueryOptions = {
       CommonCodeService.fetchCodes(
         page,
         size,
+        sort,
         cdGroupId,
         cdGroupName,
         cdGroupContent,

@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
-import { useActiveMenuDepthState } from '../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';
@@ -15,7 +15,7 @@ function LNBComponent() {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
-  const [toggleLnb, setToggleLnb] = useState<boolean>(true);
+  const [toggleLnb, setToggleLnb] = useState<boolean>(false);
   const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
@@ -25,12 +25,13 @@ function LNBComponent() {
   useEffect(() => {
     setOpenAll(false);
     setOpenAllButtonState(false);
-  }, [activeMenuDepth?.[0]?.title]);
+  }, [activeMenuDepth?.[0]?.menuCode]);
 
   useEffect(() => {
     if (!activeMenuDepth?.[0]?.children) {
       return;
     }
+    setToggleLnb(true);
     setMenus(activeMenuDepth?.[0]?.children);
   }, [activeMenuDepth?.[0]?.children]);
 
@@ -80,8 +81,11 @@ function LNBComponent() {
           <Button
             type="button"
             className={cn(styles.lnb_title_btn, buttonClass)}
-            onClick={() => handleOpenAll()}>
-            <span className={styles.lnb_title_text}>{activeMenuDepth[0].title}</span>
+            onClick={() => handleOpenAll()}
+          >
+            <span className={styles.lnb_title_text}>
+              {t(`MENU.${activeMenuDepth[0].menuCode}`)}
+            </span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>
         </h2>
@@ -99,7 +103,8 @@ function LNBComponent() {
         className={styles.btn_toggle}
         onlyIcon
         aria-expanded={toggleLnb}
-        onClick={handleToggleLnb}>
+        onClick={handleToggleLnb}
+      >
         <IcoArrowBackward width={20} height={20} stroke="#131C30" />
       </Button>
     </div>

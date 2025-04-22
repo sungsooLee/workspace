@@ -1,24 +1,24 @@
 import { memo } from 'react';
 import { Link, useMatchRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
-import type { Menu } from '../../../../../../types';
-import { useActiveMenuDepthState } from '../../../../../../features/platform';
-
-import { useMenuHierarchy } from '../../../../service/menu.service';
+import type { Menu } from '@learnway/auth';
+import { useActiveMenuDepthState, useMenuHierarchy } from '@learnway/auth';
 
 import styles from './navigate.module.css';
 
 function NavigateComponent() {
+  const { t } = useTranslation();
   const [activeMenuDepthMenu] = useActiveMenuDepthState();
   const { data } = useMenuHierarchy();
-
+  console.log('useMenuHierarchy', data);
   const matchRoute = useMatchRoute();
 
   return (
     <div className={`${styles.start} nlp--navigate`}>
       <nav className={styles.nav}>
         <ul>
-          {data?.map((menu: Menu, index: number) => {
+          {data?.menus?.map((menu: Menu, index: number) => {
             return (
               <li key={menu.key}>
                 <Link
@@ -28,10 +28,11 @@ function NavigateComponent() {
                     menu.path &&
                     (matchRoute({ to: menu?.path }) ||
                       activeMenuDepthMenu?.[0]?.path === menu?.path)
-                      ? styles._active
+                      ? styles.active
                       : ''
-                  }>
-                  {menu.title}
+                  }
+                >
+                  {t(`MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

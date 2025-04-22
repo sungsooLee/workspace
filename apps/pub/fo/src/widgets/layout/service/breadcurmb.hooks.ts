@@ -1,13 +1,13 @@
 // hooks/useCategoryBreadcrumbs.ts
 
 import { useMatch, useRouter } from '@tanstack/react-router';
-import { useCategories } from '../../../features/category/services/category.service';
+//import { useCategories } from '../../../features/category';
 import { Category } from '../../../types/entities/category';
 import { useEffect, useState } from 'react';
 
 function useCategoryBreadcrumbs(currentCategoryId: number | null) {
-  const { data: categories } = useCategories();
-  console.log(categories);
+  const { data: categories } = { data: [] }; // useCategories();
+
   const findCategoryPath = (categoryId: number) => {
     const path: Category[] = [];
 

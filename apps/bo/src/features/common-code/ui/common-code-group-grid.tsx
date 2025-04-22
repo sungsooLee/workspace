@@ -9,6 +9,7 @@ import {
   DynamicFormField,
   Grid,
   GridImperative,
+  GridState,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -59,6 +60,7 @@ const CommonCodeGroupGridComponent = ({
   onPageSizeChange,
   totalRows,
   state,
+  onStateChange,
 }: any) => {
   const gridRef = useRef<GridImperative>(null);
   const router = useRouter();
@@ -85,6 +87,7 @@ const CommonCodeGroupGridComponent = ({
     queryParams: {
       page,
       size,
+      sort: state.sort || '',
       cdGroupId: state.cdGroupId,
       cdGroupName: state.cdGroupName,
       isUsed: state.isUsed,
@@ -231,6 +234,14 @@ const CommonCodeGroupGridComponent = ({
   // 폼 필드 활성화 여부 결정
   const isFormDisabled = formMode === FORM_MODE.NONE;
 
+  const handleStateChange = (newState: GridState) => {
+    console.log(newState);
+    // 상위 컴포넌트로 상태 전달
+    if (onStateChange) {
+      onStateChange(newState);
+    }
+  };
+
   return (
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
@@ -254,6 +265,7 @@ const CommonCodeGroupGridComponent = ({
               columnPinning={{ columns: ['cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}
               emptyMessage="조회 결과가 없습니다."
+              onStateChange={handleStateChange}
             />
           </div>
         </div>
@@ -422,6 +434,7 @@ const columns = (router: any) => {
         );
       },
       header: '공통코드',
+      enableSorting: false,
     }),
 
     columnHelper.accessor('createdDate', {

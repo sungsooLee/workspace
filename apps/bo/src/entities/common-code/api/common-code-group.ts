@@ -12,21 +12,31 @@ export default class CommonCodeGroupService {
   static fetchCodeGroups(
     page: number,
     size: number,
+    sort = '',
     cdGroupId = '',
     cdGroupName = '',
-    isUsed = true,
+    isUsed = '',
     cdName = '',
   ): Promise<any> {
-    const params = new URLSearchParams({
-      page: page.toString(),
-      size: size.toString(),
-      cdGroupId,
-      cdGroupName,
-      isUsed: isUsed.toString(),
-      cdName,
-    });
+    const baseUrl = `${PMSApiPrefix()}/code-groups`;
 
-    return httpService.get<any>(`${PMSApiPrefix()}/code-groups?${params.toString()}`);
+    // 쿼리 파라미터 객체로 전달
+    const queryParams: any = {
+      page,
+      size,
+      sort,
+      cdGroupId: cdGroupId || undefined,
+      cdGroupName: cdGroupName || undefined,
+      isUsed: isUsed !== undefined ? isUsed : undefined,
+      cdName: cdName || undefined,
+    };
+
+    // 값이 없는 파라미터 제거
+    Object.keys(queryParams).forEach(
+      (key) => queryParams[key] === undefined && delete queryParams[key],
+    );
+
+    return httpService.get(baseUrl, queryParams);
   }
 
   /**

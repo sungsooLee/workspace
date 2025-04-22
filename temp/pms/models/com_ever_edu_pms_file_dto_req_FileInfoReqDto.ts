@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_file_dto_req_FileInfoReqDto = {
-    groupId?: number;
     /**
      * 파일그룹 아이디
      */

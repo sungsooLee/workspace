@@ -89,9 +89,9 @@
     .review_wrap {
       @apply mt-[42px];
       h2 {
-        @apply title_5_b flex items-center text-[var(--gray9)];
+        @apply title_5_b flex items-center leading-[22px] text-[var(--gray9)];
         span {
-          @apply title_5_r ml-[4px] inline-block text-[var(--gray7)];
+          @apply title_5_r ml-[4px] inline-block leading-[22px] text-[var(--gray7)];
         }
       }
 
@@ -198,6 +198,88 @@
             span {
               @apply rounded-[8px];
             }
+            button {
+              @apply text-[var(--gray8)];
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.introduction {
+        h2 {
+          @apply title_6_b;
+        }
+        .learn_box {
+          @apply mt-[8px] p-[16px];
+          img {
+            @apply h-[24px] w-[24px];
+          }
+          strong {
+            @apply title_7_b;
+          }
+        }
+        .info_box {
+          @apply mt-[24px];
+          .tit_box {
+            @apply mb-[8px];
+            strong {
+              @apply title_7_b;
+            }
+          }
+          .evaluation_box {
+            & > ul {
+              @apply block;
+              & > li {
+                & + li {
+                  @apply ml-0 mt-[8px];
+                }
+              }
+            }
+          }
+        }
+        .operator_box {
+          @apply mt-[24px];
+          strong {
+            @apply title_7_b;
+          }
+          & > div {
+            & + div {
+              @apply mt-[8px];
+            }
+          }
+        }
+        .education_wrap {
+          @apply mt-[24px];
+          h2 {
+            @apply inline-block;
+          }
+          .filter_wrap {
+            @apply float-right mt-0 inline-block;
+            .filter {
+              .array {
+                button {
+                  @apply !body_4_r;
+                  &[class*='active'] {
+                    @apply !body_4_b;
+                  }
+                }
+              }
+            }
+          }
+          .education_box {
+            @apply mt-[8px];
+          }
+        }
+        .review_wrap {
+          @apply mt-[24px];
+          .review_rating {
+            @apply mt-[8px];
           }
         }
       }

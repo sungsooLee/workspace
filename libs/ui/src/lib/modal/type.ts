@@ -64,4 +64,7 @@ export interface useModalReturnValue {
   closeAll: () => void;
   alert: (props: AlertComponentProps | string) => Promise<boolean>;
   confirm: (props: AlertComponentProps | string) => Promise<boolean>;
+  showSaveComplete: (props?: AlertComponentProps) => Promise<boolean>;
+  showUpdateComplete: (props?: AlertComponentProps) => Promise<boolean>;
+  showDeleteComplete: (props?: AlertComponentProps) => Promise<boolean>;
 }

@@ -1,6 +1,9 @@
 import { memo, useRef, useEffect, useState } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
+
 import { IcoArrowForward } from '@learnway/icons';
+import type { Menu } from '@learnway/auth';
 import styles from './navigate-hover.module.css';
 
 import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';
@@ -11,8 +14,9 @@ interface NavigateHoverComponentProps {
 }
 
 function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps) {
+  const { t } = useTranslation();
   const router = useRouter();
-  const { data: menus } = useMenuHierarchy();
+  const { data } = useMenuHierarchy();
 
   useEffect(() => {
     return router.history.subscribe((navigation) => {
@@ -23,25 +27,25 @@ function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps
   return (
     <div className={`${styles.start} ${styles.menu_all} ${isOpen ? styles.active : ''}`}>
       <div className={styles.menu_inner}>
-        {menus.map((menu, index) => (
+        {data.menus.map((menu, index) => (
           <div key={index} className={styles.menu_div}>
             <div className={styles.menu_list}>
               <h2 className={styles.tit}>
                 {menu.path ? (
                   <Link to={menu.path}>
-                    <span>{menu.menuName}</span>
+                    <span>{t(`MENU.${menu.menuCode}`)}</span>
                     <IcoArrowForward width={16} height={16} stroke="#6F798B" />
                   </Link>
                 ) : (
-                  <span>{menu.menuName}</span>
+                  <span>{t(`MENU.${menu.menuCode}`)}</span>
                 )}
               </h2>
 
               {menu.children && menu.children.length > 0 && (
                 <ul className={styles.list}>
-                  {menu.children.map((subMenu, subIndex) => (
+                  {menu.children.map((subMenu: Menu, subIndex: number) => (
                     <li key={subIndex}>
-                      <Link to={subMenu.path}>{subMenu.menuName}</Link>
+                      <Link to={subMenu.path}>{t(`MENU.${subMenu.menuCode}`)}</Link>
                     </li>
                   ))}
                 </ul>

@@ -225,6 +225,7 @@ function RouteComponent() {
                       { value: 'mobile', label: 'Mobile' },
                     ]}
                     value={['all']}
+                    disabled
                   />
                 </div>
               </div>
@@ -245,7 +246,9 @@ function RouteComponent() {
                       { value: 'type1', label: '사용' },
                       { value: 'type2', label: '사용불가' },
                     ]}
+                    defaultValue={'type1'}
                     className={cn(formStyles.radio_box)}
+                    disabled
                   />
                 </div>
               </div>

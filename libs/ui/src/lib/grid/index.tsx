@@ -554,7 +554,7 @@ const Grid = forwardRef(
         if (data.length === 0) {
           return (
             <tbody>
-              <tr>
+              <tr className={styles.empty_wrap}>
                 <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
                   {renderEmptyMessage()}
                 </td>
@@ -593,7 +593,7 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(
               row.getIsSelected() && styles.selected,
-              row.getIsSelected() && 'bg-[#edfcff] hover:bg-[#edfcff]',
+              row.getIsSelected() && 'bg-[#edfcff]',
             )}
             style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}

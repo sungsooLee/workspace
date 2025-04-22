@@ -4,25 +4,28 @@ import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
+import { DynamicFormField } from '@learnway/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
 import { useSetLanguage } from '../../features/platform';
 
-import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { FormRow } from '../../shared/ui/form';
+import { AUTH_CONTAINERS } from '../../widgets/layout';
 
 import authStyles from './auth.module.css';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../shared/ui/form';
+import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
   ...pageRouteConfig({
+    authorization: false,
     meta: {
       title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+      container: AUTH_CONTAINERS.LOGIN,
     },
   }),
 });
@@ -39,12 +42,6 @@ function RouteComponent() {
   const { set: setLanguage, inProgress } = useSetLanguage();
 
   useEffect(() => {
-    if ((authData as any)?.username && !inProgress) {
-      router.navigate({ to: '/' });
-    }
-  }, [authData, inProgress]);
-
-  useEffect(() => {
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
@@ -52,11 +49,15 @@ function RouteComponent() {
     });
   }, []);
 
-  const handleOnSubmit = async (data: any) => {
-    const user = await login(data);
-    const locale = user?.locale;
-    locale && (await setLanguage(locale));
-    router.navigate({ to: '/' });
+  const handleOnSubmit = async (values: any) => {
+    await login(values, {
+      onSuccess: async (data) => {
+        const locale = data?.locale;
+        locale && (await setLanguage(locale));
+
+        router.navigate({ to: '/' });
+      },
+    });
   };
 
   return (

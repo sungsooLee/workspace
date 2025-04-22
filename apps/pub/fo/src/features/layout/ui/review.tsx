@@ -35,7 +35,7 @@ const ReviewComponent = ({ className }: ReviewProps) => {
               <span>2026.07.12</span>
               {/* pin */}
               <i className={styles.pin}>
-                <IcoPin width={20} height={20} fill="#d6dae1" />
+                <IcoPin width={20} height={20} fill="#d6dae1" stroke="#d6dae1" />
               </i>
             </div>
             <Popover

@@ -1,8 +1,9 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import React, { useState, useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { guideData } from '../../../config'; // 퍼블 목록 데이터
-import '../../../assets/styles/guide.css';
+import '../../../../../../../libs/styles/src/lib/bo/assets/styles/guide.css';
 
 export const Route = createFileRoute('/_guide/guide/')({
   component: RouteComponent,
@@ -73,14 +74,16 @@ function RouteComponent() {
           className="graph_bar completed"
           style={{
             width: `${stats.total > 0 ? (stats.completed / stats.total) * 100 : 0}%`,
-          }}>
+          }}
+        >
           완료 : {stats.completed}본
         </div>
         <div
           className="graph_bar remaining"
           style={{
             width: `${stats.total > 0 ? (stats.remaining / stats.total) * 100 : 0}%`,
-          }}>
+          }}
+        >
           남은본수 : {stats.remaining}본
         </div>
       </div>

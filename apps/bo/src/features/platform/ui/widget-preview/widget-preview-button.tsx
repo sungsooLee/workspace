@@ -3,8 +3,9 @@ import { memo } from 'react';
 import { Button, useModal } from '@learnway/ui';
 
 import { WidgetPreviewModal } from './widget-preview-modal';
+import type { Widget } from '../../../../types';
 
-const WidgetPreviewComponent = ({ widgetCode }: { widgetCode: string }) => {
+const WidgetPreviewComponent = ({ widget }: { widget: Widget }) => {
   const { open: openModal } = useModal();
   return (
     <Button
@@ -15,7 +16,7 @@ const WidgetPreviewComponent = ({ widgetCode }: { widgetCode: string }) => {
         e.stopPropagation();
         openModal({
           width: 'xl',
-          content: <WidgetPreviewModal widgetCode={widgetCode} />,
+          content: <WidgetPreviewModal widget={widget} />,
         });
       }}
     >

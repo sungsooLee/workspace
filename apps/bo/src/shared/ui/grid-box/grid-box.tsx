@@ -60,7 +60,7 @@ const GridBoxComponent: FC<any> = ({ config }) => {
       {...props}
       data={data}
       columns={girdColumns}
-      disabledSelectionToggle
+      //disabledSelectionToggle
       hideColumnSettings
       hideRowSelectionCheckBox
       onChange={(newData: any) => handleChangeGridData(newData)}

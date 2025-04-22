@@ -1,10 +1,13 @@
 .start {
   &.course_information {
     strong {
-      @apply title_6_b block text-center text-[var(--gray8)];
+      @apply title_6_b block break-keep text-center text-[var(--gray8)];
     }
     p {
       @apply body_3_r mt-[16px] text-center text-[var(--gray7)];
+    }
+    svg {
+      @apply mx-auto mb-[16px];
     }
   }
 

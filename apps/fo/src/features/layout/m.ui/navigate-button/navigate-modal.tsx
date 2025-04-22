@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 
 import { useMenuHierarchy } from '../../../../entities/menu';
 
@@ -62,7 +62,7 @@ const NavigateModalComponent = () => {
                     <li>
                       <Link to={''}>
                         {/*<IcoReview width={20} height={20} stroke="#131c30"></IcoReview>*/}
-                        {menu.menuName}
+                        {t(`MENU.${menu.menuCode}`)}
                       </Link>
                     </li>
                   ),
@@ -72,13 +72,13 @@ const NavigateModalComponent = () => {
             {menu.menus.map((menu) => (
               <li>
                 <div className={styles.gnb_title}>
-                  <strong>{menu.menuName}</strong>
+                  <strong>{t(`MENU.${menu.menuCode}`)}</strong>
                 </div>
                 {menu?.children && menu?.children?.length > 0 && (
                   <ul className={styles.gnb_list}>
                     {menu?.children.map((subMenu) => (
                       <li>
-                        <Link to={subMenu.path}>{subMenu.menuName}</Link>
+                        <Link to={subMenu.path}>{t(`MENU.${subMenu.menuCode}`)}</Link>
                       </li>
                     ))}
                   </ul>

@@ -147,6 +147,8 @@ export const Basic: Story = {
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               placeholder="트리 검색..."
+              showSearchIcon={true}
+              iconType={'tree'}
             />
             <NodeDetail expandAll={handleExpandAll} collapseAll={handleCollapseAll} />
           </div>

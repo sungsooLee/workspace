@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import {
-  Information,
   IcoArrowDown,
   IcoArrowUp,
   IcoAlarmFill,
@@ -49,6 +48,7 @@ import {
   IcoCheckboxChecked,
   IcoAlertCircle,
   IcoAlertCircleGray,
+  IcoAlertCircle03,
   IcoTooltipArrow,
   IcoCloseCircle,
   IcLogOut01,
@@ -167,7 +167,6 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
         <h3 className="guide_tit3">SVG Lists</h3>
         <div className="flex_box">
           <div className="desc col">
-            <Information width={30} height={30} stroke="#4C515E" />
             <IcoArrowDown width={30} height={30} stroke="#4C515E" />
             <IcoArrowUp width={30} height={30} stroke="#4C515E" />
             <IcoAlarmFill width={30} height={30} stroke="#4C515E" />
@@ -216,6 +215,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoCheckboxChecked width={30} height={30} stroke="#4C515E" />
             <IcoAlertCircle width={30} height={30} stroke="#4C515E" />
             <IcoAlertCircleGray width={30} height={30} stroke="#4C515E" />
+            <IcoAlertCircle03 width={30} height={30} />
             <IcoTooltipArrow width={30} height={30} stroke="#4C515E" />
             <IcoCloseCircle width={30} height={30} stroke="#4C515E" />
             <IcLogOut01 width={30} height={30} stroke="#4C515E" />
@@ -241,7 +241,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoComplete02 width={30} height={30} stroke="#4C515E" fill="#4c515e" />
             <IcoBlog width={30} height={30} stroke="#4C515E" />
             <IcoEntrust width={30} height={30} stroke="#4C515E" />
-            <IcoInfoCircle width={30} height={30} stroke="#4C515E" />
+            <IcoInfoCircle width={30} height={30} stroke="#4C515E" fill="none" />
             <IcoImage01 width={30} height={30} stroke="#4C515E" />
             <IcoVideo01 width={30} height={30} stroke="#4C515E" />
             <IcoVideo02 width={30} height={30} stroke="#4C515E" />

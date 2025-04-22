@@ -6,7 +6,7 @@ export type com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin = {
     /**
      * 상태
      */
-    useYn?: boolean | null;
+    isUsed?: boolean | null;
     /**
      * 위젯명
      */

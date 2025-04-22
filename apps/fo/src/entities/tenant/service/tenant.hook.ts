@@ -1,15 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
-import { queryKeys, queryOptions, mutateOptions } from './tenant.queries';
+import { queryKeys, tenantQueryOptions, mutateOptions } from './tenant.queries';
 import { Tenant } from '../../../types';
 
 export function useFetchTenant(tenantId?: number) {
-  return useQuery(queryOptions.detail(tenantId));
+  return useQuery(tenantQueryOptions.detail(tenantId));
 }
 
 export function useFetchTenantByUser(accountId?: number) {
-  return useQuery(queryOptions.byUser(accountId));
+  return useQuery(tenantQueryOptions.byUser(accountId));
 }
 
 export function useCreateTenant(mutationOptions = {}) {

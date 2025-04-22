@@ -2,25 +2,34 @@
 .start {
   .accordion_item {
     .accordion_btn {
-      @apply relative box-border flex max-h-[70px] w-full items-center py-[13px] pl-0 pr-[32px];
+      @apply relative box-border flex max-h-[70px] w-full items-center;
       & > span {
-        @apply text-left text-[14px] leading-[22px] text-[var(--gray9)];
+        @apply flex h-full min-h-[40px] w-full items-center pl-[16px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
+      }
+      &[data-state='closed'] {
+        svg {
+          @apply stroke-[var(--gray6)];
+        }
       }
       &[data-state='open'] {
-        @apply font-bold;
         svg {
-          @apply rotate-180;
+          @apply rotate-180 stroke-[var(--gray9)];
+        }
+      }
+      [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply font-bold;
         }
       }
       svg {
-        @apply absolute right-0 top-1/2 -mt-[8px] h-[16px] w-[16px];
+        @apply absolute right-[12px] top-1/2 -mt-[8px] h-[16px] w-[16px];
       }
     }
     .accordion_content {
       @apply rounded-[8px] border-b-2 border-[#001b60] bg-[var(--gray1)];
       .accordion_item {
         .accordion_btn {
-          @apply pl-[16px];
+          /* @apply pl-[16px]; */
           svg {
             @apply right-[16px];
           }
@@ -28,7 +37,7 @@
         .accordion_content {
           .accordion_btn {
             & > span {
-              @apply relative pl-[16px] text-white;
+              @apply relative text-white;
             }
             svg {
               @apply stroke-[var(--white)];
@@ -41,7 +50,7 @@
               }
               &[data-state='open'] {
                 span {
-                  @apply pl-[28px];
+                  /* @apply pl-[28px]; */
                   &::before {
                     @apply absolute left-[16px] top-1/2 -mt-[3px] block h-[6px] w-[6px] rounded-[3px] bg-white content-[''];
                   }

@@ -1,3 +1,4 @@
+import { Program } from '../../../types/entities/program';
 import ProgramManagerService from '../api/program-manager';
 
 export const queryKeys = {
@@ -5,12 +6,27 @@ export const queryKeys = {
 };
 
 export const programManageQueryOptions = {
-  all: (rootTreeId = '1', apiScopeCode = 'FO') => ({
-    queryKey: queryKeys.all,
-    queryFn: async () => ProgramManagerService.fetchPrograms(rootTreeId, apiScopeCode),
+  all: (apiScopeCode = 'FO') => ({
+    queryKey: [...queryKeys.all, apiScopeCode],
+    queryFn: async () => ProgramManagerService.fetchPrograms(apiScopeCode),
   }),
-  getProgram: (apiId: string) => ({
-    queryKey: [...queryKeys.all, apiId],
-    queryFn: async () => ProgramManagerService.fetchProgram(apiId),
+  getProgram: (apiUuid: string) => ({
+    queryKey: [...queryKeys.all, apiUuid],
+    queryFn: async () => ProgramManagerService.fetchProgram(apiUuid),
+  }),
+};
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: Program) => ProgramManagerService.createProgram(payload),
+  }),
+  delete: () => ({
+    mutationFn: (apiId: string) => ProgramManagerService.deleteProgram(apiId),
+  }),
+  update: () => ({
+    mutationFn: (payload: Program) => ProgramManagerService.updateProgram(payload),
+  }),
+  dnd: () => ({
+    mutationFn: (payload: any) => ProgramManagerService.dndProgram(payload),
   }),
 };

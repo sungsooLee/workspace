@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button, GridState } from '@learnway/ui';
 
 import { t } from 'i18next';
 import { pageRouteConfig } from '../../../../features/auth';
@@ -26,11 +26,14 @@ function RouteComponent() {
   const { state } = useCurrentRoute(Route);
   const router = useRouter();
 
-  console.log(state);
   // 페이지네이션 상태
   const [pageState, setPageState] = useState({
     page: 0,
     size: 10,
+  });
+
+  const [sortState, setSortState] = useState({
+    sort: '',
   });
 
   // 검색 파라미터 상태
@@ -38,13 +41,14 @@ function RouteComponent() {
     cdGroupId: state.cdGroupId || '',
     cdGroupName: state.cdGroupName || '',
     cdGroupContent: '',
-    isUsed: true,
+    isUsed: '',
     cdName: '',
   });
 
   const { data: commonCodeListData } = useCommonCodeList(
     pageState.page,
     pageState.size,
+    sortState.sort,
     searchParams.cdGroupId,
     searchParams.cdGroupName,
     searchParams.cdGroupContent,
@@ -80,9 +84,29 @@ function RouteComponent() {
     setPageState({ page: 0, size: newSize });
   };
 
+  const handleGridStateChange = (newState: GridState) => {
+    if (newState.sorting && newState.sorting.length > 0) {
+      const sortItem = newState.sorting[0];
+      const direction = sortItem.desc ? 'desc' : 'asc';
+      const sortItemNameMap: Record<string, string> = {
+        cdId: 'commonCdEntityId.cdId',
+        isUsed: 'commonCdEntity.isUsed',
+        createdDate: 'commonCdEntity.createdDate',
+        createdBy: 'commonCdEntity.createdBy',
+        modifiedDate: 'commonCdEntity.modifiedDate',
+        lastModifiedBy: 'commonCdEntity.lastModifiedBy',
+      };
+      const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+      const sortValue = `${sortItemName},${direction}`;
+      setSortState({ sort: sortValue });
+    } else {
+      setSortState({ sort: '' });
+    }
+  };
+
   return (
     <div>
-      <PageContainer scrollHidden={true} titleProp="공통코드그룹관리">
+      <PageContainer scrollHidden={true}>
         <ContentsButtons>
           <Button
             type="button"
@@ -90,7 +114,7 @@ function RouteComponent() {
             size="sm"
             onClick={() => {
               router.navigate({
-                to: '/platform/system/translation',
+                to: '/platform/system/multilingual',
                 state: {
                   keyType: 'COMMON_CODE', // 다국어 분류 - 공통코드
                 },
@@ -122,6 +146,7 @@ function RouteComponent() {
             onPageSizeChange={handlePageSizeChange}
             state={searchParams}
             totalRows={commonCodeListData && commonCodeListData.totalElements}
+            onStateChange={handleGridStateChange} // 이 부분 추가
           />
         </MainContents>
       </PageContainer>

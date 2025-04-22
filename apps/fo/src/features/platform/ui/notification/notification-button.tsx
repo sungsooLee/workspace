@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect';
 import { Popover, Button, useModal } from '@learnway/ui';
 import { IcoBell02, IcoArray } from '@learnway/icons';
 import { PMSApiPrefix } from '@learnway/config';
-import { useFetchAuthUser } from '@learnway/config';
+import { useFetchAuthUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 
 import { useNotifications } from '../../../../entities/notification/service/notification.hook';

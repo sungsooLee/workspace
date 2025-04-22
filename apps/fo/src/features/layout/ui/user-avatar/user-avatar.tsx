@@ -4,7 +4,7 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser } from '@learnway/config';
+import { useFetchAuthUser, useLogoutUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 import { IcLogOut01 } from '@learnway/icons';
 
@@ -44,7 +44,7 @@ const PopoverContent = () => {
     () => [
       {
         title: '개인정보 변경',
-        action: () => router.navigate({ to: '/' }),
+        action: () => router.navigate({ to: '/my-page/privacy' }),
       },
       {
         title: '프로필 작성',

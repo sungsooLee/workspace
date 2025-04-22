@@ -4,12 +4,13 @@ import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
 
 import { cn } from '@learnway/shared';
-import { IcoDelete03, IcoSearch } from '@learnway/icons';
+import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 
 import styles from './input.module.css';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
+  id?: string;
   placeholder?: string;
   unitText?: string;
   timerText?: string; // timer input 에서만 사용
@@ -25,6 +26,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   error?: boolean; // Input border 유무
   //
   showSearchIcon?: boolean; // 검색 아이콘 표시 유무
+  iconType?: 'search' | 'tree'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   //
 }
@@ -33,6 +35,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       type = 'text',
+      id,
       thousandSeparator = true,
       readOnly,
       disabled,
@@ -51,6 +54,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       allowEmptyFormatting = true,
       onKeyDown,
       showSearchIcon,
+      iconType = 'search',
       onEnterKeyDown,
       maxLength = 0,
       ...props
@@ -94,6 +98,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           <NumericFormat
             {...props}
             getInputRef={ref}
+            id={id}
             className={cn(
               styles.input,
               className,
@@ -108,12 +113,14 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            disabled={disabled}
             maxLength={maxLength > 0 ? maxLength : undefined}
           />
         ) : type === 'mask' ? (
           <PatternFormat
             {...props}
             getInputRef={ref}
+            id={id}
             className={cn(className)}
             value={value}
             format={format}
@@ -130,6 +137,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         ) : (
           <input
             ref={ref}
+            id={id}
             value={value || ''}
             readOnly={readOnly}
             disabled={disabled}
@@ -190,7 +198,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               className={cn(styles.clear)}
               onlyIcon
             >
-              <IcoSearch width={20} height={20} stroke={'#131C30'} />
+              {iconType === 'tree' ? (
+                <IcoSearchWrite width={20} height={20} stroke={'#4C515E'} />
+              ) : (
+                <IcoSearch width={20} height={20} stroke={'#131C30'} />
+              )}
             </Button>
           )}
         </div>

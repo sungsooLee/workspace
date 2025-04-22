@@ -12,7 +12,7 @@ export const queryKeys = {
   byUser: (accountId: number) => ['tenants', 'byUser', accountId] as const,
 };
 
-export const queryOptions = {
+export const tenantQueryOptions = {
   detail: (tenantId?: number) =>
     tenantId
       ? {

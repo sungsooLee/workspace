@@ -1,6 +1,6 @@
 .start {
   &.package_wrap {
-    @apply px-[20px];
+    @apply px-[20px] pb-[80px];
     .thumbnail_img {
       img {
         @apply w-full overflow-hidden rounded-[16px];
@@ -48,8 +48,18 @@
             @apply pb-0;
           }
           & > button {
+            @apply max-h-none;
+            & > span {
+              @apply pl-0;
+            }
             & + div {
               @apply bg-inherit;
+            }
+            & > svg {
+              @apply right-0 top-[2px] h-[20px] w-[20px] !stroke-[#6f798b];
+            }
+            strong {
+              @apply leading-[26px];
             }
           }
         }
@@ -89,16 +99,6 @@
       @apply relative mt-[16px] pb-[28px];
       &::after {
         @apply absolute bottom-0 left-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
-      }
-    }
-  }
-}
-
-:global(body.mobile) {
-  @screen mobile {
-    .start {
-      &.package_wrap {
-        @apply pb-[80px];
       }
     }
   }

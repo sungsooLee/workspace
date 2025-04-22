@@ -1,0 +1,15 @@
+/* role-info.module.css */
+.start {
+  .contents_wrap {
+    @apply scrollbar block h-[calc(100vh-506px)] w-full min-w-0 overflow-y-auto overflow-x-hidden pb-[16px];
+    [class*='nlp--contents-row'] [class*='nlp--switch'] {
+      @apply translate-y-0;
+    }
+    [class*='history_info_wrap'] {
+      @apply mt-[24px];
+    }
+    [class*='chiplist_modal_wrap'] {
+      @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray2)] pb-[16px];
+    }
+  }
+}

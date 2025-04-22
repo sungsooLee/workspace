@@ -13,6 +13,7 @@ export interface AccordionItem {
   value: string;
   title: string | React.ReactNode;
   children?: React.ReactNode;
+  active?: boolean;
 }
 
 export interface AccordionComponentProps {
@@ -68,15 +69,21 @@ const AccordionComponent = forwardRef<
         value={editionValue as any}
         defaultValue={editionDefaultValue as any}
         onValueChange={onValueChange}
-        ref={ref}>
+        ref={ref}
+      >
         {items.map((item: AccordionItem) => {
           return (
             <Primitive.Item
               value={item.value}
               className={cn(styles.accordion_item)}
-              key={item.value}>
-              <Primitive.Trigger className={cn(styles.accordion_btn)}>
-                <span className="accordion_title">{item.title}</span>
+              key={item.value}
+            >
+              <Primitive.Trigger
+                className={cn(styles.accordion_btn, item.children && 'has_children')}
+              >
+                <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
+                  {item.title}
+                </span>
                 {item.children && <IcoArrowDown width={16} height={16} stroke="#131C30" />}
               </Primitive.Trigger>
               <Primitive.Content className={cn(styles.accordion_content)}>

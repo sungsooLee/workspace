@@ -37,7 +37,7 @@ function RouteComponent() {
         {
           name: 'preview',
           label: '미리보기',
-          render: ({ row }: any) => <WidgetPreviewButton widgetCode={row?.widgetCode} />,
+          render: ({ row }: any) => <WidgetPreviewButton widget={row} />,
         },
       ],
       data: [],
@@ -46,9 +46,10 @@ function RouteComponent() {
         pageIndex: 0,
         totalRows: 0,
       },
-      height: 566,
+      height: 450,
       hideColumnSettings: true,
       onRowSelect: (row: any) => {
+        console.log('onRowSelect', row);
         router.navigate({ to: '/platform/widget/view', state: { widgetCode: row?.widgetCode } });
       },
     }),
@@ -66,7 +67,9 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <GridBox config={gridConfig} />
+        <div className="grid_wrap line">
+          <GridBox config={gridConfig} />
+        </div>
       </MainContents>
     </PageContainer>
   );

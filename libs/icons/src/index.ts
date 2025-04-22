@@ -1,7 +1,6 @@
-export { ReactComponent as Information } from './lib/information.svg';
-export { ReactComponent as IcoArrowDown } from './lib/ic_arrow_down.svg'; // 16*16 Arrow down
-export { ReactComponent as IcoArrowUp } from './lib/ic_arrow_up.svg'; // 16*16 Arrow up
-export { ReactComponent as IcoAlarmFill } from './lib/ic_alarm_fill.svg'; // 32*32 Alarm
+export { ReactComponent as IcoArrowDown } from './lib/ic_arrow_down.svg';
+export { ReactComponent as IcoArrowUp } from './lib/ic_arrow_up.svg';
+export { ReactComponent as IcoAlarmFill } from './lib/ic_alarm_fill.svg';
 export { ReactComponent as IcoCheck } from './lib/ic_check.svg'; // 20*20 Check
 export { ReactComponent as IcoCheck02 } from './lib/ic_check02.svg';
 export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star fill
@@ -17,11 +16,11 @@ export { ReactComponent as IcoFillActive } from './lib/ic_fill_active.svg'; // t
 export { ReactComponent as IcoArrowForward } from './lib/ic_arrow_forward.svg'; // bread arrow
 export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home BO
 export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
-export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 line
+export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 lineinformation
 export { ReactComponent as IcoBell03 } from './lib/ic_bell_03.svg'; // bell03 line
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
 export { ReactComponent as IcoChevronDown } from './lib/ic_chevron_down.svg';
-export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging btn
+export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging IcoArrowDown
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn
@@ -49,6 +48,7 @@ export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; 
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
 export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // tootip icon
 export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray.svg';
+export { ReactComponent as IcoAlertCircle03 } from './lib/ic_alert_circle_03.svg';
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
@@ -122,6 +122,7 @@ export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
+export { ReactComponent as IcoFile01 } from './lib/ic_file_01.svg'; // tree file
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
@@ -129,4 +130,4 @@ export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
 
 //export { Information };
 
-export { Info } from './lib/info';
+//export { Info } from './lib/info';

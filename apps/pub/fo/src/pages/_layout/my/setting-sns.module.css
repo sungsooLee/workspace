@@ -1,9 +1,5 @@
 .start {
   &.sns_wrap {
-    @apply mx-auto mt-[24px] w-[780px];
-    h2 {
-      @apply title_4_b text-[var(--gray9)];
-    }
     .box {
       @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] pt-[32px];
       .confirm {

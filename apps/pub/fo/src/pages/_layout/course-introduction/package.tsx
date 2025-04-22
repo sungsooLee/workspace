@@ -20,6 +20,9 @@ export const Route = createFileRoute('/_layout/course-introduction/package')({
 });
 
 function RouteComponent() {
+  // 찜
+  const [heart, setHeart] = useState(false);
+
   const options: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
@@ -194,11 +197,16 @@ function RouteComponent() {
                 </div>
               </div>
               {/* button */}
-              <div className={packageInformationStyles.btn_box}>
-                <Button>
-                  <IcoHeart width={20} height={20} stroke="#4c515e" fill="none" />
-                  {/* 찜 상태 */}
-                  {/* <IcoHeart width={20} height={20} stroke="#ff4646" fill="#ff4646" /> */}
+              <div
+                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
+              >
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
                 </Button>
                 <Button>
                   <IcoShare width={20} height={20} stroke="#4c515e" />

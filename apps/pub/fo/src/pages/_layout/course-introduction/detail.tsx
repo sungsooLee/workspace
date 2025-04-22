@@ -14,7 +14,7 @@ import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
-  CourseInformationPopup,
+  CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -28,6 +28,7 @@ import styles from './detail.module.css';
 // 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
+import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
@@ -216,6 +217,20 @@ function RouteComponent() {
     });
   };
 
+  // 차수 알림 등록
+  const CourseTimeAlert = () => {
+    openAlert({
+      title: <>차수 알림 등록</>,
+      content: (
+        <>
+          본 과정의 차수 오픈시 연락드리겠습니다.
+          <br />
+          감사합니다.
+        </>
+      ),
+    });
+  };
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       {/* page contents */}
@@ -348,7 +363,9 @@ function RouteComponent() {
 
               {/* 수강신청 없는 case */}
               {/* button */}
-              {/* <div className={packageInformationStyles.btn_box}>
+              {/* <div
+                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
+              >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
                     width={20}
@@ -362,9 +379,31 @@ function RouteComponent() {
                 </Button>
               </div> */}
 
+              {/* 수강신청 못하는 case */}
+              {/* <div
+                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
+              >
+                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+                  <IcoHeart
+                    width={20}
+                    height={20}
+                    stroke={heart === true ? '#ff4646' : '#4c515e'}
+                    fill={heart === true ? '#ff4646' : 'none'}
+                  />
+                </Button>
+                <Button>
+                  <IcoShare width={20} height={20} stroke="#4c515e" />
+                </Button>
+                <div className={packageInformationStyles.course}>
+                  <Button variant="line" onClick={() => CourseTimeAlert()}>
+                    차수개설 알림신청
+                  </Button>
+                </div>
+              </div> */}
+
               {/* 수강신청 있는 case */}
               <div
-                className={`${packageInformationStyles.btn_box} ${packageInformationStyles.course_box}`}
+                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
               >
                 <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
                   <IcoHeart
