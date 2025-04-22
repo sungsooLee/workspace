@@ -6,20 +6,24 @@
       .title {
         @apply title_bo_4_b text-[var(--gray9)];
       }
+      & + div {
+        @apply flex items-center justify-end;
+        [class*='nlp--input'] {
+          @apply mr-[8px] w-[120px];
+        }
+      }
     }
 
-    .input_area {
-      [class*='btn_text'] {
-        @apply text-[var(--gray8)];
-        & + [class*='btn_text'] {
-          @apply relative pl-[16px];
-          &::before {
-            @apply absolute left-0 top-1/2 h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
-          }
+    [class*='btn_text'] {
+      @apply text-[var(--gray8)];
+      & + [class*='btn_text'] {
+        @apply relative pl-[16px];
+        &::before {
+          @apply absolute left-0 top-1/2 h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
         }
-        &:disabled {
-          @apply !text-[var(--gray5)];
-        }
+      }
+      &:disabled {
+        @apply !text-[var(--gray5)];
       }
     }
     &.line {

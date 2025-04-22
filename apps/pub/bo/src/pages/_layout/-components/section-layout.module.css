@@ -23,6 +23,14 @@
       }
     }
   }
+  &.third_children {
+    & > div {
+      @apply w-[calc((100%-452px)/2)];
+      &:nth-child(1) {
+        @apply shrink-0 basis-[452px];
+      }
+    }
+  }
   &.line {
     @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
   }

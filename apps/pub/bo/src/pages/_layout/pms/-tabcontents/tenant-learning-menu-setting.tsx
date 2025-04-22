@@ -1,10 +1,13 @@
 import { FC } from 'react';
 import { SectionLayout } from '../../-components/section-layout';
 
+/* contents */
+import { RoleListSearch } from '../-contents/role-list-search';
+
 const TenantLearningMenuSettingComponent: FC<{}> = ({}) => {
   return (
-    <SectionLayout contentsRatio={'thirty'}>
-      <p>추후 레이아웃 작업 예정</p>
+    <SectionLayout contentsRatio={'third_children'}>
+      <RoleListSearch />
     </SectionLayout>
   );
 };
