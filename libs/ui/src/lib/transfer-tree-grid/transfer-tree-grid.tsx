@@ -5,10 +5,10 @@ import { cn } from '@learnway/shared';
 import styles from './transfer-tree-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { Grid } from '../grid';
 import { TreeView } from '../tree-view/tree';
 import { IcoChevronLeft, IcoChevronRight } from '@learnway/icons';
-import { GridImperative } from '@/libs/ui/src';
+import { GridBox } from '../grid/grid-box';
+import { GridImperative } from '../grid/types';
 
 export interface TransferTreeGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
@@ -112,14 +112,14 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
         </div>
         {/* right grid */}
         <div>
-          <Grid
+          <GridBox
             ref={gridRef}
             title={rightTitle}
             data={gridData}
             columns={columns}
             hideColumnSettings
             multiple
-            onRowsSelect={(newSelectedRows) => setSelectedGridRows(newSelectedRows)}
+            onRowsSelect={(newSelectedRows: any) => setSelectedGridRows(newSelectedRows)}
           />
         </div>
       </div>

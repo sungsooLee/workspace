@@ -92,11 +92,6 @@ export interface GridProps<T> {
   height?: number;
 
   /**
-   * 그리드 상단에 표시할 제목입니다.
-   */
-  title?: string;
-
-  /**
    * 다중 선택 모드 활성화 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 여러 행을 선택할 수 있습니다.
    */
@@ -113,6 +108,12 @@ export interface GridProps<T> {
    * `true`로 설정하면 체크박스 컬럼이 숨겨집니다.
    */
   hideRowSelectionCheckBox?: boolean;
+
+  /**
+   * row index 를 표시할 컬럼 사용 유무
+   * `true`로 설정하면 첫번째 column 에 numbering 표시를 합니다.
+   */
+  showNumberingColumn?: boolean;
 
   /**
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
@@ -172,48 +173,6 @@ export interface GridProps<T> {
   };
 
   /**
-   * 항목 설정 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 항목 설정 버튼이 숨겨집니다.
-   */
-  hideColumnSettings?: boolean;
-
-  /**
-   * 전체 행 개수 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 행 개수가 표시됩니다.
-   */
-  showTotalCount?: boolean;
-
-  /**
-   * 선택된 행 개수 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 선택된 행 개수가 표시됩니다.
-   */
-  showSelectedCount?: boolean;
-
-  /**
-   * 엑셀 다운로드 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 엑셀 다운로드 버튼이 표시됩니다.
-   */
-  showExcelDownload?: boolean;
-
-  /**
-   * 업로드 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 업로드 버튼이 표시됩니다.
-   */
-  showUpload?: boolean;
-
-  /**
-   * 전체 선택 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 선택 버튼이 표시됩니다.
-   */
-  showSelectAll?: boolean;
-
-  /**
-   * 전체 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 삭제 버튼이 표시됩니다.
-   */
-  showDeleteAll?: boolean;
-
-  /**
    * 외부에서 추가할 CSS 클래스 이름입니다.
    */
   className?: string;
@@ -251,18 +210,19 @@ export interface GridProps<T> {
   onChange?: (data: any[]) => void;
 
   /**
-   * 커스텀 렌더 버튼..
-   */
-  renderButtons?: React.ReactNode;
-
-  /**
    * 데이터 없을 때 표시할 메세지
    */
   emptyMessage?: string;
+
   /**
    * 테이블 모드에서 style 을 구분하기 위해 사용
    */
   variant?: 'line' | 'fill';
+
+  /**
+   * 테이블 해더 표시 여부
+   */
+  hideHeader?: boolean;
 }
 
 /**

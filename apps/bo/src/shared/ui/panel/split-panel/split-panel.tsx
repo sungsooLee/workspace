@@ -8,6 +8,12 @@ interface SplitPanelProps {
   className?: string;
 }
 
+/**
+ * 검토중
+ * @param children
+ * @param className
+ * @constructor
+ */
 const SplitPanelComponent = ({ children, className }: SplitPanelProps) => {
   const [left, right] = children;
   return (

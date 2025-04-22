@@ -1,10 +1,10 @@
-import { useEffect, useState, ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios, tokenService } from '@learnway/config';
+import { initAxios, initI18N, initZod, tokenService } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
-import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
+import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
@@ -38,7 +38,6 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, []);
 
   useEffect(() => {
-    console.log(';i18nData', i18nData);
     if (!i18nData) {
       return;
     }

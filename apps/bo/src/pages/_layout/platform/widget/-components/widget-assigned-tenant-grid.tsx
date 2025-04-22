@@ -1,7 +1,7 @@
 import { useCreation } from 'ahooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { Grid } from '@learnway/ui';
+import { GridBox } from '@learnway/ui';
 
 export function WidgetAssignedTenantGrid({ data }: { data: any }) {
   const gridColumns = useCreation(() => {
@@ -34,10 +34,9 @@ export function WidgetAssignedTenantGrid({ data }: { data: any }) {
   }, []);
 
   return (
-    <Grid
+    <GridBox
       data={data}
       columns={gridColumns}
-      tableMode={false}
       title={'테넌트 정보(해당 위젯을 사용하는 테넌트)'}
       disabledSelectionToggle
       hideColumnSettings

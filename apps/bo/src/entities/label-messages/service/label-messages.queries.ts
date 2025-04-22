@@ -1,6 +1,6 @@
 import LabelMessagesService from '../api/label-messages';
-import { getQuerySkipToken } from '@learnway/shared';
-import { LabelMessage } from '../../../types';
+import { LabelMessage, LabelMessagesQueryParams } from '../../../types';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['label-messages'] as const,
@@ -8,17 +8,17 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: () => ({
+  all: <T = LabelMessage>(queryParam?: LabelMessagesQueryParams) => ({
     queryKey: queryKeys.all,
-    queryFn: async (): Promise<LabelMessage[]> => LabelMessagesService.fetchAll(),
+    queryFn: async (): Promise<T[]> => LabelMessagesService.fetchAll(queryParam),
   }),
-  detail: (id?: number) =>
-    id
-      ? {
-          queryKey: queryKeys.detail(id),
-          queryFn: (): Promise<any> => LabelMessagesService.fetch(id),
-        }
-      : getQuerySkipToken<LabelMessage>(),
+  detail: <T = LabelMessage>(id: number): UseQueryOptions<T> => {
+    return {
+      queryKey: queryKeys.detail(id),
+      queryFn: () => LabelMessagesService.fetch<T>(id),
+      enabled: id > 0,
+    };
+  },
 };
 
 export const mutateOptions = {

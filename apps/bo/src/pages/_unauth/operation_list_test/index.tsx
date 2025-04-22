@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { GridBox, useGridBox } from '../../../shared/ui/grid-box';
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { CourseTypeOptionCardModal } from '../../../features/operation';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../shared/ui/search-box';
+
+import styles from './index.module.css';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
@@ -63,8 +64,16 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <div style={{ height: '100px' }}></div>
-        <GridBox config={gConfig} />
+        <GridBox
+          config={gConfig}
+          guideText={'Guide Text'}
+          title={'목록'}
+          titleCustomNode={
+            <div className={styles.sub_info}>
+              {t('비활성')} <strong className={styles.num}>{5}</strong>
+            </div>
+          }
+        />
       </MainContents>
     </PageContainer>
   );

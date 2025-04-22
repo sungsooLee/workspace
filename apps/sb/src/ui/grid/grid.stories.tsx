@@ -21,6 +21,7 @@ import {
   EditRadioCell,
   EditTextareaCell,
   Grid,
+  GridBox,
   GridState,
   Input,
   ModalWrapper,
@@ -241,7 +242,7 @@ const BaseTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -297,7 +298,7 @@ const TableWithColumnSettings = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -357,7 +358,7 @@ const MultiSelectTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -440,7 +441,7 @@ const InfiniteScrollTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data || []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -540,7 +541,7 @@ const PaginationTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -601,7 +602,7 @@ const GroupedColumnTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data || []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -658,7 +659,7 @@ const PinnedColumnTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={data || []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -858,7 +859,7 @@ const CustomCellTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={mockData}
         columns={columnsWithCustomCell}
         onStateChange={handleStateChange}
@@ -1016,7 +1017,7 @@ const ColumnFactoryTable = () => {
 
   return (
     <div className="p-4">
-      <Grid
+      <GridBox
         data={mockData}
         columns={columns}
         onStateChange={handleStateChange}
@@ -1154,7 +1155,7 @@ export const TemplateEditGrid: any = (args: any) => {
           onClick={() => setData(editGridData)}
         />
       </div>
-      <Grid
+      <GridBox
         title={'Editable Grid'}
         data={data}
         columns={columns}
@@ -1181,7 +1182,7 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code2', size: undefined },
   ];
   return (
-    <Grid
+    <GridBox
       title={'Editable Grid'}
       data={data}
       columns={columns}
