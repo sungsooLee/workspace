@@ -219,14 +219,3 @@ const gridConfig = {
     totalRows: 0,
   },
 };
-// 2025-03-05 04:06:10
-/*{
-
-  "labelMessageMultilingulKey": "label.test1",
-  "labelMessageType": "LABEL",
-  "labelMessageName": "테스트라벨1",
-  "labelMessageDesc": "테스트라벨1",
-  "isUsed": true,
-  "isDeleted": false,
-
-} */
