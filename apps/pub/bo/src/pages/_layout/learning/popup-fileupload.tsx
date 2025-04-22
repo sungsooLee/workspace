@@ -9,6 +9,7 @@ import {
   ModalContainer,
   ModalBody,
   ModalFooter,
+  ModalTitle,
 } from '@learnway/ui';
 import {
   IcoUploadCloud,
@@ -31,13 +32,15 @@ function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const FileUploadContent = () => {
     return (
+      // 퍼블수정 2025-04-22
       <ModalContainer>
+        <ModalTitle>파일 업로드</ModalTitle>
         <ModalBody>
           <div className={PopupStyles.wrap}>
+            <div className={cn(boxStyles.start)}>
+              <p className={boxStyles.text}>{'선택한 관리채널명채널명채널명'}</p>
+            </div>
             <div className={PopupStyles.title_wrap}>
-              <h2 className={PopupStyles.title}>{'파일 업로드'}</h2>
-              <p className={PopupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-              {/* 퍼블 수정 20250331 : 스타일 수정 S  */}
               <p className={cn(styles.file_status_view)}>
                 <span className={styles.file_completed}>
                   {'완료'} <em className={styles.num}>{'4'}</em>
@@ -49,10 +52,6 @@ function RouteComponent() {
                   파일 올리는중 <em className={styles.ing}>1/1</em>
                 </span>
               </p>
-              {/* 퍼블 수정 20250331 : 스타일 수정 E  */}
-            </div>
-            <div className={cn(boxStyles.start)}>
-              <p className={boxStyles.text}>{'선택한 관리채널명채널명채널명'}</p>
             </div>
             {/* 파일 업로드 영역 */}
             <div className={cn(styles.start, styles.wrap)}>

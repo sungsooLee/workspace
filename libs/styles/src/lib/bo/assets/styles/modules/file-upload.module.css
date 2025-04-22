@@ -56,47 +56,6 @@
       @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
     }
   }
-  /* .file_item {
-    @apply relative flex min-h-[42px] w-full items-center px-[8px];
-    .check {
-      @apply w-[24px] shrink-0;
-    }
-    .file_name {
-      @apply ml-[8px] flex max-w-[300px] flex-auto items-center overflow-hidden;
-      .icon_type {
-        @apply mr-[8px] shrink-0;
-      }
-      .name {
-        @apply body_bo_1_r ellipsis max-w-[250px] text-[var(--gray8)];
-      }
-      svg {
-        @apply mr-[8px];
-      }
-    }
-    .status_view {
-      @apply body_bo_2_r ml-[18px] mr-[12px] min-w-[80px] text-[var(--gray6)];
-    }
-    .progress_area {
-      @apply ml-auto flex items-center;
-      .progress_wrap {
-        @apply w-[210px];
-      }
-      [class*='nlp--badge'] {
-        @apply mr-[7px];
-      }
-      & + .btn_status {
-        @apply -mr-[3px];
-      }
-    }
-    .btn_status {
-    }
-    .btn_delete {
-      @apply absolute right-0 top-1/2 w-[20px] -translate-y-1/2;
-    }
-    .complete {
-      @apply ml-[10px] mr-[6px] w-[20px] shrink-0;
-    }
-  } */
   .file_item {
     @apply relative flex h-[42px] w-full items-center px-[20px];
     .check {
@@ -118,7 +77,7 @@
       }
     }
     .control_wrap {
-      @apply flex w-[52px] shrink-0 items-center justify-center;
+      @apply flex w-[40px] shrink-0 items-center justify-center;
       [class*='nlp--badge'] {
         @apply h-[16px] w-[16px] rounded-[8px];
       }
@@ -128,6 +87,9 @@
       .file_status_text {
         @apply body_bo_2_r text-right text-[var(--gray6)];
       }
+    }
+    .btn_delete {
+      @apply w-[20px] shrink-0;
     }
   }
   .upload_status_type2 {

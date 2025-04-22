@@ -40,8 +40,6 @@ function RouteComponent() {
         <ModalBody>
           <div className={PopupStyles.wrap}>
             <div className={PopupStyles.title_wrap}>
-              <h2 className={PopupStyles.title}>{'파일 업로드'}</h2>
-              <p className={PopupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
               <p className={cn(statusStyles.start, statusStyles.file_status_view)}>
                 <span className={statusStyles.file_completed}>
                   {'완료'} <em className={styles.num}>{'4'}</em>
