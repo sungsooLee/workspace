@@ -57,7 +57,7 @@ const useModal = (): useModalReturnValue => {
    *
    * 사용 예:
    * await alert('저장이 완료되었습니다');
-   * await alert({ title: '에러', description: '처리에 실패했습니다', type: 'error' });
+   * await alert({ title: '에러', content: '처리에 실패했습니다', type: 'error' });
    */
   const alert = useCallback(
     (props: AlertComponentProps | string): Promise<any> => {
