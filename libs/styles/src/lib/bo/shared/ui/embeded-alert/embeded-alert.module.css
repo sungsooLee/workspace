@@ -1,5 +1,5 @@
 .start {
-  @apply body_2_r m-auto flex-col justify-center text-center;
+  @apply body_2_r m-auto flex-col justify-center whitespace-pre text-center;
   svg {
     @apply m-auto rotate-180;
   }
