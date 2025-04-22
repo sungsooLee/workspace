@@ -17,38 +17,28 @@ export const Route = createFileRoute('/_layout/pms/menu-tenant-learning-role-man
 function RouteComponent() {
   const menuItems = [
     {
-      title: '1. 테넌트 속성 관리',
+      title: '1. 테넌트 기본 정보',
       key: 'menu01',
       content: '',
     },
     {
-      title: '2. 테넌트 디자인/테마관리',
+      title: '2. 테넌트 메뉴 관리',
       key: 'menu02',
       content: '',
     },
     {
-      title: '3. 테넌트 메뉴관리',
+      title: '3. 테넌트 카테고리 관리',
       key: 'menu03',
       content: '',
     },
     {
-      title: '4. 테넌트 카테고리 관리',
+      title: '4. 테넌트 역할 관리',
       key: 'menu04',
       content: '',
     },
     {
-      title: '5. 테넌트 역할 관리',
+      title: '테넌트 디자인/테마 관리',
       key: 'menu05',
-      content: '',
-    },
-    {
-      title: '6. 메인 위젯관리',
-      key: 'menu06',
-      content: '',
-    },
-    {
-      title: '7. 배너관리',
-      key: 'menu07',
       content: '',
     },
   ];
@@ -93,7 +83,7 @@ function RouteComponent() {
           type="progress"
           size="sm"
           className={styles.progress_wrap}
-          selectedTabKey={'menu05'}
+          selectedTabKey={'menu04'}
         />
         <Tabs
           items={tabItems}

@@ -64,8 +64,8 @@ function RouteComponent() {
       <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
         <div className={lectureStyles.box}>
           <p className={lectureStyles.date}>
+            <span>2026-01-01 ~ 2026-01-31</span>
             <span>1차교육</span>
-            <span>2026-01-01 ~ 2026-01-31 </span>
           </p>
           <strong className={lectureStyles.tit}>
             스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
