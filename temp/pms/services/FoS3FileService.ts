@@ -8,6 +8,7 @@ import type { com_ever_edu_global_s3_dto_res_CompleteUploadResDto } from '../mod
 import type { com_ever_edu_global_s3_dto_res_InitiateUploadResDto } from '../models/com_ever_edu_global_s3_dto_res_InitiateUploadResDto';
 import type { com_ever_edu_global_s3_dto_res_ListUploadPartsResDto } from '../models/com_ever_edu_global_s3_dto_res_ListUploadPartsResDto';
 import type { com_ever_edu_global_s3_dto_res_PreSignedUrlResDto } from '../models/com_ever_edu_global_s3_dto_res_PreSignedUrlResDto';
+import type { com_ever_edu_pms_file_dto_res_S3FileUrlResDto } from '../models/com_ever_edu_pms_file_dto_res_S3FileUrlResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -61,6 +62,31 @@ export class FoS3FileService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * S3 파일 URL 요청
+     * S3 파일 URL을 요청한다.
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @returns com_ever_edu_pms_file_dto_res_S3FileUrlResDto OK
+     * @throws ApiError
+     */
+    public static getPathOrS3Url(
+        key: string,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_S3FileUrlResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/file/s3/url',
+            query: {
+                'key': key,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

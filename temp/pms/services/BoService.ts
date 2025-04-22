@@ -399,31 +399,6 @@ export class BoService {
         });
     }
     /**
-     * 메뉴 단건 조회
-     * 메뉴 단건 조회
-     * @param menuId
-     * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static findById1(
-        menuId: number,
-    ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/menus/{menuId}',
-            path: {
-                'menuId': menuId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 메뉴 수정
      * 메뉴를 수정한다.
      * @param menuId
@@ -538,7 +513,7 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findById2(
+    public static findById1(
         labelMessageId: number,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -942,7 +917,7 @@ export class BoService {
      * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findById3(
+    public static findById2(
         commonCdGroupId: string,
         commonCdId: string,
     ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin> {
@@ -1029,7 +1004,7 @@ export class BoService {
      * @returns com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findById4(
+    public static findById3(
         commonCdGroupId: string,
     ): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -2304,6 +2279,61 @@ export class BoService {
         });
     }
     /**
+     * s3 다국어 json 파일 확인
+     * s3에 생성된 json 파일 확인
+     * @param locale
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static validateJson(
+        locale: string,
+    ): CancelablePromise<Record<string, Record<string, any>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/multilingual/{locale}/validateJsonFile',
+            path: {
+                'locale': locale,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 다국어 JSON 생성
+     * JSON 생성
+     * @param locale
+     * @param keyTypeCode
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static findMultilingualJson(
+        locale: string,
+        keyTypeCode?: 'COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/multilingual/{locale}/multilingualJson',
+            path: {
+                'locale': locale,
+            },
+            query: {
+                'keyTypeCode': keyTypeCode,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 다국어코드 중복체크
      * 다국어코드를 중복체크한다.
      * @param keyType
@@ -2747,13 +2777,38 @@ export class BoService {
         });
     }
     /**
+     * 공통 코드(enum) 다건 조회
+     * 존재하는 enum을 찾아 반환한다.
+     * @param enumNames
+     * @returns com_ever_edu_enums_EnumValue OK
+     * @throws ApiError
+     */
+    public static findEnum(
+        enumNames: Array<string>,
+    ): CancelablePromise<Array<Record<string, Array<com_ever_edu_enums_EnumValue>>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/code-groups/enums/multiple',
+            query: {
+                'enumNames': enumNames,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 공통 코드(enum) 단건 조회
      * 존재하는 enum을 찾아 반환한다.
      * @param enumName
      * @returns com_ever_edu_enums_EnumValue OK
      * @throws ApiError
      */
-    public static findEnum(
+    public static findEnum1(
         enumName: string,
     ): CancelablePromise<Record<string, Array<com_ever_edu_enums_EnumValue>>> {
         return __request(OpenAPI, {

@@ -2,11 +2,38 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_global_excel_dto_req_ExcelValidationReqDto } from '../models/com_ever_edu_global_excel_dto_req_ExcelValidationReqDto';
+import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 import type { com_ever_edu_pms_file_dto_test_UserExcelVO } from '../models/com_ever_edu_pms_file_dto_test_UserExcelVO';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoFileTestTestApiService {
+    /**
+     * 엑셀 유효성검사 - 사용금지(테스트용)
+     * 엑셀 유효성검사 - 사용금지(테스트용)
+     * @param requestBody
+     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
+     * @throws ApiError
+     */
+    public static testValidationExcelFile(
+        requestBody: com_ever_edu_global_excel_dto_req_ExcelValidationReqDto,
+    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/api/v1/file/excel/test/validation',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
     /**
      * MultipartFile Excel 업로드 처리(복호화, 파싱) - 사용금지(임시 테스트용)
      * MultipartFile Excel 업로드 처리(복호화, 파싱) 테스트
@@ -163,13 +190,34 @@ export class BoFileTestTestApiService {
     /**
      * Excel 생성 후 다운로드 처리(임시 테스트용:yyyyMMddHHmmss_export.xlsx)
      * Excel 생성 후 다운로드 처리 테스트
+     * @param createdBy 페이징 처리를 위한 페이지 번호. 0 ~
+     * @param coordinatorId 담당자 Id
+     * @param screenId 화면 Id
+     * @param downloadReasonType 사유 유형코드, AFFAIRS|LEGAL_REQUEST|OUTSIDE_SUBMIT|RND|ETC
+     * @param downloadDetailReasonType 사유 상세유형코드
+     * @param downloadDetailReason 사유 상세 직접 입력, EDR41(상세 직접 입력)인 경우 사용
      * @returns any OK
      * @throws ApiError
      */
-    public static testExceFileExport(): CancelablePromise<any> {
+    public static testExceFileExport(
+        createdBy: any,
+        coordinatorId?: any,
+        screenId?: any,
+        downloadReasonType?: any,
+        downloadDetailReasonType?: any,
+        downloadDetailReason?: any,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/api/v1/file/excel/export',
+            query: {
+                'coordinatorId': coordinatorId,
+                'screenId': screenId,
+                'downloadReasonType': downloadReasonType,
+                'downloadDetailReasonType': downloadDetailReasonType,
+                'downloadDetailReason': downloadDetailReason,
+                'createdBy': createdBy,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
