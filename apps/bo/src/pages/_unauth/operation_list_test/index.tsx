@@ -10,8 +10,6 @@ import { CourseTypeOptionCardModal } from '../../../features/operation';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../shared/ui/search-box';
 
-import styles from './index.module.css';
-
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,
 });
@@ -64,16 +62,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <GridBox
-          config={gConfig}
-          guideText={'Guide Text'}
-          title={'목록'}
-          titleCustomNode={
-            <div className={styles.sub_info}>
-              {t('비활성')} <strong className={styles.num}>{5}</strong>
-            </div>
-          }
-        />
+        <GridBox config={gConfig} guideText={'Guide Text'} title={'목록'} />
       </MainContents>
     </PageContainer>
   );
@@ -179,7 +168,6 @@ const gridConfig = {
     { name: '등록자', label: '등록자' },
     { name: 'URL 생성', label: 'URL 생성' },
   ],
-  data: [],
   pagination: {
     pageSize: 10,
     pageIndex: 0,
