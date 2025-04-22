@@ -4,7 +4,7 @@ import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
 
 import { cn } from '@learnway/shared';
-import { IcoDelete03, IcoSearch } from '@learnway/icons';
+import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 
 import styles from './input.module.css';
 
@@ -26,6 +26,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   error?: boolean; // Input border 유무
   //
   showSearchIcon?: boolean; // 검색 아이콘 표시 유무
+  iconType?: 'search' | 'tree'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   //
 }
@@ -53,6 +54,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       allowEmptyFormatting = true,
       onKeyDown,
       showSearchIcon,
+      iconType = 'search',
       onEnterKeyDown,
       maxLength = 0,
       ...props
@@ -196,7 +198,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               className={cn(styles.clear)}
               onlyIcon
             >
-              <IcoSearch width={20} height={20} stroke={'#131C30'} />
+              {iconType === 'tree' ? (
+                <IcoSearchWrite width={20} height={20} stroke={'#4C515E'} />
+              ) : (
+                <IcoSearch width={20} height={20} stroke={'#131C30'} />
+              )}
             </Button>
           )}
         </div>

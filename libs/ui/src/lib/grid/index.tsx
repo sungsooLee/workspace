@@ -593,7 +593,7 @@ const Grid = forwardRef(
             ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(
               row.getIsSelected() && styles.selected,
-              row.getIsSelected() && 'bg-[#edfcff] hover:bg-[#edfcff]',
+              row.getIsSelected() && 'bg-[#edfcff]',
             )}
             style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}

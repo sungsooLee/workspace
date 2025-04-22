@@ -583,18 +583,17 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks:
-      'NLP_FO_USE_1010 (최근/추천/인기 검색어 팝업) 포함\nNLP_FO_USE_1011 (자동완성 팝업) 포함\n디자인 컨펌x로 작업 불가능',
+    remarks: '- 연관 검색어 related-search.tsx\n- 썸네일 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_USE_1002',
     screenName: '통합검색결과_과정 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'integrated-search/integrated-search',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- integrated-search-procedure.tsx\n- 썸네일 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_USE_MA_1010',

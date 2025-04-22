@@ -489,6 +489,9 @@
         @apply text-left;
         a {
           @apply text-[#00AFD5];
+          &:focus {
+            @apply text-red-400;
+          }
         }
         .screen {
           @apply text-[12px] text-[#999];

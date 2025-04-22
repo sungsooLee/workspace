@@ -1,7 +1,9 @@
 import { useToastStore } from '../stores/useToastStore';
 import { ToastContainer } from './toast-container';
 import * as Primitive from '@radix-ui/react-toast';
+import { cn } from '@learnway/shared';
 import React from 'react';
+import styles from './toast.module.css';
 
 interface ToastContainerProps {
   swipeDirection?: 'up' | 'down' | 'left' | 'right';
@@ -9,7 +11,7 @@ interface ToastContainerProps {
 }
 
 const ToastWrapperComponent = ({
-  swipeDirection = 'right',
+  swipeDirection = 'down',
   duration = 3000,
 }: ToastContainerProps) => {
   const toasts = useToastStore((state) => state.toasts);
@@ -18,16 +20,12 @@ const ToastWrapperComponent = ({
     <Primitive.ToastProvider swipeDirection={swipeDirection} duration={duration}>
       {/* Viewport */}
       <Primitive.Viewport
-        className="toast-viewport"
-        style={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 8, // 토스트 간 간격
-          zIndex: 1000,
-        }}
+        className={cn(
+          styles.start,
+          styles.toast_wrap,
+          'toast-viewport',
+          swipeDirection && styles[swipeDirection],
+        )}
       />
 
       {/* loop Toast */}
