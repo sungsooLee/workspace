@@ -12,7 +12,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 /* tab contents */
 import { TenantDetailMenu } from '@features/tenant/ui/tenant-detail-menu';
 import { TenantDetailBase } from '@features/tenant/ui/tenant-detail-base';
-import { TenantDetailCategory } from '@features/platform/ui/platform/tenant/tenant-detail-category';
+import { TenantDetailCategory } from '@features/tenant/ui/tenant-detail-category';
 
 export const Route = createFileRoute('/_layout/platform/tenant/detail')({
   component: RouteComponent,
