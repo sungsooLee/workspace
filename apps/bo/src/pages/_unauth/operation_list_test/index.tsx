@@ -62,7 +62,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <GridBox config={gConfig} guideText={'Guide Text'} title={'목록'} />
+        <GridBox config={gConfig} guideText={'Guide Text'} />
       </MainContents>
     </PageContainer>
   );

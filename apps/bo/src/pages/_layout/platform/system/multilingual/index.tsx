@@ -20,7 +20,7 @@ function RouteComponent() {
   const { state } = Route.useRouteContext();
   const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const isSaveDiable = useMemo(() => gConfig.totalRows > 0, [gConfig.totalRows]);
+  const isSaveDiable = useMemo(() => gConfig.hasData, [gConfig.hasData]);
   /**
    * @param data
    */

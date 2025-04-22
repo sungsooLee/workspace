@@ -1,10 +1,10 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { t } from 'i18next';
 import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
+import { useTranslation } from 'react-i18next';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -18,7 +18,6 @@ import { cn } from '@learnway/shared';
 const GridBoxComponent = <T extends object>(
   {
     config = {},
-    title,
     hideColumnSettings,
     showTotalCount = true,
     showSelectedCount,
@@ -33,7 +32,8 @@ const GridBoxComponent = <T extends object>(
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
 ) => {
-  const { data, page, totalRows, gridFetch, columns } = config;
+  const { t } = useTranslation();
+  const { data, page, totalRows, gridFetch, columns, title } = config;
   const columnHelper = createColumnHelper<any>();
 
   /**
@@ -118,12 +118,14 @@ const GridBoxComponent = <T extends object>(
       : undefined; // page가 falsy일 경우 undefined 반환
   }, [page, handleChangePage, handleChangePageSize, props.pagination]);
 
+  console.log(title, props.title);
+
   return (
     <div className={cn(styles.table_box)}>
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {title && <div className={styles.title}>{title}</div>}
+          {<div className={styles.title}>{props.title || title || t('목록')}</div>}
 
           {/* 전체 개수  */}
           {showTotalCount && (
