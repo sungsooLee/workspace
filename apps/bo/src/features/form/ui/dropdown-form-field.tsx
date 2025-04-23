@@ -102,7 +102,7 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
     };
 
     useEffect(() => {
-      console.log('watchedValue => ', watchedValue, name);
+      // console.log('watchedValue => ', watchedValue, name);
       init();
     }, [watchedValue, filterWatchedValue]);
 

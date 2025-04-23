@@ -50,7 +50,7 @@ const getPanelStyle = (leftSize?: number | string, rightSize?: number | string) 
 
   const rightPanelStyle: React.CSSProperties = {
     width: isRightSizeNumber
-      ? `${leftSize}px`
+      ? `${rightSize}px`
       : rightSize
         ? `calc(100% - ${leftSize}px)`
         : undefined,

@@ -69,6 +69,7 @@ function RouteComponent() {
             config={gridConfig}
             title={t('목록')}
             height={440}
+            autoSelectFirstRow
             onRowSelect={handleGridRowSelect}
           />
           <MessageDetail labelMessageId={selectedLabelMessageId} />

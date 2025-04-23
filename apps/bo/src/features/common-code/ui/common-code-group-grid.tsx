@@ -262,7 +262,6 @@ const CommonCodeGroupGridComponent = ({
               height={350}
               showTotalCount={true}
               title={t('공통코드그룹목록')}
-              showColumnSettings={false}
               pagination={{
                 pageIndex: page,
                 pageSize: size,
