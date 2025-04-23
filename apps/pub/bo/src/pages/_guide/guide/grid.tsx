@@ -337,6 +337,13 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             onPageSizeChange: setPageSize,
           }}
           title="타이틀"
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit">{'타이틀'}</strong>
+              <span className="count_info">{'5'}</span>
+            </div>
+          }
+          guideText={'텍스트'}
         />
       </div>
     </div>
