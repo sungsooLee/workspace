@@ -34,6 +34,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   const [mode, setMode] = useState<mode>('init');
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
 
+  const tenantId = 1;
   /*
   // switch : 사용 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
@@ -44,7 +45,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };*/
-  const { data, refetch } = useFetchTenantCategory(1);
+  const { data, refetch } = useFetchTenantCategory(tenantId);
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
@@ -70,11 +71,24 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     setSelectedNode(node);
   };
 
+  const handleExpandChange = (keys: string[]) => {
+    setExpandedKeys(keys);
+  };
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-      {treeData && <TenantCategoryTree treeData={treeData} />}
+      {treeData && (
+        <TenantCategoryTree
+          treeData={treeData}
+          onNodeClick={handleNodeClick}
+          expandedKeys={expandedKeys}
+          onExpandChange={handleExpandChange}
+          selectedKey={selectedNode?.key}
+        />
+      )}
       {selectedNode ? (
         <TenentCategoryView
+          tenantId={tenantId}
           treeData={treeData}
           selectedNode={selectedNode}
           menu
@@ -89,6 +103,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
         />
       ) : (
         <TenentCategoryView
+          tenantId={tenantId}
           treeData={treeData}
           selectedNode={null}
           menu

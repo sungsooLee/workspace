@@ -16,6 +16,7 @@ import { findMenuPathById } from '@features/category/service/category.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 
 const TenantCategoryViewComponent: FC<any> = ({
+  tenantId,
   treeData,
   selectedNode,
   mode,
@@ -35,7 +36,7 @@ const TenantCategoryViewComponent: FC<any> = ({
     return mode === 'init';
   }, [mode]);
 
-  const { data } = useFetchTenantCategoryDetail(1, selectedNode?.menuId);
+  const { data } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId);
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -51,19 +52,17 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   function dataInit(data: any, selectedNode: any, mode: string) {
     if (mode === 'view') {
-      const location = findMenuPathById(treeData, selectedNode?.menuId);
-      console.log('## location', location);
+      console.log('## selectedNode', selectedNode);
       if (data) {
         const initialData = {
-          location: location ?? '',
+          categoryPath: data?.categoryPath,
+          categoryName: data?.categoryName,
+          categoryCode: data?.categoryCode,
+          categoryContent: data?.categoryContent,
+          isUsed: isInitMode || isRoot ? false : data?.isUsed,
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
-          parentMenuName: selectedNode.parentMenuName,
-          isDuplicateMenuCode: true,
-          name: data?.name,
-          code: data?.categoryCode,
-          categoryContent: data?.categoryContent,
-          categoryType: 'COMMON',
+          parentCategoryName: selectedNode.parentMenuName,
           sortSeq: selectedNode?.children?.length ?? 0 + 1,
         };
         fetchData(initialData);
@@ -78,7 +77,7 @@ const TenantCategoryViewComponent: FC<any> = ({
         location: location ?? '',
         key: '',
         parentKey: selectedNode.key,
-        parentMenuName: selectedNode.parentMenuName,
+        parentCategoryName: selectedNode.parentMenuName,
         isDuplicateMenuCode: false,
         name: '', // 입력 필드
         code: '', // 입력 필드
@@ -210,12 +209,12 @@ const TenantCategoryViewComponent: FC<any> = ({
       <div className={layoutStyles.inner_contents}>
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'path'} disabled={true} />
+            <DynamicFormField name={'categoryPath'} disabled={true} />
           </FormRow>
         </ContentsRow>
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'parentName'} disabled={true} />
+            <DynamicFormField name={'parentCategoryName'} disabled={true} />
           </FormRow>
         </ContentsRow>
         <ContentsRow>
@@ -231,34 +230,14 @@ const TenantCategoryViewComponent: FC<any> = ({
             <DynamicFormField name={'categoryName'} disabled={true} />
           </FormRow>
         </ContentsRow>
-        <ContentsRow>
-          <div className={dynamicFormStyles.switch_wrap}>
-            <p className={dynamicFormStyles.title}>
-              {'사용여부'}
-
-              <Tooltip
-                className={formStyles.tooltip}
-                side="right"
-                align="start"
-                content={'테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다.'}
-              >
-                <Button onlyIcon>
-                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                </Button>
-              </Tooltip>
-            </p>
-            <Switch
-              id="name-use2"
-              className={dynamicFormStyles.btn_switch}
-              label={'미사용'}
-              // label={true ? '미사용' : '사용'}
-              checked={false}
-            />
-          </div>
+        <ContentsRow type={'horizontal'}>
+          <FormRow provider={provider}>
+            <DynamicFormField name={'isUsed'} disabled={isInitMode || isRoot} />
+          </FormRow>
         </ContentsRow>
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'categoryDesc'} disabled={true} resize="none" />
+            <DynamicFormField name={'categoryContent'} disabled={true} resize="none" />
           </FormRow>
         </ContentsRow>
 
@@ -272,17 +251,26 @@ const TenantCategoryViewComponent: FC<any> = ({
 
 export default TenantCategoryViewComponent;
 
+/*
+categoryCode: "tenant_category_1"
+categoryContent: "카테고리 내용입니다."
+categoryId: 6
+categoryName: "tenant카테고리001"
+categoryPath: "root"
+isUsed: true
+*/
+
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'path',
+      name: 'categoryPath',
       type: 'text',
       label: t('카테고리 위치'),
       value: '',
       placeholder: '',
     },
     {
-      name: 'parentName',
+      name: 'parentCategoryName',
       type: 'text',
       label: t('상위 카테고리명'),
       value: '',
@@ -305,13 +293,18 @@ const formConfig: DynamicFormConfig = {
       maxLength: 10,
     },
     {
-      name: 'isUsable',
+      name: 'isUsed',
       type: 'switch',
       label: t('사용 여부'),
       value: false,
+      format: 'boolean',
+      tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다.',
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
     },
     {
-      name: 'categoryDesc',
+      name: 'categoryContent',
       type: 'textarea',
       label: t('설명'),
       value: '',
