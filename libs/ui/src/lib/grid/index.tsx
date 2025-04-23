@@ -10,6 +10,7 @@ import React, {
 import {
   Cell,
   Column,
+  ColumnDef,
   ColumnFiltersState,
   ColumnPinningState,
   flexRender,
@@ -26,25 +27,19 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'; // paging Icons
-import { isEmpty } from 'lodash';
-
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
-  IcoDownload,
   IcoGridFilter,
   IcoGridOrder,
-  IcoMinus,
-  IcoPlus,
 } from '@learnway/icons';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 import { cn, isFirefox } from '@learnway/shared';
-import { t } from 'i18next';
 
-import { GridImperative, GridProps } from './types/grid';
-import ColumnSettings, { ColumnSetting } from './components/column-setting';
+import { GridProps } from './types/grid';
+import { ColumnSetting } from './components/column-setting';
 import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
@@ -64,27 +59,21 @@ const Grid = forwardRef(
       multiple,
       disabledSelectionToggle,
       hideRowSelectionCheckBox,
+      hideHeader,
+      showNumberingColumn,
       pagination,
-      title,
       isLoading,
       columnGrouping,
       columnPinning = { columns: [] },
-      hideColumnSettings,
-      showTotalCount = true,
-      showExcelDownload = false,
-      showUpload = false,
-      showSelectAll = false,
-      showDeleteAll = false,
-      showSelectedCount,
       className,
       tableMode,
       onStateChange,
       onRowSelect,
       onRowsSelect,
       onChange,
-      renderButtons,
       emptyMessage,
       variant = 'line',
+      autoSelectFirstRow,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -95,6 +84,9 @@ const Grid = forwardRef(
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    // rowSelection useEffect가 첫 번째 실행인지 추적하는 Ref
+    const isInitialSelectionEffect = useRef(true);
 
     const groupingState = useMemo<GroupingState>(
       () => columnGrouping?.columns || [],
@@ -139,30 +131,33 @@ const Grid = forwardRef(
       },
     }));
 
-    // 전달 받은 columns에 다중 선택의 경우 체크박스 추가
+    /**
+     * 테이블 columns
+     */
     const tableColumns = useMemo(() => {
-      // 다중 선택을 위한 체크박스 컬럼 정의
-      const multipleCheckColumn = {
+      // 넘버링 컬럼 생성
+      const createNumberingColumn = (): ColumnDef<T> => ({
+        id: 'numbering',
+        size: 50,
+        header: 'NO.',
+        cell: ({ row }: any) =>
+          pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
+      });
+
+      // 체크박스 컬럼 생성
+      const createMultipleCheckColumn = (): ColumnDef<T> => ({
         id: 'select',
         size: 50,
         maxSize: 50,
         minSize: 50,
-        enablePinning: true, // 컬럼 고정 가능
+        enablePinning: true,
         meta: {
           align: 'center',
           headerAlign: 'center',
           cellAlign: 'center',
         },
-        // 헤더 체크박스: 전체 선택 / 해제
         header: ({ table }: { table: Table<T> }) => (
-          <div
-            style={{
-              width: '100%',
-              display: 'block',
-              textAlign: 'center',
-              verticalAlign: 'center',
-            }}
-          >
+          <div style={{ width: '100%', textAlign: 'center' }}>
             <Checkbox
               checked={table.getIsAllRowsSelected()}
               onCheckedChange={(checked) => {
@@ -171,22 +166,12 @@ const Grid = forwardRef(
             />
           </div>
         ),
-        // 개별 행 체크박스
         cell: ({ row }: { row: Row<T> }) => (
-          <div
-            style={{
-              width: '100%',
-              display: 'block',
-              textAlign: 'center',
-              paddingRight: '0',
-            }}
-          >
-            {' '}
+          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
             <Checkbox
               checked={row.getIsSelected()}
-              disabled={row.getIsGrouped()} // 그룹핑된 행은 비활성화
-              onCheckedChange={(checked) => {
-                // 그룹 컬럼이 아닌 경우만 실행
+              disabled={row.getIsGrouped()}
+              onCheckedChange={() => {
                 if (!row.getIsGrouped()) {
                   row.getToggleSelectedHandler();
                 }
@@ -194,10 +179,18 @@ const Grid = forwardRef(
             />
           </div>
         ),
-      };
+      });
 
+      let finalColumns = [...columns];
       // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
-      return multiple && !hideRowSelectionCheckBox ? [multipleCheckColumn, ...columns] : columns;
+      if (multiple && !hideRowSelectionCheckBox) {
+        finalColumns = [createMultipleCheckColumn(), ...finalColumns];
+      }
+      // numbering 컬럼
+      if (showNumberingColumn) {
+        finalColumns = [createNumberingColumn(), ...finalColumns];
+      }
+      return finalColumns;
     }, [columns, multiple, hideRowSelectionCheckBox]);
 
     /**
@@ -347,7 +340,6 @@ const Grid = forwardRef(
     // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
     useEffect(() => {
       if (!onStateChange) return;
-
       onStateChange({
         filters: columnFilters,
         sorting,
@@ -358,15 +350,27 @@ const Grid = forwardRef(
 
     // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
     useEffect(() => {
-      if (isEmpty(data)) {
-        // 최초 로딩 인경우 수행하지 않음
+      // 해당 useEffect 최초 실행인 경우 첫 번째 실행을 건너뜁니다.
+      if (isInitialSelectionEffect.current) {
+        isInitialSelectionEffect.current = false;
         return;
       }
+
       const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
       const selectedRow = selectedRows?.[0];
       onRowSelect?.(selectedRow);
       onRowsSelect?.(selectedRows);
     }, [rowSelection]);
+
+    // data 변경시 첫번째 행 선택 (데이터가 있고 autoSelectFirstRow 설정된 경우)
+    useEffect(() => {
+      console.log('------------ change data', data);
+      const firstRowId = table.getRowModel()?.rows?.[0]?.id;
+      if (firstRowId && autoSelectFirstRow) {
+        console.log('------------ firstRowId', firstRowId);
+        setRowSelection({ [firstRowId]: true });
+      }
+    }, [data, table, autoSelectFirstRow]);
 
     // 컬럼 팝업에서 컬럼에 대한 항목 설정
     const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
@@ -432,6 +436,9 @@ const Grid = forwardRef(
       const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
+        if (hideHeader) {
+          return <></>;
+        }
         return (
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -527,21 +534,6 @@ const Grid = forwardRef(
         );
       };
 
-      /**
-       * 데이터가 없을 때 표시할 메시지 렌더링
-       */
-      const renderEmptyMessage = () => {
-        // const message = isInitialState ? initialMessage : emptyMessage;
-
-        return (
-          <div className={styles.empty_message_container}>
-            <p className={styles.empty_message}>
-              {emptyMessage ? emptyMessage : '조회 결과가 없습니다.'}
-            </p>
-          </div>
-        );
-      };
-
       // table > tbody
       const renderBody = () => {
         const bodyStyle = {
@@ -549,19 +541,6 @@ const Grid = forwardRef(
           position: 'relative',
           height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
         } as CSSProperties;
-
-        // 데이터가 없을 경우 메시지 표시
-        if (data.length === 0) {
-          return (
-            <tbody>
-              <tr className={styles.empty_wrap}>
-                <td colSpan={table.getAllColumns().length} className={styles.empty_cell}>
-                  {renderEmptyMessage()}
-                </td>
-              </tr>
-            </tbody>
-          );
-        }
 
         return (
           <tbody style={bodyStyle}>
@@ -665,6 +644,17 @@ const Grid = forwardRef(
         );
       };
 
+      /**
+       * 데이터가 없을 때 표시할 메시지 렌더링
+       */
+      const renderEmptyMessage = () => {
+        return (
+          <div className={styles.empty_message_container}>
+            <p className={styles.empty_message}>{emptyMessage || '조회 결과가 없습니다.'}</p>
+          </div>
+        );
+      };
+
       return (
         <div
           ref={tableContainerRef}
@@ -679,25 +669,17 @@ const Grid = forwardRef(
           style={{
             height: tableMode ? 'auto' : `${height}px`,
             width: '100%',
-            overflow: 'auto', // 스크롤 가능하게 설정
+            overflow: data.length === 0 ? 'hidden' : 'auto', // 데이터 있을때만 스크롤 가능
           }}
         >
           <table>
-            {/*thead*/}
-            {/*colgroup*/}
-            {/* <colgroup>
-              <col style={{ width: '15%' }} />
-              <col style={{ width: '150px' }} />
-              <col style={{ width: '30%' }} />
-              <col />
-            </colgroup> */}
-
             {/* thead */}
             {renderHead()}
-
             {/* tbody */}
             {isLoading ? renderLoading() : renderBody()}
           </table>
+          {/* 데이터 없을 때 메세지 */}
+          {data.length === 0 && renderEmptyMessage()}
         </div>
       );
     };
@@ -781,9 +763,6 @@ const Grid = forwardRef(
             </Button>
           </div>
           <span className={styles.count_wrap}>
-            {/* 총 {totalRows}개 중 {pageIndex * pageSize + 1}-
-          {Math.min((pageIndex + 1) * pageSize, totalRows)} */}
-            {/* {pageIndex * pageSize + 1}-{totalPages} Page */}
             {pageIndex + 1} / {totalPages} Page
           </span>
         </div>
@@ -791,53 +770,10 @@ const Grid = forwardRef(
     };
 
     return (
-      <div className={styles.table_info_wrap}>
-        <div className={styles.table_info_item}>
-          {/* 제목 */}
-          {title && <div className={styles.title}>{title}</div>}
-          {/* 전체 개수  */}
-          {showTotalCount && (
-            <div className={styles.sub_info}>
-              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
-            </div>
-          )}
-          {/* 전체 선택 */}
-          {showSelectAll && (
-            <Button variant="text" size="xs" className={styles.btn_all_select}>
-              <IcoPlus width={16} height={16} stroke="#131C30" />
-              {'전체 선택'}
-            </Button>
-          )}
-          {/* 전체 삭제 */}
-          {showDeleteAll && (
-            <Button variant="text" size="xs" className={styles.btn_all_delete}>
-              <IcoMinus width={16} height={16} stroke="#131C30" />
-              {'전체 삭제'}
-            </Button>
-          )}
-          {/* 업로드 */}
-          {showUpload && (
-            <Button variant="text" size="xs" className={styles.btn_upload}>
-              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
-              {'CSV업로드'}
-            </Button>
-          )}
-          {/* 엑셀다운로드 */}
-          {showExcelDownload && (
-            <Button variant="text" size="xs" className={styles.btn_excel}>
-              <IcoDownload width={16} height={16} stroke={'#3e4550'} />
-              {'엑셀다운로드'}
-            </Button>
-          )}
-          {/* 컬럼 설정 */}
-          {!hideColumnSettings && (
-            <ColumnSettings<T> onColumnChange={handleColumnSettingsChange} table={table} />
-          )}
-          {renderButtons}
-        </div>
+      <>
         {renderTable()}
         {renderPagination()}
-      </div>
+      </>
     );
   },
 );
@@ -845,9 +781,7 @@ const Grid = forwardRef(
 //
 
 const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
-  return (
-    <Grid {...props} hideColumnSettings showTotalCount={false} disabledSelectionToggle tableMode />
-  );
+  return <Grid {...props} disabledSelectionToggle tableMode />;
 });
 
 export { Grid, TableComponent as Table };

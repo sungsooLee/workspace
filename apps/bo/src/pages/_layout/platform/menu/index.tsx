@@ -218,7 +218,6 @@ function RouteComponent() {
             treeData={treeData}
             selectedNode={selectedNode}
             menuScope={tabKey}
-            // menu
             mode={mode}
             parentNode={parentNode}
             onSave={handleSave}
@@ -236,7 +235,6 @@ function RouteComponent() {
             treeData={treeData}
             selectedNode={null}
             menuScope={tabKey}
-            // menu
             mode="init"
             parentNode={null}
             onSave={handleSave}

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button } from '@learnway/ui';
+import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
@@ -8,7 +8,6 @@ import { t } from 'i18next';
 import { SearchBox } from '../../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
 import { translationQueryOptions } from '../../../../../entities/translation/service/translation.queries';
-import { GridBox, useGridBox } from '../../../../../shared/ui/grid-box';
 
 export const Route = createFileRoute('/_unauth/platform_test/company/company/')({
   component: RouteComponent,
@@ -119,6 +118,5 @@ const gridConfig = {
     totalRows: 0,
   },
   height: 566,
-  hideColumnSettings: true,
   showExcelDownload: true,
 };

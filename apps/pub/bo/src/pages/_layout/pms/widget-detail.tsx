@@ -17,7 +17,7 @@ import {
   RadioGroup,
   Switch,
   Textarea,
-  Grid,
+  GridBox,
   CheckboxGroupFormField,
   Table,
 } from '@learnway/ui';
@@ -297,11 +297,11 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <div className="grid_wrap">
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 title="테넌트 정보(해당 위젯을 사용하는 테넌트)"
-                hideColumnSettings
+                showColumnSettings={false}
               />
             </div>
           </ContentsRow>

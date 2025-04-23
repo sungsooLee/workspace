@@ -12,7 +12,7 @@
     "build:bo": "npx nx build bo",
     "build:pb-bo": "npx nx build pb-bo",
     "build:pb-fo": "npx nx build pb-fo",
-    "build:libs": "npx nx build config & npx nx build editor & npx nx build hooks & npx nx build icons & npx nx build shared & npx nx build ui",
+    "build:libs": "npx nx build config & npx nx build editor & npx nx build hooks & npx nx build icons & npx nx build shared & npx nx build ui & npx nx build auth",
     "router-gen:fo": "cd ./apps/fo & npx tsr generate",
     "router-gen:bo": "cd ./apps/bo & npx tsr generate",
     "shadcn-add": "cross-env TS_NODE_PROJECT=\"tsconfig.base.json\" NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add",
@@ -22,7 +22,11 @@
     "fetch:swagger-cms": "curl -o ./temp/cms.json http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs",
     "type-generate-pms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/v3/api-docs --output ./temp/pms --client fetch",
     "type-generate-lms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/lms-module/v3/api-docs --output ./temp/lms --client fetch",
-    "type-generate-cms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs --output ./temp/cms --client fetch"
+    "type-generate-cms": "npx openapi-typescript-codegen --input http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/cms-module/v3/api-docs --output ./temp/cms --client fetch",
+    "i18n-type-bo": "node ./temp/scripts/i18n.js --type=bo",
+    "i18n-type-fo": "node ./temp/scripts/i18n.js --type=fo",
+    "i18n-flat-bo": "node ./temp/scripts/flatJson.js --type=bo",
+    "i18n-flat-fo": "node ./temp/scripts/flatJson.js --type=fo"
   },
   "private": true,
   "dependencies": {

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { GridBoxConfig, useGridBoxConfig } from './types';
 
-const useGridBoxHook = (config: any, getData?: any) => {
+const useGridBoxHook = (config: useGridBoxConfig, getData?: any) => {
   const queryClient = useQueryClient();
-  const [gridConfig, setGridConfig] = useState(config);
+  const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config);
 
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
     const result = (await queryClient.fetchQuery(config.query({ ...params, page }))) as any;
@@ -11,8 +12,9 @@ const useGridBoxHook = (config: any, getData?: any) => {
       setGridConfig((state: any) => ({
         ...state,
         data: result.content,
+        hasData: !!result.content.length,
+        // 조건부로 pageable 존재할 때만 추가
         ...(result.pageable && {
-          // 조건부로 page가 존재할 때만 추가
           page: {
             ...state.page,
             pageSize: result.pageable.pageSize,

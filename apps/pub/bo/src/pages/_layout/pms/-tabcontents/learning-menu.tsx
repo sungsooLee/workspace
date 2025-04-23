@@ -14,7 +14,7 @@ import {
   Switch,
   Tooltip,
   Input,
-  Grid,
+  GridBox,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -248,7 +248,8 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   align="start"
                   content={
                     'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.'
-                  }>
+                  }
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -295,7 +296,8 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   className={formStyles.tooltip}
                   side="right"
                   align="start"
-                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}>
+                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}
+                >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
@@ -311,11 +313,11 @@ const LearningMenuComponent: FC<{}> = ({}) => {
             </div>
           </ContentsRow>
           <ContentsRow>
-            <Grid
+            <GridBox
               data={data}
               columns={columns}
               showTotalCount={true}
-              hideColumnSettings={true}
+              showColumnSettings={false}
               title="API"
             />
           </ContentsRow>

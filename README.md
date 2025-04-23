@@ -6,7 +6,17 @@
 
 [Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
-## Git Commit Convention
+## Git Convention
+
+Git Branch
+
+화면단위로 브랜치 생성하여 관리
+
+```
+feature/개발계획서 Screen ID
+```
+
+Commit Convention
 
 - feat: 새로운 기능에 대한 커밋
 - fix: 버그 수정에 대한 커밋
@@ -20,7 +30,7 @@
 - perf: 성능 개선에 대한 커밋
 
 ```sh
-feat: [HMGSLP-137] Create fe project
+feat: [Screen_ID] Create fe project
 ```
 
 ## Install package
@@ -110,7 +120,6 @@ Uncovered Line #s:
 테스트되지 않은 코드 줄 번호를 표시.
 예: editor.tsx 파일에서 15-16번째 줄이 테스트되지 않은 것으로 표시됨
 
-
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
 
 [More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
@@ -161,11 +170,12 @@ And join the Nx community:
 - [Our Youtube channel](https://www.youtube.com/@nxdevtools)
 - [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-
 ## Test
 
 ### fireEvent
+
 - fireEvent는 React Testing Library에서 제공하는 유틸리티 함수로, DOM 이벤트(예: click, change, blur, submit 등)를 프로그램matically(프로그램 코드로) 발생시킬 때 사용
 
 ### 테스트 접근 방법
+
 1. 컴포넌트의 의존성 파악하기

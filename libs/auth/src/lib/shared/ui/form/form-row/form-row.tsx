@@ -63,7 +63,8 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
         if (fieldRefs.current) {
           fieldRefs.current[formName] = node as HTMLElement | null;
         }
-      }}>
+      }}
+    >
       {/* 레이블 렌더링 */}
       {rootConfig.label && (
         <label htmlFor={formName} className={cn(styles.form_label, 'dynamic-form-field-label')}>
@@ -73,7 +74,8 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
               className={cn(styles.status, {
                 [styles.error]: error.isError, // 에러 발생 시 에러 스타일 적용
                 [styles.required]: !error.isError, // 에러가 없으면 필수 스타일 적용
-              })}>
+              })}
+            >
               <IcoFormRequired width={8} height={8} />
             </span>
           )}
@@ -82,7 +84,8 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
               className={styles.tooltip}
               side="right"
               align="start"
-              content={rootConfig.tooltip}>
+              content={rootConfig.tooltip}
+            >
               <Button onlyIcon>
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Button>
@@ -105,7 +108,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
         ))}
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
-          {error.message}
+          {t(error.message as any)}
         </p>
       )}
     </div>

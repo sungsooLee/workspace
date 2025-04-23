@@ -120,7 +120,9 @@ function RouteComponent() {
                   chipList={{
                     labelField: 'name',
                     valueField: 'id',
+                    wordwrap: true,
                   }}
+                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
                 />
               </DynamicFormField>
             </FormRow>

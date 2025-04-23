@@ -40,7 +40,7 @@
         .box {
           .date {
             span {
-              @apply body_4_r;
+              @apply body_3_r;
             }
           }
           .tit {

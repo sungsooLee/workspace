@@ -12,6 +12,10 @@ export type { com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_
 export type { com_ever_edu_global_dto_ResponseDtoJava_lang_Long } from './models/com_ever_edu_global_dto_ResponseDtoJava_lang_Long';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
+export type { com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto } from './models/com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto';
+export type { com_ever_edu_global_excel_dto_req_ExcelValidationReqDto } from './models/com_ever_edu_global_excel_dto_req_ExcelValidationReqDto';
+export type { com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto } from './models/com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto';
+export type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from './models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 export type { com_ever_edu_global_exception_dto_ErrorResponse } from './models/com_ever_edu_global_exception_dto_ErrorResponse';
 export type { com_ever_edu_global_exception_dto_ErrorResponse$FieldError } from './models/com_ever_edu_global_exception_dto_ErrorResponse$FieldError';
 export type { com_ever_edu_global_s3_dto_req_CompleteUploadReqDto } from './models/com_ever_edu_global_s3_dto_req_CompleteUploadReqDto';
@@ -74,6 +78,7 @@ export type { com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto } from './model
 export { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from './models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 export { com_ever_edu_pms_file_dto_res_FileInfoResDto } from './models/com_ever_edu_pms_file_dto_res_FileInfoResDto';
 export type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from './models/com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
+export type { com_ever_edu_pms_file_dto_res_S3FileUrlResDto } from './models/com_ever_edu_pms_file_dto_res_S3FileUrlResDto';
 export { com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto } from './models/com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto';
 export type { com_ever_edu_pms_file_dto_test_UserExcelVO } from './models/com_ever_edu_pms_file_dto_test_UserExcelVO';
 export { com_ever_edu_pms_form_dto_FormJsonDto } from './models/com_ever_edu_pms_form_dto_FormJsonDto';
@@ -102,7 +107,7 @@ export type { com_ever_edu_pms_menu_entity_ApiMappingMenuEntity } from './models
 export { com_ever_edu_pms_menu_entity_MenuEntity } from './models/com_ever_edu_pms_menu_entity_MenuEntity';
 export { com_ever_edu_pms_menu_entity_TenantMappingMenuEntity } from './models/com_ever_edu_pms_menu_entity_TenantMappingMenuEntity';
 export { com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin';
-export type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
+export { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
 export type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto';
 export { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin';
 export { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from './models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
@@ -214,6 +219,7 @@ export { AuthorizationAdminControllerService } from './services/AuthorizationAdm
 export { BoService } from './services/BoService';
 export { BoApiService } from './services/BoApiService';
 export { BoAwsService } from './services/BoAwsService';
+export { BoExcelFileInternalApiService } from './services/BoExcelFileInternalApiService';
 export { BoFileService } from './services/BoFileService';
 export { BoFileInternalApiService } from './services/BoFileInternalApiService';
 export { BoFileTestTestApiService } from './services/BoFileTestTestApiService';

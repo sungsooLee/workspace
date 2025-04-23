@@ -12,8 +12,8 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_T
     content?: Array<com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

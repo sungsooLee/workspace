@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { t } from 'i18next';
 import { useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
+import { GridBox, useGridBox } from '@learnway/ui';
 
 export const OrganizationTable = () => {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -83,6 +83,5 @@ const gridConfig = {
     totalRows: 0,
   },
   height: 300,
-  hideColumnSettings: true,
   showExcelDownload: true,
 };

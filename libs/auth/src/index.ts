@@ -6,6 +6,8 @@ export * from './lib/pages/search-account/result-by-search-account';
 export * from './lib/pages/signup-progress/signup-progress';
 export * from './lib/pages/signup-progress/result-by-signup-progress';
 
+export * from './lib/features/auth';
+
 export * from './lib/entities/authorization';
 export * from './lib/entities/menu';
 

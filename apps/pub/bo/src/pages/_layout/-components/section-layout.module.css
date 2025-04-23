@@ -23,6 +23,17 @@
       }
     }
   }
+  &.third_children {
+    & > div {
+      @apply min-h-[calc(100vh-446px)] w-[calc((100%-452px)/2)] pr-[32px];
+      &:nth-child(1) {
+        @apply shrink-0 basis-[452px];
+      }
+      &:nth-last-child(1) {
+        @apply pr-0;
+      }
+    }
+  }
   &.line {
     @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
   }

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, ReactNode, useEffect, useState } from 'react';
 
 import { Button, ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
@@ -13,6 +13,8 @@ export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<
   modalConfig: ModalConfig;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
+  /** action node */
+  actionNode?: ReactNode;
 }
 
 /**
@@ -36,6 +38,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
         valueField: 'value',
         visibleCount: 2,
       },
+      actionNode,
       control,
     },
     ref,
@@ -73,7 +76,8 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
           styles.start,
           styles.chips_modal_wrap,
           'nlp--chip-list-modal-selector-form-field',
-        )}>
+        )}
+      >
         <ChipList
           {...chipListProps}
           size={'xs'}
@@ -85,7 +89,8 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
           type="button"
           className={cn(styles.btn_search)}
           onlyIcon
-          onClick={handleSearchClick}>
+          onClick={handleSearchClick}
+        >
           <IcoSearch width={20} height={20} stroke={'#131C30'} />
         </Button>
       </div>

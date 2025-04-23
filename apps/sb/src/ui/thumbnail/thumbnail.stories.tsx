@@ -1,8 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { Thumbnail, ThumbnailList } from '@learnway/ui';
-import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
+import { ImageOption, Thumbnail, ThumbnailList } from '@learnway/ui';
 import { addOrRemoveItemByKey } from '@learnway/shared';
 
 export default {

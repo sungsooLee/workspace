@@ -18,13 +18,10 @@ export function useCommonCodeList(
   sort: string,
   cdGroupId = '',
   cdGroupName = '',
-  cdGroupContent = '',
   isUsed = '',
   cdName = '',
 ) {
-  return useQuery(
-    queryOptions.list(page, size, sort, cdGroupId, cdGroupName, cdGroupContent, isUsed, cdName),
-  );
+  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed, cdName));
 }
 
 export function useCommonCodeDetail(cdGroupId: string, cdId: string) {
@@ -48,7 +45,6 @@ export function useCreateCommonCode({
     sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupContent?: string;
     isUsed?: string;
     cdName?: string;
   };
@@ -70,6 +66,11 @@ export function useCreateCommonCode({
           queryKey: queryKeys.all,
         });
       }
+      // if (data.cdGroupId && data.cdId) {
+      //   await queryClient.invalidateQueries({
+      //     queryKey: queryKeys.detail(data.cdGroupId, data.cdId),
+      //   });
+      // }
 
       if (onSuccess) {
         onSuccess(data, variables, context);
@@ -103,7 +104,6 @@ export function useUpdateCommonCode({
     sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupContent?: string;
     isUsed?: string;
     cdName?: string;
   };
@@ -123,6 +123,12 @@ export function useUpdateCommonCode({
       } else {
         await queryClient.invalidateQueries({
           queryKey: queryKeys.all,
+        });
+      }
+
+      if (data.cdGroupId && data.cdId) {
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.detail(data.cdGroupId, data.cdId),
         });
       }
 

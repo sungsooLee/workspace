@@ -10,7 +10,7 @@ import {
   API_FO_URI,
   tokenService,
 } from '@learnway/config';
-import { Spinner } from '@learnway/ui';
+import { Spinner, useModal } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
@@ -35,6 +35,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
   const { reissue } = useAuthSignin();
+  const { alert } = useModal();
 
   useMount(async () => {
     // set api prefix by fo
@@ -43,7 +44,20 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   });
 
   useEffect(() => {
-    initAxios();
+    initAxios({
+      // API Error ux 대응
+      onRejected: async (error: any) => {
+        const { config, response: errorResponse } = error;
+        if (error?.code === 'ERR_NETWORK' || errorResponse?.status === 500) {
+          await alert({
+            title: '시스템 에러',
+            content: '시스템 관리자에게 문의하세요',
+            type: 'error',
+          });
+        }
+        return Promise.reject(error);
+      },
+    });
     initZod();
   }, []);
 

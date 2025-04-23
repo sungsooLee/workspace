@@ -9,6 +9,7 @@ import {
   ModalContainer,
   ModalBody,
   ModalFooter,
+  ModalTitle,
 } from '@learnway/ui';
 import {
   IcoUploadCloud,
@@ -31,13 +32,15 @@ function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const FileUploadContent = () => {
     return (
+      // 퍼블수정 2025-04-22
       <ModalContainer>
+        <ModalTitle>파일 업로드</ModalTitle>
         <ModalBody>
           <div className={PopupStyles.wrap}>
+            <div className={cn(boxStyles.start)}>
+              <p className={boxStyles.text}>{'선택한 관리채널명채널명채널명'}</p>
+            </div>
             <div className={PopupStyles.title_wrap}>
-              <h2 className={PopupStyles.title}>{'파일 업로드'}</h2>
-              <p className={PopupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-              {/* 퍼블 수정 20250331 : 스타일 수정 S  */}
               <p className={cn(styles.file_status_view)}>
                 <span className={styles.file_completed}>
                   {'완료'} <em className={styles.num}>{'4'}</em>
@@ -48,15 +51,13 @@ function RouteComponent() {
                 <span className={styles.file_ing}>
                   파일 올리는중 <em className={styles.ing}>1/1</em>
                 </span>
+                <span>{'파일은 최대1개, 4GB 이하로 업로드 가능합니다.'}</span>
               </p>
-              {/* 퍼블 수정 20250331 : 스타일 수정 E  */}
-            </div>
-            <div className={cn(boxStyles.start)}>
-              <p className={boxStyles.text}>{'선택한 관리채널명채널명채널명'}</p>
             </div>
             {/* 파일 업로드 영역 */}
             <div className={cn(styles.start, styles.wrap)}>
-              <div className={cn(styles.file_wrap)}>
+              {/* 퍼블수정 error 케이스 추가 */}
+              <div className={cn(styles.file_wrap, styles.error)}>
                 {/* 파일 첨부 하기 전 */}
                 <div className={styles.attach_area}>
                   <Button className={styles.btn_file}>
@@ -88,12 +89,14 @@ function RouteComponent() {
                     <div className={styles.progress_area}>
                       <Progress className={styles.progress} value={100} label={'완료'} />
                     </div>
-                    <IcoComplete02
-                      width={20}
-                      height={20}
-                      fill="#3EB838"
-                      className={styles.complete}
-                    />
+                    <div className={styles.control_wrap}>
+                      <IcoComplete02
+                        width={20}
+                        height={20}
+                        fill="#3EB838"
+                        className={styles.complete}
+                      />
+                    </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
@@ -109,6 +112,8 @@ function RouteComponent() {
                     </p>
                     <div className={styles.progress_area}>
                       <p className={styles.file_status_text}>{'유효성 검토 중'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
                       <Badge
                         className={styles.file_status}
                         option={{ label: '', value: '' }}
@@ -131,6 +136,8 @@ function RouteComponent() {
                     </p>
                     <div className={styles.progress_area}>
                       <p className={styles.file_status_text}>{'업로드 불가'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
                       <Badge
                         className={styles.file_status}
                         option={{ label: '', value: '' }}
@@ -154,9 +161,11 @@ function RouteComponent() {
                     <div className={styles.progress_area}>
                       <p className={styles.file_status_text}>{'업로드 취소'}</p>
                     </div>
-                    <Button className={styles.btn_status} onlyIcon>
-                      <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                    </Button>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                      </Button>
+                    </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
@@ -173,9 +182,11 @@ function RouteComponent() {
                     <div className={styles.progress_area}>
                       <Progress className={styles.progress} value={40} label={'실패'} isFailed />
                     </div>
-                    <Button className={styles.btn_status} onlyIcon>
-                      <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                    </Button>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                      </Button>
+                    </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
@@ -192,9 +203,11 @@ function RouteComponent() {
                     <div className={styles.progress_area}>
                       <Progress className={styles.progress} value={40} label={'진행중'} />
                     </div>
-                    <Button className={styles.btn_status} onlyIcon>
-                      <IcoPause width={20} height={20} fill="#A9AFB8" />
-                    </Button>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoPause width={20} height={20} fill="#A9AFB8" />
+                      </Button>
+                    </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
@@ -211,9 +224,11 @@ function RouteComponent() {
                     <div className={styles.progress_area}>
                       <Progress className={styles.progress} value={0} label={'대기중'} />
                     </div>
-                    <Button className={styles.btn_status} onlyIcon>
-                      <IcoPause width={20} height={20} fill="#A9AFB8" />
-                    </Button>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoPause width={20} height={20} fill="#A9AFB8" />
+                      </Button>
+                    </div>
                     <Button className={styles.btn_delete} onlyIcon>
                       <IcoTrash03 width={20} height={20} stroke="#131C30" />
                     </Button>
@@ -221,7 +236,7 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
-            <p className={styles.guide_text}>
+            <p className={cn(styles.guide_text, styles.error)}>
               {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
             </p>
           </div>

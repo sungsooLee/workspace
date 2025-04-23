@@ -90,40 +90,59 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
                 </div>
               )}
               {file.status === 'complete' && (
-                <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />
+                <div className={styles.control_wrap}>
+                  <IcoComplete02
+                    width={20}
+                    height={20}
+                    fill="#3EB838"
+                    className={styles.complete}
+                  />
+                </div>
               )}
               {file.status === 'waiting' && (
-                <div className={styles.progress_area}>
-                  <p className={styles.file_status_text}>{'유효성 검토 중'}</p>
-                  <Badge
-                    className={styles.file_status}
-                    option={{ label: '', value: '' }}
-                    variant="dot"
-                    status="ing"
-                  />
-                </div>
+                <>
+                  <div className={styles.progress_area}>
+                    <p className={styles.file_status_text}>{'유효성 검토 중'}</p>
+                  </div>
+                  <div className={styles.control_wrap}>
+                    <Badge
+                      className={styles.file_status}
+                      option={{ label: '', value: '' }}
+                      variant="dot"
+                      status="ing"
+                    />
+                  </div>
+                </>
               )}
               {file.status === 'error' && (
-                <div className={styles.progress_area}>
-                  <p className={styles.file_status_text}>{'업로드 불가'}</p>
-                  <Badge
-                    className={styles.file_status}
-                    option={{ label: '', value: '' }}
-                    variant="dot"
-                    status="error"
-                  />
-                </div>
+                <>
+                  <div className={styles.progress_area}>
+                    <p className={styles.file_status_text}>{'업로드 불가'}</p>
+                  </div>
+                  <div className={styles.control_wrap}>
+                    <Badge
+                      className={styles.file_status}
+                      option={{ label: '', value: '' }}
+                      variant="dot"
+                      status="error"
+                    />
+                  </div>
+                </>
               )}
               {file.status === 'uploading' && (
-                <Button className={styles.btn_status} onlyIcon onClick={() => onCancel(file.id)}>
-                  <IcoPause width={20} height={20} fill="#A9AFB8" />
-                </Button>
+                <div className={styles.control_wrap}>
+                  <Button className={styles.btn_status} onlyIcon onClick={() => onCancel(file.id)}>
+                    <IcoPause width={20} height={20} fill="#A9AFB8" />
+                  </Button>
+                </div>
               )}
 
               {file.status === 'cancel' && (
-                <Button className={styles.btn_status} onlyIcon onClick={() => onRetry(file.id)}>
-                  <IcoRefresh width={20} height={20} fill="#00AFD5" />
-                </Button>
+                <div className={styles.control_wrap}>
+                  <Button className={styles.btn_status} onlyIcon onClick={() => onRetry(file.id)}>
+                    <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                  </Button>
+                </div>
               )}
               {(file.status === 'cancel' || file.status === 'complete') && (
                 <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove(file.id)}>

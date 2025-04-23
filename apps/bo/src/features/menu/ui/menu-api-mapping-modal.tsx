@@ -33,7 +33,9 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       }
       console.log(transformedData);
       if (selectedApiKeys && selectedApiKeys.length > 0) {
+        console.log(selectedApiKeys);
         const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
+        console.log(selectedNodes);
         setSelectedItems(selectedNodes);
       }
     }
@@ -44,10 +46,9 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
   };
 
   const handleCustomNodeClick = (node: TreeNode) => {
-    console.log(node);
-    if (node && node.apiId && node.level && node.level >= 1) {
+    if (node && node.apiUuid && node.level && node.level >= 1) {
       openModal({
-        content: <ApiInfoModal apiId={node.apiId} />,
+        content: <ApiInfoModal apiId={node.apiUuid} />,
         width: 's',
         closeOnOutsideClick: true,
       });
@@ -77,7 +78,6 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
           variant={'primary'}
           size={'md'}
           onClick={() => {
-            console.log(selectedItems);
             close(selectedItems);
           }}
         >

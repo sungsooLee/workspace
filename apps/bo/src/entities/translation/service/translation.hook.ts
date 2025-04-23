@@ -8,7 +8,7 @@ const useTranslationHook = () => {
     ...mutateOptions.create(),
     onSuccess: async (data: any, variables, context) => {
       openAlert({
-        description: '정상적으로 저장되었습니다.',
+        content: '정상적으로 저장되었습니다.',
         type: 'complete',
       });
     },
@@ -19,7 +19,7 @@ const useTranslationHook = () => {
     onSuccess: async (data: any, variables, context) => {
       console.log('data => ', data);
       openAlert({
-        description: '정상적으로 수정되었습니다.',
+        content: '정상적으로 수정되었습니다.',
         type: 'complete',
       });
     },

@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { Button, Grid, TreeNode, useModal, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, GridBox, TreeNode, useModal } from '@learnway/ui';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DuplicateCodeGuideText } from './menu-code-input';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 import { ApiInfoModal } from './api-info-modal';
@@ -80,7 +80,7 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           isWebExposed: data?.isWebExposed,
           isMobileExposed: data?.isMobileExposed,
-          isHiddenMenu: data?.isHiddenMenu || false,
+          hiddenYn: data?.hiddenYn || false,
           visible: [
             data.isWebExposed === true && 'isWebExposed',
             data.isMobileExposed === true && 'isMobileExposed',
@@ -110,7 +110,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: ['isWebExposed'],
-        isHiddenMenu: false,
+        hiddenYn: false,
         apiMappingMenuList: [],
       };
       fetchData(initialData);
@@ -128,7 +128,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: [],
-        isHiddenMenu: false,
+        hiddenYn: false,
       };
       fetchData(initialData);
     }
@@ -170,17 +170,17 @@ const MenuViewComponent: FC<any> = ({
     if (mode === 'view') {
       // 메뉴 코드가 변경되었는지 확인
       const isCodeChanged = isFieldChanged('code', node.code);
-      console.log(isCodeChanged);
+
       // 코드가 변경되지 않았으면 중복 체크 없이 진행
       if (!isCodeChanged) {
         // 수정 API 호출을 위한 데이터 준비
         const updateData = {
           menuId: selectedNode.menuId,
           menuCode: node.code,
-          menuName: node.title,
           parentId: node.parentKey,
+          menuName: node.title,
           isDeleted: false,
-          isHiddenMenu: node.isHiddenMenu,
+          hiddenYn: node.hiddenYn,
           isUsed: true,
           isWebExposed: isWebExposed,
           isMobileExposed: isMobileExposed,
@@ -206,28 +206,26 @@ const MenuViewComponent: FC<any> = ({
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
       return;
     }
+    console.log(node);
 
     const tmpData = {
-      // menuId: selectedNode.menuId,
       menuCode: node.code,
-      menuName: node.title,
       parentId: node.parentKey,
       isDeleted: false,
-      isHiddenMenu: node.isHiddenMenu,
+      hiddenYn: node.hiddenYn,
       isUsed: true,
       isWebExposed: isWebExposed,
       isMobileExposed: isMobileExposed,
       menuDesc: node.menuDesc,
       isPersoninfoInclusion: node.isPersoninfoInclusion,
-      isShortCutArea: true,
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
+      menuName: node.title,
       apiMappingMenuList: apiMappingKeys,
     };
     console.log(tmpData);
-    if (mode === 'view') onUpdate({ ...tmpData, menuId: selectedNode.menuId });
-    else onSave(tmpData);
+    onSave(tmpData);
     // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
@@ -409,7 +407,7 @@ const MenuViewComponent: FC<any> = ({
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isHiddenMenu'} disabled={isInitMode} />
+              <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
             </FormRow>
           </ContentsRow>
 
@@ -427,13 +425,12 @@ const MenuViewComponent: FC<any> = ({
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'apiMappingMenuList'}>
-                <Grid
+                <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
-                  hideColumnSettings={true}
                   title={t('API')}
-                  renderButtons={
+                  customButtonNode={
                     <Button
                       variant="text"
                       onClick={() => handleApiMapping()}
@@ -520,7 +517,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('Hidden 메뉴'),
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
-      name: 'isHiddenMenu',
+      name: 'hiddenYn',
       type: 'switch',
       value: false,
     },

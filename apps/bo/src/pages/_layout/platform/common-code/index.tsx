@@ -40,7 +40,6 @@ function RouteComponent() {
   const [searchParams, setSearchParams] = useState({
     cdGroupId: state.cdGroupId || '',
     cdGroupName: state.cdGroupName || '',
-    cdGroupContent: '',
     isUsed: '',
     cdName: '',
   });
@@ -51,7 +50,6 @@ function RouteComponent() {
     sortState.sort,
     searchParams.cdGroupId,
     searchParams.cdGroupName,
-    searchParams.cdGroupContent,
     searchParams.isUsed,
     searchParams.cdName,
   );
@@ -62,7 +60,6 @@ function RouteComponent() {
       cdGroupName: data.cdGroupName || '',
       isUsed: data.isUsed || '',
       cdName: data.cdName || '',
-      cdGroupContent: '',
     });
   };
 
@@ -144,7 +141,10 @@ function RouteComponent() {
             size={pageState.size}
             onPageChange={handlePageChange}
             onPageSizeChange={handlePageSizeChange}
-            state={searchParams}
+            state={{
+              ...searchParams,
+              sort: sortState.sort,
+            }}
             totalRows={commonCodeListData && commonCodeListData.totalElements}
             onStateChange={handleGridStateChange} // 이 부분 추가
           />
