@@ -28,6 +28,7 @@ function RouteComponent() {
   const { provider: sProvider, getValues, onFormChange } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
+  const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   const isSaveDisable = useMemo(
     () => gConfig.totalRows === 0 || currentTargetLocale === '',
@@ -67,7 +68,8 @@ function RouteComponent() {
 
   useEffect(() => {
     if (state.keyType) {
-      onFormChange({ keyType: 'MENU', multilingualKey: state.multilingualKey || '' });
+      console.log('state => ', state);
+      onFormChange({ keyType: state.keyType, multilingualKey: state.multilingualKey || '' });
     }
   }, []);
   return (
@@ -79,10 +81,28 @@ function RouteComponent() {
         <Button type="button" variant="point" size="sm">
           카테고리 관리
         </Button>
-        <Button type="button" variant="point" size="sm">
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({
+              to: '/platform/common-code',
+            });
+          }}
+        >
           공통코드 관리
         </Button>
-        <Button type="button" variant="point" size="sm">
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({
+              to: '/platform/system/label',
+            });
+          }}
+        >
           라벨/메세지 관리
         </Button>
         <Button
