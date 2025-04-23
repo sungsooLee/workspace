@@ -438,9 +438,9 @@ const MenuViewComponent: FC<any> = ({
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
-                  hideColumnSettings={true}
+                  showColumnSettings={false}
                   title={t('API')}
-                  renderButtons={
+                  customButtonNode={
                     <Button
                       variant="text"
                       onClick={() => handleApiMapping()}

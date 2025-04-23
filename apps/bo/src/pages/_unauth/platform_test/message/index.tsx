@@ -64,12 +64,11 @@ function RouteComponent() {
         {/* 검색 */}
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
-        <SplitPanel>
+        <SplitPanel rightSize={450}>
           <GridBox
             config={gridConfig}
             title={t('목록')}
             height={440}
-            hideColumnSettings
             onRowSelect={handleGridRowSelect}
           />
           <MessageDetail labelMessageId={selectedLabelMessageId} />

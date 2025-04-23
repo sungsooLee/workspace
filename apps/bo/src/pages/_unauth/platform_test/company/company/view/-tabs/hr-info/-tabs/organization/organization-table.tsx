@@ -83,6 +83,6 @@ const gridConfig = {
     totalRows: 0,
   },
   height: 300,
-  hideColumnSettings: true,
+  showColumnSettings: false,
   showExcelDownload: true,
 };

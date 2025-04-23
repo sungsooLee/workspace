@@ -39,7 +39,6 @@ export function WidgetAssignedTenantGrid({ data }: { data: any }) {
       columns={gridColumns}
       title={'테넌트 정보(해당 위젯을 사용하는 테넌트)'}
       disabledSelectionToggle
-      hideColumnSettings
     />
   );
 }

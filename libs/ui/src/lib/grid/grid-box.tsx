@@ -18,22 +18,22 @@ import { useTranslation } from 'react-i18next';
 const GridBoxComponent = <T extends object>(
   {
     config = {},
-    hideColumnSettings,
     showTotalCount = true,
     showSelectedCount,
+    showColumnSettings = true,
     showExcelDownload,
     showUpload,
     showSelectAll,
     showDeleteAll,
     titleCustomNode,
-    renderButtons,
+    customButtonNode,
     guideText,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
 ) => {
   const { t } = useTranslation();
-  const { data, page, totalRows, gridFetch, columns, title } = config;
+  const { data = props.data, page, totalRows, gridFetch, columns, title } = config;
   const columnHelper = createColumnHelper<any>();
 
   /**
@@ -118,8 +118,6 @@ const GridBoxComponent = <T extends object>(
       : undefined; // page가 falsy일 경우 undefined 반환
   }, [page, handleChangePage, handleChangePageSize, props.pagination]);
 
-  console.log(title, props.title);
-
   return (
     <div className={cn(styles.table_box)}>
       <div className={styles.table_info}>
@@ -133,7 +131,7 @@ const GridBoxComponent = <T extends object>(
               {t('전체')} <strong className={styles.num}>{data?.length}</strong>
             </div>
           )}
-          {/* react node */}
+          {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
           {titleCustomNode && <div>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
@@ -141,6 +139,8 @@ const GridBoxComponent = <T extends object>(
         </div>
 
         <div className={styles.button_info}>
+          {/* 외부에서 받은 커스텀 버튼 노드 */}
+          {customButtonNode}
           {/* 전체 선택 */}
           {showSelectAll && (
             <Button
@@ -182,7 +182,7 @@ const GridBoxComponent = <T extends object>(
             />
           )}
           {/* 컬럼 설정 */}
-          {!hideColumnSettings && (
+          {showColumnSettings && (
             <Button
               variant="outline"
               size="sm"
@@ -192,8 +192,6 @@ const GridBoxComponent = <T extends object>(
               onClick={handleColumnSettings}
             />
           )}
-          {/* 외부에서 받은 커스텀 버튼 노드 */}
-          {renderButtons}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
