@@ -170,7 +170,7 @@ function RouteComponent() {
               data={data}
               columns={columns}
               showSelectedCount={true}
-              hideColumnSettings={true}
+              showColumnSettings={false}
               pagination={{
                 pageSize,
                 pageIndex,

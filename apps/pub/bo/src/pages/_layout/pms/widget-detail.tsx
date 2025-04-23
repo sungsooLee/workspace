@@ -301,7 +301,7 @@ function RouteComponent() {
                 data={data}
                 columns={columns}
                 title="테넌트 정보(해당 위젯을 사용하는 테넌트)"
-                hideColumnSettings
+                showColumnSettings={false}
               />
             </div>
           </ContentsRow>

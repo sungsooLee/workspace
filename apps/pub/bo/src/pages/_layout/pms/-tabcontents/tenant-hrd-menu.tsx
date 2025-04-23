@@ -379,7 +379,7 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
               data={data}
               columns={columns}
               showTotalCount={true}
-              hideColumnSettings={true}
+              showColumnSettings={false}
               title="API"
             />
           </ContentsRow>

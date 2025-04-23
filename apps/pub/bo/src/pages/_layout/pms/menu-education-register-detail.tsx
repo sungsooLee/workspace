@@ -225,7 +225,7 @@ function RouteComponent() {
                 data={data}
                 columns={columns}
                 height={280}
-                hideColumnSettings={true}
+                showColumnSettings={false}
                 pagination={{
                   pageSize,
                   pageIndex,
