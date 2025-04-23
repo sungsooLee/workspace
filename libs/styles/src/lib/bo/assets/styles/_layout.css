@@ -13,7 +13,7 @@ body main {
     }
   }
   [class*='nlp--contents-row'] [class*='grid_wrap'] {
-    @apply !max-w-[calc(100vw-157px)];
+    @apply !max-w-[calc(100vw-144px)];
   }
 }
 .lnb-open main {
