@@ -94,7 +94,10 @@ function RouteComponent() {
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           totalRows={commonCodeGroupListData && commonCodeGroupListData.totalElements}
-          state={searchParams}
+          state={{
+            ...searchParams,
+            sort: sortState.sort,
+          }}
           onStateChange={handleGridStateChange} // 이 부분 추가
         />
       </MainContents>

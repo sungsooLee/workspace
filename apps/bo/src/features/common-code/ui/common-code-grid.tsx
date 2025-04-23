@@ -75,7 +75,7 @@ const columns = [
     },
     header: '코드사용',
   }),
-  columnHelper.accessor('cdGroupContent', {
+  columnHelper.accessor('cdContent', {
     cell: (info) => info.getValue(),
     header: '내용',
   }),
@@ -151,7 +151,7 @@ const CommonCodeGridComponent = ({
     queryParams: {
       page,
       size,
-      sort: state.sort || '',
+      sort: state.sort,
       cdGroupId: state.cdGroupId,
       cdGroupName: state.cdGroupName,
       isUsed: state.isUsed,
@@ -168,14 +168,15 @@ const CommonCodeGridComponent = ({
         afterCreateOrUpdateCommonCodeGroup(data);
       }
     },
-    // queryParams: {
-    //   page,
-    //   size,
-    // cdGroupId: state.cdGroupId,
-    // cdGroupName: state.cdGroupName,
-    // isUsed: state.isUsed,
-    // cdName: state.cdName,
-    // },
+    queryParams: {
+      page,
+      size,
+      sort: state.sort,
+      cdGroupId: state.cdGroupId,
+      cdGroupName: state.cdGroupName,
+      isUsed: state.isUsed,
+      cdName: state.cdName,
+    },
   });
 
   const afterCreateOrUpdateCommonCodeGroup = (data: any) => {
@@ -196,7 +197,6 @@ const CommonCodeGridComponent = ({
     setTimeout(() => {
       // 적절한 시간 후에 행 선택 시도 (데이터 새로고침 완료 후)
       const selected = gridRef.current?.selectRowById('cdId', data.cdId);
-
       if (selected) {
         setFormMode(FORM_MODE.VIEW);
         setSelectedRow(newItem);
@@ -205,7 +205,7 @@ const CommonCodeGridComponent = ({
         setFormMode(FORM_MODE.NONE);
         onFormChange(initCdGroup);
       }
-    }, 300);
+    }, 500);
   };
 
   const clearAllFormErrors = () => {
@@ -269,6 +269,7 @@ const CommonCodeGridComponent = ({
       if (isAdd) {
         const createPayload = {
           ...formData,
+          cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
           translations: [
             {
               locale: 'ko',
@@ -287,6 +288,7 @@ const CommonCodeGridComponent = ({
       if (isUpdate) {
         const updatePayload = {
           ...formData,
+          cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
           translations: [
             {
               locale: 'ko',
@@ -304,7 +306,8 @@ const CommonCodeGridComponent = ({
   // 데이터가 로드되면 폼에 채우기
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
-      fetchData(detailData);
+      console.log(detailData);
+      fetchData({ ...detailData, cdSeq: detailData.cdSeq ? detailData.cdSeq + '' : '' });
       // 데이터 처리 완료 표시
       setDataProcessed(true);
     }
@@ -321,7 +324,6 @@ const CommonCodeGridComponent = ({
   const isFormDisabled = formMode === FORM_MODE.NONE;
 
   const handleStateChange = (newState: GridState) => {
-    console.log(newState);
     if (onStateChange) {
       onStateChange(newState);
     }
@@ -347,12 +349,13 @@ const CommonCodeGridComponent = ({
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,
               }}
-              columnPinning={{ columns: ['cdGroupId', 'cdGroupName'] }}
+              columnPinning={{ columns: ['numbering', 'cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}
               emptyMessage={
                 state.cdGroupId === '' ? '코드그룹을 먼저 검색해주세요.' : '조회 결과가 없습니다.'
               }
               onStateChange={handleStateChange}
+              showNumberingColumn={true}
             />
           </div>
         </div>
@@ -456,9 +459,11 @@ const CommonCodeGridComponent = ({
                   <DynamicFormField name={'isUsed'} disabled={isFormDisabled} />
                 </FormRow>
               </ContentsRow>
-              <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-                <ContentsHistoryInfoFormField type={'column'} />
-              </ContentsRow>
+              {formMode === FORM_MODE.VIEW && (
+                <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+                  <ContentsHistoryInfoFormField type={'column'} />
+                </ContentsRow>
+              )}
             </div>
           </form>
         </div>

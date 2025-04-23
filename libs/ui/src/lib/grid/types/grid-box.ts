@@ -155,5 +155,10 @@ export interface GridBoxProps<T extends object = object>
    * override GridProps
    */
   data?: T[];
+
+  /**
+   * Show RowIndex
+   */
+  showNumberingColumn?: boolean;
   columns?: any[];
 }
