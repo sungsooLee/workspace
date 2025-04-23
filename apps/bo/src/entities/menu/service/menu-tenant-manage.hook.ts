@@ -9,5 +9,5 @@ export function useMenuTenantMangeFetchTrees(tenantId: string, deviceType: strin
 }
 
 export function useMenuTenantManageDetail(menuId: string) {
-  return useQuery(queryOptions.detail(menuId));
+  return useQuery({ ...queryOptions.detail(menuId), enabled: !!menuId });
 }

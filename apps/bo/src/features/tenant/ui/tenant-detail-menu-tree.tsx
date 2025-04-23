@@ -16,6 +16,7 @@ import {
   Switch,
   Tooltip,
   Grid,
+  GridBox,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 
@@ -39,18 +40,62 @@ import {
   useMenuTenantManageDetail,
   useMenuTenantMangeFetchTrees,
 } from '@entities/menu/service/menu-tenant-manage.hook';
-import { transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+
+const FORM_MODE = {
+  NONE: 'NONE',
+  VIEW: 'VIEW',
+  ADD: 'ADD',
+};
+
+const handleExpandAll = (treeData: TreeNode[]) => {
+  const getAllKeys = (nodes: TreeNode[]): string[] => {
+    return nodes.reduce((keys: string[], node) => {
+      keys.push(node.key);
+      if (node.children?.length) {
+        keys.push(...getAllKeys(node.children));
+      }
+
+      return keys;
+    }, []);
+  };
+  return getAllKeys(treeData);
+};
+
+const getFirstExpandKeys = (treeData: TreeNode[]) => {
+  if (treeData && treeData.length > 0) {
+    const firstLevelKeys = treeData.map((node: TreeNode) => node.key);
+    return firstLevelKeys;
+  }
+};
+const tenantId = '1';
 
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [isInitMode, setIsInitMode] = useState(true);
 
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
+  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
 
-  const { data: menuDataOld, refetch: refetchOld } = useMenuManageFetchTree(menuScope, 'ko');
-  const { data: menuData, refetch } = useMenuTenantMangeFetchTrees('1', menuScope);
+  // fetch data
+  const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
+  const { data: menuData, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScope);
   const prevDataRef = React.useRef(null);
+
+  const handleExpandChange = (keys: string[]) => {
+    setExpandedKeys(keys);
+  };
+  const handleSelectedNodeChange = (node: TreeNode | null) => {
+    setSelectedNode(node);
+    if (node) {
+      setFormMode(FORM_MODE.VIEW);
+    } else {
+      setFormMode(FORM_MODE.NONE);
+    }
+  };
 
   useEffect(() => {
     if (menuData) {
@@ -66,17 +111,59 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     }
   }, [menuData]);
 
+  useEffect(() => {
+    if (detailData) {
+      console.log(detailData);
+      const parentNode = findParentNode(treeData, detailData?.menuId.toString());
+      const location = findMenuPathById(treeData, detailData?.menuId);
+      const deviceNames = [];
+      if (detailData.isWebExposed) {
+        deviceNames.push('PC');
+      }
+      if (detailData.isMobileExposed) {
+        deviceNames.push('Mobile');
+      }
+      fetchData({
+        ...detailData,
+        deviceNames: deviceNames,
+        location: location,
+      });
+      setFormMode(FORM_MODE.VIEW);
+    }
+  }, [detailData]);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
+          <h3 className={titleStyles.title}>{t('테넌트 메뉴 목록')}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
-              {'전체펼침'}
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              onClick={() => {
+                if (treeData) {
+                  const allKeys = handleExpandAll(treeData);
+                  handleExpandChange(allKeys);
+                }
+              }}
+            >
+              {t('전체펼침')}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
-              {'전체닫기'}
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              onClick={() => {
+                const firstKeys = getFirstExpandKeys(treeData);
+                handleExpandChange(firstKeys || []);
+              }}
+            >
+              {t('전체닫기')}
+            </Button>
+            <Button variant="save" size="sm">
+              {t('메뉴 맵핑')}
             </Button>
           </div>
         </div>
@@ -86,7 +173,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               treeId="tenant-menu-tree"
               type={'DRAG_DROP'}
               data={treeData}
+              selectedNode={selectedNode}
               expandedKeys={expandedKeys}
+              onExpandedKeysChange={handleExpandChange}
+              onSelectedNodeChange={handleSelectedNodeChange}
             />
           </TreeContainer>
         </div>
@@ -95,21 +185,26 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
-              {'초기화'}
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled={true}>
+              {t('초기화')}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
-              {'삭제'}
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              disabled={FORM_MODE.NONE === formMode}
+            >
+              {t('삭제')}
             </Button>
-            <Button variant="save" size="sm" disabled>
-              {'저장'}
+            <Button variant="save" size="sm" disabled={FORM_MODE.NONE === formMode}>
+              {t('저장')}
             </Button>
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'path'} disabled={true} />
+              <DynamicFormField name={'location'} disabled={true} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -132,7 +227,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuUrl'} disabled={true} />
+              <DynamicFormField name={'path'} disabled={true} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -140,75 +235,35 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               <DynamicFormField name={'menuDesc'} disabled={true} />
             </FormRow>
           </ContentsRow>
-          {/* Switch 영역 */}
-          <ContentsRow>
-            <div className={dynamicFormStyles.switch_wrap}>
-              <p className={dynamicFormStyles.title}>
-                {t('Hidden메뉴')}
-
-                <Tooltip
-                  className={formStyles.tooltip}
-                  side="right"
-                  align="start"
-                  content={t(
-                    'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
-                  )}
-                >
-                  <Button onlyIcon>
-                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  </Button>
-                </Tooltip>
-              </p>
-              <Switch
-                id="isHiddenMenu"
-                className={dynamicFormStyles.btn_switch}
-                label={'적용'}
-                // label={true ? '적용' : '미적용'}
-                checked={false}
-              />
-            </div>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isHiddenMenu'} disabled={true} />
+            </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={`deviceNames`}>
+              <DynamicFormField name={`deviceNames`} disabled={FORM_MODE.NONE === formMode}>
                 <FormTranslationBox />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
-            <div className={dynamicFormStyles.switch_wrap}>
-              <p className={dynamicFormStyles.title}>
-                {'개인정보'}
-
-                <Tooltip
-                  className={dynamicFormStyles.tooltip}
-                  side="right"
-                  align="start"
-                  content={'개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'}
-                >
-                  <Button onlyIcon>
-                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  </Button>
-                </Tooltip>
-              </p>
-              <Switch
-                id="name-use2"
-                className={dynamicFormStyles.btn_switch}
-                label={'사용'}
-                checked={true}
-                // onCheckedChange={handleCheckedChange(2)}
-                disabled
-              />
-            </div>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name="isPersoninfoInclusion" disabled={true} />
+            </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <Grid
-              data={gridData}
-              columns={columns}
-              showTotalCount={true}
-              hideColumnSettings={true}
-              title="API"
-            />
+            <FormRow provider={provider}>
+              <DynamicFormField name={'apiMappingMenuList'}>
+                <GridBox
+                  data={getValues('apiMappingMenuList') || []}
+                  columns={columns}
+                  showTotalCount={true}
+                  hideColumnSettings={true}
+                  title={t('API')}
+                />
+              </DynamicFormField>
+            </FormRow>
           </ContentsRow>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
@@ -225,11 +280,16 @@ export const TenantDetailMenuTree = TenantDetailMenuTreeComponent;
 const formConfig: DynamicFormConfig = {
   builders: [
     {
+      name: 'location',
+      type: 'text',
+      label: t('위치'),
+      value: '',
+    },
+    {
       name: 'path',
       type: 'text',
       label: t('메뉴 위치'),
       value: '',
-      placeholder: '메뉴 코드를 입력하세요.',
     },
     {
       name: 'parentName',
@@ -250,12 +310,6 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: 'menuUrl',
-      type: 'text',
-      label: t('메뉴URL'),
-      value: '',
-    },
-    {
       name: 'menuDesc',
       type: 'textarea',
       label: t('설명'),
@@ -263,9 +317,15 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isHiddenMenu',
+      tooltip: t(
+        'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
+      ),
       type: 'switch',
       label: t('Hidden 메뉴'),
       value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('적용') : t('미적용')),
+      },
     },
     {
       name: 'deviceNames',
@@ -281,7 +341,14 @@ const formConfig: DynamicFormConfig = {
       name: 'isPersoninfoInclusion',
       type: 'switch',
       label: t('게인정보'),
+      tooltip: t('개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'),
+      switchConfig: { label: (value: boolean) => (value ? t('사용') : t('미사용')) },
       value: false,
+    },
+    {
+      name: 'apiMappingMenuList',
+      type: 'custom',
+      value: [],
     },
   ],
   validator: {
@@ -296,7 +363,7 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('Sort', {
     cell: (info) => info.getValue(),
-    header: '분류',
+    header: t('분류'),
     size: 120,
     enableGrouping: false,
     meta: {
