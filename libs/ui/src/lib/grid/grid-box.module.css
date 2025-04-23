@@ -101,9 +101,9 @@
   .table_info {
     @apply mb-[12px] flex min-h-[28px] w-full items-center justify-between;
     .title_info {
-      @apply flex;
+      @apply flex items-center;
       .guide_text {
-        @apply ml-[16px] font-normal;
+        @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
       }
     }
     .title {
