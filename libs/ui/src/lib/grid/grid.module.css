@@ -1,6 +1,6 @@
 /* grid.module.css */
 .grid {
-  @apply scrollbar sticky z-0 box-border overflow-auto border border-solid border-[var(--gray5)];
+  @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
   table {
     thead {
       @apply sticky top-0 z-[1];
@@ -234,7 +234,7 @@
 }
 
 .empty_message_container {
-  @apply flex w-full items-center justify-center;
+  @apply absolute left-0 top-1/2 mt-[25px] flex w-full -translate-y-1/2 items-center justify-center;
 }
 
 .empty_message {
