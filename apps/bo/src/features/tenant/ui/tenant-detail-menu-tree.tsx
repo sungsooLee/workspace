@@ -17,6 +17,7 @@ import {
   Tooltip,
   Grid,
   GridBox,
+  useModal,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 
@@ -26,21 +27,17 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
-import {
-  useCreateMenu,
-  useDeleteMenu,
-  useMenuManageFetchTree,
-  useMoveMenu,
-  useUpdateMenu,
-} from '@entities/menu/service/menu-manage.hook';
 import {
   useMenuTenantManageDetail,
   useMenuTenantMangeFetchTrees,
 } from '@entities/menu/service/menu-tenant-manage.hook';
+/** method import */
 import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -48,26 +45,6 @@ const FORM_MODE = {
   ADD: 'ADD',
 };
 
-const handleExpandAll = (treeData: TreeNode[]) => {
-  const getAllKeys = (nodes: TreeNode[]): string[] => {
-    return nodes.reduce((keys: string[], node) => {
-      keys.push(node.key);
-      if (node.children?.length) {
-        keys.push(...getAllKeys(node.children));
-      }
-
-      return keys;
-    }, []);
-  };
-  return getAllKeys(treeData);
-};
-
-const getFirstExpandKeys = (treeData: TreeNode[]) => {
-  if (treeData && treeData.length > 0) {
-    const firstLevelKeys = treeData.map((node: TreeNode) => node.key);
-    return firstLevelKeys;
-  }
-};
 const tenantId = '1';
 
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
@@ -79,11 +56,13 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
+  const prevDataRef = React.useRef(null);
+  const { open: openModal } = useModal();
 
   // fetch data
   const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
+  console.log(menuScope);
   const { data: menuData, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScope);
-  const prevDataRef = React.useRef(null);
 
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
@@ -95,6 +74,14 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     } else {
       setFormMode(FORM_MODE.NONE);
     }
+  };
+  const handleTenantDetailMenuMapping = async () => {
+    const modalScope = menuScope;
+    const modalTenantId = tenantId;
+    const selectTenantDetailMenu = await openModal({
+      content: <TenantDetailMenuMappingModal menuScopeCode={modalScope} tenantId={modalTenantId} />,
+      width: 'xl',
+    });
   };
 
   useEffect(() => {
@@ -162,7 +149,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             >
               {t('전체닫기')}
             </Button>
-            <Button variant="save" size="sm">
+            <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
               {t('메뉴 맵핑')}
             </Button>
           </div>
@@ -171,7 +158,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           <TreeContainer>
             <TreeView2
               treeId="tenant-menu-tree"
-              type={'DRAG_DROP'}
+              type={'SAME_LEVEL_ONLY'}
               data={treeData}
               selectedNode={selectedNode}
               expandedKeys={expandedKeys}
