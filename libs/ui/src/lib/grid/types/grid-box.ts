@@ -113,7 +113,7 @@ export interface GridBoxProps<T extends object = object>
 
   /**
    * 항목 설정 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 항목 설정 버튼이 표시됩니다. (기본값 true)
+   * `true`로 설정하면 항목 설정 버튼이 표시됩니다.
    */
   showColumnSettings?: boolean;
 

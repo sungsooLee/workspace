@@ -20,7 +20,7 @@ const GridBoxComponent = <T extends object>(
     config = {},
     showTotalCount = true,
     showSelectedCount,
-    showColumnSettings = true,
+    showColumnSettings,
     showExcelDownload,
     showUpload,
     showSelectAll,
