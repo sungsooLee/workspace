@@ -43,7 +43,6 @@ const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalPro
               title={'목록'}
               data={gridData}
               columns={columns}
-              hideColumnSettings
               onRowSelect={handleRowSelect}
             />
           </div>

@@ -115,7 +115,6 @@ const TransferGridComponent = forwardRef<HTMLDivElement, TransferGridProps>(
             title={leftTitle}
             data={leftGridData}
             columns={leftGridColumns}
-            hideColumnSettings
             hideRowSelectionCheckBox
             multiple
             disabledSelectionToggle
@@ -131,7 +130,6 @@ const TransferGridComponent = forwardRef<HTMLDivElement, TransferGridProps>(
             title={rightTitle}
             data={rightGridData}
             columns={rightGridColumns}
-            hideColumnSettings
             hideRowSelectionCheckBox
             multiple
             disabledSelectionToggle

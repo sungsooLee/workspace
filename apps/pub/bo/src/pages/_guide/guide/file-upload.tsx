@@ -317,7 +317,6 @@ function RouteComponent() {
             </div>
             <div className={styles.progress_area}>
               <span className={styles.status_view}>
-                <em className={styles.now_status}>100</em> /
                 <em className={styles.file_size}>100MB</em>
               </span>
               <Progress className={styles.progress} value={100} label={'완료'} />
@@ -336,7 +335,6 @@ function RouteComponent() {
             </div>
             <div className={styles.progress_area}>
               <span className={styles.status_view}>
-                <em className={styles.now_status}>100</em> /
                 <em className={styles.file_size}>100MB</em>
               </span>
               <Progress className={styles.progress} value={40} />
@@ -360,7 +358,6 @@ function RouteComponent() {
             </div>
             <div className={styles.progress_area}>
               <span className={styles.status_view}>
-                <em className={styles.now_status}>100</em> /
                 <em className={styles.file_size}>100MB</em>
               </span>
               <Progress className={styles.progress} value={40} label={'실패'} isFailed />

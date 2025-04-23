@@ -21,7 +21,7 @@ import {
   ModalBody,
   ModalFooter,
   Dropdown,
-  Grid,
+  GridBox,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -205,11 +205,11 @@ function RouteComponent() {
             </div>
             <div className={popupStyles.container}>
               {/* Grid Case */}
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={380}
-                hideColumnSettings={true}
+                showColumnSettings={false}
                 pagination={{
                   pageSize,
                   pageIndex,
@@ -457,11 +457,11 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={310}
-                hideColumnSettings={true}
+                showColumnSettings={false}
                 pagination={{
                   pageSize,
                   pageIndex,

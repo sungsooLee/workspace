@@ -19,7 +19,7 @@ export class AuthorizationAdminControllerService {
      * @returns com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto OK
      * @throws ApiError
      */
-    public static findById5(
+    public static findById4(
         authorizationNo: number,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto> {
         return __request(OpenAPI, {

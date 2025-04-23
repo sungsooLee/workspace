@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import titleStyles from '../title.module.css'; // 타이틀 css
@@ -12,7 +13,7 @@ import {
   Switch,
   Tooltip,
   Input,
-  Grid,
+  GridBox,
   TreeView,
   TreeNode,
 } from '@learnway/ui';
@@ -377,11 +378,11 @@ const TenantPlatformHrdMenuComponent: FC<{}> = ({}) => {
             </div>
           </ContentsRow>
           <ContentsRow>
-            <Grid
+            <GridBox
               data={data}
               columns={columns}
               showTotalCount={true}
-              hideColumnSettings={true}
+              showColumnSettings={false}
               title="API"
             />
           </ContentsRow>

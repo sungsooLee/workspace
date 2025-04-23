@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Grid, Tooltip } from '@learnway/ui';
+import { Button, GridBox, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
@@ -303,10 +303,10 @@ function RouteComponent() {
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Grid } from '@learnway/ui';
+import { GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-<Grid
+<GridBox
   data={data}
   columns={columns}
   pagination={{
@@ -324,7 +324,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         <div className="group">
           <h3 className="guide_tit3">Grid Example</h3>
         </div>
-        <Grid
+        <GridBox
           data={data}
           columns={columns}
           multiple
@@ -337,6 +337,13 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             onPageSizeChange: setPageSize,
           }}
           title="타이틀"
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit">{'타이틀'}</strong>
+              <span className="count_info">{'5'}</span>
+            </div>
+          }
+          guideText={'텍스트'}
         />
       </div>
     </div>

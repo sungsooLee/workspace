@@ -156,6 +156,7 @@ export class BoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -176,14 +177,14 @@ export class BoFileService {
      * @throws ApiError
      */
     public static getFileGroupList1(
-        page: number,
-        size: number,
-        sort: string,
-        uploadType?: string,
-        affairsType?: string,
-        reposType?: string,
-        isDeleted?: boolean,
-        isUsed?: boolean,
+        page: any,
+        size: any,
+        sort: any,
+        uploadType?: any,
+        affairsType?: any,
+        reposType?: any,
+        isDeleted?: any,
+        isUsed?: any,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -235,13 +236,19 @@ export class BoFileService {
     /**
      * 파일그룹 파일 목록 조회
      * 파일그룹 파일 목록을 조회한다.
+     * @param groupUuid
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
      * @throws ApiError
      */
-    public static getGroupFileInfoList1(): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
+    public static getGroupFileInfoList1(
+        groupUuid: string,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/file/group/{groupUuid}/files',
+            path: {
+                'groupUuid': groupUuid,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

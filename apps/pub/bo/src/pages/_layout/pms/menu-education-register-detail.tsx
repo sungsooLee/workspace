@@ -25,7 +25,7 @@ import {
   ModalFooter,
   ModalTitle,
   useModal,
-  Grid,
+  GridBox,
   Textarea,
   RadioGroupFormField,
 } from '@learnway/ui';
@@ -221,11 +221,11 @@ function RouteComponent() {
               </div>
             </div>
             <div className="grid_wrap line">
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={280}
-                hideColumnSettings={true}
+                showColumnSettings={false}
                 pagination={{
                   pageSize,
                   pageIndex,

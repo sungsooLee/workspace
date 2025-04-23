@@ -170,16 +170,20 @@ export class FoFileService {
      * @param uploadType 파일업로드유형, ATTATCH|CONTENTS
      * @param affairsType 파일업무유형, LMS|PMS|CMS
      * @param reposType 저정소유형, S3(기본)|HMG
+     * @param isDeleted 삭제여부
+     * @param isUsed 사용여부
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroupList(
-        page: number,
-        size: number,
-        sort: string,
-        uploadType?: string,
-        affairsType?: string,
-        reposType?: string,
+        page: any,
+        size: any,
+        sort: any,
+        uploadType?: any,
+        affairsType?: any,
+        reposType?: any,
+        isDeleted?: any,
+        isUsed?: any,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -188,6 +192,8 @@ export class FoFileService {
                 'uploadType': uploadType,
                 'affairsType': affairsType,
                 'reposType': reposType,
+                'isDeleted': isDeleted,
+                'isUsed': isUsed,
                 'page': page,
                 'size': size,
                 'sort': sort,
@@ -229,7 +235,7 @@ export class FoFileService {
     /**
      * 파일그룹 파일 목록 조회
      * 파일그룹 파일 목록을 조회한다.
-     * @param groupUuid 파일그룹 UUID
+     * @param groupUuid
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
      * @throws ApiError
      */

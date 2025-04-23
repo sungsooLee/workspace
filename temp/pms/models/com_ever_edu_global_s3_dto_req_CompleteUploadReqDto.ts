@@ -7,6 +7,6 @@ export type com_ever_edu_global_s3_dto_req_CompleteUploadReqDto = {
     /**
      * ETag 및 PartNumber 속성이 있는 객체 배열
      */
-    parts?: Array<com_ever_edu_global_s3_dto_req_UploadETagPartsReqDto>;
+    parts: Array<com_ever_edu_global_s3_dto_req_UploadETagPartsReqDto>;
 };
 
