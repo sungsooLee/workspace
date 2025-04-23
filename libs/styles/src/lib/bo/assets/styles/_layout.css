@@ -6,9 +6,9 @@ body main {
   @apply !max-w-[100vw];
   [class*='content_wrap'] {
     & > div {
-      @apply !max-w-[calc(100vw-77px)];
+      @apply !max-w-[calc(100vw-80px)];
       & > div {
-        @apply !max-w-[calc(100vw-157px)];
+        @apply !max-w-[calc(100vw-144px)];
       }
     }
   }

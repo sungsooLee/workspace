@@ -28,7 +28,7 @@ function WordWrapComponent({ text, className }: WordWrapComponentProps) {
             {text}
           </Tooltip>
         ) : (
-          <span className={styles.text}>{text}</span>
+          <p className={styles.text}>{text}</p>
         )}
       </div>
     </div>

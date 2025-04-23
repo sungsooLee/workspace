@@ -7,6 +7,9 @@
       button {
         @apply block max-w-full truncate;
       }
+      .text {
+        @apply inline-block;
+      }
     }
   }
 }
