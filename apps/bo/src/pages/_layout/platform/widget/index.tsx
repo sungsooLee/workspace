@@ -46,7 +46,6 @@ function RouteComponent() {
         totalRows: 0,
       },
       height: 450,
-      showColumnSettings: false,
       onRowSelect: (row: any) => {
         console.log('onRowSelect', row);
         router.navigate({ to: '/platform/widget/view', state: { widgetCode: row?.widgetCode } });
