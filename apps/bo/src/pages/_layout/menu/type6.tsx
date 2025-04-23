@@ -1,9 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useS3Uploader } from '@learnway/hooks';
 import { ChangeEvent, useRef } from 'react';
-import { Button, useModal } from '@learnway/ui';
+import { Button, ContentsRow, useModal } from '@learnway/ui';
 import { LearningTypeChoiceModal } from '@features/learning';
 import { ExcelUploadModal } from '@features/shared';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
 export const Route = createFileRoute('/_layout/menu/type6')({
   component: RouteComponent,
@@ -29,10 +31,14 @@ function RouteComponent() {
     });
   };
   return (
-    <div className={'w-[300px]'}>
-      <Button variant={'primary'} onClick={handleExcelUploadModal}>
-        엑셀 업로드
-      </Button>
-    </div>
+    <PageContainer>
+      <MainContents>
+        <ContentsRow>
+          <Button variant={'primary'} onClick={handleExcelUploadModal}>
+            엑셀 업로드
+          </Button>
+        </ContentsRow>
+      </MainContents>
+    </PageContainer>
   );
 }

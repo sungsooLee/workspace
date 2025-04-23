@@ -39,3 +39,17 @@ export const normalizePath = (path: string) => {
 
   return path;
 };
+
+export const formatFileSize = (size: number): string => {
+  if (size < 1024) {
+    return `${size} B`;
+  } else if (size < 1024 ** 2) {
+    return `${(size / 1024).toFixed(1)} KB`;
+  } else if (size < 1024 ** 3) {
+    return `${(size / 1024 ** 2).toFixed(1)} MB`;
+  } else if (size < 1024 ** 4) {
+    return `${(size / 1024 ** 3).toFixed(1)} GB`;
+  } else {
+    return `${(size / 1024 ** 4).toFixed(1)} TB`;
+  }
+};

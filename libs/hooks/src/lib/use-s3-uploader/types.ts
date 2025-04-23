@@ -1,7 +1,3 @@
-export interface ApiResponse<T> {
-  status: number;
-  data: T;
-}
 export interface S3UploaderConfig {
   s3Path: string;
   auto?: boolean; // 자동 업로드 여부 기본 true
@@ -9,6 +5,7 @@ export interface S3UploaderConfig {
   multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈
 }
 export type UploadStatus =
+  | 'validating'
   | 'idle'
   | 'uploading'
   | 'paused'
@@ -32,6 +29,7 @@ export interface UploadFile {
   s3FileName: string; // s3 업로드 할 파일명
   fileName: string; // 실제 원본 파일명
   size: number; // 파일 사이즈
+  displaySize: string; // 포맷팅된 사이즈
   progress: number; // 업로드 Progress
   status: UploadStatus; // 파일 상태
   uploadId?: string; // 업로드 아이디

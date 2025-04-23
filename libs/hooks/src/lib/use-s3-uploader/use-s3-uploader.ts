@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
 import { getRandomId } from '@learnway/shared';
-import { normalizePath, updateFile } from './utils';
+import { formatFileSize, normalizePath, updateFile } from './utils';
 import { abortMultiPartUpload } from './api';
 const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
 
@@ -58,6 +58,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         s3FileName,
         fileName,
         size,
+        displaySize: formatFileSize(size),
         progress: 0, // 업로드 프로그레스
         status: 'idle', // 업로드 대기 상태
         key,
