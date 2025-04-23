@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Button, EditInputCell, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -11,6 +10,8 @@ import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/
 import { SplitPanel } from '@shared/ui';
 import { CellContext } from '@tanstack/react-table';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { useTranslation } from 'react-i18next';
+import { LabelMessagesQueryParams } from '@types';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,
@@ -18,6 +19,7 @@ export const Route = createFileRoute('/_unauth/platform_test/message/')({
 
 function RouteComponent() {
   const router = useRouter();
+  const { t } = useTranslation<any>();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
@@ -44,6 +46,11 @@ function RouteComponent() {
     gridFetch(data);
   }, []);
 
+  const handleGridAddClick = () => {
+    console.log('handleGridAddClick');
+    setSelectedLabelMessageId(Date.now() * -1); // 음수 랜덤 값 설정
+  };
+
   const handleGridRowSelect = (row: any) => {
     console.log('handleGridRowSelect', row);
     setSelectedLabelMessageId(row?.labelMessageId);
@@ -69,8 +76,10 @@ function RouteComponent() {
             config={gridConfig}
             title={t('목록')}
             height={440}
+            showAdd
             autoSelectFirstRow
             onRowSelect={handleGridRowSelect}
+            onAddClick={handleGridAddClick}
           />
           <MessageDetail labelMessageId={selectedLabelMessageId} />
         </SplitPanel>
@@ -85,36 +94,36 @@ const searchConfig: any = {
       {
         name: 'companyTypeCode',
         type: 'dropdown',
-        label: t('분류'),
+        label: '분류',
         value: '',
         options: [
-          { value: '', label: t('전체') },
-          { value: '완성차', label: t('완성차') },
-          { value: '현대', label: t('현대') },
-          { value: '기아', label: t('기아') },
+          { value: '', label: '전체' },
+          { value: '완성차', label: '완성차' },
+          { value: '현대', label: '현대' },
+          { value: '기아', label: '기아' },
         ],
       },
       {
         name: 'labelMessageMultilingulKey',
         type: 'text',
-        label: t('라벨/메세지 코드'),
+        label: '라벨/메세지 코드',
         value: '',
       },
       {
         name: 'labelMessageName',
         type: 'text',
-        label: t('라벨명/메세지'),
+        label: '라벨명/메세지',
         value: '',
       },
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('사용여부'),
+        label: '사용여부',
         value: '',
         options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
+          { value: '', label: '전체' },
+          { value: 'true', label: '사용' },
+          { value: 'false', label: '미사용' },
         ],
       },
     ],
@@ -122,11 +131,11 @@ const searchConfig: any = {
 };
 
 const gridConfig = {
-  query: queryOptions.all,
-  data: [
-    { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-    { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  ],
+  query: queryOptions.all<LabelMessagesQueryParams>,
+  // data: [
+  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
+  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
+  // ],
   columns: [
     {
       name: 'no1',

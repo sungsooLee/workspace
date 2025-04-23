@@ -1,12 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
 import React, { useEffect } from 'react';
+
 import { FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
-import { useFetchLabelMessage } from '@entities/label-messages';
+import {
+  useCreateLabelMessage,
+  useFetchLabelMessage,
+  useUpdateLabelMessage,
+} from '@entities/label-messages';
 
 interface MessageDetailProps {
   /**
@@ -16,14 +20,35 @@ interface MessageDetailProps {
 }
 
 const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
-  const { t } = useTranslation();
-  const { showSaveComplete } = useModal();
-  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { t } = useTranslation<any>();
+  const { confirm: openConfirm } = useModal();
+  const { provider, onSubmit, control, getValues, fetchData, onFormChange } =
+    useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
+  const { mutate: create } = useCreateLabelMessage({
+    onSuccess: async (response: any) => {
+      console.log('useCreateLabelMessage :: onSuccess', response);
+    },
+  });
+  const { mutate: update } = useUpdateLabelMessage({
+    onSuccess: async (response: any) => {
+      console.log('useUpdateLabelMessage :: onSuccess', response);
+    },
+  });
+
+  const isUpdateMode = labelMessageId > 0;
 
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
+    // 음수인 경우 폼 초기화 (부모창에서 추가 버튼 눌렀을때 음수로 설정)
+    if (labelMessageId < 0) {
+      onFormChange();
+    }
   }, [labelMessageId]);
+
+  useEffect(() => {
+    console.log('detail :: useEffect.data', data);
+  }, [data]);
 
   const handleMultilingualManageClick = (multilinguaKey: string) => {
     console.log('다국어 관리 화면 이동', {
@@ -45,8 +70,9 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
-    // const x = await showSaveComplete();
-    // console.log(x);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      isUpdateMode ? update(data) : create(data);
+    }
   };
 
   // console.log('getValues', getValues('labelMessageMultilingulKey'));
@@ -57,7 +83,6 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
         underLine
         actionNode={
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" label={t('추가')} />
             <Button variant="save" size="sm" type={'submit'} label={t('저장')} />
           </div>
         }
@@ -118,7 +143,7 @@ const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'labelMessageType',
-      label: t('분류'),
+      label: '분류',
       type: 'radio-group',
       format: 'string',
       options: [
@@ -135,26 +160,26 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'labelMessageMultilingulKey',
-      label: t('메세지 코드'),
+      label: '메세지 코드',
       type: 'text',
       value: '',
     },
     {
       name: 'labelMessageName',
-      label: t('메세지'),
+      label: '메세지',
       type: 'text-area',
       format: 'string',
       value: '',
     },
     {
       name: 'labelMessageDesc',
-      label: t('설명'),
+      label: '설명',
       type: 'text-area',
       value: '',
     },
     {
       name: 'isUsed',
-      label: t('사용여부'),
+      label: '사용여부',
       type: 'switch',
       value: false,
       format: 'boolean',
@@ -173,9 +198,6 @@ const formConfig: DynamicFormConfig = {
       required: true,
     },
     labelMessageName: {
-      required: true,
-    },
-    isUsed: {
       required: true,
     },
   },

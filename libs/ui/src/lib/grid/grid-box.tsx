@@ -25,9 +25,11 @@ const GridBoxComponent = <T extends object>(
     showUpload,
     showSelectAll,
     showDeleteAll,
+    showAdd,
     titleCustomNode,
     customButtonNode,
     guideText,
+    onAddClick,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -90,14 +92,6 @@ const GridBoxComponent = <T extends object>(
     },
     [gridFetch],
   );
-
-  /**
-   * 컬럼 설정 버튼 클릭 핸들러
-   */
-  const handleColumnSettings = () => {
-    //TODO: grid column setting 연동
-    console.log('columnSettings');
-  };
 
   /**
    * pagination 설정
@@ -189,8 +183,11 @@ const GridBoxComponent = <T extends object>(
               label={t('항목설정')}
               icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
               className="btn_setting"
-              onClick={handleColumnSettings}
             />
+          )}
+          {/* 추가 */}
+          {showAdd && (
+            <Button variant="outline" size="sm" label={t('추가')} onClick={() => onAddClick?.()} />
           )}
         </div>
       </div>
