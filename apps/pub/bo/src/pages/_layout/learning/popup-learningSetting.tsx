@@ -9,7 +9,7 @@ import {
   DatePicker,
   Dropdown,
   DropdownOption,
-  Grid,
+  GridBox,
   Input,
   InputModalSelectorFormField,
   List,
@@ -222,7 +222,7 @@ function RouteComponent() {
                     {'건'}
                     <IcoFormRequired width={12} height={12} className={styles.icon} />
                   </p>
-                  <Grid
+                  <GridBox
                     data={data}
                     columns={columns}
                     title="일괄설정 항목선택"

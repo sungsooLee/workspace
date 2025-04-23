@@ -6,7 +6,7 @@ import {
   ContentsRow,
   Dropdown,
   DropdownOption,
-  Grid,
+  GridBox,
   Input,
   ModalBody,
   ModalContainer,
@@ -122,7 +122,7 @@ const TenantSearchPopupCompoment = () => {
               {'조회'}
             </Button>
           </ContentsRow>
-          <Grid
+          <GridBox
             data={data}
             columns={columns}
             title="업무 담당 회사 정보"

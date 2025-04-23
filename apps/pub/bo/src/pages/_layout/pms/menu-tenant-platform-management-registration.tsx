@@ -21,7 +21,7 @@ import {
   ModalBody,
   ModalFooter,
   Dropdown,
-  Grid,
+  GridBox,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -205,7 +205,7 @@ function RouteComponent() {
             </div>
             <div className={popupStyles.container}>
               {/* Grid Case */}
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={380}
@@ -457,7 +457,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className={popupStyles.container}>
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={310}
