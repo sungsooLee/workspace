@@ -57,6 +57,12 @@
               }
             }
           }
+          [class*='btn_table'] {
+            @apply !min-w-[3.2rem];
+            & + [class*='btn_table'] {
+              @apply !ml-[4px];
+            }
+          }
           &:has(> div) {
             @apply w-full py-[4px];
 

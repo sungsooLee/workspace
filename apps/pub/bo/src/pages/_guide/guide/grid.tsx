@@ -48,6 +48,19 @@ function RouteComponent() {
           <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         </Button>
       ),
+      dataRange: (
+        <>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'회사'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'채널'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'팀'}
+          </Button>
+        </>
+      ),
     },
     {
       firstName: 'tandy',
@@ -290,6 +303,15 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '링크',
       size: 90,
+    }),
+    columnHelper.accessor('dataRange', {
+      cell: (info) => info.getValue(),
+      header: '데이터 접근 범위',
+      size: 230,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
