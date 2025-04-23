@@ -29,7 +29,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
     }
   };
   return (
-    <Primitive.Root open={true} onOpenChange={handleOpenChange}>
+    <Primitive.Root defaultOpen onOpenChange={handleOpenChange}>
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content

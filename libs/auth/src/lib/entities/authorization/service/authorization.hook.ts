@@ -5,6 +5,7 @@ import type { MutateCallback } from '@learnway/shared';
 
 import type { AuthUser, Tenant } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
+import { useSessionIntervalState } from '../state/session-interval.state';
 
 export const authUserQueryKeys = queryKeys;
 
@@ -18,12 +19,13 @@ export function useLoginUser(mutationOptions = {}) {
     ...mutateOptions.login(),
     onSuccess: async (data: any, variables, context) => {
       queryClient.setQueryData(queryKeys.authUser, data);
+      console.log();
     },
     ...mutationOptions,
   });
 
   return {
-    login: (payload: any, callback?: MutateCallback<any[]>) => {
+    login: (payload: any, callback?: MutateCallback<any>) => {
       return mutateAsync(payload, callback);
     },
     isSuccess,
@@ -59,19 +61,32 @@ export function useReissue(mutationOptions = {}) {
 export function useLogoutUser(mutationOptions = {}) {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [sessionIntervalId] = useSessionIntervalState();
 
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.logout(),
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
-      router.navigate({ to: '/login' });
+      clearInterval(sessionIntervalId);
     },
     ...mutationOptions,
   });
 
   return {
-    logout: (callback?: MutateCallback<any[]>) => {
-      mutate();
+    logout: (payload?: any, callback?: MutateCallback<any>) => {
+      // callback?.onSuccess가 정의가 없는 경우 default로 login 페이지로 이동
+      if (!callback?.onSuccess) {
+        mutate(payload, {
+          ...callback,
+          onSuccess: (data) => {
+            router.navigate({ to: '/login' });
+          },
+        });
+        return;
+      }
+
+      // callback?.onSuccess 정의가 있는 경우 navigate 처리까지 callback에 일임
+      mutate(payload, callback);
     },
     isSuccess,
     isError,
