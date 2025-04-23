@@ -26,3 +26,21 @@ export const queryOptions = {
     },
   }),
 };
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: any) => TenantCategoryService.createTenantCategory(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: any) => TenantCategoryService.updateTenantCategory(payload),
+  }),
+  delete: () => ({
+    mutationFn: (payload: any) => TenantCategoryService.deleteTenantCategory(payload),
+  }),
+  move: () => ({
+    mutationFn: (payload: any) => TenantCategoryService.moveTenantCategory(payload),
+  }),
+  mapping: () => ({
+    mutationFn: (payload: any) => TenantCategoryService.mappingTenantCategory(payload),
+  }),
+};

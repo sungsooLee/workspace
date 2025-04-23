@@ -14,6 +14,8 @@ import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
 import { findMenuPathById } from '@features/category/service/category.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
+import { TenantCategoryUpdate } from 'src/types/entities/tenant-category';
+import { ReceiptRussianRuble } from 'lucide-react';
 
 const TenantCategoryViewComponent: FC<any> = ({
   tenantId,
@@ -36,7 +38,7 @@ const TenantCategoryViewComponent: FC<any> = ({
     return mode === 'init';
   }, [mode]);
 
-  const { data } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId);
+  const { data } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId || '');
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -119,19 +121,34 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   const handleOnSubmit = (node: any) => {
     console.log('## node :: ', node);
+    console.log('## mode :: ', mode);
+    console.log('## data :: ', data);
+    if (mode === 'view') {
+      const body: TenantCategoryUpdate = {
+        name: data!.categoryName,
+        categoryCode: data!.categoryCode,
+        categoryContent: data!.categoryContent,
+        isUsed: node.isUsed,
+        whiteList: data!.whiteList.combines,
+      };
+      console.log('## body :: ', body);
+      onUpdate({
+        tenantId: tenantId,
+        categoryId: data!.categoryId,
+        data: body,
+      });
+      return;
+    }
 
     /*
-    {카테고리 코드}를 입력해 주세요. 
-
-    {카테고리 코드}를 다시 확인해 주세요.
-
-    이미 사용 중인 {카테고리 코드}입니다. 
-
-    사용할 수 있는 {카테고리 코드} 입니다. 
-
-    {카테고리 코드}의 중복 여부를 확인해 주세요. 
-    */
-
+export interface CategoryDetail {
+  name: string;
+  categoryCode: string;
+  categoryContent: string;
+  categoryPath: string;
+}
+      */
+    /*
     // View 모드에서 저장 처리
     if (mode === 'view') {
       const isCodeChanged = isFieldChanged('code', node.code);
@@ -171,6 +188,7 @@ const TenantCategoryViewComponent: FC<any> = ({
 
     console.log('## check body', body);
     onSave?.(body);
+    */
   };
 
   const handleDelete = () => {
@@ -180,71 +198,73 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   return (
     <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
-      <div className={titleStyles.title_wrap}>
-        <h3 className={titleStyles.title}>{'카테고리 정보'}</h3>
-        <div className={layoutStyles.btn_wrap}>
-          <Button
-            variant="text"
-            size="sm"
-            className={layoutStyles.btn_text}
-            onClick={handleReset}
-            disabled={isInitMode || isRoot}
-          >
-            {'초기화'}
-          </Button>
-          <Button
-            variant="text"
-            size="sm"
-            className={layoutStyles.btn_text}
-            disabled={isInitMode || mode === 'add' || isRoot}
-            onClick={handleDelete}
-          >
-            {'삭제'}
-          </Button>
-          <Button variant="save" size="sm" disabled={isInitMode || isRoot}>
-            {'저장'}
-          </Button>
-        </div>
-      </div>
-      <div className={layoutStyles.inner_contents}>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'categoryPath'} disabled={true} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'parentCategoryName'} disabled={true} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'categoryCode'} disabled={true} />
-            <Button variant="gray" size="sm" disabled>
-              {'중복'}
+      <form onSubmit={onSubmit(handleOnSubmit)}>
+        <div className={titleStyles.title_wrap}>
+          <h3 className={titleStyles.title}>{'카테고리 정보'}</h3>
+          <div className={layoutStyles.btn_wrap}>
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              onClick={handleReset}
+              disabled={isInitMode || isRoot}
+            >
+              {'초기화'}
             </Button>
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'categoryName'} disabled={true} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow type={'horizontal'}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'isUsed'} disabled={isInitMode || isRoot} />
-          </FormRow>
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'categoryContent'} disabled={true} resize="none" />
-          </FormRow>
-        </ContentsRow>
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              disabled={isInitMode || mode === 'add' || isRoot}
+              onClick={handleDelete}
+            >
+              {'삭제'}
+            </Button>
+            <Button type="submit" variant="save" size="sm" disabled={isInitMode || isRoot}>
+              {'저장'}
+            </Button>
+          </div>
+        </div>
+        <div className={layoutStyles.inner_contents}>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'categoryPath'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'parentCategoryName'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'categoryCode'} disabled={true} />
+              <Button variant="gray" size="sm" disabled>
+                {'중복'}
+              </Button>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'categoryName'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow type={'horizontal'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isUsed'} disabled={isInitMode || isRoot} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'categoryContent'} disabled={true} resize="none" />
+            </FormRow>
+          </ContentsRow>
 
-        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-          <ContentsHistoryInfoFormField />
-        </ContentsRow>
-      </div>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+            <ContentsHistoryInfoFormField />
+          </ContentsRow>
+        </div>
+      </form>
     </div>
   );
 };

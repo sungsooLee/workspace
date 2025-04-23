@@ -8,6 +8,7 @@ import {
   TreeView,
   TreeNode,
   DynamicFormField,
+  useModal,
 } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
@@ -19,7 +20,11 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
-import { useFetchTenantCategory } from '@entities/tenant/service/tenant-category.hook';
+import {
+  useDeleteTenantCategory,
+  useFetchTenantCategory,
+  useUpdateTenantCategory,
+} from '@entities/tenant/service/tenant-category.hook';
 import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import TenentCategoryView from '@features/tenant/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
@@ -34,6 +39,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   const [mode, setMode] = useState<mode>('init');
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
 
+  const { confirm: openConfirm } = useModal();
+
   const tenantId = 1;
   /*
   // switch : 사용 여부
@@ -46,6 +53,16 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };*/
   const { data, refetch } = useFetchTenantCategory(tenantId);
+
+  // delete
+  const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      setMode('init');
+    },
+  });
+
+  const { update: updateTenantCategory } = useUpdateTenantCategory(tenantId, {});
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
@@ -71,8 +88,52 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     setSelectedNode(node);
   };
 
+  const handleUpdate = (payload: any) => {
+    console.log('>> payload', payload);
+    openConfirm({
+      title: '저장 하시겠습니까?',
+      content: (
+        <>
+          <p>입력한 정보로 저장됩니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          updateTenantCategory(payload, {
+            onSuccess: (data: any) => {
+              console.log('#### success', data);
+              refetch();
+            },
+            onError: (error: unknown) => {
+              console.log('#### error', error);
+            },
+          });
+        }
+      },
+    });
+  };
+
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
+  };
+
+  const handleDelete = (payload: any) => {
+    openConfirm({
+      title: '삭제 하시겠습니까?',
+      content: (
+        <>
+          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
+          <p>삭제 후 복구할 수 없습니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          console.log('date!', payload);
+          deleteTenantCategory(payload);
+          setMode('init');
+        }
+      },
+    });
   };
 
   return (
@@ -94,6 +155,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           menu
           mode={mode}
           onReset={handleReset}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
           onCancel={() => {
             setMode('view');
             if (!selectedNode) {
@@ -108,6 +171,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           selectedNode={null}
           menu
           mode="init"
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
           onCancel={() => {
             setMode('view');
             setSelectedNode(null);
