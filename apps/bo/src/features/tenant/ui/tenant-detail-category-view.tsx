@@ -27,7 +27,6 @@ const TenantCategoryViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  console.log('## selectedNode :: ', selectedNode);
   const { t } = useTranslation();
 
   const isRoot = useMemo(() => {
@@ -54,7 +53,6 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   function dataInit(data: any, selectedNode: any, mode: string) {
     if (mode === 'view') {
-      console.log('## selectedNode', selectedNode);
       if (data) {
         const initialData = {
           categoryPath: data?.categoryPath,
@@ -71,34 +69,16 @@ const TenantCategoryViewComponent: FC<any> = ({
         setCodeCheckState('none');
         initialFromValuesRef.current = { ...initialData };
       }
-    } else if (mode === 'add' && selectedNode) {
-      console.log('## sort seq ==== ', (selectedNode?.children?.length ?? 0) + 1);
-      initialFromValuesRef.current = null;
-      const location = findMenuPathById(treeData, selectedNode?.menuId);
-      const initialData = {
-        location: location ?? '',
-        key: '',
-        parentKey: selectedNode.key,
-        parentCategoryName: selectedNode.parentMenuName,
-        isDuplicateMenuCode: false,
-        name: '', // 입력 필드
-        code: '', // 입력 필드
-        categoryContent: '', // 입력 필드
-        categoryType: 'COMMON',
-        sortSeq: (selectedNode?.children?.length ?? 0) + 1,
-      };
-      fetchData(initialData);
     } else if (mode === 'init') {
       const initialData = {
-        location: '',
+        categoryPath: '',
+        categoryName: '',
+        categoryCode: '',
+        categoryContent: '',
+        isUsed: false,
         key: '',
         parentKey: '',
-        parentMenuName: '',
-        isDuplicateMenuCode: false,
-        name: '', // 입력 필드
-        code: '', // 입력 필드
-        categoryContent: '', // 입력 필드
-        categoryType: 'COMMON',
+        parentCategoryName: '',
         sortSeq: 0,
       };
       fetchData(initialData);
@@ -112,11 +92,6 @@ const TenantCategoryViewComponent: FC<any> = ({
     onFormChange();
 
     dataInit(data, selectedNode, mode);
-  };
-
-  const isFieldChanged = (fieldName: string, currentValue: any) => {
-    if (!initialFromValuesRef.current) return true; // 초기 값이 없으면 변경된 것으로 간주
-    return initialFromValuesRef.current[fieldName] !== currentValue;
   };
 
   const handleOnSubmit = (node: any) => {
@@ -139,56 +114,6 @@ const TenantCategoryViewComponent: FC<any> = ({
       });
       return;
     }
-
-    /*
-export interface CategoryDetail {
-  name: string;
-  categoryCode: string;
-  categoryContent: string;
-  categoryPath: string;
-}
-      */
-    /*
-    // View 모드에서 저장 처리
-    if (mode === 'view') {
-      const isCodeChanged = isFieldChanged('code', node.code);
-      // 코드가 변경되지 않았으면 중복 체크 없이 진행
-      if (!isCodeChanged) {
-        const body = {
-          name: node.name,
-          categoryCode: node.code,
-          categoryContent: node.categoryContent,
-          id: node.key,
-        };
-        console.log('## check body', body);
-        // 수정 API 호출
-        onUpdate(body);
-        return;
-      }
-    }
-
-    if (codeCheckState === 'none') {
-      setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
-      return;
-    }
-
-    if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
-      setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
-      return;
-    }
-
-    const body = {
-      name: node.name,
-      categoryCode: node.code,
-      categoryContent: node.categoryContent,
-      categoryType: 'COMMON',
-      sortSeq: node.sortSeq,
-      parentId: node.parentKey,
-    };
-
-    console.log('## check body', body);
-    onSave?.(body);
-    */
   };
 
   const handleDelete = () => {
@@ -270,15 +195,6 @@ export interface CategoryDetail {
 };
 
 export default TenantCategoryViewComponent;
-
-/*
-categoryCode: "tenant_category_1"
-categoryContent: "카테고리 내용입니다."
-categoryId: 6
-categoryName: "tenant카테고리001"
-categoryPath: "root"
-isUsed: true
-*/
 
 const formConfig: DynamicFormConfig = {
   builders: [

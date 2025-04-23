@@ -1,29 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  Button,
-  ContentsRow,
-  Switch,
-  Tooltip,
-  TreeView,
-  TreeNode,
-  DynamicFormField,
-  useModal,
-} from '@learnway/ui';
+import { TreeNode, useModal } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
 import {
   useDeleteTenantCategory,
   useFetchTenantCategory,
   useUpdateTenantCategory,
+  useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import TenentCategoryView from '@features/tenant/ui/tenant-detail-category-view';
@@ -42,16 +27,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   const { confirm: openConfirm } = useModal();
 
   const tenantId = 1;
-  /*
-  // switch : 사용 여부
-  const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false,
-    2: false,
-  });
-  // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
-  const handleCheckedChange = (id: number) => (checked: boolean) => {
-    setChecked((prev) => ({ ...prev, [id]: checked }));
-  };*/
+
   const { data, refetch } = useFetchTenantCategory(tenantId);
 
   // delete
@@ -63,6 +39,15 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   });
 
   const { update: updateTenantCategory } = useUpdateTenantCategory(tenantId, {});
+
+  const { move: moveTenantCategory } = useMoveTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+    },
+    onError: async (data: any) => {
+      //
+    },
+  });
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
@@ -86,6 +71,20 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     console.log('## click');
     setMode('view');
     setSelectedNode(node);
+  };
+
+  const handleNodeMove = (id: number, destinationParentId: number, sortSeq: number) => {
+    const payload = {
+      id,
+      destinationParentId,
+      sortSeq: sortSeq + 1,
+    };
+    console.log('## payload', payload);
+    moveTenantCategory({
+      tenantId: tenantId,
+      categoryId: id,
+      data: payload,
+    });
   };
 
   const handleUpdate = (payload: any) => {
@@ -142,6 +141,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
         <TenantCategoryTree
           treeData={treeData}
           onNodeClick={handleNodeClick}
+          onNodeMove={handleNodeMove}
           expandedKeys={expandedKeys}
           onExpandChange={handleExpandChange}
           selectedKey={selectedNode?.key}
@@ -184,60 +184,3 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
 };
 
 export const TenantDetailCategory = TenantDetailCategoryComponent;
-
-// tree
-const sampleData: TreeNode[] = [
-  {
-    key: '1',
-    title: '러닝웨이 1',
-    isUsed: false,
-    children: [
-      {
-        key: '1-1',
-        title: 'Child 1',
-        isUsed: true,
-        children: [
-          {
-            key: '1-1-1',
-            title: 'Grandchild 1',
-            isUsed: true,
-            children: [
-              { key: '1-1-1-1', title: 'Grandchild 1', isUsed: true },
-              { key: '1-1-1-2', title: 'Grandchild 2', isUsed: false },
-              { key: '1-1-1-3', title: 'Grandchild 3', isUsed: false },
-            ],
-          },
-          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
-        ],
-      },
-      { key: '1-2', title: 'Child 2', isUsed: true },
-    ],
-  },
-  {
-    key: '2',
-    title: '러닝웨이 2',
-    isUsed: false,
-    children: [
-      { key: '2-1', title: 'Child 3', isUsed: false },
-      { key: '2-2', title: 'Child 4', isUsed: false },
-    ],
-  },
-  {
-    key: '3',
-    title: '러닝웨이 3',
-    isUsed: false,
-    children: [
-      { key: '3-1', title: 'Child 5', isUsed: false },
-      { key: '3-2', title: 'Child 6', isUsed: false },
-    ],
-  },
-  {
-    key: '4',
-    title: '러닝웨이 4',
-    isUsed: false,
-    children: [
-      { key: '4-1', title: 'Child 7', isUsed: false },
-      { key: '4-2', title: 'Child 8', isUsed: false },
-    ],
-  },
-];

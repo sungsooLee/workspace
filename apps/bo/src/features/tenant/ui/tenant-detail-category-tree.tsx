@@ -80,7 +80,6 @@ const TenantCategoryTreeComponent: FC<any> = ({
             variant="text"
             size="sm"
             className={layoutStyles.btn_text}
-            disabled={true}
             onClick={() => handleExpandAll(true)}
           >
             {'전체펼침'}
@@ -89,7 +88,6 @@ const TenantCategoryTreeComponent: FC<any> = ({
             variant="text"
             size="sm"
             className={layoutStyles.btn_text}
-            disabled={true}
             onClick={() => handleExpandAll(false)}
           >
             {'전체닫기'}
