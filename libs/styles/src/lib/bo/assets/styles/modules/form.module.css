@@ -187,7 +187,7 @@
   }
 }
 .form_label {
-  @apply block overflow-hidden;
+  @apply flex items-center overflow-hidden;
   .form_text {
     @apply body_3_r;
     &.sm {
@@ -209,9 +209,12 @@
       @apply ml-[4px] inline-flex;
     }
   }
+  .info_area {
+    @apply ml-auto inline-block;
+  }
 }
 .status {
-  @apply ml-[2px] inline-flex align-text-top;
+  @apply -mt-[8px] ml-[2px] inline-flex;
   &.required svg {
     @apply fill-[#00afd5];
   }
@@ -306,7 +309,7 @@
   .tit_sub {
     @apply body_3_r mb-[12px] inline-flex text-[var(--gray9)];
     .required {
-      @apply inline-flex;
+      @apply mt-0 inline-flex;
     }
   }
   .row {
