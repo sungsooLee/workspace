@@ -4,8 +4,8 @@ import { LabelMessage, LabelMessagesQueryParams } from '@types';
 
 export default class LabelMessagesService {
   //라벨 메세지 목록 조회
-  static async fetchAll<T = LabelMessage>(queryParam?: LabelMessagesQueryParams): Promise<T[]> {
-    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, { queryParam });
+  static async fetchAll<T = LabelMessage>(params?: LabelMessagesQueryParams): Promise<T[]> {
+    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, params);
     // return new Promise((resolve) => resolve(Mock));
   }
 
