@@ -95,10 +95,9 @@ export interface GridBoxProps<T extends object = object>
   title?: string;
 
   /**
-   * 항목 설정 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 항목 설정 버튼이 숨겨집니다.
+   * 가이드 텍스트
    */
-  hideColumnSettings?: boolean;
+  guideText?: string;
 
   /**
    * 전체 행 개수 표시 여부를 나타내는 boolean 값입니다.
@@ -111,6 +110,12 @@ export interface GridBoxProps<T extends object = object>
    * `true`로 설정하면 선택된 행 개수가 표시됩니다.
    */
   showSelectedCount?: boolean;
+
+  /**
+   * 항목 설정 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 항목 설정 버튼이 표시됩니다. (기본값 true)
+   */
+  showColumnSettings?: boolean;
 
   /**
    * 엑셀 다운로드 버튼 표시 여부를 나타내는 boolean 값입니다.
@@ -137,19 +142,14 @@ export interface GridBoxProps<T extends object = object>
   showDeleteAll?: boolean;
 
   /**
-   * 좌측 타이틀 영역 커스텀
+   * 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역)
    */
   titleCustomNode?: React.ReactNode;
 
   /**
    * 우측 버튼 영역 커스텀
    */
-  renderButtons?: React.ReactNode;
-
-  /**
-   * guideText
-   */
-  guideText?: string;
+  customButtonNode?: React.ReactNode;
 
   /**
    * override GridProps

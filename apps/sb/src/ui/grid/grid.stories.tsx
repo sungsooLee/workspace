@@ -10,10 +10,9 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import React, { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   Button,
-  ColumnFactory,
   CustomCell,
   EditCheckboxCell,
   EditDropdownCell,
@@ -28,7 +27,7 @@ import {
   Table,
   useModal,
 } from '@learnway/ui';
-import { IcoDownload } from '@learnway/icons';
+import { IcoDownload, IcoSetting } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
 
 export default {
@@ -616,7 +615,7 @@ const GroupedColumnTable = () => {
 };
 
 export const WithGroupColumn: Story = {
-  name: '컬럼 그룹',
+  name: '그룹 컬럼',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -630,7 +629,7 @@ export const WithGroupColumn: Story = {
     docs: {
       description: {
         story: `
-  원하는 컬럼 그룹화
+  원하는 그룹 컬럼화
   - prop으로 그룹을 원하는 컬럼을 넘겨준다.
         `,
       },
@@ -904,154 +903,6 @@ const PersonTestModal = ({
   );
 };
 
-export const createPersonColumns = (columnFactory: ColumnFactory<Person>): ColumnDef<Person>[] => {
-  const columns = columnFactory.create([
-    {
-      accessor: 'firstName',
-      header: 'First Name',
-      filterType: 'text',
-      enableGrouping: false,
-      customCell: ({ row, openModal }) => (
-        <CustomCell
-          row={row}
-          value={row.firstName}
-          imageUrl={row.imageUrl}
-          onAction={() => {
-            openModal?.(
-              <div className="space-y-2 p-4">
-                <p>이름:{row.firstName}</p>
-                <p>나이:{row.age}</p>
-                <p>상태:{row.status}</p>
-                <p>이미지 URL:{row.imageUrl}</p>
-              </div>,
-              { title: '사용자 정보', width: 'sm' },
-            );
-          }}
-        />
-      ),
-      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-    },
-    {
-      accessor: 'lastName',
-      header: 'Last Name',
-      enableGrouping: false,
-    },
-    {
-      accessor: 'age',
-      header: 'Age',
-      enableGrouping: false,
-      customCell: ({ row }) => <div>커스텀셀!:{row.age}</div>,
-    },
-    {
-      accessor: 'visits',
-      header: 'Visits',
-      filterType: 'range',
-      customCell: ({ row, openModal }) => (
-        <div>
-          <Button
-            onClick={() => {
-              openModal(
-                <div>
-                  <PersonTestModal
-                    data={row}
-                    onConfirm={(data) => {
-                      console.log(data.visits);
-                    }}
-                  />
-                </div>,
-              );
-            }}
-          >
-            팝업
-          </Button>
-        </div>
-      ),
-      footer: (props) => {
-        const total = props.table
-          .getRowModel()
-          .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
-        return `Total: ${total}`;
-      },
-    },
-    {
-      accessor: 'status',
-      header: 'Status',
-      filterType: 'select',
-      enableGrouping: true,
-      meta: {
-        filterOptions: [
-          { label: '활성', value: 'active' },
-          { label: '비활성', value: 'inactive' },
-        ],
-      },
-    },
-    {
-      accessor: 'progress',
-      header: 'Progress',
-      filterType: 'range',
-      enableGrouping: false,
-    },
-  ]);
-  return columns as ColumnDef<Person>[];
-};
-
-const ColumnFactoryTable = () => {
-  const { open } = useModal();
-
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  // 모달 팝업을 띄울때는 open 을 컬럼 팩토리에 넘겨줌.
-  const columnFactory = useMemo(() => new ColumnFactory<Person>(open), [open]);
-  const columns = useMemo(() => createPersonColumns(columnFactory), [columnFactory]);
-
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
-  };
-
-  return (
-    <div className="p-4">
-      <GridBox
-        data={mockData}
-        columns={columns}
-        onStateChange={handleStateChange}
-        title="커스텀 셀 생성"
-      />
-    </div>
-  );
-};
-
-export const WithCustomFactoryCell: Story = {
-  name: '커스텀 셀 생성',
-  decorators: [
-    (Story) => (
-      <ReactQueryConfigProvider>
-        <Story />
-        <ModalWrapper />
-      </ReactQueryConfigProvider>
-    ),
-  ],
-  render: () => <ColumnFactoryTable />,
-};
-
-const editGridData = Array(10)
-  .fill(null)
-  .map((_, i) => ({
-    id: `id_${i}`,
-    text: 'text',
-    textarea: 'textarea',
-    number: 0,
-    checkbox: true,
-    radio: '',
-    dropdown: '',
-  }));
-
 // 셀 편집
 export const TemplateEditGrid: any = (args: any) => {
   const [data, setData] = useState<any[]>(editGridData);
@@ -1160,7 +1011,6 @@ export const TemplateEditGrid: any = (args: any) => {
         data={data}
         columns={columns}
         disabledSelectionToggle
-        hideColumnSettings
         hideRowSelectionCheckBox
         onChange={(newData: any) => setData(newData)}
       />
@@ -1181,15 +1031,7 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code', maxSize: 100 },
     { accessorKey: 'code2', size: undefined },
   ];
-  return (
-    <GridBox
-      title={'Editable Grid'}
-      data={data}
-      columns={columns}
-      hideColumnSettings
-      hideRowSelectionCheckBox
-    />
-  );
+  return <GridBox title={'Editable Grid'} data={data} columns={columns} hideRowSelectionCheckBox />;
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
 
@@ -1215,3 +1057,65 @@ export const TemplateTable: any = (args: any) => {
   return <Table data={data} columns={columns} variant={'fill'} />;
 };
 TemplateTable.storyName = '테이블 모드';
+
+// 타이틀 영역
+export const TemplateTitleArea: any = (args: any) => {
+  const data = Array(10)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 300 },
+    { accessorKey: 'name2', size: 300 },
+    { accessorKey: 'name3', size: 300 },
+    { accessorKey: 'name4', size: 300 },
+  ];
+  return (
+    <GridBox
+      data={data}
+      columns={columns}
+      multiple
+      // 좌측
+      title={'목록'}
+      titleCustomNode={
+        <div className={''}>
+          {'커스텀개수'} <strong className={''}>{5}</strong>
+        </div>
+      }
+      guideText={'그리드 가이드 텍스트'}
+      // 우측
+      showColumnSettings
+      showExcelDownload
+      showUpload
+      showSelectAll
+      showDeleteAll
+      customButtonNode={
+        <Button
+          variant="outline"
+          size="sm"
+          label={'화면버튼'}
+          icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+          className="btn_setting"
+        />
+      }
+    />
+  );
+};
+TemplateTitleArea.storyName = '타이틀 영역';
+
+const editGridData = Array(10)
+  .fill(null)
+  .map((_, i) => ({
+    id: `id_${i}`,
+    text: 'text',
+    textarea: 'textarea',
+    number: 0,
+    checkbox: true,
+    radio: '',
+    dropdown: '',
+  }));

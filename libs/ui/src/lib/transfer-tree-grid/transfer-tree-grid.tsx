@@ -117,7 +117,6 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
             title={rightTitle}
             data={gridData}
             columns={columns}
-            hideColumnSettings
             multiple
             onRowsSelect={(newSelectedRows: any) => setSelectedGridRows(newSelectedRows)}
           />

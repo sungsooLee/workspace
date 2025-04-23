@@ -14,7 +14,7 @@ const useTranslationHook = () => {
     ...mutateOptions.create(),
     onSuccess: async (data: any, variables, context) => {
       openAlert({
-        description: '정상적으로 저장되었습니다.',
+        content: '정상적으로 저장되었습니다.',
         type: 'complete',
         onClose: () => {
           //router.navigate({ to: '/platform/system/translation' });
@@ -27,7 +27,7 @@ const useTranslationHook = () => {
     ...mutateOptions.update(),
     onSuccess: async (data: any, variables, context) => {
       openAlert({
-        description: '정상적으로 수정되었습니다.',
+        content: '정상적으로 수정되었습니다.',
         type: 'complete',
         onClose: () => {
           //router.navigate({ to: '/platform/system/translation' });
