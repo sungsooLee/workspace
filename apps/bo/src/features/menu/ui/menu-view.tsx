@@ -388,6 +388,7 @@ const MenuViewComponent: FC<any> = ({
                   codeCheckState={codeCheckState}
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
+                  menuScope={menuScope}
                 />
               </DynamicFormField>
             </FormRow>
