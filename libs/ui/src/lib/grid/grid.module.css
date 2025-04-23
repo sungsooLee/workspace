@@ -242,7 +242,7 @@
 }
 
 .th_pinned_left {
-  @apply !sticky left-0 !z-[3] border-b-[1px] border-solid !border-[var(--gray3)] bg-[var(--gray1)];
+  @apply !sticky left-0 !z-[3] bg-[var(--gray1)];
   &.th_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }
