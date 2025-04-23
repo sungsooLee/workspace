@@ -126,7 +126,7 @@ const TenantSearchPopupCompoment = () => {
             data={data}
             columns={columns}
             title="업무 담당 회사 정보"
-            hideColumnSettings={true}
+            showColumnSettings={false}
             disabledSelectionToggle
             pagination={{
               pageSize,

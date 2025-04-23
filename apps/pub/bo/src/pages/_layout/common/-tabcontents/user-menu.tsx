@@ -273,7 +273,7 @@ const UserMenuComponent: FC<{}> = ({}) => {
           data={data}
           columns={columns}
           showSelectedCount={true}
-          hideColumnSettings={true}
+          showColumnSettings={false}
           height={200}
           pagination={{
             pageSize,

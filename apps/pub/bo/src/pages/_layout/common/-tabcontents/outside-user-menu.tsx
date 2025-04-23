@@ -264,7 +264,7 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
           data={data}
           columns={columns}
           showSelectedCount={true}
-          hideColumnSettings={true}
+          showColumnSettings={false}
           height={280}
           pagination={{
             pageSize,

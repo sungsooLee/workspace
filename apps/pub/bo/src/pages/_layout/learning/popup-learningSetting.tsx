@@ -226,7 +226,7 @@ function RouteComponent() {
                     data={data}
                     columns={columns}
                     title="일괄설정 항목선택"
-                    hideColumnSettings={true}
+                    showColumnSettings={false}
                     multiple={true}
                     className={styles.grid}
                   />
