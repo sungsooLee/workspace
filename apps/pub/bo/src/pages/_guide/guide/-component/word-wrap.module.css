@@ -1,0 +1,12 @@
+/* word-wrap.module.css */
+.start {
+  &.word_wrap {
+    @apply flex h-full w-full items-center;
+    .word_area {
+      @apply w-full;
+      button {
+        @apply block max-w-full truncate;
+      }
+    }
+  }
+}

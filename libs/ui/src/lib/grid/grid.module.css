@@ -34,7 +34,7 @@
         @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
           @apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
-          button {
+          [class*='nlp--button'] {
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
           }
           [class*='nlp--checkbox'] {
