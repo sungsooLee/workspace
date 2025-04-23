@@ -1,6 +1,7 @@
 /* search-box.module.css */
 .start {
   &.wrap {
+    @apply w-full;
     .item label span {
       @apply text-[12px] text-[var(--gray8)];
     }

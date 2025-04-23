@@ -97,9 +97,11 @@ function RouteComponent() {
                         className={styles.complete}
                       />
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -121,9 +123,11 @@ function RouteComponent() {
                         status="ing"
                       />
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -145,9 +149,11 @@ function RouteComponent() {
                         status="error"
                       />
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -166,9 +172,11 @@ function RouteComponent() {
                         <IcoRefresh width={20} height={20} fill="#00AFD5" />
                       </Button>
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -187,9 +195,11 @@ function RouteComponent() {
                         <IcoRefresh width={20} height={20} fill="#00AFD5" />
                       </Button>
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -208,9 +218,11 @@ function RouteComponent() {
                         <IcoPause width={20} height={20} fill="#A9AFB8" />
                       </Button>
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                   {/* file_item */}
                   <div className={styles.file_item}>
@@ -229,9 +241,11 @@ function RouteComponent() {
                         <IcoPause width={20} height={20} fill="#A9AFB8" />
                       </Button>
                     </div>
-                    <Button className={styles.btn_delete} onlyIcon>
-                      <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                    </Button>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

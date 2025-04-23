@@ -9,6 +9,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 /* tab contents */
 import { TenantLearningRoleMenu } from './-tabcontents/tenant-learning-role-menu'; // 학습자 역할정보
 import { TenantLearningMenuSetting } from './-tabcontents/tenant-learning-menu-setting'; // 학습자 메뉴설정
+import { TenantLearningRoleGrant } from './-tabcontents/tenant-learning-role-grant'; // 학습자 역할부여
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-learning-role-management')({
   component: RouteComponent,
@@ -56,7 +57,7 @@ function RouteComponent() {
     {
       title: '학습자 역할부여',
       key: 'tab03',
-      content: '',
+      content: <TenantLearningRoleGrant />,
     },
     {
       title: 'HRD센터 역할정보',
