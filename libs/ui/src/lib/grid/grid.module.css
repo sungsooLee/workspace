@@ -1,6 +1,6 @@
 /* grid.module.css */
 .grid {
-  @apply scrollbar sticky z-0 box-border overflow-auto border border-solid border-[var(--gray5)];
+  @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
   table {
     thead {
       @apply sticky top-0 z-[1];
@@ -33,7 +33,7 @@
       tr {
         @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
-          @apply body_bo_2_r line-clamp-1 h-full text-ellipsis px-[8px] py-[8px] align-middle text-[var(--gray7)];
+          @apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
           button {
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
           }
@@ -234,7 +234,7 @@
 }
 
 .empty_message_container {
-  @apply flex w-full items-center justify-center;
+  @apply absolute left-0 top-1/2 mt-[25px] flex w-full -translate-y-1/2 items-center justify-center;
 }
 
 .empty_message {
@@ -242,15 +242,21 @@
 }
 
 .th_pinned_left {
-  @apply !sticky left-0 !z-[3] border-b-[1px] border-solid !border-[var(--gray3)] bg-[var(--gray1)];
+  @apply !sticky left-0 !z-[3] bg-[var(--gray1)];
   &.th_pinned_last {
     border-right: 1px solid var(--gray5) !important;
+  }
+  & + .thead_th {
+    @apply !border-l-0;
   }
 }
 .td_pinned_left {
   @apply !z-[3] bg-white;
   &.td_pinned_last {
     border-right: 1px solid var(--gray5) !important;
+  }
+  & + td {
+    @apply !border-l-0;
   }
 }
 [class*='th_pinned_left'] {
