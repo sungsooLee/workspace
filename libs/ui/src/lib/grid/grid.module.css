@@ -252,7 +252,7 @@
   &.th_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }
-  & + .thead_th {
+  & + .thead_th:not(.th_pinned_left) {
     @apply !border-l-0;
   }
 }
@@ -261,7 +261,7 @@
   &.td_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }
-  & + td {
+  & + td:not(.td_pinned_left) {
     @apply !border-l-0;
   }
 }
