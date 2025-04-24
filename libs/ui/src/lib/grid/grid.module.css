@@ -175,12 +175,19 @@
           @apply fill-[var(--gray5)];
         }
       }
+      & + button {
+        @apply !ml-0;
+      }
     }
     .num_wrap {
+      @apply mx-[16px];
       .btn_num {
         @apply title_bo_4_r h-[32px] w-[32px] rounded-[4px] bg-white text-[#6F798B];
         &.active {
           @apply bg-[var(--gray7)] text-white;
+        }
+        & + .btn_num {
+          @apply !ml-[4px];
         }
       }
     }
