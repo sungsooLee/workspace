@@ -9,18 +9,9 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 
 import { cn } from '@learnway/shared';
 
-import {
-  Button,
-  GridBox,
-  // Tooltip,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  Dropdown,
-} from '@learnway/ui';
+import { Button, GridBox, Dropdown, DatePicker, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-management')({
+export const Route = createFileRoute('/_layout/pms/menu-channel-management')({
   component: RouteComponent,
 });
 
@@ -28,8 +19,6 @@ function RouteComponent() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
-  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
-  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -41,16 +30,6 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
   const options3 = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
-  const options4 = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
-  const options5 = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
@@ -182,8 +161,8 @@ function RouteComponent() {
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트명</span>
+                      <label htmlFor="name-tenant" className={searchStyles.label}>
+                        <span className={searchStyles.text}>테넌트</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -198,8 +177,8 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>회사</span>
+                      <label htmlFor="name-applyStatus" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -212,17 +191,11 @@ function RouteComponent() {
                       </div>
                     </div>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트 담당자</span>
+                      <label htmlFor="name-proposer" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options3}
-                          value={selectedValues3}
-                          onChange={(selected) => setSelectedValues3(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
+                        <Input id="name-proposer" type="text" placeholder="입력" />
                       </div>
                     </div>
                   </div>
@@ -234,26 +207,20 @@ function RouteComponent() {
                         <span className={searchStyles.text}>회사 담당자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options4}
-                          value={selectedValues4}
-                          onChange={(selected) => setSelectedValues4(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
+                        <DatePicker displayType={'day'} size={'md'} />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>사용여부</span>
+                      <label htmlFor="name-channel" className={searchStyles.label}>
+                        <span className={searchStyles.text}>채널상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
-                          options={options5}
-                          value={selectedValues5}
-                          onChange={(selected) => setSelectedValues5(selected)}
+                          options={options3}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
                           variant="default"
                           size={'sm'}
                         />
@@ -291,6 +258,8 @@ function RouteComponent() {
                 columns={columns}
                 height={440}
                 showColumnSettings={false}
+                multiple
+                guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
                 pagination={{
                   pageSize,
                   pageIndex,
@@ -298,7 +267,13 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
-                title="타이틀"
+                customButtonNode={
+                  <>
+                    <Button variant="text" size="sm" label={'접수'} />
+                    <Button variant="text" size="sm" label={'반려'} />
+                  </>
+                }
+                title="신청 목록"
               />
             </div>
           </div>

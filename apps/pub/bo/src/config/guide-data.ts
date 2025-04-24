@@ -307,15 +307,6 @@ export const guideData = [
   //   lastUpdateDate: '',
   //   remarks: '진행중', // 비고
   // },
-  // {
-  //   screenName: 'CMS/파일업로드',
-  //   pageId: 'learning/popup-fileupload',
-  //   screenId: '',
-  //   pageType: 'Pop-up',
-  //   completionDate: '',
-  //   lastUpdateDate: '2025-03-31',
-  //   remarks: '진행중', // 비고
-  // },
   {
     screenName: 'CMS/학습유형선택',
     pageId: 'learning/popup-learningRegisteration',
@@ -326,13 +317,22 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: 'CMS/파일업로드',
+    screenName: 'CMS/파일업로드_업로드 전',
     pageId: 'learning/popup-upload',
     screenId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-06',
     lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
+    remarks: '완료', // 비고
+  },
+  {
+    screenName: 'CMS/파일업로드_업로드 후',
+    pageId: 'learning/popup-fileupload',
+    screenId: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-24',
+    lastUpdateDate: '',
+    remarks: '완료', // 비고
   },
   {
     screenName: 'CMS/학습자원등록 동영상 등록',
@@ -558,6 +558,24 @@ export const guideData = [
     completionDate: '2025-04-24',
     lastUpdateDate: '',
     remarks: '화면 케이스 작업 완료', // 비고
+  },
+  {
+    screenName: 'PMS/채널관리',
+    pageId: 'pms/menu-channel-management',
+    screenId: 'NLP_BO_CHN_1401',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/채널관리_상세',
+    pageId: 'pms/menu-channel-detail-management',
+    screenId: 'NLP_BO_CHN_1402',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
   },
   {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
