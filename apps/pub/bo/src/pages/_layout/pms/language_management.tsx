@@ -234,7 +234,7 @@ function RouteComponent() {
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <GridBox
-              data={data}
+              data={[]}
               columns={columns}
               tableMode={true}
               title={'목록'}
