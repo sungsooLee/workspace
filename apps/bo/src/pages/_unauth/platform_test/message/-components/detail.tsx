@@ -11,6 +11,7 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
+import { useRouter } from '@tanstack/react-router';
 
 interface MessageDetailProps {
   /**
@@ -21,7 +22,9 @@ interface MessageDetailProps {
 
 const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
   const { t } = useTranslation<any>();
+  const router = useRouter();
   const { confirm: openConfirm } = useModal();
+  const [isCreateMode, setIsCreateMode] = React.useState(false);
   const { provider, onSubmit, control, getValues, fetchData, onFormChange } =
     useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
@@ -36,46 +39,45 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
     },
   });
 
-  const isUpdateMode = labelMessageId > 0;
-
   useEffect(() => {
-    console.log('labelMessageId', labelMessageId);
-    // 음수인 경우 폼 초기화 (부모창에서 추가 버튼 눌렀을때 음수로 설정)
-    if (labelMessageId < 0) {
-      onFormChange();
-    }
+    // 음수인 경우 추가 모드 (부모창에서 추가 버튼 눌렀을때 음수가 넘어옴)
+    const isCreate = labelMessageId < 0;
+    // 폼 초기화 (부모창에서 추가 버튼 눌렀을때)
+    isCreate && fetchData();
+    // set state
+    setIsCreateMode(isCreate);
   }, [labelMessageId]);
 
   useEffect(() => {
     console.log('detail :: useEffect.data', data);
+    // data && fetchData(data);
+    fetchData(data)
   }, [data]);
 
-  const handleMultilingualManageClick = (multilinguaKey: string) => {
-    console.log('다국어 관리 화면 이동', {
+  const handleMultilingualManageClick = () => {
+    router.navigate({
       to: '/platform/system/multilingual',
       state: {
-        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-        multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
+        keyType: data?.labelMessageType, // LABEL, MESSAGE
+        multilinguaKey: data?.labelMessageMultilingulKey, // 메세지 코드
       },
     });
-    // 다국어 관리 화면 이동
-    // router.navigate({
-    //   to: '/platform/system/multilingual',
-    //   state: {
-    //     keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-    // multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
-    //   },
-    // });
   };
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
+    const payload = {
+      ...data,
+      labelMessageId: isCreateMode ? '' : data?.labelMessageId,
+    };
     if (await openConfirm('저장 하시겠습니까?')) {
-      isUpdateMode ? update(data) : create(data);
+      isCreateMode ? create(payload) : update(payload);
     }
   };
 
-  // console.log('getValues', getValues('labelMessageMultilingulKey'));
+
+  console.log({isCreateMode, labelMessageId});
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
@@ -108,10 +110,8 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
                 variant="point"
                 size="sm"
                 label={t('다국어 관리')}
-                disabled={!getValues('labelMessageId')}
-                onClick={() =>
-                  handleMultilingualManageClick(getValues('labelMessageMultilingulKey'))
-                }
+                disabled={isCreateMode}
+                onClick={handleMultilingualManageClick}
               />
             </FormInfoArea>
             <DynamicFormField name={'labelMessageName'} />
@@ -147,16 +147,10 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       format: 'string',
       options: [
-        {
-          label: '라벨',
-          value: '1',
-        },
-        {
-          label: '메세지',
-          value: '2',
-        },
+        { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
       ],
-      value: '',
+      value: 'LABEL',
     },
     {
       name: 'labelMessageMultilingulKey',
@@ -167,14 +161,14 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'labelMessageName',
       label: '메세지',
-      type: 'text-area',
+      type: 'textarea',
       format: 'string',
       value: '',
     },
     {
       name: 'labelMessageDesc',
       label: '설명',
-      type: 'text-area',
+      type: 'textarea',
       value: '',
     },
     {
@@ -187,7 +181,8 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'labelMessageId',
       type: 'hidden',
-      value: '',
+      format: 'number',
+      value: ''
     },
   ],
   validator: {

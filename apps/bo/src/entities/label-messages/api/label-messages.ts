@@ -15,13 +15,13 @@ export default class LabelMessagesService {
   }
 
   //라벨 메세지 생성
-  static async create<T = LabelMessage>(payload: T) {
-    return httpService.post<T>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async create(payload: LabelMessage) {
+    return httpService.post<LabelMessage>(`${PMSApiPrefix()}/label-messages`, payload);
   }
 
   //라벨 메세지 수정
-  static async update<T = LabelMessage>(payload: T) {
-    return httpService.put<T>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async update(payload: LabelMessage) {
+    return httpService.put<LabelMessage>(`${PMSApiPrefix()}/label-messages/${payload.labelMessageId}`, payload);
   }
 }
 

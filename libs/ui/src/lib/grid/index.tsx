@@ -364,10 +364,8 @@ const Grid = forwardRef(
 
     // data 변경시 첫번째 행 선택 (데이터가 있고 autoSelectFirstRow 설정된 경우)
     useEffect(() => {
-      console.log('------------ change data', data);
       const firstRowId = table.getRowModel()?.rows?.[0]?.id;
       if (firstRowId && autoSelectFirstRow) {
-        console.log('------------ firstRowId', firstRowId);
         setRowSelection({ [firstRowId]: true });
       }
     }, [data, table, autoSelectFirstRow]);
