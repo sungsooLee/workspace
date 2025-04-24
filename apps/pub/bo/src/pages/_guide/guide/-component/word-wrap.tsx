@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { memo, useRef, useLayoutEffect, useState, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
 import { Tooltip } from '@learnway/ui';
