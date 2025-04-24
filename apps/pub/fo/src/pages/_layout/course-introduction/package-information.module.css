@@ -57,7 +57,7 @@
 }
 
 .course_btn_wrap {
-  @apply flex w-full gap-[8px] bg-white;
+  @apply flex w-full gap-[8px] bg-gradient-to-t from-white from-90% to-white/0;
   button {
     @apply flex h-[48px] flex-1 justify-center border-[1px] border-solid border-[var(--gray5)] text-center;
     & + button {
@@ -72,9 +72,15 @@
       @apply !min-w-auto flex !w-[48px] !flex-none justify-center;
     }
     .course {
-      @apply flex !flex-1;
+      @apply relative flex !flex-1;
       button {
         @apply !w-full;
+      }
+      .tip {
+        @apply body_3_r absolute -top-[15px] left-[18px] -translate-y-[100%] whitespace-nowrap rounded-[6px] bg-[var(--primary1)] px-[16px] py-[8px] leading-[22px] text-white;
+        &::before {
+          @apply absolute -bottom-[10px] left-[10px] rotate-[90deg] border-b-[10px] border-l-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+        }
       }
     }
   }
@@ -112,6 +118,14 @@
     }
     .course_btn_wrap {
       @apply relative z-[1] mt-0 translate-y-0 pb-0 pt-[8px];
+      .course {
+        .tip {
+          @apply left-[inherit] right-[15px];
+          &::before {
+            @apply absolute -bottom-[10px] left-[inherit] right-[10px] rotate-[90deg] border-b-[10px] border-l-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+          }
+        }
+      }
     }
   }
 }
