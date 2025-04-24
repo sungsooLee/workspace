@@ -21,11 +21,10 @@ const API_BASE_URL = `${PMSApiPrefix()}/file/s3`;
  */
 export const initMultiPartUpload = async (
   key: string,
-  filename: string,
 ): Promise<InitMultiPartUploadRes | undefined> => {
   try {
     return await httpService.post<InitMultiPartUploadRes>(`${API_BASE_URL}/multipart`, {
-      filename: key + filename,
+      filename: key,
     });
   } catch (e) {
     console.error(e);

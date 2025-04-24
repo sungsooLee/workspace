@@ -60,8 +60,7 @@ export const resumeUpload = async (
   // 업로드 세션 초기화 및 상태 반영
   setFiles((prev) => updateFile(prev, id, { status: 'uploading', controller }));
 
-  const uploadId =
-    target.uploadId || (await initMultiPartUpload(target.key, target.file.type))?.uploadId;
+  const uploadId = target.uploadId || (await initMultiPartUpload(target.key))?.uploadId;
   if (!uploadId) return;
 
   const existingParts = await getMultiFileParts(uploadId, target.key);
@@ -146,19 +145,27 @@ export const uploadSinglePartFile = async (
   file: UploadFile,
   setFiles: (updater: (prev: UploadFile[]) => UploadFile[]) => void,
 ) => {
-  setFiles((prev) => updateFile(prev, id, { status: 'uploading', progress: 0 }));
-
   const presigned = await issuePresigendUrlBySingle(file.key);
-  if (!presigned) return;
-  console.log('presigned', presigned);
+  if (!presigned) {
+    setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
+    return;
+  }
+  setFiles((prev) =>
+    updateFile(prev, id, { status: 'uploading', progress: 0, contentType: presigned.contentType }),
+  );
   try {
     const res = await fetch(presigned.url, {
+      headers: {
+        'Content-Type': presigned.contentType,
+      },
       method: 'PUT',
       body: file.file,
     });
-    if (!res.ok) throw new Error('Upload failed');
-
-    setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
+    if (res.ok) {
+      setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
+    } else {
+      setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
+    }
   } catch (e) {
     console.error(e);
     setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
@@ -188,9 +195,8 @@ export const uploadMultiPartFile = async (
     }),
   );
 
-  const uploadInit = await initMultiPartUpload(file.key, file.file.type);
+  const uploadInit = await initMultiPartUpload(file.key);
   if (!uploadInit) return;
-  console.log('uploadInit', uploadInit);
   const partSize = 5 * 1024 * 1024;
   const partCount = Math.ceil(file.file.size / partSize);
   const parts: UploadPart[] = [];
@@ -202,18 +208,19 @@ export const uploadMultiPartFile = async (
       partNumber: i + 1,
       key: file.key,
     });
-    console.log('presigned', presigned);
     if (!presigned) return;
 
     try {
       const res = await fetch(presigned.url, {
         method: 'PUT',
+        headers: {
+          'Content-Type': presigned.contentType,
+        },
         body: chunk,
         signal: controller.signal,
       });
       const etag = res.headers.get('ETag')?.replace(/"/g, '') || '';
       parts.push({ ETag: etag, PartNumber: i + 1 });
-      console.log('res', res.ok);
       if (res.ok) {
         setFiles((prev) =>
           updateFile(prev, id, {
@@ -243,7 +250,6 @@ export const uploadMultiPartFile = async (
       return;
     }
   }
-  console.log('parts => ', parts);
   if (isSuccess) {
     const completeResponse = await completedMultiPartUpload({
       uploadId: uploadInit.uploadId,

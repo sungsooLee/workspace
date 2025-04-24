@@ -3,6 +3,9 @@ export interface S3UploaderConfig {
   auto?: boolean; // 자동 업로드 여부 기본 true
   async?: boolean; // 병렬 업로드 여부 기본 true
   multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈
+  allowedFileTypes?: string[]; // 허용할 파일 형식 (예: ["image/png", "image/jpeg"])
+  maxFileCount?: number; // 허용할 최대 파일 개수
+  maxTotalSize?: number; // 전체 파일 허용 용량 (단위: 바이트)
 }
 export type UploadStatus =
   | 'validating'
@@ -12,7 +15,7 @@ export type UploadStatus =
   | 'completed'
   | 'failed'
   | 'aborted'
-  | 'attach-error';
+  | 'validating-error';
 
 export interface UploadPart {
   ETag: string;

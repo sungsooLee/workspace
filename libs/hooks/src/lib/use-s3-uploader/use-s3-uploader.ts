@@ -49,7 +49,6 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       const key = normalizePath(s3Path) + s3FileName; // S3 KEY 경로 설정
       const size = file.size;
       const uploadType = size > multipartThreshold ? 'multi-part' : 'single-part'; // 업로드 방식 결정
-      console.log('content-type => ', file.type);
       return {
         id,
         file,
@@ -60,12 +59,11 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         size,
         displaySize: formatFileSize(size),
         progress: 0, // 업로드 프로그레스
-        status: 'idle', // 업로드 대기 상태
+        status: 'validating', // 업로드 대기 상태
         key,
         parts: [], // 멀티파트 정보
       };
     }) as UploadFile[];
-    console.log('newFiles => ', newFiles);
     // files 상태에 파일 추가
     setFiles((prev) => [...prev, ...newFiles]);
   };
@@ -106,7 +104,6 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
   };
 
   const autoUploadProcess = useCallback(async () => {
-    console.log('autoUploadProcess', files);
     const idleFiles = files.filter((f) => f.status === 'idle'); // 대기 상태의 파일만 처리
     if (idleFiles.length === 0) return;
     if (async) {
@@ -118,6 +115,19 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     }
   }, [async, files]);
 
+  const fileValidating = useCallback(() => {
+    const validatingFiles = files.filter((f) => f.status === 'validating'); // 유효성 상태의 파일만 처리
+    if (validatingFiles.length === 0) return;
+    validatingFiles.forEach((file) => {
+      const isError = false;
+      setFiles((prev) =>
+        updateFile(prev, file.id, {
+          status: isError ? 'validating-error' : 'idle',
+        }),
+      );
+    });
+  }, [files]);
+
   /**
    * 설정 값 변경시 자동 업로드 활성화
    */
@@ -125,6 +135,13 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     if (!auto) return;
     autoUploadProcess();
   }, [auto, files]);
+
+  /**
+   * 파일 변경시 유효성 체크
+   */
+  useEffect(() => {
+    fileValidating();
+  }, [files]);
 
   return {
     // 업로드 상태 및 CRUD 기능 반환
