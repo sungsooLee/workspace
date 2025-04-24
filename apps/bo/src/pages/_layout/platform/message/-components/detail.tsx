@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
 import React, { useEffect } from 'react';
+import { useRouter } from '@tanstack/react-router';
 
 import { FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -17,65 +18,72 @@ interface MessageDetailProps {
    * 라벨/메세지 NO
    */
   labelMessageId: number;
+
+  /**
+   * 저장 완료 callback function
+   */
+  onSuccessSave: () => void;
 }
 
-const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
+const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
+  const router = useRouter();
   const { t } = useTranslation<any>();
+  const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
-  const { provider, onSubmit, control, getValues, fetchData, onFormChange } =
-    useDynamicForm(formConfig);
+  const { provider, onSubmit, onFormChange, getValues, fetchData } = useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
+      onSuccessSave();
     },
   });
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useUpdateLabelMessage :: onSuccess', response);
+      onSuccessSave();
     },
   });
 
-  const isUpdateMode = labelMessageId > 0;
-
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
-    // 음수인 경우 폼 초기화 (부모창에서 추가 버튼 눌렀을때 음수로 설정)
-    if (labelMessageId < 0) {
+    // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
+    const isCreate = labelMessageId < 0;
+    // set state
+    setIsCreateMode(isCreate);
+    // 생성 모드는 폼 내용 초기화
+    if (isCreate) {
       onFormChange();
     }
   }, [labelMessageId]);
 
   useEffect(() => {
     console.log('detail :: useEffect.data', data);
+    fetchData(data);
   }, [data]);
 
-  const handleMultilingualManageClick = (multilinguaKey: string) => {
-    console.log('다국어 관리 화면 이동', {
+  const handleMultilingualManageClick = () => {
+    router.navigate({
       to: '/platform/system/multilingual',
       state: {
-        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-        multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
+        keyType: data?.labelMessageType || 'LABEL', // 다국어 분류, 서버에서 labelMessageType 값 안넘어와서 임시로 하드코딩
+        multilinguaKey: data?.labelMessageMultilingulKey, // 다국어 키
+        translation: data?.labelMessageName, // 한글 번역값
       },
     });
-    // 다국어 관리 화면 이동
-    // router.navigate({
-    //   to: '/platform/system/multilingual',
-    //   state: {
-    //     keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-    // multilinguaKey, // 메세지 코드 (다국어 관리 화면에서 검색조건의 '코드' 기본값 설정시 사용)
-    //   },
-    // });
   };
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
+    const payload = {
+      ...data,
+      labelMessageId: isCreateMode ? '' : data?.labelMessageId,
+    };
     if (await openConfirm('저장 하시겠습니까?')) {
-      isUpdateMode ? update(data) : create(data);
+      isCreateMode ? create(payload) : update(payload);
     }
   };
 
-  // console.log('getValues', getValues('labelMessageMultilingulKey'));
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
@@ -108,10 +116,8 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
                 variant="point"
                 size="sm"
                 label={t('다국어 관리')}
-                disabled={!getValues('labelMessageId')}
-                onClick={() =>
-                  handleMultilingualManageClick(getValues('labelMessageMultilingulKey'))
-                }
+                // disabled={!getValues('labelMessageId')}
+                onClick={handleMultilingualManageClick}
               />
             </FormInfoArea>
             <DynamicFormField name={'labelMessageName'} />
@@ -147,16 +153,10 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       format: 'string',
       options: [
-        {
-          label: '라벨',
-          value: '1',
-        },
-        {
-          label: '메세지',
-          value: '2',
-        },
+        { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
       ],
-      value: '',
+      value: 'LABEL',
     },
     {
       name: 'labelMessageMultilingulKey',
@@ -167,14 +167,14 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'labelMessageName',
       label: '메세지',
-      type: 'text-area',
+      type: 'textarea',
       format: 'string',
       value: '',
     },
     {
       name: 'labelMessageDesc',
       label: '설명',
-      type: 'text-area',
+      type: 'textarea',
       value: '',
     },
     {
@@ -186,6 +186,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'labelMessageId',
+      format: 'number',
       type: 'hidden',
       value: '',
     },
