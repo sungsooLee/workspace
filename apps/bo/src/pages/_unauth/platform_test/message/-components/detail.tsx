@@ -17,9 +17,14 @@ interface MessageDetailProps {
    * 라벨/메세지 NO
    */
   labelMessageId: number;
+
+  /**
+   * 저장 완료 callback function
+   */
+  onSuccessSave: () => void;
 }
 
-const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
+const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
   const { t } = useTranslation<any>();
   const { confirm: openConfirm } = useModal();
   const { provider, onSubmit, control, getValues, fetchData, onFormChange } =
@@ -28,11 +33,13 @@ const MessageDetailComponent = ({ labelMessageId }: MessageDetailProps) => {
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
+      onSuccessSave();
     },
   });
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useUpdateLabelMessage :: onSuccess', response);
+      onSuccessSave();
     },
   });
 
@@ -147,16 +154,10 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       format: 'string',
       options: [
-        {
-          label: '라벨',
-          value: '1',
-        },
-        {
-          label: '메세지',
-          value: '2',
-        },
+        { value: 'LABEL', label: '라벨' },
+        { value: 'MESSAGE', label: '메세지' },
       ],
-      value: '',
+      value: 'LABEL',
     },
     {
       name: 'labelMessageMultilingulKey',
@@ -167,14 +168,14 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'labelMessageName',
       label: '메세지',
-      type: 'text-area',
+      type: 'textarea',
       format: 'string',
       value: '',
     },
     {
       name: 'labelMessageDesc',
       label: '설명',
-      type: 'text-area',
+      type: 'textarea',
       value: '',
     },
     {

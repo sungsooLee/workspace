@@ -25,15 +25,6 @@ function RouteComponent() {
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(-1);
 
-  const handleMultilingualManageClick = () => {
-    router.navigate({
-      to: '/platform/system/multilingual',
-      state: {
-        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-      },
-    });
-  };
-
   const handleOnSearch = useCallback((data: any) => {
     console.log('handleOnSearch', data);
     gridFetch(data);
@@ -49,11 +40,24 @@ function RouteComponent() {
     setSelectedLabelMessageId(row?.labelMessageId);
   };
 
-  const code = codeConfig.getCodesByCodeGroup('labelMessageType');
+  const handleSuccessSave = () => {
+    // 마지막 조회 했을때 조건으로 재조회
+    gridFetch(searchProvider.originalValues);
+  };
 
+  const handleMultilingualManageClick = () => {
+    router.navigate({
+      to: '/platform/system/multilingual',
+      state: {
+        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+      },
+    });
+  };
 
-  console.log('code', code, codeConfig.get());
-  console.log('gConfig', gConfig);
+  console.log('======>', {
+    gConfig,
+    code: codeConfig.getCodesByCodeGroup('labelMessageType')
+  });
 
   return (
     <PageContainer scrollHidden={true}>
@@ -81,7 +85,7 @@ function RouteComponent() {
             onRowSelect={handleGridRowSelect}
             onAddClick={handleGridAddClick}
           />
-          <MessageDetail labelMessageId={selectedLabelMessageId} />
+          <MessageDetail labelMessageId={selectedLabelMessageId} onSuccessSave={handleSuccessSave} />
         </SplitPanel>
       </MainContents>
     </PageContainer>
