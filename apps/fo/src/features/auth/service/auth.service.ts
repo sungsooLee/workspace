@@ -24,7 +24,6 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
-          cookieService.set('LATEST_LOGIN_DATETIME', new Date());
           const menus = await asyncMenus(data.activeTenant?.tenantId);
 
           if (payload.saveId) {
