@@ -11,7 +11,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
   useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -178,7 +178,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         }
         //BEFORE 혹은 AFTER 이면 부모 노드가 타겟 되어야함.
         else {
-          console.log(nodeInfo.targetIndex);
           const targetIndex = nodeInfo.targetIndex || 0;
           if (targetIndex >= 0) {
             const payload = {
@@ -279,7 +278,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
-            <TreeView2
+            <TreeView
               data={treeData}
               treeId={'program-tree'}
               expandedKeys={expandedKeys}

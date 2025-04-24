@@ -5,7 +5,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
 } from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
@@ -85,17 +85,15 @@ const MenuTreeComponent: FC<any> = ({
         break;
       case 'NODE_MOVE':
         const nodeInfo = event;
-        console.log(event);
         if (nodeInfo.position === 'INSIDE') {
-          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.menuId, nodeInfo.targetIndex);
-        }
-        //BEFORE 혹은 AFTER 이면 부모 노드가 타겟 되어야함.
-        else {
           onNodeMove(
             nodeInfo.sourceNode.menuId,
-            nodeInfo.targetNode?.parentKey,
-            nodeInfo.targetIndex,
+            nodeInfo.targetNode?.menuId,
+            nodeInfo.targetIndex ? nodeInfo.targetIndex + 1 : 1,
           );
+        } else {
+          const targetIndex = nodeInfo.targetIndex || 0;
+          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex + 1);
         }
 
         break;
@@ -131,7 +129,7 @@ const MenuTreeComponent: FC<any> = ({
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView2
+          <TreeView
             data={treeData}
             treeId={'1'}
             expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키

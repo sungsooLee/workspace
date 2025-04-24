@@ -115,9 +115,8 @@ function RouteComponent() {
     const payload = {
       menuId,
       destinationParentId,
-      sortSeq: sortSeq + 1,
+      sortSeq,
     };
-    console.log(payload);
     moveMenu(payload);
   };
 
@@ -271,11 +270,6 @@ function RouteComponent() {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedTabKey);
-    refetch().then(() => {});
-  }, [selectedTabKey]);
-
   const items = [
     {
       title: '학습자 메뉴',
@@ -292,7 +286,6 @@ function RouteComponent() {
   return (
     <PageContainer scrollHidden={true}>
       <MainContents>
-        {/* <div className={styles.main_contents}> */}
         <Tabs
           selectedTabKey={selectedTabKey}
           items={items}
@@ -300,7 +293,6 @@ function RouteComponent() {
           onTabChange={handleTabChange}
           className={styles.tab_wrap}
         />
-        {/* </div> */}
       </MainContents>
     </PageContainer>
   );
