@@ -32,12 +32,16 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { confirm: openConfirm } = useModal();
   const { provider, onSubmit, onFormChange, getValues, fetchData } = useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
+
+  // 라벨 메세지 등록
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
       onSuccessSave();
     },
   });
+
+  // 라벨 메세지 수정
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useUpdateLabelMessage :: onSuccess', response);
@@ -45,6 +49,10 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     },
   });
 
+  /**
+   * 라벨/메세지 ID가 변경될 때마다 호출됩니다.
+   * 음수인 경우 생성 모드로 전환하며 폼을 초기화합니다.
+   */
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
@@ -57,11 +65,16 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     }
   }, [labelMessageId]);
 
+  /**
+   * 조회된 데이터를 폼에 반영합니다.
+   */
   useEffect(() => {
-    console.log('detail :: useEffect.data', data);
     fetchData(data);
   }, [data]);
 
+  /**
+   * 다국어 관리 페이지로 이동합니다.
+   */
   const handleMultilingualManageClick = () => {
     router.navigate({
       to: '/platform/system/multilingual',
@@ -73,6 +86,12 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     });
   };
 
+  /**
+   * 저장 버튼 클릭 시 호출되는 이벤트 핸들러입니다.
+   * 생성 또는 수정 API를 호출합니다.
+   *
+   * @param {any} data - 폼 데이터
+   */
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const payload = {
