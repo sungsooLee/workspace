@@ -69,7 +69,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 조회된 데이터를 폼에 반영합니다.
    */
   useEffect(() => {
-    fetchData(data);
+    data && fetchData(data);
   }, [data]);
 
   /**
