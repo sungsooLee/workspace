@@ -1,7 +1,7 @@
 import { useCreation } from 'ahooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { Table } from '@learnway/ui';
+import { TableBox } from '@learnway/ui';
 
 export function WidgetComponentTable({ data }: { data: any }) {
   const tableColumns = useCreation(() => {
@@ -32,5 +32,5 @@ export function WidgetComponentTable({ data }: { data: any }) {
     ] as ColumnDef<any, unknown>[];
   }, []);
 
-  return <Table data={data} columns={tableColumns} tableMode={true} />;
+  return <TableBox data={data} columns={tableColumns} tableMode={true} />;
 }

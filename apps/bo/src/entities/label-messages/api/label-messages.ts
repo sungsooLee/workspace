@@ -4,8 +4,8 @@ import { LabelMessage, LabelMessagesQueryParams } from '@types';
 
 export default class LabelMessagesService {
   //라벨 메세지 목록 조회
-  static async fetchAll<T = LabelMessage>(queryParam?: LabelMessagesQueryParams): Promise<T[]> {
-    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, { queryParam });
+  static async fetchAll<T = LabelMessage>(params?: LabelMessagesQueryParams): Promise<T[]> {
+    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, params);
     // return new Promise((resolve) => resolve(Mock));
   }
 
@@ -15,13 +15,13 @@ export default class LabelMessagesService {
   }
 
   //라벨 메세지 생성
-  static async create<T = LabelMessage>(payload: T) {
-    return httpService.post<T>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async create(payload: LabelMessage) {
+    return httpService.post<LabelMessage>(`${PMSApiPrefix()}/label-messages`, payload);
   }
 
   //라벨 메세지 수정
-  static async update<T = LabelMessage>(payload: T) {
-    return httpService.put<T>(`${PMSApiPrefix()}/label-messages`, payload);
+  static async update(payload: LabelMessage) {
+    return httpService.put<LabelMessage>(`${PMSApiPrefix()}/label-messages/${payload.labelMessageId}`, payload);
   }
 }
 

@@ -1,4 +1,5 @@
 import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
+import { queryOptionsForUseCache } from '@learnway/config';
 import { isMobile } from 'react-device-detect';
 
 import MenuService from '../api/menu';
@@ -32,6 +33,7 @@ export const queryOptions = {
               },
             );
           },
+          ...queryOptionsForUseCache,
         }
       : getQuerySkipToken<Menu[]>(),
 

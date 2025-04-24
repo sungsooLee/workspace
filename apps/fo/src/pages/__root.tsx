@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
-import { useRenewalMenuStateFromRouting } from '@learnway/auth';
+import { useRenewalMenuStateFromRouting, useSessionTimout } from '@learnway/auth';
 
 const NotFound = () => {
   return (
@@ -26,6 +26,7 @@ function RootComponent() {
   const { closeAll } = useModalStore();
 
   useRenewalMenuStateFromRouting();
+  useSessionTimout();
 
   // router event subscribe
   useGlobalRouterEvent({

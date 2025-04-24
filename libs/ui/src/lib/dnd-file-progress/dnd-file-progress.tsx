@@ -145,9 +145,11 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
                 </div>
               )}
               {(file.status === 'cancel' || file.status === 'complete') && (
-                <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove(file.id)}>
-                  <IcoTrash03 width={20} height={20} stroke="#131C30" />
-                </Button>
+                <div className={styles.delele_btn_wrap}>
+                  <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove(file.id)}>
+                    <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                  </Button>
+                </div>
               )}
             </div>
           ))}

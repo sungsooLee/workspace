@@ -6,7 +6,7 @@ export * from './lib/service/code.service';
 export * from './lib/service/config.service';
 export * from './lib/service/i18n';
 export * from './lib/service/axios';
-export * from './lib/service/react-query';
+export * from './lib/service/react-query.service';
 export * from './lib/service/nation.service';
 export * from './lib/service/app.service';
 export * from './lib/service/token.service';

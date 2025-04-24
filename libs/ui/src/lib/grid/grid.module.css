@@ -34,7 +34,7 @@
         @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
           @apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
-          button {
+          [class*='nlp--button'] {
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
           }
           [class*='nlp--checkbox'] {
@@ -55,6 +55,12 @@
               &::placeholder {
                 @apply text-[1.2rem];
               }
+            }
+          }
+          [class*='btn_table'] {
+            @apply !min-w-[3.2rem];
+            & + [class*='btn_table'] {
+              @apply !ml-[4px];
             }
           }
           &:has(> div) {
@@ -93,6 +99,9 @@
         } */
       }
     }
+  }
+  .empty_message_container {
+    @apply absolute left-0 top-1/2 mt-[25px] -translate-y-1/2;
   }
 }
 
@@ -166,12 +175,19 @@
           @apply fill-[var(--gray5)];
         }
       }
+      & + button {
+        @apply !ml-0;
+      }
     }
     .num_wrap {
+      @apply mx-[16px];
       .btn_num {
         @apply title_bo_4_r h-[32px] w-[32px] rounded-[4px] bg-white text-[#6F798B];
         &.active {
           @apply bg-[var(--gray7)] text-white;
+        }
+        & + .btn_num {
+          @apply !ml-[4px];
         }
       }
     }
@@ -186,7 +202,7 @@
 
 /* table basic */
 .table {
-  @apply border-t-[1px] border-solid border-[#131C30];
+  @apply relative border-t-[1px] border-solid border-[#131C30];
   table {
     @apply w-full table-fixed border-collapse;
     thead {
@@ -221,6 +237,9 @@
       }
     }
   }
+  .empty_message_container {
+    @apply border-b-[1px] border-solid border-[var(--gray4)] py-[100px];
+  }
 }
 
 .empty_wrap {
@@ -234,7 +253,7 @@
 }
 
 .empty_message_container {
-  @apply absolute left-0 top-1/2 mt-[25px] flex w-full -translate-y-1/2 items-center justify-center;
+  @apply flex w-full items-center justify-center;
 }
 
 .empty_message {
@@ -246,7 +265,7 @@
   &.th_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }
-  & + .thead_th {
+  & + .thead_th:not(.th_pinned_left) {
     @apply !border-l-0;
   }
 }
@@ -255,7 +274,7 @@
   &.td_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }
-  & + td {
+  & + td:not(.td_pinned_left) {
     @apply !border-l-0;
   }
 }

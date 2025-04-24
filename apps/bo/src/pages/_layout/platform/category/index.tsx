@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -26,21 +28,17 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { useCurrentRoute } from '@learnway/hooks';
 
 // TODO
-// 중복체크 API 없음
 // 삭제시 에러코드 확인하여 팝업 처리
 // 다국어 처리
 export const Route = createFileRoute('/_layout/platform/category/')({
   component: RouteComponent,
-  ...pageRouteConfig({
-    meta: {
-      title: '카테고리',
-    },
-  }),
+  ...pageRouteConfig({}),
 });
 
 type mode = 'init' | 'add' | 'view';
 
 function RouteComponent() {
+  const { t } = useTranslation<'translation'>();
   // const { state } = useCurrentRoute(Route);
   const router = useRouter();
 
@@ -57,38 +55,16 @@ function RouteComponent() {
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useFetchCategory();
-  const { create } = useCreateCategory({
-    onSuccess: async (data: any) => {
-      console.log('## create data === ', data);
-      if (data) {
-        setLastCreatedMenuId(data.toString());
-      }
-      await refetch();
-      setMode('init');
-    },
-  });
+  const { create } = useCreateCategory({});
 
   // 삭제
-  const { delete: deleteCategory } = useDeleteCategory({
-    onSuccess: async (data: any) => {
-      await refetch();
-      setMode('init');
-    },
-  });
+  const { delete: deleteCategory } = useDeleteCategory({});
 
   // 수정 mutation
   const { update: updateCategory } = useUpdateCategory({});
 
   // 이동
-
-  const { move: moveCategory } = useMoveCategory({
-    onSuccess: async (data: any) => {
-      await refetch();
-    },
-    onError: async (data: any) => {
-      //
-    },
-  });
+  const { move: moveCategory } = useMoveCategory({});
 
   useEffect(() => {
     // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
@@ -159,31 +135,37 @@ function RouteComponent() {
       destinationParentId,
       sortSeq: sortSeq + 1,
     };
-    console.log('## payload', payload);
-    moveCategory(payload);
+    moveCategory(payload, {
+      onSuccess: async (data: any) => {
+        await refetch();
+      },
+    });
   };
 
   //하위 메뉴 추가 버튼
   const handleAddSubMenu = (node: TreeNode) => {
-    //접혀있으면 확장
-    setExpandedKeys([...expandedKeys, node.key]);
     // 현재 노드 클릭이벤트.
     setSelectedNode(node);
     setMode('add');
+    //접혀있으면 확장
+    setExpandedKeys([...expandedKeys, node.key]);
   };
 
   // 메뉴 저장 핸들러
   const handleSave = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: (
-        <>
-          <p>입력한 정보로 저장됩니다.</p>
-        </>
-      ),
+      title: t('LABEL.confirm.save.title'),
+      content: <p>{t('LABEL.confirm.save.message')}</p>,
       onClose: (value: boolean) => {
         if (value) {
-          create(payload);
+          create(payload, {
+            onSuccess: async (data: any) => {
+              if (data) {
+                setLastCreatedMenuId(data.toString());
+              }
+              await refetch();
+            },
+          });
         }
       },
     });
@@ -191,12 +173,8 @@ function RouteComponent() {
 
   const handleUpdate = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: (
-        <>
-          <p>입력한 정보로 저장됩니다.</p>
-        </>
-      ),
+      title: t('LABEL.confirm.modify.title'),
+      content: <p>{t('LABEL.confirm.modify.message')}</p>,
       onClose: (value: boolean) => {
         if (value) {
           updateCategory(payload, {
@@ -221,17 +199,18 @@ function RouteComponent() {
     //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
 
     openConfirm({
-      title: '삭제 하시겠습니까?',
+      title: t('LABEL.confirm.delete.title'),
       content: (
-        <>
-          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
-          <p>삭제 후 복구할 수 없습니다.</p>
-        </>
+        <p>{t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.category') })}</p>
       ),
       onClose: (value: boolean) => {
         if (value) {
-          deleteCategory(payload);
-          setMode('init');
+          deleteCategory(payload, {
+            onSuccess: async (data: any) => {
+              await refetch();
+              setMode('init');
+            },
+          });
         }
       },
     });
@@ -253,7 +232,7 @@ function RouteComponent() {
             });
           }}
         >
-          다국어관리
+          {t('LABEL.link.multilingual')}
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -273,7 +252,6 @@ function RouteComponent() {
             <CategoryView
               treeData={treeData}
               selectedNode={selectedNode}
-              menu
               mode={mode}
               onReset={handleReset}
               onSave={handleSave}
@@ -290,7 +268,6 @@ function RouteComponent() {
             <CategoryView
               treeData={treeData}
               selectedNode={null}
-              menu
               mode="init"
               onSave={handleSave}
               onUpdate={handleUpdate}

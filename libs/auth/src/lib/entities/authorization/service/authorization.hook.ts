@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
 import type { MutateCallback } from '@learnway/shared';
+import { cookieService } from '@learnway/shared';
 
 import type { AuthUser, Tenant } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
@@ -18,12 +19,13 @@ export function useLoginUser(mutationOptions = {}) {
     ...mutateOptions.login(),
     onSuccess: async (data: any, variables, context) => {
       queryClient.setQueryData(queryKeys.authUser, data);
+      console.log();
     },
     ...mutationOptions,
   });
 
   return {
-    login: (payload: any, callback?: MutateCallback<any[]>) => {
+    login: (payload: any, callback?: MutateCallback<any>) => {
       return mutateAsync(payload, callback);
     },
     isSuccess,
@@ -62,16 +64,27 @@ export function useLogoutUser(mutationOptions = {}) {
 
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.logout(),
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
-      router.navigate({ to: '/login' });
     },
     ...mutationOptions,
   });
 
   return {
-    logout: (callback?: MutateCallback<any[]>) => {
-      mutate();
+    logout: (payload?: any, callback?: MutateCallback<any>) => {
+      // callback?.onSuccess가 정의가 없는 경우 default로 login 페이지로 이동
+      if (!callback?.onSuccess) {
+        mutate(payload, {
+          ...callback,
+          onSuccess: (data) => {
+            router.navigate({ to: '/login' });
+          },
+        });
+        return;
+      }
+
+      // callback?.onSuccess 정의가 있는 경우 navigate 처리까지 callback에 일임
+      mutate(payload, callback);
     },
     isSuccess,
     isError,
@@ -122,6 +135,14 @@ export function useUpdateUser(mutationOptions = {}) {
         return;
       }
       queryClient.setQueryData(queryKeys.authUser, { ...user, email });
+    },
+    updateLatestLoginDateTime: (latestLoginDatetime: Date): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      cookieService.set('LATEST_LOGIN_DATETIME', latestLoginDatetime);
+      queryClient.setQueryData(queryKeys.authUser, { ...user, latestLoginDatetime });
     },
   };
 }

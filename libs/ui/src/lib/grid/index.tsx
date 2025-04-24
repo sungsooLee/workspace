@@ -48,9 +48,10 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Dropdown } from '../dropdown/dropdown';
 import { DropdownOption } from '../type';
 
-import styles from './grid.module.css'; // grid module CSS
+import styles from './grid.module.css';
+import { isEmpty } from 'lodash'; // grid module CSS
 
-const Grid = forwardRef(
+const GridComponent = forwardRef(
   <T extends object>(
     {
       data,
@@ -200,6 +201,11 @@ const Grid = forwardRef(
     const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+
+      // 같은 row 선택 한 경우 deselect 안되게 하기 위해
+      if (isEmpty(newSelection)) {
+        return;
+      }
 
       // 마지막 선택만 유지
       const selectedRowIds = Object.keys(newSelection);
@@ -364,10 +370,8 @@ const Grid = forwardRef(
 
     // data 변경시 첫번째 행 선택 (데이터가 있고 autoSelectFirstRow 설정된 경우)
     useEffect(() => {
-      console.log('------------ change data', data);
       const firstRowId = table.getRowModel()?.rows?.[0]?.id;
-      if (firstRowId && autoSelectFirstRow) {
-        console.log('------------ firstRowId', firstRowId);
+      if (firstRowId && autoSelectFirstRow && !tableMode) {
         setRowSelection({ [firstRowId]: true });
       }
     }, [data, table, autoSelectFirstRow]);
@@ -778,10 +782,4 @@ const Grid = forwardRef(
   },
 );
 
-//
-
-const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
-  return <Grid {...props} disabledSelectionToggle tableMode />;
-});
-
-export { Grid, TableComponent as Table };
+export const Grid = GridComponent;
