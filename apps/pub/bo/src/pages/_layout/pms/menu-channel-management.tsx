@@ -41,37 +41,24 @@ function RouteComponent() {
   const data: any[] = [
     {
       order: '1',
-      tenantName: <Button className="link">테넌트명1</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
+      applyId: 'IA000000',
+      tenantSetting: '테넌트명',
+      channelName: '채널명채널명채널명채널명',
+      type: '공개',
+      proposer: '김현대',
+      companyName: '회사명',
+      organizationName: '조직명',
+      applyStatus: '조직명',
+      applyDate: '2025-01-01 07:12',
+      receiptID: (
+        <Button size={'xs'} className="link">
+          {'IS0000000'}
+        </Button>
       ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
-    },
-    {
-      order: '2',
-      tenantName: <Button className="link">테넌트명2</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
-      ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '미사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
+      mailSend: 'N',
+      channelStatus: '사용',
+      owner: '김현대',
+      receiptDate: '2025-01-01 07:12',
     },
   ];
 
@@ -89,65 +76,89 @@ function RouteComponent() {
       },
       enableGrouping: false,
     }),
-    columnHelper.accessor('tenantName', {
+    columnHelper.accessor('applyId', {
       cell: (info) => info.getValue(),
-      header: '테넌트명',
+      header: '신청ID',
       enableGrouping: false,
-      size: 152,
+      size: 94,
     }),
-    columnHelper.accessor('tenantSite', {
+    columnHelper.accessor('tenantSetting', {
       cell: (info) => info.getValue(),
-      header: '테넌트 사이트',
-      size: 240,
+      header: '테넌트설정',
+      size: 100,
       enableGrouping: false,
     }),
-    columnHelper.accessor('company', {
+    columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
-      header: '회사',
+      header: '채널명',
       size: 200,
       enableGrouping: false,
     }),
-    columnHelper.accessor('tenantOwner', {
+    columnHelper.accessor('type', {
       cell: (info) => info.getValue(),
-      header: '테넌트 담당자',
+      header: '유형',
+      size: 60,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('proposer', {
+      cell: (info) => info.getValue(),
+      header: '신청자명',
+      size: 80,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: '회사명',
+      size: 108,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('organizationInfo', {
+      cell: (info) => info.getValue(),
+      header: '조직정보',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyStatus', {
+      cell: (info) => info.getValue(),
+      header: '신청상태',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyDate', {
+      cell: (info) => info.getValue(),
+      header: '신청일시',
+      enableGrouping: false,
       size: 120,
+    }),
+    columnHelper.accessor('receiptID', {
+      cell: (info) => info.getValue(),
+      header: '접수ID',
+      size: 110,
       enableGrouping: false,
     }),
-    columnHelper.accessor('companyOwner', {
+    columnHelper.accessor('mailSend', {
       cell: (info) => info.getValue(),
-      header: '회사 담당자',
+      header: '메일발송',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('channelStatus', {
+      cell: (info) => info.getValue(),
+      header: '채널상태',
+      enableGrouping: false,
+      size: 90,
+    }),
+    columnHelper.accessor('owner', {
+      cell: (info) => info.getValue(),
+      header: '김현대',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('receiptDate', {
+      cell: (info) => info.getValue(),
+      header: '접수/반려일시',
+      enableGrouping: false,
       size: 120,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('useable', {
-      cell: (info) => info.getValue(),
-      header: '사용여부',
-      size: 104,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('register', {
-      cell: (info) => info.getValue(),
-      header: '등록자',
-      enableGrouping: false,
-      size: 104,
-    }),
-    columnHelper.accessor('registerDate', {
-      cell: (info) => info.getValue(),
-      header: '등록일시',
-      enableGrouping: false,
-      size: 152,
-    }),
-    columnHelper.accessor('modifier', {
-      cell: (info) => info.getValue(),
-      header: '수정자',
-      enableGrouping: false,
-      size: 104,
-    }),
-    columnHelper.accessor('modificationDate', {
-      cell: (info) => info.getValue(),
-      header: '수정일',
-      enableGrouping: false,
-      size: 152,
     }),
   ] as ColumnDef<any, unknown>[];
   return (
