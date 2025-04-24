@@ -34,7 +34,7 @@ import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal
 import {
   useMenuTenantManageDetail,
   useMenuTenantMangeFetchTrees,
-} from '@entities/menu/service/menu-tenant-manage.hook';
+} from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
@@ -57,7 +57,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
   const prevDataRef = React.useRef(null);
-  const { open: openModal } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
 
   // fetch data
   const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
@@ -81,6 +81,25 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     const selectTenantDetailMenu = await openModal({
       content: <TenantDetailMenuMappingModal menuScopeCode={modalScope} tenantId={modalTenantId} />,
       width: 'xl',
+    });
+  };
+
+  const handleDeleteMenuTenant = (payload: any) => {
+    openConfirm({
+      title: '삭제 하시겠습니까?',
+      content: (
+        <>
+          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
+          <p>삭제 후 복구할 수 없습니다.</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          console.log('date!', payload);
+
+          setFormMode(FORM_MODE.NONE);
+        }
+      },
     });
   };
 
@@ -172,14 +191,21 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled={true}>
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              onClick={() => onFormChange()}
+              disabled={FORM_MODE.NONE === formMode}
+            >
               {t('초기화')}
             </Button>
             <Button
               variant="text"
               size="sm"
               className={layoutStyles.btn_text}
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={FORM_MODE.VIEW !== formMode}
+              onClick={handleDeleteMenuTenant}
             >
               {t('삭제')}
             </Button>
@@ -222,7 +248,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               <DynamicFormField name={'menuDesc'} disabled={true} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
               <DynamicFormField name={'isHiddenMenu'} disabled={true} />
             </FormRow>
@@ -234,9 +260,14 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
               <DynamicFormField name="isPersoninfoInclusion" disabled={true} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow type={'horizontal'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isUsed'} disabled={FORM_MODE.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -246,7 +277,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
-                  hideColumnSettings={true}
                   title={t('API')}
                 />
               </DynamicFormField>
@@ -312,6 +342,15 @@ const formConfig: DynamicFormConfig = {
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('적용') : t('미적용')),
+      },
+    },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('사용여부'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {
