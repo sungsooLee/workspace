@@ -13,6 +13,7 @@ interface PopoverComponentProps extends Primitive.PopoverContentProps {
   open?: boolean;
   side?: 'top' | 'right' | 'bottom' | 'left';
   onOpenChange?: (open: boolean) => void;
+  container?: HTMLElement;
   // modal 에서 popover 사용 시 FocusOutside 이벤트 예외 처리
   forceCloseFocusOutside?: boolean;
 }
@@ -29,6 +30,7 @@ const PopoverComponent = forwardRef<
       open,
       onOpenChange,
       forceCloseFocusOutside = false,
+      container,
       ...props
     },
     ref,
@@ -45,7 +47,7 @@ const PopoverComponent = forwardRef<
         <Primitive.PopoverTrigger className={cn('nlp--popover-trigger', className)}>
           {children}
         </Primitive.PopoverTrigger>
-        <Primitive.Portal>
+        <Primitive.Portal container={container}>
           <Primitive.Content
             className={cn(styles.popover_content, 'nlp--popover-content', className)}
             {...props}

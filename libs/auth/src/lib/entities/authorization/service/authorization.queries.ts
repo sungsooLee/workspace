@@ -1,4 +1,5 @@
 import { queryConfig } from '@learnway/config';
+import { cookieService } from '@learnway/shared';
 
 import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
@@ -32,7 +33,9 @@ export const mutateOptions = {
       try {
         const data = await AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) });
         assignToken(data);
-        return convertToAuthUser(data);
+        const now = new Date();
+        cookieService.set('LATEST_LOGIN_DATETIME', now);
+        return { ...convertToAuthUser(data), latestLoginDatetime: now };
       } catch (e) {
         removeToken();
         throw e;
@@ -42,6 +45,7 @@ export const mutateOptions = {
   logout: () => ({
     mutationFn: async (): Promise<any> => {
       await AuthorizationService.logout();
+      cookieService.remove('LATEST_LOGIN_DATETIME');
       removeToken();
     },
   }),
@@ -50,7 +54,10 @@ export const mutateOptions = {
       try {
         const data = await AuthorizationService.reissue();
         assignToken(data);
-        return convertToAuthUser(data);
+        return {
+          ...convertToAuthUser(data),
+          latestLoginDatetime: cookieService.get('LATEST_LOGIN_DATETIME'),
+        };
       } catch (e) {
         removeToken();
         throw e;
