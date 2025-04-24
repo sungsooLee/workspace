@@ -75,7 +75,7 @@ const RoleListSearchComponent: FC<{}> = ({}) => {
             <Input type={'text'} showSearchIcon iconType={'tree'} placeholder={'검색'} />
             <Button label={'전체펼침'} variant={'text'} size={'sm'} className="btn_text" disabled />
             <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'저장'} variant={'save'} size={'sm'} disabled />
+            {/* <Button label={'저장'} variant={'save'} size={'sm'} disabled /> */}
           </>
         }
         underLine={true}

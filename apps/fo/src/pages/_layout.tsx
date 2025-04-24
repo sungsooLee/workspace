@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { MobileView, BrowserView } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
+import { useSessionTimout } from '@learnway/auth';
 
 import { Layout, MobileLayout } from '../widgets/layout';
 
@@ -20,6 +21,8 @@ export const Route = createFileRoute('/_layout')({
 
 function LayoutComponent() {
   const { t } = useTranslation();
+
+  useSessionTimout();
 
   const { data } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenant?.tenantId);

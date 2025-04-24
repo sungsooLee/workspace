@@ -4,12 +4,3 @@
     @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[24px];
   }
 }
-.custom_info_wrap {
-  @apply flex items-center;
-  .table_tit {
-    @apply title_bo_4_b text-[var(--gray9)];
-  }
-  .count_info {
-    @apply title_bo_4_b ml-[6px] text-[var(--secondary1)];
-  }
-}

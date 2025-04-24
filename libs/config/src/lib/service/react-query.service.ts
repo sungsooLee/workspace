@@ -13,8 +13,8 @@ class ReactQueryClient {
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       retry: false,
-      staleTime: 0, //twentyFourHoursInMs,
-      cacheTime: 0, //fiveMinutes,
+      staleTime: 0, 
+      cacheTime: 0, 
       onError: (error: any) => {
         // 에러 발생 시 이벤트 발행
         console.log(error);
@@ -61,3 +61,7 @@ class ReactQueryClient {
 }
 
 export const queryConfig = new ReactQueryClient();
+export const queryOptionsForUseCache = {
+  staleTime: twentyFourHoursInMs,
+  cacheTime: fiveMinutes,
+};

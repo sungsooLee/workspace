@@ -1,7 +1,7 @@
+import { queryConfig } from '@learnway/config';
+
 import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
-
-import { queryConfig } from '@learnway/config';
 
 import type { AuthSSOLogin } from '../../../types';
 
@@ -35,13 +35,12 @@ export const mutateOptions = {
         return convertToAuthUser(data);
       } catch (e) {
         removeToken();
-        console.log('mutateOptions eeeeee', e);
         throw e;
       }
     },
   }),
   logout: () => ({
-    mutationFn: async () => {
+    mutationFn: async (): Promise<any> => {
       await AuthorizationService.logout();
       removeToken();
     },

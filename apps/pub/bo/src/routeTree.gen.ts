@@ -81,6 +81,7 @@ import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/c
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
+import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -571,6 +572,12 @@ const LayoutCommonPopCategorySelectRoute =
     path: '/common/pop-category-select',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const GuideGuideWordWrapRoute = GuideGuideWordWrapImport.update({
+  id: '/guide/word-wrap',
+  path: '/guide/word-wrap',
+  getParentRoute: () => GuideRoute,
+} as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
@@ -1358,6 +1365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/word-wrap': {
+      id: '/_guide/guide/word-wrap'
+      path: '/guide/word-wrap'
+      fullPath: '/guide/word-wrap'
+      preLoaderRoute: typeof GuideGuideWordWrapImport
+      parentRoute: typeof GuideImport
+    }
     '/_layout/common/pop-category-select': {
       id: '/_layout/common/pop-category-select'
       path: '/common/pop-category-select'
@@ -1744,6 +1758,7 @@ interface GuideRouteChildren {
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTreeViewRoute: typeof GuideGuideTreeViewRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
+  GuideGuideWordWrapRoute: typeof GuideGuideWordWrapRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
 }
 
@@ -1792,6 +1807,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTreeViewRoute: GuideGuideTreeViewRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
+  GuideGuideWordWrapRoute: GuideGuideWordWrapRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
 }
 
@@ -1977,6 +1993,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -2092,6 +2109,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -2210,6 +2228,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -2327,6 +2346,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
     | '/common/pop-user-search'
@@ -2441,6 +2461,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
     | '/common/pop-user-search'
@@ -2557,6 +2578,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_guide/guide/word-wrap'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
     | '/_layout/common/pop-user-search'
@@ -2703,6 +2725,7 @@ export const routeTree = rootRoute
         "/_guide/guide/tooltip",
         "/_guide/guide/tree-view",
         "/_guide/guide/typography",
+        "/_guide/guide/word-wrap",
         "/_guide/guide/"
       ]
     },
@@ -3035,6 +3058,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/typography": {
       "filePath": "_guide/guide/typography.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/word-wrap": {
+      "filePath": "_guide/guide/word-wrap.tsx",
       "parent": "/_guide"
     },
     "/_layout/common/pop-category-select": {

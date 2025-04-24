@@ -66,7 +66,12 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
       </span>
     ) : (
       <Button
-        className={cn(className, 'nlp-pagination-button', selected && styles.selected)}
+        className={cn(
+          className,
+          'nlp-pagination-button',
+          selected && styles.selected,
+          selected && 'selected',
+        )}
         icon={icon}
         onClick={() => onClick?.()}
       >

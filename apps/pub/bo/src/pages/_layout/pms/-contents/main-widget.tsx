@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';

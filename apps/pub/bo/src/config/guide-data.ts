@@ -555,9 +555,9 @@ export const guideData = [
     pageId: 'pms/menu-tenant-learning-role-management',
     screenId: 'NLP_BO_TMS_1003_04',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-24',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '화면 케이스 작업 완료', // 비고
   },
   {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
