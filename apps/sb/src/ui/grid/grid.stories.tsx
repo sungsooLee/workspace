@@ -24,7 +24,7 @@ import {
   GridState,
   Input,
   ModalWrapper,
-  Table,
+  TableBox,
   useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
@@ -1054,7 +1054,7 @@ export const TemplateTable: any = (args: any) => {
     { accessorKey: 'name4', size: 200 },
     { accessorKey: 'name5', size: 200 },
   ];
-  return <Table data={data} columns={columns} variant={'fill'} />;
+  return <TableBox data={data} columns={columns} variant={'fill'} />;
 };
 TemplateTable.storyName = '테이블 모드';
 

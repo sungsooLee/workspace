@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { Button, EditInputCell, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { codeConfig } from '@learnway/config';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -8,7 +9,6 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
 import { SplitPanel } from '@shared/ui';
-import { CellContext } from '@tanstack/react-table';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
@@ -21,24 +21,16 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation<any>();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(-1);
 
   const handleMultilingualManageClick = () => {
-    console.log('다국어 관리 화면 이동', {
+    router.navigate({
       to: '/platform/system/multilingual',
       state: {
         keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
       },
     });
-    // 다국어 관리 화면 이동
-    // router.navigate({
-    //   to: '/platform/system/multilingual',
-    //   state: {
-    //     keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
-    //     // multilinguaKey: key,
-    //   },
-    // });
   };
 
   const handleOnSearch = useCallback((data: any) => {
@@ -55,6 +47,11 @@ function RouteComponent() {
     console.log('handleGridRowSelect', row);
     setSelectedLabelMessageId(row?.labelMessageId);
   };
+
+  const code = codeConfig.getCodesByCodeGroup('labelMessageType');
+
+  console.log('code', code, codeConfig.get());
+  console.log('gConfig', gConfig);
 
   return (
     <PageContainer scrollHidden={true}>
@@ -73,10 +70,11 @@ function RouteComponent() {
         {/* 그리드 + 상세 */}
         <SplitPanel rightSize={450}>
           <GridBox
-            config={gridConfig}
+            config={gConfig}
             title={t('목록')}
             height={440}
             showAdd
+            showNumberingColumn
             autoSelectFirstRow
             onRowSelect={handleGridRowSelect}
             onAddClick={handleGridAddClick}
@@ -92,15 +90,14 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'companyTypeCode',
+        name: 'labelMessageType',
         type: 'dropdown',
         label: '분류',
         value: '',
         options: [
           { value: '', label: '전체' },
-          { value: '완성차', label: '완성차' },
-          { value: '현대', label: '현대' },
-          { value: '기아', label: '기아' },
+          { value: 'LABEL', label: '라벨' },
+          { value: 'MESSAGE', label: '메세지' },
         ],
       },
       {
@@ -132,23 +129,15 @@ const searchConfig: any = {
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
-  // data: [
-  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  // ],
+  data: [
+    { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
+    { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
+  ],
   columns: [
-    {
-      name: 'no1',
-      label: 'NO.',
-      type: 'numbering',
-    },
     { name: 'labelMessageType', label: '분류' },
     {
       name: 'labelMessageMultilingulKey',
       label: '라벨/메세지 코드',
-      cell: (info: CellContext<any, string>) => (
-        <EditInputCell info={info} input={{ type: 'text' }} />
-      ),
     },
     { name: 'labelMessageName', label: '라벨명/메세지' },
     { name: 'createdBy', label: '등록자' },
