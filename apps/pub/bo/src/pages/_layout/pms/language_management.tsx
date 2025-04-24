@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Input, Dropdown, Table } from '@learnway/ui';
+import { Button, Input, Dropdown, GridBox } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -233,7 +233,7 @@ function RouteComponent() {
             </div>
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <Table
+            <GridBox
               data={data}
               columns={columns}
               tableMode={true}

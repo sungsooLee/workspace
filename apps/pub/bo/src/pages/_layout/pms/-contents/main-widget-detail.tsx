@@ -1,8 +1,9 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Table, Input } from '@learnway/ui';
+import { Button, Input, GridBox } from '@learnway/ui';
 
 /* styles */
 import styles from './main-widget-detail.module.css';
@@ -67,7 +68,7 @@ const MainWidgetDetailComponent: FC<{}> = ({}) => {
       />
       <div className={styles.form_wrap}>
         <div className={styles.table_wrap}>
-          <Table data={data} columns={columns} tableMode={true} title={'컴포넌트 ID'} />
+          <GridBox data={data} columns={columns} tableMode={true} title={'컴포넌트 ID'} />
         </div>
       </div>
     </div>
