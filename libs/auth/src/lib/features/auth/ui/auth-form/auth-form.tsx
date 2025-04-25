@@ -14,7 +14,7 @@ import {
   useSendVerifyEmail,
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
-} from '../../../../entities/user';
+} from '../../../../entities/authorization';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
 import { MobileContainerFooter } from '../../../../shared/m.ui/container-footer/container-footer';

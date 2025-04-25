@@ -7,7 +7,8 @@ export type ValidatorFormat =
   | 'array'
   | 'object'
   | 'boolean'
-  | 'password';
+  | 'password'
+  | 'phone-number';
 export type ValidatorConfig = {
   [key: string]: {
     format:
@@ -19,7 +20,8 @@ export type ValidatorConfig = {
       | 'array'
       | 'object'
       | 'boolean'
-      | 'password';
+      | 'password'
+      | 'phone-number';
     default?: any;
     required?:
       | boolean

@@ -40,3 +40,19 @@ export function getValidateConfigPassword(key: string) {
     },
   ];
 }
+
+const phoneNumberRegx = /^01[0-9](-|\s)?\d{3,4}(-|\s)?\d{4}$/;
+export function getValidateConfigPhoneNumber(key: string) {
+  return [
+    {
+      key: key,
+      config: {
+        fn: (values: Record<string, any>) => {
+          return values[key] !== '' && !phoneNumberRegx.test(values[key]);
+        },
+        path: key,
+        message: '휴대폰 번호를 다시 확인해 주세요',
+      },
+    },
+  ];
+}

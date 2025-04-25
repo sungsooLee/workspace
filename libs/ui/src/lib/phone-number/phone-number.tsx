@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { useState, useEffect } from 'react';
 import { useCreation } from 'ahooks';
-import { isFunction } from 'lodash';
+import { isEqual } from 'lodash';
 
 import { getBrowserNation } from '@learnway/shared';
 
@@ -36,25 +36,31 @@ const PhoneNumberComponent = function ({
   ...props
 }: PhoneNumberComponentProps) {
   const { t } = useTranslation();
-  const [editionValue, setEditionValue] = useState<PhoneNumberValue>(
-    value ??
-      ({
-        nationCode: getBrowserNation(),
-      } as PhoneNumberValue),
-  );
+  const [editionValue, setEditionValue] = useState<PhoneNumberValue>({
+    number: value?.number,
+    nationCode: value?.nationCode ?? getBrowserNation(),
+  } as PhoneNumberValue);
 
   const nationOptions = useCreation(() => {
     return NationNumbers;
   }, []);
 
   useEffect(() => {
-    if (value !== editionValue) {
-      onChange?.(editionValue);
+    if (isEqual(value, editionValue)) {
+      return;
     }
+    onChange?.(editionValue);
   }, [editionValue]);
 
-  const handleSelect = (option: DropdownOption) => {
-    setEditionValue({ ...editionValue, nationCode: option.value });
+  useEffect(() => {
+    if (!value || isEqual(value, editionValue)) {
+      return;
+    }
+    setEditionValue(!value?.nationCode ? { ...value, nationCode: getBrowserNation() } : value);
+  }, [value]);
+
+  const handleSelect = (option: any) => {
+    setEditionValue({ ...editionValue, nationCode: option });
   };
 
   const handleChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {

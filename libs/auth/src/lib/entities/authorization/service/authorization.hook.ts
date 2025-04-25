@@ -2,15 +2,29 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
 import type { MutateCallback } from '@learnway/shared';
-import { cookieService } from '@learnway/shared';
 
-import type { AuthUser, Tenant } from '../../../types';
+import type { AuthUser } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 
 export const authUserQueryKeys = queryKeys;
 
 export function useFetchAuthUser<T = AuthUser>() {
   return useQuery<unknown, unknown, T>(queryOptions.authUser());
+}
+
+export function useUpdateAuthUser<T = AuthUser>() {
+  const queryClient = useQueryClient();
+  return {
+    update: (payload: any): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      queryClient.setQueryData(queryKeys.authUser, { ...user, ...payload });
+
+      return { ...user, ...payload } as AuthUser;
+    },
+  };
 }
 
 export function useLoginUser(mutationOptions = {}) {
@@ -90,77 +104,3 @@ export function useLogoutUser(mutationOptions = {}) {
     isError,
   };
 }
-
-export function useUpdateUser(mutationOptions = {}) {
-  const queryClient = useQueryClient();
-
-  return {
-    updateLanguage: (languageCode: string): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      queryClient.setQueryData(queryKeys.authUser, { ...user, userLanguageSetCode: languageCode });
-    },
-    updateMenu: (menus: any): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      const updateUser = { ...user, menus };
-      queryClient.setQueryData(queryKeys.authUser, updateUser);
-      return updateUser as AuthUser;
-    },
-    updateActiveTenant: (tenant: Tenant): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      const updateUser = { ...user, activeTenant: tenant };
-      queryClient.setQueryData(queryKeys.authUser, updateUser);
-      return updateUser as AuthUser;
-    },
-    updateMainTenant: (tenantId: number): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      const updateUser = { ...user, mainTenantId: tenantId };
-      queryClient.setQueryData(queryKeys.authUser, updateUser);
-      return updateUser as AuthUser;
-    },
-    updateEmail: (email: string): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      queryClient.setQueryData(queryKeys.authUser, { ...user, email });
-    },
-    updateLatestLoginDateTime: (latestLoginDatetime: Date): AuthUser | undefined => {
-      const user = queryClient.getQueryData(queryKeys.authUser);
-      if (!user) {
-        return;
-      }
-      cookieService.set('LATEST_LOGIN_DATETIME', latestLoginDatetime);
-      queryClient.setQueryData(queryKeys.authUser, { ...user, latestLoginDatetime });
-    },
-  };
-}
-/*
-export function useAuth() {
-  const [activeTenant] = useAtom(activeTenantAtom);
-  console.log(activeTenant);
-  const { data: user } = useQuery({
-    queryKey: ['user'],
-    queryFn: AuthorizationService.getCurrentUser,
-    staleTime: 5 * 60 * 1000,
-  });
-
-  // const { data: tenant } = useQuery({
-  //   queryKey: ['tenant', activeTenant],
-  //   queryFn: () => TenantService.fetchTenantsByUser(user?.data.accountId),
-  //   enabled: !!activeTenant,
-  // });
-
-  return { user, activeTenant };
-}*/

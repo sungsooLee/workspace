@@ -19,9 +19,8 @@ function MyPageContainerComponent({ children }: MyPageContainerComponentProps) {
   }, [activeMenuDepth]);
 */
   return (
-    <div className={`${styles.start} ${styles.page_container}`}>
-      <div>{meta?.title}</div>
-      {/* <div className={styles.title}>{title}</div> */}
+    <div className={`${styles.start}`}>
+      <h2>{meta?.title}</h2>
       {children}
     </div>
   );
