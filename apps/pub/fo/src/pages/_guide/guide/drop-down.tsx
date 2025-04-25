@@ -7,7 +7,7 @@ export const Route = createFileRoute('/_guide/guide/drop-down')({
 });
 
 function RouteComponent() {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<null>(null);
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
@@ -76,7 +76,6 @@ function RouteComponent() {
               value={selectedValues}
               onChange={(selected) => setSelectedValues(selected)}
               placeholder="선택"
-              label="다중 선택 (체크박스)"
               variant="default"
               isMulti={false}
               size={'sm'}

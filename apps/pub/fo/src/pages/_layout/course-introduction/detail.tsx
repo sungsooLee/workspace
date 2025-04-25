@@ -15,6 +15,7 @@ import {
   CourseDashboard,
   CourseIntroduction,
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
+  CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -38,9 +39,6 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
-
-  // 찜
-  const [heart, setHeart] = useState(false);
 
   // 탭
   const [selectedTabKey, setSelectedTabKey] = useState<string>('');
@@ -361,76 +359,9 @@ function RouteComponent() {
                 />
               </div>
 
-              {/* 수강신청 없는 case */}
-              {/* button */}
-              {/* <div
-                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-              </div> */}
-
-              {/* 수강신청 못하는 case */}
-              {/* <div
-                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-                <div className={packageInformationStyles.course}>
-                  <Button variant="line" onClick={() => CourseTimeAlert()}>
-                    차수개설 알림신청
-                  </Button>
-                </div>
-              </div> */}
-
-              {/* 수강신청 있는 case */}
-              <div
-                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-                <div className={packageInformationStyles.course}>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      openModal({
-                        width: 's',
-                        content: <CourseInformationPopup />,
-                      })
-                    }
-                  >
-                    수강신청
-                  </Button>
-                  {/* tip */}
-                  <span className={packageInformationStyles.tip}>차수를 선택해주세요</span>
-                </div>
+              {/* 찜/공유 수강신청 Button */}
+              <div className={styles.course_btn_wrap}>
+                <CourseFixedButton course={true} />
               </div>
             </div>
           </div>
