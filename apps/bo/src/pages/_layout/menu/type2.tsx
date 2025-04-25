@@ -466,7 +466,9 @@ const detailConfig: DynamicFormConfig = {
           label: '테넌트 C',
         },
       ],
-      checkGroupConfig: {},
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'lowerGubun',
