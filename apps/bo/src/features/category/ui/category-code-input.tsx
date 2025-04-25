@@ -1,4 +1,6 @@
 import { forwardRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import { Button, Input } from '@learnway/ui';
 
@@ -20,19 +22,30 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     const { onChangeGuideText } = useDynamicFormContext();
     useEffect(() => {
       switch (codeCheckState) {
         case 'success':
-          onChangeGuideText(<span style={{ color: 'blue' }}>사용할 수 있는 메뉴 코드입니다.</span>);
+          onChangeGuideText(
+            <span style={{ color: 'blue' }}>
+              {t('LABEL.form.validation.ok', { code: t('LABEL.common.code.category') })}
+            </span>,
+          ); //사용할 수 있는 메뉴 코드입니다.
           break;
         case 'duplicate':
-          onChangeGuideText(<span style={{ color: 'red' }}>이미 사용 중인 메뉴 코드입니다.</span>);
+          onChangeGuideText(
+            <span style={{ color: 'red' }}>
+              {t('LABEL.form.validation.duplicated', { code: t('LABEL.common.code.category') })}
+            </span>,
+          ); //이미 사용 중인 메뉴 코드입니다.
           break;
         case 'error':
           onChangeGuideText(
-            <span style={{ color: 'red' }}>중복 확인 중 오류가 발생했습니다.</span>,
-          );
+            <span style={{ color: 'red' }}>
+              {t('LABEL.form.validation.reCheck', { code: t('LABEL.common.code.category') })}
+            </span>,
+          ); //중복 확인 중 오류가 발생했습니다
           break;
         // case 'none':
         // default:
@@ -53,10 +66,6 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
           onChange={(e: any) => {
             onChange(e.target.value);
             handleCodeChange(e.target.value);
-            // if (onFormChange) {
-            //   onFormChange({ isDuplicateMenuCode: false });
-            //   setCodeCheckState('none');
-            // }
           }}
           disabled={disabled}
         />
@@ -67,20 +76,21 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
           disabled={disabled}
           onClick={() => {
             const { code } = getValues();
-
             // Validate code before checking
             if (!code) {
               clearFormError(name);
-              setFormError?.('code', '카테고리 코드를 입력해주세요.');
+              setFormError?.(
+                'code',
+                t('LABEL.form.validation.needInput', { code: t('LABEL.form.input.categoryCode') }),
+              ); //'카테고리 코드를 입력해주세요.'
               return;
             }
-
             // Clear any existing errors and perform the check
             clearFormError && clearFormError(name);
             checkExists?.(code);
           }}
         >
-          중복
+          {t('LABEL.button.duplication')}
         </Button>
       </div>
     );

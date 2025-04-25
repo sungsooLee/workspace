@@ -3,9 +3,9 @@
   &.word_wrap {
     @apply flex h-full w-full items-center;
     .word_area {
-      @apply w-full;
+      @apply w-full whitespace-nowrap;
       button {
-        @apply block max-w-full truncate;
+        @apply inline-block max-w-full truncate;
       }
       .text {
         @apply inline-block;

@@ -39,7 +39,6 @@ export function useAuthSignin() {
           callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
         },
         onError: async (error, variables, context) => {
-          console.log('login error ', error, error?.message);
           alert({ title: 'MESSAGE.INVALID_INPUT_INFORMATION', content: error?.message });
           callback?.onError && callback.onError(error, variables, context);
         },

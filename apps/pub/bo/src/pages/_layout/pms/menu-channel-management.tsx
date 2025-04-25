@@ -9,18 +9,9 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 
 import { cn } from '@learnway/shared';
 
-import {
-  Button,
-  GridBox,
-  // Tooltip,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  Dropdown,
-} from '@learnway/ui';
+import { Button, GridBox, Dropdown, DatePicker, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-management')({
+export const Route = createFileRoute('/_layout/pms/menu-channel-management')({
   component: RouteComponent,
 });
 
@@ -28,8 +19,6 @@ function RouteComponent() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
-  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
-  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -45,16 +34,6 @@ function RouteComponent() {
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
   ];
-  const options4 = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
-  const options5 = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
 
   // grid
   const [pageIndex, setPageIndex] = useState(0);
@@ -62,37 +41,24 @@ function RouteComponent() {
   const data: any[] = [
     {
       order: '1',
-      tenantName: <Button className="link">테넌트명1</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
+      applyId: 'IA000000',
+      tenantSetting: '테넌트명',
+      channelName: '채널명채널명채널명채널명',
+      type: '공개',
+      proposer: '김현대',
+      companyName: '회사명',
+      organizationName: '조직명',
+      applyStatus: '조직명',
+      applyDate: '2025-01-01 07:12',
+      receiptID: (
+        <Button size={'xs'} className="link">
+          {'IS0000000'}
+        </Button>
       ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
-    },
-    {
-      order: '2',
-      tenantName: <Button className="link">테넌트명2</Button>,
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
-      ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '미사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
+      mailSend: 'N',
+      channelStatus: '사용',
+      owner: '김현대',
+      receiptDate: '2025-01-01 07:12',
     },
   ];
 
@@ -110,65 +76,89 @@ function RouteComponent() {
       },
       enableGrouping: false,
     }),
-    columnHelper.accessor('tenantName', {
+    columnHelper.accessor('applyId', {
       cell: (info) => info.getValue(),
-      header: '테넌트명',
+      header: '신청ID',
       enableGrouping: false,
-      size: 152,
+      size: 94,
     }),
-    columnHelper.accessor('tenantSite', {
+    columnHelper.accessor('tenantSetting', {
       cell: (info) => info.getValue(),
-      header: '테넌트 사이트',
-      size: 240,
+      header: '테넌트설정',
+      size: 100,
       enableGrouping: false,
     }),
-    columnHelper.accessor('company', {
+    columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
-      header: '회사',
+      header: '채널명',
       size: 200,
       enableGrouping: false,
     }),
-    columnHelper.accessor('tenantOwner', {
+    columnHelper.accessor('type', {
       cell: (info) => info.getValue(),
-      header: '테넌트 담당자',
+      header: '유형',
+      size: 60,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('proposer', {
+      cell: (info) => info.getValue(),
+      header: '신청자명',
+      size: 80,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: '회사명',
+      size: 108,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('organizationInfo', {
+      cell: (info) => info.getValue(),
+      header: '조직정보',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyStatus', {
+      cell: (info) => info.getValue(),
+      header: '신청상태',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyDate', {
+      cell: (info) => info.getValue(),
+      header: '신청일시',
+      enableGrouping: false,
       size: 120,
+    }),
+    columnHelper.accessor('receiptID', {
+      cell: (info) => info.getValue(),
+      header: '접수ID',
+      size: 110,
       enableGrouping: false,
     }),
-    columnHelper.accessor('companyOwner', {
+    columnHelper.accessor('mailSend', {
       cell: (info) => info.getValue(),
-      header: '회사 담당자',
+      header: '메일발송',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('channelStatus', {
+      cell: (info) => info.getValue(),
+      header: '채널상태',
+      enableGrouping: false,
+      size: 90,
+    }),
+    columnHelper.accessor('owner', {
+      cell: (info) => info.getValue(),
+      header: '김현대',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('receiptDate', {
+      cell: (info) => info.getValue(),
+      header: '접수/반려일시',
+      enableGrouping: false,
       size: 120,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('useable', {
-      cell: (info) => info.getValue(),
-      header: '사용여부',
-      size: 104,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('register', {
-      cell: (info) => info.getValue(),
-      header: '등록자',
-      enableGrouping: false,
-      size: 104,
-    }),
-    columnHelper.accessor('registerDate', {
-      cell: (info) => info.getValue(),
-      header: '등록일시',
-      enableGrouping: false,
-      size: 152,
-    }),
-    columnHelper.accessor('modifier', {
-      cell: (info) => info.getValue(),
-      header: '수정자',
-      enableGrouping: false,
-      size: 104,
-    }),
-    columnHelper.accessor('modificationDate', {
-      cell: (info) => info.getValue(),
-      header: '수정일',
-      enableGrouping: false,
-      size: 152,
     }),
   ] as ColumnDef<any, unknown>[];
   return (
@@ -182,8 +172,8 @@ function RouteComponent() {
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트명</span>
+                      <label htmlFor="name-tenant" className={searchStyles.label}>
+                        <span className={searchStyles.text}>테넌트</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -198,8 +188,8 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>회사</span>
+                      <label htmlFor="name-applyStatus" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -212,17 +202,11 @@ function RouteComponent() {
                       </div>
                     </div>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트 담당자</span>
+                      <label htmlFor="name-proposer" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options3}
-                          value={selectedValues3}
-                          onChange={(selected) => setSelectedValues3(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
+                        <Input id="name-proposer" type="text" placeholder="입력" />
                       </div>
                     </div>
                   </div>
@@ -234,26 +218,20 @@ function RouteComponent() {
                         <span className={searchStyles.text}>회사 담당자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options4}
-                          value={selectedValues4}
-                          onChange={(selected) => setSelectedValues4(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
+                        <DatePicker displayType={'day'} size={'md'} />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
-                        <span className={searchStyles.text}>사용여부</span>
+                      <label htmlFor="name-channel" className={searchStyles.label}>
+                        <span className={searchStyles.text}>채널상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
-                          options={options5}
-                          value={selectedValues5}
-                          onChange={(selected) => setSelectedValues5(selected)}
+                          options={options3}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
                           variant="default"
                           size={'sm'}
                         />
@@ -291,6 +269,8 @@ function RouteComponent() {
                 columns={columns}
                 height={440}
                 showColumnSettings={false}
+                multiple
+                guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
                 pagination={{
                   pageSize,
                   pageIndex,
@@ -298,7 +278,13 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
-                title="타이틀"
+                customButtonNode={
+                  <>
+                    <Button variant="text" size="sm" label={'접수'} />
+                    <Button variant="text" size="sm" label={'반려'} />
+                  </>
+                }
+                title="신청 목록"
               />
             </div>
           </div>
