@@ -49,7 +49,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
     children,
     name,
   );
-  const { guideText, infoArea, onChangeInfoArea } = useDynamicFormContext();
+  const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
   const DynamicComponent = useMemo(
     () =>
       Children.toArray(children)
@@ -58,38 +58,50 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
             !(
               isValidElement(child) &&
               child.type &&
-              (child.type as any).displayName === 'FormInfoArea'
+              ((child.type as any).displayName === 'FormInfoArea' ||
+                (child.type as any).displayName === 'FormGuideText')
             ),
         )
         .map((child) => renderFormRowContent(child, formFieldConfig)),
     [provider],
   );
   /**
-   * FormInfoArea 가져오기
+   * form row 특정 아이템 추출
    * @param children
+   * @param displayName
    */
-  const extractFormInfoArea = (children: ReactNode): ReactNode => {
+  const extractFormItem = (children: ReactNode, displayName: string): ReactNode => {
     const childArray = React.Children.toArray(children);
 
     for (const child of childArray) {
-      if (
-        isValidElement(child) &&
-        child.type &&
-        (child.type as any).displayName === 'FormInfoArea'
-      ) {
+      if (isValidElement(child) && child.type && (child.type as any).displayName === displayName) {
         return child;
       }
     }
 
     return null;
   };
+  /**
+   * FormInfoArea 가져오기
+   * @param children
+   */
+  const formInfoArea = useMemo(() => extractFormItem(children, 'FormInfoArea'), [children]);
+  const formGuideText = useMemo(() => extractFormItem(children, 'FormGuideText'), [children]);
 
   useEffect(() => {
-    const infoArea = extractFormInfoArea(children);
-    if (infoArea) {
-      onChangeInfoArea(infoArea);
+    console.log('fom info area change start', formInfoArea);
+    if (formInfoArea) {
+      console.log('form info area change', formInfoArea);
+      onChangeInfoArea(formInfoArea);
     }
-  }, []);
+  }, [formInfoArea]);
+  useEffect(() => {
+    console.log('fom guide text change start', formGuideText);
+    if (formGuideText) {
+      console.log('form guide text change');
+      onChangeGuideText(formGuideText);
+    }
+  }, [formGuideText]);
   return (
     <div
       className={cn(styles.form_item, className)}
