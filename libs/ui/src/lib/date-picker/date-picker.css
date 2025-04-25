@@ -56,7 +56,7 @@
 }
 
 .datepicker_input {
-  @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[#d6dae1] text-[var(--gray8)];
+  @apply input_3_r !h-[32px] w-full rounded-[4px] border border-solid !border-[var(--gray4)] text-[var(--gray8)];
   &:focus {
     @apply border-[#747D91];
   }
@@ -283,12 +283,15 @@
 }
 
 .nlp--datepicker-time {
-  @apply w-full gap-0;
+  @apply h-[32px] w-full gap-0;
   & > div {
     @apply flex-1;
     & + div {
       @apply ml-[4px];
     }
+  }
+  &.lg {
+    @apply h-[40px];
   }
 }
 
@@ -408,7 +411,7 @@
   .datepicker_input,
   .input_time,
   .react-datepicker__view-calendar-icon input {
-    @apply !min-h-[40px] rounded-[8px];
+    @apply !h-[40px] rounded-[8px];
     &:focus {
       @apply border-[#747D91];
     }

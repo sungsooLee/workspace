@@ -14,11 +14,11 @@ import {
   // Button,
   ContentsRow,
   Input,
-  RadioGroup,
   Switch,
   Textarea,
   GridBox,
   CheckboxGroupFormField,
+  RadioGroupFormField,
   Table,
 } from '@learnway/ui';
 
@@ -78,6 +78,12 @@ function RouteComponent() {
       enableGrouping: false,
     }),
   ] as ColumnDef<any, unknown>[];
+
+  const [selectedValue, setSelectedValue] = useState<string>('option01');
+
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+  };
 
   // Table
   const data2: any[] = [
@@ -241,14 +247,14 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.radio_wrap}>
-                  <RadioGroup
+                  <RadioGroupFormField
                     options={[
                       { value: 'type1', label: '사용' },
                       { value: 'type2', label: '사용불가' },
                     ]}
                     defaultValue={'type1'}
-                    className={cn(formStyles.radio_box)}
                     disabled
+                    onValueChange={handleValueChange}
                   />
                 </div>
               </div>
