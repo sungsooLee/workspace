@@ -468,8 +468,6 @@ const detailConfig: DynamicFormConfig = {
       ],
       checkGroupConfig: {
         allCheck: true,
-        type: 'self',
-        codeGroup: CODE_GROUP.LANGUAGE_CODE,
       },
     },
     {
