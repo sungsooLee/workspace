@@ -214,7 +214,8 @@ function RouteComponent() {
                       type={'button'}
                       variant="gray"
                       size="sm"
-                      onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}>
+                      onClick={() => append({ 'user-age': '', 'user-name': '', 'user-hobby': '' })}
+                    >
                       추가
                     </Button>
                   </div>
@@ -251,7 +252,8 @@ function RouteComponent() {
                                 type={'button'}
                                 variant="gray"
                                 size="sm"
-                                onClick={() => remove(index)}>
+                                onClick={() => remove(index)}
+                              >
                                 삭제
                               </Button>
                             </td>
@@ -439,15 +441,17 @@ const detailConfig: DynamicFormConfig = {
     {
       name: 'check',
       type: 'checkbox',
-      checkLabel: '테넌트A',
       label: '체크박스',
       value: true,
+      checkConfig: {
+        label: '테넌트A',
+      },
     },
     {
       name: 'tenant',
       type: 'checkbox-group',
       label: '테넌트 선택',
-      value: ['tenantA'],
+      value: ['tenantA', 'tenantB', 'tenantC'],
       options: [
         {
           value: 'tenantA',
@@ -462,6 +466,9 @@ const detailConfig: DynamicFormConfig = {
           label: '테넌트 C',
         },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'lowerGubun',

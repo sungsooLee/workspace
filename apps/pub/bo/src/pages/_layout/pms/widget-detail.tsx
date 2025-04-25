@@ -14,12 +14,12 @@ import {
   // Button,
   ContentsRow,
   Input,
-  RadioGroup,
   Switch,
   Textarea,
   GridBox,
   CheckboxGroupFormField,
-  Table,
+  RadioGroupFormField,
+  TableBox,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/widget-detail')({
@@ -78,6 +78,12 @@ function RouteComponent() {
       enableGrouping: false,
     }),
   ] as ColumnDef<any, unknown>[];
+
+  const [selectedValue, setSelectedValue] = useState<string>('option01');
+
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+  };
 
   // Table
   const data2: any[] = [
@@ -241,14 +247,14 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.radio_wrap}>
-                  <RadioGroup
+                  <RadioGroupFormField
                     options={[
                       { value: 'type1', label: '사용' },
                       { value: 'type2', label: '사용불가' },
                     ]}
                     defaultValue={'type1'}
-                    className={cn(formStyles.radio_box)}
                     disabled
+                    onValueChange={handleValueChange}
                   />
                 </div>
               </div>
@@ -291,7 +297,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Table data={data2} columns={columns2} tableMode={true} />
+                <TableBox data={data2} columns={columns2} tableMode={true} />
               </div>
             </div>
           </ContentsRow>

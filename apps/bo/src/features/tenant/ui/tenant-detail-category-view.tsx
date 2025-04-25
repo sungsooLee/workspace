@@ -39,8 +39,7 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   const { data } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId || '');
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
   const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
     'none',

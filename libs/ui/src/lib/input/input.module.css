@@ -49,7 +49,7 @@
     @apply input_bo_1_r flex items-center text-[#747d91];
   }
   .time {
-    @apply input_bo_1_r flex items-center font-bold text-[#07287E];
+    @apply button_4_b flex items-center text-[#07287E];
   }
 }
 

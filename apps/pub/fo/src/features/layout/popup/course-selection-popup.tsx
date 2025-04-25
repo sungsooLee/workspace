@@ -6,9 +6,11 @@ import {
   ModalContainer,
   ModalTitle,
   ModalFooter,
-  Button,
 } from '@learnway/ui';
-import { IcoHeart, IcoShare } from '@learnway/icons';
+
+import {
+  CourseFixedButton, // 수강신청 버튼
+} from '../../../features/layout';
 
 import lectureStyles from '../../../pages/_layout/course-introduction/lecture.module.css';
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -16,9 +18,6 @@ import packageInformationStyles from '../../../pages/_layout/course-introduction
 import styles from './course-selection-popup.module.css';
 
 const CourseSelectionPopupComponent = () => {
-  // 찜
-  const [heart, setHeart] = useState(false);
-
   const [courseValues, setCourseValues] = useState<string>();
   const courseOptions = [
     {
@@ -100,24 +99,8 @@ const CourseSelectionPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <div
-          className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
-        >
-          <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-            <IcoHeart
-              width={20}
-              height={20}
-              stroke={heart === true ? '#ff4646' : '#4c515e'}
-              fill={heart === true ? '#ff4646' : 'none'}
-            />
-          </Button>
-          <Button>
-            <IcoShare width={20} height={20} stroke="#4c515e" />
-          </Button>
-          <div className={packageInformationStyles.course}>
-            <Button variant="primary">수강신청</Button>
-          </div>
-        </div>
+        {/* 찜/공유 수강신청 Button */}
+        <CourseFixedButton course={true} />
       </ModalFooter>
     </ModalContainer>
   );

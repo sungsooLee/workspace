@@ -1,10 +1,14 @@
-import { forwardRef, Fragment } from 'react';
+import { forwardRef, Fragment, useEffect, useState } from 'react';
 import { Checkbox } from '../../checkbox/checkbox';
 import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
 
 const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
-  ({ value = [], onChange, checkLabel: label, options = [], name, ...props }, ref) => {
+  (
+    { value = [], onChange, checkLabel: label, options = [], name, checkGroupConfig, ...props },
+    ref,
+  ) => {
+    const [allCheck, setAllCheck] = useState(false);
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
       let checkedValues = [...value];
       if (checked && !checkedValues.includes(checkedValue)) {
@@ -15,8 +19,29 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       }
       onChange(checkedValues);
     };
+    /**
+     * 전체 체크/해제
+     * @param checked
+     */
+    const handleAllCheckChange = (checked: boolean) => {
+      if (checked) {
+        onChange(options.map((option: any) => option.value));
+      } else {
+        onChange([]);
+      }
+    };
+    useEffect(() => {
+      if (value.length === options.length) {
+        setAllCheck(true);
+      } else {
+        setAllCheck(false);
+      }
+    }, [value]);
     return (
       <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
+        {checkGroupConfig.allCheck && (
+          <Checkbox checked={allCheck} label={'전체'} onCheckedChange={handleAllCheckChange} />
+        )}
         {options &&
           options.map((item: any) => (
             <Fragment key={item.value}>

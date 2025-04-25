@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useWatch } from 'react-hook-form';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -12,22 +13,22 @@ import {
 import { SearchBox } from '../../../shared/ui/search-box';
 import { t } from 'i18next';
 import { Button, ContentsRow, DynamicFormField, Input } from '@learnway/ui';
-import { FormRow } from '../../../shared/ui/form';
+import { FormInfoArea, FormRow, FormGuideText } from '@shared/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { FormDisplay } from '../../../features/form/ui/form-display';
 import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
 import { buildJodObject } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';
-import React, { forwardRef } from 'react';
-import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
+import React, { forwardRef, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, onFormChange, onFormValid } = useDynamicForm(formConfig);
-
+  const { provider, onSubmit, onFormChange, onFormValid, control } = useDynamicForm(formConfig);
+  const isExternalCompanyInfo = useWatch({ control, name: 'isExternalCompanyInfo' });
+  const [isDisable, setDisable] = useState(false);
   const onHandleSubmit = (data: any) => {
     console.log('search config1 data => ', data);
   };
@@ -75,7 +76,10 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <FormInfoArea>
-                <Button variant={'primary'}>인포영역</Button>
+                {isDisable ? '비활성화' : '활성화'}
+                <Button variant={'primary'} onClick={() => setDisable((prev) => !prev)}>
+                  인포영역
+                </Button>
               </FormInfoArea>
               <DynamicFormField name={'channelId'} />
             </FormRow>
@@ -83,6 +87,11 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'isExternalCompanyInfo'} />
+              {/*  <FormGuideText>
+              {isExternalCompanyInfo
+                  ? '외부 업체 정보 가이드 텍스트 원본 '
+                  : '외부 업체 정보 가이드 텍스트 변경됨'}
+              </FormGuideText>*/}
             </FormRow>
           </ContentsRow>
           <FormDisplay
@@ -103,6 +112,30 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'subtitles'}>
                 <SubTitlesFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -203,9 +236,14 @@ const formConfig: DynamicFormConfig = {
     {
       label: '외부업체정보여부',
       name: 'isExternalCompanyInfo',
+      guideText: '외부 업체 정보 가이드 텍스트',
       type: 'switch',
       format: 'boolean', // 기본 string
       value: false,
+      switchConfig: {
+        label: 'dddd',
+        guideText: (value: boolean) => (value ? '참' : '거짓'),
+      },
     },
     {
       label: '외부 업체명',

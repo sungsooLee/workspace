@@ -15,7 +15,6 @@
     }
   }
   .body {
-    @apply rounded-[16px] px-[24px] py-[16px];
     .col {
     }
     &.line {
@@ -24,11 +23,8 @@
     &.fill {
       @apply bg-transparent;
     }
-    &.secondary {
-      @apply border border-solid border-[var(--secondary4)] bg-[var(--secondary5)];
-    }
-    &.gray {
-      @apply border border-solid border-[var(--gray5)] bg-[var(--gray1)];
+    &.rounded {
+      @apply rounded-[8px] border border-solid border-[var(--gray5)];
     }
   }
 }

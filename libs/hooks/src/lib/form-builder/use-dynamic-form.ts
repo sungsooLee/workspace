@@ -197,9 +197,9 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    *
    * @param data - 서버에서 받아온 데이터
    */
-  const fetchData = (data: Record<string, any>) => {
-    reset(data);
-    setOriginalValues(data);
+  const fetchData = (data?: Record<string, any>) => {
+    reset(data || defaultValues);
+    setOriginalValues(data || defaultValues);
   };
 
   // control 확장: 기본 control에 isFieldRequired 메서드 추가

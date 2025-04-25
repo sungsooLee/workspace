@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';

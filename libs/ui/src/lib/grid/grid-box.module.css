@@ -145,6 +145,9 @@
     .btn_setting {
       @apply text-[var(--gray9)];
     }
+    .button_info {
+      @apply flex items-center;
+    }
     &:empty {
       @apply !hidden;
     }

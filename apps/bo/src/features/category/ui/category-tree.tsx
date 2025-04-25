@@ -9,7 +9,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
 } from '@learnway/ui';
 
 // 컴포넌트 정의
@@ -125,7 +125,7 @@ const CategoryTreeComponent: FC<any> = ({
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView2
+          <TreeView
             data={treeData}
             treeId={'1'}
             expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키

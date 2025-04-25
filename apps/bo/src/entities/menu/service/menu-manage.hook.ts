@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
@@ -18,6 +18,7 @@ export function useMenuManageDetail(menuId: string, enabled?: boolean) {
     ...queryOptions.detail(menuId),
     // menuId가 유효한 경우에만 쿼리 활성화
     enabled: !!menuId,
+    placeholderData: keepPreviousData,
   });
 }
 

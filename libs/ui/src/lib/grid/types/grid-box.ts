@@ -142,6 +142,12 @@ export interface GridBoxProps<T extends object = object>
   showDeleteAll?: boolean;
 
   /**
+   * 추가 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 전체 추가 버튼이 표시됩니다.
+   */
+  showAdd?: boolean;
+
+  /**
    * 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역)
    */
   titleCustomNode?: React.ReactNode;
@@ -155,6 +161,11 @@ export interface GridBoxProps<T extends object = object>
    * override GridProps
    */
   data?: T[];
+
+  /**
+   * 추가 버튼 클릭 핸들러
+   */
+  onAddClick?: () => void;
 
   /**
    * Show RowIndex

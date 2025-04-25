@@ -39,7 +39,6 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      order: '1',
       sort: '서비스 기술교육',
       spot: 'Cell Text',
       useable: 'Y',
@@ -61,7 +60,6 @@ function RouteComponent() {
       modifier: '김현대',
     },
     {
-      order: '2',
       sort: '서비스 기술교육',
       spot: 'Cell Text',
       useable: 'Y',
@@ -87,17 +85,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('order', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
     columnHelper.accessor('sort', {
       cell: (info) => info.getValue(),
       header: '구분',
@@ -262,6 +249,7 @@ function RouteComponent() {
                 height={440}
                 showColumnSettings={false}
                 showExcelDownload={true}
+                showNumberingColumn={true}
                 pagination={{
                   pageSize,
                   pageIndex,

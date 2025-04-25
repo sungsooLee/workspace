@@ -56,30 +56,6 @@
   }
 }
 
-.course_btn_wrap {
-  @apply flex w-full gap-[8px] bg-white;
-  button {
-    @apply flex h-[48px] flex-1 justify-center border-[1px] border-solid border-[var(--gray5)] text-center;
-    & + button {
-      @apply !ml-0;
-    }
-    svg {
-      @apply mx-auto;
-    }
-  }
-  &.course_box {
-    button {
-      @apply !min-w-auto flex !w-[48px] !flex-none justify-center;
-    }
-    .course {
-      @apply flex !flex-1;
-      button {
-        @apply !w-full;
-      }
-    }
-  }
-}
-
 :global(body.mobile) {
   @screen mobile {
     .start {
@@ -109,9 +85,6 @@
           @apply mt-0;
         }
       }
-    }
-    .course_btn_wrap {
-      @apply relative z-[1] mt-0 translate-y-0 pb-0 pt-[8px];
     }
   }
 }
