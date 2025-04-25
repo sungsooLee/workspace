@@ -26,7 +26,7 @@ import {
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
-export const Route = createFileRoute('/_layout/platform/tenant/')({
+export const Route = createFileRoute('/_layout/tenant/')({
   component: RouteComponent,
 });
 
