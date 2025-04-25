@@ -139,8 +139,11 @@ const GridComponent = forwardRef(
       // 넘버링 컬럼 생성
       const createNumberingColumn = (): ColumnDef<T> => ({
         id: 'numbering',
-        size: 50,
+        size: 64,
         header: 'NO.',
+        meta: {
+          cellAlign: 'center',
+        },
         cell: ({ row }: any) =>
           pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
       });

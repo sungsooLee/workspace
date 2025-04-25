@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch, IcoInfoCircle } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { Button, GridBox, Input, Dropdown } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 
-export const Route = createFileRoute('/_layout/pms/menu-education-location-management')({
+import { Button, GridBox, Dropdown, DatePicker, Input } from '@learnway/ui';
+
+export const Route = createFileRoute('/_layout/pms/menu-channel-management')({
   component: RouteComponent,
 });
 
@@ -39,115 +40,125 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      sort: '서비스 기술교육',
-      spot: 'Cell Text',
-      useable: 'Y',
-      reservation: 'N',
-      companyOwner: '담당자명',
-      map: (
-        <Link to={'/'} className="link">
-          약도보기
-        </Link>
-      ),
-      link: (
-        <Button size={'xs'} className="link_icon" onlyIcon>
-          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+      order: '1',
+      applyId: 'IA000000',
+      tenantSetting: '테넌트명',
+      channelName: '채널명채널명채널명채널명',
+      type: '공개',
+      proposer: '김현대',
+      companyName: '회사명',
+      organizationName: '조직명',
+      applyStatus: '조직명',
+      applyDate: '2025-01-01 07:12',
+      receiptID: (
+        <Button size={'xs'} className="link">
+          {'IS0000000'}
         </Button>
       ),
-      registerDate: '2025-01-01 07:12',
-      registerOwner: '김현대',
-      modificationDate: '2025-01-01 07:12',
-      modifier: '김현대',
-    },
-    {
-      sort: '서비스 기술교육',
-      spot: 'Cell Text',
-      useable: 'Y',
-      reservation: 'N',
-      companyOwner: '담당자명',
-      map: (
-        <Button className="link" disabled>
-          약도보기
-        </Button>
-      ),
-      link: (
-        <Button size={'xs'} className="link_icon" onlyIcon>
-          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
-        </Button>
-      ),
-      registerDate: '2025-01-01 07:12',
-      registerOwner: '김현대',
-      modificationDate: '2025-01-01 07:12',
-      modifier: '김현대',
+      mailSend: 'N',
+      channelStatus: '사용',
+      owner: '김현대',
+      receiptDate: '2025-01-01 07:12',
     },
   ];
 
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('sort', {
+    columnHelper.accessor('order', {
       cell: (info) => info.getValue(),
-      header: '구분',
-      enableGrouping: false,
-      size: 200,
-    }),
-    columnHelper.accessor('spot', {
-      cell: (info) => info.getValue(),
-      header: '장소 명',
-      size: 300,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('useable', {
-      cell: (info) => info.getValue(),
-      header: '사용가능',
-      size: 90,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('reservation', {
-      cell: (info) => info.getValue(),
-      header: '예약가능',
-      size: 90,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('map', {
-      cell: (info) => info.getValue(),
-      header: '약도',
-      size: 90,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('link', {
-      cell: (info) => info.getValue(),
-      header: '링크',
-      size: 90,
-      enableGrouping: false,
+      header: 'NO.',
+      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+      size: 64,
       meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
+        headerAlign: 'left',
+        cellAlign: 'center',
       },
-    }),
-    columnHelper.accessor('registerDate', {
-      cell: (info) => info.getValue(),
-      header: '최초등록일시',
       enableGrouping: false,
-      size: 190,
     }),
-    columnHelper.accessor('registerOwner', {
+    columnHelper.accessor('applyId', {
       cell: (info) => info.getValue(),
-      header: '최초등록자',
+      header: '신청ID',
       enableGrouping: false,
+      size: 94,
+    }),
+    columnHelper.accessor('tenantSetting', {
+      cell: (info) => info.getValue(),
+      header: '테넌트설정',
       size: 100,
-    }),
-    columnHelper.accessor('modificationDate', {
-      cell: (info) => info.getValue(),
-      header: '최종수정일시',
       enableGrouping: false,
-      size: 190,
     }),
-    columnHelper.accessor('modifier', {
+    columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
-      header: '최종수정자',
+      header: '채널명',
+      size: 200,
       enableGrouping: false,
-      size: 100,
+    }),
+    columnHelper.accessor('type', {
+      cell: (info) => info.getValue(),
+      header: '유형',
+      size: 60,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('proposer', {
+      cell: (info) => info.getValue(),
+      header: '신청자명',
+      size: 80,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: '회사명',
+      size: 108,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('organizationInfo', {
+      cell: (info) => info.getValue(),
+      header: '조직정보',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyStatus', {
+      cell: (info) => info.getValue(),
+      header: '신청상태',
+      enableGrouping: false,
+      size: 80,
+    }),
+    columnHelper.accessor('applyDate', {
+      cell: (info) => info.getValue(),
+      header: '신청일시',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('receiptID', {
+      cell: (info) => info.getValue(),
+      header: '접수ID',
+      size: 110,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('mailSend', {
+      cell: (info) => info.getValue(),
+      header: '메일발송',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('channelStatus', {
+      cell: (info) => info.getValue(),
+      header: '채널상태',
+      enableGrouping: false,
+      size: 90,
+    }),
+    columnHelper.accessor('owner', {
+      cell: (info) => info.getValue(),
+      header: '김현대',
+      enableGrouping: false,
+      size: 104,
+    }),
+    columnHelper.accessor('receiptDate', {
+      cell: (info) => info.getValue(),
+      header: '접수/반려일시',
+      enableGrouping: false,
+      size: 120,
     }),
   ] as ColumnDef<any, unknown>[];
   return (
@@ -161,8 +172,8 @@ function RouteComponent() {
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-sort" className={searchStyles.label}>
-                        <span className={searchStyles.text}>구분</span>
+                      <label htmlFor="name-tenant" className={searchStyles.label}>
+                        <span className={searchStyles.text}>테넌트</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -177,8 +188,8 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-useable" className={searchStyles.label}>
-                        <span className={searchStyles.text}>사용가능</span>
+                      <label htmlFor="name-applyStatus" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -190,11 +201,31 @@ function RouteComponent() {
                         />
                       </div>
                     </div>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-proposer" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input id="name-proposer" type="text" placeholder="입력" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={searchStyles.item_wrap}>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>회사 담당자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <DatePicker displayType={'day'} size={'md'} />
+                      </div>
+                    </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-reservation" className={searchStyles.label}>
-                        <span className={searchStyles.text}>예약가능</span>
+                      <label htmlFor="name-channel" className={searchStyles.label}>
+                        <span className={searchStyles.text}>채널상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -204,16 +235,6 @@ function RouteComponent() {
                           variant="default"
                           size={'sm'}
                         />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={searchStyles.inner}>
-                    <div className={searchStyles.item}>
-                      <label htmlFor="name-spot" className={searchStyles.label}>
-                        <span className={searchStyles.text}>장소 명</span>
-                      </label>
-                      <div className={searchStyles.box}>
-                        <Input id="name-spot" type="text" placeholder="입력" />
                       </div>
                     </div>
                   </div>
@@ -248,8 +269,8 @@ function RouteComponent() {
                 columns={columns}
                 height={440}
                 showColumnSettings={false}
-                showExcelDownload={true}
-                showNumberingColumn={true}
+                multiple
+                guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
                 pagination={{
                   pageSize,
                   pageIndex,
@@ -257,7 +278,13 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
-                title="교육장소 목록"
+                customButtonNode={
+                  <>
+                    <Button variant="text" size="sm" label={'접수'} />
+                    <Button variant="text" size="sm" label={'반려'} />
+                  </>
+                }
+                title="신청 목록"
               />
             </div>
           </div>

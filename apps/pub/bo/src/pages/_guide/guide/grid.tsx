@@ -353,6 +353,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
           columns={columns}
           multiple
           showSelectedCount={true}
+          showNumberingColumn={true}
           pagination={{
             pageSize,
             pageIndex,

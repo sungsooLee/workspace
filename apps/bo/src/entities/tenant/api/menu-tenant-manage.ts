@@ -1,15 +1,18 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-export default class MenuTenantManageService {
+export default class TenantMenuManageService {
   /**
    * 터넨트 메뉴 수정
    * @param tenantMappingMenuId
    * @param payload
    * @returns
    */
-  static updateMenuTenant(tenantMappingMenuId: string, payload: any): Promise<any> {
-    return httpService.put<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`, payload);
+  static updateMenuTenant(payload: any): Promise<any> {
+    return httpService.put<any>(
+      `${PMSApiPrefix()}/menus/tenant/${payload.tenantMappingMenuId}`,
+      payload.menuData,
+    );
   }
 
   /**
@@ -17,8 +20,8 @@ export default class MenuTenantManageService {
    * @param tenantMappingMenuId
    * @returns
    */
-  static deleteMenuTenant(tenantMappingMenuId: string): Promise<any> {
-    return httpService.delete<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`);
+  static deleteMenuTenant(payload: any): Promise<any> {
+    return httpService.delete<any>(`${PMSApiPrefix()}/menus/tenant/${payload.tenantMappingMenuId}`);
   }
 
   /**
