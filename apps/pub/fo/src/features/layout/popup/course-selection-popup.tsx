@@ -6,7 +6,10 @@ import {
   ModalContainer,
   ModalTitle,
   ModalFooter,
+  Panel,
 } from '@learnway/ui';
+
+import { IcoCaution, IcoClock01 } from '@learnway/icons';
 
 import {
   CourseFixedButton, // 수강신청 버튼
@@ -63,6 +66,20 @@ const CourseSelectionPopupComponent = () => {
       <ModalTitle>{'차수선택'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_selection}`}>
+          {/* 수강 신청 차수 없을 시 */}
+          <div className={styles.result_box}>
+            <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+            <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+          </div>
+
+          {/* 인원마감/대기신청 */}
+          <div className={styles.result_box}>
+            <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
+            <strong>오전 10:00 수강신청이 시작됩니다!</strong>
+            <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+          </div>
+
+          {/* 강의 정보 */}
           <OptionCard
             className={packageInformationStyles.course_card}
             cols={1}
