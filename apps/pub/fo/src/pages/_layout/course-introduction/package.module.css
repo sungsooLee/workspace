@@ -107,7 +107,7 @@
     .sub_box {
       @apply scrollbar max-h-[700px] overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
       .course_btn_wrap {
-        @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] p-[24px];
+        @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] bg-white p-[24px];
       }
     }
   }

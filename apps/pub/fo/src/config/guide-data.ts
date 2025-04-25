@@ -1320,6 +1320,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1000',
@@ -1494,6 +1495,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1025',

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Tabs, useModal, Textarea } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoArrowDown } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -9,7 +9,7 @@ import {
   CourseDashboard,
   CourseIntroduction,
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
-  CourseSelectionPopup, // 차수선택 팝업
+  CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -30,9 +30,6 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
-
-  // 찜
-  const [heart, setHeart] = useState(false);
 
   // 패키지 자세한 정보 아코디언
   const [packageInformation, setPackageInformation] = useState(true);
@@ -238,75 +235,8 @@ function RouteComponent() {
       {/* button fix */}
       <MobileView>
         <MobileContainerFooter>
-          {/* 수강신청 없는 case */}
-          {/* button */}
-          {/* <div className={`${packageInformationStyles.course_btn_wrap}`}>
-            <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-              <IcoHeart
-                width={20}
-                height={20}
-                stroke={heart === true ? '#ff4646' : '#4c515e'}
-                fill={heart === true ? '#ff4646' : 'none'}
-              />
-            </Button>
-            <Button>
-              <IcoShare width={20} height={20} stroke="#4c515e" />
-            </Button>
-          </div> */}
-
-          {/* 수강신청 못하는 case */}
-          {/* <div
-            className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
-          >
-            <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-              <IcoHeart
-                width={20}
-                height={20}
-                stroke={heart === true ? '#ff4646' : '#4c515e'}
-                fill={heart === true ? '#ff4646' : 'none'}
-              />
-            </Button>
-            <Button>
-              <IcoShare width={20} height={20} stroke="#4c515e" />
-            </Button>
-            <div className={packageInformationStyles.course}>
-              <Button variant="line" onClick={() => CourseTimeAlert()}>
-                차수개설 알림신청
-              </Button>
-            </div>
-          </div> */}
-
-          {/* 수강신청 있는 case */}
-          <div
-            className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
-          >
-            <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-              <IcoHeart
-                width={20}
-                height={20}
-                stroke={heart === true ? '#ff4646' : '#4c515e'}
-                fill={heart === true ? '#ff4646' : 'none'}
-              />
-            </Button>
-            <Button>
-              <IcoShare width={20} height={20} stroke="#4c515e" />
-            </Button>
-            <div className={packageInformationStyles.course}>
-              <Button
-                variant="primary"
-                onClick={() =>
-                  openModal({
-                    width: 'm_full',
-                    content: <CourseSelectionPopup />, // 차수선택 팝업
-                  })
-                }
-              >
-                수강신청
-              </Button>
-              {/* tip */}
-              <span className={packageInformationStyles.tip}>차수를 선택해주세요</span>
-            </div>
-          </div>
+          {/* 찜/공유 수강신청 Button */}
+          <CourseFixedButton course={true} />
         </MobileContainerFooter>
       </MobileView>
     </div>
