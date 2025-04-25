@@ -17,12 +17,12 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import {
-  findMenuPathById,
-  transformApiDataToTreeData,
-} from '@features/platform/menu/service/menu.service';
+import { transformApiDataToTreeData } from '@features/tenant/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
-import { useMenuTenantMappingTreeFetch } from '@entities/tenant/service/tenant-menu-manage.hook';
+import {
+  useMenuTenantMappingTreeFetch,
+  useCreateMenuTenant,
+} from '@entities/tenant/service/tenant-menu-manage.hook';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
@@ -39,6 +39,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
 
   const { data: menuDB, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScopeCode);
 
+  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {});
+
   const handleBaseMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
       setBaseMenuTreeExpandedKeys(keys);
@@ -50,9 +52,41 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     }
   };
 
-  const handleTargetAction = (payload: TreeEventPayload) => {
-    console.log(payload);
+  const handleTargetAction = async (event: any) => {
+    console.log(event);
+    switch (event.type) {
+      case 'NODE_COPY':
+        {
+          const reqBody: any = JSON.parse(JSON.stringify(event.sourceNode));
+          reqBody.tenantId = tenantId;
+          reqBody.menuScope = menuScopeCode;
+          reqBody.parentId = event.sourceNode.parentKey;
+          tentantMenuCreate(reqBody);
+        }
+        break;
+      default:
+        break;
+      //     onNodeClick(event.node);
+      //     break;
+      //   case 'NODE_MOVE': {
+      //     const nodeInfo = event;
+      //     if (nodeInfo.position === 'INSIDE') {
+      //       onNodeMove(
+      //         nodeInfo.sourceNode.menuId,
+      //         nodeInfo.targetNode?.menuId,
+      //         nodeInfo.targetIndex ? nodeInfo.targetIndex : 1,
+      //       );
+      //     } else {
+      //       const targetIndex = nodeInfo.targetIndex || 1;
+      //       onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
+      //     }
+
+      //     break;
+    }
+
+    // useCreateMenuTenant(payload.sourceNode, {});
   };
+
   const renderBaseSelectButtons = (node: TreeNode, level: number) => {
     return (
       <div className={'gap-10px flex'}>
