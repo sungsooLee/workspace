@@ -35,11 +35,6 @@ function RouteComponent() {
   // grid
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
-  const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
-  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
-  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
 
   const router = useRouter();
 
