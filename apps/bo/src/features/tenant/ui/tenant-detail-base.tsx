@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { useRouterState } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -44,6 +45,9 @@ import { ThumbnailUploaderFormField } from '@features/learning';
 import selectedImg from '@assets/images/thumb/img_thumb_default.jpg';
 
 const TenantDetailBaseComponent: FC<any> = () => {
+  const routerState = useRouterState();
+  const tenantId = routerState.location.state?.tenantId || '1';
+
   const { t } = useTranslation();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
