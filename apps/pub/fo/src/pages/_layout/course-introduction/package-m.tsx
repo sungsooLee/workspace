@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoArrowDown } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoArrowDown } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
