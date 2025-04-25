@@ -1,5 +1,19 @@
 .start {
   &.course_selection {
+    .result_box {
+      @apply px-[20px];
+
+      svg {
+        @apply mx-auto;
+      }
+      strong {
+        @apply body_3_b mt-[4px] block text-center leading-[22px] text-[var(--gray8)];
+      }
+      p {
+        @apply body_3_r mt-[4px] text-center leading-[22px] text-[var(--gray7)];
+      }
+    }
+
     & > div {
       & > div {
         @apply !p-0;

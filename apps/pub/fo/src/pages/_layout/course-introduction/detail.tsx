@@ -9,8 +9,9 @@ import {
   OptionCardItem,
   useModal,
   Textarea,
+  Panel,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoStar } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01 } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
@@ -312,14 +313,22 @@ function RouteComponent() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
-                {/* 강의 정보 없을 시 */}
-                <div className={styles.empty_box}>
-                  <EmptyText
-                    hideTitle
-                    size="lg"
-                    description={'현재 수강 신청 가능한 차수가 없습니다.'}
-                  />
-                </div>
+                {/* 수강 신청 차수 없을 시 */}
+                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                  <div>
+                    <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+                    <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+                  </div>
+                </Panel>
+
+                {/* 인원마감/대기신청 */}
+                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                  <div>
+                    <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
+                    <strong>오전 10:00 수강신청이 시작됩니다!</strong>
+                    <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+                  </div>
+                </Panel>
 
                 {/* 강의 정보 */}
                 <OptionCard

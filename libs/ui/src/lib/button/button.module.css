@@ -184,7 +184,7 @@
     @apply border-[1px] border-solid border-[var(--primary1)] text-[var(--primary1)];
   }
   &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[var(--gray5)];
+    @apply border-[1px] border-solid border-[var(--gray2)] bg-[var(--gray2)] text-[var(--gray6)];
   }
 }
 .text {
