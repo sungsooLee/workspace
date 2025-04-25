@@ -51,6 +51,9 @@
         @apply ml-[16px] flex h-[28px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
+    [class*='nlp--button'] {
+      @apply w-auto min-w-[45px];
+    }
   }
 
   /* notice */
