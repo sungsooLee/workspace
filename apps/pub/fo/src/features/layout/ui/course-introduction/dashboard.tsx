@@ -8,7 +8,7 @@ import statusStyles from './status.module.css';
 import { NoticeDetailPopup } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<null>(null);
   const options = [
     { value: 'option1', label: '1차 | 25-03-01 ~ 26-03-31' },
     { value: 'option2', label: '2차 | 25-03-01 ~ 26-03-31' },
@@ -39,41 +39,42 @@ const CourseDashboardCompoment = () => {
           options={options}
           value={selectedValues}
           onChange={(selected) => setSelectedValues(selected)}
-          placeholder="전체 차수보기"
+          placeholder="차수보기"
           variant="text"
           isMulti={false}
           size={'lg'}
           menu-portal-text
         />
       </div>
-      {/* 
-        학습전 : status_before 
-        학습중 : status_progress
-        학습완료 (이수) : status_completed
-        학습미완료 (미이수) : status_incomplete
-      */}
-      <div className={`${statusStyles.start} ${statusStyles.status_before}`}>
-        <div className={statusStyles.panel_degreey}>
-          <div className={statusStyles.list}>
-            <h3>
-              <span className={statusStyles.ico}>
-                <IcoMessageText />
-              </span>
-              이수
-            </h3>
-            <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
-          </div>
-        </div>
 
-        <div className={statusStyles.status_box}>
+      <div className={statusStyles.start}>
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.panel_degreey}>
+          <div className={statusStyles.list}>
+            <h3>이수</h3>
+            <div className={statusStyles.date_status}>
+              <div className={statusStyles.date_box}>
+                교육기간
+                <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374)</span>
+              </div>
+              <div className={statusStyles.date_box}>
+                남은학습기간
+                <span className={statusStyles.date}>D-27</span>
+              </div>
+            </div>
+          </div>
+        </Panel>
+
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_rate}>
           <div className={statusStyles.progress_rate}>
+            <h3>나의진도율</h3>
             <Progress value={progress} className={statusStyles.progress_bar} />
             <div className={statusStyles.info}>
-              <span className={statusStyles.txt}>진도율</span>
               <span className={statusStyles.progress}>{progress}%</span>
             </div>
           </div>
+        </Panel>
 
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.status_box}>
           <div className={statusStyles.status_list}>
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>출석 (40%)</span>
@@ -125,7 +126,7 @@ const CourseDashboardCompoment = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Panel>
       </div>
     </div>
   );
