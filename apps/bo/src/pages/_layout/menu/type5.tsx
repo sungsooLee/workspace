@@ -87,11 +87,11 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'isExternalCompanyInfo'} />
-              <FormGuideText>
-                {isExternalCompanyInfo
+              {/*  <FormGuideText>
+              {isExternalCompanyInfo
                   ? '외부 업체 정보 가이드 텍스트 원본 '
                   : '외부 업체 정보 가이드 텍스트 변경됨'}
-              </FormGuideText>
+              </FormGuideText>*/}
             </FormRow>
           </ContentsRow>
           <FormDisplay
@@ -112,6 +112,30 @@ function RouteComponent() {
             <FormRow provider={provider}>
               <DynamicFormField name={'subtitles'}>
                 <SubTitlesFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            {/*자막 목록*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'changeGuideText'}>
+                <ChangeGuidText />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -216,6 +240,9 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       format: 'boolean', // 기본 string
       value: false,
+      switchConfig: {
+        guideText: (value: boolean) => (value ? '참' : '거짓'),
+      },
     },
     {
       label: '외부 업체명',

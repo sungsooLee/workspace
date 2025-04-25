@@ -84,7 +84,6 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
                 })();
         }
       }
-      console.log('newOptions => ', newOptions, filterWatchedValue);
       if (
         filterWatchedValue &&
         optionsConfig?.filter &&
@@ -102,7 +101,6 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
     };
 
     useEffect(() => {
-      // console.log('watchedValue => ', watchedValue, name);
       init();
     }, [watchedValue, filterWatchedValue]);
 

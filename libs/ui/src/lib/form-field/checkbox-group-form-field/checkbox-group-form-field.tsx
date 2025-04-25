@@ -4,7 +4,10 @@ import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
 
 const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
-  ({ value = [], onChange, checkLabel: label, options = [], name, ...props }, ref) => {
+  (
+    { value = [], onChange, checkLabel: label, options = [], name, checkGroupConfig, ...props },
+    ref,
+  ) => {
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
       let checkedValues = [...value];
       if (checked && !checkedValues.includes(checkedValue)) {
@@ -15,6 +18,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       }
       onChange(checkedValues);
     };
+
     return (
       <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
         {options &&
