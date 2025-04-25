@@ -5,7 +5,7 @@ import {
   mutateOptions,
 } from './tenant-menu-manage.queries';
 
-export function useMenuTenantMangeFetchTrees(tenantId: string, deviceType: string) {
+export function useMenuTenantMappingTreeFetch(tenantId: string, deviceType: string) {
   return useQuery(queryOptions.tree(tenantId, deviceType));
 }
 

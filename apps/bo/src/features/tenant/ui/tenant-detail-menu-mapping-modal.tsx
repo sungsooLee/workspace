@@ -10,6 +10,7 @@ import {
   TreeContainer,
   TreeView,
   TreeNode,
+  TreeEventPayload,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
@@ -21,7 +22,7 @@ import {
   transformApiDataToTreeData,
 } from '@features/platform/menu/service/menu.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
-import { useMenuTenantMangeFetchTrees } from '@entities/tenant/service/tenant-menu-manage.hook';
+import { useMenuTenantMappingTreeFetch } from '@entities/tenant/service/tenant-menu-manage.hook';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
@@ -36,7 +37,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   console.log('menu Scope = ' + menuScopeCode);
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 
-  const { data: menuDB, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScopeCode);
+  const { data: menuDB, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScopeCode);
 
   const handleBaseMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
@@ -49,6 +50,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     }
   };
 
+  const handleTargetAction = (payload: TreeEventPayload) => {
+    console.log(payload);
+  };
   const renderBaseSelectButtons = (node: TreeNode, level: number) => {
     return (
       <div className={'gap-10px flex'}>
@@ -146,9 +150,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={layoutStyles.inner_contents}>
                   <TreeView
                     treeId="mapping-menu-tree"
-                    type={'SHUTTLE_LIST'}
+                    type={'DRAG_DROP'}
                     data={baseMenuTreeData}
-                    nodeButtons={renderBaseSelectButtons}
+                    // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}
                     expandedKeys={baseMenuTreeExpandedKeys}
                     onExpandedKeysChange={handleBaseMenuTreeExpandChange}
@@ -202,10 +206,10 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={layoutStyles.inner_contents}>
                   <TreeView
                     treeId="mapping-tenant-menu-tree"
-                    type={'SHUTTLE_LIST'}
+                    type={'DRAG_DROP'}
                     data={menuTreeData}
                     nodeButtons={renderMenuDeleteButtons}
-                    // selectedNode={selectedNode}
+                    onAction={handleTargetAction}
                     expandedKeys={menuTreeExpandedKeys}
                     onExpandedKeysChange={handleMenuTreeExpandChange}
                     // onSelectedNodeChange={handleSelectedNodeChange}

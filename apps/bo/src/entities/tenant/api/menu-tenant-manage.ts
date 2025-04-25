@@ -27,14 +27,14 @@ export default class TenantMenuManageService {
   /**
    *  터넨트 메뉴 트리 조회
    * @param tenantId 터넨트 ID
-   * @param deviceType  FO / BO
+   * @param menuScope  FO / BO
    * @returns
    */
-  static findMenuTenantTree(tenantId: string, deviceType: string): Promise<any> {
+  static findMenuTenantMappingTree(tenantId: string, menuScope: string): Promise<any> {
     // console.log(`${tenantId}  ${deviceType}`);
-    return httpService.get<any>(`${PMSApiPrefix()}/menus/tenantTree`, {
+    return httpService.get<any>(`${PMSApiPrefix()}/menus/tenantMappingTree`, {
       tenantId: tenantId,
-      deviceType: deviceType,
+      menuScope: menuScope,
     });
   }
 }
