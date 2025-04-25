@@ -428,6 +428,8 @@ function RouteComponent() {
                   >
                     수강신청
                   </Button>
+                  {/* tip */}
+                  <span className={packageInformationStyles.tip}>차수를 선택해주세요</span>
                 </div>
               </div>
             </div>

@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
@@ -12,7 +11,7 @@ import { cn } from '@learnway/shared';
 
 import {
   Button,
-  Grid,
+  GridBox,
   // Tooltip,
   // ThumbnailImageUpload,
   // ChipList,
@@ -287,11 +286,11 @@ function RouteComponent() {
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
-              <Grid
+              <GridBox
                 data={data}
                 columns={columns}
                 height={440}
-                hideColumnSettings={true}
+                showColumnSettings={false}
                 pagination={{
                   pageSize,
                   pageIndex,

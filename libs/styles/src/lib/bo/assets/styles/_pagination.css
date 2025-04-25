@@ -1,0 +1,22 @@
+/* _pagination.css */
+.nlp--pagination .nlp-pagination-button {
+  @apply !ml-[4px];
+  &:nth-child(1) {
+    @apply !ml-0;
+  }
+  &:nth-child(2) {
+    @apply !ml-0 !mr-[16px];
+  }
+  &:nth-child(3) {
+    @apply !ml-0;
+  }
+  &:nth-last-child(2) {
+    @apply !ml-[16px];
+  }
+  &:nth-last-child(1) {
+    @apply !ml-0;
+  }
+  &.selected {
+    @apply rounded-[4px] bg-[var(--gray7)] text-white;
+  }
+}

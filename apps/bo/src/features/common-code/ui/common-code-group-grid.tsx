@@ -79,19 +79,15 @@ const CommonCodeGroupGridComponent = ({
         title: '완료되었습니다.',
         content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
-
-      if (data) {
-        afterCreateOrUpdateCommonCodeGroup(data);
-      }
     },
     queryParams: {
       page,
       size,
-      sort: state.sort || '',
+      sort: state.sort,
       cdGroupId: state.cdGroupId,
       cdGroupName: state.cdGroupName,
       isUsed: state.isUsed,
-      cdName: state.cdName,
+      // cdName: state.cdName,
     },
   });
   const { update: updateCodeGroup } = useUpdateCommonCodGroup({
@@ -100,9 +96,14 @@ const CommonCodeGroupGridComponent = ({
         title: '완료되었습니다.',
         content: '요청하신 작업이 정상적으로 완료되었습니다.',
       });
-      if (data) {
-        afterCreateOrUpdateCommonCodeGroup(data);
-      }
+    },
+    queryParams: {
+      page,
+      size,
+      sort: state.sort,
+      cdGroupId: state.cdGroupId,
+      cdGroupName: state.cdGroupName,
+      isUsed: state.isUsed,
     },
   });
 
@@ -127,7 +128,7 @@ const CommonCodeGroupGridComponent = ({
         setFormMode(FORM_MODE.NONE);
         onFormChange(initCdGroup);
       }
-    }, 100);
+    }, 300);
   };
 
   const clearAllFormErrors = () => {
@@ -196,7 +197,13 @@ const CommonCodeGroupGridComponent = ({
         const createPayload = {
           ...formData,
         };
-        createCodeGroup(createPayload);
+        createCodeGroup(createPayload, {
+          onSuccess: async (data) => {
+            if (data) {
+              afterCreateOrUpdateCommonCodeGroup(data);
+            }
+          },
+        });
       }
     } else if (formMode === FORM_MODE.VIEW) {
       const isUpdate = await openConfirm({
@@ -208,7 +215,13 @@ const CommonCodeGroupGridComponent = ({
         const updatePayload = {
           ...formData,
         };
-        updateCodeGroup(updatePayload);
+        updateCodeGroup(updatePayload, {
+          onSuccess: async (data) => {
+            if (data) {
+              afterCreateOrUpdateCommonCodeGroup(data);
+            }
+          },
+        });
       }
     }
   };
@@ -216,9 +229,7 @@ const CommonCodeGroupGridComponent = ({
   // 데이터가 로드되면 폼에 채우기
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
-      console.log('Filling form with data:', detailData);
       fetchData(detailData);
-      // 데이터 처리 완료 표시
       setDataProcessed(true);
     }
   }, [detailData, isLoading, formMode, dataProcessed]);
@@ -226,7 +237,6 @@ const CommonCodeGroupGridComponent = ({
   // 선택된 행이 변경되면 데이터 처리 플래그 초기화
   useEffect(() => {
     if (selectedRow) {
-      console.log(selectedRow);
       setDataProcessed(false);
     }
   }, [selectedRow?.cdGroupId]);
@@ -235,8 +245,6 @@ const CommonCodeGroupGridComponent = ({
   const isFormDisabled = formMode === FORM_MODE.NONE;
 
   const handleStateChange = (newState: GridState) => {
-    console.log(newState);
-    // 상위 컴포넌트로 상태 전달
     if (onStateChange) {
       onStateChange(newState);
     }
@@ -254,7 +262,6 @@ const CommonCodeGroupGridComponent = ({
               height={350}
               showTotalCount={true}
               title={t('공통코드그룹목록')}
-              hideColumnSettings={true}
               pagination={{
                 pageIndex: page,
                 pageSize: size,
@@ -262,10 +269,11 @@ const CommonCodeGroupGridComponent = ({
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,
               }}
-              columnPinning={{ columns: ['cdGroupId', 'cdGroupName'] }}
+              columnPinning={{ columns: ['numbering', 'cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}
               emptyMessage="조회 결과가 없습니다."
               onStateChange={handleStateChange}
+              showNumberingColumn={true}
             />
           </div>
         </div>
@@ -324,7 +332,7 @@ const CommonCodeGroupGridComponent = ({
               </ContentsRow>
 
               <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-                <ContentsHistoryInfoFormField type={'column'} />
+                {formMode === FORM_MODE.VIEW && <ContentsHistoryInfoFormField type={'column'} />}
               </ContentsRow>
             </div>
           </form>
@@ -388,16 +396,16 @@ const columns = (router: any) => {
     columnHelper.accessor('cdGroupId', {
       cell: (info) => info.getValue(),
       enablePinning: true,
-      header: '코드그룹번호',
+      header: '그룹코드',
     }),
     columnHelper.accessor('cdGroupName', {
       cell: (info) => info.getValue(),
       enablePinning: true,
-      header: '코드그룹명',
+      header: '그룹 명',
     }),
     columnHelper.accessor('cdGroupAbbreviatonEnglishName', {
       cell: (info) => info.getValue(),
-      header: '코드그룹 약어영문',
+      header: '그룹 명 약어 영문',
     }),
     columnHelper.accessor('isUsed', {
       cell: (info) => {
@@ -405,10 +413,10 @@ const columns = (router: any) => {
       },
       header: '사용',
     }),
-    columnHelper.accessor('cdGroupContent', {
-      cell: (info) => info.getValue(),
-      header: '내용',
-    }),
+    // columnHelper.accessor('cdGroupContent', {
+    //   cell: (info) => info.getValue(),
+    //   header: '내용',
+    // }),
     columnHelper.accessor('cmCd', {
       cell: (info) => {
         return (
@@ -437,21 +445,21 @@ const columns = (router: any) => {
       enableSorting: false,
     }),
 
-    columnHelper.accessor('createdDate', {
-      cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-      header: '최초등록 일자',
-    }),
-    columnHelper.accessor('createdBy', {
-      cell: (info) => info.getValue(),
-      header: '최초등록자',
-    }),
+    // columnHelper.accessor('createdDate', {
+    //   cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    //   header: '최초등록 일자',
+    // }),
+    // columnHelper.accessor('createdBy', {
+    //   cell: (info) => info.getValue(),
+    //   header: '최초등록자',
+    // }),
     columnHelper.accessor('modifiedDate', {
       cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
       header: '최종수정 일자',
     }),
-    columnHelper.accessor('lastModifiedBy', {
-      cell: (info) => info.getValue(),
-      header: '최종수정자',
-    }),
+    // columnHelper.accessor('lastModifiedBy', {
+    //   cell: (info) => info.getValue(),
+    //   header: '최종수정자',
+    // }),
   ];
 };

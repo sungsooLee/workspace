@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Table } from '@learnway/ui';
+import { TableBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_guide/guide/table')({
@@ -55,7 +55,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Table } from '@learnway/ui';
+import { TableBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const columnHelper = createColumnHelper<any>();
@@ -95,7 +95,7 @@ const columns = [
 ] as ColumnDef<any, unknown>[];
 
 
-  <Table
+  <TableBox
   data={data}
   columns={columns}
   tableMode={true}
@@ -106,7 +106,7 @@ const columns = [
       </div>
       <div className="group">
         <h3 className="guide_tit3">Table basic</h3>
-        <Table data={data} columns={columns} tableMode={true} />
+        <TableBox data={data} columns={columns} tableMode={true} />
       </div>
     </div>
   );

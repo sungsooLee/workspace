@@ -6,14 +6,14 @@ body main {
   @apply !max-w-[100vw];
   [class*='content_wrap'] {
     & > div {
-      @apply !max-w-[calc(100vw-77px)];
+      @apply !max-w-[calc(100vw-80px)];
       & > div {
-        @apply !max-w-[calc(100vw-157px)];
+        @apply !max-w-[calc(100vw-144px)];
       }
     }
   }
   [class*='nlp--contents-row'] [class*='grid_wrap'] {
-    @apply !max-w-[calc(100vw-157px)];
+    @apply !max-w-[calc(100vw-144px)];
   }
 }
 .lnb-open main {
@@ -53,7 +53,7 @@ body.scrolled {
       .scroll_inner {
         @apply relative !min-h-[calc(100vh-90px)];
         .title_wrap {
-          @apply z-[1];
+          @apply z-[2];
           &::before {
             @apply absolute -bottom-[1px] left-0 z-[0] h-[2px] w-full bg-[url('../../assets/images/common/bg_sticky_line.png')] bg-[auto_2px] bg-[position:left_center] bg-repeat-x content-[''];
           }

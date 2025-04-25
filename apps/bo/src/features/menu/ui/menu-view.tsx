@@ -178,6 +178,7 @@ const MenuViewComponent: FC<any> = ({
           menuId: selectedNode.menuId,
           menuCode: node.code,
           parentId: node.parentKey,
+          menuName: node.title,
           isDeleted: false,
           hiddenYn: node.hiddenYn,
           isUsed: true,
@@ -188,12 +189,6 @@ const MenuViewComponent: FC<any> = ({
           sortOrder: 1,
           path: node.url,
           menuScope: menuScope,
-          translations: [
-            {
-              locale: 'ko',
-              translation: node.title,
-            },
-          ],
           apiMappingMenuList: apiMappingKeys,
         };
 
@@ -226,12 +221,7 @@ const MenuViewComponent: FC<any> = ({
       sortOrder: 1,
       path: node.url,
       menuScope: menuScope,
-      translations: [
-        {
-          locale: 'ko', //TODO: 현재 선택된 locale값 들어가게 변경해야됨.
-          translation: node.title,
-        },
-      ],
+      menuName: node.title,
       apiMappingMenuList: apiMappingKeys,
     };
     console.log(tmpData);
@@ -388,6 +378,7 @@ const MenuViewComponent: FC<any> = ({
                   codeCheckState={codeCheckState}
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
+                  menuScope={menuScope}
                 />
               </DynamicFormField>
             </FormRow>
@@ -438,9 +429,8 @@ const MenuViewComponent: FC<any> = ({
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
-                  hideColumnSettings={true}
                   title={t('API')}
-                  renderButtons={
+                  customButtonNode={
                     <Button
                       variant="text"
                       onClick={() => handleApiMapping()}

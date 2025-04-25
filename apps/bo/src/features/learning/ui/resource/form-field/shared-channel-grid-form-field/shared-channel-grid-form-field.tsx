@@ -90,13 +90,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
           onClick={handleChannelModalButtonClick}
         />
       </div>
-      <GridBox
-        data={value}
-        columns={columns}
-        showTotalCount={false}
-        hideColumnSettings
-        onChange={handleGridChange}
-      />
+      <GridBox data={value} columns={columns} showTotalCount={false} onChange={handleGridChange} />
     </div>
   );
 });

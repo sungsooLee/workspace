@@ -42,7 +42,11 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <div className={cn(styles.start, styles.container)}>
+        <div className={cn(styles.container_inner, 'container_inner')}>
+          <main>{children}</main>
+        </div>
+      </div>
     </>
   );
 }

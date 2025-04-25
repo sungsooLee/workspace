@@ -1,5 +1,4 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { z } from '@learnway/shared';
 import { Button, DynamicFormField, useModal } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
@@ -29,7 +28,7 @@ function RouteComponent() {
   const handleOnSubmit = (data: any) => {
     openAlert({
       title: <></>,
-      description: <>다국어를 저장하시겠습니까?</>,
+      content: <>다국어를 저장하시겠습니까?</>,
 
       onClose: (result: boolean) => {
         // console.log(result);

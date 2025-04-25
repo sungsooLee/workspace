@@ -153,7 +153,7 @@ const RoleInfoComponent: FC<{}> = ({}) => {
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
-        label={'역할 목록'}
+        label={'역할 정보'}
         actionNode={
           <>
             <Button label={'초기화'} variant={'text'} size={'sm'} className="btn_text" disabled />

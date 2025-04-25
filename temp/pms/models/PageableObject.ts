@@ -6,8 +6,8 @@ import type { org_springdoc_core_converters_models_SortObject } from './org_spri
 export type PageableObject = {
     offset?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    paged?: boolean;
     pageSize?: number;
+    paged?: boolean;
     pageNumber?: number;
     unpaged?: boolean;
 };

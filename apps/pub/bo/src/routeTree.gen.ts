@@ -63,6 +63,8 @@ import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-p
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
 import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
+import { Route as LayoutPmsMenuChannelManagementImport } from './pages/_layout/pms/menu-channel-management'
+import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_layout/pms/menu-channel-detail-management'
 import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -81,6 +83,7 @@ import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/c
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
+import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
@@ -453,6 +456,20 @@ const LayoutPmsMenuEducationLocationManagementRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutPmsMenuChannelManagementRoute =
+  LayoutPmsMenuChannelManagementImport.update({
+    id: '/pms/menu-channel-management',
+    path: '/pms/menu-channel-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuChannelDetailManagementRoute =
+  LayoutPmsMenuChannelDetailManagementImport.update({
+    id: '/pms/menu-channel-detail-management',
+    path: '/pms/menu-channel-detail-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsLanguagemanagementRoute =
   LayoutPmsLanguagemanagementImport.update({
     id: '/pms/language_management',
@@ -571,6 +588,12 @@ const LayoutCommonPopCategorySelectRoute =
     path: '/common/pop-category-select',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const GuideGuideWordWrapRoute = GuideGuideWordWrapImport.update({
+  id: '/guide/word-wrap',
+  path: '/guide/word-wrap',
+  getParentRoute: () => GuideRoute,
+} as any)
 
 const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
   id: '/guide/typography',
@@ -1358,6 +1381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTypographyImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/word-wrap': {
+      id: '/_guide/guide/word-wrap'
+      path: '/guide/word-wrap'
+      fullPath: '/guide/word-wrap'
+      preLoaderRoute: typeof GuideGuideWordWrapImport
+      parentRoute: typeof GuideImport
+    }
     '/_layout/common/pop-category-select': {
       id: '/_layout/common/pop-category-select'
       path: '/common/pop-category-select'
@@ -1482,6 +1512,20 @@ declare module '@tanstack/react-router' {
       path: '/pms/language_management'
       fullPath: '/pms/language_management'
       preLoaderRoute: typeof LayoutPmsLanguagemanagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-channel-detail-management': {
+      id: '/_layout/pms/menu-channel-detail-management'
+      path: '/pms/menu-channel-detail-management'
+      fullPath: '/pms/menu-channel-detail-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelDetailManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-channel-management': {
+      id: '/_layout/pms/menu-channel-management'
+      path: '/pms/menu-channel-management'
+      fullPath: '/pms/menu-channel-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelManagementImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/menu-education-location-management': {
@@ -1744,6 +1788,7 @@ interface GuideRouteChildren {
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTreeViewRoute: typeof GuideGuideTreeViewRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
+  GuideGuideWordWrapRoute: typeof GuideGuideWordWrapRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
 }
 
@@ -1792,6 +1837,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTreeViewRoute: GuideGuideTreeViewRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
+  GuideGuideWordWrapRoute: GuideGuideWordWrapRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
 }
 
@@ -1819,6 +1865,8 @@ interface LayoutRouteChildren {
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
+  LayoutPmsMenuChannelDetailManagementRoute: typeof LayoutPmsMenuChannelDetailManagementRoute
+  LayoutPmsMenuChannelManagementRoute: typeof LayoutPmsMenuChannelManagementRoute
   LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
   LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
@@ -1866,6 +1914,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
+  LayoutPmsMenuChannelDetailManagementRoute:
+    LayoutPmsMenuChannelDetailManagementRoute,
+  LayoutPmsMenuChannelManagementRoute: LayoutPmsMenuChannelManagementRoute,
   LayoutPmsMenuEducationLocationManagementRoute:
     LayoutPmsMenuEducationLocationManagementRoute,
   LayoutPmsMenuEducationRegisterDetailRoute:
@@ -1977,6 +2028,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -1995,6 +2047,8 @@ export interface FileRoutesByFullPath {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
+  '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2092,6 +2146,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
+  '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -2110,6 +2165,8 @@ export interface FileRoutesByTo {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
+  '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2210,6 +2267,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
+  '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
@@ -2228,6 +2286,8 @@ export interface FileRoutesById {
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/_layout/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
+  '/_layout/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/_layout/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/_layout/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2327,6 +2387,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
     | '/common/pop-user-search'
@@ -2345,6 +2406,8 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/language_management'
+    | '/pms/menu-channel-detail-management'
+    | '/pms/menu-channel-management'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2441,6 +2504,7 @@ export interface FileRouteTypes {
     | '/guide/tooltip'
     | '/guide/tree-view'
     | '/guide/typography'
+    | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
     | '/common/pop-user-search'
@@ -2459,6 +2523,8 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/language_management'
+    | '/pms/menu-channel-detail-management'
+    | '/pms/menu-channel-management'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2557,6 +2623,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tooltip'
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
+    | '/_guide/guide/word-wrap'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
     | '/_layout/common/pop-user-search'
@@ -2575,6 +2642,8 @@ export interface FileRouteTypes {
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/language_management'
+    | '/_layout/pms/menu-channel-detail-management'
+    | '/_layout/pms/menu-channel-management'
     | '/_layout/pms/menu-education-location-management'
     | '/_layout/pms/menu-education-register-detail'
     | '/_layout/pms/menu-management'
@@ -2703,6 +2772,7 @@ export const routeTree = rootRoute
         "/_guide/guide/tooltip",
         "/_guide/guide/tree-view",
         "/_guide/guide/typography",
+        "/_guide/guide/word-wrap",
         "/_guide/guide/"
       ]
     },
@@ -2730,6 +2800,8 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
         "/_layout/pms/language_management",
+        "/_layout/pms/menu-channel-detail-management",
+        "/_layout/pms/menu-channel-management",
         "/_layout/pms/menu-education-location-management",
         "/_layout/pms/menu-education-register-detail",
         "/_layout/pms/menu-management",
@@ -3037,6 +3109,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/typography.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/word-wrap": {
+      "filePath": "_guide/guide/word-wrap.tsx",
+      "parent": "/_guide"
+    },
     "/_layout/common/pop-category-select": {
       "filePath": "_layout/common/pop-category-select.tsx",
       "parent": "/_layout"
@@ -3107,6 +3183,14 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/language_management": {
       "filePath": "_layout/pms/language_management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-channel-detail-management": {
+      "filePath": "_layout/pms/menu-channel-detail-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-channel-management": {
+      "filePath": "_layout/pms/menu-channel-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-education-location-management": {

@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Grid, Tooltip } from '@learnway/ui';
+import { Button, GridBox, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
+import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
   component: RouteComponent,
@@ -48,6 +49,19 @@ function RouteComponent() {
           <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         </Button>
       ),
+      dataRange: (
+        <>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'회사'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'채널'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'팀'}
+          </Button>
+        </>
+      ),
     },
     {
       firstName: 'tandy',
@@ -68,13 +82,14 @@ function RouteComponent() {
         </Button>
       ),
       course: (
-        <Tooltip
-          side="bottom"
-          align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
-        >
-          {'과정명'}
-        </Tooltip>
+        // <Tooltip
+        //   side="bottom"
+        //   align="end"
+        //   content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        // >
+        //   {'과정명'}
+        // </Tooltip>
+        <WordWrap text={'과정명과정명과정명과정명과정명과정명과정명'} />
       ),
       link: (
         <Button size={'xs'} className="link_icon" onlyIcon>
@@ -291,6 +306,15 @@ function RouteComponent() {
       header: '링크',
       size: 90,
     }),
+    columnHelper.accessor('dataRange', {
+      cell: (info) => info.getValue(),
+      header: '데이터 접근 범위',
+      size: 230,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
   ] as ColumnDef<any, unknown>[];
 
   return (
@@ -303,10 +327,10 @@ function RouteComponent() {
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Grid } from '@learnway/ui';
+import { GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-<Grid
+<GridBox
   data={data}
   columns={columns}
   pagination={{
@@ -324,11 +348,12 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
         <div className="group">
           <h3 className="guide_tit3">Grid Example</h3>
         </div>
-        <Grid
+        <GridBox
           data={data}
           columns={columns}
           multiple
           showSelectedCount={true}
+          showNumberingColumn={true}
           pagination={{
             pageSize,
             pageIndex,
@@ -337,6 +362,13 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             onPageSizeChange: setPageSize,
           }}
           title="타이틀"
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit">{'타이틀'}</strong>
+              <span className="count_info">{'5'}</span>
+            </div>
+          }
+          guideText={'텍스트'}
         />
       </div>
     </div>

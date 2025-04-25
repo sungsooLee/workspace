@@ -223,6 +223,11 @@ export interface GridProps<T> {
    * 테이블 모드에서 style 을 구분하기 위해 사용
    */
   variant?: 'line' | 'fill';
+
+  /**
+   * data 변경시 그리드의 첫번째 행을 자동으로 선택해주기 위해 사용
+   */
+  autoSelectFirstRow?: boolean;
 }
 
 /**

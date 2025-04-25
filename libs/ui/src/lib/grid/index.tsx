@@ -27,8 +27,6 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'; // paging Icons
-import { isEmpty } from 'lodash';
-
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -50,9 +48,10 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Dropdown } from '../dropdown/dropdown';
 import { DropdownOption } from '../type';
 
-import styles from './grid.module.css'; // grid module CSS
+import styles from './grid.module.css';
+import { isEmpty } from 'lodash'; // grid module CSS
 
-const Grid = forwardRef(
+const GridComponent = forwardRef(
   <T extends object>(
     {
       data,
@@ -75,6 +74,7 @@ const Grid = forwardRef(
       onChange,
       emptyMessage,
       variant = 'line',
+      autoSelectFirstRow,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -85,6 +85,9 @@ const Grid = forwardRef(
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    // rowSelection useEffect가 첫 번째 실행인지 추적하는 Ref
+    const isInitialSelectionEffect = useRef(true);
 
     const groupingState = useMemo<GroupingState>(
       () => columnGrouping?.columns || [],
@@ -136,8 +139,11 @@ const Grid = forwardRef(
       // 넘버링 컬럼 생성
       const createNumberingColumn = (): ColumnDef<T> => ({
         id: 'numbering',
-        size: 50,
+        size: 64,
         header: 'NO.',
+        meta: {
+          cellAlign: 'center',
+        },
         cell: ({ row }: any) =>
           pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
       });
@@ -198,6 +204,11 @@ const Grid = forwardRef(
     const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+
+      // 같은 row 선택 한 경우 deselect 안되게 하기 위해
+      if (isEmpty(newSelection)) {
+        return;
+      }
 
       // 마지막 선택만 유지
       const selectedRowIds = Object.keys(newSelection);
@@ -338,7 +349,6 @@ const Grid = forwardRef(
     // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
     useEffect(() => {
       if (!onStateChange) return;
-
       onStateChange({
         filters: columnFilters,
         sorting,
@@ -349,15 +359,25 @@ const Grid = forwardRef(
 
     // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
     useEffect(() => {
-      if (isEmpty(data)) {
-        // 최초 로딩 인경우 수행하지 않음
+      // 해당 useEffect 최초 실행인 경우 첫 번째 실행을 건너뜁니다.
+      if (isInitialSelectionEffect.current) {
+        isInitialSelectionEffect.current = false;
         return;
       }
+
       const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
       const selectedRow = selectedRows?.[0];
       onRowSelect?.(selectedRow);
       onRowsSelect?.(selectedRows);
     }, [rowSelection]);
+
+    // data 변경시 첫번째 행 선택 (데이터가 있고 autoSelectFirstRow 설정된 경우)
+    useEffect(() => {
+      const firstRowId = table.getRowModel()?.rows?.[0]?.id;
+      if (firstRowId && autoSelectFirstRow && !tableMode) {
+        setRowSelection({ [firstRowId]: true });
+      }
+    }, [data, table, autoSelectFirstRow]);
 
     // 컬럼 팝업에서 컬럼에 대한 항목 설정
     const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
@@ -765,10 +785,4 @@ const Grid = forwardRef(
   },
 );
 
-//
-
-const TableComponent = forwardRef(<T extends object>(props: GridProps<T>, ref: any) => {
-  return <Grid {...props} disabledSelectionToggle tableMode />;
-});
-
-export { Grid, TableComponent as Table };
+export const Grid = GridComponent;

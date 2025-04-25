@@ -4,7 +4,7 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser } from '@learnway/auth';
+import { useFetchAuthUser, useLogoutUser, useReissue } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 import { IcLogOut01 } from '@learnway/icons';
 
@@ -37,6 +37,7 @@ const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
+
   const { data: authUser } = useFetchAuthUser();
   //const { startSession } = useLoginTimeout();
 
@@ -58,42 +59,13 @@ const PopoverContent = () => {
     [],
   );
 
-  const logoutAlert = () => {
-    openConfirm({
+  const logoutAlert = async (e: any) => {
+    const feedback = await openConfirm({
       title: <></>,
       content: <>로그아웃 하시겠습니까?</>,
-
-      onClose: (result: boolean) => {
-        // console.log(result);
-        if (result) logout();
-      },
     });
+    feedback && logout();
   };
-
-  const loginExtension = () => {
-    openConfirm({
-      title: <>로그인 시간을 연장하시겠습니까?</>,
-      content: (
-        <>
-          로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
-          <br />
-          로그인 시간을 연장하시겠습니까?
-          <div className="time">
-            남은시간 : <strong>4분 59초</strong>
-          </div>
-        </>
-      ),
-
-      okButtonLabel: '로그인연장',
-      onClose: (result: boolean) => {
-        console.log(result);
-      },
-    });
-  };
-
-  // useEffect(()=>{
-
-  // },[])
 
   return (
     // <div>
@@ -133,7 +105,7 @@ const PopoverContent = () => {
           );
         })}
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => logoutAlert()}>
+      <Button className={styles.btn_log} variant="text" onClick={(e) => logoutAlert(e)}>
         <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
       </Button>
     </div>

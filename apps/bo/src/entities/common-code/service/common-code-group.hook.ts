@@ -21,9 +21,8 @@ export function useCommonCodeGroupList(
   cdGroupId = '',
   cdGroupName = '',
   isUsed = '',
-  cdName = '',
 ) {
-  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed, cdName));
+  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed));
 }
 
 export function useCommonCodeGroupDetail(cdGroupId: string) {
@@ -45,7 +44,6 @@ export function useCreateCommonCodeGroup({
     cdGroupId?: string;
     cdGroupName?: string;
     isUsed?: string;
-    cdName?: string;
   };
 } & Omit<
   UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
@@ -102,10 +100,7 @@ export function useUpdateCommonCodGroup({
     sort: string;
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
-    cdGroupContent?: string;
-    validityYn?: boolean;
-    cdName?: string;
+    isUsed?: string;
   };
 } & Omit<
   UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
@@ -125,6 +120,12 @@ export function useUpdateCommonCodGroup({
           queryKey: queryKeys.all,
         });
       }
+
+      // 2. 명시적으로 detail 쿼리도 무효화
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.detail(data.cdGroupId),
+      });
+
       if (onSuccess) {
         onSuccess(data, variables, context);
       }
