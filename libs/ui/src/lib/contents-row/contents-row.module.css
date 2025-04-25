@@ -13,13 +13,18 @@
     }
   }
   & + &.horizontal {
+    @apply pb-[16px];
     [class*='nlp--switch'] {
       @apply translate-y-0;
     }
+    & + &.horizontal {
+      @apply pb-0;
+    }
   }
   &.horizontal {
+    @apply pb-0;
     & > div {
-      @apply !flex flex-row flex-wrap;
+      @apply !flex flex-row flex-wrap pb-0;
       label {
         @apply flex-1;
         & + div {
@@ -36,6 +41,9 @@
     &[class*='nlp--contents-row'] {
       &[class*='inactive'] {
         @apply pb-0;
+        & > div {
+          @apply pb-0;
+        }
       }
     }
     & + [class*='nlp--contents-row'] {

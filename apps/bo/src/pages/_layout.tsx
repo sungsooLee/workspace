@@ -28,8 +28,10 @@ function LayoutComponent() {
   }, [tenant]);
 
   return (
-    <Layout>
-      <Outlet />
-    </Layout>
+    <div className="layout_wrap">
+      <Layout>
+        <Outlet />
+      </Layout>
+    </div>
   );
 }

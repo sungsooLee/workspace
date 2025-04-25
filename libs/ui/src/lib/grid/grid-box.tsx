@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
 import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
@@ -25,9 +25,11 @@ const GridBoxComponent = <T extends object>(
     showUpload,
     showSelectAll,
     showDeleteAll,
+    showAdd,
     titleCustomNode,
     customButtonNode,
     guideText,
+    onAddClick,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -35,6 +37,7 @@ const GridBoxComponent = <T extends object>(
   const { t } = useTranslation();
   const { data = props.data, page, totalRows, gridFetch, columns, title } = config;
   const columnHelper = createColumnHelper<any>();
+  const gridRef = useRef<GridImperative>(null);
 
   /**
    * 컬럼 정보를 기반으로 TanStack Table 형식으로 변환
@@ -66,6 +69,19 @@ const GridBoxComponent = <T extends object>(
     columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
 
   /**
+   * 추가 버튼 클릭
+   */
+  const handleAddClick = useCallback(
+    () => {
+      // 그리드 선택 초기화
+      gridRef.current?.resetRowSelection();
+      // call onAddClick
+      onAddClick?.();
+    },
+    [gridRef, onAddClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
    * 페이지 이동 핸들러
    */
   const handleChangePage = useCallback(
@@ -90,14 +106,6 @@ const GridBoxComponent = <T extends object>(
     },
     [gridFetch],
   );
-
-  /**
-   * 컬럼 설정 버튼 클릭 핸들러
-   */
-  const handleColumnSettings = () => {
-    //TODO: grid column setting 연동
-    console.log('columnSettings');
-  };
 
   /**
    * pagination 설정
@@ -189,15 +197,18 @@ const GridBoxComponent = <T extends object>(
               label={t('항목설정')}
               icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
               className="btn_setting"
-              onClick={handleColumnSettings}
             />
+          )}
+          {/* 추가 */}
+          {showAdd && (
+            <Button variant="outline" size="sm" label={t('추가')} onClick={handleAddClick} />
           )}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
       <Grid
         {...props}
-        ref={ref}
+        ref={gridRef}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}

@@ -22,8 +22,7 @@ const CategoryViewComponent: FC<any> = ({
   onUpdate,
   onDelete,
 }) => {
-  console.log('## selectedNode :: ', selectedNode);
-  const { t } = useTranslation();
+  const { t } = useTranslation<'translation'>();
   const router = useRouter();
 
   const isRoot = useMemo(() => {
@@ -121,11 +120,9 @@ const CategoryViewComponent: FC<any> = ({
   };
 
   const handleCodeChange = (newCode: string) => {
-    console.log('## newCode', newCode);
     const isChanged = isFieldChanged('code', newCode);
 
     if (onFormChange) {
-      console.log('## view ::: ', !isChanged && mode === 'view');
       // 코드가 변경됐을 경우에만 중복 체크 필요
       onFormChange({
         isDuplicateMenuCode: !isChanged && mode === 'view',
@@ -135,20 +132,6 @@ const CategoryViewComponent: FC<any> = ({
   };
 
   const handleOnSubmit = (node: any) => {
-    console.log('## node :: ', node);
-
-    /*
-    {카테고리 코드}를 입력해 주세요. 
-
-    {카테고리 코드}를 다시 확인해 주세요.
-
-    이미 사용 중인 {카테고리 코드}입니다. 
-
-    사용할 수 있는 {카테고리 코드} 입니다. 
-
-    {카테고리 코드}의 중복 여부를 확인해 주세요. 
-    */
-
     // View 모드에서 저장 처리
     if (mode === 'view') {
       const isCodeChanged = isFieldChanged('code', node.code);
@@ -167,13 +150,21 @@ const CategoryViewComponent: FC<any> = ({
       }
     }
 
+    // "{{code}}의 중복 여부를 확인해 주세요."
     if (codeCheckState === 'none') {
-      setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
+      setFormError?.(
+        'code',
+        t('LABEL.form.validation.check', { code: t('LABEL.form.input.categoryCode') }),
+      );
       return;
     }
 
+    //  '이미 사용 중인 {{code}} 코드입니다.'
     if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
-      setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
+      setFormError?.(
+        'code',
+        t('LABEL.form.validation.duplicated', { code: t('LABEL.form.input.categoryCode') }),
+      );
       return;
     }
 
@@ -196,13 +187,19 @@ const CategoryViewComponent: FC<any> = ({
   };
 
   const getTitle = () => {
+    // 카테고리 추가, 하위카테고리 추가
     if (mode === 'add') {
-      return selectedNode ? `${selectedNode.title} 하위 카테고리 추가` : '카테고리 추가';
+      return selectedNode
+        ? `${selectedNode.title} ${t('LABEL.tree.depthAdd', { type: t('LABEL.common.code.category') })}`
+        : `${t('LABEL.tree.add', { type: t('LABEL.common.code.category') })}`;
     }
+    // ${} 카테고리
     if (mode === 'view') {
-      return selectedNode ? `${selectedNode.title} 카테고리` : '카테고리';
+      return selectedNode
+        ? `${selectedNode.title} ${t('LABEL.common.code.category')}`
+        : t('LABEL.common.code.category');
     }
-    return '카테고리';
+    return t('LABEL.common.code.category');
   };
 
   return (
@@ -216,27 +213,31 @@ const CategoryViewComponent: FC<any> = ({
               variant="text"
               size="sm"
               onClick={handleReset}
-              disabled={isInitMode || isRoot}
+              disabled={isInitMode || (mode === 'view' && isRoot)}
               className={layoutStyles.btn_text}
             >
-              초기화
+              {t('LABEL.button.reset')}
             </Button>
             <Button
               variant="text"
               size="sm"
-              disabled={isInitMode || mode === 'add' || isRoot}
+              disabled={isInitMode || (mode === 'view' && isRoot)}
               onClick={handleDelete}
               className={layoutStyles.btn_text}
             >
-              삭제
+              {t('LABEL.button.delete')}
             </Button>
-            <Button type="submit" variant="save" size="sm" disabled={isInitMode || isRoot}>
-              저장
+            <Button
+              type="submit"
+              variant="save"
+              size="sm"
+              disabled={isInitMode || (mode === 'view' && isRoot)}
+            >
+              {t('LABEL.button.save')}
             </Button>
           </div>
         </div>
         {/* 폼 필드 - location (비활성화 상태) */}
-
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
             <FormRow provider={provider}>
@@ -253,7 +254,7 @@ const CategoryViewComponent: FC<any> = ({
           {/* 폼 필드 - code */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'code'} disabled={isRoot}>
+              <DynamicFormField name={'code'} disabled={mode === 'view' && isRoot}>
                 <DuplicateCodeGuideText
                   clearFormError={clearFormError}
                   checkExists={(data: string) => {
@@ -278,7 +279,7 @@ const CategoryViewComponent: FC<any> = ({
                     });
                   }}
                   isSuccess={isSuccessCodeCheck}
-                  disabled={isInitMode || isRoot}
+                  disabled={isInitMode || (mode === 'view' && isRoot)}
                   codeCheckState={codeCheckState}
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
@@ -290,7 +291,10 @@ const CategoryViewComponent: FC<any> = ({
           {/* 폼 필드 - title */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'name'} disabled={isInitMode || isRoot} />
+              <DynamicFormField
+                name={'name'}
+                disabled={isInitMode || (mode === 'view' && isRoot)}
+              />
               <Button
                 type="button"
                 variant="point"
@@ -307,9 +311,9 @@ const CategoryViewComponent: FC<any> = ({
                     },
                   });
                 }}
-                disabled={isInitMode || isRoot}
+                disabled={isInitMode || (mode === 'view' && isRoot)}
               >
-                다국어관리
+                {t('LABEL.link.multilingual')}
               </Button>
             </FormRow>
           </ContentsRow>
@@ -317,7 +321,10 @@ const CategoryViewComponent: FC<any> = ({
           {/* 폼 필드 - description */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'categoryContent'} disabled={isInitMode || isRoot} />
+              <DynamicFormField
+                name={'categoryContent'}
+                disabled={isInitMode || (mode === 'view' && isRoot)}
+              />
             </FormRow>
           </ContentsRow>
         </div>
@@ -333,36 +340,36 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'key',
       type: 'text',
-      label: t('키'),
+      label: 'key',
       value: '',
     },
     {
       name: 'parentKey',
       type: 'text',
-      label: t('부모키'),
+      label: 'parentKey',
       value: '',
     },
     {
       name: 'location',
       type: 'text',
-      label: t('카테고리 위치'),
+      label: t('LABEL.form.input.categoryLocation'),
       value: '',
     },
     {
-      label: t('상위 카테고리명'),
+      label: t('LABEL.form.input.categoryParentName'),
       name: 'parentMenuName',
       type: 'text',
       value: '',
     },
     {
-      label: t('카테고리 코드'),
+      label: t('LABEL.form.input.categoryCode'),
       name: 'code',
       type: 'custom',
       maxLength: 20,
       value: '',
     },
     {
-      label: t('카테고리명'),
+      label: t('LABEL.form.input.categoryCodeName'),
       name: 'name',
       type: 'text',
       maxLength: 10,
@@ -376,7 +383,7 @@ const formConfig: DynamicFormConfig = {
       value: 0,
     },
     {
-      label: t('설명'),
+      label: t('LABEL.form.input.description'),
       name: 'categoryContent',
       type: 'textarea',
       maxLength: 50,
@@ -395,7 +402,7 @@ const formConfig: DynamicFormConfig = {
         fn: (values) => {
           return values.isDuplicateMenuCode === true;
         },
-        message: t('메뉴 코드의 중복 여부를 확인해주세요.'),
+        message: t('LABEL.form.validation.check', { code: t('LABEL.form.input.categoryCode') }),
         path: 'code',
       },
       conditions: [],

@@ -1,5 +1,3 @@
-import { UseQueryOptions } from '@tanstack/react-query';
-
 import CategoryService from '@entities/category/api/category';
 import { CategoryCreate, CategoryUpdate, CategoryMove } from '@types';
 

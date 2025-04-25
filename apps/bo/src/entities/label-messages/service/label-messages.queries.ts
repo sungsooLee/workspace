@@ -23,9 +23,11 @@ export const queryOptions = {
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: LabelMessage) => LabelMessagesService.create(payload),
+    mutationFn: (payload: LabelMessage): Promise<LabelMessage> =>
+      LabelMessagesService.create(payload),
   }),
   update: () => ({
-    mutationFn: (payload: LabelMessage) => LabelMessagesService.update(payload),
+    mutationFn: (payload: LabelMessage): Promise<LabelMessage> =>
+      LabelMessagesService.update(payload),
   }),
 };

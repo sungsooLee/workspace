@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { TreeNode } from './type';
-import { TreeView } from './tree';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -8,7 +7,7 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
-import { TreeView2 } from './tree-2';
+import { TreeView } from './tree';
 import { useModal } from '../modal/modal.hook';
 import { IcoXclose } from '@learnway/icons';
 
@@ -99,7 +98,7 @@ export const ShuttleTreeWithChips = ({
             </Button>
           </div>
         </div>
-        <TreeView2
+        <TreeView
           data={sourceData}
           type="SHUTTLE_LIST"
           searchKeyword={searchKeyword}

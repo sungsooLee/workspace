@@ -3,6 +3,7 @@ import { Button, GridBox, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
+import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
   component: RouteComponent,
@@ -81,13 +82,14 @@ function RouteComponent() {
         </Button>
       ),
       course: (
-        <Tooltip
-          side="bottom"
-          align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
-        >
-          {'과정명'}
-        </Tooltip>
+        // <Tooltip
+        //   side="bottom"
+        //   align="end"
+        //   content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        // >
+        //   {'과정명'}
+        // </Tooltip>
+        <WordWrap text={'과정명과정명과정명과정명과정명과정명과정명'} />
       ),
       link: (
         <Button size={'xs'} className="link_icon" onlyIcon>
@@ -351,6 +353,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
           columns={columns}
           multiple
           showSelectedCount={true}
+          showNumberingColumn={true}
           pagination={{
             pageSize,
             pageIndex,

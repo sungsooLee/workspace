@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useCreation } from 'ahooks';
+import { Link } from '@tanstack/react-router';
 
 import {
   Button,
@@ -20,6 +21,7 @@ import { EmbedWidgetPreview } from '../embed-widget-preview/embed-widget-preview
 const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
   const { close: closeModal } = useModal();
 
+  console.log('widget', widget);
   const items = useCreation(() => {
     return [
       ...(widget.isWebExposed

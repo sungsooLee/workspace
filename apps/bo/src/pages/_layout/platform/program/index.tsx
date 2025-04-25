@@ -10,7 +10,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { pageRouteConfig } from '../../../../features/auth';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { ProgramTree } from '../../../../features/program/ui/program-tree';
+import { ProgramTree } from '../../../../features/platform/program/ui/program-tree';
 
 export const Route = createFileRoute('/_layout/platform/program/')({
   component: RouteComponent,

@@ -22,7 +22,7 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   const FooterSlot = getSlot(children, ModalFooter);
 
   return (
-    <div className={cn(styles.start, className, 'nlp--modal-content')}>
+    <div className={cn(styles.start, className, 'nlp--modal-content')} id="nlp--modal-content">
       {/* title */}
       <Primitive.Title className={styles.title}>{TitleSlot}</Primitive.Title>
       {/* description */}

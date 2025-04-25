@@ -7,8 +7,6 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { MenuTree } from '../../../../features/menu/ui/menu-tree';
-import MenuView from '../../../../features/menu/ui/menu-view';
 import {
   useCreateMenu,
   useDeleteMenu,
@@ -16,11 +14,14 @@ import {
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
+
+import { pageRouteConfig } from '../../../../features/auth';
 import {
   findNodeByMenuId,
   transformApiDataToTreeData,
-} from '../../../../features/menu/service/menu.service';
-import { pageRouteConfig } from '../../../../features/auth';
+} from '../../../../features/platform/menu/service/menu.service';
+import { MenuTree } from '../../../../features/platform/menu/ui/menu-tree';
+import MenuViewComponent from '../../../../features/platform/menu/ui/menu-view';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -44,7 +45,7 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
 
-  const { data, refetch } = useMenuManageFetchTree(selectedTabKey, 'ko');
+  const { data } = useMenuManageFetchTree(selectedTabKey, 'ko');
   const { create } = useCreateMenu({});
   const { updateMenu } = useUpdateMenu({});
   const { deleteMenu } = useDeleteMenu({});
@@ -54,8 +55,6 @@ function RouteComponent() {
   const prevDataRef = React.useRef(null);
 
   useEffect(() => {
-    // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
-    // if (data && data !== prevDataRef.current) {
     if (data) {
       prevDataRef.current = data;
 
@@ -67,38 +66,26 @@ function RouteComponent() {
         const firstLevelKeys = transformedData.map((node: any) => node.key);
         setExpandedKeys(firstLevelKeys);
       }
-
       // 새로 추가된 메뉴가 있는 경우 - lastCreatedMenuId로 체크
       if (lastCreatedMenuId) {
-        console.log('새 메뉴 ID 발견, 노드 찾기 시도:', lastCreatedMenuId);
-
         // 새로 생성된 메뉴 노드 찾기
         const newNode = findNodeByMenuId(transformedData, lastCreatedMenuId);
-
         if (newNode) {
-          console.log('새 노드 찾음:', newNode);
-
           // 노드 경로 찾기 (부모 노드들의 키)
           const nodePath = findNodePath(transformedData, lastCreatedMenuId);
-
           if (nodePath) {
             // 부모 노드들을 펼치기 위해 expandedKeys 업데이트
             // 마지막 노드(새로 생성된 노드)는 제외하지 않고 모두 포함
             setExpandedKeys((prev) => {
-              // 기존 확장된 키들과 새 경로를 합쳐서 중복 제거
               const combined = [...new Set([...prev, ...nodePath])];
               return combined;
             });
-
             // 새 노드 선택
             setSelectedNode(newNode);
             setMode('view');
-
             // 처리 완료 후 ID 초기화
             setLastCreatedMenuId(null);
           }
-        } else {
-          console.log('새 노드를 찾을 수 없음:', lastCreatedMenuId);
         }
       }
     }
@@ -115,9 +102,8 @@ function RouteComponent() {
     const payload = {
       menuId,
       destinationParentId,
-      sortSeq: sortSeq + 1,
+      sortSeq,
     };
-    console.log(payload);
     moveMenu(payload);
   };
 
@@ -176,7 +162,6 @@ function RouteComponent() {
 
   const handleDelete = (payload: any) => {
     //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
-
     openConfirm({
       title: '삭제 하시겠습니까?',
       content: (
@@ -187,11 +172,7 @@ function RouteComponent() {
       ),
       onClose: (value: boolean) => {
         if (value) {
-          deleteMenu(payload, {
-            onSuccess: (data: any) => {
-              refetch().then(() => {});
-            },
-          });
+          deleteMenu(payload);
           setMode('init');
         }
       },
@@ -214,7 +195,7 @@ function RouteComponent() {
           />
         )}
         {selectedNode || mode === 'add' ? (
-          <MenuView
+          <MenuViewComponent
             treeData={treeData}
             selectedNode={selectedNode}
             menuScope={tabKey}
@@ -231,7 +212,7 @@ function RouteComponent() {
             }}
           />
         ) : (
-          <MenuView
+          <MenuViewComponent
             treeData={treeData}
             selectedNode={null}
             menuScope={tabKey}
@@ -271,11 +252,6 @@ function RouteComponent() {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedTabKey);
-    refetch().then(() => {});
-  }, [selectedTabKey]);
-
   const items = [
     {
       title: '학습자 메뉴',
@@ -292,7 +268,6 @@ function RouteComponent() {
   return (
     <PageContainer scrollHidden={true}>
       <MainContents>
-        {/* <div className={styles.main_contents}> */}
         <Tabs
           selectedTabKey={selectedTabKey}
           items={items}
@@ -300,7 +275,6 @@ function RouteComponent() {
           onTabChange={handleTabChange}
           className={styles.tab_wrap}
         />
-        {/* </div> */}
       </MainContents>
     </PageContainer>
   );

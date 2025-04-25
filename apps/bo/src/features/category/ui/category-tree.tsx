@@ -1,19 +1,16 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import {
   Button,
   findNodeByKey,
-  Switch,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
 } from '@learnway/ui';
-import React, { FC, useEffect, useState } from 'react';
-import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 // 컴포넌트 정의
 const CategoryTreeComponent: FC<any> = ({
@@ -26,6 +23,8 @@ const CategoryTreeComponent: FC<any> = ({
   onExpandChange,
   selectedKey,
 }) => {
+  const { t } = useTranslation<'translation'>();
+
   // expandAll 토글 시 모든 키 확장/축소 처리
   const handleExpandAll = (expand: boolean) => {
     if (expand) {
@@ -61,7 +60,10 @@ const CategoryTreeComponent: FC<any> = ({
           type={'button'}
           disabled={level === 5}
         >
-          {level == 0 ? '카테고리 추가' : '하위카테고리 추가'}
+          {/* '카테고리 추가' : '하위카테고리 추가' */}
+          {level === 0
+            ? t('LABEL.tree.add', { type: t('LABEL.common.code.category') })
+            : t('LABEL.tree.depthAdd', { type: t('LABEL.common.code.category') })}
         </Button>
       </div>
     </div>
@@ -76,7 +78,7 @@ const CategoryTreeComponent: FC<any> = ({
       case 'NODE_SELECT':
         onNodeClick(event.node);
         break;
-      case 'NODE_MOVE':
+      case 'NODE_MOVE': {
         const nodeInfo = event;
         console.log(event);
         if (nodeInfo.position === 'INSIDE') {
@@ -92,6 +94,7 @@ const CategoryTreeComponent: FC<any> = ({
         }
 
         break;
+      }
     }
   };
 
@@ -100,7 +103,7 @@ const CategoryTreeComponent: FC<any> = ({
   return (
     <div className={layoutStyles.inner}>
       <div className={titleStyles.title_wrap}>
-        <h3 className={titleStyles.title}>{'공통 카테고리 목록'}</h3>
+        <h3 className={titleStyles.title}>{t('LABEL.page.category.title')}</h3>
         <div className={layoutStyles.btn_wrap}>
           <Button
             variant="text"
@@ -108,7 +111,7 @@ const CategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(true)}
           >
-            {'전체펼침'}
+            {t('LABEL.tree.expand')}
           </Button>
           <Button
             variant="text"
@@ -116,13 +119,13 @@ const CategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(false)}
           >
-            {'전체닫기'}
+            {t('LABEL.tree.closed')}
           </Button>
         </div>
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView2
+          <TreeView
             data={treeData}
             treeId={'1'}
             expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키
