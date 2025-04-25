@@ -95,7 +95,7 @@ function PageContainerComponent({
   };
 
   return (
-    <div className={`${styles.start} ${styles.contents}`}>
+    <div className={cn(styles.start, styles.contents)}>
       <Breadcrumbs />
       <div ref={scrollContainerRef} className={cn(styles.inner, 'scroll_inner')}>
         {/* title_wrap */}
