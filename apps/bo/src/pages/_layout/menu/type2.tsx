@@ -451,7 +451,7 @@ const detailConfig: DynamicFormConfig = {
       name: 'tenant',
       type: 'checkbox-group',
       label: '테넌트 선택',
-      value: ['tenantA'],
+      value: ['tenantA', 'tenantB', 'tenantC'],
       options: [
         {
           value: 'tenantA',
@@ -466,9 +466,7 @@ const detailConfig: DynamicFormConfig = {
           label: '테넌트 C',
         },
       ],
-      checkGroupConfig: {
-        allCheck: true,
-      },
+      checkGroupConfig: {},
     },
     {
       name: 'lowerGubun',
