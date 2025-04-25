@@ -17,7 +17,7 @@ export interface PanelComponentProps {
   collapsed?: boolean; // 외부에서 collapsed 컨트롤 필요한 경우 사용
   headerClassName?: string;
   hideHeaderUnderline?: boolean;
-  type?: 'line' | 'fill' | 'secondary' | 'gray';
+  type?: 'line' | 'fill' | 'rounded';
 }
 
 const PanelComponent = function ({

@@ -32,6 +32,7 @@ export type TreeEventType =
  */
 interface BaseEventPayload {
   treeId: string;
+  sourceTreeId?: string | null;
 }
 
 /**
@@ -142,6 +143,7 @@ export interface TreeProps {
   onSelectedNodeChange?: (node: TreeNode) => void;
   selectedNode?: TreeNode | null;
   onCustomNodeClick?: (node: TreeNode) => void;
+  clientTree?: boolean;
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -180,13 +182,14 @@ export interface ApiCallbackPayload extends BaseEventPayload {
   treeId: string;
   targetIndex?: number;
   targetParentKey?: string | null;
+  sourceTreeId?: string;
 }
 
 export type TreeActionPayload = NodeMoveEventPayload | SelectEventPayload | ApiCallbackPayload;
 
 export interface TreeNodeComponentProps {
   node: TreeNode;
-  // treeId: string;
+  treeId: string;
   level?: number;
   selectedNode?: TreeNode | null;
   expandedKeys: string[];
@@ -208,6 +211,7 @@ export interface TreeNodeComponentProps {
   onCustomNodeClick?: (node: TreeNode) => void;
   size?: string;
   className?: string;
+  treeContext?: any;
 }
 
 /**
@@ -217,4 +221,8 @@ export interface DropInfo {
   targetNode: TreeNode | null;
   dropPosition: NodeMovePositionType;
   sourceNode?: TreeNode | null;
+}
+
+export interface TreeBoxProps extends TreeProps {
+  initLevel: number;
 }

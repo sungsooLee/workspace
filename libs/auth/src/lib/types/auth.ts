@@ -22,6 +22,7 @@ export interface AuthUser {
   mainTenantId?: number;
   menus?: any;
   avataImage?: string;
+  latestLoginDatetime?: Date;
 }
 
 export interface AuthSSOHealthcheck {

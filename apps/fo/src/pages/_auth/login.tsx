@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/auth';
+import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
+import { useFetchAuthUser, useSessionTimeoutAlertState } from '@learnway/auth';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 
@@ -37,9 +37,11 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { alert } = useModal();
 
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(loginFormConfig);
 
+  const [sessionTimeoutAlert, setSessionTimeoutAlert] = useSessionTimeoutAlertState();
   const { data: authData } = useFetchAuthUser();
 
   const { login } = useAuthSignin();
@@ -58,6 +60,16 @@ function RouteComponent() {
       saveId: !isEmpty(getSavedUserid()),
     });
   }, []);
+
+  useEffect(() => {
+    if (sessionTimeoutAlert) {
+      alert({
+        title: '자동 로그아웃 되었습니다.',
+        content: '로그인 후 2시간이 경과되어 로그아웃 되었습니다.\n다시 로그인 후 이용해 주십시오',
+      });
+      setSessionTimeoutAlert(false);
+    }
+  }, [sessionTimeoutAlert]);
 
   const handleOnSubmit = async (data: any) => {
     const user = await login(data, {

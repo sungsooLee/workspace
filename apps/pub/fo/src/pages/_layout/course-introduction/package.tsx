@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button, Avatar } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare } from '@learnway/icons';
+import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
+import { IcoHeart, IcoUser01 } from '@learnway/icons';
+import {
+  CourseFixedButton, // 수강신청 버튼
+} from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import operatorStyles from './operator.module.css';
@@ -20,9 +23,6 @@ export const Route = createFileRoute('/_layout/course-introduction/package')({
 });
 
 function RouteComponent() {
-  // 찜
-  const [heart, setHeart] = useState(false);
-
   const options: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
@@ -196,21 +196,10 @@ function RouteComponent() {
                   </dl>
                 </div>
               </div>
-              {/* button */}
-              <div
-                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
+
+              {/* 찜/공유 Button */}
+              <div className={styles.course_btn_wrap}>
+                <CourseFixedButton course={false} />
               </div>
             </div>
           </div>

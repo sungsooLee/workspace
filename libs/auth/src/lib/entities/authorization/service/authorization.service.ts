@@ -1,15 +1,15 @@
-import { useEffect, createElement, useState } from 'react';
+import { useEffect, createElement, useState, useCallback } from 'react';
 import type { AxiosResponse } from 'axios';
 import { useRouter } from '@tanstack/react-router';
 
 import { tokenService } from '@learnway/config';
 import { cookieService } from '@learnway/shared';
-import { useModal } from '@learnway/ui';
+import { useModal, useModalStore } from '@learnway/ui';
 
 import { AuthUser, AuthSSOHealthcheck } from '../../../types';
 import { queryOptions } from './authorization.queries';
-import { useLogoutUser } from './authorization.hook';
-import { useSessionIntervalState } from '../state/session-interval.state';
+import { useLogoutUser, useFetchAuthUser, useUpdateUser } from './authorization.hook';
+import { useSessionTimeoutAlertState } from '../state/session-timeout.state';
 import { SessionTimeoutConfirm } from '../ui/sessionTimeoutConfirm';
 
 export { queryOptions as authSSOQueryOptions };
@@ -25,7 +25,6 @@ export function assignToken(data: AxiosResponse) {
 }
 
 export function removeToken() {
-  cookieService.remove('LATEST_LOGIN_DATETIME');
   tokenService.clear();
 }
 
@@ -48,26 +47,80 @@ export function getHMGSSORedirectUrl(data: AuthSSOHealthcheck): string {
 
 export function useSessionTimout() {
   const [isTimeoutConfirm, setIsTimeoutConfirm] = useState(false);
-  const [latestLoginDatetime, setLatestLoginDatetime] = useState<any>(
-    cookieService.get('LATEST_LOGIN_DATETIME'),
-  );
+  const [intervalId, setIntervalId] = useState<any>();
+
+  const { closeAll } = useModalStore();
   const { alert, confirm } = useModal();
+
   const router = useRouter();
   const { logout } = useLogoutUser();
-  const [, setSessionIntervalId] = useSessionIntervalState();
+  const { data: authUser } = useFetchAuthUser();
+  const { updateLatestLoginDateTime } = useUpdateUser();
 
-  useEffect(() => {
-    if (latestLoginDatetime === cookieService.get('LATEST_LOGIN_DATETIME')) {
-      console.log('최초 로드 시 skip', cookieService.get('LATEST_LOGIN_DATETIME'));
+  const [, setSessionTimeoutAlert] = useSessionTimeoutAlertState();
+
+  const checkSessionTimeout = useCallback(() => {
+    if (!authUser?.latestLoginDatetime) {
+      console.log('none checkSessionTimeout authUser?.latestLoginDatetime');
       return;
     }
-    cookieService.set('LATEST_LOGIN_DATETIME', latestLoginDatetime);
-  }, [latestLoginDatetime]);
+    const now = new Date();
+    const sessionDuration = now.getTime() - new Date(authUser?.latestLoginDatetime).getTime();
+    console.log('sessionDuration', sessionDuration);
+    // 2시간(7200000ms) 경과 5분전 confirm //7200000 - 300000
+    if (!isTimeoutConfirm && sessionDuration >= 1000 * 60 * 1) {
+      confirm({
+        title: '로그인 시간을 연장하시겠습니까?',
+        content: createElement(SessionTimeoutConfirm),
+        okButtonLabel: '로그인연장',
+        cancelButtonLabel: '취소',
+        onClose: (feedback: boolean) => {
+          if (feedback) {
+            updateLatestLoginDateTime(new Date());
+          } else {
+            // 로그인 연장 취소한 경우 다시 묻지 않음
+            setIsTimeoutConfirm(true);
+          }
+        },
+      });
+    }
+
+    // 2시간(7200000ms) 경과 시 자동 로그아웃 alert //7200000
+    if (sessionDuration >= 1000 * 60 * 2) {
+      closeAll();
+      logout(undefined, {
+        onSuccess: async () => {
+          setSessionTimeoutAlert(true);
+          router.navigate({ to: '/login' });
+        },
+      });
+    }
+  }, [authUser?.latestLoginDatetime, isTimeoutConfirm]);
 
   useEffect(() => {
-    let intervalId: any;
+    console.log('set interval effect');
+    if (!authUser || !checkSessionTimeout) {
+      console.log('set interval effect - 사용자 정보가 없음 clearinterval');
+      setIsTimeoutConfirm(false);
+      clearInterval(intervalId);
+      return;
+    }
+
+    setIntervalId((intervalState: any) => {
+      if (intervalState) {
+        console.log('setIntervalId before clearInterval');
+        clearInterval(intervalState);
+      }
+      console.log('set interval effect - set');
+      return setInterval(checkSessionTimeout, 60000);
+    }); // 1분마다 세션 체크
+  }, [authUser, checkSessionTimeout]);
+
+  /*
+  useEffect(() => {
     console.log('useEffect latestLoginDatetime', latestLoginDatetime);
-    if (latestLoginDatetime) {
+
+    if (authUser && latestLoginDatetime) {
       if (intervalId) {
         clearInterval(intervalId);
       }
@@ -109,10 +162,13 @@ export function useSessionTimout() {
       };
       console.log('setInterval');
       // 1분마다 세션 체크
-      intervalId = setInterval(checkSessionTimeout, 60000);
+      setIntervalId(setInterval(checkSessionTimeout, 60000));
       setSessionIntervalId(intervalId);
 
       return () => clearInterval(intervalId);
+    } else {
+      clearInterval(intervalId);
     }
-  }, [isTimeoutConfirm, latestLoginDatetime]);
+  }, [authUser, isTimeoutConfirm, latestLoginDatetime, intervalId]);
+  */
 }

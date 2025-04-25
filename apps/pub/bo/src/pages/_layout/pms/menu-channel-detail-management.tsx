@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
-import { GridBox } from '@learnway/ui';
+import { TableBox } from '@learnway/ui';
 
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -57,7 +57,7 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <GridBox
+          <TableBox
             data={data}
             columns={columns}
             showTotalCount={false}

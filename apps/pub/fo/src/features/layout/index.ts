@@ -49,3 +49,4 @@ export * from './popup/course-information-popup';
 export * from './popup/address-confirmation-popup';
 export * from './popup/accepting-popup';
 export * from './popup/course-selection-popup';
+export * from './ui/course-introduction/course-fixed-button';

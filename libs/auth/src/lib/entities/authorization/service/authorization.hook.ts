@@ -2,10 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
 import type { MutateCallback } from '@learnway/shared';
+import { cookieService } from '@learnway/shared';
 
 import type { AuthUser, Tenant } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
-import { useSessionIntervalState } from '../state/session-interval.state';
 
 export const authUserQueryKeys = queryKeys;
 
@@ -61,13 +61,11 @@ export function useReissue(mutationOptions = {}) {
 export function useLogoutUser(mutationOptions = {}) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [sessionIntervalId] = useSessionIntervalState();
 
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.logout(),
     onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
-      clearInterval(sessionIntervalId);
     },
     ...mutationOptions,
   });
@@ -137,6 +135,14 @@ export function useUpdateUser(mutationOptions = {}) {
         return;
       }
       queryClient.setQueryData(queryKeys.authUser, { ...user, email });
+    },
+    updateLatestLoginDateTime: (latestLoginDatetime: Date): AuthUser | undefined => {
+      const user = queryClient.getQueryData(queryKeys.authUser);
+      if (!user) {
+        return;
+      }
+      cookieService.set('LATEST_LOGIN_DATETIME', latestLoginDatetime);
+      queryClient.setQueryData(queryKeys.authUser, { ...user, latestLoginDatetime });
     },
   };
 }

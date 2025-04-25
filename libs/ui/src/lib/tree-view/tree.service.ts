@@ -438,3 +438,51 @@ export const calculateTargetIndex = (
     index: targetIndex + 1,
   };
 };
+
+/**
+ * 트리의 모든 키를 갖고 옴.
+ * @param treeData
+ * @returns
+ */
+export const getAllKeysByTree = (treeData: TreeNode[]) => {
+  const getAllKeys = (nodes: TreeNode[]): string[] => {
+    return nodes.reduce((keys: string[], node) => {
+      keys.push(node.key);
+      if (node.children?.length) {
+        keys.push(...getAllKeys(node.children));
+      }
+
+      return keys;
+    }, []);
+  };
+  return getAllKeys(treeData);
+};
+
+/**
+ * 특정 레벨까지의 모든 트리 키를 반환함 (1~level까지 포함)
+ * @param treeData
+ * @param level
+ * @returns
+ */
+export const getKeysByLevel = (treeData: TreeNode[], level: number, currentLevel = 1): string[] => {
+  if (!treeData || treeData.length === 0 || currentLevel > level) {
+    return [];
+  }
+
+  // 현재 레벨의 키들
+  const currentLevelKeys = treeData.map((node: TreeNode) => node.key);
+
+  // 자식 노드들에서 다음 레벨의 키를 찾음
+  const childrenKeys: string[] = [];
+  if (currentLevel < level) {
+    treeData.forEach((node: TreeNode) => {
+      if (node.children && node.children.length > 0) {
+        const keys = getKeysByLevel(node.children, level, currentLevel + 1);
+        childrenKeys.push(...keys);
+      }
+    });
+  }
+
+  // 현재 레벨의 키와 자식 노드들의 키를 합침
+  return [...currentLevelKeys, ...childrenKeys];
+};

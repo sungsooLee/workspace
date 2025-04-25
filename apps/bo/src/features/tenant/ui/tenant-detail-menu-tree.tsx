@@ -12,7 +12,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
   Switch,
   Tooltip,
   Grid,
@@ -197,7 +197,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
-            <TreeView2
+            <TreeView
               treeId="tenant-menu-tree"
               type={'SAME_LEVEL_ONLY'}
               data={treeData}

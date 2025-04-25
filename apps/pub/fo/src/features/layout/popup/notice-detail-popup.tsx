@@ -7,7 +7,7 @@ import {
   ModalTitle,
   Button,
   useModal,
-  Table,
+  TableBox,
 } from '@learnway/ui';
 import styles from './notice-detail-popup.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -56,7 +56,7 @@ const NoticeDetailPopupComponent = () => {
       <ModalBody>
         <div className={styles.start}>
           <div className={styles.table_wrap}>
-            <Table data={data} columns={columns} tableMode={true} />
+            <TableBox data={data} columns={columns} tableMode={true} />
           </div>
           <p className={styles.text_info}>관련된 안내 멘트가 있다면 오도록 합니다.</p>
         </div>
