@@ -1,149 +1,132 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
-import { useRouterState } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
+import { cn } from '@/libs/shared/src';
 
-import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { IcoFormRequired, IcoAlertCircle, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { TenantManagerModal } from './tenant-manager-modal';
-import { CompanyModal } from './company-modal';
 
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
   ContentsRow,
   Button,
   ChipListModalSelectorFormField,
   DynamicFormField,
 } from '@learnway/ui';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { FormRow } from '@shared/ui';
 import { ThumbnailUploaderFormField } from '@features/learning';
+import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
+import { TenantManagerModal } from '@features/tenant/ui/tenant-manager-modal';
+import { CompanyModal } from '@features/tenant/ui/company-modal';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
-/* image */
-import selectedImg from '@assets/images/thumb/img_thumb_default.jpg';
+export const Route = createFileRoute('/_layout/tenant/regist')({
+  component: RouteComponent,
+});
 
-const TenantDetailBaseComponent: FC<any> = () => {
-  const routerState = useRouterState();
-  const tenantId = routerState.location.state?.tenantId || '1';
-
-  const { t } = useTranslation();
-
+function RouteComponent() {
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
-  const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false,
-  });
-
-  // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
-  const handleCheckedChange = (id: number) => (checked: boolean) => {
-    setChecked((prev) => ({ ...prev, [id]: checked }));
+  const handleCheckChange = (values: any[]) => {
+    console.log('=>', values);
   };
-
   return (
-    <>
-      <div className="title_wrap">
-        <strong className="title">{'기본 정보'}</strong>
-      </div>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantName'} />
-          <Button variant="gray" size="sm">
-            {'중복'}
-          </Button>
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name="tenantLogo">
-            <ThumbnailUploaderFormField />
-          </DynamicFormField>
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'managerName'}>
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'name',
-                valueField: 'value',
-                hideBorder: true,
-              }}
-              modalConfig={{
-                title: '',
-                width: 'xl',
-                content: <TenantManagerModal />,
-              }}
-            />
-          </DynamicFormField>
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantJungsanTag'} />
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'company'}>
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'name',
-                valueField: 'value',
-                hideBorder: true,
-              }}
-              modalConfig={{
-                title: '',
-                width: 'xl',
-                content: <CompanyModal />,
-              }}
-            />
-          </DynamicFormField>
-        </FormRow>
-      </ContentsRow>
+    <form className="form_row">
+      <PageContainer>
+        <MainContents>
+          <div className="title_wrap">
+            <strong className="title">{'기본 정보'}</strong>
+          </div>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'tenantName'} />
+              <Button variant="gray" size="sm">
+                {'중복'}
+              </Button>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name="tenantLogo">
+                <ThumbnailUploaderFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'managerName'}>
+                <ChipListModalSelectorFormField
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'value',
+                    hideBorder: true,
+                  }}
+                  modalConfig={{
+                    title: '',
+                    width: 'xl',
+                    content: <TenantManagerModal />,
+                  }}
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'tenantJungsanTag'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'company'}>
+                <ChipListModalSelectorFormField
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'value',
+                    hideBorder: true,
+                  }}
+                  modalConfig={{
+                    title: '',
+                    width: 'xl',
+                    content: <CompanyModal />,
+                  }}
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
 
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isUsed'} />
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'description'} resize="none" />
-        </FormRow>
-      </ContentsRow>
-      <div className="title_wrap no_line">
-        <strong className="title">{'시스템 설정'}</strong>
-      </div>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'device'} disabled={true} />
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'useCategory'} />
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'language'} />
-        </FormRow>
-      </ContentsRow>
-      <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-        <ContentsHistoryInfoFormField />
-      </ContentsRow>
-    </>
+          <ContentsRow type={'horizontal'}>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'isUsed'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'description'} resize="none" />
+            </FormRow>
+          </ContentsRow>
+          <div className="title_wrap no_line">
+            <strong className="title">{'시스템 설정'}</strong>
+          </div>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'device'} disabled={true} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'useCategory'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'language'} onCheckedChange={handleCheckChange} />
+            </FormRow>
+          </ContentsRow>
+        </MainContents>
+      </PageContainer>
+    </form>
   );
-};
-
-export const TenantDetailBase = TenantDetailBaseComponent;
+}
 
 const formConfig: DynamicFormConfig = {
   builders: [
