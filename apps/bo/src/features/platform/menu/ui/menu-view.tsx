@@ -9,15 +9,12 @@ import { DuplicateCodeGuideText } from './menu-code-input';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 import { ApiInfoModal } from './api-info-modal';
 import { findMenuPathById } from '../service/menu.service';
-import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
-import {
-  useCheckExistsMenu,
-  useMenuManageDetail,
-} from '../../../entities/menu/service/menu-manage.hook';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { useCheckExistsMenu, useMenuManageDetail } from '../../../../entities/menu';
+import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -277,7 +274,7 @@ const MenuViewComponent: FC<any> = ({
             className="cursor-pointer underline"
             onClick={() => {
               openModal({
-                content: <ApiInfoModal apiId={rowData.apiId} />,
+                content: <ApiInfoModal apiId={rowData.apiUuid} />,
                 width: 's',
                 closeOnOutsideClick: true,
               });

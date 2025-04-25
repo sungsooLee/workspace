@@ -7,7 +7,6 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView,
-  NodeDetail,
   TreeContainer,
   TreeBox,
 } from '@learnway/ui';
@@ -148,7 +147,6 @@ export const Basic: Story = {
               showSearchIcon={true}
               iconType={'tree'}
             />
-            <NodeDetail expandAll={handleExpandAll} collapseAll={handleCollapseAll} />
           </div>
         </div>
       );

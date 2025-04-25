@@ -140,7 +140,6 @@ export * from './lib/tabs/tabs';
 // export * from './lib/tree-view/tree-3';
 export * from './lib/tree-view/tree';
 export * from './lib/tree-view/tree.service';
-export * from './lib/tree-view/node-detail';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
 export * from './lib/tree-view/shuttle-tree';

@@ -20,15 +20,13 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-
-import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
-import { CommonCode } from '../../../types/entities/common-code';
-
 import {
   useCommonCodeDetail,
   useCreateCommonCode,
   useUpdateCommonCode,
-} from '../../../entities/common-code/service/common-code.hook';
+} from '../../../../entities/common-code/service/common-code.hook';
+import { CommonCode } from '../../../../types/entities/common-code';
+import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [

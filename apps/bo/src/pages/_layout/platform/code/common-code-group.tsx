@@ -4,13 +4,13 @@ import { PageContainer } from '../../../../widgets/layout/ui/container/page-cont
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { Grid, GridState } from '@learnway/ui';
 import { pageRouteConfig } from '../../../../features/auth';
-import { CommonCodeGroupGrid } from '../../../../features/common-code/ui/common-code-group-grid';
 import { useCommonCodeGroupList } from '../../../../entities/common-code/service/common-code-group.hook';
 import { useState } from 'react';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { CommonCodeGroupGrid } from '../../../../features/platform/code/ui/common-code-group-grid';
 
-export const Route = createFileRoute('/_layout/platform/common-code-group/')({
+export const Route = createFileRoute('/_layout/platform/code/common-code-group')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {

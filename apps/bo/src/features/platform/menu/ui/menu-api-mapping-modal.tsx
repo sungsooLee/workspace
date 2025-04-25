@@ -10,10 +10,10 @@ import {
   useModal,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useFetchPrograms } from '../../../entities/program/service/program-manage.hook';
 import { useEffect, useState } from 'react';
 import { transformApiDataToApiTreeData, treeExpandAll } from '../service/menu.service';
 import { ApiInfoModal } from './api-info-modal';
+import { useFetchPrograms } from '../../../../entities/program/service/program-manage.hook';
 
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const { open: openModal, close } = useModal();

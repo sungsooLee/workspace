@@ -1,15 +1,15 @@
+import { useEffect, useState } from 'react';
+import { cn } from '@learnway/shared';
+
 import { TreeView } from './tree';
+import { getAllKeysByTree, getKeysByLevel } from './tree.service';
+import { TreeContainer } from './tree.context';
+
+import { Button } from '../button/button';
+import { Input } from '../input/input';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { TreeContainer } from './tree.context';
-import { Button } from '../button/button';
-import { Input } from '../input/input';
-import { useEffect, useState } from 'react';
-import { TreeNode } from './type';
-import { cn } from '@learnway/shared';
-import { getAllKeysByTree, getKeysByLevel } from './tree.service';
-import { random } from 'lodash';
 
 const TreeBoxComponent = <T extends object>(
   { treeId, data, showSearchKeyword, initLevel, onAction, closeLevel, clientTree, ...props }: any,
@@ -87,8 +87,8 @@ const TreeBoxComponent = <T extends object>(
           />
         </TreeContainer>
       </div>
-      {/* </div> */}
     </div>
+    // </div>
   );
 };
 

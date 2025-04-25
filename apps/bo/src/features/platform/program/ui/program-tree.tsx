@@ -21,13 +21,13 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 
 import { findNodeByApiId } from '../service/program.service';
-import { transformApiDataToApiTreeData } from '../../menu/service/menu.service';
-import { FormRow } from '../../../shared/ui';
+import { FormRow } from '../../../../shared/ui';
 import {
   useFetchProgram,
   useFetchPrograms,
   useProgramHook,
-} from '../../../entities/program/service/program-manage.hook';
+} from '../../../../entities/program/service/program-manage.hook';
+import { transformApiDataToApiTreeData } from '../../menu/service/menu.service';
 
 const FORM_MODE = {
   NONE: 'NONE',

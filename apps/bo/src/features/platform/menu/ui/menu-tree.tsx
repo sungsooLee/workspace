@@ -8,7 +8,7 @@ import {
   TreeView,
 } from '@learnway/ui';
 import React, { FC, useEffect, useState } from 'react';
-import { IcoMinus, IcoPlus } from '../../../../../../libs/icons/src';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -83,20 +83,21 @@ const MenuTreeComponent: FC<any> = ({
       case 'NODE_SELECT':
         onNodeClick(event.node);
         break;
-      case 'NODE_MOVE':
+      case 'NODE_MOVE': {
         const nodeInfo = event;
         if (nodeInfo.position === 'INSIDE') {
           onNodeMove(
             nodeInfo.sourceNode.menuId,
             nodeInfo.targetNode?.menuId,
-            nodeInfo.targetIndex ? nodeInfo.targetIndex + 1 : 1,
+            nodeInfo.targetIndex ? nodeInfo.targetIndex : 1,
           );
         } else {
-          const targetIndex = nodeInfo.targetIndex || 0;
-          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex + 1);
+          const targetIndex = nodeInfo.targetIndex || 1;
+          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
         }
 
         break;
+      }
     }
   };
 

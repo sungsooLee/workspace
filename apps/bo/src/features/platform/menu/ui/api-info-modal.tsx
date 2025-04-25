@@ -12,7 +12,7 @@ import {
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { useFetchProgram } from '../../../entities/program/service/program-manage.hook';
+import { useFetchProgram } from '../../../../entities/program/service/program-manage.hook';
 
 const ApiInfoModalComponent = ({ apiId }: any) => {
   const { close } = useModal();

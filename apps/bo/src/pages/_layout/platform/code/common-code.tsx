@@ -9,10 +9,10 @@ import { PageContainer } from '../../../../widgets/layout/ui/container/page-cont
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { useCommonCodeList } from '../../../../entities/common-code/service/common-code.hook';
-import { CommonCodeGrid } from '../../../../features/common-code/ui/common-code-grid';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { CommonCodeGrid } from '../../../../features/platform/code/ui/common-code-grid';
 
-export const Route = createFileRoute('/_layout/platform/common-code/')({
+export const Route = createFileRoute('/_layout/platform/code/common-code')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
@@ -69,11 +69,6 @@ function RouteComponent() {
     }
   }, []);
 
-  //   useEffect(() => {
-  // console.log(searchParams);
-  // onFormChange({})
-  //   }, [searchParams]);
-
   const handlePageChange = (newPage: number) => {
     setPageState({ ...pageState, page: newPage });
   };
@@ -126,7 +121,7 @@ function RouteComponent() {
             size="sm"
             onClick={() =>
               router.navigate({
-                to: '/platform/common-code-group',
+                to: '/platform/code/common-code-group',
               })
             }
           >

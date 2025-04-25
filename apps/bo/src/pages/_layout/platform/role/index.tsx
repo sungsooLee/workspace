@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { TreeBox } from '@learnway/ui';
-import { RoleInfo } from '../../../../features/role/ui/role-info';
+import { RoleInfo } from '../../../../features/platform/role/ui/role-info';
 
 export const Route = createFileRoute('/_layout/platform/role/')({
   component: RouteComponent,

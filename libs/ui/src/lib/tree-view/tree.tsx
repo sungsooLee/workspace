@@ -205,11 +205,61 @@ const TreeNodeComponent = ({
   };
 
   // 노드 스타일 계산
-  const getNodeStyle = () => {
-    const styles = [
-      `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
-        ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
-    ];
+  // const getNodeStyle = () => {
+  //   const styles = [
+  //     `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
+  //       ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
+  //   ];
+  //   // 선택 스타일
+  //   if (selectedNode && selectedNode.key === enhanceNode.key) {
+  //     styles.push('bg-[var(--gray1)]');
+  //   }
+
+  //   // 드롭 위치 스타일
+  //   if (dropPosition === 'INSIDE') {
+  //     styles.push(isValidDropPosition() ? 'bg-blue-50' : 'bg-red-50');
+  //   }
+
+  //   // 제약 조건 스타일
+  //   if (enhanceNode.constraints?.drag === false) {
+  //     styles.push('border-l-4 border-red-300');
+  //   }
+  //   if (enhanceNode.constraints?.drop === false) {
+  //     styles.push('border-l-4 border-yellow-300');
+  //   }
+  //   if (enhanceNode.constraints?.drag === false && enhanceNode.constraints?.drop === false) {
+  //     styles.push('bg-gray-50');
+  //   }
+  //   if (enhanceNode.constraints?.drag === false || enhanceNode.constraints?.drop === false) {
+  //     styles.push('opacity-75');
+  //   } else {
+  //     styles.push('');
+  //   }
+  //   // 검색 하이라이트
+  //   if (
+  //     searchKeyword &&
+  //     enhanceNode.title &&
+  //     enhanceNode.title.toLowerCase().includes(searchKeyword.toLowerCase())
+  //   ) {
+  //     styles.push('bg-yellow-50');
+  //   }
+
+  //   return styles.join(' ');
+  // };
+
+  const nodeStyle = useMemo(() => {
+    const styles = [];
+
+    // 배경 스타일
+    if (dropPosition === 'INSIDE') {
+      styles.push('bg-[var(--gray1)]');
+    }
+
+    // 드래그 중 스타일
+    if (isDragging) {
+      styles.push('opacity-50 bg-[var(--gray1)]');
+    }
+
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-[var(--gray1)]');
@@ -232,9 +282,8 @@ const TreeNodeComponent = ({
     }
     if (enhanceNode.constraints?.drag === false || enhanceNode.constraints?.drop === false) {
       styles.push('opacity-75');
-    } else {
-      styles.push('');
     }
+
     // 검색 하이라이트
     if (
       searchKeyword &&
@@ -245,7 +294,15 @@ const TreeNodeComponent = ({
     }
 
     return styles.join(' ');
-  };
+  }, [
+    dropPosition,
+    isDragging,
+    selectedNode,
+    enhanceNode.key,
+    enhanceNode.constraints,
+    searchKeyword,
+    enhanceNode.title,
+  ]);
 
   // 드래그 시작
   const handleDragStart = (e: React.DragEvent) => {
@@ -416,7 +473,7 @@ const TreeNodeComponent = ({
   return (
     <div className={styles.tree_item}>
       <div
-        className={cn(getNodeStyle(), styles.tree_inner, level === 0 && styles.root_menu)}
+        className={cn(nodeStyle, styles.tree_inner, level === 0 && styles.root_menu)}
         style={{
           boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none',
           transition: 'all 0.2s ease',
@@ -467,7 +524,7 @@ const TreeNodeComponent = ({
         <span
           className={cn(
             styles.node_title,
-            `${onCustomNodeClick && level >= 1 ? 'cursor-pointer underline' : 'none'}`,
+            `${onCustomNodeClick && level >= 1 ? 'cursor-pointer underline' : 'cursor-default'}`,
           )}
         >
           {highlightMatch(enhanceNode.title || '')}
@@ -575,50 +632,11 @@ const TreeView = ({
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
-  // 중요: 업데이트 사이클을 끊기 위한 ref 추가
-  const shouldUpdateExpandedKeys = useRef(false);
-  const pendingExpandedKeys = useRef<string[]>([]);
-
   const selectedNode =
     externalSelectedNode !== undefined ? externalSelectedNode : internalSelectedNode;
   const expandedKeys = externalExpandedKeys || internalExpandedKeys;
 
   const treeContext = useTreeContext();
-  const dragState = treeContext ? treeContext.dragState : { node: null, sourceTreeId: null };
-  const setDragState = treeContext
-    ? treeContext.setDragState
-    : () => {
-        /* 빈 함수 */
-      };
-
-  // 노드 가시성 업데이트 함수
-  // const updateNodeVisibility = useCallback(
-  //   (nodes: EnhancedTreeNode[], keyword: string): boolean => {
-  //     let hasVisibleNodes = false;
-
-  //     for (const node of nodes) {
-  //       // 직접 매치 여부 확인
-  //       const nodeMatch = keyword
-  //         ? node.title && node.title.toLowerCase().includes(keyword.toLowerCase())
-  //         : true;
-
-  //       // 하위 노드의 매치 여부 확인
-  //       let childrenMatch = false;
-  //       if (node.children && node.children.length > 0) {
-  //         childrenMatch = updateNodeVisibility(node.children, keyword);
-  //       }
-
-  //       // 현재 노드 또는 하위 노드가 매치되면 표시
-  //       node._visible = nodeMatch || childrenMatch || !keyword;
-
-  //       // 전체 결과에 반영
-  //       hasVisibleNodes = hasVisibleNodes || node._visible;
-  //     }
-
-  //     return hasVisibleNodes;
-  //   },
-  //   [],
-  // );
 
   // 외부 데이터 변경 감지
   useEffect(() => {
@@ -636,89 +654,32 @@ const TreeView = ({
     [onExpandedKeysChange],
   );
 
-  // 검색어 변경에 대한 처리 - 의존성 사이클 제거
-  // useEffect(() => {
-  //   if (!searchKeyword) {
-  //     if (isSearching) {
-  //       const currentTreeData = JSON.parse(JSON.stringify(initialData));
-  //       updateNodeVisibility(currentTreeData, '');
-  //       setTreeData(currentTreeData);
-  //       setIsSearching(false);
-  //       // 즉시 확장 키를 설정하는 대신 대기 중인 키를 표시
-  //       if (originalExpandedKeys.length > 0) {
-  //         pendingExpandedKeys.current = [...originalExpandedKeys];
-  //         shouldUpdateExpandedKeys.current = true;
-  //       }
-  //     }
-  //     return;
-  //   }
+  // 검색 관련 참조 값 추가
+  const lastSearchKeyword = useRef(searchKeyword);
+  const isInitialSearch = useRef(true);
 
-  //   // 처음 검색을 시작할 때만 현재 펼쳐진 상태 저장
-  //   if (!isSearching) {
-  //     setOriginalExpandedKeys([...internalExpandedKeys]);
-  //     setIsSearching(true);
-  //   }
-
-  //   // 노드 가시성 업데이트 - initialData 기반으로 검색
-  //   const newTreeData = JSON.parse(JSON.stringify(initialData));
-  //   const hasResults = updateNodeVisibility(newTreeData, searchKeyword);
-  //   setTreeData(newTreeData);
-
-  //   if (hasResults) {
-  //     // 검색 결과가 있으면 매칭되는 노드의 모든 부모 노드 확장
-  //     const newExpandedKeys = new Set<string>();
-
-  //     // 모든 매칭 노드의 부모 경로 수집
-  //     const collectParentKeys = (nodes: EnhancedTreeNode[], parentKeys: string[] = []): void => {
-  //       for (const node of nodes) {
-  //         const currentPath = [...parentKeys, node.key];
-
-  //         // 노드가 표시되고 검색어와 일치하면 모든 부모 키를 확장 키에 추가
-  //         if (
-  //           node._visible &&
-  //           node.title &&
-  //           node.title.toLowerCase().includes(searchKeyword.toLowerCase())
-  //         ) {
-  //           parentKeys.forEach((key) => newExpandedKeys.add(key));
-  //         }
-
-  //         // 자식 노드가 표시되면 현재 노드는 확장해야 함
-  //         if (node.children && node.children.some((child) => child._visible)) {
-  //           newExpandedKeys.add(node.key);
-  //           collectParentKeys(node.children, currentPath);
-  //         }
-  //       }
-  //     };
-  //     collectParentKeys(newTreeData);
-  //     console.log(newExpandedKeys);
-  //     // 직접 업데이트하지 않고 대기 상태로 표시
-  //     pendingExpandedKeys.current = [...newExpandedKeys];
-  //     shouldUpdateExpandedKeys.current = true;
-  //     // updateExpandedKeys([...newExpandedKeys]);
-  //   }
-  // }, [searchKeyword, initialData, isSearching, internalExpandedKeys, updateNodeVisibility]);
-  // 검색어 변경에 대한 처리 - 의존성 사이클 제거
+  // 검색어 변경에 대한 처리
   useEffect(() => {
+    // 이전 검색어와 동일하면 중복 처리 방지
+    if (lastSearchKeyword.current === searchKeyword && !isInitialSearch.current) {
+      return;
+    }
+
+    isInitialSearch.current = false;
+    lastSearchKeyword.current = searchKeyword;
+
     if (!searchKeyword) {
       if (isSearching) {
         const currentTreeData = JSON.parse(JSON.stringify(initialData));
         updateNodeVisibility(currentTreeData, '');
         setTreeData(currentTreeData);
         setIsSearching(false);
-        // 즉시 확장 키를 설정하는 대신 대기 중인 키를 표시
-        if (originalExpandedKeys.length > 0) {
-          pendingExpandedKeys.current = [...originalExpandedKeys];
-          shouldUpdateExpandedKeys.current = true;
-        }
       }
       return;
     }
 
-    // 처음 검색을 시작할 때만 현재 펼쳐진 상태 저장
-    if (!isSearching) {
-      setOriginalExpandedKeys([...internalExpandedKeys]);
-      setIsSearching(true);
-    }
+    // 검색 상태로 설정
+    setIsSearching(true);
 
     // 노드 가시성 업데이트 - initialData 기반으로 검색
     const newTreeData = JSON.parse(JSON.stringify(initialData));
@@ -727,51 +688,49 @@ const TreeView = ({
 
     if (hasResults) {
       // 검색 결과가 있으면 매칭되는 노드의 모든 부모 노드 확장
-      const newExpandedKeys = new Set<string>();
+      const newExpandedKeys = new Set<string>(expandedKeys); // 현재 확장 상태 유지
 
-      // 검색어와 일치하는 모든 노드의 부모 경로를 미리 수집하는 함수
-      const collectMatchingPaths = (
-        nodes: EnhancedTreeNode[],
-        parentPath: string[] = [],
-        allPaths: string[][] = [],
-      ): string[][] => {
+      // 모든 가시적 노드의 부모 경로를 수집하는 함수
+      const collectVisibleNodePaths = (nodes: EnhancedTreeNode[], parentPath: string[] = []) => {
         for (const node of nodes) {
           const currentPath = [...parentPath, node.key];
 
-          // 노드가 검색어와 일치하면 현재 경로를 결과에 추가
-          if (
-            node._visible &&
-            node.title &&
-            node.title.toLowerCase().includes(searchKeyword.toLowerCase())
-          ) {
-            allPaths.push([...currentPath]);
-          }
+          // 노드가 표시 가능한 경우 (본인이 검색 결과이거나 자식 중 검색 결과가 있는 경우)
+          if (node._visible) {
+            // 검색어와 직접 일치하는 경우 모든 부모 노드 확장
+            if (node.title && node.title.toLowerCase().includes(searchKeyword.toLowerCase())) {
+              // 부모 노드들만 확장 키에 추가
+              parentPath.forEach((key) => newExpandedKeys.add(key));
+            }
 
-          // 자식 노드가 있으면 재귀적으로 탐색
-          if (node.children && node.children.length > 0) {
-            collectMatchingPaths(node.children, currentPath, allPaths);
+            // 자식 노드가 있으면 재귀적으로 탐색
+            if (node.children && node.children.length > 0) {
+              collectVisibleNodePaths(node.children, currentPath);
+
+              // 자식 중 가시적인 노드가 있으면 현재 노드 확장
+              if (node.children.some((child) => child._visible)) {
+                newExpandedKeys.add(node.key);
+              }
+            }
           }
         }
-
-        return allPaths;
       };
 
-      // 모든 일치하는 경로 수집
-      const matchingPaths = collectMatchingPaths(newTreeData);
+      // 모든 가시적 노드의 경로 수집
+      collectVisibleNodePaths(newTreeData);
 
-      // 일치하는 각 경로에서 노드의 모든 부모 키 추가
-      matchingPaths.forEach((path) => {
-        // 경로의 마지막 노드를 제외한 모든 부모 노드 키 추가 (상위 폴더들)
-        path.slice(0, -1).forEach((key) => newExpandedKeys.add(key));
-      });
+      const expandedKeysArray = [...newExpandedKeys];
+      console.log('Expanded keys for search:', expandedKeysArray);
 
-      console.log('Expanded keys for search:', [...newExpandedKeys]);
+      // 직접 내부 상태 변경 (의존성 사이클 끊기)
+      setInternalExpandedKeys(expandedKeysArray);
 
-      // 대기 중인 키 설정
-      pendingExpandedKeys.current = [...newExpandedKeys];
-      shouldUpdateExpandedKeys.current = true;
+      // 외부 핸들러가 있는 경우만 호출
+      if (onExpandedKeysChange) {
+        onExpandedKeysChange(expandedKeysArray);
+      }
     }
-  }, [searchKeyword, initialData, isSearching]);
+  }, [searchKeyword, initialData, expandedKeys]);
 
   useEffect(() => {
     // 외부에서 전달받은 데이터로 트리 데이터 초기화
@@ -787,14 +746,6 @@ const TreeView = ({
 
     setTreeData(refreshedData);
   }, [initialData, isSearching, searchKeyword]);
-
-  // 대기 중인 확장 키 업데이트를 처리하는 별도의 효과
-  useEffect(() => {
-    if (shouldUpdateExpandedKeys.current) {
-      shouldUpdateExpandedKeys.current = false;
-      updateExpandedKeys(pendingExpandedKeys.current);
-    }
-  }, [updateExpandedKeys]);
 
   // 모든 노드 키 가져오기
   const getAllNodeKeys = useCallback((nodes: TreeNode[]): string[] => {
@@ -823,12 +774,7 @@ const TreeView = ({
 
     // treeContext나 dragState가 없는 경우 처리
     if (!treeContext || !treeContext.dragState || !treeContext.dragState.node) {
-      // sourceNode가 dropInfo에 있으면 사용
-      if (dropInfo.sourceNode) {
-        console.log('Using sourceNode from dropInfo instead of dragState');
-        // 아래 코드에서 dropInfo.sourceNode 사용
-      } else {
-        console.error('No source node available from any source, aborting drop');
+      if (!dropInfo.sourceNode) {
         return;
       }
     }

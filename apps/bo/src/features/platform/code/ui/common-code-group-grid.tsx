@@ -18,14 +18,13 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-
-import { ContentsHistoryInfoFormField, FormRow } from '../../../shared/ui/form';
+import { CommonCodeGroup } from '../../../../types/entities/common-code';
 import {
   useCommonCodeGroupDetail,
   useCreateCommonCodeGroup,
   useUpdateCommonCodGroup,
-} from '../../../entities/common-code/service/common-code-group.hook';
-import { CommonCodeGroup } from '../../../types/entities/common-code';
+} from '../../../../entities/common-code/service/common-code-group.hook';
+import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -62,7 +61,7 @@ const CommonCodeGroupGridComponent = ({
   state,
   onStateChange,
 }: any) => {
-  const gridRef = useRef<GridImperative>(null);
+  const gridRef = useRef<any>(null);
   const router = useRouter();
 
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
@@ -121,6 +120,7 @@ const CommonCodeGroupGridComponent = ({
       // 적절한 시간 후에 행 선택 시도 (데이터 새로고침 완료 후)
       const selected = gridRef.current?.selectRowById('cdGroupId', data.cdGroupId);
       if (selected) {
+        console.log(newItem);
         setFormMode(FORM_MODE.VIEW);
         setSelectedRow(newItem);
       } else {
@@ -199,6 +199,7 @@ const CommonCodeGroupGridComponent = ({
         };
         createCodeGroup(createPayload, {
           onSuccess: async (data) => {
+            console.log(data);
             if (data) {
               afterCreateOrUpdateCommonCodeGroup(data);
             }
@@ -427,7 +428,7 @@ const columns = (router: any) => {
               const cdGroupName = info.row.getValue('cdGroupName');
               if (router) {
                 router.navigate({
-                  to: '/platform/common-code',
+                  to: '/platform/code/common-code',
                   state: {
                     cdGroupId: cdGroupId,
                     cdGroupName: cdGroupName,

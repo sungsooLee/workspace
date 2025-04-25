@@ -34,11 +34,7 @@ const sampleData: TreeNode[] = [
   },
 ];
 const RoleInfoComponent = () => {
-  return (
-    <>
-      <TreeBox data={sampleData} showSearchKeyword initLevel={1} closeLevel={1} />
-    </>
-  );
+  return <>{/* <TreeBox data={sampleData} showSearchKeyword initLevel={1} closeLevel={1} /> */}</>;
 };
 
 export const RoleInfo = RoleInfoComponent;
