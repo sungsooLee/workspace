@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { useWatch } from 'react-hook-form';
+import { useRouterState } from '@tanstack/react-router';
 import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
 
 import {
@@ -34,6 +34,8 @@ import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal
 import {
   useMenuTenantManageDetail,
   useMenuTenantMangeFetchTrees,
+  useDeleteMenuTenent,
+  useUpdateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
@@ -45,14 +47,14 @@ const FORM_MODE = {
   ADD: 'ADD',
 };
 
-const tenantId = '1';
-
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
+  const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [isInitMode, setIsInitMode] = useState(true);
+  const tenantId = routerState.location.state?.tenantId || '1';
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
@@ -63,6 +65,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
   console.log(menuScope);
   const { data: menuData, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScope);
+
+  //
+  const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {});
+  const { update: updateMenuTenent } = useUpdateMenuTenant(tenantId, menuScope, {});
 
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
@@ -84,19 +90,35 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     });
   };
 
-  const handleDeleteMenuTenant = (payload: any) => {
+  const handleDeleteMenuTenant = () => {
     openConfirm({
-      title: '삭제 하시겠습니까?',
+      title: t('삭제 하시겠습니까?'),
       content: (
         <>
-          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
-          <p>삭제 후 복구할 수 없습니다.</p>
+          <p>{t('하위 메뉴 존재 시 모두 삭제되며,')}</p>
+          <p>{t('삭제 후 복구할 수 없습니다.')}</p>
         </>
       ),
       onClose: (value: boolean) => {
         if (value) {
+          const payload = { ...selectedNode };
           console.log('date!', payload);
+          deleteMenuTenent(payload);
+          setFormMode(FORM_MODE.NONE);
+        }
+      },
+    });
+  };
 
+  const handleUpdateMenuTenant = () => {
+    openConfirm({
+      title: t('저장 하시겠습니까?'),
+      content: <p>{t('입력한 정보로 저장됩니다.')}</p>,
+      onClose: (value: boolean) => {
+        if (value) {
+          const payload = { ...selectedNode };
+          console.log('date!', payload);
+          updateMenuTenent(payload);
           setFormMode(FORM_MODE.NONE);
         }
       },
@@ -209,7 +231,12 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             >
               {t('삭제')}
             </Button>
-            <Button variant="save" size="sm" disabled={FORM_MODE.NONE === formMode}>
+            <Button
+              variant="save"
+              size="sm"
+              disabled={FORM_MODE.NONE === formMode}
+              onClick={handleUpdateMenuTenant}
+            >
               {t('저장')}
             </Button>
           </div>

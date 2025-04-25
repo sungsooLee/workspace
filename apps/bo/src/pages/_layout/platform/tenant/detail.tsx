@@ -46,6 +46,8 @@ function RouteComponent() {
       case 'menu04':
         alert('menu04');
         break;
+      default:
+        alert('없음');
     }
   };
   return (
@@ -80,23 +82,33 @@ function RouteComponent() {
 
 const menuItems = [
   {
-    title: '1. 테넌트 기본 정보',
+    title: '테넌트 기본 정보',
     key: 'menu01',
     content: <TenantDetailBase />,
   },
   {
-    title: '2. 테넌트 메뉴관리 메핑',
+    title: '테넌트 속성 관리',
     key: 'menu02',
+    content: <TenantDetailBase />,
+  },
+  {
+    title: '테넌트 회사 관리',
+    key: 'menu03',
+    content: <TenantDetailBase />,
+  },
+  {
+    title: '테넌트 메뉴관리 메핑',
+    key: 'menu04',
     content: <TenantDetailMenu />,
   },
   {
-    title: '3. 테넌트 카테고리 관리',
-    key: 'menu04',
+    title: '테넌트 카테고리 관리',
+    key: 'menu05',
     content: <TenantDetailCategory />,
   },
   {
-    title: '4. 테넌트 역할 생성',
-    key: 'menu05',
+    title: '테넌트 역할 생성',
+    key: 'menu06',
     content: '',
   },
 ];

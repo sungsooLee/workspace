@@ -31,7 +31,7 @@ export function useUpdateMenuTenant(tenantId: string, deviceType: string, option
   });
 
   return {
-    updateMenuTenent: (payload: any, callback?: any) => {
+    update: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
@@ -58,7 +58,7 @@ export function useDeleteMenuTenent(tenantId: string, deviceType: string, option
   });
 
   return {
-    deleteMenuTenent: (payload: any, callback?: any) => {
+    delete: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
