@@ -564,7 +564,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-management',
     screenId: 'NLP_BO_CHN_1401',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-25',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -575,7 +575,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '개발 확인 후 작업 예정', // 비고
   },
   {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',
