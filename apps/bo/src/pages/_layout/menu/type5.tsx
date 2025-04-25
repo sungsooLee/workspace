@@ -241,6 +241,7 @@ const formConfig: DynamicFormConfig = {
       format: 'boolean', // 기본 string
       value: false,
       switchConfig: {
+        label: 'dddd',
         guideText: (value: boolean) => (value ? '참' : '거짓'),
       },
     },
