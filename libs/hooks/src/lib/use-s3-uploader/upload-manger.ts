@@ -8,6 +8,80 @@ import {
 } from './api';
 import { UploadFile, UploadPart } from './types';
 import { updateFile } from './utils';
+const PARTS_SIZE = 5 * 1024 * 1024;
+// 업로드 진행률 계산 유틸
+const calculateProgress = (uploaded: number, total: number) => Math.round((uploaded / total) * 100);
+
+// presigned URL로 실제 업로드 처리 후 ETag 반환
+const uploadChunk = async (
+  url: string,
+  chunk: Blob,
+  signal: AbortSignal,
+  contentType?: string,
+): Promise<string | null> => {
+  const res = await fetch(url, {
+    method: 'PUT',
+    body: chunk,
+    signal,
+    headers: contentType ? { 'Content-Type': contentType } : {},
+  });
+  if (!res.ok) return null;
+  return res.headers.get('ETag')?.replace(/"/g, '') || null;
+};
+
+// 멀티파트 업로드 루프 (resume 및 초기 업로드에서 공통 사용)
+const performMultipartUpload = async ({
+  id,
+  file,
+  parts,
+  uploadedPartNumbers,
+  partCount,
+  controller,
+  uploadId,
+  setFiles,
+}: {
+  id: string;
+  file: UploadFile;
+  parts: UploadPart[];
+  uploadedPartNumbers: Set<number>;
+  partCount: number;
+  controller: AbortController;
+  uploadId: string;
+  setFiles: (updater: (prev: UploadFile[]) => UploadFile[]) => void;
+}) => {
+  for (let i = 0; i < partCount; i++) {
+    const partNumber = i + 1;
+    if (uploadedPartNumbers.has(partNumber)) continue;
+
+    if (controller.signal.aborted) {
+      setFiles((prev) => updateFile(prev, id, { status: 'paused' }));
+      return null;
+    }
+
+    const chunk = file.file.slice(i * PARTS_SIZE, (i + 1) * PARTS_SIZE);
+    const presigned = await issuePresigendUrlByPart({
+      uploadId,
+      partNumber,
+      key: file.key,
+    });
+    if (!presigned) return null;
+
+    const etag = await uploadChunk(presigned.url, chunk, controller.signal, presigned.contentType);
+    if (!etag) return null;
+
+    parts.push({ ETag: etag, PartNumber: partNumber });
+    setFiles((prev) =>
+      updateFile(prev, id, {
+        progress: calculateProgress(parts.length, partCount),
+        parts,
+        uploadId,
+        contentType: presigned.contentType,
+        status: 'uploading',
+      }),
+    );
+  }
+  return parts;
+};
 
 /**
  * 업로드와 관련된 로직을 구체적으로 처리하는 역할
@@ -47,6 +121,7 @@ export const startUpload = async (
  * - 로컬 파트와 병합하여 누락된 part만 업로드
  * - 업로드 후 complete 호출
  */
+
 export const resumeUpload = async (
   id: string,
   files: UploadFile[],
@@ -69,71 +144,37 @@ export const resumeUpload = async (
   const localParts: UploadPart[] = target.parts || [];
   const uploadedPartNumbers = new Set([...serverParts, ...localParts].map((p) => p.PartNumber));
 
-  const partSize = 5 * 1024 * 1024;
-  const partCount = Math.ceil(target.file.size / partSize);
+  const partCount = Math.ceil(target.file.size / PARTS_SIZE);
   const parts: UploadPart[] = [...serverParts];
 
   // 시작 시점에 기존 진행률 반영
-  const estimatedProgress = Math.round((serverParts.length / partCount) * 100);
   setFiles((prev) =>
     updateFile(prev, id, {
       parts: serverParts,
       uploadId,
-      progress: estimatedProgress,
+      progress: calculateProgress(serverParts.length, partCount),
       status: 'uploading',
       controller,
     }),
   );
 
-  // 누락된 파트만 업로드
-  for (let i = 0; i < partCount; i++) {
-    const partNumber = i + 1;
-    if (uploadedPartNumbers.has(partNumber)) continue;
+  const result = await performMultipartUpload({
+    id,
+    file: target,
+    parts,
+    uploadedPartNumbers,
+    partCount,
+    controller,
+    uploadId,
+    setFiles,
+  });
 
-    // 중단 요청 시
-    if (controller.signal.aborted) {
-      setFiles((prev) => updateFile(prev, id, { status: 'paused' }));
-      return;
-    }
-
-    const chunk = target.file.slice(i * partSize, (i + 1) * partSize);
-    const presigned = await issuePresigendUrlByPart({
-      uploadId,
-      partNumber,
-      key: target.key,
-    });
-    if (!presigned) return;
-
-    try {
-      const res = await fetch(presigned.url, {
-        method: 'PUT',
-        body: chunk,
-        signal: controller.signal,
-      });
-      const etag = res.headers.get('ETag')?.replace(/"/g, '') || '';
-      parts.push({ ETag: etag, PartNumber: partNumber });
-
-      setFiles((prev) =>
-        updateFile(prev, id, {
-          status: 'uploading',
-          progress: Math.round((parts.length / partCount) * 100),
-          parts,
-          uploadId,
-        }),
-      );
-    } catch (e) {
-      if ((e as any).name === 'AbortError') {
-        setFiles((prev) => updateFile(prev, id, { status: 'paused' }));
-        return;
-      }
-      console.error(e);
-      setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
-      return;
-    }
+  if (result) {
+    await completedMultiPartUpload({ uploadId, parts: result, key: target.key });
+    setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
+  } else {
+    setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
   }
-
-  await completedMultiPartUpload({ uploadId, parts, key: target.key });
-  setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
 };
 
 /**
@@ -183,8 +224,10 @@ export const uploadMultiPartFile = async (
   setFiles: (updater: (prev: UploadFile[]) => UploadFile[]) => void,
 ) => {
   const controller = new AbortController();
+  const partCount = Math.ceil(file.file.size / PARTS_SIZE);
+  const parts: UploadPart[] = [];
+  const uploadedPartNumbers = new Set<number>();
 
-  // 초기 상태 설정
   setFiles((prev) =>
     updateFile(prev, id, {
       status: 'uploading',
@@ -197,69 +240,38 @@ export const uploadMultiPartFile = async (
 
   const uploadInit = await initMultiPartUpload(file.key);
   if (!uploadInit) return;
-  const partSize = 5 * 1024 * 1024;
-  const partCount = Math.ceil(file.file.size / partSize);
-  const parts: UploadPart[] = [];
-  let isSuccess = true;
-  for (let i = 0; i < partCount; i++) {
-    const chunk = file.file.slice(i * partSize, (i + 1) * partSize);
-    const presigned = await issuePresigendUrlByPart({
-      uploadId: uploadInit.uploadId,
-      partNumber: i + 1,
-      key: file.key,
-    });
-    if (!presigned) return;
 
-    try {
-      const res = await fetch(presigned.url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': presigned.contentType,
-        },
-        body: chunk,
-        signal: controller.signal,
-      });
-      const etag = res.headers.get('ETag')?.replace(/"/g, '') || '';
-      parts.push({ ETag: etag, PartNumber: i + 1 });
-      if (res.ok) {
-        setFiles((prev) =>
-          updateFile(prev, id, {
-            progress: Math.round((parts.length / partCount) * 100),
-            parts,
-            contentType: presigned.contentType,
-            uploadId: uploadInit.uploadId,
-          }),
-        );
-      } else {
-        file.controller?.abort(); // AbortController로 업로드 중단
-        await abortMultiPartUpload(uploadInit.uploadId, uploadInit.key);
-        setFiles((prev) =>
-          updateFile(prev, id, {
-            status: 'failed',
-            progress: Math.round((parts.length / partCount) * 100),
-          }),
-        );
-        isSuccess = false;
-        break;
-      }
-    } catch (e) {
-      if ((e as any).name === 'AbortError') {
-        setFiles((prev) => updateFile(prev, id, { status: 'paused' }));
-        return;
-      }
-      return;
-    }
+  const result = await performMultipartUpload({
+    id,
+    file,
+    parts,
+    uploadedPartNumbers,
+    partCount,
+    controller,
+    uploadId: uploadInit.uploadId,
+    setFiles,
+  });
+
+  if (!result) {
+    file.controller?.abort();
+    await abortMultiPartUpload(uploadInit.uploadId, uploadInit.key);
+    setFiles((prev) =>
+      updateFile(prev, id, {
+        status: 'failed',
+        progress: calculateProgress(parts.length, partCount),
+      }),
+    );
+    return;
   }
-  if (isSuccess) {
-    const completeResponse = await completedMultiPartUpload({
-      uploadId: uploadInit.uploadId,
-      parts,
-      key: file.key,
-    });
-    if (!completeResponse) {
-      setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
-    } else {
-      setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
-    }
+
+  const completeResponse = await completedMultiPartUpload({
+    uploadId: uploadInit.uploadId,
+    parts: result,
+    key: file.key,
+  });
+  if (!completeResponse) {
+    setFiles((prev) => updateFile(prev, id, { status: 'failed' }));
+  } else {
+    setFiles((prev) => updateFile(prev, id, { status: 'completed', progress: 100 }));
   }
 };

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import {
   Badge,
@@ -25,9 +25,18 @@ import { NoticeBox } from '@shared/ui';
 import { UploadFile, useS3Uploader } from '@learnway/hooks'; // 파일 업로드
 
 const ExcelUploadModalComponent = () => {
+  const acceptFiles = ['xlsx'];
   const { files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
     s3Path: 'upload/leaning/resource/video',
+    maxFileCount: 1,
+    acceptFiles: acceptFiles,
   });
+  const acceptFileString = useMemo(() => {
+    if (!acceptFiles) return '';
+    return acceptFiles
+      .map((acceptFile) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
+      .join(', ');
+  }, [acceptFiles]);
   const { close: closeModal } = useModal();
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -193,6 +202,7 @@ const ExcelUploadModalComponent = () => {
     // 파일 상태에 따른 컴포넌트 반환 (일치하지 않는 상태는 기본 상태로 처리)
     return statusMap[file.status] || statusMap.default;
   };
+
   return (
     <ModalContainer>
       <ModalTitle>엑셀 업로드</ModalTitle>
@@ -208,7 +218,13 @@ const ExcelUploadModalComponent = () => {
                       {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
                     </strong>
                     <span className={styles.file_guide}>{'XLSX, CSV / Max file size : 50MB'}</span>
-                    <input type="file" className={styles.input_file} onChange={handleFileChange} />
+                    <input
+                      type="file"
+                      className={styles.input_file}
+                      onChange={handleFileChange}
+                      multiple={false}
+                      accept={acceptFileString}
+                    />
                   </Button>
                 </div>
               )}

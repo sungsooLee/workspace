@@ -1,5 +1,5 @@
 import { S3UploaderConfig, UploadFile } from './types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
 import { getRandomId } from '@learnway/shared';
@@ -17,6 +17,16 @@ const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
  *               { sync: boolean } - 순차 업로드 여부
  *               { auto: boolean } - 파일 추가 시 자동 업로드
  */
+export type UploadStatus =
+  | 'validating'
+  | 'idle'
+  | 'uploading'
+  | 'paused'
+  | 'completed'
+  | 'failed'
+  | 'aborted'
+  | 'validating-error';
+
 const useS3UploaderHook = (config: S3UploaderConfig) => {
   const {
     auto = true,
@@ -27,7 +37,52 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // 현재 업로드 상태를 관리하는 state
   const [files, setFiles] = useState<UploadFile[]>([]);
+  const stats = useMemo(() => {
+    let status = 'idle';
+    // 상태별 카운트 계산
+    const statusCount = files.reduce<Record<UploadStatus, number>>(
+      (acc, file) => {
+        acc[file.status] = (acc[file.status] || 0) + 1; // 상태별로 카운팅
+        return acc;
+      },
+      {
+        validating: 0,
+        idle: 0,
+        uploading: 0,
+        paused: 0,
+        completed: 0,
+        failed: 0,
+        aborted: 0,
+        'validating-error': 0,
+      },
+    );
+    if (statusCount.uploading > 0) {
+      status = 'uploading';
+    } else if (
+      statusCount.completed +
+        statusCount.aborted +
+        statusCount['validating-error'] +
+        statusCount.failed ===
+      files.length
+    ) {
+      if (statusCount.failed === files.length) {
+        status = 'failed';
+      } else {
+        status = 'completed';
+      }
+    }
 
+    return {
+      status,
+      total: files.length,
+      uploading: statusCount.uploading,
+      paused: statusCount.paused,
+      failed: statusCount.failed,
+      completed: statusCount.completed,
+      aborted: statusCount.aborted,
+      'validating-error': statusCount['validating-error'],
+    };
+  }, [files]);
   // useUploadTask 를 통해 작업 큐 생성
   const { addTask, removeTask } = useUploadTask({
     files,

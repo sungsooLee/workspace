@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, EditInputCell, EditTextareaCell, useModal } from '@learnway/ui';
+import {
+  Button,
+  EditInputCell,
+  EditTextareaCell,
+  GridBox,
+  useGridBox,
+  useModal,
+} from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { GridBox, useGridBox } from '@shared/ui/grid-box';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -12,7 +18,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP } from '@learnway/config';
 import { CellContext } from '@tanstack/react-table';
 import { useTranslation } from '@entities/translation/service/translation.hook';
-import { useFetchCodeGroups } from '@entities/platform';
+import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -45,6 +51,7 @@ function RouteComponent() {
    * 등록화면 이동
    */
   const handleNewTranslation = useCallback(async () => {
+    if (!data) return;
     if (
       !(await confirm({
         title: '저장 하시겠습니까?',
@@ -221,7 +228,12 @@ const gridConfig = {
         return `${info.row.original.totalTranslatedCount} / ${info.row.original.totalLocaleCount}`;
       },
     },
-    { name: 'lastModifiedBy', label: '수정자' },
+    {
+      name: 'lastModifiedBy',
+      label: () => t('LABEL.LOGIN'),
+      translation: true,
+      render: () => t('LABEL'),
+    },
     {
       name: 'modifiedDate',
       label: '수정일시',
