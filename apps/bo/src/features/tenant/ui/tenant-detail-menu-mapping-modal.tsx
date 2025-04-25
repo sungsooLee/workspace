@@ -9,7 +9,6 @@ import {
   Button,
   TreeContainer,
   TreeView,
-  TreeView2,
   TreeNode,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -17,7 +16,10 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import {
+  findMenuPathById,
+  transformApiDataToTreeData,
+} from '@features/platform/menu/service/menu.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import { useMenuTenantMangeFetchTrees } from '@entities/tenant/service/tenant-menu-manage.hook';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
@@ -142,7 +144,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView2
+                  <TreeView
                     treeId="mapping-menu-tree"
                     type={'SHUTTLE_LIST'}
                     data={baseMenuTreeData}
@@ -198,7 +200,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView2
+                  <TreeView
                     treeId="mapping-tenant-menu-tree"
                     type={'SHUTTLE_LIST'}
                     data={menuTreeData}

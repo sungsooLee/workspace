@@ -38,7 +38,10 @@ import {
   useUpdateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
-import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import {
+  findMenuPathById,
+  transformApiDataToTreeData,
+} from '@features/platform/menu/service/menu.service';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const FORM_MODE = {
