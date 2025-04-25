@@ -19,7 +19,7 @@ import {
   GridBox,
   CheckboxGroupFormField,
   RadioGroupFormField,
-  Table,
+  TableBox,
 } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/widget-detail')({
@@ -297,7 +297,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <Table data={data2} columns={columns2} tableMode={true} />
+                <TableBox data={data2} columns={columns2} tableMode={true} />
               </div>
             </div>
           </ContentsRow>
