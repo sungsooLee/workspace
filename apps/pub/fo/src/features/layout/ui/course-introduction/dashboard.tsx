@@ -8,7 +8,7 @@ import statusStyles from './status.module.css';
 import { NoticeDetailPopup } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<null>(null);
   const options = [
     { value: 'option1', label: '1차 | 25-03-01 ~ 26-03-31' },
     { value: 'option2', label: '2차 | 25-03-01 ~ 26-03-31' },
@@ -39,31 +39,21 @@ const CourseDashboardCompoment = () => {
           options={options}
           value={selectedValues}
           onChange={(selected) => setSelectedValues(selected)}
-          placeholder="전체 차수보기"
+          placeholder="차수보기"
           variant="text"
           isMulti={false}
           size={'lg'}
           menu-portal-text
         />
       </div>
-      {/* 
-        학습전 : status_before 
-        학습중 : status_progress
-        학습완료 (이수) : status_completed
-        학습미완료 (미이수) : status_incomplete
-      */}
-      <div className={`${statusStyles.start} ${statusStyles.status_before}`}>
-        <div className={statusStyles.panel_degreey}>
+
+      <div className={statusStyles.start}>
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.panel_degreey}>
           <div className={statusStyles.list}>
-            <h3>
-              <span className={statusStyles.ico}>
-                <IcoMessageText />
-              </span>
-              이수
-            </h3>
+            <h3>이수</h3>
             <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
           </div>
-        </div>
+        </Panel>
 
         <div className={statusStyles.status_box}>
           <div className={statusStyles.progress_rate}>

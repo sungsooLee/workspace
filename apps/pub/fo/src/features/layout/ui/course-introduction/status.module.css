@@ -1,16 +1,15 @@
 /* 대시보드 진행상황 */
 .start {
   .panel_degreey {
-    @apply rounded-[16px] border border-solid px-[24px] py-[16px];
     .list {
-      @apply flex items-center justify-between;
+      @apply flex items-center justify-between p-[16px];
       .date {
         @apply title_3_b text-[var(--gray7)];
       }
     }
 
     h3 {
-      @apply title_3_b flex items-center justify-start text-[var(--gray7)];
+      @apply body_2_b flex items-center justify-start text-[var(--gray8)];
       .ico {
         @apply mr-[10px] flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[var(--white)];
         svg {
@@ -105,63 +104,6 @@
               }
             }
           }
-        }
-      }
-    }
-  }
-
-  /* 학습중 */
-  &.status_progress {
-    .panel_degreey {
-      @apply border-[var(--gray5)] bg-[var(--white)];
-      .list {
-        .date {
-          @apply text-[var(--gray7)];
-        }
-      }
-
-      h3 {
-        @apply text-[var(--status2)];
-        .ico {
-          @apply bg-[var(--status2)];
-        }
-      }
-    }
-  }
-
-  /* 학습완료 : 이수 */
-  &.status_completed {
-    .panel_degreey {
-      @apply border-[var(--secondary4)] bg-[var(--secondary5)];
-      .list {
-        .date {
-          @apply text-[var(--secondary3)];
-        }
-      }
-
-      h3 {
-        @apply text-[var(--secondary3)];
-        .ico {
-          @apply bg-[var(--secondary1)];
-        }
-      }
-    }
-  }
-
-  /* 학습완료 : 미이수 */
-  &.status_incomplete {
-    .panel_degreey {
-      @apply border-[var(--secondary7)] bg-[var(--secondary8)];
-      .list {
-        .date {
-          @apply text-[var(--gray6)];
-        }
-      }
-
-      h3 {
-        @apply text-[var(--status1)];
-        .ico {
-          @apply bg-[var(--status1)];
         }
       }
     }
