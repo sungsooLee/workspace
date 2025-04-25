@@ -3,8 +3,20 @@
   .panel_degreey {
     .list {
       @apply flex items-center justify-between p-[16px];
-      .date {
-        @apply title_3_b text-[var(--gray7)];
+      .date_status {
+        @apply flex items-center;
+        .date_box {
+          @apply body_3_r text-[var(--gray7)];
+          .date {
+            @apply relative ml-[8px] inline-block pl-[8px];
+            &::before {
+              @apply absolute left-0 top-[4px] block h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+            }
+          }
+          + .date_box {
+            @apply ml-[24px];
+          }
+        }
       }
     }
 
@@ -20,7 +32,7 @@
   }
 
   .status_box {
-    @apply mt-[8px] rounded-[16px] border border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[24px] py-[24px];
+    @apply mt-[8px];
     .progress_rate {
       @apply flex items-center justify-between;
       > div {

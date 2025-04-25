@@ -51,19 +51,30 @@ const CourseDashboardCompoment = () => {
         <Panel type="rounded" hideHeaderUnderline className={statusStyles.panel_degreey}>
           <div className={statusStyles.list}>
             <h3>이수</h3>
-            <span className={statusStyles.date}>25-03-01 ~ 26-03-31</span>
+            <div className={statusStyles.date_status}>
+              <div className={statusStyles.date_box}>
+                교육기간
+                <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374)</span>
+              </div>
+              <div className={statusStyles.date_box}>
+                남은학습기간
+                <span className={statusStyles.date}>D-27</span>
+              </div>
+            </div>
           </div>
         </Panel>
 
-        <div className={statusStyles.status_box}>
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_rate}>
           <div className={statusStyles.progress_rate}>
+            <h3>나의진도율</h3>
             <Progress value={progress} className={statusStyles.progress_bar} />
             <div className={statusStyles.info}>
-              <span className={statusStyles.txt}>진도율</span>
               <span className={statusStyles.progress}>{progress}%</span>
             </div>
           </div>
+        </Panel>
 
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.status_box}>
           <div className={statusStyles.status_list}>
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>출석 (40%)</span>
@@ -115,7 +126,7 @@ const CourseDashboardCompoment = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Panel>
       </div>
     </div>
   );
