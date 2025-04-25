@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button, Avatar } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare } from '@learnway/icons';
+import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
+import { IcoHeart, IcoUser01 } from '@learnway/icons';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';

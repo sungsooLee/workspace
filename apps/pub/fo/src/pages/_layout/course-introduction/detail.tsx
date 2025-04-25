@@ -10,7 +10,7 @@ import {
   useModal,
   Textarea,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoStar } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
