@@ -56,7 +56,7 @@ function RouteComponent() {
         <Button
           className="link"
           onClick={() => {
-            router.navigate({ to: '/platform/tenant/detail', state: { tenantId: 1 } });
+            router.navigate({ to: '/tenant/detail', state: { tenantId: 1 } });
           }}
         >
           테스트 테넌트 1 클릭하면 상세
