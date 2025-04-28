@@ -24,6 +24,6 @@ appConfig.init({});
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <QueryClientProvider client={queryConfig.getQueryClient()}>
-<RouterProvider router={router} />
+    <RouterProvider router={router} />
   </QueryClientProvider>
 );
