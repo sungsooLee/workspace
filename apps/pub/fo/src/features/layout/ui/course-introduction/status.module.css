@@ -35,7 +35,7 @@
   }
   .progress_rate {
     @apply flex items-center justify-between p-[16px];
-    [class*='porgress_wrap'] {
+    [class*='progress_wrap'] {
       @apply w-full;
     }
     h3 {
@@ -55,7 +55,23 @@
 
   .status_box {
     @apply mt-[16px];
-
+    .btn_action {
+      @apply border-t-[1px] border-solid border-[var(--gray3)];
+      button {
+        @apply flex h-[40px] w-full items-center justify-center;
+        span {
+          @apply body_3_r text-[var(--gray8)];
+        }
+        svg {
+          @apply ml-[3px];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+    }
     .status_list {
       @apply flex items-start justify-between gap-[16px] p-[16px];
       .status_info {

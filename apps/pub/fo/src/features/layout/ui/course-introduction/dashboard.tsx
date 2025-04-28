@@ -1,8 +1,8 @@
 import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoCheck } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
+import { Button, Dropdown, Panel, Progress, useModal, GridBox } from '@learnway/ui';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
 import { NoticeDetailPopup } from '../../../../features/layout';
@@ -18,6 +18,8 @@ const CourseDashboardCompoment = () => {
 
   const { open: openModal } = useModal();
   const { close: closeModal } = useModal();
+
+  const [detail, setDetail] = useState<boolean>();
 
   // 자동모달 띄우기 퍼블 확인용
   // const hasRun = useRef(false);
@@ -99,9 +101,35 @@ const CourseDashboardCompoment = () => {
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>총점 (100%)</span>
               <div className={statusStyles.score}>
-                100점<span className={statusStyles.default}>(80점)</span>
+                -<span className={statusStyles.default}>(80점)</span>
               </div>
             </div>
+          </div>
+
+          {detail === true ? (
+            <GridBox
+              data={data}
+              columns={columns}
+              pagination={{
+                pageSize,
+                pageIndex,
+                totalRows: 100,
+                onPageChange: setPageIndex,
+                onPageSizeChange: setPageSize,
+              }}
+            />
+          ) : (
+            ''
+          )}
+
+          <div className={statusStyles.btn_action}>
+            <Button
+              className={detail === true ? statusStyles.active : ''}
+              onClick={() => (detail === true ? setDetail(false) : setDetail(true))}
+            >
+              <span>{detail === true ? '성적 접기' : '성적 자세히'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#131c30" />
+            </Button>
           </div>
         </Panel>
       </div>
