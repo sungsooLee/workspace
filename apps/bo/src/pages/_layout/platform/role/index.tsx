@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { RoleInfo } from '../../../../features/platform/role/ui/role-info';
+import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
+import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 
 export const Route = createFileRoute('/_layout/platform/role/')({
   component: RouteComponent,
@@ -7,9 +9,10 @@ export const Route = createFileRoute('/_layout/platform/role/')({
 
 function RouteComponent() {
   return (
-    <div>
-      Hello "/_layout/platform/role/"!
-      <RoleInfo />
-    </div>
+    <PageContainer scrollHidden={true}>
+      <MainContents>
+        <RoleInfo />
+      </MainContents>
+    </PageContainer>
   );
 }

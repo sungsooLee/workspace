@@ -79,6 +79,7 @@ export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-mo
 export * from './lib/form-field/list-modal-selector-form-field/list-modal-selector-form-field';
 export * from './lib/form-field/radio-group-form-field/radio-group-form-field';
 export * from './lib/form-field/textarea-form-field/textarea-form-field';
+export * from './lib/form-field/radio-group-form-field/radio-group-form-field.module.css';
 
 // modal
 export * from './lib/modal/modal';

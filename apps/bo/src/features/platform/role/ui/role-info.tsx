@@ -1,40 +1,57 @@
-import { TreeBox, TreeNode } from '@learnway/ui';
+import { Tabs, TreeBox, TreeNode } from '@learnway/ui';
+import { useState } from 'react';
 
-const sampleData: TreeNode[] = [
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Role } from './role';
+
+const TAB_KEYS = {
+  FO_ROLE: '학습자 역할정보',
+  FO_MENU: '학습자 메뉴설정',
+  FO_ROLEGRANT: '학습자 역할부여',
+  BO_ROLE: 'HRD센터 역할정보',
+  BO_MENU: 'HRD센터 메뉴설정',
+  BO_ROLEGRANT: 'HRD센터 역할부여',
+} as const;
+
+type TabKeyName = keyof typeof TAB_KEYS;
+
+const items = [
   {
-    key: '1',
-    title: 'Root Node 1',
-    isUsed: false,
-    children: [
-      {
-        key: '1-1',
-        title: 'Child 1',
-        isUsed: true,
-        children: [
-          {
-            key: '1-1-1',
-            title: 'Grandchild 1',
-            isUsed: true,
-            children: [{ key: '1-1-1-1', title: 'Grandchild 1-1', isUsed: false }],
-          },
-          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
-        ],
-      },
-      { key: '1-2', title: 'Child 2', isUsed: true },
-    ],
+    title: TAB_KEYS.FO_ROLE,
+    key: 'FO_ROLE',
+    content: <Role />,
   },
   {
-    key: '2',
-    title: 'Root Node 2',
-    isUsed: false,
-    children: [
-      { key: '2-1', title: 'Child 3', isUsed: false },
-      { key: '2-2', title: 'Child 4', isUsed: false },
-    ],
+    title: TAB_KEYS.FO_MENU,
+    key: 'FO_MENU',
+    content: '2',
+  },
+  {
+    title: TAB_KEYS.FO_ROLEGRANT,
+    key: 'FO_ROLEGRANT',
+    content: '3',
+  },
+  {
+    title: TAB_KEYS.BO_ROLE,
+    key: 'BO_ROLE',
+    content: '4',
+  },
+  {
+    title: TAB_KEYS.BO_MENU,
+    key: 'BO_MENU',
+    content: '5',
+  },
+  {
+    title: TAB_KEYS.BO_ROLEGRANT,
+    key: 'BO_ROLEGRANT',
+    content: '6',
   },
 ];
+
 const RoleInfoComponent = () => {
-  return <>{/* <TreeBox data={sampleData} showSearchKeyword initLevel={1} closeLevel={1} /> */}</>;
+  const [selectedTabKey, setSelectedTabKey] = useState<TabKeyName>('FO_ROLE');
+
+  return <Tabs selectedTabKey={selectedTabKey} type="line" items={items} />;
 };
 
 export const RoleInfo = RoleInfoComponent;
