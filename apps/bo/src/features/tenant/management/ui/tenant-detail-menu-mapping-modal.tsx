@@ -23,10 +23,7 @@ import {
   useMenuTenantMappingTreeFetch,
   useCreateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
-import {
-  getFirstExpandKeys,
-  getAllTreeKeys,
-} from '../management/service/tenant-detail-tree.service';
+import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
