@@ -15,12 +15,6 @@ export const translationQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  get: (messageId: any) => ({
-    queryKey: queryKeys.get,
-    queryFn: () => TranslationService.fetchTranslation(messageId),
-    cacheTime: 0,
-    staleTime: 0,
-  }),
 };
 
 export const mutateOptions = {
