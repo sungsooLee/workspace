@@ -6,10 +6,9 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from 'axios';
-
-import { cookieService } from '../cookie/cookie.service';
 import { encodeQueryString, eventService, HTTP_EVENTS } from '../../index';
-import { getFileResponse } from '@/libs/shared/src/lib/utils/file-util';
+import { getFileResponse } from '../utils/file-util';
+// import { getFileResponse } from '@/libs/shared/src/lib/utils/file-util'; // storybook 실행시 에러나서 상대 경로로 수정
 
 const API_REQUEST_TIMEOUT = 9000;
 
