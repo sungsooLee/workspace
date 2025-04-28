@@ -1,8 +1,8 @@
 import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoMessageText, IcoCheck } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
+import { Button, Dropdown, Panel, Progress, useModal, GridBox } from '@learnway/ui';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
 import { NoticeDetailPopup } from '../../../../features/layout';
@@ -18,6 +18,8 @@ const CourseDashboardCompoment = () => {
 
   const { open: openModal } = useModal();
   const { close: closeModal } = useModal();
+
+  const [detail, setDetail] = useState<boolean>();
 
   // 자동모달 띄우기 퍼블 확인용
   // const hasRun = useRef(false);
@@ -64,7 +66,7 @@ const CourseDashboardCompoment = () => {
           </div>
         </Panel>
 
-        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_rate}>
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_box}>
           <div className={statusStyles.progress_rate}>
             <h3>나의진도율</h3>
             <Progress value={progress} className={statusStyles.progress_bar} />
@@ -78,53 +80,56 @@ const CourseDashboardCompoment = () => {
           <div className={statusStyles.status_list}>
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>출석 (40%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                80%
-              </div>
+              <div className={statusStyles.score}>80%</div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>평가 (1/2, 30%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                38점
-              </div>
+              <div className={statusStyles.score}>38점</div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>과제 (30%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                90점
-              </div>
+              <div className={statusStyles.score}>90점</div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>설문 (0%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                완료
-              </div>
+              <div className={statusStyles.score}>완료</div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>총점 (100%)</span>
               <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                100점
+                -<span className={statusStyles.default}>(80점)</span>
               </div>
             </div>
+          </div>
+
+          {detail === true ? (
+            <GridBox
+              data={data}
+              columns={columns}
+              pagination={{
+                pageSize,
+                pageIndex,
+                totalRows: 100,
+                onPageChange: setPageIndex,
+                onPageSizeChange: setPageSize,
+              }}
+            />
+          ) : (
+            ''
+          )}
+
+          <div className={statusStyles.btn_action}>
+            <Button
+              className={detail === true ? statusStyles.active : ''}
+              onClick={() => (detail === true ? setDetail(false) : setDetail(true))}
+            >
+              <span>{detail === true ? '성적 접기' : '성적 자세히'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#131c30" />
+            </Button>
           </div>
         </Panel>
       </div>

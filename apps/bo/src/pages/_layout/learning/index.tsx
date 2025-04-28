@@ -7,15 +7,15 @@ import {
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ManagerListModal, TeacherListModal } from '../../../features/operation';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
+import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
+import { LectureTypeSiteUrl } from '@features/operation/ui/lecture-type-site-url/lecture-type-site-url';
+import { ManagerListModal, TeacherListModal } from '@features/operation';
 import { useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../../shared/ui/form';
+import { FormRow } from '@shared/ui';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig } from '@learnway/hooks';
 
@@ -36,6 +36,7 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
+      q
       <PageContainer>
         <ContentsButtons>
           <Button type="submit" variant="point" size="sm">

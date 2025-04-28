@@ -224,6 +224,7 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.check_wrap}>
+                  {/*                   
                   <CheckboxGroupFormField
                     options={[
                       { value: 'all', label: '전체' },
@@ -232,7 +233,7 @@ function RouteComponent() {
                     ]}
                     value={['all']}
                     disabled
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

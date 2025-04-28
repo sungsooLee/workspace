@@ -9,4 +9,8 @@ export default class UsersService {
   static updatePassword(payload: { username: string; oldPassword: string; newPassword: string }) {
     return httpService.put<any>(`${PMSApiPrefix()}/users/verifications/change-password`, payload);
   }
+
+  static deleteUser() {
+    return httpService.delete<any>(`${PMSApiPrefix()}/users/delete-account`);
+  }
 }

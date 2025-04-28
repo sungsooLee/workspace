@@ -272,13 +272,13 @@ const ApiHrdMenuComponent: FC<{}> = ({}) => {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.check_wrap}>
-                  <CheckboxGroupFormField
+                  {/* <CheckboxGroupFormField
                     options={[
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: '모바일' },
                     ]}
                     value={['pc']}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

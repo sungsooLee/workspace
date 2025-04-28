@@ -268,4 +268,9 @@ export interface GridImperative {
    * 행 선택을 위한 메서드
    */
   selectRowById: (idField: string, idValue: string) => boolean;
+
+  /**
+   * 행 토글을 위한 메서드 ( 선택, 미선택 )
+   */
+  toggleRowById: (idField: string, idValue: string) => void;
 }
