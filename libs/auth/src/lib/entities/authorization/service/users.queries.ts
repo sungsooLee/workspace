@@ -11,4 +11,7 @@ export const mutateOptions = {
   updatePassword: () => ({
     mutationFn: (payload: any) => UsersService.updatePassword(payload),
   }),
+  deleteUser: () => ({
+    mutationFn: () => UsersService.deleteUser(),
+  }),
 };

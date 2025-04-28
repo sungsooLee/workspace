@@ -131,7 +131,7 @@ function RouteComponent() {
           className={styles.progress_wrap}
           selectedTabKey={'menu03'}
         />
-        <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+        <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.contents_category)}>
           <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
             <div className={titleStyles.title_wrap}>
               <h3 className={titleStyles.title}>{'테넌트 카테고리 목록'}</h3>

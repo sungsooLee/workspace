@@ -12,7 +12,7 @@ export type com_ever_edu_global_excel_dto_res_ExcelValidationResDto = {
      */
     totalRows?: number;
     /**
-     * 실패 Row 번호 목록, 헤더 정의 다음 Index ~
+     * 실패 데이터 Row 번호(1 ~) 목록 ~
      */
     faultRows?: Array<number>;
 };

@@ -25,7 +25,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_global_s3_dto_res_InitiateUploadResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/file/s3/multipart',
+            url: '/user/api/v1/file/s3/multipart',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -53,7 +53,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_global_s3_dto_res_CompleteUploadResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/file/s3/multipart/{uploadId}/complete',
+            url: '/user/api/v1/file/s3/multipart/{uploadId}/complete',
             path: {
                 'uploadId': uploadId,
             },
@@ -83,7 +83,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_S3FileUrlResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/s3/url',
+            url: '/user/api/v1/file/s3/url',
             query: {
                 'key': key,
             },
@@ -99,7 +99,7 @@ export class FoS3FileService {
     /**
      * S3 Presigned URL 요청
      * S3 단일 파일 업로드 Presigned URL을 요청한다.<br>URL을 수신 후 Ajax Put 파일 업로드 해야 한다.
-     * @param key S3 파일 경로, S3 키로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
      * @returns com_ever_edu_global_s3_dto_res_PreSignedUrlResDto OK
      * @throws ApiError
      */
@@ -108,7 +108,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_global_s3_dto_res_PreSignedUrlResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/s3/uploader',
+            url: '/user/api/v1/file/s3/uploader',
             query: {
                 'key': key,
             },
@@ -135,7 +135,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_global_s3_dto_res_ListUploadPartsResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/s3/multipart/{uploadId}',
+            url: '/user/api/v1/file/s3/multipart/{uploadId}',
             path: {
                 'uploadId': uploadId,
             },
@@ -165,7 +165,7 @@ export class FoS3FileService {
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v1/file/s3/multipart/{uploadId}',
+            url: '/user/api/v1/file/s3/multipart/{uploadId}',
             path: {
                 'uploadId': uploadId,
             },
@@ -197,7 +197,7 @@ export class FoS3FileService {
     ): CancelablePromise<com_ever_edu_global_s3_dto_res_PreSignedUrlResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/s3/multipart/{uploadId}/{partNumber}',
+            url: '/user/api/v1/file/s3/multipart/{uploadId}/{partNumber}',
             path: {
                 'uploadId': uploadId,
                 'partNumber': partNumber,
@@ -209,6 +209,35 @@ export class FoS3FileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * S3 파일 다운로드 요청
+     * S3 파일 다운로드 요청한다.
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @param fileName 다운로드 파일명, 미지정 시 S3 저장명 사용
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static fileDownloadResponse(
+        key: string,
+        fileName?: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/file/s3/download',
+            query: {
+                'key': key,
+                'fileName': fileName,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

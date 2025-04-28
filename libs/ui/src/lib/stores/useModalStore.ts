@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { ModalConfig } from '../modal/type';
+import { last } from 'lodash';
 
 interface ModalStore {
   modals: ModalConfig[]; // modal stack
   open: (config: ModalConfig) => void;
   close: (data?: any) => void;
   closeAll: () => void;
+  activeModal: () => ModalConfig | undefined;
   getModal: (id: string) => ModalConfig | undefined;
 }
 
@@ -24,6 +26,9 @@ export const useModalStore = create<ModalStore>((set, get) => ({
     set((state) => ({
       modals: state.modals?.slice(0, -1), // 마지막 모달만 제외한 새로운 배열 반환
     }));
+  },
+  activeModal: () => {
+    return last(get().modals);
   },
   closeAll: () => set({ modals: [] }),
   getModal: (id: string) => {

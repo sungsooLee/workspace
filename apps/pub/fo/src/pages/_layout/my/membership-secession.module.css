@@ -34,7 +34,7 @@
       }
     }
     .btn_wrap {
-      @apply mx-auto w-[400px];
+      @apply mx-auto mt-[48px] w-[400px];
     }
   }
 }

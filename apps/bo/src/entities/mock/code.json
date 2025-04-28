@@ -214,12 +214,12 @@
     "description": "다국어 키타입 코드",
     "codes": [
       {
-        "code": "COMMON_CODE",
-        "name": "공통코드"
-      },
-      {
         "code": "MENU",
         "name": "HRD센터 메뉴"
+      },
+      {
+        "code": "COMMON_CODE",
+        "name": "공통코드"
       },
       {
         "code": "CATEGORY",
