@@ -13,6 +13,12 @@
   }
 }
 
+.nlp--contents-row {
+  & + .nlp--contents-row {
+    @apply !border-t-0 !pt-0;
+  }
+}
+
 .col {
   @apply flex-col;
   &.no_line {
