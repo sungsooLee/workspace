@@ -14,7 +14,7 @@ const SwitchFormFieldComponent = forwardRef<
     name: switchConfig?.labelTarget || '',
   });
   const fieldLabel = useMemo<string>(() => {
-    if (!switchConfig.label) return '';
+    if (!switchConfig?.label) return '';
     return switchConfig
       ? typeof switchConfig.label === 'string'
         ? switchConfig.label
@@ -23,7 +23,7 @@ const SwitchFormFieldComponent = forwardRef<
   }, [value, watched]);
 
   useEffect(() => {
-    if (switchConfig.guideText) {
+    if (switchConfig?.guideText) {
       onChangeGuideText(switchConfig.guideText(value));
     }
   }, [value]);
