@@ -15,6 +15,7 @@ import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-b
 import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
 import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
 import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
+import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
 
 export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
@@ -116,6 +117,6 @@ const menuItems = [
   {
     title: '테넌트 배너 관리',
     key: 'menu07',
-    content: '',
+    content: <TenantDetailBanner />,
   },
 ];
