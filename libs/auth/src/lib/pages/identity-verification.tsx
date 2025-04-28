@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthForm, AuthFormData } from '../features/auth';
-import { useAsyncFetchEmail } from '../entities/user';
+import { useAsyncFetchEmail } from '../entities/authorization';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 

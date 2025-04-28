@@ -122,6 +122,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
             // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
             objectParams[prop.name] = value ?? '';
           });
+
           onValid(objectParams);
         },
         (errors) => {

@@ -16,7 +16,7 @@ import { DynamicFormField, ContentsRow } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import { FormRow, EmbededAlert } from '../../../../shared/ui';
-import { useVerifyEmail, useSendVerifyEmail } from '../../../../entities/user';
+import { useVerifyEmail, useSendVerifyEmail } from '../../../../entities/authorization';
 import { useFetchAuthUser, useUpdateUser } from '../../../../entities/authorization';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css

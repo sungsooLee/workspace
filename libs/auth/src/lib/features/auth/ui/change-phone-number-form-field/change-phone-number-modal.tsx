@@ -1,0 +1,130 @@
+import { memo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { Button, ModalBody, ModalContainer, ModalFooter, useModal, ModalTitle } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import { DynamicFormField, ContentsRow } from '@learnway/ui';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+
+import { FormRow } from '../../../../shared/ui';
+import { useFetchAuthUser, useUpdatePhoneNumber } from '../../../../entities/authorization';
+
+const TIME_LIMIT_VERIFY = 180;
+
+const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
+  const { t } = useTranslation();
+  const { close: closeModal, alert } = useModal();
+
+  const { provider, fetchData, control, getValues, onFormValid, onSubmit, setFormError } =
+    useDynamicForm(phoneNumberFormConfig);
+
+  const { data: authUser } = useFetchAuthUser();
+  const { update: updatePhoneNumber } = useUpdatePhoneNumber();
+
+  useEffect(() => {
+    if (!authUser) {
+      return;
+    }
+    fetchData({
+      currentPhoneNumber: authUser.phoneNumber,
+      currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
+    });
+  }, [authUser]);
+
+  const handleOnSubmit = async (data: any) => {
+    if (!authUser?.name || !authUser?.birthday) {
+      return;
+    }
+    const payload = {
+      name: authUser.name,
+      birthday: String(authUser.birthday),
+      currentPhoneNumber: authUser.phoneNumber,
+      currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
+      newPhoneNumber: data.newPhoneNumber,
+      newPhoneNumberNationCode: data.newPhoneNumberNationCode,
+    };
+
+    updatePhoneNumber(payload, {
+      onSuccess: async (d, variables, context) => {
+        await alert('LABEL.UPDATE_PHONE_NUMBER_RESULT_MESSAGE');
+        closeModal();
+      },
+    });
+  };
+
+  return (
+    <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
+      <ModalContainer>
+        <ModalTitle>{t('LABEL.PHONE_NUMBER_UPDATE')}</ModalTitle>
+
+        <ModalBody>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'currentPhoneNumber'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'newPhoneNumber'} />
+            </FormRow>
+          </ContentsRow>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            label={t('LABEL.CANCEL')}
+            variant={'gray'}
+            size={'lg'}
+            onClick={() => closeModal()}
+          />
+          <Button label={t('LABEL.UPDATE')} variant={'primary'} size={'lg'} type="submit" />
+        </ModalFooter>
+      </ModalContainer>
+    </form>
+  );
+};
+
+export const ChangePhoneNumberModal = memo(ChangePhoneNumberModalComponent);
+
+const phoneNumberFormConfig: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'currentPhoneNumber',
+      type: 'phone-number',
+      label: 'LABEL.CURRENT_PHONE_NUMBER',
+      value: '',
+      placeholder: 'LABEL.CURRENT_PHONE_NUMBER',
+      fields: {
+        nationCode: 'currentPhoneNumberNationCode',
+        number: 'currentPhoneNumber',
+      },
+      disabled: true,
+    },
+    {
+      name: 'currentPhoneNumberNationCode',
+      type: 'hidden',
+      value: 'KR',
+    },
+    {
+      name: 'newPhoneNumber',
+      type: 'phone-number',
+      label: 'LABEL.NEW_PHONE_NUMBER',
+      value: '',
+      placeholder: 'LABEL.NEW_PHONE_NUMBER',
+      fields: {
+        nationCode: 'newPhoneNumberNationCode',
+        number: 'newPhoneNumber',
+      },
+    },
+    {
+      name: 'newPhoneNumberNationCode',
+      type: 'hidden',
+      value: 'KR',
+    },
+  ],
+  validator: {
+    newPhoneNumber: {
+      format: 'phone-number',
+      required: true,
+    },
+  },
+};
