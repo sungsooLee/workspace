@@ -39,7 +39,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
     }, [value]);
     return (
       <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
-        {checkGroupConfig.allCheck && (
+        {checkGroupConfig?.allCheck && (
           <Checkbox checked={allCheck} label={'전체'} onCheckedChange={handleAllCheckChange} />
         )}
         {options &&
