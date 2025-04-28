@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { Avatar, ContentsRow, DynamicFormField, PhoneNumber } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { ChangeUserIdFormField } from '@learnway/auth';
+import {
+  ChangeUserIdFormField,
+  ChangePhoneNumberFormField,
+  useFetchAuthUser,
+} from '@learnway/auth';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';
@@ -24,37 +29,97 @@ export const Route = createFileRoute('/_layout/my-page/privacy/')({
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, onFormChange, control, getValues, setFormError, onFormValid } =
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError, fetchData } =
     useDynamicForm(authFormConfig);
 
+  const { data: authUser } = useFetchAuthUser();
+
+  useEffect(() => {
+    if (!authUser) {
+      return;
+    }
+
+    fetchData({
+      userIdEmail: authUser.email,
+      nameEmployeeNumber: `${authUser.name} / ${authUser.employeeNumber}`,
+      password: `********`,
+      company: `/ ${authUser.companyCode}`, //회사명,사업자등록번호
+      company1: ``, //부서명?
+      company2: ``, //직무?
+      company3: ``, //상위 결재자
+      phoneNumber: authUser.phoneNumber, //phoneNumber nationCode
+    });
+  }, [authUser]);
+
   return (
-    <div className={styles.start}>
-      <div className={styles.avata_img}>
-        {/* 사진 */}
-        <div className={styles.avata_box}>
-          <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-          <div className={styles.file}>
-            <label htmlFor="file">
-              <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
-            </label>
-            <input type="file" id="file" />
+    <div className={`${styles.start} ${styles.information_change}`}>
+      <div className={styles.box}>
+        <div className={styles.avata_img}>
+          {/* 사진 */}
+          <div className={styles.avata_box}>
+            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <div className={styles.file}>
+              <label htmlFor="file">
+                <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
+              </label>
+              <input type="file" id="file" />
+            </div>
           </div>
+          {/* 이름 성 */}
+          {/* <div className={styles.avata_box}> */}
+          {/* <span className={styles.info_avata}>김</span> */}
+          {/* </div> */}
+          {/* 첨부 보류 */}
+          <div className={styles.change}></div>
         </div>
-        {/* 이름 성 */}
-        {/* <div className={styles.avata_box}> */}
-        {/* <span className={styles.info_avata}>김</span> */}
-        {/* </div> */}
-        {/* 첨부 보류 */}
-        <div className={styles.change}></div>
-      </div>
-      <div className={styles.information}>
-        <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'email'}>
-              <ChangeUserIdFormField />
-            </DynamicFormField>
-          </FormRow>
-        </ContentsRow>
+        <div className={styles.information}>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'userIdEmail'}>
+                <ChangeUserIdFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'nameEmployeeNumber'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'password'}>
+                <ChangeUserIdFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'company'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'company1'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'company2'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'company3'}></DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'phoneNumber'}>
+                <ChangePhoneNumberFormField />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+        </div>
       </div>
     </div>
   );
@@ -63,37 +128,57 @@ function RouteComponent() {
 const authFormConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'userId',
+      name: 'userIdEmail',
       type: 'custom',
-      value: '',
+      value: '아이디(이메일)',
     },
     {
-      name: 'authToolType',
-      type: 'custom',
-      label: '',
+      name: 'nameEmployeeNumber',
+      type: 'text',
+      label: '성명 / 사번',
       value: 'PHONE',
       placeholder: '',
       description: '',
+      disabled: true,
     },
     {
-      name: 'name',
-      type: 'text',
-      label: '이름',
+      name: 'password',
+      type: 'custom',
+      label: '비밀번호',
       value: '',
-      placeholder: '이름을 입력하세요',
-      description: '',
+      disabled: true,
     },
     {
-      name: 'birthday',
+      name: 'company',
       type: 'text',
-      label: '생년월일',
-      maxLength: 10,
+      label: '회사 / 사업자등록번호',
       value: '',
-      placeholder: '생년월일(19991229)',
+      disabled: true,
+    },
+    {
+      name: 'company1',
+      type: 'text',
+      label: '부서',
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'company2',
+      type: 'text',
+      label: '직무',
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'company3',
+      type: 'text',
+      label: '상위 결재자',
+      value: '',
+      disabled: true,
     },
     {
       name: 'phoneNumber',
-      type: 'phone-number',
+      type: 'custom',
       label: '휴대폰 번호',
       value: '',
       placeholder: '-없이 휴대폰 번호입력(0102345678)',
@@ -106,20 +191,6 @@ const authFormConfig: DynamicFormConfig = {
       name: 'nationCode',
       type: 'hidden',
       value: 'KR',
-    },
-    {
-      name: 'email',
-      type: 'custom',
-      label: '이메일',
-      value: '',
-      placeholder: '이메일(hyunidai.kim@hyundai.com)',
-    },
-    {
-      name: 'verificationCode',
-      type: 'custom',
-      label: '인증번호',
-      value: '',
-      placeholder: '인증번호 입력',
     },
   ],
   validator: {

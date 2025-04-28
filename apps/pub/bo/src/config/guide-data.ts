@@ -447,7 +447,7 @@ export const guideData = [
     pageId: 'pms/language_management',
     screenId: 'NLP_BO_PMS_1421',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-28',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -511,8 +511,8 @@ export const guideData = [
     screenId: 'NLP_BO_TMS_1002_02',
     pageType: 'Page',
     completionDate: '2025-04-11',
-    lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
+    lastUpdateDate: '2025-04-28',
+    remarks: '타이틀 영역 수정', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 카테고리 매핑',

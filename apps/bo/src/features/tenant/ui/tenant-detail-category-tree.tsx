@@ -5,7 +5,7 @@ import {
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView2,
+  TreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -99,7 +99,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView2
+          <TreeView
             data={treeData}
             treeId={'1'}
             expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키

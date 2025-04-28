@@ -138,7 +138,8 @@ export type FormValidatorConfig = {
           | 'email'
           | 'array'
           | 'object'
-          | 'password';
+          | 'password'
+          | 'phone-number';
         /**
          * 필수 값 설정
          * - true → 필수 값 설정

@@ -141,7 +141,13 @@ const TenantPlatformLearningMenuComponent: FC<{}> = ({}) => {
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
+          {/* 퍼블수정 2025-04-28 : 타이틀 수정 S */}
+          <div className={titleStyles.title_area}>
+            <h3 className={titleStyles.title}>{'테넌트 메뉴 목록'}</h3>
+            <strong className={titleStyles.sub_title}>전체</strong>
+            <span className={titleStyles.num}>15</span>
+          </div>
+          {/* 퍼블수정 2025-04-28 : 타이틀 수정 E */}
           <div className={layoutStyles.btn_wrap}>
             <Button variant="text" size="sm" className={layoutStyles.btn_text}>
               {'전체펼침'}
@@ -160,7 +166,11 @@ const TenantPlatformLearningMenuComponent: FC<{}> = ({}) => {
       </div>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
+          {/* 퍼블수정 2025-04-28 : 타이틀 수정 S */}
+          <div className={titleStyles.title_area}>
+            <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
+          </div>
+          {/* 퍼블수정 2025-04-28 : 타이틀 수정 E */}
           <div className={layoutStyles.btn_wrap}>
             <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}

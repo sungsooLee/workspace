@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { TreeNode, useModal } from '@learnway/ui';
+import { useRouterState } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -26,7 +27,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
 
   const { confirm: openConfirm } = useModal();
 
-  const tenantId = 1;
+  const routerState = useRouterState();
+  const tenantId = routerState.location.state?.tenantId || '1';
 
   const { data, refetch } = useFetchTenantCategory(tenantId);
 

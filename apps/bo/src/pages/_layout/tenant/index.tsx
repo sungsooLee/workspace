@@ -25,6 +25,7 @@ import {
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
 export const Route = createFileRoute('/_layout/tenant/')({
   component: RouteComponent,
@@ -56,7 +57,7 @@ function RouteComponent() {
         <Button
           className="link"
           onClick={() => {
-            router.navigate({ to: '/platform/tenant/detail', state: { tenantId: 1 } });
+            router.navigate({ to: '/tenant/detail', state: { tenantId: 1 } });
           }}
         >
           테스트 테넌트 1 클릭하면 상세
@@ -81,6 +82,15 @@ function RouteComponent() {
   return (
     <form className="form_row">
       <PageContainer>
+        <ContentsButtons>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => router.navigate({ to: '/tenant/regist' })}
+          >
+            등록
+          </Button>
+        </ContentsButtons>
         <MainContents>
           <div className={cn(searchStyles.start, searchStyles.wrap)}>
             <SearchBox provider={sProvider} onSearch={handleOnSearch} />

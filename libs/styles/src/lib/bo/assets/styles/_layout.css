@@ -100,7 +100,4 @@ body.scrolled {
   .page_tabs > [role='tablist'] {
     @apply absolute -top-[60px] left-[40px] w-[calc(100%-80px)];
   }
-  /* & > div {
-    @apply min-h-[calc(100vh-304px)];
-  } */
 }

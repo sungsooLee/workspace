@@ -111,8 +111,6 @@ export function useAsyncFetchEmail(mutationOptions = {}) {
 }
 
 export function useUpdatePasswordByPhoneNumber(mutationOptions = {}) {
-  const queryClient = useQueryClient();
-
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.updatePasswordByPhoneNumber(),
     ...mutationOptions,
@@ -128,25 +126,8 @@ export function useUpdatePasswordByPhoneNumber(mutationOptions = {}) {
 }
 
 export function useUpdatePasswordByEmail(mutationOptions = {}) {
-  const queryClient = useQueryClient();
   const { mutateAsync, isSuccess, isError } = useMutation({
     ...mutateOptions.updatePasswordByEmail(),
-    ...mutationOptions,
-  });
-
-  return {
-    update: (payload: any, callback?: MutateCallback<any[]>) => {
-      return mutateAsync(payload, callback);
-    },
-    isSuccess,
-    isError,
-  };
-}
-
-export function useUpdatePassword(mutationOptions = {}) {
-  const queryClient = useQueryClient();
-  const { mutateAsync, isSuccess, isError } = useMutation({
-    ...mutateOptions.updatePassword(),
     ...mutationOptions,
   });
 

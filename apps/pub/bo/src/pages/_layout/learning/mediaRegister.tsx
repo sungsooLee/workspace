@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn, getRandomId } from '@learnway/shared';
@@ -454,7 +453,7 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
-          <ContentsRow>
+          <ContentsRow className="no_line">
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-2" className={formStyles.form_label}>
