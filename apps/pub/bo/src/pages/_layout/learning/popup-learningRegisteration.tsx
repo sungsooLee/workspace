@@ -174,7 +174,6 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 퍼블수정 20240317 : Modal 수정 E
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {
