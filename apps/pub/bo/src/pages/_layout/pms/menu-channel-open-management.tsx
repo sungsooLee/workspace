@@ -11,15 +11,14 @@ import { cn } from '@learnway/shared';
 
 import { Button, GridBox, Dropdown, DatePicker, Input } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/pms/menu-channel-management')({
+export const Route = createFileRoute('/_layout/pms/menu-channel-open-management')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [selectedValues, setSelectedValues] = useState<null>(null);
-  const [selectedValues2, setSelectedValues2] = useState<null>(null);
-  const [selectedValues3, setSelectedValues3] = useState<null>(null);
-  const [selectedValues4, setSelectedValues4] = useState<null>(null);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
+  const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -31,11 +30,6 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
   const options3 = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
-  const options4 = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
@@ -188,15 +182,14 @@ function RouteComponent() {
                           onChange={(selected) => setSelectedValues(selected)}
                           variant="default"
                           size={'sm'}
-                          placeholder={'선택'}
                         />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-channelSelect" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널선택</span>
+                      <label htmlFor="name-applyStatus" className={searchStyles.label}>
+                        <span className={searchStyles.text}>신청상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -205,25 +198,15 @@ function RouteComponent() {
                           onChange={(selected) => setSelectedValues2(selected)}
                           variant="default"
                           size={'sm'}
-                          placeholder={'선택'}
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-proposer" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널유형</span>
+                        <span className={searchStyles.text}>신청자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options3}
-                          value={selectedValues3}
-                          onChange={(selected) => setSelectedValues3(selected)}
-                          variant="default"
-                          size={'sm'}
-                          placeholder={'선택'}
-                        />
+                        <Input id="name-proposer" type="text" placeholder="입력" />
                       </div>
                     </div>
                   </div>
@@ -231,18 +214,11 @@ function RouteComponent() {
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-channelSort" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널구분</span>
+                      <label htmlFor="name-companyPerson" className={searchStyles.label}>
+                        <span className={searchStyles.text}>회사 담당자</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options4}
-                          value={selectedValues4}
-                          onChange={(selected) => setSelectedValues4(selected)}
-                          variant="default"
-                          size={'sm'}
-                          placeholder={'선택'}
-                        />
+                        <DatePicker displayType={'day'} size={'md'} />
                       </div>
                     </div>
                   </div>
@@ -251,24 +227,14 @@ function RouteComponent() {
                       <label htmlFor="name-channel" className={searchStyles.label}>
                         <span className={searchStyles.text}>채널상태</span>
                       </label>
-                      <div className={searchStyles.box}></div>
-                    </div>
-                  </div>
-                  <div className={searchStyles.inner}>
-                    <div className={searchStyles.item}>
-                      <label htmlFor="name-channelName" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널명</span>
-                      </label>
                       <div className={searchStyles.box}>
-                        <Input id={'name-channelName'} type={'text'} placeholder={'입력'} />
-                      </div>
-                    </div>
-                    <div className={searchStyles.item}>
-                      <label htmlFor="name-channelID" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널ID</span>
-                      </label>
-                      <div className={searchStyles.box}>
-                        <Input id={'name-channelID'} type={'text'} placeholder={'입력'} />
+                        <Dropdown
+                          options={options3}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
                       </div>
                     </div>
                   </div>

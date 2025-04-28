@@ -447,7 +447,7 @@ export const guideData = [
     pageId: 'pms/language_management',
     screenId: 'NLP_BO_PMS_1421',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-28',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -511,8 +511,8 @@ export const guideData = [
     screenId: 'NLP_BO_TMS_1002_02',
     pageType: 'Page',
     completionDate: '2025-04-11',
-    lastUpdateDate: '',
-    remarks: '작업 완료', // 비고
+    lastUpdateDate: '2025-04-28',
+    remarks: '타이틀 영역 수정', // 비고
   },
   {
     screenName: 'PMS/테넌트관리_플랫폼관리_테넌트관리_테넌트 카테고리 매핑',
@@ -560,8 +560,8 @@ export const guideData = [
     remarks: '화면 케이스 작업 완료', // 비고
   },
   {
-    screenName: 'PMS/채널관리',
-    pageId: 'pms/menu-channel-management',
+    screenName: 'PMS/채널관리_개설신청관리',
+    pageId: 'pms/menu-channel-open-management',
     screenId: 'NLP_BO_CHN_1401',
     pageType: 'Page',
     completionDate: '2025-04-25',
@@ -569,13 +569,49 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
-    screenName: 'PMS/채널관리_상세',
-    pageId: 'pms/menu-channel-detail-management',
+    screenName: 'PMS/채널관리_개설신청관리_상세',
+    pageId: 'pms/menu-channel-open-detail-management',
     screenId: 'NLP_BO_CHN_1402',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '개발 확인 후 작업 예정', // 비고
+  },
+  {
+    screenName: 'PMS/채널관리',
+    pageId: 'pms/menu-channel-management',
+    screenId: 'NLP_BO_CHN_1000',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/채널등록',
+    pageId: 'pms/menu-channel-register',
+    screenId: 'NLP_BO_CHN_1001',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/채널접수조회',
+    pageId: 'pms/pop-channel-search',
+    screenId: 'NLP_BO_CHN_1200',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/채널상세_채널기본정보(Tab)',
+    pageId: 'pms/menu-channel-register',
+    screenId: 'NLP_BO_CHN_1201',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
   },
   {
     screenName: 'PMS/교육관리_교육장소관리_교육장소 관리',

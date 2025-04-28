@@ -1,0 +1,3 @@
+.start {
+  @apply fixed right-[45px] top-[200px] bg-[#eee];
+}
