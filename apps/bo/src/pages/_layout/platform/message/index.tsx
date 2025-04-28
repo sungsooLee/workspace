@@ -9,9 +9,9 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { SplitPanel } from '@shared/ui';
 import { MessageDetail } from './-components/detail';
-import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
+import { queryOptions } from '@entities/label-messages';
 
 export const Route = createFileRoute('/_layout/platform/message/')({
   component: RouteComponent,
@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_layout/platform/message/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { t } = useTranslation<any>();
+  const { t } = useTranslation();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(-1);
