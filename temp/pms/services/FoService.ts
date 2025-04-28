@@ -2,6 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
+import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
+import type { com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
@@ -322,6 +327,55 @@ export class FoService {
         });
     }
     /**
+     * 채널 신청목록 조회
+     * 신청한 채널을 조회한다.
+     * @param channelSearchReqDto
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelResDto OK
+     * @throws ApiError
+     */
+    public static findContents(
+        channelSearchReqDto: com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto,
+    ): CancelablePromise<Array<com_ever_edu_pms_channel_dto_res_ChannelResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/channel/request',
+            query: {
+                'channelSearchReqDto': channelSearchReqDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 신청목록 조회
+     * 신청한 채널을 조회한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_entity_ChannelRequestEntity OK
+     * @throws ApiError
+     */
+    public static registerChannelRequest(
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_entity_ChannelRequestEntity> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/channel/request',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * @param userUuid
      * @param requestBody
      * @returns any OK
@@ -591,8 +645,8 @@ export class FoService {
         });
     }
     /**
-     * FO/BO 테넌트메뉴목록 트리 조회
-     * 메뉴 목록을 트리구조로 조회한다.
+     * FO GNB 테넌트메뉴목록 트리 조회
+     * GNB 테넌트 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
      * @param roleIds
      * @param deviceType
@@ -693,6 +747,31 @@ export class FoService {
             url: '/user/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 공통 Enum코드 다건 조회(셀렉트박스 노출용)
+     * 존재하는 enum code를 찾아 반환한다.
+     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달
+     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
+     * @throws ApiError
+     */
+    public static getEnumCodeList(
+        enumNames: string,
+    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/codes/enums/{enumNames}',
+            path: {
+                'enumNames': enumNames,
             },
             errors: {
                 400: `Bad Request`,

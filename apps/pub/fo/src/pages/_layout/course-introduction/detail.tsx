@@ -9,12 +9,14 @@ import {
   OptionCardItem,
   useModal,
   Textarea,
+  Panel,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoShare, IcoStar } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01 } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
+  CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -38,9 +40,6 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
-
-  // 찜
-  const [heart, setHeart] = useState(false);
 
   // 탭
   const [selectedTabKey, setSelectedTabKey] = useState<string>('');
@@ -314,14 +313,22 @@ function RouteComponent() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
-                {/* 강의 정보 없을 시 */}
-                <div className={styles.empty_box}>
-                  <EmptyText
-                    hideTitle
-                    size="lg"
-                    description={'현재 수강 신청 가능한 차수가 없습니다.'}
-                  />
-                </div>
+                {/* 수강 신청 차수 없을 시 */}
+                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                  <div>
+                    <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+                    <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+                  </div>
+                </Panel>
+
+                {/* 인원마감/대기신청 */}
+                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                  <div>
+                    <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
+                    <strong>오전 10:00 수강신청이 시작됩니다!</strong>
+                    <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+                  </div>
+                </Panel>
 
                 {/* 강의 정보 */}
                 <OptionCard
@@ -361,76 +368,9 @@ function RouteComponent() {
                 />
               </div>
 
-              {/* 수강신청 없는 case */}
-              {/* button */}
-              {/* <div
-                className={`${packageInformationStyles.course_btn_wrap} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-              </div> */}
-
-              {/* 수강신청 못하는 case */}
-              {/* <div
-                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-                <div className={packageInformationStyles.course}>
-                  <Button variant="line" onClick={() => CourseTimeAlert()}>
-                    차수개설 알림신청
-                  </Button>
-                </div>
-              </div> */}
-
-              {/* 수강신청 있는 case */}
-              <div
-                className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box} ${styles.course_btn_wrap}`}
-              >
-                <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-                  <IcoHeart
-                    width={20}
-                    height={20}
-                    stroke={heart === true ? '#ff4646' : '#4c515e'}
-                    fill={heart === true ? '#ff4646' : 'none'}
-                  />
-                </Button>
-                <Button>
-                  <IcoShare width={20} height={20} stroke="#4c515e" />
-                </Button>
-                <div className={packageInformationStyles.course}>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      openModal({
-                        width: 's',
-                        content: <CourseInformationPopup />,
-                      })
-                    }
-                  >
-                    수강신청
-                  </Button>
-                  {/* tip */}
-                  <span className={packageInformationStyles.tip}>차수를 선택해주세요</span>
-                </div>
+              {/* 찜/공유 수강신청 Button */}
+              <div className={styles.course_btn_wrap}>
+                <CourseFixedButton course={true} />
               </div>
             </div>
           </div>

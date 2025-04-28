@@ -13,10 +13,7 @@ interface DropdownFormField extends BaseFormFieldProps<string> {
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
-  (
-    { control, name, value, onChange, options: initOptions, optionsConfig, dropdownConfig },
-    ref,
-  ) => {
+  ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
     const [options, setOptions] = useState<DropdownOption[]>([]);
     const { data: codeData } = useFetchCodeGroups();
     const { t } = useTranslation();
@@ -84,25 +81,22 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
                 })();
         }
       }
-      console.log('newOptions => ', newOptions, filterWatchedValue);
       if (
         filterWatchedValue &&
         optionsConfig?.filter &&
         filterWatchedValue === optionsConfig.filter.value
       ) {
-        const filterOptions = optionsConfig.filter.fn(newOptions as SelectOption[]);
-        const currentValue = filterOptions.find((option: SelectOption) => option.value === value);
+        newOptions = optionsConfig.filter.fn(newOptions as SelectOption[]) as SelectOption[];
+        const currentValue = newOptions.find((option) => option.value === value);
         if (!currentValue) {
-          onChange(filterOptions[0]?.value);
+          onChange(newOptions[0]?.value);
         }
-        setOptions(filterOptions);
-      } else {
-        setOptions(newOptions);
       }
+      const excludeValues = optionsConfig.excludeValues || [];
+      setOptions(newOptions.filter((option) => !excludeValues.includes(option.value)));
     };
 
     useEffect(() => {
-      // console.log('watchedValue => ', watchedValue, name);
       init();
     }, [watchedValue, filterWatchedValue]);
 

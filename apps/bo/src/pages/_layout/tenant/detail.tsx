@@ -13,6 +13,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { TenantDetailMenu } from '@features/tenant/ui/tenant-detail-menu';
 import { TenantDetailBase } from '@features/tenant/ui/tenant-detail-base';
 import { TenantDetailCategory } from '@features/tenant/ui/tenant-detail-category';
+import { TenantDetailAttribute } from '@features/tenant/ui/tenant-detail-attribute';
 
 export const Route = createFileRoute('/_layout/tenant/detail')({
   component: RouteComponent,
@@ -29,7 +30,7 @@ function RouteComponent() {
     }
   };
   const handleListButtonClick = () => {
-    router.navigate({ to: '/platform/tenant/' });
+    router.navigate({ to: '/tenant/' });
   };
 
   const handleResetButtonClick = () => {
@@ -89,12 +90,12 @@ const menuItems = [
   {
     title: '테넌트 속성 관리',
     key: 'menu02',
-    content: <TenantDetailBase />,
+    content: <TenantDetailAttribute />,
   },
   {
     title: '테넌트 회사 관리',
     key: 'menu03',
-    content: <TenantDetailBase />,
+    content: '테넌트 회사 관리',
   },
   {
     title: '테넌트 메뉴관리 메핑',

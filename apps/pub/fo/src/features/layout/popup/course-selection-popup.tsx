@@ -6,9 +6,14 @@ import {
   ModalContainer,
   ModalTitle,
   ModalFooter,
-  Button,
+  Panel,
 } from '@learnway/ui';
-import { IcoHeart, IcoShare } from '@learnway/icons';
+
+import { IcoCaution, IcoClock01 } from '@learnway/icons';
+
+import {
+  CourseFixedButton, // 수강신청 버튼
+} from '../../../features/layout';
 
 import lectureStyles from '../../../pages/_layout/course-introduction/lecture.module.css';
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -16,9 +21,6 @@ import packageInformationStyles from '../../../pages/_layout/course-introduction
 import styles from './course-selection-popup.module.css';
 
 const CourseSelectionPopupComponent = () => {
-  // 찜
-  const [heart, setHeart] = useState(false);
-
   const [courseValues, setCourseValues] = useState<string>();
   const courseOptions = [
     {
@@ -64,6 +66,20 @@ const CourseSelectionPopupComponent = () => {
       <ModalTitle>{'차수선택'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_selection}`}>
+          {/* 수강 신청 차수 없을 시 */}
+          <div className={styles.result_box}>
+            <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+            <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+          </div>
+
+          {/* 인원마감/대기신청 */}
+          <div className={styles.result_box}>
+            <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
+            <strong>오전 10:00 수강신청이 시작됩니다!</strong>
+            <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+          </div>
+
+          {/* 강의 정보 */}
           <OptionCard
             className={packageInformationStyles.course_card}
             cols={1}
@@ -100,26 +116,8 @@ const CourseSelectionPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <div
-          className={`${packageInformationStyles.course_btn_wrap} ${packageInformationStyles.course_box}`}
-        >
-          <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
-            <IcoHeart
-              width={20}
-              height={20}
-              stroke={heart === true ? '#ff4646' : '#4c515e'}
-              fill={heart === true ? '#ff4646' : 'none'}
-            />
-          </Button>
-          <Button>
-            <IcoShare width={20} height={20} stroke="#4c515e" />
-          </Button>
-          <div className={packageInformationStyles.course}>
-            <Button variant="primary">수강신청</Button>
-            {/* tip */}
-            <span className={packageInformationStyles.tip}>차수를 선택해주세요</span>
-          </div>
-        </div>
+        {/* 찜/공유 수강신청 Button */}
+        <CourseFixedButton course={true} />
       </ModalFooter>
     </ModalContainer>
   );

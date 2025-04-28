@@ -23,6 +23,7 @@ export interface AuthUser {
   menus?: any;
   avataImage?: string;
   latestLoginDatetime?: Date;
+  phoneNumberNationCode?: string;
 }
 
 export interface AuthSSOHealthcheck {

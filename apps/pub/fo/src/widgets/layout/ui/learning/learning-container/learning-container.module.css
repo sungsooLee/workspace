@@ -1,0 +1,5 @@
+.start {
+  .learning_container {
+    @apply flex;
+  }
+}

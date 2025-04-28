@@ -9,6 +9,7 @@ import axios, {
 
 import { cookieService } from '../cookie/cookie.service';
 import { encodeQueryString, eventService, HTTP_EVENTS } from '../../index';
+import { getFileResponse } from '@/libs/shared/src/lib/utils/file-util';
 
 const API_REQUEST_TIMEOUT = 9000;
 
@@ -183,6 +184,9 @@ export class HttpService {
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
         if (response.status >= 200 && response.status < 300) {
+          if (response.data instanceof Blob) {
+            return getFileResponse(response);
+          }
           return response.data.data;
         } else {
           throw response.data;

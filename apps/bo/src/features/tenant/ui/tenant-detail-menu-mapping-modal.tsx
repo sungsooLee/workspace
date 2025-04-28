@@ -9,17 +9,20 @@ import {
   Button,
   TreeContainer,
   TreeView,
-  TreeView2,
   TreeNode,
+  TreeEventPayload,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import { transformApiDataToTreeData } from '@features/tenant/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
-import { useMenuTenantMangeFetchTrees } from '@entities/tenant/service/tenant-menu-manage.hook';
+import {
+  useMenuTenantMappingTreeFetch,
+  useCreateMenuTenant,
+} from '@entities/tenant/service/tenant-menu-manage.hook';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
@@ -34,7 +37,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   console.log('menu Scope = ' + menuScopeCode);
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 
-  const { data: menuDB, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScopeCode);
+  const { data: menuDB, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScopeCode);
+
+  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {});
 
   const handleBaseMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
@@ -45,6 +50,41 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     if (keys && keys.length > 0) {
       setMenuTreeExpandedKeys(keys);
     }
+  };
+
+  const handleTargetAction = async (event: any) => {
+    console.log(event);
+    switch (event.type) {
+      case 'NODE_COPY':
+        {
+          const reqBody: any = JSON.parse(JSON.stringify(event.sourceNode));
+          reqBody.tenantId = tenantId;
+          reqBody.menuScope = menuScopeCode;
+          reqBody.parentId = event.sourceNode.parentKey;
+          tentantMenuCreate(reqBody);
+        }
+        break;
+      default:
+        break;
+      //     onNodeClick(event.node);
+      //     break;
+      //   case 'NODE_MOVE': {
+      //     const nodeInfo = event;
+      //     if (nodeInfo.position === 'INSIDE') {
+      //       onNodeMove(
+      //         nodeInfo.sourceNode.menuId,
+      //         nodeInfo.targetNode?.menuId,
+      //         nodeInfo.targetIndex ? nodeInfo.targetIndex : 1,
+      //       );
+      //     } else {
+      //       const targetIndex = nodeInfo.targetIndex || 1;
+      //       onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
+      //     }
+
+      //     break;
+    }
+
+    // useCreateMenuTenant(payload.sourceNode, {});
   };
 
   const renderBaseSelectButtons = (node: TreeNode, level: number) => {
@@ -142,11 +182,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView2
+                  <TreeView
                     treeId="mapping-menu-tree"
-                    type={'SHUTTLE_LIST'}
+                    type={'DRAG_DROP'}
                     data={baseMenuTreeData}
-                    nodeButtons={renderBaseSelectButtons}
+                    // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}
                     expandedKeys={baseMenuTreeExpandedKeys}
                     onExpandedKeysChange={handleBaseMenuTreeExpandChange}
@@ -198,12 +238,12 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView2
+                  <TreeView
                     treeId="mapping-tenant-menu-tree"
-                    type={'SHUTTLE_LIST'}
+                    type={'DRAG_DROP'}
                     data={menuTreeData}
                     nodeButtons={renderMenuDeleteButtons}
-                    // selectedNode={selectedNode}
+                    onAction={handleTargetAction}
                     expandedKeys={menuTreeExpandedKeys}
                     onExpandedKeysChange={handleMenuTreeExpandChange}
                     // onSelectedNodeChange={handleSelectedNodeChange}

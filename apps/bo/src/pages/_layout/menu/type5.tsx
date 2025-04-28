@@ -18,7 +18,7 @@ import { FormDisplay } from '../../../features/form/ui/form-display';
 import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
 import { buildJodObject } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/_layout/menu/type5')({
 
 function RouteComponent() {
   const { provider, onSubmit, onFormChange, onFormValid } = useDynamicForm(formConfig);
-
+  const [disable, setDisable] = useState(false);
   const onHandleSubmit = (data: any) => {
     console.log('search config1 data => ', data);
   };
@@ -60,6 +60,14 @@ function RouteComponent() {
           <Button type="button" variant="point" size="sm" onClick={() => onFormValid()}>
             강제 유효성 체크
           </Button>
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            onClick={() => setDisable((state) => !state)}
+          >
+            Disable
+          </Button>
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
@@ -75,7 +83,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <FormInfoArea>
-                <Button variant={'primary'}>인포영역</Button>
+                <Button disabled={disable}>{disable ? '사용' : '미사용'}</Button>
               </FormInfoArea>
               <DynamicFormField name={'channelId'} />
             </FormRow>

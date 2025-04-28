@@ -1,7 +1,7 @@
 import { z } from './zod';
 import { ZodSchema } from 'zod';
 import { ValidatorConfig } from '../types/zod';
-import { getValidateConfigPassword } from './validator';
+import { getValidateConfigPassword, getValidateConfigPhoneNumber } from './validator';
 
 // 필수 값 처리 함수 (분리)
 const handleRequired = (
@@ -93,6 +93,11 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
       case 'password': {
         schema = z.string();
         conditionsSuperRefine = [...conditionsSuperRefine, ...getValidateConfigPassword(key)];
+        break;
+      }
+      case 'phone-number': {
+        schema = z.string();
+        conditionsSuperRefine = [...conditionsSuperRefine, ...getValidateConfigPhoneNumber(key)];
         break;
       }
       default:
