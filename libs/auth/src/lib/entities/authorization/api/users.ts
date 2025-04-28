@@ -10,6 +10,10 @@ export default class UsersService {
     return httpService.put<any>(`${PMSApiPrefix()}/users/verifications/change-password`, payload);
   }
 
+  static verifyPassword(payload: string) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/confirm-password`, payload);
+  }
+
   static deleteUser() {
     return httpService.delete<any>(`${PMSApiPrefix()}/users/delete-account`);
   }

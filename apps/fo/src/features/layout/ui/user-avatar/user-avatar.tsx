@@ -4,7 +4,7 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser, useReissue } from '@learnway/auth';
+import { useFetchAuthUser, useLogoutUser, PasswordVerifyModal } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 import { IcLogOut01 } from '@learnway/icons';
 
@@ -34,7 +34,7 @@ interface ProfileMenu {
 const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { confirm: openConfirm } = useModal();
+  const { confirm: openConfirm, open } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
 
@@ -45,7 +45,18 @@ const PopoverContent = () => {
     () => [
       {
         title: '개인정보 변경',
-        action: () => router.navigate({ to: '/my-page/privacy' }),
+        action: () => {
+          open({
+            width: 's',
+            content: <PasswordVerifyModal />,
+            onClose: (verify?: any) => {
+              if (!verify) {
+                return;
+              }
+              router.navigate({ to: '/my-page/privacy' });
+            },
+          });
+        },
       },
       {
         title: '프로필 작성',
