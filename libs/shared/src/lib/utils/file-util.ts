@@ -3,7 +3,6 @@ import { httpService } from '../ajax/http.service';
 export const getFileResponse = (response: any) => {
   // 응답 헤더에서 파일 이름 얻기
   const contentDisposition = response.headers['content-disposition'];
-  console.log(contentDisposition, response.headers);
   const fileName = contentDisposition
     ? contentDisposition
         .split(';')
