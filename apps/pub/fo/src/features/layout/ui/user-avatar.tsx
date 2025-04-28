@@ -1,9 +1,11 @@
+import { cn } from '@learnway/shared';
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { PasswordVerifyPopup } from '../../layout';
 import { IcLogOut01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
+import fallbackStyles from './fallback.module.css';
 
 const PopoverContent = () => {
   // 퍼블수정 20250324 : alert -> confirm 으로 변경
@@ -43,16 +45,17 @@ const PopoverContent = () => {
           {/* 퍼블수정 20250318 : 아바타 사진 수정 */}
           {hasAvataImage ? (
             <div className={styles.avata_box}>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+              {/* <span className={cn(fallbackStyles.fallback, styles.name)}>
+                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
+              </span> */}
               <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
             </div>
           ) : (
             // 아바타 이미지 없는 경우 CASE
             <div className={styles.avata_box}>
-              <span className={styles.name}>
-                <em className={styles.text}>{'김'}</em>
+              <span className={cn(fallbackStyles.fallback, styles.name)}>
+                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
               </span>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
             </div>
           )}
         </div>

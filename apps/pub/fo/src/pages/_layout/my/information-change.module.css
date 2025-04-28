@@ -15,6 +15,13 @@
               @apply flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-[50%] bg-white;
             }
           }
+          .name {
+            .text {
+              @apply text-[4rem];
+            }
+            & + .info_avata {
+            }
+          }
           @apply flex justify-center;
           .info_avata {
             @apply h-[128px] w-[128px] rounded-[50%];

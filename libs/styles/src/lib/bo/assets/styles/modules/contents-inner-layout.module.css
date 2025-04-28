@@ -50,6 +50,11 @@
         @apply left-auto right-[451px];
       }
     }
+    &.contents_category {
+      &::before {
+        @apply h-[calc(100%-70px)];
+      }
+    }
   }
 }
 .btn_wrap {

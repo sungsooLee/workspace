@@ -1,6 +1,7 @@
 /* 대시보드 진행상황 */
 .start {
   .panel_degreey {
+    @apply rounded-[8px];
     .list {
       @apply flex items-center justify-between p-[16px];
       .date_status {
@@ -17,6 +18,19 @@
             @apply ml-[24px];
           }
         }
+      }
+    }
+    &.completed {
+      @apply bg-[var(--secondary6)];
+      h3 {
+        @apply text-[var(--secondary3)];
+      }
+    }
+
+    &.incomplete {
+      @apply bg-[var(--secondary8)];
+      h3 {
+        @apply text-[var(--status1)];
       }
     }
 
@@ -55,6 +69,9 @@
 
   .status_box {
     @apply mt-[16px];
+    .status_table {
+      @apply px-[16px] pb-[16px] pt-[8px];
+    }
     .btn_action {
       @apply border-t-[1px] border-solid border-[var(--gray3)];
       button {
@@ -73,17 +90,31 @@
       }
     }
     .status_list {
-      @apply flex items-start justify-between gap-[16px] p-[16px];
+      @apply relative flex items-start justify-between gap-[16px] p-[16px];
+
       .status_info {
-        @apply w-full text-center;
+        @apply relative w-full text-center before:content-[''];
+        &::before {
+          @apply absolute left-0 top-0 h-[82px] w-[1px] bg-[var(--gray5)];
+        }
+        &:first-child::before {
+          @apply hidden;
+        }
         .tt {
           @apply label_bo_1_r inline-flex h-[24px] items-center justify-center rounded-[12px] bg-[var(--primary5)] px-[12px] text-center text-[var(--primary1)];
         }
-        .score {
+        .score_box {
           @apply title_4_b mt-[8px] flex flex-col items-center justify-center text-[var(--primary4)];
-          .default {
-            @apply body_4_r block w-full text-[12px] text-[var(--gray9)];
+
+          .score {
+            @apply flex gap-[8px];
           }
+          svg {
+            @apply mt-[8px];
+          }
+        }
+        .default {
+          @apply body_4_r block w-full text-[12px] text-[var(--gray9)];
         }
       }
     }
