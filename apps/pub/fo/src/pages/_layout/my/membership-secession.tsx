@@ -43,7 +43,7 @@ function RouteComponent() {
         </div>
 
         <BrowserView>
-          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
@@ -55,7 +55,7 @@ function RouteComponent() {
 
         <MobileView>
           <MobileContainerFooter>
-            <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>
