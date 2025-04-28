@@ -7,8 +7,9 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import { isMobile } from 'react-device-detect';
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
-import styles from './membership-secession.module.css';
+//import styles from './membership-secession.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
+import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-menbership.module.css';
 
 export const Route = createFileRoute('/_layout/my/membership-secession')({
   component: RouteComponent,

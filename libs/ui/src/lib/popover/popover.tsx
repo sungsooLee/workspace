@@ -35,7 +35,8 @@ const PopoverComponent = forwardRef<
     },
     ref,
   ) => {
-    const { modals } = useModalStore();
+    const { activeModal } = useModalStore();
+    const currentActiveModal = activeModal();
 
     return (
       <Primitive.Root
@@ -47,20 +48,26 @@ const PopoverComponent = forwardRef<
         <Primitive.PopoverTrigger className={cn('nlp--popover-trigger', className)}>
           {children}
         </Primitive.PopoverTrigger>
-        <Primitive.Portal container={container}>
+        <Primitive.Portal
+          container={
+            (container ?? currentActiveModal)
+              ? document.getElementById(`nlp--modal-${currentActiveModal?.id}`)
+              : undefined
+          }
+        >
           <Primitive.Content
             className={cn(styles.popover_content, 'nlp--popover-content', className)}
             {...props}
             onInteractOutside={(e) => {
               // popover open 상태에서 modal open 시 modal content event 버블링 문제
-              if (!forceCloseFocusOutside && modals?.length > 0) {
+              if (!forceCloseFocusOutside && currentActiveModal) {
                 e.preventDefault();
                 e.stopPropagation();
               }
             }}
             onFocusOutside={(e) => {
               // popover open 상태에서 modal open 시 modal content event 버블링 문제
-              if (!forceCloseFocusOutside && modals?.length > 0) {
+              if (!forceCloseFocusOutside && currentActiveModal) {
                 e.preventDefault();
                 e.stopPropagation();
               }

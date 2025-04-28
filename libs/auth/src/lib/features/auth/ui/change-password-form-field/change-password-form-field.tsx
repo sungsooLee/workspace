@@ -5,28 +5,30 @@ import { isFunction } from 'lodash';
 import { cn } from '@learnway/shared';
 import { Input, Button, InputProps, useModal } from '@learnway/ui';
 
-import { ChangeUserIdModal } from './change-user-id-modal';
+//import styles from './auth-tool-form-field.module.css';
+//import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
+
+import { ChangePasswordModal } from './change-password-modal';
 
 interface FormFieldComponentProps {
   onChangeGuideText?: (text: string) => void;
 }
 
 //NLP_FO_MYP_1007
-interface ChangeUserIdFormFieldComponentProps extends InputProps, FormFieldComponentProps {
+interface ChangePasswordFormFieldComponentProps extends InputProps, FormFieldComponentProps {
   className?: string;
   //onChange?: (isSuccess: boolean) => void;
 }
 
-function ChangeUserIdFormFieldComponent({
+function ChangePasswordFormFieldComponent({
   onChange,
   ...props
-}: ChangeUserIdFormFieldComponentProps) {
+}: ChangePasswordFormFieldComponentProps) {
   const { t } = useTranslation();
 
   const { open: openModal } = useModal();
   const { onChangeGuideText, ...restProps } = props;
 
-  // Withdrawal of membership
   return (
     <>
       <Input {...props} readOnly />
@@ -36,14 +38,14 @@ function ChangeUserIdFormFieldComponent({
         onClick={() => {
           openModal({
             width: isMobile ? undefined : 'sm',
-            content: <ChangeUserIdModal widget={{}} />,
-            onClose: (email?: any) => {
-              if (!email) {
+            content: <ChangePasswordModal widget={{}} />,
+            onClose: (password?: any) => {
+              if (!password) {
                 return;
               }
               const changeEvent = {
                 target: {
-                  value: email,
+                  value: password,
                 },
               } as React.ChangeEvent<HTMLInputElement>;
               onChange?.(changeEvent);
@@ -51,10 +53,10 @@ function ChangeUserIdFormFieldComponent({
           });
         }}
       >
-        {t('LABEL.UPDATE_EMAIL_ID')}
+        {t('LABEL.UPDATE_PASSWORD')}
       </Button>
     </>
   );
 }
 
-export const ChangeUserIdFormField = ChangeUserIdFormFieldComponent;
+export const ChangePasswordFormField = ChangePasswordFormFieldComponent;

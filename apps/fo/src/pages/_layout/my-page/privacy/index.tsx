@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
-import { Avatar, ContentsRow, DynamicFormField, PhoneNumber } from '@learnway/ui';
+import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import {
   ChangeUserIdFormField,
   ChangePhoneNumberFormField,
+  ChangePasswordFormField,
+  WithdrawMembershipButton,
   useFetchAuthUser,
 } from '@learnway/auth';
 
@@ -15,13 +18,13 @@ import { pageRouteConfig } from '../../../../features/auth';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
-import styles from './information-change.module.css';
+import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '개인정보변경',
+      title: 'LABEL.UPDATE_INFORMATION',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
       container: MAIN_CONTAINERS.MY_PAGE,
     },
@@ -29,6 +32,7 @@ export const Route = createFileRoute('/_layout/my-page/privacy/')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const { provider, onSubmit, onFormChange, control, getValues, setFormError, fetchData } =
     useDynamicForm(authFormConfig);
 
@@ -88,7 +92,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'password'}>
-                <ChangeUserIdFormField />
+                <ChangePasswordFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -120,6 +124,26 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
         </div>
+      </div>
+
+      <NoticeBox title={t('LABEL.CAUTION')} className={styles.notice}>
+        <dd>{t('LABEL.CAUTION_CHANGE_INFORMATION_HSW')}</dd>
+        <dd>
+          {t('LABEL.CAUTION_CHANGE_INFORMATION_DDMS')}{' '}
+          <Link to={'/'}>{t('LABEL.GO_TO_DDMS')} &#62;</Link>
+        </dd>
+      </NoticeBox>
+
+      <div className={styles.bullet_notice}>
+        <dl>
+          <dt>{t('LABEL.WITHDRAW_MEMBERSHIP')}</dt>
+          <dd>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_01')}</dd>
+          <dd>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_02')}</dd>
+          <dd>
+            {t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_03')}
+            <WithdrawMembershipButton />
+          </dd>
+        </dl>
       </div>
     </div>
   );
