@@ -115,17 +115,17 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
             {t(`MESSAGE.CAN_UPDATE_EMAIL_AFTER_VERIFYING`)}
           </EmbededAlert>
 
-          <ContentsRow type="no_line">
+          <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'currentEmail'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow type="no_line">
+          <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'email'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow type="no_line">
+          <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'verificationCode'}>
                 <InputTimer
