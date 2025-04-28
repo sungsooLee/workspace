@@ -251,15 +251,7 @@ function RouteComponent() {
                       <label htmlFor="name-channel" className={searchStyles.label}>
                         <span className={searchStyles.text}>채널상태</span>
                       </label>
-                      <div className={searchStyles.box}>
-                        <Dropdown
-                          options={options3}
-                          value={selectedValues3}
-                          onChange={(selected) => setSelectedValues3(selected)}
-                          variant="default"
-                          size={'sm'}
-                        />
-                      </div>
+                      <div className={searchStyles.box}></div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
