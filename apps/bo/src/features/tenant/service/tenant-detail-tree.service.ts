@@ -1,6 +1,6 @@
 import { TreeNode } from '@learnway/ui';
 
-export const handleExpandAll = (treeData: TreeNode[]) => {
+export const getAllTreeKeys = (treeData: TreeNode[]) => {
   const getAllKeys = (nodes: TreeNode[]): string[] => {
     return nodes.reduce((keys: string[], node) => {
       keys.push(node.key);
@@ -53,6 +53,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
         menuStartDate: node.menuStartDate,
         menuEndDate: node.menuEndDate,
         parentId: node.parentId,
+        tenantMappingMenuId: node.tenantMappingMenuId,
 
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
