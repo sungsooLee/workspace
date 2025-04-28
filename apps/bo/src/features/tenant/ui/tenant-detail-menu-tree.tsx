@@ -33,12 +33,15 @@ import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal
 /** Hook 정의 */
 import {
   useMenuTenantManageDetail,
-  useMenuTenantMangeFetchTrees,
+  useMenuTenantMappingTreeFetch,
   useDeleteMenuTenent,
   useUpdateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
-import { findMenuPathById, transformApiDataToTreeData } from '@features/menu/service/menu.service';
+import {
+  findMenuPathById,
+  transformApiDataToTreeData,
+} from '@features/platform/menu/service/menu.service';
 import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
 
 const FORM_MODE = {
@@ -64,7 +67,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   // fetch data
   const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
   console.log(menuScope);
-  const { data: menuData, refetch } = useMenuTenantMangeFetchTrees(tenantId, menuScope);
+  const { data: menuData, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScope);
 
   //
   const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {});

@@ -20,6 +20,14 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      */
     isDeleted?: boolean | null;
     /**
+     * 모바일노출여부
+     */
+    isMobileExposed?: boolean | null;
+    /**
+     * PC웹노출여부
+     */
+    isWebExposed?: boolean | null;
+    /**
      * 테넌트ID
      */
     tenantId?: number | null;

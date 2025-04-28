@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_api_entity_ApiEntity } from './com_ever_edu_pms_api_entity_ApiEntity';
 import type { com_ever_edu_pms_company_entity_CompanyAdditionalEntity } from './com_ever_edu_pms_company_entity_CompanyAdditionalEntity';
 export type com_ever_edu_pms_company_entity_CompanyEntity = {
     createdDate?: string;
@@ -21,7 +20,7 @@ export type com_ever_edu_pms_company_entity_CompanyEntity = {
     basicAddress?: string;
     detailAddress?: string;
     postNo?: string;
-    parentCompanyId?: com_ever_edu_pms_api_entity_ApiEntity;
+    parentCompanyId?: com_ever_edu_pms_company_entity_CompanyEntity;
     faxNo?: string;
     abbreviationName?: string;
     companyAdditionalEntity?: com_ever_edu_pms_company_entity_CompanyAdditionalEntity;

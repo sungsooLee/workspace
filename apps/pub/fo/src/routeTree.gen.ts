@@ -11,10 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
+import { Route as LearningImport } from './pages/_learning'
 import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as LearningVideoImport } from './pages/_learning/video'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -102,6 +104,11 @@ import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
 // Create/Update Routes
 
+const LearningRoute = LearningImport.update({
+  id: '/_learning',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
@@ -121,6 +128,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const LearningVideoRoute = LearningVideoImport.update({
+  id: '/video',
+  path: '/video',
+  getParentRoute: () => LearningRoute,
 } as any)
 
 const AuthSuccessRoute = AuthSuccessImport.update({
@@ -668,6 +681,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_learning': {
+      id: '/_learning'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LearningImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/agreement-privacy': {
       id: '/_auth/agreement-privacy'
       path: '/agreement-privacy'
@@ -814,6 +834,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/success'
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
+    }
+    '/_learning/video': {
+      id: '/_learning/video'
+      path: '/video'
+      fullPath: '/video'
+      preLoaderRoute: typeof LearningVideoImport
+      parentRoute: typeof LearningImport
     }
     '/_layout/': {
       id: '/_layout/'
@@ -1469,8 +1496,20 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
+interface LearningRouteChildren {
+  LearningVideoRoute: typeof LearningVideoRoute
+}
+
+const LearningRouteChildren: LearningRouteChildren = {
+  LearningVideoRoute: LearningVideoRoute,
+}
+
+const LearningRouteWithChildren = LearningRoute._addFileChildren(
+  LearningRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
+  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1492,6 +1531,7 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1559,7 +1599,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '': typeof GuideRouteWithChildren
+  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1581,6 +1621,7 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1652,6 +1693,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_learning': typeof LearningRouteWithChildren
   '/_auth/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/_auth/agreement_check': typeof AuthAgreementcheckRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
@@ -1673,6 +1715,7 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
@@ -1764,6 +1807,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/video'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -1852,6 +1896,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/video'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -1921,6 +1966,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_learning'
     | '/_auth/agreement-privacy'
     | '/_auth/agreement_check'
     | '/_auth/dormant-account'
@@ -1942,6 +1988,7 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/video'
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
@@ -2013,12 +2060,14 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
+  LearningRoute: typeof LearningRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
+  LearningRoute: LearningRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -2033,7 +2082,8 @@ export const routeTree = rootRoute
       "children": [
         "/_auth",
         "/_guide",
-        "/_layout"
+        "/_layout",
+        "/_learning"
       ]
     },
     "/_auth": {
@@ -2136,6 +2186,12 @@ export const routeTree = rootRoute
         "/_layout/menu3/"
       ]
     },
+    "/_learning": {
+      "filePath": "_learning.tsx",
+      "children": [
+        "/_learning/video"
+      ]
+    },
     "/_auth/agreement-privacy": {
       "filePath": "_auth/agreement-privacy.tsx",
       "parent": "/_auth"
@@ -2219,6 +2275,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_learning/video": {
+      "filePath": "_learning/video.tsx",
+      "parent": "/_learning"
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",

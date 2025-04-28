@@ -2,7 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_menu_dto_res_TreeBaseDto } from './com_ever_edu_pms_menu_dto_res_TreeBaseDto';
 export type com_ever_edu_pms_menu_dto_res_MenuTreeDto = {
+    parentId?: number;
+    children?: Array<com_ever_edu_pms_menu_dto_res_TreeBaseDto>;
     menuId?: number;
     menuCode?: string;
     menuName?: string;
@@ -18,9 +21,7 @@ export type com_ever_edu_pms_menu_dto_res_MenuTreeDto = {
     menuEndDate?: string;
     menuDesc?: string;
     isHiddenMenu?: boolean;
-    parentId?: number;
     roles?: string;
-    children?: Array<com_ever_edu_pms_menu_dto_res_MenuTreeDto>;
 };
 export namespace com_ever_edu_pms_menu_dto_res_MenuTreeDto {
     export enum menuScope {

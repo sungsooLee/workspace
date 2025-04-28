@@ -95,7 +95,7 @@ function PageContainerComponent({
   };
 
   return (
-    <div className={`${styles.start} ${styles.contents}`}>
+    <div className={cn(styles.start, styles.contents)}>
       <Breadcrumbs />
       <div ref={scrollContainerRef} className={cn(styles.inner, 'scroll_inner')}>
         {/* title_wrap */}
@@ -129,21 +129,18 @@ function PageContainerComponent({
               <Button variant="point" size="sm">
                 목록
               </Button>
+              <Button variant="point" size="sm">
+                매핑과정 보기
+              </Button>
+              <Button variant="point" size="sm">
+                공유이력 보기
+              </Button>
             </div>
-            <Button variant="point" size="sm">
-              매핑과정 보기
+            <Button variant="point" size="sm" disabled>
+              배포
             </Button>
-            <Button variant="point" size="sm">
-              공유이력 보기
-            </Button>
-            <Button variant="point" size="sm">
-              삭제
-            </Button>
-            <Button variant="primary" size="sm">
-              수정
-            </Button>
-            <Button variant="primary" size="sm">
-              신규등록
+            <Button variant="primary" size="sm" disabled>
+              저장
             </Button>
           </div>
         </div>
