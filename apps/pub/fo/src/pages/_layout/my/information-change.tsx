@@ -9,6 +9,7 @@ import { IcoCaution, IcoImage01, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './information-change.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
+import fallbackStyles from '../../../features/layout/ui/fallback.module.css';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,
@@ -25,7 +26,12 @@ function RouteComponent() {
           <div className={styles.avata_img}>
             {/* 사진 */}
             <div className={styles.avata_box}>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+              <span className={cn(fallbackStyles.fallback, fallbackStyles.name, styles.name)}>
+                <em className={cn(fallbackStyles.fallback, fallbackStyles.text, styles.text)}>
+                  {'김'}
+                </em>
+              </span>
+              {/* <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} /> */}
               <div className={styles.file}>
                 <label htmlFor="file">
                   <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>

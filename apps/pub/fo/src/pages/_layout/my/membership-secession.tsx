@@ -6,7 +6,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
 
-import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
+//import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import styles from './membership-secession.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 
@@ -42,7 +42,7 @@ function RouteComponent() {
         </div>
 
         <BrowserView>
-          <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl">
               취소
             </Button>
@@ -54,7 +54,7 @@ function RouteComponent() {
 
         <MobileView>
           <MobileContainerFooter>
-            <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
+            <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
                 취소
               </Button>
