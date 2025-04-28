@@ -15,8 +15,8 @@ import {
 import { FormRow } from '@shared/ui';
 import { ThumbnailUploaderFormField } from '@features/learning';
 import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
-import { TenantManagerModal } from '@features/tenant/ui/tenant-manager-modal';
-import { CompanyModal } from '@features/tenant/ui/company-modal';
+import { TenantManagerModal } from '@features/tenant/management/ui/tenant-manager-modal';
+import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
 export const Route = createFileRoute('/_layout/tenant/management/regist')({

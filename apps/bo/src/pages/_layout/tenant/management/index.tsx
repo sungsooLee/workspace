@@ -2,31 +2,21 @@ import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@/libs/hooks/src';
 import { useRouter } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 
-import {
-  Button,
-  GridBox,
-  // Tooltip,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  DynamicFormField,
-  Dropdown,
-} from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button, GridBox, useGridBox, Input, DynamicFormField, Dropdown } from '@learnway/ui';
+import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
+import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 export const Route = createFileRoute('/_layout/tenant/management/')({
   component: RouteComponent,
 });
@@ -43,41 +33,82 @@ function RouteComponent() {
 
   const router = useRouter();
 
-  useDynamicForm(formConfig);
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const gridConfig = {
+    // query: tenantOptions.all,
+    query: '',
+    columns: [
+      {
+        name: 'no1',
+        label: 'NO.',
+        type: 'numbering',
+      },
+      {
+        name: 'tenantName',
+        label: t('테넌트명'),
+        render: (info: any) => (
+          <Button
+            className="link"
+            onClick={() => {
+              router.navigate({
+                to: '/tenant/management/detail',
+                state: { tenantId: info.row.original.tenantId },
+              });
+            }}
+          >
+            {info.row.original.tenantName}
+          </Button>
+        ),
+      },
+      {
+        name: 'tenantSite',
+        label: t('테넌트 사이트'),
+        render: (info: any) => (
+          <Link to={info.getValue()} className="link">
+            {info.getValue()}
+          </Link>
+        ),
+      },
+      { name: 'company', label: t('회사') },
+      { name: 'hrdOwner', label: '테넌트 담당자' },
+      { name: 'companyNumber', label: '사용여부' },
+      { name: 'name', label: '등록자' },
+      { name: 'roleTerm', label: '등록일시' },
+      { name: 'tenure', label: '수정자' },
+      { name: 'roleStatus', label: '수정일시' },
+    ],
+    data: [
+      {
+        id: '1',
+        tenantId: 1,
+        tenantName: '테넌트A',
+        tenantSite: '/abcdefg',
+        channelName: '내 관리 채널명',
+        company: '현대자동차',
+        tenantOwner: '경영지원팀',
+        hrdOwner: '테넌트 담당자',
+        companyNumber: '1234567',
+        name: '김현대',
+        roleTerm: '2025-01-03 ~ 2025-01-03',
+        tenure: '재직',
+        roleStatus: '정상',
+      },
+    ],
+
+    pagination: {
+      pageSize: 10,
+      pageIndex: 0,
+      totalRows: 0,
+    },
+  };
+
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { gridFetch } = useGridBox(gridConfig, getValues);
+
+  // useDynamicForm(formConfig);
 
   const handleOnSearch = (data: any) => {
     console.log(data);
   };
-
-  const data: any[] = [
-    {
-      order: '1',
-      tenantName: (
-        <Button
-          className="link"
-          onClick={() => {
-            router.navigate({ to: '/tenant/management/detail', state: { tenantId: 1 } });
-          }}
-        >
-          테스트 테넌트 1 클릭하면 상세
-        </Button>
-      ),
-      tenantSite: (
-        <Link to="/" className="link">
-          /1000001
-        </Link>
-      ),
-      company: '현대자동차, 기아자동차',
-      tenantOwner: '담당자명',
-      companyOwner: '담당자명',
-      useable: '사용',
-      register: '김현대',
-      registerDate: '2025-01-01 07:12',
-      modifier: '김현대',
-      modificationDate: '2025-01-01 07:12',
-    },
-  ];
 
   return (
     <form className="form_row">
@@ -93,13 +124,12 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <div className={cn(searchStyles.start, searchStyles.wrap)}>
-            <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+            <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
               <GridBox
-                data={data}
-                columns={columns}
+                config={gridConfig}
                 height={440}
                 showColumnSettings={false}
                 pagination={{
@@ -144,111 +174,6 @@ const options5 = [
   { value: 'option2', label: '옵션 2' },
   { value: 'option3', label: '옵션 3' },
 ];
-
-const columnHelper = createColumnHelper<any>();
-
-const columns = [
-  columnHelper.accessor('order', {
-    cell: (info) => info.getValue(),
-    header: 'NO.',
-    footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-    size: 64,
-    meta: {
-      headerAlign: 'left',
-      cellAlign: 'center',
-    },
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('tenantName', {
-    cell: (info) => info.getValue(),
-    header: '테넌트명',
-    enableGrouping: false,
-    size: 152,
-  }),
-  columnHelper.accessor('tenantSite', {
-    cell: (info) => info.getValue(),
-    header: '테넌트 사이트',
-    size: 240,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('company', {
-    cell: (info) => info.getValue(),
-    header: '회사',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('tenantOwner', {
-    cell: (info) => info.getValue(),
-    header: '테넌트 담당자',
-    size: 120,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('companyOwner', {
-    cell: (info) => info.getValue(),
-    header: '회사 담당자',
-    size: 120,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('useable', {
-    cell: (info) => info.getValue(),
-    header: '사용여부',
-    size: 104,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('register', {
-    cell: (info) => info.getValue(),
-    header: '등록자',
-    enableGrouping: false,
-    size: 104,
-  }),
-  columnHelper.accessor('registerDate', {
-    cell: (info) => info.getValue(),
-    header: '등록일시',
-    enableGrouping: false,
-    size: 152,
-  }),
-  columnHelper.accessor('modifier', {
-    cell: (info) => info.getValue(),
-    header: '수정자',
-    enableGrouping: false,
-    size: 104,
-  }),
-  columnHelper.accessor('modificationDate', {
-    cell: (info) => info.getValue(),
-    header: '수정일',
-    enableGrouping: false,
-    size: 152,
-  }),
-] as ColumnDef<any, unknown>[];
-
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'tenantName',
-      type: 'text',
-      label: t('테넌트명'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      label: t('테넌트 로고 (Size : 000x000)'),
-      name: 'tenantLogo',
-      type: 'custom',
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'managerName',
-      label: t('테넌트 담당자'),
-      type: 'custom',
-      value: '',
-    },
-  ],
-  validator: {
-    tenantName: { required: true },
-    thumbnails: { required: true },
-  },
-};
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -351,53 +276,4 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
-
-const gridConfig = {
-  query: '',
-  data: [
-    {
-      managerId: 1,
-      tenantName: '테넌트A',
-      channelName: '내 관리 채널명',
-      company: '현대자동차',
-      affiliation: '경영지원팀',
-      hrdOwner: '테넌트 담당자',
-      companyNumber: '1234567',
-      name: '김현대',
-      roleTerm: '2025-01-03 ~ 2025-01-03',
-      tenure: '재직',
-      roleStatus: '정상',
-    },
-    {
-      managerId: 2,
-      tenantName: '테넌트A',
-      channelName: '내 관리 채널명',
-      company: '현대자동차',
-      affiliation: '경영지원팀',
-      hrdOwner: '테넌트 담당자',
-      companyNumber: '1234567',
-      name: '김현대',
-      roleTerm: '2025-01-03 ~ 2025-01-03',
-      tenure: '재직',
-      roleStatus: '정상',
-    },
-  ],
-  columns: [
-    { name: 'tenantName', label: t('테넌트명') },
-    { name: 'channelName', label: t('채널명') },
-    { name: 'company', label: t('회사') },
-    { name: 'affiliation', label: t('테넌트 담당자') },
-    { name: 'hrdOwner', label: '회사 담당자' },
-    { name: 'companyNumber', label: '사번' },
-    { name: 'name', label: '이름' },
-    { name: 'roleTerm', label: '역할 기간' },
-    { name: 'tenure', label: '재직 여부' },
-    { name: 'roleStatus', label: '역할 상태' },
-  ],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 };
