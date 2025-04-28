@@ -4,13 +4,9 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import {
   BaseFormFieldProps,
   DynamicFormConfig,
-  SearchBoxConfig,
   useDynamicForm,
   useDynamicFormContext,
-  useSearchBox,
 } from '@learnway/hooks';
-import { SearchBox } from '../../../shared/ui/search-box';
-import { t } from 'i18next';
 import { Button, ContentsRow, DynamicFormField, Input } from '@learnway/ui';
 import { FormRow } from '../../../shared/ui/form';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
