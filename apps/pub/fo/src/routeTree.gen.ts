@@ -17,6 +17,7 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningGalleryImport } from './pages/_learning/gallery'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -134,6 +135,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningGalleryRoute = LearningGalleryImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -842,6 +849,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_learning/gallery': {
+      id: '/_learning/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof LearningGalleryImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
@@ -1513,10 +1527,12 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 interface LearningRouteChildren {
+  LearningGalleryRoute: typeof LearningGalleryRoute
   LearningVideoRoute: typeof LearningVideoRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
+  LearningGalleryRoute: LearningGalleryRoute,
   LearningVideoRoute: LearningVideoRoute,
 }
 
@@ -1547,6 +1563,7 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1638,6 +1655,7 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1733,6 +1751,7 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/gallery': typeof LearningGalleryRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -1826,6 +1845,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/gallery'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -1916,6 +1936,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/gallery'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -2009,6 +2030,7 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/gallery'
     | '/_learning/video'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -2212,6 +2234,7 @@ export const routeTree = rootRoute
     "/_learning": {
       "filePath": "_learning.tsx",
       "children": [
+        "/_learning/gallery",
         "/_learning/video"
       ]
     },
@@ -2298,6 +2321,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_learning/gallery": {
+      "filePath": "_learning/gallery.tsx",
+      "parent": "/_learning"
     },
     "/_learning/video": {
       "filePath": "_learning/video.tsx",
