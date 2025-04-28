@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 
 import styles from './notification.module.css';
 
-// import { useFetchAuthUser } from '../../../entities/user';
+// import { useFetchAuthUser } from '../../../entities/authorization';
 
 interface NotificationInfo {
   id: number;
@@ -109,7 +109,8 @@ const PopoverContent = () => {
                 <li
                   key={id}
                   className={`${styles.info_item} ${!isRead ? styles.yet : ''}`}
-                  onClick={() => markAsRead(id)}>
+                  onClick={() => markAsRead(id)}
+                >
                   <div className={styles.title_wrap}>
                     <strong className={styles.title}>{title}</strong>
                     <Button
@@ -117,7 +118,8 @@ const PopoverContent = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDelete(id);
-                      }}>
+                      }}
+                    >
                       <IcoXclose width={24} height={24} stroke="#131C30" />
                     </Button>
                   </div>

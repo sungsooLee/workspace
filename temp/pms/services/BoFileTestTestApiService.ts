@@ -2,70 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_global_excel_dto_req_ExcelValidationReqDto } from '../models/com_ever_edu_global_excel_dto_req_ExcelValidationReqDto';
-import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
-import type { com_ever_edu_pms_file_dto_test_UserExcelVO } from '../models/com_ever_edu_pms_file_dto_test_UserExcelVO';
+import type { com_ever_edu_global_s3_dto_res_S3ObjectListResDto } from '../models/com_ever_edu_global_s3_dto_res_S3ObjectListResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoFileTestTestApiService {
-    /**
-     * 엑셀 유효성검사 - 사용금지(테스트용)
-     * 엑셀 유효성검사 - 사용금지(테스트용)
-     * @param requestBody
-     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
-     * @throws ApiError
-     */
-    public static testValidationExcelFile(
-        requestBody: com_ever_edu_global_excel_dto_req_ExcelValidationReqDto,
-    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/test/api/v1/file/excel/test/validation',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * MultipartFile Excel 업로드 처리(복호화, 파싱) - 사용금지(임시 테스트용)
-     * MultipartFile Excel 업로드 처리(복호화, 파싱) 테스트
-     * @param companyCode companyCode
-     * @param formData
-     * @returns com_ever_edu_pms_file_dto_test_UserExcelVO OK
-     * @throws ApiError
-     */
-    public static testExcelAttachFileDec(
-        companyCode: string,
-        formData?: {
-            file?: Blob;
-        },
-    ): CancelablePromise<Array<com_ever_edu_pms_file_dto_test_UserExcelVO>> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/test/api/v1/file/excel/import',
-            query: {
-                'companyCode': companyCode,
-            },
-            formData: formData,
-            mediaType: 'multipart/form-data',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
     /**
      * MultipartFile 업로드 처리(복호화) - 사용금지(임시 테스트용)
      * MultipartFile 업로드 처리(복호화) 테스트
@@ -188,41 +129,75 @@ export class BoFileTestTestApiService {
         });
     }
     /**
-     * Excel 생성 후 다운로드 처리(임시 테스트용:yyyyMMddHHmmss_export.xlsx)
-     * Excel 생성 후 다운로드 처리 테스트
-     * @param createdBy 페이징 처리를 위한 페이지 번호. 0 ~
-     * @param coordinatorId 담당자 Id
-     * @param screenId 화면 Id
-     * @param downloadReasonType 사유 유형코드, AFFAIRS|LEGAL_REQUEST|OUTSIDE_SUBMIT|RND|ETC
-     * @param downloadDetailReasonType 사유 상세유형코드
-     * @param downloadDetailReason 사유 상세 직접 입력, EDR41(상세 직접 입력)인 경우 사용
-     * @returns any OK
+     * S3 파일 리스트 목록 - 사용금지(임시 테스트용)
+     * S3 파일 리스트 목록을 요청한다.
+     * @param s3Path S3 파일 경로, S3 키로 사용
+     * @returns com_ever_edu_global_s3_dto_res_S3ObjectListResDto OK
      * @throws ApiError
      */
-    public static testExceFileExport(
-        createdBy: any,
-        coordinatorId?: any,
-        screenId?: any,
-        downloadReasonType?: any,
-        downloadDetailReasonType?: any,
-        downloadDetailReason?: any,
-    ): CancelablePromise<any> {
+    public static testBucketFileList(
+        s3Path: string,
+    ): CancelablePromise<Array<com_ever_edu_global_s3_dto_res_S3ObjectListResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/test/api/v1/file/excel/export',
+            url: '/test/api/v1/file/s3/files',
             query: {
-                'coordinatorId': coordinatorId,
-                'screenId': screenId,
-                'downloadReasonType': downloadReasonType,
-                'downloadDetailReasonType': downloadDetailReasonType,
-                'downloadDetailReason': downloadDetailReason,
-                'createdBy': createdBy,
+                's3path': s3Path,
             },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * S3 파일 삭제 요청 - 사용금지(임시 테스트용)
+     * SS3 파일 삭제 요청한다.
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @returns void
+     * @throws ApiError
+     */
+    public static testDeleteS3File(
+        key: string,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/test/api/v1/file/s3/delete',
+            query: {
+                'key': key,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * S3 특정 경로 파일 삭제 요청 - 사용금지(임시 테스트용)
+     * S3 특정 경로 파일 삭제 요청한다.
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @returns void
+     * @throws ApiError
+     */
+    public static testDeleteS3Path(
+        key: string,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/test/api/v1/file/s3/delete/all',
+            query: {
+                'key': key,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

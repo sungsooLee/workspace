@@ -9,8 +9,8 @@ export type com_ever_edu_pms_file_dto_test_UserExcelVO = {
     email?: string;
     mobileNo?: string;
     companyNo?: string;
-    createDateTme?: string;
-    loginDateTme?: string;
+    createDateTime?: string;
+    loginDateTime?: string;
     failCount?: number;
 };
 

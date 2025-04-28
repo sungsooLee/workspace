@@ -89,16 +89,12 @@ const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children,
   const formGuideText = useMemo(() => extractFormItem(children, 'FormGuideText'), [children]);
 
   useEffect(() => {
-    console.log('fom info area change start', formInfoArea);
     if (formInfoArea) {
-      console.log('form info area change', formInfoArea);
       onChangeInfoArea(formInfoArea);
     }
   }, [formInfoArea]);
   useEffect(() => {
-    console.log('fom guide text change start', formGuideText);
     if (formGuideText) {
-      console.log('form guide text change');
       onChangeGuideText(formGuideText);
     }
   }, [formGuideText]);

@@ -7,8 +7,8 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { MessageDetail } from '@pages/_unauth/platform_test/message/-components/detail';
 import { SplitPanel } from '@shared/ui';
+import { MessageDetail } from './-components/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
@@ -24,6 +24,41 @@ function RouteComponent() {
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(-1);
 
+  /**
+   * 검색 실행 시 호출되는 핸들러
+   * @param {any} data - 검색 조건 데이터
+   */
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(data);
+  }, []);
+
+  /**
+   * 그리드에서 '추가' 버튼 클릭 시 호출되는 핸들러
+   * 음수 임시 ID를 설정하여 새 항목 추가 모드로 전환
+   */
+  const handleGridAddClick = () => {
+    setSelectedLabelMessageId(Date.now() * -1); // 음수 랜덤 값 설정
+  };
+
+  /**
+   * 그리드의 행 선택 시 호출되는 핸들러
+   * @param {any} row - 선택된 행 데이터
+   */
+  const handleGridRowSelect = (row: any) => {
+    setSelectedLabelMessageId(row?.labelMessageId);
+  };
+
+  /**
+   * 상세 저장 완료 시 호출
+   * 마지막 검색 조건을 기준으로 그리드를 재조회함
+   */
+  const handleSuccessSave = () => {
+    gridFetch(searchProvider.originalValues);
+  };
+
+  /**
+   * 다국어 관리 화면으로 이동
+   */
   const handleMultilingualManageClick = () => {
     router.navigate({
       to: '/platform/system/multilingual',
@@ -33,25 +68,10 @@ function RouteComponent() {
     });
   };
 
-  const handleOnSearch = useCallback((data: any) => {
-    console.log('handleOnSearch', data);
-    gridFetch(data);
-  }, []);
-
-  const handleGridAddClick = () => {
-    console.log('handleGridAddClick');
-    setSelectedLabelMessageId(Date.now() * -1); // 음수 랜덤 값 설정
-  };
-
-  const handleGridRowSelect = (row: any) => {
-    console.log('handleGridRowSelect', row);
-    setSelectedLabelMessageId(row?.labelMessageId);
-  };
-
-  const code = codeConfig.getCodesByCodeGroup('labelMessageType');
-
-  console.log('code', code, codeConfig.get());
-  console.log('gConfig', gConfig);
+  console.log('======>', {
+    gConfig,
+    code: codeConfig.getCodesByCodeGroup('labelMessageType'),
+  });
 
   return (
     <PageContainer scrollHidden={true}>
@@ -79,7 +99,10 @@ function RouteComponent() {
             onRowSelect={handleGridRowSelect}
             onAddClick={handleGridAddClick}
           />
-          <MessageDetail labelMessageId={selectedLabelMessageId} />
+          <MessageDetail
+            labelMessageId={selectedLabelMessageId}
+            onSuccessSave={handleSuccessSave}
+          />
         </SplitPanel>
       </MainContents>
     </PageContainer>
@@ -129,10 +152,10 @@ const searchConfig: any = {
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
-  data: [
-    { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-    { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  ],
+  // data: [
+  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
+  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
+  // ],
   columns: [
     { name: 'labelMessageType', label: '분류' },
     {

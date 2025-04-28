@@ -1,0 +1,21 @@
+.start {
+  @apply fixed right-[45px] top-[200px];
+  .panel {
+    .menu,
+    .control {
+      @apply rounded-[16px] bg-white px-[20px] py-[24px] text-center;
+      button {
+        @apply !mx-auto flex flex-col;
+        span {
+          @apply body_3_r mt-[8px] block text-center text-[var(--gray7)];
+        }
+        & + button {
+          @apply mt-[24px];
+        }
+      }
+    }
+    .control {
+      @apply mt-[24px];
+    }
+  }
+}

@@ -16,7 +16,7 @@ import { DynamicFormField, ContentsRow } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import { FormRow, EmbededAlert } from '../../../../shared/ui';
-import { useVerifyEmail, useSendVerifyEmail } from '../../../../entities/user';
+import { useVerifyEmail, useSendVerifyEmail } from '../../../../entities/authorization';
 import { useFetchAuthUser, useUpdateUser } from '../../../../entities/authorization';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
@@ -94,7 +94,7 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
           updateEmail(data.email);
           verifyTimerCounter.set(0);
           await alert('LABEL.UPDATE_EMAIL_ID_RESULT_MESSAGE');
-          closeModal();
+          closeModal(data.email);
         },
         onError: handleVerifyError,
       },
@@ -115,17 +115,17 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
             {t(`MESSAGE.CAN_UPDATE_EMAIL_AFTER_VERIFYING`)}
           </EmbededAlert>
 
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'currentEmail'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'email'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'verificationCode'}>
                 <InputTimer

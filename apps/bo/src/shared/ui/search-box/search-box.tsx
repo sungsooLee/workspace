@@ -159,7 +159,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
             {provider.builders.length > 1 && isExpanded && (
               <div className={searchStyles.form_display}>
                 {provider.builders
-                  .filter((_, index) => index > 0)
+                  .filter((_, index) => index > 1)
                   .map((columns: any, columnIndex) => (
                     <div key={columnIndex} className={searchStyles.item_wrap}>
                       {columns.map((column: any, columnIndex: number) =>
@@ -171,7 +171,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
             )}
           </div>
           <div className={searchStyles.btn_box}>
-            {provider.builders.length > 1 && (
+            {provider.builders.length > 2 && (
               <Button
                 type="button"
                 className={cn(searchStyles.btn_expand, isExpanded ? searchStyles.active : '')}

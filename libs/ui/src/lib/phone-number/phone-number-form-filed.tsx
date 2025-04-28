@@ -16,7 +16,13 @@ interface PhoneNumberFormFieldProps extends BaseFormFieldProps<string> {
  */
 const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberFormFieldProps>(
   (
-    { value, control, onFormChange, fields = { nationCode: 'nationCode', number: 'number' } },
+    {
+      value,
+      control,
+      onFormChange,
+      fields = { nationCode: 'nationCode', number: 'number' },
+      disabled,
+    },
     _,
   ) => {
     const nationCode = useWatch({ control, name: fields.nationCode });
@@ -38,6 +44,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
           number: value,
         }}
         onChange={handleOnChange}
+        disabled={disabled}
       />
     );
   },

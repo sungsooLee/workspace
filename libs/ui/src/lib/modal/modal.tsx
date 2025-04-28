@@ -14,6 +14,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
   width = 'auto',
   hideCloseButton = false,
   closeOnOutsideClick = false,
+  id,
 }) => {
   // 닫기 버튼 클릭 시 onClose 콜백 호출
   const handleOpenChange = () => onClose?.();
@@ -33,7 +34,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
-          className={cn(styles.content, 'nlp--modal', width && styles[width])}
+          className={cn(styles.content, 'nlp--modal', width && styles[width], `nlp--modal-${id}`)}
           onInteractOutside={handleOutsideClick}
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
         >
