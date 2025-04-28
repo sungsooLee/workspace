@@ -31,26 +31,26 @@
     }
   }
 
-  .status_box {
-    @apply mt-[8px];
-    .progress_rate {
-      @apply flex items-center justify-between;
-      > div {
-        @apply w-full;
+  .progress_rate {
+    @apply flex items-center justify-between;
+
+    .progress_bar {
+      @apply flex-1 border border-solid border-[var(--gray5)] bg-[var(--white)];
+    }
+    .info {
+      @apply mr-[6px] flex w-[160px] items-center justify-end text-right;
+      .txt {
+        @apply body_3_r inline-block pl-[30px] text-left text-[var(--gray8)];
       }
-      .progress_bar {
-        @apply flex-1 border border-solid border-[var(--gray5)] bg-[var(--white)];
-      }
-      .info {
-        @apply mr-[6px] flex w-[160px] items-center justify-end text-right;
-        .txt {
-          @apply body_3_r inline-block pl-[30px] text-left text-[var(--gray8)];
-        }
-        .progress {
-          @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
-        }
+      .progress {
+        @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
       }
     }
+  }
+
+  .status_box {
+    @apply mt-[8px];
+
     .status_list {
       @apply mt-[16px] flex items-center justify-between gap-[16px];
       .status_info {

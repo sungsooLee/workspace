@@ -65,12 +65,10 @@ const CourseDashboardCompoment = () => {
         </Panel>
 
         <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_rate}>
-          <div className={statusStyles.progress_rate}>
-            <h3>나의진도율</h3>
-            <Progress value={progress} className={statusStyles.progress_bar} />
-            <div className={statusStyles.info}>
-              <span className={statusStyles.progress}>{progress}%</span>
-            </div>
+          <h3>나의진도율</h3>
+          <Progress value={progress} className={statusStyles.progress_bar} />
+          <div className={statusStyles.info}>
+            <span className={statusStyles.progress}>{progress}%</span>
           </div>
         </Panel>
 
