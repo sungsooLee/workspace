@@ -97,14 +97,14 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.check_wrap}>
-                  <CheckboxGroupFormField
+                  {/* <CheckboxGroupFormField
                     options={[
                       { value: 'all', label: '전체' },
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: 'Mobile' },
                     ]}
                     value={['all']}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
