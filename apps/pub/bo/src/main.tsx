@@ -1,4 +1,5 @@
-import { StrictMode } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryConfig } from '@learnway/config';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 
@@ -22,7 +23,7 @@ appConfig.init({});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <QueryClientProvider client={queryConfig.getQueryClient()}>
+<RouterProvider router={router} />
+  </QueryClientProvider>
 );
