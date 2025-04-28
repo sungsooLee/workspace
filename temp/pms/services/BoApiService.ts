@@ -5,7 +5,6 @@
 import type { com_ever_edu_pms_api_dto_req_ApiDnDRequestDto } from '../models/com_ever_edu_pms_api_dto_req_ApiDnDRequestDto';
 import type { com_ever_edu_pms_api_dto_req_ApiSaveReqDto } from '../models/com_ever_edu_pms_api_dto_req_ApiSaveReqDto';
 import type { com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$DetailOnAdmin';
-import type { com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin } from '../models/com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin';
 import type { com_ever_edu_pms_api_dto_res_ApiTreeDto } from '../models/com_ever_edu_pms_api_dto_res_ApiTreeDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -81,25 +80,6 @@ export class BoApiService {
             path: {
                 'apiUuid': apiUuid,
             },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * API 분류 목록 조회
-     * API 분류 목록을 조회한다.
-     * @returns com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static getApiCategoryList(): CancelablePromise<Array<com_ever_edu_pms_api_dto_res_ApiResDto$ListOnAdmin>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/apis',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
