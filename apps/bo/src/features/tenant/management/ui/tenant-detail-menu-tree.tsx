@@ -43,7 +43,7 @@ import {
   transformApiDataToTreeData,
   getFirstExpandKeys,
   getAllTreeKeys,
-} from '../service/tenant-detail-tree.service';
+} from '../management/service/tenant-detail-tree.service';
 
 const FORM_MODE = {
   NONE: 'NONE',

@@ -27,7 +27,7 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
-export const Route = createFileRoute('/_layout/tenant/')({
+export const Route = createFileRoute('/_layout/tenant/management/')({
   component: RouteComponent,
 });
 
@@ -57,7 +57,7 @@ function RouteComponent() {
         <Button
           className="link"
           onClick={() => {
-            router.navigate({ to: '/tenant/detail', state: { tenantId: 1 } });
+            router.navigate({ to: '/tenant/managment/detail', state: { tenantId: 1 } });
           }}
         >
           테스트 테넌트 1 클릭하면 상세
@@ -86,7 +86,7 @@ function RouteComponent() {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => router.navigate({ to: '/tenant/regist' })}
+            onClick={() => router.navigate({ to: '/tenant/management/regist' })}
           >
             등록
           </Button>

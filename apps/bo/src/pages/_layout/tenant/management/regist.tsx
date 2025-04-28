@@ -19,7 +19,7 @@ import { TenantManagerModal } from '@features/tenant/ui/tenant-manager-modal';
 import { CompanyModal } from '@features/tenant/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
-export const Route = createFileRoute('/_layout/tenant/regist')({
+export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
 

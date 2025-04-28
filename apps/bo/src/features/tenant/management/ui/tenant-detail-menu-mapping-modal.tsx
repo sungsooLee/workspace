@@ -17,13 +17,16 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/tenant/service/tenant-detail-tree.service';
+import { transformApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
   useMenuTenantMappingTreeFetch,
   useCreateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
-import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
+import {
+  getFirstExpandKeys,
+  getAllTreeKeys,
+} from '../management/service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);

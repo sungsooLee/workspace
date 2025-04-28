@@ -10,13 +10,13 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 /* tab contents */
-import { TenantDetailMenu } from '@features/tenant/ui/tenant-detail-menu';
-import { TenantDetailBase } from '@features/tenant/ui/tenant-detail-base';
-import { TenantDetailCategory } from '@features/tenant/ui/tenant-detail-category';
-import { TenantDetailAttribute } from '@features/tenant/ui/tenant-detail-attribute';
-import { TenantDetailWidget } from '@features/tenant/ui/tenant-detail-widget';
+import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
+import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
+import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
+import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
+import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
 
-export const Route = createFileRoute('/_layout/tenant/detail')({
+export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
 });
 
@@ -31,7 +31,7 @@ function RouteComponent() {
     }
   };
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/' });
+    router.navigate({ to: '/tenant/management' });
   };
 
   const handleResetButtonClick = () => {
