@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
@@ -26,12 +27,17 @@ export const Route = createFileRoute('/_layout/my-page/privacy/withdraw-menbersh
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const [agree, setAgree] = useState<boolean>(false);
 
   const { alert } = useModal();
   const { remove } = useDeleteUser();
   const { logout } = useLogoutUser();
 
   const handleWithdrawMembership = () => {
+    if (!agree) {
+      return;
+    }
+
     remove({
       onSuccess: async () => {
         logout();
@@ -43,6 +49,11 @@ function RouteComponent() {
       },
     });
   };
+
+  const handleCancel = () => {
+    router.navigate({ to: '/my-page/privacy' });
+  };
+
   return (
     <div className={`${styles.start} ${styles.secession}`}>
       <div className={styles.box}>
@@ -57,14 +68,18 @@ function RouteComponent() {
             <li>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_02')}</li>
             <li>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_03')}</li>
           </ul>
-          <Checkbox size="lg" label={t('LABEL.AGREE_TO_BE_THE_INSTRUCTIONS')} />
+          <Checkbox
+            size="lg"
+            label={t('LABEL.AGREE_TO_BE_THE_INSTRUCTIONS')}
+            onCheckedChange={(checked: boolean) => setAgree(checked)}
+          />
         </div>
       </div>
 
-      <MobileResponsiveContainerFooter>
+      <MobileResponsiveContainerFooter className={styles.btn_wrap}>
         <BrowserFooter>
-          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
+          <div className={cn('auth--btn_wrap')}>
+            <Button variant="gray" size="xl" onClick={() => handleCancel()}>
               {t('LABEL.CANCEL')}
             </Button>
             <Button variant="primary" size="xl" onClick={() => handleWithdrawMembership()}>

@@ -8,17 +8,24 @@ import styles from './mobile-responsive-container-footer.module.css';
 interface ContainerFooterComponentProps {
   children: ReactNode;
   mobileChildren?: ReactNode;
+  className?: string;
 }
 
-function ContainerFooterComponent({ children, mobileChildren }: ContainerFooterComponentProps) {
+function ContainerFooterComponent({
+  children,
+  mobileChildren,
+  className,
+}: ContainerFooterComponentProps) {
   const BrowserSlot = getSlot(children, BrowserFooter);
   const MobileSlot = getSlot(children, MobileFooter);
 
   return (
     <>
-      <BrowserView>{BrowserSlot}</BrowserView>
+      <BrowserView className={className}>{BrowserSlot}</BrowserView>
       <MobileView>
-        <div className={`${styles.start} ${styles.btn_wrap}`}>{MobileSlot ?? BrowserSlot}</div>
+        <div className={cn(styles.start, styles.btn_wrap, className)}>
+          {MobileSlot ?? BrowserSlot}
+        </div>
       </MobileView>
     </>
   );

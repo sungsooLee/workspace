@@ -15,6 +15,7 @@ import {
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';
+import { AvataFallback } from '../../../../features/layout';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
@@ -61,7 +62,11 @@ function RouteComponent() {
         <div className={styles.avata_img}>
           {/* 사진 */}
           <div className={styles.avata_box}>
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <Avatar
+              imageUrl={authUser?.avataImage}
+              className={styles.info_avata}
+              fallback={<AvataFallback name={authUser?.name} />}
+            />
             <div className={styles.file}>
               <label htmlFor="file">
                 <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
