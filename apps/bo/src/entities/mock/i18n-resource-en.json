@@ -13,5 +13,8 @@
       "en": "english",
       "zh": "chinese"
     }
+  },
+  "LABEL": {
+    "LOGIN": "LOGIN"
   }
 }

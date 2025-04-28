@@ -8,9 +8,9 @@ export const queryKeys = {
 
 export const tenantMenuManageQueryOptions = {
   //메뉴 트리 정보
-  tree: (tenantId: string, deviceType: string) => ({
-    queryKey: [...queryKeys.tree, tenantId, deviceType],
-    queryFn: () => TenantMenuManageService.findMenuTenantTree(tenantId, deviceType),
+  tree: (tenantId: number, menuScope: string) => ({
+    queryKey: [...queryKeys.tree, tenantId, menuScope],
+    queryFn: () => TenantMenuManageService.findMenuTenantMappingTree(tenantId, menuScope),
   }),
   detail: (menuId: string) => ({
     queryKey: [...queryKeys.detail(menuId)],
@@ -24,5 +24,8 @@ export const mutateOptions = {
   }),
   deleteMenuTenent: () => ({
     mutationFn: (payload: any) => TenantMenuManageService.deleteMenuTenant(payload),
+  }),
+  createMenuTenent: () => ({
+    mutationFn: (payload: any) => TenantMenuManageService.createMenuTenant(payload),
   }),
 };

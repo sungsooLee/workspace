@@ -130,6 +130,12 @@ const GridComponent = forwardRef(
         }
         return false;
       },
+      toggleRowById: (idField: string, idValue: string) => {
+        const selectedRow = table
+          .getSelectedRowModel()
+          .rows.find(({ original }: any) => original?.[idField] === idValue);
+        selectedRow?.toggleSelected();
+      },
     }));
 
     /**

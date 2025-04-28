@@ -8,7 +8,6 @@ import type { com_ever_edu_global_s3_dto_res_CompleteUploadResDto } from '../mod
 import type { com_ever_edu_global_s3_dto_res_InitiateUploadResDto } from '../models/com_ever_edu_global_s3_dto_res_InitiateUploadResDto';
 import type { com_ever_edu_global_s3_dto_res_ListUploadPartsResDto } from '../models/com_ever_edu_global_s3_dto_res_ListUploadPartsResDto';
 import type { com_ever_edu_global_s3_dto_res_PreSignedUrlResDto } from '../models/com_ever_edu_global_s3_dto_res_PreSignedUrlResDto';
-import type { com_ever_edu_global_s3_dto_res_S3ObjectListResDto } from '../models/com_ever_edu_global_s3_dto_res_S3ObjectListResDto';
 import type { com_ever_edu_pms_file_dto_res_S3FileUrlResDto } from '../models/com_ever_edu_pms_file_dto_res_S3FileUrlResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -100,7 +99,7 @@ export class BoS3FileService {
     /**
      * S3 Presigned URL 요청
      * S3 단일 파일 업로드 Presigned URL을 요청한다.<br>URL을 수신 후 Ajax Put 파일 업로드 해야 한다.
-     * @param key S3 파일 경로, S3 키로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
+     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
      * @returns com_ever_edu_global_s3_dto_res_PreSignedUrlResDto OK
      * @throws ApiError
      */
@@ -110,56 +109,6 @@ export class BoS3FileService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/file/s3/uploader',
-            query: {
-                'key': key,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * S3 파일 리스트 목록 - 사용금지(임시 테스트용)
-     * S3 파일 리스트 목록을 요청한다.
-     * @param s3Path S3 파일 경로, S3 키로 사용
-     * @returns com_ever_edu_global_s3_dto_res_S3ObjectListResDto OK
-     * @throws ApiError
-     */
-    public static testBucketFileList(
-        s3Path: string,
-    ): CancelablePromise<Array<com_ever_edu_global_s3_dto_res_S3ObjectListResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/file/s3/test/files',
-            query: {
-                's3path': s3Path,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * S3 파일 다운로드 - 사용금지(임시 테스트용)
-     * S3 파일을 다운로드한다.
-     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static downloadResponseStream(
-        key: string,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/file/s3/test/download',
             query: {
                 'key': key,
             },
@@ -266,50 +215,29 @@ export class BoS3FileService {
         });
     }
     /**
-     * S3 파일 삭제 요청 - 사용금지(임시 테스트용)
-     * SS3 파일 삭제 요청한다.
+     * S3 파일 다운로드 요청
+     * S3 파일 다운로드 요청한다.
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
-     * @returns void
+     * @param fileName 다운로드 파일명, 미지정 시 S3 저장명 사용
+     * @returns any OK
      * @throws ApiError
      */
-    public static testDeleteS3File(
+    public static fileDownloadResponse2(
         key: string,
-    ): CancelablePromise<void> {
+        fileName?: string,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/file/s3/test/delete',
+            method: 'GET',
+            url: '/admin/api/v1/file/s3/download',
             query: {
                 'key': key,
+                'fileName': fileName,
             },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * S3 특정 경로 파일 삭제 요청 - 사용금지(임시 테스트용)
-     * S3 특정 경로 파일 삭제 요청한다.
-     * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
-     * @returns void
-     * @throws ApiError
-     */
-    public static testDeleteS3Path(
-        key: string,
-    ): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/file/s3/test/delete/all',
-            query: {
-                'key': key,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
 import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
@@ -38,6 +38,8 @@ const GridBoxComponent = <T extends object>(
   const { data = props.data, page, totalRows, gridFetch, columns, title } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
+
+  useImperativeHandle(ref, () => gridRef.current as GridImperative);
 
   /**
    * 컬럼 정보를 기반으로 TanStack Table 형식으로 변환

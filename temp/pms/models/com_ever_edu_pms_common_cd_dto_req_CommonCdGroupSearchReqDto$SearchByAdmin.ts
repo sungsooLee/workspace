@@ -23,9 +23,5 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchB
      * 사용여부
      */
     isUsed?: boolean | null;
-    /**
-     * 코드명
-     */
-    cdName?: string | null;
 };
 

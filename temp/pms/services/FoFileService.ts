@@ -26,7 +26,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/file',
+            url: '/user/api/v1/file',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -50,7 +50,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/file/group',
+            url: '/user/api/v1/file/group',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -74,7 +74,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/file/group/files',
+            url: '/user/api/v1/file/group/files',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -98,7 +98,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{fileUuid}',
+            url: '/user/api/v1/file/{fileUuid}',
             path: {
                 'fileUuid': fileUuid,
             },
@@ -123,7 +123,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v1/file/{fileUuid}',
+            url: '/user/api/v1/file/{fileUuid}',
             path: {
                 'fileUuid': fileUuid,
             },
@@ -148,7 +148,7 @@ export class FoFileService {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/{fileUuid}/download',
+            url: '/user/api/v1/file/{fileUuid}/download',
             path: {
                 'fileUuid': fileUuid,
             },
@@ -187,7 +187,7 @@ export class FoFileService {
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/groups',
+            url: '/user/api/v1/file/groups',
             query: {
                 'uploadType': uploadType,
                 'affairsType': affairsType,
@@ -219,7 +219,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{groupUuid}',
+            url: '/user/api/v1/file/group/{groupUuid}',
             path: {
                 'groupUuid': groupUuid,
             },
@@ -244,7 +244,7 @@ export class FoFileService {
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/file/group/{groupUuid}/files',
+            url: '/user/api/v1/file/group/{groupUuid}/files',
             path: {
                 'groupUuid': groupUuid,
             },

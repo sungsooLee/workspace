@@ -11,10 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
+import { Route as LearningImport } from './pages/_learning'
 import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as LearningVideoImport } from './pages/_learning/video'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -64,6 +66,7 @@ import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typogr
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
+import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
@@ -102,6 +105,11 @@ import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
 // Create/Update Routes
 
+const LearningRoute = LearningImport.update({
+  id: '/_learning',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
@@ -121,6 +129,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const LearningVideoRoute = LearningVideoImport.update({
+  id: '/video',
+  path: '/video',
+  getParentRoute: () => LearningRoute,
 } as any)
 
 const AuthSuccessRoute = AuthSuccessImport.update({
@@ -433,6 +447,12 @@ const GuideGuideTabsRoute = GuideGuideTabsImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideTableRoute = GuideGuideTableImport.update({
+  id: '/guide/table',
+  path: '/guide/table',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
@@ -668,6 +688,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    '/_learning': {
+      id: '/_learning'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LearningImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/agreement-privacy': {
       id: '/_auth/agreement-privacy'
       path: '/agreement-privacy'
@@ -814,6 +841,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/success'
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
+    }
+    '/_learning/video': {
+      id: '/_learning/video'
+      path: '/video'
+      fullPath: '/video'
+      preLoaderRoute: typeof LearningVideoImport
+      parentRoute: typeof LearningImport
     }
     '/_layout/': {
       id: '/_layout/'
@@ -1065,6 +1099,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/switch'
       fullPath: '/guide/switch'
       preLoaderRoute: typeof GuideGuideSwitchImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/table': {
+      id: '/_guide/guide/table'
+      path: '/guide/table'
+      fullPath: '/guide/table'
+      preLoaderRoute: typeof GuideGuideTableImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/tabs': {
@@ -1354,6 +1395,7 @@ interface GuideRouteChildren {
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
@@ -1397,6 +1439,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTextareaRoute: GuideGuideTextareaRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
@@ -1469,8 +1512,20 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
+interface LearningRouteChildren {
+  LearningVideoRoute: typeof LearningVideoRoute
+}
+
+const LearningRouteChildren: LearningRouteChildren = {
+  LearningVideoRoute: LearningVideoRoute,
+}
+
+const LearningRouteWithChildren = LearningRoute._addFileChildren(
+  LearningRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
+  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1492,6 +1547,7 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1528,6 +1584,7 @@ export interface FileRoutesByFullPath {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1559,7 +1616,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '': typeof GuideRouteWithChildren
+  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/agreement_check': typeof AuthAgreementcheckRoute
   '/dormant-account': typeof AuthDormantAccountRoute
@@ -1581,6 +1638,7 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1617,6 +1675,7 @@ export interface FileRoutesByTo {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1652,6 +1711,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
+  '/_learning': typeof LearningRouteWithChildren
   '/_auth/agreement-privacy': typeof AuthAgreementPrivacyRoute
   '/_auth/agreement_check': typeof AuthAgreementcheckRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
@@ -1673,6 +1733,7 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
@@ -1709,6 +1770,7 @@ export interface FileRoutesById {
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
+  '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1764,6 +1826,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/video'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -1800,6 +1863,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
     | '/guide/tooltip'
@@ -1852,6 +1916,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/video'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -1888,6 +1953,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
     | '/guide/tooltip'
@@ -1921,6 +1987,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_guide'
     | '/_layout'
+    | '/_learning'
     | '/_auth/agreement-privacy'
     | '/_auth/agreement_check'
     | '/_auth/dormant-account'
@@ -1942,6 +2009,7 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/video'
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
@@ -1978,6 +2046,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
+    | '/_guide/guide/table'
     | '/_guide/guide/tabs'
     | '/_guide/guide/textarea'
     | '/_guide/guide/tooltip'
@@ -2013,12 +2082,14 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
+  LearningRoute: typeof LearningRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
+  LearningRoute: LearningRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -2033,7 +2104,8 @@ export const routeTree = rootRoute
       "children": [
         "/_auth",
         "/_guide",
-        "/_layout"
+        "/_layout",
+        "/_learning"
       ]
     },
     "/_auth": {
@@ -2100,6 +2172,7 @@ export const routeTree = rootRoute
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
+        "/_guide/guide/table",
         "/_guide/guide/tabs",
         "/_guide/guide/textarea",
         "/_guide/guide/tooltip",
@@ -2134,6 +2207,12 @@ export const routeTree = rootRoute
         "/_layout/setting/setting-sns_m",
         "/_layout/setting/setting-web_m",
         "/_layout/menu3/"
+      ]
+    },
+    "/_learning": {
+      "filePath": "_learning.tsx",
+      "children": [
+        "/_learning/video"
       ]
     },
     "/_auth/agreement-privacy": {
@@ -2219,6 +2298,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_learning/video": {
+      "filePath": "_learning/video.tsx",
+      "parent": "/_learning"
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
@@ -2362,6 +2445,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/table": {
+      "filePath": "_guide/guide/table.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tabs": {

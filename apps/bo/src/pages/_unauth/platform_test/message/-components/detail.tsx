@@ -22,7 +22,7 @@ interface MessageDetailProps {
   /**
    * 저장 완료 callback function
    */
-  onSuccessSave: () => void;
+  onSuccessSave?: () => void;
 }
 
 const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
@@ -35,13 +35,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
-      onSuccessSave();
+      onSuccessSave?.();
     },
   });
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useUpdateLabelMessage :: onSuccess', response);
-      onSuccessSave();
+      onSuccessSave?.();
     },
   });
 
@@ -162,6 +162,7 @@ const formConfig: DynamicFormConfig = {
       label: '메세지 코드',
       type: 'text',
       value: '',
+      maxLength: 150,
     },
     {
       name: 'labelMessageName',
@@ -169,12 +170,14 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       format: 'string',
       value: '',
+      maxLength: 150,
     },
     {
       name: 'labelMessageDesc',
       label: '설명',
       type: 'textarea',
       value: '',
+      maxLength: 150,
     },
     {
       name: 'isUsed',
