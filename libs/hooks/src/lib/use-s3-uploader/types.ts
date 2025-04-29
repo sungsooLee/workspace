@@ -5,7 +5,7 @@ export interface S3UploaderConfig {
   multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈
   acceptFiles?: string[]; // 허용할 파일 형식 (예: ["png"] , 확장자)
   maxFileCount?: number; // 허용할 최대 파일 개수
-  maxTotalSize?: number; // 단일 파일 허용 용량 (단위: 바이트)
+  maxFileSize?: number; // 단일 파일 허용 용량 (단위: 바이트)
 }
 export type UploadStatus =
   | 'validating'

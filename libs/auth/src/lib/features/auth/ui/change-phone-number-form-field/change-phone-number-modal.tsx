@@ -47,7 +47,10 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
     updatePhoneNumber(payload, {
       onSuccess: async (d, variables, context) => {
         await alert('LABEL.UPDATE_PHONE_NUMBER_RESULT_MESSAGE');
-        closeModal();
+        closeModal({
+          number: variables.newPhoneNumber,
+          nationCode: variables.newPhoneNumberNationCode,
+        });
       },
     });
   };
@@ -58,12 +61,12 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
         <ModalTitle>{t('LABEL.PHONE_NUMBER_UPDATE')}</ModalTitle>
 
         <ModalBody>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'currentPhoneNumber'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'newPhoneNumber'} />
             </FormRow>

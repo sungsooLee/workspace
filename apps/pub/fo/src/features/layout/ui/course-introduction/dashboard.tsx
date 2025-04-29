@@ -1,8 +1,9 @@
 import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoArrowDown } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal, GridBox } from '@learnway/ui';
+import { IcoArrowDown, IcoCaution03 } from '@learnway/icons';
+import { Button, Dropdown, Panel, Progress, useModal, TableBox } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
 import { NoticeDetailPopup } from '../../../../features/layout';
@@ -33,6 +34,58 @@ const CourseDashboardCompoment = () => {
   //   }
   // }, [openModal]);
 
+  const columnHelper = createColumnHelper<any>();
+
+  // thead : 'value'
+  const data: any[] = [
+    {
+      name: '총점',
+      name2: '70점이상',
+      name3: '100%',
+      name4: '-',
+      name5: '-',
+    },
+  ];
+
+  // Thead 정의
+  const columns = [
+    columnHelper.accessor('name', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '구분',
+    }),
+    columnHelper.accessor('name2', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '이수기준',
+    }),
+    columnHelper.accessor('name3', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '가중치',
+    }),
+    columnHelper.accessor('name4', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '취득점수',
+    }),
+    columnHelper.accessor('name5', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '환산점수',
+    }),
+  ] as ColumnDef<any, unknown>[];
+
   return (
     <div className={styles.start}>
       <div className={styles.title_box}>
@@ -50,7 +103,14 @@ const CourseDashboardCompoment = () => {
       </div>
 
       <div className={statusStyles.start}>
-        <Panel type="rounded" hideHeaderUnderline className={statusStyles.panel_degreey}>
+        {/* 이수 : completed 
+            미이수 : incomplete
+        */}
+        <Panel
+          type="rounded"
+          hideHeaderUnderline
+          className={`${statusStyles.panel_degreey} ${/* statusStyles.complete */ ''}`}
+        >
           <div className={statusStyles.list}>
             <h3>이수</h3>
             <div className={statusStyles.date_status}>
@@ -80,44 +140,47 @@ const CourseDashboardCompoment = () => {
           <div className={statusStyles.status_list}>
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>출석 (40%)</span>
-              <div className={statusStyles.score}>80%</div>
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>80%</div>
+              </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>평가 (1/2, 30%)</span>
-              <div className={statusStyles.score}>38점</div>
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>38점</div>
+              </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>과제 (30%)</span>
-              <div className={statusStyles.score}>90점</div>
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>
+                  <IcoCaution03 width={18} height={18} stroke="#FF4646" /> -
+                </div>
+              </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>설문 (0%)</span>
-              <div className={statusStyles.score}>완료</div>
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>완료</div>
+              </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>총점 (100%)</span>
-              <div className={statusStyles.score}>
-                -<span className={statusStyles.default}>(80점)</span>
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>-</div>
               </div>
+              <div className={statusStyles.default}>(80점)</div>
             </div>
           </div>
 
           {detail === true ? (
-            <GridBox
-              data={data}
-              columns={columns}
-              pagination={{
-                pageSize,
-                pageIndex,
-                totalRows: 100,
-                onPageChange: setPageIndex,
-                onPageSizeChange: setPageSize,
-              }}
-            />
+            <div className={statusStyles.status_table}>
+              <TableBox data={data} columns={columns} tableMode={true} showTotalCount={false} />
+            </div>
           ) : (
             ''
           )}

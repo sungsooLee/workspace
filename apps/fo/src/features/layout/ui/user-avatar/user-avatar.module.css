@@ -78,3 +78,15 @@
     @apply h-[36px] w-[36px];
   }
 }
+
+.fallback {
+  &.name {
+    @apply flex h-[66px] w-[66px] items-center justify-center rounded-[50%] bg-[#00afd5];
+    .text {
+      @apply title_3_b text-white;
+    }
+    & + .info_avata {
+      @apply -ml-[12px];
+    }
+  }
+}

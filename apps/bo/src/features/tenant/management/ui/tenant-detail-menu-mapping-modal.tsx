@@ -17,20 +17,22 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/tenant/service/tenant-detail-tree.service';
+import { transformApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
   useMenuTenantMappingTreeFetch,
   useCreateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
-import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
+import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
   const [baseMenuTreeExpandedKeys, setBaseMenuTreeExpandedKeys] = useState<string[]>([]);
+  const [baseMenuAllKeys, setBaseMenuAllKeys] = useState<string[]>([]);
   const [baseMenuTreeSelectedNode, setBaseMenuTreeSelectedNode] = useState<TreeNode | null>(null);
   const [menuTreeData, setMenuTreeData] = useState([]);
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
+  const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
 
   const { open: openModal, close: closeModal } = useModal();
 
@@ -56,13 +58,22 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     console.log(event);
     switch (event.type) {
       case 'NODE_COPY':
-        {
+        console.log(event);
+        if (event.sourceTreeId === 'mapping-menu-tree') {
+          const sourceMenuId = event.sourceNode.key;
+          if (menuTreeAllKeys.includes(sourceMenuId)) {
+            alert('이미 있음');
+            return false;
+          }
           const reqBody: any = JSON.parse(JSON.stringify(event.sourceNode));
           reqBody.tenantId = tenantId;
           reqBody.menuScope = menuScopeCode;
           reqBody.parentId = event.sourceNode.parentKey;
+          reqBody.menuStartDate = '2025-01-01 00:00:00';
+          reqBody.menuEndDate = '9999-12-31 23:59:59';
           tentantMenuCreate(reqBody);
         }
+
         break;
       default:
         break;
@@ -122,9 +133,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
       console.log(baseMenuDB);
       const transformedData = transformApiDataToTreeData(baseMenuDB);
       setBaseMenuTreeData(transformedData);
-      if (transformedData && transformedData.length > 0 && baseMenuTreeExpandedKeys.length === 0) {
+      if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
         setBaseMenuTreeExpandedKeys(firstLevelKeys);
+        const allKeys = getAllTreeKeys(transformedData);
+        setBaseMenuAllKeys(allKeys);
       }
     }
   }, [baseMenuDB]);
@@ -137,6 +150,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
       if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
         setMenuTreeExpandedKeys(firstLevelKeys);
+        const allKeys = getAllTreeKeys(transformedData);
+        setMenuTreeAllKeys(allKeys);
       }
     }
   }, [menuDB]);
@@ -154,6 +169,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
                   <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
+                  <strong className={titleStyles.sub_title}>전체</strong>
+                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -161,7 +178,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       className={layoutStyles.btn_text}
                       onClick={() => {
                         if (baseMenuTreeData) {
-                          const allKeys = handleExpandAll(baseMenuTreeData);
+                          const allKeys = getAllTreeKeys(baseMenuTreeData);
                           handleBaseMenuTreeExpandChange(allKeys);
                         }
                       }}
@@ -210,6 +227,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
                   <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
+                  <strong className={titleStyles.sub_title}>전체</strong>
+                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -217,7 +236,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       className={layoutStyles.btn_text}
                       onClick={() => {
                         if (menuTreeData) {
-                          const allKeys = handleExpandAll(menuTreeData);
+                          const allKeys = getAllTreeKeys(menuTreeData);
                           handleMenuTreeExpandChange(allKeys);
                         }
                       }}

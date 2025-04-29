@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
-import { queryKeys, queryOptions, mutateOptions } from './tenant.queries';
+import { queryKeys, tenantQueryOptions as queryOptions, mutateOptions } from './tenant.queries';
 import { Tenant } from '../../../types/entities/tenant';
 
 export function useFetchTenant(tenantId?: number) {

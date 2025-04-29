@@ -20,7 +20,7 @@ export const AvataFallback = ({ name }: { name?: string }) => {
     return name.substring(0, 1);
   }, [name]);
   return (
-    <span className={styles.name}>
+    <span className={cn(styles.fallback, styles.name)}>
       <em className={styles.text}>{firstUnit}</em>
     </span>
   );

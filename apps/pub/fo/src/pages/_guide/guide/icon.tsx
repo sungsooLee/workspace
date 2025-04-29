@@ -166,7 +166,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
       <div className="group">
         <h3 className="guide_tit3">SVG Lists</h3>
         <div className="flex_box">
-          <div className="desc col">
+          <div className="desc flex-wrap">
             <IcoArrowDown width={30} height={30} stroke="#4C515E" />
             <IcoArrowUp width={30} height={30} stroke="#4C515E" />
             <IcoAlarmFill width={30} height={30} stroke="#4C515E" />

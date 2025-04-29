@@ -1,9 +1,5 @@
 .start {
   &.information_change {
-    @apply mx-[auto] w-[780px];
-    h2 {
-      @apply title_4_b mt-[24px] text-[var(--gray9)];
-    }
     .box {
       @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] px-[24px] pb-[24px] pt-[30px];
       .avata_img {
@@ -71,10 +67,6 @@
   @screen mobile {
     .start {
       &.information_change {
-        @apply w-full px-[20px] pb-[40px];
-        h2 {
-          @apply hidden;
-        }
         .box {
           @apply border-none px-0 py-0;
           .avata_img {

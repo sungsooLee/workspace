@@ -1,4 +1,4 @@
-import { S3UploaderConfig, UploadFile } from './types';
+import { S3UploaderConfig, UploadFile, UploadStatus } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
@@ -17,16 +17,6 @@ const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
  *               { sync: boolean } - 순차 업로드 여부
  *               { auto: boolean } - 파일 추가 시 자동 업로드
  */
-export type UploadStatus =
-  | 'validating'
-  | 'idle'
-  | 'uploading'
-  | 'paused'
-  | 'completed'
-  | 'failed'
-  | 'aborted'
-  | 'validating-error';
-
 const useS3UploaderHook = (config: S3UploaderConfig) => {
   const {
     auto = true,
@@ -56,24 +46,28 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         'validating-error': 0,
       },
     );
-    if (statusCount.uploading > 0) {
-      status = 'uploading';
-    } else if (
-      statusCount.completed +
-        statusCount.aborted +
-        statusCount['validating-error'] +
-        statusCount.failed ===
-      files.length
-    ) {
-      if (statusCount.failed === files.length) {
-        status = 'failed';
-      } else {
-        status = 'completed';
+    if (files.length > 0) {
+      if (statusCount.uploading > 0) {
+        status = 'uploading';
+      } else if (
+        statusCount.completed +
+          statusCount.aborted +
+          statusCount['validating-error'] +
+          statusCount.failed ===
+        files.length
+      ) {
+        if (statusCount.failed === files.length) {
+          status = 'failed';
+        } else {
+          status = 'completed';
+        }
       }
     }
 
     return {
       status,
+      accessFiles: config.acceptFiles || [],
+      maxFileCount: config.maxFileCount || 0,
       total: files.length,
       uploading: statusCount.uploading,
       paused: statusCount.paused,
@@ -199,6 +193,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
   }, [files]);
 
   return {
+    stats,
     // 업로드 상태 및 CRUD 기능 반환
     files, // 파일 리스트
     addFiles, // 파일 추가

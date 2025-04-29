@@ -59,7 +59,7 @@ function RouteComponent() {
 
   const handleExcelDownLoad = async () => {
     await fileDownload(
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel?keyTypeCode=COMMON_CODE&locale=en',
+      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel',
       { keyTypeCode: 'LABEL', locale: 'en' },
     );
   };
