@@ -51,7 +51,7 @@ function ChangeUserIdFormFieldComponent({
           });
         }}
       >
-        {t('LABEL.UPDATE_EMAIL_ID')}
+        {t('LABEL.common.changeAccount')}
       </Button>
     </>
   );

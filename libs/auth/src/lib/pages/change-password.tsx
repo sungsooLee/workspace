@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
 import { cn, formatDate, DATE_TIME_FORMAT } from '@learnway/shared';
@@ -14,7 +14,7 @@ import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 
 export function ChangePasswordPage({ route }: any) {
   const router = useRouter();
-  const { state } = useCurrentRoute(route);
+  const { t } = useTranslation();
 
   const { provider, onSubmit, setFormError } = useDynamicForm(passwordFormConfig);
   const { logout } = useLogoutUser();
@@ -38,17 +38,16 @@ export function ChangePasswordPage({ route }: any) {
 
   const handleSuccess = async () => {
     await alert({
-      title: '비밀번호가 변경되었습니다.',
-      content: '변경된 비밀번호로 다시 로그인해 주세요.',
+      title: t('LABEL.message.changePasswordSuccess'),
+      content: t('LABEL.message.changePasswordSuccessGuide'),
     });
     logout();
   };
 
   const handleCancel = async () => {
     const callback = await confirm({
-      title: '취소하시겠습니까?',
-      content:
-        '비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.',
+      title: t('LABEL.message.cancelConfirm'),
+      content: t('LABEL.message.passwordNotChangedGuide'),
     });
     if (callback) {
       logout();
@@ -65,7 +64,7 @@ export function ChangePasswordPage({ route }: any) {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
             <HighlightMessageBox className={styles.noti_box}>
-              마지막 변경일 :
+              {t('LABEL.common.lastChangeDate')} :
               <strong>
                 {formatDate(
                   authUser?.passwordChangeDate ?? new Date(),
@@ -93,14 +92,14 @@ export function ChangePasswordPage({ route }: any) {
             </ContentsRow>
           </div>
 
-          <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
-            <dd>{t('MESSAGE.CAUTION_PASSWORD_INPUT_01')}</dd>
-            <dd>{t('MESSAGE.CAUTION_PASSWORD_INPUT_02')}</dd>
-            <dd>{t('MESSAGE.CAUTION_PASSWORD_INPUT_03')}</dd>
-            <dd>{t('MESSAGE.CAUTION_PASSWORD_INPUT_04')}</dd>
-            <dd>{t('MESSAGE.CAUTION_PASSWORD_INPUT_05')}</dd>
+          <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
+            <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
             <dd>
-              {t('MESSAGE.CAUTION_PASSWORD_INPUT_06')} <GoogleOtpGuideButton />
+              {t('LABEL.message.cautionPasswordInput06')} <GoogleOtpGuideButton />
             </dd>
           </NoticeBox>
 
@@ -112,10 +111,10 @@ export function ChangePasswordPage({ route }: any) {
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-              {t('LABEL.CANCEL')}
+              {t('LABEL.common.cancel')}
             </Button>
             <Button type="submit" variant="primary" size="xl">
-              {t('LABEL.OK')}
+              {t('LABEL.common.ok')}
             </Button>
           </div>
         </div>
@@ -129,7 +128,7 @@ const passwordFormConfig: DynamicFormConfig = {
     {
       name: 'oldPassword',
       type: 'text',
-      label: 'LABEL.OLD_PASSWORD',
+      label: 'LABEL.common.oldPassword',
       value: '',
       placeholder: '${label}을 입력하세요',
       description: '',
@@ -138,7 +137,7 @@ const passwordFormConfig: DynamicFormConfig = {
     {
       name: 'password',
       type: 'text',
-      label: 'LABEL.NEW_PASSWORD',
+      label: 'LABEL.common.newPassword',
       value: '',
       placeholder: '${label}을 입력하세요',
       description: '',
@@ -147,7 +146,7 @@ const passwordFormConfig: DynamicFormConfig = {
     {
       name: 'confirm_password',
       type: 'text',
-      label: 'LABEL.NEW_PASSWORD_CHECK',
+      label: 'LABEL.common.newPasswordCheck',
       value: '',
       placeholder: '${label}을 입력하세요',
       description: '',
@@ -168,7 +167,7 @@ const passwordFormConfig: DynamicFormConfig = {
       conditions: [
         {
           fn: (values: Record<string, any>) => values.password !== values.confirm_password,
-          message: '새로운 비밀번호를 다시 확인해 주세요.',
+          message: 'LABEL.message.validationConfirmPassword',
           path: 'confirm_password',
         },
       ],

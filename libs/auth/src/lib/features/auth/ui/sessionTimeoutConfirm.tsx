@@ -1,10 +1,11 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { duration, DATE_TIME_FORMAT } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
+import { SESSION_TIMEOUT_EXTENSION_ALERT_DURATION } from '../service/auth.service';
 
-const TIME_LIMIT_VERIFY = 300; // 5분
+const TIME_LIMIT_VERIFY = SESSION_TIMEOUT_EXTENSION_ALERT_DURATION / 1000;
 
 function SessionTimeoutConfirmComponent() {
   const { close } = useModal();
@@ -18,7 +19,6 @@ function SessionTimeoutConfirmComponent() {
       setSeconds((prev) => {
         if (prev <= 1) {
           clearInterval(interval); // 0이 되면 타이머 멈춤
-          console.log('close modal');
           close();
           return 0;
         }
@@ -31,11 +31,9 @@ function SessionTimeoutConfirmComponent() {
 
   return (
     <>
-      로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
-      <br />
-      로그인 시간을 연장하시겠습니까?
+      <p className="whitespace-break-spaces">{t('LABEL.message.sessionExtensionConfirm')}</p>
       <div className="time">
-        남은시간 : <strong>{timerText}</strong>
+        {t('LABEL.common.remainingTime')} : <strong>{timerText}</strong>
       </div>
     </>
   );

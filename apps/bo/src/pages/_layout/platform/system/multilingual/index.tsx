@@ -230,7 +230,7 @@ const gridConfig = {
     },
     {
       name: 'lastModifiedBy',
-      label: () => t('LABEL.LOGIN'),
+      label: () => t('LABEL.common.login'),
       translation: true,
       render: () => t('LABEL'),
     },

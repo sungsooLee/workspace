@@ -183,7 +183,7 @@ function AuthFormComponent({
   };
 
   const handleVerifyError = () => {
-    setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
+    setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
   };
 
   const handleCancel = () => {
@@ -269,7 +269,7 @@ function AuthFormComponent({
                 startTimer={verifyTimer}
                 onTimerEnd={() => handleTimeOver()}
                 onReset={() => handleSendVerify()}
-                resetLabel={t('LABEL.RESEND')}
+                resetLabel={t('LABEL.common.resend')}
                 disabled={verifyTimer === 0}
               />
             </DynamicFormField>
@@ -277,18 +277,18 @@ function AuthFormComponent({
         </ContentsRow>
       )}
 
-      <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
-        <dd>{t('MESSAGE.SEARCH_ACCOUNT_NOTICE')}</dd>
+      <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
+        <dd>{t('LABEL.message.searchAccountNotice')}</dd>
       </NoticeBox>
 
       <BrowserView>
         <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
           <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-            {t('LABEL.CANCEL')}
+            {t('LABEL.common.cancel')}
           </Button>
           {sendedVerifyNumber ? (
             <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
-              {t('LABEL.CHECK_AUTH_NUMBER')}
+              {t('LABEL.common.checkAuthNumber')}
             </Button>
           ) : (
             <Button
@@ -297,7 +297,7 @@ function AuthFormComponent({
               onClick={() => handleSendVerify()}
               disabled={includeUserId}
             >
-              {t('LABEL.CHECK_AUTH_REQUEST')}
+              {t('LABEL.common.checkAuthRequest')}
             </Button>
           )}
         </div>
@@ -306,7 +306,7 @@ function AuthFormComponent({
       <MobileView>
         <MobileContainerFooter>
           <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
-            {t('LABEL.CHECK_AUTH_REQUEST')}
+            {t('LABEL.common.checkAuthRequest')}
           </Button>
         </MobileContainerFooter>
       </MobileView>
@@ -350,7 +350,7 @@ const authFormConfig: DynamicFormConfig = {
     {
       name: 'birthday',
       type: 'text',
-      label: '생년월일',
+      label: 'LABEL.common.birthday',
       maxLength: 10,
       value: '',
       placeholder: '생년월일(19991229)',
@@ -358,7 +358,7 @@ const authFormConfig: DynamicFormConfig = {
     {
       name: 'phoneNumber',
       type: 'phone-number',
-      label: '휴대폰 번호',
+      label: 'LABEL.common.phoneNumber',
       value: '',
       placeholder: '-없이 휴대폰 번호입력(0102345678)',
       fields: {
@@ -374,14 +374,14 @@ const authFormConfig: DynamicFormConfig = {
     {
       name: 'email',
       type: 'text',
-      label: '이메일',
+      label: 'LABEL.common.email',
       value: '',
       placeholder: '이메일(hyunidai.kim@hyundai.com)',
     },
     {
       name: 'verificationCode',
       type: 'custom',
-      label: '인증번호',
+      label: 'LABEL.common.certificationNumber',
       value: '',
       placeholder: '인증번호 입력',
     },

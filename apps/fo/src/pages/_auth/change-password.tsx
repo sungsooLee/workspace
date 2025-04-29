@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_auth/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.PASSWORD_CHANGE',
+      title: 'LABEL.common.passwordChange',
     },
   }),
 });

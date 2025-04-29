@@ -56,7 +56,9 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
             onChange={(value: string) => {
               setTermsId(value);
             }}
-            placeholder={t('LABEL.PREVIOUS_TERMS', { type: t(`CODE.TERMS_TYPE.${termsType}`) })}
+            placeholder={t('LABEL.common.previousTerms', {
+              type: t(`CODE.TERMS_TYPE.${termsType}`),
+            })}
           />
           <HtmlContent className={styles.details}>{data?.translation?.termsContents}</HtmlContent>
         </div>

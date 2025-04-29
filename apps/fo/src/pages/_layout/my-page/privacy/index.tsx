@@ -31,7 +31,7 @@ export const Route = createFileRoute('/_layout/my-page/privacy/')({
       },
     },
     meta: {
-      title: 'LABEL.CHANGE_INFORMATION',
+      title: 'LABEL.common.changeInformation',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
       container: MAIN_CONTAINERS.MY_PAGE,
     },
@@ -137,21 +137,21 @@ function RouteComponent() {
         </div>
       </div>
 
-      <NoticeBox title={t('LABEL.CAUTION')} className={styles.notice}>
-        <dd>{t('LABEL.CAUTION_CHANGE_INFORMATION_HSW')}</dd>
+      <NoticeBox title={t('LABEL.common.caution')} className={styles.notice}>
+        <dd>{t('LABEL.message.cautionChangeInformationHsw')}</dd>
         <dd>
-          {t('LABEL.CAUTION_CHANGE_INFORMATION_DDMS')}{' '}
-          <Link to={'/'}>{t('LABEL.GO_TO_DDMS')} &#62;</Link>
+          {t('LABEL.message.cautionChangeInformationDdms')}{' '}
+          <Link to={'/'}>{t('LABEL.common.goToDdms')} &#62;</Link>
         </dd>
       </NoticeBox>
 
       <div className={styles.bullet_notice}>
         <dl>
-          <dt>{t('LABEL.WITHDRAW_MEMBERSHIP')}</dt>
-          <dd>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_01')}</dd>
-          <dd>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_02')}</dd>
+          <dt>{t('LABEL.common.withdrawMembership')}</dt>
+          <dd>{t('LABEL.message.cautionWithdrawMembership01')}</dd>
+          <dd>{t('LABEL.message.cautionWithdrawMembership02')}</dd>
           <dd>
-            {t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_03')}
+            {t('LABEL.message.cautionWithdrawMembership03')}
             <WithdrawMembershipButton />
           </dd>
         </dl>

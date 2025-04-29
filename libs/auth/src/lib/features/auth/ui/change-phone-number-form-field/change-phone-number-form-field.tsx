@@ -70,7 +70,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
           }}
           disabled={disabled}
         >
-          {t('LABEL.PHONE_NUMBER_UPDATE')}
+          {t('LABEL.common.phoneNumberChange')}
         </Button>
       </>
     );
