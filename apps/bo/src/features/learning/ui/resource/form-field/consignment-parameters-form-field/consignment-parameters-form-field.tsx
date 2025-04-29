@@ -56,7 +56,7 @@ const ConsignmentParametersFormFieldComponent = forwardRef<
         </div>
       ))}
       {/* 추가 버튼 */}
-      <Button variant={'point'} size={'md'} label={t('추가')} onClick={handleAddButtonClick} />
+      <Button variant={'point'} size={'lg'} label={t('추가')} onClick={handleAddButtonClick} />
       {/* 삭제버튼 기획에 없음  */}
     </div>
   );
