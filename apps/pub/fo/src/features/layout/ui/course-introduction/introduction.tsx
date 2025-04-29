@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { ChipList, SelectOption, Button, Avatar, Popover } from '@learnway/ui';
+import { ChipList, SelectOption, Button, Avatar, Popover, Panel } from '@learnway/ui';
 import { IcoArrowDown, IcoDownload } from '@learnway/icons';
 import { Review, ReviewRating, Curriculum, Arrays, Education } from '../../../../features/layout';
 
@@ -10,6 +10,7 @@ import operatorStyles from '../../../../pages/_layout/course-introduction/operat
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
+import pdsStyles from './pds.module.css';
 
 import learnImg from '@learnway/styles/fo/assets/images/common/img_learn.png';
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
@@ -190,32 +191,35 @@ const CourseIntroductionCompoment = () => {
       </div>
 
       {/* 자료실 */}
-      <div className={styles.info_box}>
+      <div className={`${styles.info_box} ${styles.pds}`}>
         <div className={styles.tit_box}>
-          <strong>자료실</strong>
-          <Button>
-            <IcoDownload width={16} height={16} stroke="#131c30" />
+          <h3>자료실</h3>
+
+          <Button variant="line" size="sm" className={styles.btn}>
             전체 다운로드
           </Button>
         </div>
 
-        <div className={styles.data_box}>
-          <Button>
-            <span className={styles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
-            {isMobile ? '' : <span className={styles.size}>200MB</span>}
-            <span>
-              <IcoDownload width={16} height={16} stroke="#131c30" />
-              다운로드
-            </span>
-          </Button>
-          <Button>
-            <span>비즈니스 영어 단어&숙어집.pdf</span>
-            {isMobile ? '' : <span className={styles.size}>200MB</span>}
-            <span>
-              <IcoDownload width={16} height={16} stroke="#131c30" />
-              다운로드
-            </span>
-          </Button>
+        <div className={pdsStyles.start}>
+          <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+            <div className={pdsStyles.pds_box}>
+              <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+              {isMobile ? '' : <span className={pdsStyles.size}>200MB</span>}
+              <Button variant="line" size="sm" className={pdsStyles.btn}>
+                다운로드
+              </Button>
+            </div>
+          </Panel>
+
+          <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+            <div className={pdsStyles.pds_box}>
+              <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+              {isMobile ? '' : <span className={pdsStyles.size}>200MB</span>}
+              <Button variant="line" size="sm" className={pdsStyles.btn}>
+                다운로드
+              </Button>
+            </div>
+          </Panel>
         </div>
       </div>
 

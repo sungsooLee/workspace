@@ -1,12 +1,14 @@
 import { memo, useState, useEffect, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoArrowDown, IcoCaution03 } from '@learnway/icons';
+import { IcoArrowDown, IcoCaution03, IcoDownload } from '@learnway/icons';
 import { Button, Dropdown, Panel, Progress, useModal, TableBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
-import { NoticeDetailPopup } from '../../../../features/layout';
+import pdsStyles from './pds.module.css';
+import { CurriculumStudy } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
@@ -21,18 +23,6 @@ const CourseDashboardCompoment = () => {
   const { close: closeModal } = useModal();
 
   const [detail, setDetail] = useState<boolean>();
-
-  // 자동모달 띄우기 퍼블 확인용
-  // const hasRun = useRef(false);
-  // useEffect(() => {
-  //   if (!hasRun.current) {
-  //     openModal({
-  //       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-  //       content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
-  //     });
-  //     hasRun.current = true;
-  //   }
-  // }, [openModal]);
 
   const columnHelper = createColumnHelper<any>();
 
@@ -88,8 +78,8 @@ const CourseDashboardCompoment = () => {
 
   return (
     <div className={styles.start}>
-      <div className={styles.title_box}>
-        <h2>대시보드</h2>
+      <div className={styles.tit_box}>
+        <h3>대시보드</h3>
         <Dropdown
           options={options}
           value={selectedValues}
@@ -195,6 +185,49 @@ const CourseDashboardCompoment = () => {
             </Button>
           </div>
         </Panel>
+      </div>
+
+      {/* 커리큘럼 */}
+      <div className={`${styles.info_box} ${styles.curriculum}`}>
+        <div className={styles.tit_box}>
+          <h3>커리큘럼</h3>
+        </div>
+
+        {/* curriculum */}
+        <CurriculumStudy />
+
+        {/* 자료실 */}
+        <div className={`${styles.info_box} ${styles.pds}`}>
+          <div className={styles.tit_box}>
+            <h3>자료실</h3>
+
+            <Button variant="line" size="sm" className={styles.btn}>
+              전체 다운로드
+            </Button>
+          </div>
+
+          <div className={pdsStyles.start}>
+            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+              <div className={pdsStyles.pds_box}>
+                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                {isMobile ? '' : <span className={pdsStyles.size}>200MB</span>}
+                <Button variant="line" size="sm" className={pdsStyles.btn}>
+                  다운로드
+                </Button>
+              </div>
+            </Panel>
+
+            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+              <div className={pdsStyles.pds_box}>
+                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                {isMobile ? '' : <span className={pdsStyles.size}>200MB</span>}
+                <Button variant="line" size="sm" className={pdsStyles.btn}>
+                  다운로드
+                </Button>
+              </div>
+            </Panel>
+          </div>
+        </div>
       </div>
     </div>
   );
