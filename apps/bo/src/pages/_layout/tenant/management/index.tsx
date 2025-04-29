@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
@@ -29,8 +29,8 @@ function RouteComponent() {
   const router = useRouter();
 
   const gridConfig = {
-    // query: tenantOptions.all,
-    query: '',
+    query: tenantQueryOptions.all,
+    // query: '',
     columns: [
       {
         name: 'no1',
@@ -97,50 +97,33 @@ function RouteComponent() {
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
 
   // useDynamicForm(formConfig);
 
-  const handleOnSearch = (data: any) => {
-    console.log(data);
-  };
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(data);
+  }, []);
+  const handleNewTenant = useCallback(async () => {
+    if (!data) return;
+  }, [data]);
 
   return (
-    <form className="form_row">
-      <PageContainer>
-        <ContentsButtons>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => router.navigate({ to: '/tenant/management/regist' })}
-          >
-            등록
-          </Button>
-        </ContentsButtons>
-        <MainContents>
-          <div className={cn(searchStyles.start, searchStyles.wrap)}>
-            <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-          </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                config={gridConfig}
-                height={440}
-                showColumnSettings={false}
-                pagination={{
-                  pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="타이틀"
-              />
-            </div>
-          </div>
-        </MainContents>
-      </PageContainer>
-    </form>
+    <PageContainer>
+      <ContentsButtons>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => router.navigate({ to: '/tenant/management/regist' })}
+        >
+          등록
+        </Button>
+      </ContentsButtons>
+      <MainContents>
+        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <GridBox config={gConfig} />
+      </MainContents>
+    </PageContainer>
   );
 }
 

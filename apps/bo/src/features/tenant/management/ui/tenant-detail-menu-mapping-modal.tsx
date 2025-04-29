@@ -69,8 +69,6 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
           reqBody.tenantId = tenantId;
           reqBody.menuScope = menuScopeCode;
           reqBody.parentId = event.sourceNode.parentKey;
-          reqBody.menuStartDate = '2025-01-01 00:00:00';
-          reqBody.menuEndDate = '9999-12-31 23:59:59';
           tentantMenuCreate(reqBody);
         }
 
@@ -168,9 +166,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
               <div className={popContentsStyles.inner_contents}>
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
-                  <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
-                  <strong className={titleStyles.sub_title}>전체</strong>
-                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  <div className={titleStyles.title_area}>
+                    <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
+                    <strong className={titleStyles.sub_title}>전체</strong>
+                    <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -226,9 +226,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
               <div className={popContentsStyles.inner_contents}>
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
-                  <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
-                  <strong className={titleStyles.sub_title}>전체</strong>
-                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  <div className={titleStyles.title_area}>
+                    <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
+                    <strong className={titleStyles.sub_title}>{t('전체')}</strong>
+                    <span className={titleStyles.num}>{menuTreeAllKeys?.length - 1}</span>
+                  </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -276,8 +278,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         </TreeContainer>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
+        <Button label={t('닫기')} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );
