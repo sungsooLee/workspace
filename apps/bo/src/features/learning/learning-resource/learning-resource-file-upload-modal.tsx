@@ -10,18 +10,8 @@ import {
   useModal,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { FileItemStatus, useFileUploader } from '@learnway/hooks';
+import { useFileUploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  IcoComplete02,
-  IcoPause,
-  IcoPpt,
-  IcoRefresh,
-  IcoTrash03,
-  IcoUploadCloud,
-} from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { t } from 'i18next';
 
 const LearningResourceFileUploadModalComponent = () => {
   const { close } = useModal();
