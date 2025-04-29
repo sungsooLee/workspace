@@ -1,5 +1,11 @@
 .start {
-  .learning_container {
+  &.learning_container {
     @apply flex;
+    .learning_area {
+      @apply flex w-full;
+      .learning_contents {
+        @apply flex-1;
+      }
+    }
   }
 }

@@ -1,3 +1,14 @@
 .start {
-  @apply fixed left-[0] top-[0];
+  &.learning_header {
+    @apply fixed left-[0] top-[0] h-[112px] w-full bg-black;
+    .header_area {
+      @apply flex items-center px-[40px] pt-[24px];
+      .btn_back {
+        @apply mr-[8px];
+      }
+      h1 {
+        @apply title_3_b text-white;
+      }
+    }
+  }
 }
