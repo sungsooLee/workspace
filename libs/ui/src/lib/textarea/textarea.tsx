@@ -8,7 +8,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   dummy?: any;
   className?: string;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
-  size?: 'sm' | 'md'; // textarea 높이(basic : md)
+  size?: 'xs' | 'sm' | 'md'; // textarea 높이(basic : md)
   readOnly?: boolean;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;

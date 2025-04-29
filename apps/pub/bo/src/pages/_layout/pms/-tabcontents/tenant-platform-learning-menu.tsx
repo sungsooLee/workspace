@@ -14,7 +14,6 @@ import {
   Switch,
   Input,
   Tooltip,
-  CheckboxGroupFormField,
   GridBox,
   TreeView,
   TreeNode,

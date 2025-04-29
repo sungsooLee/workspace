@@ -90,6 +90,9 @@
   &.form_auto {
     @apply flex !w-auto flex-shrink-0 flex-grow-0 items-end justify-end;
   }
+  &.direction_col {
+    @apply flex-col;
+  }
 }
 .input_box {
   @apply flex w-full items-center space-x-[8px];
