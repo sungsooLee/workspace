@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_layout/menu/type6')({
 });
 
 function RouteComponent() {
-  const thumbnailRef = useRef(null);
+  const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { addFiles, files } = useS3Uploader({ s3Path: 'upload/leaning/resource/video' });

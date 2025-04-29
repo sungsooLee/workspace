@@ -11,7 +11,6 @@ import {
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import { FC, useCallback } from 'react';
 import { DndFileProgressProps } from '@/libs/ui/src/lib/dnd-file-progress/types';
-import { FileItemStatus } from '@learnway/hooks';
 import { t } from 'i18next';
 import { useDropzone } from 'react-dropzone';
 
@@ -37,7 +36,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   }, []);
   const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: multiple ? 50 : 1 });
 
-  const statusToLabel = (status: FileItemStatus) => {
+  const statusToLabel = (status: any) => {
     switch (status) {
       case 'complete':
         return t('완료');
@@ -71,7 +70,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
 
         {/* 파일 업로드 */}
         <div className={styles.upload_status}>
-          {files.map((file, index) => (
+          {files.map((file: any, index: any) => (
             <div key={index} className={styles.file_item}>
               <div className={styles.file_name}>
                 <IcoPpt width={'24'} height={'25'} className={styles.icon_type} />
