@@ -13,8 +13,8 @@ import {
   HtmlContent,
 } from '@learnway/ui';
 
-import { useFetchTermsVersions, useFetchTerms } from '../../../../entities/terms';
-import type { TermsType } from '../../../../types';
+import { useFetchTermsVersions, useFetchTerms } from '../../../../../entities/terms';
+import type { TermsType } from '../../../../../types';
 
 import styles from '@learnway/styles/fo/features/auth/ui/terms-button/terms-modal.module.css';
 
