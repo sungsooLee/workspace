@@ -198,10 +198,6 @@ const formConfig: DynamicFormConfig = {
       value: ['all', 'isWebExposed', 'isMobileExposed', 'isAppExposed'],
       options: [
         {
-          value: 'all',
-          label: '전체',
-        },
-        {
           value: 'isWebExposed',
           label: 'PC',
         },
@@ -214,6 +210,9 @@ const formConfig: DynamicFormConfig = {
           label: 'APP',
         },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'language',
@@ -223,7 +222,6 @@ const formConfig: DynamicFormConfig = {
       tooltip: '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
       value: ['ko', 'en'],
       options: [
-        { value: 'all', label: '전체' },
         { value: 'ko', label: '한국어' },
         { value: 'en', label: '영어' },
         { value: 'ne', label: '네팔어' },
@@ -231,6 +229,9 @@ const formConfig: DynamicFormConfig = {
         { value: 'vi', label: '베트남어' },
         { value: 'es', label: '스페인어' },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'useCategory',
@@ -241,10 +242,6 @@ const formConfig: DynamicFormConfig = {
       value: ['all', 'common', 'tenant'],
       options: [
         {
-          value: 'all',
-          label: '전체',
-        },
-        {
           value: 'common',
           label: '공통 카테고리',
         },
@@ -253,6 +250,9 @@ const formConfig: DynamicFormConfig = {
           label: '테넌트 카테고리',
         },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
   ],
   validator: {
