@@ -34,9 +34,10 @@ const ModalComponent: React.FC<ModalConfig> = ({
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
-          className={cn(styles.content, 'nlp--modal', width && styles[width], `nlp--modal-${id}`)}
+          className={cn(styles.content, 'nlp--modal', width && styles[width])}
           onInteractOutside={handleOutsideClick}
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
+          id={`nlp--modal-${id}`}
         >
           {/* 모달 콘텐츠 */}
           <div className={cn(styles.content_body, width && styles[width])}>{content}</div>

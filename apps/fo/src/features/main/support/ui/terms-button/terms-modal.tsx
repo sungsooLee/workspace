@@ -11,7 +11,6 @@ import {
   Dropdown,
   useModal,
   HtmlContent,
-  Popover,
 } from '@learnway/ui';
 
 import { useFetchTermsVersions, useFetchTerms } from '../../../../entities/terms';
@@ -29,7 +28,6 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
 
   const ref = useRef<any>();
   const [termsId, setTermsId] = useState<string | undefined>();
-  const [isOpen, setIsCategoryOpen] = useState(false);
 
   const { data } = useFetchTerms(termsType, Number(termsId));
   const { data: versions } = useFetchTermsVersions(termsType);
@@ -65,20 +63,12 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
       </ModalBody>
 
       <ModalFooter>
-        <Popover
-          open={isOpen}
-          onOpenChange={(isOpen: boolean) => {
-            setIsCategoryOpen(isOpen);
-          }}
-          className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
-          popoverContent={<div className="bg-slate-100">test !!!! popover ??????</div>}
-          side="top"
-          align="start"
-          sideOffset={15}
-          //container={document.getElementById('nlp--modal-content') ?? undefined}
-        >
-          <Button label={'확인'} variant={'primary'} size={'lg'} />
-        </Popover>
+        <Button
+          label={t('LABEL.common.ok')}
+          variant={'primary'}
+          size={'lg'}
+          onClick={() => closeModal()}
+        />
       </ModalFooter>
     </ModalContainer>
   );

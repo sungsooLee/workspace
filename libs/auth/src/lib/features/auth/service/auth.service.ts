@@ -17,8 +17,10 @@ import { SessionTimeoutConfirm } from '../ui/sessionTimeoutConfirm';
 import type { AuthUser, AuthSSOHealthcheck } from '../../../types';
 import { useAsycFetchMenus } from '../../../entities/menu';
 
-export const SESSION_TIMEOUT_LIMIT_DURATION = 1000 * 60 * 2; // 2시간 = 1000 * 60 * 60 * 2 = 7200000
-export const SESSION_TIMEOUT_EXTENSION_ALERT_DURATION = 1000 * 60 * 1; // 경과 5분전 = 1000 * 60 * 5 = 300000
+import {
+  SESSION_TIMEOUT_EXTENSION_ALERT_DURATION,
+  SESSION_TIMEOUT_LIMIT_DURATION,
+} from '../const/auth.constant';
 
 interface LoginParams {
   username: string;

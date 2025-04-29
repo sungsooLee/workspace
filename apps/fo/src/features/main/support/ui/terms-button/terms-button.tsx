@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/auth';
 
-import type { TermsType } from '../../../../types';
+import type { TermsType } from '../../../../../types';
 
 import { TermsModal } from './terms-modal';
 
@@ -21,7 +21,7 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
   // 세션 정보가 있는 경우 routing
   if (data) {
     return (
-      <Link to={'/terms/$termsType'} params={{ termsType }}>
+      <Link to={'/clause/$termsType'} params={{ termsType }}>
         {t(`CODE.TERMS_TYPE.${termsType}`)}
       </Link>
     );

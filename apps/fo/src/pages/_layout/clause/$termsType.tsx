@@ -13,7 +13,7 @@ import type { TermsType } from '../../../types';
 
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
-export const Route = createFileRoute('/_layout/terms/$termsType')({
+export const Route = createFileRoute('/_layout/clause/$termsType')({
   component: RouteComponent,
   ...pageRouteConfig({
     validateParam: {

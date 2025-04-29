@@ -100,7 +100,7 @@
       "joinTheMembership": "회원가입",
       "HTA/HTACVUsers": "HTA/HTACV 이용자",
       "generalMember": "일반 회원",
-      "previousTerms": "이전 {{type}} 보기",
+      "previousClause": "이전 {{type}} 보기",
       "remainingTime": "남은시간",
       "applicationDateTime": "신청일시",
       "lastChangeDate": "마지막 변경일"

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { duration, DATE_TIME_FORMAT } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
-import { SESSION_TIMEOUT_EXTENSION_ALERT_DURATION } from '../service/auth.service';
+import { SESSION_TIMEOUT_EXTENSION_ALERT_DURATION } from '../const/auth.constant';
 
 const TIME_LIMIT_VERIFY = SESSION_TIMEOUT_EXTENSION_ALERT_DURATION / 1000;
 
