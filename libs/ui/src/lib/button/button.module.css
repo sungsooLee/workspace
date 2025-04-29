@@ -6,7 +6,7 @@
       @apply button_bo_3_r h-[28px] min-w-[50px] justify-center px-[6px] font-normal;
     }
     &.sm {
-      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[6px] font-normal;
+      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[10px] font-normal;
     }
     &.md {
       @apply button_3_r h-[36px] min-w-[50px] justify-center px-[12px] font-normal;
