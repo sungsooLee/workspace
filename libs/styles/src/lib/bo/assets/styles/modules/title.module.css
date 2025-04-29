@@ -3,5 +3,20 @@
   @apply flex min-h-[44px] w-full items-start justify-between border-b-[1px] border-solid border-[var(--gray4)];
   .title {
     @apply title_bo_4_b flex h-[32px] items-center text-[var(--gray9)];
+    & + .sub_title {
+      @apply pl-[12px];
+      &::before {
+        @apply absolute left-0 top-1/2 h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
+  .title_area {
+    @apply flex items-center;
+    .sub_title {
+      @apply title_bo_4_b relative ml-[12px] text-[var(--gray9)];
+    }
+    .num {
+      @apply title_bo_4_b ml-[2px] text-[var(--secondary1)];
+    }
   }
 }

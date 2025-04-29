@@ -38,11 +38,12 @@ import {
   useUpdateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
+import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
-  findMenuPathById,
   transformApiDataToTreeData,
-} from '@features/platform/menu/service/menu.service';
-import { getFirstExpandKeys, handleExpandAll } from '../service/tenant-detail-tree.service';
+  getFirstExpandKeys,
+  getAllTreeKeys,
+} from '../service/tenant-detail-tree.service';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -175,7 +176,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               className={layoutStyles.btn_text}
               onClick={() => {
                 if (treeData) {
-                  const allKeys = handleExpandAll(treeData);
+                  const allKeys = getAllTreeKeys(treeData);
                   handleExpandChange(allKeys);
                 }
               }}
@@ -388,6 +389,7 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('디바이스 노출 여부'),
       value: [],
+      checkGroupConfig: { allCheck: false },
       options: [
         { label: t('PC'), value: 'PC' },
         { label: t('모바일'), value: 'Mobile' },
