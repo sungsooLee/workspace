@@ -10,12 +10,14 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 /* tab contents */
-import { TenantDetailMenu } from '@features/tenant/ui/tenant-detail-menu';
-import { TenantDetailBase } from '@features/tenant/ui/tenant-detail-base';
-import { TenantDetailCategory } from '@features/tenant/ui/tenant-detail-category';
-import { TenantDetailAttribute } from '@features/tenant/ui/tenant-detail-attribute';
+import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
+import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
+import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
+import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
+import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
+import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
 
-export const Route = createFileRoute('/_layout/tenant/detail')({
+export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
 });
 
@@ -30,7 +32,7 @@ function RouteComponent() {
     }
   };
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/' });
+    router.navigate({ to: '/tenant/management' });
   };
 
   const handleResetButtonClick = () => {
@@ -93,23 +95,28 @@ const menuItems = [
     content: <TenantDetailAttribute />,
   },
   {
-    title: '테넌트 회사 관리',
-    key: 'menu03',
-    content: '테넌트 회사 관리',
-  },
-  {
     title: '테넌트 메뉴관리 메핑',
-    key: 'menu04',
+    key: 'menu03',
     content: <TenantDetailMenu />,
   },
   {
     title: '테넌트 카테고리 관리',
-    key: 'menu05',
+    key: 'menu04',
     content: <TenantDetailCategory />,
   },
   {
-    title: '테넌트 역할 생성',
-    key: 'menu06',
+    title: '테넌트 역할 관리',
+    key: 'menu05',
     content: '',
+  },
+  {
+    title: '테넌트 위젯 관리',
+    key: 'menu06',
+    content: <TenantDetailWidget />,
+  },
+  {
+    title: '테넌트 배너 관리',
+    key: 'menu07',
+    content: <TenantDetailBanner />,
   },
 ];

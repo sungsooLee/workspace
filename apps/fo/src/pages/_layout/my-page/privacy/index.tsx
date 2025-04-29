@@ -24,8 +24,14 @@ import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-inf
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,
   ...pageRouteConfig({
+    validateState: {
+      confirmPassword: {
+        format: 'string',
+        required: true,
+      },
+    },
     meta: {
-      title: 'LABEL.UPDATE_INFORMATION',
+      title: 'LABEL.CHANGE_INFORMATION',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
       container: MAIN_CONTAINERS.MY_PAGE,
     },

@@ -6,10 +6,7 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from 'axios';
-
-import { cookieService } from '../cookie/cookie.service';
-import { encodeQueryString, eventService, HTTP_EVENTS } from '../../index';
-import { getFileResponse } from '@/libs/shared/src/lib/utils/file-util';
+import { encodeQueryString, eventService, getFileResponse, HTTP_EVENTS } from '../../index';
 
 const API_REQUEST_TIMEOUT = 9000;
 

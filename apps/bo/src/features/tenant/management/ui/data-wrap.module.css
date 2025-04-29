@@ -1,0 +1,10 @@
+/* data-wrap.module.css */
+.wrap {
+  @apply flex items-center;
+  [class*='nlp--input'] {
+    @apply flex-auto;
+  }
+  .guide_text {
+    @apply body_bo_4_r ml-[16px] min-w-[120px] shrink-0 text-[var(--gray7)];
+  }
+}
