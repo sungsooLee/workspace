@@ -75,7 +75,7 @@
       & > .list {
         @apply relative flex w-full;
         & > .trigger {
-          @apply z-0 -mb-[1px] min-h-[32px] w-auto rounded-[4px] rounded-b-none border border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[8px] text-[1.4rem] font-normal leading-[1.4rem];
+          @apply z-0 -mb-[1px] min-h-[32px] w-auto rounded-[4px] rounded-b-none border border-b-0 border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[8px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
           &::after {
             @apply absolute bottom-0 left-[1px] h-[1px] w-[calc(100%-2px)] bg-transparent content-[''];
           }

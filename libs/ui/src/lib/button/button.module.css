@@ -1,12 +1,15 @@
 .start {
   &.btn {
     @apply box-border inline-flex items-center justify-start leading-[1rem];
-    /* Size ( 28 | 32 | 36 | 40 | 48 ) */
+    /* Size ( 24 |28 | 32 | 36 | 40 | 48 ) */
+    &.ts {
+      @apply button_bo_3_r h-[24px] min-w-[50px] justify-center px-[6px] text-[1.2rem] font-normal;
+    }
     &.xs {
       @apply button_bo_3_r h-[28px] min-w-[50px] justify-center px-[6px] font-normal;
     }
     &.sm {
-      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[6px] font-normal;
+      @apply button_3_r h-[32px] min-w-[32px] justify-center px-[10px] font-normal;
     }
     &.md {
       @apply button_3_r h-[36px] min-w-[50px] justify-center px-[12px] font-normal;
