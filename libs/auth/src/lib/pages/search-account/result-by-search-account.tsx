@@ -25,7 +25,7 @@ export function ResultBySearchAccountPage({ route }: any) {
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state?.email ? (
           <ProccessResult
-            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT')}
+            title={t('LABEL.message.searchAccountResult')}
             className={styles.success_info}
           >
             <div className={styles.result_message}>{state.email}</div>
@@ -33,24 +33,24 @@ export function ResultBySearchAccountPage({ route }: any) {
         ) : (
           <ProccessResult
             isSuccess={false}
-            title={t('MESSAGE.SEARCH_ACCOUNT_RESULT_NOT_FOUND')}
+            title={t('LABEL.message.searchAccountResultNotFound')}
             className={styles.success_info}
           ></ProccessResult>
         )}
 
         <div className={styles.btn_txt}>
           {isEmpty(state?.email) ? (
-            <Link to="/search-account">{t('LABEL.SEARCH_ACCOUNT')}</Link>
+            <Link to="/search-account">{t('LABEL.common.searchAccount')}</Link>
           ) : (
             <Link to="/search-account" search={{ tabKey: 'password' }}>
-              {t('LABEL.SEARCH_PASSWORD')}
+              {t('LABEL.common.searchPassword')}
             </Link>
           )}
         </div>
 
         <div className={`${styles.btn_wrap}`}>
           <Button variant="primary" size="xl" onClick={() => handleGoLogin()}>
-            {t('LABEL.LOGIN')}
+            {t('LABEL.common.login')}
           </Button>
         </div>
       </div>

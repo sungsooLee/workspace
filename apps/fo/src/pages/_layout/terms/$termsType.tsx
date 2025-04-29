@@ -72,7 +72,7 @@ function RouteComponent() {
           onChange={(value: string) => {
             setTermsId(value);
           }}
-          placeholder={t('LABEL.PREVIOUS_TERMS', {
+          placeholder={t('LABEL.common.previousTerms', {
             type: t(`CODE.TERMS_TYPE.${termsType}`),
           })}
           className={styles.select}

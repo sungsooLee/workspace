@@ -19,8 +19,9 @@ function GoogleOtpGuideButtonComponent() {
           width: 'sm',
           content: <GoogleOtpGuideModal />,
         })
-      }>
-      {t('LABEL.GOOGLE_AUTH_GUIDE')}
+      }
+    >
+      {t('LABEL.common.googleAuthGuide')}
     </Button>
   );
 }

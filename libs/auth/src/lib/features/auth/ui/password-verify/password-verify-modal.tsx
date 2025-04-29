@@ -32,18 +32,18 @@ const PasswordVerifyModalComponent = () => {
   };
 
   const handleVerifyError = () => {
-    //setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
+    //setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
     //router.navigate({ to: '/my-page/privacy', state: { confirmPassword: 'true' } as any });
   };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <ModalContainer>
-        <ModalTitle>{t('LABEL.PASSWORD_VERIFY')}</ModalTitle>
+        <ModalTitle>{t('LABEL.common.passwordVerify')}</ModalTitle>
 
         <ModalBody>
           <EmbededAlert className={styles.search_info} hiddenIcon>
-            {t(`LABEL.PASSWORD_VERIFY_FOR_CHANGE_PASSWORD`)}
+            {t(`LABEL.message.passwordVerifyForChangePassword`)}
           </EmbededAlert>
 
           <ContentsRow>
@@ -53,7 +53,7 @@ const PasswordVerifyModalComponent = () => {
           </ContentsRow>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('LABEL.OK')} variant={'primary'} size={'lg'} type="submit" />
+          <Button label={t('LABEL.common.ok')} variant={'primary'} size={'lg'} type="submit" />
         </ModalFooter>
       </ModalContainer>
     </form>
@@ -67,7 +67,7 @@ const passwordVerifyFormConfig: DynamicFormConfig = {
     {
       name: 'password',
       type: 'text',
-      label: 'LABEL.PASSWORD',
+      label: 'LABEL.common.password',
       value: '',
       required: true,
     },

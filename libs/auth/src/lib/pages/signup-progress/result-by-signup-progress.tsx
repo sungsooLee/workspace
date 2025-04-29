@@ -25,13 +25,15 @@ export function ResultBySignupProgressPage({ route }: any) {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <ProccessResult
-            title={t('MESSAGE.SIGNUP_PROGRESS_RESULT_01')}
+            title={t('LABEL.message.signupProgressResult01')}
             className={styles.success_info}
           >
-            신청일시 : <strong>YYYY-MM-DD</strong>
+             {t('LABEL.common.applicationDateTime')} : <strong>YYYY-MM-DD</strong>
           </ProccessResult>
 
-          <h4 className={cn(styles.title, 'auth--title')}>{t('LABEL.협력업체 회사 정보')}</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>
+            {t('LABEL.common.partnerCompanyInformation')}
+          </h4>
 
           <div className="no_line col">
             <ContentsRow>
@@ -49,7 +51,9 @@ export function ResultBySignupProgressPage({ route }: any) {
 
           <hr className={`${styles.divider} ${styles.divider}`} />
 
-          <h4 className={cn(styles.title, 'auth--title')}>개인정보</h4>
+          <h4 className={cn(styles.title, 'auth--title')}>
+            {t('LABEL.common.personalInformation')}
+          </h4>
 
           <div className="no_line col">
             <ContentsRow>
@@ -81,7 +85,7 @@ export function ResultBySignupProgressPage({ route }: any) {
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="primary" size="xl" onClick={() => goLogin()}>
-              로그인
+              {t('LABEL.common.login')}
             </Button>
           </div>
         </div>
@@ -95,7 +99,7 @@ const detailConfig = {
     {
       name: 'company',
       type: 'text',
-      label: 'LABEL.회사명',
+      label: 'LABEL.common.companyName',
       value: '',
       placeholder: '',
       description: '',
@@ -103,7 +107,7 @@ const detailConfig = {
     {
       name: 'no',
       type: 'text',
-      label: 'LABEL.사업자 등록 번호',
+      label: 'LABEL.common.businessRegistrationNumber',
       value: '',
       placeholder: '',
       description: '',
@@ -112,7 +116,7 @@ const detailConfig = {
     {
       name: 'id',
       type: 'text',
-      label: 'LABEL.아이디(이메일)',
+      label: 'LABEL.common.account(email)',
       value: '',
       placeholder: '',
       description: '',
@@ -120,21 +124,21 @@ const detailConfig = {
     {
       name: 'name',
       type: 'text',
-      label: 'LABEL.이름',
+      label: 'LABEL.common.name',
       value: '',
       placeholder: '',
     },
     {
       name: 'role',
       type: 'text',
-      label: 'LABEL.직위',
+      label: 'LABEL.common.spot',
       value: '',
       placeholder: '',
     },
     {
       name: 'phoneNumber',
       type: 'custom',
-      label: 'LABEL.휴대폰번호',
+      label: 'LABEL.common.phoneNumber',
       value: '',
       placeholder: '',
       //required: true,

@@ -26,7 +26,7 @@ export function SignupProgressPage({ route }: any) {
       state: {
         email: data.email,
         redirectUrl: '/signup-progress/result',
-        meta: { title: 'LABEL.SIGNUP_PROGRESS_STATUS' },
+        meta: { title: 'LABEL.common.signupProgressStatus' },
       } as any,
     });
     /*
@@ -63,7 +63,7 @@ export function SignupProgressPage({ route }: any) {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <EmbededAlert className={styles.search_info}>
-            {t('MESSAGE.SIGNUP_PROGRESS_GUIDE')}
+            {t('LABEL.message.signupProgressGuide')}
           </EmbededAlert>
 
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
@@ -74,16 +74,16 @@ export function SignupProgressPage({ route }: any) {
             </ContentsRow>
           </div>
 
-          <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
-            <dd>{t('MESSAGE.CAUTION_SIGNUP_PROGRESS')}</dd>
+          <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
+            <dd>{t('LABEL.message.cautionSignupProgress')}</dd>
           </NoticeBox>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-              {t('LABEL.CANCEL')}
+              {t('LABEL.common.cancel')}
             </Button>
             <Button type="submit" variant="primary" size="xl">
-              {t('LABEL.SIGNUP_PROGRESS_OK')}
+              {t('LABEL.common.signupProgressOk')}
             </Button>
           </div>
         </div>
@@ -97,7 +97,7 @@ const emailFormConfig: DynamicFormConfig = {
     {
       name: 'email',
       type: 'text',
-      label: 'LABEL.EMAIL',
+      label: 'LABEL.common.email',
       value: '',
       placeholder: '${label}을 입력하세요',
       description: '',
