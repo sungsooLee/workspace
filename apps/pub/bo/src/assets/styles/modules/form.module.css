@@ -92,6 +92,9 @@
   }
   &.direction_col {
     @apply flex-col;
+    .input_box > div {
+      @apply pt-[12px];
+    }
   }
 }
 .input_box {

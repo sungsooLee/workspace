@@ -1,197 +1,153 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
-import {
-  ContentsRow,
-  Button,
-  Input,
-  Textarea,
-  RadioGroupFormField,
-  Switch,
-  Tabs,
-} from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-
-/* tab contents */
-import { UserGroupSetting } from './-tabcontents/user-group-setting'; // 유저그룹 설정
-import { DirectSetting } from './-tabcontents/direct-setting'; // 직접 설정
-import { LearningExceptionSetting } from './-tabcontents/learning-exception-setting'; // 학습자 제외 설정
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import { Textarea, Button, Tooltip } from '@/libs/ui/src';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-open-detail-management')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false,
-  });
-  // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
-  const handleCheckedChange = (id: number) => (checked: boolean) => {
-    setChecked((prev) => ({ ...prev, [id]: checked }));
-  };
-
-  const [selectedTabKey] = useState<string>('a');
-  const items = [
-    {
-      title: '유저그룹 설정',
-      key: 'a',
-      content: <UserGroupSetting />,
-    },
-    {
-      title: '직접 설정',
-      key: 'b',
-      content: <DirectSetting />,
-    },
-    {
-      title: '학습자 제외 설정',
-      key: 'c',
-      content: <LearningExceptionSetting />,
-    },
-  ];
   return (
     <form className="form_row">
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <FormSubTitle
-            label={'채널 정보'}
-            underLine
-            actionNode={
-              <>
-                <p className="info_text">{`접수ID : ${45785566322}`}</p>
-                <Button variant={'gray2'} size={'sm'} label={'채널 접수정보 불러오기 '} />
-              </>
-            }
-          />
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-channel" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널명</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input id={'name-channel'} type={'text'} maxLength={40} placeholder={'입력'} />
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-channel2" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널 학습대상</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Textarea
-                  id={'name-channel2'}
-                  rows={10}
-                  cols={5}
-                  maxLength={2000}
-                  resize={'none'}
-                  placeholder={'입력'}
-                  size={'xs'}
-                />
-              </div>
-            </div>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-channel3" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널 운영목적</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Textarea
-                  id={'name-channel3'}
-                  rows={10}
-                  cols={5}
-                  maxLength={2000}
-                  resize={'none'}
-                  placeholder={'입력'}
-                  size={'xs'}
-                />
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-address" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널주소</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input type={'text'} placeholder={'입력'} value={''} readOnly={true} />
-                <Button variant={'gray'} size={'sm'}>
-                  {'자동생성'}
-                </Button>
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsRow type={'horizontal'}>
-            {/* form_item */}
-            <div className={cn(formStyles.form_item, formStyles.direction_col)}>
-              <label htmlFor="name-sort2" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널구분</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <RadioGroupFormField
-                  options={[
-                    { value: 'y', label: '공개' },
-                    { value: 'n', label: '비밀' },
-                  ]}
-                  defaultValue={'y'}
-                />
-              </div>
-            </div>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-security" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>보안 채널 여부</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Switch
-                  id="name-use"
-                  className={cn(dynamicFormStyles.btn_switch, 'translate-y-1/2')}
-                  label={checked[1] ? '보안 적용' : '보안 미적용'}
-                  checked={checked[1]}
-                  onCheckedChange={handleCheckedChange(1)}
-                />
-              </div>
-              <p className={formStyles.guide_text}>
-                보안채널 미 설정 시 학습자원의 불법 배포와 보안 위협에
-                {checked[1] ? ' 강합니다.' : ' 취약합니다.'}
-              </p>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-learning" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습 대상자 설정</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
-              </div>
-            </div>
-          </ContentsRow>
-          <ContentsHistoryInfoFormField />
+          <FormSubTitle label={'신청정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap)}>
+            <table>
+              <caption>{'신청정보'}</caption>
+              <colgroup>
+                <col style={{ width: '240px' }} />
+                <col />
+                <col style={{ width: '240px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'}>{'신청 ID'}</th>
+                  <td>{'dd147852223'}</td>
+                  <th scope={'row'}>{'채널명'}</th>
+                  <td>{'채널명채널명채널명채널명'}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'테넌트 설정'}</th>
+                  <td>{'테넌트명'}</td>
+                  <th scope={'row'}>{'채널주소'}</th>
+                  <td>{'http:/ddddd.ddddd.ddddddd'}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'채널 구분'}</th>
+                  <td colSpan={3}>{'공개채널'}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'} className={tableStyles.align_top}>
+                    {'채널 학습대상'}
+                  </th>
+                  <td colSpan={3}>
+                    <Textarea
+                      rows={5}
+                      cols={10}
+                      maxLength={2000}
+                      resize={'none'}
+                      placeholder={'입력'}
+                      readOnly
+                      size={'xs'}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th scope={'row'} className={tableStyles.align_top}>
+                    {'채널 운영목적'}
+                  </th>
+                  <td colSpan={3}>
+                    <Textarea
+                      rows={5}
+                      cols={10}
+                      maxLength={2000}
+                      resize={'none'}
+                      placeholder={'입력'}
+                      readOnly
+                      size={'xs'}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'신청자명(사번)'}</th>
+                  <td>
+                    <Link to={'/'} className={tableStyles.link}>
+                      {'홍길동(00000000)'}
+                    </Link>
+                  </td>
+                  <th scope={'row'}>{'회사명/조직명'}</th>
+                  <td>{'회사명00000/ 조직명000000'}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'신청일시'}</th>
+                  <td>{'2025-01-05 15:15:00'}</td>
+                  <th scope={'row'}>{'신청상태'}</th>
+                  <td>{'대기'}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <FormSubTitle label={'접수정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap)}>
+            <table>
+              <caption>{'접수정보'}</caption>
+              <colgroup>
+                <col style={{ width: '240px' }} />
+                <col />
+                <col style={{ width: '240px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'}>{'접수 ID'}</th>
+                  <td>
+                    <div className={tableStyles.box}>
+                      {'dd147852223'}
+
+                      <Tooltip side="bottom" align="start" content={'tooltip content'}>
+                        <Button variant={'gray2'} size={'sm'}>
+                          {'채널등록'}
+                        </Button>
+                      </Tooltip>
+                    </div>
+                  </td>
+                  <th scope={'row'}>{'채널 ID'}</th>
+                  <td>
+                    <Link to={'/'} className={tableStyles.link}>
+                      {'IDkkkkkk'}
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'채널 상태'}</th>
+                  <td>{'등록전'}</td>
+                  <th scope={'row'}>{'신청자 메일 발송'}</th>
+                  <td>{'미발송'}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'결재자(사번)'}</th>
+                  <td>
+                    <Link to={'/'} className={tableStyles.link}>
+                      {'김현대(00000000)'}
+                    </Link>
+                  </td>
+                  <th scope={'row'} className={tableStyles.align_top}>
+                    {'접수일자'}
+                  </th>
+                  <td>{'2025-01-05 15:15:00'}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </PageContainer>
     </form>

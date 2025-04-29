@@ -25,10 +25,10 @@ export type ButtonVariantType =
   | 'gray-outline'
   | 'ghost'
   | 'link';
-export type ButtonSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonSizeType = 'ts' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariantType;
-  size?: ButtonSizeType; // xs(28) , sm(32) , md(36), lg(40), xl(48)
+  size?: ButtonSizeType; // ts(24), xs(28) , sm(32) , md(36), lg(40), xl(48)
   icon?: React.ReactNode;
   iconAlign?: 'left' | 'right';
   onlyIcon?: boolean;
