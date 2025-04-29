@@ -1,0 +1,53 @@
+.start {
+  &.curriculum {
+    @apply overflow-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray5)];
+    & > ol {
+      & > li {
+        .tit_box {
+          @apply mb-0 flex items-start justify-between bg-[var(--gray1)] px-[16px] py-[13px];
+          strong {
+            @apply body_3_b flex-1 text-[var(--gray8)];
+          }
+          span {
+            @apply body_3_r ml-[8px] inline-block text-[var(--gray8)];
+          }
+        }
+        .txt_box {
+          ul {
+            li {
+              @apply relative flex items-center justify-between px-[16px] py-[8px] text-[1.4rem];
+
+              .subject {
+                @apply body_3_r inline-block flex-1 flex-[6] flex-shrink-0 pr-[20px] leading-[22px] text-[var(--gray7)];
+              }
+              .stats {
+                @apply body_3_r flex w-full flex-[3] items-center justify-center gap-[8px] text-center text-[var(--gray7)];
+                em {
+                  &.learning {
+                    @apply text-[var(--secondary3)];
+                  }
+                }
+                button {
+                  @apply text-[1.2rem] text-[var(--gray7)];
+                  svg {
+                    @apply h-[12px] w-[12px] rotate-[-90deg] stroke-[var(--gray7)];
+                  }
+                }
+              }
+
+              .btn {
+                @apply w-[73px] flex-[1] flex-shrink-0;
+              }
+              &.ing {
+                @apply bg-[var(--secondary5)];
+              }
+            }
+          }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray5)];
+        }
+      }
+    }
+  }
+}
