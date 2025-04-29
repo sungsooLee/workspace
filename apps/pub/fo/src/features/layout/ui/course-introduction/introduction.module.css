@@ -24,6 +24,11 @@
           @apply title_6_b text-[var(--gray8)];
         }
       }
+      &.pds {
+        button {
+          @apply w-[82px];
+        }
+      }
 
       .evaluation_box {
         & > ul {
@@ -217,7 +222,13 @@
               }
             }
           }
+          &.pds {
+            button {
+              @apply w-[100px];
+            }
+          }
         }
+
         .operator_box {
           @apply mt-[24px];
           strong {

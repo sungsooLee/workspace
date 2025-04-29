@@ -19,3 +19,16 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .info_box {
+      @apply mt-[32px];
+      &.pds {
+        button {
+          @apply w-[82px];
+        }
+      }
+    }
+  }
+}

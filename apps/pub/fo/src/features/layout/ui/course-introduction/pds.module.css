@@ -16,13 +16,42 @@
     button {
       @apply w-[73px];
     }
-    & + .pds_box {
-      @apply ml-0 mt-[8px];
-    }
   }
   [class*='nlp--panel'] {
     + [class*='nlp--panel'] {
       @apply mt-[16px];
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .pds_box {
+        @apply w-full flex-col items-start justify-start p-[16px];
+        .info {
+          @apply mt-[8px] flex w-full justify-between;
+        }
+        span {
+          &:first-child {
+            @apply flex-1;
+          }
+          &.size {
+            @apply mr-[auto] text-left;
+          }
+          svg {
+            @apply mr-[3px];
+          }
+        }
+        button {
+          @apply w-[58px];
+        }
+      }
+      [class*='nlp--panel'] {
+        + [class*='nlp--panel'] {
+          @apply mt-[8px];
+        }
+      }
     }
   }
 }
