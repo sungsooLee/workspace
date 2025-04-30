@@ -12,6 +12,7 @@ export interface RadioGroupComponentProps extends React.ComponentProps<typeof Pr
   defaultValue?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
   onValueChange?: (value: string) => void;
+  name?: string;
 }
 
 const RadioGroupComponent = forwardRef<
@@ -19,7 +20,16 @@ const RadioGroupComponent = forwardRef<
   RadioGroupComponentProps
 >(
   (
-    { className, options, disabled, defaultValue, size, orientation = 'horizontal', ...props },
+    {
+      className,
+      options,
+      disabled,
+      defaultValue,
+      size,
+      orientation = 'horizontal',
+      name,
+      ...props
+    },
     ref,
   ) => {
     return (
@@ -34,22 +44,25 @@ const RadioGroupComponent = forwardRef<
         defaultValue={defaultValue}
         {...props}
       >
-        {options.map((option: RadioGroupOption) => (
-          <div className={styles.radio} key={option.value}>
-            <Primitive.Item
-              key={option.value}
-              className={styles.item}
-              value={option.value}
-              id={option.value}
-              disabled={disabled}
-            >
-              <Primitive.Indicator className={styles.indicator} />
-            </Primitive.Item>
-            <label className={styles.label} htmlFor={option.value}>
-              {option.label}
-            </label>
-          </div>
-        ))}
+        {options.map((option: RadioGroupOption) => {
+          const uniqueId = name ? `${name}-${option.value}` : `radio-${option.value}`;
+          return (
+            <div className={styles.radio} key={option.value}>
+              <Primitive.Item
+                key={uniqueId}
+                className={styles.item}
+                value={option.value}
+                id={option.value}
+                disabled={disabled}
+              >
+                <Primitive.Indicator className={styles.indicator} />
+              </Primitive.Item>
+              <label className={styles.label} htmlFor={uniqueId}>
+                {option.label}
+              </label>
+            </div>
+          );
+        })}
       </Primitive.Root>
     );
   },

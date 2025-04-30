@@ -15,6 +15,7 @@ import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { useCheckExistsMenu, useMenuManageDetail } from '../../../../entities/menu';
 import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
+import { useRouter } from '@tanstack/react-router';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -31,7 +32,8 @@ const MenuViewComponent: FC<any> = ({
   const { data, isLoading } = useMenuManageDetail(
     mode !== 'add' && selectedNode ? selectedNode.menuId : undefined,
   );
-  const { open: openModal } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const router = useRouter();
 
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
@@ -47,7 +49,6 @@ const MenuViewComponent: FC<any> = ({
       const isUnique = !data;
       setIsSuccessCodeCheck(isUnique);
       setCodeCheckState(isUnique ? 'success' : 'duplicate');
-
       onFormChange?.({
         isDuplicateMenuCode: isUnique,
       });
@@ -132,8 +133,12 @@ const MenuViewComponent: FC<any> = ({
   }, [data, selectedNode, mode, parentNode, isLoading]);
 
   // 폼 초기화를 처리하는 핸들러
-  const handleReset = () => {
-    onFormChange();
+  const handleReset = async () => {
+    // onFormChange();
+    const isReset = await openConfirm({
+      title: '초기화 하시겠습니까?',
+    });
+    if (isReset) onFormChange();
   };
 
   const isFieldChanged = (fieldName: string, currentValue: any) => {
@@ -203,8 +208,6 @@ const MenuViewComponent: FC<any> = ({
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
       return;
     }
-    console.log(node);
-
     const tmpData = {
       menuCode: node.code,
       parentId: node.parentKey,
@@ -221,9 +224,7 @@ const MenuViewComponent: FC<any> = ({
       menuName: node.title,
       apiMappingMenuList: apiMappingKeys,
     };
-    console.log(tmpData);
     onSave(tmpData);
-    // 메뉴 저장 성공했을때 메뉴 다시 갖고와야됨..
   };
 
   const handleDelete = () => {
@@ -385,6 +386,26 @@ const MenuViewComponent: FC<any> = ({
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'title'} disabled={isInitMode} />
+              <Button
+                type="button"
+                variant="gray"
+                size="sm"
+                disabled={mode !== 'view'}
+                onClick={() => {
+                  const menuCode = getValues('code');
+                  const menuName = getValues('title');
+                  router.navigate({
+                    to: '/platform/system/multilingual',
+                    state: {
+                      keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                      multilinguaKey: menuCode,
+                      translation: menuName,
+                    },
+                  });
+                }}
+              >
+                다국어 관리
+              </Button>
             </FormRow>
           </ContentsRow>
 
