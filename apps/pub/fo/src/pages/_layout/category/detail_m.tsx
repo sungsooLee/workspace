@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Button, ContentsRow, Input, Dropdown, Pagination } from '@learnway/ui';
+import { ThumnailList } from '../../../features/layout';
 import { IcoArrowDown, IcoArrowForward, IcoFilter, IcoArray, IcoDotpoints } from '@learnway/icons';
 
 import styles from './detail_m.module.css';
@@ -13,22 +14,28 @@ export const Route = createFileRoute('/_layout/category/detail_m')({
 });
 
 function RouteComponent() {
+  // dropdown
+  const [divisionValues, setDivisionValues] = useState<string[]>(['분류선택']);
+  const [arrayValues, setArrayValues] = useState<string[]>(['최신순']);
+  const [countValues, setCountValues] = useState<string[]>(['20개씩']);
+
   // 필터 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(true);
-
-  const [listUi, setListUi] = useState('type');
-  const list_ui = () => {
-    if (listUi === 'type') {
-      setListUi('type2');
-    } else {
-      setListUi('type');
-    }
-  };
 
   // pagenation
   const [page, setPage] = React.useState(1);
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+  };
+
+  // list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
+  const list_ui = () => {
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
+    } else {
+      setListUi('vertical'); // 세로형
+    }
   };
 
   return (
@@ -86,6 +93,8 @@ function RouteComponent() {
               { value: 'g', label: '포터' },
               { value: 'h', label: '캐스퍼' },
             ]}
+            value={divisionValues}
+            onChange={(selected) => setDivisionValues(selected)}
           />
         </div>
         <div className={styles.box}>
@@ -116,20 +125,27 @@ function RouteComponent() {
           <div className={styles.right}>
             <div className={styles.box}>
               <Dropdown
+                className={styles.array}
+                variant="text"
                 options={[
                   { value: 'a', label: '최신순' },
                   { value: 'b', label: '과정명순' },
                   { value: 'c', label: '조회순' },
                 ]}
+                value={arrayValues}
+                onChange={(selected) => setArrayValues(selected)}
               />
             </div>
             <div className={styles.box}>
               <Dropdown
+                variant="text"
                 options={[
                   { value: '20', label: '20개씩' },
                   { value: '50', label: '50개씩' },
                   { value: '80', label: '80개씩' },
                 ]}
+                value={countValues}
+                onChange={(selected) => setCountValues(selected)}
               />
             </div>
             <div className={styles.box}>
@@ -143,14 +159,29 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-      </div>
 
-      <Pagination
-        className={cn(styles.pagenation, styles.paginationItem)}
-        count={3}
-        page={page}
-        onChange={handlePageChange}
-      />
+        {/* 검색결과 있음 */}
+        <div className={styles.list}>
+          <div className={cn(styles.list_box, styles[listUi])}>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+            <ThumnailList direction={listUi}></ThumnailList>
+          </div>
+
+          {/* pagination */}
+          <Pagination
+            className={cn(styles.pagenation, styles.paginationItem)}
+            count={3}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </div>
+      </div>
     </div>
   );
 }

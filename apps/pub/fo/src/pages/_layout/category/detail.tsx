@@ -10,7 +10,7 @@ import {
   Carousel,
   EmptyText,
 } from '@learnway/ui';
-import { Arrays, Filter, ThumnailList } from '../../../features/layout';
+import { Arrays, Filter, Thumnail, ThumnailList } from '../../../features/layout';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 
@@ -57,7 +57,7 @@ function RouteComponent() {
   const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
   const [searchValues02, setSearchValues02] = useState<string[]>(['중분류']);
   const [searchValues03, setSearchValues03] = useState<string[]>(['소분류']);
-  const [selectedValues, setSelectedValues] = useState<string[]>(['20개씩']);
+  const [countValues, setCountValues] = useState<string[]>(['20개씩']);
 
   const arrays = {
     items: ['최신순', '과정명순', '조회순'],
@@ -149,8 +149,8 @@ function RouteComponent() {
                   { value: '50', label: '50개씩' },
                   { value: '80', label: '80개씩' },
                 ]}
-                value={selectedValues}
-                onChange={(selected) => setSelectedValues(selected)}
+                value={countValues}
+                onChange={(selected) => setCountValues(selected)}
               />
             </div>
             <div className={styles.box}>

@@ -23,9 +23,14 @@
     .box {
       @apply flex items-center;
       .select {
-        @apply w-full;
+        @apply h-[40px] w-full;
         button {
           @apply h-[40px] rounded-[8px] px-[16px];
+        }
+        & > div {
+          & > div {
+            @apply !min-h-[40px] rounded-[8px];
+          }
         }
       }
       & + .box {
@@ -71,6 +76,23 @@
           }
           button {
             @apply !min-h-[auto] !border-0 !p-0;
+          }
+          .array {
+            @apply min-w-[80px];
+          }
+        }
+      }
+    }
+    .list {
+      @apply mt-[16px];
+      .list_box {
+        & > div {
+          @apply w-[calc((100%/2)-8px)];
+          &:nth-child(2n) {
+            @apply ml-[16px];
+          }
+          &:nth-child(n + 3) {
+            @apply mt-[32px];
           }
         }
       }
