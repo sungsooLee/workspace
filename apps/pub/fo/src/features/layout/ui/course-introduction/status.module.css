@@ -199,10 +199,13 @@
           }
         }
         .status_list {
+          @apply flex-wrap justify-center gap-0;
           .status_info {
+            @apply mb-[16px] h-[82px] w-1/2;
             &::before {
             }
-            &:first-child::before {
+            &:nth-child(odd)::before {
+              @apply hidden;
             }
             .tt {
             }

@@ -1,5 +1,5 @@
 import { memo, useState, useEffect, useRef } from 'react';
-import { isMobile } from 'react-device-detect';
+import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoArrowDown, IcoCaution03, IcoDownload } from '@learnway/icons';
@@ -8,6 +8,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
 import pdsStyles from './pds.module.css';
+import tableListStyles from '../../../../shared/ui/list/table-list.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
@@ -170,7 +171,73 @@ const CourseDashboardCompoment = () => {
 
           {detail === true ? (
             <div className={statusStyles.status_table}>
-              <TableBox data={data} columns={columns} tableMode={true} showTotalCount={false} />
+              <BrowserView>
+                <TableBox data={data} columns={columns} tableMode={true} showTotalCount={false} />
+              </BrowserView>
+
+              <MobileView>
+                <div className={`${tableListStyles.start} ${tableListStyles.table_list}`}>
+                  <div className={tableListStyles.list}>
+                    <span className={tableListStyles.tit}>총점</span>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>이수기준</span>
+                      <span className={tableListStyles.dd}>70점이상</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>가중치</span>
+                      <span className={tableListStyles.dd}>100%</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>취득점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>환산점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                  </div>
+
+                  <div className={tableListStyles.list}>
+                    <span className={tableListStyles.tit}>진도/출석</span>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>이수기준</span>
+                      <span className={tableListStyles.dd}>70점이상</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>가중치</span>
+                      <span className={tableListStyles.dd}>100%</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>취득점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>환산점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                  </div>
+
+                  <div className={tableListStyles.list}>
+                    <span className={tableListStyles.tit}>과제</span>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>이수기준</span>
+                      <span className={tableListStyles.dd}>70점이상</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>가중치</span>
+                      <span className={tableListStyles.dd}>100%</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>취득점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                    <div className={tableListStyles.row}>
+                      <span className={tableListStyles.dt}>환산점수</span>
+                      <span className={tableListStyles.dd}>-</span>
+                    </div>
+                  </div>
+                </div>
+              </MobileView>
             </div>
           ) : (
             ''
