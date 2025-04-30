@@ -85,6 +85,7 @@ import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learnin
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/common/pop-image-preview'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
@@ -606,6 +607,13 @@ const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   path: '/common/pop-user-search',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutCommonPopImagePreviewRoute =
+  LayoutCommonPopImagePreviewImport.update({
+    id: '/common/pop-image-preview',
+    path: '/common/pop-image-preview',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
   {
@@ -1435,6 +1443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonPopExcelUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/pop-image-preview': {
+      id: '/_layout/common/pop-image-preview'
+      path: '/common/pop-image-preview'
+      fullPath: '/common/pop-image-preview'
+      preLoaderRoute: typeof LayoutCommonPopImagePreviewImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-user-search': {
       id: '/_layout/common/pop-user-search'
       path: '/common/pop-user-search'
@@ -1910,6 +1925,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
+  LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
@@ -1961,6 +1977,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
+  LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
@@ -2102,6 +2119,7 @@ export interface FileRoutesByFullPath {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2224,6 +2242,7 @@ export interface FileRoutesByTo {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2349,6 +2368,7 @@ export interface FileRoutesById {
   '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/_layout/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2473,6 +2493,7 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2594,6 +2615,7 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2717,6 +2739,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/word-wrap'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
+    | '/_layout/common/pop-image-preview'
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
@@ -2879,6 +2902,7 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-excel-upload",
+        "/_layout/common/pop-image-preview",
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
@@ -3218,6 +3242,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-excel-upload": {
       "filePath": "_layout/common/pop-excel-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-image-preview": {
+      "filePath": "_layout/common/pop-image-preview.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-user-search": {
