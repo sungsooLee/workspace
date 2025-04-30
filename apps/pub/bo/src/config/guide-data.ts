@@ -573,7 +573,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-open-detail-management',
     screenId: 'NLP_BO_CHN_1402',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-30',
     lastUpdateDate: '',
     remarks: '개발 확인 후 작업 예정', // 비고
   },

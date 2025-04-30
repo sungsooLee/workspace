@@ -92,7 +92,9 @@ function RouteComponent() {
                   <td>{'2025-01-05 15:15:00'}</td>
                   <th scope={'row'}>{'신청상태'}</th>
                   <td>
-                    {'대기'} <span className={tableStyles.text_point}>{'접수'}</span>
+                    {'대기'}
+                    <span className={tableStyles.text_point}>{'접수'}</span>
+                    <span className={tableStyles.text_error}>{'반려'}</span>
                   </td>
                 </tr>
               </tbody>
@@ -143,6 +145,46 @@ function RouteComponent() {
                     </Link>
                   </td>
                   <th scope={'row'}>{'접수일자'}</th>
+                  <td>{'2025-01-05 15:15:00'}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <FormSubTitle label={'반려정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap)}>
+            <table>
+              <caption>{'반려정보'}</caption>
+              <colgroup>
+                <col style={{ width: '240px' }} />
+                <col />
+                <col style={{ width: '240px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'} className={tableStyles.align_top}>
+                    {'반려사유'}
+                  </th>
+                  <td colSpan={3}>
+                    <Textarea
+                      rows={5}
+                      cols={10}
+                      maxLength={2000}
+                      resize={'none'}
+                      placeholder={'입력'}
+                      readOnly
+                      size={'xs'}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'결재자(사번)'}</th>
+                  <td>
+                    <Link to={'/'} className={tableStyles.link}>
+                      {'김현대(00000000)'}
+                    </Link>
+                  </td>
+                  <th scope={'row'}>{'반려일자'}</th>
                   <td>{'2025-01-05 15:15:00'}</td>
                 </tr>
               </tbody>
