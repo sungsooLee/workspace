@@ -14,12 +14,6 @@ type Story = StoryObj<typeof Popover>;
 
 // Popover
 export const Template: any = (args: any) => {
-  const Content = () => (
-    <div className="w-80">
-      <h3 className="bg-green-50">Content Header</h3>
-      <h4 className="bg-gray-3 h-20">Content Body</h4>
-    </div>
-  );
   return (
     <Popover {...args} popoverContent={'Popover Content Text'}>
       <button>Open Popover</button>
@@ -27,6 +21,22 @@ export const Template: any = (args: any) => {
   );
 };
 Template.storyName = 'Popover';
+
+// Custom Node
+export const TemplateNode: any = (args: any) => {
+  const Content = () => (
+    <div className="w-80">
+      <h3 className="bg-green-50">Content Header</h3>
+      <h4 className="bg-gray-3 h-20">Content Body</h4>
+    </div>
+  );
+  return (
+    <Popover {...args} popoverContent={<Content />}>
+      <button>Open Popover</button>
+    </Popover>
+  );
+};
+TemplateNode.storyName = 'Custom Node';
 
 // Button Close (Radix)
 export const TemplateButtonCloseRadix: any = (args: any) => {

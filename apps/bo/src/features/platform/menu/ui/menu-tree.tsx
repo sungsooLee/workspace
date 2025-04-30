@@ -93,7 +93,7 @@ const MenuTreeComponent: FC<any> = ({
           );
         } else {
           const targetIndex = nodeInfo.targetIndex || 1;
-          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
+          onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex + 1);
         }
 
         break;

@@ -26,6 +26,8 @@ const GridBoxComponent = <T extends object>(
     showSelectAll,
     showDeleteAll,
     showAdd,
+    showAddRow,
+    showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -77,11 +79,25 @@ const GridBoxComponent = <T extends object>(
     () => {
       // 그리드 선택 초기화
       gridRef.current?.resetRowSelection();
-      // call onAddClick
+      // callback
       onAddClick?.();
     },
     [gridRef, onAddClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
+
+  /**
+   * 행추가 버튼 클릭
+   */
+  const handleAddRowClick = useCallback(() => {
+    console.log('행추가');
+  }, []);
+
+  /**
+   * 행삭제 버튼 클릭
+   */
+  const handleRemoveRowClick = useCallback(() => {
+    console.log('행삭제');
+  }, []);
 
   /**
    * 페이지 이동 핸들러
@@ -209,6 +225,19 @@ const GridBoxComponent = <T extends object>(
               label={t('추가')}
               icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
               onClick={handleAddClick}
+            />
+          )}
+          {/* 행추가 */}
+          {showAddRow && (
+            <Button variant="outline" size="sm" label={t('행추가')} onClick={handleAddRowClick} />
+          )}
+          {/* 행삭제 */}
+          {showRemoveRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행삭제')}
+              onClick={handleRemoveRowClick}
             />
           )}
         </div>
