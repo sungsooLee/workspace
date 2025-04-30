@@ -606,7 +606,7 @@ export const guideData = [
   },
   {
     screenName: 'PMS/채널상세_채널기본정보(Tab)',
-    pageId: 'pms/menu-channel-register',
+    pageId: 'pms/menu-channel-detail',
     screenId: 'NLP_BO_CHN_1201',
     pageType: 'Page',
     completionDate: '',
