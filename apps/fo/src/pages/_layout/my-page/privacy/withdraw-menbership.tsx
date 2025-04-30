@@ -76,16 +76,14 @@ function RouteComponent() {
         </div>
       </div>
 
-      <MobileResponsiveContainerFooter className={styles.btn_wrap}>
+      <MobileResponsiveContainerFooter className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
         <BrowserFooter>
-          <div className={cn('auth--btn_wrap')}>
-            <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-              {t('LABEL.common.cancel')}
-            </Button>
-            <Button variant="primary" size="xl" onClick={() => handleWithdrawMembership()}>
-              {t('LABEL.common.withdrawMembership')}
-            </Button>
-          </div>
+          <Button variant="gray" size="xl" onClick={() => handleCancel()}>
+            {t('LABEL.common.cancel')}
+          </Button>
+          <Button variant="primary" size="xl" onClick={() => handleWithdrawMembership()}>
+            {t('LABEL.common.withdrawMembership')}
+          </Button>
         </BrowserFooter>
       </MobileResponsiveContainerFooter>
     </div>
