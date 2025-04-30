@@ -135,6 +135,7 @@ export * from './lib/transfer-tree-grid/transfer-tree-grid';
 
 // tabs
 export * from './lib/tabs/tabs';
+export * from './lib/tabs/stepper-tabs/stepper-tabs';
 
 // tree
 // export * from './lib/tree-view/tree-3';

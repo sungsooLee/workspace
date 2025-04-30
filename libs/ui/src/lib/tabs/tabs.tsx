@@ -6,7 +6,7 @@ import * as Primitive from '@radix-ui/react-tabs';
 import styles from './tabs.module.css';
 import { Badge } from '../badge/badge';
 
-interface TabItemProps {
+export interface TabItemProps {
   title: string;
   key: string;
   count?: boolean;
@@ -15,10 +15,10 @@ interface TabItemProps {
   content?: React.ReactNode;
 }
 
-interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+export interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   items: Array<TabItemProps>;
   className?: string;
-  type?: 'line' | 'fill' | 'round' | 'progress' | 'segment';
+  type?: 'line' | 'fill' | 'round' | 'segment' | 'progress' | 'sub-progress';
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   size?: 'sm' | 'md';
   ariaLabel?: string;
@@ -74,8 +74,9 @@ export const TabsComponent = forwardRef<
       if (!value || value === nextValue) return;
 
       // 탭 변경 가능 여부 확인 (비동기 가능)
-      const proceed = await (onBeforeTabChange?.(value, nextValue) ?? true);
-      if (!proceed) return;
+      if (!(await (onBeforeTabChange?.(value, nextValue) ?? true))) {
+        return;
+      }
 
       // 탭 상태 변경 및 콜백 실행
       setValue(nextValue);
