@@ -123,9 +123,9 @@ export function useMappingTenantCategory(tenantId: number, options: any) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    ...mutateOptions.mapping,
+    ...mutateOptions.mapping(),
     onSuccess: async (data, variables, context) => {
-      // 메뉴 트리 캐시 무효화
+      // 트리 캐시 무효화
       await queryClient.invalidateQueries({ queryKey: queryKeys.all(tenantId) });
 
       // 외부에서 제공된 onSuccess 콜백이 있으면 실행
@@ -137,7 +137,7 @@ export function useMappingTenantCategory(tenantId: number, options: any) {
   });
 
   return {
-    move: (payload: any, callback?: any) => {
+    mapping: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

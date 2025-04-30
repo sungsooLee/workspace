@@ -118,6 +118,11 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     setExpandedKeys(keys);
   };
 
+  const handleNodeChange = () => {
+    refetch();
+    setMode('init');
+  };
+
   const handleDelete = (payload: any) => {
     openConfirm({
       title: '삭제 하시겠습니까?',
@@ -147,6 +152,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           expandedKeys={expandedKeys}
           onExpandChange={handleExpandChange}
           selectedKey={selectedNode?.key}
+          onNodeChange={handleNodeChange}
         />
       )}
       {selectedNode ? (

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useRouterState } from '@tanstack/react-router';
 import {
   Button,
   findNodeByKey,
@@ -6,19 +7,26 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView,
+  useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 
 const TenantCategoryTreeComponent: FC<any> = ({
   treeData,
   onNodeClick,
   onNodeMove,
+  onNodeChange,
   expandedKeys,
   onExpandChange,
   selectedKey,
 }) => {
+  const routerState = useRouterState();
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const tenantId = routerState.location.state?.tenantId || '1';
+
   const handleExpandAll = (expand: boolean) => {
     if (expand) {
       // 모든 노드 키 수집
@@ -69,6 +77,21 @@ const TenantCategoryTreeComponent: FC<any> = ({
     }
   };
 
+  const handleTenantDetailCategoryMapping = async () => {
+    const modalTenantId = tenantId;
+    const selectTenantDetailCategory = await openModal({
+      content: (
+        <TenantDetailCategoryMappingModal
+          tenantId={modalTenantId}
+          onNodeChange={() => {
+            if (onNodeChange) onNodeChange();
+          }}
+        />
+      ),
+      width: 'xl',
+    });
+  };
+
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
 
   return (
@@ -92,7 +115,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
           >
             {'전체닫기'}
           </Button>
-          <Button variant="save" size="sm">
+          <Button variant="save" size="sm" onClick={() => handleTenantDetailCategoryMapping()}>
             {'카테고리 매핑'}
           </Button>
         </div>
