@@ -16,6 +16,10 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto = {
      */
     tenantName?: string;
     /**
+     * 신청상태
+     */
+    approvalStatusTypecd?: com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto.approvalStatusTypecd;
+    /**
      * 비공개채널여부
      */
     isSecretChannel?: boolean;
@@ -23,10 +27,6 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto = {
      * 신청자
      */
     reqeusterName?: string;
-    /**
-     * 채널명
-     */
-    channelName?: string;
     /**
      * 회사명
      */
@@ -36,28 +36,23 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto = {
      */
     departmentName?: string;
     /**
+     * 신청기간 시작일
+     */
+    startDate?: string;
+    /**
+     * 신청기간 종료일
+     */
+    endDate?: string;
+};
+export namespace com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto {
+    /**
      * 신청상태
      */
-    requestState?: string;
-    /**
-     * 신청일시
-     */
-    requestDate?: string;
-    /**
-     * 채널접수ID
-     */
-    channelAcceptId?: number;
-    /**
-     * 메일발송여부
-     */
-    isChannelCreationMailSend?: boolean;
-    /**
-     * 결재자(승인자
-     */
-    approverName?: string;
-    /**
-     * 결재일시(승인일시
-     */
-    approvalDate?: string;
-};
+    export enum approvalStatusTypecd {
+        PENDING = 'PENDING',
+        ACCEPTED = 'ACCEPTED',
+        APPROVED = 'APPROVED',
+        REJECTED = 'REJECTED',
+    }
+}
 

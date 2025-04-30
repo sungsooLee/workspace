@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto = {
-    uuid?: string;
+    educationPlaceHistoryUuid?: string;
     /**
      * 테넌트명
      */
