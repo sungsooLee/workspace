@@ -243,15 +243,31 @@ function RouteComponent() {
                 </div>
               </div>
               <div className={styles.title_box}>
-                <h3 className={styles.sub_title}>{'업로드 결과'}</h3>
-                {/* 실패 CASE */}
-                <p className={styles.status_text}>
-                  실패<span className={cn(styles.data_text, styles.error)}>100행</span>
-                </p>
-                {/* 완료 CASE */}
-                <p className={styles.status_text}>
-                  완료<span className={cn(styles.data_text)}>100행</span>
-                </p>
+                <div className={styles.title_info}>
+                  <h3 className={styles.sub_title}>{'업로드 결과'}</h3>
+                  {/* 실패 CASE */}
+                  <p className={styles.status_text}>
+                    실패<span className={cn(styles.data_text, styles.error)}>100행</span>
+                  </p>
+                  {/* 완료 CASE */}
+                  <p className={styles.status_text}>
+                    완료<span className={cn(styles.data_text)}>100행</span>
+                  </p>
+                </div>
+                <div className={styles.btn_wrap}>
+                  <Button
+                    label={'엑셀 양식 다운로드'}
+                    variant={'text'}
+                    size={'sm'}
+                    icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
+                  />
+                  <Button
+                    label={'CSV 양식 다운로드'}
+                    variant={'text'}
+                    size={'sm'}
+                    icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
+                  />
+                </div>
               </div>
               <div className={styles.result_wrap}>
                 <p className={styles.status_text}>{'상단 영역에 데이터를 업로드하세요.'}</p>
@@ -272,20 +288,6 @@ function RouteComponent() {
                   '업로드가 되지 않을 경우, 결과를 확인 후 다시 작성하여 업로드해 주세요.',
                 ]}
               />
-              <div className={styles.btn_wrap}>
-                <Button
-                  label={'엑셀 양식 다운로드'}
-                  variant={'text'}
-                  size={'sm'}
-                  icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
-                />
-                <Button
-                  label={'CSV 양식 다운로드'}
-                  variant={'text'}
-                  size={'sm'}
-                  icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
-                />
-              </div>
             </div>
           </div>
         </ModalBody>

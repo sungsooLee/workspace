@@ -35,6 +35,9 @@
         @apply ml-[16px];
       }
     }
+    [role='radiogroup'] + button {
+      @apply ml-[16px];
+    }
     &.line {
       @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
     }

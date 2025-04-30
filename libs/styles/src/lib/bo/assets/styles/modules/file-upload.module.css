@@ -166,6 +166,12 @@
         }
       }
     }
+    .title_info {
+      @apply flex items-center;
+    }
+    .btn_wrap {
+      @apply ml-auto mt-0 flex items-center;
+    }
   }
 
   .result_wrap {
