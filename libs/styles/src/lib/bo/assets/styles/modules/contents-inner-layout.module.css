@@ -1,49 +1,31 @@
 /* contents-layout.module.css */
 .start {
   &.wrap {
-    @apply flex h-full w-full justify-between;
+    @apply relative flex w-full justify-between;
+    &::before {
+      @apply absolute left-1/2 top-0 flex h-[calc(100%-32px)] w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
+    }
     .inner {
-      @apply relative h-full min-h-[calc(100vh-384px)] w-[calc(50%-32px)];
+      @apply scrollbar relative z-[1] h-full max-h-[calc(100vh-352px)] min-h-[calc(100vh-384px)] w-[calc(50%-32px)] overflow-y-auto;
       .inner_contents {
-        @apply scrollbar max-h-[calc(100vh-426px)] overflow-y-auto py-[16px];
-      }
-      &::before {
-        @apply absolute -left-[33px] top-0 flex h-full w-[1px] bg-[var(--gray4)] content-[''];
-      }
-      &:first-child::before {
-        @apply hidden;
+        @apply py-[16px] pb-[32px];
       }
       &.type2 {
-        @apply min-h-[calc(100vh-400px)];
-        .inner_contents {
-          @apply max-h-[calc(100vh-356px)];
-        }
-        &::before {
-          @apply h-full;
-        }
+        @apply max-h-[calc(100vh-278px)] min-h-[calc(100vh-278px)];
       }
       &.type_progress {
-        @apply max-h-[calc(100vh-442px)] min-h-[calc(100vh-442px)];
-        .inner_contents {
-          @apply max-h-[calc(100vh-486px)];
-        }
+        @apply max-h-[calc(100vh-410px)] min-h-[calc(100vh-442px)];
       }
       &.type_progress2 {
-        @apply max-h-[calc(100vh-376px)] min-h-[calc(100vh-376px)];
-        .inner_contents {
-          @apply max-h-[calc(100vh-420px)];
-        }
+        @apply max-h-[calc(100vh-344px)] min-h-[calc(100vh-376px)];
       }
     }
     &.ratio_third {
       .inner {
-        @apply min-h-[calc(100vh-435px)];
+        @apply scrollbar max-h-[calc(100vh-403px)] min-h-[calc(100vh-435px)] overflow-y-auto;
         & + .inner > div:first-child,
         & + .inner form > div:first-child {
           @apply ml-[32px] w-[calc(100%-32px)];
-        }
-        .inner_contents {
-          @apply scrollbar max-h-[calc(100vh-476px)] overflow-y-auto py-[16px];
         }
         &:first-child {
           @apply w-[calc(100%-485px)] shrink-0;
@@ -58,11 +40,17 @@
           }
         }
         &.scrollHidden {
+          @apply overflow-hidden;
           .inner_contents {
-            @apply overflow-hidden pt-0;
+            @apply pt-0;
           }
         }
       }
+      &::before {
+        @apply left-auto right-[451px];
+      }
+    }
+    &.contents_category {
     }
   }
 }

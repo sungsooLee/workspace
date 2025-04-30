@@ -17,6 +17,7 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningGalleryImport } from './pages/_learning/gallery'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -66,6 +67,7 @@ import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typogr
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
 import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
+import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
@@ -133,6 +135,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningGalleryRoute = LearningGalleryImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -443,6 +451,12 @@ const GuideGuideTextareaRoute = GuideGuideTextareaImport.update({
 const GuideGuideTabsRoute = GuideGuideTabsImport.update({
   id: '/guide/tabs',
   path: '/guide/tabs',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideTableRoute = GuideGuideTableImport.update({
+  id: '/guide/table',
+  path: '/guide/table',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -835,6 +849,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_learning/gallery': {
+      id: '/_learning/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof LearningGalleryImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
@@ -1092,6 +1113,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/switch'
       fullPath: '/guide/switch'
       preLoaderRoute: typeof GuideGuideSwitchImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/table': {
+      id: '/_guide/guide/table'
+      path: '/guide/table'
+      fullPath: '/guide/table'
+      preLoaderRoute: typeof GuideGuideTableImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/tabs': {
@@ -1381,6 +1409,7 @@ interface GuideRouteChildren {
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
@@ -1424,6 +1453,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTextareaRoute: GuideGuideTextareaRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
@@ -1497,10 +1527,12 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 interface LearningRouteChildren {
+  LearningGalleryRoute: typeof LearningGalleryRoute
   LearningVideoRoute: typeof LearningVideoRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
+  LearningGalleryRoute: LearningGalleryRoute,
   LearningVideoRoute: LearningVideoRoute,
 }
 
@@ -1531,6 +1563,7 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1568,6 +1601,7 @@ export interface FileRoutesByFullPath {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1621,6 +1655,7 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1658,6 +1693,7 @@ export interface FileRoutesByTo {
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
+  '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1715,6 +1751,7 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/gallery': typeof LearningGalleryRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -1752,6 +1789,7 @@ export interface FileRoutesById {
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
+  '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
@@ -1807,6 +1845,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/gallery'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -1844,6 +1883,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
     | '/guide/tooltip'
@@ -1896,6 +1936,7 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/gallery'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -1933,6 +1974,7 @@ export interface FileRouteTypes {
     | '/guide/spinner'
     | '/guide/stepper'
     | '/guide/switch'
+    | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
     | '/guide/tooltip'
@@ -1988,6 +2030,7 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/gallery'
     | '/_learning/video'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -2025,6 +2068,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
     | '/_guide/guide/switch'
+    | '/_guide/guide/table'
     | '/_guide/guide/tabs'
     | '/_guide/guide/textarea'
     | '/_guide/guide/tooltip'
@@ -2150,6 +2194,7 @@ export const routeTree = rootRoute
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
         "/_guide/guide/switch",
+        "/_guide/guide/table",
         "/_guide/guide/tabs",
         "/_guide/guide/textarea",
         "/_guide/guide/tooltip",
@@ -2189,6 +2234,7 @@ export const routeTree = rootRoute
     "/_learning": {
       "filePath": "_learning.tsx",
       "children": [
+        "/_learning/gallery",
         "/_learning/video"
       ]
     },
@@ -2275,6 +2321,10 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_learning/gallery": {
+      "filePath": "_learning/gallery.tsx",
+      "parent": "/_learning"
     },
     "/_learning/video": {
       "filePath": "_learning/video.tsx",
@@ -2422,6 +2472,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/table": {
+      "filePath": "_guide/guide/table.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tabs": {

@@ -1,12 +1,6 @@
 /* radio-group-form-field.module.css */
 .start {
   &.radio_list {
-    @apply -mt-[12px] flex w-full flex-wrap whitespace-normal;
-    & > div {
-      @apply mr-[2.4rem] mt-[12px];
-    }
-    div + div {
-      @apply !ml-0;
-    }
+    @apply flex w-full flex-wrap gap-[1.6rem] whitespace-normal;
   }
 }

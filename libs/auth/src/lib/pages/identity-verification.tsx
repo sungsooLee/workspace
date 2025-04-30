@@ -57,7 +57,7 @@ export function IdentityVerificationPage({ route }: any) {
             })
           }
         >
-          {t(`MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`)}
+          {t(`LABEL.message.canCheckAccountAfterVerifying`)}
         </div>
 
         <AuthForm

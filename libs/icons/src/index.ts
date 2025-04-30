@@ -46,10 +46,10 @@ export { ReactComponent as IcoAlertComplete } from './lib/ic_alert_complete.svg'
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
-export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // tootip icon
+export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // Tooltip icon
 export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray.svg';
 export { ReactComponent as IcoAlertCircle03 } from './lib/ic_alert_circle_03.svg';
-export { ReactComponent as IcoTooltipArrow } from './lib/ic_tootip_arrow.svg'; // tootip arrow 12*13
+export { ReactComponent as IcoTooltipArrow } from './lib/ic_tooltip_arrow.svg'; // Tooltip arrow 12*13
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
 export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
@@ -124,6 +124,12 @@ export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
 export { ReactComponent as IcoFile01 } from './lib/ic_file_01.svg'; // tree file
+export { ReactComponent as IcoLearning01 } from './lib/ic_learning_01.svg'; // learning 1
+export { ReactComponent as IcoLearning02 } from './lib/ic_learning_02.svg'; // learning 2
+export { ReactComponent as IcoLearning03 } from './lib/ic_learning_03.svg'; // learning 3
+export { ReactComponent as IcoLearning04 } from './lib/ic_learning_04.svg'; // learning 4
+export { ReactComponent as IcoPrevPlay } from './lib/ic_prev_play.svg'; // learning prev
+export { ReactComponent as IcoPrevNext } from './lib/ic_next_play.svg'; // learning next
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

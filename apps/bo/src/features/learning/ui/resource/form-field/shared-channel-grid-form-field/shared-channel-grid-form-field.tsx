@@ -85,7 +85,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
         <span>{`${t('채널')} ${value?.length || 0}${t('개')}`}</span>
         <Button
           variant={'point'}
-          size={'md'}
+          size={'lg'}
           label={t('채널선택')}
           onClick={handleChannelModalButtonClick}
         />

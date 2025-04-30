@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto } from './com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto';
 export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto = {
-    uuid: string;
+    educationPlaceUuid: string;
     educationPlaceTypecd: com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto.educationPlaceTypecd;
     educationPlaceCode: string;
     tenantList: Array<com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto>;

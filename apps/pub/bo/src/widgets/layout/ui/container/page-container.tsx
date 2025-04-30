@@ -148,8 +148,8 @@ function PageContainerComponent({
         <div
           className={cn(
             styles.content_wrap,
-            tabs && 'case_tabs',
-            notice && 'case_notice',
+            tabs && 'tab_visible',
+            notice && 'notice_visible',
             scrollHidden && 'scroll_hidden',
             'content_wrap',
           )}

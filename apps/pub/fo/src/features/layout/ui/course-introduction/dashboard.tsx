@@ -1,11 +1,14 @@
 import { memo, useState, useEffect, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoMessageText, IcoCheck } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal } from '@learnway/ui';
+import { IcoArrowDown, IcoCaution03, IcoDownload } from '@learnway/icons';
+import { Button, Dropdown, Panel, Progress, useModal, TableBox } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
-import { NoticeDetailPopup } from '../../../../features/layout';
+import pdsStyles from './pds.module.css';
+import { CurriculumStudy } from '../../../../features/layout';
 
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
@@ -19,22 +22,64 @@ const CourseDashboardCompoment = () => {
   const { open: openModal } = useModal();
   const { close: closeModal } = useModal();
 
-  // 자동모달 띄우기 퍼블 확인용
-  // const hasRun = useRef(false);
-  // useEffect(() => {
-  //   if (!hasRun.current) {
-  //     openModal({
-  //       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-  //       content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
-  //     });
-  //     hasRun.current = true;
-  //   }
-  // }, [openModal]);
+  const [detail, setDetail] = useState<boolean>();
+
+  const columnHelper = createColumnHelper<any>();
+
+  // thead : 'value'
+  const data: any[] = [
+    {
+      name: '총점',
+      name2: '70점이상',
+      name3: '100%',
+      name4: '-',
+      name5: '-',
+    },
+  ];
+
+  // Thead 정의
+  const columns = [
+    columnHelper.accessor('name', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '구분',
+    }),
+    columnHelper.accessor('name2', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '이수기준',
+    }),
+    columnHelper.accessor('name3', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '가중치',
+    }),
+    columnHelper.accessor('name4', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '취득점수',
+    }),
+    columnHelper.accessor('name5', {
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+      header: '환산점수',
+    }),
+  ] as ColumnDef<any, unknown>[];
 
   return (
     <div className={styles.start}>
-      <div className={styles.title_box}>
-        <h2>대시보드</h2>
+      <div className={styles.tit_box}>
+        <h3>대시보드</h3>
         <Dropdown
           options={options}
           value={selectedValues}
@@ -48,7 +93,14 @@ const CourseDashboardCompoment = () => {
       </div>
 
       <div className={statusStyles.start}>
-        <Panel type="rounded" hideHeaderUnderline className={statusStyles.panel_degreey}>
+        {/* 이수 : completed 
+            미이수 : incomplete
+        */}
+        <Panel
+          type="rounded"
+          hideHeaderUnderline
+          className={`${statusStyles.panel_degreey} ${/* statusStyles.complete */ ''}`}
+        >
           <div className={statusStyles.list}>
             <h3>이수</h3>
             <div className={statusStyles.date_status}>
@@ -64,7 +116,7 @@ const CourseDashboardCompoment = () => {
           </div>
         </Panel>
 
-        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_rate}>
+        <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_box}>
           <div className={statusStyles.progress_rate}>
             <h3>나의진도율</h3>
             <Progress value={progress} className={statusStyles.progress_bar} />
@@ -78,55 +130,107 @@ const CourseDashboardCompoment = () => {
           <div className={statusStyles.status_list}>
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>출석 (40%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                80%
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>80%</div>
               </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>평가 (1/2, 30%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                38점
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>38점</div>
               </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>과제 (30%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                90점
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>
+                  <IcoCaution03 width={18} height={18} stroke="#FF4646" /> -
+                </div>
               </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>설문 (0%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                완료
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>완료</div>
               </div>
             </div>
 
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>총점 (100%)</span>
-              <div className={statusStyles.score}>
-                <span className={statusStyles.ico}>
-                  <IcoCheck width={20} height={20} stroke="#000" />
-                </span>
-                100점
+              <div className={statusStyles.score_box}>
+                <div className={statusStyles.score}>-</div>
               </div>
+              <div className={statusStyles.default}>(80점)</div>
             </div>
           </div>
+
+          {detail === true ? (
+            <div className={statusStyles.status_table}>
+              <TableBox data={data} columns={columns} tableMode={true} showTotalCount={false} />
+            </div>
+          ) : (
+            ''
+          )}
+
+          <div className={statusStyles.btn_action}>
+            <Button
+              className={detail === true ? statusStyles.active : ''}
+              onClick={() => (detail === true ? setDetail(false) : setDetail(true))}
+            >
+              <span>{detail === true ? '성적 접기' : '성적 자세히'}</span>
+              <IcoArrowDown width={16} height={16} stroke="#131c30" />
+            </Button>
+          </div>
         </Panel>
+      </div>
+
+      {/* 커리큘럼 */}
+      <div className={`${styles.info_box} ${styles.curriculum}`}>
+        <div className={styles.tit_box}>
+          <h3>커리큘럼</h3>
+        </div>
+
+        {/* curriculum */}
+        <CurriculumStudy />
+
+        {/* 자료실 */}
+        <div className={`${styles.info_box} ${styles.pds}`}>
+          <div className={styles.tit_box}>
+            <h3>자료실</h3>
+            <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+              전체 다운로드
+            </Button>
+          </div>
+
+          <div className={pdsStyles.start}>
+            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+              <div className={pdsStyles.pds_box}>
+                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                <div className={pdsStyles.info}>
+                  <span className={pdsStyles.size}>200MB</span>
+                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
+                    다운로드
+                  </Button>
+                </div>
+              </div>
+            </Panel>
+
+            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+              <div className={pdsStyles.pds_box}>
+                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                <div className={pdsStyles.info}>
+                  <span className={pdsStyles.size}>200MB</span>
+                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
+                    다운로드
+                  </Button>
+                </div>
+              </div>
+            </Panel>
+          </div>
+        </div>
       </div>
     </div>
   );

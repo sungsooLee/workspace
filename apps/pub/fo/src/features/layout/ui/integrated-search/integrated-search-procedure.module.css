@@ -18,6 +18,9 @@
           & > div {
             & > div {
               @apply mt-[12px];
+              button {
+                @apply px-[12px] py-[6px] leading-[20px];
+              }
             }
           }
         }

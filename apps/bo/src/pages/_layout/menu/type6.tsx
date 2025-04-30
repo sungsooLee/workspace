@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_layout/menu/type6')({
 });
 
 function RouteComponent() {
-  const thumbnailRef = useRef(null);
+  const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { addFiles, files } = useS3Uploader({ s3Path: 'upload/leaning/resource/video' });
@@ -59,7 +59,7 @@ function RouteComponent() {
 
   const handleExcelDownLoad = async () => {
     await fileDownload(
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel?keyTypeCode=COMMON_CODE&locale=en',
+      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel',
       { keyTypeCode: 'LABEL', locale: 'en' },
     );
   };

@@ -4,6 +4,9 @@ import { PMSApiPrefix } from '@learnway/config';
 import { Tenant } from '../../../types/entities/tenant';
 
 export default class TenantService {
+  static fetchAllTenant(payload: any) {
+    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/`, payload);
+  }
   static fetchTenant(id: number) {
     return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
   }

@@ -4,7 +4,7 @@ import { cn } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 // style
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '../title.module.css'; // 타이틀 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
@@ -14,7 +14,6 @@ import {
   Switch,
   Input,
   Tooltip,
-  CheckboxGroupFormField,
   GridBox,
   TreeView,
   TreeNode,
@@ -357,12 +356,12 @@ const TenantPlatformLearningMenuComponent: FC<{}> = ({}) => {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.check_wrap}>
-                  <CheckboxGroupFormField
+                  {/* <CheckboxGroupFormField
                     options={[
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: '모바일' },
                     ]}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

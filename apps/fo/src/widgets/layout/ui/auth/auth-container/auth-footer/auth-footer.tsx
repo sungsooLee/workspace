@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { TermsButton } from '../../../../../../features/auth';
+import { TermsButton } from '../../../../../../features/main';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-footer/auth-footer.module.css';
 

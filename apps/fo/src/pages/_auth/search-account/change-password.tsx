@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_auth/search-account/change-password')({
       },
     },
     meta: {
-      title: 'LABEL.PASSWORD_INPUT',
+      title: 'LABEL.common.passwordInput',
     },
   }),
 });

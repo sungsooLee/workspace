@@ -1,0 +1,48 @@
+/* table.module.css */
+.start {
+  &.wrap {
+    @apply border-t-[2px] border-solid border-[var(--gray9)] pt-[8px];
+    table {
+      @apply w-full table-fixed border-collapse;
+      caption {
+        @apply sr-only;
+      }
+      tbody {
+        tr {
+          th {
+            @apply body_bo_2_b h-[56px] border-t-[1px] border-solid border-[var(--gray2)] py-[14px] text-left align-middle text-[var(--gray7)];
+            &.align_top {
+              @apply align-top;
+            }
+          }
+          td {
+            @apply body_bo_2_r border-t-[1px] border-solid border-[var(--gray2)] py-[12px] align-middle;
+          }
+          &:first-child {
+            th,
+            td {
+              @apply border-0;
+            }
+          }
+        }
+      }
+    }
+    .link {
+      @apply text-[var(--gray7)] underline;
+    }
+    .box {
+      @apply flex items-center justify-between pr-[80px];
+    }
+    .text {
+      &_point {
+        @apply text-[var(--secondary1)];
+      }
+      &_error {
+        @apply text-[var(--status1)];
+      }
+    }
+    & + [class*='title_wrap'] {
+      @apply !mt-[32px] !border-0;
+    }
+  }
+}

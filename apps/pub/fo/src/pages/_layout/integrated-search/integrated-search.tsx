@@ -33,6 +33,7 @@ function RouteComponent() {
   };
 
   // 과정 탭 소팅 필터
+  const [selectedValues, setSelectedValues] = useState<string[]>(['20개씩']);
   const arrays = {
     items: ['정확도순', '최신순'],
     initialSelectedItem: 0, // 초기 선택값
@@ -77,11 +78,14 @@ function RouteComponent() {
                 <Arrays arraysData={arrays}></Arrays>
                 <div className={styles.box}>
                   <Dropdown
+                    variant="text"
                     options={[
                       { value: '20', label: '20개씩' },
                       { value: '50', label: '50개씩' },
                       { value: '80', label: '80개씩' },
                     ]}
+                    value={selectedValues}
+                    onChange={(selected) => setSelectedValues(selected)}
                   />
                 </div>
                 <div className={styles.box}>

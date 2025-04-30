@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_auth/signup-progress/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.SIGNUP_PROGRESS_STATUS',
+      title: 'LABEL.common.signupProgressStatus',
     },
   }),
 });

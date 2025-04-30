@@ -9,7 +9,7 @@
       button {
         @apply button_2_r flex h-[56px] items-center whitespace-nowrap align-top text-[var(--gray7)];
         span {
-          @apply button_2_r ml-[4px] inline-block text-[var(--gray4)];
+          @apply button_2_r ml-[4px] inline-block text-[var(--gray6)];
         }
         &.active {
           @apply !button_2_b relative text-[var(--gray9)];

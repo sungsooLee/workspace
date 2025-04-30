@@ -37,7 +37,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
 
-  // 퍼블수정 20240418 : 메뉴 수정 S
+  // 퍼블수정 20240428 : 메뉴 수정 S
   const data = [
     {
       label: '동영상',
@@ -92,12 +92,23 @@ function RouteComponent() {
     //   description: '설명문구2줄설명',
     // },
     { label: '시험지', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
+    { label: '문제은행', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
     { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
+    {
+      label: '라이브',
+      value: getRandomId(),
+      icon: <IcoHomework />,
+      description: '설명문구2줄설명',
+    },
+    {
+      label: '라이브(LIVE)',
+      value: getRandomId(),
+      icon: <IcoHomework />,
+      description: '설명문구2줄설명',
+    },
   ];
-  // 퍼블수정 20240418 : 메뉴 수정 E
-
-  // 퍼블수정 20240317 : Modal 수정 S
+  // 퍼블수정 20240428 : 메뉴 수정 E
   const EbookContent = () => {
     return (
       <ModalContainer>
@@ -158,12 +169,11 @@ function RouteComponent() {
         </ModalBody>
         {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 E */}
         <ModalFooter>
-          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'취소'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );
   };
-  // 퍼블수정 20240317 : Modal 수정 E
   // 한번만 실행
   const hasRun = useRef(false);
   useEffect(() => {

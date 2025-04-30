@@ -1,0 +1,40 @@
+/* section-layout.module.css */
+.start {
+  @apply flex w-full flex-wrap items-stretch;
+  & > div {
+    @apply pr-[32px];
+    &:not(:first-child) {
+      @apply relative flex-grow pl-[32px] pr-0;
+      &::before {
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
+  &.half {
+    & > div {
+      @apply w-1/2;
+    }
+  }
+  &.thirty {
+    & > div {
+      @apply w-[calc(100%-452px)];
+      &:first-child {
+        @apply w-[452px];
+      }
+    }
+  }
+  &.third_children {
+    & > div {
+      @apply min-h-[calc(100vh-446px)] w-[calc((100%-452px)/2)] pr-[32px];
+      &:nth-child(1) {
+        @apply shrink-0 basis-[452px];
+      }
+      &:nth-last-child(1) {
+        @apply pr-0;
+      }
+    }
+  }
+  &.line {
+    @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
+  }
+}

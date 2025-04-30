@@ -134,58 +134,13 @@
     @apply fill-[#00afd5];
   }
   &.error svg {
-    @apply fill-[#ff4646];
+    @apply fill-[#00afd5];
   }
 }
 
-/* .cols_1 {
-  .item_wrap {
-    @apply w-[calc(33%-40px)];
-    .item {
-      @apply w-full;
-    }
+.datepicker_wrap {
+  @apply flex w-full items-center;
+  .hyphen {
+    @apply flex w-[24px] shrink-0 items-center justify-center;
   }
 }
-.cols_2 {
-  .item_wrap {
-    @apply w-[calc(66%-40px)];
-    .item {
-      @apply w-1/2;
-    }
-  }
-}
-.cols_3 {
-  .item_wrap {
-    @apply w-[calc(99%-80px)];
-    .item {
-      @apply w-[33%];
-    }
-  }
-}
-.cols_4 {
-  .item_wrap {
-    @apply w-full;
-    .item {
-      @apply flex-1;
-    }
-  }
-}
-.cols_half {
-  .item_wrap {
-    @apply w-full;
-    .item {
-      @apply flex-1;
-    }
-  }
-}
-.cols_half2 {
-  .item_wrap {
-    @apply w-full;
-    .item {
-      @apply !w-[50%];
-      &:not(:first-child) {
-        @apply !w-[calc(25%-20px)];
-      }
-    }
-  }
-} */

@@ -10,7 +10,13 @@ export const queryKeys = {
   detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
 };
 
-export const queryOptions = {
+export const tenantQueryOptions = {
+  all: (params: any) => ({
+    queryKey: queryKeys.all,
+    queryFn: () => TenantService.fetchAllTenant(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
   detail: (tenantId?: number) =>
     tenantId
       ? {

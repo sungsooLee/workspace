@@ -5,9 +5,6 @@ import { isFunction } from 'lodash';
 import { cn } from '@learnway/shared';
 import { Input, Button, InputProps, useModal } from '@learnway/ui';
 
-//import styles from './auth-tool-form-field.module.css';
-//import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
-
 import { ChangeUserIdModal } from './change-user-id-modal';
 
 interface FormFieldComponentProps {
@@ -28,19 +25,33 @@ function ChangeUserIdFormFieldComponent({
 
   const { open: openModal } = useModal();
   const { onChangeGuideText, ...restProps } = props;
-  const handleChange = () => {
-    openModal({
-      width: isMobile ? undefined : 'sm',
-      content: <ChangeUserIdModal widget={{}} />,
-    });
-    //onChangeGuideText && onChangeGuideText('아이디/이메일이 확인되었습니다.');
-  };
 
+  // Withdrawal of membership
   return (
     <>
       <Input {...props} readOnly />
-      <Button variant="gray" size="lg" onClick={() => handleChange()}>
-        {t('LABEL.UPDATE_EMAIL_ID')}
+      <Button
+        variant="gray"
+        size="lg"
+        onClick={() => {
+          openModal({
+            width: isMobile ? undefined : 'sm',
+            content: <ChangeUserIdModal widget={{}} />,
+            onClose: (email?: any) => {
+              if (!email) {
+                return;
+              }
+              const changeEvent = {
+                target: {
+                  value: email,
+                },
+              } as React.ChangeEvent<HTMLInputElement>;
+              onChange?.(changeEvent);
+            },
+          });
+        }}
+      >
+        {t('LABEL.common.changeAccount')}
       </Button>
     </>
   );

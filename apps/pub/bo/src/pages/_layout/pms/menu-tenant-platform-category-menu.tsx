@@ -1,9 +1,10 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import pageStyles from './tenant-menu-management.module.css';
-import titleStyles from './title.module.css'; // 타이틀 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -131,7 +132,7 @@ function RouteComponent() {
           className={styles.progress_wrap}
           selectedTabKey={'menu03'}
         />
-        <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+        <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.contents_category)}>
           <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
             <div className={titleStyles.title_wrap}>
               <h3 className={titleStyles.title}>{'테넌트 카테고리 목록'}</h3>

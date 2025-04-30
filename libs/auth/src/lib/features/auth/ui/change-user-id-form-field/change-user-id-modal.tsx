@@ -93,8 +93,8 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
         onSuccess: async (d, variables, context) => {
           updateEmail(data.email);
           verifyTimerCounter.set(0);
-          await alert('LABEL.UPDATE_EMAIL_ID_RESULT_MESSAGE');
-          closeModal();
+          await alert('LABEL.message.updateEmailIdResultMessage');
+          closeModal(data.email);
         },
         onError: handleVerifyError,
       },
@@ -102,30 +102,30 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
   };
 
   const handleVerifyError = () => {
-    setFormError('verificationCode', t('MESSAGE.INVALID_AUTH_NUMBER'));
+    setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
   };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <ModalContainer>
-        <ModalTitle>{t('LABEL.EMAIL_ID_UPDATE')}</ModalTitle>
+        <ModalTitle>{t('LABEL.common.changeEmailAccount')}</ModalTitle>
 
         <ModalBody>
           <EmbededAlert className={styles.search_info} hiddenIcon>
-            {t(`MESSAGE.CAN_UPDATE_EMAIL_AFTER_VERIFYING`)}
+            {t(`LABEL.message.canUpdateEmailAfterVerifying`)}
           </EmbededAlert>
 
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'currentEmail'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'email'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'verificationCode'}>
                 <InputTimer
@@ -133,7 +133,9 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
                   startTimer={verifyTimer}
                   onTimerEnd={() => handleTimeOver()}
                   onReset={() => handleSendVerify()}
-                  resetLabel={t(sendedVerifyNumber ? 'LABEL.RESEND' : 'LABEL.REQUEST_VERIFICATION')}
+                  resetLabel={t(
+                    sendedVerifyNumber ? 'LABEL.common.resend' : 'LABEL.common.requestVerification',
+                  )}
                   disabled={verifyTimer === 0}
                 />
               </DynamicFormField>
@@ -142,12 +144,12 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
         </ModalBody>
         <ModalFooter>
           <Button
-            label={t('LABEL.CANCEL')}
+            label={t('LABEL.common.cancel')}
             variant={'gray'}
             size={'lg'}
             onClick={() => closeModal()}
           />
-          <Button label={t('LABEL.UPDATE')} variant={'primary'} size={'lg'} type="submit" />
+          <Button label={t('LABEL.common.update')} variant={'primary'} size={'lg'} type="submit" />
         </ModalFooter>
       </ModalContainer>
     </form>
@@ -161,23 +163,23 @@ const userIdFormConfig: DynamicFormConfig = {
     {
       name: 'currentEmail',
       type: 'text',
-      label: 'LABEL.CURRENT_EMAIL',
+      label: 'LABEL.common.currentEmail',
       value: '',
-      placeholder: 'LABEL.CURRENT_EMAIL',
+      placeholder: 'LABEL.common.currentEmail',
     },
     {
       name: 'email',
       type: 'text',
-      label: 'LABEL.NEW_EMAIL',
+      label: 'LABEL.common.newEmail',
       value: '',
-      placeholder: 'LABEL.NEW_EMAIL',
+      placeholder: 'LABEL.common.newEmail',
     },
     {
       name: 'verificationCode',
       type: 'custom',
-      label: 'LABEL.EMAIL_VERIFICATION_CODE',
+      label: 'LABEL.common.emailVerificationCode',
       value: '',
-      placeholder: 'LABEL.EMAIL_VERIFICATION_CODE',
+      placeholder: 'LABEL.common.emailVerificationCode',
     },
   ],
   validator: {
