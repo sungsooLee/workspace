@@ -6,14 +6,14 @@
     }
 
     .dt {
-      @apply body_3_r w-[80px] shrink-0 text-[var(--gray9)];
+      @apply body_3_r shrink-0 basis-[70%] pr-[20px] text-[var(--gray9)];
       + .dd {
-        @apply flex items-center text-[var(--gray7)];
+        @apply flex items-center text-right text-[var(--gray7)];
       }
     }
     .dt,
     .dd {
-      @apply body_3_r;
+      @apply body_3_r overflow-hidden text-ellipsis whitespace-nowrap;
     }
     .tit {
       @apply body_3_b block text-[1.4rem] text-[var(--gray9)];
