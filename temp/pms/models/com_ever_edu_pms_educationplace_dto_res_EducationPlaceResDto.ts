@@ -6,7 +6,7 @@ import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto
 import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from './com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
 export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto = {
     educationPlaceId?: number;
-    uuid?: string;
+    educationPlaceUuid?: string;
     educationPlaceTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto.educationPlaceTypecd;
     educationPlaceCode?: string;
     educationPlaceCodeName?: string;
