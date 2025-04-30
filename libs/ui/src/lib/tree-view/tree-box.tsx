@@ -10,9 +10,24 @@ import { Input } from '../input/input';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 const TreeBoxComponent = <T extends object>(
-  { treeId, data, showSearchKeyword, initLevel, onAction, closeLevel, clientTree, ...props }: any,
+  {
+    treeId,
+    data,
+    showSearchKeyword,
+    initLevel,
+    onAction,
+    closeLevel,
+    clientTree,
+    title,
+    renderNodeButtons,
+    handleSelectedNodeChange,
+    type,
+    customButtonNode,
+    ...props
+  }: any,
   // ref: React.Ref
 ) => {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -25,49 +40,61 @@ const TreeBoxComponent = <T extends object>(
       setExpandedKeys(initialExpandedKeys);
     }
   }, [data, initLevel]);
-
   return (
-    // <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-    <div className={layoutStyles.inner}>
-      <div className={titleStyles.title_wrap}>
-        <h3 className={titleStyles.title}>{'목록'}</h3>
-        <div className={layoutStyles.btn_wrap}>
-          {showSearchKeyword && (
-            <Input
-              type="text"
-              value={searchKeyword}
-              onChange={(e) => setSearchKeyword(e.target.value)}
-              placeholder="검색"
-              showSearchIcon={true}
-              iconType={'tree'}
-            />
+    <div className={cn(styles.start, styles.wrap)}>
+      <div
+        className={cn(
+          subTitleStyles.root,
+          subTitleStyles.title_wrap,
+          'title_wrap',
+          subTitleStyles.line,
+        )}
+      >
+        <div className={subTitleStyles.title_area}>
+          <strong className={subTitleStyles.title}>{title}</strong>
+        </div>
+        <div className={subTitleStyles.input_area}>
+          {customButtonNode ? (
+            <>{customButtonNode}</>
+          ) : (
+            <>
+              {showSearchKeyword && (
+                <Input
+                  type="text"
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  placeholder="검색"
+                  showSearchIcon={true}
+                  iconType={'tree'}
+                />
+              )}
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                onClick={() => {
+                  if (data) {
+                    const allKeys = getAllKeysByTree(data);
+                    setExpandedKeys(allKeys);
+                    // handleExpandChange(allKeys);
+                  }
+                }}
+              >
+                {'전체펼침'}
+              </Button>
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                onClick={() => {
+                  const closeLevelKeys = getKeysByLevel(data, closeLevel ?? 1);
+                  setExpandedKeys(closeLevelKeys || []);
+                }}
+              >
+                {'전체닫기'}
+              </Button>
+            </>
           )}
-
-          <Button
-            variant="text"
-            size="sm"
-            className={layoutStyles.btn_text}
-            onClick={() => {
-              if (data) {
-                const allKeys = getAllKeysByTree(data);
-                setExpandedKeys(allKeys);
-                // handleExpandChange(allKeys);
-              }
-            }}
-          >
-            {'전체펼침'}
-          </Button>
-          <Button
-            variant="text"
-            size="sm"
-            className={layoutStyles.btn_text}
-            onClick={() => {
-              const closeLevelKeys = getKeysByLevel(data, closeLevel ?? 1);
-              setExpandedKeys(closeLevelKeys || []);
-            }}
-          >
-            {'전체닫기'}
-          </Button>
         </div>
       </div>
       <div className={layoutStyles.inner_contents}>
@@ -78,17 +105,15 @@ const TreeBoxComponent = <T extends object>(
             searchKeyword={searchKeyword}
             expandedKeys={expandedKeys}
             onExpandedKeysChange={setExpandedKeys}
-            // nodeButtons={renderNodeButtons}
+            nodeButtons={renderNodeButtons}
             onAction={onAction}
-            type={'DRAG_DROP'}
+            type={type}
             clientTree={clientTree}
-            // selectedNode={selectedNode}
-            // onSelectedNodeChange={handleSelectedNodeChange}
+            onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>
       </div>
     </div>
-    // </div>
   );
 };
 

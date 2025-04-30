@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Role } from './role';
+import { RoleMenu } from './role-menu';
+import { RoleGrant } from './role-grant';
 
 const TAB_KEYS = {
   FO_ROLE: '학습자 역할정보',
@@ -19,17 +21,17 @@ const items = [
   {
     title: TAB_KEYS.FO_ROLE,
     key: 'FO_ROLE',
-    content: <Role />,
+    content: <Role type={'FO'} />,
   },
   {
     title: TAB_KEYS.FO_MENU,
     key: 'FO_MENU',
-    content: '2',
+    content: <RoleMenu type={'FO'} />,
   },
   {
     title: TAB_KEYS.FO_ROLEGRANT,
     key: 'FO_ROLEGRANT',
-    content: '3',
+    content: <RoleGrant type={'FO'} />,
   },
   {
     title: TAB_KEYS.BO_ROLE,
@@ -51,7 +53,9 @@ const items = [
 const RoleInfoComponent = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<TabKeyName>('FO_ROLE');
 
-  return <Tabs selectedTabKey={selectedTabKey} type="line" items={items} />;
+  return (
+    <Tabs selectedTabKey={selectedTabKey} type="line" items={items} className={styles.tab_wrap} />
+  );
 };
 
 export const RoleInfo = RoleInfoComponent;
