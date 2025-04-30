@@ -8,11 +8,10 @@ export default class TenantMenuManageService {
    * @param payload
    * @returns
    */
-  static updateMenuTenant(payload: any): Promise<any> {
-    return httpService.put<any>(
-      `${PMSApiPrefix()}/menus/tenant/${payload.tenantMappingMenuId}`,
-      payload.menuData,
-    );
+  static updateMenuTenant(payload: any) {
+    const tenantMappingMenuId = payload.tenantMappingMenuId;
+    const reqbody = createTenantMenuCreateByAny(payload);
+    return httpService.put<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`, reqbody);
   }
 
   /**
@@ -21,13 +20,17 @@ export default class TenantMenuManageService {
    * @returns
    */
   static createMenuTenant(payload: any) {
-    const reqbody = createTenantMenuCreateByAny(payload);
+    const reqbody = [];
+    for (const item of payload.contents) {
+      const menu = createTenantMenuCreateByAny(item);
+      reqbody.push(menu);
+    }
     console.log(reqbody);
     return httpService.post<any>(`${PMSApiPrefix()}/menus/tenant/${payload.tenantId}`, reqbody);
   }
 
   /**
-   * 터넨트 메뉴 삭제
+   * 테넌트 메뉴 삭제
    * @param tenantMappingMenuId
    * @returns
    */
@@ -36,7 +39,16 @@ export default class TenantMenuManageService {
   }
 
   /**
-   *  터넨트 메뉴 트리 조회
+   * 테넌트 메뉴 상세 조회
+   * @param tenantMappingMenuId
+   * @returns
+   */
+  static findMenuTenantDetail(tenantMappingMenuId: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/menus/tenant/detail/${tenantMappingMenuId}`);
+  }
+
+  /**
+   *  테넌트 메뉴 트리 조회
    * @param tenantId 터넨트 ID
    * @param menuScope  FO / BO
    * @returns
@@ -50,20 +62,8 @@ export default class TenantMenuManageService {
   }
 }
 
-let a = {
-  menuId: 34,
-  sortOrder: 10,
-  isUsed: true,
-  isMobileExposed: true,
-  isWebExposed: false,
-  tenantId: 1,
-  menuCode: 'menu1_4',
-  isShortCutArea: true,
-  menuScope: 'FO',
-  parentId: '1',
-};
 /* 
-
+payload 로부터 필요 없는 값을 제거 하여 전달 하기
 */
 function createTenantMenuCreateByAny(data: any) {
   return {

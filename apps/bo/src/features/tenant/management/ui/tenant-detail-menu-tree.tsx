@@ -7,19 +7,14 @@ import {
   Button,
   ContentsRow,
   DynamicFormField,
-  findNodePath,
   findParentNode,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
   TreeView,
-  Switch,
-  Tooltip,
-  Grid,
   GridBox,
   useModal,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -33,7 +28,7 @@ import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal
 /** Hook 정의 */
 import {
   useMenuTenantManageDetail,
-  useMenuTenantMappingTreeFetch,
+  useFetchMenuTenantMappingTree,
   useDeleteMenuTenent,
   useUpdateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
@@ -68,7 +63,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   // fetch data
   const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
   console.log(menuScope);
-  const { data: menuData, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScope);
+  const { data: menuData, refetch } = useFetchMenuTenantMappingTree(tenantId, menuScope);
 
   //
   const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {});
@@ -446,15 +441,3 @@ const columns = [
     },
   }),
 ] as ColumnDef<any, unknown>[];
-
-const gridData: any[] = [
-  {
-    Sort: 'Common API',
-    API: <Button className="link">API 1</Button>,
-    Delete: (
-      <Button size="xs" variant="gray2">
-        삭제
-      </Button>
-    ),
-  },
-];

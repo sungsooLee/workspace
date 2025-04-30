@@ -20,10 +20,14 @@ import popContentsStyles from './pop-contents-layout.module.css';
 import { transformApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
-  useMenuTenantMappingTreeFetch,
+  useFetchMenuTenantMappingTree,
   useCreateMenuTenant,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
-import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
+import {
+  getAllParentAndAllChildById,
+  getFirstExpandKeys,
+  getAllTreeKeys,
+} from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
@@ -34,14 +38,18 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
   const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, close: closeModal } = useModal();
+  const { close: closeModal } = useModal();
 
   console.log('menu Scope = ' + menuScopeCode);
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 
-  const { data: menuDB, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScopeCode);
+  const { data: menuDB, refetch } = useFetchMenuTenantMappingTree(tenantId, menuScopeCode);
 
-  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {});
+  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const handleBaseMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
@@ -55,7 +63,6 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   };
 
   const handleTargetAction = async (event: any) => {
-    console.log(event);
     switch (event.type) {
       case 'NODE_COPY':
         console.log(event);
@@ -65,13 +72,23 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
             alert('이미 있음');
             return false;
           }
-          const reqBody: any = JSON.parse(JSON.stringify(event.sourceNode));
-          reqBody.tenantId = tenantId;
-          reqBody.menuScope = menuScopeCode;
-          reqBody.parentId = event.sourceNode.parentKey;
-          tentantMenuCreate(reqBody);
+          const allPostMenus = getAllParentAndAllChildById(baseMenuTreeData, sourceMenuId);
+          const contents = [];
+          for (const item of allPostMenus) {
+            if (!menuTreeAllKeys.includes(item.key)) {
+              const reqMenu: any = JSON.parse(JSON.stringify(item));
+              reqMenu.tenantId = tenantId;
+              reqMenu.menuScope = menuScopeCode;
+              reqMenu.parentId = event.sourceNode.parentKey;
+              contents.push(reqMenu);
+            }
+          }
+          const payload = { tenantId: tenantId, contents: [...contents] };
+          tentantMenuCreate(payload);
         }
-
+        break;
+      case 'NODE_MOVE':
+        console.log(event);
         break;
       default:
         break;

@@ -56,20 +56,29 @@ function RouteComponent() {
   };
   return (
     <PageContainer scrollHidden={false}>
-      <ContentsButtons>
-        <LinkBox>
+      {selectedTabKey === 'menu01' && (
+        <ContentsButtons>
+          <LinkBox>
+            <Button onClick={handleListButtonClick} variant="point" size="sm">
+              목록
+            </Button>
+          </LinkBox>
+
+          <Button onClick={handleResetButtonClick} variant="point" size="sm">
+            초기화
+          </Button>
+          <Button variant="point" size="sm">
+            수정
+          </Button>
+        </ContentsButtons>
+      )}
+      {selectedTabKey !== 'menu01' && (
+        <ContentsButtons>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
             목록
           </Button>
-        </LinkBox>
-
-        <Button onClick={handleResetButtonClick} variant="point" size="sm">
-          초기화
-        </Button>
-        <Button variant="point" size="sm">
-          수정
-        </Button>
-      </ContentsButtons>
+        </ContentsButtons>
+      )}
       <MainContents>
         <Tabs
           items={menuItems}
