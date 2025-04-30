@@ -24,10 +24,6 @@ import {
   useDeleteTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchCategory } from '@entities/category';
-import {
-  useMenuTenantMappingTreeFetch,
-  useCreateMenuTenant,
-} from '@entities/tenant/service/tenant-menu-manage.hook';
 import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
 
 const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeChange }) => {
@@ -120,8 +116,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
         break;
       default:
         break;
-      //     onNodeClick(event.node);
-      //     break;
+      // TODO. 노드 이동 수정 예정
       //   case 'NODE_MOVE': {
       //     const nodeInfo = event;
       //     if (nodeInfo.position === 'INSIDE') {
