@@ -42,7 +42,7 @@
     }
   }
   .file_wrap {
-    @apply scrollbar relative h-[320px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    @apply scrollbar relative h-auto max-h-[340px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
     &.type_excel {
       @apply h-[168px];
     }

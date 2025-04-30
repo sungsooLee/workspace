@@ -301,6 +301,9 @@ function RouteComponent() {
           <Button variant={'line'} size={'sm'} className={styles.btn_add}>
             {'추가'}
           </Button>
+          <Button variant={'line'} size={'sm'} className={styles.btn_add}>
+            {'저장'}
+          </Button>
           <Button variant={'line'} size={'sm'} disabled className={styles.btn_delete}>
             {'삭제'}
           </Button>

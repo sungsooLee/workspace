@@ -55,6 +55,15 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '공통/파일 업로드_이미지 미리보기',
+    pageId: 'common/pop-image-preview',
+    screenId: 'NLP_BO_PMS_1100_05_02',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
