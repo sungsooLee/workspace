@@ -16,17 +16,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    {
-      size = 'md',
-      resize,
-      className,
-      disabled,
-      readOnly,
-      maxLength = 0,
-      value,
-      onChange,
-      ...props
-    },
+    { size = 'md', resize, className, disabled, readOnly, maxLength, value, onChange, ...props },
     ref,
   ) => {
     // const [inputValue, setInputValue] = useState(value);
@@ -73,14 +63,14 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
             resize && styles[resize],
             size && styles[size],
           )}
-          maxLength={maxLength > 0 ? maxLength : undefined}
+          maxLength={maxLength}
           disabled={disabled}
           readOnly={readOnly}
           onChange={onChange}
           {...props}
         />
         {/* 입력 글자수 */}
-        {maxLength > 0 && (
+        {maxLength && (
           <p className={styles.text_limit}>
             <span className={styles.num}>{currentLength}</span>/{maxLength}
           </p>

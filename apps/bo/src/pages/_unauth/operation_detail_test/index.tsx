@@ -235,7 +235,6 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '',
       description: '',
-      maxLength: 10,
     },
     {
       name: '대표이미지',
