@@ -49,6 +49,7 @@ const PopoverComponent = forwardRef<
           {children}
         </Primitive.PopoverTrigger>
         <Primitive.Portal
+          // modal 내 popover 활성화 시 z-index 이슈에 대한 예외처리
           container={
             (container ?? currentActiveModal)
               ? document.getElementById(`nlp--modal-${currentActiveModal?.id}`)

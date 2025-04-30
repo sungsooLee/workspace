@@ -16,7 +16,7 @@ function WithdrawMembershipButtonComponent() {
 
   return (
     <Button variant="gray" size="sm" onClick={() => handleWithdrawMembership()}>
-      {t('LABEL.WITHDRAW_MEMBERSHIP')}
+      {t('LABEL.common.withdrawMembership')}
     </Button>
   );
 }

@@ -1,7 +1,7 @@
 /* contents-layout.module.css */
 .start {
   &.wrap {
-    @apply relative flex h-full w-full justify-between;
+    @apply relative flex w-full justify-between;
     &::before {
       @apply absolute left-1/2 top-0 flex h-[calc(100%-32px)] w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
     }
@@ -11,7 +11,7 @@
         @apply py-[16px] pb-[32px];
       }
       &.type2 {
-        @apply max-h-[calc(100vh-236px)] min-h-[calc(100vh-268px)];
+        @apply max-h-[calc(100vh-278px)] min-h-[calc(100vh-278px)];
       }
       &.type_progress {
         @apply max-h-[calc(100vh-410px)] min-h-[calc(100vh-442px)];
@@ -51,9 +51,6 @@
       }
     }
     &.contents_category {
-      &::before {
-        @apply h-[calc(100%-70px)];
-      }
     }
   }
 }

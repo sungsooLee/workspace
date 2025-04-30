@@ -13,7 +13,7 @@ import type { TermsType } from '../../../types';
 
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 
-export const Route = createFileRoute('/_layout/terms/$termsType')({
+export const Route = createFileRoute('/_layout/clause/$termsType')({
   component: RouteComponent,
   ...pageRouteConfig({
     validateParam: {
@@ -72,7 +72,7 @@ function RouteComponent() {
           onChange={(value: string) => {
             setTermsId(value);
           }}
-          placeholder={t('LABEL.PREVIOUS_TERMS', {
+          placeholder={t('LABEL.common.previousTerms', {
             type: t(`CODE.TERMS_TYPE.${termsType}`),
           })}
           className={styles.select}

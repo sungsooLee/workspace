@@ -773,9 +773,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
+    remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
   },
   {
     screenId: 'NLP_FO_LEC_1004',
@@ -904,9 +904,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
+    remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1006',

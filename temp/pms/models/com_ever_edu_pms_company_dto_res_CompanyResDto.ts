@@ -187,6 +187,22 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
      * 담당자 이메일
      */
     managerEmail?: string;
+    /**
+     * 등록자ID
+     */
+    createdBy?: string;
+    /**
+     * 등록일시
+     */
+    createdDate?: string;
+    /**
+     * 최종수정자ID
+     */
+    lastModifiedBy?: string;
+    /**
+     * 최종수정일시
+     */
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
     /**

@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_auth/login')({
   ...pageRouteConfig({
     authorization: false,
     meta: {
-      title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+      title: 'LABEL.common.loginWelcomeMessage',
       container: AUTH_CONTAINERS.LOGIN,
     },
   }),
@@ -129,7 +129,7 @@ const detailConfig: DynamicFormConfig = {
       name: 'saveId',
       type: 'checkbox',
       checkConfig: {
-        label: 'LABEL.아이디 저장',
+        label: 'LABEL.common.saveAccount',
       },
       value: false,
     },

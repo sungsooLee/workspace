@@ -2,10 +2,13 @@ import {
   IcoBlog,
   IcoEntrust,
   IcoEtc,
+  IcoExam,
+  IcoHomework,
   IcoHtml,
   IcoImage01,
   IcoInfoCircle,
   IcoMybook,
+  IcoSurvey,
   IcoVideo01,
   IcoVideo02,
 } from '@learnway/icons';
@@ -15,6 +18,7 @@ import {
   ModalBody,
   ModalContainer,
   ModalFooter,
+  ModalTitle,
   OptionCard,
   OptionCardItem,
   useModal,
@@ -49,11 +53,9 @@ const LearningTypeChoiceModalComponent = () => {
 
   return (
     <ModalContainer>
+      <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
-          <div className={styles.title_wrap}>
-            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-          </div>
           <OptionCard
             cols={5}
             size="lg"
@@ -61,16 +63,6 @@ const LearningTypeChoiceModalComponent = () => {
             options={learningTypes}
             value={activeType}
             onOptionSelect={handleChoiceLearningType}
-            /*onOptionSelect={(option) => {
-              console.log('selected', option);
-              option?.label === '이북' &&
-              openModal({
-                // title: '',
-                hideCloseButton: true,
-                width: 'auto',
-                content: <EbookContent />,
-              });
-            }}*/
           />
         </div>
       </ModalBody>
@@ -92,13 +84,6 @@ const learningTypes = [
     value: LEARNING_TYPE.VIDEO,
     icon: <IcoVideo01 />,
     description: '1개 동영상 업로드',
-  },
-  {
-    label: '멀티 동영상',
-    value: LEARNING_TYPE.MULTIPLE_VIDEO,
-    icon: <IcoVideo02 />,
-    description:
-      '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
   },
   {
     label: 'HTML 동영상',
@@ -134,27 +119,39 @@ const learningTypes = [
   },
   { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
-    label: '멀티 스콤',
-    value: LEARNING_TYPE.MULTIPLE_SCORM,
-    icon: <IcoEtc />,
+    label: '시험지',
+    value: LEARNING_TYPE.TEST_PAGER,
+    icon: <IcoExam />,
+    description: '설명문구2줄설명',
+  },
+  {
+    label: '문제은행',
+    value: LEARNING_TYPE.QUESTION_BANK,
+    icon: <IcoExam />,
     description: '설명문구2줄설명',
   },
   {
     label: '설문지',
     value: LEARNING_TYPE.SURVEY,
-    icon: <IcoEtc />,
-    description: '설명문구2줄설명',
-  },
-  {
-    label: '시험지',
-    value: LEARNING_TYPE.TEST_PAGER,
-    icon: <IcoEtc />,
+    icon: <IcoSurvey />,
     description: '설명문구2줄설명',
   },
   {
     label: '과제',
     value: LEARNING_TYPE.ASSIGNMENT,
-    icon: <IcoEtc />,
+    icon: <IcoHomework />,
+    description: '설명문구2줄설명',
+  },
+  {
+    label: '라이브',
+    value: LEARNING_TYPE.LIVE,
+    icon: <IcoHomework />,
+    description: '설명문구2줄설명',
+  },
+  {
+    label: '라이브(HIVE)',
+    value: LEARNING_TYPE.HIVE,
+    icon: <IcoHomework />,
     description: '설명문구2줄설명',
   },
 ];

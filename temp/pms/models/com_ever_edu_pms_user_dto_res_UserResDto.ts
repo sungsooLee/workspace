@@ -82,6 +82,22 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      * 근무지코드
      */
     workPlaceCode?: string;
+    /**
+     * 등록자ID
+     */
+    createdBy?: string;
+    /**
+     * 등록일시
+     */
+    createdDate?: string;
+    /**
+     * 최종수정자ID
+     */
+    lastModifiedBy?: string;
+    /**
+     * 최종수정일시
+     */
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_user_dto_res_UserResDto {
     /**

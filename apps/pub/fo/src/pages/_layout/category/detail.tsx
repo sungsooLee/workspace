@@ -53,7 +53,12 @@ function RouteComponent() {
     }
   };
 
-  // 퍼블수정 20250313 : 리스트 소팅 조건 값들 (최신순, 과정명순, 조회순) 넣기
+  // dropdown
+  const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
+  const [searchValues02, setSearchValues02] = useState<string[]>(['중분류']);
+  const [searchValues03, setSearchValues03] = useState<string[]>(['소분류']);
+  const [selectedValues, setSelectedValues] = useState<string[]>(['20개씩']);
+
   const arrays = {
     items: ['최신순', '과정명순', '조회순'],
     initialSelectedItem: 0, // 초기 선택값
@@ -88,6 +93,8 @@ function RouteComponent() {
                   { value: 'g', label: '포터' },
                   { value: 'h', label: '캐스퍼' },
                 ]}
+                value={searchValues01}
+                onChange={(selected) => setSearchValues01(selected)}
               />
               <Dropdown
                 className={styles.search_select}
@@ -97,6 +104,8 @@ function RouteComponent() {
                   { value: 'b', label: 'NE PE(2024)' },
                   { value: 'c', label: 'NE(2021)' },
                 ]}
+                value={searchValues02}
+                onChange={(selected) => setSearchValues02(selected)}
               />
               <Dropdown
                 className={styles.search_select}
@@ -106,6 +115,8 @@ function RouteComponent() {
                   { value: 'b', label: '상품정보' },
                   { value: 'c', label: '기술정보' },
                 ]}
+                value={searchValues03}
+                onChange={(selected) => setSearchValues03(selected)}
               />
               <ContentsRow className={styles.search}>
                 <Input id="" type="text" placeholder="과정명 검색" showSearchIcon={true} />
@@ -132,11 +143,14 @@ function RouteComponent() {
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
             <div className={styles.box}>
               <Dropdown
+                variant="text"
                 options={[
                   { value: '20', label: '20개씩' },
                   { value: '50', label: '50개씩' },
                   { value: '80', label: '80개씩' },
                 ]}
+                value={selectedValues}
+                onChange={(selected) => setSelectedValues(selected)}
               />
             </div>
             <div className={styles.box}>

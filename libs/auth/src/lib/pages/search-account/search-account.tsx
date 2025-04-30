@@ -45,12 +45,12 @@ export function SearchAccountPage({ route }: any) {
   const items = useCreation(
     () => [
       {
-        title: t('LABEL.SEARCH_ACCOUNT'),
+        title: t('LABEL.common.searchAccount'),
         key: 'account',
         content: <></>,
       },
       {
-        title: t('LABEL.SEARCH_PASSWORD'),
+        title: t('LABEL.common.searchPassword'),
         key: 'password',
         content: <></>,
       },
@@ -82,8 +82,8 @@ export function SearchAccountPage({ route }: any) {
         onError: (error: any) => {
           // 인증 성공 후 사용자 정보 조회 실패
           alert({
-            title: 'MESSAGE.INVALID_INPUT_INFORMATION',
-            content: 'MESSAGE.INVALID_INPUT_INFORMATION_DESCRIPTION',
+            title: 'LABEL.message.nvalidInputInformation',
+            content: 'LABEL.message.invalidInputInformationDescription',
           });
         },
       },
@@ -108,8 +108,8 @@ export function SearchAccountPage({ route }: any) {
         <EmbededAlert className={styles.search_info} hiddenIcon>
           {t(
             selectedTabKey === 'account'
-              ? `MESSAGE.CAN_CHECK_ACCOUNT_AFTER_VERIFYING`
-              : `MESSAGE.CAN_UPDATE_PASSWORD_AFTER_VERIFYING`,
+              ? `LABEL.message.canCheckAccountAfterVerifying`
+              : `LABEL.message.canUpdatePasswordAfterVerifying`,
           )}
         </EmbededAlert>
 
