@@ -72,9 +72,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
               conditions: existingValidator['conditions'],
             }),
           };
-          if (key === 'externalCompanyManagerName') {
-            console.log('externalCompanyManagerName', acc[key]);
-          }
         }
       }
       return acc;
