@@ -105,7 +105,7 @@ const Role = ({ type }: any) => {
                     variant={'text'}
                     size={'sm'}
                     className="btn_text"
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode !== FORM_MODE.VIEW}
                   />
                   <Button
                     label={'저장'}

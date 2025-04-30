@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { Button, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -22,6 +22,7 @@ import {
 } from '../../../../features/platform/menu/service/menu.service';
 import { MenuTree } from '../../../../features/platform/menu/ui/menu-tree';
 import MenuViewComponent from '../../../../features/platform/menu/ui/menu-view';
+import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -45,6 +46,7 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const { confirm: openConfirm } = useModal();
 
+  const router = useRouter();
   const { data } = useMenuManageFetchTree(selectedTabKey, 'ko');
   const { create } = useCreateMenu({});
   const { updateMenu } = useUpdateMenu({});
@@ -267,6 +269,23 @@ function RouteComponent() {
 
   return (
     <PageContainer scrollHidden={true}>
+      <ContentsButtons>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({
+              to: '/platform/system/multilingual',
+              state: {
+                keyType: selectedTabKey === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+              },
+            });
+          }}
+        >
+          다국어관리
+        </Button>
+      </ContentsButtons>
       <MainContents>
         <Tabs
           selectedTabKey={selectedTabKey}

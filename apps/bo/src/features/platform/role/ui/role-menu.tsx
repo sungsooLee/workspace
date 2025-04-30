@@ -1,4 +1,12 @@
-import { Button, GridBox, RadioGroup, RadioGroupFormField, TreeBox, TreeNode } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  GridBox,
+  RadioGroup,
+  RadioGroupFormField,
+  TreeBox,
+  TreeNode,
+} from '@learnway/ui';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -33,22 +41,17 @@ const columns = [
 
 const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
   return (
-    <FormSubTitle
-      actionNode={
-        <>
-          <RadioGroupFormField
-            options={[
-              { value: 'option01', label: '모든 메뉴/API' },
-              { value: 'option02', label: '직접 선택' },
-            ]}
-            onChange={onChange}
-            value={menuSelectionType === 'all' ? 'option01' : 'option02'}
-          />
-          <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
-        </>
-      }
-      underLine={false}
-    />
+    <>
+      <RadioGroupFormField
+        options={[
+          { value: 'option01', label: '모든 메뉴/API' },
+          { value: 'option02', label: '직접 선택' },
+        ]}
+        onChange={onChange}
+        value={menuSelectionType === 'all' ? 'option01' : 'option02'}
+      />
+      <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
+    </>
   );
 };
 
@@ -255,7 +258,7 @@ export const RoleMenu = ({ type }: any) => {
             저장
           </Button>
         }
-        multiple={false} // 체크박스로 직접 관리하므로 multiple 옵션 비활성화
+        multiple={true} // 체크박스로 직접 관리하므로 multiple 옵션 비활성화
       />
     </SectionLayout>
   );
