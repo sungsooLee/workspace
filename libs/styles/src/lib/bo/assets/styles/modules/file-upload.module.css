@@ -31,9 +31,12 @@
           @apply ml-[10px];
         }
       }
+      button {
+        @apply min-w-[45px];
+      }
       .btn_delete {
         &:disabled {
-          @apply !min-w-[65px];
+          @apply !min-w-[45px];
         }
       }
     }
@@ -143,7 +146,7 @@
       }
     }
     .btn_attach {
-      @apply relative ml-[8px] !w-[65px] shrink-0;
+      @apply relative ml-[8px] !w-[65px] shrink-0 px-0;
       .input_file {
         @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
       }

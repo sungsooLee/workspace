@@ -298,6 +298,9 @@ function RouteComponent() {
         </div>
         <div className={styles.btn_area}>
           <span className={styles.info_text}>{'최대 파일 사이즈 50MB'}</span>
+          <Button variant={'line'} size={'sm'} className={styles.btn_add}>
+            {'추가'}
+          </Button>
           <Button variant={'line'} size={'sm'} disabled className={styles.btn_delete}>
             {'삭제'}
           </Button>
@@ -333,12 +336,16 @@ function RouteComponent() {
               <span className={styles.status_view}>
                 <em className={styles.file_size}>100MB</em>
               </span>
-              <Progress className={styles.progress} value={100} label={'완료'} />
+              <Progress className={styles.progress} value={100} />
             </div>
-            <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />
-            <Button className={styles.btn_delete} onlyIcon>
-              <IcoTrash03 width={20} height={20} stroke="#131C30" />
-            </Button>
+            <div className={styles.control_wrap}>
+              <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />
+            </div>
+            <div className={styles.delele_btn_wrap}>
+              <Button className={styles.btn_delete} onlyIcon>
+                <IcoTrash03 width={20} height={20} stroke="#131C30" />
+              </Button>
+            </div>
           </div>
           {/* file_item */}
           <div className={styles.file_item}>
@@ -353,15 +360,19 @@ function RouteComponent() {
               </span>
               <Progress className={styles.progress} value={40} />
             </div>
-            <Badge
-              className={styles.file_status}
-              option={{ label: '', value: '' }}
-              variant="dot"
-              status="ing"
-            />
-            <Button className={styles.btn_delete} onlyIcon>
-              <IcoTrash03 width={20} height={20} stroke="#131C30" />
-            </Button>
+            <div className={styles.control_wrap}>
+              <Badge
+                className={styles.file_status}
+                option={{ label: '', value: '' }}
+                variant="dot"
+                status="ing"
+              />
+            </div>
+            <div className={styles.delele_btn_wrap}>
+              <Button className={styles.btn_delete} onlyIcon>
+                <IcoTrash03 width={20} height={20} stroke="#131C30" />
+              </Button>
+            </div>
           </div>
           {/* file_item */}
           <div className={styles.file_item}>
@@ -374,20 +385,45 @@ function RouteComponent() {
               <span className={styles.status_view}>
                 <em className={styles.file_size}>100MB</em>
               </span>
-              <Progress className={styles.progress} value={40} label={'실패'} isFailed />
+              <Progress className={styles.progress} value={40} isFailed />
             </div>
-            <Badge
-              className={styles.file_status}
-              option={{ label: '', value: '' }}
-              variant="dot"
-              status="error"
-            />
-            <Button className={styles.btn_status} onlyIcon>
-              <IcoRefresh width={20} height={20} fill="#00AFD5" />
-            </Button>
-            <Button className={styles.btn_delete} onlyIcon>
-              <IcoTrash03 width={20} height={20} stroke="#131C30" />
-            </Button>
+            <div className={styles.control_wrap}>
+              <Badge
+                className={styles.file_status}
+                option={{ label: '', value: '' }}
+                variant="dot"
+                status="error"
+              />
+            </div>
+            <div className={styles.delele_btn_wrap}>
+              <Button className={styles.btn_delete} onlyIcon>
+                <IcoTrash03 width={20} height={20} stroke="#131C30" />
+              </Button>
+            </div>
+          </div>
+          {/* file_item */}
+          <div className={styles.file_item}>
+            <Checkbox className={styles.check} />
+            <div className={styles.file_name}>
+              <IcoPpt width={'24'} height={'25'} className={styles.icon_type} />
+              <em className={styles.name}>{'file.pdf'}</em>
+            </div>
+            <div className={styles.progress_area}>
+              <span className={styles.status_view}>
+                <em className={styles.file_size}>100MB</em>
+              </span>
+              <Progress className={styles.progress} value={40} isFailed />
+            </div>
+            <div className={styles.control_wrap}>
+              <Button className={styles.btn_status} onlyIcon>
+                <IcoRefresh width={20} height={20} fill="#00AFD5" />
+              </Button>
+            </div>
+            <div className={styles.delele_btn_wrap}>
+              <Button className={styles.btn_delete} onlyIcon>
+                <IcoTrash03 width={20} height={20} stroke="#131C30" />
+              </Button>
+            </div>
           </div>
         </div>
         {/* 파일 업로드 다른 타입 */}
