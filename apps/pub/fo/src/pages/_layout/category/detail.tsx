@@ -10,7 +10,7 @@ import {
   Carousel,
   EmptyText,
 } from '@learnway/ui';
-import { Arrays, Filter, Thumnail, ThumnailList } from '../../../features/layout';
+import { Arrays, Filter, ThumnailList } from '../../../features/layout';
 import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import styles from './detail.module.css';
 

@@ -8,6 +8,12 @@
         .img_box {
           @apply w-[237px];
         }
+        .text_box {
+          @apply ml-[16px] mt-0 flex-1;
+          .text {
+            @apply line-clamp-none whitespace-nowrap;
+          }
+        }
       }
     }
 
@@ -38,7 +44,7 @@
       }
 
       .text_box {
-        @apply mt-[16px];
+        @apply mt-[16px] overflow-hidden;
         .type {
           @apply flex items-center;
           span {
@@ -108,6 +114,44 @@
         @apply absolute bottom-[16px] right-[16px] z-[2] h-[24px] w-[24px] text-[0];
         button {
           @apply !p-0;
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.thumbnail {
+        &.horizontal {
+          @apply w-full;
+          .thumnail_box {
+            .img_box {
+              @apply w-[33.3333dvw];
+            }
+            .text_box {
+              @apply ml-[12px] mt-0;
+              .text {
+                @apply line-clamp-2 whitespace-normal;
+              }
+            }
+          }
+        }
+        .thumnail_box {
+          .img_box {
+            .img {
+              .img_play {
+                @apply h-[8.8889dvw] w-[8.8889dvw];
+              }
+            }
+          }
+          .text_box {
+            @apply mt-[12px];
+            .text {
+              @apply body_3_r;
+            }
+          }
         }
       }
     }

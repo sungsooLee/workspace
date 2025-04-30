@@ -95,6 +95,14 @@
             @apply mt-[32px];
           }
         }
+        &.horizontal {
+          & > div {
+            @apply !ml-0 w-full;
+            & + div {
+              @apply !mt-[24px];
+            }
+          }
+        }
       }
     }
   }
