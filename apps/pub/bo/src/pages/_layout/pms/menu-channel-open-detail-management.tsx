@@ -91,7 +91,9 @@ function RouteComponent() {
                   <th scope={'row'}>{'신청일시'}</th>
                   <td>{'2025-01-05 15:15:00'}</td>
                   <th scope={'row'}>{'신청상태'}</th>
-                  <td>{'대기'}</td>
+                  <td>
+                    {'대기'} <span className={tableStyles.text_point}>{'접수'}</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -140,9 +142,7 @@ function RouteComponent() {
                       {'김현대(00000000)'}
                     </Link>
                   </td>
-                  <th scope={'row'} className={tableStyles.align_top}>
-                    {'접수일자'}
-                  </th>
+                  <th scope={'row'}>{'접수일자'}</th>
                   <td>{'2025-01-05 15:15:00'}</td>
                 </tr>
               </tbody>
