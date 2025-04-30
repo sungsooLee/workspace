@@ -3,7 +3,8 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { Tabs } from '@learnway/ui';
 
 /* tab contents */
-import { ChannelBasicInfo } from './-tabcontents/channel-basic-info';
+import { ChannelBasicInfo } from './-tabcontents/channel-basic-info'; // 기본 정보
+import { ChannelRoleInfo } from './-tabcontents/channel-role-info'; // 역할 관리
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-detail')({
   component: RouteComponent,
@@ -22,9 +23,9 @@ function RouteComponent() {
       content: <h2>Tab B content</h2>,
     },
     {
-      title: '역활 관리',
+      title: '역할 관리',
       key: 'c',
-      content: <h2>Tab C content</h2>,
+      content: <ChannelRoleInfo />,
     },
     {
       title: '구독자 관리',

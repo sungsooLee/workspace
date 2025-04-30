@@ -8,8 +8,14 @@ import {
   Input,
   Textarea,
   RadioGroupFormField,
+  ChipListModalSelectorFormField,
   Switch,
   Tabs,
+  useModal,
+  ModalBody,
+  ModalTitle,
+  ModalFooter,
+  ModalContainer,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
@@ -45,6 +51,22 @@ const ChannelBasicInfoComponent: FC<{}> = ({}) => {
       content: '',
     },
   ];
+  const ModalUseableSearchContent = () => {
+    const { close: closeModal } = useModal();
+
+    return (
+      <ModalContainer>
+        <ModalTitle>타이틀</ModalTitle>
+        <ModalBody>
+          <div>팝업내용 추후 작업예정</div>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        </ModalFooter>
+      </ModalContainer>
+    );
+  };
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <ContentsRow>
@@ -188,7 +210,16 @@ const ChannelBasicInfoComponent: FC<{}> = ({}) => {
             </span>
           </label>
           <div className={formStyles.input_box}>
-            <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
+            <div className="chiplist_modal_wrap">
+              <ChipListModalSelectorFormField
+                modalConfig={{ width: 'xl', content: <ModalUseableSearchContent /> }}
+                chipList={{
+                  labelField: 'name',
+                  valueField: 'value',
+                  hideBorder: true,
+                }}
+              />
+            </div>
           </div>
         </div>
       </ContentsRow>
