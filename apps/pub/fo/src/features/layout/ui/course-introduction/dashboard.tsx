@@ -177,7 +177,7 @@ const CourseDashboardCompoment = () => {
 
               <MobileView>
                 <div className={`${tableListStyles.start} ${tableListStyles.table_list}`}>
-                  <div className={tableListStyles.list}>
+                  <div className={tableListStyles.list_row}>
                     <span className={tableListStyles.tit}>총점</span>
                     <div className={tableListStyles.row}>
                       <span className={tableListStyles.dt}>이수기준</span>
@@ -197,7 +197,7 @@ const CourseDashboardCompoment = () => {
                     </div>
                   </div>
 
-                  <div className={tableListStyles.list}>
+                  <div className={tableListStyles.list_row}>
                     <span className={tableListStyles.tit}>진도/출석</span>
                     <div className={tableListStyles.row}>
                       <span className={tableListStyles.dt}>이수기준</span>
@@ -217,7 +217,7 @@ const CourseDashboardCompoment = () => {
                     </div>
                   </div>
 
-                  <div className={tableListStyles.list}>
+                  <div className={tableListStyles.list_row}>
                     <span className={tableListStyles.tit}>과제</span>
                     <div className={tableListStyles.row}>
                       <span className={tableListStyles.dt}>이수기준</span>
