@@ -1184,10 +1184,10 @@ export const guideData = [
     screenName: '강의실_홈(대시보드)',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-04-30',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '/features/layout/ui/course-introduction/dashboard.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1001',

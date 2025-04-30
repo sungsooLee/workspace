@@ -22,11 +22,22 @@
 
 :global(body.mobile) {
   @screen mobile {
-    .info_box {
-      @apply mt-[32px];
-      &.pds {
-        button {
-          @apply w-[82px];
+    .start {
+      .tit_box {
+        h3 {
+          @apply title_6_b;
+        }
+        [class*='nlp--dropdown-text'] {
+          @apply !w-[210px] flex-initial;
+        }
+      }
+
+      .info_box {
+        @apply mt-[32px];
+        &.pds {
+          button {
+            @apply w-[82px];
+          }
         }
       }
     }

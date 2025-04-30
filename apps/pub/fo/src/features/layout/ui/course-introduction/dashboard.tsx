@@ -102,15 +102,16 @@ const CourseDashboardCompoment = () => {
           className={`${statusStyles.panel_degreey} ${/* statusStyles.complete */ ''}`}
         >
           <div className={statusStyles.list}>
-            <h3>이수</h3>
+            <h3>학습중</h3>
             <div className={statusStyles.date_status}>
               <div className={statusStyles.date_box}>
                 교육기간
-                <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374)</span>
+                <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374차)</span>
               </div>
               <div className={statusStyles.date_box}>
                 남은학습기간
-                <span className={statusStyles.date}>D-27</span>
+                <span className={`${statusStyles.date} ${statusStyles.time}`}>D-27</span>{' '}
+                {/* 남은기간 적을 시 className="time" */}
               </div>
             </div>
           </div>
