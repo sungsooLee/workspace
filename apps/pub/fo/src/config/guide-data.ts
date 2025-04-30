@@ -662,9 +662,8 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks:
-      'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
+    lastUpdateDate: '2025-04-30',
+    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
     screenId: 'NLP_FO_CAT_1003',
@@ -703,8 +702,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks: '- 썸네일 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-30',
+    remarks: '',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',

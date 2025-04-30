@@ -134,8 +134,8 @@ export class BoExcelFileTestTestApiService {
         });
     }
     /**
-     * Excel 생성 후 다운로드 처리(jxls_lang_code_data.xlsx)
-     * Excel 생성 후 다운로드 처리 테스트 <br>S3(public/template/sample/jxls_template_lang_code.xlsx) 템플릿 파일을 다운받아 데이터 매핑 후 다운로드 처리
+     * Excel 생성 후 다운로드 처리(jxls_user_data.xlsx)
+     * Excel 생성 후 다운로드 처리 테스트 <br>S3(public/template/sample/jxls_user_data.xlsx) 템플릿 파일을 다운받아 데이터 매핑 후 다운로드 처리
      * @returns any OK
      * @throws ApiError
      */
@@ -195,8 +195,8 @@ export class BoExcelFileTestTestApiService {
     }
     /**
      * S3 템플릿 파일 다운로드 요청
-     * S3 템플릿 파일 다운로드 요청한다. <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx<br>-jxls_template_lang_code.xlsx
-     * @param fileName 템플릿 파일명 <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx <br>-jxls_template_lang_code.xlsx
+     * S3 템플릿 파일 다운로드 요청한다. <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx<br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
+     * @param fileName 템플릿 파일명 <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx <br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
      * @returns any OK
      * @throws ApiError
      */

@@ -33,5 +33,16 @@
     .box {
       @apply flex items-center justify-between pr-[80px];
     }
+    .text {
+      &_point {
+        @apply text-[var(--secondary1)];
+      }
+      &_error {
+        @apply text-[var(--status1)];
+      }
+    }
+    & + [class*='title_wrap'] {
+      @apply !mt-[32px] !border-0;
+    }
   }
 }
