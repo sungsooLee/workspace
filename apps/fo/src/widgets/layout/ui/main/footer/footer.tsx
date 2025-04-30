@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import logoImage from '../../../../../assets/images/logo_footer.png';
 import { Dropdown } from '@learnway/ui';
 
-import { TermsButton } from '../../../../../features/auth';
+import { TermsButton } from '../../../../../features/main';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 

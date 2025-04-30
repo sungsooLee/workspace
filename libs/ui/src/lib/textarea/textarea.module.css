@@ -2,6 +2,9 @@
   @apply w-full overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
   .textarea {
     @apply scrollbar box-border h-[120px] w-full overflow-y-auto overflow-x-hidden px-[16px] py-[12px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray9)];
+    &.xs {
+      @apply h-[30px];
+    }
     &.sm {
       @apply h-[50px];
     }

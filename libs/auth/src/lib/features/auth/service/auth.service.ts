@@ -1,5 +1,6 @@
-import { useEffect, useState, createElement, useCallback } from 'react';
+import { useEffect, useState, createElement, useCallback, useRef } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { useModal, useModalStore } from '@learnway/ui';
 import { cookieService, MutateCallback } from '@learnway/shared';
@@ -15,6 +16,11 @@ import {
 import { SessionTimeoutConfirm } from '../ui/sessionTimeoutConfirm';
 import type { AuthUser, AuthSSOHealthcheck } from '../../../types';
 import { useAsycFetchMenus } from '../../../entities/menu';
+
+import {
+  SESSION_TIMEOUT_EXTENSION_ALERT_DURATION,
+  SESSION_TIMEOUT_LIMIT_DURATION,
+} from '../const/auth.constant';
 
 interface LoginParams {
   username: string;
@@ -69,10 +75,11 @@ export function getHMGSSORedirectUrl(data: AuthSSOHealthcheck): string {
 }
 
 export function useSessionTimout() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const [isTimeoutConfirm, setIsTimeoutConfirm] = useState(false);
-  const [intervalId, setIntervalId] = useState<any>();
+  const intervalRef = useRef<any>();
 
   const { closeAll } = useModalStore();
   const { confirm } = useModal();
@@ -91,14 +98,16 @@ export function useSessionTimout() {
     const now = new Date();
     const sessionDuration = now.getTime() - new Date(authUser?.latestLoginDatetime).getTime();
     console.log('sessionDuration', sessionDuration);
-    // 2시간(7200000ms) 경과 5분전 confirm //7200000 - 300000
-    if (!isTimeoutConfirm && sessionDuration >= 7200000 - 300000) {
+    if (
+      !isTimeoutConfirm &&
+      sessionDuration >= SESSION_TIMEOUT_LIMIT_DURATION - SESSION_TIMEOUT_EXTENSION_ALERT_DURATION
+    ) {
       //1000 * 60 * 1) {
       confirm({
-        title: '로그인 시간을 연장하시겠습니까?',
+        title: t('LABEL.message.loginExtensionAlert'),
         content: createElement(SessionTimeoutConfirm),
-        okButtonLabel: '로그인연장',
-        cancelButtonLabel: '취소',
+        okButtonLabel: t('LABEL.common.loginExtension'),
+        cancelButtonLabel: t('LABEL.common.cancel'),
         onClose: (feedback: boolean) => {
           if (feedback) {
             updateLatestLoginDateTime(new Date());
@@ -111,7 +120,7 @@ export function useSessionTimout() {
     }
 
     // 2시간(7200000ms) 경과 시 자동 로그아웃 alert //7200000
-    if (sessionDuration >= 7200000) {
+    if (sessionDuration >= SESSION_TIMEOUT_LIMIT_DURATION) {
       //1000 * 60 * 2) {
       closeAll();
       logout(undefined, {
@@ -125,20 +134,16 @@ export function useSessionTimout() {
 
   useEffect(() => {
     console.log('set interval effect');
+    if (intervalRef.current) {
+      console.log('set interval effect - 기존 interval정보가 있으므로 clearinterval');
+      clearInterval(intervalRef.current);
+    }
     if (!authUser || !checkSessionTimeout) {
-      console.log('set interval effect - 사용자 정보가 없음 clearinterval');
+      console.log('set interval effect - 사용자 정보가 없음 return');
       setIsTimeoutConfirm(false);
-      clearInterval(intervalId);
       return;
     }
-
-    setIntervalId((intervalState: any) => {
-      if (intervalState) {
-        console.log('setIntervalId before clearInterval');
-        clearInterval(intervalState);
-      }
-      console.log('set interval effect - set');
-      return setInterval(checkSessionTimeout, 60000);
-    }); // 1분마다 세션 체크
+    console.log('set interval effect - 새로운 interval 생성');
+    intervalRef.current = setInterval(checkSessionTimeout, 60000); // 1분마다 세션 체크
   }, [authUser, checkSessionTimeout]);
 }

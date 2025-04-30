@@ -2,9 +2,6 @@
 .start {
   &.checkbox_list {
     /* @apply grid w-full grid-cols-4 gap-[1.6rem]; */
-    @apply flex flex-wrap whitespace-normal;
-    [class*='nlp--checkbox'] {
-      @apply mr-[2.4rem];
-    }
+    @apply flex flex-wrap gap-[1.6rem] whitespace-normal;
   }
 }

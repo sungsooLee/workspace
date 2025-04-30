@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_layout/my-page/privacy/withdraw-menbersh
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.WITHDRAW_MEMBERSHIP',
+      title: 'LABEL.common.withdrawMembership',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
       container: MAIN_CONTAINERS.MY_PAGE,
     },
@@ -42,8 +42,8 @@ function RouteComponent() {
       onSuccess: async () => {
         logout();
         await alert({
-          title: t('LABEL.ALERT_WITHDRAW_MEMBERSHIP_SUCCESS_TITLE'),
-          content: t('LABEL.ALERT_WITHDRAW_MEMBERSHIP_SUCCESS'),
+          title: t('LABEL.message.alertWithdrawMembershipSuccessTitle'),
+          content: t('LABEL.message.alertWithdrawMembershipSuccess'),
         });
         router.navigate({ to: '/login' });
       },
@@ -59,18 +59,18 @@ function RouteComponent() {
       <div className={styles.box}>
         <div className={styles.confirm}>
           <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
-          <p className="whitespace-break-spaces">{t('LABEL.ALERT_WITHDRAW_MEMBERSHIP')}</p>
+          <p className="whitespace-break-spaces">{t('LABEL.message.alertWithdrawMembership')}</p>
         </div>
 
         <div className={styles.bullet_notice}>
           <ul>
-            <li>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_01')}</li>
-            <li>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_02')}</li>
-            <li>{t('LABEL.CAUTION_WITHDRAW_MEMBERSHIP_03')}</li>
+            <li>{t('LABEL.message.cautionWithdrawMembership01')}</li>
+            <li>{t('LABEL.message.cautionWithdrawMembership02')}</li>
+            <li>{t('LABEL.message.cautionWithdrawMembership03')}</li>
           </ul>
           <Checkbox
             size="lg"
-            label={t('LABEL.AGREE_TO_BE_THE_INSTRUCTIONS')}
+            label={t('LABEL.message.agreeToBeTheInstructions')}
             onCheckedChange={(checked: boolean) => setAgree(checked)}
           />
         </div>
@@ -80,10 +80,10 @@ function RouteComponent() {
         <BrowserFooter>
           <div className={cn('auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-              {t('LABEL.CANCEL')}
+              {t('LABEL.common.cancel')}
             </Button>
             <Button variant="primary" size="xl" onClick={() => handleWithdrawMembership()}>
-              {t('LABEL.WITHDRAW_MEMBERSHIP')}
+              {t('LABEL.common.withdrawMembership')}
             </Button>
           </div>
         </BrowserFooter>

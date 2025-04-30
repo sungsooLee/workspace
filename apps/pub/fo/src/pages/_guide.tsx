@@ -39,7 +39,7 @@ function RouteComponent() {
         { label: 'Radio', path: '/guide/radio' },
         // { label: 'Select', path: '/guide/select' },
         { label: 'Dropdown', path: '/guide/drop-down' },
-        { label: 'Tootip', path: '/guide/tooltip' },
+        { label: 'Tooltip', path: '/guide/tooltip' },
         { label: 'Chips', path: '/guide/chips' },
         { label: 'Switch', path: '/guide/switch' },
         { label: 'Carousel', path: '/guide/carousel' },

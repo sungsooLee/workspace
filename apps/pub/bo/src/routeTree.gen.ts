@@ -63,6 +63,7 @@ import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-p
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
 import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
+import { Route as LayoutPmsMenuChannelRegisterImport } from './pages/_layout/pms/menu-channel-register'
 import { Route as LayoutPmsMenuChannelOpenManagementImport } from './pages/_layout/pms/menu-channel-open-management'
 import { Route as LayoutPmsMenuChannelOpenDetailManagementImport } from './pages/_layout/pms/menu-channel-open-detail-management'
 import { Route as LayoutPmsMenuChannelManagementImport } from './pages/_layout/pms/menu-channel-management'
@@ -455,6 +456,13 @@ const LayoutPmsMenuEducationLocationManagementRoute =
   LayoutPmsMenuEducationLocationManagementImport.update({
     id: '/pms/menu-education-location-management',
     path: '/pms/menu-education-location-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuChannelRegisterRoute =
+  LayoutPmsMenuChannelRegisterImport.update({
+    id: '/pms/menu-channel-register',
+    path: '/pms/menu-channel-register',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1558,6 +1566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuChannelOpenManagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-channel-register': {
+      id: '/_layout/pms/menu-channel-register'
+      path: '/pms/menu-channel-register'
+      fullPath: '/pms/menu-channel-register'
+      preLoaderRoute: typeof LayoutPmsMenuChannelRegisterImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-education-location-management': {
       id: '/_layout/pms/menu-education-location-management'
       path: '/pms/menu-education-location-management'
@@ -1899,6 +1914,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuChannelManagementRoute: typeof LayoutPmsMenuChannelManagementRoute
   LayoutPmsMenuChannelOpenDetailManagementRoute: typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   LayoutPmsMenuChannelOpenManagementRoute: typeof LayoutPmsMenuChannelOpenManagementRoute
+  LayoutPmsMenuChannelRegisterRoute: typeof LayoutPmsMenuChannelRegisterRoute
   LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
   LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
@@ -1953,6 +1969,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuChannelOpenDetailManagementRoute,
   LayoutPmsMenuChannelOpenManagementRoute:
     LayoutPmsMenuChannelOpenManagementRoute,
+  LayoutPmsMenuChannelRegisterRoute: LayoutPmsMenuChannelRegisterRoute,
   LayoutPmsMenuEducationLocationManagementRoute:
     LayoutPmsMenuEducationLocationManagementRoute,
   LayoutPmsMenuEducationRegisterDetailRoute:
@@ -2087,6 +2104,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2207,6 +2225,7 @@ export interface FileRoutesByTo {
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2330,6 +2349,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/_layout/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/_layout/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/_layout/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/_layout/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/_layout/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2452,6 +2472,7 @@ export interface FileRouteTypes {
     | '/pms/menu-channel-management'
     | '/pms/menu-channel-open-detail-management'
     | '/pms/menu-channel-open-management'
+    | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2571,6 +2592,7 @@ export interface FileRouteTypes {
     | '/pms/menu-channel-management'
     | '/pms/menu-channel-open-detail-management'
     | '/pms/menu-channel-open-management'
+    | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2692,6 +2714,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-channel-management'
     | '/_layout/pms/menu-channel-open-detail-management'
     | '/_layout/pms/menu-channel-open-management'
+    | '/_layout/pms/menu-channel-register'
     | '/_layout/pms/menu-education-location-management'
     | '/_layout/pms/menu-education-register-detail'
     | '/_layout/pms/menu-management'
@@ -2852,6 +2875,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-channel-management",
         "/_layout/pms/menu-channel-open-detail-management",
         "/_layout/pms/menu-channel-open-management",
+        "/_layout/pms/menu-channel-register",
         "/_layout/pms/menu-education-location-management",
         "/_layout/pms/menu-education-register-detail",
         "/_layout/pms/menu-management",
@@ -3249,6 +3273,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-channel-open-management": {
       "filePath": "_layout/pms/menu-channel-open-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-channel-register": {
+      "filePath": "_layout/pms/menu-channel-register.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-education-location-management": {

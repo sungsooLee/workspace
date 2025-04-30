@@ -106,3 +106,19 @@ export function useDeleteUser(mutationOptions = {}) {
     isError,
   };
 }
+
+export function useVerifyPassword(mutationOptions = {}) {
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.verifyPassword(),
+    //onSuccess: async (data: any, variables, context) => {},
+    ...mutationOptions,
+  });
+
+  return {
+    verify: (payload: string, callback?: MutateCallback<any>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}

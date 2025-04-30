@@ -32,7 +32,7 @@ function AuthToolFormFieldComponent({
             label: (
               <div>
                 <IcoPhone02 width={48} height={48} className="ico1" />
-                <span>휴대폰 인증</span>
+                <span>{t('LABEL.common.authToolTypePhone')}</span>
               </div>
             ),
           },
@@ -41,7 +41,7 @@ function AuthToolFormFieldComponent({
             label: (
               <div>
                 <IcoMail width={48} height={48} className="ico2" />
-                <span>이메일 인증</span>
+                <span>{t('LABEL.common.authToolTypeEmail')}</span>
               </div>
             ),
           },

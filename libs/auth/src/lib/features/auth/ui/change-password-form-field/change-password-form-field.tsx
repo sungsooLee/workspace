@@ -38,7 +38,7 @@ function ChangePasswordFormFieldComponent({
         onClick={() => {
           openModal({
             width: isMobile ? undefined : 'sm',
-            content: <ChangePasswordModal widget={{}} />,
+            content: <ChangePasswordModal />,
             onClose: (password?: any) => {
               if (!password) {
                 return;
@@ -53,7 +53,7 @@ function ChangePasswordFormFieldComponent({
           });
         }}
       >
-        {t('LABEL.UPDATE_PASSWORD')}
+        {t('LABEL.common.passwordChange')}
       </Button>
     </>
   );

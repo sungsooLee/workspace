@@ -1,9 +1,15 @@
 import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, Button, Tooltip } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalTitle, Popover } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
 
 import styles from './education-place-popup.module.css';
 
 import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
+
+// 약도보기 popover
+const CopyPopoverCompoment = () => {
+  return <p className={styles.copy}>주소를 복사하였습니다</p>;
+};
 
 const EducationPlacePopupComponent = () => {
   return (
@@ -21,9 +27,14 @@ const EducationPlacePopupComponent = () => {
               <dt>주소 :</dt>
               <dd>
                 서울 강남구 테헤란로 510
-                <Tooltip side="bottom" align="start" content={'주소를 복사하였습니다'}>
-                  주소복사
-                </Tooltip>
+                <Popover
+                  popoverContent={<CopyPopoverCompoment />}
+                  side="bottom"
+                  align={isMobile ? 'center' : 'start'}
+                  sideOffset={10}
+                >
+                  <span>주소복사</span>
+                </Popover>
               </dd>
             </dl>
           </div>

@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Progress, useModal } from '@learnway/ui';
 import { IcoMessageText, IcoCheck, IcoShare, IcoStar } from '@learnway/icons';
 
-import type { EmbedWidgetProps } from '../widget-container/widget-container';
+import type { EmbedWidgetProps } from '../../widget-container/widget-container';
 //import { CompletionStatusModal } from './widget-preview-modal';
 //import type { Widget } from '../../../../types';
 import styles from './completion-status.module.css';

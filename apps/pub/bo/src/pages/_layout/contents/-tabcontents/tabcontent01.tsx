@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './tabcontents01.module.css';
-import titleStyles from './title.module.css'; // 타이틀 style
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 style
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import {
   // Button,

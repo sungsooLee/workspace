@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_auth/search-account/')({
       },
     },
     meta: {
-      title: 'LABEL.ACCOUNT_PASSWORD_SEARCH',
+      title: 'LABEL.common.accountPasswordSearch',
     },
   }),
 });

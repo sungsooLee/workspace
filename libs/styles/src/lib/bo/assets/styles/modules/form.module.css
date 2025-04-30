@@ -93,6 +93,12 @@
   &.form_auto {
     @apply flex !w-auto flex-shrink-0 flex-grow-0 items-end justify-end;
   }
+  &.direction_col {
+    @apply !flex-col;
+    .input_box > div {
+      @apply pt-[12px];
+    }
+  }
 }
 .input_box {
   @apply flex w-full items-center space-x-[8px];
@@ -155,6 +161,9 @@
   }
   .sub_text {
     @apply body_bo_4_r !ml-0 text-[var(--gray6)];
+  }
+  .info_text {
+    @apply body_bo_4_r ml-[10px] flex-auto shrink-0 text-[var(--gray7)];
   }
   &.type2 {
     @apply mt-0;
