@@ -231,7 +231,7 @@
     @apply fill-[#00afd5];
   }
   &.error svg {
-    @apply fill-[#ff4646];
+    @apply fill-[#00afd5];
   }
 }
 .dash {
