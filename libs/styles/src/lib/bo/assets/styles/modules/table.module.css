@@ -33,5 +33,8 @@
     .box {
       @apply flex items-center justify-between pr-[80px];
     }
+    & + [class*='title_wrap'] {
+      @apply !mt-[32px] !border-0;
+    }
   }
 }
