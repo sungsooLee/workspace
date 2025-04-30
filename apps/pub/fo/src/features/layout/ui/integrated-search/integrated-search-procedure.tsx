@@ -1,15 +1,52 @@
-import { useState } from 'react';
-import { Button, EmptyText } from '@learnway/ui';
+import React, { useState } from 'react';
+import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-
-import { IcoArrowForward } from '@learnway/icons';
+import { Button, EmptyText, Pagination } from '@learnway/ui';
+import { ThumnailList } from '../../../../features/layout';
 
 import styles from './integrated-search-procedure.module.css';
 
 const IntegratedSearchProcedureComponent = () => {
+  // pagenation
+  const [page, setPage] = React.useState(1);
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  // list (가로형, 세로형) 변경
+  const [listUi, setListUi] = useState('vertical');
+  const list_ui = () => {
+    if (listUi === 'vertical') {
+      setListUi('horizontal'); // 가로형
+    } else {
+      setListUi('vertical'); // 세로형
+    }
+  };
+
   return (
     <div className={`${styles.start} ${styles.procedure}`}>
-      {/* 검색 없음 */}
+      {/* 검색결과 있음 */}
+      <div className={styles.list}>
+        <div className={cn(styles.list_box, styles[listUi])}>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+          <ThumnailList direction={listUi}></ThumnailList>
+        </div>
+        {/* pagination */}
+        <Pagination
+          className={cn(styles.pagenation, styles.paginationItem)}
+          count={3}
+          page={page}
+          onChange={handlePageChange}
+        />
+      </div>
+
+      {/* 검색결과 없음 */}
       <div className={styles.empty}>
         <EmptyText
           hideTitle
