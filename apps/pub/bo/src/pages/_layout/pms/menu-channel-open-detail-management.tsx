@@ -6,7 +6,7 @@ import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { Textarea, Button, Tooltip } from '@/libs/ui/src';
+import { Textarea, Button, Tooltip } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-open-detail-management')({
   component: RouteComponent,

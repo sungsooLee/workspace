@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs, Button } from '@learnway/ui';
+import { Tabs } from '@learnway/ui';
 
 /* tab contents */
 import { ChannelBasicInfo } from './-tabcontents/channel-basic-info';

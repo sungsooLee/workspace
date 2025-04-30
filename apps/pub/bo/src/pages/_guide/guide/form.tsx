@@ -16,7 +16,7 @@ import {
 } from '@learnway/ui';
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import formStyles from '../../../assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,
