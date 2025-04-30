@@ -226,14 +226,16 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '',
       description: '',
+      maxLength: 10,
     },
     {
       name: '과정내용',
-      type: 'text-area',
+      type: 'textarea',
       label: t('과정내용'),
       value: '',
       placeholder: '',
       description: '',
+      maxLength: 10,
     },
     {
       name: '대표이미지',

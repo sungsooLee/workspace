@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -73,6 +73,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
             resize && styles[resize],
             size && styles[size],
           )}
+          maxLength={maxLength > 0 ? maxLength : undefined}
           disabled={disabled}
           readOnly={readOnly}
           onChange={onChange}
