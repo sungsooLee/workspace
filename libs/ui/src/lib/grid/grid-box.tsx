@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoSetting, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -219,7 +219,13 @@ const GridBoxComponent = <T extends object>(
           )}
           {/* 추가 */}
           {showAdd && (
-            <Button variant="outline" size="sm" label={t('추가')} onClick={handleAddClick} />
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('추가')}
+              icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
+              onClick={handleAddClick}
+            />
           )}
           {/* 행추가 */}
           {showAddRow && (

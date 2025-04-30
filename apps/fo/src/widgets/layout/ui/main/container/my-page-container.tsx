@@ -1,5 +1,6 @@
 import { memo, ReactNode } from 'react';
 import { useActiveMenuDepthState } from '@learnway/auth';
+import { useTranslation } from 'react-i18next';
 
 import { useCurrentRoute } from '@learnway/hooks';
 
@@ -10,6 +11,7 @@ interface MyPageContainerComponentProps {
 }
 
 function MyPageContainerComponent({ children }: MyPageContainerComponentProps) {
+  const { t } = useTranslation();
   const [activeMenuDepth] = useActiveMenuDepthState();
 
   const { meta } = useCurrentRoute();
@@ -20,7 +22,7 @@ function MyPageContainerComponent({ children }: MyPageContainerComponentProps) {
 */
   return (
     <div className={`${styles.start}`}>
-      <h2>{meta?.title}</h2>
+      <h2>{t(meta?.title)}</h2>
       {children}
     </div>
   );

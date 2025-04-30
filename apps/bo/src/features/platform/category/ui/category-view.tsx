@@ -8,10 +8,9 @@ import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 
-import { DuplicateCodeGuideText } from '@features/category/ui/category-code-input';
-import { findMenuPathById } from '@features/category/service/category.service';
-import { FormRow } from '@shared/ui/form';
+import { DuplicateCodeGuideText, findMenuPathById } from '@features/platform/category';
 import { useCheckExistsCategory, useFetchCategoryDetail } from '@entities/category';
+import { FormRow } from '@shared/ui/form';
 
 const CategoryViewComponent: FC<any> = ({
   treeData,
@@ -333,7 +332,7 @@ const CategoryViewComponent: FC<any> = ({
   );
 };
 
-export default CategoryViewComponent;
+export const CategoryView = CategoryViewComponent;
 
 const formConfig: DynamicFormConfig = {
   builders: [

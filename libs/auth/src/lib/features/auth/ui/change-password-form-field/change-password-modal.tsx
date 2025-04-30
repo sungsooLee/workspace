@@ -62,11 +62,11 @@ const ChangePasswordModalComponent = () => {
           </ContentsRow>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd>{t('LABEL.message.cautionPasswordInput_01')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput_02')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput_03')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput_04')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput_05')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
+            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
           </NoticeBox>
         </ModalBody>
         <ModalFooter>

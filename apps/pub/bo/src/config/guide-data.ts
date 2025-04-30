@@ -573,7 +573,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-open-detail-management',
     screenId: 'NLP_BO_CHN_1402',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-30',
     lastUpdateDate: '',
     remarks: '개발 확인 후 작업 예정', // 비고
   },
@@ -582,7 +582,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-management',
     screenId: 'NLP_BO_CHN_1000',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -591,7 +591,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-register',
     screenId: 'NLP_BO_CHN_1001',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -606,7 +606,7 @@ export const guideData = [
   },
   {
     screenName: 'PMS/채널상세_채널기본정보(Tab)',
-    pageId: 'pms/menu-channel-register',
+    pageId: 'pms/menu-channel-detail',
     screenId: 'NLP_BO_CHN_1201',
     pageType: 'Page',
     completionDate: '',
