@@ -68,7 +68,7 @@ const gridConfig = {
       ),
     },
     {
-      fileName: t('자료 없음'),
+      fileName: t('* 다운로드 자료 전달 받아야 함 *'),
       downloadButton: <Button className="link">{t('다운로드')}</Button>,
     },
   ],
