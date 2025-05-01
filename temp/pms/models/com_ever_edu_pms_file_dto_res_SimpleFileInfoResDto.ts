@@ -16,7 +16,7 @@ export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
      */
     fileName?: string;
     /**
-     * 저정소유형코드 Enum(FileUploadStatus) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
      */
     reposType?: com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto.reposType;
     /**
@@ -36,20 +36,20 @@ export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
      */
     extType?: string;
     /**
-     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
     uploadStatus?: com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto.uploadStatus;
 };
 export namespace com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto {
     /**
-     * 저정소유형코드 Enum(FileUploadStatus) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
      */
     export enum reposType {
         S3 = 'S3',
         HMG = 'HMG',
     }
     /**
-     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
     export enum uploadStatus {
         COMPLETE = 'COMPLETE',

@@ -6,8 +6,8 @@ import type { com_ever_edu_pms_role_dto_res_RoleResDto } from './com_ever_edu_pm
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
 export type org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto = {
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<com_ever_edu_pms_role_dto_res_RoleResDto>;
     number?: number;

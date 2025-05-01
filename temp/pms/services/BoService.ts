@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_enums_EnumValue } from '../models/com_ever_edu_enums_EnumValue';
 import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto';
@@ -19,7 +18,6 @@ import type { com_ever_edu_pms_common_cd_dto_req_CommonCdSearchReqDto$SearchByAd
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto';
 import type { com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin';
-import type { com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
@@ -411,7 +409,7 @@ export class BoService {
     }
     /**
      * 다국어 목록 조회
-     * 다국어 목록 조회
+     * 다국어 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
@@ -1577,13 +1575,13 @@ export class BoService {
      * 테넌트메뉴를 등록한다.
      * @param tenantId
      * @param requestBody
-     * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
+     * @returns any OK
      * @throws ApiError
      */
     public static saveMenu(
         tenantId: number,
-        requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto,
-    ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
+        requestBody: Array<com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto>,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/menus/tenant/{tenantId}',
@@ -1687,7 +1685,7 @@ export class BoService {
     }
     /**
      * 라벨/메세지 목록 조회
-     * 라벨/메세지 목록 조회
+     * 라벨/메세지 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin OK
@@ -1963,7 +1961,7 @@ export class BoService {
     }
     /**
      * 회사 목록 조회
-     * 회사 목록 정보를 조회한다.
+     * 회사 목록 정보를 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto OK
      * @throws ApiError
@@ -2012,7 +2010,7 @@ export class BoService {
     }
     /**
      * 공통코드 목록 조회
-     * 공통코드 목록 조회
+     * 공통코드 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin OK
@@ -2064,7 +2062,7 @@ export class BoService {
     }
     /**
      * 공통코드그룹 목록 조회
-     * 공통코드그룹 목록 조회
+     * 공통코드그룹 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin OK
@@ -2245,7 +2243,7 @@ export class BoService {
     }
     /**
      * 위젯 전체 조회
-     * 위젯 전체를 반환한다.
+     * 위젯 전체를 반환한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin OK
@@ -3031,150 +3029,6 @@ export class BoService {
             url: '/admin/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 단건 조회(셀렉트박스 노출용)
-     * 공통 코드 단건을 조회하여 반환한다.
-     * @param groupId 그룹코드ID
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getCodeList1(
-        groupId: string,
-    ): CancelablePromise<Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code',
-            query: {
-                'groupId': groupId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 다건 조회(셀렉트박스 노출용)
-     * 공통 코드 다건을 조회하여 반환한다.
-     * @param groupIds 1개 이상의 그룹코드ID를","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getMultiCodeList1(
-        groupIds: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code/groups',
-            query: {
-                'groupIds': groupIds,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달, 미지정 시 전체
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList1(
-        enumNames?: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code/enums',
-            query: {
-                'enumNames': enumNames,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드(enum) 목록 조회
-     * 등록된 모든 enum의 이름을 반환한다.
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static findAllEnums(): CancelablePromise<Array<string>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enums',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회(셀렉트박스 노출용)
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList2(
-        enumNames: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enums/{enumNames}',
-            path: {
-                'enumNames': enumNames,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드(enum) 단건 조회
-     * 존재하는 enum을 찾아 반환한다.
-     * @param enumName
-     * @returns com_ever_edu_enums_EnumValue OK
-     * @throws ApiError
-     */
-    public static findEnum(
-        enumName: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_enums_EnumValue>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enum/{enumName}',
-            path: {
-                'enumName': enumName,
             },
             errors: {
                 400: `Bad Request`,

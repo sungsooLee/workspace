@@ -6,7 +6,6 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '
 import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
-import type { com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
@@ -745,81 +744,6 @@ export class FoService {
             url: '/user/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 단건 조회(셀렉트박스 노출용)
-     * 공통 코드 단건을 조회하여 반환한다.
-     * @param groupId 그룹코드ID
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getCodeList(
-        groupId: string,
-    ): CancelablePromise<Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/code',
-            query: {
-                'groupId': groupId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 다건 조회(셀렉트박스 노출용)
-     * 공통 코드 다건을 조회하여 반환한다.
-     * @param groupIds 1개 이상의 그룹코드ID를","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getMultiCodeList(
-        groupIds: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/code/groups',
-            query: {
-                'groupIds': groupIds,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달, 미지정 시 전체
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList(
-        enumNames?: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/code/enums',
-            query: {
-                'enumNames': enumNames,
             },
             errors: {
                 400: `Bad Request`,
