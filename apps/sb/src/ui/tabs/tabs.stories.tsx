@@ -53,6 +53,10 @@ export const Template: any = (args: any) => {
         <h1 className={'mb-3 text-3xl font-bold italic'}>type : progress</h1>
         <Tabs type={'progress'} size={'md'} items={items} />
       </div>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : sub-progress</h1>
+        <Tabs type={'sub-progress'} size={'md'} items={items} />
+      </div>
     </div>
   );
 };
