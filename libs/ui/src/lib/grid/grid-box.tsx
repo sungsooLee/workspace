@@ -227,16 +227,6 @@ const GridBoxComponent = <T extends object>(
               onClick={handleAddClick}
             />
           )}
-          {/* 추가 */}
-          {showAdd && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('추가')}
-              icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
-              onClick={handleAddClick}
-            />
-          )}
           {/* 행추가 */}
           {showAddRow && (
             <Button variant="outline" size="sm" label={t('행추가')} onClick={handleAddRowClick} />
