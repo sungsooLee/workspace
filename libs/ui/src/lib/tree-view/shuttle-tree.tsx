@@ -144,9 +144,7 @@ export const ShuttleTreeWithChips = ({
         </div>
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className={cn('w-full py-4 text-center text-gray-500', styles.no_data)}>
-              선택된 항목이 없습니다.
-            </div>
+            <div className={styles.no_data}>선택된 항목이 없습니다.</div>
           ) : (
             actualSelectedItems.map((item: any) => (
               <div key={item.key} className={styles.selected_item}>

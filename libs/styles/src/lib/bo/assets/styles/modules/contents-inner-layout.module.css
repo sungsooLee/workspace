@@ -3,10 +3,10 @@
   &.wrap {
     @apply relative flex w-full justify-between;
     &::before {
-      @apply absolute left-1/2 top-0 flex h-[calc(100%-32px)] w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
+      @apply absolute left-1/2 top-0 flex h-full w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
     }
     .inner {
-      @apply scrollbar relative z-[1] h-full max-h-[calc(100vh-352px)] min-h-[calc(100vh-384px)] w-[calc(50%-32px)] overflow-y-auto;
+      @apply scrollbar relative z-[1] h-[calc(100vh-352px)] w-[calc(50%-32px)] overflow-y-auto;
       .inner_contents {
         @apply py-[16px] pb-[32px];
       }
