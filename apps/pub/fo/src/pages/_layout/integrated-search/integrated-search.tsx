@@ -120,66 +120,106 @@ function RouteComponent() {
 
         {/* result content */}
         <div className={styles.result_wrap}>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>과정</strong>
-              <Button onClick={() => setActiveButton(1)}>
-                과정 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          {/* 
+          activeButton
+          0 : 전체
+          1 : 과정
+          2 : 숏츠
+          3 : 채널
+          4 : 러닝랩
+          5 : 지식공유
+          6 : 코칭
+          */}
+          {/* 과정 컨텐츠 */}
+          {activeButton === 0 || activeButton === 1 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>과정</strong>
+                <Button onClick={() => setActiveButton(1)}>
+                  과정 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchProcedure />
             </div>
-            <IntegratedSearchProcedure />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>숏츠</strong>
-              <Button onClick={() => setActiveButton(2)}>
-                숏츠 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          ) : (
+            ''
+          )}
+          {/* 숏츠 컨텐츠 */}
+          {activeButton === 0 || activeButton === 2 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>숏츠</strong>
+                <Button onClick={() => setActiveButton(2)}>
+                  숏츠 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchShorts />
             </div>
-            <IntegratedSearchShorts />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>채널</strong>
-              <Button onClick={() => setActiveButton(3)}>
-                채널 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          ) : (
+            ''
+          )}
+          {/* 채널 컨텐츠 */}
+          {activeButton === 0 || activeButton === 3 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>채널</strong>
+                <Button onClick={() => setActiveButton(3)}>
+                  채널 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchChannel />
             </div>
-            <IntegratedSearchChannel />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>러닝랩</strong>
-              <Button onClick={() => setActiveButton(4)}>
-                러닝랩 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          ) : (
+            ''
+          )}
+          {/* 러닝랩 컨텐츠 */}
+          {activeButton === 0 || activeButton === 4 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>러닝랩</strong>
+                <Button onClick={() => setActiveButton(4)}>
+                  러닝랩 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchRunning />
             </div>
-            <IntegratedSearchRunning />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>지식공유</strong>
-              <Button onClick={() => setActiveButton(5)}>
-                지식공유 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          ) : (
+            ''
+          )}
+          {/* 지식공유 컨텐츠 */}
+          {activeButton === 0 || activeButton === 5 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>지식공유</strong>
+                <Button onClick={() => setActiveButton(5)}>
+                  지식공유 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchKnowledge />
             </div>
-            <IntegratedSearchKnowledge />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>코칭</strong>
-              <Button onClick={() => setActiveButton(6)}>
-                코칭 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
+          ) : (
+            ''
+          )}
+          {/* 코칭 컨텐츠 */}
+          {activeButton === 0 || activeButton === 6 ? (
+            <div>
+              <div className={styles.tit_box}>
+                <strong>코칭</strong>
+                <Button onClick={() => setActiveButton(6)}>
+                  코칭 더보기
+                  <IcoArrowForward width={16} height={16} stroke="#131c30" />
+                </Button>
+              </div>
+              <IntegratedSearchCoaching />
             </div>
-            <IntegratedSearchCoaching />
-          </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </div>

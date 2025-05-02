@@ -97,6 +97,7 @@ import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
+import { Route as GuideGuideStepperTabsImport } from './pages/_guide/guide/stepper-tabs'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
@@ -681,6 +682,12 @@ const GuideGuideTableRoute = GuideGuideTableImport.update({
 const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideStepperTabsRoute = GuideGuideStepperTabsImport.update({
+  id: '/guide/stepper-tabs',
+  path: '/guide/stepper-tabs',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1366,6 +1373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideStepperImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/stepper-tabs': {
+      id: '/_guide/guide/stepper-tabs'
+      path: '/guide/stepper-tabs'
+      fullPath: '/guide/stepper-tabs'
+      preLoaderRoute: typeof GuideGuideStepperTabsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/switch': {
       id: '/_guide/guide/switch'
       path: '/guide/switch'
@@ -1856,6 +1870,7 @@ interface GuideRouteChildren {
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
+  GuideGuideStepperTabsRoute: typeof GuideGuideStepperTabsRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
@@ -1905,6 +1920,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
+  GuideGuideStepperTabsRoute: GuideGuideStepperTabsRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
@@ -2108,6 +2124,7 @@ export interface FileRoutesByFullPath {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2231,6 +2248,7 @@ export interface FileRoutesByTo {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2357,6 +2375,7 @@ export interface FileRoutesById {
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
+  '/_guide/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
@@ -2482,6 +2501,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2604,6 +2624,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2728,6 +2749,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
+    | '/_guide/guide/stepper-tabs'
     | '/_guide/guide/switch'
     | '/_guide/guide/table'
     | '/_guide/guide/tabs'
@@ -2882,6 +2904,7 @@ export const routeTree = rootRoute
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
+        "/_guide/guide/stepper-tabs",
         "/_guide/guide/switch",
         "/_guide/guide/table",
         "/_guide/guide/tabs",
@@ -3198,6 +3221,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/stepper": {
       "filePath": "_guide/guide/stepper.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/stepper-tabs": {
+      "filePath": "_guide/guide/stepper-tabs.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/switch": {

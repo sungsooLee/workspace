@@ -25,52 +25,58 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
                 </span>
-                <span className={styles.stats}>
-                  <em className={styles.learning}>학습완료</em>
-                  <Button
-                    onClick={() =>
-                      openModal({
-                        width: isMobile ? 'm_full' : 'sm',
-                        content: <NoticeDetailPopup />,
-                      })
-                    }
-                  >
-                    학습이력 <IcoArrowDown />
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em className={styles.learning}>학습완료</em>
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: isMobile ? 'm_full' : 'sm',
+                          content: <NoticeDetailPopup />,
+                        })
+                      }
+                    >
+                      학습이력 <IcoArrowDown />
+                    </Button>
+                  </span>
+                  {/* 학습전 variant="line" 학습중 variant="primary" */}
+                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
                   </Button>
-                </span>
-                {/* 학습전 variant="line" 학습중 variant="primary" */}
-                <Button variant="line" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                </div>
               </li>
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
-                <span className={styles.stats}>
-                  <em className={styles.learning}>학습중</em>
-                  <Button
-                    onClick={() =>
-                      openModal({
-                        width: isMobile ? 'm_full' : 'sm',
-                        content: <NoticeDetailPopup />,
-                      })
-                    }
-                  >
-                    학습이력 <IcoArrowDown />
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em className={styles.learning}>학습중</em>
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: isMobile ? 'm_full' : 'sm',
+                          content: <NoticeDetailPopup />,
+                        })
+                      }
+                    >
+                      학습이력 <IcoArrowDown />
+                    </Button>
+                  </span>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
                   </Button>
-                </span>
-                <Button variant="primary" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                </div>
               </li>
               <li>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
-                <span className={styles.stats}>
-                  <em>학습전 (15분)</em>
-                </span>
-                <Button variant="primary" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em>학습전 (15분)</em>
+                  </span>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
+                  </Button>
+                </div>
               </li>
             </ul>
           </div>
@@ -86,52 +92,58 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
                 </span>
-                <span className={styles.stats}>
-                  <em className={styles.learning}>학습완료</em>
-                  <Button
-                    onClick={() =>
-                      openModal({
-                        width: isMobile ? 'm_full' : 'sm',
-                        content: <NoticeDetailPopup />,
-                      })
-                    }
-                  >
-                    학습이력 <IcoArrowDown />
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em className={styles.learning}>학습완료</em>
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: isMobile ? 'm_full' : 'sm',
+                          content: <NoticeDetailPopup />,
+                        })
+                      }
+                    >
+                      학습이력 <IcoArrowDown />
+                    </Button>
+                  </span>
+                  {/* 학습전 variant="line" 학습중 variant="primary" */}
+                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
                   </Button>
-                </span>
-                {/* 학습전 variant="line" 학습중 variant="primary" */}
-                <Button variant="line" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                </div>
               </li>
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
-                <span className={styles.stats}>
-                  <em className={styles.learning}>학습중</em>
-                  <Button
-                    onClick={() =>
-                      openModal({
-                        width: isMobile ? 'm_full' : 'sm',
-                        content: <NoticeDetailPopup />,
-                      })
-                    }
-                  >
-                    학습이력 <IcoArrowDown />
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em className={styles.learning}>학습중</em>
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: isMobile ? 'm_full' : 'sm',
+                          content: <NoticeDetailPopup />,
+                        })
+                      }
+                    >
+                      학습이력 <IcoArrowDown />
+                    </Button>
+                  </span>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
                   </Button>
-                </span>
-                <Button variant="primary" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                </div>
               </li>
               <li>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
-                <span className={styles.stats}>
-                  <em>학습전 (15분)</em>
-                </span>
-                <Button variant="primary" size="sm" className={styles.btn}>
-                  학습하기
-                </Button>
+                <div className={styles.stats_div}>
+                  <span className={styles.stats}>
+                    <em>학습전 (15분)</em>
+                  </span>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                    학습하기
+                  </Button>
+                </div>
               </li>
             </ul>
           </div>

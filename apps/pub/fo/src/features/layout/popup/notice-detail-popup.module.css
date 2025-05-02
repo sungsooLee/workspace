@@ -3,3 +3,12 @@
     @apply body_3_r mt-[16px] text-[var(--gray8)];
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .text_info {
+      }
+    }
+  }
+}
