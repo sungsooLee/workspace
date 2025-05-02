@@ -56,7 +56,7 @@
     @apply border-[1px] border-solid border-[var(--secondary3)] text-[var(--secondary3)];
   }
   &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[var(--gray5)];
+    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
   }
 }
 .gray {
@@ -83,7 +83,7 @@
     @apply border-[1px] border-solid border-[var(--gray6)] text-[var(--gray9)];
   }
   &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] !font-normal text-[var(--gray5)];
+    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] !font-normal text-[var(--gray5)];
     svg {
       @apply stroke-[var(--gray5)];
     }
