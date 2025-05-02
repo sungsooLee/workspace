@@ -1,41 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC } from 'react';
 import {
-  Badge,
   Button,
   DndFileProgress,
   ModalBody,
   ModalContainer,
   ModalFooter,
-  Progress,
+  ModalTitle,
+  UppyUpload,
   useModal,
 } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { useFileUploader } from '@learnway/hooks';
+import { useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { cn } from '@learnway/shared';
 
-const LearningResourceFileUploadModalComponent = () => {
+interface Props {
+  channel: {
+    channelId: string;
+    channelName: string;
+  };
+}
+
+const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel }) => {
   const { close } = useModal();
-  const { files, addFiles, onRemove, onRetry, onCancel, onResume } = useFileUploader(uploadConfig);
+  const acceptFiles = ['xlsx'];
+  const maxFileCount = 1;
+  const maxFileSize = 1024 * 1024 * 10;
+  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
+    s3Path: 'upload/leaning/resource/video',
+    maxFileCount,
+    acceptFiles,
+  });
 
   return (
     <ModalContainer>
-      <ModalBody>
-        <div className={popupStyles.wrap}>
-          <div className={popupStyles.title_wrap}>
-            <h2 className={popupStyles.title}>{'파일 업로드'}</h2>
-            <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
-            <p className={styles.file_status_view}>
-              <span className={styles.file_completed}>
-                {'완료'} <em className={styles.num}>{'4'}</em>
-              </span>
-              <span className={styles.file_failed}>
-                {'실패'} <em className={styles.num}>{'2'}</em>
-              </span>
-              <span className={styles.file_ing}>
-                파일 올리는중 <em className={styles.ing}>1/1</em>
-              </span>
-            </p>
-            <DndFileProgress
+      {/*<DndFileProgress
               files={files}
               addFiles={addFiles}
               onRetry={onRetry}
@@ -44,6 +42,30 @@ const LearningResourceFileUploadModalComponent = () => {
               multiple
             />
             <p className={styles.guide_text}>
+              {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
+            </p>*/}
+      <ModalTitle>{'파일 업로드'}</ModalTitle>
+      <ModalBody>
+        <div className={popupStyles.wrap}>
+          <div className={popupStyles.selected_area}>
+            <p className={popupStyles.selected_text}>{channel.channelName}</p>
+          </div>
+          <div className={popupStyles.title_wrap}>
+            <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
+          </div>
+          <div className={popupStyles.pop_contents}>
+            <DndFileProgress
+              files={files}
+              maxFileCount={maxFileCount}
+              maxFileSize={maxFileSize}
+              addFiles={addFiles}
+              acceptFiles={acceptFiles}
+              onRemove={onRemove}
+              onPause={onPause}
+              onResume={onResume}
+              onRetry={onRetry}
+            />
+            <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
               {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
             </p>
           </div>
