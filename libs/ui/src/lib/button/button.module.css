@@ -60,24 +60,18 @@
   }
 }
 .gray {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--white)] text-[var(--gray8)];
+  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] text-[var(--gray8)];
   &:hover {
-    @apply border-[1px] border-solid border-[var(--gray5)] text-[var(--gray7)];
+    @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
   }
   &:active {
-    @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray7)];
+    @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
+    svg {
+      @apply stroke-[var(--gray8)];
+    }
   }
   &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[var(--gray5)];
-  }
-  &.lg {
-    @apply border-[var(--gray6)];
-    &:hover {
-      @apply border-[var(--gray5)];
-    }
-    &:active {
-      @apply border-[var(--gray7)];
-    }
+    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
   }
 }
 .gray2 {
@@ -96,24 +90,24 @@
   }
 }
 .search {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[var(--gray9)];
+  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[var(--gray8)];
   svg {
     @apply -ml-[2px] mr-[2px];
   }
   &:hover {
-    @apply border-[1px] border-solid border-[var(--gray4)] text-[var(--gray7)];
+    @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
     svg {
       @apply stroke-[var(--gray7)];
     }
   }
   &:active {
-    @apply border-[1px] border-solid border-[var(--gray4)] text-[var(--gray9)];
+    @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
     svg {
-      @apply stroke-[var(--gray9)];
+      @apply stroke-[var(--gray8)];
     }
   }
   &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] text-[var(--gray5)];
+    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
     svg {
       @apply stroke-[var(--gray5)];
     }
