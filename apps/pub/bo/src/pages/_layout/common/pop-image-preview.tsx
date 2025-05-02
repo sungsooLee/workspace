@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { ModalBody, ModalContainer, useModal, Button } from '@learnway/ui';
 import { IcoDownload } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+
+// style
+import styles from './pop-image-preview.module.css';
 
 export const Route = createFileRoute('/_layout/common/pop-image-preview')({
   component: RouteComponent,
@@ -13,7 +17,7 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div></div>
+          <div className={cn(styles.start, styles.img_wrap)}></div>
         </ModalBody>
       </ModalContainer>
     );
