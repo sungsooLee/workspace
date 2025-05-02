@@ -1,7 +1,7 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
+import { IcoDownload, IcoMinus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -136,7 +136,8 @@ const GridBoxComponent = <T extends object>(
           {/* 전체 개수  */}
           {showTotalCount && (
             <div className={styles.sub_info}>
-              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
+              {t('LABEL.grid.header.all')}{' '}
+              <strong className={styles.num}>{data?.length || 0}</strong>
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
@@ -155,7 +156,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_all_select}
-              label={t('전체 선택')}
+              label={t('LABEL.grid.header.selectAll')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
@@ -165,7 +166,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_all_delete}
-              label={t('전체 삭제')}
+              label={t('LABEL.grid.header.removeAll')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
@@ -175,7 +176,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_upload}
-              label={t('CSV업로드')}
+              label={t('LABEL.grid.header.excelUpload')}
               icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
             />
           )}
@@ -185,23 +186,28 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_excel}
-              label={t('엑셀다운로드')}
+              label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
             />
           )}
           {/* 컬럼 설정 */}
-          {showColumnSettings && (
+          {/*{showColumnSettings && (*/}
+          {/*  <Button*/}
+          {/*    variant="outline"*/}
+          {/*    size="sm"*/}
+          {/*    label={t('LABEL.grid.header.columnSetting}*/}
+          {/*    icon={<IcoSetting width={16} height={16} stroke="#131C30" />}*/}
+          {/*    className="btn_setting"*/}
+          {/*  />*/}
+          {/*)}*/}
+          {/* 추가 */}
+          {showAdd && (
             <Button
               variant="outline"
               size="sm"
-              label={t('항목설정')}
-              icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
-              className="btn_setting"
+              label={t('LABEL.grid.header.add')}
+              onClick={handleAddClick}
             />
-          )}
-          {/* 추가 */}
-          {showAdd && (
-            <Button variant="outline" size="sm" label={t('추가')} onClick={handleAddClick} />
           )}
         </div>
       </div>

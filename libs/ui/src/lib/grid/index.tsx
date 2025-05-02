@@ -49,7 +49,8 @@ import { Dropdown } from '../dropdown/dropdown';
 import { DropdownOption } from '../type';
 
 import styles from './grid.module.css';
-import { isEmpty } from 'lodash'; // grid module CSS
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next'; // grid module CSS
 
 const GridComponent = forwardRef(
   <T extends object>(
@@ -78,6 +79,7 @@ const GridComponent = forwardRef(
     }: GridProps<T>,
     ref: any,
   ) => {
+    const { t } = useTranslation();
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
     const { open } = useModal();
@@ -657,7 +659,7 @@ const GridComponent = forwardRef(
       const renderEmptyMessage = () => {
         return (
           <div className={styles.empty_message_container}>
-            <p className={styles.empty_message}>{emptyMessage || '조회 결과가 없습니다.'}</p>
+            <p className={styles.empty_message}>{emptyMessage || t('LABEL.grid.emptyText')}</p>
           </div>
         );
       };

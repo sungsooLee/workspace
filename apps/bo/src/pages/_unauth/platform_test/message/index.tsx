@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { codeConfig } from '@learnway/config';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -10,6 +9,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { SplitPanel } from '@shared/ui';
 import { MessageDetail } from './-components/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
 
@@ -19,10 +19,10 @@ export const Route = createFileRoute('/_unauth/platform_test/message/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { t } = useTranslation<any>();
+  const { t } = useTranslation();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(-1);
+  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
 
   /**
    * 검색 실행 시 호출되는 핸들러
@@ -68,10 +68,10 @@ function RouteComponent() {
     });
   };
 
-  console.log('======>', {
-    gConfig,
-    code: codeConfig.getCodesByCodeGroup('labelMessageType'),
-  });
+  // console.log('======>', {
+  //   gConfig,
+  //   code: codeConfig.getCodesByCodeGroup('labelMessageType'),
+  // });
 
   return (
     <PageContainer scrollHidden={true}>
@@ -81,7 +81,7 @@ function RouteComponent() {
           variant="point"
           size="sm"
           onClick={() => handleMultilingualManageClick()}
-          label={t('다국어 관리')}
+          label={t('LABEL.button.multilingualManage')}
         />
       </ContentsButtons>
       <MainContents>
@@ -115,7 +115,7 @@ const searchConfig: any = {
       {
         name: 'labelMessageType',
         type: 'dropdown',
-        label: '분류',
+        label: t('LABEL.form.label.type'),
         value: '',
         options: [
           { value: '', label: '전체' },
@@ -126,19 +126,19 @@ const searchConfig: any = {
       {
         name: 'labelMessageMultilingulKey',
         type: 'text',
-        label: '라벨/메세지 코드',
+        label: t('LABEL.form.label.labelMessageCode'),
         value: '',
       },
       {
         name: 'labelMessageName',
         type: 'text',
-        label: '라벨명/메세지',
+        label: t('LABEL.form.label.labelMessage'),
         value: '',
       },
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: '사용여부',
+        label: t('LABEL.form.label.useYn'),
         value: '',
         options: [
           { value: '', label: '전체' },
@@ -157,14 +157,14 @@ const gridConfig = {
   //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
   // ],
   columns: [
-    { name: 'labelMessageType', label: '분류' },
+    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type') },
     {
       name: 'labelMessageMultilingulKey',
-      label: '라벨/메세지 코드',
+      label: t('LABEL.grid.column.labelMessageCode'),
     },
-    { name: 'labelMessageName', label: '라벨명/메세지' },
-    { name: 'createdBy', label: '등록자' },
-    { name: 'createdDate', label: '등록일' },
+    { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage') },
+    { name: 'createdBy', label: t('LABEL.grid.column.createdBy') },
+    { name: 'createdDate', label: t('LABEL.grid.column.createdDate') },
   ],
   pagination: {
     pageSize: 10,
