@@ -22,9 +22,12 @@ import {
   useFetchTenantCategory,
   useMappingTenantCategory,
   useDeleteTenantCategory,
+  useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchCategory } from '@entities/category';
 import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
+
+type ActionFunction = (payload: any) => void;
 
 const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeChange }) => {
   const [commonCategoryTreeData, setCommonCategoryTreeData] = useState([]);
@@ -45,7 +48,22 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   const { data: commonCategories } = useFetchCategory();
   const { data: tenantCategories, refetch } = useFetchTenantCategory(tenantId);
 
-  const { mapping: mappingTenantCategory } = useMappingTenantCategory(tenantId, {});
+  const { mapping: mappingTenantCategory } = useMappingTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      if (onNodeChange) {
+        onNodeChange();
+      }
+    },
+  });
+  const { move: moveTenantCategory } = useMoveTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      if (onNodeChange) {
+        onNodeChange();
+      }
+    },
+  });
 
   const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
     onSuccess: async (data: any) => {
@@ -88,52 +106,65 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   };
 
   const handleTargetAction = async (event: any) => {
-    console.log(event);
-    switch (event.type) {
-      case 'NODE_COPY':
-        console.log('event', event);
-        if (event.sourceTreeId === 'mapping-common-tree') {
-          const sourceCategoryId = event.sourceNode.key;
-          if (tenantCategoryTreeAllKeys.includes(sourceCategoryId)) {
-            alert('이미 있음');
-            return false;
-          }
-          console.log('sourceNode', event.sourceNode);
-          const payload: any = {};
-          payload.tenantId = tenantId;
-          payload.categoryId = event.sourceNode.key;
-          payload.data = {};
-          payload.data.destinationParentId = event.targetNode.parentKey;
-          payload.data.sortSeq = event.targetNode.sortSeq + 1;
-          console.log('payload', payload);
-          mappingTenantCategory(payload);
-          await refetch();
-          if (onNodeChange) {
-            onNodeChange();
-          }
-        }
+    const nodeInfo = event;
+    const sourceNode = event.sourceNode;
+    const targetNode = event.targetNode;
+    console.log('### event', event);
+    console.log('### sourceNode', sourceNode);
+    console.log('### targetNode', targetNode);
 
-        break;
-      default:
-        break;
-      // TODO. 노드 이동 수정 예정
-      //   case 'NODE_MOVE': {
-      //     const nodeInfo = event;
-      //     if (nodeInfo.position === 'INSIDE') {
-      //       onNodeMove(
-      //         nodeInfo.sourceNode.menuId,
-      //         nodeInfo.targetNode?.menuId,
-      //         nodeInfo.targetIndex ? nodeInfo.targetIndex : 1,
-      //       );
-      //     } else {
-      //       const targetIndex = nodeInfo.targetIndex || 1;
-      //       onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
-      //     }
+    let excutable: ActionFunction | undefined;
 
-      //     break;
+    let parentKey = targetNode.parentKey;
+    let sortSeq = 1;
+    let targetDepth = targetNode.depth;
+    switch (nodeInfo.position) {
+      case 'INSIDE':
+        parentKey = targetNode.key;
+        targetDepth = targetNode.depth + 1;
+        break;
+      case 'BEFORE':
+        sortSeq = targetNode.sortSeq;
+        break;
+      case 'AFTER':
+        sortSeq = targetNode.sortSeq + 1;
+        break;
     }
-
-    // useCreateMenuTenant(payload.sourceNode, {});
+    if (sourceNode.depth !== targetDepth) {
+      alert(
+        '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
+          sourceNode.depth +
+          '/dest:' +
+          targetDepth,
+      );
+      return false;
+    }
+    const sourceCategoryId = sourceNode.key;
+    switch (nodeInfo.type) {
+      case 'NODE_COPY':
+        if (nodeInfo.sourceTreeId !== 'mapping-common-tree') {
+          return false;
+        }
+        if (tenantCategoryTreeAllKeys.includes(sourceCategoryId)) {
+          alert('이미 있음');
+          return false;
+        }
+        excutable = mappingTenantCategory;
+        break;
+      case 'NODE_MOVE':
+        excutable = moveTenantCategory;
+        break;
+    }
+    if (excutable) {
+      const payload: any = {};
+      payload.tenantId = tenantId;
+      payload.categoryId = sourceNode.key;
+      payload.data = {};
+      payload.data.destinationParentId = parentKey;
+      payload.data.sortSeq = sortSeq;
+      console.log('### payload', payload);
+      excutable(payload);
+    }
   };
 
   const renderCommonCategorySelectButtons = (node: TreeNode, level: number) => {
@@ -190,18 +221,18 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
 
   useEffect(() => {
     if (tenantCategories) {
-      console.log('TenantCategories', tenantCategories);
+      console.log('### refetch! TenantCategories', tenantCategories);
       const transformedData = transformApiDataToTreeData(tenantCategories);
-      console.log('transformedData', transformedData);
+      console.log('### transformedData', transformedData);
       setTenantCategoryTreeData(transformedData);
-      if (
-        transformedData &&
-        transformedData.length > 0 &&
-        tenantCategoryTreeExpandedKeys.length === 0
-      ) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setTenantCategoryTreeExpandedKeys(firstLevelKeys);
+      console.log('### tenantCategoryTreeExpandedKeys', tenantCategoryTreeExpandedKeys);
+      if (transformedData && transformedData.length > 0) {
+        if (tenantCategoryTreeExpandedKeys.length === 0) {
+          const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+          setTenantCategoryTreeExpandedKeys(firstLevelKeys);
+        }
         const allKeys = getAllTreeKeys(transformedData);
+        console.log('## allKeys', allKeys);
         setTenantCategoryTreeAllKeys(allKeys);
       }
     }
@@ -312,7 +343,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                 <div className={layoutStyles.inner_contents}>
                   <TreeView
                     treeId="mapping-tenant-tree"
-                    type={'DRAG_DROP'}
+                    type={'SAME_LEVEL_ONLY'}
                     data={tenantCategoryTreeData}
                     nodeButtons={renderTenantCategoryDeleteButtons}
                     onAction={handleTargetAction}

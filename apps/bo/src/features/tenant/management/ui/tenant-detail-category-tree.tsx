@@ -59,7 +59,20 @@ const TenantCategoryTreeComponent: FC<any> = ({
         break;
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log(event);
+        console.log('### event', event);
+        const targetDepth =
+          nodeInfo.position === 'INSIDE'
+            ? nodeInfo.targetNode?.depth + 1
+            : nodeInfo.targetNode?.depth;
+        if (nodeInfo.sourceNode.depth !== targetDepth) {
+          alert(
+            '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
+              nodeInfo.sourceNode.depth +
+              '/dest:' +
+              targetDepth,
+          );
+          return false;
+        }
         if (nodeInfo.position === 'INSIDE') {
           onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.menuId, nodeInfo.targetIndex);
         }
