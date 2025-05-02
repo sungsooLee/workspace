@@ -9,6 +9,9 @@
       @apply scrollbar relative z-[1] h-[calc(100vh-352px)] w-[calc(50%-32px)] overflow-y-auto;
       .inner_contents {
         @apply py-[16px] pb-[32px];
+        [class*='nlp--contents-row'] {
+          @apply !pb-0;
+        }
       }
       &.type2 {
         @apply max-h-[calc(100vh-278px)] min-h-[calc(100vh-278px)];
