@@ -6,7 +6,6 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '
 import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
-import type { com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
@@ -30,6 +29,7 @@ import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../mod
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
+import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from '../models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -352,8 +352,8 @@ export class FoService {
         });
     }
     /**
-     * 채널 신청목록 조회
-     * 신청한 채널을 조회한다.
+     * 채널 신청 등록
+     * 신청한 채널을 신규 등록한다.
      * @param requestBody
      * @returns com_ever_edu_pms_channel_entity_ChannelRequestEntity OK
      * @throws ApiError
@@ -678,23 +678,20 @@ export class FoService {
     /**
      * 교육장소 목록 조회
      * 교육장소 목록 정보를 조회한다.
+     * @param pageable
      * @param paramDto
-     * @param page
-     * @param size
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceList(
+        pageable: org_springdoc_core_converters_models_Pageable,
         paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto,
-        page?: number,
-        size: number = 10,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/education/place',
             query: {
-                'page': page,
-                'size': size,
+                'pageable': pageable,
                 'paramDto': paramDto,
             },
             errors: {
@@ -709,18 +706,18 @@ export class FoService {
     /**
      * 교육장소 정보 조회
      * 교육장소 상세 정보를 조회한다.
-     * @param uuid
+     * @param educationPlaceUuid
      * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceInfo(
-        uuid: string,
+        educationPlaceUuid: string,
     ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/education/place/{uuid}',
+            url: '/user/api/v1/education/place/{educationPlaceUuid}',
             path: {
-                'uuid': uuid,
+                'educationPlaceUuid': educationPlaceUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -747,31 +744,6 @@ export class FoService {
             url: '/user/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회(셀렉트박스 노출용)
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList(
-        enumNames: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/codes/enums/{enumNames}',
-            path: {
-                'enumNames': enumNames,
             },
             errors: {
                 400: `Bad Request`,

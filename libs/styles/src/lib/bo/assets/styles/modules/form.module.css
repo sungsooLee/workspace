@@ -209,6 +209,9 @@
       }
     }
   }
+  .form_count {
+    @apply body_3_b ml-[4px] mr-[2px] !text-[var(--secondary1)];
+  }
   .tooltip {
     @apply ml-[2px] align-middle;
   }
@@ -228,7 +231,7 @@
     @apply fill-[#00afd5];
   }
   &.error svg {
-    @apply fill-[#ff4646];
+    @apply fill-[#00afd5];
   }
 }
 .dash {

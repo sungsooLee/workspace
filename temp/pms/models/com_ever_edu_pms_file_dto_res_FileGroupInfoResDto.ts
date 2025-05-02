@@ -11,15 +11,15 @@ export type com_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
      */
     groupUuid?: string;
     /**
-     * 업로드유형 Enum(FileUploadType) - ATTATCH|CONTENTS
+     * 업로드유형. 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
      */
     uploadType?: com_ever_edu_pms_file_dto_res_FileGroupInfoResDto.uploadType;
     /**
-     * 업무분류유형 Enum(FileAffairsType) - LMS|PMS|CMS
+     * 업무분류유형. 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
     affairsType?: com_ever_edu_pms_file_dto_res_FileGroupInfoResDto.affairsType;
     /**
-     * 저정소유형코드 Enum(RepositoryType) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
      */
     reposType?: com_ever_edu_pms_file_dto_res_FileGroupInfoResDto.reposType;
     /**
@@ -41,14 +41,14 @@ export type com_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
 };
 export namespace com_ever_edu_pms_file_dto_res_FileGroupInfoResDto {
     /**
-     * 업로드유형 Enum(FileUploadType) - ATTATCH|CONTENTS
+     * 업로드유형. 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
      */
     export enum uploadType {
         ATTATCH = 'ATTATCH',
         CONTENTS = 'CONTENTS',
     }
     /**
-     * 업무분류유형 Enum(FileAffairsType) - LMS|PMS|CMS
+     * 업무분류유형. 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
     export enum affairsType {
         LMS = 'LMS',
@@ -56,7 +56,7 @@ export namespace com_ever_edu_pms_file_dto_res_FileGroupInfoResDto {
         CMS = 'CMS',
     }
     /**
-     * 저정소유형코드 Enum(RepositoryType) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
      */
     export enum reposType {
         S3 = 'S3',

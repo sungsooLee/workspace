@@ -14,12 +14,8 @@ import {
   useMoveCategory,
   useUpdateCategory,
 } from '@entities/category/service/category.hook';
-import {
-  findNodeByMenuId,
-  transformApiDataToTreeData,
-} from '@features/category/service/category.service';
-import { CategoryTree } from '@features/category/ui/category-tree';
-import CategoryView from '@features/category/ui/category-view';
+import { findNodeByMenuId, transformApiDataToTreeData } from '@features/platform/category';
+import { CategoryTree, CategoryView } from '@features/platform/category';
 import { pageRouteConfig } from '@features/auth/index';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';

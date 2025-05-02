@@ -33,7 +33,7 @@ const PasswordVerifyModalComponent = () => {
 
   const handleVerifyError = () => {
     //setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
-    //router.navigate({ to: '/my-page/privacy', state: { confirmPassword: 'true' } as any });
+    router.navigate({ to: '/my-page/privacy', state: { confirmPassword: 'true' } as any });
   };
 
   return (

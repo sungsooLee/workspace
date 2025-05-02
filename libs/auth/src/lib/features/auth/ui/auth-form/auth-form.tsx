@@ -17,7 +17,7 @@ import {
 } from '../../../../entities/authorization';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
-import { MobileContainerFooter } from '../../../../shared/m.ui/container-footer/container-footer';
+import { MobileResponsiveContainerFooter, BrowserFooter, MobileFooter } from '../../../../shared';
 import { AUTH_TOOL_TYPE } from '../../../../types';
 
 import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
@@ -281,35 +281,34 @@ function AuthFormComponent({
         <dd>{t('LABEL.message.searchAccountNotice')}</dd>
       </NoticeBox>
 
-      <BrowserView>
-        <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-            {t('LABEL.common.cancel')}
-          </Button>
-          {sendedVerifyNumber ? (
-            <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
-              {t('LABEL.common.checkAuthNumber')}
+      <MobileResponsiveContainerFooter>
+        <BrowserFooter>
+          <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
+            <Button variant="gray" size="xl" onClick={() => handleCancel()}>
+              {t('LABEL.common.cancel')}
             </Button>
-          ) : (
-            <Button
-              variant="primary"
-              size="xl"
-              onClick={() => handleSendVerify()}
-              disabled={includeUserId}
-            >
-              {t('LABEL.common.checkAuthRequest')}
-            </Button>
-          )}
-        </div>
-      </BrowserView>
-
-      <MobileView>
-        <MobileContainerFooter>
+            {sendedVerifyNumber ? (
+              <Button type="submit" variant="primary" size="xl" disabled={verifyTimer === 0}>
+                {t('LABEL.common.checkAuthNumber')}
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                size="xl"
+                onClick={() => handleSendVerify()}
+                disabled={includeUserId}
+              >
+                {t('LABEL.common.checkAuthRequest')}
+              </Button>
+            )}
+          </div>
+        </BrowserFooter>
+        <MobileFooter>
           <Button variant="primary" size="xl" onClick={() => handleSendVerify()}>
             {t('LABEL.common.checkAuthRequest')}
           </Button>
-        </MobileContainerFooter>
-      </MobileView>
+        </MobileFooter>
+      </MobileResponsiveContainerFooter>
     </form>
   );
 }

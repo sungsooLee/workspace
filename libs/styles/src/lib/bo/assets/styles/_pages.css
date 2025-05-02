@@ -92,9 +92,19 @@ h4.auth--title {
   }
 }
 
+/* chips modal */
+[class*='chiplist_modal_wrap'] {
+  @apply w-full;
+}
+
 /* notice-box */
 [class*='nlp--tabs'] + [class*='notice'] {
   @apply mt-[16px];
+}
+
+/* dnd file wrap */
+.dnd_file_wrap > div > div {
+  @apply !h-[320px];
 }
 
 /* title */

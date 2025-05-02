@@ -9,7 +9,7 @@ import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
 import { useModal } from '../modal/modal.hook';
-import { IcoXclose } from '@learnway/icons';
+import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 
 export const ShuttleTreeWithChips = ({
   sourceData,
@@ -71,7 +71,7 @@ export const ShuttleTreeWithChips = ({
   };
 
   return (
-    <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+    <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'API 목록'}</h3>
@@ -117,8 +117,9 @@ export const ShuttleTreeWithChips = ({
                 }}
                 disabled={isAlreadySelected}
                 variant="gray2"
-                size={'xs'}
+                size={'ts'}
                 type={'button'}
+                className={styles.btn_select}
               >
                 선택
               </Button>
@@ -127,7 +128,9 @@ export const ShuttleTreeWithChips = ({
           {...otherProps}
         />
       </div>
-
+      <div className={layoutStyles.transfer_arrow}>
+        <IcoNarrowRight width={24} height={24} stroke={'#C8d2e5'} />
+      </div>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{'API 목록'}</h3>
@@ -144,9 +147,7 @@ export const ShuttleTreeWithChips = ({
         </div>
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className={cn('w-full py-4 text-center text-gray-500', styles.no_data)}>
-              선택된 항목이 없습니다.
-            </div>
+            <div className={styles.no_data}>선택된 항목이 없습니다.</div>
           ) : (
             actualSelectedItems.map((item: any) => (
               <div key={item.key} className={styles.selected_item}>

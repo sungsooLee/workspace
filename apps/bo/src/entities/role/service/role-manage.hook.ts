@@ -1,0 +1,155 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  roleQueryKeys,
+  roleManagerQueryOptions as queryOptions,
+  roleMutateOptions as mutateOptions,
+} from './role-manage.queries';
+import { useModal } from '@learnway/ui';
+
+// 실제 API 데이터를 가져오는 훅
+export function useFetchRoles() {
+  return useQuery(queryOptions.allRoles());
+}
+
+export function useFetchRole(roleId: string) {
+  return useQuery({ ...queryOptions.getRole(roleId), enabled: !!roleId });
+}
+
+export function useFetchMenus() {
+  return useQuery(queryOptions.allMenus());
+}
+
+export function useFetchRoleMenus(roleId: string) {
+  return useQuery({ ...queryOptions.getRoleMenus(roleId), enabled: !!roleId });
+}
+
+export function useFetchMenuApis(menuId: string) {
+  return useQuery({ ...queryOptions.getMenuApis(menuId), enabled: !!menuId });
+}
+
+export function useFetchRoleApis(roleId: string) {
+  return useQuery({ ...queryOptions.getRoleApis(roleId), enabled: !!roleId });
+}
+
+// 실제 API를 사용하는 훅
+interface RoleHookOptions {
+  onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;
+  onRoleUpdateSuccess?: (data: any, variables: any, context: any) => void;
+  onRoleDeleteSuccess?: (data: any, variables: any, context: any) => void;
+  onMenusAssignSuccess?: (data: any, variables: any, context: any) => void;
+  onApisAssignSuccess?: (data: any, variables: any, context: any) => void;
+}
+
+export const useRoleManager = (options: RoleHookOptions = {}) => {
+  const queryClient = useQueryClient();
+  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
+
+  // 역할 생성
+  const { mutate: createRoleMutate } = useMutation({
+    ...mutateOptions.createRole(),
+    onSuccess: async (data, variables, context) => {
+      showSaveComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles],
+      });
+      if (options.onRoleCreateSuccess) {
+        options.onRoleCreateSuccess(data, variables, context);
+      }
+    },
+  });
+
+  // 역할 삭제
+  const { mutate: deleteRoleMutate } = useMutation({
+    ...mutateOptions.deleteRole(),
+    onSuccess: async (data, variables, context) => {
+      showDeleteComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles],
+      });
+      if (options.onRoleDeleteSuccess) {
+        options.onRoleDeleteSuccess(data, variables, context);
+      }
+    },
+  });
+
+  // 역할 수정
+  const { mutate: updateRoleMutate } = useMutation({
+    ...mutateOptions.updateRole(),
+    onSuccess: async (data, variables, context) => {
+      showUpdateComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles],
+      });
+      if (options.onRoleUpdateSuccess) {
+        options.onRoleUpdateSuccess(data, variables, context);
+      }
+    },
+  });
+
+  // 역할에 메뉴 할당
+  const { mutate: assignMenusMutate } = useMutation({
+    ...mutateOptions.assignMenusToRole(),
+    onSuccess: async (data, variables, context) => {
+      showSaveComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [
+          ...roleQueryKeys.all,
+          ...roleQueryKeys.roles,
+          variables.roleId,
+          ...roleQueryKeys.menus,
+        ],
+      });
+      if (options.onMenusAssignSuccess) {
+        options.onMenusAssignSuccess(data, variables, context);
+      }
+    },
+  });
+
+  // 역할에 API 할당
+  const { mutate: assignApisMutate } = useMutation({
+    ...mutateOptions.assignApisToRole(),
+    onSuccess: async (data, variables, context) => {
+      showSaveComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [
+          ...roleQueryKeys.all,
+          ...roleQueryKeys.roles,
+          variables.roleId,
+          ...roleQueryKeys.apis,
+        ],
+      });
+      if (options.onApisAssignSuccess) {
+        options.onApisAssignSuccess(data, variables, context);
+      }
+    },
+  });
+
+  // 핸들러 함수들
+  const handleCreateRole = (roleData: any, callbacks?: any) => {
+    createRoleMutate(roleData, callbacks);
+  };
+
+  const handleDeleteRole = (roleId: string, callbacks?: any) => {
+    deleteRoleMutate(roleId, callbacks);
+  };
+
+  const handleUpdateRole = (roleData: any, callbacks?: any) => {
+    updateRoleMutate(roleData, callbacks);
+  };
+
+  const handleAssignMenus = (roleId: string, menuIds: string[], callbacks?: any) => {
+    assignMenusMutate({ roleId, menuIds }, callbacks);
+  };
+
+  const handleAssignApis = (roleId: string, apiIds: string[], callbacks?: any) => {
+    assignApisMutate({ roleId, apiIds }, callbacks);
+  };
+
+  return {
+    createRole: handleCreateRole,
+    deleteRole: handleDeleteRole,
+    updateRole: handleUpdateRole,
+    assignMenus: handleAssignMenus,
+    assignApis: handleAssignApis,
+  };
+};

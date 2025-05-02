@@ -23,6 +23,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     async = false,
     multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
     s3Path,
+    maxFileCount = 1,
+    acceptFiles = [],
   } = config;
 
   // 현재 업로드 상태를 관리하는 state
@@ -66,8 +68,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     return {
       status,
-      accessFiles: config.acceptFiles || [],
-      maxFileCount: config.maxFileCount || 0,
+      acceptFiles,
+      maxFileCount,
       total: files.length,
       uploading: statusCount.uploading,
       paused: statusCount.paused,
@@ -89,7 +91,11 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
    * - 파일 크기에 따라 단일 업로드 또는 멀티 파트 업로드 방식 지정
    * @param files 사용자가 추가한 파일 리스트
    */
-  const addFiles = (files: File[]) => {
+  const addFiles = async (files: File[]) => {
+    if (!files || files.length === 0) return;
+    if (maxFileCount === 1 && files.length > 0) {
+      await onRemove();
+    }
     const newFiles = files.map((file) => {
       const id = getRandomId(); // 각 파일에 고유 ID 생성
       const fileName = file.name;
@@ -121,10 +127,18 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
    * 업로드 중단 후 파일 리스트에서 제거
    * @param id 제거할 파일의 ID
    */
-  const onRemove = async (id: string) => {
-    await onAbort(id); // 업로드 중단
-    removeTask(id); // 큐에서 제거
-    setFiles((prev) => prev.filter((f) => f.id !== id)); // 파일목록에서 제거
+  const onRemove = async (id?: string) => {
+    if (id) {
+      await onAbort(id); // 업로드 중단
+      await removeTask(id); // 큐에서 제거
+      setFiles((prev) => prev.filter((f) => f.id !== id)); // 파일목록에서 제거
+    } else {
+      for (const file of files) {
+        await onAbort(file.id); // 업로드 중단
+        await removeTask(file.id); // 큐에서 제거
+      }
+      setFiles([]); // 파일목록초기화
+    }
   };
 
   /**

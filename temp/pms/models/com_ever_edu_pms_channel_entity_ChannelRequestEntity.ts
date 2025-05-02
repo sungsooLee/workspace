@@ -16,5 +16,6 @@ export type com_ever_edu_pms_channel_entity_ChannelRequestEntity = {
     tenantId?: number;
     isUsed?: boolean;
     isDeleted?: boolean;
+    channelRequestUuid?: string;
 };
 

@@ -2,14 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto } from './com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto';
+import type { com_ever_edu_pms_role_dto_res_RoleResDto } from './com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
-export type org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto = {
-    totalElements?: number;
+export type org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto = {
     totalPages?: number;
+    totalElements?: number;
     size?: number;
-    content?: Array<com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto>;
+    content?: Array<com_ever_edu_pms_role_dto_res_RoleResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
     numberOfElements?: number;

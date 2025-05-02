@@ -5,8 +5,7 @@
     thead {
       @apply sticky top-0 z-[1];
       tr {
-        @apply flex w-full bg-[var(--gray1)];
-        border-bottom: 1px solid var(--gray4) !important;
+        @apply flex w-full border-b-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)];
         th.thead_th {
           @apply bg-[var(--gray1)];
           .th_wrap {
@@ -63,6 +62,13 @@
               @apply !ml-[4px];
             }
           }
+          [class*='nlp--datepicker-time'] {
+            @apply mt-[4px] !h-[24px];
+            [class*='datepicker_input'] {
+              @apply !h-[24px];
+            }
+          }
+
           &:has(> div) {
             @apply w-full py-[4px];
 

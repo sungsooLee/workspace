@@ -13,11 +13,17 @@
             &::before {
               @apply absolute left-0 top-[4px] block h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
             }
+            &.time {
+              @apply text-[var(--status1)];
+            }
           }
           + .date_box {
             @apply ml-[24px];
           }
         }
+      }
+      h3 {
+        @apply body_2_b;
       }
     }
     &.completed {
@@ -53,7 +59,7 @@
       @apply w-full;
     }
     h3 {
-      @apply mr-[24px] basis-[94px];
+      @apply mr-[24px] flex-shrink-0 basis-[94px];
     }
     .progress_bar {
       @apply flex-1 border border-solid border-[var(--gray3)] bg-[var(--gray3)];
@@ -115,6 +121,103 @@
         }
         .default {
           @apply body_4_r block w-full text-[12px] text-[var(--gray9)];
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .panel_degreey {
+        .list {
+          @apply flex-col items-start;
+          .date_status {
+            @apply flex-col items-start;
+            .date_box {
+              @apply mt-[8px];
+              .date {
+                &::before {
+                }
+              }
+              + .date_box {
+                @apply ml-0 mt-[4px];
+              }
+            }
+          }
+        }
+        &.completed {
+          h3 {
+          }
+        }
+
+        &.incomplete {
+          h3 {
+          }
+        }
+
+        h3 {
+          @apply body_3_b;
+          .ico {
+            svg {
+            }
+          }
+        }
+      }
+      .progress_box {
+      }
+      .progress_rate {
+        [class*='progress_wrap'] {
+        }
+        h3 {
+          @apply body_3_b basis-[60px];
+        }
+        .progress_bar {
+        }
+
+        .info {
+          .progress {
+            @apply ml-[16px];
+          }
+        }
+      }
+
+      .status_box {
+        .status_table {
+        }
+        .btn_action {
+          button {
+            span {
+            }
+            svg {
+            }
+            &.active {
+              svg {
+              }
+            }
+          }
+        }
+        .status_list {
+          @apply flex-wrap justify-center gap-0;
+          .status_info {
+            @apply mb-[16px] h-[82px] w-1/2;
+            &::before {
+            }
+            &:nth-child(odd)::before {
+              @apply hidden;
+            }
+            .tt {
+            }
+            .score_box {
+              .score {
+              }
+              svg {
+              }
+            }
+            .default {
+            }
+          }
         }
       }
     }

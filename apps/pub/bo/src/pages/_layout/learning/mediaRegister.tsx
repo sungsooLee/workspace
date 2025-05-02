@@ -460,7 +460,7 @@ function RouteComponent() {
               <label htmlFor="name-1-2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>학습자원명</span>
                 {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
+                <span className={cn(formStyles.status, formStyles.required, formStyles.error)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
@@ -477,7 +477,7 @@ function RouteComponent() {
                 <em className={formStyles.num}>7</em>/150
               </span> */}
               </div>
-              <p className={cn(formStyles.guide_text)}>기본 메시지</p>
+              <p className={cn(formStyles.guide_text, formStyles.error)}>에러 메시지</p>
             </div>
           </ContentsRow>
           <ContentsRow>

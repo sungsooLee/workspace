@@ -3,3 +3,9 @@
 .nlp-select__menu-list {
   @apply !rounded-[8px];
 }
+
+.nlp-select__value-container {
+  [class*='nlp-select__placeholder'] {
+    @apply !text-[var(--gray8)];
+  }
+}

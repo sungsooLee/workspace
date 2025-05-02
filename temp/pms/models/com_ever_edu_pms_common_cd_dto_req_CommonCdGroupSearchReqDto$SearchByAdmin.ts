@@ -14,7 +14,7 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchB
     /**
      * 코드그룹약어영어명
      */
-    cdGroupAbbreviatonEnglishName?: string | null;
+    cdGroupAbbreviationEnglishName?: string | null;
     /**
      * 코드그룹내용
      */
